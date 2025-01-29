@@ -359,6 +359,22 @@ void CloudDriveNodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>
     }
 }
 
+void CloudDriveNodeSelector::onMergeItemsAboutToBeMoved(mega::MegaHandle handle, int type)
+{
+    if (type == NodeSelectorModel::ActionType::RESTORE)
+    {
+        // Check with the handle if we are in CD or Incoming
+        if (mCloudDriveWidget->increaseMovingNodes())
+        {
+            onbShowCloudDriveClicked();
+        }
+    }
+    else
+    {
+        NodeSelector::onMergeItemsAboutToBeMoved(handle, type);
+    }
+}
+
 void CloudDriveNodeSelector::onItemsRestoreRequested(const QList<mega::MegaHandle>& handles)
 {
     if (mRubbishWidget)

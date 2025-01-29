@@ -19,9 +19,30 @@ class NodeSelectorTreeView : public LoadingSceneView<NodeSelectorLoadingDelegate
 
 public:
     explicit NodeSelectorTreeView(QWidget *parent = nullptr);
+    ~NodeSelectorTreeView();
+
     MegaHandle getSelectedNodeHandle();
     QList<MegaHandle> getMultiSelectionNodeHandle() const;
     void setModel(QAbstractItemModel *model) override;
+
+    static void clearCopiedHandles();
+
+    enum ActionsOrder
+    {
+        RESTORE,
+        SEPARATOR_1,
+        MEGA_LINK,
+        SYNC,
+        UNSYNC,
+        SEPARATOR_2,
+        RENAME,
+        COPY,
+        PASTE,
+        SEPARATOR_3,
+        DELETE,
+        DELETE_PERMANENTLY,
+    };
+    Q_ENUM(ActionsOrder)
 
 protected:
     void drawBranches(QPainter *painter,
@@ -40,7 +61,6 @@ protected:
 signals:
     void deleteNodeClicked(const QList<MegaHandle>& handles, bool permanently);
     void renameNodeClicked();
-    void copyNodesClicked(const QList<MegaHandle>& handles);
     void pasteNodesClicked();
     void getMegaLinkClicked();
     void restoreClicked(const QList<MegaHandle>& handles);
@@ -68,12 +88,20 @@ private:
     bool areAllEligibleForDeletion(const QList<mega::MegaHandle>& handles) const;
     bool areAllEligibleForRestore(const QList<MegaHandle> &handles) const;
 
+    void addPasteMenuAction(QMap<int, QAction*>& actions, const QModelIndex& pasteIndex);
+    void addRestoreMenuAction(QMap<int, QAction*>& actions,
+                              QList<mega::MegaHandle> selectionHandles);
+    void addDeleteMenuAction(QMap<int, QAction*>& actions,
+                             QList<mega::MegaHandle> selectionHandles);
+    void addDeletePermanently(QMap<int, QAction*>& actions,
+                              QList<mega::MegaHandle> selectionHandles);
+
     // Shortcuts
     QShortcut* mCopyShortcut;
     QShortcut* mPasteShortcut;
 
-    // Copied items
-    QList<mega::MegaHandle> mCopiedItems;
+    // Copied handles are common for all views
+    static QList<mega::MegaHandle> mCopiedHandles;
 
     MegaApi* mMegaApi;
 };

@@ -104,6 +104,9 @@ protected slots:
     }
 
     virtual void onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles, int actionType);
+
+    virtual void onMergeItemsAboutToBeMoved(mega::MegaHandle, int) {}
+
     void onbShowCloudDriveClicked();
     void onbShowIncomingSharesClicked();
 

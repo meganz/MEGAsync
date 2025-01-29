@@ -78,6 +78,7 @@ public:
     void enableDragAndDrop(bool enable);
 
     void initMovingNodes(int number);
+    bool increaseMovingNodes();
     bool areItemsAboutToBeMovedFromHere(mega::MegaHandle firstHandleMoved, int handlesMoved);
 
 public slots:
@@ -133,9 +134,7 @@ private slots:
     void oncbAlwaysUploadToLocationChanged(bool value);
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
     void onModelDataChanged(const QModelIndex& first, const QModelIndex& last, const QVector<int> &roles = QVector<int>());
-    void onDeleteClicked(const QList<mega::MegaHandle> &handles, bool permanently);
-    void onPasteClicked();
-    void onCopyClicked(const QList<mega::MegaHandle>& handles);
+    void onDeleteClicked(const QList<mega::MegaHandle>& handles, bool permanently);
     void onRenameClicked();
     void onGenMEGALinkClicked();
     virtual void onItemDoubleClick(const QModelIndex &index);
@@ -198,9 +197,6 @@ private:
     QTimer mNodesUpdateTimer;
     mega::MegaHandle mNewFolderHandle;
     bool mNewFolderAdded;
-
-    // Copied handles are common for all views
-    static QList<mega::MegaHandle> mCopiedHandles;
 
     friend class DownloadType;
     friend class SyncType;

@@ -55,7 +55,7 @@ public:
 
 private:
     static mega::MegaRequestListener*
-        listenerMethod(mega::MegaApi* api,
+        listenerMethod(mega::MegaApi*,
                        std::function<void(mega::MegaRequest*, mega::MegaError*)> resultFunc,
                        std::shared_ptr<mega::MegaError>& error,
                        QEventLoop& eventLoop)
@@ -68,6 +68,10 @@ private:
                 if (e->getErrorCode() != mega::MegaError::API_OK)
                 {
                     error.reset(e->copy());
+                }
+                else
+                {
+                    error = nullptr;
                 }
 
                 if (resultFunc)

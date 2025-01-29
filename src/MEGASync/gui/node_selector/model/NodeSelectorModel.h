@@ -221,14 +221,26 @@ public:
         const QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>>& handleAndTarget,
         std::shared_ptr<mega::MegaNode> sourceNode,
         ActionType type);
-    void increaseMovingNodes();
+    bool increaseMovingNodes();
     void initMovingNodes(int number);
     bool isMovingNodes() const;
+
+    // Copy logic
+    bool pasteNodes(const QList<mega::MegaHandle>& nodesToCopy, const QModelIndex& indexToPaste);
+    bool canPasteNodes(const QList<mega::MegaHandle>& nodesToCopy, const QModelIndex& indexToPaste);
+
+    enum RestoreMergeType
+    {
+        MERGE_AND_MOVE_TO_TARGET,
+        MERGE_ON_EXISTING_TARGET
+    };
 
     void mergeFolders(std::shared_ptr<mega::MegaNode> moveFolder,
                       std::shared_ptr<mega::MegaNode> conflictTargetFolder,
                       std::shared_ptr<mega::MegaNode> targetParentFolder,
-                      ActionType type);
+                      ActionType type,
+                      std::optional<RestoreMergeType> restoreType);
+
     void moveFileAndReplace(std::shared_ptr<mega::MegaNode> moveFile,
                             std::shared_ptr<mega::MegaNode> conflictTargetFile,
                             std::shared_ptr<mega::MegaNode> targetParentFolder);
@@ -326,7 +338,6 @@ signals:
     void removeRootItem(NodeSelectorModelItem* items);
     void deleteWorker();
     void blockUi(bool state, QPrivateSignal);
-    void forceFilter();
     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
     void showMessageBox(QMegaMessageBox::MessageBoxInfo info) const;
     void showDuplicatedNodeDialog(std::shared_ptr<ConflictTypes> conflicts, ActionType type);
@@ -334,6 +345,8 @@ signals:
     void modelIsBeingModifiedChanged(bool status);
     void itemsMoved();
     void itemsAboutToBeMoved(const QList<mega::MegaHandle> handles, int actionType);
+    void mergeItemAboutToBeMoved(mega::MegaHandle handle, int type);
+    void finishAsyncRequest(mega::MegaHandle handle, int error);
 
 protected:
     Qt::ItemFlags flags(const QModelIndex &index) const override;
@@ -361,12 +374,14 @@ protected:
 protected slots:
     virtual void onRootItemAdded();
     virtual void onRootItemDeleted();
+    void increaseMergeMovingNodes(mega::MegaHandle handle, int actionType);
 
 private slots:
     void onChildNodesReady(NodeSelectorModelItem *parent);
     void onNodesAdded(QList<QPointer<NodeSelectorModelItem> > childrenItem);
     void onSyncStateChanged(std::shared_ptr<SyncSettings> sync);
     void resetMoveProcessing();
+    void checkFinishedRequest(mega::MegaHandle handle, int errorCode);
 
 private:
     virtual void createRootNodes() = 0;
@@ -378,9 +393,6 @@ private:
 
     QIcon getFolderIcon(NodeSelectorModelItem* item) const;
     bool fetchMoreRecursively(const QModelIndex& parentIndex);
-
-    QMutex mCheckFinishedMutex;
-    void checkFinishedRequest(mega::MegaHandle handle, int errorCode);
 
     bool checkMoveProcessing();
     void restartProtectionAgainstUpdateBlockingState();
@@ -411,5 +423,6 @@ private:
 
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaNodeList>)
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaNode>)
+Q_DECLARE_METATYPE(QList<mega::MegaHandle>)
 
 #endif // NODESELECTORMODEL_H

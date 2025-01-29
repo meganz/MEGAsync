@@ -77,6 +77,7 @@ protected:
 protected slots:
     void onCustomBottomButtonClicked(uint id) override;
     void onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles, int type) override;
+    void onMergeItemsAboutToBeMoved(mega::MegaHandle handle, int type) override;
 
 private slots:
     void onItemsRestoreRequested(const QList<mega::MegaHandle>& handles);

@@ -42,38 +42,33 @@ public:
                      Qt::CaseSensitivity sensitivity,
                      Strategy strategy = Strategy::MOVE);
 
-    std::shared_ptr<mega::MegaError> merge(mega::MegaNode* folderTarget,
-                                           mega::MegaNode* folderToMerge);
+    int merge(mega::MegaNode* folderTarget, mega::MegaNode* folderToMerge);
 
 signals:
-    void nestedItemMerged();
+    void nestedItemMerged(mega::MegaHandle handle);
     void finished();
 
 private:
-    std::shared_ptr<mega::MegaError> performMerge(mega::MegaNode* folderTarget,
-                                                  mega::MegaNode* folderToMerge);
-    std::shared_ptr<mega::MegaError> mergeTwoFolders();
-    std::shared_ptr<mega::MegaError> mergeByName();
+    int performMerge(mega::MegaNode* folderTarget, mega::MegaNode* folderToMerge);
 
     // Preparation methods
     void readTargetFolder(
         mega::MegaNode* folderTarget,
         QMap<QString, std::shared_ptr<mega::MegaNode>>& targetNodeWithoutNameConflict,
         QMap<QString, std::shared_ptr<mega::MegaNode>>& targetNodeWithNameConflict);
-    std::shared_ptr<mega::MegaError> fixTargetFolderNameConflicts(
+    int fixTargetFolderNameConflicts(
         const QMap<QString, std::shared_ptr<mega::MegaNode>>& targetNodeWithNameConflict);
-    std::shared_ptr<mega::MegaError> mergeNestedNodesIntoTargetFolder(
+    int mergeNestedNodesIntoTargetFolder(
         mega::MegaNode* folderTarget,
         mega::MegaNode* folderToMerge,
         QMap<QString, std::shared_ptr<mega::MegaNode>>& targetNodeWithoutNameConflict);
-    std::shared_ptr<mega::MegaError> finishMerge(mega::MegaNode* folderTarget,
-                                                 mega::MegaNode* folderToMerge);
+    int finishMerge(mega::MegaNode* folderTarget, mega::MegaNode* folderToMerge);
 
     // Utilities
-    void logError(std::shared_ptr<mega::MegaError> error);
-    std::shared_ptr<mega::MegaError> rename(mega::MegaNode* nodeToRename,
-                                            mega::MegaNode* parentNode,
-                                            QStringList& itemsBeingRenamed);
+    void logError(int error);
+    int rename(mega::MegaNode* nodeToRename,
+               mega::MegaNode* parentNode,
+               QStringList& itemsBeingRenamed);
     QString getNodeName(mega::MegaNode* node);
 
     Qt::CaseSensitivity mCaseSensitivity;

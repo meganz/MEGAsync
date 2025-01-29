@@ -4764,11 +4764,6 @@ Enter a different name.</translation>
 <context>
     <name>NodeSelectorTreeView</name>
     <message>
-        <source>Get MEGA link</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
-        <translation>Get MEGA link</translation>
-    </message>
-    <message>
         <source>Rename</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It renames the node (file or folder).</translatorcomment>
         <translation>Rename</translation>
@@ -4780,18 +4775,37 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>Restore</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It restores the node (file or folder) from the rubbish bin. SAT-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Delete permanently</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes permanently the node (file or folder), so it cannot be restored. SAT-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sync</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It creates a sync in the selected folder. SAT-426</translatorcomment>
         <translation type="unfinished">Sync</translation>
     </message>
     <message>
-        <source>Unsync</source>
+        <source>Paste</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It paste the copied nodes (files and folders). SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It copy the selected nodes (files or folders), waiting for the paste action. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Share link</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It copies the selected items MEGA link to the clipboard. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop syncing</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It deletes the sync on the selected folder. SAT-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4854,11 +4868,13 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>Empty Rubbish bin</source>
+        <translatorcomment>Button text to empty the rubbish bin. SAT-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently remove %n file.
 Would you like to proceed?</source>
+<translatorcomment>First part of the messagebox text when the user is about to remove permanently a node. SAT-426</translatorcomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -4866,14 +4882,17 @@ Would you like to proceed?</source>
     </message>
     <message>
         <source>You cannot undo this action</source>
+        <translatorcomment>Second part of the messagebox text when the user is about to remove permanently a node. SAT-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
+        <translatorcomment>Third part of the messagebox text when the user is about to remove permanently a node. %1 is the name of the node to remove. SAT-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Are you sure that you want to delete %1 items?</source>
+        <translatorcomment>Third part of the messagebox text when the user is about to remove permanently some nodes. SAT-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7123,6 +7142,7 @@ Do you want to delete it anyway?</translation>
     </message>
     <message>
         <source>Are you sure you want to upload it to %1</source>
+        <translatorcomment>Third part of the messagebox text when the user is about to remove permanently a node. %1 is the name of the node to remove. SAT-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

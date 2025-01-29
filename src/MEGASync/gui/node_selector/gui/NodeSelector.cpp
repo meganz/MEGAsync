@@ -452,6 +452,11 @@ void NodeSelector::initSpecialisedWidgets()
                     &NodeSelector::onItemsAboutToBeMoved);
 
             connect(model,
+                    &NodeSelectorModel::mergeItemAboutToBeMoved,
+                    this,
+                    &NodeSelector::onMergeItemsAboutToBeMoved);
+
+            connect(model,
                     &NodeSelectorModel::updateLoadingMessage,
                     this,
                     &NodeSelector::onUpdateLoadingMessage);

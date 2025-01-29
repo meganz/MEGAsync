@@ -19,8 +19,6 @@ const char* NodeSelectorTreeViewWidget::FULL_NAME_PROPERTY = "full_name";
 const int CHECK_UPDATED_NODES_INTERVAL = 1000;
 const int IMMEDIATE_CHECK_UPDATES_NODES_THRESHOLD = 200;
 
-QList<mega::MegaHandle> NodeSelectorTreeViewWidget::mCopiedHandles = QList<mega::MegaHandle>();
-
 NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWidget* parent):
     QWidget(parent),
     ui(new Ui::NodeSelectorTreeViewWidget),
@@ -340,15 +338,10 @@ void NodeSelectorTreeViewWidget::onExpandReady()
                 &NodeSelectorTreeView::deleteNodeClicked,
                 this,
                 &NodeSelectorTreeViewWidget::onDeleteClicked);
-        connect(ui->tMegaFolders, &NodeSelectorTreeView::renameNodeClicked, this, &NodeSelectorTreeViewWidget::onRenameClicked);
         connect(ui->tMegaFolders,
-                &NodeSelectorTreeView::copyNodesClicked,
+                &NodeSelectorTreeView::renameNodeClicked,
                 this,
-                &NodeSelectorTreeViewWidget::onCopyClicked);
-        connect(ui->tMegaFolders,
-                &NodeSelectorTreeView::pasteNodesClicked,
-                this,
-                &NodeSelectorTreeViewWidget::onPasteClicked);
+                &NodeSelectorTreeViewWidget::onRenameClicked);
         connect(ui->tMegaFolders, &NodeSelectorTreeView::getMegaLinkClicked, this, &NodeSelectorTreeViewWidget::onGenMEGALinkClicked);
         connect(ui->tMegaFolders, &QTreeView::doubleClicked, this, &NodeSelectorTreeViewWidget::onItemDoubleClick);
         connect(ui->tMegaFolders, &NodeSelectorTreeView::nodeSelected, this, &NodeSelectorTreeViewWidget::okBtnClicked);
@@ -569,7 +562,7 @@ void NodeSelectorTreeViewWidget::onItemDoubleClick(const QModelIndex &index)
     setRootIndex(index);
     checkBackForwardButtons();
     checkButtonsVisibility();
-    selectIndex(index, true);
+    // selectIndex(index, true);
 }
 
 void NodeSelectorTreeViewWidget::checkButtonsVisibility()
@@ -817,26 +810,6 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
     QMegaMessageBox::warning(msgInfo);
 }
 
-void NodeSelectorTreeViewWidget::onCopyClicked(const QList<MegaHandle>& handles)
-{
-    mCopiedHandles = handles;
-}
-
-void NodeSelectorTreeViewWidget::onPasteClicked()
-{
-    auto mimeData(mModel->mimeData(mCopiedHandles));
-    auto sourceIndex(mProxyModel->mapToSource(ui->tMegaFolders->rootIndex()));
-    if (mModel->canDropMimeData(mimeData, Qt::CopyAction, -1, -1, sourceIndex))
-    {
-        if (mModel->startProcessingNodes(mimeData,
-                                         sourceIndex,
-                                         NodeSelectorModel::ActionType::COPY))
-        {
-            mCopiedHandles.clear();
-        }
-    }
-}
-
 NodeSelectorTreeViewWidget::NodeState
     NodeSelectorTreeViewWidget::getNodeOnModelState(mega::MegaNode* node)
 {
@@ -1067,6 +1040,11 @@ void NodeSelectorTreeViewWidget::selectIndex(const mega::MegaHandle& handle,
 void NodeSelectorTreeViewWidget::initMovingNodes(int number)
 {
     mModel->initMovingNodes(number);
+}
+
+bool NodeSelectorTreeViewWidget::increaseMovingNodes()
+{
+    return mModel->increaseMovingNodes();
 }
 
 bool NodeSelectorTreeViewWidget::areItemsAboutToBeMovedFromHere(mega::MegaHandle firstHandleMoved,
@@ -1309,7 +1287,10 @@ void NodeSelectorTreeViewWidget::checkBackForwardButtons()
 }
 
 void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
-{    
+{
+    // Everytime we move among folders, we reset the selection
+    ui->tMegaFolders->selectionModel()->clear();
+
     //In case the idx is coming from a potentially hidden column, we always take the NODE column
     //As it is the only one that have childrens
     auto node_column_idx = proxy_idx.sibling(proxy_idx.row(), NodeSelectorModel::COLUMN::NODE);
@@ -1328,9 +1309,6 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
 
         mNavigationInfo.backwardHandles.removeLast();
     }
-
-    //Everytime we move among folders, we reset the selection
-    ui->tMegaFolders->selectionModel()->clear();
 
     onRootIndexChanged(node_column_idx);
 

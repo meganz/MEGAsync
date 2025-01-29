@@ -1004,7 +1004,7 @@ NameConflictedStalledIssue::CloudConflictedNames::mergeFolders()
 
                 auto error = foldersMerger.merge(targetFolder.get(), folderToMerge.get());
 
-                if(error)
+                if (error != mega::MegaError::API_OK)
                 {
                     errorInfo.conflictIndex = index;
                     errorInfo.error = tr("Unable to merge this folder.");

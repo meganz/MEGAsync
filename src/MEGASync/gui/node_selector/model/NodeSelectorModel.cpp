@@ -527,6 +527,12 @@ NodeSelectorModel::NodeSelectorModel(QObject* parent):
     connect(SyncInfo::instance(), &SyncInfo::syncStateChanged, this, &NodeSelectorModel::onSyncStateChanged);
     connect(SyncInfo::instance(), &SyncInfo::syncRemoved, this, &NodeSelectorModel::onSyncStateChanged);
 
+    connect(this,
+            &NodeSelectorModel::finishAsyncRequest,
+            this,
+            &NodeSelectorModel::checkFinishedRequest,
+            Qt::QueuedConnection);
+
     qRegisterMetaType<std::shared_ptr<mega::MegaNodeList>>("std::shared_ptr<mega::MegaNodeList>");
     qRegisterMetaType<std::shared_ptr<mega::MegaNode>>("std::shared_ptr<mega::MegaNode>");
     qRegisterMetaType<mega::MegaHandle>("mega::MegaHandle");
@@ -535,6 +541,8 @@ NodeSelectorModel::NodeSelectorModel(QObject* parent):
     protectModelAgainstUpdateBlockingState();
 
     mListener = RequestListenerManager::instance().registerAndGetFinishListener(this, false);
+
+    qRegisterMetaType<QList<mega::MegaHandle>>("QList<mega::MegaHandle>");
 }
 
 NodeSelectorModel::~NodeSelectorModel()
@@ -823,9 +831,29 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
 
     QList<mega::MegaHandle> handlesToMove;
 
-    QMap<mega::MegaHandle, mega::MegaHandle> handlesToMerge;
+    // There are 3 scenarios when restoring
 
-    // Look for merges -> first we merge, then we move
+    // 1) It is a simple folder or file and there is no other item with the same name on the CD ->
+    // direct restore -> ONLY "UPLOAD"
+
+    // 2) There are two files/folders with the same name in the rubbish and no other item on the CD
+    // -> Merge in the rubbish and then restore -> at least two conflicts -> FOLDER_UPLOAD_AND_MERGE
+    // && UPLOAD -> In this case, we end restoring a simple file/folder
+
+    // 3) There are on item on the CD with the same name of one or more items on the rubbish -> We
+    // merge first in the -> ONLY "FOLDER_UPLOAD_AND_MERGE"
+
+    // Depeding on the scenario, we have 3 types of RestoreMergeType values:
+
+    // 1) No value, we don´t have a merge
+    // 2) RestoreMergeType = MERGE_AND_MOVE_TO_TARGET -> We merge folders on rubbish and the we move
+    // the final folder to the CD 3) RestoreMergeType = MERGE_ON_EXISTING_TARGET -> We merge folders
+    // to the final folder to the CD
+
+    std::optional<RestoreMergeType> restoreMergeType;
+    QMap<mega::MegaHandle, mega::MegaHandle> handlesToMerge;
+    QSet<mega::MegaHandle> handlesToUpload;
+
     if (type == ActionType::RESTORE)
     {
         foreach(auto resolvedConflict, conflicts->mResolvedConflicts)
@@ -835,10 +863,37 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
             {
                 if (resolvedMoveConflict->getSolution() == NodeItemType::FOLDER_UPLOAD_AND_MERGE)
                 {
+                    if (handlesToUpload.contains(
+                            resolvedMoveConflict->getConflictNode()->getHandle()))
+                    {
+                        restoreMergeType = RestoreMergeType::MERGE_AND_MOVE_TO_TARGET;
+                    }
+
                     handlesToMerge.insert(resolvedMoveConflict->getConflictNode()->getHandle(),
                                           resolvedMoveConflict->getSourceItemHandle());
                 }
+                else if (resolvedMoveConflict->getSolution() == NodeItemType::UPLOAD)
+                {
+                    if (handlesToMerge.contains(resolvedMoveConflict->getSourceItemHandle()))
+                    {
+                        restoreMergeType = RestoreMergeType::MERGE_AND_MOVE_TO_TARGET;
+                    }
+                    else
+                    {
+                        handlesToUpload.insert(resolvedMoveConflict->getSourceItemHandle());
+                    }
+                }
             }
+        }
+
+        if (!handlesToMerge.isEmpty() && !restoreMergeType.has_value())
+        {
+            restoreMergeType = RestoreMergeType::MERGE_ON_EXISTING_TARGET;
+        }
+
+        if (restoreMergeType.has_value())
+        {
+            initMovingNodes(handlesToMerge.size() + handlesToUpload.size());
         }
     }
 
@@ -863,7 +918,8 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
                     mergeFolders(nodeToMove,
                                  resolvedMoveConflict->getConflictNode(),
                                  resolvedMoveConflict->getParentNode(),
-                                 type);
+                                 type,
+                                 restoreMergeType);
                 }
                 else
                 {
@@ -879,6 +935,10 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
                         }
                         else
                         {
+                            // Duplicate the value, as the node will be removed and then added to
+                            // the restored model
+                            handlesToMove.append(nodeToMove->getHandle());
+
                             moveFileAndReplace(nodeToMove,
                                                resolvedMoveConflict->getConflictNode(),
                                                resolvedMoveConflict->getParentNode());
@@ -1016,6 +1076,7 @@ void NodeSelectorModel::resetMoveProcessing()
 {
     mMoveRequestsCounter = 0;
     checkMoveProcessing();
+    emit levelsAdded(mIndexesToBeExpanded, true);
 }
 
 bool NodeSelectorModel::checkMoveProcessing()
@@ -1058,10 +1119,54 @@ bool NodeSelectorModel::isMovingNodes() const
     return mIsProcessingMoves;
 }
 
-void NodeSelectorModel::increaseMovingNodes()
+bool NodeSelectorModel::pasteNodes(const QList<mega::MegaHandle>& nodesToCopy,
+                                   const QModelIndex& indexToPaste)
 {
-    mMoveRequestsCounter++;
-    restartProtectionAgainstUpdateBlockingState();
+    auto data(mimeData(nodesToCopy));
+    if (canDropMimeData(data, Qt::CopyAction, -1, -1, indexToPaste))
+    {
+        if (startProcessingNodes(data, indexToPaste, NodeSelectorModel::ActionType::COPY))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool NodeSelectorModel::canPasteNodes(const QList<mega::MegaHandle>& nodesToCopy,
+                                      const QModelIndex& indexToPaste)
+{
+    auto data(mimeData(nodesToCopy));
+    return canDropMimeData(data, Qt::CopyAction, -1, -1, indexToPaste);
+}
+
+bool NodeSelectorModel::increaseMovingNodes()
+{
+    if (mMoveRequestsCounter == 0)
+    {
+        initMovingNodes(1);
+        return true;
+    }
+    else
+    {
+        mMoveRequestsCounter++;
+        restartProtectionAgainstUpdateBlockingState();
+        return false;
+    }
+}
+
+void NodeSelectorModel::increaseMergeMovingNodes(mega::MegaHandle handle, int type)
+{
+    if (mMoveRequestsCounter == 0)
+    {
+        initMovingNodes(1);
+    }
+    else
+    {
+        increaseMovingNodes();
+    }
+    emit mergeItemAboutToBeMoved(handle, type);
 }
 
 void NodeSelectorModel::initMovingNodes(int number)
@@ -1490,10 +1595,11 @@ int NodeSelectorModel::getNodeAccess(mega::MegaNode* node)
 void NodeSelectorModel::mergeFolders(std::shared_ptr<mega::MegaNode> moveFolder,
                                      std::shared_ptr<mega::MegaNode> conflictTargetFolder,
                                      std::shared_ptr<mega::MegaNode> targetParentFolder,
-                                     ActionType type)
+                                     ActionType type,
+                                     std::optional<RestoreMergeType> restoreType)
 {
     QtConcurrent::run(
-        [this, moveFolder, targetParentFolder, conflictTargetFolder, type]()
+        [this, moveFolder, targetParentFolder, conflictTargetFolder, type, restoreType]()
         {
             MergeMEGAFolders foldersMerger(MergeMEGAFolders::ActionForDuplicates::Rename,
                                            // Remote is always case sensitive
@@ -1502,21 +1608,40 @@ void NodeSelectorModel::mergeFolders(std::shared_ptr<mega::MegaNode> moveFolder,
                                                MergeMEGAFolders::Strategy::COPY :
                                                MergeMEGAFolders::Strategy::MOVE);
 
-            connect(&foldersMerger,
-                    &MergeMEGAFolders::nestedItemMerged,
-                    this,
-                    &NodeSelectorModel::increaseMovingNodes);
+            if (restoreType.has_value())
+            {
+                if (restoreType.value() == RestoreMergeType::MERGE_ON_EXISTING_TARGET)
+                {
+                    connect(&foldersMerger,
+                            &MergeMEGAFolders::nestedItemMerged,
+                            this,
+                            [this, type](mega::MegaHandle handle)
+                            {
+                                increaseMergeMovingNodes(handle, type);
+                            });
+                }
+                else if (restoreType.value() == RestoreMergeType::MERGE_AND_MOVE_TO_TARGET)
+                {
+                    connect(&foldersMerger,
+                            &MergeMEGAFolders::nestedItemMerged,
+                            this,
+                            [this](mega::MegaHandle)
+                            {
+                                increaseMovingNodes();
+                            });
+                }
+            }
 
             connect(&foldersMerger,
                     &MergeMEGAFolders::finished,
                     this,
                     &NodeSelectorModel::moveProcessed);
 
-            auto e = foldersMerger.merge(conflictTargetFolder.get(), moveFolder.get()).get();
+            auto e = foldersMerger.merge(conflictTargetFolder.get(), moveFolder.get());
 
             if (type == ActionType::RESTORE)
             {
-                if (!e || e->getErrorCode() == mega::MegaError::API_OK)
+                if (e == mega::MegaError::API_OK)
                 {
                     auto moveToParentHandle(
                         mMoveAfterMergeWhileRestoring.take(moveFolder->getHandle()));
@@ -1535,9 +1660,7 @@ void NodeSelectorModel::mergeFolders(std::shared_ptr<mega::MegaNode> moveFolder,
                 }
             }
 
-            checkFinishedRequest(moveFolder->getHandle(),
-                                 e ? e->getErrorCode() : mega::MegaError::API_OK);
-
+            emit finishAsyncRequest(moveFolder->getHandle(), e);
         });
 }
 
@@ -1557,7 +1680,7 @@ void NodeSelectorModel::moveFileAndReplace(std::shared_ptr<mega::MegaNode> moveF
             }
             else
             {
-                checkFinishedRequest(moveFile->getHandle(), e->getErrorCode());
+                emit finishAsyncRequest(moveFile->getHandle(), e->getErrorCode());
             }
         });
 }
@@ -1578,7 +1701,7 @@ void NodeSelectorModel::copyFileAndReplace(std::shared_ptr<mega::MegaNode> copyI
             }
             else
             {
-                checkFinishedRequest(copyItem->getHandle(), e->getErrorCode());
+                emit finishAsyncRequest(copyItem->getHandle(), e->getErrorCode());
             }
         });
 }
@@ -1637,8 +1760,6 @@ void NodeSelectorModel::onRequestFinish(mega::MegaRequest* request, mega::MegaEr
 
 void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorCode)
 {
-    QMutexLocker d(&mCheckFinishedMutex);
-
     auto requestType = mRequestByHandle.take(handle);
 
     if (errorCode != mega::MegaError::API_OK)
