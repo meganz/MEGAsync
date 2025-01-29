@@ -18,7 +18,7 @@
 #define VER_PRODUCTNAME_STR         "MEGAsync\0"
 
 /* SDK commit hash, 7 chars */
-#define VER_SDK_ID "c00c674"
+#define VER_SDK_ID "ddaaf5e"
 
 /* Update scrips relying on this value if you move it
 Format: 1 item by line, starting from line following the #define
