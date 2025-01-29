@@ -5797,20 +5797,20 @@ Introduzca un nombre diferente.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI and UX enhancements on transfer manager feature.
-- Support of wildcard exclusions in the exclusion dialog.
-- Upgrade Qt third party dependency.
-- New releases for Raspberry Pi OS.
-- Fixed crashes due to missing or broken OpenGL drivers on Windows.
-- Bug fixes and performance improvements.
+        <source>- We’ve enhanced the interface and behaviour of the transfer manager feature.
+- You can now create sync exclusions using wildcards.
+- There are new releases available now for the Raspberry Pi OS.
+- We’ve fixed crashes that were occurring due to missing or broken OpenGL drivers on Windows.
+- Qt has been upgraded to a newer version.
+- Other bugs have been fixed and numerous improvements made.
 </source>
         <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
-        <translation>- Mejoras en la interfaz del gestor de transferencias.
-- Ahora es posible usar comodines para las exclusiones.
-- Se han actualizado dependencias de Qt.
-- Nuevas versiones para Raspberry Pi OS.
-- Se han solucionado errores debidos a drivers de OpenGL faltantes o dañados en Windows.
-- Corrección de errores y mejoras de rendimiento.
+        <translation>- Hemos mejorado la interfaz y el comportamiento del gestor de transferencias.
+- Ahora se pueden crear exclusiones de sincronización mediante comodines.
+- Hay nuevas versiones disponibles para Raspberry Pi.
+- Hemos corregido los problemas debidos a los drivers OpenGL en Windows.
+- Qt se ha actualizado a una versión más reciente.
+- Se han corregido otros errores y se han realizado numerosas mejoras.
 </translation>
     </message>
 </context>
