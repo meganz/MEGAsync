@@ -1,6 +1,7 @@
 #include "NodeSelectorTreeViewWidget.h"
 
 #include "DialogOpener.h"
+#include "EventUpdater.h"
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
 #include "NewFolderDialog.h"
@@ -132,6 +133,10 @@ void NodeSelectorTreeViewWidget::init()
             this,
             &NodeSelectorTreeViewWidget::checkViewOnModelChange);
     connect(mModel.get(), &NodeSelectorModel::blockUi, this, &NodeSelectorTreeViewWidget::setLoadingSceneVisible);
+    connect(mModel.get(),
+            &NodeSelectorModel::disableBlockUiSystem,
+            this,
+            &NodeSelectorTreeViewWidget::disableLoadingSceneSystem);
     connect(mModel.get(), &NodeSelectorModel::dataChanged, this, &NodeSelectorTreeViewWidget::onModelDataChanged);
     connect(mModel.get(),
             &NodeSelectorModel::itemsMoved,
@@ -611,6 +616,11 @@ void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool blockUi)
     }
 }
 
+void NodeSelectorTreeViewWidget::disableLoadingSceneSystem(bool state)
+{
+    ui->tMegaFolders->loadingView().disableToogleLoadingScene(state);
+}
+
 void NodeSelectorTreeViewWidget::modelLoaded()
 {
     if(mModel)
@@ -1087,12 +1097,26 @@ void NodeSelectorTreeViewWidget::onItemsMoved()
     {
         clearSelection();
 
+        //Protect the model agains undesired unsetting loading view
+        mModel->sendDisableBlockUiSystemSignal(true);
+
         setSelectedNodeHandle(mMovedHandlesToSelect.takeFirst());
+
+        EventUpdater updater(mMovedHandlesToSelect.size(), 20);
+        auto counter = 0;
 
         for (auto handle: qAsConst(mMovedHandlesToSelect))
         {
             selectIndex(handle, true, false);
+
+            if (handle != mMovedHandlesToSelect.last())
+            {
+                updater.update(counter);
+                counter++;
+            }
         }
+
+        mModel->sendDisableBlockUiSystemSignal(false);
 
         mMovedHandlesToSelect.clear();
     }

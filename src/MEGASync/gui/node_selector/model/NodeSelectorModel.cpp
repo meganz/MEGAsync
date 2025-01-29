@@ -1087,9 +1087,9 @@ bool NodeSelectorModel::checkMoveProcessing()
 
         mProtectionAgainstBlockedStateWhileUpdating.stop();
 
-        sendBlockUiSignal(false);
-
         emit itemsMoved();
+
+        sendBlockUiSignal(false);
 
         return true;
     }
@@ -1099,7 +1099,7 @@ bool NodeSelectorModel::checkMoveProcessing()
 
 void NodeSelectorModel::restartProtectionAgainstUpdateBlockingState()
 {
-    mProtectionAgainstBlockedStateWhileUpdating.start(PROTECTION_INTERVAL);
+    // mProtectionAgainstBlockedStateWhileUpdating.start(PROTECTION_INTERVAL);
 }
 
 bool NodeSelectorModel::moveProcessed()
@@ -1180,6 +1180,11 @@ void NodeSelectorModel::initMovingNodes(int number)
 void NodeSelectorModel::sendBlockUiSignal(bool state)
 {
     emit blockUi(state, QPrivateSignal());
+}
+
+void NodeSelectorModel::sendDisableBlockUiSystemSignal(bool state)
+{
+    emit disableBlockUiSystem(state, QPrivateSignal());
 }
 
 QModelIndex NodeSelectorModel::index(int row, int column, const QModelIndex &parent) const

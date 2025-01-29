@@ -84,6 +84,7 @@ public:
 public slots:
     virtual void checkViewOnModelChange();
     void setLoadingSceneVisible(bool visible);
+    void disableLoadingSceneSystem(bool state);
 
 signals:
     void okBtnClicked();

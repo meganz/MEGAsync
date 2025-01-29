@@ -326,14 +326,15 @@ class ViewLoadingScene : public ViewLoadingSceneBase
     const int MIN_TIME_DISPLAYING_VIEW = 350;
 
 public:
-    ViewLoadingScene() :
+    ViewLoadingScene():
         ViewLoadingSceneBase(),
         mViewDelegate(nullptr),
         mView(nullptr),
         mViewModel(nullptr),
         mLoadingModel(nullptr),
         mLoadingDelegate(nullptr),
-        mViewLayout(nullptr)
+        mViewLayout(nullptr),
+        mToggleLoadingViewDisabled(false)
     {}
 
     ~ViewLoadingScene()
@@ -374,9 +375,14 @@ public:
         }
     }
 
+    inline void disableToogleLoadingScene(bool state)
+    {
+        mToggleLoadingViewDisabled = state;
+    }
+
     inline void toggleLoadingScene(bool state)
     {
-        if(!mView)
+        if (!mView || mToggleLoadingViewDisabled)
         {
             return;
         }
@@ -563,6 +569,7 @@ private:
     QPointer<LoadingSceneDelegate<DelegateWidget>> mLoadingDelegate;
     QLayout* mViewLayout;
     qint64 mStartTime;
+    bool mToggleLoadingViewDisabled;
 
     bool mWasFocused;
 };

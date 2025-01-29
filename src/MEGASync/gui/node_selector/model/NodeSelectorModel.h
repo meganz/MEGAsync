@@ -325,6 +325,7 @@ public:
     void onRequestFinish(mega::MegaRequest* request, mega::MegaError* e);
 
     void sendBlockUiSignal(bool state);
+    void sendDisableBlockUiSystemSignal(bool state);
 
 public slots:
     bool moveProcessed();
@@ -338,6 +339,7 @@ signals:
     void removeRootItem(NodeSelectorModelItem* items);
     void deleteWorker();
     void blockUi(bool state, QPrivateSignal);
+    void disableBlockUiSystem(bool state, QPrivateSignal);
     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
     void showMessageBox(QMegaMessageBox::MessageBoxInfo info) const;
     void showDuplicatedNodeDialog(std::shared_ptr<ConflictTypes> conflicts, ActionType type);

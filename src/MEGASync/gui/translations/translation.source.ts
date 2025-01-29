@@ -2455,6 +2455,10 @@ In some cases they may contain details about your data, such as file or folder n
         <translatorcomment>Informative label to indicate that your queued transfers exceed the current quota available for IP. Applies to free users.</translatorcomment>
         <translation>Your queued transfers exceed the current quota available for your IP address.</translation>
     </message>
+    <message>
+        <source>Open Cloud drive</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>InfoDialogTransferDelegateWidget</name>
@@ -4725,29 +4729,6 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error removing items</source>
-        <translatorcomment>Messagebox title when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation>Error removing items</translation>
-    </message>
-    <message>
-        <source>Error removing files</source>
-        <translatorcomment>Messagebox title when removing multiple files has failed. SAT-426</translatorcomment>
-        <translation>Error removing files</translation>
-    </message>
-    <message>
-        <source>Error removing folders</source>
-        <translatorcomment>Messagebox title when removing multiple folders has failed. SAT-426</translatorcomment>
-        <translation>Error removing folders</translation>
-    </message>
-    <message>
-        <source>Error removing file</source>
-        <translatorcomment>Messagebox title when removing a single file has failed. SAT-426</translatorcomment>
-        <translation>Error removing file</translation>
-    </message>
-    <message>
-        <source>Error removing folder</source>
-        <translatorcomment>Messagebox title when removing a single folder has failed. SAT-426</translatorcomment>
-        <translation>Error removing folder</translation>
         <source>Sort by owner name</source>
         <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
         <translation>Sort by owner name</translation>
@@ -4763,24 +4744,21 @@ Enter a different name.</translation>
         <translation>The file %1 couldn’t be removed. Try again later.</translation>
     </message>
     <message>
-        <source>The files couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing multiple files has failed. SAT-426</translatorcomment>
-        <translation>The files couldn’t be removed. Try again later.</translation>
-    </message>
-    <message>
         <source>The folder %1 couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing a single folder has failed. %1 is the folder name. SAT-426</translatorcomment>
         <translation>The folder %1 couldn’t be removed. Try again later.</translation>
     </message>
     <message>
-        <source>The folders couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing multiple folders has failed. SAT-426</translatorcomment>
-        <translation>The folders couldn’t be removed. Try again later.</translation>
+        <source>The items couldn´t be removed. Try again later</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The items couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation>The items couldn’t be removed. Try again later.</translation>
+        <source>The files couldn´t be removed. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folders couldn´t be removed. Try again later</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4874,11 +4852,6 @@ Enter a different name.</translation>
         <translation>Move</translation>
     </message>
     <message>
-        <source>Don’t move</source>
-        <translatorcomment>Messagebox button to cancel moving nodes to the rubbish bin. CON-334</translatorcomment>
-        <translation>Don’t move</translation>
-    </message>
-    <message>
         <source>Empty Rubbish bin</source>
         <translatorcomment>Button text to empty the rubbish bin. SAT-426</translatorcomment>
         <translation type="unfinished"></translation>
@@ -4886,7 +4859,7 @@ Enter a different name.</translation>
     <message numerus="yes">
         <source>You are about to permanently remove %n file.
 Would you like to proceed?</source>
-<translatorcomment>First part of the messagebox text when the user is about to remove permanently a node. SAT-426</translatorcomment>
+        <translatorcomment>First part of the messagebox text when the user is about to remove permanently a node. SAT-426</translatorcomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -7137,7 +7110,7 @@ Do you want to delete it anyway?</translation>
         <translatorcomment>Third part of the messagebox text when the user is about to remove permanently a node. %1 is the name of the node to remove. SAT-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
-    <message>        
+    <message>
         <source>Get MEGA link</source>
         <translatorcomment>Label displayed when a user is trying to get public link of a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
         <translation>Get MEGA link</translation>
