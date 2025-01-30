@@ -20,7 +20,7 @@ set(DESKTOP_APP_SYNCS_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/control/SyncSettings.h
     ${CMAKE_CURRENT_LIST_DIR}/control/CreateRemoveSyncsManager.h
     ${CMAKE_CURRENT_LIST_DIR}/control/CreateRemoveBackupsManager.h
-    ${CMAKE_CURRENT_LIST_DIR}/control/SyncReminderNotificationManager.h
+    ${CMAKE_CURRENT_LIST_DIR}/control/reminders/SyncReminderNotificationManager.h
 )
 
 set(DESKTOP_APP_SYNCS_SOURCES
@@ -44,7 +44,7 @@ set(DESKTOP_APP_SYNCS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/control/SyncSettings.cpp
     ${CMAKE_CURRENT_LIST_DIR}/control/CreateRemoveSyncsManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/control/CreateRemoveBackupsManager.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/control/SyncReminderNotificationManager.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/control/reminders/SyncReminderNotificationManager.cpp
 )
 
 if (WIN32)
@@ -79,6 +79,7 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/gui/Backups
     ${CMAKE_CURRENT_LIST_DIR}/gui/Twoways
     ${CMAKE_CURRENT_LIST_DIR}/control
+    ${CMAKE_CURRENT_LIST_DIR}/control/reminders
     ${CMAKE_CURRENT_LIST_DIR}/model
 )
 
