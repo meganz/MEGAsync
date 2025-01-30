@@ -402,6 +402,11 @@
 </context>
 <context>
     <name>BackupsModel</name>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>Nie można tworzyć kopii zapasowych katalogów o tej samej nazwie. Zmień ich nazwy, aby kontynuować tworzenie kopii zapasowej. Nazwy katalogów nie zostaną zmienione na komputerze.</translation>
+    </message>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
@@ -421,11 +426,6 @@
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
         <translation><numerusform>Nie utworzono kopii zapasowej katalogu. Spróbuj ponownie.</numerusform><numerusform>Kopia zapasowa tych katalogów nie została utworzona. Spróbuj ponownie.</numerusform><numerusform>Kopia zapasowa tych katalogów nie została utworzona. Spróbuj ponownie.</numerusform><numerusform>Kopia zapasowa tych katalogów nie została utworzona. Spróbuj ponownie.</numerusform></translation>
-    </message>
-    <message>
-        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
-        <translation>Nie można tworzyć kopii zapasowych katalogów o tej samej nazwie. Zmień ich nazwy, aby kontynuować tworzenie kopii zapasowej. Nazwy katalogów nie zostaną zmienione na komputerze.</translation>
     </message>
 </context>
 <context>
@@ -3520,7 +3520,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Critical system files which are required by this app are unable to be reached. This may be the permissions of the folder the system files are in. You can also try restarting the app to see if this resolves the issue. If the folder permissions have been checked and the app restarted, please [A]contact support[/A].</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nie można uzyskać dostępu do krytycznych plik systemowych wymaganych przez tę aplikację, prawdopodobnie z powodu uprawnień do folderów. Spróbuj ponownie uruchomić aplikacja i sprawdzić uprawnienia katalog systemowego. Jeśli problem będzie się powtarzał, prosimy o [A]kontakt z obsługą techniczną[/A].</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -5679,20 +5679,20 @@ Wprowadź inną nazwę.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI and UX enhancements on transfer manager feature.
-- Support of wildcard exclusions in the exclusion dialog.
-- Upgrade Qt third party dependency.
-- New releases for Raspberry Pi OS.
-- Fixed crashes due to missing or broken OpenGL drivers on Windows.
-- Bug fixes and performance improvements.
+        <source>- We’ve enhanced the interface and behaviour of the transfer manager feature.
+- You can now create sync exclusions using wildcards.
+- There are new releases available now for the Raspberry Pi OS.
+- We’ve fixed crashes that were occurring due to missing or broken OpenGL drivers on Windows.
+- Qt has been upgraded to a newer version.
+- Other bugs have been fixed and numerous improvements made.
 </source>
         <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
-        <translation>- Ulepszenia interfejsu użytkownika i UX w funkcji menedżer transferów transferów.
-- Obsługa wykluczeń wieloznacznych w oknie dialogowym wykluczenia.
-- Uaktualnij zależność od strony trzeciej Qt.
-- Nowe wydania dla Raspberry Pi OS.
-- Naprawiono awarie spowodowane brakującymi lub uszkodzonymi sterownikami OpenGL w systemie Windows.
-- Poprawki błędów i ulepszenia wydajności.
+        <translation>- Ulepszyliśmy interfejs i zachowanie funkcji menedżer transferów transferów.
+- Możesz teraz tworzyć wykluczenia synchronizacji za pomocą symboli wieloznacznych.
+- Dostępne są teraz nowe wersje dla systemu operacyjnego Raspberry Pi.
+- Naprawiono awarie, które występowały z powodu brakujących lub uszkodzonych sterowników OpenGL w systemie Windows.
+- Qt został zaktualizowany do nowszej wersji.
+- Inne błędy zostały naprawione i wprowadzono liczne ulepszenia.
 </translation>
     </message>
 </context>
@@ -8408,7 +8408,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>All transfers paused.</source>
         <translatorcomment>Information text indicating that all transfers are paused. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Wszystkie transfery wstrzymane</translation>
     </message>
     <message>
         <source>Transfer quota exceeded.</source>

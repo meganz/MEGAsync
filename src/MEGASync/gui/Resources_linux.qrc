@@ -1493,7 +1493,6 @@
         <file>images/StalledIssues/x-circle-solid.png</file>
         <file>images/StalledIssues/x-circle-solid@2x.png</file>
         <file>images/StalledIssues/x-circle-solid@3x.png</file>
-        <file>images/star-spark.svg</file>
         <file>images/banner/warning.svg</file>
         <file>images/banner/error.svg</file>
         <file>images/banner/info.svg</file>
@@ -1509,5 +1508,9 @@
         <file>images/node_selector/view/rubbish_empty.png</file>
         <file>images/node_selector/view/rubbish_empty@2x.png</file>
         <file>images/node_selector/view/rubbish_empty@3x.png</file>
+        <file>images/icon_plus.svg</file>
+        <file>images/ico_MEGA_website.png</file>
+        <file>images/ico_MEGA_website@2x.png</file>
+        <file>images/ico_MEGA_website@3x.png</file>
     </qresource>
 </RCC>

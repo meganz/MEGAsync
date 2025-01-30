@@ -230,6 +230,7 @@ public slots:
     void importLinks();
     void officialWeb();
     void goToMyCloud();
+    void goToFiles();
     void openDeviceCentre();
     void pauseTransfers();
     void showChangeLog();
@@ -368,7 +369,8 @@ protected:
     MenuItemAction *uploadAction;
     MenuItemAction *downloadAction;
     MenuItemAction *streamAction;
-    MenuItemAction *myCloudAction;
+    MenuItemAction* filesAction;
+    MenuItemAction* MEGAWebAction;
     MenuItemAction* deviceCentreAction;
     MenuItemAction *updateAction;
     MenuItemAction *aboutAction;

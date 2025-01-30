@@ -402,6 +402,11 @@
 </context>
 <context>
     <name>BackupsModel</name>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>Sie können keine Backups von mehreren Ordnern mit identischem Namen erstellen. Benennen Sie sie um, um mit dem Backup fortzufahren. Die Ordnernamen auf Ihrem Computer werden nicht geändert.</translation>
+    </message>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
@@ -421,11 +426,6 @@
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
         <translation><numerusform>Der Ordner wurde nicht gesichert. Bitte erneut versuchen.</numerusform><numerusform>Diese Ordner wurden nicht gesichert. Bitte erneut versuchen.</numerusform></translation>
-    </message>
-    <message>
-        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
-        <translation>Sie können keine Backups von mehreren Ordnern mit identischem Namen erstellen. Benennen Sie sie um, um mit dem Backup fortzufahren. Die Ordnernamen auf Ihrem Computer werden nicht geändert.</translation>
     </message>
 </context>
 <context>
@@ -3518,7 +3518,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Critical system files which are required by this app are unable to be reached. This may be the permissions of the folder the system files are in. You can also try restarting the app to see if this resolves the issue. If the folder permissions have been checked and the app restarted, please [A]contact support[/A].</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Auf kritische Systemdateien, die von dieser App benötigt werden, kann nicht zugegriffen werden, möglicherweise aufgrund von fehlenden Ordnerberechtigungen. Starten Sie die Anwendung neu und überprüfen Sie die Berechtigungen für den Systemordner. Wenn das Problem weiterhin besteht, [A]wenden Sie sich bitte an den Support[/A].</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -5677,20 +5677,20 @@ Bitte geben Sie einen anderen Namen ein.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI and UX enhancements on transfer manager feature.
-- Support of wildcard exclusions in the exclusion dialog.
-- Upgrade Qt third party dependency.
-- New releases for Raspberry Pi OS.
-- Fixed crashes due to missing or broken OpenGL drivers on Windows.
-- Bug fixes and performance improvements.
+        <source>- We’ve enhanced the interface and behaviour of the transfer manager feature.
+- You can now create sync exclusions using wildcards.
+- There are new releases available now for the Raspberry Pi OS.
+- We’ve fixed crashes that were occurring due to missing or broken OpenGL drivers on Windows.
+- Qt has been upgraded to a newer version.
+- Other bugs have been fixed and numerous improvements made.
 </source>
         <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
-        <translation>- Verbesserte Bedienoberfläche und Nutzungserfahrung für den Transfer-Manager.
-- Unterstützung von Platzhalter-basierten Ausschlüssen im Ausschlussdialog.
-- Upgrade der Qt-Drittanbieter-Abhängigkeit.
-- Neue Versionen für Raspberry Pi OS.
-- Abstürze aufgrund von fehlenden oder defekten OpenGL-Treibern unter Windows behoben.
-- Fehlerkorrekturen und Leistungsverbesserungen.
+        <translation>- Wir haben die Bedienoberfläche und das Verhalten des Transfer-Managers verbessert.
+- Sie können jetzt Synchronisierungsausschlüsse mit Platzhalterzeichen erstellen.
+- Für Raspberry Pi OS sind jetzt neue Versionen verfügbar.
+- Wir haben Abstürze behoben, die aufgrund von fehlenden oder defekten OpenGL-Treibern unter Windows auftraten.
+- Qt wurde auf eine neuere Version aktualisiert.
+- Es wurden weitere Fehlerkorrekturen und zahlreiche Verbesserungen vorgenommen.
 </translation>
     </message>
 </context>

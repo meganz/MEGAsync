@@ -25,6 +25,7 @@
 #include "LoginController.h"
 #include "mega/types.h"
 #include "MyBackupsHandle.h"
+#include "NodeSelector.h"
 #include "NodeSelectorSpecializations.h"
 #include "Onboarding.h"
 #include "OverQuotaDialog.h"
@@ -297,7 +298,8 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     uploadAction = nullptr;
     downloadAction = nullptr;
     streamAction = nullptr;
-    myCloudAction = nullptr;
+    filesAction = nullptr;
+    MEGAWebAction = nullptr;
     deviceCentreAction = nullptr;
     mWaiting = false;
     updated = false;
@@ -3922,7 +3924,23 @@ void MegaApplication::goToMyCloud()
     megaApi->getSessionTransferURL(url.toUtf8().constData());
 
     mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_CLOUD_DRIVE_CLICKED,
-                                         sender(), myCloudAction, true);
+                                         sender(),
+                                         MEGAWebAction,
+                                         true);
+}
+
+void MegaApplication::goToFiles()
+{
+    if (infoDialog)
+    {
+        CloudDriveNodeSelector* nodeSelector = new CloudDriveNodeSelector();
+        DialogOpener::showGeometryRetainerDialog<NodeSelector>(nodeSelector);
+
+        mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::CLOUD_DRIVE_DIALOG_OPEN,
+                                             sender(),
+                                             filesAction,
+                                             true);
+    }
 }
 
 void MegaApplication::openDeviceCentre()
@@ -4973,7 +4991,7 @@ void MegaApplication::externalFolderSync(MegaHandle targetFolder)
 
     if (infoDialog)
     {
-        infoDialog->addSync(targetFolder);
+        infoDialog->addSync(SyncInfo::EXTERNAL_ORIGIN, targetFolder);
     }
 }
 
@@ -5379,7 +5397,7 @@ void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)
         }
         else
         {
-            CreateRemoveSyncsManager::addSync(megaFolderHandle);
+            CreateRemoveSyncsManager::addSync(SyncInfo::MAIN_APP_ORIGIN, megaFolderHandle);
         }
     }
 }
@@ -5571,7 +5589,16 @@ void MegaApplication::createInfoDialogMenus()
                        "://images/ico_quit.png", &MegaApplication::tryExitApplication);
     recreateMenuAction(&settingsAction, infoDialogMenu, tr("Settings"),
                        "://images/ico_preferences.png", &MegaApplication::openSettings);
-    recreateMenuAction(&myCloudAction, infoDialogMenu, tr("Cloud drive"), "://images/ico-cloud-drive.png", &MegaApplication::goToMyCloud);
+    recreateMenuAction(&MEGAWebAction,
+                       infoDialogMenu,
+                       tr("MEGA web"),
+                       "://images/ico_MEGA_website.png",
+                       &MegaApplication::goToMyCloud);
+    recreateMenuAction(&filesAction,
+                       infoDialogMenu,
+                       tr("Files"),
+                       "://images/small_folder.png",
+                       &MegaApplication::goToFiles);
 
     // recreateMenuAction(&deviceCentreAction,
     //                    infoDialogMenu,
@@ -5631,7 +5658,8 @@ void MegaApplication::createInfoDialogMenus()
         infoDialogMenu->addAction(aboutAction);
     }
 
-    infoDialogMenu->addAction(myCloudAction);
+    infoDialogMenu->addAction(MEGAWebAction);
+    infoDialogMenu->addAction(filesAction);
     // infoDialogMenu->addAction(deviceCentreAction);
     infoDialogMenu->addSeparator();
     if (mSyncs2waysMenu)

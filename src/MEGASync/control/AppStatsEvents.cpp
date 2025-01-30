@@ -134,7 +134,11 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     {AppStatsEvents::EventType::UPSELL_DIALOG_TRY_PRO_FLEXI_CLICKED,        600026},
     {AppStatsEvents::EventType::UPSELL_DIALOG_BILLED_MONTHLY_CLICKED,       600027},
     {AppStatsEvents::EventType::UPSELL_DIALOG_BILLED_YEARLY_CLICKED,        600028},
-    {AppStatsEvents::EventType::UPSELL_DIALOG_PLAN_BUTTON_CLICKED,          600029}
+    {AppStatsEvents::EventType::UPSELL_DIALOG_PLAN_BUTTON_CLICKED,          600029},
+    {AppStatsEvents::EventType::INFO_DIALOG_ADD_SYNC_CLICKED,               600030},
+    {AppStatsEvents::EventType::SYNC_ADDED_ADD_SYNC_BUTTON,                 600031},
+    {AppStatsEvents::EventType::SYNC_ADDED_CLOUD_DRIVE_BUTTON,              600032},
+    {AppStatsEvents::EventType::CLOUD_DRIVE_DIALOG_OPEN,                    600033}
 };
 
 // Deprecated are not displayed
@@ -281,7 +285,13 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
     {AppStatsEvents::EventType::UPSELL_DIALOG_BILLED_YEARLY_CLICKED,
      "Radio button billed yearly clicked - view mode: %1"                                                              },
     {AppStatsEvents::EventType::UPSELL_DIALOG_PLAN_BUTTON_CLICKED,
-     "Button buy plan clicked  - view mode: %1 - plan id: %2 - plan name: %3"                                          }
+     "Button buy plan clicked  - view mode: %1 - plan id: %2 - plan name: %3"                                          },
+    {AppStatsEvents::EventType::INFO_DIALOG_ADD_SYNC_CLICKED,
+     "Create Sync button clicked (InfoDialog)"                                                                         },
+    {AppStatsEvents::EventType::SYNC_ADDED_ADD_SYNC_BUTTON,                 "Sync added from create sync button"       },
+    {AppStatsEvents::EventType::SYNC_ADDED_CLOUD_DRIVE_BUTTON,
+     "Sync added from cloud drive dialog"                                                                              },
+    {AppStatsEvents::EventType::CLOUD_DRIVE_DIALOG_OPEN,                    "Cloud drive dialog open"                  }
 };
 
 QString AppStatsEvents::getEventMessage(EventType event,

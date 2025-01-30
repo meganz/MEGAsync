@@ -441,6 +441,7 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
                                             [selectionHandles]()
                                             {
                                                 CreateRemoveSyncsManager::addSync(
+                                                    SyncInfo::SyncOrigin::CLOUD_DRIVE_DIALOG_ORIGIN,
                                                     selectionHandles.first(),
                                                     true);
                                             });

@@ -402,6 +402,11 @@
 </context>
 <context>
     <name>BackupsModel</name>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>Anda tidak dapat mencadangkan folder dengan nama yang sama. Ganti namanya untuk melanjutkan pencadangan. Nama folder tidak akan berubah di komputer anda.</translation>
+    </message>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
@@ -421,11 +426,6 @@
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
         <translation><numerusform>Folder ini tidak dicadangkan. Coba lagi.</numerusform></translation>
-    </message>
-    <message>
-        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
-        <translation>Anda tidak dapat mencadangkan folder dengan nama yang sama. Ganti namanya untuk melanjutkan pencadangan. Nama folder tidak akan berubah di komputer anda.</translation>
     </message>
 </context>
 <context>
@@ -1546,7 +1546,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>File and folder name</source>
         <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nama file dan folder</translation>
     </message>
     <message>
         <source>Files</source>
@@ -1561,27 +1561,27 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Files and folders beginning with “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File dan folder dimulai dengan ”%1” akan dimasukkan dalam sinkronisasi ini.</translation>
     </message>
     <message>
         <source>Files and folders containing “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File dan folder berisi ”%1” akan dimasukkan dalam sinkronisasi ini.</translation>
     </message>
     <message>
         <source>Files and folders ending with “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File dan folder diakhiri dengan ”%1” akan dimasukkan dalam sinkronisasi ini.</translation>
     </message>
     <message>
         <source>Files and folders equal to “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File dan folder sama dengan ”%1” akan dimasukkan dalam sinkronisasi ini.</translation>
     </message>
     <message>
         <source>Files and folders matching wildcard “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File dan folder yang cocok dengan wildcard ”%1” akan dimasukkan dalam sinkronisasi ini.</translation>
     </message>
     <message>
         <source>Files beginning with “%1” will be included on this sync.</source>
@@ -1626,37 +1626,37 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Files matching wildcard “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File yang cocok dengan wildcard ”%1” akan dimasukkan dalam sinkronisasi ini.</translation>
     </message>
     <message>
         <source>Files matching wildcard:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File yang cocok dengan wildcard:</translation>
     </message>
     <message>
         <source>Files or folders beginning with:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File atau folder dimulai dengan:</translation>
     </message>
     <message>
         <source>Files or folders containing:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File atau folder yang berisi:</translation>
     </message>
     <message>
         <source>Files or folders ending with:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File atau folder yang diakhiri dengan:</translation>
     </message>
     <message>
         <source>Files or folders equal to:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File atau folder sama dengan:</translation>
     </message>
     <message>
         <source>Files or folders matching wildcard:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File atau folder yang cocok dengan wildcard:</translation>
     </message>
     <message>
         <source>Files with extension:</source>
@@ -1716,12 +1716,12 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Folders matching wildcard “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder yang cocok dengan wildcard ”%1” akan dimasukkan dalam sinkronisasi ini.</translation>
     </message>
     <message>
         <source>Folders matching wildcard:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder yang cocok dengan wildcard:</translation>
     </message>
     <message>
         <source>Here you can exclude files and folders from being synced with your cloud drive. This can be useful for large files, files that you don&apos;t need on all of your devices,or certain file types that need not be synced.</source>
@@ -1736,7 +1736,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Matching wildcard</source>
         <translatorcomment>Wild card type to be used for the new exclusion rule.Con-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pencocokan wildcard</translation>
     </message>
     <message>
         <source>Outside of</source>
@@ -1851,7 +1851,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>wildcard</source>
         <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Wildcard</translation>
     </message>
 </context>
 <context>
@@ -3026,7 +3026,7 @@ Tunggu hingga unggahan selesai.</translation>
     <message>
         <source>Alert</source>
         <translatorcomment>Title of the warning dialog shown when the SDK reports a fatal error - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Waspada</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
@@ -3146,7 +3146,7 @@ Tunggu hingga unggahan selesai.</translation>
     <message>
         <source>Link import error</source>
         <translatorcomment>Title of the error message when there is an error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan impor tautan</translation>
     </message>
     <message>
         <source>Locked account</source>
@@ -3452,12 +3452,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>A critical error has been detected</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: failure to unserialize node - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan kritis telah terdeteksi</translation>
     </message>
     <message>
         <source>A serious issue has been detected in the MEGA software or the connection between this device and MEGA. Reinstall the app from [A]mega.io/desktop[/A] or contact support for further assistance.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: failure to unserialize node - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Masalah serius telah terdeteksi di perangkat lunak MEGA atau koneksi antara perangkat ini dan MEGA. Instal ulang aplikasi dari [A]mega.io/desktop[/A] dan jika ini tidak menyelesaikan masalah, hubungi Bantuan untuk bantuan lebih lanjut.</translation>
     </message>
     <message>
         <source>Access denied</source>
@@ -3472,17 +3472,17 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>An error has been detected</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: DB index overflow - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan telah terdeteksi</translation>
     </message>
     <message>
         <source>An error is causing the communication with MEGA to fail. Your syncs and backups are unable to update, and there may be further issues if you continue using this app without restarting. We strongly recommend immediately restarting the app to resolve this problem.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: unknown - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan menyebabkan komunikasi dengan MEGA gagal. Sinkronisasi dan cadangan anda tidak dapat diperbarui, dan mungkin ada masalah lebih lanjut jika Anda terus menggunakan aplikasi ini tanpa memulai ulang. Kami sangat menyarankan segera memulai ulang aplikasi untuk mengatasi masalah ini.</translation>
     </message>
     <message>
         <source>An unknown error has occurred</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: unknown - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan yang tidak diketahui telah terjadi</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -3497,7 +3497,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Check permissions</source>
         <translatorcomment>Label of the button used to open the application data folder for the user to check that the read/write permissions are good on that folder and the files inside - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Periksa izin</translation>
     </message>
     <message>
         <source>Circular linkage detected</source>
@@ -3517,7 +3517,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Critical system files which are required by this app are unable to be reached. This may be the permissions of the folder the system files are in. You can also try restarting the app to see if this resolves the issue. If the folder permissions have been checked and the app restarted, please [A]contact support[/A].</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File sistem penting yang diperlukan oleh aplikasi ini tidak dapat dijangkau, mungkin karena izin folder. Coba mulai ulang aplikasi dan periksa izin folder sistem. Jika masalah berlanjut, silakan [A]Hubungi Bantuan[/A].</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3532,12 +3532,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error reading app system files</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan membaca file sistem aplikasi</translation>
     </message>
     <message>
         <source>Error with sync configuration files</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: JSCD atribute missing - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan dengan file konfigurasi sinkronisasi</translation>
     </message>
     <message>
         <source>Expired</source>
@@ -3632,7 +3632,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Restart MEGA</source>
         <translatorcomment>Label of the button used to restart the app to try to resolve a fatal error - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mulai ulang MEGA</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
@@ -3657,12 +3657,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>The app has detected an error and needs to reload. If you experience this issue more than once, contact our Support team.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: DB index overflow - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Aplikasi telah mendeteksi kesalahan dan perlu dimuat ulang. Jika anda mengalami masalah ini lebih dari sekali, hubungi tim Bantuan kami.</translation>
     </message>
     <message>
         <source>The app has detected an error in your sync configuration data. You need to log out of MEGA to resolve this issue. If the problem persists after logging back in, report the issue to our Support team.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: JSCD atribute missing - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Aplikasi telah mendeteksi kesalahan dalam data konfigurasi sinkronisasi anda. Anda harus keluar dari MEGA untuk mengatasi masalah ini. Jika masalah berlanjut setelah masuk kembali, laporkan masalah tersebut ke tim Bantuan kami.</translation>
     </message>
     <message>
         <source>Too many concurrent connections or transfers</source>
@@ -3687,7 +3687,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>You need to make more space available in your local storage to be able to run MEGA.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Anda perlu membuat lebih banyak ruang kosong yang tersedia di penyimpanan lokal anda untuk dapat menjalankan MEGA.</translation>
     </message>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
@@ -3710,7 +3710,7 @@ Anda tidak akan dapat memperoleh kembali akses ke data yang disimpan atau diberi
     <message>
         <source>Your local storage is full</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Penyimpanan lokal anda penuh</translation>
     </message>
 </context>
 <context>
@@ -5162,7 +5162,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder yang dipilih akan secara otomatis mencadangkan ke MEGA sebagai folder read-only saat aplikasi desktop berjalan. Perubahan hanya dapat dilakukan pada cadangan di perangkat lokal anda. </translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -5207,7 +5207,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sinkronkan folder yang dipilih di drive MEGA Cloud anda dengan perangkat lokal anda. Folder akan tetap up to date dengan pengeditan yang dilakukan secara lokal atau di MEGA.</translation>
     </message>
     <message>
         <source>Sync set up</source>
@@ -5222,7 +5222,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sinkronkan dua arah seluruh MEGA Cloud anda dengan perangkat lokal. Folder akan tetap up to date dengan pengeditan yang dilakukan secara lokal atau di MEGA.</translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
@@ -5676,15 +5676,21 @@ Masukkan nama yang berbeda.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI and UX enhancements on transfer manager feature.
-- Support of wildcard exclusions in the exclusion dialog.
-- Upgrade Qt third party dependency.
-- New releases for Raspberry Pi OS.
-- Fixed crashes due to missing or broken OpenGL drivers on Windows.
-- Bug fixes and performance improvements.
+        <source>- We’ve enhanced the interface and behaviour of the transfer manager feature.
+- You can now create sync exclusions using wildcards.
+- There are new releases available now for the Raspberry Pi OS.
+- We’ve fixed crashes that were occurring due to missing or broken OpenGL drivers on Windows.
+- Qt has been upgraded to a newer version.
+- Other bugs have been fixed and numerous improvements made.
 </source>
         <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Kami telah meningkatkan antarmuka dan perilaku fitur manajer transfer.
+- Anda sekarang dapat membuat pengecualian sinkronisasi menggunakan wildcard.
+- Ada rilis baru yang tersedia sekarang untuk Raspberry Pi OS.
+- Kami telah memperbaiki crash yang terjadi karena driver OpenGL hilang atau rusak di Windows.
+- Qt telah ditingkatkan ke versi yang lebih baru.
+- Bug lain telah diperbaiki dan banyak perbaikan dilakukan.
+</translation>
     </message>
 </context>
 <context>
@@ -6180,22 +6186,22 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>MEGA has reloaded</source>
         <translatorcomment>Title for the desktop notification when receiving a RELOADING EVENT from API. 2nd notification: reloading done. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA telah dimuat ulang</translation>
     </message>
     <message>
         <source>MEGA is reloading</source>
         <translatorcomment>Title for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA sedang memuat ulang</translation>
     </message>
     <message>
         <source>The app has detected an issue and is reloading your account. Please wait…</source>
         <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Aplikasi telah mendeteksi masalah dan memuat ulang akun anda. Tolong tunggu...</translation>
     </message>
     <message>
         <source>The app has reloaded. If you experience any further issues, please contact Support.</source>
         <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 12nd notification: reloading completed. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Aplikasi telah dimuat ulang. Jika anda mengalami masalah lebih lanjut, silakan hubungi Bantuan.</translation>
     </message>
 </context>
 <context>
@@ -8399,7 +8405,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>All transfers paused.</source>
         <translatorcomment>Information text indicating that all transfers are paused. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Semua transfer dijeda</translation>
     </message>
     <message>
         <source>Transfer quota exceeded.</source>
@@ -8409,17 +8415,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>[B]Storage almost full[/B][BR][A]Upgrade now[/A] before your storage becomes full and your uploads, syncs and backups stop.</source>
         <translatorcomment>Warning text indicating that the storage quota is almost full. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Penyimpanan hampir penuh[/B][BR][A]Tingkatkan sekarang[/A] sebelum penyimpanan anda penuh dan unggahan, sinkronisasi, dan pencadangan anda berhenti.</translation>
     </message>
     <message>
         <source>[B]Storage full[/B][BR]Uploads are disabled and sync and backups are paused.</source>
         <translatorcomment>Error text indicating that the storage quota is full. Please, keep the [BR] placeholder for breaking the line and [B][/B] used for formatting the bold text. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Penyimpanan penuh[/B][BR]Upload dinonaktifkan dan sinkronisasi serta pencadangan dijeda.</translation>
     </message>
     <message>
         <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
         <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Kuota transfer terlampaui[/B][BR]Anda tidak dapat melanjutkan mengunduh karena anda tidak memiliki kuota transfer yang cukup untuk alamat IP ini. Untuk mendapatkan lebih banyak kuota, tingkatkan akun anda atau tunggu %1 sampai lebih banyak kuota gratis tersedia di alamat IP anda. [A]Pelajari lebih lanjut[/A] tentang kuota transfer.</translation>
     </message>
 </context>
 <context>

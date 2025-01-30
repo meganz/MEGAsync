@@ -2217,16 +2217,6 @@ In some cases they may contain details about your data, such as file or folder n
 <context>
     <name>InfoDialog</name>
     <message>
-        <source>Add Backup</source>
-        <translatorcomment>Tooltip message shown while hovering backups button.</translatorcomment>
-        <translation>Add backup</translation>
-    </message>
-    <message>
-        <source>Add Sync</source>
-        <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation>Add sync</translation>
-    </message>
-    <message>
         <source>All file uploads are currently disabled.</source>
         <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
         <translation>All file uploads are currently disabled.</translation>
@@ -2392,11 +2382,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translation>Upgrade now before your account becomes full and your uploads to MEGA stop.</translation>
     </message>
     <message>
-        <source>Upload</source>
-        <translatorcomment>Label to indicate an upload.</translatorcomment>
-        <translation>Upload</translation>
-    </message>
-    <message>
         <source>Upload to MEGA now</source>
         <translatorcomment>Label shown at main dialog when the user is already logged in to inform that he can start uploading files to MEGA</translatorcomment>
         <translation>Upload to MEGA now</translation>
@@ -2456,8 +2441,9 @@ In some cases they may contain details about your data, such as file or folder n
         <translation>Your queued transfers exceed the current quota available for your IP address.</translation>
     </message>
     <message>
-        <source>Open Cloud drive</source>
-        <translation type="unfinished"></translation>
+        <source>Add sync</source>
+        <translatorcomment>Label for the &quot;Add Sync&quot; button added in the InfoDialog (Max 20 characters). SNC-5182.</translatorcomment>
+        <translation type="unfinished">Add sync</translation>
     </message>
 </context>
 <context>
@@ -3140,11 +3126,6 @@ Wait for the upload to complete.</translation>
         <translation>Checking for updates…</translation>
     </message>
     <message>
-        <source>Cloud drive</source>
-        <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
-        <translation>Cloud drive</translation>
-    </message>
-    <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
         <translation>We couldn’t find a system tray to place the app tray icon into. Try launching the app again.</translation>
@@ -3553,6 +3534,14 @@ https://mega.co.nz/#sync</source>
         <source>contact</source>
         <translatorcomment>Label to indicate a contact of a user.</translatorcomment>
         <translation>contact</translation>
+    </message>
+    <message>
+        <source>MEGA web</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation type="unfinished">Files</translation>
     </message>
 </context>
 <context>
@@ -5915,7 +5904,13 @@ Would you like to proceed?</source>
 - Other bugs have been fixed and numerous improvements made.
 </source>
         <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- We’ve enhanced the interface and behaviour of the transfer manager feature.
+- You can now create sync exclusions using wildcards.
+- There are new releases available now for the Raspberry Pi OS.
+- We’ve fixed crashes that were occurring due to missing or broken OpenGL drivers on Windows.
+- Qt has been upgraded to a newer version.
+- Other bugs have been fixed and numerous improvements made.
+</translation>
     </message>
 </context>
 <context>
@@ -9398,8 +9393,18 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>%1 billed yearly</source>
+        <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(%1 per month)</source>
+        <translatorcomment>Price per month with yealy billing. The placeholder %1 shall be replaced by the monthly price (e.g. 49.9€ transfer). CON-945</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9409,6 +9414,7 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
     <message>
         <source>Current plan</source>
+        <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
         <translation type="unfinished">Current plan</translation>
     </message>
     <message>
@@ -9427,6 +9433,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>%1 transfer</source>
         <translatorcomment>Text to show the transfer amount for the plan. The placeholder %1 shall be replaced by the amount of transfer including the units (e.g. 1TB transfer). CON-945</translatorcomment>
         <translation type="unfinished"></translation>
@@ -9437,28 +9448,13 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation type="unfinished">Transfer quota exceeded</translation>
     </message>
     <message>
-        <source>(%1 per month)</source>
-        <translatorcomment>Price per month with yealy billing. The placeholder %1 shall be replaced by the monthly price (e.g. 49.9€ transfer). CON-945</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 billed yearly</source>
-        <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
+        <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]Upgrade your account to get more transfer quota or you can wait for [B]%1[/B] until more free quota becomes available for you.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
+        <translatorcomment>Explanatory message informing free users they have reached their download limit, offering options to upgrade or wait. The placeholder %1 shall be replaced by the remaining time to reset the transfer quota (e.g. 13m 34s or 6h). The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
         <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
-        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]Upgrade your account to get more transfer quota or you can wait for [B]%1[/B] until more free quota becomes available for you.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
-        <translatorcomment>Explanatory message informing free users they have reached their download limit, offering options to upgrade or wait. The placeholder %1 shall be replaced by the remaining time to reset the transfer quota (e.g. 13m 34s or 6h). The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
