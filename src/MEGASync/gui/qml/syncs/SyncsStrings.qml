@@ -18,5 +18,7 @@ QtObject {
     readonly property string sync: qsTranslate("OnboardingStrings", "Sync")
     readonly property string syncTitle: qsTranslate("OnboardingStrings", "Choose sync type")
     readonly property string syncsWindowTitle: qsTr("Add sync")
+    readonly property string confirm: qsTranslate("OnboardingString", "Confirm");
+    readonly property string syncSetUp: qsTranslate("OnboardingString", "Sync set up");
 
 }

@@ -15,6 +15,7 @@ SyncsFlow {
     syncPageComponent: syncPageComponentItem
     fullSyncPageComponent: fullSyncPageComponentItem
     selectiveSyncPageComponent: selectiveSyncPageComponentItem
+    state: root.selectiveSync
 
     Item {
         id: stepPanelStateWrapper
@@ -37,7 +38,7 @@ SyncsFlow {
                 PropertyChanges {
                     target: root.stepPanelRef
                     state: root.stepPanelRef.step2
-                    step2String: SyncsStrings.selectiveSync
+                    step2String: SyncsStrings.confirm
                 }
             },
             State {
