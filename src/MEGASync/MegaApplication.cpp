@@ -1477,7 +1477,10 @@ if (!preferences->lastExecutionTime())
 
     if (!preferences->isFirstSyncDone())
     {
-        mSyncReminderNotificationManager = std::make_unique<SyncReminderNotificationManager>();
+        bool comesFromOnboarding(
+            !preferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN));
+        mSyncReminderNotificationManager =
+            std::make_unique<SyncReminderNotificationManager>(comesFromOnboarding);
         connect(&SyncController::instance(),
                 &SyncController::syncAddStatus,
                 mSyncReminderNotificationManager.get(),
@@ -1486,7 +1489,6 @@ if (!preferences->lastExecutionTime())
                 &MegaApplication::syncsDialogClosed,
                 mSyncReminderNotificationManager.get(),
                 &SyncReminderNotificationManager::onSyncsDialogClosed);
-        mSyncReminderNotificationManager->update(!fastLogin);
     }
 }
 

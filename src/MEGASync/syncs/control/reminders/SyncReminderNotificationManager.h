@@ -1,67 +1,69 @@
 #ifndef SYNC_REMINDER_NOTIFICATION_MANAGER_H
 #define SYNC_REMINDER_NOTIFICATION_MANAGER_H
 
-#include <QDateTime>
 #include <QObject>
-#include <QPair>
 #include <QString>
 #include <QTimer>
+
+#include <memory>
+#include <optional>
+
+class SyncReminderAction;
 
 class SyncReminderNotificationManager: public QObject
 {
     Q_OBJECT
 
-public:
-    SyncReminderNotificationManager();
-    ~SyncReminderNotificationManager();
+    friend class SyncReminderAction;
 
-    void update(bool isFirstTime = false);
+public:
+    enum class ReminderState
+    {
+        INITIAL = 1,
+        FIRST_REMINDER = 2,
+        SECOND_REMINDER = 3,
+        MONTHLY = 4,
+        BIMONTHLY = 5,
+        DONE = 6
+    };
+
+    SyncReminderNotificationManager(bool comesFromOnboarding);
+    ~SyncReminderNotificationManager();
 
 public slots:
     void onSyncsDialogClosed();
     void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name);
 
+signals:
+    void stateChanged();
+
 private:
-    enum class ReminderState
-    {
-        UNDEFINED = 0,
-        FIRST_REMINDER = 1,
-        SECOND_REMINDER = 2,
-        MONTHLY = 3,
-        BIMONTHLY = 4,
-        DONE = 5
-    };
-
-    ReminderState mState;
+    std::map<ReminderState, std::unique_ptr<SyncReminderAction>> mActions;
+    std::optional<ReminderState> mState;
+    std::optional<ReminderState> mLastState;
+    std::optional<qint64> mLastSyncReminderTime;
     QTimer mTimer;
-    qint64 mLastShowedTime;
-    bool mClicked;
 
-    void init(bool isFirstTime, const QDateTime& lastTime, const QDateTime& currentTime);
-    void continuePeriodicProcess(const QDateTime& lastTime, const QDateTime& currentTime);
-    void startNextReminder(const QDateTime& lastTime, const QDateTime& currentTime);
-
+    void readFromPreferences();
+    void writeToPreferences();
+    void initActions();
+    void init(bool comesFromOnboarding);
+    void initFirstTime(bool comesFromOnboarding);
+    void updateStates();
     void updateState();
-    void updatePreferences();
-
-    void showNotification();
-
-    bool isNotificationRequired();
-    bool isPendingNotificationRequired();
-    bool isPendingNotificationRequiredUndefined(ReminderState lastState);
-
-    int calculateMsecsToNextReminder(const QDateTime& lastTime, const QDateTime& currentTime) const;
-    QPair<QString, QString> getMessageForState() const;
+    bool isNeededToChangeFirstState() const;
+    bool isNeededToChangeState(quint64 daysToNextReminder) const;
+    quint64 getSecsToNextReminder() const;
     quint64 getDaysToNextReminder() const;
-
-    ReminderState getNextState(ReminderState state) const;
-
-    void sendShownEvents() const;
-
+    QString getNotificationTitle(ReminderState state) const;
+    QString getNotificationMessage(ReminderState state) const;
+    int calculateMsecsToCurrentState() const;
+    void startNextTimer();
+    void calculateCurrentState();
     void moveToDoneState();
-    void resetClickedInfo();
 
 private slots:
+    void run();
     void onTimeout();
 };
 

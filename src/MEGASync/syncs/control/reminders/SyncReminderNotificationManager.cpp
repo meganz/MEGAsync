@@ -6,30 +6,49 @@
 #include "Preferences.h"
 #include "StatsEventHandler.h"
 #include "SyncController.h"
+#include "SyncReminderAction.h"
 
 namespace
 {
 constexpr int ONE_HOUR_MS = 1000 * 60 * 60; // 1 hour
-constexpr int ONE_DAY_MS = ONE_HOUR_MS * 24; // 1 day
 constexpr int TIME_TO_FIRST_REMINDER_MS = ONE_HOUR_MS * 2; // 2 hours
 constexpr int TWO_HOURS_S = TIME_TO_FIRST_REMINDER_MS / 1000; // 2 hours in seconds
-constexpr int FIFTEEN_MINS_S = TWO_HOURS_S / 8; // 15 minutes in seconds
+constexpr int FIFTEEN_MINS_S = TWO_HOURS_S / 8; // 15 mins in seconds
+constexpr quint64 SECS_PER_DAY = 60 * 60 * 24;
+constexpr quint64 SECS_TO_FIRST_REMINDER = 2 * 60 * 60; // 2 hours in seconds
 constexpr quint64 DAYS_TO_SECOND_REMINDER = 10;
 constexpr quint64 DAYS_TO_MONTHLY_REMINDER = 30;
 constexpr quint64 DAYS_TO_BIMONTHLY_REMINDER = 60;
+const std::map<SyncReminderNotificationManager::ReminderState, quint64> STATE_DURATIONS = {
+    {SyncReminderNotificationManager::ReminderState::FIRST_REMINDER, TWO_HOURS_S},
+    {SyncReminderNotificationManager::ReminderState::SECOND_REMINDER,
+     DAYS_TO_SECOND_REMINDER* SECS_PER_DAY},
+    {SyncReminderNotificationManager::ReminderState::MONTHLY,
+     DAYS_TO_MONTHLY_REMINDER* SECS_PER_DAY},
+    {SyncReminderNotificationManager::ReminderState::BIMONTHLY,
+     DAYS_TO_BIMONTHLY_REMINDER* SECS_PER_DAY},
+};
 }
 
-SyncReminderNotificationManager::SyncReminderNotificationManager():
+SyncReminderNotificationManager::SyncReminderNotificationManager(bool comesFromOnboarding):
     QObject(nullptr),
-    mState(ReminderState::FIRST_REMINDER),
-    mLastShowedTime(-1),
-    mClicked(false)
+    mState(std::nullopt),
+    mLastState(std::nullopt),
+    mLastSyncReminderTime(std::nullopt)
 {
-    connect(&mTimer, &QTimer::timeout, this, &SyncReminderNotificationManager::onTimeout);
+    readFromPreferences();
 
-    // First reminder is shown after the remaining time to the next time only once,
-    // then the timer is triggered every day (see onTimeout).
-    mTimer.setSingleShot(true);
+    if (mLastState != ReminderState::DONE)
+    {
+        connect(this,
+                &SyncReminderNotificationManager::stateChanged,
+                this,
+                &SyncReminderNotificationManager::run);
+        connect(&mTimer, &QTimer::timeout, this, &SyncReminderNotificationManager::onTimeout);
+
+        initActions();
+        init(comesFromOnboarding);
+    }
 }
 
 SyncReminderNotificationManager::~SyncReminderNotificationManager()
@@ -40,154 +59,258 @@ SyncReminderNotificationManager::~SyncReminderNotificationManager()
     }
 }
 
-void SyncReminderNotificationManager::update(bool isFirstTime)
+void SyncReminderNotificationManager::onSyncsDialogClosed()
 {
-    auto lastSyncReminderTime(Preferences::instance()->lastSyncReminderTime());
-    auto lastSyncReminderTimeSecs(QDateTime::fromSecsSinceEpoch(lastSyncReminderTime));
-    auto currentTime(QDateTime::currentDateTime());
-    auto currentTimeSecs(currentTime.toSecsSinceEpoch());
-    if (lastSyncReminderTime == 0 || lastSyncReminderTime > currentTimeSecs)
+    if (mActions.count(mState.value()))
     {
-        init(isFirstTime, lastSyncReminderTimeSecs, currentTime);
+        mActions[mState.value()]->resetClicked();
+    }
+}
+
+void SyncReminderNotificationManager::onSyncAddRequestStatus(int errorCode,
+                                                             int syncErrorCode,
+                                                             QString name)
+{
+    Q_UNUSED(name);
+
+    if (mLastState == ReminderState::DONE || errorCode != mega::MegaError::API_OK ||
+        syncErrorCode != mega::MegaSync::NO_SYNC_ERROR)
+    {
+        return;
+    }
+
+    if (!mActions.count(mLastState.value()))
+    {
+        return;
+    }
+
+    int reminderID(static_cast<int>(mLastState.value()));
+    if (mActions[mLastState.value()]->isClicked())
+    {
+        // Send event if a sync has been created after clicking in the notification.
+        MegaSyncApp->getStatsEventHandler()->sendEvent(
+            AppStatsEvents::EventType::SYNC_CREATED_AFTER_CLICKING_NOTIFICATION,
+            {QString::number(reminderID)});
     }
     else
     {
-        updateState();
-        continuePeriodicProcess(lastSyncReminderTimeSecs, currentTime);
+        int currentTime(static_cast<int>(QDateTime::currentDateTime().toSecsSinceEpoch()));
+        int maxTime(static_cast<int>(mLastSyncReminderTime.value()) + FIFTEEN_MINS_S);
+        if (currentTime <= maxTime)
+        {
+            // Send event if a sync has been created before the first 15 mins. after
+            // showing the notification.
+            MegaSyncApp->getStatsEventHandler()->sendEvent(
+                AppStatsEvents::EventType::SYNC_CREATED_AFTER_NOTIFICATION,
+                {QString::number(reminderID)});
+        }
+    }
+    moveToDoneState();
+    writeToPreferences();
+}
+
+void SyncReminderNotificationManager::readFromPreferences()
+{
+    int lastState(Preferences::instance()->lastSyncReminderState());
+    if (lastState != 0)
+    {
+        mLastState = static_cast<ReminderState>(lastState);
+    }
+    mLastSyncReminderTime = Preferences::instance()->lastSyncReminderTime();
+}
+
+void SyncReminderNotificationManager::writeToPreferences()
+{
+    Preferences::instance()->setSyncReminderTime(mLastSyncReminderTime.value());
+    Preferences::instance()->setLastSyncReminderState(static_cast<int>(mLastState.value()));
+}
+
+void SyncReminderNotificationManager::initActions()
+{
+    auto createAction = [this](ReminderState state, AppStatsEvents::EventType eventType)
+    {
+        return std::make_unique<SyncReminderAction>(this,
+                                                    getNotificationTitle(state),
+                                                    getNotificationMessage(state),
+                                                    eventType);
+    };
+
+    mActions[ReminderState::FIRST_REMINDER] =
+        createAction(ReminderState::FIRST_REMINDER,
+                     AppStatsEvents::EventType::FIRST_SYNC_NOTIFICATION_SHOWN);
+    mActions[ReminderState::SECOND_REMINDER] =
+        createAction(ReminderState::SECOND_REMINDER,
+                     AppStatsEvents::EventType::SECOND_SYNC_NOTIFICATION_SHOWN);
+    mActions[ReminderState::MONTHLY] =
+        createAction(ReminderState::MONTHLY,
+                     AppStatsEvents::EventType::MONTHLY_SYNC_NOTIFICATION_SHOWN);
+    mActions[ReminderState::BIMONTHLY] =
+        createAction(ReminderState::BIMONTHLY,
+                     AppStatsEvents::EventType::BIMONTHLY_SYNC_NOTIFICATION_SHOWN);
+}
+
+void SyncReminderNotificationManager::init(bool comesFromOnboarding)
+{
+    mTimer.setSingleShot(true);
+
+    if (!mLastState.has_value())
+    {
+        // First execution, set the initial state and start the next timer.
+        initFirstTime(comesFromOnboarding);
+        startNextTimer();
+    }
+    else
+    {
+        calculateCurrentState();
+
+        int state = static_cast<int>(mState.value());
+
+        ReminderState expectedLastState(static_cast<ReminderState>(state - 1));
+        if (expectedLastState > mLastState.value())
+        {
+            // Pending notification required when the current time has passed the time to show the
+            // last reminder.
+            mLastState = expectedLastState;
+            mLastSyncReminderTime = QDateTime::currentDateTime().toSecsSinceEpoch();
+            writeToPreferences();
+            emit stateChanged();
+        }
+        else
+        {
+            // No pending notification required, so start the next timer.
+            startNextTimer();
+        }
     }
 }
 
-void SyncReminderNotificationManager::resetClickedInfo()
+void SyncReminderNotificationManager::initFirstTime(bool comesFromOnboarding)
 {
-    mLastShowedTime = -1;
-    mClicked = false;
-}
-
-void SyncReminderNotificationManager::init(bool isFirstTime,
-                                           const QDateTime& lastTime,
-                                           const QDateTime& currentTime)
-{
-    Preferences::instance()->setSyncReminderTime(currentTime.toSecsSinceEpoch());
-    if (isFirstTime)
+    if (comesFromOnboarding)
     {
         // If it is the first time the app is started after onboarding or the time is invalid
         // (for example when the system time is changed), then show the first reminder.
+        mLastState = ReminderState::INITIAL;
         mState = ReminderState::FIRST_REMINDER;
-        mTimer.start(TIME_TO_FIRST_REMINDER_MS);
     }
     else
     {
         // For existing users, we will skip the first notification.
-        updateState();
-        startNextReminder(lastTime, currentTime);
+        mLastState = ReminderState::FIRST_REMINDER;
+        mState = ReminderState::SECOND_REMINDER;
     }
+    mLastSyncReminderTime = QDateTime::currentDateTime().toSecsSinceEpoch();
+    writeToPreferences();
 }
 
-void SyncReminderNotificationManager::continuePeriodicProcess(const QDateTime& lastTime,
-                                                              const QDateTime& currentTime)
+void SyncReminderNotificationManager::onTimeout()
 {
-    if (isPendingNotificationRequired())
+    auto currentState(mState);
+    updateState();
+    if (currentState != mState ||
+        (mState == ReminderState::BIMONTHLY && isNeededToChangeState(DAYS_TO_BIMONTHLY_REMINDER)))
     {
-        // Show the last reminder if it is pending.
-        showNotification();
-        updatePreferences();
+        mLastState = currentState;
+        mLastSyncReminderTime = QDateTime::currentDateTime().toSecsSinceEpoch();
+        writeToPreferences();
+        emit stateChanged();
     }
-
-    if (lastTime.isValid())
-    {
-        startNextReminder(lastTime, currentTime);
-    }
-    else
-    {
-        MegaSyncApp->getMegaApi()->log(mega::MegaApi::LOG_LEVEL_WARNING,
-                                       QString::fromUtf8("Invalid last sync reminder time: %s")
-                                           .arg(lastTime.toString())
-                                           .toUtf8()
-                                           .constData());
-    }
-}
-
-void SyncReminderNotificationManager::startNextReminder(const QDateTime& lastTime,
-                                                        const QDateTime& currentTime)
-{
-    // Trigger the timer to show the reminder using the remaining time to the next day
-    // of the reminder.
-    int msecsToNextReminder(calculateMsecsToNextReminder(lastTime, currentTime));
-    mTimer.start(msecsToNextReminder);
 }
 
 void SyncReminderNotificationManager::updateState()
 {
-    quint64 daysCount(getDaysToNextReminder());
-    auto lastState(static_cast<ReminderState>(Preferences::instance()->lastSyncReminderState()));
-    if (daysCount > DAYS_TO_MONTHLY_REMINDER)
-    {
-        mState = ReminderState::BIMONTHLY;
-    }
-    else if (daysCount > DAYS_TO_SECOND_REMINDER)
-    {
-        mState = ReminderState::MONTHLY;
-    }
-    else if (lastState == ReminderState::UNDEFINED)
-    {
-        mState = ReminderState::FIRST_REMINDER;
-    }
-    else
-    {
-        mState = ReminderState::SECOND_REMINDER;
-    }
-}
-
-void SyncReminderNotificationManager::updatePreferences()
-{
-    Preferences::instance()->setSyncReminderTime(QDateTime::currentDateTime().toSecsSinceEpoch());
-    Preferences::instance()->setLastSyncReminderState(static_cast<int>(mState));
-}
-
-void SyncReminderNotificationManager::showNotification()
-{
-    auto [title, message] = getMessageForState();
-
-    DesktopNotifications::NotificationInfo reminder;
-    reminder.title = title;
-    reminder.message = message;
-    reminder.activatedFunction = [this](DesktopAppNotificationBase::Action)
-    {
-        mClicked = true;
-        CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin::OS_NOTIFICATION_ORIGIN);
-    };
-
-    MegaSyncApp->showInfoMessage(reminder);
-
-    mLastShowedTime = QDateTime::currentDateTime().toSecsSinceEpoch();
-
-    sendShownEvents();
-}
-
-bool SyncReminderNotificationManager::isNotificationRequired()
-{
-    quint64 daysCount(getDaysToNextReminder());
-    bool show(false);
-    switch (mState)
+    switch (mState.value())
     {
         case ReminderState::FIRST_REMINDER:
         {
-            show = true;
+            if (isNeededToChangeFirstState())
+            {
+                mState = ReminderState::SECOND_REMINDER;
+            }
             break;
         }
         case ReminderState::SECOND_REMINDER:
         {
-            show = (daysCount >= DAYS_TO_SECOND_REMINDER);
+            if (isNeededToChangeState(DAYS_TO_SECOND_REMINDER))
+            {
+                mState = ReminderState::MONTHLY;
+            }
             break;
         }
         case ReminderState::MONTHLY:
         {
-            show = (daysCount >= DAYS_TO_MONTHLY_REMINDER);
+            if (isNeededToChangeState(DAYS_TO_MONTHLY_REMINDER))
+            {
+                mState = ReminderState::BIMONTHLY;
+            }
             break;
         }
+        case ReminderState::INITIAL:
+        // Fallthrough
+        case ReminderState::BIMONTHLY:
+        // Fallthrough
+        case ReminderState::DONE:
+        // Fallthrough
+        default:
+        {
+            break;
+        }
+    }
+}
+
+bool SyncReminderNotificationManager::isNeededToChangeFirstState() const
+{
+    quint64 secsCount(getSecsToNextReminder());
+    return secsCount >= SECS_TO_FIRST_REMINDER;
+}
+
+bool SyncReminderNotificationManager::isNeededToChangeState(quint64 daysToNextReminder) const
+{
+    quint64 daysCount(getDaysToNextReminder());
+    return daysCount >= daysToNextReminder;
+}
+
+quint64 SyncReminderNotificationManager::getSecsToNextReminder() const
+{
+    auto lastTime(QDateTime::fromSecsSinceEpoch(mLastSyncReminderTime.value()));
+    auto currentTime(QDateTime::currentDateTime());
+    return static_cast<quint64>(lastTime.secsTo(currentTime));
+}
+
+quint64 SyncReminderNotificationManager::getDaysToNextReminder() const
+{
+    auto lastTime(QDateTime::fromSecsSinceEpoch(mLastSyncReminderTime.value()));
+    auto currentTime(QDateTime::currentDateTime());
+    return static_cast<quint64>(lastTime.daysTo(currentTime));
+}
+
+void SyncReminderNotificationManager::run()
+{
+    if (mState.value() == ReminderState::DONE ||
+        mActions.find(mLastState.value()) == mActions.end())
+    {
+        return;
+    }
+
+    mActions[mLastState.value()]->run();
+}
+
+QString SyncReminderNotificationManager::getNotificationTitle(ReminderState state) const
+{
+    QString title;
+    switch (state)
+    {
+        case ReminderState::FIRST_REMINDER:
+        {
+            title = tr("You’re almost done");
+            break;
+        }
+        case ReminderState::SECOND_REMINDER:
+        // Fallthrough
+        case ReminderState::MONTHLY:
+        // Fallthrough
         case ReminderState::BIMONTHLY:
         {
-            show = (daysCount >= DAYS_TO_BIMONTHLY_REMINDER);
+            title = tr("Sync your data");
             break;
         }
         default:
@@ -195,35 +318,28 @@ bool SyncReminderNotificationManager::isNotificationRequired()
             break;
         }
     }
-
-    return show;
+    return title;
 }
 
-bool SyncReminderNotificationManager::isPendingNotificationRequired()
+QString SyncReminderNotificationManager::getNotificationMessage(ReminderState state) const
 {
-    bool isPending(false);
-
-    auto lastState(static_cast<ReminderState>(Preferences::instance()->lastSyncReminderState()));
-    switch (lastState)
+    QString message;
+    switch (state)
     {
-        case ReminderState::UNDEFINED:
+        case ReminderState::FIRST_REMINDER:
         {
-            isPending = isPendingNotificationRequiredUndefined(lastState);
+            message =
+                tr("Set up your first sync and backup to get the most out of the desktop app");
             break;
         }
-        case ReminderState::FIRST_REMINDER:
-        // Fallthrough
         case ReminderState::SECOND_REMINDER:
         // Fallthrough
         case ReminderState::MONTHLY:
-        {
-            isPending = mState > lastState;
-            break;
-        }
+        // Fallthrough
         case ReminderState::BIMONTHLY:
         {
-            quint64 daysCount(getDaysToNextReminder());
-            isPending = daysCount > DAYS_TO_BIMONTHLY_REMINDER;
+            message = tr("Access your data from anywhere, collaborate with ease, and instantly get "
+                         "the most up-to-date version of your files");
             break;
         }
         default:
@@ -231,42 +347,39 @@ bool SyncReminderNotificationManager::isPendingNotificationRequired()
             break;
         }
     }
-
-    return isPending;
+    return message;
 }
 
-bool SyncReminderNotificationManager::isPendingNotificationRequiredUndefined(
-    ReminderState lastState)
+void SyncReminderNotificationManager::calculateCurrentState()
 {
-    bool pending(false);
-    if (mState == ReminderState::FIRST_REMINDER)
+    quint64 elapsedSeconds = getSecsToNextReminder();
+
+    for (const auto& [state, duration]: STATE_DURATIONS)
     {
-        auto lastTime(
-            QDateTime::fromSecsSinceEpoch(Preferences::instance()->lastSyncReminderTime()));
-        auto currentTime(QDateTime::currentDateTime());
-        auto secsDiff(lastTime.secsTo(currentTime));
-        pending = (secsDiff > TWO_HOURS_S);
+        if (elapsedSeconds <= duration)
+        {
+            mState = state;
+            return;
+        }
     }
-    else
-    {
-        pending = mState > lastState;
-    }
-    return pending;
+
+    mState = ReminderState::BIMONTHLY;
 }
 
-int SyncReminderNotificationManager::calculateMsecsToNextReminder(
-    const QDateTime& lastTime,
-    const QDateTime& currentTime) const
+int SyncReminderNotificationManager::calculateMsecsToCurrentState() const
 {
     QDateTime nextReminderTime;
-    if (mState == ReminderState::FIRST_REMINDER)
+    auto lastTime(QDateTime::fromSecsSinceEpoch(mLastSyncReminderTime.value()));
+    auto currentTime(QDateTime::currentDateTime());
+    auto currentState(mState.value());
+    if (currentState == ReminderState::FIRST_REMINDER)
     {
         nextReminderTime = lastTime.addSecs(TWO_HOURS_S);
     }
     else
     {
         auto remainingDays(0);
-        switch (mState)
+        switch (currentState)
         {
             case ReminderState::SECOND_REMINDER:
             {
@@ -303,156 +416,22 @@ int SyncReminderNotificationManager::calculateMsecsToNextReminder(
         // Calculate the time to the next reminder.
         nextReminderTime = lastTime.addDays(daysToCurrentTime);
     }
-
     return static_cast<int>(currentTime.msecsTo(nextReminderTime));
 }
 
-QPair<QString, QString> SyncReminderNotificationManager::getMessageForState() const
+void SyncReminderNotificationManager::startNextTimer()
 {
-    QString title;
-    QString message;
-
-    if (mState == ReminderState::FIRST_REMINDER)
-    {
-        title = tr("You’re almost done");
-        message = tr("Set up your first sync and backup to get the most out of the desktop app");
-    }
-    else
-    {
-        title = tr("Sync your data");
-        message = tr("Access your data from anywhere, collaborate with ease, and instantly get "
-                     "the most up-to-date version of your files");
-    }
-
-    return {title, message};
-}
-
-quint64 SyncReminderNotificationManager::getDaysToNextReminder() const
-{
-    auto lastTime(QDateTime::fromSecsSinceEpoch(Preferences::instance()->lastSyncReminderTime()));
-    quint64 daysCount(0);
-    if (lastTime.isValid())
-    {
-        auto currentTime(QDateTime::currentDateTime());
-        daysCount = static_cast<quint64>(lastTime.daysTo(currentTime));
-    }
-    return daysCount;
-}
-
-SyncReminderNotificationManager::ReminderState
-    SyncReminderNotificationManager::getNextState(ReminderState state) const
-{
-    return static_cast<ReminderState>(static_cast<int>(state) + 1);
-}
-
-void SyncReminderNotificationManager::sendShownEvents() const
-{
-    AppStatsEvents::EventType event(AppStatsEvents::EventType::NONE);
-    switch (mState)
-    {
-        case ReminderState::FIRST_REMINDER:
-        {
-            event = AppStatsEvents::EventType::FIRST_SYNC_NOTIFICATION_SHOWN;
-            break;
-        }
-        case ReminderState::SECOND_REMINDER:
-        {
-            event = AppStatsEvents::EventType::SECOND_SYNC_NOTIFICATION_SHOWN;
-            break;
-        }
-        case ReminderState::MONTHLY:
-        {
-            event = AppStatsEvents::EventType::MONTHLY_SYNC_NOTIFICATION_SHOWN;
-            break;
-        }
-        case ReminderState::BIMONTHLY:
-        {
-            event = AppStatsEvents::EventType::BIMONTHLY_SYNC_NOTIFICATION_SHOWN;
-            break;
-        }
-        default:
-        {
-            break;
-        }
-    }
-    MegaSyncApp->getStatsEventHandler()->sendEvent(event);
+    auto msecsToNextReminder(calculateMsecsToCurrentState());
+    mTimer.start(msecsToNextReminder);
 }
 
 void SyncReminderNotificationManager::moveToDoneState()
 {
     mState = ReminderState::DONE;
+    mLastState = ReminderState::DONE;
+    mLastSyncReminderTime = QDateTime::currentDateTime().toSecsSinceEpoch();
     if (mTimer.isActive())
     {
         mTimer.stop();
-    }
-}
-
-void SyncReminderNotificationManager::onSyncAddRequestStatus(int errorCode,
-                                                             int syncErrorCode,
-                                                             QString name)
-{
-    Q_UNUSED(name);
-
-    if (mState == ReminderState::UNDEFINED || errorCode != mega::MegaError::API_OK ||
-        syncErrorCode != mega::MegaSync::NO_SYNC_ERROR)
-    {
-        return;
-    }
-
-    int reminderID(static_cast<int>(mState));
-    if (mClicked)
-    {
-        MegaSyncApp->getStatsEventHandler()->sendEvent(
-            AppStatsEvents::EventType::SYNC_CREATED_AFTER_CLICKING_NOTIFICATION,
-            {QString::number(reminderID)});
-        moveToDoneState();
-    }
-    else
-    {
-        int currentTime(static_cast<int>(QDateTime::currentDateTime().toSecsSinceEpoch()));
-        int maxTime(static_cast<int>(mLastShowedTime) + FIFTEEN_MINS_S);
-        if (currentTime <= maxTime)
-        {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(
-                AppStatsEvents::EventType::SYNC_CREATED_AFTER_NOTIFICATION,
-                {QString::number(reminderID)});
-            moveToDoneState();
-        }
-    }
-    resetClickedInfo();
-}
-
-void SyncReminderNotificationManager::onSyncsDialogClosed()
-{
-    resetClickedInfo();
-}
-
-void SyncReminderNotificationManager::onTimeout()
-{
-    if (Preferences::instance()->isFirstSyncDone())
-    {
-        if (mTimer.isActive())
-        {
-            mTimer.stop();
-        }
-        return;
-    }
-
-    if (isNotificationRequired())
-    {
-        // Show the reminder if the conditions are met, update the time and update the states.
-        showNotification();
-        updatePreferences();
-        if (mState != ReminderState::BIMONTHLY)
-        {
-            mState = getNextState(mState);
-        }
-    }
-
-    // Trigger the timer every day if it is not already triggered.
-    if (mTimer.isSingleShot())
-    {
-        mTimer.setSingleShot(false);
-        mTimer.start(ONE_DAY_MS);
     }
 }
