@@ -1099,17 +1099,6 @@ void NodeSelectorTreeViewWidget::onItemsMoved()
         setSelectedNodeHandle(mMovedHandlesToSelect.takeFirst());
         mModel->selectIndexesByHandleAsync(mMovedHandlesToSelect);
 
-        // for (auto handle: qAsConst(mMovedHandlesToSelect))
-        // {
-        //     selectIndex(handle, true, false);
-
-        // if (handle != mMovedHandlesToSelect.last())
-        // {
-        //     updater.update(counter);
-        //     counter++;
-        // }
-        // }
-
         mMovedHandlesToSelect.clear();
     }
 }
