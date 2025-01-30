@@ -42,7 +42,7 @@ public:
         PASTE,
         SEPARATOR_3,
         DELETE,
-        DELETE_PERMANENTLY,
+        DELETE_PERMANENTLY
     };
     Q_ENUM(ActionsOrder)
 
