@@ -740,7 +740,23 @@ bool NodeSelectorModel::canDropMimeData(const QMimeData* data,
     Q_UNUSED(parent);
     Q_UNUSED(column);
 
-    return true;
+    if (action == Qt::CopyAction)
+    {
+        if (parent.isValid())
+        {
+            auto item = getItemByIndex(parent);
+            if (item)
+            {
+                auto node = item->getNode();
+                if (!node || node->isFolder())
+                {
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
 }
 
 QStringList NodeSelectorModel::mimeTypes() const
@@ -803,10 +819,13 @@ bool NodeSelectorModel::startProcessingNodes(const QMimeData* data,
                 std::unique_ptr<mega::MegaNode> moveNode(
                     MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
 
-                if (moveNode->getParentHandle() == targetFolder ||
-                    moveNode->getHandle() == targetFolder)
+                if (type != ActionType::COPY)
                 {
-                    continue;
+                    if (moveNode->getParentHandle() == targetFolder ||
+                        moveNode->getHandle() == targetFolder)
+                    {
+                        continue;
+                    }
                 }
 
                 nodesToMove.append(
@@ -1141,6 +1160,11 @@ bool NodeSelectorModel::canPasteNodes(const QList<mega::MegaHandle>& nodesToCopy
     return canDropMimeData(data, Qt::CopyAction, -1, -1, indexToPaste);
 }
 
+bool NodeSelectorModel::canCopyNodes() const
+{
+    return true;
+}
+
 bool NodeSelectorModel::increaseMovingNodes()
 {
     if (mMoveRequestsCounter == 0)
@@ -1185,6 +1209,14 @@ void NodeSelectorModel::sendBlockUiSignal(bool state)
 void NodeSelectorModel::sendDisableBlockUiSystemSignal(bool state)
 {
     emit disableBlockUiSystem(state, QPrivateSignal());
+}
+
+void NodeSelectorModel::selectIndexesByHandleAsync(const QList<mega::MegaHandle>& handles)
+{
+    for (auto& handle: qAsConst(handles))
+    {
+        mIndexesToBeSelected.append(qMakePair(handle, QModelIndex()));
+    }
 }
 
 QModelIndex NodeSelectorModel::index(int row, int column, const QModelIndex &parent) const
@@ -2101,6 +2133,16 @@ bool NodeSelectorModel::canFetchMore(const QModelIndex &parent) const
     }
 }
 
+QModelIndex NodeSelectorModel::rootIndex(const QModelIndex& visualRootIndex) const
+{
+    if (!visualRootIndex.isValid())
+    {
+        return index(0, 0);
+    }
+
+    return visualRootIndex;
+}
+
 bool NodeSelectorModel::isRequestingNodes() const
 {
     return mNodeRequesterWorker->isRequestingNodes();
@@ -2137,7 +2179,6 @@ void NodeSelectorModel::onChildNodesReady(NodeSelectorModelItem* parent)
     emit updateLoadingMessage(info);
 
     auto index = parent->property(INDEX_PROPERTY).value<QModelIndex>();
-    // mIndexesToBeExpanded.append(qMakePair(parent->getNode()->getHandle(), index));
     continueWithNextItemToLoad(index);
 }
 
@@ -2270,19 +2311,21 @@ QIcon NodeSelectorModel::getFolderIcon(NodeSelectorModelItem *item) const
                 else if(node->getHandle() == MegaSyncApp->getRootNode()->getHandle())
                 {
                     QIcon icon;
-                    icon.addFile(QLatin1String("://images/ico-cloud-drive.png"));
+                    icon.addFile(QLatin1String("://images/ico-cloud-drive.png"), QSize(16, 16));
                     return icon;
                 }
                 else if(node->getHandle() == MegaSyncApp->getRubbishNode()->getHandle())
                 {
                     QIcon icon;
-                    icon.addFile(QLatin1String("://images/ico-cloud-drive.png"));
+                    icon.addFile(QLatin1String("://images/node_selector/view/trash.png"),
+                                 QSize(16, 16));
                     return icon;
                 }
                 else if(item->isVault())
                 {
                     QIcon icon;
-                    icon.addFile(QLatin1String("://images/node_selector/Backups_small_ico.png"));
+                    icon.addFile(QLatin1String("://images/node_selector/Backups_small_ico.png"),
+                                 QSize(16, 16));
                     return icon;
                 }
                 else

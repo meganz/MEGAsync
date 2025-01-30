@@ -1104,9 +1104,6 @@
         <file>images/node_selector/sidebar/rubbish_selected.png</file>
         <file>images/node_selector/sidebar/rubbish_selected@2x.png</file>
         <file>images/node_selector/sidebar/rubbish_selected@3x.png</file>
-        <file>images/node_selector/view/rubbish.png</file>
-        <file>images/node_selector/view/rubbish@2x.png</file>
-        <file>images/node_selector/view/rubbish@3x.png</file>
         <file>images/sync_context_menu/edit-small.png</file>
         <file>images/sync_context_menu/edit-small@2x.png</file>
         <file>images/sync_context_menu/edit-small@3x.png</file>
@@ -1252,5 +1249,11 @@
         <file>images/default-avatar.jpg</file>
         <file>images/default-avatar@2x.jpg</file>
         <file>images/default-avatar@3x.jpg</file>
+        <file>images/node_selector/view/trash.png</file>
+        <file>images/node_selector/view/trash@2x.png</file>
+        <file>images/node_selector/view/trash@3x.png</file>
+        <file>images/node_selector/view/rubbish_empty.png</file>
+        <file>images/node_selector/view/rubbish_empty@2x.png</file>
+        <file>images/node_selector/view/rubbish_empty@3x.png</file>
     </qresource>
 </RCC>

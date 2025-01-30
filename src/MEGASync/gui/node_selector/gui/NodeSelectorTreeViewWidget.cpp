@@ -132,11 +132,10 @@ void NodeSelectorTreeViewWidget::init()
             &QAbstractItemModel::rowsRemoved,
             this,
             &NodeSelectorTreeViewWidget::checkViewOnModelChange);
-    connect(mModel.get(), &NodeSelectorModel::blockUi, this, &NodeSelectorTreeViewWidget::setLoadingSceneVisible);
     connect(mModel.get(),
-            &NodeSelectorModel::disableBlockUiSystem,
+            &NodeSelectorModel::blockUi,
             this,
-            &NodeSelectorTreeViewWidget::disableLoadingSceneSystem);
+            &NodeSelectorTreeViewWidget::setLoadingSceneVisible);
     connect(mModel.get(), &NodeSelectorModel::dataChanged, this, &NodeSelectorTreeViewWidget::onModelDataChanged);
     connect(mModel.get(),
             &NodeSelectorModel::itemsMoved,
@@ -215,6 +214,11 @@ NodeSelectorProxyModel* NodeSelectorTreeViewWidget::getProxyModel()
 bool NodeSelectorTreeViewWidget::isInRootView() const
 {
     return !ui->tMegaFolders->rootIndex().isValid();
+}
+
+QModelIndex NodeSelectorTreeViewWidget::findIndexToMoveItem()
+{
+    return mProxyModel->mapFromSource(ui->tMegaFolders->findIndexToMoveItem());
 }
 
 void NodeSelectorTreeViewWidget::updateLoadingMessage(std::shared_ptr<MessageInfo> message)
@@ -614,11 +618,6 @@ void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool blockUi)
     {
         modelLoaded();
     }
-}
-
-void NodeSelectorTreeViewWidget::disableLoadingSceneSystem(bool state)
-{
-    ui->tMegaFolders->loadingView().disableToogleLoadingScene(state);
 }
 
 void NodeSelectorTreeViewWidget::modelLoaded()
@@ -1097,26 +1096,19 @@ void NodeSelectorTreeViewWidget::onItemsMoved()
     {
         clearSelection();
 
-        //Protect the model agains undesired unsetting loading view
-        mModel->sendDisableBlockUiSystemSignal(true);
-
         setSelectedNodeHandle(mMovedHandlesToSelect.takeFirst());
+        mModel->selectIndexesByHandleAsync(mMovedHandlesToSelect);
 
-        EventUpdater updater(mMovedHandlesToSelect.size(), 20);
-        auto counter = 0;
+        // for (auto handle: qAsConst(mMovedHandlesToSelect))
+        // {
+        //     selectIndex(handle, true, false);
 
-        for (auto handle: qAsConst(mMovedHandlesToSelect))
-        {
-            selectIndex(handle, true, false);
-
-            if (handle != mMovedHandlesToSelect.last())
-            {
-                updater.update(counter);
-                counter++;
-            }
-        }
-
-        mModel->sendDisableBlockUiSystemSignal(false);
+        // if (handle != mMovedHandlesToSelect.last())
+        // {
+        //     updater.update(counter);
+        //     counter++;
+        // }
+        // }
 
         mMovedHandlesToSelect.clear();
     }
@@ -1216,7 +1208,10 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
 
                 for (auto& node: qAsConst(finalNodes))
                 {
-                    mMovedHandlesToSelect.append(node->getHandle());
+                    if (!MegaSyncApp->getMegaApi()->isInRubbish(node.get()))
+                    {
+                        mMovedHandlesToSelect.append(node->getHandle());
+                    }
                 }
 
                 //Only for root indexes
@@ -1726,7 +1721,7 @@ void CloudDriveType::selectionHasChanged(const QModelIndexList &selected, NodeSe
         {
             uploadEnabled = !selected.first().data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)).toBool() && !wdg->isCurrentSelectionReadOnly();
         }
-        else if(selected.size() == 0 && !wdg->isInRootView() && !wdg->isCurrentRootIndexReadOnly())
+        else if (selected.size() == 0 && !wdg->isCurrentRootIndexReadOnly())
         {
             uploadEnabled = true;
         }

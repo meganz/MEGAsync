@@ -150,10 +150,10 @@ bool NodeSelectorModelIncomingShares::rootNodeUpdated(mega::MegaNode* node)
     return false;
 }
 
-bool NodeSelectorModelIncomingShares::canDropMimeData(const QMimeData* data,
+bool NodeSelectorModelIncomingShares::canDropMimeData(const QMimeData*,
                                                       Qt::DropAction action,
-                                                      int row,
-                                                      int column,
+                                                      int,
+                                                      int,
                                                       const QModelIndex& parent) const
 {
     if(action == Qt::CopyAction)
@@ -164,7 +164,7 @@ bool NodeSelectorModelIncomingShares::canDropMimeData(const QMimeData* data,
             if(item)
             {
                 auto node = item->getNode();
-                if(node)
+                if (node && node->isFolder())
                 {
                     auto access = Utilities::getNodeAccess(node->getHandle());
                     if (access >= MegaShare::ACCESS_READWRITE)
@@ -177,6 +177,16 @@ bool NodeSelectorModelIncomingShares::canDropMimeData(const QMimeData* data,
     }
 
     return false;
+}
+
+QModelIndex NodeSelectorModelIncomingShares::rootIndex(const QModelIndex& visualRootIndex) const
+{
+    return visualRootIndex;
+}
+
+NodeSelectorModel::RemoveType NodeSelectorModelIncomingShares::canBeDeleted() const
+{
+    return NodeSelectorModel::RemoveType::PERMANENT_REMOVE;
 }
 
 void NodeSelectorModelIncomingShares::onRootItemsCreated()
@@ -483,6 +493,20 @@ bool NodeSelectorModelSearch::rootNodeUpdated(mega::MegaNode *node)
     return false;
 }
 
+bool NodeSelectorModelSearch::canDropMimeData(const QMimeData*,
+                                              Qt::DropAction,
+                                              int,
+                                              int,
+                                              const QModelIndex&) const
+{
+    return false;
+}
+
+bool NodeSelectorModelSearch::canCopyNodes() const
+{
+    return false;
+}
+
 void NodeSelectorModelSearch::proxyInvalidateFinished()
 {
     mNodeRequesterWorker->lockSearchMutex(false);
@@ -613,7 +637,7 @@ bool NodeSelectorModelRubbish::canDropMimeData(const QMimeData*,
             if (item)
             {
                 auto node = item->getNode();
-                if (node)
+                if (node && node->isFolder())
                 {
                     auto access = Utilities::getNodeAccess(node->getHandle());
                     if (access == MegaShare::ACCESS_OWNER)
@@ -625,5 +649,10 @@ bool NodeSelectorModelRubbish::canDropMimeData(const QMimeData*,
         }
     }
 
+    return false;
+}
+
+bool NodeSelectorModelRubbish::canCopyNodes() const
+{
     return false;
 }

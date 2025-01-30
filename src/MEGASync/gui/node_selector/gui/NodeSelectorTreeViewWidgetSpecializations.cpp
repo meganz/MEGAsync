@@ -232,6 +232,11 @@ std::unique_ptr<NodeSelectorProxyModel> NodeSelectorTreeViewWidgetSearch::create
     return proxy;
 }
 
+bool NodeSelectorTreeViewWidgetSearch::isCurrentRootIndexReadOnly()
+{
+    return true;
+}
+
 bool NodeSelectorTreeViewWidgetSearch::newNodeCanBeAdded(mega::MegaNode *node)
 {
     auto nodeName(QString::fromUtf8(node->getName()));
@@ -449,7 +454,7 @@ void NodeSelectorTreeViewWidgetRubbish::modelLoaded()
 
 QIcon NodeSelectorTreeViewWidgetRubbish::getEmptyIcon()
 {
-    return QIcon(QString::fromUtf8("://images/node_selector/view/rubbish.png"));
+    return QIcon(QString::fromUtf8("://images/node_selector/view/rubbish_empty.png"));
 }
 
 void NodeSelectorTreeViewWidgetRubbish::onRootIndexChanged(const QModelIndex &source_idx)

@@ -333,8 +333,7 @@ public:
         mViewModel(nullptr),
         mLoadingModel(nullptr),
         mLoadingDelegate(nullptr),
-        mViewLayout(nullptr),
-        mToggleLoadingViewDisabled(false)
+        mViewLayout(nullptr)
     {}
 
     ~ViewLoadingScene()
@@ -375,14 +374,9 @@ public:
         }
     }
 
-    inline void disableToogleLoadingScene(bool state)
-    {
-        mToggleLoadingViewDisabled = state;
-    }
-
     inline void toggleLoadingScene(bool state)
     {
-        if (!mView || mToggleLoadingViewDisabled)
+        if (!mView)
         {
             return;
         }
@@ -569,7 +563,6 @@ private:
     QPointer<LoadingSceneDelegate<DelegateWidget>> mLoadingDelegate;
     QLayout* mViewLayout;
     qint64 mStartTime;
-    bool mToggleLoadingViewDisabled;
 
     bool mWasFocused;
 };

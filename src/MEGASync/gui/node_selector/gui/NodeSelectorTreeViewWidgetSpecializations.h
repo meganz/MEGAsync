@@ -78,6 +78,7 @@ public:
     void search(const QString& text);
     void stopSearch();
     std::unique_ptr<NodeSelectorProxyModel> createProxyModel() override;
+    bool isCurrentRootIndexReadOnly() override;
 
 signals:
     void nodeDoubleClicked(std::shared_ptr<mega::MegaNode> node, bool goToInit);

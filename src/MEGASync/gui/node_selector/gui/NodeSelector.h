@@ -51,6 +51,7 @@ public:
     void setDefaultUploadOption(bool value);
     bool getDefaultUploadOption();
     void setSelectedNodeHandle(std::shared_ptr<mega::MegaNode> node = nullptr);
+    mega::MegaHandle findIndexToMoveItem();
     mega::MegaHandle getSelectedNodeHandle();
     QList<mega::MegaHandle> getMultiSelectionNodeHandle();
     void closeEvent(QCloseEvent* event) override;

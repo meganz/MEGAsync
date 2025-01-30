@@ -305,7 +305,7 @@ void NodeSelectorProxyModelSearch::setMode(NodeSelectorModelItemSearch::Types mo
 
 int NodeSelectorProxyModelSearch::canBeDeleted() const
 {
-    if(mMode & NodeSelectorModelItemSearch::Type::BACKUP)
+    if (mMode & NodeSelectorModelItemSearch::Type::BACKUP)
     {
         return NodeSelectorModel::RemoveType::NO_REMOVE;
     }

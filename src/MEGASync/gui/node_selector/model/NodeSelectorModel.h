@@ -191,6 +191,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation,
                                     int role = Qt::DisplayRole) const override;
     bool canFetchMore(const QModelIndex &parent) const override;
+    virtual QModelIndex rootIndex(const QModelIndex& visualRootIndex) const;
 
     bool isRequestingNodes() const;
 
@@ -228,6 +229,7 @@ public:
     // Copy logic
     bool pasteNodes(const QList<mega::MegaHandle>& nodesToCopy, const QModelIndex& indexToPaste);
     bool canPasteNodes(const QList<mega::MegaHandle>& nodesToCopy, const QModelIndex& indexToPaste);
+    virtual bool canCopyNodes() const;
 
     enum RestoreMergeType
     {
@@ -326,6 +328,8 @@ public:
 
     void sendBlockUiSignal(bool state);
     void sendDisableBlockUiSystemSignal(bool state);
+
+    void selectIndexesByHandleAsync(const QList<mega::MegaHandle>& handles);
 
 public slots:
     bool moveProcessed();

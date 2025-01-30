@@ -424,11 +424,6 @@ void NodeSelector::initSpecialisedWidgets()
 {
     NodeSelectorModel* model(nullptr);
 
-    connect(mSearchWidget,
-            &NodeSelectorTreeViewWidgetSearch::nodeDoubleClicked,
-            this,
-            &NodeSelector::setSelectedNodeHandle);
-
     for(int page = 0; page < ui->stackedWidget->count(); ++page)
     {
         auto viewContainer = getTreeViewWidget(page);
@@ -514,6 +509,22 @@ bool NodeSelector::eventFilter(QObject* obj, QEvent* event)
 void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
 {
     mNodeToBeSelected = node;
+    if (mInitialised)
+    {
+        performNodeSelection();
+    }
+}
+
+MegaHandle NodeSelector::findIndexToMoveItem()
+{
+    auto currentWid(getCurrentTreeViewWidget());
+    if (currentWid)
+    {
+        auto index = currentWid->findIndexToMoveItem();
+        return currentWid->getHandleByIndex(index);
+    }
+
+    return mega::INVALID_HANDLE;
 }
 
 void NodeSelector::performNodeSelection()
@@ -599,6 +610,10 @@ void NodeSelector::addSearch()
 {
     mSearchWidget = new NodeSelectorTreeViewWidgetSearch(mSelectType);
     mSearchWidget->setObjectName(QString::fromUtf8("Search"));
+    connect(mSearchWidget,
+            &NodeSelectorTreeViewWidgetSearch::nodeDoubleClicked,
+            this,
+            &NodeSelector::setSelectedNodeHandle);
     ui->stackedWidget->addWidget(mSearchWidget);
 }
 

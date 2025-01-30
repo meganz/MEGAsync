@@ -48,11 +48,15 @@ public:
     bool rootNodeUpdated(mega::MegaNode*node) override;
     bool showsSyncStates() override {return true;}
 
-    bool canDropMimeData(const QMimeData* data,
+    bool canDropMimeData(const QMimeData*,
                          Qt::DropAction action,
-                         int row,
-                         int column,
+                         int,
+                         int,
                          const QModelIndex& parent) const override;
+
+    QModelIndex rootIndex(const QModelIndex& visualRootIndex) const override;
+
+    NodeSelectorModel::RemoveType canBeDeleted() const override;
 
 public slots:
     void onItemInfoUpdated(int role);
@@ -122,6 +126,12 @@ public:
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
     void addNodes(QList<std::shared_ptr<mega::MegaNode> > nodes, const QModelIndex &parent) override;
     bool rootNodeUpdated(mega::MegaNode*node) override;
+    bool canDropMimeData(const QMimeData*,
+                         Qt::DropAction,
+                         int,
+                         int,
+                         const QModelIndex&) const override;
+    bool canCopyNodes() const override;
 
     const NodeSelectorModelItemSearch::Types &searchedTypes() const;
 
@@ -162,6 +172,7 @@ public:
                          int,
                          int,
                          const QModelIndex& parent) const override;
+    bool canCopyNodes() const override;
 
 public slots:
     void onItemInfoUpdated(int role);

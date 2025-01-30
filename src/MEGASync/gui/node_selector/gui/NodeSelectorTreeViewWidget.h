@@ -71,6 +71,7 @@ public:
     NodeSelectorModelItem* rootItem();
     NodeSelectorProxyModel* getProxyModel();
     bool isInRootView() const;
+    QModelIndex findIndexToMoveItem();
 
     bool onNodesUpdate(mega::MegaApi*, mega::MegaNodeList* nodes);
     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
@@ -81,10 +82,11 @@ public:
     bool increaseMovingNodes();
     bool areItemsAboutToBeMovedFromHere(mega::MegaHandle firstHandleMoved, int handlesMoved);
 
+    mega::MegaHandle getHandleByIndex(const QModelIndex& idx);
+
 public slots:
     virtual void checkViewOnModelChange();
     void setLoadingSceneVisible(bool visible);
-    void disableLoadingSceneSystem(bool state);
 
 signals:
     void okBtnClicked();
@@ -158,8 +160,11 @@ private:
     void checkBackForwardButtons();
     void setRootIndex(const QModelIndex& proxy_idx);
     virtual QIcon getEmptyIcon();
-    virtual void onRootIndexChanged(const QModelIndex& source_idx){Q_UNUSED(source_idx)};
-    mega::MegaHandle getHandleByIndex(const QModelIndex& idx);
+
+    virtual void onRootIndexChanged(const QModelIndex& source_idx)
+    {
+        Q_UNUSED(source_idx)
+    };
     QModelIndex getIndexFromHandle(const mega::MegaHandle &handle);
     void checkButtonsVisibility();
     void checkOkCancelButtonsVisibility();

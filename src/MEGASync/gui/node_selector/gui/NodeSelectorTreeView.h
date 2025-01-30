@@ -27,6 +27,8 @@ public:
 
     static void clearCopiedHandles();
 
+    QModelIndex findIndexToMoveItem() const;
+
     enum ActionsOrder
     {
         RESTORE,
@@ -74,6 +76,7 @@ private slots:
     void onNavigateReady(const QModelIndex& index);
     void onCopyShortcutActivated();
     void onPasteShortcutActivated();
+    void onPasteClicked();
 
 private:
     friend class NodeSelectorDelegate;
@@ -88,7 +91,7 @@ private:
     bool areAllEligibleForDeletion(const QList<mega::MegaHandle>& handles) const;
     bool areAllEligibleForRestore(const QList<MegaHandle> &handles) const;
 
-    void addPasteMenuAction(QMap<int, QAction*>& actions, const QModelIndex& pasteIndex);
+    void addPasteMenuAction(QMap<int, QAction*>& actions);
     void addRestoreMenuAction(QMap<int, QAction*>& actions,
                               QList<mega::MegaHandle> selectionHandles);
     void addDeleteMenuAction(QMap<int, QAction*>& actions,
