@@ -50,7 +50,7 @@ FooterButtonsPage {
             PropertyChanges {
                 target: stepPanelRef;
                 state: stepPanelRef.stepAllDone;
-                step3Text: OnboardingStrings.syncChooseType;
+                step3Text: SyncsStrings.selectiveSync;
                 step4Text: OnboardingStrings.syncSetUp;
             }
         },

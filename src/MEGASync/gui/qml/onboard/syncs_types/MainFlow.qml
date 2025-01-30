@@ -90,7 +90,12 @@ Rectangle {
                     var toOpenTabIndex = 0;
                     switch(root.navInfo.typeSelected) {
                         case Constants.SyncType.SELECTIVE_SYNC:
-                            resumePageState = "stateSelectiveSync";
+                            if (root.navInfo.fullSyncDone) {
+                                resumePageState = "stateFullSync";
+                            }
+                            else if (root.navInfo.selectiveSyncDone) {
+                                resumePageState = "stateSelectiveSync";
+                            }
                             toOpenTabIndex = SettingsDialog.SYNCS_TAB;
                             break;
                         case Constants.SyncType.FULL_SYNC:

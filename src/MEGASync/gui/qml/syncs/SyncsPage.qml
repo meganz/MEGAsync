@@ -168,6 +168,11 @@ SyncsFlow {
                 root.sync.syncStatus = root.sync.SyncStatusCode.SELECTIVE;
                 root.syncsFlowMoveToFinal(Constants.SyncType.SELECTIVE_SYNC);
             }
+
+            onFullSyncMoveToSuccess: {
+                root.sync.syncStatus = root.sync.SyncStatusCode.FULL;
+                root.syncsFlowMoveToFinal(Constants.SyncType.FULL_SYNC);
+            }
         }
     }
 
