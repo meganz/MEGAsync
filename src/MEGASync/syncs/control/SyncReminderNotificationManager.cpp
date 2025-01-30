@@ -5,6 +5,7 @@
 #include "MegaApplication.h"
 #include "Preferences.h"
 #include "StatsEventHandler.h"
+#include "SyncController.h"
 
 namespace
 {
@@ -18,8 +19,8 @@ constexpr quint64 DAYS_TO_MONTHLY_REMINDER = 30;
 constexpr quint64 DAYS_TO_BIMONTHLY_REMINDER = 60;
 }
 
-SyncReminderNotificationManager::SyncReminderNotificationManager(QObject* parent):
-    QObject(parent),
+SyncReminderNotificationManager::SyncReminderNotificationManager():
+    QObject(nullptr),
     mState(ReminderState::FIRST_REMINDER),
     mLastShowedTime(-1),
     mClicked(false)
@@ -41,47 +42,19 @@ SyncReminderNotificationManager::~SyncReminderNotificationManager()
 
 void SyncReminderNotificationManager::update(bool isFirstTime)
 {
-    auto lastTime(Preferences::instance()->lastSyncReminderTime());
-    auto lastSyncReminderTime(QDateTime::fromSecsSinceEpoch(lastTime));
+    auto lastSyncReminderTime(Preferences::instance()->lastSyncReminderTime());
+    auto lastSyncReminderTimeSecs(QDateTime::fromSecsSinceEpoch(lastSyncReminderTime));
     auto currentTime(QDateTime::currentDateTime());
     auto currentTimeSecs(currentTime.toSecsSinceEpoch());
-    if (lastTime == 0 || lastTime > currentTimeSecs)
+    if (lastSyncReminderTime == 0 || lastSyncReminderTime > currentTimeSecs)
     {
-        init(isFirstTime, lastSyncReminderTime, currentTime);
+        init(isFirstTime, lastSyncReminderTimeSecs, currentTime);
     }
     else
     {
         updateState();
-        continuePeriodicProcess(lastSyncReminderTime, currentTime);
+        continuePeriodicProcess(lastSyncReminderTimeSecs, currentTime);
     }
-}
-
-void SyncReminderNotificationManager::sendEventsIfNeeded()
-{
-    if (mState == ReminderState::UNDEFINED)
-    {
-        return;
-    }
-
-    int reminderID(static_cast<int>(mState));
-    if (mClicked)
-    {
-        MegaSyncApp->getStatsEventHandler()->sendEvent(
-            AppStatsEvents::EventType::SYNC_CREATED_AFTER_CLICKING_NOTIFICATION,
-            {QString::number(reminderID)});
-    }
-    else
-    {
-        int currentTime(static_cast<int>(QDateTime::currentDateTime().toSecsSinceEpoch()));
-        int maxTime(static_cast<int>(mLastShowedTime) + FIFTEEN_MINS_S);
-        if (currentTime <= maxTime)
-        {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(
-                AppStatsEvents::EventType::SYNC_CREATED_AFTER_NOTIFICATION,
-                {QString::number(reminderID)});
-        }
-    }
-    resetClickedInfo();
 }
 
 void SyncReminderNotificationManager::resetClickedInfo()
@@ -403,6 +376,55 @@ void SyncReminderNotificationManager::sendShownEvents() const
         }
     }
     MegaSyncApp->getStatsEventHandler()->sendEvent(event);
+}
+
+void SyncReminderNotificationManager::moveToDoneState()
+{
+    mState = ReminderState::DONE;
+    if (mTimer.isActive())
+    {
+        mTimer.stop();
+    }
+}
+
+void SyncReminderNotificationManager::onSyncAddRequestStatus(int errorCode,
+                                                             int syncErrorCode,
+                                                             QString name)
+{
+    Q_UNUSED(name);
+
+    if (mState == ReminderState::UNDEFINED || errorCode != mega::MegaError::API_OK ||
+        syncErrorCode != mega::MegaSync::NO_SYNC_ERROR)
+    {
+        return;
+    }
+
+    int reminderID(static_cast<int>(mState));
+    if (mClicked)
+    {
+        MegaSyncApp->getStatsEventHandler()->sendEvent(
+            AppStatsEvents::EventType::SYNC_CREATED_AFTER_CLICKING_NOTIFICATION,
+            {QString::number(reminderID)});
+        moveToDoneState();
+    }
+    else
+    {
+        int currentTime(static_cast<int>(QDateTime::currentDateTime().toSecsSinceEpoch()));
+        int maxTime(static_cast<int>(mLastShowedTime) + FIFTEEN_MINS_S);
+        if (currentTime <= maxTime)
+        {
+            MegaSyncApp->getStatsEventHandler()->sendEvent(
+                AppStatsEvents::EventType::SYNC_CREATED_AFTER_NOTIFICATION,
+                {QString::number(reminderID)});
+            moveToDoneState();
+        }
+    }
+    resetClickedInfo();
+}
+
+void SyncReminderNotificationManager::onSyncsDialogClosed()
+{
+    resetClickedInfo();
 }
 
 void SyncReminderNotificationManager::onTimeout()

@@ -3,7 +3,6 @@
 #include "ChooseFolder.h"
 #include "mega/types.h"
 #include "MegaApplication.h"
-#include "SyncReminderNotificationManager.h"
 #include "TextDecorator.h"
 
 const QString Syncs::DEFAULT_MEGA_FOLDER = QString::fromUtf8("MEGA");
@@ -266,7 +265,6 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString nam
     else
     {
         emit syncSetupSuccess();
-        executeSyncReminderIfNeeded();
     }
 }
 
@@ -394,14 +392,4 @@ QString Syncs::getLocalErrorMessage(std::optional<LocalErrors> error, const QStr
     }
 
     return QString();
-}
-
-void Syncs::executeSyncReminderIfNeeded() const
-{
-    auto syncReminderManager(MegaSyncApp->getSyncReminderNotificationManager());
-    if (syncReminderManager)
-    {
-        syncReminderManager->sendEventsIfNeeded();
-        MegaSyncApp->destroySyncReminderNotificationManager();
-    }
 }

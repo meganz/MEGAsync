@@ -2,7 +2,6 @@
 
 #include "DialogOpener.h"
 #include "SettingsDialog.h"
-#include "SyncReminderNotificationManager.h"
 
 #include <QEvent>
 
@@ -15,9 +14,9 @@ bool SyncsQmlDialog::event(QEvent* event)
             dialog->getDialog()->setSyncAddButtonEnabled(event->type() == QEvent::Close);
         }
 
-        if (event->type() == QEvent::Close && MegaSyncApp->getSyncReminderNotificationManager())
+        if (event->type() == QEvent::Close)
         {
-            MegaSyncApp->getSyncReminderNotificationManager()->resetClickedInfo();
+            emit MegaSyncApp->syncsDialogClosed();
         }
     }
 

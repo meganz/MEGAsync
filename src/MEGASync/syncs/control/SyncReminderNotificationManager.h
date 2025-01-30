@@ -1,6 +1,10 @@
 #ifndef SYNC_REMINDER_NOTIFICATION_MANAGER_H
 #define SYNC_REMINDER_NOTIFICATION_MANAGER_H
 
+#include <QDateTime>
+#include <QObject>
+#include <QPair>
+#include <QString>
 #include <QTimer>
 
 class SyncReminderNotificationManager: public QObject
@@ -8,13 +12,14 @@ class SyncReminderNotificationManager: public QObject
     Q_OBJECT
 
 public:
-    SyncReminderNotificationManager(QObject* parent = nullptr);
+    SyncReminderNotificationManager();
     ~SyncReminderNotificationManager();
 
     void update(bool isFirstTime = false);
 
-    void sendEventsIfNeeded();
-    void resetClickedInfo();
+public slots:
+    void onSyncsDialogClosed();
+    void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name);
 
 private:
     enum class ReminderState
@@ -23,7 +28,8 @@ private:
         FIRST_REMINDER = 1,
         SECOND_REMINDER = 2,
         MONTHLY = 3,
-        BIMONTHLY = 4
+        BIMONTHLY = 4,
+        DONE = 5
     };
 
     ReminderState mState;
@@ -51,6 +57,9 @@ private:
     ReminderState getNextState(ReminderState state) const;
 
     void sendShownEvents() const;
+
+    void moveToDoneState();
+    void resetClickedInfo();
 
 private slots:
     void onTimeout();

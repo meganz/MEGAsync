@@ -202,7 +202,6 @@ public:
     void showUpsellDialog(UpsellPlans::ViewMode viewMode);
 
     SyncReminderNotificationManager* getSyncReminderNotificationManager();
-    void destroySyncReminderNotificationManager();
 
 signals:
     void startUpdaterThread();
@@ -220,6 +219,7 @@ signals:
     void shellNotificationsProcessed();
     void updateUserInterface();
     void requestAppState(AppState::AppStates newAppState);
+    void syncsDialogClosed();
 
 public slots:
     void updateTrayIcon();

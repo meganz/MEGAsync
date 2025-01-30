@@ -42,6 +42,7 @@
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
 #include "StreamingFromMegaDialog.h"
+#include "SyncController.h"
 #include "SyncReminderNotificationManager.h"
 #include "SyncsMenu.h"
 #include "TransferMetaData.h"
@@ -1476,8 +1477,15 @@ if (!preferences->lastExecutionTime())
 
     if (!preferences->isFirstSyncDone())
     {
-        mSyncReminderNotificationManager =
-            std::make_unique<SyncReminderNotificationManager>(nullptr);
+        mSyncReminderNotificationManager = std::make_unique<SyncReminderNotificationManager>();
+        connect(&SyncController::instance(),
+                &SyncController::syncAddStatus,
+                mSyncReminderNotificationManager.get(),
+                &SyncReminderNotificationManager::onSyncAddRequestStatus);
+        connect(this,
+                &MegaApplication::syncsDialogClosed,
+                mSyncReminderNotificationManager.get(),
+                &SyncReminderNotificationManager::onSyncsDialogClosed);
         mSyncReminderNotificationManager->update(!fastLogin);
     }
 }
@@ -1546,7 +1554,7 @@ void MegaApplication::onLogout()
                 DialogOpener::closeAllDialogs();
                 mGfxProvider.reset();
                 mUserMessageController.reset();
-                destroySyncReminderNotificationManager();
+                mSyncReminderNotificationManager.reset();
                 createUserMessageController();
                 infoDialog->deleteLater();
                 infoDialog = nullptr;
@@ -2253,7 +2261,7 @@ void MegaApplication::cleanAll()
 
     mGfxProvider.reset();
     mUserMessageController.reset();
-    destroySyncReminderNotificationManager();
+    mSyncReminderNotificationManager.reset();
     infoDialog->deleteLater();
 
     // Delete menus and menu items
@@ -4566,11 +4574,6 @@ void MegaApplication::showUpsellDialog(UpsellPlans::ViewMode viewMode)
 SyncReminderNotificationManager* MegaApplication::getSyncReminderNotificationManager()
 {
     return mSyncReminderNotificationManager.get();
-}
-
-void MegaApplication::destroySyncReminderNotificationManager()
-{
-    mSyncReminderNotificationManager.reset();
 }
 
 void MegaApplication::processSetDownload(const QString& publicLink,
