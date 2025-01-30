@@ -167,7 +167,7 @@ FooterButtonsPage {
                     id: syncButtonItem
 
                     width: (parent.width - parent.spacing) / 2
-                    title: SyncsStrings.selectiveSync
+                    title: SyncsStrings.sync
                     description: OnboardingStrings.finalPageButtonSelectiveSync
                     imageSource: Images.sync
                     focus: true
