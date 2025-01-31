@@ -12,7 +12,8 @@
 #include <QToolTip>
 
 NodeSelectorDelegate::NodeSelectorDelegate(QObject* parent):
-    QStyledItemDelegate(parent)
+    QStyledItemDelegate(parent),
+    mMainDevice(nullptr)
 {}
 
 void NodeSelectorDelegate::setPaintDevice(QPainter* painter) const
