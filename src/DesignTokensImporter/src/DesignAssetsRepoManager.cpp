@@ -1,7 +1,8 @@
+// clang-format off
 #include "DesignAssetsRepoManager.h"
 
-#include "Utilities.h"
 #include "PathProvider.h"
+#include "Utilities.h"
 
 #include <QDebug>
 #include <QDir>
@@ -15,10 +16,11 @@ static const QString CoreMain = QString::fromLatin1("Core/Main");
 static const QString CoreColors = QString::fromLatin1("Colors");
 static const QString SemanticTokens = QString::fromLatin1("Semantic tokens");
 static const QString ColorTokenStart = QString::fromLatin1("color-");
-
 static const QString RepoAttributeValue = QString::fromLatin1("value");
 static const QString RepoAttributeType = QString::fromLatin1("type");
 static const QString RepoAttributeColorId = QString::fromLatin1("color");
+static const QRegularExpression CORE_COLOR_TOKEN_REGULAR_EXPRESSION{
+    QString("^#([a-f,A-F,0-9]{6}|[a-f,A-F,0-9]{8})$")};
 
 std::optional<DesignAssets> DesignAssetsRepoManager::getDesignAssets()
 {
@@ -38,11 +40,13 @@ std::optional<DesignAssets> DesignAssetsRepoManager::getDesignAssets()
 std::optional<ThemedColorData> DesignAssetsRepoManager::getColorData()
 {
     // look for tokens.json file
-    QString pathToDesignTokensFile = Utilities::resolvePath(QDir::currentPath(), PathProvider::RELATIVE_DESIGN_TOKENS_FILE_PATH);
+    QString pathToDesignTokensFile =
+        Utilities::resolvePath(QDir::currentPath(), PathProvider::RELATIVE_DESIGN_TOKENS_FILE_PATH);
     QFile designTokensFile(pathToDesignTokensFile);
     if (!designTokensFile.exists())
     {
-        qCritical() << __func__ << " Error : No tokens.json file found in " << pathToDesignTokensFile;
+        qCritical() << __func__ << " Error : No tokens.json file found in "
+                    << pathToDesignTokensFile;
         qCritical() << __func__ << " Did you forget to clone megadesignassets repository?";
         return std::nullopt;
     }
@@ -80,9 +84,12 @@ DesignAssetsRepoManager::CoreData DesignAssetsRepoManager::parseCore(QFile& desi
 
     QJsonObject jsonObject = jsonDocument.object();
     QStringList childKeys = jsonObject.keys();
-    auto foundMatchingChildKeyIt = std::find_if(childKeys.constBegin(), childKeys.constEnd(), [](const QString& key){
-        return key == CoreMain;
-    });
+    auto foundMatchingChildKeyIt = std::find_if(childKeys.constBegin(),
+                                                childKeys.constEnd(),
+                                                [](const QString& key)
+                                                {
+                                                    return key == CoreMain;
+                                                });
 
     if (foundMatchingChildKeyIt == childKeys.constEnd())
     {
@@ -92,9 +99,12 @@ DesignAssetsRepoManager::CoreData DesignAssetsRepoManager::parseCore(QFile& desi
 
     jsonObject = jsonObject.value(CoreMain).toObject();
     childKeys = jsonObject.keys();
-    foundMatchingChildKeyIt = std::find_if(childKeys.constBegin(), childKeys.constEnd(), [](const QString& key){
-        return key == CoreColors;
-    });
+    foundMatchingChildKeyIt = std::find_if(childKeys.constBegin(),
+                                           childKeys.constEnd(),
+                                           [](const QString& key)
+                                           {
+                                               return key == CoreColors;
+                                           });
 
     if (foundMatchingChildKeyIt == childKeys.constEnd())
     {
@@ -113,7 +123,8 @@ DesignAssetsRepoManager::CoreData DesignAssetsRepoManager::parseCore(QFile& desi
     return coreData;
 }
 
-ThemedColorData DesignAssetsRepoManager::parseTheme(QFile& designTokensFile, const CoreData& coreData)
+ThemedColorData DesignAssetsRepoManager::parseTheme(QFile& designTokensFile,
+                                                    const CoreData& coreData)
 {
     const QString errorPrefix = __func__ + QString(" Error : parsing design tokens file, ");
 
@@ -129,29 +140,32 @@ ThemedColorData DesignAssetsRepoManager::parseTheme(QFile& designTokensFile, con
 
     QJsonObject jsonObject = jsonDocument.object();
     QStringList childKeys = jsonObject.keys();
-    std::for_each(childKeys.constBegin(), childKeys.constEnd(), [&](const QString& key)
-    {
-        if (key.contains(SemanticTokens))
-        {
-            QJsonObject themeObject = jsonObject.value(key).toObject();
+    std::for_each(childKeys.constBegin(),
+                  childKeys.constEnd(),
+                  [&](const QString& key)
+                  {
+                      if (key.contains(SemanticTokens))
+                      {
+                          QJsonObject themeObject = jsonObject.value(key).toObject();
 
-            ColorData colorData = parseColorTheme(themeObject, coreData);
-            if (colorData.isEmpty())
-            {
-                qWarning() << errorPrefix << "no color theme data for " << key;
-                return;
-            }
+                          ColorData colorData = parseColorTheme(themeObject, coreData);
+                          if (colorData.isEmpty())
+                          {
+                              qWarning() << errorPrefix << "no color theme data for " << key;
+                              return;
+                          }
 
-            QString theme = key.right(key.size() - key.lastIndexOf('/') - 1);
-            if (theme.isEmpty())
-            {
-                qWarning() << errorPrefix << " Error : No valid theme found on key " << key;
-                return;
-            }
+                          QString theme = key.right(key.size() - key.lastIndexOf('/') - 1);
+                          if (theme.isEmpty())
+                          {
+                              qWarning()
+                                  << errorPrefix << " Error : No valid theme found on key " << key;
+                              return;
+                          }
 
-            themedColorData.insert(theme, colorData);
-        }
-    });
+                          themedColorData.insert(theme, colorData);
+                      }
+                  });
 
     if (!themedColorData.empty())
     {
@@ -161,8 +175,12 @@ ThemedColorData DesignAssetsRepoManager::parseTheme(QFile& designTokensFile, con
     return themedColorData;
 }
 
-void DesignAssetsRepoManager::recurseCore(QString category, const QJsonObject& coreColors, CoreData& coreData)
+void DesignAssetsRepoManager::recurseCore(QString category,
+                                          const QJsonObject& coreColors,
+                                          CoreData& coreData)
 {
+    const QString errorPrefix = __func__ + QString(" Warning : parsing core colors, ");
+
     const QStringList tokenKeys = coreColors.keys();
 
     if (tokenKeys.contains(RepoAttributeValue) && tokenKeys.contains(RepoAttributeType))
@@ -170,19 +188,40 @@ void DesignAssetsRepoManager::recurseCore(QString category, const QJsonObject& c
         QJsonValue jType = coreColors[RepoAttributeType];
         QJsonValue jValue = coreColors[RepoAttributeValue];
 
-        if (!jType.isNull() && jValue.isString())
+        if (!jType.isNull() && jType.isString() && !jValue.isNull() && jValue.isString())
         {
             QString type = jType.toString();
 
             if (type == RepoAttributeColorId)
             {
-                /*
-                 * Core color hex value format is #RRGGBBAA,
-                 * but we need to convert it to AARRGGBB.
-                */
-                QString coreColorHex = Utilities::normalizeHexColoursForQtFormat(jValue.toString());
-                coreData.insert(category, coreColorHex);
+                QString value = jValue.toString();
+
+                auto match = CORE_COLOR_TOKEN_REGULAR_EXPRESSION.match(value);
+                if (match.hasMatch())
+                {
+                    /*
+                     * Core color hex value format is #RRGGBBAA,
+                     * but we need to convert it to AARRGGBB.
+                     */
+                    QString coreColorHex = Utilities::normalizeHexColoursForQtFormat(value);
+                    coreData.insert(category, coreColorHex);
+                }
+                else
+                {
+                    qWarning() << errorPrefix << "invalid core color " << value << " for category "
+                               << category;
+                }
             }
+            else
+            {
+                qWarning() << errorPrefix << "unknown color type " << type << " for category "
+                           << category;
+            }
+        }
+        else
+        {
+            qWarning() << errorPrefix << "unknown error on get " << RepoAttributeType << " or "
+                       << RepoAttributeValue << " for category " << category;
         }
     }
     else
@@ -213,7 +252,7 @@ ColorData DesignAssetsRepoManager::parseColorTheme(const QJsonObject& jsonThemeO
     ColorData colorData;
     const QStringList categoryKeys = jsonThemeObject.keys();
 
-    for (const auto& category : categoryKeys)
+    for (const auto& category: categoryKeys)
     {
         QJsonObject categoryObject = jsonThemeObject.value(category).toObject();
         parseCategory(categoryObject, coreData, colorData);
@@ -238,7 +277,7 @@ void DesignAssetsRepoManager::parseCategory(const QJsonObject& categoryObject,
 {
     const QStringList tokenKeys = categoryObject.keys();
 
-    for (const auto& token : tokenKeys)
+    for (const auto& token: tokenKeys)
     {
         QJsonObject tokenObject = categoryObject[token].toObject();
         processToken(token, tokenObject, coreData, colorData);
