@@ -357,7 +357,7 @@ void CloudDriveNodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>
 
         performItemsToBeMoved(handles, type, true, false);
     }
-    else if (type == NodeSelectorModel::ActionType::DELETE)
+    else if (type == NodeSelectorModel::ActionType::DELETE_RUBBISH)
     {
         mRubbishWidget->initMovingNodes(handles.size());
         performItemsToBeMoved(handles, type, true, false);

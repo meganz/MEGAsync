@@ -15,6 +15,7 @@
 
 #include <megaapi.h>
 #include <memory>
+#include <optional>
 
 namespace UserAttributes{
 class CameraUploadFolder;
@@ -213,7 +214,7 @@ public:
         MOVE,
         COPY,
         RESTORE,
-        DELETE,
+        DELETE_RUBBISH,
         DELETE_PERMANENTLY
     };
     bool startProcessingNodes(const QMimeData* data, const QModelIndex& parent, ActionType type);

@@ -41,8 +41,8 @@ public:
         COPY,
         PASTE,
         SEPARATOR_3,
-        DELETE,
-        DELETE_PERMANENTLY
+        DELETE_RUBBISH,
+        DELETE_PERMANENTLY,
     };
     Q_ENUM(ActionsOrder)
 

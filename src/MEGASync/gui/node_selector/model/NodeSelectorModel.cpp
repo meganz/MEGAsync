@@ -1507,7 +1507,8 @@ std::shared_ptr<mega::MegaNode> NodeSelectorModel::getNodeToRemove(mega::MegaHan
 void NodeSelectorModel::deleteNodes(const QList<mega::MegaHandle>& nodeHandles, bool permanently)
 {
     emit itemsAboutToBeMoved(nodeHandles,
-                             permanently ? ActionType::DELETE_PERMANENTLY : ActionType::DELETE);
+                             permanently ? ActionType::DELETE_PERMANENTLY :
+                                           ActionType::DELETE_RUBBISH);
 
     // It will be unblocked when all requestFinish calls are received (check onRequestFinish)
     QtConcurrent::run([this, nodeHandles, permanently]() {

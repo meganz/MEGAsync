@@ -300,7 +300,7 @@ void NodeSelectorTreeView::addDeleteMenuAction(QMap<int, QAction*>& actions,
             {
                 deleteNode(selectionHandles, false);
             });
-    actions.insert(ActionsOrder::DELETE, deleteAction);
+    actions.insert(ActionsOrder::DELETE_RUBBISH, deleteAction);
 }
 
 void NodeSelectorTreeView::addDeletePermanently(QMap<int, QAction*>& actions,
