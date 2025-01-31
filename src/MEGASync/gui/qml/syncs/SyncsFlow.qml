@@ -11,43 +11,21 @@ Item {
 
     property alias sync: syncItem
 
-    required property Component syncPageComponent
-    required property Component fullSyncPageComponent
     required property Component selectiveSyncPageComponent
 
-    readonly property string syncType: "syncType"
-    readonly property string fullSync: "fullSync"
     readonly property string selectiveSync: "selectiveSync"
 
     property bool isOnboarding: false
 
     signal syncsFlowMoveToFinal(int syncType)
-    signal syncsFlowMoveToBack(bool fromSelectType)
+    signal syncsFlowMoveToBack()
 
     // added to avoid qml warning.
     function setInitialFocusPosition() { }
 
-    state: syncItem.syncStatus !== syncItem.SyncStatusCode.NONE
-           ? root.selectiveSync
-           : root.syncType
+    state: root.selectiveSync
 
     states: [
-        State {
-            name: root.syncType
-            StateChangeScript {
-                script: {
-                    view.replace(syncPageComponent);
-                }
-            }
-        },
-        State {
-            name: root.fullSync
-            StateChangeScript {
-                script: {
-                    view.replace(fullSyncPageComponent);
-                }
-            }
-        },
         State {
             name: root.selectiveSync
             StateChangeScript {
