@@ -98,10 +98,6 @@ Rectangle {
                             }
                             toOpenTabIndex = SettingsDialog.SYNCS_TAB;
                             break;
-                        case Constants.SyncType.FULL_SYNC:
-                            resumePageState = "stateFullSync";
-                            toOpenTabIndex = SettingsDialog.SYNCS_TAB;
-                            break;
                         case Constants.SyncType.BACKUP:
                             resumePageState = "stateBackup";
                             toOpenTabIndex = SettingsDialog.BACKUP_TAB;
