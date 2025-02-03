@@ -5027,11 +5027,6 @@ Enter a different name.</translation>
         <translation>Change your email address</translation>
     </message>
     <message>
-        <source>Choose sync type</source>
-        <translatorcomment>Text indicating the user to choose between different available sync types CON-467</translatorcomment>
-        <translation>Choose sync type</translation>
-    </message>
-    <message>
         <source>Choose:</source>
         <translatorcomment>Label that indicates the user to choose between different options CON-467</translatorcomment>
         <translation>Choose:</translation>
@@ -5160,11 +5155,6 @@ Enter a different name.</translation>
         <source>Forgot password?</source>
         <translatorcomment>Button text that user have to click in case he forgot the password. Button has no borders and it looks like a label CON-465</translatorcomment>
         <translation>Forgot password?</translation>
-    </message>
-    <message>
-        <source>Full sync</source>
-        <translatorcomment>Full sync button title CON-467</translatorcomment>
-        <translation>Full sync</translation>
     </message>
     <message>
         <source>I agree with MEGA&apos;s [B][A]Terms of service[/A][/B]</source>
@@ -5355,11 +5345,6 @@ Enter a different name.</translation>
         <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
         <translation>Sync your device with MEGA, and any local changes will automatically and instantly apply to MEGA and vice versa.</translation>
-    </message>
-    <message>
-        <source>Sync your entire MEGA Cloud drive with your local device.</source>
-        <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation>Two-way sync your entire MEGA Cloud with a local device. Folders will stay up to date with edits made locally or in MEGA.</translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
