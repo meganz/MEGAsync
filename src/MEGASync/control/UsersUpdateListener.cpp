@@ -4,13 +4,16 @@ using namespace mega;
 
 void UsersUpdateListener::onUsersUpdate(MegaApi*, MegaUserList* userList)
 {
-    for (int i = 0; i < userList->size(); i++)
+    if (userList != nullptr)
     {
-        MegaUser* user = userList->get(i);
-        if (user->hasChanged(MegaUser::CHANGE_TYPE_EMAIL))
+        for (int userIndex = 0; userIndex < userList->size(); ++userIndex)
         {
-            const QString newEmail = QString::fromUtf8(user->getEmail());
-            emit userEmailUpdated(user->getHandle(), newEmail);
+            MegaUser* user = userList->get(userIndex);
+            if (user != nullptr && user->hasChanged(MegaUser::CHANGE_TYPE_EMAIL))
+            {
+                const QString newEmail = QString::fromUtf8(user->getEmail());
+                emit userEmailUpdated(user->getHandle(), newEmail);
+            }
         }
     }
 }
