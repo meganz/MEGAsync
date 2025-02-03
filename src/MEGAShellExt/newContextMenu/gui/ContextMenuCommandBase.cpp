@@ -1,6 +1,6 @@
 #include "ContextMenuCommandBase.h"
 
-#include "Utilities.h"
+#include <windows.storage.h>
 
 ContextMenuData ContextMenuCommandBase::mContextMenuData;
 
@@ -26,7 +26,11 @@ IFACEMETHODIMP ContextMenuCommandBase::GetIcon(IShellItemArray* psiItemArray, LP
 {
     UNREFERENCED_PARAMETER(psiItemArray);
 
-    std::wstring icon(Utilities::GetContextMenuPath() + L"\\MEGAsync.exe");
+    auto package = winrt::Windows::ApplicationModel::Package::Current();
+    auto appFolder = package.InstalledPath();
+
+    std::wstring icon(appFolder + L"\\assets\\Square44x44Logo.scale-125.png");
+
     SHStrDup(icon.data(), ppszIcon);
 
     return S_OK;

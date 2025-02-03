@@ -24,16 +24,6 @@ IFACEMETHODIMP ContextMenuCommandUpload::GetTitle(IShellItemArray* psiItemArray,
     return S_OK;
 }
 
-IFACEMETHODIMP ContextMenuCommandUpload::GetIcon(IShellItemArray* psiItemArray, LPWSTR* ppszIcon)
-{
-    UNREFERENCED_PARAMETER(psiItemArray);
-
-    std::wstring icon;
-    SHStrDup(icon.data(), ppszIcon);
-
-    return S_OK;
-}
-
 IFACEMETHODIMP ContextMenuCommandUpload::GetToolTip(IShellItemArray* psiItemArray,
                                                     LPWSTR* ppszInfotip)
 {

@@ -111,7 +111,7 @@ target_compile_features(MEGAShellExt PRIVATE cxx_std_17)
             TARGET MEGAShellExt
             POST_BUILD
             COMMAND MakePri.exe new "/cf" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/priconfig.xml" "/pr" "${CMAKE_CURRENT_SOURCE_DIR}"
-            "/mn" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/AppAplication.xml" "/o" "/of" "$<TARGET_FILE_DIR:MEGAShellExt>/resources.pri"
+            "/mn" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/AppAplication.xml" "/o" "/of" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/resources.pri"
             COMMENT "Creating resources.pri"
         )
 
