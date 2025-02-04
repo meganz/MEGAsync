@@ -43,6 +43,7 @@ private:
     std::optional<ReminderState> mLastState;
     std::optional<qint64> mLastSyncReminderTime;
     QTimer mTimer;
+    qint64 mDelay;
 
     void readFromPreferences();
     void writeToPreferences();
@@ -61,6 +62,8 @@ private:
     void startNextTimer();
     void calculateCurrentState();
     void moveToDoneState();
+    qint64 getCurrentTimeSecs() const;
+    void loadEnvVariable();
 
 private slots:
     void run();

@@ -28,6 +28,8 @@ const std::map<SyncReminderNotificationManager::ReminderState, quint64> STATE_DU
     {SyncReminderNotificationManager::ReminderState::BIMONTHLY,
      DAYS_TO_BIMONTHLY_REMINDER* SECS_PER_DAY},
 };
+const QLatin1String ENV_MEGA_REMINDER_DELAY_SECS("MEGA_REMINDER_DELAY_SECS");
+const QLatin1String ENV_MEGA_REMINDER_DELAY_SECS_DEFAULT_VALUE("0");
 }
 
 SyncReminderNotificationManager::SyncReminderNotificationManager(bool comesFromOnboarding):
@@ -37,6 +39,8 @@ SyncReminderNotificationManager::SyncReminderNotificationManager(bool comesFromO
     mLastSyncReminderTime(std::nullopt)
 {
     readFromPreferences();
+
+    loadEnvVariable();
 
     if (mLastState != ReminderState::DONE)
     {
@@ -94,7 +98,7 @@ void SyncReminderNotificationManager::onSyncAddRequestStatus(int errorCode,
     }
     else
     {
-        int currentTime(static_cast<int>(QDateTime::currentDateTime().toSecsSinceEpoch()));
+        int currentTime(static_cast<int>(getCurrentTimeSecs()));
         int maxTime(static_cast<int>(mLastSyncReminderTime.value()) + FIFTEEN_MINS_S);
         if (currentTime <= maxTime)
         {
@@ -162,16 +166,14 @@ void SyncReminderNotificationManager::init(bool comesFromOnboarding)
     else
     {
         calculateCurrentState();
-
-        int state = static_cast<int>(mState.value());
-
-        ReminderState expectedLastState(static_cast<ReminderState>(state - 1));
+        ReminderState expectedLastState(
+            static_cast<ReminderState>(static_cast<int>(mState.value()) - 1));
         if (expectedLastState > mLastState.value())
         {
             // Pending notification required when the current time has passed the time to show the
             // last reminder.
             mLastState = expectedLastState;
-            mLastSyncReminderTime = QDateTime::currentDateTime().toSecsSinceEpoch();
+            mLastSyncReminderTime = getCurrentTimeSecs();
             writeToPreferences();
             emit stateChanged();
         }
@@ -198,7 +200,7 @@ void SyncReminderNotificationManager::initFirstTime(bool comesFromOnboarding)
         mLastState = ReminderState::FIRST_REMINDER;
         mState = ReminderState::SECOND_REMINDER;
     }
-    mLastSyncReminderTime = QDateTime::currentDateTime().toSecsSinceEpoch();
+    mLastSyncReminderTime = getCurrentTimeSecs();
     writeToPreferences();
 }
 
@@ -210,7 +212,7 @@ void SyncReminderNotificationManager::onTimeout()
         (mState == ReminderState::BIMONTHLY && isNeededToChangeState(DAYS_TO_BIMONTHLY_REMINDER)))
     {
         mLastState = currentState;
-        mLastSyncReminderTime = QDateTime::currentDateTime().toSecsSinceEpoch();
+        mLastSyncReminderTime = getCurrentTimeSecs();
         writeToPreferences();
         emit stateChanged();
     }
@@ -429,9 +431,22 @@ void SyncReminderNotificationManager::moveToDoneState()
 {
     mState = ReminderState::DONE;
     mLastState = ReminderState::DONE;
-    mLastSyncReminderTime = QDateTime::currentDateTime().toSecsSinceEpoch();
+    mLastSyncReminderTime = getCurrentTimeSecs();
     if (mTimer.isActive())
     {
         mTimer.stop();
     }
+}
+
+qint64 SyncReminderNotificationManager::getCurrentTimeSecs() const
+{
+    return QDateTime::currentDateTime().toSecsSinceEpoch() + mDelay;
+}
+
+void SyncReminderNotificationManager::loadEnvVariable()
+{
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    QString value(
+        env.value(ENV_MEGA_REMINDER_DELAY_SECS, ENV_MEGA_REMINDER_DELAY_SECS_DEFAULT_VALUE));
+    mDelay = static_cast<qint64>(QVariant(value).toLongLong());
 }
