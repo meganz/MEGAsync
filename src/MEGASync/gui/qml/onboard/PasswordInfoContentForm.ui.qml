@@ -51,7 +51,7 @@ Rectangle {
             width: parent.width
             height: lineHeight
             radius: height
-            color: ColorTheme.divider
+            color: ColorTheme.borderSubtle
         }
 
         Column {
