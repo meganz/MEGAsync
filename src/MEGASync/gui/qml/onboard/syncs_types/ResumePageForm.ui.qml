@@ -32,7 +32,7 @@ FooterButtonsPage {
     property bool selectiveSyncDone
 
     footerButtons {
-        leftSecondary.visible: false
+        leftPrimary.visible: false
         rightSecondary.text: Strings.viewInSettings
         rightPrimary {
             text: Strings.done
