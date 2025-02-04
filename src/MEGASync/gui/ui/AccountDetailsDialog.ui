@@ -396,7 +396,7 @@ min-width:219px;
             <item row="2" column="1">
              <spacer name="verticalSpacer_6">
               <property name="orientation">
-               <enum>Qt::Orientation::Vertical</enum>
+               <enum>Qt::Vertical</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -409,7 +409,7 @@ min-width:219px;
             <item row="0" column="1">
              <spacer name="verticalSpacer_5">
               <property name="orientation">
-               <enum>Qt::Orientation::Vertical</enum>
+               <enum>Qt::Vertical</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -435,7 +435,7 @@ min-width:219px;
             <item row="1" column="0">
              <spacer name="horizontalSpacer_7">
               <property name="orientation">
-               <enum>Qt::Orientation::Horizontal</enum>
+               <enum>Qt::Horizontal</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -448,7 +448,7 @@ min-width:219px;
             <item row="1" column="2">
              <spacer name="horizontalSpacer_8">
               <property name="orientation">
-               <enum>Qt::Orientation::Horizontal</enum>
+               <enum>Qt::Horizontal</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -543,7 +543,7 @@ min-width:219px;
                   <item>
                    <spacer name="verticalSpacer">
                     <property name="orientation">
-                     <enum>Qt::Orientation::Vertical</enum>
+                     <enum>Qt::Vertical</enum>
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
@@ -576,7 +576,7 @@ min-width:219px;
                   <item>
                    <spacer name="verticalSpacer_2">
                     <property name="orientation">
-                     <enum>Qt::Orientation::Vertical</enum>
+                     <enum>Qt::Vertical</enum>
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
@@ -658,7 +658,7 @@ min-width:219px;
                   <item>
                    <spacer name="verticalSpacer_3">
                     <property name="orientation">
-                     <enum>Qt::Orientation::Vertical</enum>
+                     <enum>Qt::Vertical</enum>
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
@@ -691,7 +691,7 @@ min-width:219px;
                   <item>
                    <spacer name="verticalSpacer_4">
                     <property name="orientation">
-                     <enum>Qt::Orientation::Vertical</enum>
+                     <enum>Qt::Vertical</enum>
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
@@ -1128,14 +1128,14 @@ min-width:219px;
            <property name="rightMargin">
             <number>8</number>
            </property>
-           <item alignment="Qt::AlignmentFlag::AlignVCenter">
+           <item alignment="Qt::AlignVCenter">
             <widget class="QLabel" name="lAvailable">
              <property name="text">
               <string>Available storage</string>
              </property>
             </widget>
            </item>
-           <item alignment="Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignVCenter">
+           <item alignment="Qt::AlignRight|Qt::AlignVCenter">
             <widget class="QLabel" name="lAvailableStorage"/>
            </item>
           </layout>
@@ -1164,10 +1164,10 @@ min-width:219px;
          </size>
         </property>
         <property name="frameShadow">
-         <enum>QFrame::Shadow::Plain</enum>
+         <enum>QFrame::Plain</enum>
         </property>
         <property name="orientation">
-         <enum>Qt::Orientation::Horizontal</enum>
+         <enum>Qt::Horizontal</enum>
         </property>
        </widget>
       </item>
@@ -1217,9 +1217,6 @@ min-width:219px;
             </property>
             <property name="text">
              <string>Of that, size taken up by file versions:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
             </property>
            </widget>
           </item>
