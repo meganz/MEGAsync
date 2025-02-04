@@ -1,10 +1,32 @@
 #include "ContextMenuCommandUpload.h"
 
+#include "ContextMenuCommandGetLink.h"
+#include "ContextMenuCommandView.h"
 #include "MEGAinterface.h"
 #include "SharedState.h"
-#include "Utilities.h"
 
-#include <iostream>
+ContextMenuCommandUpload::ContextMenuCommandUpload()
+{
+    {
+        winrt::com_ptr<ContextMenuCommandGetLink> comPointer =
+            winrt::make_self<ContextMenuCommandGetLink>();
+
+        // Si necesitas un puntero crudo (raw pointer), puedes obtenerlo de esta manera:
+        ContextMenuCommandGetLink* rawPointer = comPointer.get();
+
+        mSubCommands.push_back(rawPointer);
+    }
+
+    {
+        winrt::com_ptr<ContextMenuCommandView> comPointer =
+            winrt::make_self<ContextMenuCommandView>();
+
+        // Si necesitas un puntero crudo (raw pointer), puedes obtenerlo de esta manera:
+        ContextMenuCommandView* rawPointer = comPointer.get();
+
+        mSubCommands.push_back(rawPointer);
+    }
+}
 
 IFACEMETHODIMP ContextMenuCommandUpload::GetTitle(IShellItemArray* psiItemArray, LPWSTR* ppszName)
 {
@@ -37,6 +59,18 @@ IFACEMETHODIMP ContextMenuCommandUpload::Invoke(IShellItemArray* psiItemArray,
 
     if (GetState(psiItemArray) == ECS_ENABLED)
         mContextMenuData.requestUpload();
+
+    return S_OK;
+}
+
+HRESULT ContextMenuCommandUpload::EnumSubCommands(IEnumExplorerCommand** ppEnum)
+{
+    // winrt::com_ptr<SubCommandEnumerator> comPointer = winrt::make_self<SubCommandEnumerator>();
+
+    // SubCommandEnumerator* rawPointer = comPointer.get();
+    // rawPointer->subCommands = mSubCommands;
+    // *ppEnum = rawPointer;
+    *ppEnum = nullptr;
 
     return S_OK;
 }

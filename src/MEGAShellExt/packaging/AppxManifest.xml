@@ -33,31 +33,17 @@
         <desktop4:Extension Category="windows.fileExplorerContextMenus">
           <desktop4:FileExplorerContextMenus>
             <desktop5:ItemType Type="*">
-              <desktop5:Verb Id="MEGAShellExtMenuCmd1" Clsid="F85CF690-330F-4EC2-89E5-3E7ED0344BF5" />
-              <desktop5:Verb Id="MEGAShellExtMenuCmd2" Clsid="F043C633-970A-43DF-A382-9D51C8D14E97" />
-              <desktop5:Verb Id="MEGAShellExtMenuCmd3" Clsid="0313D546-594C-49D6-AF85-F53575420E6C" />
-              <desktop5:Verb Id="MEGAShellExtMenuCmd4" Clsid="9172EFEE-604B-492A-B2B3-9CC6164F52CC" />
-              <desktop5:Verb Id="MEGAShellExtMenuCmd5" Clsid="D13F4639-DCFF-4866-98B8-3FA95388E5E1" />
+              <desktop5:Verb Id="MEGAShellExtMenuCmd1" Clsid="F043C633-970A-43DF-A382-9D51C8D14E97" />
             </desktop5:ItemType>
             <desktop5:ItemType Type="Directory">
-              <desktop5:Verb Id="MEGAShellExtMenuCmd1" Clsid="F85CF690-330F-4EC2-89E5-3E7ED0344BF5" />
-              <desktop5:Verb Id="MEGAShellExtMenuCmd2" Clsid="F043C633-970A-43DF-A382-9D51C8D14E97" />
-              <desktop5:Verb Id="MEGAShellExtMenuCmd3" Clsid="0313D546-594C-49D6-AF85-F53575420E6C" />
-              <desktop5:Verb Id="MEGAShellExtMenuCmd4" Clsid="7FBA45D9-8232-4EA6-A61B-717C1F1819FE" />
-              <desktop5:Verb Id="MEGAShellExtMenuCmd5" Clsid="9172EFEE-604B-492A-B2B3-9CC6164F52CC" />
-              <desktop5:Verb Id="MEGAShellExtMenuCmd6" Clsid="D13F4639-DCFF-4866-98B8-3FA95388E5E1" />
+              <desktop5:Verb Id="MEGAShellExtMenuCmd1" Clsid="F043C633-970A-43DF-A382-9D51C8D14E97" />
             </desktop5:ItemType>
           </desktop4:FileExplorerContextMenus>
         </desktop4:Extension>
         <com:Extension Category="windows.comServer">
           <com:ComServer>
             <com:SurrogateServer DisplayName="MEGAsync Shell Extension">
-              <com:Class Id="F85CF690-330F-4EC2-89E5-3E7ED0344BF5" Path="MEGAShellExt.dll" ThreadingModel="STA"/>
               <com:Class Id="F043C633-970A-43DF-A382-9D51C8D14E97" Path="MEGAShellExt.dll" ThreadingModel="STA"/>
-              <com:Class Id="0313D546-594C-49D6-AF85-F53575420E6C" Path="MEGAShellExt.dll" ThreadingModel="STA"/>
-              <com:Class Id="7FBA45D9-8232-4EA6-A61B-717C1F1819FE" Path="MEGAShellExt.dll" ThreadingModel="STA"/>
-              <com:Class Id="9172EFEE-604B-492A-B2B3-9CC6164F52CC" Path="MEGAShellExt.dll" ThreadingModel="STA"/>
-              <com:Class Id="D13F4639-DCFF-4866-98B8-3FA95388E5E1" Path="MEGAShellExt.dll" ThreadingModel="STA"/>
             </com:SurrogateServer>
           </com:ComServer>
         </com:Extension>
