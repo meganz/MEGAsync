@@ -18,7 +18,7 @@ protected:
     virtual const EXPCMDSTATE GetState(IShellItemArray* psiItemArray) override;
 
 private:
-    std::vector<IExplorerCommand*> mSubCommands;
+    winrt::com_ptr<SubCommandEnumerator> mEnumCommands;
 };
 
 #endif

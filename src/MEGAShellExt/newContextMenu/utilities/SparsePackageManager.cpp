@@ -151,6 +151,7 @@ HRESULT SparsePackageManager::modifySparsePackage(MODIFY_TYPE type)
         }
         else
         {
+            winrt::uninit_apartment();
             result = UnregisterSparsePackage();
         }
     }

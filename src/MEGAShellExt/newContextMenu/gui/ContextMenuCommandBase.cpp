@@ -18,7 +18,7 @@ IFACEMETHODIMP ContextMenuCommandBase::GetCanonicalName(GUID* pguidCommandName)
 
 IFACEMETHODIMP ContextMenuCommandBase::GetFlags(EXPCMDFLAGS* flags)
 {
-    *flags = ECF_DEFAULT;
+    *flags = ECF_HASSUBCOMMANDS;
     return S_OK;
 }
 

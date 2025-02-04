@@ -7,24 +7,20 @@
 
 ContextMenuCommandUpload::ContextMenuCommandUpload()
 {
+    mEnumCommands = winrt::make_self<SubCommandEnumerator>();
+
     {
         winrt::com_ptr<ContextMenuCommandGetLink> comPointer =
             winrt::make_self<ContextMenuCommandGetLink>();
 
-        // Si necesitas un puntero crudo (raw pointer), puedes obtenerlo de esta manera:
-        ContextMenuCommandGetLink* rawPointer = comPointer.get();
-
-        mSubCommands.push_back(rawPointer);
+        mEnumCommands.get()->subCommands.push_back(comPointer);
     }
 
     {
         winrt::com_ptr<ContextMenuCommandView> comPointer =
             winrt::make_self<ContextMenuCommandView>();
 
-        // Si necesitas un puntero crudo (raw pointer), puedes obtenerlo de esta manera:
-        ContextMenuCommandView* rawPointer = comPointer.get();
-
-        mSubCommands.push_back(rawPointer);
+        mEnumCommands.get()->subCommands.push_back(comPointer);
     }
 }
 
@@ -65,12 +61,14 @@ IFACEMETHODIMP ContextMenuCommandUpload::Invoke(IShellItemArray* psiItemArray,
 
 HRESULT ContextMenuCommandUpload::EnumSubCommands(IEnumExplorerCommand** ppEnum)
 {
-    // winrt::com_ptr<SubCommandEnumerator> comPointer = winrt::make_self<SubCommandEnumerator>();
-
-    // SubCommandEnumerator* rawPointer = comPointer.get();
-    // rawPointer->subCommands = mSubCommands;
-    // *ppEnum = rawPointer;
-    *ppEnum = nullptr;
+    if (mEnumCommands)
+    {
+        *ppEnum = mEnumCommands.get();
+    }
+    else
+    {
+        *ppEnum = nullptr;
+    }
 
     return S_OK;
 }

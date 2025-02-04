@@ -36,7 +36,7 @@ public:
         currentIndex(0)
     {}
 
-    std::vector<IExplorerCommand*> subCommands;
+    std::vector<winrt::com_ptr<IExplorerCommand>> subCommands;
 
     // Enumerar los subcomandos
     HRESULT STDMETHODCALLTYPE Next(ULONG celt,
@@ -46,7 +46,7 @@ public:
         ULONG fetched = 0;
         while (currentIndex < subCommands.size() && fetched < celt)
         {
-            rgelt[fetched] = subCommands[currentIndex];
+            rgelt[fetched] = subCommands[currentIndex].get();
             currentIndex++;
             fetched++;
         }
@@ -61,11 +61,12 @@ public:
 
     HRESULT STDMETHODCALLTYPE Skip(ULONG celt)
     {
-        return S_OK;
+        return S_FALSE;
     }
 
     HRESULT STDMETHODCALLTYPE Reset(void)
     {
+        subCommands.clear();
         return S_OK;
     }
 
