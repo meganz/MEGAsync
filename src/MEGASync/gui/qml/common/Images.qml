@@ -75,7 +75,6 @@ QtObject {
     readonly property url person: imagesOnboardingPath + "person.svg"
     readonly property url resume: imagesOnboardingPath + "resume.svg"
     readonly property url mail: imagesOnboardingPath + "mail.svg"
-    readonly property url selectiveSync: imagesOnboardingPath + "selective_sync.svg"
     readonly property url sync: imagesOnboardingPath + "sync.png"
     readonly property url syncIcon: imagesOnboardingPath + "syncb.svg"
 
@@ -92,9 +91,6 @@ QtObject {
     readonly property url editRule: imagesExclusionsPath + "edit.svg"
     readonly property url chevronDown: imagesExclusionsPath + "chevron-down.svg"
     readonly property url info: imagesExclusionsPath + "info.svg"
-
-    readonly property url syncTypeSelective: imagesSyncsPath + "selective_sync.svg"
-    readonly property url syncTypeFull: imagesSyncsPath + "full_sync.svg"
 
     readonly property url addBackup: imagesDeviceCentrePath + "addbackup.svg"
     readonly property url addSync: imagesDeviceCentrePath + "addsync.svg"
