@@ -68,6 +68,7 @@ public:
     void setSyncSetupMode(bool value);
     void lockDataMutex(bool state) const;
     bool isRequestingNodes() const;
+
     int rootIndexSize() const;
     int rootIndexOf(NodeSelectorModelItem *item);
     NodeSelectorModelItem* getRootItem(int index) const;
@@ -192,6 +193,8 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation,
                                     int role = Qt::DisplayRole) const override;
     bool canFetchMore(const QModelIndex &parent) const override;
+
+    virtual void setCurrentRootIndex(const QModelIndex& rootIndex);
     virtual QModelIndex rootIndex(const QModelIndex& visualRootIndex) const;
 
     bool isRequestingNodes() const;
@@ -398,6 +401,9 @@ private:
     void protectModelWhenPerformingActions();
     void protectModelAgainstUpdateBlockingState();
 
+    void executeExtraSpaceLogic();
+    void executeRemoveExtraSpaceLogic();
+
     QIcon getFolderIcon(NodeSelectorModelItem* item) const;
     bool fetchMoreRecursively(const QModelIndex& parentIndex);
 
@@ -426,6 +432,12 @@ private:
 
     // Add nodes secuentially, not all at the same time
     AddNodesQueue mAddNodesQueue;
+
+    // Current root index
+    QModelIndex mCurrentRootIndex;
+    QModelIndex mPreviousRootIndex;
+    bool mRowAdded;
+    bool mRowRemoved;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaNodeList>)

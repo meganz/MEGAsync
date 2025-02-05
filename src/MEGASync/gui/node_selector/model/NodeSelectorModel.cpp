@@ -495,7 +495,9 @@ NodeSelectorModel::NodeSelectorModel(QObject* parent):
     mIsProcessingMoves(false),
     mAcceptDragAndDrop(false),
     mMoveRequestsCounter(0),
-    mAddNodesQueue(this)
+    mAddNodesQueue(this),
+    mRowAdded(false),
+    mRowRemoved(false)
 {
     mCameraFolderAttribute = UserAttributes::CameraUploadFolder::requestCameraUploadFolder();
     mMyChatFilesFolderAttribute = UserAttributes::MyChatFilesFolder::requestMyChatFilesFolder();
@@ -585,6 +587,26 @@ void NodeSelectorModel::protectModelAgainstUpdateBlockingState()
             &QTimer::timeout,
             this,
             &NodeSelectorModel::resetMoveProcessing);
+}
+
+void NodeSelectorModel::executeExtraSpaceLogic()
+{
+    // Remove the previous current index extra row
+    if (mPreviousRootIndex.isValid() && !mRowRemoved)
+    {
+        auto totalRows = rowCount(mPreviousRootIndex);
+        beginRemoveRows(mPreviousRootIndex, totalRows, totalRows);
+        endRemoveRows();
+        mRowRemoved = true;
+    }
+
+    if (mCurrentRootIndex.isValid() && !mRowAdded)
+    {
+        auto totalRows = rowCount(mCurrentRootIndex);
+        beginInsertRows(mCurrentRootIndex, totalRows, totalRows);
+        endInsertRows();
+        mRowAdded = true;
+    }
 }
 
 int NodeSelectorModel::columnCount(const QModelIndex &) const
@@ -1279,15 +1301,21 @@ QModelIndex NodeSelectorModel::parent(const QModelIndex &index) const
 
 int NodeSelectorModel::rowCount(const QModelIndex &parent) const
 {
+    int rows(0);
+
     if (parent.isValid())
     {
         mNodeRequesterWorker->lockDataMutex(true);
         NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
-        auto rows = item ? item->getNumChildren() : 0;
+        rows = item ? item->getNumChildren() : 0;
         mNodeRequesterWorker->lockDataMutex(false);
-        return rows;
     }
-    return mNodeRequesterWorker->rootIndexSize();
+    else
+    {
+        rows = mNodeRequesterWorker->rootIndexSize();
+    }
+
+    return rows;
 }
 
 bool NodeSelectorModel::hasChildren(const QModelIndex &parent) const
@@ -1378,6 +1406,7 @@ QVariant NodeSelectorModel::headerData(int section, Qt::Orientation orientation,
             }
         }
     }
+
     return QAbstractItemModel::headerData(section, orientation, role);
 }
 
@@ -2114,6 +2143,8 @@ void NodeSelectorModel::addRootItems()
 
 void NodeSelectorModel::loadLevelFinished()
 {
+    executeExtraSpaceLogic();
+
     emit levelsAdded(mIndexesToBeExpanded);
 }
 
@@ -2131,6 +2162,22 @@ bool NodeSelectorModel::canFetchMore(const QModelIndex &parent) const
     else
     {
         return mNodeRequesterWorker->rootIndexSize() < rootItemsCount();
+    }
+}
+
+void NodeSelectorModel::setCurrentRootIndex(const QModelIndex& rootIndex)
+{
+    mPreviousRootIndex = mCurrentRootIndex;
+    mCurrentRootIndex = rootIndex.isValid() ? rootIndex : index(0, 0);
+
+    mRowAdded = false;
+    mRowRemoved = false;
+
+    NodeSelectorModelItem* item =
+        static_cast<NodeSelectorModelItem*>(mCurrentRootIndex.internalPointer());
+    if (item && item->areChildrenInitialized())
+    {
+        executeExtraSpaceLogic();
     }
 }
 

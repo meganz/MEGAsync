@@ -107,8 +107,24 @@ void NodeSelectorProxyModel::deleteNode(const QModelIndex& item)
 
 bool NodeSelectorProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-    bool lIsFile = left.data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)).toBool();
-    bool rIsFile = right.data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)).toBool();
+    auto lIsFileVar(left.data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)));
+    auto rIsFileVar(right.data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)));
+
+    // Logic to put the empty space always at the bottom
+    {
+        if (!lIsFileVar.isValid())
+        {
+            return sortOrder() == Qt::DescendingOrder;
+        }
+
+        if (!rIsFileVar.isValid())
+        {
+            return sortOrder() != Qt::DescendingOrder;
+        }
+    }
+
+    bool lIsFile = lIsFileVar.toBool();
+    bool rIsFile = rIsFileVar.toBool();
 
     auto result(false);
 

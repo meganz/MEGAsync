@@ -14,7 +14,7 @@
 
 QList<mega::MegaHandle> NodeSelectorTreeView::mCopiedHandles = QList<mega::MegaHandle>();
 
-NodeSelectorTreeView::NodeSelectorTreeView(QWidget* parent) :
+NodeSelectorTreeView::NodeSelectorTreeView(QWidget* parent):
     LoadingSceneView<NodeSelectorLoadingDelegate, QTreeView>(parent),
     mMegaApi(MegaSyncApp->getMegaApi())
 {
@@ -347,15 +347,29 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
         return;
     }
 
-    if (!indexAt(event->pos()).isValid())
+    auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
+
+    QList<mega::MegaHandle> selectionHandles;
+    QModelIndexList selectedIndexes;
+
+    auto indexClicked = indexAt(event->pos());
+    if (indexClicked.isValid())
     {
-        clearSelection();
+        auto currentSelectionHandles(getMultiSelectionNodeHandle());
+        auto indexClickedHandle(proxyModel->getHandle(indexClicked));
+        if (currentSelectionHandles.contains(indexClickedHandle))
+        {
+            selectionHandles = currentSelectionHandles;
+            selectedIndexes = selectionModel()->selectedRows();
+        }
+        else if (indexClickedHandle != mega::INVALID_HANDLE)
+        {
+            selectedIndexes.append(indexClicked);
+            selectionHandles.append(indexClickedHandle);
+        }
     }
 
-    auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
     auto removeType(proxyModel->canBeDeleted());
-
-    QList<mega::MegaHandle> selectionHandles{getMultiSelectionNodeHandle()};
 
     QMap<int, QAction*> actions;
 
@@ -371,18 +385,16 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
         actions.insert(ActionsOrder::COPY, copyAction);
     }
 
-    auto selectedIndexes(selectionModel()->selectedRows());
-
     if (selectedIndexes.size() <= 1)
     {
         addPasteMenuAction(actions);
     }
 
-    if (!selectionHandles.isEmpty())
+    if (!selectedIndexes.isEmpty())
     {
         auto selectedIndex = proxyModel->mapToSource(selectedIndexes.first());
 
-        if (selectionHandles.size() == 1)
+        if (selectedIndexes.size() == 1)
         {
             if (areAllEligibleForRestore(selectionHandles))
             {
@@ -493,6 +505,7 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
             }
         }
     }
+
     QAction* lastActionAdded(nullptr);
 
     QMetaEnum e = QMetaEnum::fromType<ActionsOrder>();

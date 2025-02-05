@@ -571,7 +571,6 @@ void NodeSelectorTreeViewWidget::onItemDoubleClick(const QModelIndex &index)
     setRootIndex(index);
     checkBackForwardButtons();
     checkButtonsVisibility();
-    // selectIndex(index, true);
 }
 
 void NodeSelectorTreeViewWidget::checkButtonsVisibility()
@@ -717,6 +716,12 @@ void NodeSelectorTreeViewWidget::onRenameClicked()
 
 void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &handles, bool permanently)
 {
+    auto selectedRows = ui->tMegaFolders->selectionModel()->selectedRows();
+    if (selectedRows.isEmpty())
+    {
+        return;
+    }
+
     auto getNode = [this](mega::MegaHandle handle) -> std::shared_ptr<mega::MegaNode>{
         auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
         int access = mMegaApi->getAccess(node.get());
@@ -778,10 +783,8 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
             };
         }
     }
-    else
+    else if (handles.size() > 1)
     {
-        auto selectedRows = ui->tMegaFolders->selectionModel()->selectedRows();
-
         if(permanently)
         {
             msgInfo.text = tr("You are about to permanently remove %n file.\nWould you like to proceed?", "", selectedRows.size());
@@ -1303,6 +1306,7 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
     //As it is the only one that have childrens
     auto node_column_idx = proxy_idx.sibling(proxy_idx.row(), NodeSelectorModel::COLUMN::NODE);
 
+    mModel->setCurrentRootIndex(mProxyModel->mapToSource(node_column_idx));
     ui->tMegaFolders->setRootIndex(node_column_idx);
 
     // Remove in case the rootindex is in the backward list

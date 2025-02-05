@@ -189,6 +189,14 @@ NodeSelectorModel::RemoveType NodeSelectorModelIncomingShares::canBeDeleted() co
     return NodeSelectorModel::RemoveType::PERMANENT_REMOVE;
 }
 
+void NodeSelectorModelIncomingShares::setCurrentRootIndex(const QModelIndex& rootIndex)
+{
+    if (rootIndex.isValid())
+    {
+        NodeSelectorModel::setCurrentRootIndex(rootIndex);
+    }
+}
+
 void NodeSelectorModelIncomingShares::onRootItemsCreated()
 {
     rootItemsLoaded();
@@ -338,7 +346,7 @@ void NodeSelectorModelBackups::loadLevelFinished()
     }
     if(mBackupDevicesSize == 0)
     {
-        emit levelsAdded(mIndexesToBeExpanded);
+        NodeSelectorModel::loadLevelFinished();
     }
 }
 

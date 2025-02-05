@@ -31,7 +31,7 @@ public:
 
     enum ActionsOrder
     {
-        RESTORE,
+        RESTORE = 0,
         SEPARATOR_1,
         MEGA_LINK,
         SYNC,

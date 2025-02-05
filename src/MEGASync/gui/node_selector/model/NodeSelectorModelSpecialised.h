@@ -58,6 +58,9 @@ public:
 
     NodeSelectorModel::RemoveType canBeDeleted() const override;
 
+    // No extra space for search
+    void setCurrentRootIndex(const QModelIndex& rootIndex) override;
+
 public slots:
     void onItemInfoUpdated(int role);
 
@@ -134,6 +137,9 @@ public:
     bool canCopyNodes() const override;
 
     const NodeSelectorModelItemSearch::Types &searchedTypes() const;
+
+    // No extra space for search
+    void setCurrentRootIndex(const QModelIndex&) override {}
 
 protected:
     void proxyInvalidateFinished() override;
