@@ -10,23 +10,20 @@
 
 namespace
 {
-constexpr int ONE_HOUR_MS = 1000 * 60 * 60; // 1 hour
-constexpr int TIME_TO_FIRST_REMINDER_MS = ONE_HOUR_MS * 2; // 2 hours
-constexpr int TWO_HOURS_S = TIME_TO_FIRST_REMINDER_MS / 1000; // 2 hours in seconds
-constexpr quint64 SECS_PER_DAY = 60 * 60 * 24;
-constexpr quint64 SECS_TO_FIRST_REMINDER = 2 * 60 * 60; // 2 hours in seconds
-constexpr quint64 DAYS_TO_SECOND_REMINDER = 10;
-constexpr quint64 DAYS_TO_MONTHLY_REMINDER = 30;
-constexpr quint64 DAYS_TO_BIMONTHLY_REMINDER = 60;
-const std::map<SyncReminderNotificationManager::ReminderState, quint64> STATE_DURATIONS = {
+constexpr qint64 TIME_TO_FIRST_REMINDER_MS = 1000 * 60 * 60 * 2; // 2 hours
+constexpr qint64 TWO_HOURS_S = TIME_TO_FIRST_REMINDER_MS / 1000; // 2 hours in seconds
+constexpr qint64 SECS_PER_DAY = 60 * 60 * 24;
+constexpr qint64 SECS_TO_FIRST_REMINDER = 2 * 60 * 60; // 2 hours in seconds
+constexpr qint64 DAYS_TO_SECOND_REMINDER = 10;
+constexpr qint64 DAYS_TO_MONTHLY_REMINDER = 30;
+constexpr qint64 DAYS_TO_BIMONTHLY_REMINDER = 60;
+constexpr qint64 SECS_TO_BIMONTHLY_REMINDER = DAYS_TO_BIMONTHLY_REMINDER * SECS_PER_DAY;
+const std::map<SyncReminderNotificationManager::ReminderState, qint64> STATE_DURATIONS = {
     {SyncReminderNotificationManager::ReminderState::FIRST_REMINDER, TWO_HOURS_S},
     {SyncReminderNotificationManager::ReminderState::SECOND_REMINDER,
      DAYS_TO_SECOND_REMINDER* SECS_PER_DAY},
     {SyncReminderNotificationManager::ReminderState::MONTHLY,
-     DAYS_TO_MONTHLY_REMINDER* SECS_PER_DAY},
-    {SyncReminderNotificationManager::ReminderState::BIMONTHLY,
-     DAYS_TO_BIMONTHLY_REMINDER* SECS_PER_DAY},
-};
+     DAYS_TO_MONTHLY_REMINDER* SECS_PER_DAY}};
 const QLatin1String ENV_MEGA_REMINDER_DELAY_SECS("MEGA_REMINDER_DELAY_SECS");
 const QLatin1String ENV_MEGA_REMINDER_DELAY_SECS_DEFAULT_VALUE("0");
 const QLatin1String
@@ -69,9 +66,10 @@ SyncReminderNotificationManager::~SyncReminderNotificationManager()
 
 void SyncReminderNotificationManager::onSyncsDialogClosed()
 {
-    if (mActions.count(mState.value()))
+    auto lastState(mLastState.value());
+    if (mActions.count(lastState))
     {
-        mActions[mState.value()]->resetClicked();
+        mActions[lastState]->resetClicked();
     }
 }
 
@@ -102,9 +100,8 @@ void SyncReminderNotificationManager::onSyncAddRequestStatus(int errorCode,
     }
     else
     {
-        int currentTime(static_cast<int>(getCurrentTimeSecs()));
-        int maxTime(static_cast<int>(mLastSyncReminderTime.value()) +
-                    static_cast<int>(mTimeTestInfo.mSyncCreationMaxInterval));
+        auto currentTime(getCurrentTimeSecs());
+        auto maxTime(mLastSyncReminderTime.value() + mTimeTestInfo.mSyncCreationMaxInterval);
         if (currentTime <= maxTime)
         {
             // Send event if a sync has been created before the first 15 mins. after
@@ -171,9 +168,8 @@ void SyncReminderNotificationManager::init(bool comesFromOnboarding)
     else
     {
         calculateCurrentState();
-        ReminderState expectedLastState(
-            static_cast<ReminderState>(static_cast<int>(mState.value()) - 1));
-        if (expectedLastState > mLastState.value())
+        ReminderState expectedLastState(getPreviousState());
+        if (expectedLastState > mLastState.value() || isBimonthlyPending())
         {
             // Pending notification required when the current time has passed the time to show the
             // last reminder.
@@ -266,28 +262,28 @@ void SyncReminderNotificationManager::updateState()
 
 bool SyncReminderNotificationManager::isNeededToChangeFirstState() const
 {
-    quint64 secsCount(getSecsToNextReminder());
+    qint64 secsCount(getSecsToNextReminder());
     return secsCount >= SECS_TO_FIRST_REMINDER;
 }
 
-bool SyncReminderNotificationManager::isNeededToChangeState(quint64 daysToNextReminder) const
+bool SyncReminderNotificationManager::isNeededToChangeState(qint64 daysToNextReminder) const
 {
-    quint64 daysCount(getDaysToNextReminder());
+    qint64 daysCount(getDaysToNextReminder());
     return daysCount >= daysToNextReminder;
 }
 
-quint64 SyncReminderNotificationManager::getSecsToNextReminder() const
+qint64 SyncReminderNotificationManager::getSecsToNextReminder() const
 {
     auto lastTime(QDateTime::fromSecsSinceEpoch(mLastSyncReminderTime.value()));
     auto currentTime(QDateTime::fromSecsSinceEpoch(getCurrentTimeSecs()));
-    return static_cast<quint64>(lastTime.secsTo(currentTime));
+    return static_cast<qint64>(lastTime.secsTo(currentTime));
 }
 
-quint64 SyncReminderNotificationManager::getDaysToNextReminder() const
+qint64 SyncReminderNotificationManager::getDaysToNextReminder() const
 {
     auto lastTime(QDateTime::fromSecsSinceEpoch(mLastSyncReminderTime.value()));
     auto currentTime(QDateTime::fromSecsSinceEpoch(getCurrentTimeSecs()));
-    return static_cast<quint64>(lastTime.daysTo(currentTime));
+    return static_cast<qint64>(lastTime.daysTo(currentTime));
 }
 
 void SyncReminderNotificationManager::run()
@@ -359,11 +355,12 @@ QString SyncReminderNotificationManager::getNotificationMessage(ReminderState st
 
 void SyncReminderNotificationManager::calculateCurrentState()
 {
-    quint64 elapsedSeconds = getSecsToNextReminder();
+    qint64 elapsedSeconds = getSecsToNextReminder();
 
     for (const auto& [state, duration]: STATE_DURATIONS)
     {
-        if (elapsedSeconds <= duration)
+        if (static_cast<int>(state) > static_cast<int>(mLastState.value()) &&
+            elapsedSeconds <= duration)
         {
             mState = state;
             return;
@@ -378,15 +375,14 @@ int SyncReminderNotificationManager::calculateMsecsToCurrentState() const
     QDateTime nextReminderTime;
     auto lastTime(QDateTime::fromSecsSinceEpoch(mLastSyncReminderTime.value()));
     auto currentTime(QDateTime::fromSecsSinceEpoch(getCurrentTimeSecs()));
-    auto currentState(mState.value());
-    if (currentState == ReminderState::FIRST_REMINDER)
+    if (mState.value() == ReminderState::FIRST_REMINDER)
     {
         nextReminderTime = lastTime.addSecs(TWO_HOURS_S);
     }
     else
     {
         auto remainingDays(0);
-        switch (currentState)
+        switch (mState.value())
         {
             case ReminderState::SECOND_REMINDER:
             {
@@ -408,27 +404,33 @@ int SyncReminderNotificationManager::calculateMsecsToCurrentState() const
                 break;
             }
         }
-        // Increment the days to the next reminder if the current time is closer to the next
-        // reminder than to the current time or use the days to the next reminder.
-        auto daysToCurrentTime(lastTime.daysTo(currentTime));
-        if (daysToCurrentTime < remainingDays)
-        {
-            daysToCurrentTime++;
-        }
-        else
-        {
-            daysToCurrentTime = remainingDays;
-        }
 
         // Calculate the time to the next reminder.
+        auto daysToCurrentTime(getDaysToCurrentTime(lastTime, currentTime, remainingDays));
         nextReminderTime = lastTime.addDays(daysToCurrentTime);
     }
+
     return static_cast<int>(currentTime.msecsTo(nextReminderTime));
 }
 
 void SyncReminderNotificationManager::startNextTimer()
 {
+    if (mTimer.isActive())
+    {
+        mTimer.stop();
+    }
+
     auto msecsToNextReminder(calculateMsecsToCurrentState());
+    if (msecsToNextReminder <= 0)
+    {
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
+                           QString::fromLatin1("Msecs to next sync reminder is negative: %1")
+                               .arg(msecsToNextReminder)
+                               .toUtf8()
+                               .constData());
+        return;
+    }
+
     mTimer.start(msecsToNextReminder);
 }
 
@@ -462,10 +464,40 @@ qint64 SyncReminderNotificationManager::loadEnvVariable(const QString& envVarNam
 {
     QString value(
         QProcessEnvironment::systemEnvironment().value(envVarName, envVarDefaultValue).trimmed());
-    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
-                       QString::fromLatin1("Sync reminder env var %1 value: %2")
-                           .arg(envVarName, value)
-                           .toUtf8()
-                           .constData());
     return static_cast<qint64>(QVariant(value).toLongLong());
+}
+
+SyncReminderNotificationManager::ReminderState
+    SyncReminderNotificationManager::getPreviousState() const
+{
+    return static_cast<ReminderState>(static_cast<int>(mState.value()) - 1);
+}
+
+qint64 SyncReminderNotificationManager::getDaysToCurrentTime(const QDateTime& lastTime,
+                                                             const QDateTime& currentTime,
+                                                             qint64 remainingDays) const
+{
+    // Increment the days to the next reminder if the current time is closer to the next
+    // reminder than to the current time or use the days to the next reminder.
+    auto daysToCurrentTime(lastTime.daysTo(currentTime));
+    if (daysToCurrentTime < remainingDays)
+    {
+        daysToCurrentTime++;
+    }
+    else
+    {
+        daysToCurrentTime = remainingDays;
+    }
+    return daysToCurrentTime;
+}
+
+bool SyncReminderNotificationManager::isBimonthlyPending() const
+{
+    if (mState != ReminderState::BIMONTHLY)
+    {
+        return false;
+    }
+
+    auto secsToNextReminder(getSecsToNextReminder());
+    return secsToNextReminder >= SECS_TO_BIMONTHLY_REMINDER;
 }

@@ -59,9 +59,9 @@ private:
     void updateStates();
     void updateState();
     bool isNeededToChangeFirstState() const;
-    bool isNeededToChangeState(quint64 daysToNextReminder) const;
-    quint64 getSecsToNextReminder() const;
-    quint64 getDaysToNextReminder() const;
+    bool isNeededToChangeState(qint64 daysToNextReminder) const;
+    qint64 getSecsToNextReminder() const;
+    qint64 getDaysToNextReminder() const;
     QString getNotificationTitle(ReminderState state) const;
     QString getNotificationMessage(ReminderState state) const;
     int calculateMsecsToCurrentState() const;
@@ -71,6 +71,11 @@ private:
     qint64 getCurrentTimeSecs() const;
     void loadEnvVariables();
     qint64 loadEnvVariable(const QString& envVarName, const QString& envVarDefaultValue);
+    ReminderState getPreviousState() const;
+    qint64 getDaysToCurrentTime(const QDateTime& lastTime,
+                                const QDateTime& currentTime,
+                                qint64 remainingDays) const;
+    bool isBimonthlyPending() const;
 
 private slots:
     void run();
