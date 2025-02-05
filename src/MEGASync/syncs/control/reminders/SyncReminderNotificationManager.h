@@ -38,12 +38,18 @@ signals:
     void stateChanged();
 
 private:
+    struct TimeTestInfo
+    {
+        qint64 mDelay;
+        qint64 mSyncCreationMaxInterval;
+    };
+
     std::map<ReminderState, std::unique_ptr<SyncReminderAction>> mActions;
     std::optional<ReminderState> mState;
     std::optional<ReminderState> mLastState;
     std::optional<qint64> mLastSyncReminderTime;
     QTimer mTimer;
-    qint64 mDelay;
+    TimeTestInfo mTimeTestInfo;
 
     void readFromPreferences();
     void writeToPreferences();
@@ -63,7 +69,8 @@ private:
     void calculateCurrentState();
     void moveToDoneState();
     qint64 getCurrentTimeSecs() const;
-    void loadEnvVariable();
+    void loadEnvVariables();
+    qint64 loadEnvVariable(const QString& envVarName, const QString& envVarDefaultValue);
 
 private slots:
     void run();

@@ -13,7 +13,6 @@ namespace
 constexpr int ONE_HOUR_MS = 1000 * 60 * 60; // 1 hour
 constexpr int TIME_TO_FIRST_REMINDER_MS = ONE_HOUR_MS * 2; // 2 hours
 constexpr int TWO_HOURS_S = TIME_TO_FIRST_REMINDER_MS / 1000; // 2 hours in seconds
-constexpr int FIFTEEN_MINS_S = TWO_HOURS_S / 8; // 15 mins in seconds
 constexpr quint64 SECS_PER_DAY = 60 * 60 * 24;
 constexpr quint64 SECS_TO_FIRST_REMINDER = 2 * 60 * 60; // 2 hours in seconds
 constexpr quint64 DAYS_TO_SECOND_REMINDER = 10;
@@ -30,6 +29,9 @@ const std::map<SyncReminderNotificationManager::ReminderState, quint64> STATE_DU
 };
 const QLatin1String ENV_MEGA_REMINDER_DELAY_SECS("MEGA_REMINDER_DELAY_SECS");
 const QLatin1String ENV_MEGA_REMINDER_DELAY_SECS_DEFAULT_VALUE("0");
+const QLatin1String
+    ENV_MEGA_SYNC_CREATION_MAX_INTERVAL_SECS("MEGA_SYNC_CREATION_MAX_INTERVAL_SECS");
+const QLatin1String ENV_MEGA_SYNC_CREATION_MAX_INTERVAL_SECS_DEFAULT_VALUE("900"); // 15 mins
 }
 
 SyncReminderNotificationManager::SyncReminderNotificationManager(bool comesFromOnboarding):
@@ -40,7 +42,7 @@ SyncReminderNotificationManager::SyncReminderNotificationManager(bool comesFromO
 {
     readFromPreferences();
 
-    loadEnvVariable();
+    loadEnvVariables();
 
     if (mLastState != ReminderState::DONE)
     {
@@ -99,7 +101,8 @@ void SyncReminderNotificationManager::onSyncAddRequestStatus(int errorCode,
     else
     {
         int currentTime(static_cast<int>(getCurrentTimeSecs()));
-        int maxTime(static_cast<int>(mLastSyncReminderTime.value()) + FIFTEEN_MINS_S);
+        int maxTime(static_cast<int>(mLastSyncReminderTime.value()) +
+                    static_cast<int>(mTimeTestInfo.mSyncCreationMaxInterval));
         if (currentTime <= maxTime)
         {
             // Send event if a sync has been created before the first 15 mins. after
@@ -274,14 +277,14 @@ bool SyncReminderNotificationManager::isNeededToChangeState(quint64 daysToNextRe
 quint64 SyncReminderNotificationManager::getSecsToNextReminder() const
 {
     auto lastTime(QDateTime::fromSecsSinceEpoch(mLastSyncReminderTime.value()));
-    auto currentTime(QDateTime::currentDateTime());
+    auto currentTime(QDateTime::fromSecsSinceEpoch(getCurrentTimeSecs()));
     return static_cast<quint64>(lastTime.secsTo(currentTime));
 }
 
 quint64 SyncReminderNotificationManager::getDaysToNextReminder() const
 {
     auto lastTime(QDateTime::fromSecsSinceEpoch(mLastSyncReminderTime.value()));
-    auto currentTime(QDateTime::currentDateTime());
+    auto currentTime(QDateTime::fromSecsSinceEpoch(getCurrentTimeSecs()));
     return static_cast<quint64>(lastTime.daysTo(currentTime));
 }
 
@@ -440,18 +443,27 @@ void SyncReminderNotificationManager::moveToDoneState()
 
 qint64 SyncReminderNotificationManager::getCurrentTimeSecs() const
 {
-    return QDateTime::currentDateTime().toSecsSinceEpoch() + mDelay;
+    return QDateTime::currentDateTime().toSecsSinceEpoch() + mTimeTestInfo.mDelay;
 }
 
-void SyncReminderNotificationManager::loadEnvVariable()
+void SyncReminderNotificationManager::loadEnvVariables()
 {
-    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    mTimeTestInfo.mDelay =
+        loadEnvVariable(ENV_MEGA_REMINDER_DELAY_SECS, ENV_MEGA_REMINDER_DELAY_SECS_DEFAULT_VALUE);
+    mTimeTestInfo.mSyncCreationMaxInterval =
+        loadEnvVariable(ENV_MEGA_SYNC_CREATION_MAX_INTERVAL_SECS,
+                        ENV_MEGA_SYNC_CREATION_MAX_INTERVAL_SECS_DEFAULT_VALUE);
+}
+
+qint64 SyncReminderNotificationManager::loadEnvVariable(const QString& envVarName,
+                                                        const QString& envVarDefaultValue)
+{
     QString value(
-        env.value(ENV_MEGA_REMINDER_DELAY_SECS, ENV_MEGA_REMINDER_DELAY_SECS_DEFAULT_VALUE));
+        QProcessEnvironment::systemEnvironment().value(envVarName, envVarDefaultValue).trimmed());
     mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
-                       QString::fromLatin1("Sync reminder MEGA_REMINDER_DELAY_SECS value: %1")
-                           .arg(value)
+                       QString::fromLatin1("Sync reminder env var %1 value: %2")
+                           .arg(envVarName, value)
                            .toUtf8()
                            .constData());
-    mDelay = static_cast<qint64>(QVariant(value.trimmed()).toLongLong());
+    return static_cast<qint64>(QVariant(value).toLongLong());
 }
