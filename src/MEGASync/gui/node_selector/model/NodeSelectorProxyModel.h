@@ -35,11 +35,14 @@ public:
     void deleteNode(const QModelIndex& item);
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
     void setSourceModel(QAbstractItemModel *sourceModel) override;
-    void setExpandMapped(bool value){mExpandMapped = value;}
-    NodeSelectorModel* getMegaModel();
+    void setExpandMapped(bool value){mExpandMapped = value;
+    }
+
+    NodeSelectorModel* getMegaModel() const;
     bool isModelProcessing() const;
 
     virtual int canBeDeleted() const;
+    bool hasContextMenuOptions(const QModelIndexList& indexes) const;
 
 signals:
     void expandReady();

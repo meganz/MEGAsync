@@ -245,7 +245,7 @@ QModelIndex
     return QModelIndex();
 }
 
-NodeSelectorModel *NodeSelectorProxyModel::getMegaModel()
+NodeSelectorModel* NodeSelectorProxyModel::getMegaModel() const
 {
     return dynamic_cast<NodeSelectorModel*>(sourceModel());
 }
@@ -258,6 +258,24 @@ bool NodeSelectorProxyModel::isModelProcessing() const
 int NodeSelectorProxyModel::canBeDeleted() const
 {
     return dynamic_cast<NodeSelectorModel*>(sourceModel())->canBeDeleted();
+}
+
+bool NodeSelectorProxyModel::hasContextMenuOptions(const QModelIndexList& indexes) const
+{
+    for (auto& index: qAsConst(indexes))
+    {
+        auto indexItem(getMegaModel()->getItemByIndex(mapToSource(index)));
+        if (indexItem && indexItem->getNode())
+        {
+            if (indexItem->isCloudDrive() || indexItem->isRubbishBin() || indexItem->isVault() ||
+                indexItem->isVaultDevice())
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
 }
 
 void NodeSelectorProxyModel::invalidateModel(const QList<QPair<mega::MegaHandle,QModelIndex>>& parents, bool force)

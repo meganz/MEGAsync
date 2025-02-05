@@ -217,6 +217,8 @@ void NodeSelectorTreeView::keyPressEvent(QKeyEvent *event)
             }
         }
     }
+
+    QTreeView::keyPressEvent(event);
 }
 
 void NodeSelectorTreeView::onCopyShortcutActivated()
@@ -367,6 +369,11 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
             selectedIndexes.append(indexClicked);
             selectionHandles.append(indexClickedHandle);
         }
+    }
+
+    if (!proxyModel->hasContextMenuOptions(selectedIndexes))
+    {
+        return;
     }
 
     auto removeType(proxyModel->canBeDeleted());

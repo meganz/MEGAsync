@@ -372,7 +372,12 @@ bool NodeSelectorModelItem::isRubbishBin() const
     return mNode->getHandle() == MegaSyncApp->getRubbishNode()->getHandle();
 }
 
-bool NodeSelectorModelItem::isVault()
+bool NodeSelectorModelItem::isVault() const
+{
+    return false;
+}
+
+bool NodeSelectorModelItem::isVaultDevice() const
 {
     return false;
 }
@@ -444,10 +449,15 @@ bool NodeSelectorModelItemBackup::isSyncable()
     return false;
 }
 
-bool NodeSelectorModelItemBackup::isVault()
+bool NodeSelectorModelItemBackup::isVault() const
 {
     //if it is a backup item and it doesn´t have parent it is the root node in backups tree
     return parent() == nullptr;
+}
+
+bool NodeSelectorModelItemBackup::isVaultDevice() const
+{
+    return parent() && parent()->parent() == nullptr;
 }
 
 NodeSelectorModelItem *NodeSelectorModelItemBackup::createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem)

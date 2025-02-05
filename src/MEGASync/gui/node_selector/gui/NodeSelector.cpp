@@ -157,8 +157,11 @@ void NodeSelector::keyPressEvent(QKeyEvent *e)
     case Qt::Key_Return:
     {
         e->ignore();
+        return;
     }
     }
+
+    QDialog::keyPressEvent(e);
 }
 
 void NodeSelector::mousePressEvent(QMouseEvent *event)

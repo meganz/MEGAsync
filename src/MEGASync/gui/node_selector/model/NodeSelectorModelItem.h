@@ -51,7 +51,8 @@ public:
     QIcon getStatusIcons();
     Status getStatus() const;
     virtual bool isSyncable();
-    virtual bool isVault();
+    virtual bool isVault() const;
+    virtual bool isVaultDevice() const;
     bool isCloudDrive() const;
     bool isRubbishBin() const;
     QPointer<NodeSelectorModelItem> addNode(std::shared_ptr<mega::MegaNode> node);
@@ -122,7 +123,8 @@ public:
     explicit NodeSelectorModelItemBackup(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0);
     ~NodeSelectorModelItemBackup();
     bool isSyncable() override;
-    bool isVault() override;
+    bool isVault() const override;
+    bool isVaultDevice() const override;
 
 private:
     NodeSelectorModelItem* createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0) override;
