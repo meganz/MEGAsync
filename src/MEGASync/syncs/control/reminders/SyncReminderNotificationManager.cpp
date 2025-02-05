@@ -448,5 +448,10 @@ void SyncReminderNotificationManager::loadEnvVariable()
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
     QString value(
         env.value(ENV_MEGA_REMINDER_DELAY_SECS, ENV_MEGA_REMINDER_DELAY_SECS_DEFAULT_VALUE));
-    mDelay = static_cast<qint64>(QVariant(value).toLongLong());
+    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
+                       QString::fromLatin1("Sync reminder MEGA_REMINDER_DELAY_SECS value: %1")
+                           .arg(value)
+                           .toUtf8()
+                           .constData());
+    mDelay = static_cast<qint64>(QVariant(value.trimmed()).toLongLong());
 }
