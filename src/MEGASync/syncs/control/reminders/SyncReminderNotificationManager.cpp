@@ -59,10 +59,12 @@ SyncReminderNotificationManager::SyncReminderNotificationManager(bool comesFromO
 
 SyncReminderNotificationManager::~SyncReminderNotificationManager()
 {
-    if (mTimer.isActive())
-    {
-        mTimer.stop();
-    }
+    disconnect(this,
+               &SyncReminderNotificationManager::stateChanged,
+               this,
+               &SyncReminderNotificationManager::run);
+    mTimer.stop();
+    mTimer.disconnect();
 }
 
 void SyncReminderNotificationManager::onSyncsDialogClosed()
@@ -375,7 +377,7 @@ int SyncReminderNotificationManager::calculateMsecsToCurrentState() const
 {
     QDateTime nextReminderTime;
     auto lastTime(QDateTime::fromSecsSinceEpoch(mLastSyncReminderTime.value()));
-    auto currentTime(QDateTime::currentDateTime());
+    auto currentTime(QDateTime::fromSecsSinceEpoch(getCurrentTimeSecs()));
     auto currentState(mState.value());
     if (currentState == ReminderState::FIRST_REMINDER)
     {

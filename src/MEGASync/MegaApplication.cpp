@@ -1479,15 +1479,14 @@ if (!preferences->lastExecutionTime())
     {
         bool comesFromOnboarding(
             !preferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN));
-        mSyncReminderNotificationManager =
-            std::make_unique<SyncReminderNotificationManager>(comesFromOnboarding);
+        mSyncReminderNotificationManager = new SyncReminderNotificationManager(comesFromOnboarding);
         connect(&SyncController::instance(),
                 &SyncController::syncAddStatus,
-                mSyncReminderNotificationManager.get(),
+                mSyncReminderNotificationManager,
                 &SyncReminderNotificationManager::onSyncAddRequestStatus);
         connect(this,
                 &MegaApplication::syncsDialogClosed,
-                mSyncReminderNotificationManager.get(),
+                mSyncReminderNotificationManager,
                 &SyncReminderNotificationManager::onSyncsDialogClosed);
     }
 }
@@ -1556,7 +1555,7 @@ void MegaApplication::onLogout()
                 DialogOpener::closeAllDialogs();
                 mGfxProvider.reset();
                 mUserMessageController.reset();
-                mSyncReminderNotificationManager.reset();
+                mSyncReminderNotificationManager->deleteLater();
                 createUserMessageController();
                 infoDialog->deleteLater();
                 infoDialog = nullptr;
@@ -2263,7 +2262,7 @@ void MegaApplication::cleanAll()
 
     mGfxProvider.reset();
     mUserMessageController.reset();
-    mSyncReminderNotificationManager.reset();
+    mSyncReminderNotificationManager->deleteLater();
     infoDialog->deleteLater();
 
     // Delete menus and menu items
@@ -4571,11 +4570,6 @@ void MegaApplication::showUpsellDialog(UpsellPlans::ViewMode viewMode)
         dialogInfo = QMLComponent::addDialog<UpsellComponent>(nullptr, viewMode);
         dialogInfo->getDialog()->setShowWhenCreated();
     }
-}
-
-SyncReminderNotificationManager* MegaApplication::getSyncReminderNotificationManager()
-{
-    return mSyncReminderNotificationManager.get();
 }
 
 void MegaApplication::processSetDownload(const QString& publicLink,
