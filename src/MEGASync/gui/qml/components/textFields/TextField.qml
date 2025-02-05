@@ -19,6 +19,7 @@ FocusScope {
     property alias acceptableInput: textField.acceptableInput
     property alias validator: textField.validator
     property alias hint: hintItem
+    property alias secondaryHint: secondaryHintItem
     property alias title: titleItem.text
     property alias rightIconVisible: rightIcon.visible
     property alias leftIconColor: leftIcon.color
@@ -26,6 +27,7 @@ FocusScope {
     property alias horizontalAlignment: textField.horizontalAlignment
 
     property bool error: false
+    property bool secondaryError: false
     property string rightIconSource: ""
     property string leftIconSource: ""
 
@@ -154,7 +156,7 @@ FocusScope {
                     if(!enabled) {
                         color = colors.borderDisabled;
                     }
-                    else if(error) {
+                    else if(error || secondaryError) {
                         color = colors.borderError;
                     }
                     else if(textField.activeFocus) {
@@ -233,6 +235,28 @@ FocusScope {
             left: parent.left
             right: parent.right
             top: textField.bottom
+            topMargin: 2
+            leftMargin: sizes.focusBorderWidth
+            rightMargin: sizes.focusBorderWidth
+        }
+        type: Constants.MessageType.ERROR
+        visible: false
+    }
+
+    /*
+    We can have two error sources bound to the same text field.
+    For instance controller 1 could be bound to hintItem to show error for local folders.
+    controller 2 could be bound to secondaryHintItem to show remote error, need to keep property
+    binding on both to allow error translation on language change. Both error could be shown
+    at the same time.
+    */
+    Texts.HintText {
+        id: secondaryHintItem
+
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: hintItem.bottom
             topMargin: 2
             leftMargin: sizes.focusBorderWidth
             rightMargin: sizes.focusBorderWidth

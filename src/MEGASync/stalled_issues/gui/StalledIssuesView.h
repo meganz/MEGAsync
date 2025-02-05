@@ -1,12 +1,12 @@
 #ifndef STALLEDISSUESVIEW_H
 #define STALLEDISSUESVIEW_H
 
-#include <ViewLoadingScene.h>
-#include <StalledIssueLoadingItem.h>
+#include "StalledIssueLoadingItem.h"
+#include "ViewLoadingScene.h"
 
-#include <QTreeView>
 #include <QMouseEvent>
 #include <QTimer>
+#include <QTreeView>
 
 class StalledIssuesView : public LoadingSceneView<StalledIssueLoadingItem, QTreeView>
 {

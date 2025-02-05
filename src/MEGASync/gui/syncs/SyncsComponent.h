@@ -1,7 +1,7 @@
 #ifndef SYNCS_COMPONENT_H
 #define SYNCS_COMPONENT_H
 
-#include "qml/QmlDialogWrapper.h"
+#include "QmlDialogWrapper.h"
 
 class SyncsComponent : public QMLComponent
 {

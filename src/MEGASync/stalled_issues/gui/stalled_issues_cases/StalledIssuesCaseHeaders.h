@@ -1,7 +1,8 @@
 #ifndef STALLEDISSUESCASEHEADERS_H
 #define STALLEDISSUESCASEHEADERS_H
 
-#include <StalledIssueHeader.h>
+#include "StalledIssueHeader.h"
+
 #include <QPointer>
 
 class StalledIssueHeaderCase : public QObject

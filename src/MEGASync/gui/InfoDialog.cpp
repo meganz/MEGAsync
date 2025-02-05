@@ -2,20 +2,15 @@
 
 #include "AccountDetailsDialog.h"
 #include "AccountDetailsManager.h"
-#include "assert.h"
+#include "AppState.h"
 #include "CreateRemoveBackupsManager.h"
 #include "CreateRemoveSyncsManager.h"
 #include "DialogOpener.h"
-#include "GuiUtilities.h"
 #include "MegaApplication.h"
 #include "MenuItemAction.h"
 #include "Platform.h"
-#include "QMegaMessageBox.h"
-#include "QmlDialogManager.h"
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
-#include "SyncsComponent.h"
-#include "TextDecorator.h"
 #include "TransferManager.h"
 #include "ui_InfoDialog.h"
 #include "UserMessageController.h"
@@ -34,6 +29,8 @@
 #include <QToolTip>
 #include <QUrl>
 #include <QVBoxLayout>
+
+#include <cassert>
 
 #ifdef _WIN32
 #include <chrono>
@@ -70,7 +67,13 @@ void InfoDialog::upAreaClicked()
 
 void InfoDialog::pauseResumeHovered(QMouseEvent *event)
 {
-    QToolTip::showText(event->globalPos(), tr("Pause/Resume"));
+    if (mPreferences->logged())
+    {
+        QString tooltip(mPreferences->getGlobalPaused() ?
+                            TransferManager::getResumeAllTransfersTooltip() :
+                            TransferManager::getPauseAllTransfersTooltip());
+        QToolTip::showText(event->globalPos(), tooltip);
+    }
 }
 
 void InfoDialog::generalAreaHovered(QMouseEvent *event)
@@ -100,6 +103,20 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     qtBugFixer(this)
 {
     ui->setupUi(this);
+
+    connect(AppState::instance().get(),
+            &AppState::appStateChanged,
+            this,
+            [this](AppState::AppStates oldAppState, AppState::AppStates newAppState)
+            {
+                // We want to show the infodialog only in NOMINAL mode.
+                // Show Guest Dialog otherwise
+                if (newAppState != AppState::NOMINAL)
+                {
+                    hide();
+                    deleteLater();
+                }
+            });
 
     mSyncsMenus[ui->bAddSync] = nullptr;
     mSyncsMenus[ui->bAddBackup] = nullptr;
@@ -390,7 +407,7 @@ void InfoDialog::hideEvent(QHideEvent *event)
     isShown = false;
     if (ui->bTransferManager->alwaysAnimateOnShow || ui->bTransferManager->neverPainted )
     {
-        ui->bTransferManager->shrink(true);
+        ui->bTransferManager->shrink();
     }
     QDialog::hideEvent(event);
 

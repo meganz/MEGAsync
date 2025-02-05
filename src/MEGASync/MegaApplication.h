@@ -1,7 +1,9 @@
 #ifndef MEGAAPPLICATION_H
 #define MEGAAPPLICATION_H
 
+#include "AppState.h"
 #include "BlockingStageProgressController.h"
+#include "DesktopNotifications.h"
 #include "DownloadFromMegaDialog.h"
 #include "HTTPServer.h"
 #include "InfoDialog.h"
@@ -10,7 +12,6 @@
 #include "MegaDownloader.h"
 #include "MegaSyncLogger.h"
 #include "MegaUploader.h"
-#include "notifications/DesktopNotifications.h"
 #include "PasteMegaLinksDialog.h"
 #include "Preferences.h"
 #include "QTMegaListener.h"
@@ -25,7 +26,6 @@
 #include "UpgradeOverStorage.h"
 #include "Utilities.h"
 
-#include <memory>
 #include <QAction>
 #include <QApplication>
 #include <QDataStream>
@@ -37,6 +37,8 @@
 #include <QNetworkInterface>
 #include <QQueue>
 #include <QSystemTrayIcon>
+
+#include <memory>
 
 class IntervalExecutioner;
 class TransfersModel;
@@ -106,8 +108,7 @@ public:
     void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e) override;
     void onAccountUpdate(mega::MegaApi *api) override;
     void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users) override;
-    void onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes) override;
-    void onReloadNeeded(mega::MegaApi* api) override;
+    void onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList* nodes) override;
     void onGlobalSyncStateChanged(mega::MegaApi *api) override;
 
     void onGlobalSyncStateChangedImpl();
@@ -133,7 +134,6 @@ public:
     void showWarningMessage(QString message, QString title = MegaSyncApp->getMEGAString());
     void showErrorMessage(QString message, QString title = MegaSyncApp->getMEGAString());
     void showNotificationMessage(QString message, QString title = MegaSyncApp->getMEGAString());
-    void setUploadLimit(int limit);
     void setMaxUploadSpeed(int limit);
     void setMaxDownloadSpeed(int limit);
     void setMaxConnections(int direction, int connections);
@@ -217,6 +217,7 @@ signals:
     void addBackup();
     void shellNotificationsProcessed();
     void updateUserInterface();
+    void requestAppState(AppState::AppStates newAppState);
 
 public slots:
     void updateTrayIcon();
@@ -301,6 +302,7 @@ public slots:
     void enableFinderExt();
 #endif
     void requestFetchSetFromLink(const QString& link);
+    void onAppStateChanged(AppState::AppStates, AppState::AppStates);
 
 private slots:
     void openFolderPath(QString path);
@@ -520,6 +522,8 @@ private:
     static QString obfuscateIpv6Address(const QHostAddress& ipAddress);
     static QStringList explodeIpv6(const QHostAddress &ipAddress);
 
+    static bool mightBeCaseSensitivityIssue(const QString& folderPath);
+
     void reconnectIfNecessary(const bool disconnected, const QList<QNetworkInterface>& newNetworkInterfaces);
     bool isIdleForTooLong() const;
 
@@ -608,6 +612,7 @@ private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();
     void onScheduledExecution();
+    void onOpenLinkError(const QString& path, const int errorCode);
 };
 
 #endif // MEGAAPPLICATION_H

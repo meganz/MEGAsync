@@ -1,8 +1,8 @@
 #include "LocalAndRemoteNameConflicts.h"
-#include "ui_LocalAndRemoteNameConflicts.h"
 
-#include <StalledIssueHeader.h>
-#include <NameConflictStalledIssue.h>
+#include "NameConflictStalledIssue.h"
+#include "StalledIssueHeader.h"
+#include "ui_LocalAndRemoteNameConflicts.h"
 
 LocalAndRemoteNameConflicts::LocalAndRemoteNameConflicts(QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),

@@ -1,10 +1,8 @@
 #include "ThreadPool.h"
 
-#include <array>
-#include <chrono>
-#include <string>
-
 #include <QtGlobal>
+
+#include <string>
 
 #ifdef Q_OS_LINUX
 #include <pthread.h>

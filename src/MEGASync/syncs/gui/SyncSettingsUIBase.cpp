@@ -1,6 +1,7 @@
 #include "SyncSettingsUIBase.h"
 
 #include "DialogOpener.h"
+#include "SyncController.h"
 #include "SyncExclusions.h"
 #include "SyncItemModel.h"
 #include "SyncTableView.h"

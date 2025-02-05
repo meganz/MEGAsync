@@ -1,10 +1,8 @@
 #include "SomeIssuesOccurredMessage.h"
-#include "ui_SomeIssuesOccurredMessage.h"
 
-#include <StalledIssuesDialog.h>
-#include <DialogOpener.h>
-#include <Platform.h>
-#include <StalledIssuesModel.h>
+#include "DialogOpener.h"
+#include "StalledIssuesDialog.h"
+#include "ui_SomeIssuesOccurredMessage.h"
 
 SomeIssuesOccurredMessage::SomeIssuesOccurredMessage(QWidget *parent) :
     QWidget(parent),

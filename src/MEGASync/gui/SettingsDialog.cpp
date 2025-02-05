@@ -8,27 +8,18 @@
 #include "CommonMessages.h"
 #include "DialogOpener.h"
 #include "FullName.h"
-#include "GuiUtilities.h"
-#include "mega/types.h"
 #include "MegaApplication.h"
-#include "MyBackupsHandle.h"
 #include "NodeSelectorSpecializations.h"
 #include "Platform.h"
 #include "PowerOptions.h"
 #include "ProxySettings.h"
 #include "QMegaMessageBox.h"
 #include "RemoveBackupDialog.h"
-#include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
-#include "TextDecorator.h"
 #include "ThemeManager.h"
 #include "ui_SettingsDialog.h"
 #include "Utilities.h"
 
-#include <QtConcurrent/QtConcurrent>
-
-#include <assert.h>
-#include <memory>
 #include <QApplication>
 #include <QButtonGroup>
 #include <QDesktopServices>
@@ -37,8 +28,12 @@
 #include <QMessageBox>
 #include <QRect>
 #include <QShortcut>
+#include <QtConcurrent/QtConcurrent>
 #include <QTranslator>
 #include <QUrl>
+
+#include <cassert>
+#include <memory>
 
 #ifdef Q_OS_WINDOWS
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
@@ -182,9 +177,14 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
             &SettingsDialog::onShellNotificationsProcessed);
     setOverlayCheckboxEnabled(!mApp->isShellNotificationProcessingOngoing(),
                               mUi->cOverlayIcons->isChecked());
-
     connect(mUi->bBackup, &QPushButton::clicked, this, &SettingsDialog::on_bBackup_clicked);
     connect(mUi->bSyncs, &QPushButton::clicked, this, &SettingsDialog::on_bSyncs_clicked);
+
+    // React to AppState changes
+    connect(AppState::instance().get(),
+            &AppState::appStateChanged,
+            this,
+            &SettingsDialog::onAppStateChanged);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -261,6 +261,12 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
     {
         loadSettings();
     }
+}
+
+void SettingsDialog::onAppStateChanged(AppState::AppStates oldAppState,
+                                       AppState::AppStates newAppState)
+{
+    setProxyOnly(newAppState != AppState::NOMINAL);
 }
 
 void SettingsDialog::showGuestMode()
@@ -720,8 +726,19 @@ void SettingsDialog::on_cFileVersioning_toggled(bool checked)
 {
     if (mLoadingSettings)
         return;
-    if (!checked)
+
+    if (checked)
     {
+        // This is actually saved to Preferences after the MegaApi call succeeds;
+        // Warning: the parameter is actually "disable".
+        mMegaApi->setFileVersionsOption(false);
+    }
+    else
+    {
+        // Restore the check while the user has not answered the warning dialog
+        mUi->cFileVersioning->blockSignals(true);
+        mUi->cFileVersioning->setChecked(true);
+
         QMegaMessageBox::MessageBoxInfo msgInfo;
         msgInfo.title = MegaSyncApp->getMEGAString();
         msgInfo.text = tr("Disabling file versioning will prevent"
@@ -730,26 +747,22 @@ void SettingsDialog::on_cFileVersioning_toggled(bool checked)
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
         msgInfo.defaultButton = QMessageBox::No;
         msgInfo.parent = this;
-        msgInfo.finishFunc = [this, checked](QPointer<QMessageBox> msg)
+        msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
         {
-            if (msg->result() == QMessageBox::No)
+            // We want to make changes only if the answer is Yes.
+            // If the user clicks No or closes the dialog with he X button, we don't want to disable
+            // the feature.
+            if (msg->result() == QMessageBox::Yes)
             {
-                mUi->cFileVersioning->blockSignals(true);
-                mUi->cFileVersioning->setChecked(true);
-                mUi->cFileVersioning->blockSignals(false);
+                // This is actually saved to Preferences after the MegaApi call succeeds;
+                // Warning: the parameter is actually "disable".
+                mMegaApi->setFileVersionsOption(true);
+                mUi->cFileVersioning->setChecked(false);
             }
-            else
-            {
-                mMegaApi->setFileVersionsOption(!checked);
-            }
+            mUi->cFileVersioning->blockSignals(false);
         };
 
         QMegaMessageBox::warning(msgInfo);
-    }
-    else
-    {
-        // This is actually saved to Preferences after the MegaApi call succeeds;
-        mMegaApi->setFileVersionsOption(!checked);
     }
 }
 
@@ -823,7 +836,6 @@ void SettingsDialog::on_cFinderIcons_toggled(bool checked)
     else
     {
         Platform::getInstance()->removeAllSyncsFromLeftPane();
-        return;
     }
     mPreferences->disableLeftPaneIcons(!checked);
 }
@@ -1460,7 +1472,7 @@ void SettingsDialog::on_bUploadFolder_clicked()
                 if (node)
                 {
                     std::unique_ptr<const char[]> nPath(mMegaApi->getNodePath(node.get()));
-                    if (nPath && std::strlen(nPath.get()))
+                    if (nPath && strlen(nPath.get()))
                     {
                         mHasDefaultUploadOption = nodeSelector->getDefaultUploadOption();
                         mUi->eUploadFolder->setText(QString::fromUtf8(nPath.get()));
@@ -1553,8 +1565,6 @@ void SettingsDialog::on_bOpenBandwidthSettings_clicked()
         {
             if (bandwidthSettings->result() == QDialog::Accepted)
             {
-                mApp->setUploadLimit(std::max(mPreferences->uploadLimitKB(), 0));
-
                 mApp->setMaxUploadSpeed(mPreferences->uploadLimitKB());
                 mApp->setMaxDownloadSpeed(mPreferences->downloadLimitKB());
 

@@ -1,4 +1,7 @@
-#pragma once
+#ifndef THREAD_POOL_H
+#define THREAD_POOL_H
+
+#include <QtGlobal>
 
 #include <condition_variable>
 #include <cstddef>
@@ -7,8 +10,6 @@
 #include <queue>
 #include <thread>
 #include <vector>
-
-#include <QtGlobal>
 
 class ThreadPool
 {
@@ -35,4 +36,4 @@ private:
     std::condition_variable mCv;
     std::mutex mMutex;
 };
-
+#endif

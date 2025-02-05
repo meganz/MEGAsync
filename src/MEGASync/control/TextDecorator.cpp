@@ -1,4 +1,5 @@
 #include "TextDecorator.h"
+
 #include <QDebug>
 
 namespace Text
@@ -44,7 +45,16 @@ void Link::process(QString &input) const
     foreach(auto link, mLinkAddresses)
     {
         currentIndex = input.indexOf(headerTag, currentIndex);
-        input.replace(currentIndex, headerLength, QString::fromUtf8("<a href=\"%1\">").arg(link));
+        if (link.isEmpty())
+        {
+            input.replace(currentIndex, headerLength, QString::fromUtf8("<a href=\"empty\">"));
+        }
+        else
+        {
+            input.replace(currentIndex,
+                          headerLength,
+                          QString::fromUtf8("<a href=\"%1\">").arg(link));
+        }
         currentIndex += headerLength;
     }
 
@@ -85,5 +95,30 @@ void NewLine::process(QString &input) const
     Decorator::process(input);
     input.replace(QLatin1String("[BR]"), QLatin1String("<br>"));
     input.replace(QLatin1String("[/BR]"), QLatin1String(""));
+}
+
+RichText::RichText(QObject* parent):
+    Decorator(parent),
+    mLinkAddresses(QStringList())
+{}
+
+RichText::RichText(const QStringList& links, QObject* parent):
+    Decorator(parent),
+    mLinkAddresses(links)
+{}
+
+RichText::RichText(const QString& link, QObject* parent):
+    Decorator(parent),
+    mLinkAddresses(link)
+{}
+
+void RichText::process(QString& input) const
+{
+    if (!mLinkAddresses.isEmpty())
+    {
+        Text::Link(mLinkAddresses).process(input);
+    }
+    Text::Bold().process(input);
+    Text::NewLine().process(input);
 }
 }

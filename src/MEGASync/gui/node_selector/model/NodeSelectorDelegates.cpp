@@ -1,13 +1,13 @@
 #include "NodeSelectorDelegates.h"
+
 #include "NodeSelectorModel.h"
 
-#include <QBitmap>
-#include <QPainter>
-#include <QToolTip>
-#include <QFontMetrics>
 #include <QAbstractItemView>
 #include <QApplication>
-
+#include <QBitmap>
+#include <QFontMetrics>
+#include <QPainter>
+#include <QToolTip>
 
 const int IconDelegate::ICON_HEIGHT = 18;
 

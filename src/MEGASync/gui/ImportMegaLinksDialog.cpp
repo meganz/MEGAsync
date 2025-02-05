@@ -1,20 +1,20 @@
 #include "ImportMegaLinksDialog.h"
-#include "ui_ImportMegaLinksDialog.h"
-#include "ImportListWidgetItem.h"
-#include "NodeSelectorSpecializations.h"
-#include "Utilities.h"
-#include "MegaApplication.h"
-#include "QMegaMessageBox.h"
-#include "DialogOpener.h"
-#include <MegaNodeNames.h>
-#include "Platform.h"
+
 #include "CommonMessages.h"
+#include "DialogOpener.h"
+#include "ImportListWidgetItem.h"
+#include "MegaApplication.h"
+#include "NodeSelectorSpecializations.h"
+#include "Platform.h"
+#include "QMegaMessageBox.h"
+#include "ui_ImportMegaLinksDialog.h"
+#include "Utilities.h"
 
 #include <QDesktopServices>
 #include <QDir>
 #include <QFileDialog>
-#include <QTemporaryFile>
 #include <QPointer>
+#include <QTemporaryFile>
 
 using namespace mega;
 

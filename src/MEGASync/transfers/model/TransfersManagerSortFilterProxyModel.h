@@ -4,14 +4,15 @@
 #include "TransferItem.h"
 #include "TransfersSortFilterProxyBaseModel.h"
 
-#include <QSortFilterProxyModel>
-#include <QReadWriteLock>
 #include <QFutureWatcher>
 #include <QMutex>
 #include <QPointer>
+#include <QReadWriteLock>
+#include <QSortFilterProxyModel>
 
 class TransferBaseDelegateWidget;
 class TransfersModel;
+class TransferWidgetColumnsManager;
 
 class TransfersManagerSortFilterProxyModel : public TransfersSortFilterProxyBaseModel
 {
@@ -60,7 +61,9 @@ public:
 
         bool isDragging() const;
 
-signals:
+        void setColumnManager(QPointer<TransferWidgetColumnsManager> newColumnManager);
+
+    signals:
         void modelAboutToBeChanged();
         void modelChanged();
         void searchNumbersChanged();
@@ -110,6 +113,7 @@ private:
         QFutureWatcher<void> mFilterWatcher;
         QString mFilterText;
         mutable QPointer<QMimeData> mInternalMoveMimeData;
+        QPointer<TransferWidgetColumnsManager> mColumnManager;
 
         void removeActiveTransferFromCounter(TransferTag tag) const;
         void removePausedTransferFromCounter(TransferTag tag) const;

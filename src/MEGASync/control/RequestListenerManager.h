@@ -2,16 +2,16 @@
 #define REQUEST_LISTENER_MANAGER_H
 
 #include "megaapi.h"
-#include "QTMegaListener.h"
 #include "QTMegaRequestListener.h"
 
-#include <functional>
-#include <memory>
-#include <mutex>
 #include <QList>
 #include <QMutex>
 #include <QObject>
 #include <QPointer>
+
+#include <functional>
+#include <memory>
+#include <mutex>
 
 struct onRequestFinishOnlyListenerCallback
 {

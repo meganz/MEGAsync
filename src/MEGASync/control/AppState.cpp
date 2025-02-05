@@ -1,9 +1,9 @@
 #include "AppState.h"
 
 #include "DialogOpener.h"
+#include "megaapi.h"
 #include "QmlManager.h"
 
-#include <megaapi.h>
 #include <QQmlEngine>
 #include <QString>
 #include <QVariant>
@@ -59,6 +59,8 @@ void AppState::setAppState(AppStates newState)
                 break;
             }
             case AppState::NOMINAL:
+            // Fallthrough
+            case AppState::FINISHED:
             {
                 break;
             }

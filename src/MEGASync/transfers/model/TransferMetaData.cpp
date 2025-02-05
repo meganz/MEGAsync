@@ -1,17 +1,14 @@
-#include <TransferMetaData.h>
+#include "TransferMetaData.h"
+
+#include "megaapi.h"
+#include "MegaApplication.h"
+#include "MegaNodeNames.h"
+#include "Notificator.h"
+#include "Preferences.h"
 
 #include <QDir>
 
-#include <MegaApplication.h>
-#include "Preferences.h"
-#include <Notificator.h>
-#include <MegaNodeNames.h>
-
-#include <megaapi.h>
-#include <mega/types.h>
-
-
-//CLASS TRANSFERMETADATAITEMID
+// CLASS TRANSFERMETADATAITEMID
 bool TransferMetaDataItemId::operator==(const TransferMetaDataItemId& item) const
 {
     if((item.tag < 0) && (item.handle == mega::INVALID_HANDLE))
@@ -115,9 +112,8 @@ bool TransferMetaData::finish(mega::MegaTransfer *transfer, mega::MegaError* e)
             value->id = id;
             TransferData::TransferState state(TransferData::TRANSFER_NONE);
 
-            if(transfer->getState() == mega::MegaTransfer::STATE_FAILED
-                 || e->getErrorCode() == mega::MegaError::API_EINCOMPLETE
-                 || e->getErrorCode() == mega::MegaError::API_EACCESS)
+            if (transfer->getState() == mega::MegaTransfer::STATE_FAILED ||
+                e->getErrorCode() != mega::MegaError::API_OK)
             {
                 state = TransferData::TRANSFER_FAILED;
                 value->failedTransfer = std::shared_ptr<mega::MegaTransfer>(transfer->copy());

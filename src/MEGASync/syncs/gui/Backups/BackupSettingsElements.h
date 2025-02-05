@@ -1,7 +1,8 @@
 #ifndef BACKUPSETTINGSELEMENTS_H
 #define BACKUPSETTINGSELEMENTS_H
 
-#include <megaapi.h>
+#include "megaapi.h"
+
 #include <QObject>
 
 namespace Ui

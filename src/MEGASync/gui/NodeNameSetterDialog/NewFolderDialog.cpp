@@ -1,8 +1,7 @@
 #include "NewFolderDialog.h"
 
-#include <Utilities.h>
-#include <MegaApplication.h>
-#include <mega/types.h>
+#include "MegaApplication.h"
+#include "Utilities.h"
 
 ///NEW FOLDER REIMPLEMENTATION
 NewFolderDialog::NewFolderDialog(std::shared_ptr<mega::MegaNode> parentNode, QWidget *parent)

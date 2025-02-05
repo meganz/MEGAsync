@@ -121,5 +121,13 @@
         <file>images/qml/multidevices@2x.png</file>
         <file>images/qml/multidevices@3x.png</file>
         <file>images/qml/power.svg</file>
+        <file>images/qml/guest/alert-triangle.png</file>
+        <file>images/qml/guest/alert-triangle@2x.png</file>
+        <file>images/qml/guest/alert-triangle@3x.png</file>
+        <file>images/icons/headset.svg</file>
+        <file>images/icons/file_edit.svg</file>
+        <file>images/icons/rotate_ccw.svg</file>
+        <file>images/icons/log-out-01.svg</file>
+        <file>images/qml/sync_exclusions/folder-file.svg</file>
     </qresource>
 </RCC>

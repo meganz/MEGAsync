@@ -1,13 +1,11 @@
 #ifndef BUGREPORTDIALOG_H
 #define BUGREPORTDIALOG_H
 
-// clang-format off
 #include "MegaSyncLogger.h"
 #include "ProgressIndicatorDialog.h"
 
-#include <QPointer>
 #include <QDialog>
-// clang-format on
+#include <QPointer>
 
 class QProgressDialog;
 class BugReportController;
@@ -23,6 +21,9 @@ class BugReportDialog: public QDialog
 public:
     explicit BugReportDialog(QWidget *parent, MegaSyncLogger& logger);
     ~BugReportDialog();
+
+    void setReportObject(const QString& title);
+    void setReportText(const QString& desc);
 
 private slots:
     void onReportStarted();

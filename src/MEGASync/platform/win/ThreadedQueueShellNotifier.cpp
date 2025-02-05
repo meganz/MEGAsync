@@ -1,4 +1,5 @@
 #include "ThreadedQueueShellNotifier.h"
+
 #include "megaapi.h"
 
 ThreadedQueueShellNotifier::ThreadedQueueShellNotifier(std::shared_ptr<AbstractShellNotifier> baseNotifier)

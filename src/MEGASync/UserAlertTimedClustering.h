@@ -1,6 +1,9 @@
-#pragma once
-#include <mutex>
+#ifndef USER_ALERT_TIMED_CLUSTERING_H
+#define USER_ALERT_TIMED_CLUSTERING_H
+
 #include <QTimer>
+
+#include <mutex>
 
 namespace mega {
 class MegaUserAlert;
@@ -28,3 +31,4 @@ private slots:
 signals:
     void sendUserAlert(mega::MegaUserAlert* userAlert, const QString& message);
 };
+#endif

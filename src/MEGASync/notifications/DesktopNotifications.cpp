@@ -1,16 +1,15 @@
-#include "megaapi.h"
-#include "CommonMessages.h"
 #include "DesktopNotifications.h"
+
+#include "CommonMessages.h"
 #include "EmailRequester.h"
-#include "MegaApplication.h"
-#include "RequestListenerManager.h"
-#include "mega/user.h"
-#include "Platform.h"
 #include "FullName.h"
+#include "megaapi.h"
 #include "MegaApplication.h"
+#include "Notificator.h"
+#include "Platform.h"
+#include "RequestListenerManager.h"
 #include "TransferMetaData.h"
 #include "TransferNotificationBuilder.h"
-#include "Notificator.h"
 
 #include <QCoreApplication>
 #include <QtConcurrent/QtConcurrent>

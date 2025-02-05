@@ -1,7 +1,6 @@
-#include <platform/PowerOptions.h>
+#include "PowerOptions.h"
 
 #include "Preferences.h"
-#include "megaapi.h"
 
 #include <QString>
 #include <QTimer>

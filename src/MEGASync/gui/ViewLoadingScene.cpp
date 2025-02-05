@@ -1,4 +1,5 @@
-#include <ViewLoadingScene.h>
+#include "ViewLoadingScene.h"
+
 #include "ui_ViewLoadingScene.h"
 
 #include <QDebug>

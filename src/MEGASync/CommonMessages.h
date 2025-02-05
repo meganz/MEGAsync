@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COMMON_MESSAGE_H
+#define COMMON_MESSAGE_H
 
 #include <QObject>
 #include <QString>
@@ -20,3 +21,4 @@ public:
 private:
     static int computeDaysToExpiration(int64_t expirationTimeStampInSecs);
 };
+#endif

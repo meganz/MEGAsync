@@ -1,16 +1,17 @@
 #ifndef TRANSFERMANAGERDELEGATEWIDGET_H
 #define TRANSFERMANAGERDELEGATEWIDGET_H
 
-#include "TransferItem.h"
 #include "TransferBaseDelegateWidget.h"
 
-
 #include <QDateTime>
+#include <QPointer>
 #include <QUrl>
 
 namespace Ui {
 class TransferManagerDelegateWidget;
 }
+
+class TransferWidgetColumnsManager;
 
 class TransferManagerDelegateWidget : public TransferBaseDelegateWidget
 {
@@ -23,6 +24,8 @@ public:
     ActionHoverType mouseHoverTransfer(bool isHover, const QPoint &pos) override;
 
     void render(const QStyleOptionViewItem &option, QPainter *painter, const QRegion &sourceRegion) override;
+
+    void setColumnManager(QPointer<TransferWidgetColumnsManager> columnManager);
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
@@ -52,6 +55,7 @@ private:
 
     Ui::TransferManagerDelegateWidget *mUi;
     QString mPauseResumeTransferDefaultIconName;
+    QPointer<TransferWidgetColumnsManager> mColumnManager;
 };
 
 #endif // TRANSFERMANAGERDELEGATEWIDGET_H

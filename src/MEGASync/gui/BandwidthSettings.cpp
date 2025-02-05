@@ -1,4 +1,5 @@
 #include "BandwidthSettings.h"
+
 #include "ui_BandwidthSettings.h"
 
 #include <QButtonGroup>

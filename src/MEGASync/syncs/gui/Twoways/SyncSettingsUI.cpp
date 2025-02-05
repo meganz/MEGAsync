@@ -5,6 +5,7 @@
 #include "MegaApplication.h"
 #include "Onboarding.h"
 #include "QmlDialogWrapper.h"
+#include "SyncController.h"
 #include "SyncItemModel.h"
 #include "SyncsComponent.h"
 #include "SyncTableView.h"

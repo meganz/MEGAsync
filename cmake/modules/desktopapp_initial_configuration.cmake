@@ -2,6 +2,8 @@
 # Initial CMake configuration for the MEGA Desktop app project
 #
 
+include(detect_host_architecture)
+
 if(CMAKE_HOST_APPLE)
     # Required flags required to generate correct stack traces on a crash
     set(CMAKE_CXX_VISIBILITY_PRESET hidden)

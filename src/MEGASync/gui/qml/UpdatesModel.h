@@ -3,8 +3,9 @@
 
 #include "WhatsNewController.h"
 
-#include <memory>
 #include <QAbstractListModel>
+
+#include <memory>
 
 class UpdatesModel: public QAbstractListModel
 {

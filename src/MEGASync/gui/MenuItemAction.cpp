@@ -1,7 +1,8 @@
 #include "MenuItemAction.h"
+
+#include <QImageReader>
 #include <QKeyEvent>
 #include <QStyle>
-#include <QImageReader>
 
 const QString MenuItemAction::Colors::Normal = QLatin1String("#777777");
 const QString MenuItemAction::Colors::Highlight = QLatin1String("#000000");

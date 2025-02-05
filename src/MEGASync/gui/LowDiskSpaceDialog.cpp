@@ -1,7 +1,7 @@
 #include "LowDiskSpaceDialog.h"
-#include "ui_LowDiskSpaceDialog.h"
 
 #include "BlurredShadowEffect.h"
+#include "ui_LowDiskSpaceDialog.h"
 #include "Utilities.h"
 
 #include <QFileIconProvider>

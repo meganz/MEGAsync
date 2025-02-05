@@ -1,5 +1,7 @@
 #include "UserAlertTimedClustering.h"
+
 #include "megaapi.h"
+
 #include <QCoreApplication>
 
 constexpr int clusterMaxTime{5000};//5 seconds cluster time

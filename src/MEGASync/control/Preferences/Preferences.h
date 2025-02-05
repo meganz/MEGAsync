@@ -3,15 +3,16 @@
 
 #include "EncryptedSettings.h"
 #include "EphemeralCredentials.h"
+#include "megaapi.h"
 #include "SyncInfo.h"
 
-#include <chrono>
-#include <megaapi.h>
-#include <memory>
 #include <QDataStream>
 #include <QLocale>
 #include <QMutex>
 #include <QStringList>
+
+#include <chrono>
+#include <memory>
 #include <type_traits>
 
 Q_DECLARE_METATYPE(QList<long long>)

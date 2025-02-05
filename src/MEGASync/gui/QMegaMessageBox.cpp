@@ -1,9 +1,10 @@
 #include "QMegaMessageBox.h"
-#include <QDialogButtonBox>
-#include <QPushButton>
-#include <QDebug>
 
 #include "DialogOpener.h"
+
+#include <QDebug>
+#include <QDialogButtonBox>
+#include <QPushButton>
 
 QString QMegaMessageBox::warningTitle()
 {
@@ -13,6 +14,11 @@ QString QMegaMessageBox::warningTitle()
 QString QMegaMessageBox::errorTitle()
 {
     return QCoreApplication::translate("MegaApplication", "Error");
+}
+
+QString QMegaMessageBox::fatalErrorTitle()
+{
+    return QCoreApplication::translate("MegaApplication", "Alert");
 }
 
 void QMegaMessageBox::information(const MessageBoxInfo& info)
@@ -85,11 +91,17 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
 #ifdef Q_OS_MACOS
             // Work-around for default buttons not highlighted correctly in MacOS(
             button->setFixedHeight(32);
-#endif \
-    //Change button text if needed
+#endif
+            // Change button text if needed
             if(info.buttonsText.contains(buttonType))
             {
-                button->setText(info.buttonsText.value((StandardButton) sb));
+                button->setText(info.buttonsText.value(buttonType));
+            }
+
+            // Change button icon if needed
+            if (info.buttonsIcons.contains(buttonType))
+            {
+                button->setIcon(info.buttonsIcons.value(buttonType));
             }
 
             // Choose the first accept role as the default
@@ -115,7 +127,23 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
             msgBox->setCheckBox(checkbox);
         }
 
+        // Prevent showing context menu in texts
+        for (auto childLabel: msgBox->findChildren<QLabel*>())
+        {
+            childLabel->setContextMenuPolicy(Qt::PreventContextMenu);
+        }
+
         DialogOpener::showMessageBox(msgBox, info);
+
+        // Hide Close button if requested
+        if (info.hideCloseButton)
+        {
+            auto* closeButton = msgBox->button(QMessageBox::Close);
+            if (closeButton != nullptr)
+            {
+                closeButton->hide();
+            }
+        }
     };
 
     //ALWAYS show messagebox on GUI thread

@@ -1,15 +1,13 @@
 #include "StalledIssueBaseDelegateWidget.h"
 
-#include "MegaApplication.h"
-#include "WordWrapLabel.h"
-#include "StalledIssueDelegate.h"
 #include "DialogOpener.h"
+#include "MegaApplication.h"
+#include "StalledIssueDelegate.h"
 #include "StalledIssuesDialog.h"
+#include "WordWrapLabel.h"
 
-#include "mega/types.h"
-
-#include <QtConcurrent/QtConcurrent>
 #include <QFile>
+#include <QtConcurrent/QtConcurrent>
 
 StalledIssueBaseDelegateWidget::StalledIssueBaseDelegateWidget(QWidget *parent)
     : QWidget(parent),

@@ -1,10 +1,12 @@
 import QtQuick 2.15
+import QtQuick.Layouts 1.15
 
 import components.images 1.0
 import components.texts 1.0 as Texts
 
-Item {
-    id: root
+
+Rectangle {
+    id: mainRect
 
     property alias text: richText.text
     property alias font: richText.font
@@ -18,39 +20,33 @@ Item {
     property int horizontalPadding: 4
     property int verticalPadding: 2
 
+    implicitWidth: layout.implicitWidth + 2 * horizontalPadding
+    implicitHeight: layout.implicitHeight+ 2 * verticalPadding
 
-    implicitWidth: richText.implicitWidth + (iconImage.source.length === 0? 0 : iconImage.width )
-                   + 2 * horizontalPadding + iconTextSpacing
-    implicitHeight: Math.max(richText.height, iconImage.height) + 2 * verticalPadding
+    anchors.leftMargin: horizontalPadding
+    anchors.rightMargin: horizontalPadding
+    anchors.topMargin: verticalPadding
+    anchors.bottomMargin: verticalPadding
 
-    Rectangle{
-        id: mainRect
+    RowLayout {
+        id: layout
 
-        implicitWidth:  parent.implicitWidth
-        implicitHeight: parent.implicitHeight
-
+        spacing: iconTextSpacing
+        anchors.centerIn: parent
         SvgImage {
             id: iconImage
 
             sourceSize: Qt.size(16, 16)
-            anchors{
-                left: parent.left
-                verticalCenter: parent.verticalCenter
-                leftMargin: horizontalPadding
-            }
-            visible: root.visible
+            visible: mainRect.visible
         }
 
         Texts.RichText {
             id: richText
-
-            visible: root.visible
+            visible: mainRect.visible
             wrapMode: Text.NoWrap
-            anchors{
-                left: iconImage.right
-                leftMargin: iconTextSpacing
-                verticalCenter: parent.verticalCenter
-            }
+            verticalAlignment: Text.AlignVCenter
         }
     }
 }
+
+

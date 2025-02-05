@@ -1,8 +1,8 @@
 #ifndef MEGAPROXYSTYLE_H
 #define MEGAPROXYSTYLE_H
 
-#include <QProxyStyle>
 #include <QPainter>
+#include <QProxyStyle>
 
 class MegaProxyStyle : public QProxyStyle
 {

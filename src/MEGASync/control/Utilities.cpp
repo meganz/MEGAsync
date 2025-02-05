@@ -1,28 +1,31 @@
 #include "Utilities.h"
 
-#include "Preferences.h"
-#include "MegaApplication.h"
-#include "gzjoin.h"
+// clang-format off
 #include "Platform.h"
+#include "gzjoin.h"
+#include "MegaApiSynchronizedRequest.h"
+#include "MegaApplication.h"
+#include "Preferences.h"
+// clang-format on
 
 #include <QApplication>
-#include <QImageReader>
-#include <QDirIterator>
-#include <QTextStream>
+#include <QCryptographicHash>
 #include <QDateTime>
 #include <QDesktopWidget>
+#include <QDirIterator>
+#include <QImageReader>
 #include <QScreen>
-#include <QCryptographicHash>
-#include <MegaApiSynchronizedRequest.h>
+#include <QTextStream>
 
 #include <iostream>
 
 #ifndef WIN32
 #include "megaapi.h"
+
 #include <utime.h>
 #else
-#include <windows.h>
 #include <shellapi.h>
+#include <windows.h>
 #endif
 
 using namespace std;
@@ -50,6 +53,7 @@ const QString Utilities::SUPPORT_URL = QString::fromUtf8("https://mega.nz/contac
 const QString Utilities::BACKUP_CENTER_URL = QString::fromLatin1("mega://#fm/devices");
 const QString Utilities::SYNC_SUPPORT_URL =
     QString::fromLatin1("https://help.mega.io/installs-apps/desktop/how-does-syncing-work");
+const QString Utilities::DESKTOP_APP_URL = QString::fromLatin1("https://mega.io/desktop#download");
 
 const long long KB = 1024;
 const long long MB = 1024 * KB;
@@ -1435,6 +1439,11 @@ bool Utilities::isBusinessAccount()
 QFuture<bool> Utilities::openUrl(QUrl url)
 {
     return QtConcurrent::run(QDesktopServices::openUrl, url);
+}
+
+void Utilities::openAppDataPath()
+{
+    Platform::getInstance()->showInFolder(MegaApplication::applicationDataPath());
 }
 
 void Utilities::openInMega(MegaHandle handle)

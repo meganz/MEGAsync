@@ -1,9 +1,9 @@
 #ifndef QMLSYNCDATA_H
 #define QMLSYNCDATA_H
 
+#include "megaapi.h"
 #include "SyncStatus.h"
 
-#include <megaapi.h>
 #include <QDateTime>
 
 struct QmlSyncData

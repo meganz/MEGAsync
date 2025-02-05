@@ -1,12 +1,13 @@
 #include "Preferences.h"
-#include "Version.h"
-#include "Platform.h"
+
 #include "FullName.h"
 #include "StatsEventHandler.h"
+#include "Version.h"
 
 #include <QDesktopServices>
 #include <QDir>
-#include <assert.h>
+
+#include <cassert>
 
 using namespace mega;
 

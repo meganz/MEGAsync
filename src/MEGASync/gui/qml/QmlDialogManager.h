@@ -1,9 +1,10 @@
 #ifndef QML_DIALOG_MANAGER_H
 #define QML_DIALOG_MANAGER_H
 
-#include <memory>
 #include <QQmlComponent>
 #include <QTimer>
+
+#include <memory>
 
 class QmlDialogManager: public QObject
 {

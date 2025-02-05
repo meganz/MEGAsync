@@ -1,10 +1,9 @@
 #ifndef DATETIMEFORMATTER_H
 #define DATETIMEFORMATTER_H
 
-#include <QObject>
-
 #include <QDateTime>
 #include <QLocale>
+#include <QObject>
 #include <QString>
 
 class DateTimeFormatter : public QObject

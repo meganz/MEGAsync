@@ -1,11 +1,12 @@
 #ifndef IMPORTMEGALINKSDIALOG_H
 #define IMPORTMEGALINKSDIALOG_H
 
+#include "megaapi.h"
+#include "Preferences.h"
+
 #include <QDialog>
 #include <QStringList>
 #include <QVector>
-#include "megaapi.h"
-#include "Preferences.h"
 
 namespace Ui {
 class ImportMegaLinksDialog;

@@ -1,7 +1,7 @@
 #include "CancelConfirmWidget.h"
-#include "ui_CancelConfirmWidget.h"
 
 #include "BlurredShadowEffect.h"
+#include "ui_CancelConfirmWidget.h"
 #include "Utilities.h"
 
 CancelConfirmWidget::CancelConfirmWidget(QWidget *parent) :

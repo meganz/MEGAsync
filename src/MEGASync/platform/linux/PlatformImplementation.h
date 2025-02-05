@@ -2,12 +2,11 @@
 #define LINUXPLATFORM_H
 
 #include "AbstractPlatform.h"
-
 #include "ExtServer.h"
 #include "NotifyServer.h"
+
 #include <xcb/xcb.h>
 #include <xcb/xproto.h>
-
 
 class PlatformImplementation : public AbstractPlatform
 {

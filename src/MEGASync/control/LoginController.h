@@ -1,8 +1,9 @@
 #ifndef LOGINCONTROLLER_H
 #define LOGINCONTROLLER_H
 
-#include "megaapi.h"
+#include "AppState.h"
 #include "mega/bindings/qt/QTMegaGlobalListener.h"
+#include "megaapi.h"
 
 #include <QObject>
 #include <QTimer>
@@ -95,6 +96,7 @@ signals:
     void passwordErrorChanged();
     void createAccountErrorMsgChanged();
     void accountCreationCancelled();
+    void requestAppState(AppState::AppStates newAppState);
 
 protected:
     virtual void onLogin(mega::MegaRequest* request, mega::MegaError* e);
@@ -115,6 +117,7 @@ protected:
 private slots:
     void runConnectivityCheck();
     void onConnectivityCheckFinished(bool success);
+    void onAppStateChanged(AppState::AppStates oldAppState, AppState::AppStates newAppState);
 
 private:
     unsigned long long computeExclusionSizeLimit(const unsigned long long& sizeLimitValue, const int unit);

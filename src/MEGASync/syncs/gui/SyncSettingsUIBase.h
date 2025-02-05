@@ -2,11 +2,11 @@
 #define SYNCSETTINGSUIBASE_H
 
 #include "GuiUtilities.h"
-#include "MegaApplication.h"
+#include "Preferences.h"
 #include "QMegaMessageBox.h"
-#include "SyncController.h"
+#include "SyncInfo.h"
+#include "SyncSettings.h"
 #include "TextDecorator.h"
-#include "Utilities.h"
 
 #include <QFutureWatcher>
 #include <QIcon>

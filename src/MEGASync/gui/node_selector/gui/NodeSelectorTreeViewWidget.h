@@ -2,17 +2,17 @@
 #define NODESELECTORTREEVIEWWIDGET_H
 
 #include "ButtonIconManager.h"
-#include "QTMegaListener.h"
-#include <megaapi.h>
+#include "megaapi.h"
 #include "NodeSelectorModelItem.h"
-#include <ViewLoadingScene.h>
+#include "QTMegaListener.h"
 
-#include <QWidget>
 #include <QDebug>
 #include <QItemSelectionModel>
 #include <QPersistentModelIndex>
-#include <memory>
+#include <QTimer>
+#include <QWidget>
 
+#include <memory>
 
 class NodeSelectorProxyModel;
 class NodeSelectorModel;

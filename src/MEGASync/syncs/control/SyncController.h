@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SYNC_CONTROLLER_H
+#define SYNC_CONTROLLER_H
 
 #include "megaapi.h"
 #include "SyncInfo.h"
@@ -123,3 +124,4 @@ private:
 
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaError>)
 Q_DECLARE_METATYPE(mega::MegaSync::Error)
+#endif

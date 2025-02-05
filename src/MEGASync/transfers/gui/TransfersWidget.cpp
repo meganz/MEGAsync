@@ -1,17 +1,19 @@
 #include "TransfersWidget.h"
-#include "ui_TransfersWidget.h"
+
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
+#include "TransferWidgetColumnsManager.h"
+#include "ui_TransfersWidget.h"
 
-#include <QTimer>
-#include <QtConcurrent/QtConcurrent>
 #include <QScrollBar>
+#include <QtConcurrent/QtConcurrent>
+#include <QTimer>
 
-TransfersWidget::TransfersWidget(QWidget* parent) :
-    QWidget (parent),
-    ui (new Ui::TransfersWidget),
-    tDelegate (nullptr),
-    app (qobject_cast<MegaApplication*>(qApp)),
+TransfersWidget::TransfersWidget(QWidget* parent):
+    QWidget(parent),
+    ui(new Ui::TransfersWidget),
+    tDelegate(nullptr),
+    mColumnManager(std::make_unique<TransferWidgetColumnsManager>()),
     mCurrentTab(NO_TAB),
     mScanningIsActive(false)
 {
@@ -25,7 +27,7 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     connect(ui->statusColumn, &TransferWidgetHeaderItem::toggled, this, &TransfersWidget::onHeaderItemClicked);
     connect(ui->timeColumn, &TransferWidgetHeaderItem::toggled, this, &TransfersWidget::onHeaderItemClicked);
 
-    mModel = app->getTransfersModel();
+    mModel = MegaSyncApp->getTransfersModel();
 
     //Align header pause/cancel buttons to view pause/cancel button
     connect(ui->tvTransfers, &MegaTransferView::verticalScrollBarVisibilityChanged, this, &TransfersWidget::onVerticalScrollBarVisibilityChanged);
@@ -56,8 +58,10 @@ TransfersWidget::~TransfersWidget()
 void TransfersWidget::setupTransfers()
 {
     mProxyModel = new TransfersManagerSortFilterProxyModel(ui->tvTransfers);
-    mProxyModel->setSourceModel(app->getTransfersModel());
+    mProxyModel->setSourceModel(MegaSyncApp->getTransfersModel());
     mProxyModel->initProxyModel(SortCriterion::PRIORITY, Qt::DescendingOrder);
+
+    mProxyModel->setColumnManager(mColumnManager.get());
 
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::modelAboutToBeChanged, this, &TransfersWidget::onModelAboutToBeChanged);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::modelChanged, this, &TransfersWidget::onModelChanged);
@@ -65,10 +69,22 @@ void TransfersWidget::setupTransfers()
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferCancelClear, this, &TransfersWidget::onCancelClearButtonPressedOnDelegate);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferRetry, this, &TransfersWidget::onRetryButtonPressedOnDelegate);
     connect(&ui->tvTransfers->loadingView(), &ViewLoadingScene<TransferManagerLoadingItem, QTreeView>::sceneVisibilityChange, this, &TransfersWidget::onUiLoadingViewVisibilityChanged);
-    connect(app->getTransfersModel(), &TransfersModel::blockUi, this, &TransfersWidget::onUiBlockedRequested);
-    connect(app->getTransfersModel(), &TransfersModel::unblockUi, this, &TransfersWidget::onUiUnblockedRequested);
-    connect(app->getTransfersModel(), &TransfersModel::unblockUiAndFilter, this, &TransfersWidget::onUiUnblockedAndFilter);
-    connect(app->getTransfersModel(), &TransfersModel::rowsAboutToBeMoved, this, &TransfersWidget::onRowsAboutToBeMoved);
+    connect(MegaSyncApp->getTransfersModel(),
+            &TransfersModel::blockUi,
+            this,
+            &TransfersWidget::onUiBlockedRequested);
+    connect(MegaSyncApp->getTransfersModel(),
+            &TransfersModel::unblockUi,
+            this,
+            &TransfersWidget::onUiUnblockedRequested);
+    connect(MegaSyncApp->getTransfersModel(),
+            &TransfersModel::unblockUiAndFilter,
+            this,
+            &TransfersWidget::onUiUnblockedAndFilter);
+    connect(MegaSyncApp->getTransfersModel(),
+            &TransfersModel::rowsAboutToBeMoved,
+            this,
+            &TransfersWidget::onRowsAboutToBeMoved);
 
     configureTransferView();
 }
@@ -90,11 +106,23 @@ void TransfersWidget::configureTransferView()
     ui->tvTransfers->enableContextMenu();
 
     mDelegateHoverManager.setView(ui->tvTransfers);
+
+    // Configure header manager
+    TransferWidgetColumnsManager::ColumnsWidget info;
+    info.insert(TransferWidgetColumnsManager::Columns::NAME, ui->nameColumn);
+    info.insert(TransferWidgetColumnsManager::Columns::SIZE, ui->sizeColumn);
+    info.insert(TransferWidgetColumnsManager::Columns::SPEED, ui->speedColumn);
+    info.insert(TransferWidgetColumnsManager::Columns::STATUS, ui->statusColumn);
+    info.insert(TransferWidgetColumnsManager::Columns::TIME, ui->timeColumn);
+    info.insert(TransferWidgetColumnsManager::Columns::CLEAR_CANCEL, ui->wCancelClear);
+    info.insert(TransferWidgetColumnsManager::Columns::PAUSE_RESUME, ui->wPauseResume);
+
+    mColumnManager->addColumnsWidget(this, info);
 }
 
 TransfersModel* TransfersWidget::getModel()
 {
-    return app->getTransfersModel();
+    return MegaSyncApp->getTransfersModel();
 }
 
 void TransfersWidget::onHeaderItemClicked(int sortBy, Qt::SortOrder order)
@@ -333,36 +361,57 @@ void TransfersWidget::updateHeaderItems()
     // Show pause button on tab except completed tab,
     // and set Clear All button string,
     // Emit wether we are showing completed or not
-    if (mCurrentTab == TransfersWidget::ALL_TRANSFERS_TAB)
+
+    TransferWidgetColumnsManager::ColumnsInfo info = mColumnManager->columnsVisibility();
+    info.currentTab = mCurrentTab;
+
+    if (mCurrentTab == TransfersWidget::FAILED_TAB)
     {
-        mHeaderInfo.headerTime = tr("Time left");
-        mHeaderInfo.headerSpeed = tr("Speed");
+        mHeaderInfo.headerStatus = tr("Details");
+
+        info.columnExpanded = TransferWidgetColumnsManager::Columns::STATUS;
+        info.visibility.insert(TransferWidgetColumnsManager::Columns::TIME, false);
+        info.visibility.insert(TransferWidgetColumnsManager::Columns::SPEED, false);
     }
     else
     {
-        if (mCurrentTab == TransfersWidget::COMPLETED_TAB)
-        {
-            mHeaderInfo.headerTime = tr("Time completed");
-            mHeaderInfo.headerSpeed = tr("Avg. speed");
-        }
-        else if (mCurrentTab == TransfersWidget::FAILED_TAB)
-        {
-            mHeaderInfo.headerTime = tr("Time completed");
-            mHeaderInfo.headerSpeed = tr("Avg. speed");
-        }
-        else if (mCurrentTab == TransfersWidget::SEARCH_TAB || (mCurrentTab > TransfersWidget::TYPES_TAB_BASE && mCurrentTab < TransfersWidget::TYPES_LAST))
-        {
-            mHeaderInfo.headerTime = tr("Time");
-            mHeaderInfo.headerSpeed = tr("Speed");
-        }
-        //UPLOAD // DOWNLOAD
-        else
+        mHeaderInfo.headerStatus = tr("Status");
+        info.columnExpanded = std::nullopt;
+        info.visibility.insert(TransferWidgetColumnsManager::Columns::TIME, true);
+        info.visibility.insert(TransferWidgetColumnsManager::Columns::SPEED, true);
+
+        if (mCurrentTab == TransfersWidget::ALL_TRANSFERS_TAB)
         {
             mHeaderInfo.headerTime = tr("Time left");
             mHeaderInfo.headerSpeed = tr("Speed");
         }
+        else
+        {
+            if (mCurrentTab == TransfersWidget::COMPLETED_TAB)
+            {
+                mHeaderInfo.headerTime = tr("Time completed");
+                mHeaderInfo.headerSpeed = tr("Avg. speed");
+            }
+
+            else if (mCurrentTab == TransfersWidget::SEARCH_TAB ||
+                     (mCurrentTab > TransfersWidget::TYPES_TAB_BASE &&
+                      mCurrentTab < TransfersWidget::TYPES_LAST))
+            {
+                mHeaderInfo.headerTime = tr("Time");
+                mHeaderInfo.headerSpeed = tr("Speed");
+            }
+            // UPLOAD // DOWNLOAD
+            else
+            {
+                mHeaderInfo.headerTime = tr("Time left");
+                mHeaderInfo.headerSpeed = tr("Speed");
+            }
+        }
     }
 
+    mColumnManager->setColumnVisibility(info);
+
+    ui->statusColumn->setTitle(mHeaderInfo.headerStatus);
     ui->timeColumn->setTitle(mHeaderInfo.headerTime);
     ui->speedColumn->setTitle(mHeaderInfo.headerSpeed);
 }
@@ -489,10 +538,12 @@ void TransfersWidget::selectAndScrollToMovedTransfer(QAbstractItemView::ScrollHi
         {
             foreach(auto row, mScrollToAfterMovingRow)
             {
-                auto d = app->getTransfersModel()->getTransferByTag(row);
+                auto d = MegaSyncApp->getTransfersModel()->getTransferByTag(row);
                 if(d)
                 {
-                    auto rowIndex = app->getTransfersModel()->index(app->getTransfersModel()->getRowByTransferTag(d->mTag),0);
+                    auto rowIndex = MegaSyncApp->getTransfersModel()->index(
+                        MegaSyncApp->getTransfersModel()->getRowByTransferTag(d->mTag),
+                        0);
                     if(rowIndex.isValid())
                     {
                         auto proxyIndex = mProxyModel->mapFromSource(rowIndex);

@@ -1,4 +1,3 @@
-
 #include "BackupsQmlDialog.h"
 
 #include "DialogOpener.h"

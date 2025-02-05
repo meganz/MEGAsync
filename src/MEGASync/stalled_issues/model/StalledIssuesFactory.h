@@ -1,8 +1,8 @@
 #ifndef STALLEDISSUEFACTORY_H
 #define STALLEDISSUEFACTORY_H
 
-#include <StalledIssue.h>
-#include <MultiStepIssueSolver.h>
+#include "MultiStepIssueSolver.h"
+#include "StalledIssue.h"
 
 class MoveOrRenameCannotOccurFactory;
 

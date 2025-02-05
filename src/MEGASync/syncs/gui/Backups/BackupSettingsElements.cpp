@@ -1,8 +1,10 @@
 #include "BackupSettingsElements.h"
 
+#include "MegaApplication.h"
 #include "MyBackupsHandle.h"
 #include "SyncSettingsUIBase.h"
 #include "ui_OpenBackupsFolder.h"
+#include "Utilities.h"
 
 BackupSettingsElements::BackupSettingsElements(QObject* parent):
     QObject(parent),

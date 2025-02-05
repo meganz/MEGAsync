@@ -1,13 +1,14 @@
 #include "ChangeLogDialog.h"
-#include "ui_ChangeLogDialog.h"
-#include <QtCore>
-#include <QDesktopServices>
-#include <QString>
-#include <QUrl>
-#include <QScrollBar>
-#include <QtConcurrent/QtConcurrent>
 
 #include "Preferences.h"
+#include "ui_ChangeLogDialog.h"
+
+#include <QDesktopServices>
+#include <QScrollBar>
+#include <QString>
+#include <QtConcurrent/QtConcurrent>
+#include <QtCore>
+#include <QUrl>
 
 QString getArchitectureString()
 {

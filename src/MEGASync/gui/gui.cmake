@@ -56,6 +56,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/WordWrapLabel.h
     gui/ThemeManager.h
     gui/AccountTypeWidget.h
+    gui/BannerWidget.h
     gui/ApiImageLabel.h
     gui/NodeNameSetterDialog/NodeNameSetterDialog.h
     gui/NodeNameSetterDialog/NewFolderDialog.h
@@ -185,6 +186,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/WordWrapLabel.cpp
     gui/ThemeManager.cpp
     gui/AccountTypeWidget.cpp
+    gui/BannerWidget.cpp
     gui/ApiImageLabel.cpp
     gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     gui/NodeNameSetterDialog/NewFolderDialog.cpp
@@ -478,6 +480,8 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/SyncSettingsUIBase.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoteItemUi.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/SyncStallModeSelector.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/BannerWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/SyncAccountFullMessage.ui
 )
 
 set (DESKTOP_APP_GUI_UI_FILES_ROOT
@@ -503,10 +507,6 @@ target_sources(MEGAsync
     ${DESKTOP_APP_GUI_UI_FILES}
 )
 
-target_include_directories(MEGAsync PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}
-)
-
 set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog
@@ -521,7 +521,7 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/ui
     ${CMAKE_CURRENT_LIST_DIR}/user_messages
     ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre
-    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer
 )
 target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})
 

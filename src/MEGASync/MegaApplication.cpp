@@ -17,6 +17,7 @@
 #include "EphemeralCredentials.h"
 #include "EventUpdater.h"
 #include "ExportProcessor.h"
+#include "FatalEventHandler.h"
 #include "FullName.h"
 #include "GuiUtilities.h"
 #include "ImportMegaLinksDialog.h"
@@ -35,22 +36,19 @@
 #include "QmlDialogManager.h"
 #include "QmlDialogWrapper.h"
 #include "QTMegaApiManager.h"
+#include "ReloadingEventHandler.h"
 #include "RequestListenerManager.h"
+#include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
 #include "StreamingFromMegaDialog.h"
 #include "SyncsMenu.h"
 #include "TransferMetaData.h"
-#include "UpdatesModel.h"
 #include "UploadToMegaDialog.h"
 #include "UserAttributesManager.h"
 #include "UserMessageController.h"
 #include "Utilities.h"
 
-#include <QtConcurrent/QtConcurrent>
-
-#include <assert.h>
-#include <DialogOpener.h>
 #include <QCheckBox>
 #include <QClipboard>
 #include <QDesktopWidget>
@@ -59,9 +57,11 @@
 #include <QNetworkProxy>
 #include <QScreen>
 #include <QSettings>
+#include <QtConcurrent/QtConcurrent>
 #include <QToolTip>
 #include <QTranslator>
-#include <StalledIssuesDialog.h>
+
+#include <cassert>
 
 #ifdef Q_OS_LINUX
 #include <condition_variable>
@@ -465,6 +465,26 @@ void MegaApplication::initialize()
 
     createGfxProvider(basePath);
 
+    // Connect to AppState signals
+    auto appState = AppState::instance();
+    connect(this, &MegaApplication::requestAppState, appState.get(), &AppState::setAppState);
+    connect(appState.get(), &AppState::appStateChanged, this, &MegaApplication::onAppStateChanged);
+
+    // Connect to FatalEventHandler signals
+    auto fatalEventHandler = FatalEventHandler::instance();
+    connect(fatalEventHandler.get(),
+            &FatalEventHandler::requestExitApp,
+            this,
+            &MegaApplication::tryExitApplication);
+    connect(fatalEventHandler.get(),
+            &FatalEventHandler::requestUnlink,
+            this,
+            &MegaApplication::unlink);
+    connect(fatalEventHandler.get(),
+            &FatalEventHandler::requestRebootApp,
+            this,
+            &MegaApplication::rebootApplication);
+
     QTMegaApiManager::createMegaApi(megaApi,
                                     Preferences::CLIENT_KEY,
                                     mGfxProvider.get(),
@@ -704,6 +724,11 @@ void MegaApplication::initialize()
 
     mLinkProcessor = new LinkProcessor(megaApi, megaApiFolders);
 
+    connect(mLinkProcessor,
+            &LinkProcessor::linkDownloadErrorDetected,
+            this,
+            &MegaApplication::onOpenLinkError);
+
     connect(mLinkProcessor, &LinkProcessor::requestFetchSetFromLink, mSetManager, &SetManager::requestFetchSetFromLink);
     connect(mSetManager, &SetManager::onFetchSetFromLink, mLinkProcessor, &LinkProcessor::onFetchSetFromLink);
     connect(mLinkProcessor, &LinkProcessor::requestDownloadSet, mSetManager, &SetManager::requestDownloadSet);
@@ -821,7 +846,13 @@ void MegaApplication::updateTrayIcon()
 
     const bool isStorageOverQuotaOrPaywall = appliedStorageState == MegaApi::STORAGE_STATE_RED
                                                 || appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL;
-    if (isStorageOverQuotaOrPaywall || mTransferQuota->isOverQuota())
+
+    if (AppState::instance()->getAppState() == AppState::FATAL_ERROR)
+    {
+        icon = icons["alert"];
+        tooltipState = FatalEventHandler::instance()->getErrorTitle();
+    }
+    else if (isStorageOverQuotaOrPaywall || mTransferQuota->isOverQuota())
     {
         tooltipState = isStorageOverQuotaOrPaywall ? tr("Storage full") : tr("Transfer quota exceeded");
         icon = icons["warning"];
@@ -899,7 +930,8 @@ void MegaApplication::updateTrayIcon()
     #endif
         }
     }
-    else if (!nodescurrent || !getRootNode())
+    else if (!nodescurrent || !getRootNode() ||
+             AppState::instance()->getAppState() == AppState::RELOADING)
     {
         tooltipState = tr("Fetching file list...");
         icon = icons["synching"];
@@ -1028,6 +1060,7 @@ void MegaApplication::updateTrayIcon()
         tooltip += tooltipState;
     }
 
+    // Finally apply icon and tooltip
     if (!icon.isEmpty())
     {
 #ifndef __APPLE__
@@ -1384,16 +1417,6 @@ if (!preferences->lastExecutionTime())
     mIsFirstFileBackedUp = preferences->isFirstFileBackedUp();
 
     createAppMenus();
-
-    //Set the upload limit
-    if (preferences->uploadLimitKB() > 0)
-    {
-        setUploadLimit(0);
-    }
-    else
-    {
-        setUploadLimit(preferences->uploadLimitKB());
-    }
 
     mThreadPool->push([=](){
     setMaxUploadSpeed(preferences->uploadLimitKB());
@@ -2136,6 +2159,8 @@ void MegaApplication::cleanAll()
     }
     appfinished = true;
 
+    emit requestAppState(AppState::FINISHED);
+
 #ifndef DEBUG
     CrashHandler::instance()->Disable();
 #endif
@@ -2305,6 +2330,11 @@ bool MegaApplication::isShellNotificationProcessingOngoing()
 void MegaApplication::showInfoDialog()
 {
     if (appfinished)
+    {
+        return;
+    }
+
+    if (AppState::instance()->getAppState() != AppState::NOMINAL)
     {
         return;
     }
@@ -3121,6 +3151,12 @@ void MegaApplication::unlink(bool keepLogs)
     {
         logger->cleanLogs();
     }
+
+    // When unlinking to solve a sdk fatal issue, change back to nominal after unlink.
+    if (AppState::instance()->getAppState() == AppState::FATAL_ERROR)
+    {
+        emit requestAppState(AppState::NOMINAL);
+    }
 }
 
 void MegaApplication::cleanLocalCaches(bool all)
@@ -3276,24 +3312,6 @@ void MegaApplication::showNotificationMessage(QString message, QString title)
     {
         lastTrayMessage = message;
         mOsNotifications->sendInfoNotification(title, message);
-    }
-}
-
-//KB/s
-void MegaApplication::setUploadLimit(int limit)
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    if (limit < 0)
-    {
-        megaApi->setUploadLimit(-1);
-    }
-    else
-    {
-        megaApi->setUploadLimit(limit * 1024);
     }
 }
 
@@ -4236,7 +4254,9 @@ void MegaApplication::updateTrayIconMenu()
 
         trayIcon->setContextMenu(nullptr); //prevents duplicated context menu in qt 5.12.8 64 bits
 
-        if (preferences && preferences->logged() && getRootNode() && !mStatusController->isAccountBlocked())
+        if (preferences && preferences->logged() && getRootNode() &&
+            !mStatusController->isAccountBlocked() &&
+            AppState::instance()->getAppState() != AppState::FATAL_ERROR)
         { //regular situation: fully logged and without any blocking status
 #ifdef _WIN32
             trayIcon->setContextMenu(windowsMenu.data() ? windowsMenu.data() : &emptyMenu);
@@ -5017,6 +5037,17 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         return;
     }
 
+    registerUserActivity();
+
+    if (AppState::instance()->getAppState() == AppState::FATAL_ERROR)
+    {
+        if (reason == QSystemTrayIcon::Trigger)
+        {
+            QmlDialogManager::instance()->raiseGuestDialog();
+        }
+        return;
+    }
+
 #ifdef Q_OS_LINUX
     const QString desktopEnv = qEnvironmentVariable("XDG_CURRENT_DESKTOP");
     if (!desktopEnv.isEmpty() && (
@@ -5043,7 +5074,6 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         httpServer->processRequest(NULL, request);
     }*/
 
-    registerUserActivity();
     megaApi->retryPendingConnections();
 
     if (reason == QSystemTrayIcon::Trigger || reason == QSystemTrayIcon::Context)
@@ -5165,11 +5195,12 @@ void MegaApplication::openSettings(int tab)
     mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_SETTINGS_CLICKED,
                                          sender(), settingsAction, true);
 
-    bool proxyOnly = true;
+    bool proxyOnly = AppState::instance()->getAppState() != AppState::NOMINAL;
 
     if (megaApi)
     {
-        proxyOnly = !mLoginController->isFetchNodesFinished() || mStatusController->isAccountBlocked();
+        proxyOnly |=
+            !mLoginController->isFetchNodesFinished() || mStatusController->isAccountBlocked();
         megaApi->retryPendingConnections();
     }
 
@@ -5672,8 +5703,6 @@ void MegaApplication::manageBusinessStatus(int64_t event)
 
 void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
 {
-    const int eventNumber = static_cast<int>(event->getNumber());
-
     if (event->getType() == MegaEvent::EVENT_CHANGE_TO_HTTPS)
     {
         preferences->setUseHttpsOnly(true);
@@ -5686,7 +5715,8 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
     {
         if (mLoginController->isFetchNodesFinished())
         {
-            applyStorageState(eventNumber);
+            const auto storageState = static_cast<int>(event->getNumber());
+            applyStorageState(storageState);
         }
     }
     else if (event->getType() == MegaEvent::EVENT_STORAGE_SUM_CHANGED)
@@ -5707,6 +5737,16 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
     else if (event->getType() == MegaEvent::EVENT_UPGRADE_SECURITY)
     {
         processUpgradeSecurityEvent();
+    }
+    else if (event->getType() == MegaEvent::EVENT_RELOADING)
+    {
+        ReloadingEventHandler::instance()->processEvent(std::unique_ptr<MegaEvent>(event->copy()),
+                                                        mOsNotifications);
+    }
+    else if (event->getType() == MegaEvent::EVENT_FATAL_ERROR)
+    {
+        FatalEventHandler::instance()->processEvent(std::unique_ptr<MegaEvent>(event->copy()),
+                                                    logger.get());
     }
 }
 
@@ -6229,24 +6269,39 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
     }
 }
 
-void MegaApplication::onReloadNeeded(MegaApi*)
-{
-    // TODO isCrashed: onReloadNeeded obsoleted by MegaEvent::EVENT_RELOAD
-    if (appfinished)
-    {
-        return;
-    }
-
-    // TODO isCrashed: investigate this. Could a restart of the app be enough?
-
-    //Don't reload the filesystem here because it's unsafe
-    //and the most probable cause for this callback is a false positive.
-    //Simply set the crashed flag to force a filesystem reload in the next execution.
-}
-
 void MegaApplication::onScheduledExecution()
 {
     onGlobalSyncStateChangedImpl();
+}
+
+void MegaApplication::onOpenLinkError(const QString& path, const int errorCode)
+{
+    const QString title = tr("Folder download error");
+
+    QString message;
+    if (errorCode == MegaError::API_EWRITE)
+    {
+        if (mightBeCaseSensitivityIssue(path))
+        {
+            message = tr("The folder %1 can't be downloaded. The download may have failed due to a "
+                         "casing mismatch. Ensure the folders match exactly and try again.")
+                          .arg(path);
+        }
+        else
+        {
+            message =
+                tr("The folder %1 can't be downloaded. Check the download destination folder.")
+                    .arg(path);
+        }
+    }
+    else
+    {
+        const QString errorString = QString::fromUtf8(MegaError::getErrorString(errorCode));
+        message =
+            tr("The folder %1 can't be downloaded. Error received : %2.").arg(path, errorString);
+    }
+
+    showErrorMessage(message, title);
 }
 
 void MegaApplication::onGlobalSyncStateChanged(MegaApi* api)
@@ -6308,5 +6363,16 @@ void MegaApplication::requestFetchSetFromLink(const QString& link)
     {
         mSetManager->requestFetchSetFromLink(link);
     }
+}
 
+void MegaApplication::onAppStateChanged(AppState::AppStates, AppState::AppStates)
+{
+    updateTrayIcon();
+    updateTrayIconMenu();
+}
+
+bool MegaApplication::mightBeCaseSensitivityIssue(const QString& folderPath)
+{
+    QFileInfo info(folderPath);
+    return info.exists();
 }

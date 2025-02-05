@@ -1,7 +1,8 @@
 #ifndef SYNCTABLEVIEW_H
 #define SYNCTABLEVIEW_H
 
-#include <megaapi.h>
+#include "megaapi.h"
+
 #include <QObject>
 #include <QStyledItemDelegate>
 #include <QTableView>

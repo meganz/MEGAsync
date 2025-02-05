@@ -1,9 +1,5 @@
 #include "QmlDialogWrapper.h"
 
-#include "QmlManager.h"
-
-#include "MegaApplication.h"
-
 #include <QQmlProperty>
 #include <QWindow>
 

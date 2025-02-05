@@ -10,11 +10,12 @@
 #include "ui_NodeSelector.h"
 #include "Utilities.h"
 
-#include <optional>
 #include <QKeyEvent>
 #include <QMessageBox>
 #include <QPointer>
 #include <QShortcut>
+
+#include <optional>
 
 using namespace mega;
 

@@ -4,7 +4,7 @@ IF [%MEGA_QTPATH%]==[] (
 	IF NOT [%MEGAQTPATH%]==[] (
 		SET MEGA_QTPATH=%MEGAQTPATH%
 	) ELSE (
-		SET MEGA_QTPATH=C:\Qt\5.15.13\x64
+		SET MEGA_QTPATH=C:\Qt\5.15.16\x64
 	)
 )
 
@@ -23,6 +23,9 @@ mkdir %MEGA_QT_DEPLOY_DIR%
  build-x64-windows-mega\src\MEGASync\RelWithDebInfo\MEGAsync.exe
 rmdir /s /q %MEGA_QT_DEPLOY_DIR%\bearer
 rmdir /s /q %MEGA_QT_DEPLOY_DIR%\scenegraph
+
+REM Copy sofware opengl dll
+cp %MEGA_QTPATH%\bin\opengl32sw.dll %MEGA_QT_DEPLOY_DIR%\opengl32sw.dll
 
 IF "%MEGA_SKIP_32_BIT_BUILD%" == "true" (
 	GOTO :EOF
@@ -45,3 +48,6 @@ mkdir %MEGA_QT_DEPLOY_DIR%
  build-x86-windows-mega\src\MEGASync\RelWithDebInfo\MEGAsync.exe
 rmdir /s /q %MEGA_QT_DEPLOY_DIR%\bearer
 rmdir /s /q %MEGA_QT_DEPLOY_DIR%\scenegraph
+
+REM Copy sofware opengl dll
+cp %MEGA_QTPATH%\..\x86\bin\opengl32sw.dll %MEGA_QT_DEPLOY_DIR%\opengl32sw.dll

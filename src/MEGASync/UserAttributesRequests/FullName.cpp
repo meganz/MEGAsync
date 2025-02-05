@@ -1,8 +1,6 @@
 #include "FullName.h"
 
 #include "megaapi.h"
-#include "mega/types.h"
-#include "AvatarWidget.h"
 #include "MegaApplication.h"
 
 namespace UserAttributes

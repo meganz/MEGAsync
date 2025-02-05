@@ -4,9 +4,10 @@
 #include "megaapi.h"
 #include "QmlSyncData.h"
 
+#include <QAbstractListModel>
+
 #include <memory>
 #include <optional>
-#include <QAbstractListModel>
 
 class SyncSettings;
 

@@ -37,7 +37,7 @@ Qml.ComboBox {
         color:"transparent"
         radius: sizes.focusBorderRadius
         border {
-            color: root.activeFocus && !popup.visible ? ColorTheme.focus : "transparent"
+            color: root.activeFocus && !popup.visible ? ColorTheme.focusColor : "transparent"
             width: sizes.focusBorderWidth
         }
         Rectangle{

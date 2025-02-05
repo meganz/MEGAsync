@@ -1,13 +1,13 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-#define VER_FILEVERSION 5, 7, 1, 1
-#define VER_FILEVERSION_CODE 50701
-#define VER_PRODUCTVERSION 5, 7, 1, 1
+#define VER_FILEVERSION 5, 8, 0, 2
+#define VER_FILEVERSION_CODE 50800
+#define VER_PRODUCTVERSION 5, 8, 0, 2
 // Update scripts relying on this value if you move it
-#define VER_PRODUCTVERSION_STR "5.7.1.1\0"
+#define VER_PRODUCTVERSION_STR "5.8.0.2\0"
 
-#define VER_BUILD_ID 1
+#define VER_BUILD_ID 2
 
 #define VER_COMPANYNAME_STR         "Mega Limited\0"
 #define VER_FILEDESCRIPTION_STR     "MEGAsync\0"
@@ -18,7 +18,7 @@
 #define VER_PRODUCTNAME_STR         "MEGAsync\0"
 
 /* SDK commit hash, 7 chars */
-#define VER_SDK_ID "d6a5d20"
+#define VER_SDK_ID "ddaaf5e"
 
 /* Update scrips relying on this value if you move it
 Format: 1 item by line, starting from line following the #define
@@ -29,16 +29,14 @@ Format: 1 item by line, starting from line following the #define
 "- item n\n"
 )*/
 #define VER_CHANGES_NOTES \
-QT_TRANSLATE_NOOP("Preferences", \
-                  "- Enhanced stability with isolated graphics processing: We’ve upgraded our " \
-                  "app to run the graphics processor (GFX) in a separate process. This means " \
-                  "that if any third-party graphics libraries encounter issues, the app remains " \
-                  "stable and unaffected, ensuring a smoother, uninterrupted experience.\n" \
-                  "- End of support for macOS 10.13 and 10.14: This update no longer supports " \
-                  "macOS 10.13 and 10.14. To continue receiving updates and support, please " \
-                  "upgrade to a more recent version of macOS.\n" \
-                  "- The Settings dialogue has been redesigned.\n" \
-                  "- Improved app issue detection and resolution.\n" \
-                  "- Other bugs have been fixed and numerous improvements made.\n")
+QT_TRANSLATE_NOOP( \
+    "Preferences", \
+    "- We’ve enhanced the interface and behaviour of the transfer manager feature.\n" \
+    "- You can now create sync exclusions using wildcards.\n" \
+    "- There are new releases available now for the Raspberry Pi OS.\n" \
+    "- We’ve fixed crashes that were occurring due to missing or broken OpenGL drivers on " \
+    "Windows.\n" \
+    "- Qt has been upgraded to a newer version.\n" \
+    "- Other bugs have been fixed and numerous improvements made.\n")
 
 #endif // VERSION_H

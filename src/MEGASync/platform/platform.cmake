@@ -126,6 +126,9 @@ target_sources(MEGAsync
 set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}
     ${CMAKE_CURRENT_LIST_DIR}/platform
+    ${CMAKE_CURRENT_LIST_DIR}/platform/linux
+    ${CMAKE_CURRENT_LIST_DIR}/platform/mac
+    ${CMAKE_CURRENT_LIST_DIR}/platform/win
 )
 target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})
 

@@ -1,11 +1,9 @@
 #ifndef MOVEORRENAMECANNOTOCCURISSUE_H
 #define MOVEORRENAMECANNOTOCCURISSUE_H
 
-#include <StalledIssue.h>
-#include <StalledIssuesFactory.h>
-#include <StalledIssuesUtilities.h>
-
-#include <QTMegaRequestListener.h>
+#include "StalledIssue.h"
+#include "StalledIssuesFactory.h"
+#include "StalledIssuesUtilities.h"
 
 class SyncSettings;
 

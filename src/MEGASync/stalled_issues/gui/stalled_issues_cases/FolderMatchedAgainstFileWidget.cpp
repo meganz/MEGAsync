@@ -1,28 +1,17 @@
 #include "FolderMatchedAgainstFileWidget.h"
-#include "TextDecorator.h"
-#include <QDialogButtonBox>
-#include "ui_FolderMatchedAgainstFileWidget.h"
-#include <QCheckBox>
 
-#include "MegaApplication.h"
-#include "StalledIssuesModel.h"
-#include "StalledIssueHeader.h"
-#include <DialogOpener.h>
-#include <StalledIssuesDialog.h>
-#include <PlatformStrings.h>
-#include <QMegaMessageBox.h>
 #include "FolderMatchedAgainstFileIssue.h"
-#include "StalledIssueChooseWidget.h"
-#include <Preferences/Preferences.h>
 #include "RenameNodeDialog.h"
+#include "StalledIssueHeader.h"
+#include "ui_FolderMatchedAgainstFileWidget.h"
 
-#include "mega/types.h"
-
-#include <QMessageBox>
+#include <Preferences/Preferences.h>
+#include <QCheckBox>
+#include <QDialogButtonBox>
 #include <QFile>
+#include <QMessageBox>
 
-
-FolderMatchedAgainstFileWidget::FolderMatchedAgainstFileWidget(QWidget *parent) :
+FolderMatchedAgainstFileWidget::FolderMatchedAgainstFileWidget(QWidget* parent):
     StalledIssueBaseDelegateWidget(parent),
     ui(new Ui::FolderMatchedAgainstFileWidget)
 {

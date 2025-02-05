@@ -1,4 +1,5 @@
 #include "WinShellDispatcherTask.h"
+
 #include "megaapi.h"
 
 PIPEINST Pipe[INSTANCES];

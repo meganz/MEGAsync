@@ -1,7 +1,8 @@
 #include "MegaProgressCustomDialog.h"
+
 #include "ui_MegaProgressCustomDialog.h"
-#include <QCloseEvent>
-#include <qdebug.h>
+
+#include <QEvent>
 
 MegaProgressCustomDialog::MegaProgressCustomDialog(QWidget *parent, int minimum, int maximum):
     QDialog(parent),

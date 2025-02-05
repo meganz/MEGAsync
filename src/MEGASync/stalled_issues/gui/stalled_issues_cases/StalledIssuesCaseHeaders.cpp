@@ -1,20 +1,19 @@
 #include "StalledIssuesCaseHeaders.h"
-#include <QDialogButtonBox>
-#include <QCheckBox>
 
-#include <Utilities.h>
-#include <MegaApplication.h>
+#include "DialogOpener.h"
+#include "IgnoredStalledIssue.h"
+#include "MegaApplication.h"
+#include "MoveOrRenameCannotOccurIssue.h"
+#include "NameConflictStalledIssue.h"
+#include "QMegaMessageBox.h"
+#include "StalledIssue.h"
+#include "StalledIssuesDialog.h"
+#include "StalledIssuesModel.h"
 #include "TextDecorator.h"
+#include "Utilities.h"
 
-#include <StalledIssuesModel.h>
-#include <StalledIssue.h>
-#include <IgnoredStalledIssue.h>
-#include <NameConflictStalledIssue.h>
-#include <MoveOrRenameCannotOccurIssue.h>
-#include <QMegaMessageBox.h>
-#include <DialogOpener.h>
-#include <StalledIssuesDialog.h>
-#include <LocalOrRemoteUserMustChooseStalledIssue.h>
+#include <QCheckBox>
+#include <QDialogButtonBox>
 
 #ifdef _WIN32
     #include "minwindef.h"

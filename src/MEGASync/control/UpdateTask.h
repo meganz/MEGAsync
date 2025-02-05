@@ -1,21 +1,21 @@
 #ifndef UPDATETASK_H
 #define UPDATETASK_H
 
-#include <QCoreApplication>
-#include <QApplication>
-#include <QProcess>
-#include <QThread>
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QStringList>
-#include <QTimer>
-#include <QDir>
-#include <QDirIterator>
-#include <QDateTime>
-
 #include "megaapi.h"
 #include "Preferences.h"
+
+#include <QApplication>
+#include <QCoreApplication>
+#include <QDateTime>
+#include <QDir>
+#include <QDirIterator>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QProcess>
+#include <QStringList>
+#include <QThread>
+#include <QTimer>
 
 class UpdateTask : public QObject
 {

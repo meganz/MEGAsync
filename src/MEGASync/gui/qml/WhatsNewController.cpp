@@ -1,8 +1,6 @@
 #include "WhatsNewController.h"
 
-#include "MegaApplication.h"
-
-#include <QCoreApplication>
+#include <QApplication>
 
 namespace
 {

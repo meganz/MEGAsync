@@ -1,10 +1,8 @@
 #include "StalledIssue.h"
 
 #include "MegaApplication.h"
-#include "FullName.h"
 #include "StalledIssuesUtilities.h"
 #include "TransfersModel.h"
-#include "MultiStepIssueSolver.h"
 
 StalledIssueData::StalledIssueData()
 {

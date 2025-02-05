@@ -1,7 +1,7 @@
 #ifndef OTHERSIDEMISSINGORBLOCKED_H
 #define OTHERSIDEMISSINGORBLOCKED_H
 
-#include <StalledIssueBaseDelegateWidget.h>
+#include "StalledIssueBaseDelegateWidget.h"
 
 namespace Ui {
 class OtherSideMissingOrBlocked;

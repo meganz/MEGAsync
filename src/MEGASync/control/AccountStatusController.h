@@ -1,11 +1,11 @@
 #ifndef ACCOUNTSTATUSCONTROLLER_H
 #define ACCOUNTSTATUSCONTROLLER_H
 
-#include "QTMegaListener.h"
+#include "megaapi.h"
 #include "Preferences.h"
+#include "QTMegaListener.h"
 
 #include <QObject>
-#include <megaapi.h>
 
 #include <memory>
 

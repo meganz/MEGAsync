@@ -1,10 +1,9 @@
 #include "NodeNameSetterDialog.h"
-#include "ui_NodeNameSetterDialog.h"
 
-#include <Utilities.h>
-#include <MegaApplication.h>
-#include <CommonMessages.h>
-#include <mega/types.h>
+#include "CommonMessages.h"
+#include "MegaApplication.h"
+#include "ui_NodeNameSetterDialog.h"
+#include "Utilities.h"
 
 #include <memory>
 

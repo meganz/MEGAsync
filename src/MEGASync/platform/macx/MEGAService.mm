@@ -1,6 +1,8 @@
 #include "MEGAService.h"
+
 #include "MacXSystemServiceTask.h"
 #include "MacXFunctions.h"
+
 #include <QStringList>
 
 @implementation MEGAService

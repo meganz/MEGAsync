@@ -1,18 +1,16 @@
 #include "LoginController.h"
 
-#include "MegaApplication.h"
 #include "ConnectivityChecker.h"
+#include "MegaApplication.h"
 #include "Platform.h"
-#include "QMegaMessageBox.h"
-
-#include "TextDecorator.h"
-#include "StatsEventHandler.h"
-
 #include "Preferences.h"
+#include "QMegaMessageBox.h"
 #include "QmlDialogManager.h"
+#include "RequestListenerManager.h"
+#include "StatsEventHandler.h"
+#include "TextDecorator.h"
 
 #include <QQmlContext>
-#include "RequestListenerManager.h"
 
 LoginController::LoginController(QObject* parent)
     : QObject{parent}
@@ -46,6 +44,16 @@ LoginController::LoginController(QObject* parent)
     {
         mMegaApi->resumeCreateAccount(credentials.sessionId.toUtf8().constData());
     }
+
+    // Plug into AppStates
+    connect(this,
+            &LoginController::requestAppState,
+            AppState::instance().get(),
+            &AppState::setAppState);
+    connect(AppState::instance().get(),
+            &AppState::appStateChanged,
+            this,
+            &LoginController::onAppStateChanged);
 }
 
 void LoginController::login(const QString& email, const QString& password)
@@ -102,6 +110,12 @@ void LoginController::setState(State state)
     {
         mState = state;
         emit stateChanged();
+
+        if (mState == State::FETCH_NODES_FINISHED &&
+            AppState::instance()->getAppState() == AppState::RELOADING)
+        {
+            emit requestAppState(AppState::NOMINAL);
+        }
     }
 }
 
@@ -576,11 +590,14 @@ void LoginController::fetchNodes(const QString& email)
            // that didn't complete a fetch nodes (i.e. does not have mPreferences logged).
            // that can happen for blocked accounts.
            // Fortunately, the SDK can help us get the email of the session
-    bool needFindingOutEmail = !mPreferences->logged() && email.isEmpty();
+    bool needFindingOutEmail = !mPreferences->logged() && email.isEmpty() &&
+                               AppState::instance()->getAppState() != AppState::RELOADING;
 
     auto loadMigrateAndFetchNodes = [this](const QString& email)
     {
-        if (!mPreferences->logged() && email.isEmpty()) // I still couldn't get the the email: won't be able to access user settings
+        if ((!mPreferences->logged() && email.isEmpty()) // I still couldn't get the the email:
+                                                         // won't be able to access user settings
+            || AppState::instance()->getAppState() == AppState::RELOADING)
         {
             mMegaApi->fetchNodes();
         }
@@ -854,6 +871,25 @@ void LoginController::onConnectivityCheckFinished(bool success)
         MegaSyncApp->showErrorMessage(tr("MEGAsync is unable to connect. Please check your "
                                            "Internet connectivity and local firewall configuration. "
                                            "Note that most antivirus software includes a firewall."));
+    }
+}
+
+void LoginController::onAppStateChanged(AppState::AppStates oldAppState,
+                                        AppState::AppStates newAppState)
+{
+    // We are here only interrested by the RELOADING state
+    if (newAppState == AppState::RELOADING)
+    {
+        // If previous state was a FATAL ERROR, we force a fetchNodes()
+        if (oldAppState == AppState::FATAL_ERROR)
+        {
+            fetchNodes();
+        }
+        // Otherwise, the fetchnodes has been started by the SDK, and we just need to monitor it
+        else
+        {
+            setState(FETCHING_NODES);
+        }
     }
 }
 

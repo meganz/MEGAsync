@@ -1,8 +1,11 @@
 #include "MacXExtServer.h"
-#include <assert.h>
+
 #include "CommonMessages.h"
+#include "megaapi.h"
+
 #include <QThread>
-#include <megaapi.h>
+
+#include <cassert>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>

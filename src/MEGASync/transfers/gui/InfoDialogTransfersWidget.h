@@ -1,13 +1,12 @@
 #ifndef INFODIALOGTRANSFERSWIDGET_H
 #define INFODIALOGTRANSFERSWIDGET_H
 
-#include <QWidget>
-#include <QSortFilterProxyModel>
-
-#include "MegaTransferDelegate.h"
+#include "InfoDialogTransferLoadingItem.h"
 #include "MegaDelegateHoverManager.h"
-#include <ViewLoadingScene.h>
-#include <InfoDialogTransferLoadingItem.h>
+#include "ViewLoadingScene.h"
+
+#include <QSortFilterProxyModel>
+#include <QWidget>
 
 namespace Ui {
 class InfoDialogTransfersWidget;

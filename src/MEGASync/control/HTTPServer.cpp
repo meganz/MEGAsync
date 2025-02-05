@@ -1,14 +1,13 @@
 #include "HTTPServer.h"
-#include "Preferences.h"
-#include "Utilities.h"
+
 #include "MegaApplication.h"
+#include "Preferences.h"
 #include "StatsEventHandler.h"
+#include "Utilities.h"
 
 #include <QtConcurrent/QtConcurrent>
 
-
 #include <algorithm>
-
 
 using namespace mega;
 

@@ -1,8 +1,5 @@
 #include "ProxyStatsEventHandler.h"
 
-#include "Utilities.h"
-#include "MegaApplication.h"
-
 #include <QProcessEnvironment>
 
 void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventType type,

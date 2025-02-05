@@ -1,8 +1,9 @@
 #ifndef QMLTHEME_H
 #define QMLTHEME_H
 
-#include <QObject>
 #include "Preferences/Preferences.h"
+
+#include <QObject>
 
 class QmlTheme : public QObject
 {

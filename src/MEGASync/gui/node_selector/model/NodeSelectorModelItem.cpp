@@ -1,11 +1,8 @@
 #include "NodeSelectorModelItem.h"
-#include "QMegaMessageBox.h"
-#include "MegaApplication.h"
-#include "SyncInfo.h"
-#include "FullName.h"
-#include "Avatar.h"
 
-#include "mega/utils.h"
+#include "Avatar.h"
+#include "FullName.h"
+#include "MegaApplication.h"
 
 const int NodeSelectorModelItem::ICON_SIZE = 17;
 

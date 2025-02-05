@@ -3,7 +3,7 @@
 
 #include <QEvent>
 #include <QIcon>
-#include <qobjectdefs.h>
+#include <QObject>
 #include <QPainter>
 #include <QPen>
 #include <QWidget>

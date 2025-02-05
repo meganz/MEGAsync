@@ -1,12 +1,11 @@
 #include "GuiUtilities.h"
 
+#include "QMegaMessageBox.h"
+#include "Utilities.h"
+
 #include <QApplication>
 #include <QPointer>
 #include <QUrl>
-
-#include "QMegaMessageBox.h"
-#include "TextDecorator.h"
-#include "Utilities.h"
 
 using namespace mega;
 

@@ -1,13 +1,14 @@
-#pragma once
+#ifndef TRANSFER_QUOTA_H
+#define TRANSFER_QUOTA_H
 
-#include "Preferences.h"
 #include "DesktopNotifications.h"
-#include <memory>
-#include "UpgradeDialog.h"
-#include "UpgradeOverStorage.h"
 #include "OverQuotaDialog.h"
+#include "Preferences.h"
+#include "UpgradeDialog.h"
 
 #include <QObject>
+
+#include <memory>
 
 // % for almost over quota
 constexpr int ALMOST_OVER_QUOTA_PER_CENT{90};
@@ -37,7 +38,7 @@ public:
     void checkImportLinksAlertDismissed(std::function<void(int)> func);
     void checkDownloadAlertDismissed(std::function<void(int)> func);
     void checkStreamingAlertDismissed(std::function<void (int)> func);
-    QTime getTransferQuotaDeadline();
+    QTime getRemainingTransferQuotaTime();
     void reset();
 
 private:
@@ -77,3 +78,4 @@ signals:
     void sendState(QuotaState state);
     void waitTimeIsOver();
 };
+#endif

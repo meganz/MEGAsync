@@ -1,10 +1,10 @@
 #ifndef NAMECONFLICT_H
 #define NAMECONFLICT_H
 
-#include <StalledIssueBaseDelegateWidget.h>
-#include <NameConflictStalledIssue.h>
-#include <StalledIssuesUtilities.h>
+#include "NameConflictStalledIssue.h"
 #include "StalledIssueActionTitle.h"
+#include "StalledIssueBaseDelegateWidget.h"
+#include "StalledIssuesUtilities.h"
 
 namespace Ui {
 class NameConflict;
