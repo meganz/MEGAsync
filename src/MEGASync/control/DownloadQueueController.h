@@ -46,9 +46,8 @@ private:
     void tryDownload();
     bool hasEnoughSpaceForDownloads();
     void askUserForChoice();
-    DriveDisplayData getDriveDisplayData(const QStorageInfo& driveInfo) const;
+    QString getDriveName(const QStorageInfo& driveInfo) const;
     QString getDefaultDriveName() const;
-    QString getDriveIcon() const;
     DriveSpaceData getDriveSpaceDataFromQt();
 
     mega::MegaApi *mMegaApi;

@@ -16,10 +16,4 @@ public:
     int64_t mTotalSpace;
 };
 
-struct DriveDisplayData
-{
-    QString name;
-    QString icon;
-};
-
 #endif // DRIVEDATA_H

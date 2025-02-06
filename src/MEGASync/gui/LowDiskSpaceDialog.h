@@ -16,10 +16,10 @@ class LowDiskSpaceDialog : public QDialog
 
 public:
     explicit LowDiskSpaceDialog(long neededSize,
-        long long freeSize,
-        long long driveSize,
-        const DriveDisplayData& driveDisplayData,
-        QWidget* parent = nullptr);
+                                long long freeSize,
+                                long long driveSize,
+                                const QString& driveName,
+                                QWidget* parent = nullptr);
     ~LowDiskSpaceDialog();
 
 private:

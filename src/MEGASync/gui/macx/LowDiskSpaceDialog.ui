@@ -87,6 +87,12 @@ QPushButton {
          <property name="text">
           <string notr="true"/>
          </property>
+         <property name="pixmap">
+          <pixmap resource="../Resources_macx.qrc">:/images/drive-low-space.svg</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item>
