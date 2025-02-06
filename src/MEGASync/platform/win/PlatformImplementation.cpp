@@ -207,6 +207,10 @@ bool PlatformImplementation::enableTrayIcon(QString executable)
     return true;
 }
 
+/*
+ * This implementation only works in Windows 11, there is not alternative way afaik
+ * to do the same on Windows 10.
+ */
 void PlatformImplementation::unHideTrayIcon()
 {
     auto preferences = Preferences::instance();
