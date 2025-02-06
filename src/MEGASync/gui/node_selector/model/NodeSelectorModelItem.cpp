@@ -393,11 +393,22 @@ NodeSelectorModelItemSearch::NodeSelectorModelItemSearch(std::unique_ptr<mega::M
     }
 
     calculateSyncStatus();
+
+    qRegisterMetaType<Types>("Types");
 }
 
 NodeSelectorModelItemSearch::~NodeSelectorModelItemSearch()
 {
 
+}
+
+void NodeSelectorModelItemSearch::setType(Types type)
+{
+    if (mType != type)
+    {
+        mType = type;
+        emit typeChanged(type);
+    }
 }
 
 int NodeSelectorModelItemSearch::getNumChildren()

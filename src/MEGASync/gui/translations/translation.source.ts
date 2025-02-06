@@ -4797,6 +4797,10 @@ Enter a different name.</translation>
         <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It deletes the sync on the selected folder. SAT-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Leave share</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NodeSelectorTreeViewWidget</name>
@@ -4845,15 +4849,6 @@ Enter a different name.</translation>
         <translatorcomment>Button text to empty the rubbish bin. SAT-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
-    <message numerus="yes">
-        <source>You are about to permanently remove %n file.
-Would you like to proceed?</source>
-        <translatorcomment>First part of the messagebox text when the user is about to remove permanently a node. SAT-426</translatorcomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
     <message>
         <source>You cannot undo this action</source>
         <translatorcomment>Second part of the messagebox text when the user is about to remove permanently a node. SAT-426</translatorcomment>
@@ -4883,6 +4878,48 @@ Would you like to proceed?</source>
         <source>Ok</source>
         <translatorcomment>Button text to accept and close the dialog</translatorcomment>
         <translation>OK</translation>
+    </message>
+    <message numerus="yes">
+        <source>You are about to permanently remove %n items.
+Would you like to proceed?</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>You are about to permanently remove &quot;%1&quot;.
+Would you like to proceed?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Leave</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don’t leave</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You will leave the inshared folder. You will stop having access to the folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are about to leave &quot;%1&quot;.
+Would you like to proceed?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>You are about to leave %n folder.
+Would you like to proceed?</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Rubbish bin</source>
+        <translation type="unfinished">Rubbish bin</translation>
     </message>
 </context>
 <context>

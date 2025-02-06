@@ -1537,5 +1537,17 @@
         <file>images/node_selector/view/rubbish_empty.png</file>
         <file>images/node_selector/view/rubbish_empty@2x.png</file>
         <file>images/node_selector/view/rubbish_empty@3x.png</file>
+        <file>images/node_selector/search_filter/small_trash_default.png</file>
+        <file>images/node_selector/search_filter/small_trash_default@2x.png</file>
+        <file>images/node_selector/search_filter/small_trash_default@3x.png</file>
+        <file>images/node_selector/search_filter/small_trash_hover_selected.png</file>
+        <file>images/node_selector/search_filter/small_trash_hover_selected@2x.png</file>
+        <file>images/node_selector/search_filter/small_trash_hover_selected@3x.png</file>
+        <file>images/node_selector/search_filter/small_trash_hover.png</file>
+        <file>images/node_selector/search_filter/small_trash_hover@3x.png</file>
+        <file>images/node_selector/search_filter/small_trash_hoverr@2x.png</file>
+        <file>images/node_selector/search_filter/small_trash_selected.png</file>
+        <file>images/node_selector/search_filter/small_trash_selected@2x.png</file>
+        <file>images/node_selector/search_filter/small_trash_selected@3x.png</file>
     </qresource>
 </RCC>

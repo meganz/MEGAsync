@@ -132,6 +132,8 @@ private:
 
 class NodeSelectorModelItemSearch : public NodeSelectorModelItem
 {
+    Q_OBJECT
+
 public:
     enum class Type
     {
@@ -139,13 +141,23 @@ public:
         BACKUP = 0x01,
         INCOMING_SHARE = 0x02,
         CLOUD_DRIVE = 0x04,
+        RUBBISH = 0x08,
     };
     Q_DECLARE_FLAGS(Types, Type);
 
     explicit NodeSelectorModelItemSearch(std::unique_ptr<mega::MegaNode> node, Types type, NodeSelectorModelItem *parentItem = 0);
     ~NodeSelectorModelItemSearch();
-    Types getType(){return mType;}
+
+    Types getType()
+    {
+        return mType;
+    }
+
+    void setType(Types type);
     int getNumChildren() override;
+
+signals:
+    void typeChanged(Types type);
 
 private:
     NodeSelectorModelItem* createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0) override;

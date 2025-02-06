@@ -348,6 +348,10 @@ void NodeSelectorTreeViewWidget::onExpandReady()
                 this,
                 &NodeSelectorTreeViewWidget::onDeleteClicked);
         connect(ui->tMegaFolders,
+                &NodeSelectorTreeView::leaveShareClicked,
+                this,
+                &NodeSelectorTreeViewWidget::onLeaveShareClicked);
+        connect(ui->tMegaFolders,
                 &NodeSelectorTreeView::renameNodeClicked,
                 this,
                 &NodeSelectorTreeViewWidget::onRenameClicked);
@@ -716,8 +720,7 @@ void NodeSelectorTreeViewWidget::onRenameClicked()
 
 void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &handles, bool permanently)
 {
-    auto selectedRows = ui->tMegaFolders->selectionModel()->selectedRows();
-    if (selectedRows.isEmpty())
+    if (handles.isEmpty())
     {
         return;
     }
@@ -738,87 +741,127 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
     QMegaMessageBox::MessageBoxInfo msgInfo;
     msgInfo.parent = ui->tMegaFolders;
     msgInfo.title = MegaSyncApp->getMEGAString();
-    msgInfo.informativeText = tr(
-        "Any shared files or folders will no longer be accessible to the people you shared "
-        "them with. You can still access these items in the Rubbish bin, restore, and share "
-        "them.");
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::Yes;
     msgInfo.buttonsText.insert(QMessageBox::Yes, tr("Move"));
     msgInfo.buttonsText.insert(QMessageBox::No, tr("Don’t move"));
+    msgInfo.finishFunc = [this, handles, permanently](QPointer<QMessageBox> msg)
+    {
+        if (msg->result() == QMessageBox::Yes)
+        {
+            mModel->deleteNodes(handles, permanently);
+        }
+        else
+        {
+            return;
+        }
+    };
 
+    if (permanently)
+    {
+        msgInfo.informativeText = tr("You cannot undo this action");
+    }
+    else
+    {
+        msgInfo.informativeText =
+            tr("Any shared files or folders will no longer be accessible to the people you shared "
+               "them with. You can still access these items in the Rubbish bin, restore, and share "
+               "them.");
+    }
     if(handles.size() == 1)
     {
         auto node = getNode(handles.first());
         if (node)
         {
-            int access = mMegaApi->getAccess(node.get());
-            permanently =
-                permanently || (access == MegaShare::ACCESS_FULL && node->isNodeKeyDecrypted());
-
             if (permanently)
             {
                 msgInfo.text =
-                    tr("You are about to permanently remove %n file.\nWould you like to proceed?",
-                       "",
-                       1);
-                msgInfo.informativeText = tr("You cannot undo this action");
+                    tr("You are about to permanently remove \"%1\".\nWould you like to proceed?")
+                        .arg(QString::fromUtf8(node->getName()));
             }
             else
             {
                 msgInfo.text = tr("Are you sure that you want to delete \"%1\"?")
                                    .arg(QString::fromUtf8(node->getName()));
             }
-
-            msgInfo.finishFunc = [this, node, permanently](QPointer<QMessageBox> msg)
-            {
-                if (msg->result() == QMessageBox::Yes)
-                {
-                    mModel->deleteNodes(QList<mega::MegaHandle>{node->getHandle()}, permanently);
-                }
-                else
-                {
-                    return;
-                }
-            };
         }
     }
     else if (handles.size() > 1)
     {
         if(permanently)
         {
-            msgInfo.text = tr("You are about to permanently remove %n file.\nWould you like to proceed?", "", selectedRows.size());
-            msgInfo.informativeText = tr("You cannot undo this action");
+            msgInfo.text =
+                tr("You are about to permanently remove %n items.\nWould you like to proceed?",
+                   "",
+                   handles.size());
         }
         else
         {
             msgInfo.text = tr("Are you sure that you want to delete %1 items?")
-                               .arg(QString::number(selectedRows.size()));
+                               .arg(QString::number(handles.size()));
         }
-
-        msgInfo.finishFunc = [this, selectedRows, permanently](QPointer<QMessageBox> msg)
-        {
-            if(msg->result() == QMessageBox::Yes)
-            {
-                QList<mega::MegaHandle> handlesToRemove;
-
-                for (const auto& index: selectedRows)
-                {
-                    if (auto savedNode = mProxyModel->getNode(index))
-                    {
-                        handlesToRemove << savedNode->getHandle();
-                    }
-                }
-
-                mModel->deleteNodes(handlesToRemove, permanently);
-            }
-            else
-            {
-                return;
-            }
-        };
     }
 
+    QMegaMessageBox::warning(msgInfo);
+}
+
+void NodeSelectorTreeViewWidget::onLeaveShareClicked(const QList<mega::MegaHandle>& handles)
+{
+    if (handles.isEmpty())
+    {
+        return;
+    }
+
+    auto getNode = [this](mega::MegaHandle handle) -> std::shared_ptr<mega::MegaNode>
+    {
+        auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
+
+        // This is for an extra protection as we don´t show the rename action if oxne of this
+        // conditions are not met
+        if (!node || !node->isNodeKeyDecrypted())
+        {
+            return nullptr;
+        }
+
+        return node;
+    };
+
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = ui->tMegaFolders;
+    msgInfo.title = MegaSyncApp->getMEGAString();
+    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+    msgInfo.defaultButton = QMessageBox::Yes;
+    msgInfo.buttonsText.insert(QMessageBox::Yes, tr("Leave"));
+    msgInfo.buttonsText.insert(QMessageBox::No, tr("Don’t leave"));
+
+    msgInfo.informativeText =
+        tr("You will leave the inshared folder. You will stop having access to the folder.");
+    if (handles.size() == 1)
+    {
+        auto node = getNode(handles.first());
+        if (node)
+        {
+            msgInfo.text = tr("You are about to leave \"%1\".\nWould you like to proceed?")
+                               .arg(QString::fromUtf8(node->getName()));
+        }
+    }
+    else
+    {
+        msgInfo.text =
+            tr("You are about to leave %n folder.\nWould you like to proceed?", "", handles.size());
+    }
+
+    msgInfo.finishFunc = [this, handles](QPointer<QMessageBox> msg)
+    {
+        if (msg->result() == QMessageBox::Yes)
+        {
+            mModel->deleteNodes(handles, true);
+        }
+        else
+        {
+            return;
+        }
+    };
     QMegaMessageBox::warning(msgInfo);
 }
 
@@ -874,6 +917,10 @@ NodeSelectorTreeViewWidget::NodeState
             else if (currentIndex.isValid())
             {
                 result = NodeState::REMOVE;
+            }
+            else if (isNodeCompatibleWithModel(node))
+            {
+                result = NodeState::EXISTS_BUT_INVISIBLE;
             }
         }
     }
@@ -967,8 +1014,7 @@ bool NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
 
     foreach(auto updateNode, updatedNodes)
     {
-        if (newNodeCanBeAdded(updateNode.node.get()) &&
-            (!updateNode.node->isFile() || mModel->showFiles()))
+        if (!updateNode.node->isFile() || mModel->showFiles())
         {
             mAddedNodesByParentHandle.insert(updateNode.parentHandle, updateNode.node);
         }
@@ -1640,9 +1686,9 @@ bool CloudDriveType::okButtonEnabled(NodeSelectorTreeViewWidget*, const QModelIn
 
 NodeSelectorModelItemSearch::Types CloudDriveType::allowedTypes()
 {
-    return NodeSelectorModelItemSearch::Type::CLOUD_DRIVE
-            | NodeSelectorModelItemSearch::Type::INCOMING_SHARE
-            | NodeSelectorModelItemSearch::Type::BACKUP;
+    return NodeSelectorModelItemSearch::Type::CLOUD_DRIVE |
+           NodeSelectorModelItemSearch::Type::INCOMING_SHARE |
+           NodeSelectorModelItemSearch::Type::BACKUP | NodeSelectorModelItemSearch::Type::RUBBISH;
 }
 
 void CloudDriveType::okCancelButtonsVisibility(NodeSelectorTreeViewWidget *wdg)

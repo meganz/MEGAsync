@@ -549,12 +549,12 @@ void NameConflict::onActionClicked(int actionId)
                             std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
                             if(node)
                             {
-                                error = Utilities::removeRemoteFile(node.get());
+                                error = Utilities::removeSyncRemoteFile(node.get());
                             }
                         }
                         else
                         {
-                            error = Utilities::removeRemoteFile(filePath);
+                            error = Utilities::removeSyncRemoteFile(filePath);
                         }
 
                         if(error)

@@ -895,8 +895,7 @@ NameConflictedStalledIssue::CloudConflictedNames::keepMostRecentlyModifiedNode()
         std::unique_ptr<mega::MegaNode> conflictNode(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictedName->mHandle));
         if(conflictNode)
         {
-            auto error = Utilities::removeRemoteFile(
-                conflictNode.get());
+            auto error = Utilities::removeSyncRemoteFile(conflictNode.get());
             if(error)
             {
                 auto errorStr = StalledIssuesStrings::RemoveRemoteFailedFile(

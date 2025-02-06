@@ -150,7 +150,7 @@ bool LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
                 bool versionsDisabled(Preferences::instance()->fileVersioningDisabled());
                 if(versionsDisabled)
                 {
-                    mError = Utilities::removeRemoteFile(node.get());
+                    mError = Utilities::removeSyncRemoteFile(node.get());
                     if(mError)
                     {
                         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Unable to remove file: %1. Error: %2")

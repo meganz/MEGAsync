@@ -414,7 +414,9 @@ public:
     static QString getTranslatedError(const mega::MegaError* error);
 
     static std::shared_ptr<mega::MegaError> removeRemoteFile(const mega::MegaNode* node);
+    static std::shared_ptr<mega::MegaError> removeSyncRemoteFile(const mega::MegaNode* node);
     static std::shared_ptr<mega::MegaError> removeRemoteFile(const QString& path);
+    static std::shared_ptr<mega::MegaError> removeSyncRemoteFile(const QString& path);
     static bool removeLocalFile(const QString& path, const mega::MegaHandle& syncId);
     static bool restoreNode(mega::MegaNode* node,
                             mega::MegaApi* megaApi,

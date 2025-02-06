@@ -9,6 +9,31 @@
 #include <MegaApplication.h>
 
 ///////////////////////////////////////////////////////////////////
+
+void RestoreNodeManager::onRestoreClicked(const QList<mega::MegaHandle>& handles)
+{
+    mRestoredItems = handles;
+
+    QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>> moveHandles;
+
+    foreach(auto handle, handles)
+    {
+        auto node = std::shared_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+        if (node)
+        {
+            auto newParent = std::shared_ptr<MegaNode>(
+                MegaSyncApp->getMegaApi()->getNodeByHandle(node->getRestoreHandle()));
+            moveHandles.append(
+                qMakePair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>(handle, newParent));
+        }
+    }
+
+    mModel->processNodesAndCheckConflicts(moveHandles,
+                                          MegaSyncApp->getRubbishNode(),
+                                          NodeSelectorModel::ActionType::RESTORE);
+}
+
+///////////////////////////////////////////////////////////////////
 NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(SelectTypeSPtr mode, QWidget *parent)
     : NodeSelectorTreeViewWidget(mode, parent)
 {
@@ -19,6 +44,11 @@ NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(Selec
 void NodeSelectorTreeViewWidgetCloudDrive::setShowEmptyView(bool newShowEmptyView)
 {
     mShowEmptyView = newShowEmptyView;
+}
+
+bool NodeSelectorTreeViewWidgetCloudDrive::isNodeCompatibleWithModel(mega::MegaNode* node)
+{
+    return MegaSyncApp->getMegaApi()->isInCloud(node);
 }
 
 QString NodeSelectorTreeViewWidgetCloudDrive::getRootText()
@@ -84,6 +114,28 @@ NodeSelectorTreeViewWidgetIncomingShares::NodeSelectorTreeViewWidgetIncomingShar
 {
     setTitle(MegaNodeNames::getIncomingSharesName());
     ui->searchEmptyInfoWidget->hide();
+}
+
+bool NodeSelectorTreeViewWidgetIncomingShares::isNodeCompatibleWithModel(mega::MegaNode* node)
+{
+    if (node->isInShare())
+    {
+        return true;
+    }
+
+    auto p_node = std::unique_ptr<mega::MegaNode>(
+        MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
+    while (p_node)
+    {
+        if (p_node->isInShare())
+        {
+            return true;
+        }
+
+        p_node.reset(MegaSyncApp->getMegaApi()->getParentNode(p_node.get()));
+    }
+
+    return false;
 }
 
 QString NodeSelectorTreeViewWidgetIncomingShares::getRootText()
@@ -200,6 +252,10 @@ NodeSelectorTreeViewWidgetSearch::NodeSelectorTreeViewWidgetSearch(SelectTypeSPt
     connect(ui->cloudDriveSearch, &QToolButton::clicked, this, &NodeSelectorTreeViewWidgetSearch::onCloudDriveSearchClicked);
     connect(ui->incomingSharesSearch, &QToolButton::clicked, this, &NodeSelectorTreeViewWidgetSearch::onIncomingSharesSearchClicked);
     connect(ui->backupsSearch, &QToolButton::clicked, this, &NodeSelectorTreeViewWidgetSearch::onBackupsSearchClicked);
+    connect(ui->rubbishSearch,
+            &QToolButton::clicked,
+            this,
+            &NodeSelectorTreeViewWidgetSearch::onRubbishSearchClicked);
 }
 
 void NodeSelectorTreeViewWidgetSearch::search(const QString &text)
@@ -223,10 +279,14 @@ void NodeSelectorTreeViewWidgetSearch::stopSearch()
 
 std::unique_ptr<NodeSelectorProxyModel> NodeSelectorTreeViewWidgetSearch::createProxyModel()
 {
-    auto proxy =  std::unique_ptr<NodeSelectorProxyModelSearch>(new NodeSelectorProxyModelSearch);
-    //The search view is the only one with a real proxy model (in terms on filterAcceptsRow)
+    auto proxy = std::unique_ptr<NodeSelectorProxyModelSearch>(new NodeSelectorProxyModelSearch);
+    // The search view is the only one with a real proxy model (in terms on filterAcceptsRow)
     connect(proxy.get(),
             &QAbstractItemModel::rowsInserted,
+            this,
+            &NodeSelectorTreeViewWidget::checkViewOnModelChange);
+    connect(proxy.get(),
+            &NodeSelectorProxyModelSearch::modeEmpty,
             this,
             &NodeSelectorTreeViewWidget::checkViewOnModelChange);
     return proxy;
@@ -237,7 +297,27 @@ bool NodeSelectorTreeViewWidgetSearch::isCurrentRootIndexReadOnly()
     return true;
 }
 
-bool NodeSelectorTreeViewWidgetSearch::newNodeCanBeAdded(mega::MegaNode *node)
+void NodeSelectorTreeViewWidgetSearch::checkSearchButtonsVisibility()
+{
+    NodeSelectorModelItemSearch::Types searchedTypes = NodeSelectorModelItemSearch::Type::NONE;
+    auto searchModel = dynamic_cast<NodeSelectorModelSearch*>(mModel.get());
+    if (searchModel)
+    {
+        searchedTypes = searchModel->searchedTypes();
+    }
+
+    ui->backupsSearch->setVisible(
+        searchedTypes.testFlag(NodeSelectorModelItemSearch::Type::BACKUP));
+    ui->incomingSharesSearch->setVisible(
+        searchedTypes.testFlag(NodeSelectorModelItemSearch::Type::INCOMING_SHARE));
+    ui->cloudDriveSearch->setVisible(
+        searchedTypes.testFlag(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE));
+    ui->rubbishSearch->setVisible(
+        searchedTypes.testFlag(NodeSelectorModelItemSearch::Type::RUBBISH));
+    ui->searchButtonsWidget->setVisible(true);
+}
+
+bool NodeSelectorTreeViewWidgetSearch::isNodeCompatibleWithModel(mega::MegaNode* node)
 {
     auto nodeName(QString::fromUtf8(node->getName()));
     auto containsText = nodeName.contains(ui->searchingText->text(),Qt::CaseInsensitive);
@@ -250,16 +330,29 @@ QModelIndex NodeSelectorTreeViewWidgetSearch::getAddedNodeParent(mega::MegaHandl
     return QModelIndex();
 }
 
+void NodeSelectorTreeViewWidgetSearch::makeCustomConnections()
+{
+    connect(ui->tMegaFolders,
+            &NodeSelectorTreeView::restoreClicked,
+            mRestoreManager.get(),
+            &RestoreNodeManager::onRestoreClicked);
+}
+
 NodeSelectorTreeViewWidget::NodeState
     NodeSelectorTreeViewWidgetSearch::getNodeOnModelState(mega::MegaNode* node)
 {
     NodeState result(NodeState::DOESNT_EXIST);
 
-    if (mHasRows && node &&
-        (newNodeCanBeAdded(node) ||
-         mModel->findIndexByNodeHandle(node->getHandle(), QModelIndex()).isValid()))
+    if (mHasRows && node)
     {
-        result = NodeState::EXISTS;
+        if (mModel->findIndexByNodeHandle(node->getHandle(), QModelIndex()).isValid())
+        {
+            result = NodeState::EXISTS;
+        }
+        else if (isNodeCompatibleWithModel(node))
+        {
+            result = NodeState::ADD;
+        }
     }
 
     return result;
@@ -269,6 +362,13 @@ void NodeSelectorTreeViewWidgetSearch::onBackupsSearchClicked()
 {
     auto proxy_model = static_cast<NodeSelectorProxyModelSearch*>(mProxyModel.get());
     proxy_model->setMode(NodeSelectorModelItemSearch::Type::BACKUP);
+    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::USER, true);
+}
+
+void NodeSelectorTreeViewWidgetSearch::onRubbishSearchClicked()
+{
+    auto proxy_model = static_cast<NodeSelectorProxyModelSearch*>(mProxyModel.get());
+    proxy_model->setMode(NodeSelectorModelItemSearch::Type::RUBBISH);
     ui->tMegaFolders->setColumnHidden(NodeSelectorModel::USER, true);
 }
 
@@ -306,7 +406,17 @@ QString NodeSelectorTreeViewWidgetSearch::getRootText()
 
 std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetSearch::createModel()
 {
-    return std::unique_ptr<NodeSelectorModelSearch>(new NodeSelectorModelSearch(getSelectType()->allowedTypes()));
+    auto model = std::unique_ptr<NodeSelectorModelSearch>(
+        new NodeSelectorModelSearch(getSelectType()->allowedTypes()));
+
+    connect(model.get(),
+            &NodeSelectorModelSearch::nodeTypeHasChanged,
+            this,
+            &NodeSelectorTreeViewWidgetSearch::modelLoaded);
+
+    mRestoreManager = std::make_shared<RestoreNodeManager>(model.get(), this);
+
+    return model;
 }
 
 QIcon NodeSelectorTreeViewWidgetSearch::getEmptyIcon()
@@ -324,17 +434,7 @@ void NodeSelectorTreeViewWidgetSearch::modelLoaded()
     changeButtonsWidgetSizePolicy(false);
     NodeSelectorTreeViewWidget::modelLoaded();
 
-    NodeSelectorModelItemSearch::Types searchedTypes = NodeSelectorModelItemSearch::Type::NONE;
-    auto searchModel = dynamic_cast<NodeSelectorModelSearch*>(mModel.get());
-    if(searchModel)
-    {
-        searchedTypes = searchModel->searchedTypes();
-    }
-
-    ui->backupsSearch->setVisible(searchedTypes.testFlag(NodeSelectorModelItemSearch::Type::BACKUP));
-    ui->incomingSharesSearch->setVisible(searchedTypes.testFlag(NodeSelectorModelItemSearch::Type::INCOMING_SHARE));
-    ui->cloudDriveSearch->setVisible(searchedTypes.testFlag(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE));
-    ui->searchButtonsWidget->setVisible(true);
+    checkSearchButtonsVisibility();
 
     QToolButton* buttonToCheck(nullptr);
 
@@ -394,39 +494,17 @@ bool NodeSelectorTreeViewWidgetRubbish::isEmpty() const
     return mModel->rowCount(rootIndex) == 0;
 }
 
-void NodeSelectorTreeViewWidgetRubbish::onRestoreItemsFinished() {}
-
-void NodeSelectorTreeViewWidgetRubbish::restoreItems(const QList<mega::MegaHandle>& handles)
+bool NodeSelectorTreeViewWidgetRubbish::isNodeCompatibleWithModel(mega::MegaNode* node)
 {
-    mRestoredItems = handles;
-
-    QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>> moveHandles;
-
-    foreach(auto handle, handles)
-    {
-        auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
-        if (node)
-        {
-            auto newParent =
-                std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(node->getRestoreHandle()));
-            moveHandles.append(
-                qMakePair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>(handle, newParent));
-        }
-    }
-
-    mModel->processNodesAndCheckConflicts(moveHandles,
-                                          MegaSyncApp->getRubbishNode(),
-                                          NodeSelectorModel::ActionType::RESTORE);
+    return MegaSyncApp->getMegaApi()->isInRubbish(node);
 }
 
 void NodeSelectorTreeViewWidgetRubbish::makeCustomConnections()
 {
-    connect(ui->tMegaFolders, &NodeSelectorTreeView::restoreClicked, this, &NodeSelectorTreeViewWidgetRubbish::onRestoreClicked);
-}
-
-void NodeSelectorTreeViewWidgetRubbish::onRestoreClicked(const QList<mega::MegaHandle>& handles)
-{
-    emit itemsRestoreRequested(handles);
+    connect(ui->tMegaFolders,
+            &NodeSelectorTreeView::restoreClicked,
+            mRestoreManager.get(),
+            &RestoreNodeManager::onRestoreClicked);
 }
 
 QString NodeSelectorTreeViewWidgetRubbish::getRootText()
@@ -436,7 +514,11 @@ QString NodeSelectorTreeViewWidgetRubbish::getRootText()
 
 std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetRubbish::createModel()
 {
-    return std::unique_ptr<NodeSelectorModelRubbish>(new NodeSelectorModelRubbish);
+    auto model = std::unique_ptr<NodeSelectorModelRubbish>(new NodeSelectorModelRubbish);
+
+    mRestoreManager = std::make_shared<RestoreNodeManager>(model.get(), this);
+
+    return model;
 }
 
 void NodeSelectorTreeViewWidgetRubbish::modelLoaded()

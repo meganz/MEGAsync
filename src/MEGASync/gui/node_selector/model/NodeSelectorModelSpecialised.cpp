@@ -96,6 +96,26 @@ void NodeSelectorModelIncomingShares::onItemInfoUpdated(int role)
     }
 }
 
+void NodeSelectorModelIncomingShares::onRootItemAdded()
+{
+    NodeSelectorModel::onRootItemAdded();
+
+    if (isMovingNodes())
+    {
+        moveProcessed();
+    }
+}
+
+void NodeSelectorModelIncomingShares::onRootItemDeleted()
+{
+    NodeSelectorModel::onRootItemDeleted();
+
+    if (isMovingNodes())
+    {
+        moveProcessed();
+    }
+}
+
 bool NodeSelectorModelIncomingShares::rootNodeUpdated(mega::MegaNode* node)
 {
     if(node->getChanges() & MegaNode::CHANGE_TYPE_INSHARE)
@@ -184,9 +204,9 @@ QModelIndex NodeSelectorModelIncomingShares::rootIndex(const QModelIndex& visual
     return visualRootIndex;
 }
 
-NodeSelectorModel::RemoveType NodeSelectorModelIncomingShares::canBeDeleted() const
+bool NodeSelectorModelIncomingShares::canBeDeleted() const
 {
-    return NodeSelectorModel::RemoveType::PERMANENT_REMOVE;
+    return true;
 }
 
 void NodeSelectorModelIncomingShares::setCurrentRootIndex(const QModelIndex& rootIndex)
@@ -295,9 +315,9 @@ void NodeSelectorModelBackups::firstLoad()
     }
 }
 
-NodeSelectorModel::RemoveType NodeSelectorModelBackups::canBeDeleted() const
+bool NodeSelectorModelBackups::canBeDeleted() const
 {
-    return RemoveType::NO_REMOVE;
+    return false;
 }
 
 bool NodeSelectorModelBackups::canDropMimeData(const QMimeData*,
@@ -463,39 +483,57 @@ void NodeSelectorModelSearch::addNodes(QList<std::shared_ptr<mega::MegaNode>> no
     emit requestAddSearchRootItem(nodes, mAllowedTypes);
 }
 
-bool NodeSelectorModelSearch::rootNodeUpdated(mega::MegaNode *node)
+bool NodeSelectorModelSearch::rootNodeUpdated(mega::MegaNode* node)
 {
-    if(node->getChanges() & MegaNode::CHANGE_TYPE_INSHARE)
+    if (node->getChanges() & MegaNode::CHANGE_TYPE_INSHARE)
     {
-        if(node->isInShare())
+        if (node->isInShare())
         {
             auto totalRows = rowCount(QModelIndex());
             beginInsertRows(QModelIndex(), totalRows, totalRows);
             QList<std::shared_ptr<mega::MegaNode>> nodes;
-            emit requestAddSearchRootItem(nodes << std::shared_ptr<mega::MegaNode>(node->copy()), mAllowedTypes);
+            emit requestAddSearchRootItem(nodes << std::shared_ptr<mega::MegaNode>(node->copy()),
+                                          mAllowedTypes);
         }
 
         return true;
     }
-    else if(node->getParentHandle() == mega::INVALID_HANDLE && node->isFolder())
+    else if (node->getChanges() & (MegaNode::CHANGE_TYPE_PARENT))
     {
-        if(node->getChanges() & MegaNode::CHANGE_TYPE_REMOVED)
+        auto index = findIndexByNodeHandle(node->getHandle(), QModelIndex());
+        if (index.isValid())
         {
-            auto index = findIndexByNodeHandle(node->getHandle(), QModelIndex());
-            if(index.isValid())
+            auto item = getItemByIndex(index);
+            if (auto searchItem = dynamic_cast<NodeSelectorModelItemSearch*>(item))
             {
-                beginRemoveRows(QModelIndex(), index.row(), index.row());
-                emit requestDeleteSearchRootItem(std::shared_ptr<mega::MegaNode>(node->copy()));
-                return true;
+                auto newType(calculateSearchType(node));
+                auto oldType(searchItem->getType());
+                if (newType != oldType)
+                {
+                    searchItem->setType(newType);
+                    updateRow(index);
+                    emit nodeTypeHasChanged();
+                    return true;
+                }
             }
         }
-
-        auto folderIndex = findIndexByNodeHandle(node->getHandle(), QModelIndex());
-        if(folderIndex.isValid())
+    }
+    else if (node->getChanges() & MegaNode::CHANGE_TYPE_REMOVED)
+    {
+        auto index = findIndexByNodeHandle(node->getHandle(), QModelIndex());
+        if (index.isValid())
         {
-            updateItemNode(folderIndex, std::shared_ptr<mega::MegaNode>(node->copy()));
+            beginRemoveRows(QModelIndex(), index.row(), index.row());
+            emit requestDeleteSearchRootItem(std::shared_ptr<mega::MegaNode>(node->copy()));
             return true;
         }
+    }
+
+    auto folderIndex = findIndexByNodeHandle(node->getHandle(), QModelIndex());
+    if (folderIndex.isValid())
+    {
+        updateItemNode(folderIndex, std::shared_ptr<mega::MegaNode>(node->copy()));
+        return true;
     }
 
     return false;
@@ -520,6 +558,26 @@ void NodeSelectorModelSearch::proxyInvalidateFinished()
     mNodeRequesterWorker->lockSearchMutex(false);
 }
 
+void NodeSelectorModelSearch::onRootItemAdded()
+{
+    NodeSelectorModel::onRootItemAdded();
+
+    if (isMovingNodes())
+    {
+        moveProcessed();
+    }
+}
+
+void NodeSelectorModelSearch::onRootItemDeleted()
+{
+    NodeSelectorModel::onRootItemDeleted();
+
+    if (isMovingNodes())
+    {
+        moveProcessed();
+    }
+}
+
 void NodeSelectorModelSearch::onRootItemsCreated()
 {
     if(mNodeRequesterWorker->trySearchLock())
@@ -532,6 +590,31 @@ void NodeSelectorModelSearch::onRootItemsCreated()
 const NodeSelectorModelItemSearch::Types &NodeSelectorModelSearch::searchedTypes() const
 {
     return mNodeRequesterWorker->searchedTypes();
+}
+
+NodeSelectorModelItemSearch::Types
+    NodeSelectorModelSearch::calculateSearchType(mega::MegaNode* node)
+{
+    NodeSelectorModelItemSearch::Types type;
+
+    if (MegaSyncApp->getMegaApi()->isInCloud(node))
+    {
+        type = NodeSelectorModelItemSearch::Type::CLOUD_DRIVE;
+    }
+    else if (MegaSyncApp->getMegaApi()->isInVault(node))
+    {
+        type = NodeSelectorModelItemSearch::Type::BACKUP;
+    }
+    else if (MegaSyncApp->getMegaApi()->isInRubbish(node))
+    {
+        type = NodeSelectorModelItemSearch::Type::RUBBISH;
+    }
+    else
+    {
+        type = NodeSelectorModelItemSearch::Type::INCOMING_SHARE;
+    }
+
+    return type;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -624,11 +707,6 @@ void NodeSelectorModelRubbish::firstLoad()
 bool NodeSelectorModelRubbish::isNodeAccepted(MegaNode* node)
 {
     return MegaSyncApp->getMegaApi()->isInRubbish(node);
-}
-
-NodeSelectorModel::RemoveType NodeSelectorModelRubbish::canBeDeleted() const
-{
-    return RemoveType::PERMANENT_REMOVE;
 }
 
 bool NodeSelectorModelRubbish::canDropMimeData(const QMimeData*,

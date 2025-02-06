@@ -105,9 +105,18 @@ protected:
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
     SelectTypeSPtr getSelectType(){return mSelectType;}
     virtual void modelLoaded();
-    virtual bool showEmptyView(){return true;}
-    virtual void makeCustomConnections(){}
-    virtual bool newNodeCanBeAdded(mega::MegaNode*){return true;}
+
+    virtual bool showEmptyView()
+    {
+        return true;
+    }
+
+    virtual void makeCustomConnections() {}
+
+    virtual bool isNodeCompatibleWithModel(mega::MegaNode*)
+    {
+        return false;
+    }
     virtual QModelIndex getAddedNodeParent(mega::MegaHandle parentHandle);
     QModelIndex getRootIndexFromIndex(const QModelIndex& index);
     void selectIndex(const QModelIndex& index, bool setCurrent, bool exclusiveSelect = false);
@@ -138,6 +147,7 @@ private slots:
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
     void onModelDataChanged(const QModelIndex& first, const QModelIndex& last, const QVector<int> &roles = QVector<int>());
     void onDeleteClicked(const QList<mega::MegaHandle>& handles, bool permanently);
+    void onLeaveShareClicked(const QList<mega::MegaHandle>& handles);
     void onRenameClicked();
     void onGenMEGALinkClicked();
     virtual void onItemDoubleClick(const QModelIndex &index);

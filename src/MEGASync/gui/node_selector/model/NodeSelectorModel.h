@@ -115,9 +115,13 @@ signals:
      void nodesAdded(QList<QPointer<NodeSelectorModelItem>> item);
      void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
 
-private:
+ private slots:
+     void onSearchItemTypeChanged(NodeSelectorModelItemSearch::Types type);
+
+ private:
      bool isAborted();
-    NodeSelectorModelItem* createSearchItem(mega::MegaNode* node, NodeSelectorModelItemSearch::Types typesAllowed);
+     NodeSelectorModelItem* createSearchItem(mega::MegaNode* node,
+                                             NodeSelectorModelItemSearch::Types typesAllowed);
 
      std::atomic<bool> mShowFiles{true};
      std::atomic<bool> mShowReadOnlyFolders{true};
@@ -290,15 +294,12 @@ public:
 
     void abort();
 
-    enum RemoveType
+    virtual bool rootNodeUpdated(mega::MegaNode*)
     {
-        NO_REMOVE = 0,
-        MOVE_TO_RUBBISH,
-        PERMANENT_REMOVE
-    };
+        return false;
+    }
 
-    virtual RemoveType canBeDeleted() const;
-    virtual bool rootNodeUpdated(mega::MegaNode*){return false;}
+    virtual bool canBeDeleted() const;
     virtual bool isNodeAccepted(mega::MegaNode* node){return !MegaSyncApp->getMegaApi()->isInRubbish(node);}
     virtual bool showsSyncStates() {return false;}
 

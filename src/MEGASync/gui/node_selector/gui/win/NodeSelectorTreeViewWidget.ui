@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>554</width>
+    <width>603</width>
     <height>348</height>
    </rect>
   </property>
@@ -506,6 +506,42 @@ QToolButton:pressed
              </property>
              <property name="default_icon" stdset="0">
               <string notr="true">qrc:/images/node_selector/search_filter/small_folder_default.png</string>
+             </property>
+             <property name="not_change_text_color" stdset="0">
+              <bool>true</bool>
+             </property>
+             <property name="icon_spacing" stdset="0">
+              <UInt>6</UInt>
+             </property>
+             <property name="hover_selected" stdset="0">
+              <bool>true</bool>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">searchFilterButtonGroup</string>
+             </attribute>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="rubbishSearch">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="text">
+              <string>Rubbish bin</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normalon>:/images/node_selector/search_filter/small_trash_default.png</normalon>
+              </iconset>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="toolButtonStyle">
+              <enum>Qt::ToolButtonTextBesideIcon</enum>
+             </property>
+             <property name="default_icon" stdset="0">
+              <string notr="true">qrc:/images/node_selector/search_filter/small_trash_default.png</string>
              </property>
              <property name="not_change_text_color" stdset="0">
               <bool>true</bool>

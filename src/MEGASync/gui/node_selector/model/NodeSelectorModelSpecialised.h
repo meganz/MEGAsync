@@ -56,13 +56,17 @@ public:
 
     QModelIndex rootIndex(const QModelIndex& visualRootIndex) const override;
 
-    NodeSelectorModel::RemoveType canBeDeleted() const override;
+    bool canBeDeleted() const override;
 
     // No extra space for search
     void setCurrentRootIndex(const QModelIndex& rootIndex) override;
 
 public slots:
     void onItemInfoUpdated(int role);
+
+protected slots:
+    void onRootItemAdded() override;
+    void onRootItemDeleted() override;
 
 signals:
     void requestIncomingSharesRootCreation(std::shared_ptr<mega::MegaNodeList> nodes);
@@ -90,7 +94,7 @@ public:
     void fetchMore(const QModelIndex &parent) override;
     void firstLoad() override;
 
-    NodeSelectorModel::RemoveType canBeDeleted() const override;
+    bool canBeDeleted() const override;
 
     bool canDropMimeData(const QMimeData*,
                          Qt::DropAction,
@@ -141,11 +145,18 @@ public:
     // No extra space for search
     void setCurrentRootIndex(const QModelIndex&) override {}
 
+    static NodeSelectorModelItemSearch::Types calculateSearchType(mega::MegaNode* node);
+
 protected:
     void proxyInvalidateFinished() override;
 
+protected slots:
+    void onRootItemAdded() override;
+    void onRootItemDeleted() override;
+
 signals:
     void searchNodes(const QString& text, NodeSelectorModelItemSearch::Types);
+    void nodeTypeHasChanged();
     void requestAddSearchRootItem(QList<std::shared_ptr<mega::MegaNode>> nodes, NodeSelectorModelItemSearch::Types typesAllowed);
     void requestDeleteSearchRootItem(std::shared_ptr<mega::MegaNode> node);
 
@@ -172,7 +183,6 @@ public:
 
     bool isNodeAccepted(mega::MegaNode* node) override;
 
-    NodeSelectorModel::RemoveType canBeDeleted() const override;
     bool canDropMimeData(const QMimeData*,
                          Qt::DropAction action,
                          int,

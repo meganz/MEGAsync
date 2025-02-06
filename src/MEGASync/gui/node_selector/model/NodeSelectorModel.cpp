@@ -157,7 +157,7 @@ NodeSelectorModelItem *NodeRequester::createSearchItem(mega::MegaNode *node, Nod
     {
         return nullptr;
     }
-    if((node->isFile() && !mShowFiles) || MegaSyncApp->getMegaApi()->isInRubbish(node))
+    if ((node->isFile() && !mShowFiles))
     {
         return nullptr;
     }
@@ -178,26 +178,17 @@ NodeSelectorModelItem *NodeRequester::createSearchItem(mega::MegaNode *node, Nod
         }
     }
 
-    NodeSelectorModelItemSearch::Types type;
-
-    if(MegaSyncApp->getMegaApi()->isInCloud(node))
-    {
-        type = NodeSelectorModelItemSearch::Type::CLOUD_DRIVE;
-    }
-    else if(MegaSyncApp->getMegaApi()->isInVault(node))
-    {
-        type = NodeSelectorModelItemSearch::Type::BACKUP;
-    }
-    else
-    {
-        type = NodeSelectorModelItemSearch::Type::INCOMING_SHARE;
-    }
+    NodeSelectorModelItemSearch::Types type = NodeSelectorModelSearch::calculateSearchType(node);
 
     if(typesAllowed & type)
     {
         mSearchedTypes |= type;
         auto nodeUptr = std::unique_ptr<mega::MegaNode>(node->copy());
         auto item = new NodeSelectorModelItemSearch(std::move(nodeUptr), type);
+        connect(item,
+                &NodeSelectorModelItemSearch::typeChanged,
+                this,
+                &NodeRequester::onSearchItemTypeChanged);
         return item;
     }
 
@@ -478,6 +469,11 @@ void NodeRequester::abort()
 {
     cancelCurrentRequest();
     mAborted = true;
+}
+
+void NodeRequester::onSearchItemTypeChanged(NodeSelectorModelItemSearch::Types type)
+{
+    mSearchedTypes |= type;
 }
 
 /* ------------------- MODEL ------------------------- */
@@ -1547,13 +1543,10 @@ void NodeSelectorModel::deleteNodes(const QList<mega::MegaHandle>& nodeHandles, 
                 MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
             if (node)
             {
-                int access = MegaSyncApp->getMegaApi()->getAccess(node.get());
-
                 mRequestByHandle.insert(handle, mega::MegaRequest::TYPE_REMOVE);
 
                 // Double protection in case the node properties changed while the node is deleted
-                if (permanently ||
-                    (access == mega::MegaShare::ACCESS_FULL && node->isNodeKeyDecrypted()))
+                if (permanently)
                 {
                     MegaSyncApp->getMegaApi()->remove(node.get(), mListener.get());
                 }
@@ -2036,9 +2029,9 @@ void NodeSelectorModel::abort()
     mNodeRequesterWorker->cancelCurrentRequest();
 }
 
-NodeSelectorModel::RemoveType NodeSelectorModel::canBeDeleted() const
+bool NodeSelectorModel::canBeDeleted() const
 {
-    return RemoveType::MOVE_TO_RUBBISH;
+    return true;
 }
 
 void NodeSelectorModel::loadTreeFromNode(const std::shared_ptr<mega::MegaNode> node)

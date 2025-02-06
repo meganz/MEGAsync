@@ -201,7 +201,7 @@ void NodeSelector::onbOkClicked()
         }
     }
 
-    checkSelection();
+    onOkButtonClicked();
 }
 
 void NodeSelector::on_tClearSearchResultNS_clicked()
@@ -483,8 +483,6 @@ void NodeSelector::initSpecialisedWidgets()
                                 model->processNodesAfterConflictCheck(conflicts, type);
                             });
                     });
-
-            doCustomConnections(viewContainer);
         }
     }
 

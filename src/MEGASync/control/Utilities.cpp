@@ -1576,7 +1576,7 @@ std::shared_ptr<MegaError> Utilities::removeRemoteFile(const MegaNode* node)
 
     if(node)
     {
-        error = MoveToMEGABin()(node->getHandle(), QLatin1String("SyncDebris"), true);
+        error = MoveToMEGABin()(node->getHandle(), QLatin1String(""), true);
     }
 
     return error;
@@ -1586,6 +1586,25 @@ std::shared_ptr<MegaError> Utilities::removeRemoteFile(const QString& path)
 {
     std::unique_ptr<MegaNode>fileNode(MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
     return removeRemoteFile(fileNode.get());
+}
+
+std::shared_ptr<MegaError> Utilities::removeSyncRemoteFile(const QString& path)
+{
+    std::unique_ptr<MegaNode> fileNode(
+        MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
+    return removeSyncRemoteFile(fileNode.get());
+}
+
+std::shared_ptr<MegaError> Utilities::removeSyncRemoteFile(const MegaNode* node)
+{
+    std::shared_ptr<MegaError> error;
+
+    if (node)
+    {
+        error = MoveToMEGABin()(node->getHandle(), QLatin1String("SyncDebris"), true);
+    }
+
+    return error;
 }
 
 bool Utilities::removeLocalFile(const QString& path, const MegaHandle& syncId)

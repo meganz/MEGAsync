@@ -30,7 +30,7 @@ void UploadNodeSelector::createSpecialisedWidgets()
     addIncomingShares();
 }
 
-void UploadNodeSelector::checkSelection()
+void UploadNodeSelector::onOkButtonClicked()
 {
     auto node = getSelectedNode();
     if(node)
@@ -73,7 +73,7 @@ void DownloadNodeSelector::createSpecialisedWidgets()
     addBackups();
 }
 
-void DownloadNodeSelector::checkSelection()
+void DownloadNodeSelector::onOkButtonClicked()
 {
     QList<mega::MegaHandle> nodes = getMultiSelectionNodeHandle();
     int wrongNodes(0);
@@ -152,7 +152,7 @@ bool SyncNodeSelector::isFullSync()
     return foundIt != syncsList.cend();
 }
 
-void SyncNodeSelector::checkSelection()
+void SyncNodeSelector::onOkButtonClicked()
 {
     auto node = getSelectedNode();
     if(node)
@@ -204,7 +204,7 @@ void StreamNodeSelector::createSpecialisedWidgets()
     addBackups();
 }
 
-void StreamNodeSelector::checkSelection()
+void StreamNodeSelector::onOkButtonClicked()
 {
     auto node = getSelectedNode();
     if(node)
@@ -262,18 +262,6 @@ void CloudDriveNodeSelector::createSpecialisedWidgets()
     addRubbish();
 
     enableDragAndDrop(true);
-}
-
-void CloudDriveNodeSelector::doCustomConnections(NodeSelectorTreeViewWidget* item)
-{
-    if (item == mRubbishWidget)
-    {
-        connect(mRubbishWidget,
-                &NodeSelectorTreeViewWidgetRubbish::itemsRestoreRequested,
-                this,
-                &CloudDriveNodeSelector::onItemsRestoreRequested,
-                Qt::UniqueConnection);
-    }
 }
 
 void CloudDriveNodeSelector::enableDragAndDrop(bool enable)
@@ -351,8 +339,43 @@ void CloudDriveNodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>
     {
         if (!handles.isEmpty())
         {
-            mCloudDriveWidget->initMovingNodes(handles.size());
-            onbShowCloudDriveClicked();
+            QList<mega::MegaHandle> cloudDriveNodes;
+            QList<mega::MegaHandle> IncomingSharedNodes;
+
+            for (auto& handle: qAsConst(handles))
+            {
+                std::unique_ptr<mega::MegaNode> node(
+                    MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+                if (node)
+                {
+                    std::unique_ptr<mega::MegaNode> restoreNode(
+                        MegaSyncApp->getMegaApi()->getNodeByHandle(node->getRestoreHandle()));
+                    if (!restoreNode || MegaSyncApp->getMegaApi()->isInCloud(restoreNode.get()))
+                    {
+                        cloudDriveNodes.append(handle);
+                    }
+                    else
+                    {
+                        IncomingSharedNodes.append(handle);
+                    }
+                }
+            }
+
+            if (!cloudDriveNodes.isEmpty())
+            {
+                mCloudDriveWidget->initMovingNodes(cloudDriveNodes.size());
+                onbShowCloudDriveClicked();
+            }
+
+            if (!IncomingSharedNodes.isEmpty())
+            {
+                mIncomingSharesWidget->initMovingNodes(IncomingSharedNodes.size());
+
+                if (cloudDriveNodes.isEmpty())
+                {
+                    onbShowIncomingSharesClicked();
+                }
+            }
         }
 
         performItemsToBeMoved(handles, type, true, false);
@@ -392,12 +415,9 @@ void CloudDriveNodeSelector::onMergeItemsAboutToBeMoved(mega::MegaHandle handle,
     }
 }
 
-void CloudDriveNodeSelector::onItemsRestoreRequested(const QList<mega::MegaHandle>& handles)
+void CloudDriveNodeSelector::onOkButtonClicked()
 {
-    if (mRubbishWidget)
-    {
-        mRubbishWidget->restoreItems(handles);
-    }
+    onCustomBottomButtonClicked(CloudDriveType::Download);
 }
 
 ////////////////////////////////
@@ -414,7 +434,7 @@ void MoveBackupNodeSelector::createSpecialisedWidgets()
     mCloudDriveWidget->setShowEmptyView(false);
 }
 
-void MoveBackupNodeSelector::checkSelection()
+void MoveBackupNodeSelector::onOkButtonClicked()
 {
     accept();
 }

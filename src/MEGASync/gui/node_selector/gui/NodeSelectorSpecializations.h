@@ -14,7 +14,7 @@ protected:
     void createSpecialisedWidgets() override;
 
 private:
-    void checkSelection() override;
+    void onOkButtonClicked() override;
 };
 
 class DownloadNodeSelector : public NodeSelector
@@ -28,7 +28,7 @@ protected:
     void createSpecialisedWidgets() override;
 
 private:
-    void checkSelection() override;
+    void onOkButtonClicked() override;
 };
 
 class SyncNodeSelector : public NodeSelector
@@ -42,7 +42,7 @@ protected:
     void createSpecialisedWidgets() override;
 
 private:
-    void checkSelection() override;
+    void onOkButtonClicked() override;
     bool isFullSync();
 };
 
@@ -57,7 +57,7 @@ protected:
     void createSpecialisedWidgets() override;
 
 private:
-    void checkSelection() override;
+    void onOkButtonClicked() override;
 };
 
 ////////////////////
@@ -72,18 +72,14 @@ public:
 
 protected:
     void createSpecialisedWidgets() override;
-    void doCustomConnections(NodeSelectorTreeViewWidget* item) override;
 
 protected slots:
     void onCustomBottomButtonClicked(uint id) override;
     void onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles, int type) override;
     void onMergeItemsAboutToBeMoved(mega::MegaHandle handle, int type) override;
 
-private slots:
-    void onItemsRestoreRequested(const QList<mega::MegaHandle>& handles);
-
 private:
-    void checkSelection() override {}
+    void onOkButtonClicked() override;
 
     QWidget* mDragBackDrop;
 };
@@ -100,7 +96,7 @@ protected:
     void createSpecialisedWidgets() override;
 
 private:
-    void checkSelection() override;
+    void onOkButtonClicked() override;
 };
 
 #endif // NODESELECTORSPECIALIZED_H

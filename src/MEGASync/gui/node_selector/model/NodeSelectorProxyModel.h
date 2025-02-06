@@ -41,7 +41,7 @@ public:
     NodeSelectorModel* getMegaModel() const;
     bool isModelProcessing() const;
 
-    virtual int canBeDeleted() const;
+    virtual bool canBeDeleted() const;
     bool hasContextMenuOptions(const QModelIndexList& indexes) const;
 
 signals:
@@ -68,11 +68,15 @@ private slots:
 
 class NodeSelectorProxyModelSearch : public NodeSelectorProxyModel
 {
+    Q_OBJECT
 
 public:
     explicit NodeSelectorProxyModelSearch(QObject* parent = nullptr);
     void setMode(NodeSelectorModelItemSearch::Types mode);
-    int canBeDeleted() const override;
+    bool canBeDeleted() const override;
+
+signals:
+    void modeEmpty();
 
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;

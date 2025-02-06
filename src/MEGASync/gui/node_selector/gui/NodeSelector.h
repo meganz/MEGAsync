@@ -91,8 +91,6 @@ protected:
     void addRubbish();
     NodeSelectorTreeViewWidgetRubbish* mRubbishWidget;
 
-    virtual void doCustomConnections(NodeSelectorTreeViewWidget*) {}
-
     mega::MegaApi* mMegaApi;
     Ui::NodeSelector *ui;
     SelectTypeSPtr mSelectType;
@@ -125,7 +123,7 @@ private:
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
     void setToggledStyle(TabItem item);
     void setAllFramesItsOnProperty();
-    virtual void checkSelection() = 0;
+    virtual void onOkButtonClicked() = 0;
     void shortCutConnects(int ignoreThis);
 
     void performNodeSelection();

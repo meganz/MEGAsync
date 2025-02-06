@@ -255,7 +255,7 @@ bool NodeSelectorProxyModel::isModelProcessing() const
     return mFilterWatcher.isRunning();
 }
 
-int NodeSelectorProxyModel::canBeDeleted() const
+bool NodeSelectorProxyModel::canBeDeleted() const
 {
     return dynamic_cast<NodeSelectorModel*>(sourceModel())->canBeDeleted();
 }
@@ -335,13 +335,17 @@ void NodeSelectorProxyModelSearch::setMode(NodeSelectorModelItemSearch::Types mo
     mMode = mode;
     invalidateFilter();
     getMegaModel()->sendBlockUiSignal(false);
+    if (rowCount() == 0)
+    {
+        emit modeEmpty();
+    }
 }
 
-int NodeSelectorProxyModelSearch::canBeDeleted() const
+bool NodeSelectorProxyModelSearch::canBeDeleted() const
 {
     if (mMode & NodeSelectorModelItemSearch::Type::BACKUP)
     {
-        return NodeSelectorModel::RemoveType::NO_REMOVE;
+        return false;
     }
     return NodeSelectorProxyModel::canBeDeleted();
 }

@@ -43,6 +43,7 @@ public:
         SEPARATOR_3,
         DELETE_RUBBISH,
         DELETE_PERMANENTLY,
+        LEAVE_SHARE
     };
     Q_ENUM(ActionsOrder)
 
@@ -62,6 +63,7 @@ protected:
 
 signals:
     void deleteNodeClicked(const QList<MegaHandle>& handles, bool permanently);
+    void leaveShareClicked(const QList<MegaHandle>& handles);
     void renameNodeClicked();
     void pasteNodesClicked();
     void getMegaLinkClicked();
@@ -88,7 +90,15 @@ private:
     std::shared_ptr<MegaNode> getDropNode(const QModelIndex& dropIndex);
 
     bool areAllEligibleForCopy(const QList<mega::MegaHandle>& handles) const;
-    bool areAllEligibleForDeletion(const QList<mega::MegaHandle>& handles) const;
+    enum class DeletionType
+    {
+        PERMANENT_REMOVE,
+        MOVE_TO_RUBBISH,
+        LEAVE_SHARE
+    };
+
+    std::optional<NodeSelectorTreeView::DeletionType>
+        areAllEligibleForDeletion(const QList<mega::MegaHandle>& handles) const;
     bool areAllEligibleForRestore(const QList<MegaHandle> &handles) const;
 
     void addPasteMenuAction(QMap<int, QAction*>& actions);
@@ -97,6 +107,9 @@ private:
     void addDeleteMenuAction(QMap<int, QAction*>& actions,
                              QList<mega::MegaHandle> selectionHandles);
     void addDeletePermanently(QMap<int, QAction*>& actions,
+                              QList<mega::MegaHandle> selectionHandles);
+    void addLeaveInshare(QMap<int, QAction*>& actions, QList<mega::MegaHandle> selectionHandles);
+    void addRemoveMenuActions(QMap<int, QAction*>& actions,
                               QList<mega::MegaHandle> selectionHandles);
 
     // Shortcuts
