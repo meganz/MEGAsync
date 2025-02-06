@@ -16,6 +16,7 @@ bool AbstractPlatform::enableTrayIcon(QString /*executable*/)
     return false;
 }
 
+void AbstractPlatform::unHideTrayIcon() {}
 
 bool AbstractPlatform::isTilingWindowManager()
 {

@@ -599,7 +599,6 @@ private:
     void closeUpsellStorageDialog();
 
     void createGfxProvider(const QString& basePath);
-    void unhideTrayIcon();
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);

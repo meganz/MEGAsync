@@ -1242,39 +1242,6 @@ void MegaApplication::start()
     updateTrayIcon();
 }
 
-void MegaApplication::unhideTrayIcon()
-{
-    auto preferences = Preferences::instance();
-
-    if (!preferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_UNHIDE_TRAY_ICON))
-    {
-        const auto registryPath =
-            QString::fromUtf8("HKEY_CURRENT_USER\\Control Panel\\NotifyIconSettings");
-        QSettings settings(registryPath, QSettings::NativeFormat);
-
-        const auto& trayIconAppProperties = settings.childGroups();
-        for (const auto& child: trayIconAppProperties)
-        {
-            QSettings trayIconAppConfig(registryPath + QString::fromUtf8("\\") + child,
-                                        QSettings::NativeFormat);
-            auto executablePath = trayIconAppConfig.value(QString::fromUtf8("ExecutablePath"));
-            if (!executablePath.isNull() && executablePath.isValid())
-            {
-                auto regPath = QDir::toNativeSeparators(executablePath.toString());
-                auto execPath = QDir::toNativeSeparators(QCoreApplication::applicationFilePath());
-
-                if (regPath == execPath)
-                {
-                    trayIconAppConfig.setValue(QString::fromUtf8("IsPromoted"), 1);
-                    preferences->setOneTimeActionUserDone(
-                        Preferences::ONE_TIME_ACTION_UNHIDE_TRAY_ICON,
-                        true);
-                }
-            }
-        }
-    }
-}
-
 void MegaApplication::requestUserData()
 {
     if (!megaApi)
@@ -1499,7 +1466,7 @@ void MegaApplication::onLoginFinished()
     }
 
 #ifdef Q_OS_WINDOWS
-    unhideTrayIcon();
+    Platform::getInstance()->unHideTrayIcon();
 #endif
 }
 

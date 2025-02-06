@@ -38,6 +38,7 @@ public:
     virtual void initialize(int argc, char *argv[]) = 0;
     virtual void prepareForSync();
     virtual bool enableTrayIcon(QString executable);
+    virtual void unHideTrayIcon();
     virtual void notifyItemChange(const QString& localPath, int newState) = 0;
     virtual void notifySyncFileChange(std::string *localPath, int newState) = 0;
     virtual bool startOnStartup(bool value) = 0;
