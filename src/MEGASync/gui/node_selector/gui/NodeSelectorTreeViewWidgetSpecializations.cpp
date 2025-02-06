@@ -527,6 +527,9 @@ void NodeSelectorTreeViewWidgetRubbish::modelLoaded()
     if(mModel->rowCount(rootIndex) == 0 && showEmptyView())
     {
         ui->stackedWidget->setCurrentWidget(ui->emptyPage);
+
+        // The rubbish has been emptied, so we can unset the loading view
+        ui->tMegaFolders->loadingView().toggleLoadingScene(false);
     }
     else
     {

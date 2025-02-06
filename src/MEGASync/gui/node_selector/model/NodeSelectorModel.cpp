@@ -772,6 +772,10 @@ bool NodeSelectorModel::canDropMimeData(const QMimeData* data,
                 }
             }
         }
+        else
+        {
+            return true;
+        }
     }
 
     return false;
