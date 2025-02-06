@@ -146,25 +146,21 @@ void DownloadQueueController::askUserForChoice()
 {
     QStorageInfo destinationDrive(mCurrentTargetPath);
 
-    const DriveDisplayData driveDisplayData = getDriveDisplayData(destinationDrive);
+    const QString driveName = getDriveName(destinationDrive);
 
-    LowDiskSpaceDialog* dialog = new LowDiskSpaceDialog(mTotalQueueDiskSize, mCachedDriveData.mAvailableSpace,
-                              mCachedDriveData.mTotalSpace, driveDisplayData);
+    LowDiskSpaceDialog* dialog = new LowDiskSpaceDialog(mTotalQueueDiskSize,
+                                                        mCachedDriveData.mAvailableSpace,
+                                                        mCachedDriveData.mTotalSpace,
+                                                        driveName);
     DialogOpener::showDialog<LowDiskSpaceDialog>(dialog, [this, dialog](){
         dialog->result() == QDialog::Accepted ? tryDownload() : emit finishedAvailableSpaceCheck(false);
     });
 }
 
-DriveDisplayData DownloadQueueController::getDriveDisplayData(const QStorageInfo &driveInfo) const
+QString DownloadQueueController::getDriveName(const QStorageInfo& driveInfo) const
 {
-    DriveDisplayData data;
-    data.name = driveInfo.name();
-    if (data.name.isEmpty())
-    {
-        data.name = getDefaultDriveName();
-    }
-    data.icon = getDriveIcon();
-    return data;
+    const QString driveName = driveInfo.name();
+    return driveName.isEmpty() ? getDefaultDriveName() : driveName;
 }
 
 QString DownloadQueueController::getDefaultDriveName() const
@@ -181,11 +177,6 @@ QString DownloadQueueController::getDefaultDriveName() const
     }
 #endif
     return tr("Local drive");
-}
-
-QString DownloadQueueController::getDriveIcon() const
-{
-    return QString::fromLatin1(":/images/drive-low-space.svg");
 }
 
 DriveSpaceData DownloadQueueController::getDriveSpaceDataFromQt()
