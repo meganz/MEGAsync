@@ -719,7 +719,7 @@ void HTTPServer::externalFolderSyncRequest(QString& response, const HTTPRequest&
     else
     {
         MegaHandle appUser(megaApi->getMyUserHandleBinary());
-        if (userHandle != appUser)
+        if (userHandle != appUser && appUser != mega::INVALID_HANDLE)
         {
             response = QString::number(MegaError::API_EACCESS);
             MegaApi::log(MegaApi::LOG_LEVEL_DEBUG,
