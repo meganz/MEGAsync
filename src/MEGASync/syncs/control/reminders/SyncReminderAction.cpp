@@ -4,12 +4,8 @@
 #include "SyncReminderNotificationManager.h"
 
 SyncReminderAction::SyncReminderAction(SyncReminderNotificationManager* manager,
-                                       const QString& title,
-                                       const QString& message,
                                        AppStatsEvents::EventType eventType):
     mManager(manager),
-    mTitle(title),
-    mMessage(message),
     mEventType(eventType),
     mClicked(false)
 {}
@@ -34,8 +30,8 @@ bool SyncReminderAction::isClicked() const
 void SyncReminderAction::showNotification()
 {
     DesktopNotifications::NotificationInfo reminder;
-    reminder.title = mTitle;
-    reminder.message = mMessage;
+    reminder.title = getTitle();
+    reminder.message = getMessage();
     reminder.activatedFunction = [this](DesktopAppNotificationBase::Action)
     {
         mClicked = true;

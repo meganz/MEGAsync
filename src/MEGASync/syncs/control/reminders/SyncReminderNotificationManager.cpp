@@ -2,7 +2,9 @@
 
 #include "AppStatsEvents.h"
 #include "CreateRemoveSyncsManager.h"
+#include "FirstSyncReminderAction.h"
 #include "MegaApplication.h"
+#include "MultiSyncReminderAction.h"
 #include "Preferences.h"
 #include "StatsEventHandler.h"
 #include "SyncController.h"
@@ -133,26 +135,18 @@ void SyncReminderNotificationManager::writeToPreferences()
 
 void SyncReminderNotificationManager::initActions()
 {
-    auto createAction = [this](ReminderState state, AppStatsEvents::EventType eventType)
-    {
-        return std::make_unique<SyncReminderAction>(this,
-                                                    getNotificationTitle(state),
-                                                    getNotificationMessage(state),
-                                                    eventType);
-    };
-
-    mActions[ReminderState::FIRST_REMINDER] =
-        createAction(ReminderState::FIRST_REMINDER,
-                     AppStatsEvents::EventType::FIRST_SYNC_NOTIFICATION_SHOWN);
-    mActions[ReminderState::SECOND_REMINDER] =
-        createAction(ReminderState::SECOND_REMINDER,
-                     AppStatsEvents::EventType::SECOND_SYNC_NOTIFICATION_SHOWN);
-    mActions[ReminderState::MONTHLY] =
-        createAction(ReminderState::MONTHLY,
-                     AppStatsEvents::EventType::MONTHLY_SYNC_NOTIFICATION_SHOWN);
-    mActions[ReminderState::BIMONTHLY] =
-        createAction(ReminderState::BIMONTHLY,
-                     AppStatsEvents::EventType::BIMONTHLY_SYNC_NOTIFICATION_SHOWN);
+    mActions[ReminderState::FIRST_REMINDER] = std::make_unique<FirstSyncReminderAction>(
+        this,
+        AppStatsEvents::EventType::FIRST_SYNC_NOTIFICATION_SHOWN);
+    mActions[ReminderState::SECOND_REMINDER] = std::make_unique<MultiSyncReminderAction>(
+        this,
+        AppStatsEvents::EventType::SECOND_SYNC_NOTIFICATION_SHOWN);
+    mActions[ReminderState::MONTHLY] = std::make_unique<MultiSyncReminderAction>(
+        this,
+        AppStatsEvents::EventType::MONTHLY_SYNC_NOTIFICATION_SHOWN);
+    mActions[ReminderState::BIMONTHLY] = std::make_unique<MultiSyncReminderAction>(
+        this,
+        AppStatsEvents::EventType::BIMONTHLY_SYNC_NOTIFICATION_SHOWN);
 }
 
 void SyncReminderNotificationManager::init(bool comesFromOnboarding)
@@ -293,62 +287,6 @@ void SyncReminderNotificationManager::run()
     }
 
     mActions[mLastState.value()]->run();
-}
-
-QString SyncReminderNotificationManager::getNotificationTitle(ReminderState state) const
-{
-    QString title;
-    switch (state)
-    {
-        case ReminderState::FIRST_REMINDER:
-        {
-            title = tr("You’re almost done");
-            break;
-        }
-        case ReminderState::SECOND_REMINDER:
-        // Fallthrough
-        case ReminderState::MONTHLY:
-        // Fallthrough
-        case ReminderState::BIMONTHLY:
-        {
-            title = tr("Sync your data");
-            break;
-        }
-        default:
-        {
-            break;
-        }
-    }
-    return title;
-}
-
-QString SyncReminderNotificationManager::getNotificationMessage(ReminderState state) const
-{
-    QString message;
-    switch (state)
-    {
-        case ReminderState::FIRST_REMINDER:
-        {
-            message =
-                tr("Set up your first sync and backup to get the most out of the desktop app");
-            break;
-        }
-        case ReminderState::SECOND_REMINDER:
-        // Fallthrough
-        case ReminderState::MONTHLY:
-        // Fallthrough
-        case ReminderState::BIMONTHLY:
-        {
-            message = tr("Access your data from anywhere, collaborate with ease, and instantly get "
-                         "the most up-to-date version of your files");
-            break;
-        }
-        default:
-        {
-            break;
-        }
-    }
-    return message;
 }
 
 bool SyncReminderNotificationManager::calculateCurrentState()

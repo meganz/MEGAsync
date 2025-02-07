@@ -61,8 +61,6 @@ private:
     bool isNeededToChangeState(qint64 daysToNextReminder) const;
     qint64 getSecsFromLastReminder() const;
     qint64 getDaysFromLastReminder() const;
-    QString getNotificationTitle(ReminderState state) const;
-    QString getNotificationMessage(ReminderState state) const;
     int calculateMsecsToCurrentState() const;
     void startNextTimer();
     bool calculateCurrentState();

@@ -6,14 +6,16 @@
 #include "DesktopNotifications.h"
 #include "MegaApplication.h"
 
+#include <QObject>
+
 class SyncReminderNotificationManager;
 
-class SyncReminderAction
+class SyncReminderAction: public QObject
 {
+    Q_OBJECT
+
 public:
     SyncReminderAction(SyncReminderNotificationManager* manager,
-                       const QString& title,
-                       const QString& message,
                        AppStatsEvents::EventType eventType);
     virtual ~SyncReminderAction() = default;
 
@@ -21,10 +23,12 @@ public:
     void resetClicked();
     bool isClicked() const;
 
+protected:
+    virtual QString getTitle() const = 0;
+    virtual QString getMessage() const = 0;
+
 private:
     SyncReminderNotificationManager* mManager;
-    QString mTitle;
-    QString mMessage;
     AppStatsEvents::EventType mEventType;
     bool mClicked;
 
