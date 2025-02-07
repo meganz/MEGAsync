@@ -167,20 +167,18 @@ void SyncReminderNotificationManager::init(bool comesFromOnboarding)
     }
     else
     {
-        calculateCurrentState();
-        ReminderState expectedLastState(getPreviousState());
-        if (expectedLastState > mLastState.value() || isBimonthlyPending())
+        // There is a previous state (info in preferences), so check if the current state should be
+        // updated or not.
+        if (calculateCurrentState())
         {
-            // Pending notification required when the current time has passed the time to show the
-            // last reminder.
-            mLastState = expectedLastState;
-            mLastSyncReminderTime = getCurrentTimeSecs();
-            writeToPreferences();
-            emit stateChanged();
+            // In case there is a time jump since the last time the application was launched and the
+            // last pending notification has to be displayed (pending notification required when the
+            // current time has passed the time to show the last reminder).
+            updateWritePreferencesAndNotifyStateChanged();
         }
         else
         {
-            // No pending notification required, so start the next timer.
+            // Normal case: no pending notification required, so start the next timer.
             startNextTimer();
         }
     }
@@ -207,20 +205,15 @@ void SyncReminderNotificationManager::initFirstTime(bool comesFromOnboarding)
 
 void SyncReminderNotificationManager::onTimeout()
 {
-    auto currentState(mState);
-    updateState();
-    if (currentState != mState ||
-        (mState == ReminderState::BIMONTHLY && isNeededToChangeState(DAYS_TO_BIMONTHLY_REMINDER)))
+    if (updateState())
     {
-        mLastState = currentState;
-        mLastSyncReminderTime = getCurrentTimeSecs();
-        writeToPreferences();
-        emit stateChanged();
+        updateWritePreferencesAndNotifyStateChanged();
     }
 }
 
-void SyncReminderNotificationManager::updateState()
+bool SyncReminderNotificationManager::updateState()
 {
+    auto currentState(mState);
     switch (mState.value())
     {
         case ReminderState::FIRST_REMINDER:
@@ -258,6 +251,11 @@ void SyncReminderNotificationManager::updateState()
             break;
         }
     }
+
+    mLastState = currentState;
+
+    return currentState != mState || (mState == ReminderState::BIMONTHLY &&
+                                      isNeededToChangeState(DAYS_TO_BIMONTHLY_REMINDER));
 }
 
 bool SyncReminderNotificationManager::isNeededToChangeFirstState() const
@@ -353,21 +351,33 @@ QString SyncReminderNotificationManager::getNotificationMessage(ReminderState st
     return message;
 }
 
-void SyncReminderNotificationManager::calculateCurrentState()
+bool SyncReminderNotificationManager::calculateCurrentState()
 {
+    // Update the state based on the elapsed time since the last reminder to check
+    // if the current state should be changed (jump time).
     qint64 elapsedSeconds = getSecsFromLastReminder();
+    auto lastState(mLastState.value());
+    const auto state(std::find_if(STATE_DURATIONS.cbegin(),
+                                  STATE_DURATIONS.cend(),
+                                  [elapsedSeconds, lastState](const auto& entry)
+                                  {
+                                      return entry.first > lastState &&
+                                             elapsedSeconds <= entry.second;
+                                  }));
+    mState = (state != STATE_DURATIONS.end()) ? state->first : ReminderState::BIMONTHLY;
 
-    for (const auto& [state, duration]: STATE_DURATIONS)
+    // Check if the previous state for the new state is the expected one for the
+    // saved last state. If not, then the state should be updated to the expected one
+    // and the pending notification should be shown.
+    // Bimonthly is a special case because it doesn't have a next state until it is done.
+    ReminderState expectedLastState(getPreviousState());
+    bool existPendingNotification(expectedLastState > mLastState.value() || isBimonthlyPending());
+    if (existPendingNotification)
     {
-        if (static_cast<int>(state) > static_cast<int>(mLastState.value()) &&
-            elapsedSeconds <= duration)
-        {
-            mState = state;
-            return;
-        }
+        mLastState = expectedLastState;
     }
 
-    mState = ReminderState::BIMONTHLY;
+    return existPendingNotification;
 }
 
 int SyncReminderNotificationManager::calculateMsecsToCurrentState() const
@@ -500,4 +510,11 @@ bool SyncReminderNotificationManager::isBimonthlyPending() const
 
     auto secsToNextReminder(getSecsFromLastReminder());
     return secsToNextReminder >= SECS_TO_BIMONTHLY_REMINDER;
+}
+
+void SyncReminderNotificationManager::updateWritePreferencesAndNotifyStateChanged()
+{
+    mLastSyncReminderTime = getCurrentTimeSecs();
+    writeToPreferences();
+    emit stateChanged();
 }

@@ -56,8 +56,7 @@ private:
     void initActions();
     void init(bool comesFromOnboarding);
     void initFirstTime(bool comesFromOnboarding);
-    void updateStates();
-    void updateState();
+    bool updateState();
     bool isNeededToChangeFirstState() const;
     bool isNeededToChangeState(qint64 daysToNextReminder) const;
     qint64 getSecsFromLastReminder() const;
@@ -66,7 +65,7 @@ private:
     QString getNotificationMessage(ReminderState state) const;
     int calculateMsecsToCurrentState() const;
     void startNextTimer();
-    void calculateCurrentState();
+    bool calculateCurrentState();
     void moveToDoneState();
     qint64 getCurrentTimeSecs() const;
     void loadEnvVariables();
@@ -76,6 +75,7 @@ private:
                                 const QDateTime& currentTime,
                                 qint64 remainingDays) const;
     bool isBimonthlyPending() const;
+    void updateWritePreferencesAndNotifyStateChanged();
 
 private slots:
     void run();
