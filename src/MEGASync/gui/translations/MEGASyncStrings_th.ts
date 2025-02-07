@@ -1546,7 +1546,7 @@
     <message>
         <source>File and folder name</source>
         <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ชื่อไฟล์และโฟลเดอร์</translation>
     </message>
     <message>
         <source>Files</source>
@@ -1561,27 +1561,27 @@
     <message>
         <source>Files and folders beginning with “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์และโฟลเดอร์ที่ขึ้นต้นด้วยตัว “%1” จะถูกซิงค์ทั้งหมด</translation>
     </message>
     <message>
         <source>Files and folders containing “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์และโฟลเดอร์ที่ประกอบไปด้วยตัว “%1” จะถูกซิงค์ทั้งหมด</translation>
     </message>
     <message>
         <source>Files and folders ending with “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์และโฟลเดอร์ที่ลงท้ายด้วยตัว “%1” จะถูกซิงค์ทั้งหมด</translation>
     </message>
     <message>
         <source>Files and folders equal to “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์และโฟลเดอร์ที่มีชื่อตรงกับ “%1” จะถูกซิงค์ทั้งหมด</translation>
     </message>
     <message>
         <source>Files and folders matching wildcard “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์และโฟลเดอร์ที่ตรงกับอักขระตัวแทน “%1” จะถูกซิงค์ทั้งหมด</translation>
     </message>
     <message>
         <source>Files beginning with “%1” will be included on this sync.</source>
@@ -1626,37 +1626,37 @@
     <message>
         <source>Files matching wildcard “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์ที่ตรงกับอักขระตัวแทน “%1” จะถูกซิงค์ทั้งหมด</translation>
     </message>
     <message>
         <source>Files matching wildcard:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์ที่ตรงกับอักขระตัวแทน:</translation>
     </message>
     <message>
         <source>Files or folders beginning with:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์หรือโฟลเดอร์ที่ขึ้นต้นด้วย:</translation>
     </message>
     <message>
         <source>Files or folders containing:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์หรือโฟลเดอร์ที่ประกอบไปด้วย:</translation>
     </message>
     <message>
         <source>Files or folders ending with:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์หรือโฟลเดอร์ที่ลงท้ายด้วย:</translation>
     </message>
     <message>
         <source>Files or folders equal to:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์หรือโฟลเดอร์ที่ตรงกับ:</translation>
     </message>
     <message>
         <source>Files or folders matching wildcard:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์หรือโฟลเดอร์ที่ตรงกับอักขระตัวแทน:</translation>
     </message>
     <message>
         <source>Files with extension:</source>
@@ -1716,12 +1716,12 @@
     <message>
         <source>Folders matching wildcard “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>โฟลเดอร์ที่ตรงกับอักขระตัวแทน “%1” จะถูกซิงค์ทั้งหมด</translation>
     </message>
     <message>
         <source>Folders matching wildcard:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>โฟลเดอร์ที่ตรงกับอักขระตัวแทน:</translation>
     </message>
     <message>
         <source>Here you can exclude files and folders from being synced with your cloud drive. This can be useful for large files, files that you don&apos;t need on all of your devices,or certain file types that need not be synced.</source>
@@ -1736,7 +1736,7 @@
     <message>
         <source>Matching wildcard</source>
         <translatorcomment>Wild card type to be used for the new exclusion rule.Con-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ตรงกับอักขระตัวแทน</translation>
     </message>
     <message>
         <source>Outside of</source>
@@ -1851,7 +1851,7 @@
     <message>
         <source>wildcard</source>
         <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>อักขระตัวแทน</translation>
     </message>
 </context>
 <context>
@@ -3025,7 +3025,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Alert</source>
         <translatorcomment>Title of the warning dialog shown when the SDK reports a fatal error - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>แจ้งเตือน</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
@@ -3145,7 +3145,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Link import error</source>
         <translatorcomment>Title of the error message when there is an error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เกิดข้อผิดพลาดในการนำเข้าลิงก์</translation>
     </message>
     <message>
         <source>Locked account</source>
@@ -3451,12 +3451,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>A critical error has been detected</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: failure to unserialize node - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>พบข้อผิดพลาดร้ายแรง</translation>
     </message>
     <message>
         <source>A serious issue has been detected in the MEGA software or the connection between this device and MEGA. Reinstall the app from [A]mega.io/desktop[/A] or contact support for further assistance.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: failure to unserialize node - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ระบบพบปัญหาขัดข้องร้ายแรงในซอฟต์แวร์ MEGA หรือการเชื่อมต่อระหว่างอุปกรณ์กับ MEGA กรุณาติดตั้งแอปพลิเคชันใหม่จาก [A]mega.io/desktop[/A] หากยังประสบปัญหาอยู่ กรุณาติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</translation>
     </message>
     <message>
         <source>Access denied</source>
@@ -3471,17 +3471,17 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>An error has been detected</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: DB index overflow - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>พบข้อผิดพลาด</translation>
     </message>
     <message>
         <source>An error is causing the communication with MEGA to fail. Your syncs and backups are unable to update, and there may be further issues if you continue using this app without restarting. We strongly recommend immediately restarting the app to resolve this problem.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: unknown - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>มีข้อผิดพลาดเกิดขึ้น ทำให้ไม่สามารถเชื่อมต่อกับ MEGA ได้ การซิงค์และการสำรองข้อมูลของคุณไม่สามารถอัปเดตได้ และอาจเกิดปัญหาอื่น ๆ ตามมาหากคุณยังคงใช้งานแอปโดยไม่เริ่มต้นการทำงานใหม่ เราขอแนะนำให้คุณเริ่มต้นการทำงานแอปทันทีเพื่อแก้ไขปัญหานี้</translation>
     </message>
     <message>
         <source>An unknown error has occurred</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: unknown - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -3496,7 +3496,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Check permissions</source>
         <translatorcomment>Label of the button used to open the application data folder for the user to check that the read/write permissions are good on that folder and the files inside - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ตรวจสอบสิทธิ์การเข้าถึง</translation>
     </message>
     <message>
         <source>Circular linkage detected</source>
@@ -3516,7 +3516,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Critical system files which are required by this app are unable to be reached. This may be the permissions of the folder the system files are in. You can also try restarting the app to see if this resolves the issue. If the folder permissions have been checked and the app restarted, please [A]contact support[/A].</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถเข้าถึงไฟล์ระบบที่จำเป็นสำหรับแอปนี้ได้ อาจเกิดจากสิทธิ์การเข้าถึงโฟลเดอร์ไม่ถูกต้อง กรุณาลองเริ่มการทำงานแอปและตรวจสอบสิทธิ์การเข้าถึงโฟลเดอร์ระบบ หากยังประสบปัญหาอยู่ กรุณา[A]ติดต่อฝ่ายสนับสนุน[/A]</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3531,12 +3531,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error reading app system files</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เกิดข้อผิดพลาดในการอ่านไฟล์ระบบแอป</translation>
     </message>
     <message>
         <source>Error with sync configuration files</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: JSCD atribute missing - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ข้อผิดพลาดกับไฟล์กำหนดค่าการซิงค์</translation>
     </message>
     <message>
         <source>Expired</source>
@@ -3631,7 +3631,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Restart MEGA</source>
         <translatorcomment>Label of the button used to restart the app to try to resolve a fatal error - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เริ่มการทำงาน MEGA ใหม่</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
@@ -3656,12 +3656,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>The app has detected an error and needs to reload. If you experience this issue more than once, contact our Support team.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: DB index overflow - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>แอปตรวจพบข้อผิดพลาดและจำเป็นต้องโหลดข้อมูลใหม่ หากพบปัญหานี้อีกหลายครั้ง กรุณาติดต่อทีมสนับสนุนของเรา</translation>
     </message>
     <message>
         <source>The app has detected an error in your sync configuration data. You need to log out of MEGA to resolve this issue. If the problem persists after logging back in, report the issue to our Support team.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: JSCD atribute missing - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>แอปตรวจพบข้อผิดพลาดในการตั้งค่าการซิงค์ข้อมูล คุณจำเป็นต้องออกจากระบบ MEGA เพื่อแก้ไขปัญหานี้ หากยังประสบปัญหาอยู่หลังจากเข้าสู่ระบบอีกครั้ง กรุณาแจ้งปัญหาให้ทีมสนับสนุนของเราทราบ</translation>
     </message>
     <message>
         <source>Too many concurrent connections or transfers</source>
@@ -3686,7 +3686,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>You need to make more space available in your local storage to be able to run MEGA.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>คุณจำเป็นต้องเพิ่มพื้นที่ว่างในที่เก็บข้อมูลภายในเครื่อง เพื่อให้สามารถใช้งาน MEGA ได้</translation>
     </message>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
@@ -3709,7 +3709,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your local storage is full</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>พื้นที่เก็บข้อมูลในเครื่องของคุณเต็มแล้ว</translation>
     </message>
 </context>
 <context>
@@ -5681,7 +5681,12 @@ Enter a different name</source>
 - Other bugs have been fixed and numerous improvements made.
 </source>
         <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- เราได้ปรับปรุงฟังก์ชันการจัดการการถ่ายโอนไฟล์ให้ใช้งานง่ายขึ้นและมีประสิทธิภาพมากยิ่งขึ้น
+- คุณสามารถกำหนดไฟล์ที่ไม่ต้องการซิงค์โดยใช้อักขระตัวแทนได้แล้ว
+- รองรับระบบปฏิบัติการ Raspberry Pi OS เวอร์ชันล่าสุดแล้ว
+- เราได้แก้ไขปัญหาการทำงานผิดพลาดที่เกิดจากไดรเวอร์ OpenGL บน Windows ที่ขาดหายไปหรือเสียหายแล้ว
+- อัปเกรด Qt เป็นเวอร์ชันล่าสุด
+- แก้ไขข้อผิดพลาดอื่น ๆ อีกมากมายและปรับปรุงประสิทธิภาพของแอปให้ดียิ่งขึ้น</translation>
     </message>
 </context>
 <context>
@@ -6177,22 +6182,22 @@ Do you want to delete it anyway?</source>
     <message>
         <source>MEGA has reloaded</source>
         <translatorcomment>Title for the desktop notification when receiving a RELOADING EVENT from API. 2nd notification: reloading done. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA ได้โหลดข้อมูลใหม่แล้ว</translation>
     </message>
     <message>
         <source>MEGA is reloading</source>
         <translatorcomment>Title for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA กำลังโหลดข้อมูลใหม่</translation>
     </message>
     <message>
         <source>The app has detected an issue and is reloading your account. Please wait…</source>
         <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>แอปตรวจพบปัญหาและกำลังโหลดบัญชีของคุณใหม่ กรุณารอสักครู่…</translation>
     </message>
     <message>
         <source>The app has reloaded. If you experience any further issues, please contact Support.</source>
         <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 12nd notification: reloading completed. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>แอปได้โหลดข้อมูลใหม่เรียบร้อยแล้ว หากคุณพบปัญหาใด ๆ เพิ่มเติม กรุณาติดต่อฝ่ายสนับสนุน</translation>
     </message>
 </context>
 <context>
@@ -8396,7 +8401,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>All transfers paused.</source>
         <translatorcomment>Information text indicating that all transfers are paused. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>หยุดการโอนข้อมูลทั้งหมดชั่วคราวแล้ว</translation>
     </message>
     <message>
         <source>Transfer quota exceeded.</source>
@@ -8406,17 +8411,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>[B]Storage almost full[/B][BR][A]Upgrade now[/A] before your storage becomes full and your uploads, syncs and backups stop.</source>
         <translatorcomment>Warning text indicating that the storage quota is almost full. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]พื้นที่เก็บข้อมูลของคุณใกล้เต็มแล้ว[/B][BR][A]อัปเกรดตอนนี้[/A]ก่อนที่พื้นที่เก็บข้อมูลจะเต็มและการอัปโหลด ซิงค์ และสำรองข้อมูลของคุณจะหยุดทำงาน</translation>
     </message>
     <message>
         <source>[B]Storage full[/B][BR]Uploads are disabled and sync and backups are paused.</source>
         <translatorcomment>Error text indicating that the storage quota is full. Please, keep the [BR] placeholder for breaking the line and [B][/B] used for formatting the bold text. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]พื้นที่จัดเก็บเต็มแล้ว[/B][BR]การอัปโหลดไฟล์ใหม่ถูกระงับชั่วคราว และการซิงค์ข้อมูลพร้อมกับการสำรองข้อมูลก็หยุดทำงานไปด้วย</translation>
     </message>
     <message>
         <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
         <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]โควต้าการถ่ายโอนข้อมูลเกินกำหนด[/B][BR]ขณะนี้คุณไม่สามารถดาวน์โหลดต่อได้ เนื่องจากโควต้าการถ่ายโอนข้อมูลของที่อยู่ IP นี้เกินกำหนดแล้ว หากต้องการเพิ่มโควต้า กรุณาอัปเกรดบัญชีของคุณ หรือรอจนถึง %1 เพื่อให้โควต้าฟรีสำหรับที่อยู่ IP ของคุณกลับมาใช้งานได้อีกครั้ง [A]เรียนรู้เพิ่มเติม[/A]เกี่ยวกับโควต้าการถ่ายโอนข้อมูล</translation>
     </message>
 </context>
 <context>

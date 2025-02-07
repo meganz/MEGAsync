@@ -5219,7 +5219,7 @@ Enter a different name</source>
     <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation>MEGAクラウド全体をローカルデバイスと双方向同期します。フォルダは、ローカルまたはMEGAで編集された最新の状態に保たれます。</translation>
+        <translation>MEGA Cloud全体をローカルデバイスと双方向同期します。フォルダは、ローカルまたはMEGAで編集された最新の状態に保たれます。</translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>

@@ -624,7 +624,7 @@
     <message>
         <source>You must wait 10 minutes before submitting another issue</source>
         <translatorcomment>Warning message title shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation>Bạn phải đợi 10 phút trước khi gửi báo thêm vấn đề khác</translation>
+        <translation>Bạn phải đợi 10 phút trước khi gửi báo cáo thêm vấn đề khác</translation>
     </message>
     <message>
         <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
@@ -1546,7 +1546,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>File and folder name</source>
         <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tên tệp và thư mục</translation>
     </message>
     <message>
         <source>Files</source>
@@ -1561,27 +1561,27 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Files and folders beginning with “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các tệp tin và thư mục có tên bắt đầu là “%1” sẽ được bao gồm trong đồng bộ hóa này.</translation>
     </message>
     <message>
         <source>Files and folders containing “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các tệp tin và thư mục có chứa “%1” trong tên sẽ được bao gồm trong đồng bộ hóa này.</translation>
     </message>
     <message>
         <source>Files and folders ending with “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các tệp tin và thư mục có tên kết thúc là “%1” sẽ được bao gồm trong đồng bộ hóa này.</translation>
     </message>
     <message>
         <source>Files and folders equal to “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các tệp tin và thư mục có tên giống như là “%1” sẽ được bao gồm trong đồng bộ hóa này.</translation>
     </message>
     <message>
         <source>Files and folders matching wildcard “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các tệp tin và thư mục có tên trùng với mẫu đại diện “%1” sẽ được bao gồm trong đồng bộ hóa này.</translation>
     </message>
     <message>
         <source>Files beginning with “%1” will be included on this sync.</source>
@@ -1626,37 +1626,37 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Files matching wildcard “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các tệp tin có tên trùng với mẫu đại diện “%1” sẽ được bao gồm trong đồng bộ hóa này.</translation>
     </message>
     <message>
         <source>Files matching wildcard:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các tên tệp tin trùng với mẫu đại diện sau:</translation>
     </message>
     <message>
         <source>Files or folders beginning with:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các tên tệp tin và thư mục  bắt đầu với:</translation>
     </message>
     <message>
         <source>Files or folders containing:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các tên tệp tin và thư mục có chứa:</translation>
     </message>
     <message>
         <source>Files or folders ending with:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các tên tệp tin và thư mục kết thúc với:</translation>
     </message>
     <message>
         <source>Files or folders equal to:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các tên tệp tin và thư mục giống như:</translation>
     </message>
     <message>
         <source>Files or folders matching wildcard:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các tên tệp tin và thư mục trùng với mẫu đại diện sau:</translation>
     </message>
     <message>
         <source>Files with extension:</source>
@@ -1716,12 +1716,12 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Folders matching wildcard “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các thư mục có tên trùng với mẫu đại diện “%1” sẽ được bao gồm trong đồng bộ hóa này.</translation>
     </message>
     <message>
         <source>Folders matching wildcard:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các tên thư mục trùng với mẫu đại diện sau:</translation>
     </message>
     <message>
         <source>Here you can exclude files and folders from being synced with your cloud drive. This can be useful for large files, files that you don&apos;t need on all of your devices,or certain file types that need not be synced.</source>
@@ -1736,7 +1736,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Matching wildcard</source>
         <translatorcomment>Wild card type to be used for the new exclusion rule.Con-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Trùng với mẫu đại diện</translation>
     </message>
     <message>
         <source>Outside of</source>
@@ -1851,7 +1851,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>wildcard</source>
         <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mẫu đại diện</translation>
     </message>
 </context>
 <context>
@@ -3026,7 +3026,7 @@ Hãy chờ cho phiên tải lên được hoàn tất.</translation>
     <message>
         <source>Alert</source>
         <translatorcomment>Title of the warning dialog shown when the SDK reports a fatal error - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cảnh báo</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
@@ -3146,7 +3146,7 @@ Hãy chờ cho phiên tải lên được hoàn tất.</translation>
     <message>
         <source>Link import error</source>
         <translatorcomment>Title of the error message when there is an error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi chuyển nhập đường liên kết</translation>
     </message>
     <message>
         <source>Locked account</source>
@@ -3452,12 +3452,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>A critical error has been detected</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: failure to unserialize node - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Một lỗi nghiêm trọng đã được phát hiện</translation>
     </message>
     <message>
         <source>A serious issue has been detected in the MEGA software or the connection between this device and MEGA. Reinstall the app from [A]mega.io/desktop[/A] or contact support for further assistance.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: failure to unserialize node - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Một lỗi nghiêm trọng đã được phát hiện trong phần mềm MEGA hoặc kết nối giữa thiết bị này và MEGA. Hãy cài đặt lại ứng dụng từ trang [A]mega.io/desktop[/A] và nếu việc này không giải quyết được vấn đề, hãy liên hệ với bộ phận Hỗ trợ để được giúp đỡ.</translation>
     </message>
     <message>
         <source>Access denied</source>
@@ -3472,17 +3472,17 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>An error has been detected</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: DB index overflow - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Một lỗi đã được phát hiện</translation>
     </message>
     <message>
         <source>An error is causing the communication with MEGA to fail. Your syncs and backups are unable to update, and there may be further issues if you continue using this app without restarting. We strongly recommend immediately restarting the app to resolve this problem.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: unknown - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Một lỗi phát sinh khiến giao tiếp với MEGA không thành công. Việc đồng bộ hóa và sao lưu của bạn không thể cập nhật được và có thể còn có vấn đề khác nếu bạn tiếp tục sử dụng ứng dụng này mà không khởi động lại. Chúng tôi thực sự khuyên bạn nên khởi động lại ứng dụng ngay lập tức để giải quyết vấn đề này.</translation>
     </message>
     <message>
         <source>An unknown error has occurred</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: unknown - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Một lỗi không xác định được đã xảy ra</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -3497,7 +3497,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Check permissions</source>
         <translatorcomment>Label of the button used to open the application data folder for the user to check that the read/write permissions are good on that folder and the files inside - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kiểm tra quyền hạn</translation>
     </message>
     <message>
         <source>Circular linkage detected</source>
@@ -3512,12 +3512,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Contact support</source>
         <translatorcomment>Label of the button used to contact support for assistance when a fatal error occurs - CON-844</translatorcomment>
-        <translation>Liên hệ Hỗ trợ</translation>
+        <translation>Liên hệ Hỗ trợ</translation>
     </message>
     <message>
         <source>Critical system files which are required by this app are unable to be reached. This may be the permissions of the folder the system files are in. You can also try restarting the app to see if this resolves the issue. If the folder permissions have been checked and the app restarted, please [A]contact support[/A].</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không thể truy cập các tệp hệ thống quan trọng theo yêu cầu của ứng dụng này, có thể do thiếu quyền thư mục. Hãy thử khởi động lại ứng dụng và kiểm tra quyền truy cập thư mục hệ thống. Nếu vấn đề vẫn tiếp diễn, xin vui lòng [A]liên hệ Hỗ trợ[/A].</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3532,12 +3532,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error reading app system files</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi khi đọc tệp tin hệ thống của ứng dụng</translation>
     </message>
     <message>
         <source>Error with sync configuration files</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: JSCD atribute missing - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi xảy ra với các tệp tin cấu hình đồng bộ hóa</translation>
     </message>
     <message>
         <source>Expired</source>
@@ -3632,7 +3632,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Restart MEGA</source>
         <translatorcomment>Label of the button used to restart the app to try to resolve a fatal error - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Khởi động lại MEGA</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
@@ -3657,12 +3657,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>The app has detected an error and needs to reload. If you experience this issue more than once, contact our Support team.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: DB index overflow - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ứng dụng đã phát hiện ra lỗi và cần tải lại. Nếu bạn gặp sự cố này nhiều lần, hãy liên hệ với nhóm Hỗ trợ của chúng tôi.</translation>
     </message>
     <message>
         <source>The app has detected an error in your sync configuration data. You need to log out of MEGA to resolve this issue. If the problem persists after logging back in, report the issue to our Support team.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: JSCD atribute missing - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ứng dụng đã phát hiện lỗi trong dữ liệu cấu hình đồng bộ hóa của bạn. Bạn cần đăng xuất tài khoản khỏi MEGA để giải quyết vấn đề này. Nếu sự cố vẫn còn sau khi đăng nhập lại, hãy báo cáo sự cố cho nhóm Hỗ trợ của chúng tôi.</translation>
     </message>
     <message>
         <source>Too many concurrent connections or transfers</source>
@@ -3687,7 +3687,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>You need to make more space available in your local storage to be able to run MEGA.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bạn cần tạo thêm chỗ trống trong dung lượng cục bộ có sẵn của mình để có thể chạy MEGA.</translation>
     </message>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
@@ -3710,7 +3710,7 @@ Bạn sẽ không thể lấy lại quyền truy cập vào dữ liệu đã �
     <message>
         <source>Your local storage is full</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không gian lưu trữ nội bộ của bạn đã đầy</translation>
     </message>
 </context>
 <context>
@@ -4508,27 +4508,27 @@ Nhập một tên khác.</translation>
     <message>
         <source>Error removing file</source>
         <translatorcomment>Messagebox title when removing a single file has failed. SAT-426</translatorcomment>
-        <translation>Lỗi khi loại bỏ tệp tin</translation>
+        <translation>Lỗi xảy ra khi loại bỏ tệp tin</translation>
     </message>
     <message>
         <source>Error removing files</source>
         <translatorcomment>Messagebox title when removing multiple files has failed. SAT-426</translatorcomment>
-        <translation>Lỗi khi loại bỏ các tệp tin</translation>
+        <translation>Lỗi xảy ra khi loại bỏ các tệp tin</translation>
     </message>
     <message>
         <source>Error removing folder</source>
         <translatorcomment>Messagebox title when removing a single folder has failed. SAT-426</translatorcomment>
-        <translation>Lỗi khi loại bỏ thư mục</translation>
+        <translation>Lỗi xảy ra khi loại bỏ thư mục</translation>
     </message>
     <message>
         <source>Error removing folders</source>
         <translatorcomment>Messagebox title when removing multiple folders has failed. SAT-426</translatorcomment>
-        <translation>Lỗi khi loại bỏ các thư mục</translation>
+        <translation>Lỗi xảy ra khi loại bỏ các thư mục</translation>
     </message>
     <message>
         <source>Error removing items</source>
         <translatorcomment>Messagebox title when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation>Lỗi khi loại bỏ mục</translation>
+        <translation>Lỗi xảy ra khi loại bỏ mục</translation>
     </message>
     <message>
         <source>Folder already synced</source>
@@ -4578,7 +4578,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>The files couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple files has failed. SAT-426</translatorcomment>
-        <translation>Các tệp tin không thể loại bỏ được. Thử lại sau.</translation>
+        <translation>Các tệp tin không thể loại bỏ được. Thử lại sau.</translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be removed. Try again later</source>
@@ -4593,7 +4593,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>The items couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation>Các mục không thể loại bỏ được. Thử lại sau.</translation>
+        <translation>Các mục đã chọn không thể loại bỏ được. Thử lại sau.</translation>
     </message>
 </context>
 <context>
@@ -4624,7 +4624,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Any shared files or folders will no longer be accessible to the people you shared them with. You can still access these items in the Rubbish bin, restore, and share them.</source>
         <translatorcomment>Informative text about the potential issues of removing the nodes. CON-334</translatorcomment>
-        <translation>Mọi tệp tin hoặc thư mục bên trong mà bạn đã chia sẻ cho người khác, họ sẽ không thể truy cập được nữa. Bạn vẫn có thể truy cập các mục này trong Thùng Rác, và khôi phục để chia sẻ lại nếu cần.</translation>
+        <translation>Bất kỳ tệp tin hoặc thư mục bên trong mà bạn đã chia sẻ cho người khác, họ sẽ không thể truy cập được nữa. Bạn vẫn có thể truy cập các mục này trong Thùng Rác, và khôi phục để chia sẻ lại nếu cần.</translation>
     </message>
     <message>
         <source>Backups</source>
@@ -4644,7 +4644,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Don’t move</source>
         <translatorcomment>Messagebox button to cancel moving nodes to the rubbish bin. CON-334</translatorcomment>
-        <translation>Đừng chuyển vào</translation>
+        <translation>Đừng di chuyển</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -4705,27 +4705,27 @@ Nhập một tên khác.</translation>
     <message>
         <source>Offer expires in %1 m %2 s</source>
         <translatorcomment>Text indicating that the offer expires in the %1 minutes and %2 seconds. The placeholder %1 shall be replaced by the number of minutes and %2 by the number of seconds. CON-868</translatorcomment>
-        <translation>Ưu đãi hết hạn trong %1 ṕ %2 giây</translation>
+        <translation>KM hết hạn trong %1 phút %2 giây</translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n day</source>
         <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
-        <translation><numerusform>Ưu đãi hết hạn trong %n ngày</numerusform></translation>
+        <translation><numerusform>KM hết hạn trong %n ngày</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n hour</source>
         <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
-        <translation><numerusform>Ưu đãi hết hạn trong %n giờ</numerusform></translation>
+        <translation><numerusform>KM hết hạn trong %n giờ</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n minute</source>
         <translatorcomment>Text indicating that the offer expires in the %n minutes. The placeholder %n shall be replaced by the number of minutes. CON-868/SNC-4853</translatorcomment>
-        <translation><numerusform>Ưu đãi hết hạn trong %n phút </numerusform></translation>
+        <translation><numerusform>KM hết hạn trong %n phút </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n second</source>
         <translatorcomment>Text indicating that the offer expires in the %n seconds. Placeholder %n shall be replaced by the number of seconds. CON-868/SNC-4853</translatorcomment>
-        <translation><numerusform>Ưu đãi hết hạn trong %n giây</numerusform></translation>
+        <translation><numerusform>KM hết hạn trong %n giây</numerusform></translation>
     </message>
     <message>
         <source>PROMO</source>
@@ -5683,7 +5683,13 @@ Nhập một tên khác.</translation>
 - Other bugs have been fixed and numerous improvements made.
 </source>
         <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Chúng tôi đã nâng cao giao diện và hành vi của quản lý truyền tải.
+- Bây giờ bạn có thể tạo luật loại trừ đồng bộ bằng mẫu đại diện.
+- Nhiều bản phát hành mới hiện sẽ có cho hệ điều hành Raspberry Pi.
+- Chúng tôi đã khắc phục sự cố xảy ra do trình điều khiển OpenGL bị thiếu hoặc bị hỏng trên Windows.
+- Qt đã được nâng cấp lên phiên bản mới hơn.
+- Các lỗi khác đã được sửa và nhiều cải tiến đã được thực hiện.
+</translation>
     </message>
 </context>
 <context>
@@ -6179,22 +6185,22 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>MEGA has reloaded</source>
         <translatorcomment>Title for the desktop notification when receiving a RELOADING EVENT from API. 2nd notification: reloading done. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA đã tải lại xong</translation>
     </message>
     <message>
         <source>MEGA is reloading</source>
         <translatorcomment>Title for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA đang tải lại</translation>
     </message>
     <message>
         <source>The app has detected an issue and is reloading your account. Please wait…</source>
         <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ứng dụng đã phát hiện ra sự cố và đang tải lại tài khoản của bạn. Xin vui lòng chờ...</translation>
     </message>
     <message>
         <source>The app has reloaded. If you experience any further issues, please contact Support.</source>
         <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 12nd notification: reloading completed. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ứng dụng đã tải lại. Nếu còn gặp bất kỳ vấn đề nào khác, vui lòng liên hệ với bộ phận Hỗ trợ.</translation>
     </message>
 </context>
 <context>
@@ -7161,7 +7167,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Being solved</source>
         <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. We are actively working on the issue and it is not still solved. SAT-1140</translatorcomment>
-        <translation>Đang giải quyết&amp;#8230;</translation>
+        <translation>Đang giải quyết...</translation>
     </message>
     <message>
         <source>Failed</source>
@@ -7510,7 +7516,7 @@ Làm mới danh sách.</translation>
     <message>
         <source>Maximum 32 characters</source>
         <translatorcomment>Error message when trying to rename a device with too long name. SAT-1523.</translatorcomment>
-        <translation>Tối[w]đa 32 ký[w]tự</translation>
+        <translation>Tối đa 32 ký tự</translation>
     </message>
     <message>
         <source>Next</source>
@@ -7735,7 +7741,7 @@ Làm mới danh sách.</translation>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation>Sao lưu &amp;#8220;%1&amp;#8221; đã bị tắt bởi vì thư mục MEGA đang nằm trong Thùng Rác.</translation>
+        <translation>Sao lưu “%1” đã bị tắt bởi vì thư mục MEGA đang nằm trong Thùng Rác.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -8016,7 +8022,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Saving synchronised folders…</source>
         <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.SNC-4208</translatorcomment>
-        <translation>Đang lưu lại các thư mục đồng bộ&amp;#8230;</translation>
+        <translation>Đang lưu lại các thư mục đồng bộ…</translation>
     </message>
 </context>
 <context>
@@ -8398,7 +8404,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>All transfers paused.</source>
         <translatorcomment>Information text indicating that all transfers are paused. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các phiên truyền tải hiện tạm dừng</translation>
     </message>
     <message>
         <source>Transfer quota exceeded.</source>
@@ -8408,17 +8414,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>[B]Storage almost full[/B][BR][A]Upgrade now[/A] before your storage becomes full and your uploads, syncs and backups stop.</source>
         <translatorcomment>Warning text indicating that the storage quota is almost full. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Không gian lưu trữ sắp đầy[/B][BR][A]Nâng cấp ngay[/A] trước khi không gian của bạn bị đầy và các phiên tải lên, đồng bộ hóa và sao lưu bị dừng lại.</translation>
     </message>
     <message>
         <source>[B]Storage full[/B][BR]Uploads are disabled and sync and backups are paused.</source>
         <translatorcomment>Error text indicating that the storage quota is full. Please, keep the [BR] placeholder for breaking the line and [B][/B] used for formatting the bold text. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Không gian lưu trữ đã đầy[/B][BR]Các phiên tải lên đã bị vô hiệu, đồng bộ hóa và sao lưu bị tạm dừng.</translation>
     </message>
     <message>
         <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
         <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Đã quá mức băng thông truyền tải[/B][BR]Quá trình tải xuống không thể tiếp tục vì bạn không còn lượng băng thông truyền tải nào cho địa chỉ IP này. Để có thêm băng thông, hãy nâng cấp lên gói Pro hoặc đợi %1 đến khi có thêm băng thông truyền tải miễn phí hồi phục lại cho địa chỉ IP của bạn. [A]Tìm hiểu thêm[/A] về băng thông truyền tải.</translation>
     </message>
 </context>
 <context>
@@ -9095,7 +9101,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to indicate the amount of used and total space available. Keep %1 (used space) and %2 (total space) substitution placeholders because they will be filled with the required amounts of storage space dynamically including the unit (e.g. 1KB, 5MB, 8GB...). CON-944</translatorcomment>
-        <translation>%1 của %2</translation>
+        <translation>%1 trong tổng %2</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>

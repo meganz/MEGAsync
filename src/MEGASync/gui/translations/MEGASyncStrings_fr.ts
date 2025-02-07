@@ -3214,7 +3214,7 @@ Attendez la fin du téléversement.</translation>
     <message>
         <source>Link can&apos;t be imported, your storage is full</source>
         <translatorcomment>Error message when there is an error importing a MEGA link because the storage quota is exceeded. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&#8217;importer le lien, votre espace de stockage est plein</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported: %1</source>
@@ -3224,7 +3224,7 @@ Attendez la fin du téléversement.</translation>
     <message>
         <source>Link import error</source>
         <translatorcomment>Title of the error message when there is an error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Erreur lors de l&#8217;importation du lien</translation>
     </message>
     <message>
         <source>Locked account</source>
@@ -5806,7 +5806,13 @@ Saisissez un nom différent.</translation>
 - Other bugs have been fixed and numerous improvements made.
 </source>
         <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Nous avons amélioré l&#8217;interface et le comportement de la fonction de gestionnaire de transferts.
+- Vous pouvez désormais créer des exclusions de synchronisation à l&#8217;aide de caractères génériques.
+- De nouvelles versions sont disponibles dès maintenant pour le système d&#8217;exploitation Raspberry Pi.
+- Nous avons corrigé des pannes dues à des pilotes OpenGL manquants ou cassés sous Windows.
+- Qt a été mis à niveau vers une version plus récente.
+- D&#8217;autres bugs ont été corrigés et de nombreuses améliorations ont été apportées.
+</translation>
     </message>
 </context>
 <context>
