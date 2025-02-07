@@ -262,24 +262,24 @@ void SyncReminderNotificationManager::updateState()
 
 bool SyncReminderNotificationManager::isNeededToChangeFirstState() const
 {
-    qint64 secsCount(getSecsToNextReminder());
+    qint64 secsCount(getSecsFromLastReminder());
     return secsCount >= SECS_TO_FIRST_REMINDER;
 }
 
 bool SyncReminderNotificationManager::isNeededToChangeState(qint64 daysToNextReminder) const
 {
-    qint64 daysCount(getDaysToNextReminder());
+    qint64 daysCount(getDaysFromLastReminder());
     return daysCount >= daysToNextReminder;
 }
 
-qint64 SyncReminderNotificationManager::getSecsToNextReminder() const
+qint64 SyncReminderNotificationManager::getSecsFromLastReminder() const
 {
     auto lastTime(QDateTime::fromSecsSinceEpoch(mLastSyncReminderTime.value()));
     auto currentTime(QDateTime::fromSecsSinceEpoch(getCurrentTimeSecs()));
     return static_cast<qint64>(lastTime.secsTo(currentTime));
 }
 
-qint64 SyncReminderNotificationManager::getDaysToNextReminder() const
+qint64 SyncReminderNotificationManager::getDaysFromLastReminder() const
 {
     auto lastTime(QDateTime::fromSecsSinceEpoch(mLastSyncReminderTime.value()));
     auto currentTime(QDateTime::fromSecsSinceEpoch(getCurrentTimeSecs()));
@@ -355,7 +355,7 @@ QString SyncReminderNotificationManager::getNotificationMessage(ReminderState st
 
 void SyncReminderNotificationManager::calculateCurrentState()
 {
-    qint64 elapsedSeconds = getSecsToNextReminder();
+    qint64 elapsedSeconds = getSecsFromLastReminder();
 
     for (const auto& [state, duration]: STATE_DURATIONS)
     {
@@ -498,6 +498,6 @@ bool SyncReminderNotificationManager::isBimonthlyPending() const
         return false;
     }
 
-    auto secsToNextReminder(getSecsToNextReminder());
+    auto secsToNextReminder(getSecsFromLastReminder());
     return secsToNextReminder >= SECS_TO_BIMONTHLY_REMINDER;
 }
