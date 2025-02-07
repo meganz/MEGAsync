@@ -2337,7 +2337,6 @@ void MegaApplication::raiseInfoDialog()
         infoDialog->show();
         infoDialog->raise();
         infoDialog->activateWindow();
-        infoDialog->setFocus();
         infoDialog->highDpiResize.queueRedraw();
     }
 }
