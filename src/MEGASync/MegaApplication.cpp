@@ -1465,9 +1465,7 @@ void MegaApplication::onLoginFinished()
                 this, &MegaApplication::onScheduledExecution);
     }
 
-#ifdef Q_OS_WINDOWS
     Platform::getInstance()->unHideTrayIcon();
-#endif
 }
 
 void MegaApplication::onFetchNodesFinished()
