@@ -207,6 +207,43 @@ bool PlatformImplementation::enableTrayIcon(QString executable)
     return true;
 }
 
+/*
+ * This implementation only works in Windows 11, there is not alternative way afaik
+ * to do the same on Windows 10.
+ */
+void PlatformImplementation::unHideTrayIcon()
+{
+    auto preferences = Preferences::instance();
+
+    if (!preferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_UNHIDE_TRAY_ICON))
+    {
+        const auto registryPath =
+            QString::fromUtf8("HKEY_CURRENT_USER\\Control Panel\\NotifyIconSettings");
+        QSettings settings(registryPath, QSettings::NativeFormat);
+
+        const auto& trayIconAppProperties = settings.childGroups();
+        for (const auto& child: trayIconAppProperties)
+        {
+            QSettings trayIconAppConfig(registryPath + QString::fromUtf8("\\") + child,
+                                        QSettings::NativeFormat);
+            auto executablePath = trayIconAppConfig.value(QString::fromUtf8("ExecutablePath"));
+            if (!executablePath.isNull() && executablePath.isValid())
+            {
+                auto regPath = QDir::toNativeSeparators(executablePath.toString());
+                auto execPath = QDir::toNativeSeparators(QCoreApplication::applicationFilePath());
+
+                if (regPath == execPath)
+                {
+                    trayIconAppConfig.setValue(QString::fromUtf8("IsPromoted"), 1);
+                    preferences->setOneTimeActionUserDone(
+                        Preferences::ONE_TIME_ACTION_UNHIDE_TRAY_ICON,
+                        true);
+                }
+            }
+        }
+    }
+}
+
 void PlatformImplementation::notifyItemChange(const QString& path, int)
 {
     notifyItemChange(path, mShellNotifier);

@@ -1464,6 +1464,8 @@ void MegaApplication::onLoginFinished()
         connect(mIntervalExecutioner.get(), &IntervalExecutioner::execute,
                 this, &MegaApplication::onScheduledExecution);
     }
+
+    Platform::getInstance()->unHideTrayIcon();
 }
 
 void MegaApplication::onFetchNodesFinished()
