@@ -4768,11 +4768,6 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Delete permanently</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes permanently the node (file or folder), so it cannot be restored. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Sync</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It creates a sync in the selected folder. SAT-426</translatorcomment>
         <translation type="unfinished">Sync</translation>
@@ -4799,6 +4794,10 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>Leave share</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Permanently delete</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

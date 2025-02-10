@@ -307,7 +307,7 @@ void NodeSelectorTreeView::addDeleteMenuAction(QMap<int, QAction*>& actions,
 void NodeSelectorTreeView::addDeletePermanently(QMap<int, QAction*>& actions,
                                                 QList<MegaHandle> selectionHandles)
 {
-    auto deletePermanentlyAction(new QAction(tr("Delete permanently")));
+    auto deletePermanentlyAction(new QAction(tr("Permanently delete")));
     connect(deletePermanentlyAction,
             &QAction::triggered,
             this,

@@ -30,7 +30,9 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
     ui(new Ui::NodeSelector),
     mSelectType(selectType),
     mDelegateListener(std::make_unique<QTMegaListener>(mMegaApi, this)),
-    mInitialised(false)
+    mInitialised(false),
+    mDuplicatedType(std::nullopt),
+    mDuplicatedModel(nullptr)
 {
     ui->setupUi(this);
 
@@ -72,6 +74,11 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
 
 NodeSelector::~NodeSelector()
 {
+    // Remove duplicated node dialog if it is currently open
+    if (mDuplicatedType.has_value())
+    {
+        DialogOpener::closeDialogsByClass<DuplicatedNodeDialog>();
+    }
     mMegaApi->removeListener(mDelegateListener.get());
     delete ui;
 }
@@ -473,15 +480,17 @@ void NodeSelector::initSpecialisedWidgets()
                     [this, model](std::shared_ptr<ConflictTypes> conflicts,
                                   NodeSelectorModel::ActionType type)
                     {
-                        auto checkUploadNameDialog = new DuplicatedNodeDialog(this);
+                        mDuplicatedModel = model;
+                        mDuplicatedConflicts = conflicts;
+                        mDuplicatedType = type;
+
+                        auto checkUploadNameDialog = new DuplicatedNodeDialog();
                         checkUploadNameDialog->setConflicts(conflicts);
 
-                        DialogOpener::showDialog<DuplicatedNodeDialog>(
+                        DialogOpener::showDialog<DuplicatedNodeDialog, NodeSelector>(
                             checkUploadNameDialog,
-                            [model, conflicts, type]()
-                            {
-                                model->processNodesAfterConflictCheck(conflicts, type);
-                            });
+                            this,
+                            &NodeSelector::onShowDuplicatedNodeDialog);
                     });
         }
     }
@@ -572,6 +581,19 @@ void NodeSelector::onCurrentWidgetChanged(int index)
             wid->setSelectedNodeHandle(mNodeToBeSelected->getHandle());
             mNodeToBeSelected.reset();
         }
+    }
+}
+
+void NodeSelector::onShowDuplicatedNodeDialog(QPointer<DuplicatedNodeDialog>)
+{
+    if (mDuplicatedType.has_value())
+    {
+        mDuplicatedModel->processNodesAfterConflictCheck(
+            mDuplicatedConflicts,
+            static_cast<NodeSelectorModel::ActionType>(mDuplicatedType.value()));
+        mDuplicatedType = std::nullopt;
+        mDuplicatedModel = nullptr;
+        mDuplicatedConflicts.reset();
     }
 }
 

@@ -19,6 +19,8 @@ class NodeSelectorTreeViewWidgetIncomingShares;
 class NodeSelectorTreeViewWidgetBackups;
 class NodeSelectorTreeViewWidgetSearch;
 class NodeSelectorTreeViewWidgetRubbish;
+class DuplicatedNodeDialog;
+struct ConflictTypes;
 
 struct MessageInfo;
 
@@ -118,6 +120,7 @@ private slots:
     void updateNodeSelectorTabs(); void onSearch(const QString& text);
     void on_tClearSearchResultNS_clicked();
     void onCurrentWidgetChanged(int index);
+    void onShowDuplicatedNodeDialog(QPointer<DuplicatedNodeDialog>);
 
 private:
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
@@ -141,6 +144,11 @@ private:
     bool mInitialised;
 
     std::shared_ptr<mega::MegaNode> mNodeToBeSelected;
+
+    // Duplicated node details
+    std::shared_ptr<ConflictTypes> mDuplicatedConflicts;
+    std::optional<int> mDuplicatedType;
+    NodeSelectorModel* mDuplicatedModel;
 };
 
 #endif // NODESELECTOR_H
