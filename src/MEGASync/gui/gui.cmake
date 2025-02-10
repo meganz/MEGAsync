@@ -43,7 +43,6 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/VerifyLockMessage.h
     ${CMAKE_CURRENT_LIST_DIR}/ViewLoadingScene.h
     ${CMAKE_CURRENT_LIST_DIR}/ViewLoadingMessage.h
-    ${CMAKE_CURRENT_LIST_DIR}/MegaInfoMessage.h
     ${CMAKE_CURRENT_LIST_DIR}/WaitingSpinnerWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/ProxySettings.h
     ${CMAKE_CURRENT_LIST_DIR}/BandwidthSettings.h
@@ -182,7 +181,6 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/BugReportDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ProgressIndicatorDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/VerifyLockMessage.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/MegaInfoMessage.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ViewLoadingScene.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ViewLoadingMessage.cpp
     ${CMAKE_CURRENT_LIST_DIR}/WaitingSpinnerWidget.cpp
@@ -298,7 +296,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/win/AlertFilterType.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/VerifyLockMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/MegaInfoMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/OverQuotaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/ScanningWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/CancelConfirmWidget.ui
@@ -333,7 +330,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/macx/FilterAlertWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/AlertFilterType.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/VerifyLockMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/MegaInfoMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/OverQuotaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/ScanningWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/CancelConfirmWidget.ui
@@ -370,7 +366,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/linux/AlertFilterType.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/VerifyLockMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/MegaInfoMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/OverQuotaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/CancelConfirmWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/ScanningWidget.ui
