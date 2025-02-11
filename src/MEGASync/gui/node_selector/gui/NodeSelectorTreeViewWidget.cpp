@@ -768,37 +768,61 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
                "them with. You can still access these items in the Rubbish bin, restore, and share "
                "them.");
     }
-    if(handles.size() == 1)
+
+    auto type(Utilities::getHandlesType(handles));
+
+    if (permanently)
     {
-        auto node = getNode(handles.first());
-        if (node)
-        {
-            if (permanently)
-            {
-                msgInfo.text =
-                    tr("You are about to permanently remove \"%1\".\nWould you like to proceed?")
-                        .arg(QString::fromUtf8(node->getName()));
-            }
-            else
-            {
-                msgInfo.text = tr("Are you sure that you want to delete \"%1\"?")
-                                   .arg(QString::fromUtf8(node->getName()));
-            }
-        }
-    }
-    else if (handles.size() > 1)
-    {
-        if(permanently)
+        if (type == Utilities::HandlesType::FILES)
         {
             msgInfo.text =
-                tr("You are about to permanently remove %n items.\nWould you like to proceed?",
+                tr("You are about to permanently delete %n file. Would you like to proceed?",
+                   "",
+                   handles.size());
+        }
+        else if (type == Utilities::HandlesType::FOLDERS)
+        {
+            msgInfo.text =
+                tr("You are about to permanently delete %n folder. Would you like to proceed?",
                    "",
                    handles.size());
         }
         else
         {
-            msgInfo.text = tr("Are you sure that you want to delete %1 items?")
-                               .arg(QString::number(handles.size()));
+            msgInfo.text =
+                tr("You are about to permanently delete %1 items. Would you like to proceed?")
+                    .arg(handles.size());
+        }
+    }
+    else
+    {
+        if (handles.size() == 1)
+        {
+            auto node = getNode(handles.first());
+            if (node)
+            {
+                msgInfo.text = tr("Are you sure that you want to delete \"%1\"?")
+                                   .arg(QString::fromUtf8(node->getName()));
+            }
+        }
+        else
+        {
+            if (type == Utilities::HandlesType::FILES)
+            {
+                msgInfo.text =
+                    tr("Are you sure that you want to delete %1 file?").arg(handles.size());
+            }
+            else if (type == Utilities::HandlesType::FOLDERS)
+            {
+                msgInfo.text =
+                    tr("Are you sure that you want to delete %1 folder?").arg(handles.size());
+            }
+            else
+            {
+                msgInfo.text =
+                    tr("You are about to permanently delete %1 items. Would you like to proceed?")
+                        .arg(handles.size());
+            }
         }
     }
 

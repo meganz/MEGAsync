@@ -408,6 +408,15 @@ public:
     static bool isIncommingShare(mega::MegaNode* node);
     static int getNodeAccess(mega::MegaHandle handle);
 
+    enum HandlesType
+    {
+        FILES = 0x1,
+        FOLDERS = 0x2
+    };
+    Q_DECLARE_FLAGS(HandlesTypes, HandlesType)
+
+    static HandlesTypes getHandlesType(const QList<mega::MegaHandle>& handles);
+
     static bool dayHasChangedSince(qint64 msecs);
     static bool monthHasChangedSince(qint64 msecs);
 

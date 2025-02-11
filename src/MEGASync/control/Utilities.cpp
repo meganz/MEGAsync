@@ -1551,6 +1551,27 @@ int Utilities::getNodeAccess(MegaHandle handle)
     }
 }
 
+Utilities::HandlesTypes Utilities::getHandlesType(const QList<MegaHandle>& handles)
+{
+    HandlesTypes type;
+
+    for (auto& handle: qAsConst(handles))
+    {
+        std::unique_ptr<MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+        if (node)
+        {
+            type |= node->isFile() ? HandlesType::FILES : HandlesType::FOLDERS;
+        }
+
+        if (type & (HandlesType::FILES & HandlesType::FOLDERS))
+        {
+            break;
+        }
+    }
+
+    return type;
+}
+
 bool Utilities::dayHasChangedSince(qint64 msecs)
 {
     QDate currentDate = QDateTime::currentDateTime().date();

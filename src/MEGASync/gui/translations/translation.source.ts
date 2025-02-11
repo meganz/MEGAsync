@@ -4859,11 +4859,6 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Are you sure that you want to delete %1 items?</source>
-        <translatorcomment>Third part of the messagebox text when the user is about to remove permanently some nodes. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New folder</source>
         <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
         <translation>New folder</translation>
@@ -4877,19 +4872,6 @@ Enter a different name.</translation>
         <source>Ok</source>
         <translatorcomment>Button text to accept and close the dialog</translatorcomment>
         <translation>OK</translation>
-    </message>
-    <message numerus="yes">
-        <source>You are about to permanently remove %n items.
-Would you like to proceed?</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>You are about to permanently remove &quot;%1&quot;.
-Would you like to proceed?</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Leave</source>
@@ -4919,6 +4901,32 @@ Would you like to proceed?</source>
     <message>
         <source>Rubbish bin</source>
         <translation type="unfinished">Rubbish bin</translation>
+    </message>
+    <message>
+        <source>Are you sure that you want to delete %1 file?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure that you want to delete %1 folder?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>You are about to permanently delete %n file. Would you like to proceed?</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>You are about to permanently delete %n folder. Would you like to proceed?</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>You are about to permanently delete %1 items. Would you like to proceed?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
