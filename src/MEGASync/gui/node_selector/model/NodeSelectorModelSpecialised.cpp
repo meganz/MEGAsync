@@ -338,9 +338,9 @@ bool NodeSelectorModelBackups::canDropMimeData(const QMimeData*,
 
 void NodeSelectorModelBackups::onMyBackupsHandleReceived(mega::MegaHandle handle)
 {
-    mBackupsHandle = handle;
-    if (mBackupsHandle != INVALID_HANDLE)
+    if (mBackupsHandle == INVALID_HANDLE && handle != INVALID_HANDLE)
     {
+        mBackupsHandle = handle;
         addRootItems();
     }
 }
