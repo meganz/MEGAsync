@@ -6337,7 +6337,6 @@ void MegaApplication::onGlobalSyncStateChangedImpl()
         }
         else if (misSyncingStateWrongLogged)
         {
-            qDebug() << "RESET VALUE";
             misSyncingStateWrongLogged = false;
         }
 
