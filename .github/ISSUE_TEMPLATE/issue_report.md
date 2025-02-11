@@ -1,3 +1,11 @@
+---
+name: Issue report
+about: Report an issue to help us improve.
+title: ''
+labels: issue
+
+---
+
 # Issue
 
 Thank you for taking the time to report an issue or suggest an improvement! Please complete the sections below to help us better understand and address your request. If any section does not apply to your issue or suggestion, feel free to omit it.
