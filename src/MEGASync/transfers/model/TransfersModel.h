@@ -72,16 +72,24 @@ struct TransfersCount
         pendingDownloads++;
     }
 
-    void removePendingUpload()
+    void removePendingUpload(mega::MegaTransfer* transfer)
     {
+        if (transfer->isSyncTransfer())
+        {
+            pendingSyncTransfers--;
+        }
+
         pendingUploads--;
-        pendingSyncTransfers--;
     }
 
-    void removePendingDownload()
+    void removePendingDownload(mega::MegaTransfer* transfer)
     {
+        if (transfer->isSyncTransfer())
+        {
+            pendingSyncTransfers--;
+        }
+
         pendingDownloads--;
-        pendingSyncTransfers--;
     }
 
     uint completedDownloads()const {return totalDownloads - pendingDownloads - failedDownloads;}

@@ -386,24 +386,24 @@ void TransferThread::onTransferFinish(MegaApi* megaApi, MegaTransfer *transfer, 
                         {
                             mTransfersCount.completedUploadBytes -= transfer->getTransferredBytes();
                             mTransfersCount.totalUploadBytes -= transfer->getTotalBytes();
-                            mTransfersCount.removePendingUpload();
+                            mTransfersCount.removePendingUpload(transfer);
                             mTransfersCount.totalUploads--;
 
                             mLastTransfersCount.completedUploadBytes -= transfer->getTransferredBytes();
                             mLastTransfersCount.totalUploadBytes -= transfer->getTotalBytes();
-                            mLastTransfersCount.removePendingUpload();
+                            mLastTransfersCount.removePendingUpload(transfer);
                             mLastTransfersCount.totalUploads--;
                         }
                         else
                         {
                             mTransfersCount.completedDownloadBytes -= transfer->getTransferredBytes();
                             mTransfersCount.totalDownloadBytes -= transfer->getTotalBytes();
-                            mTransfersCount.removePendingDownload();
+                            mTransfersCount.removePendingDownload(transfer);
                             mTransfersCount.totalDownloads--;
 
                             mLastTransfersCount.completedDownloadBytes -= transfer->getTransferredBytes();
                             mLastTransfersCount.totalDownloadBytes -= transfer->getTotalBytes();
-                            mLastTransfersCount.removePendingDownload();
+                            mLastTransfersCount.removePendingDownload(transfer);
                             mLastTransfersCount.totalDownloads--;
                         }
 
@@ -417,8 +417,8 @@ void TransferThread::onTransferFinish(MegaApi* megaApi, MegaTransfer *transfer, 
                         mTransfersCount.transfersFinishedByType[fileType]++;
                         if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
                         {
-                            mTransfersCount.removePendingUpload();
-                            mLastTransfersCount.removePendingUpload();
+                            mTransfersCount.removePendingUpload(transfer);
+                            mLastTransfersCount.removePendingUpload(transfer);
 
                             if(transfer->getTransferredBytes() < transfer->getTotalBytes())
                             {
@@ -435,8 +435,8 @@ void TransferThread::onTransferFinish(MegaApi* megaApi, MegaTransfer *transfer, 
                         }
                         else
                         {
-                            mTransfersCount.removePendingDownload();
-                            mLastTransfersCount.removePendingDownload();
+                            mTransfersCount.removePendingDownload(transfer);
+                            mLastTransfersCount.removePendingDownload(transfer);
 
                             if(transfer->getTransferredBytes() < transfer->getTotalBytes())
                             {
