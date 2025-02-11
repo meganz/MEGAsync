@@ -743,8 +743,8 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
     msgInfo.title = MegaSyncApp->getMEGAString();
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::Yes;
-    msgInfo.buttonsText.insert(QMessageBox::Yes, tr("Move"));
-    msgInfo.buttonsText.insert(QMessageBox::No, tr("Don’t move"));
+    msgInfo.buttonsText.insert(QMessageBox::Yes, tr("Delete"));
+    msgInfo.buttonsText.insert(QMessageBox::No, tr("Cancel"));
     msgInfo.finishFunc = [this, handles, permanently](QPointer<QMessageBox> msg)
     {
         if (msg->result() == QMessageBox::Yes)

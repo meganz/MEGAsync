@@ -4829,19 +4829,9 @@ Enter a different name.</translation>
         <translation>Cloud drive</translation>
     </message>
     <message>
-        <source>Don’t move</source>
-        <translatorcomment>Messagebox button to cancel moving nodes to the rubbish bin. CON-334</translatorcomment>
-        <translation>Don’t move</translation>
-    </message>
-    <message>
         <source>Incoming Shares</source>
         <translatorcomment>Button to filter search results from incoming shares</translatorcomment>
         <translation>Incoming shares</translation>
-    </message>
-    <message>
-        <source>Move</source>
-        <translatorcomment>Messagebox button to move nodes to the rubbish bin. CON-334</translatorcomment>
-        <translation>Move</translation>
     </message>
     <message>
         <source>Empty Rubbish bin</source>
@@ -4927,6 +4917,10 @@ Would you like to proceed?</source>
     <message>
         <source>You are about to permanently delete %1 items. Would you like to proceed?</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Delete</translation>
     </message>
 </context>
 <context>
