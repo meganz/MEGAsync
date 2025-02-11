@@ -493,6 +493,8 @@ protected:
 
     std::unique_ptr<mega::MegaGfxProvider> mGfxProvider;
 
+    bool misSyncingStateWrongLogged;
+
 private:
     void loadSyncExclusionRules(QString email = QString());
 
