@@ -115,6 +115,8 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyComponent.h
     ${CMAKE_CURRENT_LIST_DIR}/surveys/Surveys.h
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyController.h
+    ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/MessageDialogComponent.h
+    ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/MessageDialogData.h
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellComponent.h
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellController.h
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellModel.h
@@ -253,6 +255,8 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/surveys/Surveys.cpp
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyController.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/MessageDialogComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/MessageDialogData.cpp
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellController.cpp
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellModel.cpp
@@ -558,6 +562,7 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/backups
     ${CMAKE_CURRENT_LIST_DIR}/upsell
     ${CMAKE_CURRENT_LIST_DIR}/surveys
+    ${CMAKE_CURRENT_LIST_DIR}/message_dialogs
     ${CMAKE_CURRENT_LIST_DIR}/syncs
     ${CMAKE_CURRENT_LIST_DIR}/ui
     ${CMAKE_CURRENT_LIST_DIR}/user_messages

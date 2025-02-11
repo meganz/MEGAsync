@@ -208,6 +208,8 @@
         <file>deviceCentre/TroubleshootDialog.qml</file>
         <file>deviceCentre/IssueResolutionOption.qml</file>
         <file>deviceCentre/TroubleshootButton.qml</file>
+        <file>messageDialogs/MessageDialog.qml</file>
+        <file>messageDialogs/MessageDialogMediumSizes.qml</file>
         <file>components/menus/MenuItem.qml</file>
         <file>components/menus/qmldir</file>
         <file>components/menus/ContextMenuItem.qml</file>

@@ -1,10 +1,11 @@
 #include "QMegaMessageBox.h"
 
 #include "DialogOpener.h"
+#include "MessageDialogComponent.h"
+#include "QmlDialogWrapper.h"
+#include "Utilities.h"
 
-#include <QDebug>
-#include <QDialogButtonBox>
-#include <QPushButton>
+#include <QPointer>
 
 QString QMegaMessageBox::warningTitle()
 {
@@ -23,146 +24,44 @@ QString QMegaMessageBox::fatalErrorTitle()
 
 void QMegaMessageBox::information(const MessageBoxInfo& info)
 {
-    return showNewMessageBox(Information, info);
+    return show(MessageDialogData::Type::INFORMATION, info);
 }
 
 void QMegaMessageBox::warning(const MessageBoxInfo& info)
 {
-    return showNewMessageBox(Warning, info);
+    return show(MessageDialogData::Type::WARNING, info);
 }
 
 void QMegaMessageBox::question(const MessageBoxInfo& info)
 {
-    return showNewMessageBox(Question, info);
+    return show(MessageDialogData::Type::QUESTION, info);
 }
 
 void QMegaMessageBox::critical(const MessageBoxInfo& info)
 {
-    return showNewMessageBox(Critical, info);
+    return show(MessageDialogData::Type::CRITICAL, info);
 }
 
-bool QMegaMessageBox::event(QEvent *event)
+void QMegaMessageBox::show(MessageDialogData::Type type, const MessageBoxInfo& info)
 {
-    if(event->type() == QEvent::LanguageChange)
+    auto showDialog = [type, info]()
     {
-        event->ignore();
-        return true;
-    }
-
-    return QMessageBox::event(event);
-}
-
-void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
-{
-    auto showMsgBox = [icon, info]()
-    {
-        QMessageBox* msgBox = new QMegaMessageBox(info.parent);
-
-        msgBox->setIcon(icon);
-        msgBox->setWindowTitle(info.title.isEmpty() ? QString::fromLatin1("MEGA") : info.title);
-        msgBox->setText(info.text);
-        msgBox->setInformativeText(info.informativeText);
-        msgBox->setTextFormat(info.textFormat);
-        msgBox->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
-
-#ifdef Q_OS_MAC
-        if (!info.parent && info.textFormat == Qt::PlainText)
-        {
-            // Using QMessageBox without parent in macOS, forces the text to bold.
-            // Avoid displaying text in bold format.
-            msgBox->setStyleSheet(QStringLiteral("QLabel{font-weight: normal;}"));
-        }
-#endif
-
-        if(info.checkBox)
-        {
-#ifdef Q_OS_MACOS
-            //This little hack is done in order to have the same font as the Informative text on macOS (the only one with different font)
-            info.checkBox->setFont(qApp->font("QTipLabel"));
-#endif
-            msgBox->setCheckBox(info.checkBox);
-        }
-        QDialogButtonBox* buttonBox = msgBox->findChild<QDialogButtonBox*>();
-        Q_ASSERT(buttonBox != 0);
-
-#ifdef Q_OS_LINUX
-        buttonBox->setStyleSheet(QLatin1String("background: rgb(246, 245, 244);"));
-#endif
-
-        uint mask = FirstButton;
-        while(mask <= LastButton)
-        {
-            int sb = info.buttons & mask;
-            mask <<= 1;
-            if(!sb)
-                continue;
-            StandardButton buttonType = static_cast<StandardButton>(sb);
-            QPushButton* button = msgBox->addButton(buttonType);
-#ifdef Q_OS_MACOS
-            // Work-around for default buttons not highlighted correctly in MacOS(
-            button->setFixedHeight(32);
-#endif
-            // Change button text if needed
-            if(info.buttonsText.contains(buttonType))
-            {
-                button->setText(info.buttonsText.value(buttonType));
-            }
-
-            // Change button icon if needed
-            if (info.buttonsIcons.contains(buttonType))
-            {
-                button->setIcon(info.buttonsIcons.value(buttonType));
-            }
-
-            // Choose the first accept role as the default
-            if(msgBox->defaultButton())
-                continue;
-            if((info.defaultButton == NoButton && buttonBox &&
-                   buttonBox->buttonRole((QAbstractButton*) button) ==
-                       QDialogButtonBox::AcceptRole) ||
-                (info.defaultButton != NoButton && sb == static_cast<int>((info.defaultButton))))
-            {
-                msgBox->setDefaultButton(button);
-            }
-        }
-
-        if(!info.iconPixmap.isNull())
-        {
-            msgBox->setIconPixmap(info.iconPixmap);
-        }
-
-        if(!info.checkboxText.isEmpty())
-        {
-            QCheckBox* checkbox = new QCheckBox(info.checkboxText);
-            msgBox->setCheckBox(checkbox);
-        }
-
-        // Prevent showing context menu in texts
-        for (auto childLabel: msgBox->findChildren<QLabel*>())
-        {
-            childLabel->setContextMenuPolicy(Qt::PreventContextMenu);
-        }
-
-        DialogOpener::showMessageBox(msgBox, info);
-
-        // Hide Close button if requested
-        if (info.hideCloseButton)
-        {
-            auto* closeButton = msgBox->button(QMessageBox::Close);
-            if (closeButton != nullptr)
-            {
-                closeButton->hide();
-            }
-        }
+        QPointer<MessageDialogData> data = new MessageDialogData(type, info, info.parent);
+        QPointer<QmlDialogWrapper<MessageDialogComponent>> dialog =
+            new QmlDialogWrapper<MessageDialogComponent>(info.parent, data);
+        DialogOpener::showMessageBox(dialog, data);
     };
 
-    //ALWAYS show messagebox on GUI thread
-    if(MegaSyncApp->thread() != MegaSyncApp->thread()->currentThread())
+    if (MegaSyncApp->thread() != MegaSyncApp->thread()->currentThread())
     {
-        Utilities::queueFunctionInAppThread([showMsgBox]() { showMsgBox(); });
+        Utilities::queueFunctionInAppThread(
+            [showDialog]()
+            {
+                showDialog();
+            });
     }
     else
     {
-        showMsgBox();
+        showDialog();
     }
 }

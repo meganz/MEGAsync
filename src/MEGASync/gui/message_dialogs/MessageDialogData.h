@@ -1,0 +1,164 @@
+#ifndef MESSAGE_DIALOG_DATA_H
+#define MESSAGE_DIALOG_DATA_H
+
+#include <QIcon>
+#include <QMap>
+#include <QMessageBox>
+#include <QObject>
+#include <QPointer>
+#include <QUrl>
+
+#include <functional>
+#include <optional>
+
+class MessageDialogComponent;
+
+struct MessageDialogButtonInfo
+{
+    Q_GADGET
+
+public:
+    enum class ButtonStyle
+    {
+        OUTLINE = 0,
+        PRIMARY = 1,
+        SECONDARY = 2,
+        LINK = 3,
+        TEXT = 4
+    };
+    Q_ENUM(ButtonStyle)
+
+    QString text = QString();
+    QMessageBox::StandardButton type = QMessageBox::StandardButton::NoButton;
+    ButtonStyle style = ButtonStyle::OUTLINE;
+
+    MessageDialogButtonInfo() = default;
+    MessageDialogButtonInfo(const QString& buttonText, QMessageBox::StandardButton buttonType);
+};
+
+struct MessageDialogCheckboxInfo
+{
+    Q_GADGET
+
+    Q_PROPERTY(QString text READ getText MEMBER text)
+    Q_PROPERTY(bool checked READ getChecked MEMBER checked)
+
+public:
+    QString text = QString();
+    bool checked = false;
+
+    MessageDialogCheckboxInfo() = default;
+    MessageDialogCheckboxInfo(const QString& checkboxText, bool checkboxChecked = false);
+
+    QString getText() const;
+    bool getChecked() const;
+};
+Q_DECLARE_METATYPE(MessageDialogCheckboxInfo)
+
+class MessageBoxResult: public QObject
+{
+    Q_OBJECT
+
+public:
+    MessageBoxResult();
+    virtual ~MessageBoxResult() = default;
+
+    void setButton(QMessageBox::StandardButton button);
+    void setChecked(bool checked);
+
+    QMessageBox::StandardButton result() const;
+    bool isChecked() const;
+
+private:
+    QMessageBox::StandardButton mButton;
+    bool mChecked;
+};
+
+struct MessageBoxInfo
+{
+    MessageBoxInfo();
+
+    std::function<void(QPointer<MessageBoxResult>)> finishFunc;
+    QWidget* parent;
+    QString title;
+    QString text;
+    QString informativeText;
+    QMessageBox::StandardButtons buttons;
+    QMessageBox::StandardButton defaultButton;
+    QMap<QMessageBox::StandardButton, QString> buttonsText;
+    QMap<QMessageBox::StandardButton, QIcon> buttonsIcons;
+    Qt::TextFormat textFormat;
+    QUrl imageUrl;
+    bool enqueue;
+    bool ignoreCloseAll;
+    bool hideCloseButton;
+    QString checkboxText;
+    bool checkboxChecked;
+};
+
+class MessageDialogData: public QObject
+{
+    Q_OBJECT
+
+    Q_PROPERTY(QString title READ getTitle CONSTANT)
+    Q_PROPERTY(QUrl imageUrl READ getImageUrl NOTIFY imageChanged)
+    Q_PROPERTY(QString titleText READ getTitleText CONSTANT)
+    Q_PROPERTY(QString descriptionText READ getDescriptionText CONSTANT)
+    Q_PROPERTY(QVariantList buttons READ getButtons NOTIFY buttonsChanged)
+    Q_PROPERTY(MessageDialogCheckboxInfo checkbox READ getCheckbox NOTIFY checkboxChanged)
+
+public:
+    enum class Type
+    {
+        INFORMATION = 1,
+        WARNING = 2,
+        QUESTION = 3,
+        CRITICAL = 4,
+    };
+
+    explicit MessageDialogData(Type type, MessageBoxInfo info, QObject* parent = nullptr);
+    virtual ~MessageDialogData() = default;
+
+    Type getType() const;
+    QWidget* getParentWidget() const;
+    QString getTitle() const;
+    QUrl getImageUrl() const;
+    QString getTitleText() const;
+    QString getDescriptionText() const;
+    QVariantList getButtons() const;
+    std::function<void(QPointer<MessageBoxResult>)> getFinishFunction() const;
+    bool enqueue() const;
+    bool ignoreCloseAll() const;
+    MessageDialogCheckboxInfo getCheckbox() const;
+
+    QPointer<MessageBoxResult> result() const;
+
+signals:
+    void typeChanged();
+    void imageChanged();
+    void buttonsChanged();
+    void checkboxChanged();
+
+private:
+    std::optional<Type> mType;
+    MessageBoxInfo mInfo;
+    QPointer<MessageBoxResult> mResult;
+    QMap<QMessageBox::StandardButton, MessageDialogButtonInfo> mButtons;
+
+    friend class MessageDialogComponent;
+
+    void setCheckboxChecked(bool checked);
+    void buttonClicked(QMessageBox::StandardButton type);
+
+    void setImageUrl(const QUrl& url);
+    void setButtons(QMessageBox::StandardButtons buttons,
+                    QMessageBox::StandardButton defaultButton = QMessageBox::NoButton);
+    void processButtonInfo(QMessageBox::StandardButtons buttons,
+                           QMessageBox::StandardButton type,
+                           const QString& defaultText);
+    void updateButtonsByDefault(QMessageBox::StandardButtons buttons,
+                                QMessageBox::StandardButton defaultButton = QMessageBox::Ok);
+    void updateWidgetsByType();
+};
+
+#endif // MESSAGE_DIALOG_DATA_H

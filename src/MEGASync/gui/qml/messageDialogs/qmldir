@@ -1,0 +1,3 @@
+module messageDialogs
+MessageDialog 1.0 MessageDialog.qml
+MessageDialogMediumSizes 1.0 MessageDialogMediumSizes.qml
