@@ -9,11 +9,10 @@ class MultiSyncReminderAction: public SyncReminderAction
 
 public:
     using SyncReminderAction::SyncReminderAction;
-    ~MultiSyncReminderAction() override = default;
 
 protected:
-    virtual QString getTitle() const override;
-    virtual QString getMessage() const override;
+    QString getTitle() const override;
+    QString getMessage() const override;
 };
 
 #endif // MULTI_SYNC_REMINDER_ACTION_H

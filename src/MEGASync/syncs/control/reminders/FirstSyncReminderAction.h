@@ -9,11 +9,10 @@ class FirstSyncReminderAction: public SyncReminderAction
 
 public:
     using SyncReminderAction::SyncReminderAction;
-    ~FirstSyncReminderAction() override = default;
 
 protected:
-    virtual QString getTitle() const override;
-    virtual QString getMessage() const override;
+    QString getTitle() const override;
+    QString getMessage() const override;
 };
 
 #endif // FIRST_SYNC_REMINDER_ACTION_H
