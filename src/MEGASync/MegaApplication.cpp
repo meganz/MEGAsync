@@ -6302,7 +6302,6 @@ void MegaApplication::onGlobalSyncStateChangedImpl()
         mSyncing = megaApi->isSyncing();
         mSyncStalled = megaApi->isSyncStalled();
 
-        mTransfersModel->updateTransfersCount();
         auto transferCount = mTransfersModel->getTransfersCount();
         auto pendingSyncTransfers = transferCount.pendingSyncTransfers;
 

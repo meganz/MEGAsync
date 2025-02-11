@@ -362,7 +362,6 @@ signals:
 public slots:
     void pauseResumeAllTransfers(bool state);
     void askForMostPriorityTransfer();
-    void updateTransfersCount();
 
 private slots:
     void processStartTransfers(QList<QExplicitlySharedDataPointer<TransferData>>& transfersToStart);
@@ -376,6 +375,7 @@ private slots:
     void onUpdateTransfersFinished();
     void onAskForMostPriorityTransfersFinished();
     void onKeepPCAwake();
+    void updateTransfersCount();
 
 private:
     void removeRows(QModelIndexList &indexesToRemove);
