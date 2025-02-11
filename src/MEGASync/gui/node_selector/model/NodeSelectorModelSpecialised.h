@@ -48,7 +48,7 @@ public:
     bool rootNodeUpdated(mega::MegaNode*node) override;
     bool showsSyncStates() override {return true;}
 
-    bool canDropMimeData(const QMimeData*,
+    bool canDropMimeData(const QMimeData* data,
                          Qt::DropAction action,
                          int,
                          int,
@@ -183,7 +183,7 @@ public:
 
     bool isNodeAccepted(mega::MegaNode* node) override;
 
-    bool canDropMimeData(const QMimeData*,
+    bool canDropMimeData(const QMimeData* data,
                          Qt::DropAction action,
                          int,
                          int,

@@ -123,19 +123,8 @@ bool NodeSelectorTreeViewWidgetIncomingShares::isNodeCompatibleWithModel(mega::M
         return true;
     }
 
-    auto p_node = std::unique_ptr<mega::MegaNode>(
-        MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
-    while (p_node)
-    {
-        if (p_node->isInShare())
-        {
-            return true;
-        }
-
-        p_node.reset(MegaSyncApp->getMegaApi()->getParentNode(p_node.get()));
-    }
-
-    return false;
+    return Utilities::getNodeAccess(node) !=
+           (mega::MegaShare::ACCESS_OWNER | mega::MegaShare::ACCESS_UNKNOWN);
 }
 
 QString NodeSelectorTreeViewWidgetIncomingShares::getRootText()

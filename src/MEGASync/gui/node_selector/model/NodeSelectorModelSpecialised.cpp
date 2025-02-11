@@ -170,13 +170,13 @@ bool NodeSelectorModelIncomingShares::rootNodeUpdated(mega::MegaNode* node)
     return false;
 }
 
-bool NodeSelectorModelIncomingShares::canDropMimeData(const QMimeData*,
+bool NodeSelectorModelIncomingShares::canDropMimeData(const QMimeData* data,
                                                       Qt::DropAction action,
                                                       int,
                                                       int,
                                                       const QModelIndex& parent) const
 {
-    if(action == Qt::CopyAction)
+    if (action == Qt::CopyAction || action == Qt::MoveAction)
     {
         if(parent.isValid())
         {
@@ -189,7 +189,14 @@ bool NodeSelectorModelIncomingShares::canDropMimeData(const QMimeData*,
                     auto access = Utilities::getNodeAccess(node->getHandle());
                     if (access >= MegaShare::ACCESS_READWRITE)
                     {
-                        return true;
+                        if (action == Qt::CopyAction)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return checkDraggedMimeData(data);
+                        }
                     }
                 }
             }
@@ -709,13 +716,13 @@ bool NodeSelectorModelRubbish::isNodeAccepted(MegaNode* node)
     return MegaSyncApp->getMegaApi()->isInRubbish(node);
 }
 
-bool NodeSelectorModelRubbish::canDropMimeData(const QMimeData*,
+bool NodeSelectorModelRubbish::canDropMimeData(const QMimeData* data,
                                                Qt::DropAction action,
                                                int,
                                                int,
                                                const QModelIndex& parent) const
 {
-    if (action == Qt::CopyAction)
+    if (action == Qt::CopyAction || action == Qt::MoveAction)
     {
         if (parent.isValid())
         {
@@ -728,7 +735,14 @@ bool NodeSelectorModelRubbish::canDropMimeData(const QMimeData*,
                     auto access = Utilities::getNodeAccess(node->getHandle());
                     if (access == MegaShare::ACCESS_OWNER)
                     {
-                        return true;
+                        if (action == Qt::CopyAction)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return checkDraggedMimeData(data);
+                        }
                     }
                 }
             }

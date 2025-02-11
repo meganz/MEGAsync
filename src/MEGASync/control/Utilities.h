@@ -407,6 +407,7 @@ public:
 
     static bool isIncommingShare(mega::MegaNode* node);
     static int getNodeAccess(mega::MegaHandle handle);
+    static int getNodeAccess(mega::MegaNode* handle);
 
     enum HandlesType
     {

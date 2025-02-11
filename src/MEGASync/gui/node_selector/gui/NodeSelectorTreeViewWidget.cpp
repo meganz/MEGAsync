@@ -88,7 +88,11 @@ bool NodeSelectorTreeViewWidget::eventFilter(QObject* watched, QEvent* event)
     {
         if(auto dropEvent = static_cast<QDropEvent*>(event))
         {
-            if(mModel->dropMimeData(dropEvent->mimeData(), Qt::CopyAction, -1, -1, mModel->index(0,0,QModelIndex())))
+            if (mModel->dropMimeData(dropEvent->mimeData(),
+                                     Qt::MoveAction,
+                                     -1,
+                                     -1,
+                                     mModel->index(0, 0, QModelIndex())))
             {
                 dropEvent->acceptProposedAction();
             }
@@ -98,7 +102,11 @@ bool NodeSelectorTreeViewWidget::eventFilter(QObject* watched, QEvent* event)
     {
         if(auto dropEvent = static_cast<QDragEnterEvent*>(event))
         {
-            if(mModel->canDropMimeData(dropEvent->mimeData(), Qt::CopyAction, -1, -1, mModel->index(0,0,QModelIndex())))
+            if (mModel->canDropMimeData(dropEvent->mimeData(),
+                                        Qt::MoveAction,
+                                        -1,
+                                        -1,
+                                        mModel->index(0, 0, QModelIndex())))
             {
                 dropEvent->acceptProposedAction();
             }
@@ -725,12 +733,12 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
         return;
     }
 
-    auto getNode = [this](mega::MegaHandle handle) -> std::shared_ptr<mega::MegaNode>{
+    auto getNode = [this](mega::MegaHandle handle) -> std::shared_ptr<mega::MegaNode>
+    {
         auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
-        int access = mMegaApi->getAccess(node.get());
 
         //This is for an extra protection as we don´t show the rename action if oxne of this conditions are not met
-        if (!node || access < MegaShare::ACCESS_FULL || !node->isNodeKeyDecrypted())
+        if (!node || !node->isNodeKeyDecrypted())
         {
             return nullptr;
         }

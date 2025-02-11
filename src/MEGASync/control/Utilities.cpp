@@ -1541,9 +1541,14 @@ bool Utilities::isIncommingShare(MegaNode *node)
 int Utilities::getNodeAccess(MegaHandle handle)
 {
     auto node = std::unique_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+    return getNodeAccess(node.get());
+}
+
+int Utilities::getNodeAccess(MegaNode* node)
+{
     if (node)
     {
-        return MegaSyncApp->getMegaApi()->getAccess(node.get());
+        return MegaSyncApp->getMegaApi()->getAccess(node);
     }
     else
     {

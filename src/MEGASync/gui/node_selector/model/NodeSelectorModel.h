@@ -328,6 +328,7 @@ public:
         int row,
         int column,
         const QModelIndex& parent) const override;
+    bool checkDraggedMimeData(const QMimeData* data) const;
 
     void onRequestFinish(mega::MegaRequest* request, mega::MegaError* e);
 

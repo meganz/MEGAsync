@@ -447,7 +447,7 @@ NodeSelectorModelItem *NodeSelectorModelItemIncomingShare::createModelItem(std::
 NodeSelectorModelItemBackup::NodeSelectorModelItemBackup(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem)
     : NodeSelectorModelItem(std::move(node), showFiles, parentItem)
 {
-
+    mStatus = Status::BACKUP;
 }
 
 NodeSelectorModelItemBackup::~NodeSelectorModelItemBackup()

@@ -758,7 +758,7 @@ bool NodeSelectorModel::canDropMimeData(const QMimeData* data,
     Q_UNUSED(parent);
     Q_UNUSED(column);
 
-    if (action == Qt::CopyAction)
+    if (action == Qt::CopyAction || action == Qt::MoveAction)
     {
         if (parent.isValid())
         {
@@ -768,17 +768,43 @@ bool NodeSelectorModel::canDropMimeData(const QMimeData* data,
                 auto node = item->getNode();
                 if (!node || node->isFolder())
                 {
-                    return true;
+                    if (action == Qt::CopyAction)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return checkDraggedMimeData(data);
+                    }
                 }
             }
         }
         else
         {
-            return true;
+            return checkDraggedMimeData(data);
         }
     }
 
     return false;
+}
+
+bool NodeSelectorModel::checkDraggedMimeData(const QMimeData* data) const
+{
+    QByteArray encodedData = data->data(MIME_DATA_INTERNAL_MOVE);
+    QDataStream stream(&encodedData, QIODevice::ReadOnly);
+
+    while (!stream.atEnd())
+    {
+        mega::MegaHandle handle;
+        stream >> handle;
+
+        if (Utilities::getNodeAccess(handle) < mega::MegaShare::ACCESS_FULL)
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 QStringList NodeSelectorModel::mimeTypes() const
@@ -793,7 +819,7 @@ bool NodeSelectorModel::dropMimeData(const QMimeData* data,
                                      int column,
                                      const QModelIndex& parent)
 {
-    if (action == Qt::CopyAction)
+    if (action == Qt::CopyAction || action == Qt::MoveAction)
     {
         return startProcessingNodes(data, parent, ActionType::MOVE);
     }
