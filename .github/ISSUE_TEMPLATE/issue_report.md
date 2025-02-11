@@ -1,7 +1,7 @@
 ---
 name: Issue report
 about: Report an issue to help us improve.
-title: ''
+title: "[Issue]: "
 labels: issue
 
 ---
