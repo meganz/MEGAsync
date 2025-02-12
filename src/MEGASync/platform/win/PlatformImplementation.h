@@ -27,6 +27,7 @@ public:
     void initialize(int argc, char *argv[]) override;
     void prepareForSync() override;
     bool enableTrayIcon(QString executable) override;
+    void unHideTrayIcon() override;
     void notifyItemChange(const QString& localPath, int newState) override;
     void notifySyncFileChange(std::string *localPath, int newState) override;
     bool startOnStartup(bool value) override;

@@ -23,6 +23,10 @@
                 {
                     "name": "jasper",
                     "default-features": false
+                },
+                {
+                    "name": "tiff",
+                    "version>=": "4.7.0"
                 }
             ]
         },

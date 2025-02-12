@@ -19,6 +19,8 @@ Rectangle {
     readonly property string step4Error: "step4Error"
     readonly property string stepAllDone: "stepAllDone"
 
+    property url helpButtonLink
+
     readonly property int lineLeftMargin: 15
     readonly property int subStepLeftMargin: 4
     readonly property int lineWidth: 2
@@ -177,7 +179,7 @@ Rectangle {
         icons.source: Images.helpCircle
         sizes.iconSize: Qt.size(24, 24)
         onClicked: {
-            Qt.openUrlExternally(Links.installAppsDesktop);
+            Qt.openUrlExternally(root.helpButtonLink);
         }
     }
 }

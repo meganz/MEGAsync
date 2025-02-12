@@ -12,8 +12,8 @@ Item {
 
 	readonly property color backgroundBlur: loader.item.backgroundBlur
 	readonly property color backgroundInverse: loader.item.backgroundInverse
+	readonly property color borderBrand: loader.item.borderBrand
 	readonly property color borderDisabled: loader.item.borderDisabled
-	readonly property color borderInteractive: loader.item.borderInteractive
 	readonly property color borderStrong: loader.item.borderStrong
 	readonly property color borderStrongSelected: loader.item.borderStrongSelected
 	readonly property color borderSubtle: loader.item.borderSubtle
@@ -37,6 +37,7 @@ Item {
 	readonly property color buttonSecondaryPressed: loader.item.buttonSecondaryPressed
 	readonly property color focusColor: loader.item.focusColor
 	readonly property color iconAccent: loader.item.iconAccent
+	readonly property color iconBrand: loader.item.iconBrand
 	readonly property color iconDisabled: loader.item.iconDisabled
 	readonly property color iconInverse: loader.item.iconInverse
 	readonly property color iconInverseAccent: loader.item.iconInverseAccent
@@ -70,6 +71,7 @@ Item {
 	readonly property color surface3: loader.item.surface3
 	readonly property color surfaceInverseAccent: loader.item.surfaceInverseAccent
 	readonly property color textAccent: loader.item.textAccent
+	readonly property color textBrand: loader.item.textBrand
 	readonly property color textDisabled: loader.item.textDisabled
 	readonly property color textError: loader.item.textError
 	readonly property color textInfo: loader.item.textInfo

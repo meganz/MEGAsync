@@ -76,7 +76,7 @@
 #endif
 
 #ifndef WIN32
-//sleep
+// sleep
 #include <unistd.h>
 #else
 #include <Windows.h>
@@ -136,7 +136,8 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     scanStageController(this),
     mDisableGfx(false),
     mUserMessageController(nullptr),
-    mGfxProvider(nullptr)
+    mGfxProvider(nullptr),
+    misSyncingStateWrongLogged(false)
 {
 #if defined Q_OS_MACX && !defined QT_DEBUG
     if (!qEnvironmentVariableIsSet("MEGA_DISABLE_RUN_MAC_RESTRICTION"))
@@ -608,33 +609,49 @@ void MegaApplication::initialize()
         QStringList reports = CrashHandler::instance()->getPendingCrashReports();
         if (reports.size())
         {
-            QPointer<CrashReportDialog> crashDialog = new CrashReportDialog(reports.join(QString::fromUtf8("------------------------------\n")));
+            QPointer<CrashReportDialog> crashDialog = new CrashReportDialog(
+                reports.join(QString::fromUtf8("------------------------------\n")));
             if (crashDialog->exec() == QDialog::Accepted)
             {
                 applyProxySettings();
                 CrashHandler::instance()->sendPendingCrashReports(crashDialog->getUserMessage());
                 if (crashDialog->sendLogs())
                 {
-                    auto timestampString = reports[0].mid(reports[0].indexOf(QString::fromUtf8("Timestamp: "))+11,20);
-                    timestampString = timestampString.left(timestampString.indexOf(QString::fromUtf8("\n")));
-                    QDateTime crashTimestamp = QDateTime::fromMSecsSinceEpoch(timestampString.toLongLong());
+                    auto timestampString =
+                        reports[0].mid(reports[0].indexOf(QString::fromUtf8("Timestamp: ")) + 11,
+                                       20);
+                    timestampString =
+                        timestampString.left(timestampString.indexOf(QString::fromUtf8("\n")));
+                    QDateTime crashTimestamp =
+                        QDateTime::fromMSecsSinceEpoch(timestampString.toLongLong());
 
                     if (crashTimestamp != QDateTime::fromMSecsSinceEpoch(0))
                     {
-                        crashTimestamp = crashTimestamp.addSecs(-300); //to gather some logging before the crash
+                        // to gather some logging before the crash
+                        crashTimestamp = crashTimestamp.addSecs(-300);
                     }
 
-                    connect(logger.get(), &MegaSyncLogger::logReadyForReporting, context, [this, crashTimestamp]()
-                    {
-                        crashReportFilePath = Utilities::joinLogZipFiles(megaApi, &crashTimestamp, CrashHandler::instance()->getLastCrashHash());
-                        if (!crashReportFilePath.isNull()
-                                && megaApi && megaApi->isLoggedIn())
-                        {
-                            megaApi->startUploadForSupport(QDir::toNativeSeparators(crashReportFilePath).toUtf8().constData(), false);
-                            crashReportFilePath.clear();
-                        }
-                        context->deleteLater();
-                    });
+                    connect(logger.get(),
+                            &MegaSyncLogger::logReadyForReporting,
+                            context,
+                            [this, crashTimestamp]()
+                            {
+                                crashReportFilePath = Utilities::joinLogZipFiles(
+                                    megaApi,
+                                    &crashTimestamp,
+                                    CrashHandler::instance()->getLastCrashHash());
+                                if (!crashReportFilePath.isNull() && megaApi &&
+                                    megaApi->isLoggedIn())
+                                {
+                                    megaApi->startUploadForSupport(
+                                        QDir::toNativeSeparators(crashReportFilePath)
+                                            .toUtf8()
+                                            .constData(),
+                                        false);
+                                    crashReportFilePath.clear();
+                                }
+                                context->deleteLater();
+                            });
 
                     logger->prepareForReporting();
                 }
@@ -1466,6 +1483,8 @@ void MegaApplication::onLoginFinished()
         connect(mIntervalExecutioner.get(), &IntervalExecutioner::execute,
                 this, &MegaApplication::onScheduledExecution);
     }
+
+    Platform::getInstance()->unHideTrayIcon();
 }
 
 void MegaApplication::onFetchNodesFinished()
@@ -2341,7 +2360,6 @@ void MegaApplication::raiseInfoDialog()
         infoDialog->show();
         infoDialog->raise();
         infoDialog->activateWindow();
-        infoDialog->setFocus();
         infoDialog->highDpiResize.queueRedraw();
     }
 }
@@ -6429,11 +6447,49 @@ void MegaApplication::onGlobalSyncStateChangedImpl()
     if (megaApi && infoDialog && mTransfersModel)
     {
         mIndexing = megaApi->isScanning();
-        mSyncStalled = megaApi->isSyncStalled();
         mWaiting = megaApi->isWaiting() || mSyncStalled;
+
         mSyncing = megaApi->isSyncing();
+        mSyncStalled = megaApi->isSyncStalled();
 
         auto transferCount = mTransfersModel->getTransfersCount();
+        auto pendingSyncTransfers = transferCount.pendingSyncTransfers;
+
+        if (!mSyncStalled && mSyncing && pendingSyncTransfers == 0)
+        {
+            mSyncing = false;
+
+            if (!misSyncingStateWrongLogged)
+            {
+                misSyncingStateWrongLogged = true;
+
+                auto listener =
+                    RequestListenerManager::instance().registerAndGetCustomFinishListener(
+                        this,
+                        [](::mega::MegaRequest* request, ::mega::MegaError* e)
+                        {
+                            if (e->getErrorCode() == MegaError::API_OK)
+                            {
+                                // If mSyncing == true, mSyncStalled == false and
+                                // pendingSyncTransfers == 0 and we don´t have transfers in the
+                                // throttling queue, there is an unexpected scenario as mSyncing
+                                // should be false
+                                if (!request->getFlag())
+                                {
+                                    MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                                                 "isSyncing is set but no transfers in "
+                                                 "the throttling queue");
+                                }
+                            }
+                        });
+                megaApi->checkSyncUploadsThrottled(listener.get());
+            }
+        }
+        else if (misSyncingStateWrongLogged)
+        {
+            misSyncingStateWrongLogged = false;
+        }
+
         mTransferring = transferCount.pendingUploads || transferCount.pendingDownloads;
 
         auto pendingUploads = transferCount.pendingUploads;
@@ -6441,12 +6497,18 @@ void MegaApplication::onGlobalSyncStateChangedImpl()
 
         if (pendingUploads)
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending uploads: %1").arg(pendingUploads).toUtf8().constData());
+            MegaApi::log(
+                MegaApi::LOG_LEVEL_INFO,
+                QString::fromUtf8("Pending uploads: %1").arg(pendingUploads).toUtf8().constData());
         }
 
         if (pendingDownloads)
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending downloads: %1").arg(pendingDownloads).toUtf8().constData());
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                         QString::fromUtf8("Pending downloads: %1")
+                             .arg(pendingDownloads)
+                             .toUtf8()
+                             .constData());
         }
 
         infoDialog->setIndexing(mIndexing);
@@ -6455,8 +6517,16 @@ void MegaApplication::onGlobalSyncStateChangedImpl()
         infoDialog->setTransferring(mTransferring);
         infoDialog->updateDialogState();
 
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Current state. Paused = %1 Indexing = %2 Waiting = %3 Syncing = %4 Stalled = %5")
-                                                  .arg(paused).arg(mIndexing).arg(mWaiting).arg(mSyncing).arg(mSyncStalled).toUtf8().constData());
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                     QString::fromUtf8("Current state. Paused = %1 Indexing = %2 Waiting = %3 "
+                                       "Syncing = %4 Stalled = %5")
+                         .arg(paused)
+                         .arg(mIndexing)
+                         .arg(mWaiting)
+                         .arg(mSyncing)
+                         .arg(mSyncStalled)
+                         .toUtf8()
+                         .constData());
 
         updateTrayIcon();
     }
