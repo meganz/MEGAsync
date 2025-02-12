@@ -4934,17 +4934,6 @@ Enter a different name.</translation>
     </message>
 </context>
 <context>
-    <name>OnboardingString</name>
-    <message>
-        <source>Confirm</source>
-        <translation type="unfinished">Confirm</translation>
-    </message>
-    <message>
-        <source>Sync set up</source>
-        <translation type="unfinished">Sync set up</translation>
-    </message>
-</context>
-<context>
     <name>OnboardingStrings</name>
     <message>
         <source>A folder with the same name already exists on your backups</source>
