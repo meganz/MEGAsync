@@ -69,7 +69,7 @@ private:
     void loadEnvVariables();
     qint64 loadEnvVariable(const QString& envVarName, const QString& envVarDefaultValue);
     ReminderState getPreviousState() const;
-    qint64 getDaysToCurrentTime(const QDateTime& lastTime,
+    qint64 getMonthlyTimerCheck(const QDateTime& lastTime,
                                 const QDateTime& currentTime,
                                 qint64 remainingDays) const;
     bool isBimonthlyPending() const;
