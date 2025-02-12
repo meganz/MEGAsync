@@ -492,8 +492,10 @@ protected:
     bool mDisableGfx;
 
     std::unique_ptr<UserMessageController> mUserMessageController;
-    std::unique_ptr<SyncReminderNotificationManager> mSyncReminderNotificationManager;
+
     std::unique_ptr<mega::MegaGfxProvider> mGfxProvider;
+
+    SyncReminderNotificationManager* mSyncReminderNotificationManager;
 
     bool misSyncingStateWrongLogged;
 

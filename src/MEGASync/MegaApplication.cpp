@@ -137,8 +137,8 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     scanStageController(this),
     mDisableGfx(false),
     mUserMessageController(nullptr),
-    mSyncReminderNotificationManager(nullptr),
     mGfxProvider(nullptr),
+    mSyncReminderNotificationManager(nullptr),
     misSyncingStateWrongLogged(false)
 {
 #if defined Q_OS_MACX && !defined QT_DEBUG
