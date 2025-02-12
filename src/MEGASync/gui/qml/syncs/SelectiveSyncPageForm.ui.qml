@@ -23,6 +23,8 @@ FooterButtonsPage {
         icons.source: Images.syncIcon
     }
 
+    footerButtons.rightSecondary.visible: root.isOnboarding
+
     Syncs {
         id: syncsItem
     }
