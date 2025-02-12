@@ -54,12 +54,9 @@ public:
                          int,
                          const QModelIndex& parent) const override;
 
-    QModelIndex rootIndex(const QModelIndex& visualRootIndex) const override;
+    QModelIndex getTopRootIndex() const override;
 
     bool canBeDeleted() const override;
-
-    // No extra space for search
-    void setCurrentRootIndex(const QModelIndex& rootIndex) override;
 
 public slots:
     void onItemInfoUpdated(int role);
@@ -101,6 +98,7 @@ public:
                          int,
                          int,
                          const QModelIndex&) const override;
+    bool canDropMimeData() const override;
 
 signals:
     void requestBackupsRootCreation(mega::MegaHandle backupHandle);
@@ -129,6 +127,7 @@ public:
     void searchByText(const QString& text);
     void stopSearch();
     int rootItemsCount() const override;
+    QModelIndex getTopRootIndex() const override;
     bool canFetchMore(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
     void addNodes(QList<std::shared_ptr<mega::MegaNode> > nodes, const QModelIndex &parent) override;
@@ -138,13 +137,10 @@ public:
                          int,
                          int,
                          const QModelIndex&) const override;
+    bool canDropMimeData() const override;
     bool canCopyNodes() const override;
 
-    const NodeSelectorModelItemSearch::Types &searchedTypes() const;
-
-    // No extra space for search
-    void setCurrentRootIndex(const QModelIndex&) override {}
-
+    const NodeSelectorModelItemSearch::Types& searchedTypes() const;
     static NodeSelectorModelItemSearch::Types calculateSearchType(mega::MegaNode* node);
 
 protected:
@@ -177,6 +173,8 @@ public:
 
     void createRootNodes() override;
     int rootItemsCount() const override;
+
+    QModelIndex getTopRootIndex() const override;
 
     void fetchMore(const QModelIndex &parent) override;
     void firstLoad() override;

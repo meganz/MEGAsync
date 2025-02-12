@@ -198,8 +198,9 @@ public:
                                     int role = Qt::DisplayRole) const override;
     bool canFetchMore(const QModelIndex &parent) const override;
 
-    virtual void setCurrentRootIndex(const QModelIndex& rootIndex);
-    virtual QModelIndex rootIndex(const QModelIndex& visualRootIndex) const;
+    void setCurrentRootIndex(const QModelIndex& rootIndex);
+    QModelIndex rootIndex(const QModelIndex& visualRootIndex) const;
+    virtual QModelIndex getTopRootIndex() const;
 
     bool isRequestingNodes() const;
 
@@ -323,11 +324,14 @@ public:
                       int row,
                       int column,
                       const QModelIndex& parent) override;
+    // specific cases
     virtual bool canDropMimeData(const QMimeData* data,
         Qt::DropAction action,
         int row,
         int column,
         const QModelIndex& parent) const override;
+    // General cases
+    virtual bool canDropMimeData() const;
     bool checkDraggedMimeData(const QMimeData* data) const;
 
     void onRequestFinish(mega::MegaRequest* request, mega::MegaError* e);
@@ -369,7 +373,9 @@ protected:
     void fetchItemChildren(const QModelIndex& parent);
     void addRootItems();
     virtual void loadLevelFinished();
-    bool continueWithNextItemToLoad(const QModelIndex &parentIndex);
+    bool continueWithNextItemToLoad(const QModelIndex& parentIndex);
+
+    void executeExtraSpaceLogic();
 
     int mRequiredRights;
     bool mDisplayFiles;
@@ -403,7 +409,6 @@ private:
     void protectModelWhenPerformingActions();
     void protectModelAgainstUpdateBlockingState();
 
-    void executeExtraSpaceLogic();
     void executeRemoveExtraSpaceLogic();
 
     QIcon getFolderIcon(NodeSelectorModelItem* item) const;

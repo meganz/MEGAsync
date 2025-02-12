@@ -587,21 +587,29 @@ void NodeSelectorModel::protectModelAgainstUpdateBlockingState()
 
 void NodeSelectorModel::executeExtraSpaceLogic()
 {
-    // Remove the previous current index extra row
-    if (mPreviousRootIndex.isValid() && !mRowRemoved)
+    if (canDropMimeData())
     {
-        auto totalRows = rowCount(mPreviousRootIndex);
-        beginRemoveRows(mPreviousRootIndex, totalRows, totalRows);
-        endRemoveRows();
-        mRowRemoved = true;
-    }
+        // Remove the previous current index extra row
+        if (mPreviousRootIndex.isValid() && !mRowRemoved)
+        {
+            auto totalRows = rowCount(mPreviousRootIndex);
+            beginRemoveRows(mPreviousRootIndex, totalRows, totalRows);
+            endRemoveRows();
+            mRowRemoved = true;
+        }
 
-    if (mCurrentRootIndex.isValid() && !mRowAdded)
-    {
-        auto totalRows = rowCount(mCurrentRootIndex);
-        beginInsertRows(mCurrentRootIndex, totalRows, totalRows);
-        endInsertRows();
-        mRowAdded = true;
+        NodeSelectorModelItem* item =
+            static_cast<NodeSelectorModelItem*>(mCurrentRootIndex.internalPointer());
+        if (item && item->areChildrenInitialized())
+        {
+            if (mCurrentRootIndex.isValid() && !mRowAdded)
+            {
+                auto totalRows = rowCount(mCurrentRootIndex);
+                beginInsertRows(mCurrentRootIndex, totalRows, totalRows);
+                endInsertRows();
+                mRowAdded = true;
+            }
+        }
     }
 }
 
@@ -786,6 +794,11 @@ bool NodeSelectorModel::canDropMimeData(const QMimeData* data,
     }
 
     return false;
+}
+
+bool NodeSelectorModel::canDropMimeData() const
+{
+    return true;
 }
 
 bool NodeSelectorModel::checkDraggedMimeData(const QMimeData* data) const
@@ -2191,27 +2204,27 @@ bool NodeSelectorModel::canFetchMore(const QModelIndex &parent) const
 void NodeSelectorModel::setCurrentRootIndex(const QModelIndex& rootIndex)
 {
     mPreviousRootIndex = mCurrentRootIndex;
-    mCurrentRootIndex = rootIndex.isValid() ? rootIndex : index(0, 0);
+    mCurrentRootIndex = rootIndex.isValid() ? rootIndex : getTopRootIndex();
 
     mRowAdded = false;
     mRowRemoved = false;
 
-    NodeSelectorModelItem* item =
-        static_cast<NodeSelectorModelItem*>(mCurrentRootIndex.internalPointer());
-    if (item && item->areChildrenInitialized())
-    {
-        executeExtraSpaceLogic();
-    }
+    executeExtraSpaceLogic();
 }
 
 QModelIndex NodeSelectorModel::rootIndex(const QModelIndex& visualRootIndex) const
 {
     if (!visualRootIndex.isValid())
     {
-        return index(0, 0);
+        return getTopRootIndex();
     }
 
     return visualRootIndex;
+}
+
+QModelIndex NodeSelectorModel::getTopRootIndex() const
+{
+    return index(0, 0);
 }
 
 bool NodeSelectorModel::isRequestingNodes() const

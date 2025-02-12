@@ -282,29 +282,12 @@ void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint id)
         }
         else
         {
-            auto rootHandle(findIndexToMoveItem());
-            if (rootHandle != mega::INVALID_HANDLE)
-            {
-                MegaSyncApp->runUploadActionWithTargetHandle(rootHandle, this);
-            }
-            else
-            {
-                showNotFoundNodeMessageBox();
-            }
+            showNotFoundNodeMessageBox();
         }
     }
     else if(id == CloudDriveType::Download)
     {
-        auto selectionNodeHandle(getMultiSelectionNodeHandle());
-        if (!selectionNodeHandle.isEmpty())
-        {
-            MegaSyncApp->downloadACtionClickedWithHandles(getMultiSelectionNodeHandle());
-        }
-        else
-        {
-            auto rootHandle(findIndexToMoveItem());
-            MegaSyncApp->downloadACtionClickedWithHandles(QList<mega::MegaHandle>() << rootHandle);
-        }
+        MegaSyncApp->downloadACtionClickedWithHandles(getMultiSelectionNodeHandle());
     }
     else if(id == CloudDriveType::ClearRubbish)
     {

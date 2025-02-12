@@ -434,6 +434,8 @@ void NodeSelector::initSpecialisedWidgets()
 {
     NodeSelectorModel* model(nullptr);
 
+    auto selectedTab = selectedNodeTab();
+
     for(int page = 0; page < ui->stackedWidget->count(); ++page)
     {
         auto viewContainer = getTreeViewWidget(page);
@@ -448,6 +450,14 @@ void NodeSelector::initSpecialisedWidgets()
                     this,
                     &NodeSelector::onSearch,
                     Qt::UniqueConnection);
+
+            if (selectedTab.has_value() && selectedTab.value() == page)
+            {
+                connect(viewContainer,
+                        &NodeSelectorTreeViewWidget::viewReady,
+                        this,
+                        &NodeSelector::performNodeSelection);
+            }
 
             model = viewContainer->getProxyModel()->getMegaModel();
 
@@ -499,8 +509,6 @@ void NodeSelector::initSpecialisedWidgets()
             &QStackedWidget::currentChanged,
             this,
             &NodeSelector::onCurrentWidgetChanged);
-
-    performNodeSelection();
 }
 
 bool NodeSelector::eventFilter(QObject* obj, QEvent* event)
@@ -525,37 +533,11 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
     }
 }
 
-MegaHandle NodeSelector::findIndexToMoveItem()
-{
-    auto currentWid(getCurrentTreeViewWidget());
-    if (currentWid)
-    {
-        auto index = currentWid->findIndexToMoveItem();
-        return currentWid->getHandleByIndex(index);
-    }
-
-    return mega::INVALID_HANDLE;
-}
-
 void NodeSelector::performNodeSelection()
 {
     if (mNodeToBeSelected)
     {
-        std::optional<TabItem> option;
-
-        if (mMegaApi->isInCloud(mNodeToBeSelected.get()))
-        {
-            option = CLOUD_DRIVE;
-        }
-        else if (mMegaApi->isInVault(mNodeToBeSelected.get()))
-        {
-            option = BACKUPS;
-        }
-        // If it is not in the cloud drive or the vault, it is a backup
-        else
-        {
-            option = SHARES;
-        }
+        std::optional<TabItem> option = selectedNodeTab();
 
         if (option.has_value())
         {
@@ -570,6 +552,36 @@ void NodeSelector::performNodeSelection()
             }
         }
     }
+}
+
+std::optional<NodeSelector::TabItem> NodeSelector::selectedNodeTab()
+{
+    if (mNodeToBeSelected)
+    {
+        std::optional<TabItem> option;
+
+        if (mMegaApi->isInCloud(mNodeToBeSelected.get()))
+        {
+            option = CLOUD_DRIVE;
+        }
+        else if (mMegaApi->isInVault(mNodeToBeSelected.get()))
+        {
+            option = BACKUPS;
+        }
+        // If it is not in the cloud drive or the vault, it is a backup
+        else if (Utilities::getNodeAccess(mNodeToBeSelected->getHandle()) !=
+                 (mega::MegaShare::ACCESS_OWNER | mega::MegaShare::ACCESS_UNKNOWN))
+        {
+            option = SHARES;
+        }
+
+        if (option.has_value())
+        {
+            return option.value();
+        }
+    }
+
+    return std::nullopt;
 }
 
 void NodeSelector::onCurrentWidgetChanged(int index)

@@ -171,11 +171,11 @@ bool NodeSelectorTreeViewWidgetIncomingShares::isCurrentRootIndexReadOnly()
     return true;
 }
 
-bool NodeSelectorTreeViewWidgetIncomingShares::isCurrentSelectionReadOnly()
+bool NodeSelectorTreeViewWidgetIncomingShares::isSelectionReadOnly(const QModelIndexList& selection)
 {
-    auto selectedRows = ui->tMegaFolders->selectionModel()->selectedRows();
-    auto anyReadOnly(selectedRows.isEmpty() ? isCurrentRootIndexReadOnly() : false);
-    foreach(auto index, selectedRows)
+    bool anyReadOnly(false);
+
+    foreach(auto index, selection)
     {
         auto rootIndex(getRootIndexFromIndex(index));
         if(rootIndex.isValid())
@@ -193,6 +193,11 @@ bool NodeSelectorTreeViewWidgetIncomingShares::isCurrentSelectionReadOnly()
     }
 
     return anyReadOnly;
+}
+
+bool NodeSelectorTreeViewWidgetIncomingShares::isCurrentSelectionReadOnly()
+{
+    return isSelectionReadOnly(ui->tMegaFolders->selectedRows());
 }
 
 QIcon NodeSelectorTreeViewWidgetIncomingShares::getEmptyIcon()

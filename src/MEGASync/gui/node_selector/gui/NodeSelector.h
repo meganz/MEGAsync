@@ -121,6 +121,7 @@ private slots:
     void on_tClearSearchResultNS_clicked();
     void onCurrentWidgetChanged(int index);
     void onShowDuplicatedNodeDialog(QPointer<DuplicatedNodeDialog>);
+    void performNodeSelection();
 
 private:
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
@@ -129,7 +130,7 @@ private:
     virtual void onOkButtonClicked() = 0;
     void shortCutConnects(int ignoreThis);
 
-    void performNodeSelection();
+    std::optional<TabItem> selectedNodeTab();
 
     ButtonIconManager mButtonIconManager;
     QGraphicsDropShadowEffect* mShadowTab;

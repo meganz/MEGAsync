@@ -206,22 +206,14 @@ bool NodeSelectorModelIncomingShares::canDropMimeData(const QMimeData* data,
     return false;
 }
 
-QModelIndex NodeSelectorModelIncomingShares::rootIndex(const QModelIndex& visualRootIndex) const
+QModelIndex NodeSelectorModelIncomingShares::getTopRootIndex() const
 {
-    return visualRootIndex;
+    return QModelIndex();
 }
 
 bool NodeSelectorModelIncomingShares::canBeDeleted() const
 {
     return true;
-}
-
-void NodeSelectorModelIncomingShares::setCurrentRootIndex(const QModelIndex& rootIndex)
-{
-    if (rootIndex.isValid())
-    {
-        NodeSelectorModel::setCurrentRootIndex(rootIndex);
-    }
 }
 
 void NodeSelectorModelIncomingShares::onRootItemsCreated()
@@ -274,9 +266,10 @@ void NodeSelectorModelIncomingShares::firstLoad()
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-NodeSelectorModelBackups::NodeSelectorModelBackups(QObject *parent)
-    : NodeSelectorModel(parent)
-    , mBackupDevicesSize(0)
+NodeSelectorModelBackups::NodeSelectorModelBackups(QObject* parent):
+    NodeSelectorModel(parent),
+    mBackupsHandle(INVALID_HANDLE),
+    mBackupDevicesSize(0)
 {
 }
 
@@ -312,11 +305,7 @@ void NodeSelectorModelBackups::firstLoad()
     connect(backupsRequest.get(), &UserAttributes::MyBackupsHandle::attributeReady,
             this, &NodeSelectorModelBackups::onMyBackupsHandleReceived);
 
-    if(backupsRequest->isAttributeReady())
-    {
-        onMyBackupsHandleReceived(backupsRequest->getMyBackupsHandle());
-    }
-    else
+    if (backupsRequest->isAttributeReady())
     {
         addRootItems();
     }
@@ -332,6 +321,11 @@ bool NodeSelectorModelBackups::canDropMimeData(const QMimeData*,
                                                int,
                                                int,
                                                const QModelIndex&) const
+{
+    return canDropMimeData();
+}
+
+bool NodeSelectorModelBackups::canDropMimeData() const
 {
     return false;
 }
@@ -443,6 +437,11 @@ int NodeSelectorModelSearch::rootItemsCount() const
     return 0;
 }
 
+QModelIndex NodeSelectorModelSearch::getTopRootIndex() const
+{
+    return QModelIndex();
+}
+
 bool NodeSelectorModelSearch::canFetchMore(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
@@ -551,6 +550,11 @@ bool NodeSelectorModelSearch::canDropMimeData(const QMimeData*,
                                               int,
                                               int,
                                               const QModelIndex&) const
+{
+    return canDropMimeData();
+}
+
+bool NodeSelectorModelSearch::canDropMimeData() const
 {
     return false;
 }
@@ -686,6 +690,11 @@ void NodeSelectorModelRubbish::createRootNodes()
 int NodeSelectorModelRubbish::rootItemsCount() const
 {
     return 1;
+}
+
+QModelIndex NodeSelectorModelRubbish::getTopRootIndex() const
+{
+    return QModelIndex();
 }
 
 void NodeSelectorModelRubbish::fetchMore(const QModelIndex &parent)

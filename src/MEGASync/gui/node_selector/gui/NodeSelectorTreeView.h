@@ -27,7 +27,7 @@ public:
 
     static void clearCopiedHandles();
 
-    QModelIndex findIndexToMoveItem() const;
+    QModelIndexList selectedRows() const;
 
     enum ActionsOrder
     {

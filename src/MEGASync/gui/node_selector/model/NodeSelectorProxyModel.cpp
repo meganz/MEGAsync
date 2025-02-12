@@ -312,6 +312,7 @@ void NodeSelectorProxyModel::onModelSortedFiltered()
                                                    mapFromSource(mItemsToMap.first()));
         mExpandMapped = true;
     }
+
     getMegaModel()->sendBlockUiSignal(false);
     mItemsToMap.clear();
 
