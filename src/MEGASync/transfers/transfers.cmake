@@ -1,154 +1,154 @@
 
 set(DESKTOP_APP_TRANSFERS_HEADERS
-    transfers/model/InfoDialogTransfersProxyModel.h
-    transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeDialog.h
-    transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeInfo.h
-    transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeItem.h
-    transfers/gui/DuplicatedNodeDialogs/DuplicatedUploadChecker.h
-    transfers/gui/InfoDialogTransferLoadingItem.h
-    transfers/gui/TransferWidgetColumnsManager.h
-    transfers/model/TransfersManagerSortFilterProxyModel.h
-    transfers/model/TransfersSortFilterProxyBaseModel.h
-    transfers/model/TransfersModel.h
-    transfers/model/TransferMetaData.h
-    transfers/gui/SomeIssuesOccurredMessage.h
-    transfers/gui/InfoDialogTransferDelegateWidget.h
-    transfers/gui/InfoDialogTransfersWidget.h
-    transfers/gui/MegaTransferDelegate.h
-    transfers/gui/MegaTransferView.h
-    transfers/gui/MediaTypeFilterWidget.h
-    transfers/gui/TransferBaseDelegateWidget.h
-    transfers/gui/TransferItem.h
-    transfers/gui/TransferManager.h
-    transfers/gui/TransferManagerDelegateWidget.h
-    transfers/gui/TransferManagerLoadingItem.h
-    transfers/gui/TransfersStatusWidget.h
-    transfers/gui/TransfersSummaryWidget.h
-    transfers/gui/TransferScanCancelUi.h
-    transfers/gui/TransferWidgetHeaderItem.h
-    transfers/gui/TransfersWidget.h
-    transfers/gui/TransfersAccountInfoWidget.h
-    transfers/gui/TransferManagerStatusHeaderWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/model/InfoDialogTransfersProxyModel.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/DuplicatedNodeDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/DuplicatedNodeInfo.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/DuplicatedNodeItem.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/DuplicatedUploadChecker.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/InfoDialogTransferLoadingItem.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransferWidgetColumnsManager.h
+    ${CMAKE_CURRENT_LIST_DIR}/model/TransfersManagerSortFilterProxyModel.h
+    ${CMAKE_CURRENT_LIST_DIR}/model/TransfersSortFilterProxyBaseModel.h
+    ${CMAKE_CURRENT_LIST_DIR}/model/TransfersModel.h
+    ${CMAKE_CURRENT_LIST_DIR}/model/TransferMetaData.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/SomeIssuesOccurredMessage.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/InfoDialogTransferDelegateWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/InfoDialogTransfersWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/MegaTransferDelegate.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/MegaTransferView.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/MediaTypeFilterWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransferBaseDelegateWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransferItem.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransferManager.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransferManagerDelegateWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransferManagerLoadingItem.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransfersStatusWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransfersSummaryWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransferScanCancelUi.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransferWidgetHeaderItem.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransfersWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransfersAccountInfoWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransferManagerStatusHeaderWidget.h
 )
 
 set(DESKTOP_APP_TRANSFERS_SOURCES
-    transfers/model/TransfersModel.cpp
-    transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeDialog.cpp
-    transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeInfo.cpp
-    transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeItem.cpp
-    transfers/gui/DuplicatedNodeDialogs/DuplicatedUploadChecker.cpp
-    transfers/gui/InfoDialogTransferLoadingItem.cpp
-    transfers/gui/TransferWidgetColumnsManager.cpp
-    transfers/model/InfoDialogTransfersProxyModel.cpp
-    transfers/model/TransfersManagerSortFilterProxyModel.cpp
-    transfers/gui/SomeIssuesOccurredMessage.cpp
-    transfers/model/TransferMetaData.cpp
-    transfers/gui/InfoDialogTransferDelegateWidget.cpp
-    transfers/gui/InfoDialogTransfersWidget.cpp
-    transfers/gui/MegaTransferDelegate.cpp
-    transfers/gui/MegaTransferView.cpp
-    transfers/gui/MediaTypeFilterWidget.cpp
-    transfers/gui/TransferBaseDelegateWidget.cpp
-    transfers/gui/TransferItem.cpp
-    transfers/gui/TransferManager.cpp
-    transfers/gui/TransferManagerDelegateWidget.cpp
-    transfers/gui/TransferManagerLoadingItem.cpp
-    transfers/gui/TransfersStatusWidget.cpp
-    transfers/gui/TransfersSummaryWidget.cpp
-    transfers/gui/TransferScanCancelUi.cpp
-    transfers/gui/TransferWidgetHeaderItem.cpp
-    transfers/gui/TransfersWidget.cpp
-    transfers/gui/TransfersAccountInfoWidget.cpp
-    transfers/gui/TransferManagerStatusHeaderWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/model/TransfersModel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/DuplicatedNodeDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/DuplicatedNodeInfo.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/DuplicatedNodeItem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/DuplicatedUploadChecker.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/InfoDialogTransferLoadingItem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransferWidgetColumnsManager.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/model/InfoDialogTransfersProxyModel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/model/TransfersManagerSortFilterProxyModel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/SomeIssuesOccurredMessage.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/model/TransferMetaData.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/InfoDialogTransferDelegateWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/InfoDialogTransfersWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/MegaTransferDelegate.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/MegaTransferView.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/MediaTypeFilterWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransferBaseDelegateWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransferItem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransferManager.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransferManagerDelegateWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransferManagerLoadingItem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransfersStatusWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransfersSummaryWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransferScanCancelUi.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransferWidgetHeaderItem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransfersWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransfersAccountInfoWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/TransferManagerStatusHeaderWidget.cpp
 )
 
 
-target_sources_conditional(MEGAsync
+target_sources_conditional(${ExecutableTarget}
    FLAG WIN32
    QT_AWARE
    PRIVATE
-   transfers/gui/win/TransferWidgetHeaderItem.ui
-   transfers/gui/win/TransferManagerDelegateWidget.ui
-   transfers/gui/win/TransferManager.ui
-   transfers/gui/win/TransfersWidget.ui
-   transfers/gui/win/TransferManagerLoadingItem.ui
-   transfers/gui/win/TransferManagerDragBackDrop.ui
-   transfers/gui/win/InfoDialogTransfersWidget.ui
-   transfers/gui/win/InfoDialogTransferDelegateWidget.ui
-   transfers/gui/win/InfoDialogTransferLoadingItem.ui
-   transfers/gui/win/TransfersStatusWidget.ui
-   transfers/gui/win/TransfersSummaryWidget.ui
-   transfers/gui/win/SomeIssuesOccurredMessage.ui
-   transfers/gui/win/TransfersAccountInfoWidget.ui
-   transfers/gui/win/MediaTypeFilterWidget.ui
-   transfers/gui/DuplicatedNodeDialogs/win/DuplicatedNodeDialog.ui
-   transfers/gui/DuplicatedNodeDialogs/win/DuplicatedNodeItem.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransferWidgetHeaderItem.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransferManagerDelegateWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransferManager.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransfersWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransferManagerLoadingItem.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransferManagerDragBackDrop.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/win/InfoDialogTransfersWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/win/InfoDialogTransferDelegateWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/win/InfoDialogTransferLoadingItem.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransfersStatusWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransfersSummaryWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/win/SomeIssuesOccurredMessage.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransfersAccountInfoWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/win/MediaTypeFilterWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/win/DuplicatedNodeDialog.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/win/DuplicatedNodeItem.ui
 )
 
-target_sources_conditional(MEGAsync
+target_sources_conditional(${ExecutableTarget}
    FLAG APPLE
    QT_AWARE
    PRIVATE
-   transfers/gui/macx/TransferWidgetHeaderItem.ui
-   transfers/gui/macx/TransferManagerDelegateWidget.ui
-   transfers/gui/macx/TransferManager.ui
-   transfers/gui/macx/TransfersWidget.ui
-   transfers/gui/macx/TransferManagerLoadingItem.ui
-   transfers/gui/macx/TransferManagerDragBackDrop.ui
-   transfers/gui/macx/InfoDialogTransfersWidget.ui
-   transfers/gui/macx/InfoDialogTransferDelegateWidget.ui
-   transfers/gui/macx/InfoDialogTransferLoadingItem.ui
-   transfers/gui/macx/TransfersStatusWidget.ui
-   transfers/gui/macx/TransfersSummaryWidget.ui
-   transfers/gui/macx/SomeIssuesOccurredMessage.ui
-   transfers/gui/macx/TransfersAccountInfoWidget.ui
-   transfers/gui/macx/MediaTypeFilterWidget.ui
-   transfers/gui/DuplicatedNodeDialogs/macx/DuplicatedNodeDialog.ui
-   transfers/gui/DuplicatedNodeDialogs/macx/DuplicatedNodeItem.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransferWidgetHeaderItem.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransferManagerDelegateWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransferManager.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransfersWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransferManagerLoadingItem.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransferManagerDragBackDrop.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/InfoDialogTransfersWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/InfoDialogTransferDelegateWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/InfoDialogTransferLoadingItem.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransfersStatusWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransfersSummaryWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/SomeIssuesOccurredMessage.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransfersAccountInfoWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/MediaTypeFilterWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/macx/DuplicatedNodeDialog.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/macx/DuplicatedNodeItem.ui
 )
 
-target_sources_conditional(MEGAsync
+target_sources_conditional(${ExecutableTarget}
    FLAG UNIX AND NOT APPLE
    QT_AWARE
    PRIVATE
-   transfers/gui/linux/TransferWidgetHeaderItem.ui
-   transfers/gui/linux/TransferManagerDelegateWidget.ui
-   transfers/gui/linux/TransferManager.ui
-   transfers/gui/linux/TransfersWidget.ui
-   transfers/gui/linux/TransferManagerLoadingItem.ui
-   transfers/gui/linux/TransferManagerDragBackDrop.ui
-   transfers/gui/linux/InfoDialogTransfersWidget.ui
-   transfers/gui/linux/InfoDialogTransferDelegateWidget.ui
-   transfers/gui/linux/InfoDialogTransferLoadingItem.ui
-   transfers/gui/linux/TransfersStatusWidget.ui
-   transfers/gui/linux/TransfersSummaryWidget.ui
-   transfers/gui/linux/SomeIssuesOccurredMessage.ui
-   transfers/gui/linux/TransfersAccountInfoWidget.ui
-   transfers/gui/linux/MediaTypeFilterWidget.ui
-   transfers/gui/DuplicatedNodeDialogs/linux/DuplicatedNodeDialog.ui
-   transfers/gui/DuplicatedNodeDialogs/linux/DuplicatedNodeItem.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransferWidgetHeaderItem.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransferManagerDelegateWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransferManager.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransfersWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransferManagerLoadingItem.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransferManagerDragBackDrop.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/InfoDialogTransfersWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/InfoDialogTransferDelegateWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/InfoDialogTransferLoadingItem.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransfersStatusWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransfersSummaryWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/SomeIssuesOccurredMessage.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransfersAccountInfoWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/MediaTypeFilterWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/linux/DuplicatedNodeDialog.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/linux/DuplicatedNodeItem.ui
 )
 
 if (WIN32)
-    set_property(TARGET MEGAsync
+    set_property(TARGET ${ExecutableTarget}
         APPEND PROPERTY AUTOUIC_SEARCH_PATHS
-        transfers/gui/win
-        transfers/gui/DuplicatedNodeDialogs/win
-        transfers/gui/ui
+        ${CMAKE_CURRENT_LIST_DIR}/gui/win
+        ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/win
+        ${CMAKE_CURRENT_LIST_DIR}/gui/ui
     )
 elseif (APPLE)
-    set_property(TARGET MEGAsync
+    set_property(TARGET ${ExecutableTarget}
         APPEND PROPERTY AUTOUIC_SEARCH_PATHS
-        transfers/gui/macx
-        transfers/gui/DuplicatedNodeDialogs/macx
-        transfers/gui/ui
+        ${CMAKE_CURRENT_LIST_DIR}/gui/macx
+        ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/macx
+        ${CMAKE_CURRENT_LIST_DIR}/gui/ui
     )
 else()
-    set_property(TARGET MEGAsync
+    set_property(TARGET ${ExecutableTarget}
         APPEND PROPERTY AUTOUIC_SEARCH_PATHS
-        transfers/gui/linux
-        transfers/gui/DuplicatedNodeDialogs/linux
-        transfers/gui/ui
+        ${CMAKE_CURRENT_LIST_DIR}/gui/linux
+        ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/linux
+        ${CMAKE_CURRENT_LIST_DIR}/gui/ui
     )
 endif()
 
@@ -156,7 +156,7 @@ set (DESKTOP_APP_TRANSFERS_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransferManagerStatusHeaderWidget.ui
 )
 
-target_sources(MEGAsync
+target_sources(${ExecutableTarget}
     PRIVATE
     ${DESKTOP_APP_TRANSFERS_HEADERS}
     ${DESKTOP_APP_TRANSFERS_SOURCES}
@@ -171,5 +171,5 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs
 )
 
-target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})
+target_include_directories(${ExecutableTarget} PRIVATE ${INCLUDE_DIRECTORIES})
 

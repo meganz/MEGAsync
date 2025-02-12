@@ -1,471 +1,492 @@
 set(DESKTOP_APP_GUI_HEADERS
-    gui/SettingsDialog.h
-    gui/AutoResizeStackedWidget.h
-    gui/BalloonToolTip.h
-    gui/BlurredShadowEffect.h
-    gui/ButtonIconManager.h
-    gui/DateTimeFormatter.h
-    gui/LowDiskSpaceDialog.h
-    gui/EventHelper.h
-    gui/InfoDialog.h
-    gui/MegaDelegateHoverManager.h
-    gui/MegaNodeNames.h
-    gui/NotificationsSettings.h
-    gui/OverQuotaDialog.h
-    gui/ScanningWidget.h
-    gui/QtPositioningBugFixer.h
-    gui/PasswordLineEdit.h
-    gui/UploadToMegaDialog.h
-    gui/PasteMegaLinksDialog.h
-    gui/ImportMegaLinksDialog.h
-    gui/ImportListWidgetItem.h
-    gui/CrashReportDialog.h
-    gui/MultiQFileDialog.h
-    gui/MegaProxyStyle.h
-    gui/AccountDetailsDialog.h
-    gui/DownloadFromMegaDialog.h
-    gui/ChangeLogDialog.h
-    gui/StreamingFromMegaDialog.h
-    gui/MegaProgressCustomDialog.h
-    gui/PlanWidget.h
-    gui/QMegaMessageBox.h
-    gui/AvatarWidget.h
-    gui/MenuItemAction.h
-    gui/StatusInfo.h
-    gui/PSAwidget.h
-    gui/ElidedLabel.h
-    gui/ChangePassword.h
-    gui/Login2FA.h
-    gui/QRWidget.h
-    gui/CircularUsageProgressBar.h
-    gui/HighDpiResize.h
-    gui/BugReportDialog.h
-    gui/ProgressIndicatorDialog.h
-    gui/VerifyLockMessage.h
-    gui/ViewLoadingScene.h
-    gui/MegaInfoMessage.h
-    gui/WaitingSpinnerWidget.h
-    gui/ProxySettings.h
-    gui/BandwidthSettings.h
-    gui/SwitchButton.h
-    gui/GuiUtilities.h
-    gui/CancelConfirmWidget.h
-    gui/RemoteItemUi.h
-    gui/WordWrapLabel.h
-    gui/ThemeManager.h
-    gui/AccountTypeWidget.h
-    gui/BannerWidget.h
-    gui/ApiImageLabel.h
-    gui/NodeNameSetterDialog/NodeNameSetterDialog.h
-    gui/NodeNameSetterDialog/NewFolderDialog.h
-    gui/NodeNameSetterDialog/RenameNodeDialog.h
-    gui/node_selector/model/NodeSelectorDelegates.h
-    gui/node_selector/model/NodeSelectorProxyModel.h
-    gui/node_selector/model/NodeSelectorModel.h
-    gui/node_selector/model/NodeSelectorModelSpecialised.h
-    gui/node_selector/model/NodeSelectorModelItem.h
-    gui/node_selector/gui/NodeSelectorTreeView.h
-    gui/node_selector/gui/NodeSelectorTreeViewWidget.h
-    gui/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h
-    gui/node_selector/gui/NodeSelector.h
-    gui/node_selector/gui/NodeSelectorLoadingDelegate.h
-    gui/node_selector/gui/SearchLineEdit.h
-    gui/node_selector/gui/NodeSelectorSpecializations.h
-    gui/qml/QmlClipboard.h
-    gui/qml/QmlDialog.h
-    gui/qml/QmlDialogWrapper.h
-    gui/qml/QmlWidgetWrapper.h
-    gui/qml/QmlInstancesManager.h
-    gui/qml/QmlItem.h
-    gui/qml/QmlDialogManager.h
-    gui/qml/QmlManager.h
-    gui/qml/QmlTheme.h
-    gui/qml/ApiEnums.h
-    gui/qml/StandardIconProvider.h
-    gui/qml/ChooseFolder.h
-    gui/qml/ChooseFile.h
-    gui/qml/QmlDeviceName.h
-    gui/qml/AccountInfoData.h
-    gui/qml/WhatsNewWindow.h
-    gui/qml/UpdatesList.h
-    gui/qml/WhatsNewController.h
-    gui/qml/UpdatesModel.h
-    gui/qml/QmlUtils.h
-    gui/onboarding/Onboarding.h
-    gui/onboarding/PasswordStrengthChecker.h
-    gui/onboarding/GuestQmlDialog.h
-    gui/onboarding/OnboardingQmlDialog.h
-    gui/onboarding/GuestContent.h
-    gui/SyncExclusions/ExclusionRulesModel.h
-    gui/SyncExclusions/SyncExclusions.h
-    gui/tokenizer/TokenParserWidgetManager.h
-    gui/tokenizer/IconTokenizer.h
-    gui/backups/BackupCandidatesComponent.h
-    gui/backups/BackupsController.h
-    gui/backups/BackupCandidatesModel.h
-    gui/backups/BackupCandidatesController.h
-    gui/backups/BackupCandidates.h
-    gui/backups/BackupCandidatesFolderSizeRequester.h
-    gui/SyncExclusions/AddExclusionRule.h
-    gui/syncs/SyncsComponent.h
-    gui/syncs/SyncsQmlDialog.h
-    gui/syncs/Syncs.h
-    gui/surveys/SurveyWidget.h
-    gui/surveys/SurveyComponent.h
-    gui/surveys/Surveys.h
-    gui/surveys/SurveyController.h
-    gui/upsell/UpsellComponent.h
-    gui/upsell/UpsellController.h
-    gui/upsell/UpsellModel.h
-    gui/upsell/UpsellPlans.h
-    gui/user_messages/UserMessageCacheManager.h
-    gui/user_messages/AlertFilterType.h
-    gui/user_messages/AlertItem.h
-    gui/user_messages/FilterAlertWidget.h
-    gui/user_messages/NotificationItem.h
-    gui/user_messages/UserAlert.h
-    gui/user_messages/UserMessage.h
-    gui/user_messages/UserMessageDelegate.h
-    gui/user_messages/UserMessageModel.h
-    gui/user_messages/UserMessageProxyModel.h
-    gui/user_messages/UserNotification.h
-    gui/user_messages/UserMessageWidget.h
-    gui/user_messages/NotificationExpirationTimer.h
-    gui/DeviceCentre/DeviceCentre.h
-    gui/DeviceCentre/DeviceModel.h
-    gui/DeviceCentre/DeviceData.h
-    gui/DeviceCentre/SyncModel.h
-    gui/DeviceCentre/QmlSyncData.h
-    gui/DeviceCentre/SyncStatus.h
+    ${CMAKE_CURRENT_LIST_DIR}/SettingsDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/AutoResizeStackedWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/BalloonToolTip.h
+    ${CMAKE_CURRENT_LIST_DIR}/BlurredShadowEffect.h
+    ${CMAKE_CURRENT_LIST_DIR}/ButtonIconManager.h
+    ${CMAKE_CURRENT_LIST_DIR}/DateTimeFormatter.h
+    ${CMAKE_CURRENT_LIST_DIR}/LowDiskSpaceDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/EventHelper.h
+    ${CMAKE_CURRENT_LIST_DIR}/InfoDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/MegaDelegateHoverManager.h
+    ${CMAKE_CURRENT_LIST_DIR}/MegaNodeNames.h
+    ${CMAKE_CURRENT_LIST_DIR}/NotificationsSettings.h
+    ${CMAKE_CURRENT_LIST_DIR}/OverQuotaDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/ScanningWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/QtPositioningBugFixer.h
+    ${CMAKE_CURRENT_LIST_DIR}/PasswordLineEdit.h
+    ${CMAKE_CURRENT_LIST_DIR}/UploadToMegaDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/PasteMegaLinksDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/ImportMegaLinksDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/ImportListWidgetItem.h
+    ${CMAKE_CURRENT_LIST_DIR}/CrashReportDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/MultiQFileDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/MegaProxyStyle.h
+    ${CMAKE_CURRENT_LIST_DIR}/AccountDetailsDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/DownloadFromMegaDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/ChangeLogDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/StreamingFromMegaDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/MegaProgressCustomDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/PlanWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/QMegaMessageBox.h
+    ${CMAKE_CURRENT_LIST_DIR}/AvatarWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/MenuItemAction.h
+    ${CMAKE_CURRENT_LIST_DIR}/StatusInfo.h
+    ${CMAKE_CURRENT_LIST_DIR}/PSAwidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/ElidedLabel.h
+    ${CMAKE_CURRENT_LIST_DIR}/ChangePassword.h
+    ${CMAKE_CURRENT_LIST_DIR}/Login2FA.h
+    ${CMAKE_CURRENT_LIST_DIR}/QRWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/CircularUsageProgressBar.h
+    ${CMAKE_CURRENT_LIST_DIR}/HighDpiResize.h
+    ${CMAKE_CURRENT_LIST_DIR}/BugReportDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/ProgressIndicatorDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/VerifyLockMessage.h
+    ${CMAKE_CURRENT_LIST_DIR}/ViewLoadingScene.h
+    ${CMAKE_CURRENT_LIST_DIR}/MegaInfoMessage.h
+    ${CMAKE_CURRENT_LIST_DIR}/WaitingSpinnerWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/ProxySettings.h
+    ${CMAKE_CURRENT_LIST_DIR}/BandwidthSettings.h
+    ${CMAKE_CURRENT_LIST_DIR}/SwitchButton.h
+    ${CMAKE_CURRENT_LIST_DIR}/GuiUtilities.h
+    ${CMAKE_CURRENT_LIST_DIR}/CancelConfirmWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/RemoteItemUi.h
+    ${CMAKE_CURRENT_LIST_DIR}/WordWrapLabel.h
+    ${CMAKE_CURRENT_LIST_DIR}/ThemeManager.h
+    ${CMAKE_CURRENT_LIST_DIR}/AccountTypeWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/BannerWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/ApiImageLabel.h
+    ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NodeNameSetterDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NewFolderDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/RenameNodeDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorDelegates.h
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorProxyModel.h
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorModel.h
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorModelSpecialised.h
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorModelItem.h
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeView.h
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeViewWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelector.h
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorLoadingDelegate.h
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/SearchLineEdit.h
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorSpecializations.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlClipboard.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlDialogWrapper.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlWidgetWrapper.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlInstancesManager.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlItem.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlDialogManager.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlManager.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlTheme.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/ApiEnums.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/StandardIconProvider.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/ChooseFolder.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/ChooseFile.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlDeviceName.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/AccountInfoData.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/WhatsNewWindow.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/UpdatesList.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/WhatsNewController.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/UpdatesModel.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlUtils.h
+    ${CMAKE_CURRENT_LIST_DIR}/onboarding/Onboarding.h
+    ${CMAKE_CURRENT_LIST_DIR}/onboarding/PasswordStrengthChecker.h
+    ${CMAKE_CURRENT_LIST_DIR}/onboarding/GuestQmlDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/onboarding/OnboardingQmlDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/onboarding/GuestContent.h
+    ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions/ExclusionRulesModel.h
+    ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions/SyncExclusions.h
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenParserWidgetManager.h
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/IconTokenizer.h
+    ${CMAKE_CURRENT_LIST_DIR}/backups/BackupCandidatesComponent.h
+    ${CMAKE_CURRENT_LIST_DIR}/backups/BackupsController.h
+    ${CMAKE_CURRENT_LIST_DIR}/backups/BackupCandidatesModel.h
+    ${CMAKE_CURRENT_LIST_DIR}/backups/BackupCandidatesController.h
+    ${CMAKE_CURRENT_LIST_DIR}/backups/BackupCandidates.h
+    ${CMAKE_CURRENT_LIST_DIR}/backups/BackupCandidatesFolderSizeRequester.h
+    ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions/AddExclusionRule.h
+    ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsComponent.h
+    ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsQmlDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/syncs/Syncs.h
+    ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyComponent.h
+    ${CMAKE_CURRENT_LIST_DIR}/surveys/Surveys.h
+    ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyController.h
+    ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellComponent.h
+    ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellController.h
+    ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellModel.h
+    ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellPlans.h
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserMessageCacheManager.h
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/AlertFilterType.h
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/AlertItem.h
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/FilterAlertWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/NotificationItem.h
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserAlert.h
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserMessage.h
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserMessageDelegate.h
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserMessageModel.h
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserMessageProxyModel.h
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserNotification.h
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserMessageWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/NotificationExpirationTimer.h
+    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/DeviceCentre.h
+    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/DeviceModel.h
+    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/DeviceData.h
+    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/SyncModel.h
+    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/QmlSyncData.h
+    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/SyncStatus.h
 )
 
 set(DESKTOP_APP_GUI_SOURCES
-    gui/SettingsDialog.cpp
-    gui/BalloonToolTip.cpp
-    gui/BlurredShadowEffect.cpp
-    gui/ButtonIconManager.cpp
-    gui/LowDiskSpaceDialog.cpp
-    gui/DateTimeFormatter.cpp
-    gui/EventHelper.cpp
-    gui/InfoDialog.cpp
-    gui/MegaDelegateHoverManager.cpp
-    gui/OverQuotaDialog.cpp
-    gui/ScanningWidget.cpp
-    gui/NotificationsSettings.cpp
-    gui/QtPositioningBugFixer.cpp
-    gui/PasswordLineEdit.cpp
-    gui/UploadToMegaDialog.cpp
-    gui/PasteMegaLinksDialog.cpp
-    gui/ImportMegaLinksDialog.cpp
-    gui/ImportListWidgetItem.cpp
-    gui/CrashReportDialog.cpp
-    gui/MultiQFileDialog.cpp
-    gui/MegaProxyStyle.cpp
-    gui/AccountDetailsDialog.cpp
-    gui/DownloadFromMegaDialog.cpp
-    gui/ChangeLogDialog.cpp
-    gui/StreamingFromMegaDialog.cpp
-    gui/MegaProgressCustomDialog.cpp
-    gui/PlanWidget.cpp
-    gui/QMegaMessageBox.cpp
-    gui/AvatarWidget.cpp
-    gui/MenuItemAction.cpp
-    gui/StatusInfo.cpp
-    gui/ChangePassword.cpp
-    gui/PSAwidget.cpp
-    gui/ElidedLabel.cpp
-    gui/Login2FA.cpp
-    gui/QRWidget.cpp
-    gui/CircularUsageProgressBar.cpp
-    gui/BugReportDialog.cpp
-    gui/ProgressIndicatorDialog.cpp
-    gui/VerifyLockMessage.cpp
-    gui/MegaInfoMessage.cpp
-    gui/ViewLoadingScene.cpp
-    gui/WaitingSpinnerWidget.cpp
-    gui/ProxySettings.cpp
-    gui/BandwidthSettings.cpp
-    gui/SwitchButton.cpp
-    gui/GuiUtilities.cpp
-    gui/CancelConfirmWidget.cpp
-    gui/RemoteItemUi.cpp
-    gui/WordWrapLabel.cpp
-    gui/ThemeManager.cpp
-    gui/AccountTypeWidget.cpp
-    gui/BannerWidget.cpp
-    gui/ApiImageLabel.cpp
-    gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
-    gui/NodeNameSetterDialog/NewFolderDialog.cpp
-    gui/NodeNameSetterDialog/RenameNodeDialog.cpp
-    gui/node_selector/model/NodeSelectorDelegates.cpp
-    gui/node_selector/model/NodeSelectorProxyModel.cpp
-    gui/node_selector/model/NodeSelectorModel.cpp
-    gui/node_selector/model/NodeSelectorModelSpecialised.cpp
-    gui/node_selector/model/NodeSelectorModelItem.cpp
-    gui/node_selector/gui/NodeSelectorTreeView.cpp
-    gui/node_selector/gui/NodeSelectorTreeViewWidget.cpp
-    gui/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.cpp
-    gui/node_selector/gui/NodeSelector.cpp
-    gui/node_selector/gui/NodeSelectorLoadingDelegate.cpp
-    gui/node_selector/gui/SearchLineEdit.cpp
-    gui/node_selector/gui/NodeSelectorSpecializations.cpp
-    gui/qml/QmlClipboard.cpp
-    gui/qml/QmlDialog.cpp
-    gui/qml/QmlDialogWrapper.cpp
-    gui/qml/QmlWidgetWrapper.cpp
-    gui/qml/QmlInstancesManager.cpp
-    gui/qml/QmlItem.cpp
-    gui/qml/QmlDialogManager.cpp
-    gui/qml/QmlManager.cpp
-    gui/qml/QmlTheme.cpp
-    gui/qml/StandardIconProvider.cpp
-    gui/qml/ChooseFolder.cpp
-    gui/qml/ChooseFile.cpp
-    gui/qml/QmlDeviceName.cpp
-    gui/qml/AccountInfoData.cpp
-    gui/qml/WhatsNewWindow.cpp
-    gui/qml/WhatsNewController.cpp
-    gui/qml/UpdatesModel.cpp
-    gui/qml/QmlUtils.cpp
-    gui/onboarding/Onboarding.cpp
-    gui/onboarding/PasswordStrengthChecker.cpp
-    gui/onboarding/GuestQmlDialog.cpp
-    gui/onboarding/OnboardingQmlDialog.cpp
-    gui/onboarding/GuestContent.cpp
-    gui/SyncExclusions/ExclusionRulesModel.cpp
-    gui/SyncExclusions/SyncExclusions.cpp
-    gui/tokenizer/TokenParserWidgetManager.cpp
-    gui/tokenizer/IconTokenizer.cpp
-    gui/backups/BackupCandidatesComponent.cpp
-    gui/backups/BackupsController.cpp
-    gui/backups/BackupCandidatesModel.cpp
-    gui/backups/BackupCandidatesController.cpp
-    gui/backups/BackupCandidates.cpp
-    gui/backups/BackupCandidatesFolderSizeRequester.cpp
-    gui/SyncExclusions/AddExclusionRule.cpp
-    gui/syncs/SyncsComponent.cpp
-    gui/syncs/SyncsQmlDialog.cpp
-    gui/syncs/Syncs.cpp
-    gui/surveys/SurveyWidget.cpp
-    gui/surveys/SurveyComponent.cpp
-    gui/surveys/Surveys.cpp
-    gui/surveys/SurveyController.cpp
-    gui/upsell/UpsellComponent.cpp
-    gui/upsell/UpsellController.cpp
-    gui/upsell/UpsellModel.cpp
-    gui/upsell/UpsellPlans.cpp
-    gui/user_messages/UserMessageCacheManager.cpp
-    gui/user_messages/AlertFilterType.cpp
-    gui/user_messages/AlertItem.cpp
-    gui/user_messages/FilterAlertWidget.cpp
-    gui/user_messages/NotificationItem.cpp
-    gui/user_messages/UserAlert.cpp
-    gui/user_messages/UserMessageDelegate.cpp
-    gui/user_messages/UserMessageModel.cpp
-    gui/user_messages/UserMessageProxyModel.cpp
-    gui/user_messages/UserNotification.cpp
-    gui/user_messages/NotificationExpirationTimer.cpp
-    gui/DeviceCentre/DeviceCentre.cpp
-    gui/DeviceCentre/DeviceModel.cpp
-    gui/DeviceCentre/SyncModel.cpp
-    gui/DeviceCentre/QmlSyncData.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/SettingsDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/BalloonToolTip.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/BlurredShadowEffect.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ButtonIconManager.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/LowDiskSpaceDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/DateTimeFormatter.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/EventHelper.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/InfoDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MegaDelegateHoverManager.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/OverQuotaDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ScanningWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/NotificationsSettings.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/QtPositioningBugFixer.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/PasswordLineEdit.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/UploadToMegaDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/PasteMegaLinksDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ImportMegaLinksDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ImportListWidgetItem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/CrashReportDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MultiQFileDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MegaProxyStyle.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/AccountDetailsDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/DownloadFromMegaDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ChangeLogDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/StreamingFromMegaDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MegaProgressCustomDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/PlanWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/QMegaMessageBox.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/AvatarWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MenuItemAction.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/StatusInfo.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ChangePassword.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/PSAwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ElidedLabel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Login2FA.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/QRWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/CircularUsageProgressBar.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/BugReportDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ProgressIndicatorDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/VerifyLockMessage.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MegaInfoMessage.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ViewLoadingScene.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/WaitingSpinnerWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ProxySettings.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/BandwidthSettings.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/SwitchButton.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/GuiUtilities.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/CancelConfirmWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/RemoteItemUi.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/WordWrapLabel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ThemeManager.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/AccountTypeWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/BannerWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ApiImageLabel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NodeNameSetterDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NewFolderDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/RenameNodeDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorDelegates.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorProxyModel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorModel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorModelSpecialised.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorModelItem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeView.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeViewWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelector.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorLoadingDelegate.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/SearchLineEdit.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorSpecializations.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlClipboard.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlDialogWrapper.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlWidgetWrapper.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlInstancesManager.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlItem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlDialogManager.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlManager.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlTheme.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/StandardIconProvider.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/ChooseFolder.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/ChooseFile.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlDeviceName.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/AccountInfoData.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/WhatsNewWindow.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/WhatsNewController.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/UpdatesModel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/QmlUtils.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/onboarding/Onboarding.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/onboarding/PasswordStrengthChecker.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/onboarding/GuestQmlDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/onboarding/OnboardingQmlDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/onboarding/GuestContent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions/ExclusionRulesModel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions/SyncExclusions.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenParserWidgetManager.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/IconTokenizer.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/backups/BackupCandidatesComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/backups/BackupsController.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/backups/BackupCandidatesModel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/backups/BackupCandidatesController.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/backups/BackupCandidates.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/backups/BackupCandidatesFolderSizeRequester.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions/AddExclusionRule.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsQmlDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/syncs/Syncs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/surveys/Surveys.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyController.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellController.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellModel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellPlans.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserMessageCacheManager.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/AlertFilterType.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/AlertItem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/FilterAlertWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/NotificationItem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserAlert.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserMessageDelegate.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserMessageModel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserMessageProxyModel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserNotification.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages/NotificationExpirationTimer.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/DeviceCentre.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/DeviceModel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/SyncModel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/QmlSyncData.cpp
 )
 
 # UI files additions
-target_sources_conditional(MEGAsync
+target_sources_conditional(${ExecutableTarget}
     FLAG WIN32
     QT_AWARE
     PRIVATE
-    gui/Resources_win.qrc
-    gui/win/InfoDialog.ui
-    gui/win/UploadToMegaDialog.ui
-    gui/win/PasteMegaLinksDialog.ui
-    gui/win/ImportMegaLinksDialog.ui
-    gui/win/ImportListWidgetItem.ui
-    gui/win/CrashReportDialog.ui
-    gui/win/ChangeLogDialog.ui
-    gui/win/StreamingFromMegaDialog.ui
-    gui/win/MegaProgressCustomDialog.ui
-    gui/win/PlanWidget.ui
-    gui/win/StatusInfo.ui
-    gui/win/PSAwidget.ui
-    gui/win/Login2FA.ui
-    gui/win/AlertItem.ui
-    gui/win/FilterAlertWidget.ui
-    gui/win/AlertFilterType.ui
-    gui/win/LockedPopOver.ui
-    gui/win/VerifyLockMessage.ui
-    gui/win/MegaInfoMessage.ui
-    gui/win/OverQuotaDialog.ui
-    gui/win/ScanningWidget.ui
-    gui/win/CancelConfirmWidget.ui
-    gui/win/NodeNameSetterDialog.ui
-    gui/win/LowDiskSpaceDialog.ui
-    gui/win/ViewLoadingScene.ui
-    gui/win/NotificationItem.ui
-    gui/win/AccountTypeWidget.ui
-    gui/node_selector/gui/win/NodeSelectorTreeViewWidget.ui
-    gui/node_selector/gui/win/NodeSelectorLoadingDelegate.ui
-    gui/node_selector/gui/win/NodeSelector.ui
-    gui/node_selector/gui/win/SearchLineEdit.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/InfoDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/UploadToMegaDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/PasteMegaLinksDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/ImportMegaLinksDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/ImportListWidgetItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/CrashReportDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/ChangeLogDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/StreamingFromMegaDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/MegaProgressCustomDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/PlanWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/StatusInfo.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/PSAwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/Login2FA.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/AlertItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/FilterAlertWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/AlertFilterType.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/LockedPopOver.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/VerifyLockMessage.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/MegaInfoMessage.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/OverQuotaDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/ScanningWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/CancelConfirmWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/NodeNameSetterDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/LowDiskSpaceDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/ViewLoadingScene.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/NotificationItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/AccountTypeWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelectorTreeViewWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelectorLoadingDelegate.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelector.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/SearchLineEdit.ui
 )
 
-target_sources_conditional(MEGAsync
+target_sources_conditional(${ExecutableTarget}
    FLAG APPLE
    QT_AWARE
    PRIVATE
-   gui/Resources_macx.qrc
-   gui/macx/InfoDialog.ui
-   gui/macx/UploadToMegaDialog.ui
-   gui/macx/PasteMegaLinksDialog.ui
-   gui/macx/ImportMegaLinksDialog.ui
-   gui/macx/ImportListWidgetItem.ui
-   gui/macx/CrashReportDialog.ui
-   gui/macx/ChangeLogDialog.ui
-   gui/macx/StreamingFromMegaDialog.ui
-   gui/macx/MegaProgressCustomDialog.ui
-   gui/macx/PlanWidget.ui
-   gui/macx/StatusInfo.ui
-   gui/macx/PSAwidget.ui
-   gui/macx/Login2FA.ui
-   gui/macx/AlertItem.ui
-   gui/macx/FilterAlertWidget.ui
-   gui/macx/AlertFilterType.ui
-   gui/macx/VerifyLockMessage.ui
-   gui/macx/MegaInfoMessage.ui
-   gui/macx/OverQuotaDialog.ui
-   gui/macx/ScanningWidget.ui
-   gui/macx/CancelConfirmWidget.ui
-   gui/macx/NodeNameSetterDialog.ui
-   gui/macx/LowDiskSpaceDialog.ui
-   gui/macx/ViewLoadingScene.ui
-   gui/macx/NotificationItem.ui
-   gui/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui
-   gui/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui
-   gui/node_selector/gui/macx/NodeSelector.ui
-   gui/node_selector/gui/macx/SearchLineEdit.ui
-   gui/macx/LockedPopOver.ui
-   gui/macx/AccountTypeWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/InfoDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/UploadToMegaDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/PasteMegaLinksDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/ImportMegaLinksDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/ImportListWidgetItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/CrashReportDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/ChangeLogDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/StreamingFromMegaDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/MegaProgressCustomDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/PlanWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/StatusInfo.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/PSAwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/Login2FA.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/AlertItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/FilterAlertWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/AlertFilterType.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/VerifyLockMessage.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/MegaInfoMessage.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/OverQuotaDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/ScanningWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/CancelConfirmWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/NodeNameSetterDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/LowDiskSpaceDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/ViewLoadingScene.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/NotificationItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelector.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/SearchLineEdit.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/LockedPopOver.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/AccountTypeWidget.ui
 )
 
-target_sources_conditional(MEGAsync
+target_sources_conditional(${ExecutableTarget}
     FLAG UNIX AND NOT APPLE
     QT_AWARE
     PRIVATE
-    gui/Resources_linux.qrc
-    gui/linux/InfoDialog.ui
-    gui/linux/UploadToMegaDialog.ui
-    gui/linux/PasteMegaLinksDialog.ui
-    gui/linux/ImportMegaLinksDialog.ui
-    gui/linux/ImportListWidgetItem.ui
-    gui/linux/CrashReportDialog.ui
-    gui/linux/ChangeLogDialog.ui
-    gui/linux/StreamingFromMegaDialog.ui
-    gui/linux/MegaProgressCustomDialog.ui
-    gui/linux/PlanWidget.ui
-    gui/linux/StatusInfo.ui
-    gui/linux/PSAwidget.ui
-    gui/linux/Login2FA.ui
-    gui/linux/AlertItem.ui
-    gui/linux/FilterAlertWidget.ui
-    gui/linux/AlertFilterType.ui
-    gui/linux/LockedPopOver.ui
-    gui/linux/VerifyLockMessage.ui
-    gui/linux/MegaInfoMessage.ui
-    gui/linux/OverQuotaDialog.ui
-    gui/linux/CancelConfirmWidget.ui
-    gui/linux/ScanningWidget.ui
-    gui/linux/NodeNameSetterDialog.ui
-    gui/linux/LowDiskSpaceDialog.ui
-    gui/linux/ViewLoadingScene.ui
-    gui/linux/NotificationItem.ui
-    gui/linux/AccountTypeWidget.ui
-    gui/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui
-    gui/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui
-    gui/node_selector/gui/linux/NodeSelector.ui
-    gui/node_selector/gui/linux/SearchLineEdit.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/InfoDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/UploadToMegaDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/PasteMegaLinksDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/ImportMegaLinksDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/ImportListWidgetItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/CrashReportDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/ChangeLogDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/StreamingFromMegaDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/MegaProgressCustomDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/PlanWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/StatusInfo.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/PSAwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/Login2FA.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/AlertItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/FilterAlertWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/AlertFilterType.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/LockedPopOver.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/VerifyLockMessage.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/MegaInfoMessage.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/OverQuotaDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/CancelConfirmWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/ScanningWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/NodeNameSetterDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/LowDiskSpaceDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/ViewLoadingScene.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/NotificationItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/AccountTypeWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelector.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/SearchLineEdit.ui
 )
 
 # Resources and platform-specific additions
-target_sources_conditional(MEGAsync
+target_sources_conditional(${ExecutableTarget}
     FLAG NOT APPLE
     QT_AWARE
     PRIVATE
-    gui/LockedPopOver.h
-    gui/LockedPopOver.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/LockedPopOver.h
+    ${CMAKE_CURRENT_LIST_DIR}/LockedPopOver.cpp
 )
 
-target_sources_conditional(MEGAsync
+target_sources_conditional(${ExecutableTarget}
    FLAG APPLE
    QT_AWARE
    PRIVATE
-   gui/CocoaHelpButton.mm
-   gui/QMacSpinningProgressIndicator.mm
-   gui/QSegmentedControl.mm
-   gui/QMacSpinningProgressIndicator.h
-   gui/CocoaHelpButton.h
-   gui/QSegmentedControl.h
-   gui/macx/LockedPopOver.ui
+   ${CMAKE_CURRENT_LIST_DIR}/CocoaHelpButton.mm
+   ${CMAKE_CURRENT_LIST_DIR}/QMacSpinningProgressIndicator.mm
+   ${CMAKE_CURRENT_LIST_DIR}/QSegmentedControl.mm
+   ${CMAKE_CURRENT_LIST_DIR}/QMacSpinningProgressIndicator.h
+   ${CMAKE_CURRENT_LIST_DIR}/CocoaHelpButton.h
+   ${CMAKE_CURRENT_LIST_DIR}/QSegmentedControl.h
+   ${CMAKE_CURRENT_LIST_DIR}/macx/LockedPopOver.ui
 )
 
-target_sources_conditional(MEGAsync
+target_sources_conditional(${ExecutableTarget}
    FLAG UNIX
    QT_AWARE
    PRIVATE
-   gui/PermissionsDialog.cpp
-   gui/PermissionsWidget.cpp
-   gui/PermissionsDialog.h
-   gui/PermissionsWidget.h
+   ${CMAKE_CURRENT_LIST_DIR}/PermissionsDialog.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/PermissionsWidget.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/PermissionsDialog.h
+   ${CMAKE_CURRENT_LIST_DIR}/PermissionsWidget.h
 )
 
 
 # Not using expression generator due to autouic not able to resolve them causing errors
 if (WIN32)
-    set_property(TARGET MEGAsync
+    set_property(TARGET ${ExecutableTarget}
         PROPERTY AUTOUIC_SEARCH_PATHS
-        gui/win gui/node_selector/gui/win gui/ui
+        ${CMAKE_CURRENT_LIST_DIR}/win ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win ${CMAKE_CURRENT_LIST_DIR}/ui
     )
 elseif (APPLE)
-    set_property(TARGET MEGAsync
+    set_property(TARGET ${ExecutableTarget}
         PROPERTY AUTOUIC_SEARCH_PATHS
-        gui/macx gui/node_selector/gui/macx gui/ui
+        ${CMAKE_CURRENT_LIST_DIR}/macx ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx ${CMAKE_CURRENT_LIST_DIR}/ui
     )
     elseif(UNIX)
-        set_property(TARGET MEGAsync
+        set_property(TARGET ${ExecutableTarget}
             PROPERTY AUTOUIC_SEARCH_PATHS
-            gui/linux gui/node_selector/gui/linux gui/ui
+            ${CMAKE_CURRENT_LIST_DIR}/linux ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux ${CMAKE_CURRENT_LIST_DIR}/ui
         )
 endif()
 
 
 set (DESKTOP_APP_TS_FILES
-    gui/translations/MEGASyncStrings_ar.ts
-    gui/translations/MEGASyncStrings_de.ts
-    gui/translations/MEGASyncStrings_en.ts
-    gui/translations/MEGASyncStrings_es.ts
-    gui/translations/MEGASyncStrings_fr.ts
-    gui/translations/MEGASyncStrings_id.ts
-    gui/translations/MEGASyncStrings_it.ts
-    gui/translations/MEGASyncStrings_ja.ts
-    gui/translations/MEGASyncStrings_ko.ts
-    gui/translations/MEGASyncStrings_nl.ts
-    gui/translations/MEGASyncStrings_pl.ts
-    gui/translations/MEGASyncStrings_pt.ts
-    gui/translations/MEGASyncStrings_ro.ts
-    gui/translations/MEGASyncStrings_ru.ts
-    gui/translations/MEGASyncStrings_th.ts
-    gui/translations/MEGASyncStrings_vi.ts
-    gui/translations/MEGASyncStrings_zh_CN.ts
-    gui/translations/MEGASyncStrings_zh_TW.ts
+    ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_ar.ts
+    ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_de.ts
+    ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_en.ts
+    ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_es.ts
+    ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_fr.ts
+    ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_id.ts
+    ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_it.ts
+    ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_ja.ts
+    ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_ko.ts
+    ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_nl.ts
+    ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_pl.ts
+    ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_pt.ts
+    ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_ro.ts
+    ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_ru.ts
+    ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_th.ts
+    ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_vi.ts
+    ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_zh_CN.ts
+    ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_zh_TW.ts
 )
 
 set_source_files_properties(${DESKTOP_APP_TS_FILES} PROPERTIES OUTPUT_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/gui/translations)
-qt5_add_translation(DESKTOP_APP_QM_FILES ${DESKTOP_APP_TS_FILES})
+
+if (NOT DontUseResources)
+    target_sources_conditional(${ExecutableTarget}
+        FLAG WIN32
+        QT_AWARE
+        PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/Resources_win.qrc
+    )
+
+    target_sources_conditional(${ExecutableTarget}
+       FLAG APPLE
+       QT_AWARE
+       PRIVATE
+       ${CMAKE_CURRENT_LIST_DIR}/Resources_macx.qrc
+    )
+
+    target_sources_conditional(${ExecutableTarget}
+        FLAG UNIX AND NOT APPLE
+        QT_AWARE
+        PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/Resources_linux.qrc
+    )
+
+    qt5_add_translation(DESKTOP_APP_QM_FILES ${DESKTOP_APP_TS_FILES})
+endif()
 
 set(DESKTOP_APP_GUI_RESOURCES
-    gui/Resources.qrc
-    gui/Resources_qml.qrc
-    gui/qml/qml.qrc
+    ${CMAKE_CURRENT_LIST_DIR}/Resources.qrc
+    ${CMAKE_CURRENT_LIST_DIR}/Resources_qml.qrc
+    ${CMAKE_CURRENT_LIST_DIR}/qml/qml.qrc
 )
 
 list(APPEND QML_IMPORT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/gui/qml)
@@ -505,15 +526,21 @@ set (DESKTOP_APP_GUI_UI_FILES_ROOT
 list(JOIN DESKTOP_APP_GUI_UI_FILES "|" DESKTOP_APP_GUI_UI_FILES_TEMP )
 list(JOIN DESKTOP_APP_GUI_UI_FILES_ROOT "|" DESKTOP_APP_GUI_UI_FILES_ROOT_TEMP )
 
-target_compile_definitions(MEGAsync PRIVATE "DESKTOP_APP_GUI_UI_FILES=\"${DESKTOP_APP_GUI_UI_FILES_TEMP}\"")
-target_compile_definitions(MEGAsync PRIVATE "DESKTOP_APP_GUI_UI_FILES_ROOT=\"${DESKTOP_APP_GUI_UI_FILES_ROOT_TEMP}\"")
+target_compile_definitions(${ExecutableTarget} PRIVATE "DESKTOP_APP_GUI_UI_FILES=\"${DESKTOP_APP_GUI_UI_FILES_TEMP}\"")
+target_compile_definitions(${ExecutableTarget} PRIVATE "DESKTOP_APP_GUI_UI_FILES_ROOT=\"${DESKTOP_APP_GUI_UI_FILES_ROOT_TEMP}\"")
 
-target_sources(MEGAsync
+target_sources_conditional(${ExecutableTarget}
+   FLAG NOT DontUseResources
+   QT_AWARE
+   PRIVATE
+   ${DESKTOP_APP_GUI_RESOURCES}
+   ${DESKTOP_APP_QM_FILES}
+)
+
+target_sources(${ExecutableTarget}
     PRIVATE
     ${DESKTOP_APP_GUI_HEADERS}
     ${DESKTOP_APP_GUI_SOURCES}
-    ${DESKTOP_APP_GUI_RESOURCES}
-    ${DESKTOP_APP_QM_FILES}
     ${DESKTOP_APP_GUI_UI_FILES}
 )
 
@@ -535,7 +562,7 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer
 )
-target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})
+target_include_directories(${ExecutableTarget} PRIVATE ${INCLUDE_DIRECTORIES})
 
 if (UNIX AND NOT APPLE)
 

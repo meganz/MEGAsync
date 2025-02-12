@@ -325,17 +325,22 @@ bool CrashHandlerPrivate::bReportCrashesToSystem = true;
 /* DumpCallback                                                         */
 /************************************************************************/
 #if defined(Q_OS_WIN32)
-bool DumpCallback(const wchar_t* _dump_dir,const wchar_t* _minidump_id,void* context,EXCEPTION_POINTERS* exinfo,MDRawAssertionInfo* assertion,bool success)
+bool DumpCallback(const wchar_t* dump_dir,
+                  const wchar_t* minidump_id,
+                  void* context,
+                  EXCEPTION_POINTERS* exinfo,
+                  MDRawAssertionInfo* assertion,
+                  bool success)
 #elif defined(Q_OS_LINUX)
-bool DumpCallback(const google_breakpad::MinidumpDescriptor &,void *context, bool success)
+bool DumpCallback(const google_breakpad::MinidumpDescriptor&, void* context, bool success)
 #elif defined(Q_OS_MAC)
-bool DumpCallback(const char* _dump_dir,const char* _minidump_id,void *context, bool success)
+bool DumpCallback(const char* dump_dir, const char* minidump_id, void* context, bool success)
 #endif
 {
     Q_UNUSED(context);
 #if defined(Q_OS_WIN32)
-    Q_UNUSED(_dump_dir);
-    Q_UNUSED(_minidump_id);
+    Q_UNUSED(dump_dir);
+    Q_UNUSED(minidump_id);
     Q_UNUSED(assertion);
     Q_UNUSED(exinfo);
 #endif
@@ -615,7 +620,7 @@ void CrashHandler::discardPendingCrashReports()
     deletePendingCrashReports();
 }
 
-void CrashHandler::onPostFinished(QNetworkReply *reply)
+void CrashHandler::onPostFinished(QNetworkReply* reply)
 {
     reply->deleteLater();
     crashPostTimer.stop();
@@ -626,7 +631,8 @@ void CrashHandler::onPostFinished(QNetworkReply *reply)
     }
     loop.exit();
     QVariant statusCode = reply->attribute( QNetworkRequest::HttpStatusCodeAttribute );
-    if (!statusCode.isValid() || (statusCode.toInt() != 200) || (reply->error() != QNetworkReply::NoError))
+    if (!statusCode.isValid() || (statusCode.toInt() != 200) ||
+        (reply->error() != QNetworkReply::NoError))
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error sending crash reports");
         return;
