@@ -32,7 +32,7 @@ SyncsQmlDialog {
             id: stepPanelItem
 
             width: parent.width
-            step1String: SyncsStrings.selectiveSync
+            step1String: SyncsStrings.selectFolders
             step2String: SyncsStrings.confirm
             helpUrl: Links.setUpSyncs
         }

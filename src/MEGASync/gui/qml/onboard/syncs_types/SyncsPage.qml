@@ -30,7 +30,7 @@ SyncsFlow {
                 PropertyChanges {
                     target: root.stepPanelRef;
                     state: root.stepPanelRef.step4;
-                    step3Text: SyncsStrings.selectiveSync;
+                    step3Text: SyncsStrings.selectFolders;
                     step4Text: OnboardingStrings.confirm;
                 }
             }

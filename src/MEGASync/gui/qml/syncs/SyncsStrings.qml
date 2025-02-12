@@ -12,7 +12,7 @@ QtObject {
     readonly property string selectMEGAFolder: qsTranslate("OnboardingStrings", "Select a MEGA folder")
     readonly property string selectiveSyncDescription: qsTr("Sync folders in your local device with MEGA.")
     readonly property string selectiveSyncTitle: qsTr("Select folders to sync")
-    readonly property string selectiveSync: qsTr("Sync: Select folders")
+    readonly property string selectFolders: qsTr("Sync: Select folders")
     readonly property string sync: qsTranslate("OnboardingStrings", "Sync")
     readonly property string syncsWindowTitle: qsTr("Add sync")
     readonly property string confirm: qsTranslate("OnboardingString", "Confirm");
