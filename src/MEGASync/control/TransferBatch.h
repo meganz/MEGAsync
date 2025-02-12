@@ -13,11 +13,11 @@ class TransferBatch
 {
 public:
     TransferBatch(unsigned long long appDataId);
-    ~TransferBatch() = default;
+    virtual ~TransferBatch() = default;
 
     bool isEmpty();
 
-    void cancel();
+    virtual void cancel();
 
     void onScanCompleted(unsigned long long appDataId);
 

@@ -75,7 +75,7 @@
 #endif
 
 #ifndef WIN32
-//sleep
+// sleep
 #include <unistd.h>
 #else
 #include <Windows.h>
@@ -606,33 +606,49 @@ void MegaApplication::initialize()
         QStringList reports = CrashHandler::instance()->getPendingCrashReports();
         if (reports.size())
         {
-            QPointer<CrashReportDialog> crashDialog = new CrashReportDialog(reports.join(QString::fromUtf8("------------------------------\n")));
+            QPointer<CrashReportDialog> crashDialog = new CrashReportDialog(
+                reports.join(QString::fromUtf8("------------------------------\n")));
             if (crashDialog->exec() == QDialog::Accepted)
             {
                 applyProxySettings();
                 CrashHandler::instance()->sendPendingCrashReports(crashDialog->getUserMessage());
                 if (crashDialog->sendLogs())
                 {
-                    auto timestampString = reports[0].mid(reports[0].indexOf(QString::fromUtf8("Timestamp: "))+11,20);
-                    timestampString = timestampString.left(timestampString.indexOf(QString::fromUtf8("\n")));
-                    QDateTime crashTimestamp = QDateTime::fromMSecsSinceEpoch(timestampString.toLongLong());
+                    auto timestampString =
+                        reports[0].mid(reports[0].indexOf(QString::fromUtf8("Timestamp: ")) + 11,
+                                       20);
+                    timestampString =
+                        timestampString.left(timestampString.indexOf(QString::fromUtf8("\n")));
+                    QDateTime crashTimestamp =
+                        QDateTime::fromMSecsSinceEpoch(timestampString.toLongLong());
 
                     if (crashTimestamp != QDateTime::fromMSecsSinceEpoch(0))
                     {
-                        crashTimestamp = crashTimestamp.addSecs(-300); //to gather some logging before the crash
+                        // to gather some logging before the crash
+                        crashTimestamp = crashTimestamp.addSecs(-300);
                     }
 
-                    connect(logger.get(), &MegaSyncLogger::logReadyForReporting, context, [this, crashTimestamp]()
-                    {
-                        crashReportFilePath = Utilities::joinLogZipFiles(megaApi, &crashTimestamp, CrashHandler::instance()->getLastCrashHash());
-                        if (!crashReportFilePath.isNull()
-                                && megaApi && megaApi->isLoggedIn())
-                        {
-                            megaApi->startUploadForSupport(QDir::toNativeSeparators(crashReportFilePath).toUtf8().constData(), false);
-                            crashReportFilePath.clear();
-                        }
-                        context->deleteLater();
-                    });
+                    connect(logger.get(),
+                            &MegaSyncLogger::logReadyForReporting,
+                            context,
+                            [this, crashTimestamp]()
+                            {
+                                crashReportFilePath = Utilities::joinLogZipFiles(
+                                    megaApi,
+                                    &crashTimestamp,
+                                    CrashHandler::instance()->getLastCrashHash());
+                                if (!crashReportFilePath.isNull() && megaApi &&
+                                    megaApi->isLoggedIn())
+                                {
+                                    megaApi->startUploadForSupport(
+                                        QDir::toNativeSeparators(crashReportFilePath)
+                                            .toUtf8()
+                                            .constData(),
+                                        false);
+                                    crashReportFilePath.clear();
+                                }
+                                context->deleteLater();
+                            });
 
                     logger->prepareForReporting();
                 }
