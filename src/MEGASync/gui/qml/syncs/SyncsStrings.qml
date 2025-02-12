@@ -15,7 +15,7 @@ QtObject {
     readonly property string selectFolders: qsTr("Sync: Select folders")
     readonly property string sync: qsTranslate("OnboardingStrings", "Sync")
     readonly property string syncsWindowTitle: qsTr("Add sync")
-    readonly property string confirm: qsTranslate("OnboardingString", "Confirm");
-    readonly property string syncSetUp: qsTranslate("OnboardingString", "Sync set up");
+    readonly property string confirm: qsTranslate("OnboardingStrings", "Confirm");
+    readonly property string syncSetUp: qsTranslate("OnboardingStrings", "Sync set up");
 
 }
