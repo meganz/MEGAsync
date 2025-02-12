@@ -10,10 +10,8 @@
 
 namespace
 {
-constexpr qint64 TIME_TO_FIRST_REMINDER_MS = 1000 * 60 * 60 * 2; // 2 hours
-constexpr qint64 TWO_HOURS_S = TIME_TO_FIRST_REMINDER_MS / 1000; // 2 hours in seconds
+constexpr qint64 TWO_HOURS_S = 60 * 60 * 2;
 constexpr qint64 SECS_PER_DAY = 60 * 60 * 24;
-constexpr qint64 SECS_TO_FIRST_REMINDER = 2 * 60 * 60; // 2 hours in seconds
 constexpr qint64 DAYS_TO_SECOND_REMINDER = 10;
 constexpr qint64 DAYS_TO_MONTHLY_REMINDER = 30;
 constexpr qint64 DAYS_TO_BIMONTHLY_REMINDER = 60;
@@ -253,7 +251,7 @@ bool SyncReminderNotificationManager::updateState()
 bool SyncReminderNotificationManager::isNeededToChangeFirstState() const
 {
     qint64 secsCount(getSecsFromLastReminder());
-    return secsCount >= SECS_TO_FIRST_REMINDER;
+    return secsCount >= TWO_HOURS_S;
 }
 
 bool SyncReminderNotificationManager::isNeededToChangeState(qint64 daysToNextReminder) const
@@ -327,22 +325,22 @@ int SyncReminderNotificationManager::calculateMsecsToCurrentState() const
     }
     else
     {
-        auto remainingDays(0);
+        auto days(0);
         switch (mState.value())
         {
             case ReminderState::SECOND_REMINDER:
             {
-                remainingDays = DAYS_TO_SECOND_REMINDER;
+                days = DAYS_TO_SECOND_REMINDER;
                 break;
             }
             case ReminderState::MONTHLY:
             {
-                remainingDays = DAYS_TO_MONTHLY_REMINDER;
+                days = DAYS_TO_MONTHLY_REMINDER;
                 break;
             }
             case ReminderState::BIMONTHLY:
             {
-                remainingDays = DAYS_TO_BIMONTHLY_REMINDER;
+                days = DAYS_TO_BIMONTHLY_REMINDER;
                 break;
             }
             default:
@@ -352,8 +350,7 @@ int SyncReminderNotificationManager::calculateMsecsToCurrentState() const
         }
 
         // Calculate the time to the next reminder.
-        auto daysToCurrentTime(getMonthlyTimerCheck(lastTime, currentTime, remainingDays));
-        nextReminderTime = lastTime.addDays(daysToCurrentTime);
+        nextReminderTime = lastTime.addDays(getMonthlyTimerCheck(lastTime, currentTime, days));
     }
 
     return static_cast<int>(currentTime.msecsTo(nextReminderTime));
@@ -393,12 +390,12 @@ void SyncReminderNotificationManager::moveToDoneState()
 
 qint64 SyncReminderNotificationManager::getCurrentTimeSecs() const
 {
-    return QDateTime::currentDateTime().toSecsSinceEpoch() + mTimeTestInfo.mDelay;
+    return QDateTime::currentDateTime().toSecsSinceEpoch() + mTimeTestInfo.mOffset;
 }
 
 void SyncReminderNotificationManager::loadEnvVariables()
 {
-    mTimeTestInfo.mDelay =
+    mTimeTestInfo.mOffset =
         loadEnvVariable(ENV_MEGA_REMINDER_OFFSET_SECS, ENV_MEGA_REMINDER_OFFSET_SECS_DEFAULT_VALUE);
     mTimeTestInfo.mSyncCreationMaxInterval =
         loadEnvVariable(ENV_MEGA_SYNC_CREATION_MAX_INTERVAL_SECS,
@@ -421,21 +418,19 @@ SyncReminderNotificationManager::ReminderState
 
 qint64 SyncReminderNotificationManager::getMonthlyTimerCheck(const QDateTime& lastTime,
                                                              const QDateTime& currentTime,
-                                                             qint64 remainingDays) const
+                                                             qint64 days) const
 {
     // Calculate days elapsed since last check until current time.
     auto daysSinceLastCheck(lastTime.daysTo(currentTime));
 
     // Adjust waiting time based on elapsed period.
-    if (daysSinceLastCheck < remainingDays)
+    if (daysSinceLastCheck < days)
     {
-        // If insufficient time has passed, increment to complete period.
         daysSinceLastCheck++;
     }
     else
     {
-        // If required time has passed, reset to base remaining days value.
-        daysSinceLastCheck = remainingDays;
+        daysSinceLastCheck = days;
     }
 
     return daysSinceLastCheck;

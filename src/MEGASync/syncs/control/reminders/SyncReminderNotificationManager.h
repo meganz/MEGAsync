@@ -40,7 +40,7 @@ signals:
 private:
     struct TimeTestInfo
     {
-        qint64 mDelay;
+        qint64 mOffset;
         qint64 mSyncCreationMaxInterval;
     };
 
