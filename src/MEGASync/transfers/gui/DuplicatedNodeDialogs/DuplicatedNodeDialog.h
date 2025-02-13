@@ -31,6 +31,9 @@ public:
     void setConflicts(std::shared_ptr<ConflictTypes> newConflicts);
     std::shared_ptr<ConflictTypes> conflicts() const;
 
+    static bool ignoreConflictType(NodeItemType ignoreConflictType);
+    static void addIgnoreConflictTypes(NodeItemType ignoreConflictType);
+
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
     bool event(QEvent *event) override;
@@ -57,6 +60,8 @@ private:
     QList<std::shared_ptr<DuplicatedNodeInfo>> mConflictsBeingProcessed;
     DuplicatedUploadBase* mChecker;
     std::shared_ptr<ConflictTypes>  mConflicts;
+
+    static QSet<int> mIgnoreConflictTypes;
 
     bool mApplyToAll;
 

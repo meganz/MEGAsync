@@ -1,5 +1,6 @@
 #include "NodeSelectorModelSpecialised.h"
 
+#include "DuplicatedNodeDialog.h"
 #include "MegaApplication.h"
 #include "MyBackupsHandle.h"
 #include "Utilities.h"
@@ -93,6 +94,17 @@ void NodeSelectorModelIncomingShares::onItemInfoUpdated(int role)
                 }
             }
         }
+    }
+}
+
+void NodeSelectorModelIncomingShares::ignoreDuplicatedNodeOptions(
+    std::shared_ptr<mega::MegaNode> targetNode)
+{
+    auto access = Utilities::getNodeAccess(targetNode.get());
+    if (access < mega::MegaShare::ACCESS_FULL)
+    {
+        // It will be clear as soon as the dialog is closed
+        DuplicatedNodeDialog::addIgnoreConflictTypes(NodeItemType::FILE_UPLOAD_AND_REPLACE);
     }
 }
 

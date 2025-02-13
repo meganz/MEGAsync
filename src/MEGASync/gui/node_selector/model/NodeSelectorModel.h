@@ -379,6 +379,8 @@ protected:
     virtual void loadLevelFinished();
     bool continueWithNextItemToLoad(const QModelIndex& parentIndex);
 
+    virtual void ignoreDuplicatedNodeOptions(std::shared_ptr<mega::MegaNode>) {}
+
     void executeExtraSpaceLogic();
 
     int mRequiredRights;

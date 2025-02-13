@@ -9,6 +9,8 @@
 #include <QFileInfo>
 #include <QScreen>
 
+QSet<int> DuplicatedNodeDialog::mIgnoreConflictTypes = QSet<int>();
+
 DuplicatedNodeDialog::DuplicatedNodeDialog(QWidget* parent) :
     QDialog(parent),
     ui(new Ui::DuplicatedNodeDialog)
@@ -38,12 +40,21 @@ DuplicatedNodeDialog::DuplicatedNodeDialog(QWidget* parent) :
 
 DuplicatedNodeDialog::~DuplicatedNodeDialog()
 {
+    mIgnoreConflictTypes.clear();
     delete ui;
 }
 
 void DuplicatedNodeDialog::addNodeItem(DuplicatedNodeItem* item)
 {
-    ui->nodeItemsLayout->addWidget(item);
+    if (ignoreConflictType(item->getType()))
+    {
+        item->hide();
+        item->deleteLater();
+    }
+    else
+    {
+        ui->nodeItemsLayout->addWidget(item);
+    }
 }
 
 void DuplicatedNodeDialog::cleanUi()
@@ -244,6 +255,16 @@ void DuplicatedNodeDialog::updateHeader()
     {
         ui->lDescription->setToolTip(mCurrentNodeName);
     }
+}
+
+void DuplicatedNodeDialog::addIgnoreConflictTypes(NodeItemType ignoreConflictType)
+{
+    mIgnoreConflictTypes.insert(static_cast<int>(ignoreConflictType));
+}
+
+bool DuplicatedNodeDialog::ignoreConflictType(NodeItemType ignoreConflictType)
+{
+    return mIgnoreConflictTypes.contains(static_cast<int>(ignoreConflictType));
 }
 
 std::shared_ptr<ConflictTypes> DuplicatedNodeDialog::conflicts() const

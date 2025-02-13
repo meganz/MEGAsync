@@ -61,6 +61,9 @@ public:
 public slots:
     void onItemInfoUpdated(int role);
 
+protected:
+    void ignoreDuplicatedNodeOptions(std::shared_ptr<mega::MegaNode> targetNode) override;
+
 protected slots:
     void onRootItemAdded() override;
     void onRootItemDeleted() override;

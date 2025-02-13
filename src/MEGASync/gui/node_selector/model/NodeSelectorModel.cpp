@@ -1087,6 +1087,11 @@ bool NodeSelectorModel::processNodesAndCheckConflicts(
 
     if (!conflicts->isEmpty())
     {
+        if (!handleAndTarget.isEmpty())
+        {
+            ignoreDuplicatedNodeOptions(handleAndTarget.first().second);
+        }
+
         emit showDuplicatedNodeDialog(conflicts, type);
     }
     else
