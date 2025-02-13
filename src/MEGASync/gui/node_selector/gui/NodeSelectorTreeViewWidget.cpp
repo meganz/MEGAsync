@@ -276,6 +276,8 @@ void NodeSelectorTreeViewWidget::showEvent(QShowEvent* )
     if(!mManuallyResizedColumn)
     {
         ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::NODE, qRound(ui->stackedWidget->width() * 0.50));
+        ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::ACCESS,
+                                         qRound(ui->stackedWidget->width() * 0.12));
     }
 }
 
@@ -284,6 +286,8 @@ void NodeSelectorTreeViewWidget::resizeEvent(QResizeEvent *)
     if(!mManuallyResizedColumn)
     {
         ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::NODE, qRound(ui->stackedWidget->width() * 0.50));
+        ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::ACCESS,
+                                         qRound(ui->stackedWidget->width() * 0.12));
     }
 
     setTitleText(ui->lFolderName->property(FULL_NAME_PROPERTY).toString());
@@ -338,12 +342,16 @@ void NodeSelectorTreeViewWidget::onExpandReady()
         ui->tMegaFolders->setItemDelegate(new NodeRowDelegate(ui->tMegaFolders));
         ui->tMegaFolders->setItemDelegateForColumn(NodeSelectorModel::STATUS, new IconDelegate(ui->tMegaFolders));
         ui->tMegaFolders->setItemDelegateForColumn(NodeSelectorModel::USER, new IconDelegate(ui->tMegaFolders));
-        ui->tMegaFolders->setItemDelegateForColumn(NodeSelectorModel::DATE, new DateColumnDelegate(ui->tMegaFolders));
+        ui->tMegaFolders->setItemDelegateForColumn(NodeSelectorModel::DATE,
+                                                   new TextColumnDelegate(ui->tMegaFolders));
+        ui->tMegaFolders->setItemDelegateForColumn(NodeSelectorModel::ACCESS,
+                                                   new TextColumnDelegate(ui->tMegaFolders));
         ui->tMegaFolders->setTextElideMode(Qt::ElideMiddle);
 
         ui->tMegaFolders->sortByColumn(NodeSelectorModel::NODE, Qt::AscendingOrder);
         ui->tMegaFolders->setModel(mProxyModel.get());
 
+        ui->tMegaFolders->header()->setVisible(true);
         ui->tMegaFolders->header()->setFixedHeight(NodeSelectorModel::ROW_HEIGHT);
         ui->tMegaFolders->header()->moveSection(NodeSelectorModel::STATUS, NodeSelectorModel::NODE);
         ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::STATUS, NodeSelectorModel::ROW_HEIGHT * 2);
@@ -833,20 +841,6 @@ void NodeSelectorTreeViewWidget::onLeaveShareClicked(const QList<mega::MegaHandl
         return;
     }
 
-    auto getNode = [this](mega::MegaHandle handle) -> std::shared_ptr<mega::MegaNode>
-    {
-        auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
-
-        // This is for an extra protection as we don´t show the rename action if oxne of this
-        // conditions are not met
-        if (!node || !node->isNodeKeyDecrypted())
-        {
-            return nullptr;
-        }
-
-        return node;
-    };
-
     QMegaMessageBox::MessageBoxInfo msgInfo;
     msgInfo.parent = ui->tMegaFolders;
     msgInfo.title = MegaSyncApp->getMEGAString();
@@ -855,21 +849,17 @@ void NodeSelectorTreeViewWidget::onLeaveShareClicked(const QList<mega::MegaHandl
     msgInfo.buttonsText.insert(QMessageBox::Yes, tr("Leave"));
     msgInfo.buttonsText.insert(QMessageBox::No, tr("Don’t leave"));
 
-    msgInfo.informativeText =
-        tr("You will leave the inshared folder. You will stop having access to the folder.");
     if (handles.size() == 1)
     {
-        auto node = getNode(handles.first());
-        if (node)
-        {
-            msgInfo.text = tr("You are about to leave \"%1\".\nWould you like to proceed?")
-                               .arg(QString::fromUtf8(node->getName()));
-        }
+        msgInfo.text = tr("Leave this shared folder?");
+        msgInfo.informativeText =
+            tr("If you leave the folder, you will not be able to see it again");
     }
     else
     {
-        msgInfo.text =
-            tr("You are about to leave %n folder.\nWould you like to proceed?", "", handles.size());
+        msgInfo.text = tr("Leave these shared folders?");
+        msgInfo.informativeText =
+            tr("If you leave these folders, you will not be able to see them again.");
     }
 
     msgInfo.finishFunc = [this, handles](QPointer<QMessageBox> msg)
@@ -1126,16 +1116,20 @@ bool NodeSelectorTreeViewWidget::increaseMovingNodes()
     return mModel->increaseMovingNodes();
 }
 
+bool NodeSelectorTreeViewWidget::decreaseMovingNodes(int number)
+{
+    return mModel->moveProcessedByNumber(number);
+}
+
 bool NodeSelectorTreeViewWidget::areItemsAboutToBeMovedFromHere(mega::MegaHandle firstHandleMoved,
-                                                                int handlesMoved)
+                                                                NodeSelectorModel* senderModel)
 {
     // Check if the move and drop is in the same model
-    if (!mModel->isMovingNodes())
+    if (mModel.get() != senderModel)
     {
         auto itemIndex(mModel->findIndexByNodeHandle(firstHandleMoved, QModelIndex()));
         if (itemIndex.isValid())
         {
-            initMovingNodes(handlesMoved);
             return true;
         }
     }
@@ -1393,6 +1387,7 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
         setTitleText(getRootText());
 
         ui->lOwnerIcon->setPixmap(QPixmap());
+        ui->lAccess->hide();
         ui->avatarSpacer->spacerItem()->changeSize(0, 0);
         ui->lIcon->setPixmap(QPixmap());
         ui->syncSpacer->spacerItem()->changeSize(0, 0);

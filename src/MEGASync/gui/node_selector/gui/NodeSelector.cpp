@@ -232,13 +232,18 @@ void NodeSelector::onUpdateLoadingMessage(std::shared_ptr<MessageInfo> message)
     }
 }
 
-void NodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles, int actionType)
+void NodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles, int)
 {
-    performItemsToBeMoved(handles, actionType, true, true);
+    performItemsToBeMoved(handles, IncreaseOrDecrease::INCREASE, true, true);
+}
+
+void NodeSelector::onItemsAboutToBeMovedFailed(const QList<mega::MegaHandle>& handles, int)
+{
+    performItemsToBeMoved(handles, IncreaseOrDecrease::DECREASE, true, true);
 }
 
 void NodeSelector::performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
-                                         int,
+                                         IncreaseOrDecrease type,
                                          bool blockSource,
                                          bool blockTarget)
 {
@@ -253,19 +258,31 @@ void NodeSelector::performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
 
     auto senderModel(dynamic_cast<NodeSelectorModel*>(sender()));
 
+    auto targetOrSourceFound = [type, handles](NodeSelectorTreeViewWidget* wid, bool& flag)
+    {
+        flag = true;
+        if (type == IncreaseOrDecrease::INCREASE)
+        {
+            wid->initMovingNodes(handles.size());
+        }
+        else
+        {
+            wid->decreaseMovingNodes(handles.size());
+        }
+    };
+
     for (int index = 0; index < ui->stackedWidget->count(); ++index)
     {
         if (auto wid = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(index)))
         {
             if (!foundTarget && wid->getProxyModel()->getMegaModel() == senderModel)
             {
-                foundTarget = true;
-                wid->initMovingNodes(handles.size());
+                targetOrSourceFound(wid, foundTarget);
             }
             else if (!foundSource &&
-                     wid->areItemsAboutToBeMovedFromHere(handles.first(), handles.size()))
+                     wid->areItemsAboutToBeMovedFromHere(handles.first(), senderModel))
             {
-                foundSource = true;
+                targetOrSourceFound(wid, foundSource);
             }
 
             if (foundSource && foundTarget)
@@ -465,6 +482,11 @@ void NodeSelector::initSpecialisedWidgets()
                     &NodeSelectorModel::itemsAboutToBeMoved,
                     this,
                     &NodeSelector::onItemsAboutToBeMoved);
+
+            connect(model,
+                    &NodeSelectorModel::itemsAboutToBeMovedFailed,
+                    this,
+                    &NodeSelector::onItemsAboutToBeMovedFailed);
 
             connect(model,
                     &NodeSelectorModel::mergeItemAboutToBeMoved,

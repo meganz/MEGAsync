@@ -76,10 +76,14 @@ protected:
 protected slots:
     void onCustomBottomButtonClicked(uint id) override;
     void onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles, int type) override;
+    void onItemsAboutToBeMovedFailed(const QList<mega::MegaHandle>& handles, int type) override;
     void onMergeItemsAboutToBeMoved(mega::MegaHandle handle, int type) override;
 
 private:
     void onOkButtonClicked() override;
+    void checkMovingItems(const QList<mega::MegaHandle>& handles,
+                          int moveType,
+                          NodeSelector::IncreaseOrDecrease type);
 
     QWidget* mDragBackDrop;
 };

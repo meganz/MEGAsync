@@ -2187,6 +2187,29 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
 </context>
 <context>
+    <name>IncomingShareAccess</name>
+    <message>
+        <source>Unknown</source>
+        <translation type="unfinished">Unknown</translation>
+    </message>
+    <message>
+        <source>Read-only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Read and write</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Full access</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Owner</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>InfoAccount</name>
     <message>
         <source>Available storage:</source>
@@ -4749,6 +4772,98 @@ Enter a different name.</translation>
         <source>The folders couldn´t be removed. Try again later</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Access</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort by access</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error copying items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The items couldn´t be copied. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error copying files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The files couldn´t be copied. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error copying folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folders couldn´t be copied. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error copying file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be copied. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error copying folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be copied. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error restoring items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The items couldn´t be restored. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error restoring files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The files couldn´t be restored. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error restoring folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folders couldn´t be restored. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error restoring file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be restored. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error restoring folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be restored. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Close</translation>
+    </message>
 </context>
 <context>
     <name>NodeSelectorTreeView</name>
@@ -4793,11 +4908,11 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Leave share</source>
+        <source>Permanently delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Permanently delete</source>
+        <source>Leave folder</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4872,23 +4987,6 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You will leave the inshared folder. You will stop having access to the folder.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You are about to leave &quot;%1&quot;.
-Would you like to proceed?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>You are about to leave %n folder.
-Would you like to proceed?</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message>
         <source>Rubbish bin</source>
         <translation type="unfinished">Rubbish bin</translation>
     </message>
@@ -4921,6 +5019,22 @@ Would you like to proceed?</source>
     <message>
         <source>Delete</source>
         <translation type="unfinished">Delete</translation>
+    </message>
+    <message>
+        <source>Leave this shared folder?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you leave the folder, you will not be able to see it again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Leave these shared folders?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you leave these folders, you will not be able to see them again.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

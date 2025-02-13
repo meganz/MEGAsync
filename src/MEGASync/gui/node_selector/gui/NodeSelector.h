@@ -75,8 +75,14 @@ protected:
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override{}
     void onNodesUpdate(mega::MegaApi *api, mega::MegaNodeList *nodes) override;
 
+    enum class IncreaseOrDecrease
+    {
+        INCREASE,
+        DECREASE
+    };
+
     void performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
-                               int,
+                               IncreaseOrDecrease type,
                                bool blockSource,
                                bool blockTarget);
 
@@ -105,6 +111,7 @@ protected slots:
     }
 
     virtual void onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles, int actionType);
+    virtual void onItemsAboutToBeMovedFailed(const QList<mega::MegaHandle>& handles, int type);
 
     virtual void onMergeItemsAboutToBeMoved(mega::MegaHandle, int) {}
 

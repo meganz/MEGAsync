@@ -756,6 +756,9 @@ bool NodeSelectorModelRubbish::canDropMimeData(const QMimeData* data,
                 }
             }
         }
+
+        // Allow copying/moving items to all the view space
+        return true;
     }
 
     return false;

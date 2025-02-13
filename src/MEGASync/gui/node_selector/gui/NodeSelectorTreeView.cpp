@@ -237,10 +237,7 @@ void NodeSelectorTreeView::onPasteShortcutActivated()
     QModelIndex pasteIndex =
         proxyModel->getMegaModel()->rootIndex(proxyModel->mapToSource(rootIndex()));
 
-    if (proxyModel->getMegaModel()->pasteNodes(mCopiedHandles, pasteIndex))
-    {
-        mCopiedHandles.clear();
-    }
+    proxyModel->getMegaModel()->pasteNodes(mCopiedHandles, pasteIndex);
 }
 
 void NodeSelectorTreeView::onPasteClicked()
@@ -251,11 +248,8 @@ void NodeSelectorTreeView::onPasteClicked()
 
     if (rows.size() == 1)
     {
-        if (proxyModel->getMegaModel()->pasteNodes(mCopiedHandles,
-                                                   proxyModel->mapToSource(rows.first())))
-        {
-            mCopiedHandles.clear();
-        }
+        proxyModel->getMegaModel()->pasteNodes(mCopiedHandles,
+                                               proxyModel->mapToSource(rows.first()));
     }
 }
 
@@ -329,7 +323,7 @@ void NodeSelectorTreeView::addDeletePermanently(QMap<int, QAction*>& actions,
 void NodeSelectorTreeView::addLeaveInshare(QMap<int, QAction*>& actions,
                                            QList<MegaHandle> selectionHandles)
 {
-    auto leaveShareAction(new QAction(tr("Leave share")));
+    auto leaveShareAction(new QAction(tr("Leave folder")));
     connect(leaveShareAction,
             &QAction::triggered,
             this,
@@ -755,11 +749,6 @@ bool NodeSelectorTreeView::areAllEligibleForRestore(const QList<MegaHandle> &han
     }
 
     return restorableItems == 0;
-}
-
-void NodeSelectorTreeView::clearCopiedHandles()
-{
-    mCopiedHandles.clear();
 }
 
 void NodeSelectorTreeView::deleteNode(const QList<MegaHandle>& handles, bool permanently)

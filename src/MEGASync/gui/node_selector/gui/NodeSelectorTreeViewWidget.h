@@ -80,7 +80,9 @@ public:
 
     void initMovingNodes(int number);
     bool increaseMovingNodes();
-    bool areItemsAboutToBeMovedFromHere(mega::MegaHandle firstHandleMoved, int handlesMoved);
+    bool decreaseMovingNodes(int number);
+    bool areItemsAboutToBeMovedFromHere(mega::MegaHandle firstHandleMoved,
+                                        NodeSelectorModel* senderModel);
 
     mega::MegaHandle getHandleByIndex(const QModelIndex& idx);
 

@@ -32,6 +32,7 @@ enum class NodeSelectorModelRoles
     IS_FILE_ROLE,
     IS_SYNCABLE_FOLDER_ROLE,
     STATUS_ROLE,
+    ACCESS_ROLE,
     HANDLE_ROLE,
     MODEL_ITEM_ROLE,
     NODE_ROLE,
@@ -172,6 +173,7 @@ public:
       NODE = 0,
       STATUS,
       USER,
+      ACCESS,
       DATE,
       last
     };
@@ -234,6 +236,7 @@ public:
     bool increaseMovingNodes();
     void initMovingNodes(int number);
     bool isMovingNodes() const;
+    bool moveProcessedByNumber(int number);
 
     // Copy logic
     bool pasteNodes(const QList<mega::MegaHandle>& nodesToCopy, const QModelIndex& indexToPaste);
@@ -361,6 +364,7 @@ signals:
     void modelIsBeingModifiedChanged(bool status);
     void itemsMoved();
     void itemsAboutToBeMoved(const QList<mega::MegaHandle> handles, int actionType);
+    void itemsAboutToBeMovedFailed(const QList<mega::MegaHandle> handles, int actionType);
     void mergeItemAboutToBeMoved(mega::MegaHandle handle, int type);
     void finishAsyncRequest(mega::MegaHandle handle, int error);
 
@@ -415,7 +419,6 @@ private:
     bool fetchMoreRecursively(const QModelIndex& parentIndex);
 
     bool checkMoveProcessing();
-    void restartProtectionAgainstUpdateBlockingState();
 
     std::shared_ptr<const UserAttributes::CameraUploadFolder> mCameraFolderAttribute;
     std::shared_ptr<const UserAttributes::MyChatFilesFolder> mMyChatFilesFolderAttribute;
@@ -429,6 +432,7 @@ private:
 
     // Variables related to move (including moving to rubbish bin or remove)
     QMap<mega::MegaHandle, int> mRequestByHandle;
+    QList<mega::MegaHandle> mExpectedNodesUpdate;
     QMap<mega::MegaHandle, int> mRequestFailedByHandle;
     MovedItemsTypes mMovedItemsType;
 

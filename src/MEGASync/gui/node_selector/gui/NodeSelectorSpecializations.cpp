@@ -318,7 +318,41 @@ void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint id)
 
 void CloudDriveNodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles, int type)
 {
+    checkMovingItems(handles, type, NodeSelector::IncreaseOrDecrease::INCREASE);
+}
+
+void CloudDriveNodeSelector::onItemsAboutToBeMovedFailed(const QList<mega::MegaHandle>& handles,
+                                                         int type)
+{
+    checkMovingItems(handles, type, NodeSelector::IncreaseOrDecrease::DECREASE);
+}
+
+void CloudDriveNodeSelector::onMergeItemsAboutToBeMoved(mega::MegaHandle handle, int type)
+{
     if (type == NodeSelectorModel::ActionType::RESTORE)
+    {
+        // Check with the handle if we are in CD or Incoming
+        if (mCloudDriveWidget->increaseMovingNodes())
+        {
+            onbShowCloudDriveClicked();
+        }
+    }
+    else
+    {
+        NodeSelector::onMergeItemsAboutToBeMoved(handle, type);
+    }
+}
+
+void CloudDriveNodeSelector::onOkButtonClicked()
+{
+    onCustomBottomButtonClicked(CloudDriveType::Download);
+}
+
+void CloudDriveNodeSelector::checkMovingItems(const QList<mega::MegaHandle>& handles,
+                                              int moveType,
+                                              NodeSelector::IncreaseOrDecrease type)
+{
+    if (moveType == NodeSelectorModel::ActionType::RESTORE)
     {
         if (!handles.isEmpty())
         {
@@ -363,44 +397,23 @@ void CloudDriveNodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>
 
         performItemsToBeMoved(handles, type, true, false);
     }
-    else if (type == NodeSelectorModel::ActionType::DELETE_RUBBISH)
+    else if (moveType == NodeSelectorModel::ActionType::DELETE_RUBBISH)
     {
         mRubbishWidget->initMovingNodes(handles.size());
         performItemsToBeMoved(handles, type, true, false);
     }
-    else if (type == NodeSelectorModel::ActionType::DELETE_PERMANENTLY)
+    else if (moveType == NodeSelectorModel::ActionType::DELETE_PERMANENTLY)
     {
         performItemsToBeMoved(handles, type, true, false);
     }
-    else if (type == NodeSelectorModel::ActionType::COPY)
+    else if (moveType == NodeSelectorModel::ActionType::COPY)
     {
         performItemsToBeMoved(handles, type, false, true);
     }
     else
     {
-        NodeSelector::onItemsAboutToBeMoved(handles, type);
+        performItemsToBeMoved(handles, type, true, true);
     }
-}
-
-void CloudDriveNodeSelector::onMergeItemsAboutToBeMoved(mega::MegaHandle handle, int type)
-{
-    if (type == NodeSelectorModel::ActionType::RESTORE)
-    {
-        // Check with the handle if we are in CD or Incoming
-        if (mCloudDriveWidget->increaseMovingNodes())
-        {
-            onbShowCloudDriveClicked();
-        }
-    }
-    else
-    {
-        NodeSelector::onMergeItemsAboutToBeMoved(handle, type);
-    }
-}
-
-void CloudDriveNodeSelector::onOkButtonClicked()
-{
-    onCustomBottomButtonClicked(CloudDriveType::Download);
 }
 
 ////////////////////////////////

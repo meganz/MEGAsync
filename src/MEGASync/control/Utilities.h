@@ -408,6 +408,8 @@ public:
     static bool isIncommingShare(mega::MegaNode* node);
     static int getNodeAccess(mega::MegaHandle handle);
     static int getNodeAccess(mega::MegaNode* handle);
+    static QString getNodeStringAccess(mega::MegaNode* handle);
+    static QString getNodeStringAccess(mega::MegaHandle handle);
 
     enum HandlesType
     {

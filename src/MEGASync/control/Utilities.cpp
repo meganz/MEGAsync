@@ -1556,6 +1556,40 @@ int Utilities::getNodeAccess(MegaNode* node)
     }
 }
 
+QString Utilities::getNodeStringAccess(MegaNode* node)
+{
+    auto access(getNodeAccess(node));
+    switch (access)
+    {
+        case MegaShare::ACCESS_READ:
+        {
+            return QCoreApplication::translate("IncomingShareAccess", "Read-only");
+        }
+        case MegaShare::ACCESS_READWRITE:
+        {
+            return QCoreApplication::translate("IncomingShareAccess", "Read and write");
+        }
+        case MegaShare::ACCESS_FULL:
+        {
+            return QCoreApplication::translate("IncomingShareAccess", "Full access");
+        }
+        case MegaShare::ACCESS_OWNER:
+        {
+            return QCoreApplication::translate("IncomingShareAccess", "Owner");
+        }
+        default:
+        {
+            return QCoreApplication::translate("IncomingShareAccess", "Unknown");
+        }
+    }
+}
+
+QString Utilities::getNodeStringAccess(MegaHandle handle)
+{
+    auto node = std::unique_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+    return getNodeStringAccess(node.get());
+}
+
 Utilities::HandlesTypes Utilities::getHandlesType(const QList<MegaHandle>& handles)
 {
     HandlesTypes type;

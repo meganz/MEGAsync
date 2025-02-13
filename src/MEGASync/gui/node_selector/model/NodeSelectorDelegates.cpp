@@ -170,12 +170,14 @@ void NodeRowDelegate::initStyleOption(QStyleOptionViewItem *option, const QModel
     }
 }
 
-DateColumnDelegate::DateColumnDelegate(QObject* parent):
+TextColumnDelegate::TextColumnDelegate(QObject* parent):
     NodeSelectorDelegate(parent)
 {
 }
 
-void DateColumnDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+void TextColumnDelegate::paint(QPainter* painter,
+                               const QStyleOptionViewItem& option,
+                               const QModelIndex& index) const
 {
     NodeSelectorDelegate::setPaintDevice(painter);
 
@@ -206,7 +208,10 @@ void DateColumnDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     }
 }
 
-bool DateColumnDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
+bool TextColumnDelegate::helpEvent(QHelpEvent* event,
+                                   QAbstractItemView* view,
+                                   const QStyleOptionViewItem& option,
+                                   const QModelIndex& index)
 {
     if (!event || !view || !index.isValid())
     {
@@ -235,7 +240,8 @@ bool DateColumnDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, c
     return QStyledItemDelegate::helpEvent(event, view, option, index);
 }
 
-void DateColumnDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
+void TextColumnDelegate::initStyleOption(QStyleOptionViewItem* option,
+                                         const QModelIndex& index) const
 {
     QStyledItemDelegate::initStyleOption(option, index);
     option->text = QString::fromUtf8("");

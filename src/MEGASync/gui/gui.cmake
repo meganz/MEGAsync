@@ -43,6 +43,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/ProgressIndicatorDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/VerifyLockMessage.h
     ${CMAKE_CURRENT_LIST_DIR}/ViewLoadingScene.h
+    ${CMAKE_CURRENT_LIST_DIR}/ViewLoadingMessage.h
     ${CMAKE_CURRENT_LIST_DIR}/MegaInfoMessage.h
     ${CMAKE_CURRENT_LIST_DIR}/WaitingSpinnerWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/ProxySettings.h
@@ -182,6 +183,7 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/VerifyLockMessage.cpp
     ${CMAKE_CURRENT_LIST_DIR}/MegaInfoMessage.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ViewLoadingScene.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ViewLoadingMessage.cpp
     ${CMAKE_CURRENT_LIST_DIR}/WaitingSpinnerWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ProxySettings.cpp
     ${CMAKE_CURRENT_LIST_DIR}/BandwidthSettings.cpp
@@ -301,6 +303,7 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/win/NodeNameSetterDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/LowDiskSpaceDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/ViewLoadingScene.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/ViewLoadingMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/NotificationItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/AccountTypeWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelectorTreeViewWidget.ui
@@ -337,6 +340,7 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/macx/NodeNameSetterDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/LowDiskSpaceDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/ViewLoadingScene.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/ViewLoadingMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/NotificationItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui
@@ -375,6 +379,7 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/linux/NodeNameSetterDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/LowDiskSpaceDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/ViewLoadingScene.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/ViewLoadingMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/NotificationItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/AccountTypeWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui

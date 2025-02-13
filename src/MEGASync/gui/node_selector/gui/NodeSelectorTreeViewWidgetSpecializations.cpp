@@ -106,6 +106,7 @@ void NodeSelectorTreeViewWidgetCloudDrive::onRootIndexChanged(const QModelIndex 
 {
     Q_UNUSED(source_idx)
     ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::USER);
+    ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::ACCESS);
 }
 
 /////////////////////////////////////////////////////////////////
@@ -147,12 +148,21 @@ void NodeSelectorTreeViewWidgetIncomingShares::onRootIndexChanged(const QModelIn
         QString tooltip = in_share_idx.data(Qt::ToolTipRole).toString();
         ui->lOwnerIcon->setToolTip(tooltip);
         ui->lOwnerIcon->setPixmap(pm);
+        auto item(NodeSelectorModel::getItemByIndex(idx));
+        if (item)
+        {
+            ui->lAccess->show();
+            ui->lAccess->setText(Utilities::getNodeStringAccess(item->getNode().get()));
+        }
         ui->avatarSpacer->spacerItem()->changeSize(10, 0);
         ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::USER);
+        ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::ACCESS);
     }
     else
     {
+        ui->lAccess->hide();
         ui->tMegaFolders->header()->showSection(NodeSelectorModel::COLUMN::USER);
+        ui->tMegaFolders->header()->showSection(NodeSelectorModel::COLUMN::ACCESS);
     }
 }
 
@@ -232,6 +242,7 @@ void NodeSelectorTreeViewWidgetBackups::onRootIndexChanged(const QModelIndex &id
 {
     Q_UNUSED(idx)
     ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::USER);
+    ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::ACCESS);
 }
 /////////////////////////////////////////////////////////////////
 
@@ -357,6 +368,7 @@ void NodeSelectorTreeViewWidgetSearch::onBackupsSearchClicked()
     auto proxy_model = static_cast<NodeSelectorProxyModelSearch*>(mProxyModel.get());
     proxy_model->setMode(NodeSelectorModelItemSearch::Type::BACKUP);
     ui->tMegaFolders->setColumnHidden(NodeSelectorModel::USER, true);
+    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ACCESS, true);
 }
 
 void NodeSelectorTreeViewWidgetSearch::onRubbishSearchClicked()
@@ -364,6 +376,7 @@ void NodeSelectorTreeViewWidgetSearch::onRubbishSearchClicked()
     auto proxy_model = static_cast<NodeSelectorProxyModelSearch*>(mProxyModel.get());
     proxy_model->setMode(NodeSelectorModelItemSearch::Type::RUBBISH);
     ui->tMegaFolders->setColumnHidden(NodeSelectorModel::USER, true);
+    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ACCESS, true);
 }
 
 void NodeSelectorTreeViewWidgetSearch::onIncomingSharesSearchClicked()
@@ -371,6 +384,7 @@ void NodeSelectorTreeViewWidgetSearch::onIncomingSharesSearchClicked()
     auto proxy_model = static_cast<NodeSelectorProxyModelSearch*>(mProxyModel.get());
     proxy_model->setMode(NodeSelectorModelItemSearch::Type::INCOMING_SHARE);
     ui->tMegaFolders->setColumnHidden(NodeSelectorModel::USER, false);
+    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ACCESS, false);
 }
 
 void NodeSelectorTreeViewWidgetSearch::onCloudDriveSearchClicked()
@@ -378,6 +392,7 @@ void NodeSelectorTreeViewWidgetSearch::onCloudDriveSearchClicked()
     auto proxy_model = static_cast<NodeSelectorProxyModelSearch*>(mProxyModel.get());
     proxy_model->setMode(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE);
     ui->tMegaFolders->setColumnHidden(NodeSelectorModel::USER, true);
+    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ACCESS, true);
 }
 
 void NodeSelectorTreeViewWidgetSearch::onItemDoubleClick(const QModelIndex &index)
@@ -540,4 +555,5 @@ void NodeSelectorTreeViewWidgetRubbish::onRootIndexChanged(const QModelIndex &so
 {
     Q_UNUSED(source_idx)
     ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::USER);
+    ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::ACCESS);
 }

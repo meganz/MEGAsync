@@ -72,77 +72,6 @@ background-color: #FFFFFF;
         <property name="verticalSpacing">
          <number>8</number>
         </property>
-        <item row="0" column="10">
-         <widget class="SearchLineEdit" name="leSearch">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>145</width>
-            <height>34</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>145</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QFrame{
-border-radius:6px;
-border-width:1px 1px 1px 1px;
-border-style:solid;
-border-color:rgba(0,0,0,0.1);
-min-height:32px;
-}</string>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QPushButton" name="bForward">
-          <property name="maximumSize">
-           <size>
-            <width>30</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="cursor">
-           <cursorShape>PointingHandCursor</cursorShape>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton {
-    border: none;
-    background-color: transparent;
-    padding: 0px;
-}</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="../../../Resources_linux.qrc">
-            <normaloff>:/images/node_selector/chevron-right-active.png</normaloff>
-            <disabledoff>:/images/node_selector/chevron-right.png</disabledoff>:/images/node_selector/chevron-right-active.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="2">
          <spacer name="horizontalSpacer_5">
           <property name="orientation">
@@ -159,99 +88,7 @@ min-height:32px;
           </property>
          </spacer>
         </item>
-        <item row="0" column="4">
-         <widget class="QLabel" name="searchingText">
-          <property name="styleSheet">
-           <string notr="true">*{
-font-size:17px;
-color:#3D3D3D;
-}</string>
-          </property>
-          <property name="text">
-           <string notr="true"/>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="5">
-         <spacer name="syncSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>13</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="0" column="6">
-         <widget class="QLabel" name="lIcon">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string notr="true"/>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-          <property name="margin">
-           <number>0</number>
-          </property>
-          <property name="indent">
-           <number>-1</number>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QPushButton" name="bBack">
-          <property name="maximumSize">
-           <size>
-            <width>30</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="cursor">
-           <cursorShape>PointingHandCursor</cursorShape>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton {
-    border: none;
-    background-color: transparent;
-    padding: 0px;
-}
-</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="../../../Resources_linux.qrc">
-            <normaloff>:/images/node_selector/chevron-left-active.png</normaloff>
-            <disabledoff>:/images/node_selector/chevron-left.png</disabledoff>:/images/node_selector/chevron-left-active.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="9">
+        <item row="0" column="11">
          <spacer name="horizontalSpacer_4">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -264,67 +101,7 @@ color:#3D3D3D;
           </property>
          </spacer>
         </item>
-        <item row="0" column="7">
-         <spacer name="avatarSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>13</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="0" column="3">
-         <widget class="QLabel" name="lFolderName">
-          <property name="font">
-           <font>
-            <pointsize>-1</pointsize>
-            <bold>true</bold>
-            <strikeout>false</strikeout>
-            <kerning>false</kerning>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLabel{
-font-size:17px;
-font-weight: bold;
-color:#303233;
-}</string>
-          </property>
-          <property name="text">
-           <string notr="true">FolderName</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="8">
-         <widget class="QLabel" name="lOwnerIcon">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="text">
-           <string notr="true"/>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-          <property name="margin">
-           <number>0</number>
-          </property>
-          <property name="indent">
-           <number>-1</number>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="3" colspan="8" alignment="Qt::AlignLeft">
+        <item row="1" column="3" colspan="10" alignment="Qt::AlignLeft">
          <widget class="QWidget" name="searchButtonsWidget" native="true">
           <property name="minimumSize">
            <size>
@@ -401,7 +178,7 @@ QToolButton:pressed
               <string>Cloud drive</string>
              </property>
              <property name="icon">
-              <iconset resource="../../../Resources_linux.qrc">
+              <iconset>
                <normaloff>:/images/node_selector/search_filter/small_cloud_default.png</normaloff>:/images/node_selector/search_filter/small_cloud_default.png</iconset>
              </property>
              <property name="iconSize">
@@ -445,7 +222,7 @@ QToolButton:pressed
               <string>Backups</string>
              </property>
              <property name="icon">
-              <iconset resource="../../../Resources_linux.qrc">
+              <iconset>
                <normaloff>:/images/node_selector/search_filter/small_database_default.png</normaloff>:/images/node_selector/search_filter/small_database_default.png</iconset>
              </property>
              <property name="iconSize">
@@ -486,7 +263,7 @@ QToolButton:pressed
               <string>Incoming Shares</string>
              </property>
              <property name="icon">
-              <iconset resource="../../../Resources_linux.qrc">
+              <iconset>
                <normaloff>:/images/node_selector/search_filter/small_folder_default.png</normaloff>:/images/node_selector/search_filter/small_folder_default.png</iconset>
              </property>
              <property name="iconSize">
@@ -527,7 +304,7 @@ QToolButton:pressed
               <string>Rubbish bin</string>
              </property>
              <property name="icon">
-              <iconset resource="../../../Resources_linux.qrc">
+              <iconset>
                <normaloff>:/images/node_selector/search_filter/small_trash_default.png</normaloff>:/images/node_selector/search_filter/small_trash_default.png</iconset>
              </property>
              <property name="checkable">
@@ -556,6 +333,199 @@ QToolButton:pressed
           </layout>
          </widget>
         </item>
+        <item row="0" column="6">
+         <widget class="QLabel" name="lIcon">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string notr="true"/>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="margin">
+           <number>0</number>
+          </property>
+          <property name="indent">
+           <number>-1</number>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="8">
+         <widget class="QLabel" name="lOwnerIcon">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string notr="true"/>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="margin">
+           <number>0</number>
+          </property>
+          <property name="indent">
+           <number>-1</number>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QLabel" name="lFolderName">
+          <property name="font">
+           <font>
+            <pointsize>-1</pointsize>
+            <bold>true</bold>
+            <strikeout>false</strikeout>
+            <kerning>false</kerning>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel{
+font-size:17px;
+font-weight: bold;
+color:#303233;
+}</string>
+          </property>
+          <property name="text">
+           <string notr="true">FolderName</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="12">
+         <widget class="SearchLineEdit" name="leSearch">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>145</width>
+            <height>34</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>145</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QFrame{
+border-radius:6px;
+border-width:1px 1px 1px 1px;
+border-style:solid;
+border-color:rgba(0,0,0,0.1);
+min-height:32px;
+}</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="10">
+         <widget class="QLabel" name="lAccess">
+          <property name="styleSheet">
+           <string notr="true">QLabel{
+background-color: #FAFAFA;
+border-radius: 16;
+font-size:15px;
+color:#303233;
+padding-left: 11px;
+padding-right: 11px;
+}</string>
+          </property>
+          <property name="text">
+           <string notr="true"/>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QPushButton" name="bBack">
+          <property name="maximumSize">
+           <size>
+            <width>30</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    border: none;
+    background-color: transparent;
+    padding: 0px;
+}
+</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>:/images/node_selector/chevron-left-active.png</normaloff>
+            <disabledoff>:/images/node_selector/chevron-left.png</disabledoff>:/images/node_selector/chevron-left-active.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="7">
+         <spacer name="avatarSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>13</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="5">
+         <spacer name="syncSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>13</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
         <item row="1" column="2">
          <spacer name="verticalSpacer_3">
           <property name="orientation">
@@ -568,6 +538,69 @@ QToolButton:pressed
            <size>
             <width>0</width>
             <height>7</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="4">
+         <widget class="QLabel" name="searchingText">
+          <property name="styleSheet">
+           <string notr="true">*{
+font-size:17px;
+color:#3D3D3D;
+}</string>
+          </property>
+          <property name="text">
+           <string notr="true"/>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QPushButton" name="bForward">
+          <property name="maximumSize">
+           <size>
+            <width>30</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    border: none;
+    background-color: transparent;
+    padding: 0px;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>:/images/node_selector/chevron-right-active.png</normaloff>
+            <disabledoff>:/images/node_selector/chevron-right.png</disabledoff>:/images/node_selector/chevron-right-active.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="9">
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>13</width>
+            <height>20</height>
            </size>
           </property>
          </spacer>
@@ -822,7 +855,7 @@ QScrollBar::handle:vertical
                 <string notr="true"/>
                </property>
                <property name="icon">
-                <iconset resource="../../../Resources_linux.qrc">
+                <iconset>
                  <normaloff>:/images/node_selector/view/cloud.png</normaloff>:/images/node_selector/view/cloud.png</iconset>
                </property>
                <property name="iconSize">
@@ -978,7 +1011,7 @@ background-color:qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #8D8D8D, stop:1 #
             <string>New folder</string>
            </property>
            <property name="icon">
-            <iconset resource="../../../Resources_linux.qrc">
+            <iconset>
              <normaloff>:/images/node_selector/plus.png</normaloff>:/images/node_selector/plus.png</iconset>
            </property>
            <property name="iconSize">
@@ -1125,9 +1158,7 @@ color:#FFFFFF;
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../../../Resources_linux.qrc"/>
- </resources>
+ <resources/>
  <connections/>
  <buttongroups>
   <buttongroup name="searchFilterButtonGroup"/>

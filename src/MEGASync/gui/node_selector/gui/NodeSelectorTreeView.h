@@ -25,8 +25,6 @@ public:
     QList<MegaHandle> getMultiSelectionNodeHandle() const;
     void setModel(QAbstractItemModel *model) override;
 
-    static void clearCopiedHandles();
-
     QModelIndexList selectedRows() const;
 
     enum ActionsOrder
