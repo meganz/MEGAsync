@@ -9,7 +9,7 @@ SelectiveSyncPageForm {
 
     signal selectiveSyncMoveToBack
     signal selectiveSyncMoveToSuccess
-    signal fullSyncMoveToSuccess;
+    signal fullSyncMoveToSuccess
 
     localFolderChooser.folderField.hint.text: root.syncs.localError
     localFolderChooser.folderField.hint.visible: root.syncs.localError.length !== 0

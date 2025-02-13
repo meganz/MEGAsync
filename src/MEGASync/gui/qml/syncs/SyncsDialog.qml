@@ -63,7 +63,7 @@ SyncsQmlDialog {
                     PropertyChanges {
                         target: stepPanelItem;
                         state: stepPanelItem.stepCurrentDone;
-                        step2String: SyncsStrings.syncSetUp
+                        step2String: SyncsStrings.syncSetUp;
                     }
                 }
             ]
