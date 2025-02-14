@@ -676,8 +676,6 @@ void NodeSelectorTreeViewWidget::onUiBlocked(bool state)
     if(mUiBlocked != state)
     {
         mUiBlocked = state;
-
-        processCachedNodesUpdated();
     }
 }
 
@@ -959,12 +957,12 @@ bool NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
 
         if(node->getParentHandle() != mega::INVALID_HANDLE)
         {
+            auto existenceType(getNodeOnModelState(node));
+
             if (node->getChanges() & (MegaNode::CHANGE_TYPE_PARENT |
                                       MegaNode::CHANGE_TYPE_NEW))
             {
                 std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
-
-                auto existenceType(getNodeOnModelState(node));
 
                 if (existenceType == NodeState::REMOVE)
                 {
@@ -992,7 +990,7 @@ bool NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
                         else if (existenceType == NodeState::EXISTS_BUT_INVISIBLE ||
                                  existenceType == NodeState::MOVED_OUT_OF_VIEW)
                         {
-                            mUpdatedButInvisibleNodes.append(node->getHandle());
+                            mUpdatedButInvisibleNodes.insert(node->getHandle(), node->getChanges());
 
                             if (existenceType == NodeState::MOVED_OUT_OF_VIEW)
                             {
@@ -1004,7 +1002,7 @@ bool NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
             }
             else if(node->getChanges() & MegaNode::CHANGE_TYPE_NAME)
             {
-                if (getNodeOnModelState(node) == NodeState::EXISTS)
+                if (existenceType == NodeState::EXISTS)
                 {
                     UpdateNodesInfo info;
                     info.previousHandle = node->getHandle();
@@ -1015,9 +1013,13 @@ bool NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
             //Moved or new version added
             else if(node->getChanges() & MegaNode::CHANGE_TYPE_REMOVED)
             {
-                if (getNodeOnModelState(node) == NodeState::EXISTS)
+                if (existenceType == NodeState::EXISTS)
                 {
                     mRemovedNodes.insert(node->getHandle());
+                }
+                else if (existenceType == NodeState::EXISTS_BUT_INVISIBLE)
+                {
+                    mUpdatedButInvisibleNodes.insert(node->getHandle(), node->getChanges());
                 }
             }
         }
@@ -1233,15 +1235,22 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
             mRemoveMovedNodes.clear();
         }
 
-        if (!mModel->isBeingModified())
+        if (!mModel->isBeingModified() && !mUpdatedButInvisibleNodes.isEmpty())
         {
-            for (int index = 0; index < mUpdatedButInvisibleNodes.size(); ++index)
+            for (auto it = mUpdatedButInvisibleNodes.keyValueBegin();
+                 it != mUpdatedButInvisibleNodes.keyValueEnd();
+                 ++it)
             {
-                auto handle(mUpdatedButInvisibleNodes.at(index));
-
                 // Just in case
-                removeItemByHandle(handle);
-                mMovedHandlesToSelect.append(handle);
+                if (it->second == mega::MegaNode::CHANGE_TYPE_REMOVED ||
+                    it->second == mega::MegaNode::CHANGE_TYPE_PARENT)
+                {
+                    removeItemByHandle(it->first);
+                }
+                else
+                {
+                    mMovedHandlesToSelect.append(it->first);
+                }
 
                 mModel->moveProcessed();
             }

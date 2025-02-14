@@ -232,17 +232,30 @@ void NodeSelector::onUpdateLoadingMessage(std::shared_ptr<MessageInfo> message)
     }
 }
 
-void NodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles, int)
+void NodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles,
+                                         int extraUpdateNodesOnTarget,
+                                         int)
 {
-    performItemsToBeMoved(handles, IncreaseOrDecrease::INCREASE, true, true);
+    performItemsToBeMoved(handles,
+                          extraUpdateNodesOnTarget,
+                          IncreaseOrDecrease::INCREASE,
+                          true,
+                          true);
 }
 
-void NodeSelector::onItemsAboutToBeMovedFailed(const QList<mega::MegaHandle>& handles, int)
+void NodeSelector::onItemsAboutToBeMovedFailed(const QList<mega::MegaHandle>& handles,
+                                               int extraUpdateNodesOnTarget,
+                                               int)
 {
-    performItemsToBeMoved(handles, IncreaseOrDecrease::DECREASE, true, true);
+    performItemsToBeMoved(handles,
+                          extraUpdateNodesOnTarget,
+                          IncreaseOrDecrease::DECREASE,
+                          true,
+                          true);
 }
 
 void NodeSelector::performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
+                                         int extraUpdateNodesOnTarget,
                                          IncreaseOrDecrease type,
                                          bool blockSource,
                                          bool blockTarget)
@@ -258,16 +271,17 @@ void NodeSelector::performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
 
     auto senderModel(dynamic_cast<NodeSelectorModel*>(sender()));
 
-    auto targetOrSourceFound = [type, handles](NodeSelectorTreeViewWidget* wid, bool& flag)
+    auto targetOrSourceFound =
+        [type](NodeSelectorTreeViewWidget* wid, bool& flag, int nodesUpdateToReceive)
     {
         flag = true;
         if (type == IncreaseOrDecrease::INCREASE)
         {
-            wid->initMovingNodes(handles.size());
+            wid->initMovingNodes(nodesUpdateToReceive);
         }
         else
         {
-            wid->decreaseMovingNodes(handles.size());
+            wid->decreaseMovingNodes(nodesUpdateToReceive);
         }
     };
 
@@ -277,12 +291,12 @@ void NodeSelector::performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
         {
             if (!foundTarget && wid->getProxyModel()->getMegaModel() == senderModel)
             {
-                targetOrSourceFound(wid, foundTarget);
+                targetOrSourceFound(wid, foundTarget, handles.size() + extraUpdateNodesOnTarget);
             }
             else if (!foundSource &&
                      wid->areItemsAboutToBeMovedFromHere(handles.first(), senderModel))
             {
-                targetOrSourceFound(wid, foundSource);
+                targetOrSourceFound(wid, foundSource, handles.size());
             }
 
             if (foundSource && foundTarget)

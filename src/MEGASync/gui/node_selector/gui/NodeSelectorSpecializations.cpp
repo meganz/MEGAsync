@@ -316,15 +316,24 @@ void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint id)
     }
 }
 
-void CloudDriveNodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles, int type)
+void CloudDriveNodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles,
+                                                   int extraUpdateNodesOnTarget,
+                                                   int type)
 {
-    checkMovingItems(handles, type, NodeSelector::IncreaseOrDecrease::INCREASE);
+    checkMovingItems(handles,
+                     extraUpdateNodesOnTarget,
+                     type,
+                     NodeSelector::IncreaseOrDecrease::INCREASE);
 }
 
 void CloudDriveNodeSelector::onItemsAboutToBeMovedFailed(const QList<mega::MegaHandle>& handles,
+                                                         int extraUpdateNodesOnTarget,
                                                          int type)
 {
-    checkMovingItems(handles, type, NodeSelector::IncreaseOrDecrease::DECREASE);
+    checkMovingItems(handles,
+                     extraUpdateNodesOnTarget,
+                     type,
+                     NodeSelector::IncreaseOrDecrease::DECREASE);
 }
 
 void CloudDriveNodeSelector::onMergeItemsAboutToBeMoved(mega::MegaHandle handle, int type)
@@ -349,6 +358,7 @@ void CloudDriveNodeSelector::onOkButtonClicked()
 }
 
 void CloudDriveNodeSelector::checkMovingItems(const QList<mega::MegaHandle>& handles,
+                                              int extraUpdateNodesOnTarget,
                                               int moveType,
                                               NodeSelector::IncreaseOrDecrease type)
 {
@@ -395,24 +405,24 @@ void CloudDriveNodeSelector::checkMovingItems(const QList<mega::MegaHandle>& han
             }
         }
 
-        performItemsToBeMoved(handles, type, true, false);
+        performItemsToBeMoved(handles, extraUpdateNodesOnTarget, type, true, false);
     }
     else if (moveType == NodeSelectorModel::ActionType::DELETE_RUBBISH)
     {
         mRubbishWidget->initMovingNodes(handles.size());
-        performItemsToBeMoved(handles, type, true, false);
+        performItemsToBeMoved(handles, extraUpdateNodesOnTarget, type, true, false);
     }
     else if (moveType == NodeSelectorModel::ActionType::DELETE_PERMANENTLY)
     {
-        performItemsToBeMoved(handles, type, true, false);
+        performItemsToBeMoved(handles, extraUpdateNodesOnTarget, type, true, false);
     }
     else if (moveType == NodeSelectorModel::ActionType::COPY)
     {
-        performItemsToBeMoved(handles, type, false, true);
+        performItemsToBeMoved(handles, extraUpdateNodesOnTarget, type, false, true);
     }
     else
     {
-        performItemsToBeMoved(handles, type, true, true);
+        performItemsToBeMoved(handles, extraUpdateNodesOnTarget, type, true, true);
     }
 }
 

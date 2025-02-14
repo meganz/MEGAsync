@@ -4646,31 +4646,6 @@ Enter a different name.</translation>
 <context>
     <name>NodeSelectorModel</name>
     <message>
-        <source>Error removing file</source>
-        <translatorcomment>Messagebox title when removing a single file has failed. SAT-426</translatorcomment>
-        <translation>Error removing file</translation>
-    </message>
-    <message>
-        <source>Error removing files</source>
-        <translatorcomment>Messagebox title when removing multiple files has failed. SAT-426</translatorcomment>
-        <translation>Error removing files</translation>
-    </message>
-    <message>
-        <source>Error removing folder</source>
-        <translatorcomment>Messagebox title when removing a single folder has failed. SAT-426</translatorcomment>
-        <translation>Error removing folder</translation>
-    </message>
-    <message>
-        <source>Error removing folders</source>
-        <translatorcomment>Messagebox title when removing multiple folders has failed. SAT-426</translatorcomment>
-        <translation>Error removing folders</translation>
-    </message>
-    <message>
-        <source>Error removing items</source>
-        <translatorcomment>Messagebox title when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation>Error removing items</translation>
-    </message>
-    <message>
         <source>Folder already synced</source>
         <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
         <translation>Folder already synced</translation>
@@ -4749,28 +4724,6 @@ Enter a different name.</translation>
         <source>Sort by status</source>
         <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
         <translation>Sort by status</translation>
-    </message>
-    <message>
-        <source>The file %1 couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing a single file has failed. %1 is the file name. SAT-426</translatorcomment>
-        <translation>The file %1 couldn’t be removed. Try again later.</translation>
-    </message>
-    <message>
-        <source>The folder %1 couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing a single folder has failed. %1 is the folder name. SAT-426</translatorcomment>
-        <translation>The folder %1 couldn’t be removed. Try again later.</translation>
-    </message>
-    <message>
-        <source>The items couldn´t be removed. Try again later</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The files couldn´t be removed. Try again later</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The folders couldn´t be removed. Try again later</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Access</source>
@@ -4863,6 +4816,46 @@ Enter a different name.</translation>
     <message>
         <source>Close</source>
         <translation type="unfinished">Close</translation>
+    </message>
+    <message>
+        <source>Error deleting items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The items couldn´t be deleted. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error deleting files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The files couldn´t be deleted. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error deleting folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folders couldn´t be deleted. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error deleting file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be deleted. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error deleting folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be deleted. Try again later</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

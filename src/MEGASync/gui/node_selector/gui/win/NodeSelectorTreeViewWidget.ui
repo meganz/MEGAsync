@@ -312,12 +312,12 @@ min-height:32px;
          <widget class="QLabel" name="lAccess">
           <property name="styleSheet">
            <string notr="true">QLabel{
-background-color: #FAFAFA;
+background-color: #EFEFF0;
 border-radius: 16;
 font-size:15px;
 color:#303233;
-padding-left: 11px;
-padding-right: 11px;
+padding-left: 8px;
+padding-right: 8px;
 }</string>
           </property>
           <property name="text">

@@ -913,7 +913,8 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
         return;
     }
 
-    mExpectedNodesUpdate.clear();
+    mExtraExpectedNodesUpdateOnTarget = 0;
+    mExpectedNodesUpdateOnSource.clear();
 
     // There are 3 scenarios when restoring
 
@@ -974,11 +975,6 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
         {
             restoreMergeType = RestoreMergeType::MERGE_ON_EXISTING_TARGET;
         }
-
-        if (restoreMergeType.has_value())
-        {
-            initMovingNodes(handlesToMerge.size() + handlesToUpload.size());
-        }
     }
 
     foreach(auto resolvedConflict, conflicts->mResolvedConflicts)
@@ -996,7 +992,7 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
                 {
                     if (type != ActionType::RESTORE)
                     {
-                        mExpectedNodesUpdate.append(nodeToMove->getHandle());
+                        mExpectedNodesUpdateOnSource.append(nodeToMove->getHandle());
                     }
 
                     mergeFolders(nodeToMove,
@@ -1007,10 +1003,15 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
                 }
                 else
                 {
-                    mExpectedNodesUpdate.append(nodeToMove->getHandle());
+                    mExpectedNodesUpdateOnSource.append(nodeToMove->getHandle());
 
                     if (decision == NodeItemType::FILE_UPLOAD_AND_REPLACE)
                     {
+                        // This might be done only in the target model, not the source model
+                        // Duplicate the value, as the old node will be removed and the new one
+                        // will be added, so we need to wait for the new one
+                        mExtraExpectedNodesUpdateOnTarget++;
+
                         if (type == ActionType::COPY)
                         {
                             copyFileAndReplace(nodeToMove,
@@ -1019,10 +1020,6 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
                         }
                         else
                         {
-                            // Duplicate the value, as the node will be removed and then added to
-                            // the restored model
-                            mExpectedNodesUpdate.append(nodeToMove->getHandle());
-
                             moveFileAndReplace(nodeToMove,
                                                resolvedMoveConflict->getConflictNode(),
                                                resolvedMoveConflict->getParentNode());
@@ -1070,7 +1067,7 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
     }
 
     // Set loading view in the source model where the move started
-    emit itemsAboutToBeMoved(mExpectedNodesUpdate, type);
+    emit itemsAboutToBeMoved(mExpectedNodesUpdateOnSource, mExtraExpectedNodesUpdateOnTarget, type);
 }
 
 bool NodeSelectorModel::processNodesAndCheckConflicts(
@@ -1600,7 +1597,7 @@ std::shared_ptr<mega::MegaNode> NodeSelectorModel::getNodeToRemove(mega::MegaHan
 void NodeSelectorModel::deleteNodes(const QList<mega::MegaHandle>& nodeHandles, bool permanently)
 {
     ActionType type(permanently ? ActionType::DELETE_PERMANENTLY : ActionType::DELETE_RUBBISH);
-    emit itemsAboutToBeMoved(nodeHandles, type);
+    emit itemsAboutToBeMoved(nodeHandles, 0, type);
 
     // It will be unblocked when all requestFinish calls are received (check onRequestFinish)
     QtConcurrent::run(
@@ -2051,21 +2048,21 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
                     if (mMovedItemsType.testFlag(MovedItemsType::NONE) ||
                         mMovedItemsType.testFlag(MovedItemsType::BOTH))
                     {
-                        msgInfo.text = tr("Error removing items");
+                        msgInfo.text = tr("Error deleting items");
                         msgInfo.informativeText =
-                            tr("The items couldn´t be removed. Try again later");
+                            tr("The items couldn´t be deleted. Try again later");
                     }
                     else if (mMovedItemsType.testFlag(MovedItemsType::FILES))
                     {
-                        msgInfo.text = tr("Error removing files");
+                        msgInfo.text = tr("Error deleting files");
                         msgInfo.informativeText =
-                            tr("The files couldn´t be removed. Try again later");
+                            tr("The files couldn´t be deleted. Try again later");
                     }
                     else if (mMovedItemsType.testFlag(MovedItemsType::FOLDERS))
                     {
-                        msgInfo.text = tr("Error removing folders");
+                        msgInfo.text = tr("Error deleting folders");
                         msgInfo.informativeText =
-                            tr("The folders couldn´t be removed. Try again later");
+                            tr("The folders couldn´t be deleted. Try again later");
                     }
                 }
                 else
@@ -2075,16 +2072,16 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
 
                     if (node->isFile())
                     {
-                        msgInfo.text = tr("Error removing file");
+                        msgInfo.text = tr("Error deleting file");
                         msgInfo.informativeText =
-                            tr("The file %1 couldn’t be removed. Try again later")
+                            tr("The file %1 couldn’t be deleted. Try again later")
                                 .arg(MegaNodeNames::getNodeName(node.get()));
                     }
                     else
                     {
-                        msgInfo.text = tr("Error removing folder");
+                        msgInfo.text = tr("Error deleting folder");
                         msgInfo.informativeText =
-                            tr("The folder %1 couldn’t be removed. Try again later")
+                            tr("The folder %1 couldn’t be deleted. Try again later")
                                 .arg(MegaNodeNames::getNodeName(node.get()));
                     }
                 }
@@ -2093,7 +2090,9 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
             // Show dialog
             emit showMessageBox(msgInfo);
 
-            emit itemsAboutToBeMovedFailed(mExpectedNodesUpdate, requestType);
+            emit itemsAboutToBeMovedFailed(mExpectedNodesUpdateOnSource,
+                                           mExtraExpectedNodesUpdateOnTarget,
+                                           requestType);
 
             // Reset value
             mRequestFailedByHandle.clear();

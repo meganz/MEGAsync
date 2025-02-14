@@ -222,7 +222,7 @@ private:
     QMultiMap<mega::MegaHandle, std::shared_ptr<mega::MegaNode>> mAddedNodesByParentHandle;
     QSet<mega::MegaHandle> mRemovedNodes;
     QSet<mega::MegaHandle> mRemoveMovedNodes;
-    QList<mega::MegaHandle> mUpdatedButInvisibleNodes;
+    QMap<mega::MegaHandle, uint64_t> mUpdatedButInvisibleNodes;
     QList<mega::MegaHandle> mMovedHandlesToSelect;
 
     QTimer mNodesUpdateTimer;

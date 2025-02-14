@@ -760,17 +760,13 @@ bool NodeSelectorModelRubbish::canDropMimeData(const QMimeData* data,
                         {
                             return true;
                         }
-                        else
-                        {
-                            return checkDraggedMimeData(data);
-                        }
                     }
                 }
             }
         }
 
         // Allow copying/moving items to all the view space
-        return true;
+        return checkDraggedMimeData(data);
     }
 
     return false;

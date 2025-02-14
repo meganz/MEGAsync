@@ -82,6 +82,7 @@ protected:
     };
 
     void performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
+                               int extraUpdateNodesOnTarget,
                                IncreaseOrDecrease type,
                                bool blockSource,
                                bool blockTarget);
@@ -110,8 +111,12 @@ protected slots:
         Q_UNUSED(id)
     }
 
-    virtual void onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles, int actionType);
-    virtual void onItemsAboutToBeMovedFailed(const QList<mega::MegaHandle>& handles, int type);
+    virtual void onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles,
+                                       int extraUpdateNodesOnTarget,
+                                       int actionType);
+    virtual void onItemsAboutToBeMovedFailed(const QList<mega::MegaHandle>& handles,
+                                             int extraUpdateNodesOnTarget,
+                                             int type);
 
     virtual void onMergeItemsAboutToBeMoved(mega::MegaHandle, int) {}
 

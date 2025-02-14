@@ -363,8 +363,12 @@ signals:
     void allNodeRequestsFinished();
     void modelIsBeingModifiedChanged(bool status);
     void itemsMoved();
-    void itemsAboutToBeMoved(const QList<mega::MegaHandle> handles, int actionType);
-    void itemsAboutToBeMovedFailed(const QList<mega::MegaHandle> handles, int actionType);
+    void itemsAboutToBeMoved(const QList<mega::MegaHandle> handles,
+                             int extraUpdateNodesOnTarget,
+                             int actionType);
+    void itemsAboutToBeMovedFailed(const QList<mega::MegaHandle> handles,
+                                   int extraUpdateNodesOnTarget,
+                                   int actionType);
     void mergeItemAboutToBeMoved(mega::MegaHandle handle, int type);
     void finishAsyncRequest(mega::MegaHandle handle, int error);
 
@@ -434,7 +438,8 @@ private:
 
     // Variables related to move (including moving to rubbish bin or remove)
     QMap<mega::MegaHandle, int> mRequestByHandle;
-    QList<mega::MegaHandle> mExpectedNodesUpdate;
+    int mExtraExpectedNodesUpdateOnTarget;
+    QList<mega::MegaHandle> mExpectedNodesUpdateOnSource;
     QMap<mega::MegaHandle, int> mRequestFailedByHandle;
     MovedItemsTypes mMovedItemsType;
 
