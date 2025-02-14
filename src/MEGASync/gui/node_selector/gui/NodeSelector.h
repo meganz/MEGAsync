@@ -11,6 +11,7 @@
 #include <QTimer>
 
 #include <memory>
+#include <optional>
 
 class NodeSelectorProxyModel;
 class NodeSelectorModel;
