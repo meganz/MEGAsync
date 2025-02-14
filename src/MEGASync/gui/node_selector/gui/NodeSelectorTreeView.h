@@ -9,6 +9,8 @@
 #include <QShortcut>
 #include <QTreeView>
 
+#include <optional>
+
 class NodeSelectorProxyModel;
 class NodeSelectorModel;
 
