@@ -812,7 +812,7 @@ bool NodeSelectorModel::checkDraggedMimeData(const QMimeData* data) const
 
     while (!stream.atEnd())
     {
-        mega::MegaHandle handle;
+        quint64 handle;
         stream >> handle;
 
         if (Utilities::getNodeAccess(handle) < mega::MegaShare::ACCESS_FULL)
