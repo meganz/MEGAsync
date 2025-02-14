@@ -454,8 +454,9 @@ private:
     // Current root index
     QModelIndex mCurrentRootIndex;
     QModelIndex mPreviousRootIndex;
-    bool mRowAdded;
-    bool mRowRemoved;
+    bool mExtraSpaceAdded;
+    bool mExtraSpaceRemoved;
+    bool mRemovingPreviousExtraSpace;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaNodeList>)

@@ -492,8 +492,9 @@ NodeSelectorModel::NodeSelectorModel(QObject* parent):
     mAcceptDragAndDrop(false),
     mMoveRequestsCounter(0),
     mAddNodesQueue(this),
-    mRowAdded(false),
-    mRowRemoved(false)
+    mExtraSpaceAdded(false),
+    mExtraSpaceRemoved(false),
+    mRemovingPreviousExtraSpace(false)
 {
     mCameraFolderAttribute = UserAttributes::CameraUploadFolder::requestCameraUploadFolder();
     mMyChatFilesFolderAttribute = UserAttributes::MyChatFilesFolder::requestMyChatFilesFolder();
@@ -590,24 +591,28 @@ void NodeSelectorModel::executeExtraSpaceLogic()
     if (canDropMimeData())
     {
         // Remove the previous current index extra row
-        if (mPreviousRootIndex.isValid() && !mRowRemoved)
+        if (mPreviousRootIndex.isValid() && !mExtraSpaceRemoved)
         {
-            auto totalRows = rowCount(mPreviousRootIndex);
-            beginRemoveRows(mPreviousRootIndex, totalRows, totalRows);
+            mRemovingPreviousExtraSpace = true;
+
+            auto lastRow = rowCount(mPreviousRootIndex) - 1;
+            beginRemoveRows(mPreviousRootIndex, lastRow, lastRow);
             endRemoveRows();
-            mRowRemoved = true;
+
+            mRemovingPreviousExtraSpace = false;
+            mExtraSpaceRemoved = true;
         }
 
         NodeSelectorModelItem* item =
             static_cast<NodeSelectorModelItem*>(mCurrentRootIndex.internalPointer());
         if (item && item->areChildrenInitialized())
         {
-            if (mCurrentRootIndex.isValid() && !mRowAdded)
+            if (mCurrentRootIndex.isValid() && !mExtraSpaceAdded)
             {
                 auto totalRows = rowCount(mCurrentRootIndex);
                 beginInsertRows(mCurrentRootIndex, totalRows, totalRows);
                 endInsertRows();
-                mRowAdded = true;
+                mExtraSpaceAdded = true;
             }
         }
     }
@@ -1362,6 +1367,11 @@ int NodeSelectorModel::rowCount(const QModelIndex &parent) const
         NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
         rows = item ? item->getNumChildren() : 0;
         mNodeRequesterWorker->lockDataMutex(false);
+
+        if (mRemovingPreviousExtraSpace && parent == mPreviousRootIndex)
+        {
+            rows++;
+        }
     }
     else
     {
@@ -2328,8 +2338,8 @@ void NodeSelectorModel::setCurrentRootIndex(const QModelIndex& rootIndex)
     mPreviousRootIndex = mCurrentRootIndex;
     mCurrentRootIndex = rootIndex.isValid() ? rootIndex : getTopRootIndex();
 
-    mRowAdded = false;
-    mRowRemoved = false;
+    mExtraSpaceAdded = false;
+    mExtraSpaceRemoved = false;
 
     executeExtraSpaceLogic();
 }
