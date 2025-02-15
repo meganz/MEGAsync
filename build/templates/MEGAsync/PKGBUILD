@@ -68,7 +68,7 @@ build() {
 		vcpkg_root="-DVCPKG_ROOT=${megasrcdir}/vcpkg"
 	fi
 
-	cmake ${vcpkg_root} -DENABLE_DESKTOP_UPDATE_GEN=OFF -DENABLE_DESIGN_TOKENS_IMPORTER=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -S "${megasrcdir}" -B "${megabuilddir}"
+	cmake ${vcpkg_root} -DENABLE_DESKTOP_UPDATE_GEN=OFF -DENABLE_DESIGN_TOKENS_IMPORTER=OFF -DENABLE_DESKTOP_APP_TESTS=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -S "${megasrcdir}" -B "${megabuilddir}"
 	cmake --build "${megasrcdir}"/build_dir ${BUILD_PARALLEL_JOBS}
 }
 
