@@ -12,10 +12,10 @@ set(DESKTOP_APP_PLATFORM_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/ShellNotifier.cpp
 )
 
-#if (WIN32)
+if (WIN32)
     set(LAF_TOKEN $ENV{LAF_TOKEN})
     configure_file(${CMAKE_CURRENT_LIST_DIR}/win/Laf.h.in ${CMAKE_CURRENT_LIST_DIR}/win/Laf.h @ONLY)
-#endif()
+endif()
 
 target_sources_conditional(${ExecutableTarget}
    FLAG WIN32
