@@ -8353,17 +8353,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Sync folders in your local device with MEGA.</source>
-        <translatorcomment>Page description to add syncs. CON-???</translatorcomment>
+        <translatorcomment>Page description to add syncs. CON-1268</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sync: Select folders</source>
-        <translatorcomment>Left pane current state literal. CON-???</translatorcomment>
+        <translatorcomment>Left pane current state literal. CON-1268</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select folders to sync</source>
-        <translatorcomment>Page title to add syncs. CON-???</translatorcomment>
+        <translatorcomment>Page title to add syncs. CON-1268</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
