@@ -36,6 +36,7 @@ private:
     bool mForceClose;
     bool mCreatingAccount;
 
+    void requestPinOnTaskbar() const;
 };
 
 #endif // ONBOARDINGQMLDIALOG_H

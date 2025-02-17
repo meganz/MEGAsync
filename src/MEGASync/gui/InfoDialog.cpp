@@ -25,21 +25,17 @@
 #include <QRect>
 #include <QScrollBar>
 #include <QSignalMapper>
+#include <QtConcurrent/QtConcurrent>
 #include <QTimer>
 #include <QToolTip>
 #include <QUrl>
 #include <QVBoxLayout>
 
 #include <cassert>
-
-#ifdef _WIN32
 #include <chrono>
-using namespace std::chrono;
-#endif
-
-#include <QtConcurrent/QtConcurrent>
 
 using namespace mega;
+using namespace std::chrono;
 
 static constexpr int DEFAULT_MIN_PERCENTAGE{1};
 static constexpr int FONT_SIZE_BUSINESS_PX{20};
@@ -351,6 +347,11 @@ void InfoDialog::showEvent(QShowEvent *event)
     app->getNotificationController()->requestNotifications();
 
     repositionInfoDialog();
+
+    if (mPreferences->logged())
+    {
+        startRequestTaskbarPinningTimer();
+    }
 
     QDialog::showEvent(event);
 }
@@ -1767,4 +1768,25 @@ void InfoDialog::initNotificationArea()
     });
 
     notificationsReady = true;
+}
+
+void InfoDialog::startRequestTaskbarPinningTimer()
+{
+    auto preferences = Preferences::instance();
+    if (!preferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_REQUEST_PIN_TASKBAR))
+    {
+        mRequestTaskbarPinning = new QTimer(this);
+        connect(mRequestTaskbarPinning, &QTimer::timeout, this, &InfoDialog::requestTaskbarPinning);
+        mRequestTaskbarPinning->start(2s);
+    }
+}
+
+void InfoDialog::requestTaskbarPinning()
+{
+    mRequestTaskbarPinning->stop();
+
+    if (isShown)
+    {
+        Platform::getInstance()->pinOnTaskbar();
+    }
 }

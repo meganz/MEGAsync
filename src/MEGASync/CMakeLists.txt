@@ -42,6 +42,7 @@ set(MEGA_DESKTOP_APP_SOURCES
 if (WIN32)
     set(RESOURCE_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/icon.rc
+        ${CMAKE_CURRENT_SOURCE_DIR}/config.rc
     )
 elseif (APPLE)
     set(RESOURCE_FILES

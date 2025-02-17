@@ -1,0 +1,4 @@
+#include <windows.h>
+
+Identity LimitedAccessFeature { L"MEGAsync_x4jagz123a1p0" }
+
