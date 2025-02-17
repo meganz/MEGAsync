@@ -56,6 +56,7 @@ const QString Utilities::SYNC_SUPPORT_URL =
 const QString Utilities::DESKTOP_APP_URL = QString::fromLatin1("https://mega.io/desktop#download");
 
 const QLatin1String CASE_SENSITIVE_FOLDER = QLatin1String(".case_sensitive");
+const int CASE_SENSITIVE_FOLDER_NUMBER = 2;
 
 const long long KB = 1024;
 const long long MB = 1024 * KB;
@@ -1406,21 +1407,33 @@ Qt::CaseSensitivity Utilities::isCaseSensitive(const QString& folder)
     Qt::CaseSensitivity caseSensitivity(Qt::CaseInsensitive);
 
     QDir tempPath(folder);
+
     // Creates the folder if it does not exist but it also returns true if it already exists
     if (tempPath.mkpath(QLatin1String(CASE_SENSITIVE_FOLDER)))
     {
         tempPath.cd(QLatin1String(CASE_SENSITIVE_FOLDER));
 
-        QFile file_lower_case(tempPath.path());
-        file_lower_case.setFileName(QLatin1String("mega"));
+        // Create lower case file
+        QFile file_lower_case(tempPath.absoluteFilePath(QLatin1String("mega")));
+        file_lower_case.open(QFile::ReadWrite);
 
-        QFile file_upper_case(tempPath.path());
-        file_upper_case.setFileName(QLatin1String("MEGA"));
+        // Create upper case file
+        QFile file_upper_case(tempPath.absoluteFilePath(QLatin1String("MEGA")));
+        file_upper_case.open(QFile::ReadWrite);
+
+        // Check if both files have been created
+        QDirIterator filesIt(tempPath.absolutePath(),
+                             QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
+                             QDirIterator::NoIteratorFlags);
+        auto counter(0);
+        while (filesIt.hasNext())
+        {
+            filesIt.next();
+            counter++;
+        }
 
         caseSensitivity =
-            file_lower_case.open(QFile::ReadWrite) && file_upper_case.open(QFile::ReadWrite) ?
-                Qt::CaseSensitive :
-                Qt::CaseInsensitive;
+            counter == CASE_SENSITIVE_FOLDER_NUMBER ? Qt::CaseSensitive : Qt::CaseInsensitive;
 
         tempPath.removeRecursively();
     }
