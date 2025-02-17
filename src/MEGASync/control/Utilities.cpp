@@ -55,11 +55,7 @@ const QString Utilities::SYNC_SUPPORT_URL =
     QString::fromLatin1("https://help.mega.io/installs-apps/desktop/how-does-syncing-work");
 const QString Utilities::DESKTOP_APP_URL = QString::fromLatin1("https://mega.io/desktop#download");
 
-#ifdef Q_OS_WINDOWS
-const QLatin1String CASE_SENSITIVE_FOLDER = QLatin1String("case_sensitive");
-#else
 const QLatin1String CASE_SENSITIVE_FOLDER = QLatin1String(".case_sensitive");
-#endif
 const int CASE_SENSITIVE_FOLDER_NUMBER = 2;
 
 const long long KB = 1024;
