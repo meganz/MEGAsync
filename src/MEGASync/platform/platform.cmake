@@ -12,10 +12,10 @@ set(DESKTOP_APP_PLATFORM_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/ShellNotifier.cpp
 )
 
-if (WIN32)
+#if (WIN32)
     set(LAF_TOKEN $ENV{LAF_TOKEN})
-    configure_file(platform/win/Laf.h.in platform/win/Laf.h @ONLY)
-endif()
+    configure_file(${CMAKE_CURRENT_LIST_DIR}/win/Laf.h.in ${CMAKE_CURRENT_LIST_DIR}/win/Laf.h @ONLY)
+#endif()
 
 target_sources_conditional(${ExecutableTarget}
    FLAG WIN32
@@ -37,6 +37,7 @@ target_sources_conditional(${ExecutableTarget}
    ${CMAKE_CURRENT_LIST_DIR}/win/WinTrayReceiver.cpp
    ${CMAKE_CURRENT_LIST_DIR}/win/wintoastlib.cpp
    ${CMAKE_CURRENT_LIST_DIR}/win/PowerOptions.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/win/PlatformStrings.cpp
    ${CMAKE_CURRENT_LIST_DIR}/win/DesktopManager.cpp
    ${CMAKE_CURRENT_LIST_DIR}/win/Laf.h.in
 )
@@ -133,11 +134,10 @@ target_sources(${ExecutableTarget}
 
 set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}
-    ${CMAKE_CURRENT_LIST_DIR}/platform
-    ${CMAKE_CURRENT_LIST_DIR}/platform/linux
-    ${CMAKE_CURRENT_LIST_DIR}/platform/mac
-    ${CMAKE_CURRENT_LIST_DIR}/platform/win
-    ${CMAKE_CURRENT_BINARY_DIR}/platform/win
+    ${CMAKE_CURRENT_LIST_DIR}/linux
+    ${CMAKE_CURRENT_LIST_DIR}/mac
+    ${CMAKE_CURRENT_LIST_DIR}/win
+    ${CMAKE_CURRENT_BINARY_DIR}/win
 )
 target_include_directories(${ExecutableTarget} PRIVATE ${INCLUDE_DIRECTORIES})
 
