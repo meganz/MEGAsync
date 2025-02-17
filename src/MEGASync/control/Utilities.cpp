@@ -55,7 +55,11 @@ const QString Utilities::SYNC_SUPPORT_URL =
     QString::fromLatin1("https://help.mega.io/installs-apps/desktop/how-does-syncing-work");
 const QString Utilities::DESKTOP_APP_URL = QString::fromLatin1("https://mega.io/desktop#download");
 
+#ifdef Q_OS_WINDOWS
+const QLatin1String CASE_SENSITIVE_FOLDER = QLatin1String("case_sensitive");
+#else
 const QLatin1String CASE_SENSITIVE_FOLDER = QLatin1String(".case_sensitive");
+#endif
 const int CASE_SENSITIVE_FOLDER_NUMBER = 2;
 
 const long long KB = 1024;
@@ -1402,6 +1406,7 @@ QString Utilities::getNodePath(MegaTransfer* transfer)
     return QString::fromUtf8(transfer->getParentPath()) + QString::fromUtf8(transfer->getFileName());
 }
 
+// Case sensitivity may be change on an specific directory
 Qt::CaseSensitivity Utilities::isCaseSensitive(const QString& folder)
 {
     Qt::CaseSensitivity caseSensitivity(Qt::CaseInsensitive);
@@ -1413,13 +1418,27 @@ Qt::CaseSensitivity Utilities::isCaseSensitive(const QString& folder)
     {
         tempPath.cd(QLatin1String(CASE_SENSITIVE_FOLDER));
 
+#ifdef Q_OS_WINDOWS
+        // macOS and Linux are automatically hidden as the name starts with a dot
+        auto pathString(tempPath.absolutePath().toStdString());
+        std::wstring stemp = std::wstring(pathString.begin(), pathString.end());
+        LPCWSTR path = stemp.c_str();
+        int attr = GetFileAttributes(path);
+        if ((attr & FILE_ATTRIBUTE_HIDDEN) == 0)
+        {
+            SetFileAttributes(path, FILE_ATTRIBUTE_HIDDEN);
+        }
+#endif
+
         // Create lower case file
         QFile file_lower_case(tempPath.absoluteFilePath(QLatin1String("mega")));
         file_lower_case.open(QFile::ReadWrite);
+        file_lower_case.close();
 
         // Create upper case file
         QFile file_upper_case(tempPath.absoluteFilePath(QLatin1String("MEGA")));
         file_upper_case.open(QFile::ReadWrite);
+        file_upper_case.close();
 
         // Check if both files have been created
         QDirIterator filesIt(tempPath.absolutePath(),
