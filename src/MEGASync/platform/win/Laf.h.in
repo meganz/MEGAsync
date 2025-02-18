@@ -1,1 +1,1 @@
-#cmakedefine LAF_TOKEN L"@LAF_TOKEN@"s
+#define LAF_TOKEN L"@LAF_TOKEN@"s
