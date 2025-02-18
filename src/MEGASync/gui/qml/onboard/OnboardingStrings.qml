@@ -13,7 +13,6 @@ QtObject {
     readonly property string changeEmailTitle: qsTr("Change your email address")
     readonly property string deviceName: qsTr("Device name")
     readonly property string deviceNameDescription: qsTr("Add the name of your device.")
-    readonly property string deviceNameTitle: setUpMEGA
     readonly property string confirm: qsTr("Confirm")
     readonly property string confirmBackupFoldersTitle: qsTr("Confirm folders to back up")
     readonly property string confirmEmailTitle: qsTr("Account created")
