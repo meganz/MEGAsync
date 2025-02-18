@@ -2002,6 +2002,19 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
 </context>
 <context>
+    <name>FirstSyncReminderAction</name>
+    <message>
+        <source>You’re almost done</source>
+        <translatorcomment>Title text in O.S. notification to remind that the user can create syncs after few hours (e.g. 2) from the first launch of the application if the user has never created a sync. CON-1207</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set up your first sync and backup to get the most out of the desktop app</source>
+        <translatorcomment>Description text in O.S. notification to remind that the user can create syncs after few hours (e.g. 2) from the first launch of the application if the user has never created a sync. CON-1207</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FolderMatchedAgainstFileHeader</name>
     <message>
         <source>Cannot sync folders against files.</source>
@@ -4324,6 +4337,19 @@ All your completed transfers will be cleared.</translation>
         <source>Some issues couldn&apos;t be resolved.[BR]Check the Issues screen for resolution options, and try to resolve the issues again.</source>
         <translatorcomment>Notification sent when at least one MoveOrRenameCannotOccur has failed. SAT-1016.</translatorcomment>
         <translation>Some issues couldn’t be resolved.[BR]Check the Issues screen for resolution options, and try to resolve the issues again.</translation>
+    </message>
+</context>
+<context>
+    <name>MultiSyncReminderAction</name>
+    <message>
+        <source>Sync your data</source>
+        <translatorcomment>Title text in O.S. notification to remind that the user can create syncs after days or months (e.g. 10 days, 1 month) if the user has never created a sync. CON-1207</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Access your data from anywhere, collaborate with ease, and instantly get the most up-to-date version of your files</source>
+        <translatorcomment>Description text in O.S. notification to remind that the user can create syncs after days or months (e.g. 10 days, 1 month) if the user has never created a sync. CON-1207</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

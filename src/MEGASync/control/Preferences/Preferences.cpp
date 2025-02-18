@@ -263,6 +263,8 @@ const QString Preferences::systemTrayLastPromptTimestamp = QString::fromLatin1("
 const QString Preferences::lastDailyStatTimeKey = QString::fromLatin1("lastDailyStatTimeKey");
 const QString Preferences::askOnExclusionRemove = QString::fromLatin1("askOnExclusionRemove");
 const QString Preferences::themeKey = QString::fromLatin1("themeType");
+const QString Preferences::lastSyncReminderTimeKey = QString::fromLatin1("lastSyncReminderTime");
+const QString Preferences::lastSyncReminderStateKey = QString::fromLatin1("lastSyncReminderState");
 #if defined(ENABLE_SDK_ISOLATED_GFX)
 const QString Preferences::gfxWorkerEndpointKey = QString::fromLatin1("gfxWorkerEndpoint");
 #endif
@@ -1910,6 +1912,26 @@ long long Preferences::lastDailyStatTime()
 void Preferences::setLastDailyStatTime(long long time)
 {
     setValueConcurrently(lastDailyStatTimeKey, time);
+}
+
+long long Preferences::lastSyncReminderTime()
+{
+    return getValueConcurrent<long long>(lastSyncReminderTimeKey, 0);
+}
+
+void Preferences::setSyncReminderTime(long long time)
+{
+    setValueConcurrently(lastSyncReminderTimeKey, time);
+}
+
+int Preferences::lastSyncReminderState()
+{
+    return getValueConcurrent<int>(lastSyncReminderStateKey, 0);
+}
+
+void Preferences::setLastSyncReminderState(int state)
+{
+    setValueConcurrently(lastSyncReminderStateKey, state);
 }
 
 void Preferences::setLastExecutionTime(long long time)

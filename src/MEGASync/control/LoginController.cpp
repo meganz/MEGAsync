@@ -421,9 +421,9 @@ void LoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e)
 
 void LoginController::onboardingFinished()
 {
-    SyncInfo::instance()->rewriteSyncSettings(); //write sync settings into user's preferences
-
+    SyncInfo::instance()->rewriteSyncSettings(); // write sync settings into user's preferences
     MegaSyncApp->onboardingFinished(false);
+    mPreferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN, true);
 }
 
 void LoginController::onAccountCreation(mega::MegaRequest* request, mega::MegaError* e)
@@ -517,7 +517,6 @@ void LoginController::onFetchNodes(mega::MegaRequest* request, mega::MegaError* 
         {                                                                               //and they have first backup or first sync done
             QmlDialogManager::instance()->openOnboardingDialog();
             setState(FETCH_NODES_FINISHED_ONBOARDING);
-            mPreferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN, true);
         }
         else
         {

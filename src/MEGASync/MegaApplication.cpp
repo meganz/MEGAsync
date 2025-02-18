@@ -42,6 +42,8 @@
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
 #include "StreamingFromMegaDialog.h"
+#include "SyncController.h"
+#include "SyncReminderNotificationManager.h"
 #include "SyncsMenu.h"
 #include "TransferMetaData.h"
 #include "UploadToMegaDialog.h"
@@ -136,6 +138,7 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     mDisableGfx(false),
     mUserMessageController(nullptr),
     mGfxProvider(nullptr),
+    mSyncReminderNotificationManager(nullptr),
     misSyncingStateWrongLogged(false)
 {
 #if defined Q_OS_MACX && !defined QT_DEBUG
@@ -1160,7 +1163,6 @@ void MegaApplication::start()
     if (updated)
     {
         showInfoMessage(tr("MEGAsync has been updated"));
-        preferences->setFirstSyncDone();
         preferences->setFirstFileSynced();
         preferences->setFirstBackupDone();
         preferences->setFirstFileBackedUp();
@@ -1472,6 +1474,21 @@ if (!preferences->lastExecutionTime())
     preferences->monitorUserAttributes();
 
     checkOverStorageStates(true);
+
+    if (!preferences->isFirstSyncDone())
+    {
+        bool comesFromOnboarding(
+            !preferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN));
+        mSyncReminderNotificationManager = new SyncReminderNotificationManager(comesFromOnboarding);
+        connect(&SyncController::instance(),
+                &SyncController::syncAddStatus,
+                mSyncReminderNotificationManager,
+                &SyncReminderNotificationManager::onSyncAddRequestStatus);
+        connect(this,
+                &MegaApplication::syncsDialogClosed,
+                mSyncReminderNotificationManager,
+                &SyncReminderNotificationManager::onSyncsDialogClosed);
+    }
 }
 
 void MegaApplication::onLoginFinished()
@@ -1538,6 +1555,7 @@ void MegaApplication::onLogout()
                 DialogOpener::closeAllDialogs();
                 mGfxProvider.reset();
                 mUserMessageController.reset();
+                mSyncReminderNotificationManager->deleteLater();
                 createUserMessageController();
                 infoDialog->deleteLater();
                 infoDialog = nullptr;
@@ -2244,6 +2262,7 @@ void MegaApplication::cleanAll()
 
     mGfxProvider.reset();
     mUserMessageController.reset();
+    mSyncReminderNotificationManager->deleteLater();
     infoDialog->deleteLater();
 
     // Delete menus and menu items
