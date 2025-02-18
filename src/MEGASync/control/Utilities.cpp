@@ -55,8 +55,6 @@ const QString Utilities::SYNC_SUPPORT_URL =
     QString::fromLatin1("https://help.mega.io/installs-apps/desktop/how-does-syncing-work");
 const QString Utilities::DESKTOP_APP_URL = QString::fromLatin1("https://mega.io/desktop#download");
 
-const QLatin1String CASE_SENSITIVE_FOLDER = QLatin1String(".case_sensitive");
-
 const long long KB = 1024;
 const long long MB = 1024 * KB;
 const long long GB = 1024 * MB;
@@ -1401,26 +1399,39 @@ QString Utilities::getNodePath(MegaTransfer* transfer)
     return QString::fromUtf8(transfer->getParentPath()) + QString::fromUtf8(transfer->getFileName());
 }
 
+// Start of case sensitivity detection logic
 Qt::CaseSensitivity Utilities::isCaseSensitive(const QString& folder)
 {
     Qt::CaseSensitivity caseSensitivity(Qt::CaseInsensitive);
 
     QDir tempPath(folder);
+
+    const QLatin1String CASE_SENSITIVE_FOLDER = QLatin1String(".case_sensitive");
     // Creates the folder if it does not exist but it also returns true if it already exists
     if (tempPath.mkpath(QLatin1String(CASE_SENSITIVE_FOLDER)))
     {
         tempPath.cd(QLatin1String(CASE_SENSITIVE_FOLDER));
 
-        QFile file_lower_case(tempPath.path());
-        file_lower_case.setFileName(QLatin1String("mega"));
+#ifdef Q_OS_WINDOWS
+        // macOS and Linux are automatically hidden as the name starts with a dot
+        auto pathString(tempPath.absolutePath().toStdString());
+        std::wstring stemp = std::wstring(pathString.begin(), pathString.end());
+        LPCWSTR path = stemp.c_str();
+        int attr = GetFileAttributes(path);
+        if ((attr & FILE_ATTRIBUTE_HIDDEN) == 0)
+        {
+            SetFileAttributes(path, FILE_ATTRIBUTE_HIDDEN);
+        }
+#endif
+        // Create lower case file
+        createFile(tempPath, QLatin1String("mega"));
+        createFile(tempPath, QLatin1String("MEGA"));
 
-        QFile file_upper_case(tempPath.path());
-        file_upper_case.setFileName(QLatin1String("MEGA"));
-
-        caseSensitivity =
-            file_lower_case.open(QFile::ReadWrite) && file_upper_case.open(QFile::ReadWrite) ?
-                Qt::CaseSensitive :
-                Qt::CaseInsensitive;
+        // Check if both files have been created
+        const int FILE_COUNT_FOR_CASE_SENSITIVE_CASE = 2;
+        caseSensitivity = getFileCount(tempPath) == FILE_COUNT_FOR_CASE_SENSITIVE_CASE ?
+                              Qt::CaseSensitive :
+                              Qt::CaseInsensitive;
 
         tempPath.removeRecursively();
     }
@@ -1428,6 +1439,31 @@ Qt::CaseSensitivity Utilities::isCaseSensitive(const QString& folder)
     return caseSensitivity;
 }
 
+void Utilities::createFile(const QDir& path, const QString& filename)
+{
+    QFile file(path.absoluteFilePath(filename));
+    file.open(QFile::ReadWrite);
+    file.close();
+}
+
+uint8_t Utilities::getFileCount(QDir path)
+{
+    QDirIterator filesIt(path.absolutePath(),
+                         QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
+                         QDirIterator::NoIteratorFlags);
+    uint8_t counter(0);
+
+    while (filesIt.hasNext())
+    {
+        filesIt.next();
+        counter++;
+    }
+
+    return counter;
+}
+
+// End of case sensitivity detection logic
+/////////////////////////////////////////////////////
 bool Utilities::isBusinessAccount()
 {
     int accountType = Preferences::instance()->accountType();

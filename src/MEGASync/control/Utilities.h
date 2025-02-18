@@ -393,7 +393,7 @@ public:
     //get mega transfer nodepath
     static QString getNodePath(mega::MegaTransfer* transfer);
 
-    // Folder is on a case sensitive drive/OS
+    // Detect folder case sensitivity utils
     static Qt::CaseSensitivity isCaseSensitive(const QString& folder);
 
     //Check is current account is business (either business or flexi pro)
@@ -439,7 +439,12 @@ private:
 
     static long long getNearestUnit(long long bytes);
 
-//Platform dependent functions
+    // Detect folder case sensitivity utils
+    static void createFile(const QDir& path, const QString& filename);
+    static uint8_t getFileCount(QDir path);
+
+    // Platform dependent functions
+
 public:
     static QString languageCodeToString(QString code);
     static QString getAvatarPath(QString email);
