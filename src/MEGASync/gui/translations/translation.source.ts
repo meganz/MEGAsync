@@ -5066,11 +5066,6 @@ Enter a different name.</translation>
         <translation>Creating account…</translation>
     </message>
     <message>
-        <source>Data from your device will automatically and consistently back up to MEGA in real-time.</source>
-        <translatorcomment>Button description, on click it goes to the backups section CON-468</translatorcomment>
-        <translation>Data from your device will automatically and consistently back up to MEGA in real-time.</translation>
-    </message>
-    <message>
         <source>Device name</source>
         <translatorcomment>Device name window title CON-467</translatorcomment>
         <translation>Device name</translation>
@@ -5331,11 +5326,6 @@ Enter a different name.</translation>
         <translation>Sync set up</translation>
     </message>
     <message>
-        <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
-        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>Sync your device with MEGA, and any local changes will automatically and instantly apply to MEGA and vice versa.</translation>
-    </message>
-    <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to choose sync type button description CON-467</translatorcomment>
         <translation>Sync your files between your computers with MEGA; any change from one side will apply to the other side.</translation>
@@ -5419,6 +5409,16 @@ Enter a different name.</translation>
         <source>[B]Select all[/B]</source>
         <translatorcomment>Backups table checkbox text to select all lines in the table CON-466</translatorcomment>
         <translation>[B]Select all[/B]</translation>
+    </message>
+    <message>
+        <source>Data from your device will automatically and consistently back up to MEGA in real-time. Files deleted from your computer will be deleted from MEGA.</source>
+        <translatorcomment>Button description, on click it goes to the backups section CON-1268<translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Access the latest version of your files from anywhere. Changes made to synced files will automatically update in both directions.</source>
+        <translatorcomment>Selective sync button text description CON-1268</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8352,19 +8352,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Add sync</translation>
     </message>
     <message>
-        <source>Sync folders in your local device with MEGA.</source>
+        <source>Select folders to sync</source>
+        <translatorcomment>Page title to add syncs. CON-1268</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Changes made to synced folders in MEGA or on your device will automatically update in both directions.</source>
         <translatorcomment>Page description to add syncs. CON-1268</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sync: Select folders</source>
+        <source>Select folders</source>
         <translatorcomment>Left pane current state literal. CON-1268</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select folders to sync</source>
-        <translatorcomment>Page title to add syncs. CON-1268</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Select folders</translation>
     </message>
 </context>
 <context>

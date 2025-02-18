@@ -10,9 +10,9 @@ QtObject {
     readonly property string invalidRemotePath: qsTranslate("OnboardingStrings", "Select a MEGA folder to sync.")
     readonly property string selectLocalFolder: qsTranslate("OnboardingStrings", "Select a local folder")
     readonly property string selectMEGAFolder: qsTranslate("OnboardingStrings", "Select a MEGA folder")
-    readonly property string selectiveSyncDescription: qsTr("Sync folders in your local device with MEGA.")
+    readonly property string selectiveSyncDescription: qsTr("Changes made to synced folders in MEGA or on your device will automatically update in both directions.")
     readonly property string selectiveSyncTitle: qsTr("Select folders to sync")
-    readonly property string selectFolders: qsTr("Sync: Select folders")
+    readonly property string selectFolders: qsTr("Select folders")
     readonly property string sync: qsTranslate("OnboardingStrings", "Sync")
     readonly property string syncsWindowTitle: qsTr("Add sync")
     readonly property string confirm: qsTranslate("OnboardingStrings", "Confirm");
