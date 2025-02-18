@@ -5412,7 +5412,7 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>Data from your device will automatically and consistently back up to MEGA in real-time. Files deleted from your computer will be deleted from MEGA.</source>
-        <translatorcomment>Button description, on click it goes to the backups section CON-1268<translatorcomment>
+        <translatorcomment>Button description, on click it goes to the backups section CON-1268</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
