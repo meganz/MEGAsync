@@ -64,6 +64,16 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
         msgBox->setInformativeText(info.informativeText);
         msgBox->setTextFormat(info.textFormat);
         msgBox->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
+
+#ifdef Q_OS_MAC
+        if (!info.parent && info.textFormat == Qt::PlainText)
+        {
+            // Using QMessageBox without parent in macOS, forces the text to bold.
+            // Avoid displaying text in bold format.
+            msgBox->setStyleSheet(QStringLiteral("QLabel{font-weight: normal;}"));
+        }
+#endif
+
         if(info.checkBox)
         {
 #ifdef Q_OS_MACOS
