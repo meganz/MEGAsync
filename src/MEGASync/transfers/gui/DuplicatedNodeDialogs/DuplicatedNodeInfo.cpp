@@ -173,6 +173,11 @@ bool DuplicatedMoveNodeInfo::sourceItemIsFile() const
     return mSourceItemNode->isFile();
 }
 
+std::shared_ptr<mega::MegaNode> DuplicatedMoveNodeInfo::getSourceItemNode() const
+{
+    return mSourceItemNode;
+}
+
 std::shared_ptr<ConflictTypes> CheckDuplicatedNodes::checkMoves(
     QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>> handlesAndTargetNode,
     std::shared_ptr<mega::MegaNode> sourceNode)
@@ -193,6 +198,8 @@ std::shared_ptr<ConflictTypes> CheckDuplicatedNodes::checkMoves(
         auto moveHandleAndTarget(handlesAndTargetNode.takeFirst());
 
         auto moveHandle(moveHandleAndTarget.first);
+
+        std::shared_ptr<mega::MegaNode> foundNode;
 
         std::shared_ptr<mega::MegaNode> moveNode(
             MegaSyncApp->getMegaApi()->getNodeByHandle(moveHandle));
@@ -217,34 +224,36 @@ std::shared_ptr<ConflictTypes> CheckDuplicatedNodes::checkMoves(
         info->setSourceItemHandle(moveHandle);
 
         auto targetNode(moveHandleAndTarget.second);
-        if (!targetNode)
-        {
-            continue;
-        }
         info->setParentNode(targetNode);
 
-        QHash<QString, std::shared_ptr<mega::MegaNode>> nodesOnCloudDrive;
-
-        if (nodesOnCloudDriveByParentHandle.contains(targetNode->getHandle()))
+        // The rubbish accepts duplicate nodes
+        if (targetNode && (targetNode->getHandle() != MegaSyncApp->getRubbishNode()->getHandle() &&
+                           !MegaSyncApp->getMegaApi()->isInRubbish(targetNode.get())))
         {
-            nodesOnCloudDrive = nodesOnCloudDriveByParentHandle.value(targetNode->getHandle());
-        }
-        else
-        {
-            std::unique_ptr<mega::MegaNodeList> childNodes(
-                MegaSyncApp->getMegaApi()->getChildren(targetNode.get()));
+            QHash<QString, std::shared_ptr<mega::MegaNode>> nodesOnCloudDrive;
 
-            for (int index = 0; index < childNodes->size(); ++index)
+            if (nodesOnCloudDriveByParentHandle.contains(targetNode->getHandle()))
             {
-                std::shared_ptr<mega::MegaNode> node(childNodes->get(index)->copy());
-                QString nodeName(QString::fromUtf8(node->getName()));
-                nodesOnCloudDrive.insert(nodeName, node);
+                nodesOnCloudDrive = nodesOnCloudDriveByParentHandle.value(targetNode->getHandle());
+            }
+            else
+            {
+                std::unique_ptr<mega::MegaNodeList> childNodes(
+                    MegaSyncApp->getMegaApi()->getChildren(targetNode.get()));
+
+                for (int index = 0; index < childNodes->size(); ++index)
+                {
+                    std::shared_ptr<mega::MegaNode> node(childNodes->get(index)->copy());
+                    QString nodeName(QString::fromUtf8(node->getName()));
+                    nodesOnCloudDrive.insert(nodeName, node);
+                }
+
+                nodesOnCloudDriveByParentHandle.insert(targetNode->getHandle(), nodesOnCloudDrive);
             }
 
-            nodesOnCloudDriveByParentHandle.insert(targetNode->getHandle(), nodesOnCloudDrive);
+            foundNode = nodesOnCloudDrive.value(moveNodeName);
         }
 
-        auto foundNode(nodesOnCloudDrive.value(moveNodeName));
         if (foundNode)
         {
             info->setConflictNode(foundNode);
@@ -256,7 +265,11 @@ std::shared_ptr<ConflictTypes> CheckDuplicatedNodes::checkMoves(
         }
         else
         {
-            nodesOnCloudDriveByParentHandle[targetNode->getHandle()].insert(moveNodeName, moveNode);
+            if (targetNode)
+            {
+                nodesOnCloudDriveByParentHandle[targetNode->getHandle()].insert(moveNodeName,
+                                                                                moveNode);
+            }
             conflicts->mResolvedConflicts.append(info);
         }
 

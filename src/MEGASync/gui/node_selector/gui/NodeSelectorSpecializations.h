@@ -82,6 +82,9 @@ protected slots:
                                      int extraUpdateNodesOnTarget,
                                      int type) override;
     void onMergeItemsAboutToBeMoved(mega::MegaHandle handle, int type) override;
+    void onItemsAboutToBeRestored(const QSet<mega::MegaHandle>& targetHandles) override;
+
+    void onMergeFinished(mega::MegaHandle handle) override;
 
 private:
     void onOkButtonClicked() override;
@@ -89,6 +92,15 @@ private:
                           int extraUpdateNodesOnTarget,
                           int moveType,
                           NodeSelector::IncreaseOrDecrease type);
+
+    struct HandlesByTab
+    {
+        QList<mega::MegaHandle> cloudDriveNodes;
+        QList<mega::MegaHandle> incomingSharedNodes;
+    };
+
+    HandlesByTab getTabs(const QList<mega::MegaHandle>& handles);
+    void selectTabs(const HandlesByTab& tabsInfo);
 
     QWidget* mDragBackDrop;
 };

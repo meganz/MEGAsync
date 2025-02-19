@@ -67,6 +67,8 @@ public:
     bool requestingChildren() const;
     void setRequestingChildren(bool newRequestingChildren);
 
+    void resetChildrenCounter();
+
 signals:
     void infoUpdated(int role);
     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);

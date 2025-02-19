@@ -480,7 +480,6 @@ void NodeRequester::onSearchItemTypeChanged(NodeSelectorModelItemSearch::Types t
 
 const int NodeSelectorModel::ROW_HEIGHT = 25;
 const QString MIME_DATA_INTERNAL_MOVE = QLatin1String("application/node_move");
-const int PROTECTION_INTERVAL = 10000; /*10 seconds*/
 
 NodeSelectorModel::NodeSelectorModel(QObject* parent):
     QAbstractItemModel(parent),
@@ -537,7 +536,6 @@ NodeSelectorModel::NodeSelectorModel(QObject* parent):
     qRegisterMetaType<mega::MegaHandle>("mega::MegaHandle");
 
     protectModelWhenPerformingActions();
-    protectModelAgainstUpdateBlockingState();
 
     mListener = RequestListenerManager::instance().registerAndGetFinishListener(this, false);
 
@@ -574,16 +572,6 @@ void NodeSelectorModel::protectModelWhenPerformingActions()
     connect(this, &NodeSelectorModel::rowsRemoved, unprotectModel);
     connect(this, &NodeSelectorModel::modelReset, unprotectModel);
     connect(this, &NodeSelectorModel::rowsMoved, unprotectModel);
-}
-
-void NodeSelectorModel::protectModelAgainstUpdateBlockingState()
-{
-    mProtectionAgainstBlockedStateWhileUpdating.setInterval(PROTECTION_INTERVAL);
-    mProtectionAgainstBlockedStateWhileUpdating.setSingleShot(true);
-    connect(&mProtectionAgainstBlockedStateWhileUpdating,
-            &QTimer::timeout,
-            this,
-            &NodeSelectorModel::resetMoveProcessing);
 }
 
 void NodeSelectorModel::executeExtraSpaceLogic()
@@ -910,17 +898,99 @@ bool NodeSelectorModel::startProcessingNodes(const QMimeData* data,
     return false;
 }
 
-void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictTypes> conflicts,
-                                                       ActionType type)
+void NodeSelectorModel::checkForDuplicatedSourceFilesWhenRestoring(
+    std::shared_ptr<ConflictTypes> conflicts)
 {
-    if (conflicts->mResolvedConflicts.isEmpty())
+    QHash<mega::MegaHandle, std::shared_ptr<DuplicatedMoveNodeInfo>> nodesToUpload;
+    QHash<mega::MegaHandle, std::shared_ptr<DuplicatedMoveNodeInfo>> nodesToUploadAndReplace;
+
+    auto linkDuplicatedConflicts =
+        [](std::shared_ptr<DuplicatedMoveNodeInfo> uploadAndReplaceConflict)
     {
-        return;
+        Utilities::removeRemoteFile(uploadAndReplaceConflict->getSourceItemNode().get());
+        uploadAndReplaceConflict->setSolution(NodeItemType::DONT_UPLOAD);
+    };
+
+    foreach(auto resolvedConflict, conflicts->mResolvedConflicts)
+    {
+        if (auto resolvedMoveConflict =
+                std::dynamic_pointer_cast<DuplicatedMoveNodeInfo>(resolvedConflict))
+        {
+            if (resolvedMoveConflict->getSolution() == NodeItemType::FILE_UPLOAD_AND_REPLACE)
+            {
+                auto targetNode(resolvedMoveConflict->getConflictNode());
+                auto sourceNode(resolvedMoveConflict->getSourceItemNode());
+
+                // Two or more repeated files in rubbish with no conflict item on the restore tab
+                if (targetNode && sourceNode &&
+                    targetNode->getParentHandle() == sourceNode->getParentHandle())
+                {
+                    if (nodesToUpload.contains(targetNode->getHandle()))
+                    {
+                        linkDuplicatedConflicts(resolvedMoveConflict);
+                    }
+                    else
+                    {
+                        nodesToUploadAndReplace.insert(targetNode->getHandle(),
+                                                       resolvedMoveConflict);
+                    }
+                }
+                // One or more repeated files in rubbish with a conflict item on the restore tab
+                else
+                {
+                    if (nodesToUploadAndReplace.contains(targetNode->getHandle()))
+                    {
+                        linkDuplicatedConflicts(resolvedMoveConflict);
+                    }
+                    else
+                    {
+                        nodesToUploadAndReplace.insert(targetNode->getHandle(),
+                                                       resolvedMoveConflict);
+                    }
+                }
+            }
+            // This type of conflict arises when there are two or more repeated files in rubbish
+            // with no conflict item on the restore tab
+            else if (resolvedMoveConflict->getSolution() == NodeItemType::UPLOAD)
+            {
+                auto sourceNode(resolvedMoveConflict->getSourceItemNode());
+                if (sourceNode)
+                {
+                    if (auto conflict = nodesToUpload.value(sourceNode->getHandle()))
+                    {
+                        linkDuplicatedConflicts(conflict);
+                    }
+                    else
+                    {
+                        nodesToUpload.insert(sourceNode->getHandle(), resolvedMoveConflict);
+                    }
+                }
+            }
+        }
+    }
+}
+
+void NodeSelectorModel::checkRestoreNodesTargetFolder(std::shared_ptr<ConflictTypes> conflicts)
+{
+    QSet<mega::MegaHandle> parentTargets;
+
+    for (auto& resolvedConflict: qAsConst(conflicts->mResolvedConflicts))
+    {
+        if (resolvedConflict->getSolution() == NodeItemType::DONT_UPLOAD ||
+            !resolvedConflict->getParentNode())
+        {
+            continue;
+        }
+
+        parentTargets.insert(resolvedConflict->getParentNode()->getHandle());
     }
 
-    mExtraExpectedNodesUpdateOnTarget = 0;
-    mExpectedNodesUpdateOnSource.clear();
+    emit itemsAboutToBeRestored(parentTargets);
+}
 
+std::optional<NodeSelectorModel::RestoreMergeType>
+    NodeSelectorModel::checkForFoldersToMergeWhenRestoring(std::shared_ptr<ConflictTypes> conflicts)
+{
     // There are 3 scenarios when restoring
 
     // 1) It is a simple folder or file and there is no other item with the same name on the CD ->
@@ -929,6 +999,7 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
     // 2) There are two files/folders with the same name in the rubbish and no other item on the CD
     // -> Merge in the rubbish and then restore -> at least two conflicts -> FOLDER_UPLOAD_AND_MERGE
     // && UPLOAD -> In this case, we end restoring a simple file/folder
+    // The rubbish needs n-1 removals, the target tab only 1 add
 
     // 3) There are on item on the CD with the same name of one or more items on the rubbish -> We
     // merge first in the -> ONLY "FOLDER_UPLOAD_AND_MERGE"
@@ -942,48 +1013,168 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
 
     std::optional<RestoreMergeType> restoreMergeType;
     QMap<mega::MegaHandle, mega::MegaHandle> handlesToMerge;
-    QSet<mega::MegaHandle> handlesToUpload;
+    QMap<mega::MegaHandle, std::shared_ptr<DuplicatedMoveNodeInfo>> handlesToUpload;
 
-    if (type == ActionType::RESTORE)
+    auto resetConflict = [](std::shared_ptr<DuplicatedMoveNodeInfo> uploadConflict)
     {
-        foreach(auto resolvedConflict, conflicts->mResolvedConflicts)
-        {
-            if (auto resolvedMoveConflict =
-                    std::dynamic_pointer_cast<DuplicatedMoveNodeInfo>(resolvedConflict))
-            {
-                if (resolvedMoveConflict->getSolution() == NodeItemType::FOLDER_UPLOAD_AND_MERGE)
-                {
-                    if (handlesToUpload.contains(
-                            resolvedMoveConflict->getConflictNode()->getHandle()))
-                    {
-                        restoreMergeType = RestoreMergeType::MERGE_AND_MOVE_TO_TARGET;
-                    }
+        uploadConflict->setSolution(NodeItemType::DONT_UPLOAD);
+    };
 
-                    handlesToMerge.insert(resolvedMoveConflict->getConflictNode()->getHandle(),
-                                          resolvedMoveConflict->getSourceItemHandle());
-                }
-                else if (resolvedMoveConflict->getSolution() == NodeItemType::UPLOAD)
+    foreach(auto resolvedConflict, conflicts->mResolvedConflicts)
+    {
+        if (resolvedConflict->getSolution() == NodeItemType::DONT_UPLOAD)
+        {
+            continue;
+        }
+
+        if (auto resolvedMoveConflict =
+                std::dynamic_pointer_cast<DuplicatedMoveNodeInfo>(resolvedConflict))
+        {
+            if (resolvedMoveConflict->getSolution() == NodeItemType::FOLDER_UPLOAD_AND_MERGE)
+            {
+                if (auto uploadConflict =
+                        handlesToUpload.value(resolvedMoveConflict->getConflictNode()->getHandle()))
                 {
-                    if (handlesToMerge.contains(resolvedMoveConflict->getSourceItemHandle()))
-                    {
-                        restoreMergeType = RestoreMergeType::MERGE_AND_MOVE_TO_TARGET;
-                    }
-                    else
-                    {
-                        handlesToUpload.insert(resolvedMoveConflict->getSourceItemHandle());
-                    }
+                    restoreMergeType = RestoreMergeType::MERGE_AND_MOVE_TO_TARGET;
+                    resetConflict(uploadConflict);
+                }
+
+                handlesToMerge.insert(resolvedMoveConflict->getConflictNode()->getHandle(),
+                                      resolvedMoveConflict->getSourceItemHandle());
+            }
+            else if (resolvedMoveConflict->getSolution() == NodeItemType::UPLOAD)
+            {
+                if (handlesToMerge.contains(resolvedMoveConflict->getSourceItemHandle()))
+                {
+                    restoreMergeType = RestoreMergeType::MERGE_AND_MOVE_TO_TARGET;
+                    resetConflict(resolvedMoveConflict);
+                }
+                else
+                {
+                    handlesToUpload.insert(resolvedMoveConflict->getSourceItemHandle(),
+                                           resolvedMoveConflict);
                 }
             }
         }
+    }
 
-        if (!handlesToMerge.isEmpty() && !restoreMergeType.has_value())
+    if (!handlesToMerge.isEmpty() && !restoreMergeType.has_value())
+    {
+        restoreMergeType = RestoreMergeType::MERGE_ON_EXISTING_TARGET;
+    }
+
+    return restoreMergeType;
+}
+
+void NodeSelectorModel::processMergeQueue()
+{
+    QtConcurrent::run(
+        [this]()
         {
-            restoreMergeType = RestoreMergeType::MERGE_ON_EXISTING_TARGET;
-        }
+            while (!mMergeQueue.isEmpty())
+            {
+                auto info(mMergeQueue.dequeue());
+
+                // Folder merge starts
+                emit itemsAboutToBeMoved(QList<mega::MegaHandle>() << info.nodeTarget->getHandle(),
+                                         0,
+                                         info.type);
+
+                std::shared_ptr<MergeMEGAFolders> foldersMerger(std::make_unique<MergeMEGAFolders>(
+                    MergeMEGAFolders::ActionForDuplicates::Rename,
+                    // Remote is always case sensitive
+                    Qt::CaseSensitive,
+                    info.type == ActionType::COPY ? MergeMEGAFolders::Strategy::COPY :
+                                                    MergeMEGAFolders::Strategy::MOVE));
+
+                bool emptyMerge(!foldersMerger->checkMerge(info.nodeToMerge.get()));
+
+                if (info.restoreMergeType.has_value())
+                {
+                    // Affects the source widget + the target widget
+                    if (info.restoreMergeType.value() == RestoreMergeType::MERGE_ON_EXISTING_TARGET)
+                    {
+                        connect(foldersMerger.get(),
+                                &MergeMEGAFolders::nestedItemMerged,
+                                this,
+                                [this, info](mega::MegaHandle handle)
+                                {
+                                    increaseMergeMovingNodes(handle, info.type);
+                                });
+                    }
+                    // Affects only to the source widget
+                    else if (info.restoreMergeType.value() ==
+                             RestoreMergeType::MERGE_AND_MOVE_TO_TARGET)
+                    {
+                        connect(foldersMerger.get(),
+                                &MergeMEGAFolders::nestedItemMerged,
+                                this,
+                                [this](mega::MegaHandle)
+                                {
+                                    increaseMovingNodes();
+                                });
+                    }
+                }
+
+                connect(foldersMerger.get(),
+                        &MergeMEGAFolders::finished,
+                        this,
+                        [this, info]()
+                        {
+                            emit mergeFinished(info.nodeTarget->getHandle());
+                        });
+
+                auto e = foldersMerger->merge(info.nodeTarget.get(), info.nodeToMerge.get());
+
+                if (e == mega::MegaError::API_OK && info.type == ActionType::RESTORE &&
+                    info.restoreMergeType == RestoreMergeType::MERGE_AND_MOVE_TO_TARGET)
+                {
+                    QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>> nodesToMove;
+                    nodesToMove.append(qMakePair(info.nodeTarget->getHandle(), info.parentNode));
+
+                    processNodesAndCheckConflicts(nodesToMove,
+                                                  MegaSyncApp->getRubbishNode(),
+                                                  info.type);
+                }
+
+                emit finishAsyncRequest(info.nodeToMerge->getHandle(), e);
+
+                if (emptyMerge)
+                {
+                    emit mergeItemAboutToBeMoved(info.nodeTarget->getHandle(),
+                                                 ActionType::EMPTY_MERGE);
+                }
+            }
+        });
+}
+
+void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictTypes> conflicts,
+                                                       ActionType type)
+{
+    if (conflicts->mResolvedConflicts.isEmpty())
+    {
+        return;
+    }
+
+    mExtraExpectedNodesUpdateOnTarget = 0;
+    mExpectedNodesUpdateOnSource.clear();
+
+    std::optional<RestoreMergeType> restoreMergeType;
+
+    if (type == ActionType::RESTORE)
+    {
+        checkRestoreNodesTargetFolder(conflicts);
+        restoreMergeType = checkForFoldersToMergeWhenRestoring(conflicts);
+        checkForDuplicatedSourceFilesWhenRestoring(conflicts);
     }
 
     foreach(auto resolvedConflict, conflicts->mResolvedConflicts)
     {
+        if (resolvedConflict->getSolution() == NodeItemType::DONT_UPLOAD)
+        {
+            continue;
+        }
+
         if (auto resolvedMoveConflict = std::dynamic_pointer_cast<DuplicatedMoveNodeInfo>(resolvedConflict))
         {
             std::shared_ptr<mega::MegaNode> nodeToMove(
@@ -991,20 +1182,19 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
             if (nodeToMove)
             {
                 auto decision = resolvedMoveConflict->getSolution();
+
                 mRequestByHandle.insert(nodeToMove->getHandle(), type);
 
                 if (decision == NodeItemType::FOLDER_UPLOAD_AND_MERGE)
                 {
-                    if (type != ActionType::RESTORE)
-                    {
-                        mExpectedNodesUpdateOnSource.append(nodeToMove->getHandle());
-                    }
+                    MergeInfo info;
+                    info.nodeToMerge = nodeToMove;
+                    info.nodeTarget = resolvedMoveConflict->getConflictNode();
+                    info.parentNode = resolvedMoveConflict->getParentNode();
+                    info.type = type;
+                    info.restoreMergeType = restoreMergeType;
 
-                    mergeFolders(nodeToMove,
-                                 resolvedMoveConflict->getConflictNode(),
-                                 resolvedMoveConflict->getParentNode(),
-                                 type,
-                                 restoreMergeType);
+                    mMergeQueue.append(info);
                 }
                 else
                 {
@@ -1053,17 +1243,7 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
                         }
                         else
                         {
-                            if (type == ActionType::RESTORE &&
-                                handlesToMerge.contains(nodeToMove->getHandle()))
-                            {
-                                mMoveAfterMergeWhileRestoring.insert(
-                                    handlesToMerge.value(nodeToMove->getHandle()),
-                                    resolvedMoveConflict->getParentNode()->getHandle());
-                            }
-                            else
-                            {
-                                moveNode(nodeToMove, resolvedMoveConflict->getParentNode());
-                            }
+                            moveNode(nodeToMove, resolvedMoveConflict->getParentNode());
                         }
                     }
                 }
@@ -1071,8 +1251,15 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
         }
     }
 
-    // Set loading view in the source model where the move started
-    emit itemsAboutToBeMoved(mExpectedNodesUpdateOnSource, mExtraExpectedNodesUpdateOnTarget, type);
+    processMergeQueue();
+
+    if (!mExpectedNodesUpdateOnSource.isEmpty())
+    {
+        // Set loading view in the source model where the move started
+        emit itemsAboutToBeMoved(mExpectedNodesUpdateOnSource,
+                                 mExtraExpectedNodesUpdateOnTarget,
+                                 type);
+    }
 }
 
 bool NodeSelectorModel::processNodesAndCheckConflicts(
@@ -1175,8 +1362,6 @@ bool NodeSelectorModel::checkMoveProcessing()
     if (mIsProcessingMoves && mMoveRequestsCounter == 0)
     {
         mIsProcessingMoves = false;
-
-        mProtectionAgainstBlockedStateWhileUpdating.stop();
 
         emit itemsMoved();
 
@@ -1487,7 +1672,8 @@ void NodeSelectorModel::setSyncSetupMode(bool value)
     mNodeRequesterWorker->setSyncSetupMode(value);
 }
 
-void NodeSelectorModel::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes, const QModelIndex &parent)
+bool NodeSelectorModel::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes,
+                                 const QModelIndex& parent)
 {
     if(!nodes.isEmpty())
     {
@@ -1496,6 +1682,7 @@ void NodeSelectorModel::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes, c
             if (isBeingModified())
             {
                 mAddNodesQueue.addStep(nodes, parent);
+                return true;
             }
             else
             {
@@ -1507,10 +1694,13 @@ void NodeSelectorModel::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes, c
                     auto totalRows = rowCount(parent);
                     beginInsertRows(parent, totalRows, totalRows + nodes.size() - 1);
                     emit requestAddNodes(nodes, parent, parentItem);
+                    return true;
                 }
             }
         }
     }
+
+    return false;
 }
 
 void NodeSelectorModel::onNodesAdded(QList<QPointer<NodeSelectorModelItem>> childrenItem)
@@ -1727,78 +1917,6 @@ int NodeSelectorModel::getNodeAccess(mega::MegaNode* node)
     {
         return mega::MegaShare::ACCESS_UNKNOWN;
     }
-}
-
-void NodeSelectorModel::mergeFolders(std::shared_ptr<mega::MegaNode> moveFolder,
-                                     std::shared_ptr<mega::MegaNode> conflictTargetFolder,
-                                     std::shared_ptr<mega::MegaNode> targetParentFolder,
-                                     ActionType type,
-                                     std::optional<RestoreMergeType> restoreType)
-{
-    QtConcurrent::run(
-        [this, moveFolder, targetParentFolder, conflictTargetFolder, type, restoreType]()
-        {
-            MergeMEGAFolders foldersMerger(MergeMEGAFolders::ActionForDuplicates::Rename,
-                                           // Remote is always case sensitive
-                                           Qt::CaseSensitive,
-                                           type == ActionType::COPY ?
-                                               MergeMEGAFolders::Strategy::COPY :
-                                               MergeMEGAFolders::Strategy::MOVE);
-
-            if (restoreType.has_value())
-            {
-                if (restoreType.value() == RestoreMergeType::MERGE_ON_EXISTING_TARGET)
-                {
-                    connect(&foldersMerger,
-                            &MergeMEGAFolders::nestedItemMerged,
-                            this,
-                            [this, type](mega::MegaHandle handle)
-                            {
-                                increaseMergeMovingNodes(handle, type);
-                            });
-                }
-                else if (restoreType.value() == RestoreMergeType::MERGE_AND_MOVE_TO_TARGET)
-                {
-                    connect(&foldersMerger,
-                            &MergeMEGAFolders::nestedItemMerged,
-                            this,
-                            [this](mega::MegaHandle)
-                            {
-                                increaseMovingNodes();
-                            });
-                }
-            }
-
-            connect(&foldersMerger,
-                    &MergeMEGAFolders::finished,
-                    this,
-                    &NodeSelectorModel::moveProcessed);
-
-            auto e = foldersMerger.merge(conflictTargetFolder.get(), moveFolder.get());
-
-            if (type == ActionType::RESTORE)
-            {
-                if (e == mega::MegaError::API_OK)
-                {
-                    auto moveToParentHandle(
-                        mMoveAfterMergeWhileRestoring.take(moveFolder->getHandle()));
-                    if (moveToParentHandle != mega::INVALID_HANDLE)
-                    {
-                        std::shared_ptr<mega::MegaNode> targetNode(
-                            MegaSyncApp->getMegaApi()->getNodeByHandle(moveToParentHandle));
-                        QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>> nodesToMove;
-                        nodesToMove.append(
-                            qMakePair(conflictTargetFolder->getHandle(), targetNode));
-
-                        processNodesAndCheckConflicts(nodesToMove,
-                                                      MegaSyncApp->getRubbishNode(),
-                                                      type);
-                    }
-                }
-            }
-
-            emit finishAsyncRequest(moveFolder->getHandle(), e);
-        });
 }
 
 void NodeSelectorModel::moveFileAndReplace(std::shared_ptr<mega::MegaNode> moveFile,

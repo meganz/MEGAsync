@@ -271,17 +271,30 @@ void NodeSelector::performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
 
     auto senderModel(dynamic_cast<NodeSelectorModel*>(sender()));
 
-    auto targetOrSourceFound =
-        [type](NodeSelectorTreeViewWidget* wid, bool& flag, int nodesUpdateToReceive)
+    auto targetOrSourceFound = [type](NodeSelectorTreeViewWidget* wid, int nodesUpdateToReceive)
     {
-        flag = true;
-        if (type == IncreaseOrDecrease::INCREASE)
+        if (wid)
         {
-            wid->initMovingNodes(nodesUpdateToReceive);
+            if (type == IncreaseOrDecrease::INCREASE)
+            {
+                wid->initMovingNodes(nodesUpdateToReceive);
+            }
+            else
+            {
+                wid->decreaseMovingNodes(nodesUpdateToReceive);
+            }
         }
-        else
+    };
+
+    NodeSelectorTreeViewWidget* sourceWid(nullptr);
+    NodeSelectorTreeViewWidget* targetWid(nullptr);
+
+    auto findSource = [handles, &foundSource, &sourceWid](NodeSelectorTreeViewWidget* wid)
+    {
+        if (!foundSource && wid->areItemsAboutToBeMovedFromHere(handles.first()))
         {
-            wid->decreaseMovingNodes(nodesUpdateToReceive);
+            foundSource = true;
+            sourceWid = wid;
         }
     };
 
@@ -291,12 +304,14 @@ void NodeSelector::performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
         {
             if (!foundTarget && wid->getProxyModel()->getMegaModel() == senderModel)
             {
-                targetOrSourceFound(wid, foundTarget, handles.size() + extraUpdateNodesOnTarget);
+                foundTarget = true;
+                targetWid = wid;
+
+                findSource(wid);
             }
-            else if (!foundSource &&
-                     wid->areItemsAboutToBeMovedFromHere(handles.first(), senderModel))
+            else if (!foundSource)
             {
-                targetOrSourceFound(wid, foundSource, handles.size());
+                findSource(wid);
             }
 
             if (foundSource && foundTarget)
@@ -304,6 +319,13 @@ void NodeSelector::performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
                 break;
             }
         }
+    }
+
+    targetOrSourceFound(targetWid, handles.size() + extraUpdateNodesOnTarget);
+
+    if (targetWid != sourceWid)
+    {
+        targetOrSourceFound(sourceWid, handles.size());
     }
 }
 
@@ -319,6 +341,9 @@ void NodeSelector::onOptionSelected(int index)
             break;
         case NodeSelector::BACKUPS:
             ui->bShowBackups->click();
+            break;
+        case NodeSelector::RUBBISH:
+            ui->bRubbish->click();
             break;
         default:
             break;
@@ -508,6 +533,13 @@ void NodeSelector::initSpecialisedWidgets()
                     &NodeSelector::onMergeItemsAboutToBeMoved);
 
             connect(model,
+                    &NodeSelectorModel::itemsAboutToBeRestored,
+                    this,
+                    &NodeSelector::onItemsAboutToBeRestored);
+
+            connect(model, &NodeSelectorModel::mergeFinished, this, &NodeSelector::onMergeFinished);
+
+            connect(model,
                     &NodeSelectorModel::updateLoadingMessage,
                     this,
                     &NodeSelector::onUpdateLoadingMessage);
@@ -604,9 +636,11 @@ std::optional<NodeSelector::TabItem> NodeSelector::selectedNodeTab()
         {
             option = BACKUPS;
         }
-        // If it is not in the cloud drive or the vault, it is a backup
-        else if (Utilities::getNodeAccess(mNodeToBeSelected->getHandle()) !=
-                 (mega::MegaShare::ACCESS_OWNER | mega::MegaShare::ACCESS_UNKNOWN))
+        else if (mMegaApi->isInRubbish(mNodeToBeSelected.get()))
+        {
+            option = RUBBISH;
+        }
+        else
         {
             option = SHARES;
         }
@@ -626,6 +660,7 @@ void NodeSelector::onCurrentWidgetChanged(int index)
     {
         if (auto wid = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(index)))
         {
+            wid->clearSelection();
             wid->setSelectedNodeHandle(mNodeToBeSelected->getHandle());
             mNodeToBeSelected.reset();
         }

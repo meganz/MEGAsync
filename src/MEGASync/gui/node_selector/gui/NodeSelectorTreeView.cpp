@@ -456,7 +456,7 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
             {
                 int access = Utilities::getNodeAccess(selectionHandles.first());
 
-                if (access != MegaShare::ACCESS_UNKNOWN)
+                if (!isAnyNodeInTheRubbish(selectionHandles) && access != MegaShare::ACCESS_UNKNOWN)
                 {
                     if (access == MegaShare::ACCESS_OWNER)
                     {
@@ -663,18 +663,17 @@ bool NodeSelectorTreeView::areAllEligibleForCopy(const QList<MegaHandle>& handle
         return false;
     }
 
-    auto copyItems(handles.size());
     foreach(auto&& nodeHandle, handles)
     {
         std::unique_ptr<mega::MegaNode> node(
             MegaSyncApp->getMegaApi()->getNodeByHandle(nodeHandle));
-        if (node)
+        if (!node)
         {
-            copyItems--;
+            return false;
         }
     }
 
-    return copyItems == 0;
+    return true;
 }
 
 std::optional<NodeSelectorTreeView::DeletionType>
@@ -730,7 +729,6 @@ std::optional<NodeSelectorTreeView::DeletionType>
 
 bool NodeSelectorTreeView::areAllEligibleForRestore(const QList<MegaHandle> &handles) const
 {
-    auto restorableItems(handles.size());
     for (const auto& handle: handles)
     {
         std::unique_ptr<mega::MegaNode> node(mMegaApi->getNodeByHandle(handle));
@@ -741,14 +739,32 @@ bool NodeSelectorTreeView::areAllEligibleForRestore(const QList<MegaHandle> &han
             auto previousParentNode =
                 std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(node->getRestoreHandle()));
 
-            if (previousParentNode && !mMegaApi->isInRubbish(previousParentNode.get()))
+            if (!previousParentNode || mMegaApi->isInRubbish(previousParentNode.get()))
             {
-                restorableItems--;
+                return false;
             }
+        }
+        else
+        {
+            return false;
         }
     }
 
-    return restorableItems == 0;
+    return true;
+}
+
+bool NodeSelectorTreeView::isAnyNodeInTheRubbish(const QList<MegaHandle>& handles) const
+{
+    for (const auto& handle: handles)
+    {
+        std::unique_ptr<mega::MegaNode> node(mMegaApi->getNodeByHandle(handle));
+        if (node && mMegaApi->isInRubbish(node.get()))
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void NodeSelectorTreeView::deleteNode(const QList<MegaHandle>& handles, bool permanently)

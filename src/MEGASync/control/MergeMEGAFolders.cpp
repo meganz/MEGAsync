@@ -13,6 +13,13 @@ MergeMEGAFolders::MergeMEGAFolders(ActionForDuplicates action,
     mStrategy(strategy)
 {}
 
+bool MergeMEGAFolders::checkMerge(mega::MegaNode* folderToMerge)
+{
+    std::unique_ptr<mega::MegaNodeList> sourceChildren(
+        MegaSyncApp->getMegaApi()->getChildren(folderToMerge));
+    return sourceChildren && sourceChildren->size() != 0;
+}
+
 int MergeMEGAFolders::merge(mega::MegaNode* folderTarget, mega::MegaNode* folderToMerge)
 {
     int error(mega::MegaError::API_OK);

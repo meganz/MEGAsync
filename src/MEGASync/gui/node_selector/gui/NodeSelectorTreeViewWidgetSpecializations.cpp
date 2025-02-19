@@ -124,8 +124,9 @@ bool NodeSelectorTreeViewWidgetIncomingShares::isNodeCompatibleWithModel(mega::M
         return true;
     }
 
-    return Utilities::getNodeAccess(node) !=
-           (mega::MegaShare::ACCESS_OWNER | mega::MegaShare::ACCESS_UNKNOWN);
+    auto access(Utilities::getNodeAccess(node));
+
+    return access != mega::MegaShare::ACCESS_OWNER && access != mega::MegaShare::ACCESS_UNKNOWN;
 }
 
 QString NodeSelectorTreeViewWidgetIncomingShares::getRootText()

@@ -133,7 +133,7 @@ public:
     QModelIndex getTopRootIndex() const override;
     bool canFetchMore(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
-    void addNodes(QList<std::shared_ptr<mega::MegaNode> > nodes, const QModelIndex &parent) override;
+    bool addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes, const QModelIndex& parent) override;
     bool rootNodeUpdated(mega::MegaNode*node) override;
     bool canDropMimeData(const QMimeData*,
                          Qt::DropAction,

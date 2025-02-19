@@ -81,10 +81,11 @@ public:
     void initMovingNodes(int number);
     bool increaseMovingNodes();
     bool decreaseMovingNodes(int number);
-    bool areItemsAboutToBeMovedFromHere(mega::MegaHandle firstHandleMoved,
-                                        NodeSelectorModel* senderModel);
+    bool areItemsAboutToBeMovedFromHere(mega::MegaHandle firstHandleMoved);
 
     mega::MegaHandle getHandleByIndex(const QModelIndex& idx);
+
+    void setParentOfRestoredNodes(const QSet<mega::MegaHandle>& newParentOfRestoredNodes);
 
 public slots:
     virtual void checkViewOnModelChange();
@@ -128,7 +129,8 @@ protected:
     enum class NodeState
     {
         EXISTS,
-        EXISTS_BUT_INVISIBLE,
+        EXISTS_BUT_PARENT_UNINITIALISED,
+        EXISTS_BUT_OUT_OF_VIEW,
         ADD,
         REMOVE,
         MOVED,
@@ -205,6 +207,10 @@ private:
     bool shouldUpdateImmediately();
     bool areThereNodesToUpdate();
 
+    // Expand and select
+    void expandPendingIndexes();
+    void selectPendingIndexes();
+
     ButtonIconManager mButtonIconManager;
     bool first;
     bool mUiBlocked;
@@ -222,8 +228,10 @@ private:
     QMultiMap<mega::MegaHandle, std::shared_ptr<mega::MegaNode>> mAddedNodesByParentHandle;
     QSet<mega::MegaHandle> mRemovedNodes;
     QSet<mega::MegaHandle> mRemoveMovedNodes;
+    QSet<mega::MegaHandle> mParentsToUpdateChildrenCount;
     QMap<mega::MegaHandle, uint64_t> mUpdatedButInvisibleNodes;
     QList<mega::MegaHandle> mMovedHandlesToSelect;
+    QSet<mega::MegaHandle> mParentOfRestoredNodes;
 
     QTimer mNodesUpdateTimer;
     mega::MegaHandle mNewFolderHandle;

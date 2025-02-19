@@ -209,7 +209,7 @@ public:
     void setDisableFolders(bool option);
     void setSyncSetupMode(bool value);
 
-    virtual void addNodes(QList<std::shared_ptr<mega::MegaNode>> node, const QModelIndex &parent);
+    virtual bool addNodes(QList<std::shared_ptr<mega::MegaNode>> node, const QModelIndex& parent);
     void deleteNodeFromModel(const QModelIndex& index);
 
     int getNodeAccess(mega::MegaNode* node);
@@ -224,6 +224,7 @@ public:
         MOVE,
         COPY,
         RESTORE,
+        EMPTY_MERGE,
         DELETE_RUBBISH,
         DELETE_PERMANENTLY
     };
@@ -242,18 +243,6 @@ public:
     bool pasteNodes(const QList<mega::MegaHandle>& nodesToCopy, const QModelIndex& indexToPaste);
     bool canPasteNodes(const QList<mega::MegaHandle>& nodesToCopy, const QModelIndex& indexToPaste);
     virtual bool canCopyNodes() const;
-
-    enum RestoreMergeType
-    {
-        MERGE_AND_MOVE_TO_TARGET,
-        MERGE_ON_EXISTING_TARGET
-    };
-
-    void mergeFolders(std::shared_ptr<mega::MegaNode> moveFolder,
-                      std::shared_ptr<mega::MegaNode> conflictTargetFolder,
-                      std::shared_ptr<mega::MegaNode> targetParentFolder,
-                      ActionType type,
-                      std::optional<RestoreMergeType> restoreType);
 
     void moveFileAndReplace(std::shared_ptr<mega::MegaNode> moveFile,
                             std::shared_ptr<mega::MegaNode> conflictTargetFile,
@@ -369,7 +358,9 @@ signals:
     void itemsAboutToBeMovedFailed(const QList<mega::MegaHandle> handles,
                                    int extraUpdateNodesOnTarget,
                                    int actionType);
+    void itemsAboutToBeRestored(const QSet<mega::MegaHandle> targetFolders);
     void mergeItemAboutToBeMoved(mega::MegaHandle handle, int type);
+    void mergeFinished(mega::MegaHandle handle);
     void finishAsyncRequest(mega::MegaHandle handle, int error);
 
 protected:
@@ -417,14 +408,11 @@ private:
     virtual bool addToLoadingList(const std::shared_ptr<mega::MegaNode> node);
     void createChildItems(std::shared_ptr<mega::MegaNodeList> childNodes, const QModelIndex& index, NodeSelectorModelItem* parent);
     void protectModelWhenPerformingActions();
-    void protectModelAgainstUpdateBlockingState();
 
     void executeRemoveExtraSpaceLogic();
 
     QIcon getFolderIcon(NodeSelectorModelItem* item) const;
     bool fetchMoreRecursively(const QModelIndex& parentIndex);
-
-    bool checkMoveProcessing();
 
     std::shared_ptr<const UserAttributes::CameraUploadFolder> mCameraFolderAttribute;
     std::shared_ptr<const UserAttributes::MyChatFilesFolder> mMyChatFilesFolderAttribute;
@@ -444,8 +432,32 @@ private:
     MovedItemsTypes mMovedItemsType;
 
     // Move nodes
+    bool checkMoveProcessing();
+    void checkForDuplicatedSourceFilesWhenRestoring(std::shared_ptr<ConflictTypes> conflicts);
+    void checkRestoreNodesTargetFolder(std::shared_ptr<ConflictTypes> conflicts);
+
+    enum RestoreMergeType
+    {
+        MERGE_AND_MOVE_TO_TARGET,
+        MERGE_ON_EXISTING_TARGET
+    };
+
+    struct MergeInfo
+    {
+        std::shared_ptr<mega::MegaNode> nodeToMerge;
+        std::shared_ptr<mega::MegaNode> nodeTarget;
+        std::shared_ptr<mega::MegaNode> parentNode;
+        ActionType type;
+        std::optional<RestoreMergeType> restoreMergeType;
+    };
+
+    QQueue<MergeInfo> mMergeQueue;
+
+    void processMergeQueue();
+    std::optional<RestoreMergeType>
+        checkForFoldersToMergeWhenRestoring(std::shared_ptr<ConflictTypes> conflicts);
+
     int mMoveRequestsCounter;
-    QTimer mProtectionAgainstBlockedStateWhileUpdating;
     QMap<mega::MegaHandle, mega::MegaHandle> mMoveAfterMergeWhileRestoring;
 
     // Add nodes secuentially, not all at the same time

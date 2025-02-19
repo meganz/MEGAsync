@@ -42,6 +42,7 @@ public:
                      Qt::CaseSensitivity sensitivity,
                      Strategy strategy = Strategy::MOVE);
 
+    bool checkMerge(mega::MegaNode* folderToMerge);
     int merge(mega::MegaNode* folderTarget, mega::MegaNode* folderToMerge);
 
 signals:

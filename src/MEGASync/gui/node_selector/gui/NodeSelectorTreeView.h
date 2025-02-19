@@ -100,6 +100,7 @@ private:
     std::optional<NodeSelectorTreeView::DeletionType>
         areAllEligibleForDeletion(const QList<mega::MegaHandle>& handles) const;
     bool areAllEligibleForRestore(const QList<MegaHandle> &handles) const;
+    bool isAnyNodeInTheRubbish(const QList<MegaHandle>& handles) const;
 
     void addPasteMenuAction(QMap<int, QAction*>& actions);
     void addRestoreMenuAction(QMap<int, QAction*>& actions,

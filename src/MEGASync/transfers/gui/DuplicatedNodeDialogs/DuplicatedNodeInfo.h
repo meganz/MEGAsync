@@ -32,7 +32,7 @@ public:
     const std::shared_ptr<mega::MegaNode> &getParentNode() const;
     void setParentNode(const std::shared_ptr<mega::MegaNode> &newParentNode);
 
-    const std::shared_ptr<mega::MegaNode> &getConflictNode() const;
+    const std::shared_ptr<mega::MegaNode>& getConflictNode() const;
     void setConflictNode(const std::shared_ptr<mega::MegaNode> &newRemoteConflictNode);
 
     const QString& getSourceItemPath() const;
@@ -92,6 +92,8 @@ public:
 
     mega::MegaHandle getSourceItemHandle() const;
     void setSourceItemHandle(const mega::MegaHandle& sourceItemHandle);
+
+    std::shared_ptr<mega::MegaNode> getSourceItemNode() const;
 
     bool sourceItemIsFile() const override;
 

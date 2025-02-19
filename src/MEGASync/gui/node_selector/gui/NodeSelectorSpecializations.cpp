@@ -338,17 +338,71 @@ void CloudDriveNodeSelector::onItemsAboutToBeMovedFailed(const QList<mega::MegaH
 
 void CloudDriveNodeSelector::onMergeItemsAboutToBeMoved(mega::MegaHandle handle, int type)
 {
+    auto tabsInfo(getTabs(QList<mega::MegaHandle>() << handle));
+
     if (type == NodeSelectorModel::ActionType::RESTORE)
     {
-        // Check with the handle if we are in CD or Incoming
-        if (mCloudDriveWidget->increaseMovingNodes())
+        if (!tabsInfo.cloudDriveNodes.isEmpty())
         {
-            onbShowCloudDriveClicked();
+            // Check with the handle if we are in CD or Incoming
+            if (mCloudDriveWidget->increaseMovingNodes() &&
+                ui->stackedWidget->currentWidget() == mRubbishWidget)
+            {
+                onbShowCloudDriveClicked();
+            }
+        }
+
+        if (!tabsInfo.incomingSharedNodes.isEmpty())
+        {
+            // Check with the handle if we are in CD or Incoming
+            if (mIncomingSharesWidget->increaseMovingNodes() &&
+                ui->stackedWidget->currentWidget() == mRubbishWidget)
+            {
+                onbShowIncomingSharesClicked();
+            }
         }
     }
-    else
+    else if (type == NodeSelectorModel::ActionType::EMPTY_MERGE)
     {
-        NodeSelector::onMergeItemsAboutToBeMoved(handle, type);
+        if (!tabsInfo.cloudDriveNodes.isEmpty())
+        {
+            onbShowCloudDriveClicked();
+            mCloudDriveWidget->setSelectedNodeHandle(handle);
+        }
+        else if (!tabsInfo.incomingSharedNodes.isEmpty())
+        {
+            onbShowIncomingSharesClicked();
+            mIncomingSharesWidget->setSelectedNodeHandle(handle);
+        }
+    }
+}
+
+void CloudDriveNodeSelector::onItemsAboutToBeRestored(const QSet<mega::MegaHandle>& handles)
+{
+    auto tabsInfo(getTabs(handles.values()));
+
+    if (!tabsInfo.cloudDriveNodes.isEmpty())
+    {
+        mCloudDriveWidget->setParentOfRestoredNodes(handles);
+    }
+
+    if (!tabsInfo.incomingSharedNodes.isEmpty())
+    {
+        mIncomingSharesWidget->setParentOfRestoredNodes(handles);
+    }
+}
+
+void CloudDriveNodeSelector::onMergeFinished(mega::MegaHandle handle)
+{
+    auto tabsInfo(getTabs(QList<mega::MegaHandle>() << handle));
+
+    if (!tabsInfo.cloudDriveNodes.isEmpty())
+    {
+        mCloudDriveWidget->decreaseMovingNodes(1);
+    }
+    else if (!tabsInfo.incomingSharedNodes.isEmpty())
+    {
+        mIncomingSharesWidget->decreaseMovingNodes(1);
     }
 }
 
@@ -364,48 +418,35 @@ void CloudDriveNodeSelector::checkMovingItems(const QList<mega::MegaHandle>& han
 {
     if (moveType == NodeSelectorModel::ActionType::RESTORE)
     {
-        if (!handles.isEmpty())
+        auto tabsInfo(getTabs(handles));
+
+        if (extraUpdateNodesOnTarget > 0 && !tabsInfo.cloudDriveNodes.isEmpty() &&
+            !tabsInfo.incomingSharedNodes.isEmpty())
         {
-            QList<mega::MegaHandle> cloudDriveNodes;
-            QList<mega::MegaHandle> IncomingSharedNodes;
-
-            for (auto& handle: qAsConst(handles))
-            {
-                std::unique_ptr<mega::MegaNode> node(
-                    MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
-                if (node)
-                {
-                    std::unique_ptr<mega::MegaNode> restoreNode(
-                        MegaSyncApp->getMegaApi()->getNodeByHandle(node->getRestoreHandle()));
-                    if (!restoreNode || MegaSyncApp->getMegaApi()->isInCloud(restoreNode.get()))
-                    {
-                        cloudDriveNodes.append(handle);
-                    }
-                    else
-                    {
-                        IncomingSharedNodes.append(handle);
-                    }
-                }
-            }
-
-            if (!cloudDriveNodes.isEmpty())
-            {
-                mCloudDriveWidget->initMovingNodes(cloudDriveNodes.size());
-                onbShowCloudDriveClicked();
-            }
-
-            if (!IncomingSharedNodes.isEmpty())
-            {
-                mIncomingSharesWidget->initMovingNodes(IncomingSharedNodes.size());
-
-                if (cloudDriveNodes.isEmpty())
-                {
-                    onbShowIncomingSharesClicked();
-                }
-            }
+            // half for each type
+            extraUpdateNodesOnTarget = extraUpdateNodesOnTarget / 2;
         }
 
+        if (!tabsInfo.cloudDriveNodes.isEmpty())
+        {
+            mCloudDriveWidget->initMovingNodes(tabsInfo.cloudDriveNodes.size() +
+                                               extraUpdateNodesOnTarget);
+        }
+
+        if (!tabsInfo.incomingSharedNodes.isEmpty())
+        {
+            mIncomingSharesWidget->initMovingNodes(tabsInfo.incomingSharedNodes.size() +
+                                                   extraUpdateNodesOnTarget);
+        }
+
+        selectTabs(tabsInfo);
+
         performItemsToBeMoved(handles, extraUpdateNodesOnTarget, type, true, false);
+    }
+    else if (moveType == NodeSelectorModel::ActionType::EMPTY_MERGE)
+    {
+        auto tabsInfo(getTabs(handles));
+        selectTabs(tabsInfo);
     }
     else if (moveType == NodeSelectorModel::ActionType::DELETE_RUBBISH)
     {
@@ -423,6 +464,59 @@ void CloudDriveNodeSelector::checkMovingItems(const QList<mega::MegaHandle>& han
     else
     {
         performItemsToBeMoved(handles, extraUpdateNodesOnTarget, type, true, true);
+    }
+}
+
+CloudDriveNodeSelector::HandlesByTab
+    CloudDriveNodeSelector::getTabs(const QList<mega::MegaHandle>& handles)
+{
+    HandlesByTab info;
+
+    if (!handles.isEmpty())
+    {
+        for (auto& handle: qAsConst(handles))
+        {
+            std::unique_ptr<mega::MegaNode> node(
+                MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+            if (node)
+            {
+                mega::MegaNode* checkNode(nullptr);
+
+                std::unique_ptr<mega::MegaNode> restoreNode(
+                    MegaSyncApp->getMegaApi()->getNodeByHandle(node->getRestoreHandle()));
+                if (restoreNode)
+                {
+                    checkNode = restoreNode.get();
+                }
+                else
+                {
+                    checkNode = node.get();
+                }
+
+                if (MegaSyncApp->getMegaApi()->isInCloud(checkNode))
+                {
+                    info.cloudDriveNodes.append(handle);
+                }
+                else
+                {
+                    info.incomingSharedNodes.append(handle);
+                }
+            }
+        }
+    }
+
+    return info;
+}
+
+void CloudDriveNodeSelector::selectTabs(const HandlesByTab& tabsInfo)
+{
+    if (!tabsInfo.cloudDriveNodes.isEmpty())
+    {
+        onbShowCloudDriveClicked();
+    }
+    else if (!tabsInfo.incomingSharedNodes.isEmpty())
+    {
+        onbShowIncomingSharesClicked();
     }
 }
 

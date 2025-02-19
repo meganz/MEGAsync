@@ -119,7 +119,11 @@ protected slots:
                                              int extraUpdateNodesOnTarget,
                                              int type);
 
+    virtual void onItemsAboutToBeRestored(const QSet<mega::MegaHandle>&) {}
+
     virtual void onMergeItemsAboutToBeMoved(mega::MegaHandle, int) {}
+
+    virtual void onMergeFinished(mega::MegaHandle) {}
 
     void onbShowCloudDriveClicked();
     void onbShowIncomingSharesClicked();

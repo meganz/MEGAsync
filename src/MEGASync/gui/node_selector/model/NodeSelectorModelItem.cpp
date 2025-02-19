@@ -18,12 +18,8 @@ NodeSelectorModelItem::NodeSelectorModelItem(std::unique_ptr<MegaNode> node, boo
     mMegaApi(MegaSyncApp->getMegaApi()),
     mNode(std::move(node)),
     mOwner(nullptr)
-{ 
-    mChildrenCounter = mShowFiles ? MegaSyncApp->getMegaApi()->getNumChildren(mNode.get())
-            : MegaSyncApp->getMegaApi()->getNumChildFolders(mNode.get());
-
-    //If it has no children, the item does not need to be init
-    mChildrenAreInit = mChildrenCounter > 0 ? false : true;
+{
+    resetChildrenCounter();
 
     if(mNode->isFile() || mNode->isInShare())
     {
@@ -101,6 +97,15 @@ bool NodeSelectorModelItem::requestingChildren() const
 void NodeSelectorModelItem::setRequestingChildren(bool newRequestingChildren)
 {
     mRequestingChildren = newRequestingChildren;
+}
+
+void NodeSelectorModelItem::resetChildrenCounter()
+{
+    mChildrenCounter = mShowFiles ? MegaSyncApp->getMegaApi()->getNumChildren(mNode.get()) :
+                                    MegaSyncApp->getMegaApi()->getNumChildFolders(mNode.get());
+
+    // If it has no children, the item does not need to be init
+    mChildrenAreInit = mChildrenCounter > 0 ? false : true;
 }
 
 QPointer<NodeSelectorModelItem> NodeSelectorModelItem::getParent()

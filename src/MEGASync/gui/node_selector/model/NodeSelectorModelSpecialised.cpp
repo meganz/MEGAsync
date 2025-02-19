@@ -494,11 +494,13 @@ QVariant NodeSelectorModelSearch::data(const QModelIndex &index, int role) const
     return NodeSelectorModel::data(index, role);
 }
 
-void NodeSelectorModelSearch::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes, const QModelIndex &parent)
+bool NodeSelectorModelSearch::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes,
+                                       const QModelIndex& parent)
 {
     auto totalRows = rowCount(parent);
     beginInsertRows(QModelIndex(), totalRows, totalRows + nodes.size() - 1);
     emit requestAddSearchRootItem(nodes, mAllowedTypes);
+    return true;
 }
 
 bool NodeSelectorModelSearch::rootNodeUpdated(mega::MegaNode* node)
@@ -743,28 +745,8 @@ bool NodeSelectorModelRubbish::canDropMimeData(const QMimeData* data,
                                                int,
                                                const QModelIndex& parent) const
 {
-    if (action == Qt::CopyAction || action == Qt::MoveAction)
+    if (action == Qt::MoveAction)
     {
-        if (parent.isValid())
-        {
-            auto item = getItemByIndex(parent);
-            if (item)
-            {
-                auto node = item->getNode();
-                if (node && node->isFolder())
-                {
-                    auto access = Utilities::getNodeAccess(node->getHandle());
-                    if (access == MegaShare::ACCESS_OWNER)
-                    {
-                        if (action == Qt::CopyAction)
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-
         // Allow copying/moving items to all the view space
         return checkDraggedMimeData(data);
     }
