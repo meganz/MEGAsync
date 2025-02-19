@@ -89,7 +89,7 @@ private:
 
 private slots:
     void onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings);
-    void onFolderSizeReceived(QString folder, int size);
+    void onFolderSizeReceived(QString folder, long long size);
     void onBackupsCreationFinished(bool success);
     void onBackupFinished(const QString& folder, int errorCode, int syncErrorCode);
 };
