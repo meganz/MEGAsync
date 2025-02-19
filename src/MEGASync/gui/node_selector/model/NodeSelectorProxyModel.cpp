@@ -319,10 +319,10 @@ void NodeSelectorProxyModel::onModelSortedFiltered()
         mExpandMapped = true;
     }
 
+    emit modelSorted();
+
     getMegaModel()->sendBlockUiSignal(false);
     mItemsToMap.clear();
-
-    emit modelSorted();
 }
 
 NodeSelectorProxyModelSearch::NodeSelectorProxyModelSearch(QObject *parent)
