@@ -25,7 +25,6 @@
 #include <QRect>
 #include <QScrollBar>
 #include <QSignalMapper>
-#include <QtConcurrent/QtConcurrent>
 #include <QTimer>
 #include <QToolTip>
 #include <QUrl>
