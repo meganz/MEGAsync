@@ -59,6 +59,7 @@ class LoginController;
 class AccountStatusController;
 class StatsEventHandler;
 class UserMessageController;
+class SyncReminderNotificationManager;
 
 enum GetUserStatsReason {
     USERSTATS_LOGGEDIN,
@@ -217,6 +218,7 @@ signals:
     void shellNotificationsProcessed();
     void updateUserInterface();
     void requestAppState(AppState::AppStates newAppState);
+    void syncsDialogClosed();
 
 public slots:
     void updateTrayIcon();
@@ -498,6 +500,8 @@ protected:
     std::unique_ptr<UserMessageController> mUserMessageController;
 
     std::unique_ptr<mega::MegaGfxProvider> mGfxProvider;
+
+    SyncReminderNotificationManager* mSyncReminderNotificationManager;
 
     bool misSyncingStateWrongLogged;
 

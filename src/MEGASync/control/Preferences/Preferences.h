@@ -283,6 +283,10 @@ public:
     void setMaxMemoryReportTime(long long timestamp);
     long long lastDailyStatTime();
     void setLastDailyStatTime(long long time);
+    long long lastSyncReminderTime();
+    void setSyncReminderTime(long long time);
+    int lastSyncReminderState();
+    void setLastSyncReminderState(int state);
 
     long long lastUpdateTime();
     void setLastUpdateTime(long long time);
@@ -769,6 +773,8 @@ protected:
     static const QString lastDailyStatTimeKey;
     static const QString askOnExclusionRemove;
     static const QString themeKey;
+    static const QString lastSyncReminderTimeKey;
+    static const QString lastSyncReminderStateKey;
 #if defined(ENABLE_SDK_ISOLATED_GFX)
     static const QString gfxWorkerEndpointKey;
 #endif
