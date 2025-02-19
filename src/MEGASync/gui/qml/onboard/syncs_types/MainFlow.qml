@@ -118,7 +118,17 @@ Rectangle {
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.stepAllDone;
-                helpButtonLink: Links.installAppsDesktop;
+                helpButtonLink: {
+                    switch(root.navInfo.typeSelected) {
+                        case Constants.SyncType.SELECTIVE_SYNC:
+                        case Constants.SyncType.FULL_SYNC:
+                            return Links.setUpSyncs;
+                        case Constants.SyncType.BACKUP:
+                            return Links.createBackup;
+                        default:
+                            return Links.installAppsDesktop;
+                    }
+                }
             }
         }
     ]
