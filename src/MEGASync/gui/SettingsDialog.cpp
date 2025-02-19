@@ -42,6 +42,7 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 using namespace mega;
+using namespace std::chrono_literals;
 
 static const QString SYNCS_TAB_MENU_LABEL_QSS =
     QString::fromLatin1("QLabel{ border-image: url(%1); }");
@@ -193,6 +194,8 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
             &AppState::appStateChanged,
             this,
             &SettingsDialog::onAppStateChanged);
+
+    startRequestTaskbarPinningTimer();
 }
 
 SettingsDialog::~SettingsDialog()
@@ -1735,3 +1738,25 @@ void SettingsDialog::onPermissionsClicked()
         });
 }
 #endif
+
+void SettingsDialog::startRequestTaskbarPinningTimer()
+{
+    auto preferences = Preferences::instance();
+    if (preferences->logged() &&
+        !preferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_REQUEST_PIN_TASKBAR))
+    {
+        mTaskbarPinningRequestTimer = new QTimer(this);
+        connect(mTaskbarPinningRequestTimer,
+                &QTimer::timeout,
+                this,
+                &SettingsDialog::onRequestTaskbarPinningTimeout);
+
+        mTaskbarPinningRequestTimer->start(500ms);
+    }
+}
+
+void SettingsDialog::onRequestTaskbarPinningTimeout()
+{
+    mTaskbarPinningRequestTimer->stop();
+    Platform::getInstance()->pinOnTaskbar();
+}

@@ -348,11 +348,6 @@ void InfoDialog::showEvent(QShowEvent *event)
 
     repositionInfoDialog();
 
-    if (mPreferences->logged())
-    {
-        startRequestTaskbarPinningTimer();
-    }
-
     QDialog::showEvent(event);
 }
 
@@ -1768,25 +1763,4 @@ void InfoDialog::initNotificationArea()
     });
 
     notificationsReady = true;
-}
-
-void InfoDialog::startRequestTaskbarPinningTimer()
-{
-    auto preferences = Preferences::instance();
-    if (!preferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_REQUEST_PIN_TASKBAR))
-    {
-        mRequestTaskbarPinning = new QTimer(this);
-        connect(mRequestTaskbarPinning, &QTimer::timeout, this, &InfoDialog::requestTaskbarPinning);
-        mRequestTaskbarPinning->start(2s);
-    }
-}
-
-void InfoDialog::requestTaskbarPinning()
-{
-    mRequestTaskbarPinning->stop();
-
-    if (isShown)
-    {
-        Platform::getInstance()->pinOnTaskbar();
-    }
 }

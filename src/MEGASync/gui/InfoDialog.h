@@ -167,7 +167,6 @@ private slots:
     void onTransfersStateChanged();
 
     void onStalledIssuesChanged();
-    void requestTaskbarPinning();
 
 signals:
 
@@ -249,13 +248,12 @@ protected:
     QTimer uploadsFinishedTimer;
     QTimer transfersFinishedTimer;
     QTimer mResetTransferSummaryWidget;
-    MegaApplication *app;
+    MegaApplication* app;
     std::shared_ptr<Preferences> mPreferences;
-    SyncInfo *mSyncInfo;
-    mega::MegaApi *megaApi;
-    mega::MegaTransfer *activeDownload;
-    mega::MegaTransfer *activeUpload;
-    QTimer* mRequestTaskbarPinning;
+    SyncInfo* mSyncInfo;
+    mega::MegaApi* megaApi;
+    mega::MegaTransfer* activeDownload;
+    mega::MegaTransfer* activeUpload;
 
 private:
     static double computeRatio(long long completed, long long remaining);
@@ -265,7 +263,6 @@ private:
     void fixMultiscreenResizeBug(int& posX, int& posY);
     void repositionInfoDialog();
     void initNotificationArea();
-    void startRequestTaskbarPinningTimer();
 
     TransferScanCancelUi* mTransferScanCancelUi = nullptr;
     QtPositioningBugFixer qtBugFixer;
