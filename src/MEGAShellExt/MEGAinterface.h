@@ -1,3 +1,4 @@
+// clang-format off
 #ifndef MEGAINTERFACE_H
 #define MEGAINTERFACE_H
 
@@ -6,8 +7,9 @@
 
 class MegaInterface
 {
-
 public:
+    MegaInterface() = delete;
+
     typedef enum {
            FILE_SYNCED = 0,
            FILE_PENDING = 1,
@@ -46,6 +48,7 @@ public:
     static bool viewVersions(PCWSTR path);
     static bool startRequest();
     static bool endRequest();
+    static bool isMEGASyncOpen();
 
 private:
     static LPCWSTR MEGA_PIPE;
@@ -61,7 +64,6 @@ private:
     static WCHAR OP_VERSIONS;
     static WCHAR OP_HASVERSIONS;
     static int sendRequest(WCHAR type, PCWSTR content, PCWSTR response, int responseLen);
-    MegaInterface() {}
 };
 
 #endif // MEGAINTERFACE_H

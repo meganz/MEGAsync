@@ -3,6 +3,10 @@
 #include "MEGAinterface.h"
 #include "SharedState.h"
 
+ContextMenuCommandView::ContextMenuCommandView():
+    ContextMenuCommandBase(L"ContextMenuCommandView")
+{}
+
 IFACEMETHODIMP ContextMenuCommandView::GetTitle(IShellItemArray* psiItemArray, LPWSTR* ppszName)
 {
     std::wstring title;
@@ -31,22 +35,35 @@ IFACEMETHODIMP ContextMenuCommandView::Invoke(IShellItemArray* psiItemArray, IBi
 {
     UNREFERENCED_PARAMETER(pbc);
 
-    if (GetState(psiItemArray) == ECS_ENABLED)
+    if (GetCmdState(psiItemArray) == ECS_ENABLED)
+    {
         mContextMenuData.viewOnMEGA();
+    }
 
     return S_OK;
 }
 
-const EXPCMDSTATE ContextMenuCommandView::GetState(IShellItemArray* psiItemArray)
+EXPCMDSTATE ContextMenuCommandView::GetCmdState(IShellItemArray* psiItemArray)
 {
     if (!psiItemArray)
-        return ECS_HIDDEN;
+    {
+        mExpCmdState = ECS_HIDDEN;
+    }
+    else
+    {
+        mState->SetState(mId, Set);
 
-    mState->SetState(L"ContextMenuCommandView", Set);
+        initializeContextMenuData(psiItemArray);
 
-    initializeContextMenuData(psiItemArray);
-    if (mContextMenuData.canViewOnMEGA())
-        return ECS_ENABLED;
+        if (mContextMenuData.canViewOnMEGA())
+        {
+            mExpCmdState = ECS_ENABLED;
+        }
+        else
+        {
+            mExpCmdState = ECS_HIDDEN;
+        }
+    }
 
-    return ECS_HIDDEN;
+    return mExpCmdState;
 }

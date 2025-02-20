@@ -104,6 +104,11 @@ bool ContextMenuData::isUnsynced(int state)
     return (state == MegaInterface::FILE_NOTFOUND);
 }
 
+bool ContextMenuData::isMEGASyncOpen() const
+{
+    return MegaInterface::isMEGASyncOpen();
+}
+
 void ContextMenuData::processFile(const std::wstring& fileOrDirPath)
 {
     WIN32_FILE_ATTRIBUTE_DATA fad;

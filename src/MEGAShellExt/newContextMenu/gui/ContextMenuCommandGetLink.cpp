@@ -3,6 +3,10 @@
 #include "MEGAinterface.h"
 #include "SharedState.h"
 
+ContextMenuCommandGetLink::ContextMenuCommandGetLink():
+    ContextMenuCommandBase(L"ContextMenuCommandGetLink")
+{}
+
 IFACEMETHODIMP ContextMenuCommandGetLink::GetTitle(IShellItemArray* psiItemArray, LPWSTR* ppszName)
 {
     std::wstring title;
@@ -35,24 +39,34 @@ IFACEMETHODIMP ContextMenuCommandGetLink::Invoke(IShellItemArray* psiItemArray,
 {
     UNREFERENCED_PARAMETER(pbc);
 
-    if (GetState(psiItemArray) == ECS_ENABLED)
+    if (GetCmdState(psiItemArray) == ECS_ENABLED)
+    {
         mContextMenuData.requestGetLinks();
+    }
 
     return S_OK;
 }
 
-const EXPCMDSTATE ContextMenuCommandGetLink::GetState(IShellItemArray* psiItemArray)
+EXPCMDSTATE ContextMenuCommandGetLink::GetCmdState(IShellItemArray* psiItemArray)
 {
     if (!psiItemArray)
-        return ECS_HIDDEN;
-
-    mState->SetState(L"ContextMenuCommandGetLink", Set);
-
-    initializeContextMenuData(psiItemArray);
-    if (mContextMenuData.canRequestGetLinks())
     {
-        return ECS_ENABLED;
+        mExpCmdState = ECS_HIDDEN;
+    }
+    else
+    {
+        mState->SetState(mId, Set);
+
+        initializeContextMenuData(psiItemArray);
+        if (mContextMenuData.canRequestGetLinks())
+        {
+            mExpCmdState = ECS_ENABLED;
+        }
+        else
+        {
+            mExpCmdState = ECS_HIDDEN;
+        }
     }
 
-    return ECS_HIDDEN;
+    return mExpCmdState;
 }

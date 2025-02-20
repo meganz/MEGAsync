@@ -3,6 +3,10 @@
 #include "MEGAinterface.h"
 #include "SharedState.h"
 
+ContextMenuCommandRemoveFromLeftPane::ContextMenuCommandRemoveFromLeftPane():
+    ContextMenuCommandBase(L"ContextMenuCommandRemoveFromLeftPane")
+{}
+
 IFACEMETHODIMP ContextMenuCommandRemoveFromLeftPane::GetTitle(IShellItemArray* psiItemArray,
                                                               LPWSTR* ppszName)
 {
@@ -30,22 +34,35 @@ IFACEMETHODIMP ContextMenuCommandRemoveFromLeftPane::Invoke(IShellItemArray* psi
 {
     UNREFERENCED_PARAMETER(pbc);
 
-    if (GetState(psiItemArray) == ECS_ENABLED)
+    if (GetCmdState(psiItemArray) == ECS_ENABLED)
+    {
         mContextMenuData.removeFromLeftPane();
+    }
 
     return S_OK;
 }
 
-const EXPCMDSTATE ContextMenuCommandRemoveFromLeftPane::GetState(IShellItemArray* psiItemArray)
+EXPCMDSTATE ContextMenuCommandRemoveFromLeftPane::GetCmdState(IShellItemArray* psiItemArray)
 {
     if (!psiItemArray)
-        return ECS_HIDDEN;
+    {
+        mExpCmdState = ECS_HIDDEN;
+    }
+    else
+    {
+        mState->SetState(mId, Set);
 
-    mState->SetState(L"ContextMenuCommandRemoveFromLeftPane", Set);
+        initializeContextMenuData(psiItemArray);
 
-    initializeContextMenuData(psiItemArray);
-    if (mContextMenuData.canRemoveFromLeftPane())
-        return ECS_ENABLED;
+        if (mContextMenuData.canRemoveFromLeftPane())
+        {
+            mExpCmdState = ECS_ENABLED;
+        }
+        else
+        {
+            mExpCmdState = ECS_HIDDEN;
+        }
+    }
 
-    return ECS_HIDDEN;
+    return mExpCmdState;
 }

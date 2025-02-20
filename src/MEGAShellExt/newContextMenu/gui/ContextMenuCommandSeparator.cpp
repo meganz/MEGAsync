@@ -2,6 +2,10 @@
 
 #include "SharedState.h"
 
+ContextMenuCommandSeparator::ContextMenuCommandSeparator():
+    ContextMenuCommandBase(L"ContextMenuCommandSeparator")
+{}
+
 IFACEMETHODIMP ContextMenuCommandSeparator::GetFlags(EXPCMDFLAGS* flags)
 {
     *flags = ECF_ISSEPARATOR;
@@ -32,10 +36,12 @@ IFACEMETHODIMP ContextMenuCommandSeparator::Invoke(IShellItemArray* psiItemArray
     return S_OK;
 }
 
-const EXPCMDSTATE ContextMenuCommandSeparator::GetState(IShellItemArray* psiItemArray)
+EXPCMDSTATE ContextMenuCommandSeparator::GetCmdState(IShellItemArray* psiItemArray)
 {
     UNREFERENCED_PARAMETER(psiItemArray);
-    mState->SetState(L"ContextMenuCommandSeparator", Set);
 
-    return ECS_ENABLED;
+    mState->SetState(mId, Set);
+    mExpCmdState = ECS_ENABLED;
+
+    return mExpCmdState;
 }

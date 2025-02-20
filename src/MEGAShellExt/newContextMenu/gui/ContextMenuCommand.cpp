@@ -7,7 +7,8 @@
 #include "ContextMenuCommandView.h"
 #include "ContextMenuCommandViewVersions.h"
 
-ContextMenuCommand::ContextMenuCommand()
+ContextMenuCommand::ContextMenuCommand():
+    ContextMenuCommandBase(L"ContextMenuCommand")
 {
     mEnumCommands = winrt::make_self<SubCommandEnumerator>();
 
@@ -18,12 +19,14 @@ ContextMenuCommand::ContextMenuCommand()
         mEnumCommands.get()->subCommands.push_back(comPointer);
     }
 
+    /*
     {
         winrt::com_ptr<ContextMenuCommandSeparator> comPointer =
             winrt::make_self<ContextMenuCommandSeparator>();
 
         mEnumCommands.get()->subCommands.push_back(comPointer);
     }
+*/
 
     {
         winrt::com_ptr<ContextMenuCommandView> comPointer =
@@ -54,9 +57,25 @@ ContextMenuCommand::ContextMenuCommand()
     }
 }
 
+IFACEMETHODIMP ContextMenuCommand::GetFlags(EXPCMDFLAGS* flags)
+{
+    *flags = ECF_HASSUBCOMMANDS;
+
+    return S_OK;
+}
+
 IFACEMETHODIMP ContextMenuCommand::GetTitle(IShellItemArray* psiItemArray, LPWSTR* ppszName)
 {
     static const std::wstring title = L"MEGA";
+
+    if (mEnumCommands->enabledSubCommandItems(psiItemArray) == 1)
+    {
+        auto uniqueCommand = mEnumCommands->getEnabledCommand(psiItemArray);
+        if (uniqueCommand.has_value())
+        {
+            return uniqueCommand.value()->GetTitle(psiItemArray, ppszName);
+        }
+    }
 
     SHStrDup(title.data(), ppszName);
 
@@ -70,6 +89,15 @@ IFACEMETHODIMP ContextMenuCommand::GetToolTip(IShellItemArray* psiItemArray, LPW
 
 IFACEMETHODIMP ContextMenuCommand::Invoke(IShellItemArray* psiItemArray, IBindCtx* pbc) noexcept
 {
+    if (mEnumCommands->enabledSubCommandItems(psiItemArray) == 1)
+    {
+        auto uniqueCommand = mEnumCommands->getEnabledCommand(psiItemArray);
+        if (uniqueCommand.has_value())
+        {
+            return uniqueCommand.value()->Invoke(psiItemArray, pbc);
+        }
+    }
+
     return S_OK;
 }
 
@@ -87,22 +115,27 @@ HRESULT ContextMenuCommand::EnumSubCommands(IEnumExplorerCommand** ppEnum)
     return S_OK;
 }
 
-const EXPCMDSTATE ContextMenuCommand::GetState(IShellItemArray* psiItemArray)
+EXPCMDSTATE ContextMenuCommand::GetCmdState(IShellItemArray* psiItemArray)
 {
-    return ECS_ENABLED;
-
     if (!psiItemArray)
-        return ECS_HIDDEN;
-
-    mState->SetState(L"ContextMenuCommand", Set);
-
-    initializeContextMenuData(psiItemArray);
-    /*
-    if (mContextMenuData.IsMEGASyncOpen())
     {
-        return ECS_ENABLED;
+        mExpCmdState = ECS_HIDDEN;
     }
-    */
+    else
+    {
+        mState->SetState(mId, Set);
 
-    return ECS_HIDDEN;
+        initializeContextMenuData(psiItemArray);
+
+        if (mContextMenuData.isMEGASyncOpen())
+        {
+            mExpCmdState = ECS_ENABLED;
+        }
+        else
+        {
+            mExpCmdState = ECS_HIDDEN;
+        }
+    }
+
+    return mExpCmdState;
 }

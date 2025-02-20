@@ -19,6 +19,7 @@ public:
     bool canRemoveFromLeftPane() const;
     bool canViewOnMEGA() const;
     bool canViewVersions() const;
+    bool isMEGASyncOpen() const;
 
     void requestUpload();
     void requestGetLinks();

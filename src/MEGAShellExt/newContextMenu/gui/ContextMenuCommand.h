@@ -13,9 +13,9 @@ public:
     IFACEMETHODIMP GetToolTip(IShellItemArray* psiItemArray, LPWSTR* ppszInfotip) override;
     IFACEMETHODIMP Invoke(IShellItemArray* psiItemArray, IBindCtx* pbc) noexcept override;
     IFACEMETHODIMP EnumSubCommands(IEnumExplorerCommand** ppEnum) override;
+    IFACEMETHODIMP GetFlags(EXPCMDFLAGS* flags) override;
 
-protected:
-    virtual const EXPCMDSTATE GetState(IShellItemArray* psiItemArray) override;
+    EXPCMDSTATE GetCmdState(IShellItemArray* psiItemArray) override;
 
 private:
     winrt::com_ptr<SubCommandEnumerator> mEnumCommands;

@@ -7,13 +7,12 @@ class __declspec(uuid("F85CF690-330F-4EC2-89E5-3E7ED0344BF5")) ContextMenuComman
     public ContextMenuCommandBase
 {
 public:
+    ContextMenuCommandSeparator();
     IFACEMETHODIMP GetFlags(EXPCMDFLAGS* flags) override;
     IFACEMETHODIMP GetTitle(IShellItemArray* psiItemArray, LPWSTR* ppszName) override;
     IFACEMETHODIMP GetToolTip(IShellItemArray* psiItemArray, LPWSTR* ppszInfotip) override;
     IFACEMETHODIMP Invoke(IShellItemArray* psiItemArray, IBindCtx* pbc) noexcept override;
-
-protected:
-    virtual const EXPCMDSTATE GetState(IShellItemArray* psiItemArray) override;
+    EXPCMDSTATE GetCmdState(IShellItemArray* psiItemArray) override;
 };
 
 #endif

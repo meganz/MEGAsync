@@ -3,6 +3,10 @@
 #include "MEGAinterface.h"
 #include "SharedState.h"
 
+ContextMenuCommandUpload::ContextMenuCommandUpload():
+    ContextMenuCommandBase(L"ContextMenuCommandUpload")
+{}
+
 IFACEMETHODIMP ContextMenuCommandUpload::GetTitle(IShellItemArray* psiItemArray, LPWSTR* ppszName)
 {
     std::wstring title;
@@ -33,24 +37,35 @@ IFACEMETHODIMP ContextMenuCommandUpload::Invoke(IShellItemArray* psiItemArray,
 {
     UNREFERENCED_PARAMETER(pbc);
 
-    if (GetState(psiItemArray) == ECS_ENABLED)
+    if (GetCmdState(psiItemArray) == ECS_ENABLED)
+    {
         mContextMenuData.requestUpload();
+    }
 
     return S_OK;
 }
 
-const EXPCMDSTATE ContextMenuCommandUpload::GetState(IShellItemArray* psiItemArray)
+EXPCMDSTATE ContextMenuCommandUpload::GetCmdState(IShellItemArray* psiItemArray)
 {
     if (!psiItemArray)
-        return ECS_HIDDEN;
-
-    mState->SetState(L"ContextMenuCommandUpload", Set);
-
-    initializeContextMenuData(psiItemArray);
-    if (mContextMenuData.canRequestUpload())
     {
-        return ECS_ENABLED;
+        mExpCmdState = ECS_ENABLED;
+    }
+    else
+    {
+        mState->SetState(mId, Set);
+
+        initializeContextMenuData(psiItemArray);
+
+        if (mContextMenuData.canRequestUpload())
+        {
+            mExpCmdState = ECS_ENABLED;
+        }
+        else
+        {
+            mExpCmdState = ECS_HIDDEN;
+        }
     }
 
-    return ECS_HIDDEN;
+    return mExpCmdState;
 }

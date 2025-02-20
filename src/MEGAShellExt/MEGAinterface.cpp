@@ -33,6 +33,13 @@ int MegaInterface::sendRequest(WCHAR type, PCWSTR content, PCWSTR response, int 
     return 0;
 }
 
+bool MegaInterface::isMEGASyncOpen()
+{
+    DWORD timeout = 250;
+
+    return WaitNamedPipe(MegaInterface::MEGA_PIPE, timeout) != 0;
+}
+
 MegaInterface::FileState MegaInterface::getPathState(PCWSTR filePath, bool overlayIcons)
 {
     WCHAR chReadBuf[2];

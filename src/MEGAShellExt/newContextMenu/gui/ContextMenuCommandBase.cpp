@@ -2,9 +2,49 @@
 
 #include <windows.storage.h>
 
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <windows.h>
+
 ContextMenuData ContextMenuCommandBase::mContextMenuData;
 
-ContextMenuCommandBase::ContextMenuCommandBase()
+void ContextMenuCommandBase::log(const std::wstring& content) const
+{
+    const std::wstring fileName = L"c:\\temp\\winextension.log";
+
+    // Create or open the file
+    HANDLE hFile = CreateFile(fileName.c_str(), // File name
+                              FILE_APPEND_DATA, // Desired access
+                              0, // Share mode
+                              NULL, // Security attributes
+                              OPEN_EXISTING, // Creation disposition
+                              FILE_ATTRIBUTE_NORMAL, // Flags and attributes
+                              NULL); // Template file
+
+    // Move the file pointer to the end of the file
+    SetFilePointer(hFile, 0, NULL, FILE_END);
+
+    // Write the content to the file
+    std::wstringstream wss;
+    wss << content;
+    wss << std::endl;
+
+    std::wstring linedContent = wss.str();
+
+    DWORD bytesWritten;
+    WriteFile(hFile, // File handle
+              linedContent.c_str(), // Buffer to write
+              static_cast<DWORD>(linedContent.size() * sizeof(wchar_t)),
+              &bytesWritten, // Number of bytes written
+              NULL); // Overlapped
+
+    // Close the file handle
+    CloseHandle(hFile);
+}
+
+ContextMenuCommandBase::ContextMenuCommandBase(const std::wstring& id):
+    mId(id)
 {
     mState = std::make_unique<SharedState>();
     mContextMenuData.reset();
@@ -18,7 +58,7 @@ IFACEMETHODIMP ContextMenuCommandBase::GetCanonicalName(GUID* pguidCommandName)
 
 IFACEMETHODIMP ContextMenuCommandBase::GetFlags(EXPCMDFLAGS* flags)
 {
-    *flags = ECF_HASSUBCOMMANDS;
+    *flags = ECF_DEFAULT;
     return S_OK;
 }
 
@@ -42,7 +82,7 @@ IFACEMETHODIMP ContextMenuCommandBase::GetState(IShellItemArray* psiItemArray,
 {
     UNREFERENCED_PARAMETER(fOkToBeSlow);
 
-    *pCmdState = GetState(psiItemArray);
+    *pCmdState = GetCmdState(psiItemArray);
     return S_OK;
 }
 
