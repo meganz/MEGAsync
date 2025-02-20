@@ -770,7 +770,7 @@ modeselected:
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\swresample-3.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avcodec-59.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avformat-59.dll"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avutil-59.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avutil-57.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\swscale-6.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\swresample-4.dll"
 
