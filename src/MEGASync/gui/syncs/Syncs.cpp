@@ -29,6 +29,8 @@ void Syncs::addSync(SyncInfo::SyncOrigin origin, const QString& local, const QSt
 {
     cleanErrors();
 
+    mSyncConfig.localFolder = local;
+
     if (checkErrorsOnSyncPaths(local, remote))
     {
         return;
@@ -121,7 +123,7 @@ void Syncs::helperCheckLocalSync(const QString& path)
     if (mLocalError != localError)
     {
         mLocalError.swap(localError);
-        emit localErrorChanged(getLocalError(path));
+        emit localErrorChanged();
     }
 }
 
@@ -155,7 +157,7 @@ void Syncs::helperCheckRemoteSync(const QString& path)
     if (mRemoteError != remoteError)
     {
         mRemoteError.swap(remoteError);
-        emit remoteErrorChanged(getRemoteError());
+        emit remoteErrorChanged();
     }
 }
 
@@ -219,7 +221,7 @@ void Syncs::onRequestFinish(mega::MegaApi* api,
             else
             {
                 mRemoteError = RemoteErrors::CantCreateRemoteFolder;
-                emit remoteErrorChanged(getRemoteError());
+                emit remoteErrorChanged();
             }
         }
         else if (error->getErrorCode() != mega::MegaError::API_ESSL
@@ -230,7 +232,7 @@ void Syncs::onRequestFinish(mega::MegaApi* api,
             mRemoteMegaError.syncError = mega::SyncError::NO_SYNC_ERROR;
             mRemoteStringMessage = QString::fromUtf8(error->getErrorString());
 
-            emit remoteErrorChanged(getRemoteError());
+            emit remoteErrorChanged();
         }
     }
 }
@@ -261,7 +263,7 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString nam
         mRemoteMegaError.error = errorCode;
         mRemoteMegaError.syncError = syncErrorCode;
 
-        emit remoteErrorChanged(getRemoteError());
+        emit remoteErrorChanged();
     }
     else
     {
@@ -343,13 +345,13 @@ void Syncs::clearRemoteError()
     mRemoteMegaError.error = mega::MegaError::API_OK;
     mRemoteMegaError.syncError = mega::SyncError::NO_SYNC_ERROR;
 
-    emit remoteErrorChanged(getRemoteError());
+    emit remoteErrorChanged();
 }
 
 void Syncs::clearLocalError()
 {
     mLocalError.reset();
-    emit localErrorChanged(getLocalError());
+    emit localErrorChanged();
 }
 
 QString Syncs::getLocalError(const QString& path) const

@@ -60,8 +60,8 @@ signals:
     void syncSetupSuccess();
     void syncStatusChanged();
     void syncRemoved();
-    void localErrorChanged(QString errorMessage);
-    void remoteErrorChanged(QString errorMessage);
+    void localErrorChanged();
+    void remoteErrorChanged();
 
 private:
     enum class LocalErrors
