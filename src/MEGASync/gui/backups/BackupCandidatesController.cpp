@@ -692,7 +692,7 @@ void BackupCandidatesController::onSyncRemoved(std::shared_ptr<SyncSettings> syn
     refreshBackupCandidatesErrors();
 }
 
-void BackupCandidatesController::onFolderSizeReceived(QString folder, int size)
+void BackupCandidatesController::onFolderSizeReceived(QString folder, long long size)
 {
     auto backupCandidate = mBackupCandidates->getBackupCandidateByFolder(folder);
     if (backupCandidate)
