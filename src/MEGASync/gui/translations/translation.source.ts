@@ -7663,6 +7663,11 @@ Refresh the list.</translation>
         <translatorcomment>Text shown when a streaming link has been copied to the clipboard</translatorcomment>
         <translation>The link has been copied to the clipboard</translation>
     </message>
+    <message>
+        <source>Folder links can&apos;t be streamed</source>
+        <translatorcomment>Message displayed when the user tries to stream a folder. SNC-5215.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Strings</name>
