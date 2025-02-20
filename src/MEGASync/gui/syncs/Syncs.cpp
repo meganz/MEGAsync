@@ -27,7 +27,7 @@ Syncs::Syncs(QObject* parent):
 
 void Syncs::addSync(SyncInfo::SyncOrigin origin, const QString& local, const QString& remote)
 {
-    cleanErrorsPrivately();
+    cleanErrors();
 
     if (checkErrorsOnSyncPaths(local, remote))
     {
@@ -73,7 +73,7 @@ bool Syncs::checkErrorsOnSyncPaths(const QString& localPath, const QString& remo
     helperCheckLocalSync(localPath);
     helperCheckRemoteSync(remotePath);
 
-    return (!mLocalErrorMessage.isEmpty() || mRemoteError.has_value());
+    return (mLocalError.has_value() || mRemoteError.has_value());
 }
 
 void Syncs::helperCheckLocalSync(const QString& path)
@@ -105,22 +105,23 @@ void Syncs::helperCheckLocalSync(const QString& path)
         }
     }
 
-    QString errorMessage;
     if (!localError.has_value())
     {
-        auto syncability = SyncController::instance().isLocalFolderSyncable(path, mega::MegaSync::TYPE_TWOWAY, errorMessage);
+        QString errorMessage;
+        auto syncability =
+            SyncController::instance().isLocalFolderSyncable(path,
+                                                             mega::MegaSync::TYPE_TWOWAY,
+                                                             errorMessage);
         if (syncability == SyncController::CANT_SYNC)
         {
             localError = LocalErrors::CantSync;
         }
     }
-    if (errorMessage.isEmpty())
-        errorMessage = getLocalErrorMessage(localError, path);
 
-    if (mLocalErrorMessage != errorMessage)
+    if (mLocalError != localError)
     {
-        mLocalErrorMessage = errorMessage;
-        emit localErrorChanged(mLocalErrorMessage);
+        mLocalError.swap(localError);
+        emit localErrorChanged(getLocalError(path));
     }
 }
 
@@ -161,7 +162,7 @@ void Syncs::helperCheckRemoteSync(const QString& path)
 bool Syncs::checkLocalSync(const QString& path)
 {
     helperCheckLocalSync(path);
-    return (mLocalErrorMessage.isEmpty());
+    return (!mLocalError.has_value());
 }
 
 bool Syncs::checkRemoteSync(const QString& path)
@@ -270,7 +271,7 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString nam
 
 QString Syncs::getLocalError() const
 {
-    return mLocalErrorMessage;
+    return getLocalError(mSyncConfig.localFolder);
 }
 
 QString Syncs::getRemoteError() const
@@ -329,13 +330,10 @@ QString Syncs::getRemoteError() const
     return {};
 }
 
-void Syncs::cleanErrorsPrivately()
+void Syncs::cleanErrors()
 {
-    mLocalErrorMessage.clear();
-    mRemoteError.reset();
-    mRemoteStringMessage.clear();
-    mRemoteMegaError.error = mega::MegaError::API_OK;
-    mRemoteMegaError.syncError = mega::SyncError::NO_SYNC_ERROR;
+    clearLocalError();
+    clearRemoteError();
 }
 
 void Syncs::clearRemoteError()
@@ -350,18 +348,18 @@ void Syncs::clearRemoteError()
 
 void Syncs::clearLocalError()
 {
-    mLocalErrorMessage.clear();
-    emit localErrorChanged(QString());
+    mLocalError.reset();
+    emit localErrorChanged(getLocalError());
 }
 
-QString Syncs::getLocalErrorMessage(std::optional<LocalErrors> error, const QString& path) const
+QString Syncs::getLocalError(const QString& path) const
 {
-    if (!error.has_value())
+    if (!mLocalError.has_value())
     {
-        return QString();
+        return {};
     }
 
-    switch (error.value())
+    switch (mLocalError.value())
     {
         case LocalErrors::EmptyPath:
         {
@@ -391,5 +389,5 @@ QString Syncs::getLocalErrorMessage(std::optional<LocalErrors> error, const QStr
         }
     }
 
-    return QString();
+    return {};
 }
