@@ -182,7 +182,6 @@ QComboBox:disabled[type="mega"]
 {
 color: #ff797c80; /*colorToken.text-disabled*/
 border-color: #ff797c80; /*colorToken.button-disabled*/
-image : url("");
 }
 
 QComboBox::on[type="mega"]
