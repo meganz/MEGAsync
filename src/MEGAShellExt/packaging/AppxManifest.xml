@@ -33,17 +33,17 @@
         <desktop4:Extension Category="windows.fileExplorerContextMenus">
           <desktop4:FileExplorerContextMenus>
             <desktop5:ItemType Type="*">
-              <desktop5:Verb Id="MEGAShellExtMenuCmd1" Clsid="F043C633-970A-43DF-A382-9D51C8D14E97" />
+              <desktop5:Verb Id="MEGAShellExtMenuCmd1" Clsid="F9E3E837-B080-4BB1-A508-632CC3E751B7" />
             </desktop5:ItemType>
             <desktop5:ItemType Type="Directory">
-              <desktop5:Verb Id="MEGAShellExtMenuCmd1" Clsid="F043C633-970A-43DF-A382-9D51C8D14E97" />
+              <desktop5:Verb Id="MEGAShellExtMenuCmd1" Clsid="F9E3E837-B080-4BB1-A508-632CC3E751B7" />
             </desktop5:ItemType>
           </desktop4:FileExplorerContextMenus>
         </desktop4:Extension>
         <com:Extension Category="windows.comServer">
           <com:ComServer>
             <com:SurrogateServer DisplayName="MEGAsync Shell Extension">
-              <com:Class Id="F043C633-970A-43DF-A382-9D51C8D14E97" Path="MEGAShellExt.dll" ThreadingModel="STA"/>
+              <com:Class Id="F9E3E837-B080-4BB1-A508-632CC3E751B7" Path="MEGAShellExt.dll" ThreadingModel="STA"/>
             </com:SurrogateServer>
           </com:ComServer>
         </com:Extension>

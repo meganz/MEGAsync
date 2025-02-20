@@ -3,6 +3,7 @@
 #include "ClassFactoryShellExtPending.h"
 #include "ClassFactoryShellExtSynced.h"
 #include "ClassFactoryShellExtSyncing.h"
+#include "ContextMenuCommand.h"
 #include "ContextMenuCommandGetLink.h"
 #include "ContextMenuCommandRemoveFromLeftPane.h"
 #include "ContextMenuCommandSeparator.h"
@@ -111,6 +112,10 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void **ppv)
         else if (rclsid == __uuidof(ContextMenuCommandViewVersions))
         {
             hr = winrt::make<SimpleFactory<ContextMenuCommandViewVersions>>().as(riid, ppv);
+        }
+        else if (rclsid == __uuidof(ContextMenuCommand))
+        {
+            hr = winrt::make<SimpleFactory<ContextMenuCommand>>().as(riid, ppv);
         }
     }
     else
