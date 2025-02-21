@@ -2,7 +2,7 @@ dolphin-megasync (5.4.0) stable; urgency=low
 
   * Build for kf5 and kf6
 
- -- MEGA Team <linux@mega.co.nz>  Mon, 10 Jun 2024 19:52:00 +0200
+ -- MEGA Team <linux@mega.co.nz>  Fri, 21 Feb 2025 11:42:00 +0200
 dolphin-megasync (5.3.0) stable; urgency=low
 
   * Bug fixes
