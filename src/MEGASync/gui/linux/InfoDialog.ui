@@ -71,7 +71,7 @@ padding-left: 12px;
 font-family: Inter;
 font-size: 12px;
 line-height: 18px;
-border: 1px solid #0000001A;
+border: 1px solid rgba(0, 0, 0, 10%);
 border-radius: 4px;
 color: #FFFFFF;
 padding: 4px 8px;
@@ -92,7 +92,7 @@ background-color: #00D7C2;
 
 #bUpgrade::disabled
 {
-background-color: #00BFA54D;
+background-color: rgba(0, 191, 165, 30%);
 }
 
 #bCreateSync
