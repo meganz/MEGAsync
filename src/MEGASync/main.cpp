@@ -26,6 +26,8 @@
 #include <Shellapi.h>
 #include <Strsafe.h>
 #include <Windows.h>
+
+#include <winrt/base.h>
 #endif
 
 #if defined(WIN32) || defined(Q_OS_LINUX)
@@ -301,6 +303,11 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain(QString::fromUtf8("mega.co.nz"));
     QCoreApplication::setApplicationName(QString::fromUtf8("MEGAsync")); //Do not change app name, keep MEGAsync because Linux rely on that for app paths.
     QCoreApplication::setApplicationVersion(QString::number(Preferences::VERSION_CODE));
+
+#ifdef Q_OS_WINDOWS
+    winrt::uninit_apartment();
+    winrt::init_apartment();
+#endif
 
     Platform::create();
 

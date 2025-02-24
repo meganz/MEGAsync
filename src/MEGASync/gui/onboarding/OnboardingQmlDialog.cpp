@@ -1,7 +1,8 @@
 #include "OnboardingQmlDialog.h"
 
-#include "MegaApplication.h"
 #include "LoginController.h"
+#include "MegaApplication.h"
+#include "Platform.h"
 
 #include <QEvent>
 #include <QScreen>
@@ -70,24 +71,29 @@ void OnboardingQmlDialog::raise()
     QmlDialog::raise();
 }
 
-bool OnboardingQmlDialog::event(QEvent *evnt)
+bool OnboardingQmlDialog::event(QEvent* event)
 {
-    if(evnt->type() == QEvent::WindowUnblocked && mForceClose)
+    if (event->type() == QEvent::Close)
+    {
+        requestPinOnTaskbar();
+    }
+
+    if (event->type() == QEvent::WindowUnblocked && mForceClose)
     {
         close();
     }
-    else if(evnt->type() == QEvent::Close && !mForceClose)
+    else if (event->type() == QEvent::Close && !mForceClose)
     {
-        if(mLoggingIn)
+        if (mLoggingIn)
         {
             emit closingButLoggingIn();
-            evnt->ignore();
+            event->ignore();
             return true;
         }
-        else if(mCreatingAccount)
+        else if (mCreatingAccount)
         {
             emit closingButCreatingAccount();
-            evnt->ignore();
+            event->ignore();
             return true;
         }
         else // Already logged in
@@ -95,5 +101,11 @@ bool OnboardingQmlDialog::event(QEvent *evnt)
             MegaSyncApp->getLoginController()->processOnboardingClosed();
         }
     }
-    return QmlDialog::event(evnt);
+
+    return QmlDialog::event(event);
+}
+
+void OnboardingQmlDialog::requestPinOnTaskbar() const
+{
+    Platform::getInstance()->pinOnTaskbar();
 }

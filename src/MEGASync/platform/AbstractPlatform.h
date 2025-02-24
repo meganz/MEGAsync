@@ -97,6 +97,8 @@ public:
     virtual QString getGfxProviderPath() = 0;
 #endif
 
+    virtual void pinOnTaskbar(){};
+
 protected:
     std::shared_ptr<AbstractShellNotifier> mShellNotifier = nullptr;
 

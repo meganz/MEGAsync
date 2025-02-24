@@ -31,15 +31,10 @@
 #include <QVBoxLayout>
 
 #include <cassert>
-
-#ifdef _WIN32
 #include <chrono>
-using namespace std::chrono;
-#endif
-
-#include <QtConcurrent/QtConcurrent>
 
 using namespace mega;
+using namespace std::chrono;
 
 static constexpr int DEFAULT_MIN_PERCENTAGE{1};
 static constexpr int FONT_SIZE_BUSINESS_PX{20};
