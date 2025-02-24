@@ -60,8 +60,8 @@ signals:
     void syncSetupSuccess();
     void syncStatusChanged();
     void syncRemoved();
-    void localErrorChanged(QString errorMessage);
-    void remoteErrorChanged(QString errorMessage);
+    void localErrorChanged();
+    void remoteErrorChanged();
 
 private:
     enum class LocalErrors
@@ -93,16 +93,16 @@ private:
     bool mCreatingFolder;
     SyncStatusCode mSyncStatus;
     QString mRemoteFolder;
-    QString mLocalErrorMessage;
+    std::optional<LocalErrors> mLocalError;
     std::optional<RemoteErrors> mRemoteError;
     QString mRemoteStringMessage;
 
     bool checkErrorsOnSyncPaths(const QString& localPath, const QString& remotePath);
     void helperCheckLocalSync(const QString& path);
     void helperCheckRemoteSync(const QString& path);
-    void cleanErrorsPrivately();
+    void cleanErrors();
 
-    QString getLocalErrorMessage(std::optional<LocalErrors> error, const QString& path) const;
+    QString getLocalError(const QString& path) const;
 
 private slots:
     void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name);
