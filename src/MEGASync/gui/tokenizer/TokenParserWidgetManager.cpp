@@ -261,12 +261,6 @@ void TokenParserWidgetManager::removeFrameOnDialogCombos(QWidget* widget)
 
     for (auto comboBox : comboBoxes)
     {
-        /*
-         * WARNING HACK : this line will generate an error on widget, so the frame will be removed.
-         * border-type is not a valid property.
-        */
-        comboBox->view()->window()->setStyleSheet(QLatin1String("border-type: none;"));
-
         comboBox->view()->window()->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
         comboBox->view()->window()->setAttribute(Qt::WA_TranslucentBackground);
     }
