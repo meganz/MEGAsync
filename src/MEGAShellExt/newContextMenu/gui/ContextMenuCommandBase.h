@@ -12,7 +12,7 @@
 class ContextMenuCommandBase: public winrt::implements<ContextMenuCommandBase, IExplorerCommand>
 {
 public:
-    ContextMenuCommandBase(const std::wstring& id);
+    ContextMenuCommandBase(const std::wstring& id, bool isSubCommand);
 
     IFACEMETHODIMP GetCanonicalName(GUID* pguidCommandName) override;
     IFACEMETHODIMP GetFlags(EXPCMDFLAGS* flags) override;
@@ -37,6 +37,7 @@ protected:
     void log(const std::wstring& content) const;
 
     std::wstring mId;
+    bool mIsSubCommand;
     std::unique_ptr<SharedState> mState;
     _EXPCMDSTATE mExpCmdState = ECS_DISABLED;
     static ContextMenuData mContextMenuData;

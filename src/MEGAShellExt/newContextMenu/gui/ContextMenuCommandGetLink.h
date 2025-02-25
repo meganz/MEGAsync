@@ -7,7 +7,7 @@ class __declspec(uuid("0313D546-594C-49D6-AF85-F53575420E6C")) ContextMenuComman
     public ContextMenuCommandBase
 {
 public:
-    ContextMenuCommandGetLink();
+    ContextMenuCommandGetLink(bool isSubCommand = false);
     IFACEMETHODIMP GetTitle(IShellItemArray* psiItemArray, LPWSTR* ppszName) override;
     IFACEMETHODIMP GetToolTip(IShellItemArray* psiItemArray, LPWSTR* ppszInfotip) override;
     IFACEMETHODIMP Invoke(IShellItemArray* psiItemArray, IBindCtx* pbc) noexcept override;

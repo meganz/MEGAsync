@@ -14,7 +14,7 @@ ContextMenuCommand::ContextMenuCommand():
 
     {
         winrt::com_ptr<ContextMenuCommandGetLink> comPointer =
-            winrt::make_self<ContextMenuCommandGetLink>();
+            winrt::make_self<ContextMenuCommandGetLink>(true);
 
         mEnumCommands.get()->subCommands.push_back(comPointer);
     }
@@ -30,28 +30,28 @@ ContextMenuCommand::ContextMenuCommand():
 
     {
         winrt::com_ptr<ContextMenuCommandView> comPointer =
-            winrt::make_self<ContextMenuCommandView>();
+            winrt::make_self<ContextMenuCommandView>(true);
 
         mEnumCommands.get()->subCommands.push_back(comPointer);
     }
 
     {
         winrt::com_ptr<ContextMenuCommandViewVersions> comPointer =
-            winrt::make_self<ContextMenuCommandViewVersions>();
+            winrt::make_self<ContextMenuCommandViewVersions>(true);
 
         mEnumCommands.get()->subCommands.push_back(comPointer);
     }
 
     {
         winrt::com_ptr<ContextMenuCommandUpload> comPointer =
-            winrt::make_self<ContextMenuCommandUpload>();
+            winrt::make_self<ContextMenuCommandUpload>(true);
 
         mEnumCommands.get()->subCommands.push_back(comPointer);
     }
 
     {
         winrt::com_ptr<ContextMenuCommandRemoveFromLeftPane> comPointer =
-            winrt::make_self<ContextMenuCommandRemoveFromLeftPane>();
+            winrt::make_self<ContextMenuCommandRemoveFromLeftPane>(true);
 
         mEnumCommands.get()->subCommands.push_back(comPointer);
     }
@@ -127,7 +127,8 @@ EXPCMDSTATE ContextMenuCommand::GetCmdState(IShellItemArray* psiItemArray)
 
         initializeContextMenuData(psiItemArray);
 
-        if (mContextMenuData.isMEGASyncOpen())
+        if (mContextMenuData.isMEGASyncOpen() &&
+            mEnumCommands->enabledSubCommandItems(psiItemArray) > 1)
         {
             mExpCmdState = ECS_ENABLED;
         }
