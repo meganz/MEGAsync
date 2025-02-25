@@ -193,11 +193,10 @@ STDAPI DllRegisterServer(void)
         // Register the component.
         if (Utilities::isWindows11())
         {
-            // SparsePackageManager::modifySparsePackage(SparsePackageManager::MODIFY_TYPE::INSTALL);
+            SparsePackageManager::modifySparsePackage(SparsePackageManager::MODIFY_TYPE::INSTALL);
         }
         else
         {
-            /*
             hr = RegisterInprocServer(szModule,
                                       CLSID_ContextMenuExt,
                                       ContextMenuExtFriendlyName,
@@ -222,48 +221,52 @@ STDAPI DllRegisterServer(void)
                                                     ContextMenuExtFriendlyName);
             if (!SUCCEEDED(hr))
                 return hr;
-            */
         }
 
         hr = RegisterInprocServer(szModule,
                                   CLSID_ShellExtSynced,
                                   ShellExtSyncedFriendlyName,
                                   L"Apartment");
+        if (!SUCCEEDED(hr))
+            return hr;
 
-        // if (!SUCCEEDED(hr)) return hr;
-
-        /*
         hr = RegisterShellExtIconOverlayHandler(CLSID_ShellExtSynced,
             ShellExtSyncedFriendlyName);
-        if (!SUCCEEDED(hr)) return hr;
+        if (!SUCCEEDED(hr))
+            return hr;
 
         hr = RegisterInprocServer(szModule, CLSID_ShellExtPending,
             ShellExtPendingFriendlyName,
             L"Apartment");
-        if (!SUCCEEDED(hr)) return hr;
+        if (!SUCCEEDED(hr))
+            return hr;
 
         hr = RegisterShellExtIconOverlayHandler(CLSID_ShellExtPending,
             ShellExtPendingFriendlyName);
-        if (!SUCCEEDED(hr)) return hr;
+        if (!SUCCEEDED(hr))
+            return hr;
 
         hr = RegisterInprocServer(szModule, CLSID_ShellExtSyncing,
             ShellExtSyncingFriendlyName,
             L"Apartment");
-        if (!SUCCEEDED(hr)) return hr;
+        if (!SUCCEEDED(hr))
+            return hr;
 
         hr = RegisterShellExtIconOverlayHandler(CLSID_ShellExtSyncing,
             ShellExtSyncingFriendlyName);
-        if (!SUCCEEDED(hr)) return hr;
+        if (!SUCCEEDED(hr))
+            return hr;
 
         hr = RegisterInprocServer(szModule, CLSID_ShellExtNotFound,
             ShellExtNotFoundFriendlyName,
             L"Apartment");
-        if (!SUCCEEDED(hr)) return hr;
+        if (!SUCCEEDED(hr))
+            return hr;
 
         hr = RegisterShellExtIconOverlayHandler(CLSID_ShellExtNotFound,
             ShellExtNotFoundFriendlyName);
-        if (!SUCCEEDED(hr)) return hr;
-        */
+        if (!SUCCEEDED(hr))
+            return hr;
 
         return hr;
     }
