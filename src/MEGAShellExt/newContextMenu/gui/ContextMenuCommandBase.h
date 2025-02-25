@@ -12,7 +12,7 @@
 class ContextMenuCommandBase: public winrt::implements<ContextMenuCommandBase, IExplorerCommand>
 {
 public:
-    ContextMenuCommandBase(const std::wstring& id, bool isSubCommand);
+    ContextMenuCommandBase(const std::wstring& id);
 
     IFACEMETHODIMP GetCanonicalName(GUID* pguidCommandName) override;
     IFACEMETHODIMP GetFlags(EXPCMDFLAGS* flags) override;
@@ -22,11 +22,6 @@ public:
                             EXPCMDSTATE* pCmdState) override;
     IFACEMETHODIMP EnumSubCommands(IEnumExplorerCommand** ppEnum) override;
 
-    virtual EXPCMDSTATE GetCmdState(IShellItemArray* psiItemArray)
-    {
-        return ECS_ENABLED;
-    };
-
     std::wstring GetId() const
     {
         return mId;
@@ -34,12 +29,10 @@ public:
 
 protected:
     void initializeContextMenuData(IShellItemArray* psiItemArray);
-    void log(const std::wstring& content) const;
+    virtual EXPCMDSTATE GetState(IShellItemArray* psiItemArray) = 0;
 
     std::wstring mId;
-    bool mIsSubCommand;
     std::unique_ptr<SharedState> mState;
-    _EXPCMDSTATE mExpCmdState = ECS_DISABLED;
     static ContextMenuData mContextMenuData;
 };
 
@@ -92,6 +85,7 @@ public:
     {
         return S_OK;
     }
+<<<<<<< HEAD
 
     uint64_t enabledSubCommandItems(IShellItemArray* psiItemArray)
     {
@@ -201,6 +195,8 @@ public:
 
         CloseHandle(hFile);
     }
+=======
+>>>>>>> b57f4e4bf (SNC-3098 : Disabled menu options & fix register error.)
 };
 
 #endif

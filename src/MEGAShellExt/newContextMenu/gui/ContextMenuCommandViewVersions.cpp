@@ -37,35 +37,26 @@ IFACEMETHODIMP ContextMenuCommandViewVersions::Invoke(IShellItemArray* psiItemAr
 {
     UNREFERENCED_PARAMETER(pbc);
 
-    if (GetCmdState(psiItemArray) == ECS_ENABLED)
-    {
-        mContextMenuData.viewVersions();
-    }
+    mContextMenuData.viewVersions();
 
     return S_OK;
 }
 
-EXPCMDSTATE ContextMenuCommandViewVersions::GetCmdState(IShellItemArray* psiItemArray)
+EXPCMDSTATE ContextMenuCommandViewVersions::GetState(IShellItemArray* psiItemArray)
 {
     if (!psiItemArray)
     {
-        mExpCmdState = ECS_HIDDEN;
+        return ECS_HIDDEN;
     }
-    else
+
+    mState->SetState(mId, Set);
+
+    initializeContextMenuData(psiItemArray);
+
+    if (mContextMenuData.canViewVersions())
     {
-        mState->SetState(mId, Set);
-
-        initializeContextMenuData(psiItemArray);
-
-        if (mContextMenuData.canViewVersions())
-        {
-            mExpCmdState = ECS_ENABLED;
-        }
-        else
-        {
-            mExpCmdState = ECS_HIDDEN;
-        }
+        return ECS_ENABLED;
     }
 
-    return mExpCmdState;
+    return ECS_DISABLED;
 }

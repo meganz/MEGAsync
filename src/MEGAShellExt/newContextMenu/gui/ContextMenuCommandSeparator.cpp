@@ -36,12 +36,10 @@ IFACEMETHODIMP ContextMenuCommandSeparator::Invoke(IShellItemArray* psiItemArray
     return S_OK;
 }
 
-EXPCMDSTATE ContextMenuCommandSeparator::GetCmdState(IShellItemArray* psiItemArray)
+EXPCMDSTATE ContextMenuCommandSeparator::GetState(IShellItemArray* psiItemArray)
 {
     UNREFERENCED_PARAMETER(psiItemArray);
 
     mState->SetState(mId, Set);
-    mExpCmdState = ECS_ENABLED;
-
-    return mExpCmdState;
+    return ECS_ENABLED;
 }

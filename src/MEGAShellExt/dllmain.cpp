@@ -117,10 +117,6 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void **ppv)
         {
             hr = winrt::make<SimpleFactory<ContextMenuCommand>>().as(riid, ppv);
         }
-        else if (rclsid == __uuidof(ContextMenuUniqueCommand))
-        {
-            hr = winrt::make<SimpleFactory<ContextMenuUniqueCommand>>().as(riid, ppv);
-        }
     }
     else
     {
@@ -197,10 +193,11 @@ STDAPI DllRegisterServer(void)
         // Register the component.
         if (Utilities::isWindows11())
         {
-            SparsePackageManager::modifySparsePackage(SparsePackageManager::MODIFY_TYPE::INSTALL);
+            // SparsePackageManager::modifySparsePackage(SparsePackageManager::MODIFY_TYPE::INSTALL);
         }
         else
         {
+            /*
             hr = RegisterInprocServer(szModule,
                                       CLSID_ContextMenuExt,
                                       ContextMenuExtFriendlyName,
@@ -208,8 +205,6 @@ STDAPI DllRegisterServer(void)
             if (!SUCCEEDED(hr))
                 return hr;
 
-            // Register the context menu handler. The context menu handler is
-            // associated with the .cpp file class.
             hr = RegisterShellExtContextMenuHandler(L"*",
                                                     CLSID_ContextMenuExt,
                                                     ContextMenuExtFriendlyName);
@@ -227,13 +222,17 @@ STDAPI DllRegisterServer(void)
                                                     ContextMenuExtFriendlyName);
             if (!SUCCEEDED(hr))
                 return hr;
+            */
         }
 
-        hr = RegisterInprocServer(szModule, CLSID_ShellExtSynced,
-            ShellExtSyncedFriendlyName,
-            L"Apartment");
-        if (!SUCCEEDED(hr)) return hr;
+        hr = RegisterInprocServer(szModule,
+                                  CLSID_ShellExtSynced,
+                                  ShellExtSyncedFriendlyName,
+                                  L"Apartment");
 
+        // if (!SUCCEEDED(hr)) return hr;
+
+        /*
         hr = RegisterShellExtIconOverlayHandler(CLSID_ShellExtSynced,
             ShellExtSyncedFriendlyName);
         if (!SUCCEEDED(hr)) return hr;
@@ -264,12 +263,14 @@ STDAPI DllRegisterServer(void)
         hr = RegisterShellExtIconOverlayHandler(CLSID_ShellExtNotFound,
             ShellExtNotFoundFriendlyName);
         if (!SUCCEEDED(hr)) return hr;
+        */
 
         return hr;
     }
     __except(EXCEPTION_EXECUTE_HANDLER)
     {
     }
+
     return E_UNEXPECTED;
 }
 

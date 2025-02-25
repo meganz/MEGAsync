@@ -4,6 +4,9 @@
 #include "framework.h"
 
 #include <filesystem>
+#include <string>
+#include <iostream>
+#include <sstream>
 
 extern HMODULE g_hInst;
 
@@ -119,5 +122,35 @@ const std::wstring GetExecutingModuleName()
     transform(moduleName.begin(), moduleName.end(), moduleName.begin(), towlower);
 
     return moduleName;
+}
+
+void log(const std::wstring file, const std::wstring& message)
+{
+    HANDLE hFile = CreateFile(
+        file.c_str(),
+        FILE_APPEND_DATA,
+        0,
+        NULL,
+        OPEN_EXISTING,
+        FILE_ATTRIBUTE_NORMAL,
+        NULL);
+
+    SetFilePointer(hFile, 0, NULL, FILE_END);
+
+    std::wstringstream wss;
+    wss << message;
+    wss << std::endl;
+
+    std::wstring linedContent = wss.str();
+
+    DWORD bytesWritten;
+    WriteFile(
+        hFile,
+        linedContent.c_str(),
+        static_cast<DWORD>(linedContent.size() * sizeof(wchar_t)),
+        &bytesWritten,
+        NULL);
+
+    CloseHandle(hFile);
 }
 }

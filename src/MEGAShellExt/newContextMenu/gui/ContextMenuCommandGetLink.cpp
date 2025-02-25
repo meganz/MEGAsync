@@ -39,7 +39,7 @@ IFACEMETHODIMP ContextMenuCommandGetLink::Invoke(IShellItemArray* psiItemArray,
 {
     UNREFERENCED_PARAMETER(pbc);
 
-    if (GetCmdState(psiItemArray) == ECS_ENABLED)
+    if (GetState(psiItemArray) == ECS_ENABLED)
     {
         mContextMenuData.requestGetLinks();
     }
@@ -47,26 +47,20 @@ IFACEMETHODIMP ContextMenuCommandGetLink::Invoke(IShellItemArray* psiItemArray,
     return S_OK;
 }
 
-EXPCMDSTATE ContextMenuCommandGetLink::GetCmdState(IShellItemArray* psiItemArray)
+EXPCMDSTATE ContextMenuCommandGetLink::GetState(IShellItemArray* psiItemArray)
 {
     if (!psiItemArray)
     {
-        mExpCmdState = ECS_HIDDEN;
+        return ECS_HIDDEN;
     }
-    else
+
+    mState->SetState(mId, Set);
+
+    initializeContextMenuData(psiItemArray);
+    if (mContextMenuData.canRequestGetLinks())
     {
-        mState->SetState(mId, Set);
-
-        initializeContextMenuData(psiItemArray);
-        if (mContextMenuData.canRequestGetLinks())
-        {
-            mExpCmdState = ECS_ENABLED;
-        }
-        else
-        {
-            mExpCmdState = ECS_HIDDEN;
-        }
+        return ECS_ENABLED;
     }
 
-    return mExpCmdState;
+    return ECS_DISABLED;
 }

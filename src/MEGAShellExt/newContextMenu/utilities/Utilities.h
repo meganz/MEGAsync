@@ -20,6 +20,7 @@ void resetAcl();
 const std::wstring GetMEGADesktopAppPath();
 const std::wstring GetContextMenuPath();
 const std::wstring GetExecutingModuleName();
+void log(const std::wstring file, const std::wstring& message);
 }
 
 #endif // UTILITIES_H

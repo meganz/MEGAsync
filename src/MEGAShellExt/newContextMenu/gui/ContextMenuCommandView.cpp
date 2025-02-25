@@ -35,35 +35,26 @@ IFACEMETHODIMP ContextMenuCommandView::Invoke(IShellItemArray* psiItemArray, IBi
 {
     UNREFERENCED_PARAMETER(pbc);
 
-    if (GetCmdState(psiItemArray) == ECS_ENABLED)
-    {
-        mContextMenuData.viewOnMEGA();
-    }
+    mContextMenuData.viewOnMEGA();
 
     return S_OK;
 }
 
-EXPCMDSTATE ContextMenuCommandView::GetCmdState(IShellItemArray* psiItemArray)
+EXPCMDSTATE ContextMenuCommandView::GetState(IShellItemArray* psiItemArray)
 {
     if (!psiItemArray)
     {
-        mExpCmdState = ECS_HIDDEN;
+        return ECS_HIDDEN;
     }
-    else
+
+    mState->SetState(mId, Set);
+
+    initializeContextMenuData(psiItemArray);
+
+    if (mContextMenuData.canViewOnMEGA())
     {
-        mState->SetState(mId, Set);
-
-        initializeContextMenuData(psiItemArray);
-
-        if (mContextMenuData.canViewOnMEGA())
-        {
-            mExpCmdState = ECS_ENABLED;
-        }
-        else
-        {
-            mExpCmdState = ECS_HIDDEN;
-        }
+        return ECS_ENABLED;
     }
 
-    return mExpCmdState;
+    return ECS_DISABLED;
 }

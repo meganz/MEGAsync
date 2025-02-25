@@ -13,7 +13,6 @@ set(MEGAShellExt_HEADERS
     newContextMenu/data/ContextMenuData.h
     newContextMenu/gui/ContextMenuCommandBase.h
     newContextMenu/gui/ContextMenuCommand.h
-    newContextMenu/gui/ContextMenuUniqueCommand.h
     newContextMenu/gui/ContextMenuCommandGetLink.h
     newContextMenu/gui/ContextMenuCommandRemoveFromLeftPane.h
     newContextMenu/gui/ContextMenuCommandSeparator.h
@@ -43,7 +42,6 @@ set(MEGAShellExt_SOURCES
     newContextMenu/data/ContextMenuData.cpp
     newContextMenu/gui/ContextMenuCommandBase.cpp
     newContextMenu/gui/ContextMenuCommand.cpp
-    newContextMenu/gui/ContextMenuUniqueCommand.cpp
     newContextMenu/gui/ContextMenuCommandGetLink.cpp
     newContextMenu/gui/ContextMenuCommandRemoveFromLeftPane.cpp
     newContextMenu/gui/ContextMenuCommandSeparator.cpp

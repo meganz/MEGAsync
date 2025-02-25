@@ -14,44 +14,35 @@ ContextMenuCommand::ContextMenuCommand():
 
     {
         winrt::com_ptr<ContextMenuCommandGetLink> comPointer =
-            winrt::make_self<ContextMenuCommandGetLink>(true);
+            winrt::make_self<ContextMenuCommandGetLink>();
 
         mEnumCommands.get()->subCommands.push_back(comPointer);
     }
-
-    /*
-    {
-        winrt::com_ptr<ContextMenuCommandSeparator> comPointer =
-            winrt::make_self<ContextMenuCommandSeparator>();
-
-        mEnumCommands.get()->subCommands.push_back(comPointer);
-    }
-    */
 
     {
         winrt::com_ptr<ContextMenuCommandView> comPointer =
-            winrt::make_self<ContextMenuCommandView>(true);
+            winrt::make_self<ContextMenuCommandView>();
 
         mEnumCommands.get()->subCommands.push_back(comPointer);
     }
 
     {
         winrt::com_ptr<ContextMenuCommandViewVersions> comPointer =
-            winrt::make_self<ContextMenuCommandViewVersions>(true);
+            winrt::make_self<ContextMenuCommandViewVersions>();
 
         mEnumCommands.get()->subCommands.push_back(comPointer);
     }
 
     {
         winrt::com_ptr<ContextMenuCommandUpload> comPointer =
-            winrt::make_self<ContextMenuCommandUpload>(true);
+            winrt::make_self<ContextMenuCommandUpload>();
 
         mEnumCommands.get()->subCommands.push_back(comPointer);
     }
 
     {
         winrt::com_ptr<ContextMenuCommandRemoveFromLeftPane> comPointer =
-            winrt::make_self<ContextMenuCommandRemoveFromLeftPane>(true);
+            winrt::make_self<ContextMenuCommandRemoveFromLeftPane>();
 
         mEnumCommands.get()->subCommands.push_back(comPointer);
     }
@@ -97,28 +88,21 @@ HRESULT ContextMenuCommand::EnumSubCommands(IEnumExplorerCommand** ppEnum)
     return S_OK;
 }
 
-EXPCMDSTATE ContextMenuCommand::GetCmdState(IShellItemArray* psiItemArray)
+EXPCMDSTATE ContextMenuCommand::GetState(IShellItemArray* psiItemArray)
 {
     if (!psiItemArray)
     {
-        mExpCmdState = ECS_HIDDEN;
+        return ECS_HIDDEN;
     }
-    else
+
+    mState->SetState(mId, Set);
+
+    initializeContextMenuData(psiItemArray);
+
+    if (mContextMenuData.isMEGASyncOpen())
     {
-        mState->SetState(mId, Set);
-
-        initializeContextMenuData(psiItemArray);
-
-        if (mContextMenuData.isMEGASyncOpen() &&
-            mEnumCommands->enabledSubCommandItems(psiItemArray) > 1)
-        {
-            mExpCmdState = ECS_ENABLED;
-        }
-        else
-        {
-            mExpCmdState = ECS_DISABLED;
-        }
+        return ECS_ENABLED;
     }
 
-    return mExpCmdState;
+    return ECS_HIDDEN;
 }

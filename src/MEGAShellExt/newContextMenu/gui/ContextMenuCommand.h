@@ -15,7 +15,8 @@ public:
     IFACEMETHODIMP EnumSubCommands(IEnumExplorerCommand** ppEnum) override;
     IFACEMETHODIMP GetFlags(EXPCMDFLAGS* flags) override;
 
-    EXPCMDSTATE GetCmdState(IShellItemArray* psiItemArray) override;
+protected:
+    EXPCMDSTATE GetState(IShellItemArray* psiItemArray) override;
 
 private:
     winrt::com_ptr<SubCommandEnumerator> mEnumCommands;

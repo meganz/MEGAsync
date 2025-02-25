@@ -34,7 +34,7 @@ IFACEMETHODIMP ContextMenuCommandRemoveFromLeftPane::Invoke(IShellItemArray* psi
 {
     UNREFERENCED_PARAMETER(pbc);
 
-    if (GetCmdState(psiItemArray) == ECS_ENABLED)
+    if (GetState(psiItemArray) == ECS_ENABLED)
     {
         mContextMenuData.removeFromLeftPane();
     }
@@ -42,27 +42,21 @@ IFACEMETHODIMP ContextMenuCommandRemoveFromLeftPane::Invoke(IShellItemArray* psi
     return S_OK;
 }
 
-EXPCMDSTATE ContextMenuCommandRemoveFromLeftPane::GetCmdState(IShellItemArray* psiItemArray)
+EXPCMDSTATE ContextMenuCommandRemoveFromLeftPane::GetState(IShellItemArray* psiItemArray)
 {
     if (!psiItemArray)
     {
-        mExpCmdState = ECS_HIDDEN;
+        return ECS_HIDDEN;
     }
-    else
+
+    mState->SetState(mId, Set);
+
+    initializeContextMenuData(psiItemArray);
+
+    if (mContextMenuData.canRemoveFromLeftPane())
     {
-        mState->SetState(mId, Set);
-
-        initializeContextMenuData(psiItemArray);
-
-        if (mContextMenuData.canRemoveFromLeftPane())
-        {
-            mExpCmdState = ECS_ENABLED;
-        }
-        else
-        {
-            mExpCmdState = ECS_HIDDEN;
-        }
+        return ECS_ENABLED;
     }
 
-    return mExpCmdState;
+    return ECS_DISABLED;
 }

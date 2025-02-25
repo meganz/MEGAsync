@@ -37,35 +37,26 @@ IFACEMETHODIMP ContextMenuCommandUpload::Invoke(IShellItemArray* psiItemArray,
 {
     UNREFERENCED_PARAMETER(pbc);
 
-    if (GetCmdState(psiItemArray) == ECS_ENABLED)
-    {
-        mContextMenuData.requestUpload();
-    }
+    mContextMenuData.requestUpload();
 
     return S_OK;
 }
 
-EXPCMDSTATE ContextMenuCommandUpload::GetCmdState(IShellItemArray* psiItemArray)
+EXPCMDSTATE ContextMenuCommandUpload::GetState(IShellItemArray* psiItemArray)
 {
     if (!psiItemArray)
     {
-        mExpCmdState = ECS_ENABLED;
+        return ECS_HIDDEN;
     }
-    else
+
+    mState->SetState(mId, Set);
+
+    initializeContextMenuData(psiItemArray);
+
+    if (mContextMenuData.canRequestUpload())
     {
-        mState->SetState(mId, Set);
-
-        initializeContextMenuData(psiItemArray);
-
-        if (mContextMenuData.canRequestUpload())
-        {
-            mExpCmdState = ECS_ENABLED;
-        }
-        else
-        {
-            mExpCmdState = ECS_HIDDEN;
-        }
+        return ECS_ENABLED;
     }
 
-    return mExpCmdState;
+    return ECS_DISABLED;
 }

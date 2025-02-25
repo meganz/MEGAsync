@@ -43,6 +43,8 @@ void ContextMenuCommandBase::log(const std::wstring& content) const
     CloseHandle(hFile);
 }
 
+=======
+>>>>>>> b57f4e4bf (SNC-3098 : Disabled menu options & fix register error.)
 ContextMenuCommandBase::ContextMenuCommandBase(const std::wstring& id):
     mId(id)
 {
@@ -82,7 +84,7 @@ IFACEMETHODIMP ContextMenuCommandBase::GetState(IShellItemArray* psiItemArray,
 {
     UNREFERENCED_PARAMETER(fOkToBeSlow);
 
-    *pCmdState = GetCmdState(psiItemArray);
+    *pCmdState = GetState(psiItemArray);
     return S_OK;
 }
 
