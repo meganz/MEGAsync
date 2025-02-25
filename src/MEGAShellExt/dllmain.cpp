@@ -117,6 +117,10 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void **ppv)
         {
             hr = winrt::make<SimpleFactory<ContextMenuCommand>>().as(riid, ppv);
         }
+        else if (rclsid == __uuidof(ContextMenuUniqueCommand))
+        {
+            hr = winrt::make<SimpleFactory<ContextMenuUniqueCommand>>().as(riid, ppv);
+        }
     }
     else
     {

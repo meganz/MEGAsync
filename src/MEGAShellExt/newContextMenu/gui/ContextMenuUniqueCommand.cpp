@@ -1,14 +1,13 @@
-#include "ContextMenuCommand.h"
+#include "ContextMenuUniqueCommand.h"
 
 #include "ContextMenuCommandGetLink.h"
 #include "ContextMenuCommandRemoveFromLeftPane.h"
-#include "ContextMenuCommandSeparator.h"
 #include "ContextMenuCommandUpload.h"
 #include "ContextMenuCommandView.h"
 #include "ContextMenuCommandViewVersions.h"
 
-ContextMenuCommand::ContextMenuCommand():
-    ContextMenuCommandBase(L"ContextMenuCommand")
+ContextMenuUniqueCommand::ContextMenuUniqueCommand():
+    ContextMenuCommandBase(L"ContextMenuCommand", false)
 {
     mEnumCommands = winrt::make_self<SubCommandEnumerator>();
 
@@ -18,15 +17,6 @@ ContextMenuCommand::ContextMenuCommand():
 
         mEnumCommands.get()->subCommands.push_back(comPointer);
     }
-
-    /*
-    {
-        winrt::com_ptr<ContextMenuCommandSeparator> comPointer =
-            winrt::make_self<ContextMenuCommandSeparator>();
-
-        mEnumCommands.get()->subCommands.push_back(comPointer);
-    }
-    */
 
     {
         winrt::com_ptr<ContextMenuCommandView> comPointer =
@@ -57,33 +47,49 @@ ContextMenuCommand::ContextMenuCommand():
     }
 }
 
-IFACEMETHODIMP ContextMenuCommand::GetFlags(EXPCMDFLAGS* flags)
+IFACEMETHODIMP ContextMenuUniqueCommand::GetFlags(EXPCMDFLAGS* flags)
 {
-    *flags = ECF_HASSUBCOMMANDS;
+    *flags = ECF_DEFAULT;
 
     return S_OK;
 }
 
-IFACEMETHODIMP ContextMenuCommand::GetTitle(IShellItemArray* psiItemArray, LPWSTR* ppszName)
+IFACEMETHODIMP ContextMenuUniqueCommand::GetTitle(IShellItemArray* psiItemArray, LPWSTR* ppszName)
 {
-    static const std::wstring title = L"MEGA";
-
-    SHStrDup(title.data(), ppszName);
+    if (mEnumCommands->enabledSubCommandItems(psiItemArray) == 1)
+    {
+        auto uniqueCommand = mEnumCommands->getEnabledCommand(psiItemArray);
+        if (uniqueCommand.has_value())
+        {
+            return uniqueCommand.value()->GetTitle(psiItemArray, ppszName);
+        }
+    }
 
     return S_OK;
 }
 
-IFACEMETHODIMP ContextMenuCommand::GetToolTip(IShellItemArray* psiItemArray, LPWSTR* ppszInfotip)
+IFACEMETHODIMP ContextMenuUniqueCommand::GetToolTip(IShellItemArray* psiItemArray,
+                                                    LPWSTR* ppszInfotip)
 {
     return GetTitle(psiItemArray, ppszInfotip);
 }
 
-IFACEMETHODIMP ContextMenuCommand::Invoke(IShellItemArray* psiItemArray, IBindCtx* pbc) noexcept
+IFACEMETHODIMP ContextMenuUniqueCommand::Invoke(IShellItemArray* psiItemArray,
+                                                IBindCtx* pbc) noexcept
 {
+    if (mEnumCommands->enabledSubCommandItems(psiItemArray) == 1)
+    {
+        auto uniqueCommand = mEnumCommands->getEnabledCommand(psiItemArray);
+        if (uniqueCommand.has_value())
+        {
+            return uniqueCommand.value()->Invoke(psiItemArray, pbc);
+        }
+    }
+
     return S_OK;
 }
 
-HRESULT ContextMenuCommand::EnumSubCommands(IEnumExplorerCommand** ppEnum)
+HRESULT ContextMenuUniqueCommand::EnumSubCommands(IEnumExplorerCommand** ppEnum)
 {
     if (mEnumCommands)
     {
@@ -97,7 +103,7 @@ HRESULT ContextMenuCommand::EnumSubCommands(IEnumExplorerCommand** ppEnum)
     return S_OK;
 }
 
-EXPCMDSTATE ContextMenuCommand::GetCmdState(IShellItemArray* psiItemArray)
+EXPCMDSTATE ContextMenuUniqueCommand::GetCmdState(IShellItemArray* psiItemArray)
 {
     if (!psiItemArray)
     {
@@ -110,13 +116,13 @@ EXPCMDSTATE ContextMenuCommand::GetCmdState(IShellItemArray* psiItemArray)
         initializeContextMenuData(psiItemArray);
 
         if (mContextMenuData.isMEGASyncOpen() &&
-            mEnumCommands->enabledSubCommandItems(psiItemArray) > 1)
+            mEnumCommands->enabledSubCommandItems(psiItemArray) == 1)
         {
             mExpCmdState = ECS_ENABLED;
         }
         else
         {
-            mExpCmdState = ECS_DISABLED;
+            mExpCmdState = ECS_HIDDEN;
         }
     }
 
