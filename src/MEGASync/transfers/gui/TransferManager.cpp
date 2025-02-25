@@ -790,6 +790,7 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
         }
     }
 
+    mUi->wAccountInfo->setTransferOverquota(mTransferQuotaState != QuotaState::OK);
     checkPauseButtonVisibilityIfPossible();
 }
 
