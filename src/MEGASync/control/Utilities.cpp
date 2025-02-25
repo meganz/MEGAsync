@@ -1743,6 +1743,28 @@ bool Utilities::isNodeNameValid(const QString& name)
     return !trimmedName.isEmpty() && !trimmedName.contains(FORBIDDEN_CHARS_RX);
 }
 
+bool Utilities::shouldDisplayUpgradeButton(const bool isTransferOverquota)
+{
+    auto preferences = Preferences::instance();
+    const int storageState = preferences->getStorageState();
+    if (preferences->accountType() == Preferences::ACCOUNT_TYPE_FREE)
+    {
+        return true;
+    }
+    else if (storageState == MegaApi::STORAGE_STATE_PAYWALL ||
+             storageState == MegaApi::STORAGE_STATE_RED ||
+             storageState == MegaApi::STORAGE_STATE_ORANGE)
+    {
+        return true;
+    }
+    else if (isTransferOverquota)
+    {
+        return true;
+    }
+
+    return false;
+}
+
 QString Utilities::getFileHash(const QString& filePath)
 {
     QFile file(filePath);
