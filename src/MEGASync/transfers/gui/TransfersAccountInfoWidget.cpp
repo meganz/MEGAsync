@@ -25,7 +25,7 @@ TransfersAccountInfoWidget::TransfersAccountInfoWidget(QWidget* parent):
 
     updateStorageText();
     updateStorageBar();
-    checkUpgradeButtonVisibility();
+    updateUpgradeButtonVisibility();
     AccountDetailsManager::instance()->attachStorageObserver(*this);
     AccountDetailsManager::instance()->attachAccountObserver(*this);
 }
@@ -45,7 +45,13 @@ void TransfersAccountInfoWidget::updateStorageElements()
 
 void TransfersAccountInfoWidget::updateAccountElements()
 {
-    checkUpgradeButtonVisibility();
+    updateUpgradeButtonVisibility();
+}
+
+void TransfersAccountInfoWidget::setTransferOverquota(const bool isOverquota)
+{
+    mIsBandwithOverquota = isOverquota;
+    updateUpgradeButtonVisibility();
 }
 
 void TransfersAccountInfoWidget::changeEvent(QEvent* event)
@@ -138,10 +144,11 @@ void TransfersAccountInfoWidget::refreshProgressBar()
     mUi->pbStorage->update();
 }
 
-void TransfersAccountInfoWidget::checkUpgradeButtonVisibility()
+void TransfersAccountInfoWidget::updateUpgradeButtonVisibility()
 {
-    mUi->pbStorage->setVisible(!Utilities::isBusinessAccount());
-    mUi->bUpgrade->setVisible(!Utilities::isBusinessAccount());
+    const bool isButtonVisible = Utilities::shouldDisplayUpgradeButton(mIsBandwithOverquota);
+    mUi->pbStorage->setVisible(isButtonVisible);
+    mUi->bUpgrade->setVisible(isButtonVisible);
 }
 
 void TransfersAccountInfoWidget::on_bUpgrade_clicked()
