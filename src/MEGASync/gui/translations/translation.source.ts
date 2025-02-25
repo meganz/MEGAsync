@@ -410,6 +410,30 @@
     </message>
 </context>
 <context>
+    <name>BackupsController</name>
+    <message numerus="yes">
+        <source>%n folder was backed up</source>
+        <translatorcomment>Notification message to indicate that %n backups have been created.</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%n folder was backed up</numerusform>
+            <numerusform>%n folders were backed up</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Not all folders were backed up</source>
+        <translatorcomment>Notification title to indicate that not all folders have been backed up successfully.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1, but %n folder couldn’t be backed up.</source>
+        <translatorcomment>Notification message to indicate that backups have been created (%1) but other %n backups have failed. Keep %1 indicating a text with correctly created backups.</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%1, but %n folder couldn’t be backed up.</numerusform>
+            <numerusform>%1, but %n folders couldn’t be backed up.</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
     <name>BackupsModel</name>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
