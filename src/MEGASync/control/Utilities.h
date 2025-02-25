@@ -481,6 +481,8 @@ public:
     static constexpr int ERROR_DISPLAY_TIME_MS = 10000; //10s in milliseconds
 
     static bool isNodeNameValid(const QString& name);
+
+    static bool shouldDisplayUpgradeButton(const bool isTransferOverquota);
 };
 
 Q_DECLARE_METATYPE(Utilities::FileType)

@@ -11,6 +11,7 @@
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
 #include "TransferManager.h"
+#include "TransferQuota.h"
 #include "ui_InfoDialog.h"
 #include "UpsellController.h"
 #include "UserMessageController.h"
@@ -365,6 +366,10 @@ void InfoDialog::updateUsageAndAccountType()
 {
     setUsage();
     setAccountType(mPreferences->accountType());
+
+    const QuotaState quotaState = MegaSyncApp->getTransferQuota()->quotaState();
+    const bool isTransferOverquota = (quotaState != QuotaState::OK);
+    ui->bUpgrade->setVisible(Utilities::shouldDisplayUpgradeButton(isTransferOverquota));
 }
 
 void InfoDialog::enableTransferOverquotaAlert()
@@ -750,7 +755,6 @@ void InfoDialog::setAccountType(int accType)
     }
 
     actualAccountType = accType;
-    ui->bUpgrade->setVisible(accType == Preferences::ACCOUNT_TYPE_FREE);
 }
 
 void InfoDialog::updateBlockedState()
