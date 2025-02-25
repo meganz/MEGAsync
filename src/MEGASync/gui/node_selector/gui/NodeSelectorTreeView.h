@@ -29,6 +29,10 @@ public:
 
     QModelIndexList selectedRows() const;
 
+    void dropEvent(QDropEvent *event) override;
+    void dragEnterEvent(QDragEnterEvent* event) override;
+    void dragMoveEvent(QDragMoveEvent* event) override;
+
     enum ActionsOrder
     {
         RESTORE = 0,
@@ -57,23 +61,19 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
     void contextMenuEvent(QContextMenuEvent* event) override;
-    void dragEnterEvent(QDragEnterEvent* event) override;
-    void dragMoveEvent(QDragMoveEvent* event) override;
-    void dropEvent(QDropEvent *event) override;
 
 signals:
     void deleteNodeClicked(const QList<MegaHandle>& handles, bool permanently);
     void leaveShareClicked(const QList<MegaHandle>& handles);
     void renameNodeClicked();
     void pasteNodesClicked();
-    void getMegaLinkClicked();
+    void getMegaLinkClicked(const QList<MegaHandle>& handles);
     void restoreClicked(const QList<MegaHandle>& handles);
     void nodeSelected();
 
 private slots:
     void deleteNode(const QList<MegaHandle>& handles, bool permanently);
     void renameNode();
-    void getMegaLink();
     void restore(const QList<MegaHandle>& handles);
     void onNavigateReady(const QModelIndex& index);
     void onCopyShortcutActivated();
@@ -98,10 +98,14 @@ private:
     };
 
     std::optional<NodeSelectorTreeView::DeletionType>
-        areAllEligibleForDeletion(const QList<mega::MegaHandle>& handles) const;
+        areAllEligibleForDeletion(const QHash<mega::MegaHandle, int>& handles) const;
+    bool
+    areAllEligibleForLinkShare(const QHash<mega::MegaHandle, int>& handlesAndAccess) const;
     bool areAllEligibleForRestore(const QList<MegaHandle> &handles) const;
     bool isAnyNodeInTheRubbish(const QList<MegaHandle>& handles) const;
 
+    void addShareLinkMenuAction(QMap<int, QAction*>& actions,
+                                QHash<mega::MegaHandle, int> selectionHandles);
     void addPasteMenuAction(QMap<int, QAction*>& actions);
     void addRestoreMenuAction(QMap<int, QAction*>& actions,
                               QList<mega::MegaHandle> selectionHandles);
@@ -111,7 +115,10 @@ private:
                               QList<mega::MegaHandle> selectionHandles);
     void addLeaveInshare(QMap<int, QAction*>& actions, QList<mega::MegaHandle> selectionHandles);
     void addRemoveMenuActions(QMap<int, QAction*>& actions,
-                              QList<mega::MegaHandle> selectionHandles);
+                              QHash<mega::MegaHandle, int> selectionHandles);
+
+    //Access
+    QHash<mega::MegaHandle, int> getNodesAccess(const QList<mega::MegaHandle>& handles) const;
 
     // Shortcuts
     QShortcut* mCopyShortcut;

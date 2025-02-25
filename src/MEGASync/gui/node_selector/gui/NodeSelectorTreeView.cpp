@@ -198,8 +198,9 @@ void NodeSelectorTreeView::keyPressEvent(QKeyEvent *event)
             if (proxyModel->canBeDeleted())
             {
                 auto selectionHandles(getMultiSelectionNodeHandle());
+                auto handlesAndAccess(getNodesAccess(selectionHandles));
 
-                auto deletionTypeOpt = areAllEligibleForDeletion(selectionHandles);
+                auto deletionTypeOpt = areAllEligibleForDeletion(handlesAndAccess);
                 if (deletionTypeOpt.has_value())
                 {
                     auto deletionType(deletionTypeOpt.value());
@@ -250,6 +251,23 @@ void NodeSelectorTreeView::onPasteClicked()
     {
         proxyModel->getMegaModel()->pasteNodes(mCopiedHandles,
                                                proxyModel->mapToSource(rows.first()));
+    }
+}
+
+void NodeSelectorTreeView::addShareLinkMenuAction(QMap<int, QAction*>& actions,
+                                                  QHash<MegaHandle, int> selectionHandlesAndAccess)
+{
+    if (areAllEligibleForLinkShare(selectionHandlesAndAccess))
+    {
+        auto megaLinkAction(new QAction(tr("Share link")));
+        connect(megaLinkAction,
+                &QAction::triggered,
+                this,
+                [this, selectionHandlesAndAccess]()
+                {
+                    emit getMegaLinkClicked(selectionHandlesAndAccess.keys());
+                });
+        actions.insert(ActionsOrder::MEGA_LINK, megaLinkAction);
     }
 }
 
@@ -335,30 +353,48 @@ void NodeSelectorTreeView::addLeaveInshare(QMap<int, QAction*>& actions,
 }
 
 void NodeSelectorTreeView::addRemoveMenuActions(QMap<int, QAction*>& actions,
-                                                QList<MegaHandle> selectionHandles)
+                                                QHash<MegaHandle, int> selectionHandlesAndAccess)
 {
     auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
 
-    if (proxyModel->canBeDeleted() && areAllEligibleForDeletion(selectionHandles))
+    if (proxyModel->canBeDeleted())
     {
-        auto deletionTypeOpt = areAllEligibleForDeletion(selectionHandles);
+        auto deletionTypeOpt = areAllEligibleForDeletion(selectionHandlesAndAccess);
         if (deletionTypeOpt.has_value())
         {
+            auto handles(selectionHandlesAndAccess.keys());
+
             auto deletionType(deletionTypeOpt.value());
             if (deletionType == DeletionType::LEAVE_SHARE)
             {
-                addLeaveInshare(actions, selectionHandles);
+                addLeaveInshare(actions, handles);
             }
             else if (deletionType == DeletionType::MOVE_TO_RUBBISH)
             {
-                addDeleteMenuAction(actions, selectionHandles);
+                addDeleteMenuAction(actions, handles);
             }
             else
             {
-                addDeletePermanently(actions, selectionHandles);
+                addDeletePermanently(actions, handles);
             }
         }
     }
+}
+
+QHash<mega::MegaHandle, int> NodeSelectorTreeView::getNodesAccess(const QList<MegaHandle>& handles) const
+{
+    QHash<mega::MegaHandle, int> accessByHandle;
+
+    for (const auto& handle: handles)
+    {
+        auto node = std::unique_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+        if (node)
+        {
+            accessByHandle.insert(handle, Utilities::getNodeAccess(node.get()));
+        }
+    }
+
+    return accessByHandle;
 }
 
 QModelIndexList NodeSelectorTreeView::selectedRows() const
@@ -441,6 +477,8 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
         addPasteMenuAction(actions);
     }
 
+    auto handlesAndAccess(getNodesAccess(selectionHandles));
+
     if (!selectedIndexes.isEmpty())
     {
         auto selectedIndex = proxyModel->mapToSource(selectedIndexes.first());
@@ -454,23 +492,10 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
             // If all nodes are not in the rubbish bin
             else
             {
-                int access = Utilities::getNodeAccess(selectionHandles.first());
+                auto access(handlesAndAccess.value(selectionHandles.first()));
 
                 if (!isAnyNodeInTheRubbish(selectionHandles) && access != MegaShare::ACCESS_UNKNOWN)
                 {
-                    if (access == MegaShare::ACCESS_OWNER)
-                    {
-                        auto megaLinkAction(new QAction(tr("Share link")));
-                        connect(megaLinkAction,
-                                &QAction::triggered,
-                                this,
-                                [this]()
-                                {
-                                    getMegaLink();
-                                });
-                        actions.insert(ActionsOrder::MEGA_LINK, megaLinkAction);
-                    }
-
                     if (access >= MegaShare::ACCESS_FULL)
                     {
                         auto item = proxyModel->getMegaModel()->getItemByIndex(selectedIndex);
@@ -522,8 +547,6 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
                     }
                 }
             }
-
-            addRemoveMenuActions(actions, selectionHandles);
         }
         else if (selectionHandles.size() > 1)
         {
@@ -531,9 +554,10 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
             {
                 addRestoreMenuAction(actions, selectionHandles);
             }
-
-            addRemoveMenuActions(actions, selectionHandles);
         }
+
+        addShareLinkMenuAction(actions, handlesAndAccess);
+        addRemoveMenuActions(actions, handlesAndAccess);
     }
 
     QAction* lastActionAdded(nullptr);
@@ -677,14 +701,16 @@ bool NodeSelectorTreeView::areAllEligibleForCopy(const QList<MegaHandle>& handle
 }
 
 std::optional<NodeSelectorTreeView::DeletionType>
-    NodeSelectorTreeView::areAllEligibleForDeletion(const QList<MegaHandle>& handles) const
+    NodeSelectorTreeView::areAllEligibleForDeletion(const QHash<MegaHandle,int>& handlesAndAccess) const
 {
-    auto removableItems(handles.size());
+    auto removableItems(handlesAndAccess.size());
     std::optional<NodeSelectorTreeView::DeletionType> type;
 
-    for (const auto& handle: handles)
+    for (auto it = handlesAndAccess.keyValueBegin();
+         it != handlesAndAccess.keyValueEnd();
+         ++it)
     {
-        auto node = std::unique_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+        auto node = std::unique_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(it->first));
         if (node)
         {
             std::optional<DeletionType> currentNodeDeletionType;
@@ -698,8 +724,7 @@ std::optional<NodeSelectorTreeView::DeletionType>
             }
             else
             {
-                auto access = Utilities::getNodeAccess(node.get());
-                if (access >= mega::MegaShare::ACCESS_FULL)
+                if (it->second >= mega::MegaShare::ACCESS_FULL)
                 {
                     currentNodeDeletionType = DeletionType::MOVE_TO_RUBBISH;
                 }
@@ -725,6 +750,32 @@ std::optional<NodeSelectorTreeView::DeletionType>
     }
 
     return removableItems == 0 ? type : std::nullopt;
+}
+
+bool NodeSelectorTreeView::areAllEligibleForLinkShare(
+    const QHash<MegaHandle, int>& handlesAndAccess) const
+{
+    auto result(true);
+
+    for (auto it = handlesAndAccess.keyValueBegin();
+        it != handlesAndAccess.keyValueEnd();
+        ++it)
+    {
+        if(it->second != mega::MegaShare::ACCESS_OWNER)
+        {
+            result = false;
+            break;
+        }
+
+        std::unique_ptr<mega::MegaNode> node(mMegaApi->getNodeByHandle(it->first));
+        if (node && mMegaApi->isInRubbish(node.get()))
+        {
+            result = false;
+            break;
+        }
+    }
+
+    return result;
 }
 
 bool NodeSelectorTreeView::areAllEligibleForRestore(const QList<MegaHandle> &handles) const
@@ -775,11 +826,6 @@ void NodeSelectorTreeView::deleteNode(const QList<MegaHandle>& handles, bool per
 void NodeSelectorTreeView::renameNode()
 {
     emit renameNodeClicked();
-}
-
-void NodeSelectorTreeView::getMegaLink()
-{
-    emit getMegaLinkClicked();
 }
 
 void NodeSelectorTreeView::restore(const QList<mega::MegaHandle>& handles)

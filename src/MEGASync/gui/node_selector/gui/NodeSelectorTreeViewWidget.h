@@ -154,7 +154,7 @@ private slots:
     void onDeleteClicked(const QList<mega::MegaHandle>& handles, bool permanently);
     void onLeaveShareClicked(const QList<mega::MegaHandle>& handles);
     void onRenameClicked();
-    void onGenMEGALinkClicked();
+    void onGenMEGALinkClicked(const QList<mega::MegaHandle>& handles);
     virtual void onItemDoubleClick(const QModelIndex &index);
     void onGoForwardClicked();
     void onGoBackClicked();

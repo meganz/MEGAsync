@@ -89,7 +89,12 @@ bool NodeSelectorTreeViewWidget::eventFilter(QObject* watched, QEvent* event)
     {
         if(auto dropEvent = static_cast<QDropEvent*>(event))
         {
-            if (mModel->dropMimeData(dropEvent->mimeData(),
+            if(!dropEvent->mimeData()->urls().isEmpty())
+            {
+                ui->tMegaFolders->dropEvent(dropEvent);
+                dropEvent->acceptProposedAction();
+            }
+            else if (mModel->dropMimeData(dropEvent->mimeData(),
                                      Qt::MoveAction,
                                      -1,
                                      -1,
@@ -103,13 +108,27 @@ bool NodeSelectorTreeViewWidget::eventFilter(QObject* watched, QEvent* event)
     {
         if(auto dropEvent = static_cast<QDragEnterEvent*>(event))
         {
-            if (mModel->canDropMimeData(dropEvent->mimeData(),
+            if(!dropEvent->mimeData()->urls().isEmpty())
+            {
+                ui->tMegaFolders->dragEnterEvent(dropEvent);
+            }
+            else if (mModel->canDropMimeData(dropEvent->mimeData(),
                                         Qt::MoveAction,
                                         -1,
                                         -1,
                                         mModel->index(0, 0, QModelIndex())))
             {
                 dropEvent->acceptProposedAction();
+            }
+        }
+    }
+    else if(event->type() == QEvent::DragMove)
+    {
+        if(auto dropEvent = static_cast<QDragEnterEvent*>(event))
+        {
+            if(!dropEvent->mimeData()->urls().isEmpty())
+            {
+                ui->tMegaFolders->dragMoveEvent(dropEvent);
             }
         }
     }
@@ -136,6 +155,10 @@ void NodeSelectorTreeViewWidget::init()
             &NodeSelectorProxyModel::modelSorted,
             this,
             &NodeSelectorTreeViewWidget::viewReady);
+    connect(mProxyModel.get(),
+        &NodeSelectorProxyModel::modelSorted,
+        this,
+        &NodeSelectorTreeViewWidget::modelLoaded);
     connect(mProxyModel.get(),
             &QAbstractItemModel::rowsInserted,
             this,
@@ -592,7 +615,7 @@ void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool blockUi)
 
     if(!blockUi)
     {
-        modelLoaded();
+        //modelLoaded();
         expandPendingIndexes();
         selectPendingIndexes();
     }
@@ -1521,15 +1544,9 @@ QModelIndex NodeSelectorTreeViewWidget::getParentIncomingShareByIndex(QModelInde
 }
 
 
-void NodeSelectorTreeViewWidget::onGenMEGALinkClicked()
+void NodeSelectorTreeViewWidget::onGenMEGALinkClicked(const QList<mega::MegaHandle>& handles)
 {
-    auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
-    if (!node || node->getType() == MegaNode::TYPE_ROOT
-            || mMegaApi->getAccess(node.get()) != MegaShare::ACCESS_OWNER)
-    {
-        return;
-    }
-    mMegaApi->exportNode(node.get());
+    MegaSyncApp->exportNodes(handles);
 }
 
 void NodeSelectorTreeViewWidget::Navigation::removeFromForward(const mega::MegaHandle &handle)
