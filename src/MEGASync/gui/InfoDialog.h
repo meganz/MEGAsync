@@ -263,6 +263,7 @@ private:
     void fixMultiscreenResizeBug(int& posX, int& posY);
     void repositionInfoDialog();
     void initNotificationArea();
+    void applyNotificationFilter(MessageType opt);
 
     TransferScanCancelUi* mTransferScanCancelUi = nullptr;
     QtPositioningBugFixer qtBugFixer;
