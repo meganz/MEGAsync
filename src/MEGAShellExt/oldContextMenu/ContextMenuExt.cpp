@@ -29,9 +29,8 @@ WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 #include "ContextMenuExt.h"
 
-#include "../MEGAinterface.h"
-#include "../RegUtils.h"
-#include "../resource.h"
+#include "MEGAinterface.h"
+#include "resource.h"
 #include <Shlwapi.h>
 
 #include <strsafe.h>
@@ -182,7 +181,7 @@ HBITMAP ContextMenuExt::getBitmap(HICON icon)
         }
 
         RECT rect = {0, 0, width, height};
-        BITMAPINFO bmInfo = {0};
+        BITMAPINFO bmInfo{{0}};
         bmInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
         bmInfo.bmiHeader.biPlanes = 1;
         bmInfo.bmiHeader.biCompression = BI_RGB;

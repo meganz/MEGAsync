@@ -1,7 +1,7 @@
 #include "ContextMenuData.h"
 
-#include "../../MEGAinterface.h"
-#include "../../RegUtils.h"
+#include "MEGAinterface.h"
+#include "RegUtils.h"
 
 ContextMenuData::ContextMenuData(void)
 {
