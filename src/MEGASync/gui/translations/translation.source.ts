@@ -411,11 +411,6 @@
 </context>
 <context>
     <name>BackupsModel</name>
-    <message>
-        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
-        <translation>You can’t back up folders with the same name. Rename them to continue with the backup. Folder names won’t change on your computer.</translation>
-    </message>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
@@ -441,6 +436,11 @@
             <numerusform>Folder wasn’t backed up. Try again.</numerusform>
             <numerusform>These folders weren’t backed up. Try again.</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>You can’t back up folders with the same name. Rename them to continue with the backup. Folder names won’t change on your computer.</translation>
     </message>
 </context>
 <context>
@@ -857,8 +857,8 @@
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
         <translation>
-            <numerusform>This action will download the file to a temporary location, fix the issue and then remove the temporary file.</numerusform>
-            <numerusform>This action will download the files to a temporary location, fix the issues and then remove the temporary files.</numerusform>
+            <numerusform>This action will download the file to a temporary location, fix the issue and then delete the temporary file.</numerusform>
+            <numerusform>This action will download the files to a temporary location, fix the issues and then delete the temporary files.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -2198,6 +2198,11 @@ In some cases they may contain details about your data, such as file or folder n
 <context>
     <name>InfoDialog</name>
     <message>
+        <source>Add sync</source>
+        <translatorcomment>Label for the &quot;Add Sync&quot; button added in the InfoDialog (Max 20 characters). SNC-5182.</translatorcomment>
+        <translation>Add sync</translation>
+    </message>
+    <message>
         <source>All file uploads are currently disabled.</source>
         <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
         <translation>All file uploads are currently disabled.</translation>
@@ -2420,11 +2425,6 @@ In some cases they may contain details about your data, such as file or folder n
         <source>Your queued transfers exceed the current quota available for your IP address.</source>
         <translatorcomment>Informative label to indicate that your queued transfers exceed the current quota available for IP. Applies to free users.</translatorcomment>
         <translation>Your queued transfers exceed the current quota available for your IP address.</translation>
-    </message>
-    <message>
-        <source>Add sync</source>
-        <translatorcomment>Label for the &quot;Add Sync&quot; button added in the InfoDialog (Max 20 characters). SNC-5182.</translatorcomment>
-        <translation type="unfinished">Add sync</translation>
     </message>
 </context>
 <context>
@@ -2836,22 +2836,22 @@ Wait for the upload to complete.</translation>
     <message>
         <source>Unable to remove the file stored in MEGA</source>
         <translatorcomment>Local/Remote conflict stall issue. User chose to keep the local file, but removing the MEGA file failed. Used in a tooltip. SAT-1110</translatorcomment>
-        <translation>Unable to remove the file stored in MEGA</translation>
+        <translation>Unable to delete the file stored in MEGA</translation>
     </message>
     <message>
         <source>Unable to remove the folder stored in MEGA</source>
         <translatorcomment>Local/Remote conflict stall issue. User chose to keep the local folder, but removing the MEGA folder failed. Used in a tooltip. SAT-1110</translatorcomment>
-        <translation>Unable to remove the folder stored in MEGA</translation>
+        <translation>Unable to delete the folder stored in MEGA</translation>
     </message>
     <message>
         <source>Unable to remove the local file</source>
         <translatorcomment>Local/Remote conflict stall issue. User chose to keep the remote file, but removing the local file failed. Used in a tooltip. SAT-1110</translatorcomment>
-        <translation>Unable to remove the local file</translation>
+        <translation>Unable to delete the local file</translation>
     </message>
     <message>
         <source>Unable to remove the local folder</source>
         <translatorcomment>Local/Remote conflict stall issue. User chose to keep the remote folder, but removing the local folder failed. Used in a tooltip. SAT-1110</translatorcomment>
-        <translation>Unable to remove the local folder</translation>
+        <translation>Unable to delete the local folder</translation>
     </message>
     <message>
         <source>Unable to update both local and MEGA files</source>
@@ -4393,7 +4393,7 @@ Refresh the view.</translation>
     <message>
         <source>Removed</source>
         <translatorcomment>Label in solved name conflict sync stalls by removing the file.SNC-2565</translatorcomment>
-        <translation>Removed</translation>
+        <translation>Deleted</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -4444,17 +4444,17 @@ Refresh the view.</translation>
     <message>
         <source>Remove duplicates</source>
         <translatorcomment>Button to solve a name conflict sync stall by removing duplicated items.SNC-2565</translatorcomment>
-        <translation>Remove duplicates</translation>
+        <translation>Delete duplicates</translation>
     </message>
     <message>
         <source>Remove duplicates and rename the rest</source>
         <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation>Remove duplicates and rename the rest</translation>
+        <translation>Delete duplicates and rename the rest</translation>
     </message>
     <message>
         <source>Remove duplicates, merge folders and rename the rest</source>
         <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation>Remove duplicates, merge folders and rename the rest</translation>
+        <translation>Delete duplicates, merge folders and rename the rest</translation>
     </message>
     <message>
         <source>Rename all items</source>
@@ -4599,27 +4599,27 @@ Enter a different name.</translation>
     <message>
         <source>Error removing file</source>
         <translatorcomment>Messagebox title when removing a single file has failed. SAT-426</translatorcomment>
-        <translation>Error removing file</translation>
+        <translation>Error deleting file</translation>
     </message>
     <message>
         <source>Error removing files</source>
         <translatorcomment>Messagebox title when removing multiple files has failed. SAT-426</translatorcomment>
-        <translation>Error removing files</translation>
+        <translation>Error deleting files</translation>
     </message>
     <message>
         <source>Error removing folder</source>
         <translatorcomment>Messagebox title when removing a single folder has failed. SAT-426</translatorcomment>
-        <translation>Error removing folder</translation>
+        <translation>Error deleting folder</translation>
     </message>
     <message>
         <source>Error removing folders</source>
         <translatorcomment>Messagebox title when removing multiple folders has failed. SAT-426</translatorcomment>
-        <translation>Error removing folders</translation>
+        <translation>Error deleting folders</translation>
     </message>
     <message>
         <source>Error removing items</source>
         <translatorcomment>Messagebox title when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation>Error removing items</translation>
+        <translation>Error deleting items</translation>
     </message>
     <message>
         <source>Folder already synced</source>
@@ -4664,27 +4664,27 @@ Enter a different name.</translation>
     <message>
         <source>The file %1 couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing a single file has failed. %1 is the file name. SAT-426</translatorcomment>
-        <translation>The file %1 couldn’t be removed. Try again later.</translation>
+        <translation>The file %1 couldn’t be deleted. Try again later.</translation>
     </message>
     <message>
         <source>The files couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple files has failed. SAT-426</translatorcomment>
-        <translation>The files couldn’t be removed. Try again later.</translation>
+        <translation>The files couldn’t be deleted. Try again later.</translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing a single folder has failed. %1 is the folder name. SAT-426</translatorcomment>
-        <translation>The folder %1 couldn’t be removed. Try again later.</translation>
+        <translation>The folder %1 couldn’t be deleted. Try again later.</translation>
     </message>
     <message>
         <source>The folders couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple folders has failed. SAT-426</translatorcomment>
-        <translation>The folders couldn’t be removed. Try again later.</translation>
+        <translation>The folders couldn’t be deleted. Try again later.</translation>
     </message>
     <message>
         <source>The items couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation>The items couldn’t be removed. Try again later.</translation>
+        <translation>The items couldn’t be deleted. Try again later.</translation>
     </message>
 </context>
 <context>
@@ -5793,7 +5793,11 @@ Enter a different name.</translation>
 - Other bugs have been fixed and numerous improvements made.
 </source>
         <translatorcomment>Change log for version 5.9.0. CON-1259</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Numerous interface improvements.
+- Improved HiDpi handling in Windows.
+- Updates to third party libraries.
+- Other bugs have been fixed and numerous improvements made.
+</translation>
     </message>
 </context>
 <context>
@@ -6805,7 +6809,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Remove files older than</source>
         <translatorcomment>Label for checkbox to remove local cache files older than a specified number of days.</translatorcomment>
-        <translation>Remove files older than</translation>
+        <translation>Delete files older than</translation>
     </message>
     <message>
         <source>Report Issue</source>
@@ -6908,7 +6912,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
         <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the current account.</translatorcomment>
-        <translation>You are about to permanently remove all file versions. Would you like to proceed?</translation>
+        <translation>You are about to permanently delete all file versions. Would you like to proceed?</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -7656,6 +7660,11 @@ Refresh the list.</translation>
         <translation>Choose</translation>
     </message>
     <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button label to dismiss and hide the survey. CON-942</translatorcomment>
+        <translation>Dismiss</translation>
+    </message>
+    <message>
         <source>Done</source>
         <translatorcomment>Label for Done buttons. SAT-1678.</translatorcomment>
         <translation>Done</translation>
@@ -7700,48 +7709,43 @@ Refresh the list.</translation>
         <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
         <translation>Try again</translation>
     </message>
-    <message>
-        <source>Dismiss</source>
-        <translatorcomment>Button label to dismiss and hide the survey. CON-942</translatorcomment>
-        <translation type="unfinished">Dismiss</translation>
-    </message>
 </context>
 <context>
     <name>SurveyStrings</name>
     <message>
         <source>Excellent</source>
         <translatorcomment>Label to indicate the highest score of the survey. CON-942</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Excellent</translation>
     </message>
     <message>
         <source>OK, got it</source>
         <translatorcomment>Label for the button of the final view after the end of the survey. CON-942</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>OK, got it</translation>
     </message>
     <message>
         <source>Poor</source>
         <translatorcomment>Label to indicate the lowest score of the survey. CON-942</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Poor</translation>
     </message>
     <message>
         <source>Submit</source>
         <translatorcomment>Label for the button to submit the answers to the survey. CON-942</translatorcomment>
-        <translation type="unfinished">Submit</translation>
+        <translation>Submit</translation>
     </message>
     <message>
         <source>Tell us more</source>
         <translatorcomment>Placeholder text to request comments to the user. CON-942</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tell us more</translation>
     </message>
     <message>
         <source>Thank you for your feedback</source>
         <translatorcomment>Title text of the final view after sending the survey responses thanking the user for his/her participation. CON-942</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thank you for your feedback</translation>
     </message>
     <message>
         <source>You’re helping to improve MEGA for you and everyone who uses it</source>
         <translatorcomment>Description text of the final view after sending the survey responses. CON-942</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>You’re helping to improve MEGA for yourself and everyone who uses it</translation>
     </message>
 </context>
 <context>
@@ -8350,9 +8354,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>Maximum length is %n characters.</source>
         <translatorcomment>Label to indicate the maximum number of characters in the text area. The %n placeholder indicates the number of characters, please keep it. CON-942</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>Maximum length is %n character.</numerusform>
-            <numerusform>Maximum length is %n characters.</numerusform>
+        <translation>
+            <numerusform>Maximum length is %n character</numerusform>
+            <numerusform>Maximum length is %n characters</numerusform>
         </translation>
     </message>
 </context>
@@ -9241,104 +9245,104 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>UpsellStrings</name>
     <message>
-        <source>Billed monthly</source>
-        <translatorcomment>Button to display plans with monthly subscription. CON-945</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save up to %1% with yearly billing</source>
-        <translatorcomment>Label with information about the discount of the annual subscription compared to the monthly subscription for the plan selected in the window. The placeholder %1 shall be replaced by the discount percentage. CON-945</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Billed yearly</source>
-        <translatorcomment>Button to display plans with yearly subscription. CON-945</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Buy %1</source>
-        <translatorcomment>Button that redirects to the website to purchase the selected plan. The placeholder %1 shall be replaced by the name of the plan selected in the window. CON-945</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</source>
-        <translatorcomment>Billing clarification message according to currency. CON-945</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>%1 billed yearly</source>
+        <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
+        <translation>%1 billed yearly</translation>
     </message>
     <message>
         <source>%1 per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 billed yearly</source>
-        <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>per month</source>
-        <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>(%1 per month)</source>
-        <translatorcomment>Price per month with yealy billing. The placeholder %1 shall be replaced by the monthly price (e.g. 49.9€ transfer). CON-945</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Recommended</source>
-        <translatorcomment>Label to indicate which is the recommended plan. CON-945</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Current plan</source>
-        <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
-        <translation type="unfinished">Current plan</translation>
+        <translation>%1 per month</translation>
     </message>
     <message>
         <source>%1 storage</source>
         <translatorcomment>Text to show the total amount of space available for the plan. The placeholder %1 shall be replaced by the amount of storage including the units (e.g. 1TB storage). CON-945</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your MEGA cloud storage is almost full</source>
-        <translatorcomment>Title indicating that the storage is almost full. CON-945</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your MEGA cloud storage is full</source>
-        <translatorcomment>Title indicating that the storage is full. CON-945</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
-        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 storage</translation>
     </message>
     <message>
         <source>%1 transfer</source>
         <translatorcomment>Text to show the transfer amount for the plan. The placeholder %1 shall be replaced by the amount of transfer including the units (e.g. 1TB transfer). CON-945</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 transfer</translation>
     </message>
     <message>
-        <source>Transfer quota exceeded</source>
-        <translatorcomment>Title of the window showing that the transfer quota has been exceeded. CON-945</translatorcomment>
-        <translation type="unfinished">Transfer quota exceeded</translation>
+        <source>(%1 per month)</source>
+        <translatorcomment>Price per month with yealy billing. The placeholder %1 shall be replaced by the monthly price (e.g. 49.9€ transfer). CON-945</translatorcomment>
+        <translation>(%1 per month)</translation>
     </message>
     <message>
-        <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]Upgrade your account to get more transfer quota or you can wait for [B]%1[/B] until more free quota becomes available for you.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
-        <translatorcomment>Explanatory message informing free users they have reached their download limit, offering options to upgrade or wait. The placeholder %1 shall be replaced by the remaining time to reset the transfer quota (e.g. 13m 34s or 6h). The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</source>
+        <translatorcomment>Billing clarification message according to currency. CON-945</translatorcomment>
+        <translation>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</translation>
+    </message>
+    <message>
+        <source>Billed monthly</source>
+        <translatorcomment>Button to display plans with monthly subscription. CON-945</translatorcomment>
+        <translation>Billed monthly</translation>
+    </message>
+    <message>
+        <source>Billed yearly</source>
+        <translatorcomment>Button to display plans with yearly subscription. CON-945</translatorcomment>
+        <translation>Billed yearly</translation>
+    </message>
+    <message>
+        <source>Buy %1</source>
+        <translatorcomment>Button that redirects to the website to purchase the selected plan. The placeholder %1 shall be replaced by the name of the plan selected in the window. CON-945</translatorcomment>
+        <translation>Buy %1</translation>
+    </message>
+    <message>
+        <source>Current plan</source>
+        <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
+        <translation>Current plan</translation>
     </message>
     <message>
         <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
         <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Need more storage?[BR][B][A]Try Pro&#xa0;Flexi[/A][/B]</translation>
+    </message>
+    <message>
+        <source>Recommended</source>
+        <translatorcomment>Label to indicate which is the recommended plan. CON-945</translatorcomment>
+        <translation>Recommended</translation>
+    </message>
+    <message>
+        <source>Save up to %1% with yearly billing</source>
+        <translatorcomment>Label with information about the discount of the annual subscription compared to the monthly subscription for the plan selected in the window. The placeholder %1 shall be replaced by the discount percentage. CON-945</translatorcomment>
+        <translation>Save up to %1% with yearly billing</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Title of the window showing that the transfer quota has been exceeded. CON-945</translatorcomment>
+        <translation>Transfer quota exceeded</translation>
+    </message>
+    <message>
+        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
+        <translation>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
         <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</translation>
+    </message>
+    <message>
+        <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]Upgrade your account to get more transfer quota or you can wait for [B]%1[/B] until more free quota becomes available for you.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
+        <translatorcomment>Explanatory message informing free users they have reached their download limit, offering options to upgrade or wait. The placeholder %1 shall be replaced by the remaining time to reset the transfer quota (e.g. 13m 34s or 6h). The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945</translatorcomment>
+        <translation>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]Upgrade your account to get more transfer quota or you can wait for [B]%1[/B] until more free quota becomes available for you.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</translation>
+    </message>
+    <message>
+        <source>Your MEGA cloud storage is almost full</source>
+        <translatorcomment>Title indicating that the storage is almost full. CON-945</translatorcomment>
+        <translation>Your MEGA cloud storage is almost full</translation>
+    </message>
+    <message>
+        <source>Your MEGA cloud storage is full</source>
+        <translatorcomment>Title indicating that the storage is full. CON-945</translatorcomment>
+        <translation>Your MEGA cloud storage is full</translation>
+    </message>
+    <message>
+        <source>per month</source>
+        <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
+        <translation>per month</translation>
     </message>
 </context>
 <context>

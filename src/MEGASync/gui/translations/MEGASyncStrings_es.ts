@@ -2198,13 +2198,8 @@ En algunos casos podría contener detalles como nombres de archivo o carpeta.</t
 <context>
     <name>InfoDialog</name>
     <message>
-        <source>Add Backup</source>
-        <translatorcomment>Tooltip message shown while hovering backups button.</translatorcomment>
-        <translation>Añadir backup</translation>
-    </message>
-    <message>
-        <source>Add Sync</source>
-        <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
+        <source>Add sync</source>
+        <translatorcomment>Label for the &quot;Add Sync&quot; button added in the InfoDialog (Max 20 characters). SNC-5182.</translatorcomment>
         <translation>Añadir sincronización</translation>
     </message>
     <message>
@@ -2371,11 +2366,6 @@ En algunos casos podría contener detalles como nombres de archivo o carpeta.</t
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
         <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
         <translation>Amplía tu cuenta ahora antes que tu espacio de almacenamiento se agote y tus subidas a MEGA se detengan.</translation>
-    </message>
-    <message>
-        <source>Upload</source>
-        <translatorcomment>Label to indicate an upload.</translatorcomment>
-        <translation>Subir</translation>
     </message>
     <message>
         <source>Upload to MEGA now</source>
@@ -5797,19 +5787,15 @@ Introduzca un nombre diferente.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We’ve enhanced the interface and behaviour of the transfer manager feature.
-- You can now create sync exclusions using wildcards.
-- There are new releases available now for the Raspberry Pi OS.
-- We’ve fixed crashes that were occurring due to missing or broken OpenGL drivers on Windows.
-- Qt has been upgraded to a newer version.
+        <source>- Numerous interface improvements.
+- Improved HiDpi handling in Windows.
+- Updates to third party libraries.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
-        <translation>- Hemos mejorado la interfaz y el comportamiento del gestor de transferencias.
-- Ahora se pueden crear exclusiones de sincronización mediante comodines.
-- Hay nuevas versiones disponibles para Raspberry Pi.
-- Hemos corregido los problemas debidos a los drivers OpenGL en Windows.
-- Qt se ha actualizado a una versión más reciente.
+        <translatorcomment>Change log for version 5.9.0. CON-1259</translatorcomment>
+        <translation>- Varias mejoras en la interfaz.
+- Mejor gestión de HiDPI en Windows.
+- Bibliotecas de terceros actualizadas.
 - Se han corregido otros errores y se han realizado numerosas mejoras.
 </translation>
     </message>
@@ -6823,7 +6809,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Remove files older than</source>
         <translatorcomment>Label for checkbox to remove local cache files older than a specified number of days.</translatorcomment>
-        <translation>Eliminar archivos con más de</translation>
+        <translation>Eliminar archivos de más de</translation>
     </message>
     <message>
         <source>Report Issue</source>
@@ -7606,6 +7592,11 @@ Actualiza la lista.</translation>
         <translation>No se encuentra el archivo</translation>
     </message>
     <message>
+        <source>Folder links can&apos;t be streamed</source>
+        <translatorcomment>Message displayed when the user tries to stream a folder. SNC-5215.</translatorcomment>
+        <translation>Los enlaces de carpetas no se pueden reproducir en streaming.</translation>
+    </message>
+    <message>
         <source>Nothing selected</source>
         <translatorcomment>Text shown when no files have been selected for streaming yet</translatorcomment>
         <translation>No hay nada seleccionado</translation>
@@ -7674,6 +7665,11 @@ Actualiza la lista.</translation>
         <translation>Seleccionar</translation>
     </message>
     <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button label to dismiss and hide the survey. CON-942</translatorcomment>
+        <translation>Descartar</translation>
+    </message>
+    <message>
         <source>Done</source>
         <translatorcomment>Label for Done buttons. SAT-1678.</translatorcomment>
         <translation>Hecho</translation>
@@ -7717,6 +7713,44 @@ Actualiza la lista.</translation>
         <source>Try again</source>
         <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
         <translation>Inténtalo de nuevo</translation>
+    </message>
+</context>
+<context>
+    <name>SurveyStrings</name>
+    <message>
+        <source>Excellent</source>
+        <translatorcomment>Label to indicate the highest score of the survey. CON-942</translatorcomment>
+        <translation>Excelente</translation>
+    </message>
+    <message>
+        <source>OK, got it</source>
+        <translatorcomment>Label for the button of the final view after the end of the survey. CON-942</translatorcomment>
+        <translation>Entendido</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <translatorcomment>Label to indicate the lowest score of the survey. CON-942</translatorcomment>
+        <translation>Mala</translation>
+    </message>
+    <message>
+        <source>Submit</source>
+        <translatorcomment>Label for the button to submit the answers to the survey. CON-942</translatorcomment>
+        <translation>Enviar</translation>
+    </message>
+    <message>
+        <source>Tell us more</source>
+        <translatorcomment>Placeholder text to request comments to the user. CON-942</translatorcomment>
+        <translation>Cuéntanos más</translation>
+    </message>
+    <message>
+        <source>Thank you for your feedback</source>
+        <translatorcomment>Title text of the final view after sending the survey responses thanking the user for his/her participation. CON-942</translatorcomment>
+        <translation>Gracias por tu valoración</translation>
+    </message>
+    <message>
+        <source>You’re helping to improve MEGA for you and everyone who uses it</source>
+        <translatorcomment>Description text of the final view after sending the survey responses. CON-942</translatorcomment>
+        <translation>Estás ayudando a mejorar MEGA para ti y para todos los que lo usan</translation>
     </message>
 </context>
 <context>
@@ -8318,6 +8352,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Add sync</source>
         <translatorcomment>Page title to add syncs. CON-833</translatorcomment>
         <translation>Añadir sincronización</translation>
+    </message>
+</context>
+<context>
+    <name>TextArea</name>
+    <message numerus="yes">
+        <source>Maximum length is %n characters.</source>
+        <translatorcomment>Label to indicate the maximum number of characters in the text area. The %n placeholder indicates the number of characters, please keep it. CON-942</translatorcomment>
+        <translation>
+            <numerusform>La longitud máxima es de %n carácter.</numerusform>
+            <numerusform>La longitud máxima es de %n caracteres.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -9144,82 +9189,6 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
 </context>
 <context>
-    <name>UpgradeDialog</name>
-    <message>
-        <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
-        <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>*El precio en tu moneda local es solo una estimación. Se te cobrará el precio mostrado en euros en todas las transacciones.</translation>
-    </message>
-    <message>
-        <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
-        <translation>Elige el pago anual para obtener 12 meses al precio de 10</translation>
-    </message>
-    <message>
-        <source>Depleted transfer quota</source>
-        <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
-        <translation>Cuota de transferencia agotada</translation>
-    </message>
-    <message>
-        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
-        <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>Amplía tu cuenta para continuar ahora mismo, o espera %1 para continuar gratis</translation>
-    </message>
-    <message>
-        <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
-        <translation>Este límite puede variar y depende de la cantidad de ancho de banda no utilizado que tengamos disponible.</translation>
-    </message>
-    <message>
-        <source>Transfer quota exceeded</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>Cuota de transferencia agotada</translation>
-    </message>
-    <message>
-        <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
-        <translatorcomment>Informative message to inform users that downloads could not continue because user has reached over transfer situation.</translatorcomment>
-        <translation>La descarga no puede continuar porque estás por encima del límite de transferencia gratuito. </translation>
-    </message>
-</context>
-<context>
-    <name>UpgradeOverStorage</name>
-    <message>
-        <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
-        <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>*El precio en tu moneda local es solo una estimación. Se te cobrará el precio mostrado en euros en todas las transacciones.</translation>
-    </message>
-    <message>
-        <source>100% of the %1 available used on your account.</source>
-        <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation>100 % de los %1 disponibles en tu cuenta.</translation>
-    </message>
-    <message>
-        <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
-        <translation>Elige el pago anual para obtener 12 meses al precio de 10</translation>
-    </message>
-    <message>
-        <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
-        <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>Amplía tu cuenta para disfrutar de más espacio de almacenamiento. Las subidas se reanudarán automáticamente.</translation>
-    </message>
-    <message>
-        <source>Storage full</source>
-        <translatorcomment>Title of the over storage dialog</translatorcomment>
-        <translation>Almacenamiento lleno</translation>
-    </message>
-    <message>
-        <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>
-        <translatorcomment>Informative message shown when user reaches over storage situation, encouraging to upgrade and get more extra storage space.</translatorcomment>
-        <translation>Para aumentar este límite, puedes ampliar tu cuenta y así obtener almacenamiento adicional.</translation>
-    </message>
-    <message>
-        <source>Your MEGA account is full</source>
-        <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>Tu cuenta de MEGA está llena.</translation>
-    </message>
-</context>
-<context>
     <name>UploadIssueHeader</name>
     <message>
         <source>Cannot reach the destination folder.</source>
@@ -9276,6 +9245,109 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to upload a file/folder to MEGA.(MAX 20 characters)</translatorcomment>
         <translation>Subir a MEGA</translation>
+    </message>
+</context>
+<context>
+    <name>UpsellStrings</name>
+    <message>
+        <source>%1 billed yearly</source>
+        <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
+        <translation>%1 facturado anualmente</translation>
+    </message>
+    <message>
+        <source>%1 per month</source>
+        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
+        <translation>%1 al mes</translation>
+    </message>
+    <message>
+        <source>%1 storage</source>
+        <translatorcomment>Text to show the total amount of space available for the plan. The placeholder %1 shall be replaced by the amount of storage including the units (e.g. 1TB storage). CON-945</translatorcomment>
+        <translation>%1 de almacenamiento</translation>
+    </message>
+    <message>
+        <source>%1 transfer</source>
+        <translatorcomment>Text to show the transfer amount for the plan. The placeholder %1 shall be replaced by the amount of transfer including the units (e.g. 1TB transfer). CON-945</translatorcomment>
+        <translation>%1 de transferencia</translation>
+    </message>
+    <message>
+        <source>(%1 per month)</source>
+        <translatorcomment>Price per month with yealy billing. The placeholder %1 shall be replaced by the monthly price (e.g. 49.9€ transfer). CON-945</translatorcomment>
+        <translation>(%1 al mes)</translation>
+    </message>
+    <message>
+        <source>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</source>
+        <translatorcomment>Billing clarification message according to currency. CON-945</translatorcomment>
+        <translation>*El precio en tu moneda local es solo una estimación. Se te cobrará el precio mostrado en euros en todas las transacciones.</translation>
+    </message>
+    <message>
+        <source>Billed monthly</source>
+        <translatorcomment>Button to display plans with monthly subscription. CON-945</translatorcomment>
+        <translation>Facturado mensualmente</translation>
+    </message>
+    <message>
+        <source>Billed yearly</source>
+        <translatorcomment>Button to display plans with yearly subscription. CON-945</translatorcomment>
+        <translation>Facturado anualmente</translation>
+    </message>
+    <message>
+        <source>Buy %1</source>
+        <translatorcomment>Button that redirects to the website to purchase the selected plan. The placeholder %1 shall be replaced by the name of the plan selected in the window. CON-945</translatorcomment>
+        <translation>Comprar %1</translation>
+    </message>
+    <message>
+        <source>Current plan</source>
+        <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
+        <translation>Plan actual</translation>
+    </message>
+    <message>
+        <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
+        <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
+        <translation>¿Necesitas más almacenamiento?[BR][B][A]Prueba Pro Flexi[/A][/B]</translation>
+    </message>
+    <message>
+        <source>Recommended</source>
+        <translatorcomment>Label to indicate which is the recommended plan. CON-945</translatorcomment>
+        <translation>Recomendado</translation>
+    </message>
+    <message>
+        <source>Save up to %1% with yearly billing</source>
+        <translatorcomment>Label with information about the discount of the annual subscription compared to the monthly subscription for the plan selected in the window. The placeholder %1 shall be replaced by the discount percentage. CON-945</translatorcomment>
+        <translation>Ahorra hasta un %1 con el cobro anual</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Title of the window showing that the transfer quota has been exceeded. CON-945</translatorcomment>
+        <translation>Cuota de transferencia agotada</translation>
+    </message>
+    <message>
+        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
+        <translation>Amplía tu cuenta para obtener más cuota de almacenamiento.[BR][BR]O elimina algunos archivos y [B][A]vacía la papelera[/A][/B] para liberar espacio de almacenamiento.</translation>
+    </message>
+    <message>
+        <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
+        <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
+        <translation>No puedes seguir descargando porque has agotado toda la cuota de transferencia disponible.[BR][BR]Para obtener más cuota de transferencia, compra otro plan.[BR][BR][B][A]Más información sobre la cuota de transferencia.[/A][/B]</translation>
+    </message>
+    <message>
+        <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]Upgrade your account to get more transfer quota or you can wait for [B]%1[/B] until more free quota becomes available for you.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
+        <translatorcomment>Explanatory message informing free users they have reached their download limit, offering options to upgrade or wait. The placeholder %1 shall be replaced by the remaining time to reset the transfer quota (e.g. 13m 34s or 6h). The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945</translatorcomment>
+        <translation>No puedes seguir descargando porque has utilizado toda la cuota de transferencia disponible.[BR][BR]Amplía tu cuenta para obtener más cuota de transferencia o espera [B]%1[/B]hasta que haya más cuota gratuita disponible para ti.[BR][BR][B][A]Aprende más sobre la cuota de transferencia.[/A][/B]</translation>
+    </message>
+    <message>
+        <source>Your MEGA cloud storage is almost full</source>
+        <translatorcomment>Title indicating that the storage is almost full. CON-945</translatorcomment>
+        <translation>El almacenamiento en la nube de MEGA está casi lleno</translation>
+    </message>
+    <message>
+        <source>Your MEGA cloud storage is full</source>
+        <translatorcomment>Title indicating that the storage is full. CON-945</translatorcomment>
+        <translation>El almacenamiento de tu nube de MEGA está lleno</translation>
+    </message>
+    <message>
+        <source>per month</source>
+        <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
+        <translation>al mes</translation>
     </message>
 </context>
 <context>

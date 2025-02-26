@@ -402,11 +402,6 @@
 </context>
 <context>
     <name>BackupsModel</name>
-    <message>
-        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
-        <translation>您无法备份同名文件夹。请重命名它们以继续备份。文件夹名在您的电脑上不会改变。</translation>
-    </message>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
@@ -426,6 +421,11 @@
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
         <translation><numerusform>这些文件夹没有备份。请再试一次。</numerusform></translation>
+    </message>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>您无法备份同名文件夹。请重命名它们以继续备份。文件夹名在您的电脑上不会改变。</translation>
     </message>
 </context>
 <context>
@@ -838,7 +838,7 @@
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation><numerusform>此操作会将文件下载到临时位置，修复问题，然后移除临时文件。</numerusform></translation>
+        <translation><numerusform>此操作会将文件下载到临时位置，修复问题，然后删除临时文件。</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
@@ -2138,13 +2138,8 @@
 <context>
     <name>InfoDialog</name>
     <message>
-        <source>Add Backup</source>
-        <translatorcomment>Tooltip message shown while hovering backups button.</translatorcomment>
-        <translation>添加备份</translation>
-    </message>
-    <message>
-        <source>Add Sync</source>
-        <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
+        <source>Add sync</source>
+        <translatorcomment>Label for the &quot;Add Sync&quot; button added in the InfoDialog (Max 20 characters). SNC-5182.</translatorcomment>
         <translation>添加同步</translation>
     </message>
     <message>
@@ -2311,11 +2306,6 @@
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
         <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
         <translation>请在您的帐户已满且上传被停止前，立即升级您的帐户。</translation>
-    </message>
-    <message>
-        <source>Upload</source>
-        <translatorcomment>Label to indicate an upload.</translatorcomment>
-        <translation>上传</translation>
     </message>
     <message>
         <source>Upload to MEGA now</source>
@@ -2509,7 +2499,7 @@ Would you like to install the necessary components now?</source>
     <message>
         <source>Installing notification area icon...</source>
         <translatorcomment>This is the text for the Notification Area Icon installation progress bar which provide the feedback to the user about SNC-2270</translatorcomment>
-        <translation>正在安装通知区域图标...</translation>
+        <translation>正在安装通知区域图标…</translation>
     </message>
     <message>
         <source>The notification area icon installation was cancelled.</source>
@@ -2771,22 +2761,22 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Unable to remove the file stored in MEGA</source>
         <translatorcomment>Local/Remote conflict stall issue. User chose to keep the local file, but removing the MEGA file failed. Used in a tooltip. SAT-1110</translatorcomment>
-        <translation>无法移除存储在MEGA中的文件</translation>
+        <translation>无法删除存储在MEGA中的文件</translation>
     </message>
     <message>
         <source>Unable to remove the folder stored in MEGA</source>
         <translatorcomment>Local/Remote conflict stall issue. User chose to keep the local folder, but removing the MEGA folder failed. Used in a tooltip. SAT-1110</translatorcomment>
-        <translation>无法移除存储在MEGA中的文件夹</translation>
+        <translation>无法删除存储在MEGA中的文件夹</translation>
     </message>
     <message>
         <source>Unable to remove the local file</source>
         <translatorcomment>Local/Remote conflict stall issue. User chose to keep the remote file, but removing the local file failed. Used in a tooltip. SAT-1110</translatorcomment>
-        <translation>无法移除本地文件</translation>
+        <translation>无法删除本地文件</translation>
     </message>
     <message>
         <source>Unable to remove the local folder</source>
         <translatorcomment>Local/Remote conflict stall issue. User chose to keep the remote folder, but removing the local folder failed. Used in a tooltip. SAT-1110</translatorcomment>
-        <translation>无法移除本地文件夹</translation>
+        <translation>无法删除本地文件夹</translation>
     </message>
     <message>
         <source>Unable to update both local and MEGA files</source>
@@ -4354,7 +4344,7 @@ Please refresh the view</source>
     <message>
         <source>Remove duplicates</source>
         <translatorcomment>Button to solve a name conflict sync stall by removing duplicated items.SNC-2565</translatorcomment>
-        <translation>移除重复项</translation>
+        <translation>删除重复项</translation>
     </message>
     <message>
         <source>Remove duplicates and rename the rest</source>
@@ -4509,27 +4499,27 @@ Enter a different name</source>
     <message>
         <source>Error removing file</source>
         <translatorcomment>Messagebox title when removing a single file has failed. SAT-426</translatorcomment>
-        <translation>移除文件时出错</translation>
+        <translation>删除文件时出错</translation>
     </message>
     <message>
         <source>Error removing files</source>
         <translatorcomment>Messagebox title when removing multiple files has failed. SAT-426</translatorcomment>
-        <translation>移除文件时出错</translation>
+        <translation>删除文件时出错</translation>
     </message>
     <message>
         <source>Error removing folder</source>
         <translatorcomment>Messagebox title when removing a single folder has failed. SAT-426</translatorcomment>
-        <translation>移除文件夹时出错</translation>
+        <translation>删除文件夹时出错</translation>
     </message>
     <message>
         <source>Error removing folders</source>
         <translatorcomment>Messagebox title when removing multiple folders has failed. SAT-426</translatorcomment>
-        <translation>移除文件夹时出错</translation>
+        <translation>删除文件夹时出错</translation>
     </message>
     <message>
         <source>Error removing items</source>
         <translatorcomment>Messagebox title when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation>移除项目时出错</translation>
+        <translation>删除项目时出错</translation>
     </message>
     <message>
         <source>Folder already synced</source>
@@ -4574,27 +4564,27 @@ Enter a different name</source>
     <message>
         <source>The file %1 couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing a single file has failed. %1 is the file name. SAT-426</translatorcomment>
-        <translation>该文件%1无法移除。稍后再试。</translation>
+        <translation>该文件%1无法删除。请稍后再试。</translation>
     </message>
     <message>
         <source>The files couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple files has failed. SAT-426</translatorcomment>
-        <translation>无法移除这些文件。稍后再试。</translation>
+        <translation>该文件无法删除。请稍后再试。</translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing a single folder has failed. %1 is the folder name. SAT-426</translatorcomment>
-        <translation>该文件夹%1无法删除。稍后再试。</translation>
+        <translation>该文件夹%1无法删除。请稍后再试。</translation>
     </message>
     <message>
         <source>The folders couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple folders has failed. SAT-426</translatorcomment>
-        <translation>无法移除这些文件夹。稍后再试。</translation>
+        <translation>该文件夹无法删除。请稍后再试。</translation>
     </message>
     <message>
         <source>The items couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation>无法移除这些项目。稍后再试。</translation>
+        <translation>该项目无法删除。请稍后再试。</translation>
     </message>
 </context>
 <context>
@@ -5676,20 +5666,16 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We’ve enhanced the interface and behaviour of the transfer manager feature.
-- You can now create sync exclusions using wildcards.
-- There are new releases available now for the Raspberry Pi OS.
-- We’ve fixed crashes that were occurring due to missing or broken OpenGL drivers on Windows.
-- Qt has been upgraded to a newer version.
+        <source>- Numerous interface improvements.
+- Improved HiDpi handling in Windows.
+- Updates to third party libraries.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
-        <translation>－我们增强了传输管理器功能的界面和行为。
-－您现在可以使用通配符创建同步排除。
-－树莓派操作系统现在有新版本可用。
-－我们修复了由于Windows上OpenGL驱动程序缺失或损坏而导致的崩溃。
-－Qt已升级到较新版本。
-－修复了其它错误，并进行了诸多改进。
+        <translatorcomment>Change log for version 5.9.0. CON-1259</translatorcomment>
+        <translation>—界面进行了多项改进。
+—改善了Windows中的HiDpi问题。
+—更新了第三方库。
+—修复了其它错误并进行了多项改进。
 </translation>
     </message>
 </context>
@@ -6196,7 +6182,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>The app has detected an issue and is reloading your account. Please wait…</source>
         <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
-        <translation>应用程序已检测到问题并正在重新加载您的帐户。请稍候...</translation>
+        <translation>应用程序已检测到问题并正在重新加载您的帐户。请稍候…</translation>
     </message>
     <message>
         <source>The app has reloaded. If you experience any further issues, please contact Support.</source>
@@ -6696,7 +6682,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Remove files older than</source>
         <translatorcomment>Label for checkbox to remove local cache files older than a specified number of days.</translatorcomment>
-        <translation>移除回收站中的文件，时间超过</translation>
+        <translation>删除在此之前的文件</translation>
     </message>
     <message>
         <source>Report Issue</source>
@@ -6796,7 +6782,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
         <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the current account.</translatorcomment>
-        <translation>您即将永久删除所有文件版本。您想继续吗？</translation>
+        <translation>您将永久删除所有文件版本。您想继续吗？</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -6954,17 +6940,17 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Loading size</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation>正在加载大小...</translation>
+        <translation>正在加载大小…</translation>
     </message>
     <message>
         <source>Loading time…</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation>正在加载时间戳...</translation>
+        <translation>正在加载时间戳…</translation>
     </message>
     <message>
         <source>Loading user…</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation>正在获取用户...</translation>
+        <translation>正在获取用户…</translation>
     </message>
     <message>
         <source>Size:</source>
@@ -7168,7 +7154,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Being solved</source>
         <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. We are actively working on the issue and it is not still solved. SAT-1140</translatorcomment>
-        <translation>正在解决...</translation>
+        <translation>正在解决…</translation>
     </message>
     <message>
         <source>Failed</source>
@@ -7299,7 +7285,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Fixing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation>正在解决问题...</translation>
+        <translation>正在解决问题…</translation>
     </message>
     <message>
         <source>Issues can't be fixed.
@@ -7311,7 +7297,7 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Processing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation>正在解决问题...</translation>
+        <translation>正在解决问题…</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -7437,6 +7423,11 @@ Please, refresh the list.</source>
         <translation>未找到文件</translation>
     </message>
     <message>
+        <source>Folder links can&apos;t be streamed</source>
+        <translatorcomment>Message displayed when the user tries to stream a folder. SNC-5215.</translatorcomment>
+        <translation>文件夹链接无法被串流</translation>
+    </message>
+    <message>
         <source>Nothing selected</source>
         <translatorcomment>Text shown when no files have been selected for streaming yet</translatorcomment>
         <translation>未选择任何文件</translation>
@@ -7505,6 +7496,11 @@ Please, refresh the list.</source>
         <translation>选择</translation>
     </message>
     <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button label to dismiss and hide the survey. CON-942</translatorcomment>
+        <translation>忽略</translation>
+    </message>
+    <message>
         <source>Done</source>
         <translatorcomment>Label for Done buttons. SAT-1678.</translatorcomment>
         <translation>已完成</translation>
@@ -7548,6 +7544,44 @@ Please, refresh the list.</source>
         <source>Try again</source>
         <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
         <translation>请再试一次</translation>
+    </message>
+</context>
+<context>
+    <name>SurveyStrings</name>
+    <message>
+        <source>Excellent</source>
+        <translatorcomment>Label to indicate the highest score of the survey. CON-942</translatorcomment>
+        <translation>太棒了</translation>
+    </message>
+    <message>
+        <source>OK, got it</source>
+        <translatorcomment>Label for the button of the final view after the end of the survey. CON-942</translatorcomment>
+        <translation>好的，明白了</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <translatorcomment>Label to indicate the lowest score of the survey. CON-942</translatorcomment>
+        <translation>太差了</translation>
+    </message>
+    <message>
+        <source>Submit</source>
+        <translatorcomment>Label for the button to submit the answers to the survey. CON-942</translatorcomment>
+        <translation>提交</translation>
+    </message>
+    <message>
+        <source>Tell us more</source>
+        <translatorcomment>Placeholder text to request comments to the user. CON-942</translatorcomment>
+        <translation>告诉我们更多</translation>
+    </message>
+    <message>
+        <source>Thank you for your feedback</source>
+        <translatorcomment>Title text of the final view after sending the survey responses thanking the user for his/her participation. CON-942</translatorcomment>
+        <translation>感谢您的反馈</translation>
+    </message>
+    <message>
+        <source>You’re helping to improve MEGA for you and everyone who uses it</source>
+        <translatorcomment>Description text of the final view after sending the survey responses. CON-942</translatorcomment>
+        <translation>您正在帮助自己和所有使用MEGA的人改进它</translation>
     </message>
 </context>
 <context>
@@ -8023,7 +8057,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Saving synchronised folders…</source>
         <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.SNC-4208</translatorcomment>
-        <translation>正在保存同步文件夹...</translation>
+        <translation>正在保存同步文件夹…</translation>
     </message>
 </context>
 <context>
@@ -8149,6 +8183,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Add sync</source>
         <translatorcomment>Page title to add syncs. CON-833</translatorcomment>
         <translation>添加同步</translation>
+    </message>
+</context>
+<context>
+    <name>TextArea</name>
+    <message numerus="yes">
+        <source>Maximum length is %n characters.</source>
+        <translatorcomment>Label to indicate the maximum number of characters in the text area. The %n placeholder indicates the number of characters, please keep it. CON-942</translatorcomment>
+        <translation><numerusform>最大长度为%n字符。</numerusform></translation>
     </message>
 </context>
 <context>
@@ -8930,82 +8972,6 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
 </context>
 <context>
-    <name>UpgradeDialog</name>
-    <message>
-        <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
-        <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* 您的本地货币价格仅供参考。所有交易都将以欧元向您收费。</translation>
-    </message>
-    <message>
-        <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
-        <translation>选择按年结算，即以10个月的会员价格享受12个月的会员服务</translation>
-    </message>
-    <message>
-        <source>Depleted transfer quota</source>
-        <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
-        <translation>传输流量已用完</translation>
-    </message>
-    <message>
-        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
-        <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>升级您的帐户以立即继续，或者等待%1后继续使用免费传输流量</translation>
-    </message>
-    <message>
-        <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
-        <translation>此流量限制是动态的，取决于我们可用的未使用带宽量。</translation>
-    </message>
-    <message>
-        <source>Transfer quota exceeded</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>已超出传输流量上限</translation>
-    </message>
-    <message>
-        <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
-        <translatorcomment>Informative message to inform users that downloads could not continue because user has reached over transfer situation.</translatorcomment>
-        <translation>由于已超出您的免费传输流量限额，您的下载无法继续。</translation>
-    </message>
-</context>
-<context>
-    <name>UpgradeOverStorage</name>
-    <message>
-        <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
-        <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* 您的本地货币价格仅供参考。所有交易都将以欧元向您收费。</translation>
-    </message>
-    <message>
-        <source>100% of the %1 available used on your account.</source>
-        <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation>您帐户上可用的%1存储空间已全部用完。</translation>
-    </message>
-    <message>
-        <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
-        <translation>选择按年结算，即以10个月的会员价格享受12个月的会员服务</translation>
-    </message>
-    <message>
-        <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
-        <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>请升级您的帐户以享受更多存储空间（您的上传将自动恢复）。</translation>
-    </message>
-    <message>
-        <source>Storage full</source>
-        <translatorcomment>Title of the over storage dialog</translatorcomment>
-        <translation>存储空间已满</translation>
-    </message>
-    <message>
-        <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>
-        <translatorcomment>Informative message shown when user reaches over storage situation, encouraging to upgrade and get more extra storage space.</translatorcomment>
-        <translation>要增加此限制，您可以升级您的帐户，这将为您提供充足的额外存储空间。</translation>
-    </message>
-    <message>
-        <source>Your MEGA account is full</source>
-        <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>您的MEGA帐户空间已满。</translation>
-    </message>
-</context>
-<context>
     <name>UploadIssueHeader</name>
     <message>
         <source>Cannot reach the destination folder.</source>
@@ -9062,6 +9028,109 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to upload a file/folder to MEGA.(MAX 20 characters)</translatorcomment>
         <translation>上传到MEGA</translation>
+    </message>
+</context>
+<context>
+    <name>UpsellStrings</name>
+    <message>
+        <source>%1 billed yearly</source>
+        <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
+        <translation>%1按年结算</translation>
+    </message>
+    <message>
+        <source>%1 per month</source>
+        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
+        <translation>%1每月</translation>
+    </message>
+    <message>
+        <source>%1 storage</source>
+        <translatorcomment>Text to show the total amount of space available for the plan. The placeholder %1 shall be replaced by the amount of storage including the units (e.g. 1TB storage). CON-945</translatorcomment>
+        <translation>%1存储空间</translation>
+    </message>
+    <message>
+        <source>%1 transfer</source>
+        <translatorcomment>Text to show the transfer amount for the plan. The placeholder %1 shall be replaced by the amount of transfer including the units (e.g. 1TB transfer). CON-945</translatorcomment>
+        <translation>%1传输流量</translation>
+    </message>
+    <message>
+        <source>(%1 per month)</source>
+        <translatorcomment>Price per month with yealy billing. The placeholder %1 shall be replaced by the monthly price (e.g. 49.9€ transfer). CON-945</translatorcomment>
+        <translation>（%1每月）</translation>
+    </message>
+    <message>
+        <source>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</source>
+        <translatorcomment>Billing clarification message according to currency. CON-945</translatorcomment>
+        <translation>*本地币值仅供参考。您的帐户的所有交易将以欧元价格为准。</translation>
+    </message>
+    <message>
+        <source>Billed monthly</source>
+        <translatorcomment>Button to display plans with monthly subscription. CON-945</translatorcomment>
+        <translation>按月结算</translation>
+    </message>
+    <message>
+        <source>Billed yearly</source>
+        <translatorcomment>Button to display plans with yearly subscription. CON-945</translatorcomment>
+        <translation>按年结算</translation>
+    </message>
+    <message>
+        <source>Buy %1</source>
+        <translatorcomment>Button that redirects to the website to purchase the selected plan. The placeholder %1 shall be replaced by the name of the plan selected in the window. CON-945</translatorcomment>
+        <translation>购买%1</translation>
+    </message>
+    <message>
+        <source>Current plan</source>
+        <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
+        <translation>当前方案</translation>
+    </message>
+    <message>
+        <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
+        <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
+        <translation>需要更多存储空间吗？[BR][B][A]试试Pro Flexi[/A][/B]</translation>
+    </message>
+    <message>
+        <source>Recommended</source>
+        <translatorcomment>Label to indicate which is the recommended plan. CON-945</translatorcomment>
+        <translation>推荐</translation>
+    </message>
+    <message>
+        <source>Save up to %1% with yearly billing</source>
+        <translatorcomment>Label with information about the discount of the annual subscription compared to the monthly subscription for the plan selected in the window. The placeholder %1 shall be replaced by the discount percentage. CON-945</translatorcomment>
+        <translation>按年结算节省可达%1%</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Title of the window showing that the transfer quota has been exceeded. CON-945</translatorcomment>
+        <translation>已超出传输流量上限</translation>
+    </message>
+    <message>
+        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
+        <translation>升级您的帐户以获得更多存储空间。[BR][BR]或者删除一些文件然后[B][A]清空您的回收站[/A][/B]以释放存储空间。</translation>
+    </message>
+    <message>
+        <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
+        <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
+        <translation>您无法继续下载，因为您已经用完了所有可用的传输流量。[BR][BR]要获得更多流量，请购买其它付费方案。[BR][BR][B][A]了解更多有关传输流量的信息。[/A][/B]</translation>
+    </message>
+    <message>
+        <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]Upgrade your account to get more transfer quota or you can wait for [B]%1[/B] until more free quota becomes available for you.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
+        <translatorcomment>Explanatory message informing free users they have reached their download limit, offering options to upgrade or wait. The placeholder %1 shall be replaced by the remaining time to reset the transfer quota (e.g. 13m 34s or 6h). The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945</translatorcomment>
+        <translation>您无法继续下载，因为您已经用完了所有可用的传输流量。[BR][BR]升级您的帐户以获得更多传输流量或者您可以等待[B]%1[/B]，直到有更多免费流量可供您使用。[BR][BR][B][A]了解更多有关传输流量的信息。[/A][/B]</translation>
+    </message>
+    <message>
+        <source>Your MEGA cloud storage is almost full</source>
+        <translatorcomment>Title indicating that the storage is almost full. CON-945</translatorcomment>
+        <translation>您的MEGA云端存储空间几乎已满</translation>
+    </message>
+    <message>
+        <source>Your MEGA cloud storage is full</source>
+        <translatorcomment>Title indicating that the storage is full. CON-945</translatorcomment>
+        <translation>您的MEGA云盘空间已满</translation>
+    </message>
+    <message>
+        <source>per month</source>
+        <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
+        <translation>每月</translation>
     </message>
 </context>
 <context>

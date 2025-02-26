@@ -402,11 +402,6 @@
 </context>
 <context>
     <name>BackupsModel</name>
-    <message>
-        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
-        <translation>لا يمكنك إجراء نسخ احتياطي للمجلدات التي تحمل الاسم نفسه. أعد تسميتها لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الكمبيوتر الخاص بك.</translation>
-    </message>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
@@ -426,6 +421,11 @@
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
         <translation><numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى.</numerusform><numerusform>لم يتم نسخ المجلد احتياطيًا. حاول مرة أخرى.</numerusform><numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى.</numerusform><numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى.</numerusform><numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى.</numerusform><numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى.</numerusform></translation>
+    </message>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>لا يمكنك إجراء نسخ احتياطي للمجلدات التي تحمل الاسم نفسه. أعد تسميتها لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الكمبيوتر الخاص بك.</translation>
     </message>
 </context>
 <context>
@@ -838,7 +838,7 @@
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation><numerusform>سيؤدي هذا الإجراء إلى تنزيل الملفات إلى موقع مؤقت وإصلاح المشكلة ثم إزالة الملفات المؤقتة.</numerusform><numerusform>سيؤدي هذا الإجراء إلى تنزيل الملف إلى موقع مؤقت وإصلاح المشكلة ثم إزالة الملف المؤقت.</numerusform><numerusform>سيؤدي هذا الإجراء إلى تنزيل الملفات إلى موقع مؤقت وإصلاح المشكلتين ثم إزالة الملفات المؤقتة.</numerusform><numerusform>سيؤدي هذا الإجراء إلى تنزيل الملفات إلى موقع مؤقت وإصلاح المشكلات ثم إزالة الملفات المؤقتة.</numerusform><numerusform>سيؤدي هذا الإجراء إلى تنزيل الملفات إلى موقع مؤقت وإصلاح المشكلات ثم إزالة الملفات المؤقتة.</numerusform><numerusform>سيؤدي هذا الإجراء إلى تنزيل الملفات إلى موقع مؤقت وإصلاح المشكلات ثم إزالة الملفات المؤقتة.</numerusform></translation>
+        <translation><numerusform>سيؤدي هذا الإجراء إلى تنزيل الملفات إلى موقع مؤقت وإصلاح المشكلات ثم حذف الملفات المؤقتة.</numerusform><numerusform>سيؤدي هذا الإجراء إلى تنزيل الملف إلى موقع مؤقت وإصلاح المشكلة ثم حذف الملف المؤقت.</numerusform><numerusform>سيؤدي هذا الإجراء إلى تنزيل الملفات إلى موقع مؤقت وإصلاح المشكلات ثم حذف الملفات المؤقتة.</numerusform><numerusform>سيؤدي هذا الإجراء إلى تنزيل الملفات إلى موقع مؤقت وإصلاح المشكلات ثم حذف الملفات المؤقتة.</numerusform><numerusform>سيؤدي هذا الإجراء إلى تنزيل الملفات إلى موقع مؤقت وإصلاح المشكلات ثم حذف الملفات المؤقتة.</numerusform><numerusform>سيؤدي هذا الإجراء إلى تنزيل الملفات إلى موقع مؤقت وإصلاح المشكلات ثم حذف الملفات المؤقتة.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
@@ -1448,7 +1448,7 @@
     <message>
         <source>loading time…</source>
         <translatorcomment>Placeholder used meanwhile the last modified time is being calculated. SNC-3972</translatorcomment>
-        <translation>تاريخ الاحضار&amp;#8230;</translation>
+        <translation>تاريخ الاحضار…</translation>
     </message>
 </context>
 <context>
@@ -1994,7 +1994,7 @@
     <message>
         <source>Setting up your account…</source>
         <translatorcomment>Label that indicates that the account is being setting up CON-465</translatorcomment>
-        <translation>إعداد الحساب الخاص بك&amp;#8230;</translation>
+        <translation>إعداد الحساب الخاص بك…</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -2004,7 +2004,7 @@
     <message>
         <source>Waiting for email confirmation…</source>
         <translatorcomment>Label that indicates that the email confirmation is pending CON-465</translatorcomment>
-        <translation>في انتظار تأكيد البريد الإلكتروني&amp;#8230;</translation>
+        <translation>في انتظار تأكيد البريد الإلكتروني…</translation>
     </message>
     <message>
         <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
@@ -2138,13 +2138,8 @@
 <context>
     <name>InfoDialog</name>
     <message>
-        <source>Add Backup</source>
-        <translatorcomment>Tooltip message shown while hovering backups button.</translatorcomment>
-        <translation>إضافة نسخة احتياطية</translation>
-    </message>
-    <message>
-        <source>Add Sync</source>
-        <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
+        <source>Add sync</source>
+        <translatorcomment>Label for the &quot;Add Sync&quot; button added in the InfoDialog (Max 20 characters). SNC-5182.</translatorcomment>
         <translation>إضافة مزامنة</translation>
     </message>
     <message>
@@ -2311,11 +2306,6 @@
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
         <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
         <translation>قم بالترقية الآن، قبل أن يمتلئ حسابك و تتوقف عمليات الترفيع إلى ميغا MEGA.</translation>
-    </message>
-    <message>
-        <source>Upload</source>
-        <translatorcomment>Label to indicate an upload.</translatorcomment>
-        <translation>ترفيع</translation>
     </message>
     <message>
         <source>Upload to MEGA now</source>
@@ -2509,7 +2499,7 @@ Would you like to install the necessary components now?</source>
     <message>
         <source>Installing notification area icon...</source>
         <translatorcomment>This is the text for the Notification Area Icon installation progress bar which provide the feedback to the user about SNC-2270</translatorcomment>
-        <translation>جاري تثبيت إشعار أيقونة المنطقة&amp;#8230;</translation>
+        <translation>جاري تثبيت إشعار أيقونة المنطقة…</translation>
     </message>
     <message>
         <source>The notification area icon installation was cancelled.</source>
@@ -2771,22 +2761,22 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Unable to remove the file stored in MEGA</source>
         <translatorcomment>Local/Remote conflict stall issue. User chose to keep the local file, but removing the MEGA file failed. Used in a tooltip. SAT-1110</translatorcomment>
-        <translation>غير قادر على إزالة الملف المخزن في ميغا MEGA</translation>
+        <translation>غير قادر على حذف الملف المخزن في ميغا MEGA</translation>
     </message>
     <message>
         <source>Unable to remove the folder stored in MEGA</source>
         <translatorcomment>Local/Remote conflict stall issue. User chose to keep the local folder, but removing the MEGA folder failed. Used in a tooltip. SAT-1110</translatorcomment>
-        <translation>غير قادر على إزالة المجلد المخزن في ميغا MEGA</translation>
+        <translation>غير قادر على حذف المجلد المخزن في ميغا MEGA</translation>
     </message>
     <message>
         <source>Unable to remove the local file</source>
         <translatorcomment>Local/Remote conflict stall issue. User chose to keep the remote file, but removing the local file failed. Used in a tooltip. SAT-1110</translatorcomment>
-        <translation>غير قادر على إزالة الملف المحلي</translation>
+        <translation>غير قادر على حذف الملف المحلي</translation>
     </message>
     <message>
         <source>Unable to remove the local folder</source>
         <translatorcomment>Local/Remote conflict stall issue. User chose to keep the remote folder, but removing the local folder failed. Used in a tooltip. SAT-1110</translatorcomment>
-        <translation>غير قادر على إزالة المجلد المحلي</translation>
+        <translation>غير قادر على حذف المجلد المحلي</translation>
     </message>
     <message>
         <source>Unable to update both local and MEGA files</source>
@@ -3146,7 +3136,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Link import error</source>
         <translatorcomment>Title of the error message when there is an error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في استيراد الرابط</translation>
     </message>
     <message>
         <source>Locked account</source>
@@ -4308,7 +4298,7 @@ Please refresh the view</source>
     <message>
         <source>Removed</source>
         <translatorcomment>Label in solved name conflict sync stalls by removing the file.SNC-2565</translatorcomment>
-        <translation>حُذفَ</translation>
+        <translation>المحذوف</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -4359,17 +4349,17 @@ Please refresh the view</source>
     <message>
         <source>Remove duplicates</source>
         <translatorcomment>Button to solve a name conflict sync stall by removing duplicated items.SNC-2565</translatorcomment>
-        <translation>إزالة التكرارات</translation>
+        <translation>حذف التكرارات</translation>
     </message>
     <message>
         <source>Remove duplicates and rename the rest</source>
         <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation>قم بإزالة التكرارات وإعادة تسمية المتبقي</translation>
+        <translation>احذف التكرارات وأعد تسمية الباقي</translation>
     </message>
     <message>
         <source>Remove duplicates, merge folders and rename the rest</source>
         <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation>قم بإزالة التكرارات ودمج المجلدات وإعادة تسمية المتبقي</translation>
+        <translation>احذف التكرارات ودمج المجلدات وأعد تسمية الباقي</translation>
     </message>
     <message>
         <source>Rename all items</source>
@@ -4514,27 +4504,27 @@ Enter a different name</source>
     <message>
         <source>Error removing file</source>
         <translatorcomment>Messagebox title when removing a single file has failed. SAT-426</translatorcomment>
-        <translation>حدث خطأ أثناء إزالة الملف</translation>
+        <translation>حدث خطأ أثناء حذف الملف</translation>
     </message>
     <message>
         <source>Error removing files</source>
         <translatorcomment>Messagebox title when removing multiple files has failed. SAT-426</translatorcomment>
-        <translation>حدث خطأ أثناء إزالة الملفات</translation>
+        <translation>حدث خطأ أثناء حذف الملفات</translation>
     </message>
     <message>
         <source>Error removing folder</source>
         <translatorcomment>Messagebox title when removing a single folder has failed. SAT-426</translatorcomment>
-        <translation>حدث خطأ أثناء إزالة المجلد</translation>
+        <translation>حدث خطأ أثناء حذف المجلد</translation>
     </message>
     <message>
         <source>Error removing folders</source>
         <translatorcomment>Messagebox title when removing multiple folders has failed. SAT-426</translatorcomment>
-        <translation>حدث خطأ أثناء إزالة المجلدات</translation>
+        <translation>حدث خطأ أثناء حذف المجلدات</translation>
     </message>
     <message>
         <source>Error removing items</source>
         <translatorcomment>Messagebox title when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation> حدث خطأ أثناء إزالة العناصر</translation>
+        <translation>حدث خطأ أثناء حذف العناصر</translation>
     </message>
     <message>
         <source>Folder already synced</source>
@@ -4579,27 +4569,27 @@ Enter a different name</source>
     <message>
         <source>The file %1 couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing a single file has failed. %1 is the file name. SAT-426</translatorcomment>
-        <translation>لا يمكن إزالة الملف %1. حاول مرة أخرى لاحقًا.</translation>
+        <translation> لا يمكن حذف الملف %1. حاول مرة أخرى لاحقًا.</translation>
     </message>
     <message>
         <source>The files couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple files has failed. SAT-426</translatorcomment>
-        <translation>لا يمكن إزالة الملفات. حاول مرة أخرى لاحقًا.</translation>
+        <translation>لا يمكن حذف الملفات. حاول مرة أخرى لاحقًا.</translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing a single folder has failed. %1 is the folder name. SAT-426</translatorcomment>
-        <translation>لا يمكن إزالة المجلد %1. حاول مرة أخرى لاحقًا.</translation>
+        <translation>لا يمكن حذف المجلد %1. حاول مرة أخرى لاحقًا.</translation>
     </message>
     <message>
         <source>The folders couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple folders has failed. SAT-426</translatorcomment>
-        <translation>لا يمكن إزالة المجلدات. حاول مرة أخرى لاحقًا.</translation>
+        <translation>لا يمكن حذف المجلدات. حاول مرة أخرى لاحقًا.</translation>
     </message>
     <message>
         <source>The items couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation>لا يمكن إزالة العناصر. حاول مرة أخرى لاحقًا.</translation>
+        <translation>لا يمكن حذف العناصر. حاول مرة أخرى لاحقًا.</translation>
     </message>
 </context>
 <context>
@@ -5012,7 +5002,7 @@ Enter a different name</source>
     <message>
         <source>Fetching file list…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
-        <translation>جاري احضار قائمة الملف&amp;#8230;</translation>
+        <translation>جاري احضار قائمة الملف…</translation>
     </message>
     <message>
         <source>First name</source>
@@ -5082,7 +5072,7 @@ Enter a different name</source>
     <message>
         <source>Logging in…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
-        <translation>جاري تسجيل الدخول&amp;#8230;</translation>
+        <translation>جاري تسجيل الدخول…</translation>
     </message>
     <message>
         <source>Names longer than 32 characters are not supported</source>
@@ -5257,7 +5247,7 @@ Enter a different name</source>
     <message>
         <source>Validating 2FA code…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
-        <translation>التحقق من صحة رمز المصادقة المزدوجة 2FA&amp;#8230;</translation>
+        <translation>التحقق من صحة رمز المصادقة المزدوجة 2FA…</translation>
     </message>
     <message>
         <source>View in Settings</source>
@@ -5681,19 +5671,15 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We’ve enhanced the interface and behaviour of the transfer manager feature.
-- You can now create sync exclusions using wildcards.
-- There are new releases available now for the Raspberry Pi OS.
-- We’ve fixed crashes that were occurring due to missing or broken OpenGL drivers on Windows.
-- Qt has been upgraded to a newer version.
+        <source>- Numerous interface improvements.
+- Improved HiDpi handling in Windows.
+- Updates to third party libraries.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
-        <translation>- لقد قمنا بتحسين واجهة وسلوك ميزة مدير تراسل المعطيات.
-- يمكنك الآن إنشاء استبعادات المزامنة باستخدام رموز البحث.
-- هناك إصدارات جديدة متاحة الآن لنظام التشغيل Raspberry Pi OS.
-- لقد أصلحنا الأعطال التي كانت تحدث بسبب برامج تشغيل OpenGL المفقودة أو التالفة على ويندوز Windows.
-- تمت ترقية Qt إلى إصدار أحدث.
+        <translatorcomment>Change log for version 5.9.0. CON-1259</translatorcomment>
+        <translation>- العديد من تحسينات الواجهة.
+- تحسين معالجة HiDPI في نظام التشغيل Windows.
+- تحديثات لمكتبات الطرف الثالث.
 - تم إصلاح الأخطاء الأخرى وإجراء العديد من التحسينات.
 </translation>
     </message>
@@ -6201,7 +6187,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>The app has detected an issue and is reloading your account. Please wait…</source>
         <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
-        <translation>اكتشف التطبيق مشكلة ويقوم بإعادة تحميل حسابك. يرجى الانتظار...</translation>
+        <translation>اكتشف التطبيق مشكلة ويقوم بإعادة تحميل حسابك. يرجى الانتظار…</translation>
     </message>
     <message>
         <source>The app has reloaded. If you experience any further issues, please contact Support.</source>
@@ -6375,7 +6361,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Adding transfers…</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Adding transfers&quot; step.con-429</translatorcomment>
-        <translation>إضافة عمليات تراسل&amp;#8230;</translation>
+        <translation>إضافة عمليات تراسل…</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6701,7 +6687,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Remove files older than</source>
         <translatorcomment>Label for checkbox to remove local cache files older than a specified number of days.</translatorcomment>
-        <translation>أزل الملفات الأقدم من</translation>
+        <translation>احذف الملفات الأقدم من</translation>
     </message>
     <message>
         <source>Report Issue</source>
@@ -6801,7 +6787,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
         <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the current account.</translatorcomment>
-        <translation>أنت على وشك إزالة جميع نسخ الملف نهائياً. هل ترغب في المتابعة؟</translation>
+        <translation>أنت على وشك حذف جميع إصدارات الملفات نهائيًا. هل ترغب في المتابعة؟</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -6959,17 +6945,17 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Loading size</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation>حجم التحميل&amp;#8230;</translation>
+        <translation>حجم التحميل…</translation>
     </message>
     <message>
         <source>Loading time…</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation>جاري تحميل الطابع الزمني&amp;#8230;</translation>
+        <translation>جاري تحميل الطابع الزمني…</translation>
     </message>
     <message>
         <source>Loading user…</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation>جاري احضار المستخدم&amp;#8230;</translation>
+        <translation>جاري احضار المستخدم…</translation>
     </message>
     <message>
         <source>Size:</source>
@@ -7173,7 +7159,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Being solved</source>
         <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. We are actively working on the issue and it is not still solved. SAT-1140</translatorcomment>
-        <translation>حل&amp;#8230;</translation>
+        <translation>حل…</translation>
     </message>
     <message>
         <source>Failed</source>
@@ -7304,7 +7290,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Fixing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation>جاري حل المشاكل&amp;#8230;</translation>
+        <translation>جاري حل المشاكل…</translation>
     </message>
     <message>
         <source>Issues can't be fixed.
@@ -7316,7 +7302,7 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Processing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation>جاري حل المشاكل&amp;#8230;</translation>
+        <translation>جاري حل المشاكل…</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -7442,6 +7428,11 @@ Please, refresh the list.</source>
         <translation>لم يتم إيجاد الملف</translation>
     </message>
     <message>
+        <source>Folder links can&apos;t be streamed</source>
+        <translatorcomment>Message displayed when the user tries to stream a folder. SNC-5215.</translatorcomment>
+        <translation>لا يمكن بث روابط المجلدات</translation>
+    </message>
+    <message>
         <source>Nothing selected</source>
         <translatorcomment>Text shown when no files have been selected for streaming yet</translatorcomment>
         <translation>لم يتم تحديد أي شيء</translation>
@@ -7510,6 +7501,11 @@ Please, refresh the list.</source>
         <translation>اختر</translation>
     </message>
     <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button label to dismiss and hide the survey. CON-942</translatorcomment>
+        <translation>رفض</translation>
+    </message>
+    <message>
         <source>Done</source>
         <translatorcomment>Label for Done buttons. SAT-1678.</translatorcomment>
         <translation>تم</translation>
@@ -7553,6 +7549,44 @@ Please, refresh the list.</source>
         <source>Try again</source>
         <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
         <translation>حاول مرة أخرى</translation>
+    </message>
+</context>
+<context>
+    <name>SurveyStrings</name>
+    <message>
+        <source>Excellent</source>
+        <translatorcomment>Label to indicate the highest score of the survey. CON-942</translatorcomment>
+        <translation>ممتاز</translation>
+    </message>
+    <message>
+        <source>OK, got it</source>
+        <translatorcomment>Label for the button of the final view after the end of the survey. CON-942</translatorcomment>
+        <translation>إغلاق</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <translatorcomment>Label to indicate the lowest score of the survey. CON-942</translatorcomment>
+        <translation>ضعيف</translation>
+    </message>
+    <message>
+        <source>Submit</source>
+        <translatorcomment>Label for the button to submit the answers to the survey. CON-942</translatorcomment>
+        <translation>إرسال</translation>
+    </message>
+    <message>
+        <source>Tell us more</source>
+        <translatorcomment>Placeholder text to request comments to the user. CON-942</translatorcomment>
+        <translation>أخبرنا المزيد</translation>
+    </message>
+    <message>
+        <source>Thank you for your feedback</source>
+        <translatorcomment>Title text of the final view after sending the survey responses thanking the user for his/her participation. CON-942</translatorcomment>
+        <translation>شكرًا لك على ملاحظاتك</translation>
+    </message>
+    <message>
+        <source>You’re helping to improve MEGA for you and everyone who uses it</source>
+        <translatorcomment>Description text of the final view after sending the survey responses. CON-942</translatorcomment>
+        <translation>أنت تساعد في تحسين ميغا MEGA لنفسك ولكل من يستخدمها</translation>
     </message>
 </context>
 <context>
@@ -7737,12 +7771,12 @@ Please, refresh the list.</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation>تم تعطيل نسخك الاحتياطي &amp;#8220;%1&amp;#8221; بسبب تغيير المجلد المحلي</translation>
+        <translation>تم تعطيل نسخك الاحتياطي “%1” بسبب تغيير المجلد المحلي</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation>تم تعطيل نسخك الاحتياطي &amp;#8220;%1&amp;#8221; بسبب تغيير مجلد ميغا MEGA.</translation>
+        <translation>تم تعطيل نسخك الاحتياطي “%1” بسبب تغيير مجلد ميغا MEGA.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
@@ -7782,7 +7816,7 @@ Please, refresh the list.</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>تم تعطيل مزامنتك &amp;#8220;%1&amp;#8221; بسبب تغيير المجلد المحلي</translation>
+        <translation>تم تعطيل مزامنتك “%1” بسبب تغيير المجلد المحلي</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
@@ -8028,7 +8062,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Saving synchronised folders…</source>
         <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.SNC-4208</translatorcomment>
-        <translation>جاري حفظ المجلدات المتزامنة&amp;#8230;</translation>
+        <translation>جاري حفظ المجلدات المتزامنة…</translation>
     </message>
 </context>
 <context>
@@ -8154,6 +8188,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Add sync</source>
         <translatorcomment>Page title to add syncs. CON-833</translatorcomment>
         <translation>أضف مزامنة</translation>
+    </message>
+</context>
+<context>
+    <name>TextArea</name>
+    <message numerus="yes">
+        <source>Maximum length is %n characters.</source>
+        <translatorcomment>Label to indicate the maximum number of characters in the text area. The %n placeholder indicates the number of characters, please keep it. CON-942</translatorcomment>
+        <translation><numerusform>الحد الأقصى للطول هو %n محرف</numerusform><numerusform>الحد الأقصى للطول هو %n محرف</numerusform><numerusform>الحد الأقصى للطول هو %n محرفين</numerusform><numerusform>الحد الأقصى للطول هو %n محارف</numerusform><numerusform>الحد الأقصى للطول هو %n محرفاً</numerusform><numerusform>الحد الأقصى للطول هو %n محرف</numerusform></translation>
     </message>
 </context>
 <context>
@@ -8935,82 +8977,6 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
 </context>
 <context>
-    <name>UpgradeDialog</name>
-    <message>
-        <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
-        <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>*السعر مُقدر بعملتك المحلية. سيتم محاسبتك باليورو لجميع العمليات.</translation>
-    </message>
-    <message>
-        <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
-        <translation>اختر الفوترة السنوية واحصل على 12 شهرًا بسعر 10</translation>
-    </message>
-    <message>
-        <source>Depleted transfer quota</source>
-        <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
-        <translation>حجم التراسل المستنفد</translation>
-    </message>
-    <message>
-        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
-        <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>قم بترقية حسابك للمتابعة فورًا أو الانتظار %1 للمتابعة مجانًا</translation>
-    </message>
-    <message>
-        <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
-        <translation>هذا الحد متغير ويعتمد على مقدار النطاق الترددي غير المستخدم والمتوفر لدينا.</translation>
-    </message>
-    <message>
-        <source>Transfer quota exceeded</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>تم تجاوز حجم التراسل المتاح</translation>
-    </message>
-    <message>
-        <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
-        <translatorcomment>Informative message to inform users that downloads could not continue because user has reached over transfer situation.</translatorcomment>
-        <translation>تعذر متابعة التنزيل الخاص بك لأنه يتجاوز حجم التراسل المتاح المجاني الخاص بك.</translation>
-    </message>
-</context>
-<context>
-    <name>UpgradeOverStorage</name>
-    <message>
-        <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
-        <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>*السعر مُقدر بعملتك المحلية. سيتم محاسبتك باليورو على جميع العمليات.</translation>
-    </message>
-    <message>
-        <source>100% of the %1 available used on your account.</source>
-        <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation>100% من %1 المتاحة، مستخدمة في حسابك.</translation>
-    </message>
-    <message>
-        <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
-        <translation>اختر الفوترة السنوية واحصل على 12 شهرًا بسعر 10</translation>
-    </message>
-    <message>
-        <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
-        <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>قم بترقية حسابك للاستمتاع بمساحة تخزين أكبر (سيتم استئناف الترفيعات تلقائيًا).</translation>
-    </message>
-    <message>
-        <source>Storage full</source>
-        <translatorcomment>Title of the over storage dialog</translatorcomment>
-        <translation>مساحة التخزين ممتلئة</translation>
-    </message>
-    <message>
-        <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>
-        <translatorcomment>Informative message shown when user reaches over storage situation, encouraging to upgrade and get more extra storage space.</translatorcomment>
-        <translation>لزيادة هذا الحد، يمكنك ترقية حسابك مما يمنحك مساحة تخزين إضافية كبيرة.</translation>
-    </message>
-    <message>
-        <source>Your MEGA account is full</source>
-        <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>حسابك على ميغا MEGA ممتلئ.</translation>
-    </message>
-</context>
-<context>
     <name>UploadIssueHeader</name>
     <message>
         <source>Cannot reach the destination folder.</source>
@@ -9067,6 +9033,109 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to upload a file/folder to MEGA.(MAX 20 characters)</translatorcomment>
         <translation>الترفيع إلى ميغا MEGA</translation>
+    </message>
+</context>
+<context>
+    <name>UpsellStrings</name>
+    <message>
+        <source>%1 billed yearly</source>
+        <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
+        <translation>%1 تتم محاسبتها سنويًا</translation>
+    </message>
+    <message>
+        <source>%1 per month</source>
+        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
+        <translation>%1 في الشهر</translation>
+    </message>
+    <message>
+        <source>%1 storage</source>
+        <translatorcomment>Text to show the total amount of space available for the plan. The placeholder %1 shall be replaced by the amount of storage including the units (e.g. 1TB storage). CON-945</translatorcomment>
+        <translation>%1 مساحة تخزين</translation>
+    </message>
+    <message>
+        <source>%1 transfer</source>
+        <translatorcomment>Text to show the transfer amount for the plan. The placeholder %1 shall be replaced by the amount of transfer including the units (e.g. 1TB transfer). CON-945</translatorcomment>
+        <translation>%1 تراسل متاح</translation>
+    </message>
+    <message>
+        <source>(%1 per month)</source>
+        <translatorcomment>Price per month with yealy billing. The placeholder %1 shall be replaced by the monthly price (e.g. 49.9€ transfer). CON-945</translatorcomment>
+        <translation>(%1 في الشهر)</translation>
+    </message>
+    <message>
+        <source>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</source>
+        <translatorcomment>Billing clarification message according to currency. CON-945</translatorcomment>
+        <translation>* السعر المقدر بعملتك المحلية. ستتم محاسبة حسابك باليورو لجميع المعاملات.</translation>
+    </message>
+    <message>
+        <source>Billed monthly</source>
+        <translatorcomment>Button to display plans with monthly subscription. CON-945</translatorcomment>
+        <translation>الدفعة شهرياً</translation>
+    </message>
+    <message>
+        <source>Billed yearly</source>
+        <translatorcomment>Button to display plans with yearly subscription. CON-945</translatorcomment>
+        <translation>الدفعة سنوياً</translation>
+    </message>
+    <message>
+        <source>Buy %1</source>
+        <translatorcomment>Button that redirects to the website to purchase the selected plan. The placeholder %1 shall be replaced by the name of the plan selected in the window. CON-945</translatorcomment>
+        <translation>شراء %1</translation>
+    </message>
+    <message>
+        <source>Current plan</source>
+        <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
+        <translation>الباقة الحالية</translation>
+    </message>
+    <message>
+        <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
+        <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
+        <translation>هل تحتاج إلى المزيد من مساحة التخزين؟[BR][B][A]جرب برو فليكسي Pro Flexi[/A][/B]</translation>
+    </message>
+    <message>
+        <source>Recommended</source>
+        <translatorcomment>Label to indicate which is the recommended plan. CON-945</translatorcomment>
+        <translation>موصي به</translation>
+    </message>
+    <message>
+        <source>Save up to %1% with yearly billing</source>
+        <translatorcomment>Label with information about the discount of the annual subscription compared to the monthly subscription for the plan selected in the window. The placeholder %1 shall be replaced by the discount percentage. CON-945</translatorcomment>
+        <translation>وفر ما يصل إلى %1% مع الفوترة السنوية</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Title of the window showing that the transfer quota has been exceeded. CON-945</translatorcomment>
+        <translation>تم تجاوز حجم التراسل المتاح</translation>
+    </message>
+    <message>
+        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
+        <translation>قم بترقية حسابك للحصول على المزيد من مساحة التخزين.[BR][BR]أو احذف بعض الملفات و [B][A]أفرغ سلة المحذوفات[/A][/B] لتحرير مساحة التخزين.</translation>
+    </message>
+    <message>
+        <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
+        <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
+        <translation>لا يمكنك متابعة التنزيل لأنك استخدمت كل حجم تراسل المعطيات المتاح لك.[BR][BR]للحصول على المزيد من الحجم، قم بشراء باقة مدفوعة أخرى.[BR][BR][B][A]اعرف المزيد حول حجم تراسل المعطيات.[/A][/B]</translation>
+    </message>
+    <message>
+        <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]Upgrade your account to get more transfer quota or you can wait for [B]%1[/B] until more free quota becomes available for you.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
+        <translatorcomment>Explanatory message informing free users they have reached their download limit, offering options to upgrade or wait. The placeholder %1 shall be replaced by the remaining time to reset the transfer quota (e.g. 13m 34s or 6h). The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945</translatorcomment>
+        <translation>لا يمكنك متابعة التنزيل لأنك استخدمت كل حجم تراسل المعطيات المتاح لك.[BR][BR]قم بترقية حسابك للحصول على المزيد من حجم تراسل المعطيات أو يمكنك الانتظار [B]%1[/B] حتى يصبح الحجم المجاني متاح لك.[BR][BR][B][A]اعرف المزيد حول حجم تراسل المعطيات المتاح.[/A][/B]</translation>
+    </message>
+    <message>
+        <source>Your MEGA cloud storage is almost full</source>
+        <translatorcomment>Title indicating that the storage is almost full. CON-945</translatorcomment>
+        <translation>سحابة ميغا MEGA للتخزين السحابية الخاصة بك ممتلئة تقريباً</translation>
+    </message>
+    <message>
+        <source>Your MEGA cloud storage is full</source>
+        <translatorcomment>Title indicating that the storage is full. CON-945</translatorcomment>
+        <translation>سحابة تخزين ميغا MEGA الخاصة بك ممتلئة</translation>
+    </message>
+    <message>
+        <source>per month</source>
+        <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
+        <translation>في الشهر</translation>
     </message>
 </context>
 <context>
