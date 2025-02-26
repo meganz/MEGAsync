@@ -10,25 +10,26 @@ project(MEGAShellExt
 add_library(MEGAShellExt SHARED)
 
 set(MEGAShellExt_HEADERS
-    newContextMenu/data/ContextMenuData.h
-    newContextMenu/gui/ContextMenuCommandBase.h
-    newContextMenu/gui/ContextMenuCommand.h
-    newContextMenu/gui/ContextMenuCommandGetLink.h
-    newContextMenu/gui/ContextMenuCommandRemoveFromLeftPane.h
-    newContextMenu/gui/ContextMenuCommandSeparator.h
-    newContextMenu/gui/ContextMenuCommandUpload.h
-    newContextMenu/gui/ContextMenuCommandView.h
-    newContextMenu/gui/ContextMenuCommandViewVersions.h
-    newContextMenu/utilities/framework.h
-    newContextMenu/utilities/SparsePackageManager.h
-    newContextMenu/utilities/SharedState.h
-    newContextMenu/utilities/SimpleFactory.h
-    newContextMenu/utilities/Utilities.h
+    W11ShellContextMenu/data/ContextMenuData.h
+    W11ShellContextMenu/gui/ContextMenuCommand.h
+    W11ShellContextMenu/gui/ContextMenuCommandBase.h
+    W11ShellContextMenu/gui/ContextMenuCommandGetLink.h
+    W11ShellContextMenu/gui/ContextMenuCommandRemoveFromLeftPane.h
+    W11ShellContextMenu/gui/ContextMenuCommandSeparator.h
+    W11ShellContextMenu/gui/ContextMenuCommandUpload.h
+    W11ShellContextMenu/gui/ContextMenuCommandView.h
+    W11ShellContextMenu/gui/ContextMenuCommandViewVersions.h
+    W11ShellContextMenu/gui/SubCommandEnumerator.h
+    W11ShellContextMenu/utilities/framework.h
+    W11ShellContextMenu/utilities/SparsePackageManager.h
+    W11ShellContextMenu/utilities/SharedState.h
+    W11ShellContextMenu/utilities/SimpleFactory.h
+    W11ShellContextMenu/utilities/Utilities.h
     ShellExt.h
     ShellExtNotASync.h
     resource.h
     RegUtils.h
-    oldContextMenu/ContextMenuExt.h
+    LegacyShellContextMenu/ContextMenuExt.h
     ClassFactoryShellExtSyncing.h
     ClassFactoryShellExtSynced.h
     ClassFactoryShellExtPending.h
@@ -39,23 +40,23 @@ set(MEGAShellExt_HEADERS
 )
 
 set(MEGAShellExt_SOURCES
-    newContextMenu/data/ContextMenuData.cpp
-    newContextMenu/gui/ContextMenuCommandBase.cpp
-    newContextMenu/gui/ContextMenuCommand.cpp
-    newContextMenu/gui/ContextMenuCommandGetLink.cpp
-    newContextMenu/gui/ContextMenuCommandRemoveFromLeftPane.cpp
-    newContextMenu/gui/ContextMenuCommandSeparator.cpp
-    newContextMenu/gui/ContextMenuCommandUpload.cpp
-    newContextMenu/gui/ContextMenuCommandView.cpp
-    newContextMenu/gui/ContextMenuCommandViewVersions.cpp
-    newContextMenu/utilities/SparsePackageManager.cpp
-    newContextMenu/utilities/SharedState.cpp
-    newContextMenu/utilities/Utilities.cpp
+    W11ShellContextMenu/data/ContextMenuData.cpp
+    W11ShellContextMenu/gui/ContextMenuCommandBase.cpp
+    W11ShellContextMenu/gui/ContextMenuCommand.cpp
+    W11ShellContextMenu/gui/ContextMenuCommandGetLink.cpp
+    W11ShellContextMenu/gui/ContextMenuCommandRemoveFromLeftPane.cpp
+    W11ShellContextMenu/gui/ContextMenuCommandSeparator.cpp
+    W11ShellContextMenu/gui/ContextMenuCommandUpload.cpp
+    W11ShellContextMenu/gui/ContextMenuCommandView.cpp
+    W11ShellContextMenu/gui/ContextMenuCommandViewVersions.cpp
+    W11ShellContextMenu/utilities/SparsePackageManager.cpp
+    W11ShellContextMenu/utilities/SharedState.cpp
+    W11ShellContextMenu/utilities/Utilities.cpp
     ShellExt.cpp
     ShellExtNotASync.cpp
     RegUtils.cpp
     dllmain.cpp
-    oldContextMenu/ContextMenuExt.cpp
+    LegacyShellContextMenu/ContextMenuExt.cpp
     ClassFactoryShellExtSyncing.cpp
     ClassFactoryShellExtSynced.cpp
     ClassFactoryShellExtPending.cpp
@@ -91,15 +92,15 @@ target_link_libraries(MEGAShellExt
 target_include_directories(MEGAShellExt
     PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/newContextMenu/data
-    ${CMAKE_CURRENT_SOURCE_DIR}/newContextMenu/gui
-    ${CMAKE_CURRENT_SOURCE_DIR}/newContextMenu/utilities
-    ${CMAKE_CURRENT_SOURCE_DIR}/oldContextMenu
+    ${CMAKE_CURRENT_SOURCE_DIR}/W11ShellContextMenu/data
+    ${CMAKE_CURRENT_SOURCE_DIR}/W11ShellContextMenu/gui
+    ${CMAKE_CURRENT_SOURCE_DIR}/W11ShellContextMenu/utilities
+    ${CMAKE_CURRENT_SOURCE_DIR}/LegacyShellContextMenu
 )
 
 target_compile_features(MEGAShellExt PRIVATE cxx_std_17)
 
-#if(ENABLE_EXPLORER_EXT_SPARSE)
+if(ENABLE_EXPLORER_EXT_SPARSE)
     if(MSVC)
         # Create resources .pri
         add_custom_command(
@@ -141,4 +142,4 @@ target_compile_features(MEGAShellExt PRIVATE cxx_std_17)
             COMMENT "Signing DLL"
         )
     endif()
-#endif()
+endif()

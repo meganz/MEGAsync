@@ -2,6 +2,7 @@
 #define CONTEXTMENUCOMMAND_H
 
 #include "ContextMenuCommandBase.h"
+#include "SubCommandEnumerator.h"
 
 class __declspec(uuid("F9E3E837-B080-4BB1-A508-632CC3E751B7")) ContextMenuCommand:
     public ContextMenuCommandBase
