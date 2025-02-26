@@ -124,8 +124,19 @@ const std::wstring GetExecutingModuleName()
     return moduleName;
 }
 
-void log(const std::wstring file, const std::wstring& message)
+void log(const std::wstring& file, const std::wstring& message)
 {
+    HANDLE hFileCreate = CreateFile(
+        file.c_str(),
+        FILE_APPEND_DATA,
+        0,
+        NULL,
+        CREATE_NEW,
+        FILE_ATTRIBUTE_NORMAL,
+        NULL);
+
+    CloseHandle(hFileCreate);
+
     HANDLE hFile = CreateFile(
         file.c_str(),
         FILE_APPEND_DATA,

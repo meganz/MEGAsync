@@ -43,3 +43,8 @@ EXPCMDSTATE ContextMenuCommandSeparator::GetState(IShellItemArray* psiItemArray)
     mState->SetState(mId, Set);
     return ECS_ENABLED;
 }
+
+std::wstring ContextMenuCommandSeparator::GetIcon() const
+{
+    return L"";
+}

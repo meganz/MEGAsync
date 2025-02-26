@@ -3,6 +3,8 @@
 #include "MEGAinterface.h"
 #include "SharedState.h"
 
+static const std::wstring ICON = L"upload.ico";
+
 ContextMenuCommandRemoveFromLeftPane::ContextMenuCommandRemoveFromLeftPane():
     ContextMenuCommandBase(L"ContextMenuCommandRemoveFromLeftPane")
 {}
@@ -58,5 +60,10 @@ EXPCMDSTATE ContextMenuCommandRemoveFromLeftPane::GetState(IShellItemArray* psiI
         return ECS_ENABLED;
     }
 
-    return ECS_DISABLED;
+    return ECS_HIDDEN;
+}
+
+std::wstring ContextMenuCommandRemoveFromLeftPane::GetIcon() const
+{
+    return ICON;
 }

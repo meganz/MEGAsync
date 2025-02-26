@@ -71,7 +71,7 @@ IFACEMETHODIMP ContextMenuCommandBase::GetIcon(IShellItemArray* psiItemArray, LP
     auto package = winrt::Windows::ApplicationModel::Package::Current();
     auto appFolder = package.InstalledPath();
 
-    std::wstring icon(appFolder + L"\\assets\\Square44x44Logo.scale-125.png");
+    std::wstring icon(appFolder + L"\\assets\\" + GetIcon());
 
     SHStrDup(icon.data(), ppszIcon);
 

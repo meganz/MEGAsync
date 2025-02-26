@@ -3,6 +3,8 @@
 #include "MEGAinterface.h"
 #include "SharedState.h"
 
+static const std::wstring ICON = L"upload.ico";
+
 ContextMenuCommandUpload::ContextMenuCommandUpload():
     ContextMenuCommandBase(L"ContextMenuCommandUpload")
 {}
@@ -58,5 +60,10 @@ EXPCMDSTATE ContextMenuCommandUpload::GetState(IShellItemArray* psiItemArray)
         return ECS_ENABLED;
     }
 
-    return ECS_DISABLED;
+    return ECS_HIDDEN;
+}
+
+std::wstring ContextMenuCommandUpload::GetIcon() const
+{
+    return ICON;
 }

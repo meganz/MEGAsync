@@ -7,6 +7,8 @@
 #include "ContextMenuCommandView.h"
 #include "ContextMenuCommandViewVersions.h"
 
+static const std::wstring ICON = L"upload.ico";
+
 ContextMenuCommand::ContextMenuCommand():
     ContextMenuCommandBase(L"ContextMenuCommand")
 {
@@ -105,4 +107,9 @@ EXPCMDSTATE ContextMenuCommand::GetState(IShellItemArray* psiItemArray)
     }
 
     return ECS_HIDDEN;
+}
+
+std::wstring ContextMenuCommand::GetIcon() const
+{
+    return ICON;
 }

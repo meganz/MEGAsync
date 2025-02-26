@@ -15,6 +15,7 @@ public:
 
 protected:
     EXPCMDSTATE GetState(IShellItemArray* psiItemArray) override;
+    std::wstring GetIcon() const override;
 };
 
 #endif

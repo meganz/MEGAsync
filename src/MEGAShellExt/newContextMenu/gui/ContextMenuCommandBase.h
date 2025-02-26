@@ -30,6 +30,7 @@ public:
 protected:
     void initializeContextMenuData(IShellItemArray* psiItemArray);
     virtual EXPCMDSTATE GetState(IShellItemArray* psiItemArray) = 0;
+    virtual std::wstring GetIcon() const = 0;
 
     std::wstring mId;
     std::unique_ptr<SharedState> mState;
