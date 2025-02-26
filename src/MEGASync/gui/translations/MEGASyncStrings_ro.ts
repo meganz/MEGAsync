@@ -402,11 +402,6 @@
 </context>
 <context>
     <name>BackupsModel</name>
-    <message>
-        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
-        <translation>Nu poți face backup folderelor cu același nume. Redenumește-le pentru a continua cu backupul. Numele folderelor nu se vor schimba pe calculator.</translation>
-    </message>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
@@ -426,6 +421,11 @@
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
         <translation><numerusform>Folderul nu a fost făcut backup-uit. Încercați din nou.</numerusform><numerusform>Aceste foldere nu au fost backup. Încercați din nou.</numerusform><numerusform>Aceste foldere nu au fost backup. Încercați din nou.</numerusform></translation>
+    </message>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>Nu poți face backup folderelor cu același nume. Redenumește-le pentru a continua cu backupul. Numele folderelor nu se vor schimba pe calculator.</translation>
     </message>
 </context>
 <context>
@@ -838,7 +838,7 @@
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation><numerusform>Această acțiune va descărca fișierul într-o locație temporară, va remedia problema și apoi va elimina fișierul temporar.</numerusform><numerusform>Această acțiune va descărca fișierele într-o locație temporară, va remedia problemele și apoi va elimina fișierele temporare.</numerusform><numerusform>Această acțiune va descărca fișierele într-o locație temporară, va remedia problemele și apoi va elimina fișierele temporare.</numerusform></translation>
+        <translation><numerusform>Această acțiune va descărca fișierul într-o locație temporară, va remedia problema și apoi va șterge fișierul temporar.</numerusform><numerusform>Această acțiune va descărca fișierele într-o locație temporară, va remedia problemele și apoi va șterge fișierele temporare.</numerusform><numerusform>Această acțiune va descărca fișierele într-o locație temporară, va remedia problemele și apoi va șterge fișierele temporare.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
@@ -2138,13 +2138,8 @@
 <context>
     <name>InfoDialog</name>
     <message>
-        <source>Add Backup</source>
-        <translatorcomment>Tooltip message shown while hovering backups button.</translatorcomment>
-        <translation>Adaugă un backup</translation>
-    </message>
-    <message>
-        <source>Add Sync</source>
-        <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
+        <source>Add sync</source>
+        <translatorcomment>Label for the &quot;Add Sync&quot; button added in the InfoDialog (Max 20 characters). SNC-5182.</translatorcomment>
         <translation>Adaugă o sincronizare</translation>
     </message>
     <message>
@@ -2311,11 +2306,6 @@
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
         <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
         <translation>Upgradează acum înainte ca contul să se umple și încărcările pe MEGA să se oprească.</translation>
-    </message>
-    <message>
-        <source>Upload</source>
-        <translatorcomment>Label to indicate an upload.</translatorcomment>
-        <translation>Încarcă</translation>
     </message>
     <message>
         <source>Upload to MEGA now</source>
@@ -2771,22 +2761,22 @@ Așteptați finalizarea încărcării.</translation>
     <message>
         <source>Unable to remove the file stored in MEGA</source>
         <translatorcomment>Local/Remote conflict stall issue. User chose to keep the local file, but removing the MEGA file failed. Used in a tooltip. SAT-1110</translatorcomment>
-        <translation>Imposibil de eliminat fișierul stocat în MEGA</translation>
+        <translation>Imposibil de a șterge fișierul stocat în MEGA</translation>
     </message>
     <message>
         <source>Unable to remove the folder stored in MEGA</source>
         <translatorcomment>Local/Remote conflict stall issue. User chose to keep the local folder, but removing the MEGA folder failed. Used in a tooltip. SAT-1110</translatorcomment>
-        <translation>Imposibil de eliminat folderul stocat în MEGA</translation>
+        <translation>Imposibil de a șterge folderul stocat în MEGA</translation>
     </message>
     <message>
         <source>Unable to remove the local file</source>
         <translatorcomment>Local/Remote conflict stall issue. User chose to keep the remote file, but removing the local file failed. Used in a tooltip. SAT-1110</translatorcomment>
-        <translation>Imposibil de eliminat fișierul local</translation>
+        <translation>Imposibil de a șterge fișierul local</translation>
     </message>
     <message>
         <source>Unable to remove the local folder</source>
         <translatorcomment>Local/Remote conflict stall issue. User chose to keep the remote folder, but removing the local folder failed. Used in a tooltip. SAT-1110</translatorcomment>
-        <translation>Imposibil de eliminat folderul local</translation>
+        <translation>Imposibil de a șterge folderul local</translation>
     </message>
     <message>
         <source>Unable to update both local and MEGA files</source>
@@ -4305,7 +4295,7 @@ Actualizați fereastra.</translation>
     <message>
         <source>Removed</source>
         <translatorcomment>Label in solved name conflict sync stalls by removing the file.SNC-2565</translatorcomment>
-        <translation>Eliminate</translation>
+        <translation>Șters</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -4356,17 +4346,17 @@ Actualizați fereastra.</translation>
     <message>
         <source>Remove duplicates</source>
         <translatorcomment>Button to solve a name conflict sync stall by removing duplicated items.SNC-2565</translatorcomment>
-        <translation>Eliminați duplicatele</translation>
+        <translation>Ștergeți duplicatele</translation>
     </message>
     <message>
         <source>Remove duplicates and rename the rest</source>
         <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation>Eliminați duplicatele și redenumiți restul</translation>
+        <translation>Ștergeți duplicatele și redenumiți restul</translation>
     </message>
     <message>
         <source>Remove duplicates, merge folders and rename the rest</source>
         <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation>Eliminați duplicatele, îmbinați folderele și redenumiți restul</translation>
+        <translation>Ștergeți duplicatele, fuzionarea folderelor și redenumiți restul</translation>
     </message>
     <message>
         <source>Rename all items</source>
@@ -4511,27 +4501,27 @@ Introdu un alt nume.</translation>
     <message>
         <source>Error removing file</source>
         <translatorcomment>Messagebox title when removing a single file has failed. SAT-426</translatorcomment>
-        <translation>Eroare la eliminarea fișierului</translation>
+        <translation>Eroare la ștergerea fișierului</translation>
     </message>
     <message>
         <source>Error removing files</source>
         <translatorcomment>Messagebox title when removing multiple files has failed. SAT-426</translatorcomment>
-        <translation>Eroare la eliminarea fișierelor</translation>
+        <translation>Eroare la ștergerea fișierelor</translation>
     </message>
     <message>
         <source>Error removing folder</source>
         <translatorcomment>Messagebox title when removing a single folder has failed. SAT-426</translatorcomment>
-        <translation>Eroare la eliminarea folderului</translation>
+        <translation>Eroare la ștergerea folderului</translation>
     </message>
     <message>
         <source>Error removing folders</source>
         <translatorcomment>Messagebox title when removing multiple folders has failed. SAT-426</translatorcomment>
-        <translation>Eroare la eliminarea folderelor</translation>
+        <translation>Eroare la ștergerea folderelor</translation>
     </message>
     <message>
         <source>Error removing items</source>
         <translatorcomment>Messagebox title when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation>Eroare la eliminarea elementelor</translation>
+        <translation>Eroare la ștergerea elementelor</translation>
     </message>
     <message>
         <source>Folder already synced</source>
@@ -4576,27 +4566,27 @@ Introdu un alt nume.</translation>
     <message>
         <source>The file %1 couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing a single file has failed. %1 is the file name. SAT-426</translatorcomment>
-        <translation>Fișierului %1 nu a putut fi eliminat. Încercați din nou mai târziu.</translation>
+        <translation>Fișierul %1 nu a putut fi șters. Încercați din nou mai târziu.</translation>
     </message>
     <message>
         <source>The files couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple files has failed. SAT-426</translatorcomment>
-        <translation>Fișierele nu au putut fi eliminate. Încercați din nou mai târziu.</translation>
+        <translation>Fișierele nu au putut fi șterse. Încercați din nou mai târziu.</translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing a single folder has failed. %1 is the folder name. SAT-426</translatorcomment>
-        <translation>Folderul %1 nu a putut fi eliminat. Încercați din nou mai târziu.</translation>
+        <translation>Folderul %1 nu a putut fi șters. Încercați din nou mai târziu.</translation>
     </message>
     <message>
         <source>The folders couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple folders has failed. SAT-426</translatorcomment>
-        <translation>Folderele nu au putut fi eliminate. Încercați din nou mai târziu.</translation>
+        <translation>Folderele nu au putut fi șterse. Încercați din nou mai târziu.</translation>
     </message>
     <message>
         <source>The items couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation>Elementele nu au putut fi eliminate. Încercați din nou mai târziu.</translation>
+        <translation>Elementele nu au putut fi șterse. Încercați din nou mai târziu.</translation>
     </message>
 </context>
 <context>
@@ -5678,19 +5668,15 @@ Introdu un alt nume.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We’ve enhanced the interface and behaviour of the transfer manager feature.
-- You can now create sync exclusions using wildcards.
-- There are new releases available now for the Raspberry Pi OS.
-- We’ve fixed crashes that were occurring due to missing or broken OpenGL drivers on Windows.
-- Qt has been upgraded to a newer version.
+        <source>- Numerous interface improvements.
+- Improved HiDpi handling in Windows.
+- Updates to third party libraries.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
-        <translation>- Am îmbunătățit interfața și comportamentul funcției de manager de transfer.
-- Acum puteți crea excluderi de sincronizare folosind wildcard-uri.
-- Există noi versiuni disponibile acum pentru sistemul de operare Raspberry Pi.
-- Am remediat blocările care au apărut din cauza driverelor OpenGL lipsă sau rupte pe Windows.
-- Qt a fost actualizat la o versiune mai nouă.
+        <translatorcomment>Change log for version 5.9.0. CON-1259</translatorcomment>
+        <translation>- Numeroase îmbunătățiri ale interfeței.
+- Îmbunătățirea manipulării HiDPI în Windows.
+- Actualizări la biblioteci terțe părți.
 - Alte erori au fost remediate și s-au făcut numeroase îmbunătățiri.
 </translation>
     </message>
@@ -6198,7 +6184,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>The app has detected an issue and is reloading your account. Please wait…</source>
         <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
-        <translation>Aplicația a detectat o problemă și vă reîncarcă contul. Vă rugăm să așteptați&amp;#8230;</translation>
+        <translation>Aplicația a detectat o problemă și vă reîncarcă contul. Vă rugăm să așteptați…</translation>
     </message>
     <message>
         <source>The app has reloaded. If you experience any further issues, please contact Support.</source>
@@ -6698,7 +6684,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Remove files older than</source>
         <translatorcomment>Label for checkbox to remove local cache files older than a specified number of days.</translatorcomment>
-        <translation>Elimină fișierele mai vechi de</translation>
+        <translation>Ștergeți fișierele mai vechi decât</translation>
     </message>
     <message>
         <source>Report Issue</source>
@@ -6798,7 +6784,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
         <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the current account.</translatorcomment>
-        <translation>Ești pe cale să elimini definitiv toate versiunile fișierelor. Dorești să continui?</translation>
+        <translation>Sunteți pe cale să ștergeți definitiv toate versiunile de fișiere. Doriți să continuați?</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -7439,6 +7425,11 @@ Actualizați lista.</translation>
         <translation>Fișier negăsit</translation>
     </message>
     <message>
+        <source>Folder links can&apos;t be streamed</source>
+        <translatorcomment>Message displayed when the user tries to stream a folder. SNC-5215.</translatorcomment>
+        <translation>Linkurile de dosare nu pot fi transmise în flux</translation>
+    </message>
+    <message>
         <source>Nothing selected</source>
         <translatorcomment>Text shown when no files have been selected for streaming yet</translatorcomment>
         <translation>Nimic selectat</translation>
@@ -7507,6 +7498,11 @@ Actualizați lista.</translation>
         <translation>Alege</translation>
     </message>
     <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button label to dismiss and hide the survey. CON-942</translatorcomment>
+        <translation>Închideți</translation>
+    </message>
+    <message>
         <source>Done</source>
         <translatorcomment>Label for Done buttons. SAT-1678.</translatorcomment>
         <translation>Terminat</translation>
@@ -7550,6 +7546,44 @@ Actualizați lista.</translation>
         <source>Try again</source>
         <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
         <translation>Reîncearcă</translation>
+    </message>
+</context>
+<context>
+    <name>SurveyStrings</name>
+    <message>
+        <source>Excellent</source>
+        <translatorcomment>Label to indicate the highest score of the survey. CON-942</translatorcomment>
+        <translation>Excelentă</translation>
+    </message>
+    <message>
+        <source>OK, got it</source>
+        <translatorcomment>Label for the button of the final view after the end of the survey. CON-942</translatorcomment>
+        <translation>Bine, am înțeles</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <translatorcomment>Label to indicate the lowest score of the survey. CON-942</translatorcomment>
+        <translation>Proastă</translation>
+    </message>
+    <message>
+        <source>Submit</source>
+        <translatorcomment>Label for the button to submit the answers to the survey. CON-942</translatorcomment>
+        <translation>Trimite</translation>
+    </message>
+    <message>
+        <source>Tell us more</source>
+        <translatorcomment>Placeholder text to request comments to the user. CON-942</translatorcomment>
+        <translation>Spune-ne mai multe</translation>
+    </message>
+    <message>
+        <source>Thank you for your feedback</source>
+        <translatorcomment>Title text of the final view after sending the survey responses thanking the user for his/her participation. CON-942</translatorcomment>
+        <translation>Îți mulțumim pentru feedback</translation>
+    </message>
+    <message>
+        <source>You’re helping to improve MEGA for you and everyone who uses it</source>
+        <translatorcomment>Description text of the final view after sending the survey responses. CON-942</translatorcomment>
+        <translation>Ajutați la îmbunătățirea MEGA pentru dvs. și pentru toți cei care îl folosesc</translation>
     </message>
 </context>
 <context>
@@ -8151,6 +8185,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Add sync</source>
         <translatorcomment>Page title to add syncs. CON-833</translatorcomment>
         <translation>Adaugă o sincronizare</translation>
+    </message>
+</context>
+<context>
+    <name>TextArea</name>
+    <message numerus="yes">
+        <source>Maximum length is %n characters.</source>
+        <translatorcomment>Label to indicate the maximum number of characters in the text area. The %n placeholder indicates the number of characters, please keep it. CON-942</translatorcomment>
+        <translation><numerusform>Lungimea maximă este %n caracter</numerusform><numerusform>Lungimea maximă este %n caractere</numerusform><numerusform>Lungimea maximă este %n caractere</numerusform></translation>
     </message>
 </context>
 <context>
@@ -8932,82 +8974,6 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
 </context>
 <context>
-    <name>UpgradeDialog</name>
-    <message>
-        <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
-        <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* Preț estimat în moneda locală. Factura va fi în euro.</translation>
-    </message>
-    <message>
-        <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
-        <translation>Alege facturarea anuală și obține 12 luni la preț de 10</translation>
-    </message>
-    <message>
-        <source>Depleted transfer quota</source>
-        <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
-        <translation>Cotă de transfer epuizată</translation>
-    </message>
-    <message>
-        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
-        <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>Upgradați contul dvs. pentru a continua imediat sau așteaptă %1 pentru a continua gratuit</translation>
-    </message>
-    <message>
-        <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
-        <translation>Această limită este dinamică și depinde de cantitatea de lățime de bandă neutilizată pe care o avem la dispoziție.</translation>
-    </message>
-    <message>
-        <source>Transfer quota exceeded</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>Cotă de transfer depășită</translation>
-    </message>
-    <message>
-        <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
-        <translatorcomment>Informative message to inform users that downloads could not continue because user has reached over transfer situation.</translatorcomment>
-        <translation>Descărcarea nu a putut continua deoarece depășește cota gratuită de transfer.</translation>
-    </message>
-</context>
-<context>
-    <name>UpgradeOverStorage</name>
-    <message>
-        <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
-        <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* Preț estimat în moneda locală. Factura va fi în euro.</translation>
-    </message>
-    <message>
-        <source>100% of the %1 available used on your account.</source>
-        <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation>100 % din cei %1 disponibili sunt folosiți în contul dvs.</translation>
-    </message>
-    <message>
-        <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
-        <translation>Alege facturarea anuală și obține 12 luni la preț de 10</translation>
-    </message>
-    <message>
-        <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
-        <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>Upgradați contul dvs. pentru a te bucura de mai mult spațiu de stocare (încărcările se vor relua automat).</translation>
-    </message>
-    <message>
-        <source>Storage full</source>
-        <translatorcomment>Title of the over storage dialog</translatorcomment>
-        <translation>Spațiu de stocare plin</translation>
-    </message>
-    <message>
-        <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>
-        <translatorcomment>Informative message shown when user reaches over storage situation, encouraging to upgrade and get more extra storage space.</translatorcomment>
-        <translation>Pentru a mări această limită, poți upgrada contul, ceea ce îți va oferi spațiu de stocare vast suplimentar.</translation>
-    </message>
-    <message>
-        <source>Your MEGA account is full</source>
-        <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>Contul dvs. MEGA este plin.</translation>
-    </message>
-</context>
-<context>
     <name>UploadIssueHeader</name>
     <message>
         <source>Cannot reach the destination folder.</source>
@@ -9064,6 +9030,109 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to upload a file/folder to MEGA.(MAX 20 characters)</translatorcomment>
         <translation>Încarcă pe MEGA</translation>
+    </message>
+</context>
+<context>
+    <name>UpsellStrings</name>
+    <message>
+        <source>%1 billed yearly</source>
+        <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
+        <translation>%1 facturat anual</translation>
+    </message>
+    <message>
+        <source>%1 per month</source>
+        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
+        <translation>%1 pe lună</translation>
+    </message>
+    <message>
+        <source>%1 storage</source>
+        <translatorcomment>Text to show the total amount of space available for the plan. The placeholder %1 shall be replaced by the amount of storage including the units (e.g. 1TB storage). CON-945</translatorcomment>
+        <translation>%1 spațiu de stocare</translation>
+    </message>
+    <message>
+        <source>%1 transfer</source>
+        <translatorcomment>Text to show the transfer amount for the plan. The placeholder %1 shall be replaced by the amount of transfer including the units (e.g. 1TB transfer). CON-945</translatorcomment>
+        <translation>%1 transfer</translation>
+    </message>
+    <message>
+        <source>(%1 per month)</source>
+        <translatorcomment>Price per month with yealy billing. The placeholder %1 shall be replaced by the monthly price (e.g. 49.9€ transfer). CON-945</translatorcomment>
+        <translation>(%1 pe lună)</translation>
+    </message>
+    <message>
+        <source>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</source>
+        <translatorcomment>Billing clarification message according to currency. CON-945</translatorcomment>
+        <translation>* Preț estimat în moneda locală. Contul dvs. va fi facturat în euro pentru toate tranzacțiile.</translation>
+    </message>
+    <message>
+        <source>Billed monthly</source>
+        <translatorcomment>Button to display plans with monthly subscription. CON-945</translatorcomment>
+        <translation>Facturare lunară</translation>
+    </message>
+    <message>
+        <source>Billed yearly</source>
+        <translatorcomment>Button to display plans with yearly subscription. CON-945</translatorcomment>
+        <translation>Facturare anuală</translation>
+    </message>
+    <message>
+        <source>Buy %1</source>
+        <translatorcomment>Button that redirects to the website to purchase the selected plan. The placeholder %1 shall be replaced by the name of the plan selected in the window. CON-945</translatorcomment>
+        <translation>Cumpără %1</translation>
+    </message>
+    <message>
+        <source>Current plan</source>
+        <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
+        <translation>Abonamentul actual</translation>
+    </message>
+    <message>
+        <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
+        <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
+        <translation>Aveți nevoie de mai mult spațiu de stocare?[BR][B][A]Încercați Pro Flexi[/A][/B]</translation>
+    </message>
+    <message>
+        <source>Recommended</source>
+        <translatorcomment>Label to indicate which is the recommended plan. CON-945</translatorcomment>
+        <translation>Recomandat</translation>
+    </message>
+    <message>
+        <source>Save up to %1% with yearly billing</source>
+        <translatorcomment>Label with information about the discount of the annual subscription compared to the monthly subscription for the plan selected in the window. The placeholder %1 shall be replaced by the discount percentage. CON-945</translatorcomment>
+        <translation>Economisiți până la %1% cu facturare anuală</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Title of the window showing that the transfer quota has been exceeded. CON-945</translatorcomment>
+        <translation>Cotă de transfer depășită</translation>
+    </message>
+    <message>
+        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
+        <translation>Actualizează-ți contul pentru a obține mai multă cotă de stocare.[BR][BR]Sau ștergeți unele fișiere și [B][A]goliți coșul de gunoi[/A][/B] pentru a elibera spațiu de stocare.</translation>
+    </message>
+    <message>
+        <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
+        <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
+        <translation>Nu puteți continua descărcarea, deoarece ați utilizat toată cota de transfer disponibilă.[BR][BR]Pentru a obține mai multă cotă, achiziționați un alt abonament plătit.[BR][BR][B][A]Aflați mai multe despre cota de transfer.[/A][/B]</translation>
+    </message>
+    <message>
+        <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]Upgrade your account to get more transfer quota or you can wait for [B]%1[/B] until more free quota becomes available for you.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
+        <translatorcomment>Explanatory message informing free users they have reached their download limit, offering options to upgrade or wait. The placeholder %1 shall be replaced by the remaining time to reset the transfer quota (e.g. 13m 34s or 6h). The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945</translatorcomment>
+        <translation>Nu puteți continua descărcarea, deoarece ați utilizat toată cota de transfer disponibilă.[BR][BR]Actualizează-ți contul pentru a obține mai multă cotă de transfer sau poți aștepta [B]%1[/B] până când va deveni disponibilă mai multă cotă gratuită pentru dvs.[BR][BR][B][A]Aflați mai multe despre cota de transfer.[/A][/B]</translation>
+    </message>
+    <message>
+        <source>Your MEGA cloud storage is almost full</source>
+        <translatorcomment>Title indicating that the storage is almost full. CON-945</translatorcomment>
+        <translation>Spațiul tău de stocare în cloud MEGA este aproape plin.</translation>
+    </message>
+    <message>
+        <source>Your MEGA cloud storage is full</source>
+        <translatorcomment>Title indicating that the storage is full. CON-945</translatorcomment>
+        <translation>Spațiul tău de stocare în cloud MEGA este plin</translation>
+    </message>
+    <message>
+        <source>per month</source>
+        <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
+        <translation>pe lună</translation>
     </message>
 </context>
 <context>
