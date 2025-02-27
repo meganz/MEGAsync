@@ -321,6 +321,10 @@ void NodeSelectorModelBackups::firstLoad()
     {
         addRootItems();
     }
+    else
+    {
+        emit noBackupCenterAvailable();
+    }
 }
 
 bool NodeSelectorModelBackups::canBeDeleted() const
