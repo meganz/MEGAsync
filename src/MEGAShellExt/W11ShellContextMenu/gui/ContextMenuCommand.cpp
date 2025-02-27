@@ -7,7 +7,7 @@
 #include "ContextMenuCommandView.h"
 #include "ContextMenuCommandViewVersions.h"
 
-static const std::wstring ICON = L"upload.ico";
+static const std::wstring ICON = L"mega.ico";
 
 ContextMenuCommand::ContextMenuCommand():
     ContextMenuCommandBase(L"ContextMenuCommand")

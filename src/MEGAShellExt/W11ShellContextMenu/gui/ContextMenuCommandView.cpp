@@ -3,7 +3,7 @@
 #include "MEGAinterface.h"
 #include "SharedState.h"
 
-static const std::wstring ICON = L"upload.ico";
+static const std::wstring ICON = L"cmd4.ico";
 
 ContextMenuCommandView::ContextMenuCommandView():
     ContextMenuCommandBase(L"ContextMenuCommandView")

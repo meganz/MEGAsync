@@ -100,8 +100,24 @@ target_include_directories(MEGAShellExt
 
 target_compile_features(MEGAShellExt PRIVATE cxx_std_17)
 
-if(ENABLE_EXPLORER_EXT_SPARSE)
+#if(ENABLE_EXPLORER_EXT_SPARSE)
     if(MSVC)
+        # Create resources .pri
+        add_custom_command(
+            TARGET MEGAShellExt
+            POST_BUILD
+            COMMAND makepri createconfig "/o" "/cf" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/priconfig.xml" "/dq" "en-US"
+            COMMENT "Creating priconfig.xml"
+        )
+
+        add_custom_command(
+            TARGET MEGAShellExt
+            POST_BUILD
+            COMMAND MakePri.exe new "/cf" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/priconfig.xml" "/pr" "${CMAKE_CURRENT_SOURCE_DIR}"
+            "/mn" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/AppAplication.xml" "/o" "/of" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/resources.pri"
+            COMMENT "Creating resources.pri"
+        )
+
         # Create sparse package
         add_custom_command(
             TARGET MEGAShellExt
@@ -126,4 +142,4 @@ if(ENABLE_EXPLORER_EXT_SPARSE)
             COMMENT "Signing DLL"
         )
     endif()
-endif()
+#endif()

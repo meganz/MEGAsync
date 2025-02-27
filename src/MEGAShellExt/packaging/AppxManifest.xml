@@ -27,7 +27,7 @@
   </Capabilities>
   <Applications>
     <Application Id="MEGASyncShellSparse" Executable="MEGAsync.exe" uap10:TrustLevel="mediumIL" uap10:RuntimeBehavior="win32App">
-      <uap:VisualElements AppListEntry="none" DisplayName="MEGAsync" Description="MEGAsync" BackgroundColor="transparent" Square150x150Logo="assets\Square150x150Logo.png" Square44x44Logo="assets\Square44x44Logo.png">
+      <uap:VisualElements AppListEntry="none" DisplayName="MEGAsync" Description="MEGAsync" BackgroundColor="transparent" Square150x150Logo="assets\upload.png" Square44x44Logo="assets\upload.png">
       </uap:VisualElements>
       <Extensions>
         <desktop4:Extension Category="windows.fileExplorerContextMenus">
