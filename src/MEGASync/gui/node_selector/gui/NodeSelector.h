@@ -121,9 +121,8 @@ protected slots:
 
     virtual void onItemsAboutToBeRestored(const QSet<mega::MegaHandle>&) {}
 
-    virtual void onMergeItemsAboutToBeMoved(mega::MegaHandle, int) {}
-
-    virtual void onMergeFinished(mega::MegaHandle) {}
+    virtual void onItemsAboutToBeMerged(const QMultiHash<mega::MegaHandle, mega::MegaHandle>&, int)
+    {}
 
     void onbShowCloudDriveClicked();
     void onbShowIncomingSharesClicked();

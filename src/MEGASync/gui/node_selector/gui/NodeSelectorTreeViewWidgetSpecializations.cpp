@@ -345,13 +345,14 @@ void NodeSelectorTreeViewWidgetSearch::makeCustomConnections()
 }
 
 NodeSelectorTreeViewWidget::NodeState
-    NodeSelectorTreeViewWidgetSearch::getNodeOnModelState(mega::MegaNode* node)
+    NodeSelectorTreeViewWidgetSearch::getNodeOnModelState(const QModelIndex& index,
+                                                          mega::MegaNode* node)
 {
     NodeState result(NodeState::DOESNT_EXIST);
 
     if (mHasRows && node)
     {
-        if (mModel->findIndexByNodeHandle(node->getHandle(), QModelIndex()).isValid())
+        if (index.isValid())
         {
             result = NodeState::EXISTS;
         }

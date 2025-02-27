@@ -277,7 +277,7 @@ void NodeSelector::performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
         {
             if (type == IncreaseOrDecrease::INCREASE)
             {
-                wid->initMovingNodes(nodesUpdateToReceive);
+                wid->increaseMovingNodes(nodesUpdateToReceive);
             }
             else
             {
@@ -528,16 +528,14 @@ void NodeSelector::initSpecialisedWidgets()
                     &NodeSelector::onItemsAboutToBeMovedFailed);
 
             connect(model,
-                    &NodeSelectorModel::mergeItemAboutToBeMoved,
-                    this,
-                    &NodeSelector::onMergeItemsAboutToBeMoved);
-
-            connect(model,
                     &NodeSelectorModel::itemsAboutToBeRestored,
                     this,
                     &NodeSelector::onItemsAboutToBeRestored);
 
-            connect(model, &NodeSelectorModel::mergeFinished, this, &NodeSelector::onMergeFinished);
+            connect(model,
+                    &NodeSelectorModel::itemsAboutToBeMerged,
+                    this,
+                    &NodeSelector::onItemsAboutToBeMerged);
 
             connect(model,
                     &NodeSelectorModel::updateLoadingMessage,

@@ -56,7 +56,9 @@ public:
     mega::MegaHandle getSelectedNodeHandle();
     QList<mega::MegaHandle> getMultiSelectionNodeHandle();
     QModelIndexList getSelectedIndexes() const;
+    void navigateToItem(const mega::MegaHandle& handle);
     void setSelectedNodeHandle(const mega::MegaHandle& selectedHandle);
+    void setAsyncSelectedNodeHandle(const QSet<mega::MegaHandle>& selectedHandles);
 
     void setDefaultUploadOption(bool value);
     bool getDefaultUploadOption();
@@ -78,14 +80,14 @@ public:
 
     void enableDragAndDrop(bool enable);
 
-    void initMovingNodes(int number);
-    bool increaseMovingNodes();
+    bool increaseMovingNodes(int number);
     bool decreaseMovingNodes(int number);
     bool areItemsAboutToBeMovedFromHere(mega::MegaHandle firstHandleMoved);
 
     mega::MegaHandle getHandleByIndex(const QModelIndex& idx);
 
-    void setParentOfRestoredNodes(const QSet<mega::MegaHandle>& newParentOfRestoredNodes);
+    void setParentOfRestoredNodes(const QSet<mega::MegaHandle>& parentOfRestoredNodes);
+    void setMergeFoldersTargetNodes(const QMultiHash<mega::MegaHandle, mega::MegaHandle>& handles);
 
 public slots:
     virtual void checkViewOnModelChange();
@@ -138,7 +140,7 @@ protected:
         DOESNT_EXIST
     };
 
-    virtual NodeState getNodeOnModelState(mega::MegaNode* node);
+    virtual NodeState getNodeOnModelState(const QModelIndex& index, mega::MegaNode* node);
 
     Ui::NodeSelectorTreeViewWidget *ui;
     std::unique_ptr<NodeSelectorProxyModel> mProxyModel;
@@ -165,6 +167,7 @@ private slots:
     void processCachedNodesUpdated();
     void removeItemByHandle(mega::MegaHandle handle);
     void onItemsMoved();
+    void onNodesAdded(const QList<QPointer<NodeSelectorModelItem>>& itemsAdded);
     void onProxyModelRowsInserted(const QModelIndex& parent, int first, int last);
 
 private:
@@ -210,6 +213,7 @@ private:
     // Expand and select
     void expandPendingIndexes();
     void selectPendingIndexes();
+    void resetMoveNodesToSelect();
 
     ButtonIconManager mButtonIconManager;
     bool first;
@@ -218,20 +222,35 @@ private:
 
     struct UpdateNodesInfo
     {
-      mega::MegaHandle previousHandle = mega::INVALID_HANDLE;
-      mega::MegaHandle parentHandle = mega::INVALID_HANDLE;
-      std::shared_ptr<mega::MegaNode> node;
+        UpdateNodesInfo(mega::MegaNode* node, const QModelIndex& index):
+            parentHandle(node->getParentHandle()),
+            handle(node->getHandle()),
+            node(std::shared_ptr<mega::MegaNode>(node->copy())),
+            index(index)
+        {}
+
+        mega::MegaHandle parentHandle = mega::INVALID_HANDLE;
+        mega::MegaHandle handle = mega::INVALID_HANDLE;
+        std::shared_ptr<mega::MegaNode> node;
+        QModelIndex index;
     };
     void updateNode(const UpdateNodesInfo& info, bool scrollTo = false);
+
+    // Update Containers
     QList<UpdateNodesInfo> mRenamedNodesByHandle;
-    QList<UpdateNodesInfo> mUpdatedNodesByPreviousHandle;
-    QMultiMap<mega::MegaHandle, std::shared_ptr<mega::MegaNode>> mAddedNodesByParentHandle;
-    QSet<mega::MegaHandle> mRemovedNodes;
-    QSet<mega::MegaHandle> mRemoveMovedNodes;
-    QSet<mega::MegaHandle> mParentsToUpdateChildrenCount;
-    QMap<mega::MegaHandle, uint64_t> mUpdatedButInvisibleNodes;
-    QList<mega::MegaHandle> mMovedHandlesToSelect;
+    QList<UpdateNodesInfo> mUpdatedNodes;
+    QMultiMap<mega::MegaHandle, UpdateNodesInfo> mAddedNodesByParentHandle;
+    QList<UpdateNodesInfo> mRemovedNodes;
+    QList<UpdateNodesInfo> mRemoveMovedNodes;
+    QList<UpdateNodesInfo> mUpdatedButInvisibleNodes;
+    QList<UpdateNodesInfo> mMergeSourceFolderRemoved;
+
+    // Select when moving finished
+    QSet<mega::MegaHandle> mMovedHandlesToSelect;
+
+    // Containers used to ignore specific nodes updates
     QSet<mega::MegaHandle> mParentOfRestoredNodes;
+    QMultiHash<mega::MegaHandle, mega::MegaHandle> mMergeTargetFolders;
 
     QTimer mNodesUpdateTimer;
     mega::MegaHandle mNewFolderHandle;

@@ -336,47 +336,6 @@ void CloudDriveNodeSelector::onItemsAboutToBeMovedFailed(const QList<mega::MegaH
                      NodeSelector::IncreaseOrDecrease::DECREASE);
 }
 
-void CloudDriveNodeSelector::onMergeItemsAboutToBeMoved(mega::MegaHandle handle, int type)
-{
-    auto tabsInfo(getTabs(QList<mega::MegaHandle>() << handle));
-
-    if (type == NodeSelectorModel::ActionType::RESTORE)
-    {
-        if (!tabsInfo.cloudDriveNodes.isEmpty())
-        {
-            // Check with the handle if we are in CD or Incoming
-            if (mCloudDriveWidget->increaseMovingNodes() &&
-                ui->stackedWidget->currentWidget() == mRubbishWidget)
-            {
-                onbShowCloudDriveClicked();
-            }
-        }
-
-        if (!tabsInfo.incomingSharedNodes.isEmpty())
-        {
-            // Check with the handle if we are in CD or Incoming
-            if (mIncomingSharesWidget->increaseMovingNodes() &&
-                ui->stackedWidget->currentWidget() == mRubbishWidget)
-            {
-                onbShowIncomingSharesClicked();
-            }
-        }
-    }
-    else if (type == NodeSelectorModel::ActionType::EMPTY_MERGE)
-    {
-        if (!tabsInfo.cloudDriveNodes.isEmpty())
-        {
-            onbShowCloudDriveClicked();
-            mCloudDriveWidget->setSelectedNodeHandle(handle);
-        }
-        else if (!tabsInfo.incomingSharedNodes.isEmpty())
-        {
-            onbShowIncomingSharesClicked();
-            mIncomingSharesWidget->setSelectedNodeHandle(handle);
-        }
-    }
-}
-
 void CloudDriveNodeSelector::onItemsAboutToBeRestored(const QSet<mega::MegaHandle>& handles)
 {
     auto tabsInfo(getTabs(handles.values()));
@@ -392,17 +351,53 @@ void CloudDriveNodeSelector::onItemsAboutToBeRestored(const QSet<mega::MegaHandl
     }
 }
 
-void CloudDriveNodeSelector::onMergeFinished(mega::MegaHandle handle)
+void CloudDriveNodeSelector::onItemsAboutToBeMerged(
+    const QMultiHash<mega::MegaHandle, mega::MegaHandle>& items,
+    int actionType)
 {
-    auto tabsInfo(getTabs(QList<mega::MegaHandle>() << handle));
+    auto tabsInfo(getTabs(items.uniqueKeys()));
+
+    auto fillMergeFolders =
+        [&items](const QList<mega::MegaHandle>& handlesByTab, NodeSelectorTreeViewWidget* wid)
+    {
+        QMultiHash<mega::MegaHandle, mega::MegaHandle> merges;
+        for (auto& targetHandle: handlesByTab)
+        {
+            for (auto& sourceHandle: items)
+            {
+                merges.insert(sourceHandle, targetHandle);
+            }
+        }
+        wid->increaseMovingNodes(merges.size());
+        wid->setMergeFoldersTargetNodes(merges);
+    };
 
     if (!tabsInfo.cloudDriveNodes.isEmpty())
     {
-        mCloudDriveWidget->decreaseMovingNodes(1);
+        fillMergeFolders(tabsInfo.cloudDriveNodes, mCloudDriveWidget);
+
+        if (actionType == NodeSelectorModel::ActionType::RESTORE)
+        {
+            // Check with the handle if we are in CD or Incoming
+            if (ui->stackedWidget->currentWidget() == mRubbishWidget)
+            {
+                onbShowCloudDriveClicked();
+            }
+        }
     }
-    else if (!tabsInfo.incomingSharedNodes.isEmpty())
+
+    if (!tabsInfo.incomingSharedNodes.isEmpty())
     {
-        mIncomingSharesWidget->decreaseMovingNodes(1);
+        fillMergeFolders(tabsInfo.incomingSharedNodes, mIncomingSharesWidget);
+
+        if (actionType == NodeSelectorModel::ActionType::RESTORE)
+        {
+            // Check with the handle if we are in CD or Incoming
+            if (ui->stackedWidget->currentWidget() == mRubbishWidget)
+            {
+                onbShowIncomingSharesClicked();
+            }
+        }
     }
 }
 
@@ -429,28 +424,23 @@ void CloudDriveNodeSelector::checkMovingItems(const QList<mega::MegaHandle>& han
 
         if (!tabsInfo.cloudDriveNodes.isEmpty())
         {
-            mCloudDriveWidget->initMovingNodes(tabsInfo.cloudDriveNodes.size() +
-                                               extraUpdateNodesOnTarget);
+            mCloudDriveWidget->increaseMovingNodes(tabsInfo.cloudDriveNodes.size() +
+                                                   extraUpdateNodesOnTarget);
         }
 
         if (!tabsInfo.incomingSharedNodes.isEmpty())
         {
-            mIncomingSharesWidget->initMovingNodes(tabsInfo.incomingSharedNodes.size() +
-                                                   extraUpdateNodesOnTarget);
+            mIncomingSharesWidget->increaseMovingNodes(tabsInfo.incomingSharedNodes.size() +
+                                                       extraUpdateNodesOnTarget);
         }
 
         selectTabs(tabsInfo);
 
         performItemsToBeMoved(handles, extraUpdateNodesOnTarget, type, true, false);
     }
-    else if (moveType == NodeSelectorModel::ActionType::EMPTY_MERGE)
-    {
-        auto tabsInfo(getTabs(handles));
-        selectTabs(tabsInfo);
-    }
     else if (moveType == NodeSelectorModel::ActionType::DELETE_RUBBISH)
     {
-        mRubbishWidget->initMovingNodes(handles.size());
+        mRubbishWidget->increaseMovingNodes(handles.size());
         performItemsToBeMoved(handles, extraUpdateNodesOnTarget, type, true, false);
     }
     else if (moveType == NodeSelectorModel::ActionType::DELETE_PERMANENTLY)

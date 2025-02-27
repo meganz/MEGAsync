@@ -540,6 +540,7 @@ NodeSelectorModel::NodeSelectorModel(QObject* parent):
     mListener = RequestListenerManager::instance().registerAndGetFinishListener(this, false);
 
     qRegisterMetaType<QList<mega::MegaHandle>>("QList<mega::MegaHandle>");
+    qRegisterMetaType<QSet<mega::MegaHandle>>("QSet<mega::MegaHandle>");
 }
 
 NodeSelectorModel::~NodeSelectorModel()
@@ -999,17 +1000,19 @@ std::optional<NodeSelectorModel::RestoreMergeType>
     // 2) There are two files/folders with the same name in the rubbish and no other item on the CD
     // -> Merge in the rubbish and then restore -> at least two conflicts -> FOLDER_UPLOAD_AND_MERGE
     // && UPLOAD -> In this case, we end restoring a simple file/folder
-    // The rubbish needs n-1 removals, the target tab only 1 add
 
     // 3) There are on item on the CD with the same name of one or more items on the rubbish -> We
-    // merge first in the -> ONLY "FOLDER_UPLOAD_AND_MERGE"
+    // merge the the source folders one by one into the target tab
 
-    // Depeding on the scenario, we have 3 types of RestoreMergeType values:
+    // Depending on the scenario, we have 3 types of RestoreMergeType values:
 
     // 1) No value, we don´t have a merge
+
     // 2) RestoreMergeType = MERGE_AND_MOVE_TO_TARGET -> We merge folders on rubbish and the we move
-    // the final folder to the CD 3) RestoreMergeType = MERGE_ON_EXISTING_TARGET -> We merge folders
-    // to the final folder to the CD
+    // the final folder to the CD
+
+    // 3) RestoreMergeType = MERGE_ON_EXISTING_TARGET -> We merge folders (one by one)
+    //  to the final folder to the CD
 
     std::optional<RestoreMergeType> restoreMergeType;
     QMap<mega::MegaHandle, mega::MegaHandle> handlesToMerge;
@@ -1066,8 +1069,32 @@ std::optional<NodeSelectorModel::RestoreMergeType>
     return restoreMergeType;
 }
 
-void NodeSelectorModel::processMergeQueue()
+void NodeSelectorModel::processMergeQueue(ActionType type)
 {
+    if (mMergeQueue.isEmpty())
+    {
+        return;
+    }
+
+    QMultiHash<mega::MegaHandle, mega::MegaHandle> mergeTargetAndSource;
+    // Tell the other models that a merge will be performed
+    for (auto& merge: mMergeQueue)
+    {
+        // In this case it is a normal move, not a merge as the merge is done in the source
+        if (type == ActionType::RESTORE &&
+            merge.restoreMergeType == RestoreMergeType::MERGE_AND_MOVE_TO_TARGET)
+        {
+            continue;
+        }
+
+        mergeTargetAndSource.insert(merge.nodeTarget->getHandle(), merge.nodeToMerge->getHandle());
+    }
+
+    if (!mergeTargetAndSource.isEmpty())
+    {
+        emit itemsAboutToBeMerged(mergeTargetAndSource, type);
+    }
+
     QtConcurrent::run(
         [this]()
         {
@@ -1075,54 +1102,12 @@ void NodeSelectorModel::processMergeQueue()
             {
                 auto info(mMergeQueue.dequeue());
 
-                // Folder merge starts
-                emit itemsAboutToBeMoved(QList<mega::MegaHandle>() << info.nodeTarget->getHandle(),
-                                         0,
-                                         info.type);
-
                 std::shared_ptr<MergeMEGAFolders> foldersMerger(std::make_unique<MergeMEGAFolders>(
                     MergeMEGAFolders::ActionForDuplicates::Rename,
                     // Remote is always case sensitive
                     Qt::CaseSensitive,
                     info.type == ActionType::COPY ? MergeMEGAFolders::Strategy::COPY :
                                                     MergeMEGAFolders::Strategy::MOVE));
-
-                bool emptyMerge(!foldersMerger->checkMerge(info.nodeToMerge.get()));
-
-                if (info.restoreMergeType.has_value())
-                {
-                    // Affects the source widget + the target widget
-                    if (info.restoreMergeType.value() == RestoreMergeType::MERGE_ON_EXISTING_TARGET)
-                    {
-                        connect(foldersMerger.get(),
-                                &MergeMEGAFolders::nestedItemMerged,
-                                this,
-                                [this, info](mega::MegaHandle handle)
-                                {
-                                    increaseMergeMovingNodes(handle, info.type);
-                                });
-                    }
-                    // Affects only to the source widget
-                    else if (info.restoreMergeType.value() ==
-                             RestoreMergeType::MERGE_AND_MOVE_TO_TARGET)
-                    {
-                        connect(foldersMerger.get(),
-                                &MergeMEGAFolders::nestedItemMerged,
-                                this,
-                                [this](mega::MegaHandle)
-                                {
-                                    increaseMovingNodes();
-                                });
-                    }
-                }
-
-                connect(foldersMerger.get(),
-                        &MergeMEGAFolders::finished,
-                        this,
-                        [this, info]()
-                        {
-                            emit mergeFinished(info.nodeTarget->getHandle());
-                        });
 
                 auto e = foldersMerger->merge(info.nodeTarget.get(), info.nodeToMerge.get());
 
@@ -1138,12 +1123,6 @@ void NodeSelectorModel::processMergeQueue()
                 }
 
                 emit finishAsyncRequest(info.nodeToMerge->getHandle(), e);
-
-                if (emptyMerge)
-                {
-                    emit mergeItemAboutToBeMoved(info.nodeTarget->getHandle(),
-                                                 ActionType::EMPTY_MERGE);
-                }
             }
         });
 }
@@ -1251,7 +1230,7 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
         }
     }
 
-    processMergeQueue();
+    processMergeQueue(type);
 
     if (!mExpectedNodesUpdateOnSource.isEmpty())
     {
@@ -1386,7 +1365,7 @@ bool NodeSelectorModel::moveProcessed()
 
 bool NodeSelectorModel::moveProcessedByNumber(int number)
 {
-    if (mMoveRequestsCounter > 0)
+    if (number > 0 && mMoveRequestsCounter > 0)
     {
         mMoveRequestsCounter -= number;
         if (mMoveRequestsCounter < 0)
@@ -1432,38 +1411,20 @@ bool NodeSelectorModel::canCopyNodes() const
     return true;
 }
 
-bool NodeSelectorModel::increaseMovingNodes()
+bool NodeSelectorModel::increaseMovingNodes(int number)
 {
     if (mMoveRequestsCounter == 0)
     {
-        initMovingNodes(1);
+        mIsProcessingMoves = true;
+        mMoveRequestsCounter = number;
+        sendBlockUiSignal(true);
         return true;
     }
     else
     {
-        mMoveRequestsCounter++;
+        mMoveRequestsCounter += number;
         return false;
     }
-}
-
-void NodeSelectorModel::increaseMergeMovingNodes(mega::MegaHandle handle, int type)
-{
-    if (mMoveRequestsCounter == 0)
-    {
-        initMovingNodes(1);
-    }
-    else
-    {
-        increaseMovingNodes();
-    }
-    emit mergeItemAboutToBeMoved(handle, type);
-}
-
-void NodeSelectorModel::initMovingNodes(int number)
-{
-    mIsProcessingMoves = true;
-    mMoveRequestsCounter = number;
-    sendBlockUiSignal(true);
 }
 
 void NodeSelectorModel::sendBlockUiSignal(bool state)
@@ -1474,14 +1435,6 @@ void NodeSelectorModel::sendBlockUiSignal(bool state)
 void NodeSelectorModel::sendDisableBlockUiSystemSignal(bool state)
 {
     emit disableBlockUiSystem(state, QPrivateSignal());
-}
-
-void NodeSelectorModel::selectIndexesByHandleAsync(const QList<mega::MegaHandle>& handles)
-{
-    for (auto& handle: qAsConst(handles))
-    {
-        mIndexesToBeSelected.append(qMakePair(handle, QModelIndex()));
-    }
 }
 
 QModelIndex NodeSelectorModel::index(int row, int column, const QModelIndex &parent) const
@@ -1713,15 +1666,7 @@ void NodeSelectorModel::onNodesAdded(QList<QPointer<NodeSelectorModelItem>> chil
         emit dataChanged(index, index);
     }
 
-    // If we are moving nodes, the loading view is visible
-    if (isMovingNodes())
-    {
-        foreach(auto child, childrenItem)
-        {
-            Q_UNUSED(child);
-            moveProcessed();
-        }
-    }
+    emit nodesAdded(childrenItem);
 }
 
 void NodeSelectorModel::onSyncStateChanged(std::shared_ptr<SyncSettings> sync)
@@ -2307,14 +2252,18 @@ QVariant NodeSelectorModel::getText(const QModelIndex &index, NodeSelectorModelI
     return QVariant();
 }
 
-QList<QPair<mega::MegaHandle, QModelIndex>>& NodeSelectorModel::needsToBeExpanded()
+QList<QPair<mega::MegaHandle, QModelIndex>> NodeSelectorModel::needsToBeExpanded()
 {
-    return mIndexesToBeExpanded;
+    auto auxList(mIndexesToBeExpanded);
+    mIndexesToBeExpanded.clear();
+    return auxList;
 }
 
-QList<QPair<mega::MegaHandle, QModelIndex>>& NodeSelectorModel::needsToBeSelected()
+QList<QPair<mega::MegaHandle, QModelIndex>> NodeSelectorModel::needsToBeSelected()
 {
-    return mIndexesToBeSelected;
+    auto auxList(mIndexesToBeSelected);
+    mIndexesToBeSelected.clear();
+    return auxList;
 }
 
 void NodeSelectorModel::abort()
@@ -2350,8 +2299,6 @@ void NodeSelectorModel::loadTreeFromNode(const std::shared_ptr<mega::MegaNode> n
         p_node.reset(MegaSyncApp->getMegaApi()->getParentNode(p_node.get()));
     }
 
-    mIndexesToBeSelected.append(qMakePair(node->getHandle(), QModelIndex()));
-
     if(!fetchMoreRecursively(QModelIndex()))
     {
         sendBlockUiSignal(false);
@@ -2386,6 +2333,7 @@ bool NodeSelectorModel::fetchMoreRecursively(const QModelIndex& parentIndex)
     return result;
 }
 
+// This method looks only in the parent layer, not recursively
 QModelIndex NodeSelectorModel::getIndexFromNode(const std::shared_ptr<mega::MegaNode> node, const QModelIndex &parent)
 {
     if(node)
@@ -2406,13 +2354,6 @@ QModelIndex NodeSelectorModel::getIndexFromNode(const std::shared_ptr<mega::Mega
     }
 
     return QModelIndex();
-}
-
-QModelIndex NodeSelectorModel::getIndexFromHandle(const mega::MegaHandle& handle,
-                                                  const QModelIndex& parent)
-{
-    std::shared_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
-    return getIndexFromNode(node, parent);
 }
 
 void NodeSelectorModel::rootItemsLoaded()
@@ -2487,6 +2428,8 @@ void NodeSelectorModel::fetchItemChildren(const QModelIndex& parent)
     NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
     if(!item->areChildrenInitialized() && !item->requestingChildren())
     {
+        // Just in case the children changed
+        item->resetChildrenCounter();
         int itemNumChildren = item->getNumChildren();
         if(itemNumChildren > 0)
         {

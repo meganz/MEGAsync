@@ -81,10 +81,10 @@ protected slots:
     void onItemsAboutToBeMovedFailed(const QList<mega::MegaHandle>& handles,
                                      int extraUpdateNodesOnTarget,
                                      int type) override;
-    void onMergeItemsAboutToBeMoved(mega::MegaHandle handle, int type) override;
     void onItemsAboutToBeRestored(const QSet<mega::MegaHandle>& targetHandles) override;
 
-    void onMergeFinished(mega::MegaHandle handle) override;
+    void onItemsAboutToBeMerged(const QMultiHash<mega::MegaHandle, mega::MegaHandle>& items,
+                                int actionType) override;
 
 private:
     void onOkButtonClicked() override;

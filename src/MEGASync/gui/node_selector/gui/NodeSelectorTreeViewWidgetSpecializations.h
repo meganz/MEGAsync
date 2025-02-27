@@ -135,7 +135,7 @@ protected:
     void makeCustomConnections() override;
 
 protected slots:
-    NodeState getNodeOnModelState(mega::MegaNode* node) override;
+    NodeState getNodeOnModelState(const QModelIndex& index, mega::MegaNode* node) override;
 
 private slots:
     void onBackupsSearchClicked();

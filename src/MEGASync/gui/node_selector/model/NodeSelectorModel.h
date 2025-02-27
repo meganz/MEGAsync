@@ -234,10 +234,15 @@ public:
         const QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>>& handleAndTarget,
         std::shared_ptr<mega::MegaNode> sourceNode,
         ActionType type);
-    bool increaseMovingNodes();
-    void initMovingNodes(int number);
+
+    bool increaseMovingNodes(int number);
     bool isMovingNodes() const;
     bool moveProcessedByNumber(int number);
+
+    int getMoveRequestsCounter()
+    {
+        return mMoveRequestsCounter;
+    }
 
     // Copy logic
     bool pasteNodes(const QList<mega::MegaHandle>& nodesToCopy, const QModelIndex& indexToPaste);
@@ -282,8 +287,8 @@ public:
 
     virtual void proxyInvalidateFinished(){}
 
-    QList<QPair<mega::MegaHandle, QModelIndex>>& needsToBeExpanded();
-    QList<QPair<mega::MegaHandle, QModelIndex>>& needsToBeSelected();
+    QList<QPair<mega::MegaHandle, QModelIndex>> needsToBeExpanded();
+    QList<QPair<mega::MegaHandle, QModelIndex>> needsToBeSelected();
 
     void abort();
 
@@ -331,13 +336,21 @@ public:
     void sendBlockUiSignal(bool state);
     void sendDisableBlockUiSystemSignal(bool state);
 
-    void selectIndexesByHandleAsync(const QList<mega::MegaHandle>& handles);
+    template<class Container>
+    void selectIndexesByHandleAsync(const Container& handles)
+    {
+        for (auto& handle: qAsConst(handles))
+        {
+            mIndexesToBeSelected.append(qMakePair(handle, QModelIndex()));
+        }
+    }
 
 public slots:
     bool moveProcessed();
 
 signals:
     void levelsAdded(const QList<QPair<mega::MegaHandle, QModelIndex>>& parent, bool force = false);
+    void nodesAdded(const QList<QPointer<NodeSelectorModelItem>>& itemsAdded);
     void requestChildNodes(NodeSelectorModelItem* parent, const QModelIndex& parentIndex);
     void firstLoadFinished(const QModelIndex& parent);
     void requestAddNodes(QList<std::shared_ptr<mega::MegaNode>> newNodes, const QModelIndex& parentIndex, NodeSelectorModelItem* parent);
@@ -358,9 +371,9 @@ signals:
     void itemsAboutToBeMovedFailed(const QList<mega::MegaHandle> handles,
                                    int extraUpdateNodesOnTarget,
                                    int actionType);
-    void itemsAboutToBeRestored(const QSet<mega::MegaHandle> targetFolders);
-    void mergeItemAboutToBeMoved(mega::MegaHandle handle, int type);
-    void mergeFinished(mega::MegaHandle handle);
+    void itemsAboutToBeRestored(const QSet<mega::MegaHandle>& targetFolders);
+    void itemsAboutToBeMerged(const QMultiHash<mega::MegaHandle, mega::MegaHandle>& targetFolders,
+                              ActionType type);
     void finishAsyncRequest(mega::MegaHandle handle, int error);
 
 protected:
@@ -393,7 +406,6 @@ protected:
 protected slots:
     virtual void onRootItemAdded();
     virtual void onRootItemDeleted();
-    void increaseMergeMovingNodes(mega::MegaHandle handle, int actionType);
 
 private slots:
     void onChildNodesReady(NodeSelectorModelItem *parent);
@@ -453,7 +465,7 @@ private:
 
     QQueue<MergeInfo> mMergeQueue;
 
-    void processMergeQueue();
+    void processMergeQueue(ActionType type);
     std::optional<RestoreMergeType>
         checkForFoldersToMergeWhenRestoring(std::shared_ptr<ConflictTypes> conflicts);
 
@@ -474,5 +486,6 @@ private:
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaNodeList>)
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaNode>)
 Q_DECLARE_METATYPE(QList<mega::MegaHandle>)
+Q_DECLARE_METATYPE(QSet<mega::MegaHandle>)
 
 #endif // NODESELECTORMODEL_H
