@@ -7189,11 +7189,7 @@ Do you want to delete it anyway?</translation>
         <translatorcomment>Label descriping a sync stall is happening because the folder cannot be read.SNC-2565</translatorcomment>
         <translation>Can’t retrieve the metadata for this folder. Check the permissions and re-scan.</translation>
     </message>
-    <message>
-        <source>Error identifying folder content in filesystem.</source>
-        <translatorcomment>Label descriping a sync stall is happening because the folder cannot be parsed for unnkown reason.SNC-2565</translatorcomment>
-        <translation>The contents of this folder could not be read. Check the folder permissions and that none of the items are in use by other applications.</translation>
-    </message>
+
     <message>
         <source>Error not detected</source>
         <translatorcomment>Label descripiwith default error of sync stall .SNC-2565</translatorcomment>

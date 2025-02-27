@@ -58,8 +58,12 @@ bool LocalOrRemoteUserMustChooseStalledIssue::isAutoSolvable() const
         if(isFile() && (consultLocalData()->getAttributes()->size() == consultCloudData()->getAttributes()->size()))
         {
             //Check names
-            auto localName(QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(consultLocalData()->getFileName().toUtf8().constData())));
-            auto cloudName(QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(consultCloudData()->getFileName().toUtf8().constData())));
+            auto localName(QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(
+                consultLocalData()->getFileName().toUtf8().constData(),
+                nullptr)));
+            auto cloudName(QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(
+                consultCloudData()->getFileName().toUtf8().constData(),
+                nullptr)));
             if(localName.compare(cloudName, Qt::CaseSensitive) == 0)
             {
                 result = true;

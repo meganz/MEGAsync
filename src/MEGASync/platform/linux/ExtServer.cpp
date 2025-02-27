@@ -230,8 +230,7 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
                         runState = megaSync->getRunState();
                     }
 
-                    if (runState == MegaSync::SyncRunningState::RUNSTATE_PAUSED ||
-                        runState == MegaSync::SyncRunningState::RUNSTATE_SUSPENDED)
+                    if (runState == MegaSync::SyncRunningState::RUNSTATE_SUSPENDED)
                     {
                         syncStatus = RESPONSE_PAUSED;
                     }

@@ -28,7 +28,10 @@ public:
         {
             if(mUnescapedConflictedName.isEmpty())
             {
-                mUnescapedConflictedName = QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(getConflictedName().toUtf8().constData()));
+                mUnescapedConflictedName =
+                    QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(
+                        getConflictedName().toUtf8().constData(),
+                        nullptr));
             }
 
             return mUnescapedConflictedName;

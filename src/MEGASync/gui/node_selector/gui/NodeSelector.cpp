@@ -365,7 +365,7 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node, bool go
         {
             option = BACKUPS;
         }
-        else if (mMegaApi->isInShare(node.get()))
+        else if (node.get()->isInShare())
         {
             option = SHARES;
         }

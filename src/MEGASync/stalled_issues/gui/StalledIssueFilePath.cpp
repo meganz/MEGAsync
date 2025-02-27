@@ -444,10 +444,6 @@ QString StalledIssueFilePath::getSyncPathProblemString(mega::MegaSyncStall::Sync
         {
             return tr("Error Listing folder in filesystem.");
         }
-        case mega::MegaSyncStall::FilesystemErrorIdentifyingFolderContent:
-        {
-            return tr("Error identifying folder content in filesystem.");
-        }
         case mega::MegaSyncStall::WaitingForScanningToComplete:
         {
             return tr("Waiting for scanning to complete.");

@@ -423,11 +423,11 @@ bool TransferData::canBeRetried() const
         }
         else
         {
-            mega::MegaError error = mFailedTransfer->getLastError();
+            const mega::MegaError* error = mFailedTransfer->getLastErrorExtended();
             //If it is not any of these errors, it can be retried
-            if(error.getErrorCode() != mega::MegaError::API_EARGS
-                    && error.getErrorCode() != mega::MegaError::API_ENOENT
-                    && error.getErrorCode() != mega::MegaError::API_EREAD)
+            if (error->getErrorCode() != mega::MegaError::API_EARGS &&
+                error->getErrorCode() != mega::MegaError::API_ENOENT &&
+                error->getErrorCode() != mega::MegaError::API_EREAD)
             {
                 result = true;
             }
