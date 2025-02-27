@@ -51,10 +51,6 @@ EXPCMDSTATE ContextMenuCommandRemoveFromLeftPane::GetState(IShellItemArray* psiI
         return ECS_HIDDEN;
     }
 
-    mState->SetState(mId, Set);
-
-    initializeContextMenuData(psiItemArray);
-
     if (mContextMenuData.canRemoveFromLeftPane())
     {
         return ECS_ENABLED;

@@ -2,7 +2,7 @@
 #define CONTEXTMENUCOMMANDBASE_H
 
 #include "ContextMenuData.h"
-#include "SharedState.h"
+#include "framework.h"
 
 #include <windows.h>
 
@@ -30,7 +30,6 @@ protected:
     virtual std::wstring GetIcon() const = 0;
 
     std::wstring mId;
-    std::unique_ptr<SharedState> mState;
     static ContextMenuData mContextMenuData;
 };
 #endif

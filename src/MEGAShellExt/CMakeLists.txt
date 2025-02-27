@@ -22,7 +22,6 @@ set(MEGAShellExt_HEADERS
     W11ShellContextMenu/gui/SubCommandEnumerator.h
     W11ShellContextMenu/utilities/framework.h
     W11ShellContextMenu/utilities/SparsePackageManager.h
-    W11ShellContextMenu/utilities/SharedState.h
     W11ShellContextMenu/utilities/SimpleFactory.h
     W11ShellContextMenu/utilities/Utilities.h
     ShellExt.h
@@ -50,7 +49,6 @@ set(MEGAShellExt_SOURCES
     W11ShellContextMenu/gui/ContextMenuCommandView.cpp
     W11ShellContextMenu/gui/ContextMenuCommandViewVersions.cpp
     W11ShellContextMenu/utilities/SparsePackageManager.cpp
-    W11ShellContextMenu/utilities/SharedState.cpp
     W11ShellContextMenu/utilities/Utilities.cpp
     ShellExt.cpp
     ShellExtNotASync.cpp

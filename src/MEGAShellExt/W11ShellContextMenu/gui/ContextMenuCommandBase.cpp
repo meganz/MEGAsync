@@ -5,7 +5,6 @@ ContextMenuData ContextMenuCommandBase::mContextMenuData;
 ContextMenuCommandBase::ContextMenuCommandBase(const std::wstring& id):
     mId(id)
 {
-    mState = std::make_unique<SharedState>();
     mContextMenuData.reset();
 }
 

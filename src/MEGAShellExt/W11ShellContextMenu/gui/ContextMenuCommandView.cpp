@@ -49,10 +49,6 @@ EXPCMDSTATE ContextMenuCommandView::GetState(IShellItemArray* psiItemArray)
         return ECS_HIDDEN;
     }
 
-    mState->SetState(mId, Set);
-
-    initializeContextMenuData(psiItemArray);
-
     if (mContextMenuData.canViewOnMEGA())
     {
         return ECS_ENABLED;

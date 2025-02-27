@@ -51,10 +51,6 @@ EXPCMDSTATE ContextMenuCommandViewVersions::GetState(IShellItemArray* psiItemArr
         return ECS_HIDDEN;
     }
 
-    mState->SetState(mId, Set);
-
-    initializeContextMenuData(psiItemArray);
-
     if (mContextMenuData.canViewVersions())
     {
         return ECS_ENABLED;

@@ -51,10 +51,6 @@ EXPCMDSTATE ContextMenuCommandUpload::GetState(IShellItemArray* psiItemArray)
         return ECS_HIDDEN;
     }
 
-    mState->SetState(mId, Set);
-
-    initializeContextMenuData(psiItemArray);
-
     if (mContextMenuData.canRequestUpload())
     {
         return ECS_ENABLED;

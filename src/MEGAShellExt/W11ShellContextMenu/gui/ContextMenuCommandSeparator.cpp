@@ -40,7 +40,6 @@ EXPCMDSTATE ContextMenuCommandSeparator::GetState(IShellItemArray* psiItemArray)
 {
     UNREFERENCED_PARAMETER(psiItemArray);
 
-    mState->SetState(mId, Set);
     return ECS_ENABLED;
 }
 
