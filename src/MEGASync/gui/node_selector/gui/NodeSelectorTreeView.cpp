@@ -645,8 +645,17 @@ void NodeSelectorTreeView::dropEvent(QDropEvent* event)
             }
             else
             {
-                event->ignore();
-                return;
+                auto parentIndex(dropIndex.parent());
+                auto parentNode = getDropNode(parentIndex);
+                if (parentNode)
+                {
+                    MegaSyncApp->uploadFilesToNode(urlList, parentNode->getHandle());
+                }
+                else
+                {
+                    event->ignore();
+                    return;
+                }
             }
         }
 
