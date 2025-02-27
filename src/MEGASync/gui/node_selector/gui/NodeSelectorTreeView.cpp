@@ -164,6 +164,11 @@ void NodeSelectorTreeView::keyPressEvent(QKeyEvent *event)
 
     QModelIndexList indexes = selectedRows();
 
+    if (indexes.isEmpty())
+    {
+        return;
+    }
+
     static QModelIndex cdRootIndex = proxyModel()->getIndexFromNode(MegaSyncApp->getRootNode());
     static QList<int> bannedFromRootKeyList = QList<int>() << Qt::Key_Left << Qt::Key_Right
                                                      << Qt::Key_Plus << Qt::Key_Minus;
@@ -194,24 +199,29 @@ void NodeSelectorTreeView::keyPressEvent(QKeyEvent *event)
         }
         else if(event->key() == Qt::Key_Delete)
         {
-            auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
-            if (proxyModel->canBeDeleted())
+            // You cannot remove the root index
+            if (!indexes.contains(rootIndex()))
             {
-                auto selectionHandles(getMultiSelectionNodeHandle());
-                auto handlesAndAccess(getNodesAccess(selectionHandles));
-
-                auto deletionTypeOpt = areAllEligibleForDeletion(handlesAndAccess);
-                if (deletionTypeOpt.has_value())
+                auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
+                if (proxyModel->canBeDeleted())
                 {
-                    auto deletionType(deletionTypeOpt.value());
-                    if (deletionType == DeletionType::LEAVE_SHARE)
+                    auto selectionHandles(getMultiSelectionNodeHandle());
+                    auto handlesAndAccess(getNodesAccess(selectionHandles));
+
+                    auto deletionTypeOpt = areAllEligibleForDeletion(handlesAndAccess);
+                    if (deletionTypeOpt.has_value())
                     {
-                        emit leaveShareClicked(selectionHandles);
-                    }
-                    else
-                    {
-                        deleteNode(selectionHandles,
-                                   deletionType == DeletionType::MOVE_TO_RUBBISH ? false : true);
+                        auto deletionType(deletionTypeOpt.value());
+                        if (deletionType == DeletionType::LEAVE_SHARE)
+                        {
+                            emit leaveShareClicked(selectionHandles);
+                        }
+                        else
+                        {
+                            deleteNode(selectionHandles,
+                                       deletionType == DeletionType::MOVE_TO_RUBBISH ? false :
+                                                                                       true);
+                        }
                     }
                 }
             }
@@ -494,7 +504,8 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
             {
                 auto access(handlesAndAccess.value(selectionHandles.first()));
 
-                if (!isAnyNodeInTheRubbish(selectionHandles) && access != MegaShare::ACCESS_UNKNOWN)
+                if (!isAnyNodeInALimitedDrive(selectionHandles) &&
+                    access != MegaShare::ACCESS_UNKNOWN)
                 {
                     if (access >= MegaShare::ACCESS_FULL)
                     {
@@ -813,12 +824,12 @@ bool NodeSelectorTreeView::areAllEligibleForRestore(const QList<MegaHandle> &han
     return true;
 }
 
-bool NodeSelectorTreeView::isAnyNodeInTheRubbish(const QList<MegaHandle>& handles) const
+bool NodeSelectorTreeView::isAnyNodeInALimitedDrive(const QList<MegaHandle>& handles) const
 {
     for (const auto& handle: handles)
     {
         std::unique_ptr<mega::MegaNode> node(mMegaApi->getNodeByHandle(handle));
-        if (node && mMegaApi->isInRubbish(node.get()))
+        if (node && (mMegaApi->isInRubbish(node.get()) || mMegaApi->isInVault(node.get())))
         {
             return true;
         }

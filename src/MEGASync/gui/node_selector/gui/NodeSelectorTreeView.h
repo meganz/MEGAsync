@@ -102,7 +102,7 @@ private:
     bool
     areAllEligibleForLinkShare(const QHash<mega::MegaHandle, int>& handlesAndAccess) const;
     bool areAllEligibleForRestore(const QList<MegaHandle> &handles) const;
-    bool isAnyNodeInTheRubbish(const QList<MegaHandle>& handles) const;
+    bool isAnyNodeInALimitedDrive(const QList<MegaHandle>& handles) const;
 
     void addShareLinkMenuAction(QMap<int, QAction*>& actions,
                                 QHash<mega::MegaHandle, int> selectionHandles);
