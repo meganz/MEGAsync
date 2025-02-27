@@ -62,7 +62,7 @@ struct TransferMetaDataItem
     {
         if (failedTransfer)
         {
-            return failedTransfer->getLastError().getErrorCode();
+            return failedTransfer->getLastErrorExtended()->getErrorCode();
         }
 
         return mega::MegaError::API_OK;
