@@ -28,7 +28,7 @@ arch=('x86_64')
 url="http://mega.nz/#sync"
 license=() #TODO
 depends=('megasync>=5.3.0' 'dolphin')
-makedepends=('extra-cmake-modules' 'kde-sdk-meta' 'dolphin')
+makedepends=('grep' 'cmake' 'extra-cmake-modules' 'kde-sdk-meta')
 provides=("dolphin-megasync=${pkgver}")
 conflicts=()
 replaces=()
@@ -40,27 +40,41 @@ noextract=()
 md5sums=('MD5SUM')
 validpgpkeys=()
 
-prepare() {
-	cd "$pkgname-$pkgver"
-}
+KF_VERSIONS=""
 
-build() {
-	cd "$pkgname-$pkgver"
-	cmake $PWD
-	make
+prepare() {
+	# Get all kio packages installed, to build for all available kf versions
+	for p in $(pacman -Qqs "^kio.?$")
+	do
+		# Get KF version by checking where it installs files
+		KF_VERSION=$(pacman -Ql $p | grep -m1 -oP '/usr/include/KF\K\w+(?=/)')
+		KF_VERSIONS+=" ${KF_VERSION}"
+	done
 }
 
 check() {
 	cd "$pkgname-$pkgver"
 }
 
-package() {
-	cd "$pkgname-$pkgver"
-	make install DESTDIR=$pkgdir
+build() {
+	for k in ${KF_VERSIONS}
+	do
+		local cmake_options=(
+		-B build-kf$k
+		-S $pkgname-$pkgver
+		-W no-dev
+		-D CMAKE_BUILD_TYPE=None
+		-D CMAKE_INSTALL_PREFIX=/usr
+		-D KF_VER=$k
+		)
+		cmake "${cmake_options[@]}"
+		cmake --build build-kf$k
+	done
+}
 
-	#fix missplaced .so for kf5
-	if [ -d $pkgdir/usr/lib/qt5 ]; then
-		cp -av $pkgdir/usr/lib/qt5/* $pkgdir/usr/lib/qt/
-		rm -rf $pkgdir/usr/lib/qt5
-	fi
+package() {
+	for d in build-kf*
+	do
+		DESTDIR="$pkgdir" cmake --install ${d}
+	done
 }
