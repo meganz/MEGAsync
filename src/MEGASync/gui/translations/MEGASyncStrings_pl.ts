@@ -402,11 +402,6 @@
 </context>
 <context>
     <name>BackupsModel</name>
-    <message>
-        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
-        <translation>Nie można tworzyć kopii zapasowych katalogów o tej samej nazwie. Zmień ich nazwy, aby kontynuować tworzenie kopii zapasowej. Nazwy katalogów nie zostaną zmienione na komputerze.</translation>
-    </message>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
@@ -426,6 +421,11 @@
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
         <translation><numerusform>Nie utworzono kopii zapasowej katalogu. Spróbuj ponownie.</numerusform><numerusform>Kopia zapasowa tych katalogów nie została utworzona. Spróbuj ponownie.</numerusform><numerusform>Kopia zapasowa tych katalogów nie została utworzona. Spróbuj ponownie.</numerusform><numerusform>Kopia zapasowa tych katalogów nie została utworzona. Spróbuj ponownie.</numerusform></translation>
+    </message>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>Nie można tworzyć kopii zapasowych katalogów o tej samej nazwie. Zmień ich nazwy, aby kontynuować tworzenie kopii zapasowej. Nazwy katalogów nie zostaną zmienione na komputerze.</translation>
     </message>
 </context>
 <context>
@@ -838,7 +838,7 @@
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation><numerusform>Ta akcja spowoduje pobranie plik do tymczasowej lokalizacji, naprawienie problemu, a następnie usunięcie pliku tymczasowego.</numerusform><numerusform>Ta akcja spowoduje pobranie plików do tymczasowej lokalizacji, naprawienie problemów, a następnie usunięcie plików tymczasowych.</numerusform><numerusform>Ta akcja spowoduje pobranie plików do tymczasowej lokalizacji, naprawienie problemów, a następnie usunięcie plików tymczasowych.</numerusform><numerusform>Ta akcja spowoduje pobranie plików do tymczasowej lokalizacji, naprawienie problemów, a następnie usunięcie plików tymczasowych.</numerusform></translation>
+        <translation><numerusform>Ta akcja spowoduje pobranie pliku do tymczasowej lokalizacji, naprawienie problemu, a następnie usunięcie pliku tymczasowego.</numerusform><numerusform>Ta akcja spowoduje pobranie plików do tymczasowej lokalizacji, naprawienie problemów, a następnie usunięcie plików tymczasowych.</numerusform><numerusform>Ta akcja spowoduje pobranie plików do tymczasowej lokalizacji, naprawienie problemów, a następnie usunięcie plików tymczasowych.</numerusform><numerusform>Ta akcja spowoduje pobranie plików do tymczasowej lokalizacji, naprawienie problemów, a następnie usunięcie plików tymczasowych.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
@@ -1443,12 +1443,12 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>loading size…</source>
         <translatorcomment>Placeholder used meanwhile the size time is being calculated. SNC-3972</translatorcomment>
-        <translation>obliczanie rozmiaru&amp;#8230;</translation>
+        <translation>obliczanie rozmiaru…</translation>
     </message>
     <message>
         <source>loading time…</source>
         <translatorcomment>Placeholder used meanwhile the last modified time is being calculated. SNC-3972</translatorcomment>
-        <translation>pobieranie daty&amp;#8230;</translation>
+        <translation>pobieranie daty…</translation>
     </message>
 </context>
 <context>
@@ -1994,7 +1994,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>Setting up your account…</source>
         <translatorcomment>Label that indicates that the account is being setting up CON-465</translatorcomment>
-        <translation>Konfigurowanie konta&amp;#8230;</translation>
+        <translation>Konfigurowanie konta…</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -2004,7 +2004,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>Waiting for email confirmation…</source>
         <translatorcomment>Label that indicates that the email confirmation is pending CON-465</translatorcomment>
-        <translation>Oczekiwanie na potwierdzenie e-maila&amp;#8230;</translation>
+        <translation>Oczekiwanie na potwierdzenie e-maila…</translation>
     </message>
     <message>
         <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
@@ -2138,13 +2138,8 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
 <context>
     <name>InfoDialog</name>
     <message>
-        <source>Add Backup</source>
-        <translatorcomment>Tooltip message shown while hovering backups button.</translatorcomment>
-        <translation>Dodaj kopię zapasową</translation>
-    </message>
-    <message>
-        <source>Add Sync</source>
-        <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
+        <source>Add sync</source>
+        <translatorcomment>Label for the &quot;Add Sync&quot; button added in the InfoDialog (Max 20 characters). SNC-5182.</translatorcomment>
         <translation>Dodaj synchronizacje</translation>
     </message>
     <message>
@@ -2311,11 +2306,6 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
         <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
         <translation>Uaktualnij teraz, zanim Twoje konto się zapełni i Twoje przesyłanie do MEGA zatrzyma się.</translation>
-    </message>
-    <message>
-        <source>Upload</source>
-        <translatorcomment>Label to indicate an upload.</translatorcomment>
-        <translation>Wgrywanie</translation>
     </message>
     <message>
         <source>Upload to MEGA now</source>
@@ -2509,7 +2499,7 @@ Czy chcesz teraz zainstalować niezbędne komponenty?</translation>
     <message>
         <source>Installing notification area icon...</source>
         <translatorcomment>This is the text for the Notification Area Icon installation progress bar which provide the feedback to the user about SNC-2270</translatorcomment>
-        <translation>Instalowanie ikony powiadomień&amp;#8230;</translation>
+        <translation>Instalowanie ikony powiadomień…</translation>
     </message>
     <message>
         <source>The notification area icon installation was cancelled.</source>
@@ -3795,7 +3785,7 @@ Nie będziesz w stanie odzyskać dostępu do przechowywanych danych ani uzyskać
     <message>
         <source>Filesystem notification subsystem unavailable.</source>
         <translatorcomment>SDK error indicating that the filesystem notification subsystem is not available. CON-537</translatorcomment>
-        <translation>Nie można nawiązać komunikacji z lokalizacją katalogu. Sprawdź, czy lokalizacja jest dostępna i czy przyznano uprawnienia do lokalizacji katalogu&amp;#8230;.</translation>
+        <translation>Nie można nawiązać komunikacji z lokalizacją katalogu. Sprawdź, czy lokalizacja jest dostępna i czy przyznano uprawnienia do lokalizacji katalogu….</translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -4316,7 +4306,7 @@ Odśwież widok.</translation>
     <message>
         <source>Renamed to &quot;%1&quot;</source>
         <translatorcomment>Label in solved name conflict sync stalls by renaming the file.SNC-2565</translatorcomment>
-        <translation>Zmieniono nazwę na &amp;#8220;%1&amp;#8221;</translation>
+        <translation>Zmieniono nazwę na “%1”</translation>
     </message>
 </context>
 <context>
@@ -4357,17 +4347,17 @@ Odśwież widok.</translation>
     <message>
         <source>Remove duplicates</source>
         <translatorcomment>Button to solve a name conflict sync stall by removing duplicated items.SNC-2565</translatorcomment>
-        <translation>Usuwanie duplikatów</translation>
+        <translation>Usuń duplikaty</translation>
     </message>
     <message>
         <source>Remove duplicates and rename the rest</source>
         <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation>Usuń duplikaty i zmień nazwy pozostałych plików</translation>
+        <translation>Usuń duplikaty i zmień nazwę reszty</translation>
     </message>
     <message>
         <source>Remove duplicates, merge folders and rename the rest</source>
         <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation>Usuwanie duplikatów, łączenie katalogów i zmiana nazw pozostałych plików</translation>
+        <translation>Usuń duplikaty, scalaj katalog i zmień nazwę reszty</translation>
     </message>
     <message>
         <source>Rename all items</source>
@@ -4577,7 +4567,7 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>The file %1 couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing a single file has failed. %1 is the file name. SAT-426</translatorcomment>
-        <translation>Pliku %1 nie można było usunąć. Spróbuj ponownie później.</translation>
+        <translation>Pliku %1 nie można usunąć. Spróbuj ponownie później.</translation>
     </message>
     <message>
         <source>The files couldn’t be removed. Try again later</source>
@@ -4587,17 +4577,17 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>The folder %1 couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing a single folder has failed. %1 is the folder name. SAT-426</translatorcomment>
-        <translation>Katalogu %1 nie można było usunąć. Spróbuj ponownie później.</translation>
+        <translation>Katalogu %1 nie można usunąć. Spróbuj ponownie później.</translation>
     </message>
     <message>
         <source>The folders couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple folders has failed. SAT-426</translatorcomment>
-        <translation>Katalog nie może zostać usunięty. Spróbuj ponownie później.</translation>
+        <translation>Katalogu nie można usunąć. Spróbuj ponownie później.</translation>
     </message>
     <message>
         <source>The items couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation>Elementów nie można było usunąć. Spróbuj ponownie później.</translation>
+        <translation>Elementów nie można usunąć. Spróbuj ponownie później.</translation>
     </message>
 </context>
 <context>
@@ -4945,7 +4935,7 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>Creating account…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-466</translatorcomment>
-        <translation>Tworzenie konta&amp;#8230;</translation>
+        <translation>Tworzenie konta…</translation>
     </message>
     <message>
         <source>Data from your device will automatically and consistently back up to MEGA in real-time.</source>
@@ -5010,7 +5000,7 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>Fetching file list…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
-        <translation>Pobieranie listy plików&amp;#8230;</translation>
+        <translation>Pobieranie listy plików…</translation>
     </message>
     <message>
         <source>First name</source>
@@ -5080,7 +5070,7 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>Logging in…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
-        <translation>Logowanie&amp;#8230;</translation>
+        <translation>Logowanie…</translation>
     </message>
     <message>
         <source>Names longer than 32 characters are not supported</source>
@@ -5255,7 +5245,7 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>Validating 2FA code…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
-        <translation>Weryfikacja kodu 2FA&amp;#8230;</translation>
+        <translation>Weryfikacja kodu 2FA…</translation>
     </message>
     <message>
         <source>View in Settings</source>
@@ -5679,19 +5669,15 @@ Wprowadź inną nazwę.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We’ve enhanced the interface and behaviour of the transfer manager feature.
-- You can now create sync exclusions using wildcards.
-- There are new releases available now for the Raspberry Pi OS.
-- We’ve fixed crashes that were occurring due to missing or broken OpenGL drivers on Windows.
-- Qt has been upgraded to a newer version.
+        <source>- Numerous interface improvements.
+- Improved HiDpi handling in Windows.
+- Updates to third party libraries.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
-        <translation>- Ulepszyliśmy interfejs i zachowanie funkcji menedżer transferów transferów.
-- Możesz teraz tworzyć wykluczenia synchronizacji za pomocą symboli wieloznacznych.
-- Dostępne są teraz nowe wersje dla systemu operacyjnego Raspberry Pi.
-- Naprawiono awarie, które występowały z powodu brakujących lub uszkodzonych sterowników OpenGL w systemie Windows.
-- Qt został zaktualizowany do nowszej wersji.
+        <translatorcomment>Change log for version 5.9.0. CON-1259</translatorcomment>
+        <translation>- Liczne ulepszenia interfejsu.
+- Ulepszona obsługa HiDPI w systemie Windows.
+- Aktualizacje bibliotek stron trzecich.
 - Inne błędy zostały naprawione i wprowadzono liczne ulepszenia.
 </translation>
     </message>
@@ -6199,7 +6185,7 @@ Czy mimo to chcesz je usunąć?</translation>
     <message>
         <source>The app has detected an issue and is reloading your account. Please wait…</source>
         <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
-        <translation>Aplikacja wykryła problem i ponownie ładuje Twoje konto. Proszę czekać&amp;#8230;</translation>
+        <translation>Aplikacja wykryła problem i ponownie ładuje Twoje konto. Proszę czekać…</translation>
     </message>
     <message>
         <source>The app has reloaded. If you experience any further issues, please contact Support.</source>
@@ -6373,7 +6359,7 @@ Czy mimo to chcesz je usunąć?</translation>
     <message>
         <source>Adding transfers…</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Adding transfers&quot; step.con-429</translatorcomment>
-        <translation>Dodawanie transferów&amp;#8230;</translation>
+        <translation>Dodawanie transferów…</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6699,7 +6685,7 @@ Czy mimo to chcesz je usunąć?</translation>
     <message>
         <source>Remove files older than</source>
         <translatorcomment>Label for checkbox to remove local cache files older than a specified number of days.</translatorcomment>
-        <translation>Usuń pliki starsze niż</translation>
+        <translation>Usuń plik starsze niż</translation>
     </message>
     <message>
         <source>Report Issue</source>
@@ -6799,7 +6785,7 @@ Czy mimo to chcesz je usunąć?</translation>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
         <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the current account.</translatorcomment>
-        <translation>Masz zamiary usunąć wszystkie wersje plików. Czy chcesz kontynuować?</translation>
+        <translation>Zamierzasz trwale usunąć wszystkie wersje plików. Chciałbyś kontynuować?</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -6957,17 +6943,17 @@ Czy mimo to chcesz je usunąć?</translation>
     <message>
         <source>Loading size</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation>Ładowanie rozmiaru&amp;#8230;</translation>
+        <translation>Ładowanie rozmiaru…</translation>
     </message>
     <message>
         <source>Loading time…</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation>Ładowanie znacznika czasu&amp;#8230;</translation>
+        <translation>Ładowanie znacznika czasu…</translation>
     </message>
     <message>
         <source>Loading user…</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation>pobieranie użytkownika&amp;#8230;</translation>
+        <translation>pobieranie użytkownika…</translation>
     </message>
     <message>
         <source>Size:</source>
@@ -7171,7 +7157,7 @@ Czy mimo to chcesz je usunąć?</translation>
     <message>
         <source>Being solved</source>
         <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. We are actively working on the issue and it is not still solved. SAT-1140</translatorcomment>
-        <translation>Rozwiązywanie&amp;#8230;</translation>
+        <translation>Rozwiązywanie…</translation>
     </message>
     <message>
         <source>Failed</source>
@@ -7302,7 +7288,7 @@ Czy mimo to chcesz je usunąć?</translation>
     <message>
         <source>Fixing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation>Rozwiązywanie problemów&amp;#8230;</translation>
+        <translation>Rozwiązywanie problemów…</translation>
     </message>
     <message>
         <source>Issues can't be fixed.
@@ -7314,7 +7300,7 @@ Sprawdź uprawnienia pliku .megaignore w lokalizacjach lokalnych folderów synch
     <message>
         <source>Processing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation>Rozwiązywanie problemów&amp;#8230;</translation>
+        <translation>Rozwiązywanie problemów…</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -7440,6 +7426,11 @@ Odśwież listę.</translation>
         <translation>Plik nie znaleziony</translation>
     </message>
     <message>
+        <source>Folder links can&apos;t be streamed</source>
+        <translatorcomment>Message displayed when the user tries to stream a folder. SNC-5215.</translatorcomment>
+        <translation>Link do katalogów nie mogą być przesyłane strumieniowo</translation>
+    </message>
+    <message>
         <source>Nothing selected</source>
         <translatorcomment>Text shown when no files have been selected for streaming yet</translatorcomment>
         <translation>Nic nie wybrano</translation>
@@ -7508,6 +7499,11 @@ Odśwież listę.</translation>
         <translation>Wybierz</translation>
     </message>
     <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button label to dismiss and hide the survey. CON-942</translatorcomment>
+        <translation>Odrzucić</translation>
+    </message>
+    <message>
         <source>Done</source>
         <translatorcomment>Label for Done buttons. SAT-1678.</translatorcomment>
         <translation>Gotowe</translation>
@@ -7551,6 +7547,44 @@ Odśwież listę.</translation>
         <source>Try again</source>
         <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
         <translation>Ponów</translation>
+    </message>
+</context>
+<context>
+    <name>SurveyStrings</name>
+    <message>
+        <source>Excellent</source>
+        <translatorcomment>Label to indicate the highest score of the survey. CON-942</translatorcomment>
+        <translation>Doskonały</translation>
+    </message>
+    <message>
+        <source>OK, got it</source>
+        <translatorcomment>Label for the button of the final view after the end of the survey. CON-942</translatorcomment>
+        <translation>Zamknij</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <translatorcomment>Label to indicate the lowest score of the survey. CON-942</translatorcomment>
+        <translation>Słaby</translation>
+    </message>
+    <message>
+        <source>Submit</source>
+        <translatorcomment>Label for the button to submit the answers to the survey. CON-942</translatorcomment>
+        <translation>Wyślij</translation>
+    </message>
+    <message>
+        <source>Tell us more</source>
+        <translatorcomment>Placeholder text to request comments to the user. CON-942</translatorcomment>
+        <translation>Powiedz nam więcej</translation>
+    </message>
+    <message>
+        <source>Thank you for your feedback</source>
+        <translatorcomment>Title text of the final view after sending the survey responses thanking the user for his/her participation. CON-942</translatorcomment>
+        <translation>Dziękujemy za opinię</translation>
+    </message>
+    <message>
+        <source>You’re helping to improve MEGA for you and everyone who uses it</source>
+        <translatorcomment>Description text of the final view after sending the survey responses. CON-942</translatorcomment>
+        <translation>Pomagasz ulepszyć MEGA dla siebie i wszystkich, którzy z niej korzystają</translation>
     </message>
 </context>
 <context>
@@ -7730,7 +7764,7 @@ Odśwież listę.</translation>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
-        <translation>Kopia zapasowa &amp;#8220;%1&amp;#8221; została wyłączona, ponieważ katalog lokalny jest niedostępny lub nie masz uprawnień do odczytu i zapisu.</translation>
+        <translation>Kopia zapasowa “%1” została wyłączona, ponieważ katalog lokalny jest niedostępny lub nie masz uprawnień do odczytu i zapisu.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -7947,7 +7981,7 @@ Jeśli to nie rozwiąże problemu, skontaktuj się z support@mega.nz.</translati
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation>Nie można zsynchronizować katalogu. Upewnij się, że nie używasz &quot;\&quot;, &amp;#8220;/&amp;#8221; lub &amp;#8220;:&amp;#8221; w nazwach katalogów.</translation>
+        <translation>Nie można zsynchronizować katalogu. Upewnij się, że nie używasz &quot;\&quot;, “/” lub “:” w nazwach katalogów.</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
@@ -8026,7 +8060,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Saving synchronised folders…</source>
         <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.SNC-4208</translatorcomment>
-        <translation>Zapisywanie zsynchronizowanych katalogów&amp;#8230;</translation>
+        <translation>Zapisywanie zsynchronizowanych katalogów…</translation>
     </message>
 </context>
 <context>
@@ -8155,6 +8189,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>TextArea</name>
+    <message numerus="yes">
+        <source>Maximum length is %n characters.</source>
+        <translatorcomment>Label to indicate the maximum number of characters in the text area. The %n placeholder indicates the number of characters, please keep it. CON-942</translatorcomment>
+        <translation><numerusform>Maksymalna długość wynosi %n znak.</numerusform><numerusform>Maksymalna długość wynosi %n znaków.</numerusform><numerusform>Maksymalna długość wynosi %n znaków.</numerusform><numerusform>Maksymalna długość wynosi %n znaków.</numerusform></translation>
+    </message>
+</context>
+<context>
     <name>TransferBaseDelegateWidget</name>
     <message>
         <source>(in queue)</source>
@@ -8219,7 +8261,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Syncing…</source>
         <translatorcomment>Transfer is being synced</translatorcomment>
-        <translation>Synchronizacja&amp;#8230;</translation>
+        <translation>Synchronizacja…</translation>
     </message>
     <message>
         <source>Uploading…</source>
@@ -8933,82 +8975,6 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
 </context>
 <context>
-    <name>UpgradeDialog</name>
-    <message>
-        <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
-        <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* Szacunkowa cena w lokalnej walucie. Za wszystkie transakcje zostaniesz obciążony w euro.</translation>
-    </message>
-    <message>
-        <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
-        <translation>Wybierz rozliczenie roczne, a otrzymasz 12 miesięcy w cenie 10</translation>
-    </message>
-    <message>
-        <source>Depleted transfer quota</source>
-        <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
-        <translation>Wyczerpany limit transferu</translation>
-    </message>
-    <message>
-        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
-        <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>Uaktualnij swoje konto, aby kontynuować natychmiast, lub poczekaj %1 kontynuować za darmo</translation>
-    </message>
-    <message>
-        <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
-        <translation>Limit transferu jest dynamiczny i uzależniony od dostępnych przepustowości.</translation>
-    </message>
-    <message>
-        <source>Transfer quota exceeded</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>Transfer quota exceeded</translation>
-    </message>
-    <message>
-        <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
-        <translatorcomment>Informative message to inform users that downloads could not continue because user has reached over transfer situation.</translatorcomment>
-        <translation>Pobieranie nie może być kontynuowane, ponieważ przekracza limit wolnego transferu.</translation>
-    </message>
-</context>
-<context>
-    <name>UpgradeOverStorage</name>
-    <message>
-        <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
-        <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* Szacunkowa cena w lokalnej walucie. Za wszystkie transakcje zostaniesz obciążony w euro.</translation>
-    </message>
-    <message>
-        <source>100% of the %1 available used on your account.</source>
-        <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation>100% dostępnego %1 zostało wykorzystane na Twoim koncie.</translation>
-    </message>
-    <message>
-        <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
-        <translation>Wybierz rozliczenie roczne, a otrzymasz 12 miesięcy w cenie 10</translation>
-    </message>
-    <message>
-        <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
-        <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>Uaktualnij swoje konto, aby cieszyć się pojemność ilością miejsca na dysku (przesyłane pliki zostaną automatycznie wznowione).</translation>
-    </message>
-    <message>
-        <source>Storage full</source>
-        <translatorcomment>Title of the over storage dialog</translatorcomment>
-        <translation>Dysk pełny</translation>
-    </message>
-    <message>
-        <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>
-        <translatorcomment>Informative message shown when user reaches over storage situation, encouraging to upgrade and get more extra storage space.</translatorcomment>
-        <translation>Aby zwiększyć ten limit, możesz uaktualnić swoje konto, co da Ci dużo dodatkowej przestrzeni dyskowej.</translation>
-    </message>
-    <message>
-        <source>Your MEGA account is full</source>
-        <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>Twoje konto MEGA jest pełne.</translation>
-    </message>
-</context>
-<context>
     <name>UploadIssueHeader</name>
     <message>
         <source>Cannot reach the destination folder.</source>
@@ -9065,6 +9031,109 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to upload a file/folder to MEGA.(MAX 20 characters)</translatorcomment>
         <translation>Wgraj na MEGA</translation>
+    </message>
+</context>
+<context>
+    <name>UpsellStrings</name>
+    <message>
+        <source>%1 billed yearly</source>
+        <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
+        <translation>%1 rozliczane rocznie</translation>
+    </message>
+    <message>
+        <source>%1 per month</source>
+        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
+        <translation>%1 miesięcznie</translation>
+    </message>
+    <message>
+        <source>%1 storage</source>
+        <translatorcomment>Text to show the total amount of space available for the plan. The placeholder %1 shall be replaced by the amount of storage including the units (e.g. 1TB storage). CON-945</translatorcomment>
+        <translation>%1 pamięci</translation>
+    </message>
+    <message>
+        <source>%1 transfer</source>
+        <translatorcomment>Text to show the transfer amount for the plan. The placeholder %1 shall be replaced by the amount of transfer including the units (e.g. 1TB transfer). CON-945</translatorcomment>
+        <translation>%1 transferu przesyłania</translation>
+    </message>
+    <message>
+        <source>(%1 per month)</source>
+        <translatorcomment>Price per month with yealy billing. The placeholder %1 shall be replaced by the monthly price (e.g. 49.9€ transfer). CON-945</translatorcomment>
+        <translation>(%1 miesięcznie)</translation>
+    </message>
+    <message>
+        <source>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</source>
+        <translatorcomment>Billing clarification message according to currency. CON-945</translatorcomment>
+        <translation>* Szacunkowa cena w lokalnej walucie. Wszystkie transakcje będą rozliczane w euro.</translation>
+    </message>
+    <message>
+        <source>Billed monthly</source>
+        <translatorcomment>Button to display plans with monthly subscription. CON-945</translatorcomment>
+        <translation>Opłata miesięczna</translation>
+    </message>
+    <message>
+        <source>Billed yearly</source>
+        <translatorcomment>Button to display plans with yearly subscription. CON-945</translatorcomment>
+        <translation>Opłata roczna</translation>
+    </message>
+    <message>
+        <source>Buy %1</source>
+        <translatorcomment>Button that redirects to the website to purchase the selected plan. The placeholder %1 shall be replaced by the name of the plan selected in the window. CON-945</translatorcomment>
+        <translation>Kup %1</translation>
+    </message>
+    <message>
+        <source>Current plan</source>
+        <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
+        <translation>Obecny plan</translation>
+    </message>
+    <message>
+        <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
+        <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
+        <translation>Potrzebujesz więcej pamięci? [BR][B][A]Wypróbuj Pro Flexi[/A][/B]</translation>
+    </message>
+    <message>
+        <source>Recommended</source>
+        <translatorcomment>Label to indicate which is the recommended plan. CON-945</translatorcomment>
+        <translation>Polecam</translation>
+    </message>
+    <message>
+        <source>Save up to %1% with yearly billing</source>
+        <translatorcomment>Label with information about the discount of the annual subscription compared to the monthly subscription for the plan selected in the window. The placeholder %1 shall be replaced by the discount percentage. CON-945</translatorcomment>
+        <translation>Oszczędzaj do %1% przy rozliczeniu rocznym</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Title of the window showing that the transfer quota has been exceeded. CON-945</translatorcomment>
+        <translation>Przekroczono limit transferu</translation>
+    </message>
+    <message>
+        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
+        <translation>Zmień swoje konto, aby uzyskać większą pojemność.[BR][BR]Lub usuń niektóre pliki i [B][A]opróżnij swój kosz[/A][/B], aby zwolnić miejsce.</translation>
+    </message>
+    <message>
+        <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
+        <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
+        <translation>Nie możesz kontynuować pobierania, ponieważ wykorzystałeś cały dostępny limit transferu.[BR][BR]Aby uzyskać więcej limitu, kup inny płatny plan.[BR][BR][B][A]Dowiedz się więcej o limitach transferu.[/A][/B]</translation>
+    </message>
+    <message>
+        <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]Upgrade your account to get more transfer quota or you can wait for [B]%1[/B] until more free quota becomes available for you.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
+        <translatorcomment>Explanatory message informing free users they have reached their download limit, offering options to upgrade or wait. The placeholder %1 shall be replaced by the remaining time to reset the transfer quota (e.g. 13m 34s or 6h). The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945</translatorcomment>
+        <translation>Nie możesz kontynuować pobierania, ponieważ wykorzystałeś cały dostępny limit transferu.[BR][BR]Uaktualnij swoje konto, aby uzyskać większy limit transferu lub możesz poczekać [B]%1[/B] dopóki więcej limitu nie stanie się dla Ciebie dostępnych.[BR][BR][B][A]Dowiedz się więcej o limitach limit transferu.[/A][/B]</translation>
+    </message>
+    <message>
+        <source>Your MEGA cloud storage is almost full</source>
+        <translatorcomment>Title indicating that the storage is almost full. CON-945</translatorcomment>
+        <translation>Twoja pamięć w chmurze MEGA jest prawie pełna</translation>
+    </message>
+    <message>
+        <source>Your MEGA cloud storage is full</source>
+        <translatorcomment>Title indicating that the storage is full. CON-945</translatorcomment>
+        <translation>Twoja MEGA dysk w chmurze jest pełny</translation>
+    </message>
+    <message>
+        <source>per month</source>
+        <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
+        <translation>na miesiąc</translation>
     </message>
 </context>
 <context>
