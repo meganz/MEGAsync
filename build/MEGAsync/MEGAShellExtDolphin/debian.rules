@@ -3,21 +3,30 @@
 MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
 DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 24\|Oracular Oriole\|Noble Numbat\|Ubuntu 23\|Mantic Minotaur\|Lunar Lobster\|Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
 
-build: build-stamp
+KIO_DEV_PACKAGES := $$(apt-cache pkgnames | grep "libkf.*kio-dev")
+KF_VERSIONS := $(shell for p in ${KIO_DEV_PACKAGES}; do KF_VERSION=$$(dpkg -L $${p} | grep -m1 -oP '/usr/include/KF\K\w+(?=/)') && printf "kf$${KF_VERSION} "; done)
+KF_BUILDS := $(shell for v in ${KF_VERSIONS}; do printf "build-$${v} "; done)
+KF_INSTALLS := $(shell for v in ${KF_VERSIONS}; do printf "install-$${v} "; done)
+
+build: build-stamp $(KF_BUILDS) 
 build-stamp:
 	dh_testdir
 	sed -i -E "0,/dolphin-megasync \(([0-9.]*)[^\)]*\)/s//dolphin-megasync \(\1-$(MEGA_BUILD_ID).1)/" debian.changelog || :
-	cmake -DCMAKE_INSTALL_PREFIX="`qtpaths --install-prefix`" -DPLUGIN_INSTALL_DIR="`qtpaths --plugin-dir`" .
-	make
 	touch build-stamp
+
+build-kf%: build-stamp 
+	cmake -S . -B $@ -DKF_VER=$*
+	cmake --build $@
 
 clean:
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp
 
-install: build
-	dh_auto_install --destdir=debian/dolphin-megasync
+install-kf% : build-kf%
+	DESTDIR=debian/dolphin-megasync cmake --install $^
+
+install: build ${KF_INSTALLS}
 
 # Build architecture-independent files here.
 binary-indep: build install

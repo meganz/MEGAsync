@@ -328,7 +328,7 @@ void SyncController::setSyncToPause(std::shared_ptr<SyncSettings> syncSetting)
             syncOperationEnds();
         });
 
-    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_PAUSED, listener.get());
+    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_SUSPENDED, listener.get());
 }
 
 void SyncController::setSyncToSuspend(std::shared_ptr<SyncSettings> syncSetting)

@@ -522,7 +522,6 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                     }
 
                     if (runState == MegaSync::SyncRunningState::RUNSTATE_RUNNING ||
-                        runState == MegaSync::SyncRunningState::RUNSTATE_PAUSED ||
                         runState == MegaSync::SyncRunningState::RUNSTATE_SUSPENDED)
                     {
                         syncStatus = RESPONSE_PAUSED;

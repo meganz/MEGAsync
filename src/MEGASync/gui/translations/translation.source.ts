@@ -7448,11 +7448,7 @@ Do you want to delete it anyway?</translation>
         <translatorcomment>Label descriping a sync stall is happening because the folder cannot be read.SNC-2565</translatorcomment>
         <translation>Can’t retrieve the metadata for this folder. Check the permissions and re-scan.</translation>
     </message>
-    <message>
-        <source>Error identifying folder content in filesystem.</source>
-        <translatorcomment>Label descriping a sync stall is happening because the folder cannot be parsed for unnkown reason.SNC-2565</translatorcomment>
-        <translation>The contents of this folder could not be read. Check the folder permissions and that none of the items are in use by other applications.</translation>
-    </message>
+
     <message>
         <source>Error not detected</source>
         <translatorcomment>Label descripiwith default error of sync stall .SNC-2565</translatorcomment>
@@ -7921,6 +7917,11 @@ Refresh the list.</translation>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Text shown when a streaming link has been copied to the clipboard</translatorcomment>
         <translation>The link has been copied to the clipboard</translation>
+    </message>
+    <message>
+        <source>Folder links can&apos;t be streamed</source>
+        <translatorcomment>Message displayed when the user tries to stream a folder. SNC-5215.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

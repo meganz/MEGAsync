@@ -1,5 +1,6 @@
 #include "PlatformImplementation.h"
 
+#include "DesktopManager.h"
 #include "RecursiveShellNotifier.h"
 #include "ThreadedQueueShellNotifier.h"
 #include "WinAPIShell.h"
@@ -241,6 +242,20 @@ void PlatformImplementation::unHideTrayIcon()
                 }
             }
         }
+    }
+}
+
+void PlatformImplementation::pinOnTaskbar()
+{
+    auto preferences = Preferences::instance();
+    const auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
+
+    if (megaApi->isLoggedIn() &&
+        !preferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_REQUEST_PIN_TASKBAR))
+    {
+        preferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_REQUEST_PIN_TASKBAR,
+                                              true);
+        DesktopManager::requestPinToTaskBar();
     }
 }
 

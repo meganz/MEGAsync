@@ -14,6 +14,7 @@
 #include <QStyleOptionFocusRect>
 
 using namespace mega;
+using namespace std::chrono_literals;
 
 const int TransferManager::SPEED_REFRESH_PERIOD_MS;
 const int TransferManager::STATS_REFRESH_PERIOD_MS;
@@ -255,6 +256,8 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
 #endif
 
     setAttribute(Qt::WA_DeleteOnClose, true);
+
+    startRequestTaskbarPinningTimer();
 }
 
 TransferManager::~TransferManager()
@@ -787,6 +790,7 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
         }
     }
 
+    mUi->wAccountInfo->setTransferOverquota(mTransferQuotaState != QuotaState::OK);
     checkPauseButtonVisibilityIfPossible();
 }
 
@@ -1471,4 +1475,26 @@ void TransferManager::updateTransferWidget(QWidget* widgetToShow)
             }
         }
     }
+}
+
+void TransferManager::startRequestTaskbarPinningTimer()
+{
+    auto preferences = Preferences::instance();
+    if (preferences->logged() &&
+        !preferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_REQUEST_PIN_TASKBAR))
+    {
+        mTaskbarPinningRequestTimer = new QTimer(this);
+        connect(mTaskbarPinningRequestTimer,
+                &QTimer::timeout,
+                this,
+                &TransferManager::onRequestTaskbarPinningTimeout);
+
+        mTaskbarPinningRequestTimer->start(500ms);
+    }
+}
+
+void TransferManager::onRequestTaskbarPinningTimeout()
+{
+    mTaskbarPinningRequestTimer->stop();
+    Platform::getInstance()->pinOnTaskbar();
 }

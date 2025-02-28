@@ -1,37 +1,15 @@
-#include <kfileitem.h>
-#include <kfileitemlistproperties.h>
-#include <QDir>
-#include <QFileInfo>
-#include <QString>
-#if QT_VERSION >= 0x050000
-#include <QStandardPaths>
-#endif
-
-#ifndef WITH_KF5
-#include <kaction.h>
-#include <kdemacros.h>
-#include <KDE/KPluginFactory>
-#include <KDE/KPluginLoader>
-#else
-#include <KPluginFactory>
-#include <KPluginLoader>
-#include <KIOWidgets/kabstractfileitemactionplugin.h>
-#include <QtNetwork/QLocalSocket>
-#include <KIOCore/kfileitem.h>
-#include <KIOCore/KFileItemListProperties>
-#include <QtWidgets/QAction>
-#include <QtCore/QDir>
-#include <QtCore/QTimer>
-
-#define KAction QAction
-#define KIcon QIcon
-
-#endif
-
 #include "megasync-plugin.h"
 
-K_PLUGIN_FACTORY(MEGASyncPluginFactory, registerPlugin<MEGASyncPlugin>();)
-K_EXPORT_PLUGIN(MEGASyncPluginFactory("megasync-plugin"))
+#include <KFileItem>
+#include <KFileItemListProperties>
+#include <KPluginFactory>
+
+#include <QDir>
+#include <QFileInfo>
+#include <QStandardPaths>
+#include <QString>
+
+K_PLUGIN_CLASS_WITH_JSON(MEGASyncPlugin, "megasync-plugin.json")
 
 typedef enum {
     STRING_UPLOAD = 0,
@@ -70,13 +48,10 @@ MEGASyncPlugin::MEGASyncPlugin(QObject* parent, const QList<QVariant> & args):
 {
     qDebug("MEGASYNCPLUGIN : Started");
     Q_UNUSED(args);
-#if QT_VERSION < 0x050000
-    sockPath = QDir::home().path();
-    sockPath.append(QDir::separator()).append(".local/share/data/Mega Limited/MEGAsync/mega.socket");
-#else
+
     sockPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
-    sockPath.append(QDir::separator()).append("data/Mega Limited/MEGAsync/mega.socket");
-#endif
+    sockPath.append(QDir::separator())
+        .append(QLatin1String("data/Mega Limited/MEGAsync/mega.socket"));
     sock.connectToServer(sockPath);
 }
 
@@ -145,7 +120,8 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
 
     // populate Menu
     KActionMenu * menuAction = new KActionMenu(this);
-    menuAction->setText("MEGA");
+    menuAction->setIcon(QIcon::fromTheme(QStringLiteral("mega")));
+    menuAction->setText(QLatin1String("MEGA"));
     actions << menuAction;
 
     // if there any unsynced files / folders selected
@@ -164,14 +140,6 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
         QAction* act = createChildAction(menuAction, STRING_GETLINK, syncedFiles, syncedFolders);
         if (act)
         {
-            // set menu icon //TODO: state refers to the last file. Does it make any sense??
-            if (state == RESPONSE_SYNCED)
-                act->setIcon(KIcon("mega-synced"));
-            else if (state == RESPONSE_PENDING)
-                act->setIcon(KIcon("mega-pending"));
-            else if (state == RESPONSE_SYNCING)
-                act->setIcon(KIcon("mega-syncing"));
-
             connect(act, SIGNAL(triggered()), this, SLOT(getLinks()));
         }
     }
@@ -206,8 +174,8 @@ int MEGASyncPlugin::getState()
 {
     QString res;
     QString cannonicalpath = QFileInfo(selectedFilePath).canonicalFilePath();
-    cannonicalpath.append((char)0x1C);
-    cannonicalpath.append('1');
+    cannonicalpath.append(QLatin1Char(0x1C));
+    cannonicalpath.append(QLatin1Char('1'));
     res = sendRequest(OP_PATH_STATE,cannonicalpath);
 
     return res.isEmpty() ? RESPONSE_ERROR : res.toInt();
@@ -217,7 +185,7 @@ void MEGASyncPlugin::getLink()
 {
     if (sendRequest(OP_LINK, QFileInfo(selectedFilePath).canonicalFilePath()).size())
     {
-        sendRequest(OP_END, " ");
+        sendRequest(OP_END, QLatin1String(" "));
     }
 }
 
@@ -230,14 +198,14 @@ void MEGASyncPlugin::getLinks()
         {
         }
     }
-    sendRequest(OP_END, " ");
+    sendRequest(OP_END, QLatin1String(" "));
 }
 
 void MEGASyncPlugin::uploadFile()
 {
     if (sendRequest(OP_UPLOAD, QFileInfo(selectedFilePath).canonicalFilePath()).size())
     {
-        sendRequest(OP_END, " ");
+        sendRequest(OP_END, QLatin1String(" "));
     }
 }
 
@@ -250,14 +218,14 @@ void MEGASyncPlugin::uploadFiles()
         {
         }
     }
-    sendRequest(OP_END, " ");
+    sendRequest(OP_END, QLatin1String(" "));
 }
 
 void MEGASyncPlugin::viewOnMega()
 {
     if (sendRequest(OP_VIEW, QFileInfo(selectedFilePath).canonicalFilePath()).size())
     {
-        sendRequest(OP_END, " ");
+        sendRequest(OP_END, QLatin1String(" "));
     }
 }
 
@@ -265,16 +233,15 @@ void MEGASyncPlugin::viewPreviousVersions()
 {
     if (sendRequest(OP_PREVIOUS, QFileInfo(selectedFilePath).canonicalFilePath()).size())
     {
-        sendRequest(OP_END, " ");
+        sendRequest(OP_END, QLatin1String(" "));
     }
 }
 
 QString MEGASyncPlugin::getString(int type, int numFiles,int numFolders)
 {
     QString res;
-    QString queryString = "";
-    queryString.sprintf("%d:%d:%d", type, numFiles, numFolders);
 
+    QString queryString = QString::fromLatin1("%1:%2:%3").arg(type).arg(numFiles).arg(numFolders);
     res = sendRequest(OP_STRING, queryString);
     int responseCode = res.isEmpty() ? RESPONSE_ERROR : res.toInt();
 
@@ -291,10 +258,12 @@ QAction *MEGASyncPlugin::createChildAction(KActionMenu *menu, int type, int numF
     QString actionText = getString(type, numFiles, numFolders);
     if(!actionText.isEmpty())
     {
-       QAction *act = new KAction(actionText, this);
-       menu->addAction(act);
-       return act;
+        QAction* act = new QAction(actionText, this);
+        act->setIcon(QIcon::fromTheme(QStringLiteral("mega")));
+        menu->addAction(act);
+        return act;
     }
+
     return nullptr;
 }
 
@@ -302,9 +271,9 @@ QAction *MEGASyncPlugin::createChildAction(KActionMenu *menu, int type, int numF
 // Return newly-allocated response string
 QString MEGASyncPlugin::sendRequest(char type, QString command)
 {
-    int waitTime = -1; // This (instead of a timeout) makes dolphin hang until the location for an upload is selected (will be corrected in megasync>3.0.1).
-                       // Otherwise megaync segafaults accesing client socket
-    QString req;
+    int waitTime = -1; // This (instead of a timeout) makes dolphin hang until the location for an
+                       // upload is selected (will be corrected in megasync>3.0.1). Otherwise
+                       // megaync segafaults accesing client socket
 
     if(!sock.isOpen()) {
         sock.connectToServer(sockPath);
@@ -312,7 +281,7 @@ QString MEGASyncPlugin::sendRequest(char type, QString command)
             return QString();
     }
 
-    req.sprintf("%c:%s", type, command.toUtf8().constData());
+    QString req = QString::fromLatin1("%1:%2").arg(type).arg(command);
 
     qDebug("MEGASYNCPLUGIN : Sending request \"%s\"", req.toUtf8().constData());
 
@@ -324,7 +293,7 @@ QString MEGASyncPlugin::sendRequest(char type, QString command)
         return QString();
     }
 
-    QString reply (sock.readAll().trimmed());
+    QString reply = QLatin1String(sock.readAll().trimmed());
 
     return reply;
 }

@@ -1,17 +1,20 @@
-#ifndef _MEGA_SYNC_PLUGIN_H_
-#define _MEGA_SYNC_PLUGIN_H_
+#ifndef MEGA_SYNC_PLUGIN_H
+#define MEGA_SYNC_PLUGIN_H
 
-#ifndef WITH_KF5
-#include <kabstractfileitemactionplugin.h>
-#else
-#include <KIOWidgets/kabstractfileitemactionplugin.h>
-#endif
-#include <kactionmenu.h>
+#include <KAbstractFileItemActionPlugin>
+#include <KActionMenu>
+#include <KFileItem>
+#include <KFileItemListProperties>
+#include <KPluginFactory>
+
 #include <QLocalSocket>
+
+#include <kactionmenu.h>
 
 class MEGASyncPlugin: public KAbstractFileItemActionPlugin
 {
     Q_OBJECT
+
 private:
     QLocalSocket sock;
     QString sockPath;
@@ -19,12 +22,14 @@ private:
     QVector<QString> selectedFilePaths;
     int getState();
     QString sendRequest(char type, QString command);
-public:
-    MEGASyncPlugin(QObject* parent = 0, const QVariantList & args = QVariantList());
-    virtual ~MEGASyncPlugin();
-    virtual QList<QAction*> actions(const KFileItemListProperties & fileItemInfos, QWidget * parentWidget) override;
 
-private slots:
+public:
+    explicit MEGASyncPlugin(QObject* parent = nullptr, const QVariantList& args = QVariantList());
+    ~MEGASyncPlugin() override;
+    QList<QAction*> actions(const KFileItemListProperties& fileItemInfos,
+                            QWidget* parentWidget) override;
+
+private Q_SLOTS:
     void getLink();
     void getLinks();
     void uploadFile();

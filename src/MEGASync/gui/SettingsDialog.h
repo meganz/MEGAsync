@@ -142,6 +142,7 @@ protected:
 private slots:
     void onShellNotificationsProcessed();
     void onUserEmailChanged(mega::MegaHandle userHandle, const QString& newEmail);
+    void onRequestTaskbarPinningTimeout();
 
 private:
     void loadSettings();
@@ -154,6 +155,7 @@ private:
     void setGeneralTabEnabled(const bool enabled);
     void setOverlayCheckboxEnabled(const bool enabled, const bool checked);
     void setProgressState(const QString& stateName);
+    void startRequestTaskbarPinningTimer();
 
     Ui::SettingsDialog* mUi;
     MegaApplication* mApp;
@@ -173,5 +175,6 @@ private:
     bool mHasDefaultUploadOption;
     bool mHasDefaultDownloadOption;
     std::unique_ptr<UsersUpdateListener> usersUpdateListener;
+    QTimer* mTaskbarPinningRequestTimer;
 };
 #endif // SETTINGSDIALOG_H

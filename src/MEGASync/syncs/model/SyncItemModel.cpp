@@ -184,9 +184,6 @@ QVariant SyncItemModel::data(const QModelIndex& index, int role) const
                     case ::mega::MegaSync::RUNSTATE_LOADING:
                         s = tr("Loading");
                         break;
-                    case ::mega::MegaSync::RUNSTATE_PAUSED:
-                        s = tr("Paused");
-                        break;
                     case ::mega::MegaSync::RUNSTATE_SUSPENDED:
                     {
                         if (sync->getError())
@@ -320,15 +317,6 @@ QIcon SyncItemModel::getStateIcon(const std::shared_ptr<SyncSettings>& sync) con
                          QSize(STATES_ICON_SIZE, STATES_ICON_SIZE),
                          QIcon::Normal);
         syncIcon.addFile(QLatin1String(":/images/sync_states/sync-running-selected.png"),
-                         QSize(STATES_ICON_SIZE, STATES_ICON_SIZE),
-                         QIcon::Selected);
-    }
-    else if (sync->getRunState() == mega::MegaSync::RUNSTATE_PAUSED)
-    {
-        syncIcon.addFile(QLatin1String(":/images/sync_states/pause-circle.png"),
-                         QSize(STATES_ICON_SIZE, STATES_ICON_SIZE),
-                         QIcon::Normal);
-        syncIcon.addFile(QLatin1String(":/images/sync_states/pause-circle-selected.png"),
                          QSize(STATES_ICON_SIZE, STATES_ICON_SIZE),
                          QIcon::Selected);
     }

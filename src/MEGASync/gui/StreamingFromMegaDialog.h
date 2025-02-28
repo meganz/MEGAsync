@@ -68,6 +68,8 @@ private:
     void updateFileInfoFromNode(mega::MegaNode* node);
     void requestPublicNodeInfo();
     void requestNodeToLinkProcessor();
+    bool isFolderLink(const QString& link) const;
+    void showErrorMessage(const QString& message);
 };
 
 #endif // STREAMINGFROMMEGADIALOG_H

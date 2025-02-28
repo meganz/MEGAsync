@@ -1241,7 +1241,9 @@ QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode
 
     if(unescapeName)
     {
-        nodeName = QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(nodeName.toUtf8().constData()));
+        nodeName = QString::fromUtf8(
+            MegaSyncApp->getMegaApi()->unescapeFsIncompatible(nodeName.toUtf8().constData(),
+                                                              nullptr));
     }
 
     int counter(1);
@@ -1290,7 +1292,9 @@ QString Utilities::getNonDuplicatedLocalName(const QFileInfo &currentFile, bool 
     QString fileName;
     if(unescapeName)
     {
-        fileName = QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(currentFile.baseName().toUtf8().constData()));
+        fileName = QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(
+            currentFile.baseName().toUtf8().constData(),
+            nullptr));
     }
     else
     {
@@ -1320,7 +1324,10 @@ QString Utilities::getNonDuplicatedLocalName(const QFileInfo &currentFile, bool 
 
                 if(unescapeName)
                 {
-                    checkFileName = QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(filesIt.fileName().toUtf8().constData()));
+                    checkFileName =
+                        QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(
+                            filesIt.fileName().toUtf8().constData(),
+                            nullptr));
                 }
                 else
                 {
@@ -1566,7 +1573,9 @@ QString Utilities::getCommonPath(const QString &path1, const QString &path2, boo
 
 bool Utilities::isIncommingShare(MegaNode *node)
 {
-    if(node && MegaSyncApp->getMegaApi()->checkAccess(node, MegaShare::ACCESS_OWNER).getErrorCode() != MegaError::API_OK)
+    if (node && MegaSyncApp->getMegaApi()
+                        ->checkAccessErrorExtended(node, MegaShare::ACCESS_OWNER)
+                        ->getErrorCode() != MegaError::API_OK)
     {
         return true;
     }
@@ -1908,6 +1917,28 @@ bool Utilities::isNodeNameValid(const QString& name)
 {
     QString trimmedName (name.trimmed());
     return !trimmedName.isEmpty() && !trimmedName.contains(FORBIDDEN_CHARS_RX);
+}
+
+bool Utilities::shouldDisplayUpgradeButton(const bool isTransferOverquota)
+{
+    auto preferences = Preferences::instance();
+    const int storageState = preferences->getStorageState();
+    if (preferences->accountType() == Preferences::ACCOUNT_TYPE_FREE)
+    {
+        return true;
+    }
+    else if (storageState == MegaApi::STORAGE_STATE_PAYWALL ||
+             storageState == MegaApi::STORAGE_STATE_RED ||
+             storageState == MegaApi::STORAGE_STATE_ORANGE)
+    {
+        return true;
+    }
+    else if (isTransferOverquota)
+    {
+        return true;
+    }
+
+    return false;
 }
 
 QString Utilities::getFileHash(const QString& filePath)

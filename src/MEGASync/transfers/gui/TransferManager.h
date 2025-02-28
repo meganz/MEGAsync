@@ -106,6 +106,7 @@ private:
 
     bool mFoundStalledIssues;
     ButtonIconManager mButtonIconManager;
+    QTimer* mTaskbarPinningRequestTimer;
 
     void refreshStateStats();
     void refreshTypeStats();
@@ -125,6 +126,7 @@ private:
     void updateCurrentCategoryTitle();
 
     void filterByTab(TransfersWidget::TM_TAB tab);
+    void startRequestTaskbarPinningTimer();
 
 private slots:
     void on_tCompleted_clicked();
@@ -175,6 +177,7 @@ private slots:
     void onScanningAnimationUpdate();
 
     void onSortCriterionChanged(int sortBy, Qt::SortOrder order);
+    void onRequestTaskbarPinningTimeout();
 };
 
 #endif // TRANSFERMANAGER_H

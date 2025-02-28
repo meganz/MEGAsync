@@ -35,7 +35,9 @@ SelectiveSyncPageForm {
         rightPrimary.onClicked: {
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            root.syncs.addSync(isOnboarding ?  SyncInfo.ONBOARDING_ORIGIN : syncsComponentAccess.origin, localFolderChooser.choosenPath, remoteFolderChooser.choosenPath);
+            root.syncs.addSync(isOnboarding ?  SyncInfo.ONBOARDING_ORIGIN : syncsComponentAccess.origin,
+                               localFolderChooser.choosenPath,
+                               remoteFolderChooser.choosenPath);
         }
     }
 

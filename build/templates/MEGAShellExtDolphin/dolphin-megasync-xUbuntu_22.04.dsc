@@ -6,7 +6,7 @@ Version: EXT_VERSION
 DEBTRANSFORM-RELEASE: 1
 Maintainer: MEGA Linux Team <linux@mega.co.nz>
 Homepage: https://mega.nz/#sync
-Build-Depends: debhelper, cdbs, cmake, extra-cmake-modules, libkf6kio-dev, libkf5kio-dev, qt6-tools-dev-tools, qttools5-dev
+Build-Depends: debhelper, cdbs, cmake, extra-cmake-modules, libkf5kio-dev, qttools5-dev
 Depends: megasync (>= 5.3.0)
 Package-List:
   dolphin-megasync deb kde optional

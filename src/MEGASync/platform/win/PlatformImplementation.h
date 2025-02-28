@@ -66,6 +66,7 @@ public:
     static void notify(const std::string& path);
 
     void calculateInfoDialogCoordinates(const QRect& rect, int *posx, int *posy) override;
+    void pinOnTaskbar() override;
 
 private:
     void removeSyncFromLeftPane(QString syncPath, QString syncName, QString uuid);

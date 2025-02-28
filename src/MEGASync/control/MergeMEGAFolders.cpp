@@ -318,8 +318,8 @@ int MergeMEGAFolders::rename(mega::MegaNode* nodeToRename,
 
 QString MergeMEGAFolders::getNodeName(mega::MegaNode* node)
 {
-    QString nodeName =
-        QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(node->getName()));
+    QString nodeName = QString::fromUtf8(
+        MegaSyncApp->getMegaApi()->unescapeFsIncompatible(node->getName(), nullptr));
 
     if (mCaseSensitivity == Qt::CaseInsensitive)
     {
