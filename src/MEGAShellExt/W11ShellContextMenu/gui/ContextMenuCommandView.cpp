@@ -1,7 +1,6 @@
 #include "ContextMenuCommandView.h"
 
 #include "MEGAinterface.h"
-#include "SharedState.h"
 
 static const std::wstring ICON = L"cmd4.ico";
 

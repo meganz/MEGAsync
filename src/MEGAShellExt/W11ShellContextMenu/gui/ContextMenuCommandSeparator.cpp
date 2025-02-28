@@ -1,7 +1,5 @@
 #include "ContextMenuCommandSeparator.h"
 
-#include "SharedState.h"
-
 ContextMenuCommandSeparator::ContextMenuCommandSeparator():
     ContextMenuCommandBase(L"ContextMenuCommandSeparator")
 {}

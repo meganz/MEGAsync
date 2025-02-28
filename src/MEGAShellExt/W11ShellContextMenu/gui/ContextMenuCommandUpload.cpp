@@ -1,7 +1,6 @@
 #include "ContextMenuCommandUpload.h"
 
 #include "MEGAinterface.h"
-#include "SharedState.h"
 
 static const std::wstring ICON = L"cmd3.ico";
 

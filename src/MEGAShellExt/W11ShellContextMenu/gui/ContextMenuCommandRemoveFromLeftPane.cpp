@@ -1,7 +1,6 @@
 #include "ContextMenuCommandRemoveFromLeftPane.h"
 
 #include "MEGAinterface.h"
-#include "SharedState.h"
 
 static const std::wstring ICON = L"cmd2.ico";
 
