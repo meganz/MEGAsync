@@ -3,117 +3,51 @@
 #include "MEGAinterface.h"
 #include "RegUtils.h"
 
-ContextMenuData::ContextMenuData(void)
+void ContextMenuData::initialize(IShellItemArray* psiItemArray)
 {
     reset();
-}
 
-ContextMenuData::~ContextMenuData(void)
-{
-    reset();
-}
-
-void ContextMenuData::initialize(const std::vector<std::wstring>& selectedFiles,
-                                 bool forceInitialize)
-{
-    if (forceInitialize || isReset())
+    DWORD count = 0UL;
+    HRESULT hr = psiItemArray->GetCount(&count);
+    if (FAILED(hr))
     {
-        reset();
+        return;
+    }
 
-        for (const std::wstring& selectedFile: selectedFiles)
+    std::vector<std::wstring> selectedPaths;
+
+    for (DWORD fileIndex = 0; fileIndex < count; ++fileIndex)
+    {
+        LPWSTR selectedPath;
+        IShellItem* psi = nullptr;
+
+        psiItemArray->GetItemAt(fileIndex, &psi);
+        hr = psi->GetDisplayName(SIGDN_FILESYSPATH, &selectedPath);
+        if (FAILED(hr))
         {
-            processFile(selectedFile);
+            return;
+        }
+
+        psi->Release();
+
+        if (selectedPath != nullptr)
+        {
+            selectedPaths.emplace_back(selectedPath);
+            CoTaskMemFree(selectedPath);
         }
     }
-}
 
-void ContextMenuData::reset()
-{
-    mIsReset = true;
-    mInLeftPane.clear();
-    mSelectedFiles.clear();
-    mPathStates.clear();
-    mPathTypes.clear();
-    mSyncedFolders = mSyncedFiles = mSyncedUnknowns = 0;
-    mUnsyncedFolders = mUnsyncedFiles = mUnsyncedUnknowns = 0;
-}
-
-bool ContextMenuData::isReset() const
-{
-    return mIsReset;
-}
-
-bool ContextMenuData::canRequestUpload() const
-{
-    if (mUnsyncedFolders || mUnsyncedFiles)
+    for (const std::wstring& selectedPath: selectedPaths)
     {
-        return true;
+        processPath(selectedPath);
     }
-
-    return false;
 }
 
-bool ContextMenuData::canRequestGetLinks() const
-{
-    if (mSyncedFolders || mSyncedFiles)
-    {
-        return true;
-    }
-
-    return false;
-}
-
-bool ContextMenuData::canRemoveFromLeftPane() const
-{
-    if (mInLeftPane.size())
-        return true;
-
-    return false;
-}
-
-bool ContextMenuData::canViewOnMEGA() const
-{
-    if (!mUnsyncedFiles && !mUnsyncedFolders && !mUnsyncedUnknowns && !mSyncedUnknowns &&
-        mSelectedFiles.size() == 1 && (mSyncedFiles + mSyncedFolders) == 1 && mSyncedFolders)
-    {
-        return true;
-    }
-
-    return false;
-}
-
-bool ContextMenuData::canViewVersions() const
-{
-    if (!mUnsyncedFiles && !mUnsyncedFolders && !mUnsyncedUnknowns && !mSyncedUnknowns &&
-        mSelectedFiles.size() == 1 && (mSyncedFiles + mSyncedFolders) == 1 && !mSyncedFolders)
-    {
-        return true;
-    }
-
-    return false;
-}
-
-bool ContextMenuData::isSynced(int type, int state)
-{
-    return (state == MegaInterface::FILE_SYNCED) ||
-           ((type == MegaInterface::TYPE_FOLDER) && state == MegaInterface::FILE_SYNCING);
-}
-
-bool ContextMenuData::isUnsynced(int state)
-{
-    return (state == MegaInterface::FILE_NOTFOUND);
-}
-
-bool ContextMenuData::isMEGASyncOpen() const
-{
-    return MegaInterface::isMEGASyncOpen();
-}
-
-void ContextMenuData::processFile(const std::wstring& fileOrDirPath)
+void ContextMenuData::processPath(const std::wstring& path)
 {
     WIN32_FILE_ATTRIBUTE_DATA fad;
     int type = MegaInterface::TYPE_UNKNOWN;
-    if (GetFileAttributesExW(fileOrDirPath.data(), GetFileExInfoStandard, (LPVOID)&fad))
+    if (GetFileAttributesExW(path.data(), GetFileExInfoStandard, (LPVOID)&fad))
     {
         type = (fad.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ? MegaInterface::TYPE_FOLDER :
                                                                    MegaInterface::TYPE_FILE;
@@ -127,10 +61,11 @@ void ContextMenuData::processFile(const std::wstring& fileOrDirPath)
         }
     }
 
-    int state = MegaInterface::getPathState(fileOrDirPath.data(), false);
-    mSelectedFiles.push_back(fileOrDirPath);
+    int state = MegaInterface::getPathState(path.data(), false);
+    mSelectedPaths.push_back(path);
     mPathStates.push_back(state);
     mPathTypes.push_back(type);
+
     if (isSynced(type, state))
     {
         if (type == MegaInterface::TYPE_FOLDER)
@@ -165,19 +100,104 @@ void ContextMenuData::processFile(const std::wstring& fileOrDirPath)
     if ((type == MegaInterface::TYPE_FOLDER || type == MegaInterface::TYPE_NOTFOUND) &&
         !mInLeftPane.size())
     {
-        if (CheckLeftPaneIcon(const_cast<wchar_t*>(fileOrDirPath.data()), false))
+        if (CheckLeftPaneIcon(const_cast<wchar_t*>(path.data()), false))
         {
-            mInLeftPane = fileOrDirPath;
+            mInLeftPane = path;
         }
     }
 }
 
+void ContextMenuData::reset()
+{
+    mInLeftPane.clear();
+    mSelectedPaths.clear();
+    mPathStates.clear();
+    mPathTypes.clear();
+
+    mSyncedFolders = 0;
+    mSyncedFiles = 0;
+    mSyncedUnknowns = 0;
+    mUnsyncedFolders = 0;
+    mUnsyncedFiles = 0;
+    mUnsyncedUnknowns = 0;
+}
+
+bool ContextMenuData::canRequestUpload() const
+{
+    if (mUnsyncedFolders || mUnsyncedFiles)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+bool ContextMenuData::canRequestGetLinks() const
+{
+    if (mSyncedFolders || mSyncedFiles)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+bool ContextMenuData::canRemoveFromLeftPane() const
+{
+    if (mInLeftPane.size())
+    {
+        return true;
+    }
+
+    return false;
+}
+
+bool ContextMenuData::canViewOnMEGA() const
+{
+    if (!mUnsyncedFiles && !mUnsyncedFolders && !mUnsyncedUnknowns && !mSyncedUnknowns &&
+        mSelectedPaths.size() == 1 && (mSyncedFiles + mSyncedFolders) == 1 && mSyncedFolders)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+bool ContextMenuData::canViewVersions() const
+{
+    if (!mUnsyncedFiles && !mUnsyncedFolders && !mUnsyncedUnknowns && !mSyncedUnknowns &&
+        mSelectedPaths.size() == 1 && (mSyncedFiles + mSyncedFolders) == 1 && !mSyncedFolders)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+bool ContextMenuData::isSynced(int type, int state)
+{
+    return (state == MegaInterface::FILE_SYNCED) ||
+           ((type == MegaInterface::TYPE_FOLDER) && state == MegaInterface::FILE_SYNCING);
+}
+
+bool ContextMenuData::isUnsynced(int state)
+{
+    return (state == MegaInterface::FILE_NOTFOUND);
+}
+
+bool ContextMenuData::isMEGASyncOpen() const
+{
+    return MegaInterface::isMEGASyncOpen();
+}
+
 void ContextMenuData::requestUpload()
 {
-    for (unsigned int i = 0; i < mSelectedFiles.size(); i++)
+    for (auto fileIndex = 0u; fileIndex < mSelectedPaths.size(); ++fileIndex)
     {
-        if (isUnsynced(mPathStates[i]))
-            MegaInterface::upload(mSelectedFiles[i].data());
+        if (isUnsynced(mPathStates[fileIndex]))
+        {
+            MegaInterface::upload(mSelectedPaths[fileIndex].data());
+        }
     }
 
     MegaInterface::endRequest();
@@ -185,10 +205,12 @@ void ContextMenuData::requestUpload()
 
 void ContextMenuData::requestGetLinks()
 {
-    for (unsigned int i = 0; i < mSelectedFiles.size(); i++)
+    for (auto fileIndex = 0u; fileIndex < mSelectedPaths.size(); ++fileIndex)
     {
-        if (isSynced(mPathTypes[i], mPathStates[i]))
-            MegaInterface::pasteLink(mSelectedFiles[i].data());
+        if (isSynced(mPathTypes[fileIndex], mPathStates[fileIndex]))
+        {
+            MegaInterface::pasteLink(mSelectedPaths[fileIndex].data());
+        }
     }
 
     MegaInterface::endRequest();
@@ -196,27 +218,27 @@ void ContextMenuData::requestGetLinks()
 
 void ContextMenuData::removeFromLeftPane()
 {
-    if (!mInLeftPane.size())
-        return;
-
-    CheckLeftPaneIcon(mInLeftPane.data(), true);
-    MegaInterface::endRequest();
+    if (!mInLeftPane.empty())
+    {
+        CheckLeftPaneIcon(mInLeftPane.data(), true);
+        MegaInterface::endRequest();
+    }
 }
 
 void ContextMenuData::viewOnMEGA()
 {
-    if (mSelectedFiles.size())
+    if (mSelectedPaths.size())
     {
-        MegaInterface::viewOnMEGA(mSelectedFiles[0].data());
+        MegaInterface::viewOnMEGA(mSelectedPaths.cbegin()->data());
         MegaInterface::endRequest();
     }
 }
 
 void ContextMenuData::viewVersions()
 {
-    if (mSelectedFiles.size())
+    if (mSelectedPaths.size())
     {
-        MegaInterface::viewVersions(mSelectedFiles[0].data());
+        MegaInterface::viewVersions(mSelectedPaths.cbegin()->data());
         MegaInterface::endRequest();
     }
 }

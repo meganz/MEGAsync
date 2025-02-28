@@ -248,7 +248,7 @@ void ContextMenuExt::processFile(HDROP hDrop, int i)
         ((LPWSTR)buffer.data())[characters - 1] = L'\0'; // Ensure a trailing NUL character
         if (ok)
         {
-            ContextMenuData::processFile(buffer);
+            ContextMenuData::processPath(buffer);
         }
     }
 }
@@ -362,7 +362,7 @@ IFACEMETHODIMP ContextMenuExt::Initialize(LPCITEMIDLIST, LPDATAOBJECT pDataObj, 
                             processFile(hDrop, i);
                         }
 
-                        if (mSelectedFiles.size())
+                        if (!mSelectedPaths.empty())
                         {
                             hr = S_OK;
                         }
@@ -488,7 +488,7 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(HMENU hMenu,
         }
 
         if (!mUnsyncedFiles && !mUnsyncedFolders && !mUnsyncedUnknowns && !mSyncedUnknowns &&
-            mSelectedFiles.size() == 1 && (mSyncedFiles + mSyncedFolders) == 1)
+            mSelectedPaths.size() == 1 && (mSyncedFiles + mSyncedFolders) == 1)
         {
             // One synced file or folder selected
             if (mSyncedFolders)
