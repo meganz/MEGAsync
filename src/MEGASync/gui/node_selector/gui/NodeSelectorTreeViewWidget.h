@@ -3,7 +3,7 @@
 
 #include "ButtonIconManager.h"
 #include "megaapi.h"
-#include "NodeSelectorModelItem.h"
+#include "NodeSelectorModel.h"
 #include "QTMegaListener.h"
 
 #include <QDebug>
@@ -58,7 +58,15 @@ public:
     QModelIndexList getSelectedIndexes() const;
     void navigateToItem(const mega::MegaHandle& handle);
     void setSelectedNodeHandle(const mega::MegaHandle& selectedHandle);
-    void setAsyncSelectedNodeHandle(const QSet<mega::MegaHandle>& selectedHandles);
+
+    template<class Container>
+    void setAsyncSelectedNodeHandle(const Container& selectedHandles)
+    {
+        clearSelection();
+        mModel->selectIndexesByHandleAsync<Container>(selectedHandles);
+    }
+
+    void selectPendingIndexes();
 
     void setDefaultUploadOption(bool value);
     bool getDefaultUploadOption();
@@ -86,8 +94,13 @@ public:
 
     mega::MegaHandle getHandleByIndex(const QModelIndex& idx);
 
+    void addHandleToBeReplaced(mega::MegaHandle handle);
     void setParentOfRestoredNodes(const QSet<mega::MegaHandle>& parentOfRestoredNodes);
-    void setMergeFoldersTargetNodes(const QMultiHash<mega::MegaHandle, mega::MegaHandle>& handles);
+
+    using TargetHandle = mega::MegaHandle;
+    using SourceHandle = mega::MegaHandle;
+    void setMergeFolderHandles(const QMultiHash<SourceHandle, TargetHandle>& handles);
+    void resetMergeFolderHandles(const QMultiHash<SourceHandle, TargetHandle>& handles);
 
 public slots:
     virtual void checkViewOnModelChange();
@@ -212,7 +225,6 @@ private:
 
     // Expand and select
     void expandPendingIndexes();
-    void selectPendingIndexes();
     void resetMoveNodesToSelect();
 
     ButtonIconManager mButtonIconManager;
@@ -250,7 +262,8 @@ private:
 
     // Containers used to ignore specific nodes updates
     QSet<mega::MegaHandle> mParentOfRestoredNodes;
-    QMultiHash<mega::MegaHandle, mega::MegaHandle> mMergeTargetFolders;
+    QMultiHash<SourceHandle, TargetHandle> mMergeTargetFolders;
+    QSet<mega::MegaHandle> mNodesToBeReplaced;
 
     QTimer mNodesUpdateTimer;
     mega::MegaHandle mNewFolderHandle;

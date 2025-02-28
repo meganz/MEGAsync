@@ -5,33 +5,9 @@
 #include "NodeSelectorModelSpecialised.h"
 #include "NodeSelectorProxyModel.h"
 #include "RequestListenerManager.h"
+#include "RestoreNodeManager.h"
 #include "ui_NodeSelectorTreeViewWidget.h"
 #include <MegaApplication.h>
-
-///////////////////////////////////////////////////////////////////
-
-void RestoreNodeManager::onRestoreClicked(const QList<mega::MegaHandle>& handles)
-{
-    mRestoredItems = handles;
-
-    QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>> moveHandles;
-
-    foreach(auto handle, handles)
-    {
-        auto node = std::shared_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
-        if (node)
-        {
-            auto newParent = std::shared_ptr<MegaNode>(
-                MegaSyncApp->getMegaApi()->getNodeByHandle(node->getRestoreHandle()));
-            moveHandles.append(
-                qMakePair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>(handle, newParent));
-        }
-    }
-
-    mModel->processNodesAndCheckConflicts(moveHandles,
-                                          MegaSyncApp->getRubbishNode(),
-                                          NodeSelectorModel::ActionType::RESTORE);
-}
 
 ///////////////////////////////////////////////////////////////////
 NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(SelectTypeSPtr mode, QWidget *parent)
@@ -309,6 +285,11 @@ std::unique_ptr<NodeSelectorProxyModel> NodeSelectorTreeViewWidgetSearch::create
 bool NodeSelectorTreeViewWidgetSearch::isCurrentRootIndexReadOnly()
 {
     return true;
+}
+
+void NodeSelectorTreeViewWidgetSearch::resetMovingNumber()
+{
+    mModel->moveProcessedByNumber(mModel->getMoveRequestsCounter());
 }
 
 void NodeSelectorTreeViewWidgetSearch::checkSearchButtonsVisibility()

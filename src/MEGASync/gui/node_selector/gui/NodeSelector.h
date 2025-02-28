@@ -15,6 +15,7 @@
 
 class NodeSelectorProxyModel;
 class NodeSelectorModel;
+struct NodeSelectorMergeInfo;
 class NodeSelectorTreeViewWidgetCloudDrive;
 class NodeSelectorTreeViewWidgetIncomingShares;
 class NodeSelectorTreeViewWidgetBackups;
@@ -83,7 +84,6 @@ protected:
     };
 
     void performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
-                               int extraUpdateNodesOnTarget,
                                IncreaseOrDecrease type,
                                bool blockSource,
                                bool blockTarget);
@@ -112,16 +112,18 @@ protected slots:
         Q_UNUSED(id)
     }
 
-    virtual void onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles,
-                                       int extraUpdateNodesOnTarget,
-                                       int actionType);
-    virtual void onItemsAboutToBeMovedFailed(const QList<mega::MegaHandle>& handles,
-                                             int extraUpdateNodesOnTarget,
-                                             int type);
+    virtual void onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles, int actionType);
+    virtual void onItemsAboutToBeMovedFailed(const QList<mega::MegaHandle>& handles, int type);
 
     virtual void onItemsAboutToBeRestored(const QSet<mega::MegaHandle>&) {}
 
-    virtual void onItemsAboutToBeMerged(const QMultiHash<mega::MegaHandle, mega::MegaHandle>&, int)
+    virtual void onItemAboutToBeReplaced(mega::MegaHandle) {}
+
+    virtual void onItemsAboutToBeMerged(const QList<std::shared_ptr<NodeSelectorMergeInfo>>&, int)
+    {}
+
+    virtual void onItemsAboutToBeMergedFailed(const QList<std::shared_ptr<NodeSelectorMergeInfo>>&,
+                                              int)
     {}
 
     void onbShowCloudDriveClicked();
@@ -166,6 +168,10 @@ private:
     std::shared_ptr<ConflictTypes> mDuplicatedConflicts;
     std::optional<int> mDuplicatedType;
     NodeSelectorModel* mDuplicatedModel;
+
+    // Loading view
+    NodeSelectorTreeViewWidget* mSourceWid;
+    NodeSelectorTreeViewWidget* mTargetWid;
 };
 
 #endif // NODESELECTOR_H

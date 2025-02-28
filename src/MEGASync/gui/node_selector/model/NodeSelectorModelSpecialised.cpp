@@ -108,26 +108,6 @@ void NodeSelectorModelIncomingShares::ignoreDuplicatedNodeOptions(
     }
 }
 
-void NodeSelectorModelIncomingShares::onRootItemAdded()
-{
-    NodeSelectorModel::onRootItemAdded();
-
-    if (isMovingNodes())
-    {
-        moveProcessed();
-    }
-}
-
-void NodeSelectorModelIncomingShares::onRootItemDeleted()
-{
-    NodeSelectorModel::onRootItemDeleted();
-
-    if (isMovingNodes())
-    {
-        moveProcessed();
-    }
-}
-
 bool NodeSelectorModelIncomingShares::rootNodeUpdated(mega::MegaNode* node)
 {
     if(node->getChanges() & MegaNode::CHANGE_TYPE_INSHARE)
@@ -145,7 +125,7 @@ bool NodeSelectorModelIncomingShares::rootNodeUpdated(mega::MegaNode* node)
             {
                 if(mNodeRequesterWorker->isIncomingShareCompatible(node))
                 {
-                    updateItemNode(folderIndex, std::shared_ptr<mega::MegaNode>(node->copy()));
+                    updateRow(folderIndex);
                 }
                 else
                 {
@@ -285,10 +265,6 @@ NodeSelectorModelBackups::NodeSelectorModelBackups(QObject* parent):
 {
 }
 
-NodeSelectorModelBackups::~NodeSelectorModelBackups()
-{
-}
-
 void NodeSelectorModelBackups::createRootNodes()
 {
     emit requestBackupsRootCreation(mBackupsHandle);
@@ -415,11 +391,6 @@ NodeSelectorModelSearch::NodeSelectorModelSearch(NodeSelectorModelItemSearch::Ty
     qRegisterMetaType<NodeSelectorModelItemSearch::Types>("NodeSelectorModelItemSearch::Types");
 }
 
-NodeSelectorModelSearch::~NodeSelectorModelSearch()
-{
-
-}
-
 void NodeSelectorModelSearch::firstLoad()
 {
     connect(this, &NodeSelectorModelSearch::searchNodes, mNodeRequesterWorker, &NodeRequester::search);
@@ -513,11 +484,20 @@ bool NodeSelectorModelSearch::rootNodeUpdated(mega::MegaNode* node)
     {
         if (node->isInShare())
         {
-            auto totalRows = rowCount(QModelIndex());
-            beginInsertRows(QModelIndex(), totalRows, totalRows);
-            QList<std::shared_ptr<mega::MegaNode>> nodes;
-            emit requestAddSearchRootItem(nodes << std::shared_ptr<mega::MegaNode>(node->copy()),
-                                          mAllowedTypes);
+            auto index = findIndexByNodeHandle(node->getHandle(), QModelIndex());
+            if (!index.isValid())
+            {
+                auto totalRows = rowCount(QModelIndex());
+                beginInsertRows(QModelIndex(), totalRows, totalRows);
+                QList<std::shared_ptr<mega::MegaNode>> nodes;
+                emit requestAddSearchRootItem(nodes
+                                                  << std::shared_ptr<mega::MegaNode>(node->copy()),
+                                              mAllowedTypes);
+            }
+            else
+            {
+                updateRow(index);
+            }
         }
 
         return true;
@@ -585,26 +565,6 @@ bool NodeSelectorModelSearch::canCopyNodes() const
 void NodeSelectorModelSearch::proxyInvalidateFinished()
 {
     mNodeRequesterWorker->lockSearchMutex(false);
-}
-
-void NodeSelectorModelSearch::onRootItemAdded()
-{
-    NodeSelectorModel::onRootItemAdded();
-
-    if (isMovingNodes())
-    {
-        moveProcessed();
-    }
-}
-
-void NodeSelectorModelSearch::onRootItemDeleted()
-{
-    NodeSelectorModel::onRootItemDeleted();
-
-    if (isMovingNodes())
-    {
-        moveProcessed();
-    }
 }
 
 void NodeSelectorModelSearch::onRootItemsCreated()

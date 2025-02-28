@@ -1,10 +1,11 @@
 #ifndef NODESELECTORMODEL_H
 #define NODESELECTORMODEL_H
 
+#include "DuplicatedNodeInfo.h"
 #include "megaapi.h"
+#include "MegaApplication.h"
 #include "NodeSelectorModelItem.h"
 #include "Utilities.h"
-#include <MegaApplication.h>
 
 #include <QAbstractItemModel>
 #include <QIcon>
@@ -12,6 +13,7 @@
 #include <QMegaMessageBox.h>
 #include <QPointer>
 #include <QQueue>
+#include <QReadWriteLock>
 
 #include <megaapi.h>
 #include <memory>
@@ -23,8 +25,6 @@ class MyChatFilesFolder;
 }
 
 class SyncSettings;
-class DuplicatedNodeInfo;
-struct ConflictTypes;
 
 enum class NodeSelectorModelRoles
 {
@@ -51,6 +51,16 @@ enum class HeaderRoles
 {
     ICON_ROLE = toInt(NodeRowDelegateRoles::last),  //ALWAYS use last enum value from previous enum class for new enums
     last
+};
+
+enum MoveActionType
+{
+    MOVE = 0,
+    COPY,
+    RESTORE,
+    EMPTY_MERGE,
+    DELETE_RUBBISH,
+    DELETE_PERMANENTLY
 };
 
 class NodeSelectorModel;
@@ -162,6 +172,22 @@ private:
     NodeSelectorModel* mModel;
 };
 
+struct NodeSelectorMergeInfo
+{
+    std::shared_ptr<mega::MegaNode> nodeToMerge;
+    std::shared_ptr<mega::MegaNode> nodeTarget;
+    std::shared_ptr<mega::MegaNode> parentNode;
+    MoveActionType type;
+
+    enum RestoreMergeType
+    {
+        MERGE_AND_MOVE_TO_TARGET,
+        MERGE_ON_EXISTING_TARGET
+    };
+
+    std::optional<RestoreMergeType> restoreMergeType;
+};
+
 class NodeSelectorModel : public QAbstractItemModel
 {
     Q_OBJECT
@@ -219,21 +245,15 @@ public:
     bool areAllNodesEligibleForDeletion(const QList<mega::MegaHandle>& handles);
     bool areAllNodesEligibleForRestore(const QList<mega::MegaHandle> &handles) const;
 
-    enum ActionType
-    {
-        MOVE,
-        COPY,
-        RESTORE,
-        EMPTY_MERGE,
-        DELETE_RUBBISH,
-        DELETE_PERMANENTLY
-    };
-    bool startProcessingNodes(const QMimeData* data, const QModelIndex& parent, ActionType type);
-    void processNodesAfterConflictCheck(std::shared_ptr<ConflictTypes> conflicts, ActionType type);
+    bool startProcessingNodes(const QMimeData* data,
+                              const QModelIndex& parent,
+                              MoveActionType type);
+    void processNodesAfterConflictCheck(std::shared_ptr<ConflictTypes> conflicts,
+                                        MoveActionType type);
     bool processNodesAndCheckConflicts(
         const QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>>& handleAndTarget,
         std::shared_ptr<mega::MegaNode> sourceNode,
-        ActionType type);
+        MoveActionType type);
 
     bool increaseMovingNodes(int number);
     bool isMovingNodes() const;
@@ -334,7 +354,6 @@ public:
     void onRequestFinish(mega::MegaRequest* request, mega::MegaError* e);
 
     void sendBlockUiSignal(bool state);
-    void sendDisableBlockUiSystemSignal(bool state);
 
     template<class Container>
     void selectIndexesByHandleAsync(const Container& handles)
@@ -344,9 +363,6 @@ public:
             mIndexesToBeSelected.append(qMakePair(handle, QModelIndex()));
         }
     }
-
-public slots:
-    bool moveProcessed();
 
 signals:
     void levelsAdded(const QList<QPair<mega::MegaHandle, QModelIndex>>& parent, bool force = false);
@@ -358,22 +374,21 @@ signals:
     void removeRootItem(NodeSelectorModelItem* items);
     void deleteWorker();
     void blockUi(bool state, QPrivateSignal);
-    void disableBlockUiSystem(bool state, QPrivateSignal);
     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
     void showMessageBox(QMegaMessageBox::MessageBoxInfo info) const;
-    void showDuplicatedNodeDialog(std::shared_ptr<ConflictTypes> conflicts, ActionType type);
+    void showDuplicatedNodeDialog(std::shared_ptr<ConflictTypes> conflicts, MoveActionType type);
     void allNodeRequestsFinished();
     void modelIsBeingModifiedChanged(bool status);
     void itemsMoved();
-    void itemsAboutToBeMoved(const QList<mega::MegaHandle> handles,
-                             int extraUpdateNodesOnTarget,
-                             int actionType);
-    void itemsAboutToBeMovedFailed(const QList<mega::MegaHandle> handles,
-                                   int extraUpdateNodesOnTarget,
-                                   int actionType);
+    void itemsAboutToBeMoved(const QList<mega::MegaHandle> handles, int actionType);
+    void itemsAboutToBeMovedFailed(const QList<mega::MegaHandle> handles, int actionType);
     void itemsAboutToBeRestored(const QSet<mega::MegaHandle>& targetFolders);
-    void itemsAboutToBeMerged(const QMultiHash<mega::MegaHandle, mega::MegaHandle>& targetFolders,
-                              ActionType type);
+    void itemAboutToBeReplaced(mega::MegaHandle replacedHandle);
+    void itemsAboutToBeMerged(const QList<std::shared_ptr<NodeSelectorMergeInfo>>& targetFolders,
+                              int actionType);
+    void itemsAboutToBeMergedFailed(
+        const QList<std::shared_ptr<NodeSelectorMergeInfo>>& targetFolders,
+        int actionType);
     void finishAsyncRequest(mega::MegaHandle handle, int error);
 
 protected:
@@ -391,8 +406,6 @@ protected:
 
     void executeExtraSpaceLogic();
 
-    int mRequiredRights;
-    bool mDisplayFiles;
     bool mSyncSetupMode;
     NodeRequester* mNodeRequesterWorker;
     QList<std::shared_ptr<mega::MegaNode>> mNodesToLoad;
@@ -404,8 +417,8 @@ protected:
     QList<QPair<mega::MegaHandle, QModelIndex>> mIndexesToBeExpanded;
 
 protected slots:
-    virtual void onRootItemAdded();
-    virtual void onRootItemDeleted();
+    void onRootItemAdded();
+    void onRootItemDeleted();
 
 private slots:
     void onChildNodesReady(NodeSelectorModelItem *parent);
@@ -437,10 +450,26 @@ private:
     bool mAcceptDragAndDrop;
 
     // Variables related to move (including moving to rubbish bin or remove)
-    QMap<mega::MegaHandle, int> mRequestByHandle;
-    int mExtraExpectedNodesUpdateOnTarget;
-    QList<mega::MegaHandle> mExpectedNodesUpdateOnSource;
-    QMap<mega::MegaHandle, int> mRequestFailedByHandle;
+    QReadWriteLock mRequestCounterLock;
+
+    struct RequestsBeingProcessed
+    {
+        int type = -1;
+        int counter = 0;
+
+        void clear()
+        {
+            type = -1;
+            counter = 0;
+        }
+    };
+
+    RequestsBeingProcessed mRequestsBeingProcessed;
+    void initRequestsBeingProcessed(int type, int counter);
+    int requestFinished();
+
+    QList<mega::MegaHandle> mExpectedNodesUpdates;
+    QMultiMap<mega::MegaHandle, int> mRequestFailedByHandle;
     MovedItemsTypes mMovedItemsType;
 
     // Move nodes
@@ -448,31 +477,15 @@ private:
     void checkForDuplicatedSourceFilesWhenRestoring(std::shared_ptr<ConflictTypes> conflicts);
     void checkRestoreNodesTargetFolder(std::shared_ptr<ConflictTypes> conflicts);
 
-    enum RestoreMergeType
-    {
-        MERGE_AND_MOVE_TO_TARGET,
-        MERGE_ON_EXISTING_TARGET
-    };
-
-    struct MergeInfo
-    {
-        std::shared_ptr<mega::MegaNode> nodeToMerge;
-        std::shared_ptr<mega::MegaNode> nodeTarget;
-        std::shared_ptr<mega::MegaNode> parentNode;
-        ActionType type;
-        std::optional<RestoreMergeType> restoreMergeType;
-    };
-
-    QQueue<MergeInfo> mMergeQueue;
-
-    void processMergeQueue(ActionType type);
-    std::optional<RestoreMergeType>
+    QQueue<std::shared_ptr<NodeSelectorMergeInfo>> mMergeQueue;
+    QList<std::shared_ptr<NodeSelectorMergeInfo>> mFailedMerges;
+    void processMergeQueue(MoveActionType type);
+    std::optional<NodeSelectorMergeInfo::RestoreMergeType>
         checkForFoldersToMergeWhenRestoring(std::shared_ptr<ConflictTypes> conflicts);
 
     int mMoveRequestsCounter;
-    QMap<mega::MegaHandle, mega::MegaHandle> mMoveAfterMergeWhileRestoring;
 
-    // Add nodes secuentially, not all at the same time
+    // If the model is being modified, queue the nodes to add
     AddNodesQueue mAddNodesQueue;
 
     // Current root index
@@ -487,5 +500,6 @@ Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaNodeList>)
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaNode>)
 Q_DECLARE_METATYPE(QList<mega::MegaHandle>)
 Q_DECLARE_METATYPE(QSet<mega::MegaHandle>)
+Q_DECLARE_METATYPE(QList<std::shared_ptr<NodeSelectorMergeInfo>>)
 
 #endif // NODESELECTORMODEL_H

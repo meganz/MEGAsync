@@ -65,6 +65,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorModel.h
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorModelSpecialised.h
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorModelItem.h
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/RestoreNodeManager.h
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeView.h
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeViewWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h
@@ -204,6 +205,7 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorModel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorModelSpecialised.cpp
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorModelItem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/RestoreNodeManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeView.cpp
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeViewWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.cpp

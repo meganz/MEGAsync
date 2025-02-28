@@ -12,27 +12,7 @@
 
 class NodeSelectorProxyModel;
 class NodeSelectorModel;
-
-class RestoreNodeManager: public QObject
-{
-    Q_OBJECT
-
-public:
-    RestoreNodeManager(NodeSelectorModel* model, QObject* parent):
-        QObject(parent),
-        mModel(model)
-    {}
-
-public slots:
-    void onRestoreClicked(const QList<mega::MegaHandle>& handles);
-
-signals:
-    void itemsRestoreRequested(const QList<mega::MegaHandle>& handles);
-
-private:
-    QList<mega::MegaHandle> mRestoredItems;
-    NodeSelectorModel* mModel;
-};
+class RestoreNodeManager;
 
 class NodeSelectorTreeViewWidgetCloudDrive : public NodeSelectorTreeViewWidget
 {
@@ -124,6 +104,7 @@ public:
     std::shared_ptr<RestoreNodeManager> getRestoreManager() const;
 
 public slots:
+    void resetMovingNumber();
     void modelLoaded() override;
 
 signals:

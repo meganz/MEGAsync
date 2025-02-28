@@ -75,21 +75,25 @@ protected:
 
 protected slots:
     void onCustomBottomButtonClicked(uint id) override;
-    void onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles,
-                               int extraUpdateNodesOnTarget,
-                               int type) override;
-    void onItemsAboutToBeMovedFailed(const QList<mega::MegaHandle>& handles,
-                                     int extraUpdateNodesOnTarget,
-                                     int type) override;
+    void onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles, int type) override;
+    void onItemsAboutToBeMovedFailed(const QList<mega::MegaHandle>& handles, int type) override;
     void onItemsAboutToBeRestored(const QSet<mega::MegaHandle>& targetHandles) override;
 
-    void onItemsAboutToBeMerged(const QMultiHash<mega::MegaHandle, mega::MegaHandle>& items,
+    void onItemAboutToBeReplaced(mega::MegaHandle handle) override;
+
+    void onItemsAboutToBeMerged(const QList<std::shared_ptr<NodeSelectorMergeInfo>>& mergesInfo,
                                 int actionType) override;
 
+    void onItemsAboutToBeMergedFailed(
+        const QList<std::shared_ptr<NodeSelectorMergeInfo>>& mergesInfo,
+        int actionType) override;
+
 private:
+    void performMergeAction(const QList<std::shared_ptr<NodeSelectorMergeInfo>>& mergesInfo,
+                            int actionType,
+                            NodeSelector::IncreaseOrDecrease type);
     void onOkButtonClicked() override;
     void checkMovingItems(const QList<mega::MegaHandle>& handles,
-                          int extraUpdateNodesOnTarget,
                           int moveType,
                           NodeSelector::IncreaseOrDecrease type);
 

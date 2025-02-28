@@ -64,10 +64,6 @@ public slots:
 protected:
     void ignoreDuplicatedNodeOptions(std::shared_ptr<mega::MegaNode> targetNode) override;
 
-protected slots:
-    void onRootItemAdded() override;
-    void onRootItemDeleted() override;
-
 signals:
     void requestIncomingSharesRootCreation(std::shared_ptr<mega::MegaNodeList> nodes);
     void addIncomingSharesRoot(std::shared_ptr<mega::MegaNode> node);
@@ -86,7 +82,7 @@ class NodeSelectorModelBackups : public NodeSelectorModel
 
 public:
     explicit NodeSelectorModelBackups(QObject *parent = 0);
-    virtual ~NodeSelectorModelBackups();
+    ~NodeSelectorModelBackups() = default;
 
     void createRootNodes() override;
     int rootItemsCount() const override;
@@ -125,7 +121,7 @@ class NodeSelectorModelSearch : public NodeSelectorModel
     Q_OBJECT
 public:
     explicit NodeSelectorModelSearch(NodeSelectorModelItemSearch::Types allowedType, QObject* parent = 0);
-    virtual ~NodeSelectorModelSearch();
+    ~NodeSelectorModelSearch() = default;
     void firstLoad() override;
     void createRootNodes() override;
     void searchByText(const QString& text);
@@ -149,10 +145,6 @@ public:
 
 protected:
     void proxyInvalidateFinished() override;
-
-protected slots:
-    void onRootItemAdded() override;
-    void onRootItemDeleted() override;
 
 signals:
     void searchNodes(const QString& text, NodeSelectorModelItemSearch::Types);

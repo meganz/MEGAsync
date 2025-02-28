@@ -32,7 +32,9 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
     mDelegateListener(std::make_unique<QTMegaListener>(mMegaApi, this)),
     mInitialised(false),
     mDuplicatedType(std::nullopt),
-    mDuplicatedModel(nullptr)
+    mDuplicatedModel(nullptr),
+    mSourceWid(nullptr),
+    mTargetWid(nullptr)
 {
     ui->setupUi(this);
 
@@ -232,30 +234,17 @@ void NodeSelector::onUpdateLoadingMessage(std::shared_ptr<MessageInfo> message)
     }
 }
 
-void NodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles,
-                                         int extraUpdateNodesOnTarget,
-                                         int)
+void NodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles, int)
 {
-    performItemsToBeMoved(handles,
-                          extraUpdateNodesOnTarget,
-                          IncreaseOrDecrease::INCREASE,
-                          true,
-                          true);
+    performItemsToBeMoved(handles, IncreaseOrDecrease::INCREASE, true, true);
 }
 
-void NodeSelector::onItemsAboutToBeMovedFailed(const QList<mega::MegaHandle>& handles,
-                                               int extraUpdateNodesOnTarget,
-                                               int)
+void NodeSelector::onItemsAboutToBeMovedFailed(const QList<mega::MegaHandle>& handles, int)
 {
-    performItemsToBeMoved(handles,
-                          extraUpdateNodesOnTarget,
-                          IncreaseOrDecrease::DECREASE,
-                          true,
-                          true);
+    performItemsToBeMoved(handles, IncreaseOrDecrease::DECREASE, true, true);
 }
 
 void NodeSelector::performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
-                                         int extraUpdateNodesOnTarget,
                                          IncreaseOrDecrease type,
                                          bool blockSource,
                                          bool blockTarget)
@@ -264,6 +253,17 @@ void NodeSelector::performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
     {
         return;
     }
+
+    if (mTargetWid)
+    {
+        disconnect(mTargetWid->getProxyModel()->getMegaModel(),
+                   &NodeSelectorModel::itemsMoved,
+                   mSearchWidget,
+                   &NodeSelectorTreeViewWidgetSearch::resetMovingNumber);
+    }
+
+    mTargetWid = nullptr;
+    mSourceWid = nullptr;
 
     // IF we want to block the source or target, set values to false in order to look for them
     bool foundSource(blockSource ? false : true);
@@ -286,15 +286,12 @@ void NodeSelector::performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
         }
     };
 
-    NodeSelectorTreeViewWidget* sourceWid(nullptr);
-    NodeSelectorTreeViewWidget* targetWid(nullptr);
-
-    auto findSource = [handles, &foundSource, &sourceWid](NodeSelectorTreeViewWidget* wid)
+    auto findSource = [this, handles, &foundSource](NodeSelectorTreeViewWidget* wid)
     {
         if (!foundSource && wid->areItemsAboutToBeMovedFromHere(handles.first()))
         {
             foundSource = true;
-            sourceWid = wid;
+            mSourceWid = wid;
         }
     };
 
@@ -305,7 +302,7 @@ void NodeSelector::performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
             if (!foundTarget && wid->getProxyModel()->getMegaModel() == senderModel)
             {
                 foundTarget = true;
-                targetWid = wid;
+                mTargetWid = wid;
 
                 findSource(wid);
             }
@@ -321,11 +318,19 @@ void NodeSelector::performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
         }
     }
 
-    targetOrSourceFound(targetWid, handles.size() + extraUpdateNodesOnTarget);
+    targetOrSourceFound(mTargetWid, handles.size());
 
-    if (targetWid != sourceWid)
+    if (mTargetWid != mSourceWid)
     {
-        targetOrSourceFound(sourceWid, handles.size());
+        targetOrSourceFound(mSourceWid, handles.size());
+    }
+
+    if (mTargetWid && mSourceWid == mSearchWidget)
+    {
+        connect(mTargetWid->getProxyModel()->getMegaModel(),
+                &NodeSelectorModel::itemsMoved,
+                mSearchWidget,
+                &NodeSelectorTreeViewWidgetSearch::resetMovingNumber);
     }
 }
 
@@ -533,9 +538,19 @@ void NodeSelector::initSpecialisedWidgets()
                     &NodeSelector::onItemsAboutToBeRestored);
 
             connect(model,
+                    &NodeSelectorModel::itemAboutToBeReplaced,
+                    this,
+                    &NodeSelector::onItemAboutToBeReplaced);
+
+            connect(model,
                     &NodeSelectorModel::itemsAboutToBeMerged,
                     this,
                     &NodeSelector::onItemsAboutToBeMerged);
+
+            connect(model,
+                    &NodeSelectorModel::itemsAboutToBeMergedFailed,
+                    this,
+                    &NodeSelector::onItemsAboutToBeMergedFailed);
 
             connect(model,
                     &NodeSelectorModel::updateLoadingMessage,
@@ -550,11 +565,11 @@ void NodeSelector::initSpecialisedWidgets()
                         info.parent = this;
                         QMegaMessageBox::warning(info);
                     });
+
             connect(model,
                     &NodeSelectorModel::showDuplicatedNodeDialog,
                     this,
-                    [this, model](std::shared_ptr<ConflictTypes> conflicts,
-                                  NodeSelectorModel::ActionType type)
+                    [this, model](std::shared_ptr<ConflictTypes> conflicts, MoveActionType type)
                     {
                         mDuplicatedModel = model;
                         mDuplicatedConflicts = conflicts;
@@ -671,7 +686,7 @@ void NodeSelector::onShowDuplicatedNodeDialog(QPointer<DuplicatedNodeDialog>)
     {
         mDuplicatedModel->processNodesAfterConflictCheck(
             mDuplicatedConflicts,
-            static_cast<NodeSelectorModel::ActionType>(mDuplicatedType.value()));
+            static_cast<MoveActionType>(mDuplicatedType.value()));
         mDuplicatedType = std::nullopt;
         mDuplicatedModel = nullptr;
         mDuplicatedConflicts.reset();
@@ -684,7 +699,10 @@ void NodeSelector::onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList* nodes)
     {
         if (auto wid = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(index)))
         {
-            wid->onNodesUpdate(api, nodes);
+            if (wid != mSearchWidget || !ui->wSearchNS->isHidden())
+            {
+                wid->onNodesUpdate(api, nodes);
+            }
         }
     }
 }

@@ -490,6 +490,11 @@ MegaHandle NodeSelectorTreeViewWidget::getHandleByIndex(const QModelIndex& idx)
     return mProxyModel ? mProxyModel->getHandle(idx) : mega::INVALID_HANDLE;
 }
 
+void NodeSelectorTreeViewWidget::addHandleToBeReplaced(mega::MegaHandle handle)
+{
+    mNodesToBeReplaced.insert(handle);
+}
+
 QModelIndex NodeSelectorTreeViewWidget::getIndexFromHandle(const mega::MegaHandle &handle)
 {
     return mProxyModel ? mProxyModel->getIndexFromHandle(handle) : QModelIndex();
@@ -938,11 +943,6 @@ bool NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
             auto index(mModel->findIndexByNodeHandle(node->getHandle(), QModelIndex()));
             auto existenceType(getNodeOnModelState(index, node));
 
-            qDebug() << this << node->getName() << node->getChanges() << node->getHandle()
-                     << node->getParentHandle() << static_cast<int>(existenceType)
-                     << mMergeTargetFolders << mParentOfRestoredNodes
-                     << mModel->getMoveRequestsCounter();
-
             if (existenceType == NodeState::DOESNT_EXIST)
             {
                 continue;
@@ -1120,6 +1120,13 @@ void NodeSelectorTreeViewWidget::selectPendingIndexes()
     auto indexesToBeSelected = mModel->needsToBeSelected();
     if (!indexesToBeSelected.isEmpty())
     {
+        // Disconnect the signal to check the state when finished
+        disconnect(ui->tMegaFolders->selectionModel(),
+                   &QItemSelectionModel::selectionChanged,
+                   this,
+                   &NodeSelectorTreeViewWidget::onSelectionChanged);
+
+        bool allSelected(true);
         foreach(auto item, indexesToBeSelected)
         {
             QModelIndex proxyIndex;
@@ -1136,8 +1143,19 @@ void NodeSelectorTreeViewWidget::selectPendingIndexes()
                 else
                 {
                     setSelectedNodeHandle(handle);
+                    allSelected = false;
                 }
             }
+        }
+        // Connect it again
+        connect(ui->tMegaFolders->selectionModel(),
+                &QItemSelectionModel::selectionChanged,
+                this,
+                &NodeSelectorTreeViewWidget::onSelectionChanged);
+
+        if (allSelected)
+        {
+            onSelectionChanged(QItemSelection(), QItemSelection());
         }
     }
 }
@@ -1151,6 +1169,23 @@ void NodeSelectorTreeViewWidget::selectIndex(const mega::MegaHandle& handle,
     {
         selectIndex(index, setCurrent, exclusiveSelect);
     }
+}
+
+void NodeSelectorTreeViewWidget::selectIndex(const QModelIndex& index,
+                                             bool setCurrent,
+                                             bool exclusiveSelect)
+{
+    auto selectionFlag(exclusiveSelect ? QItemSelectionModel::ClearAndSelect :
+                                         QItemSelectionModel::Select);
+
+    if (setCurrent)
+    {
+        ui->tMegaFolders->selectionModel()->setCurrentIndex(index,
+                                                            selectionFlag |
+                                                                QItemSelectionModel::Rows);
+    }
+    ui->tMegaFolders->selectionModel()->select(index, selectionFlag | QItemSelectionModel::Rows);
+    ui->tMegaFolders->scrollTo(index, QAbstractItemView::ScrollHint::PositionAtCenter);
 }
 
 bool NodeSelectorTreeViewWidget::increaseMovingNodes(int number)
@@ -1173,23 +1208,6 @@ bool NodeSelectorTreeViewWidget::areItemsAboutToBeMovedFromHere(mega::MegaHandle
     }
 
     return false;
-}
-
-void NodeSelectorTreeViewWidget::selectIndex(const QModelIndex& index,
-                                             bool setCurrent,
-                                             bool exclusiveSelect)
-{
-    auto selectionFlag(exclusiveSelect ? QItemSelectionModel::ClearAndSelect :
-                                         QItemSelectionModel::Select);
-
-    if(setCurrent)
-    {
-        ui->tMegaFolders->selectionModel()->setCurrentIndex(index,
-                                                            selectionFlag |
-                                                                QItemSelectionModel::Rows);
-    }
-    ui->tMegaFolders->selectionModel()->select(index, selectionFlag | QItemSelectionModel::Rows);
-    ui->tMegaFolders->scrollTo(index, QAbstractItemView::ScrollHint::PositionAtCenter);
 }
 
 void NodeSelectorTreeViewWidget::onItemsMoved()
@@ -1288,7 +1306,6 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
             for (auto& info: qAsConst(mRenamedNodesByHandle))
             {
                 updateNode(info, true);
-                moveProcessedCounter++;
             }
             mRenamedNodesByHandle.clear();
         }
@@ -1298,7 +1315,6 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
             for (auto& info: qAsConst(mUpdatedNodes))
             {
                 updateNode(info, false);
-                moveProcessedCounter++;
             }
             mUpdatedNodes.clear();
         }
@@ -1309,7 +1325,10 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
             {
                 removeItemByHandle(info.handle);
 
-                moveProcessedCounter++;
+                if (!mNodesToBeReplaced.remove(info.handle))
+                {
+                    moveProcessedCounter++;
+                }
             }
             mRemovedNodes.clear();
         }
@@ -1409,7 +1428,6 @@ void NodeSelectorTreeViewWidget::updateNode(const UpdateNodesInfo &info, bool sc
         }
     }
 
-    mModel->moveProcessed();
     mModel->updateItemNode(index, info.node);
 
     if(info.node)
@@ -1435,10 +1453,19 @@ void NodeSelectorTreeViewWidget::setParentOfRestoredNodes(
     mParentOfRestoredNodes = parentOfRestoredNodes;
 }
 
-void NodeSelectorTreeViewWidget::setMergeFoldersTargetNodes(
-    const QMultiHash<mega::MegaHandle, mega::MegaHandle>& handles)
+void NodeSelectorTreeViewWidget::setMergeFolderHandles(
+    const QMultiHash<SourceHandle, TargetHandle>& handles)
 {
     mMergeTargetFolders = handles;
+}
+
+void NodeSelectorTreeViewWidget::resetMergeFolderHandles(
+    const QMultiHash<SourceHandle, TargetHandle>& handles)
+{
+    for (auto it = handles.keyValueBegin(); it != handles.keyValueEnd(); ++it)
+    {
+        mMergeTargetFolders.remove(it->first);
+    }
 }
 
 void NodeSelectorTreeViewWidget::setSelectedNodeHandle(const MegaHandle& selectedHandle)
@@ -1456,13 +1483,6 @@ void NodeSelectorTreeViewWidget::setSelectedNodeHandle(const MegaHandle& selecte
 
     mModel->selectIndexesByHandleAsync(QSet<mega::MegaHandle>() << node->getHandle());
     mModel->loadTreeFromNode(node);
-}
-
-void NodeSelectorTreeViewWidget::setAsyncSelectedNodeHandle(
-    const QSet<mega::MegaHandle>& selectedHandles)
-{
-    clearSelection();
-    mModel->selectIndexesByHandleAsync(selectedHandles);
 }
 
 MegaHandle NodeSelectorTreeViewWidget::getSelectedNodeHandle()
