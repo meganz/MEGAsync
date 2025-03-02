@@ -434,7 +434,8 @@ private:
     void createChildItems(std::shared_ptr<mega::MegaNodeList> childNodes, const QModelIndex& index, NodeSelectorModelItem* parent);
     void protectModelWhenPerformingActions();
 
-    void executeRemoveExtraSpaceLogic();
+    void executeRemoveExtraSpaceLogic(const QModelIndex& previousIndex);
+    void executeAddExtraSpaceLogic(const QModelIndex& currentIndex);
 
     QIcon getFolderIcon(NodeSelectorModelItem* item) const;
     bool fetchMoreRecursively(const QModelIndex& parentIndex);
@@ -491,6 +492,9 @@ private:
     // Current root index
     QModelIndex mCurrentRootIndex;
     QModelIndex mPreviousRootIndex;
+    QModelIndex mAddedIndex;
+    bool mAddExpaceWhenLoadingFinish = false;
+    QModelIndex mPendingRootIndex;
     bool mExtraSpaceAdded;
     bool mExtraSpaceRemoved;
     bool mRemovingPreviousExtraSpace;

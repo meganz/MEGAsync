@@ -34,6 +34,7 @@ public:
     ~NodeSelectorModelItem();
 
     std::shared_ptr<mega::MegaNode> getNode() const;
+    bool isSpecialNode() const;
 
     void createChildItems(std::unique_ptr<mega::MegaNodeList> nodeList);
     bool areChildrenInitialized() const;

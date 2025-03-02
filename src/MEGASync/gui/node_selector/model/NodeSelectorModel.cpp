@@ -574,36 +574,54 @@ void NodeSelectorModel::protectModelWhenPerformingActions()
     connect(this, &NodeSelectorModel::rowsMoved, unprotectModel);
 }
 
-void NodeSelectorModel::executeExtraSpaceLogic()
+void NodeSelectorModel::executeRemoveExtraSpaceLogic(const QModelIndex& previousIndex)
 {
     if (canDropMimeData())
     {
         // Remove the previous current index extra row
-        if (mPreviousRootIndex.isValid() && !mExtraSpaceRemoved)
+        if (previousIndex.isValid() && !mExtraSpaceRemoved)
         {
             mRemovingPreviousExtraSpace = true;
 
-            auto lastRow = rowCount(mPreviousRootIndex) - 1;
-            beginRemoveRows(mPreviousRootIndex, lastRow, lastRow);
+            auto lastRow = rowCount(previousIndex) - 1;
+            beginRemoveRows(previousIndex, lastRow, lastRow);
             endRemoveRows();
 
+            mAddedIndex = QModelIndex();
             mRemovingPreviousExtraSpace = false;
             mExtraSpaceRemoved = true;
+            mExtraSpaceAdded = false;
         }
+    }
+}
 
+void NodeSelectorModel::executeAddExtraSpaceLogic(const QModelIndex& currentIndex)
+{
+    if (canDropMimeData())
+    {
         NodeSelectorModelItem* item =
-            static_cast<NodeSelectorModelItem*>(mCurrentRootIndex.internalPointer());
+            static_cast<NodeSelectorModelItem*>(currentIndex.internalPointer());
         if (item && item->areChildrenInitialized())
         {
-            if (mCurrentRootIndex.isValid() && !mExtraSpaceAdded)
+            if (currentIndex.isValid() && !mExtraSpaceAdded)
             {
-                auto totalRows = rowCount(mCurrentRootIndex);
-                beginInsertRows(mCurrentRootIndex, totalRows, totalRows);
+                auto totalRows = rowCount(currentIndex);
+                beginInsertRows(currentIndex, totalRows, totalRows);
                 endInsertRows();
                 mExtraSpaceAdded = true;
+                mExtraSpaceRemoved = false;
+                mAddedIndex = createIndex(totalRows, 0, nullptr);
             }
         }
     }
+}
+
+void NodeSelectorModel::executeExtraSpaceLogic()
+{
+    executeRemoveExtraSpaceLogic(mCurrentRootIndex);
+    mPreviousRootIndex = mCurrentRootIndex;
+    mCurrentRootIndex = mPendingRootIndex.isValid() ? mPendingRootIndex : getTopRootIndex();
+    executeAddExtraSpaceLogic(mCurrentRootIndex);
 }
 
 int NodeSelectorModel::columnCount(const QModelIndex &) const
@@ -731,10 +749,17 @@ Qt::ItemFlags NodeSelectorModel::flags(const QModelIndex &index) const
                 flags &= ~(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
             }
 
-            if(mAcceptDragAndDrop)
+            if(mAcceptDragAndDrop && !item->isSpecialNode())
             {
                 flags |= (Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
             }
+        }
+
+        if (mExtraSpaceAdded &&
+            (mAddedIndex.row() == index.row() && mAddedIndex.parent() == index.parent()))
+        {
+            flags |= (Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+            flags &= ~(Qt::ItemIsSelectable);
         }
     }
 
@@ -1451,11 +1476,7 @@ QModelIndex NodeSelectorModel::index(int row, int column, const QModelIndex &par
             NodeSelectorModelItem* item(static_cast<NodeSelectorModelItem*>(parent.internalPointer()));
             if(item)
             {
-                auto data = item->getChild(row).data();
-                if(data)
-                {
-                    index =  createIndex(row, column, data);
-                }
+                index = createIndex(row, column, item->getChild(row).data());
             }
             mNodeRequesterWorker->lockDataMutex(false);
         }
@@ -1506,12 +1527,12 @@ int NodeSelectorModel::rowCount(const QModelIndex &parent) const
         mNodeRequesterWorker->lockDataMutex(true);
         NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
         rows = item ? item->getNumChildren() : 0;
+        if (mExtraSpaceAdded && parent == mCurrentRootIndex)
+        {
+            rows = rows + 1;
+        }
         mNodeRequesterWorker->lockDataMutex(false);
 
-        if (mRemovingPreviousExtraSpace && parent == mPreviousRootIndex)
-        {
-            rows++;
-        }
     }
     else
     {
@@ -2408,7 +2429,12 @@ void NodeSelectorModel::addRootItems()
 
 void NodeSelectorModel::loadLevelFinished()
 {
-    executeExtraSpaceLogic();
+    if(mAddExpaceWhenLoadingFinish)
+    {
+        executeExtraSpaceLogic();
+        mAddExpaceWhenLoadingFinish = false;
+        mPendingRootIndex = QModelIndex();
+    }
 
     emit levelsAdded(mIndexesToBeExpanded);
 }
@@ -2430,15 +2456,21 @@ bool NodeSelectorModel::canFetchMore(const QModelIndex &parent) const
     }
 }
 
-void NodeSelectorModel::setCurrentRootIndex(const QModelIndex& rootIndex)
+void NodeSelectorModel::setCurrentRootIndex(const QModelIndex& index)
 {
-    mPreviousRootIndex = mCurrentRootIndex;
-    mCurrentRootIndex = rootIndex.isValid() ? rootIndex : getTopRootIndex();
+    mPendingRootIndex = index;
 
-    mExtraSpaceAdded = false;
-    mExtraSpaceRemoved = false;
-
-    executeExtraSpaceLogic();
+    NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(index.internalPointer());
+    if(item && item->areChildrenInitialized())
+    {
+        executeExtraSpaceLogic();
+        mAddExpaceWhenLoadingFinish = false;
+        mPendingRootIndex = QModelIndex();
+    }
+    else
+    {
+        mAddExpaceWhenLoadingFinish = true;
+    }
 }
 
 QModelIndex NodeSelectorModel::rootIndex(const QModelIndex& visualRootIndex) const
