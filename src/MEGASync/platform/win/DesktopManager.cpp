@@ -80,8 +80,7 @@ bool DesktopManager::requestPinToTaskBar()
         {
             auto taskbarManager = winrt::Windows::UI::Shell::TaskbarManager::GetDefault();
 
-            if (taskbarManager.IsSupported() && taskbarManager.IsPinningAllowed() &&
-                !taskbarManager.IsCurrentAppPinnedAsync().get())
+            if (taskbarManager.IsSupported() && taskbarManager.IsPinningAllowed())
             {
                 taskbarManager.RequestPinCurrentAppAsync();
                 return true;

@@ -304,11 +304,6 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName(QString::fromUtf8("MEGAsync")); //Do not change app name, keep MEGAsync because Linux rely on that for app paths.
     QCoreApplication::setApplicationVersion(QString::number(Preferences::VERSION_CODE));
 
-#ifdef Q_OS_WINDOWS
-    winrt::uninit_apartment();
-    winrt::init_apartment();
-#endif
-
     Platform::create();
 
     // This call is responsible for rebuilding the Qt symlinks in platforms where it applies.
