@@ -404,6 +404,8 @@ protected:
 
     virtual void ignoreDuplicatedNodeOptions(std::shared_ptr<mega::MegaNode>) {}
 
+    virtual bool showAccess(mega::MegaNode* node) const;
+
     void executeExtraSpaceLogic();
 
     bool mSyncSetupMode;

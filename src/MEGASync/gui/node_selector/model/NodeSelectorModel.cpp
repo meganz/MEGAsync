@@ -2286,7 +2286,7 @@ QVariant NodeSelectorModel::getText(const QModelIndex &index, NodeSelectorModelI
         case COLUMN::ACCESS:
         {
             // Only for the top parent inshare
-            if (item->getNode()->isInShare())
+            if (showAccess(item->getNode().get()))
             {
                 return Utilities::getNodeStringAccess(item->getNode().get());
             }
@@ -2558,6 +2558,11 @@ bool NodeSelectorModel::continueWithNextItemToLoad(const QModelIndex& parentInde
     }
 
     return result;
+}
+
+bool NodeSelectorModel::showAccess(mega::MegaNode* node) const
+{
+    return node->isInShare();
 }
 
 QModelIndex NodeSelectorModel::findIndexByNodeHandle(const mega::MegaHandle& handle,
