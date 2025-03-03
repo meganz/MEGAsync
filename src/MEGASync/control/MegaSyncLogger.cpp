@@ -289,7 +289,11 @@ private:
 
                 outputFile.close();
                 QFile::remove(newNameZipping);
-                QFile(filename).rename(newNameZipping);
+                if (!QFile(filename).rename(newNameZipping))
+                {
+                    // If renaming fails, try a copy
+                    QFile(filename).copy(newNameZipping);
+                }
 
                 bool report = forceRotationForReporting;
                 forceRotationForReporting = false;
