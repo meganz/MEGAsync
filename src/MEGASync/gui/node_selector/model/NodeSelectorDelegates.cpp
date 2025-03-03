@@ -18,12 +18,21 @@ NodeSelectorDelegate::NodeSelectorDelegate(QObject* parent):
 
 void NodeSelectorDelegate::setPaintDevice(QPainter* painter) const
 {
+#ifdef Q_OS_LINUX
+    // On Linux the main device is not permanent, it may change
+    auto view = dynamic_cast<NodeSelectorTreeView*>(parent());
+    if (mMainDevice != painter->device() && view->state() == NodeSelectorTreeView::NoState)
+    {
+        mMainDevice = painter->device();
+    }
+#else
     // First time the row is painted, we get the main paint device
     // in order to compare with other paint devices, as the use by the dragging action
     if (!mMainDevice)
     {
         mMainDevice = painter->device();
     }
+#endif
 }
 
 bool NodeSelectorDelegate::isPaintingDrag(QPainter* painter) const
