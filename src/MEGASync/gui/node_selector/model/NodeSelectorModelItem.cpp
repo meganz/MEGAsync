@@ -41,8 +41,7 @@ std::shared_ptr<mega::MegaNode> NodeSelectorModelItem::getNode() const
 
 bool NodeSelectorModelItem::isSpecialNode() const
 {
-    return (isCloudDrive() || isVault() || isRubbishBin() ||
-            (mNode && mNode->isInShare()));
+    return (isCloudDrive() || isVault() || isRubbishBin() || mNode->isInShare());
 }
 
 void NodeSelectorModelItem::createChildItems(std::unique_ptr<mega::MegaNodeList> nodeList)

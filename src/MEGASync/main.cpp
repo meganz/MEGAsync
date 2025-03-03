@@ -305,8 +305,8 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationVersion(QString::number(Preferences::VERSION_CODE));
 
 #ifdef Q_OS_WINDOWS
-    winrt::uninit_apartment();
-    winrt::init_apartment();
+    // winrt::uninit_apartment();
+    // winrt::init_apartment();
 #endif
 
     Platform::create();
