@@ -451,6 +451,7 @@ set (DESKTOP_APP_TS_FILES
     ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_ro.ts
     ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_ru.ts
     ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_th.ts
+    ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_tr.ts
     ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_vi.ts
     ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_zh_CN.ts
     ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_zh_TW.ts
