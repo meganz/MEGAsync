@@ -156,13 +156,9 @@ void NodeSelectorTreeViewWidget::init()
             this,
             &NodeSelectorTreeViewWidget::viewReady);
     connect(mProxyModel.get(),
-        &NodeSelectorProxyModel::modelSorted,
-        this,
-        &NodeSelectorTreeViewWidget::modelLoaded);
-    connect(mProxyModel.get(),
-            &QAbstractItemModel::rowsInserted,
+            &NodeSelectorProxyModel::modelSorted,
             this,
-            &NodeSelectorTreeViewWidget::onProxyModelRowsInserted);
+            &NodeSelectorTreeViewWidget::modelLoaded);
     connect(mModel.get(),
             &QAbstractItemModel::rowsInserted,
             this,
@@ -336,26 +332,16 @@ void NodeSelectorTreeViewWidget::checkViewOnModelChange()
     modelLoaded();
 }
 
-void NodeSelectorTreeViewWidget::onProxyModelRowsInserted(const QModelIndex& parent,
-                                                          int first,
-                                                          int last)
+void NodeSelectorTreeViewWidget::checkNewFolderAdded(QPointer<NodeSelectorModelItem> item)
 {
     if (mNewFolderAdded)
     {
-        for (int index = first; index <= last; ++index)
+        // If the row inserted is the new row, stop iterating over the new insertions
+        if (item->getNode()->getHandle() == mNewFolderHandle)
         {
-            auto proxyIndex(mProxyModel->index(index, 0, parent));
-            if (proxyIndex.isValid())
-            {
-                auto handle = getHandleByIndex(proxyIndex);
-                // If the row inserted is the new row, stop iterating over the new insertions
-                if (handle == mNewFolderHandle)
-                {
-                    onItemDoubleClick(mProxyModel->getIndexFromHandle(mNewFolderHandle));
-                    mNewFolderHandle = mega::INVALID_HANDLE;
-                    break;
-                }
-            }
+            onItemDoubleClick(mProxyModel->getIndexFromHandle(mNewFolderHandle));
+            mNewFolderHandle = mega::INVALID_HANDLE;
+            mNewFolderAdded = false;
         }
     }
 }
@@ -739,8 +725,6 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
     msgInfo.title = MegaSyncApp->getMEGAString();
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::Yes;
-    msgInfo.buttonsText.insert(QMessageBox::Yes, tr("Delete"));
-    msgInfo.buttonsText.insert(QMessageBox::No, tr("Cancel"));
     msgInfo.finishFunc = [this, handles, permanently](QPointer<QMessageBox> msg)
     {
         if (msg->result() == QMessageBox::Yes)
@@ -769,6 +753,9 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
 
     if (permanently)
     {
+        msgInfo.buttonsText.insert(QMessageBox::Yes, tr("Delete"));
+        msgInfo.buttonsText.insert(QMessageBox::No, tr("Cancel"));
+
         if (type == Utilities::HandlesType::FILES)
         {
             msgInfo.text =
@@ -792,33 +779,18 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
     }
     else
     {
-        if (handles.size() == 1)
+        msgInfo.buttonsText.insert(QMessageBox::Yes, tr("Move"));
+        msgInfo.buttonsText.insert(QMessageBox::No, tr("Don´t move"));
+
+        auto node = getNode(handles.first());
+        if (handles.size() == 1 && node)
         {
-            auto node = getNode(handles.first());
-            if (node)
-            {
-                msgInfo.text = tr("Are you sure that you want to delete \"%1\"?")
-                                   .arg(QString::fromUtf8(node->getName()));
-            }
+            msgInfo.text =
+                tr("Move %1 to Rubbish bin?").arg(MegaNodeNames::getNodeName(node.get()));
         }
         else
         {
-            if (type == Utilities::HandlesType::FILES)
-            {
-                msgInfo.text =
-                    tr("Are you sure that you want to delete %1 file?").arg(handles.size());
-            }
-            else if (type == Utilities::HandlesType::FOLDERS)
-            {
-                msgInfo.text =
-                    tr("Are you sure that you want to delete %1 folder?").arg(handles.size());
-            }
-            else
-            {
-                msgInfo.text =
-                    tr("You are about to permanently delete %1 items. Would you like to proceed?")
-                        .arg(handles.size());
-            }
+            msgInfo.text = tr("Move %1 items to Rubbish bin?").arg(handles.size());
         }
     }
 
@@ -840,18 +812,13 @@ void NodeSelectorTreeViewWidget::onLeaveShareClicked(const QList<mega::MegaHandl
     msgInfo.buttonsText.insert(QMessageBox::Yes, tr("Leave"));
     msgInfo.buttonsText.insert(QMessageBox::No, tr("Don’t leave"));
 
-    if (handles.size() == 1)
-    {
-        msgInfo.text = tr("Leave this shared folder?");
-        msgInfo.informativeText =
-            tr("If you leave the folder, you will not be able to see it again");
-    }
-    else
-    {
-        msgInfo.text = tr("Leave these shared folders?");
-        msgInfo.informativeText =
-            tr("If you leave these folders, you will not be able to see them again.");
-    }
+    msgInfo.text = tr("Leave this shared folder?", "", handles.size());
+    msgInfo.informativeText =
+        tr("If you leave the folder, you will not be able to see it again.", "", handles.size());
+
+    // msgInfo.text = tr("Leave these shared folders?");
+    // msgInfo.informativeText =
+    //     tr("If you leave these folders, you will not be able to see them again.");
 
     msgInfo.finishFunc = [this, handles](QPointer<QMessageBox> msg)
     {
@@ -1264,6 +1231,14 @@ void NodeSelectorTreeViewWidget::onNodesAdded(
         }
 
         mModel->moveProcessedByNumber(moveProcessCounter);
+    }
+    // Creating a new folder using the "New folder" button never happens while moving nodes
+    else
+    {
+        for (auto& item: qAsConst(itemsAdded))
+        {
+            checkNewFolderAdded(item);
+        }
     }
 }
 

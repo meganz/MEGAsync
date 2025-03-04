@@ -817,18 +817,22 @@
     <name>CloudDriveNodeSelector</name>
     <message>
         <source>Empty</source>
+        <translatorcomment>Messagebox accept button string to empty the rubbish bin. SAT-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Messagebox cancel button string to empty the rubbish bin. SAT-426</translatorcomment>
         <translation type="unfinished">Cancel</translation>
     </message>
     <message>
         <source>Empty Rubbish bin?</source>
+        <translatorcomment>Messagebox main string to empty the rubbish bin. SAT-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
+        <translatorcomment>Messagebox secondary string to empty the rubbish bin. SAT-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2203,22 +2207,27 @@ In some cases they may contain details about your data, such as file or folder n
     <name>IncomingShareAccess</name>
     <message>
         <source>Unknown</source>
+        <translatorcomment>The incoming shared folder access is unknown. CON-1266</translatorcomment>
         <translation type="unfinished">Unknown</translation>
     </message>
     <message>
         <source>Read-only</source>
+        <translatorcomment>The incoming shared folder access is read-only. CON-1266</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Read and write</source>
+        <translatorcomment>The incoming shared folder access is read and write. CON-1266</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Full access</source>
+        <translatorcomment>The incoming shared folder has full access. CON-1266</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Owner</source>
+        <translatorcomment>The user is the owner of the folder. CON-1266</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3573,10 +3582,12 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>MEGA web</source>
+        <translatorcomment>InfoDialog menu action to open the webclient. CON-1245</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Files</source>
+        <translatorcomment>InfoDialog menu action to open the Cloud Drive dialog</translatorcomment>
         <translation type="unfinished">Files</translation>
     </message>
 </context>
@@ -3878,6 +3889,7 @@ You will not be able to regain access to your stored data or be authorised to si
     </message>
     <message>
         <source>Rubbish bin</source>
+        <translatorcomment>Title of the Rubbish section. SAT-426</translatorcomment>
         <translation type="unfinished">Rubbish bin</translation>
     </message>
 </context>
@@ -4672,31 +4684,6 @@ Enter a different name.</translation>
 <context>
     <name>NodeSelectorModel</name>
     <message>
-        <source>Error removing file</source>
-        <translatorcomment>Messagebox title when removing a single file has failed. SAT-426</translatorcomment>
-        <translation>Error deleting file</translation>
-    </message>
-    <message>
-        <source>Error removing files</source>
-        <translatorcomment>Messagebox title when removing multiple files has failed. SAT-426</translatorcomment>
-        <translation>Error deleting files</translation>
-    </message>
-    <message>
-        <source>Error removing folder</source>
-        <translatorcomment>Messagebox title when removing a single folder has failed. SAT-426</translatorcomment>
-        <translation>Error deleting folder</translation>
-    </message>
-    <message>
-        <source>Error removing folders</source>
-        <translatorcomment>Messagebox title when removing multiple folders has failed. SAT-426</translatorcomment>
-        <translation>Error deleting folders</translation>
-    </message>
-    <message>
-        <source>Error removing items</source>
-        <translatorcomment>Messagebox title when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation>Error deleting items</translation>
-    </message>
-    <message>
         <source>Folder already synced</source>
         <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
         <translation>Folder already synced</translation>
@@ -4728,42 +4715,52 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>Error moving items</source>
+        <translatorcomment>Main text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. CON-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The items couldn´t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. CON-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error moving files</source>
+        <translatorcomment>Main text of a messagebox when moving some files in the Cloud Drive dialog failed. CON-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The files couldn´t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving some files in the Cloud Drive dialog failed. CON-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error moving folders</source>
+        <translatorcomment>Main text of a messagebox when moving some folders in the Cloud Drive dialog failed. CON-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The folders couldn´t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving some folders in the Cloud Drive dialog failed. CON-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error moving file</source>
+        <translatorcomment>Main text of a messagebox when moving a file in the Cloud Drive dialog failed. CON-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The file %1 couldn´t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving a file in the Cloud Drive dialog failed. %1 is the file name. CON-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error moving folder</source>
+        <translatorcomment>Main text of a messagebox when moving a folder in the Cloud Drive dialog failed. CON-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The folder %1 couldn´t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving a folder in the Cloud Drive dialog failed. %1 is the folder name. CON-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4777,29 +4774,169 @@ Enter a different name.</translation>
         <translation>Sort by status</translation>
     </message>
     <message>
-        <source>The file %1 couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing a single file has failed. %1 is the file name. SAT-426</translatorcomment>
-        <translation>The file %1 couldn’t be deleted. Try again later.</translation>
+        <source>Access</source>
+        <translatorcomment>Column title. This column shows the incoming shared folder access rights.CON-1266</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The files couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing multiple files has failed. SAT-426</translatorcomment>
-        <translation>The files couldn’t be deleted. Try again later.</translation>
+        <source>Sort by access</source>
+        <translatorcomment>Access column tooltip. Sorts the order of the column by incoming shared folder access.CON-1266</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The folder %1 couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing a single folder has failed. %1 is the folder name. SAT-426</translatorcomment>
-        <translation>The folder %1 couldn’t be deleted. Try again later.</translation>
+        <source>Close</source>
+        <translatorcomment>Cancel button string for failed action in Cloud Drive dialog.SAT-426</translatorcomment>
+        <translation type="unfinished">Close</translation>
     </message>
     <message>
-        <source>The folders couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing multiple folders has failed. SAT-426</translatorcomment>
-        <translation>The folders couldn’t be deleted. Try again later.</translation>
+        <source>Error copying items</source>
+        <translatorcomment>Main text of a messagebox when copying some items (files and folders) in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The items couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation>The items couldn’t be deleted. Try again later.</translation>
+        <source>The items couldn´t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying some items (files and folders) in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error copying files</source>
+        <translatorcomment>Main text of a messagebox when copying some files in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The files couldn´t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying some files in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error copying folders</source>
+        <translatorcomment>Main text of a messagebox when copying some folders in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folders couldn´t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying some folders in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error copying file</source>
+        <translatorcomment>Main text of a messagebox when copying a file in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying a file in the Cloud Drive dialog failed. %1 is the file name. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error copying folder</source>
+        <translatorcomment>Main text of a messagebox when copying a folder in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying a folder in the Cloud Drive dialog failed. %1 is the folder name. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error restoring items</source>
+        <translatorcomment>Main text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The items couldn´t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error restoring files</source>
+        <translatorcomment>Main text of a messagebox when restoring some files in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The files couldn´t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some files in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error restoring folders</source>
+        <translatorcomment>Main text of a messagebox when restoring some folders in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folders couldn´t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some folders in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error restoring file</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error restoring folder</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error deleting items</source>
+        <translatorcomment>Main text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The items couldn´t be deleted. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error deleting files</source>
+        <translatorcomment>Main text of a messagebox when deleting some files in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The files couldn´t be deleted. Try again later</source>
+        <translatorcomment>Main text of a messagebox when deleting some files in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error deleting folders</source>
+        <translatorcomment>Main text of a messagebox when deleting some folders in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folders couldn´t be deleted. Try again later</source>
+        <translatorcomment>Main text of a messagebox when deleting some folders in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error deleting file</source>
+        <translatorcomment>Secondary text of a messagebox when deleting a file in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be deleted. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error deleting folder</source>
+        <translatorcomment>Secondary text of a messagebox when deleting a folder in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be deleted. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. CON-426</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4846,10 +4983,12 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>Permanently delete</source>
+        <translatorcomment>Contextual menu text that appears when we right click on an item on the rubbish page on node selector. It deletes the item and it can be undone. SAT-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Leave folder</source>
+        <translatorcomment>Contextual menu text that appears when we right click on inshare folder on the incoming shared page on node selector. It leaves an inshared folder. CON-1255</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4896,11 +5035,6 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translatorcomment>Third part of the messagebox text when the user is about to remove permanently a node. %1 is the name of the node to remove. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New folder</source>
         <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
         <translation>New folder</translation>
@@ -4917,26 +5051,22 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>Leave</source>
+        <translatorcomment>Button text to accept the confirm messagebox when leaving a inshared folder</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Don’t leave</source>
+        <translatorcomment>Button text to cancel the confirm messagebox when leaving a inshared folder</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Rubbish bin</source>
+        <translatorcomment>Button to filter search results from rubbish bin</translatorcomment>
         <translation type="unfinished">Rubbish bin</translation>
-    </message>
-    <message>
-        <source>Are you sure that you want to delete %1 file?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure that you want to delete %1 folder?</source>
-        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
+        <translatorcomment>Main text of the confirmation messagebox to delete permanently a file(s) from the rubbish bin. %n is the number of files to delete. CON-1258</translatorcomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -4944,6 +5074,7 @@ Enter a different name.</translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n folder. Would you like to proceed?</source>
+        <translatorcomment>Main text of the confirmation messagebox to delete permanently a folder(s) from the rubbish bin. %n is the number of folders to delete. CON-1258</translatorcomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -4951,27 +5082,48 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>You are about to permanently delete %1 items. Would you like to proceed?</source>
+        <translatorcomment>Main text of the confirmation messagebox to delete permanently some items (files and folders) from the rubbish bin. %n is the number of items to delete. CON-1258</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Delete</source>
+        <translatorcomment>Button to accept the confirmation messagebox to delete permanently a file/folder in the rubbish bin. CON-1258</translatorcomment>
         <translation type="unfinished">Delete</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>Leave this shared folder?</source>
+        <translatorcomment>Main text of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>Leave this shared folder?</numerusform>
+            <numerusform>Leave these shared folders?</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Move</source>
+        <translatorcomment>Button to accept the confirmation messagebox to move an item (or more) to the rubbish bin. CON-334</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>If you leave the folder, you will not be able to see it again</source>
+        <source>Don´t move</source>
+        <translatorcomment>Button to cancel the confirmation messagebox to move an item (or more) to the rubbish bin. CON-334</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Leave these shared folders?</source>
+        <source>Move %1 to Rubbish bin?</source>
+        <translatorcomment>Main text of the confirmation messagebox to move a single item (file or folder) pto the rubbish bin. %1 is the name of the item to delete. CON-334</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>If you leave these folders, you will not be able to see them again.</source>
+        <source>Move %1 items to Rubbish bin?</source>
+        <translatorcomment>Main text of the confirmation messagebox to move some items (files or folders) pto the rubbish bin. %1 is the number of items to delete. CON-334</translatorcomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>If you leave the folder, you will not be able to see it again.</source>
+        <translation type="unfinished">
+            <numerusform>If you leave the folder, you will not be able to see it again.</numerusform>
+            <numerusform>If you leave these folders, you will not be able to see them again.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -7370,7 +7522,6 @@ Do you want to delete it anyway?</translation>
         <translatorcomment>Label descriping a sync stall is happening because the folder cannot be read.SNC-2565</translatorcomment>
         <translation>Can’t retrieve the metadata for this folder. Check the permissions and re-scan.</translation>
     </message>
-
     <message>
         <source>Error not detected</source>
         <translatorcomment>Label descripiwith default error of sync stall .SNC-2565</translatorcomment>

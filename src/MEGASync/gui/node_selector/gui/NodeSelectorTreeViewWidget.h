@@ -181,7 +181,6 @@ private slots:
     void removeItemByHandle(mega::MegaHandle handle);
     void onItemsMoved();
     void onNodesAdded(const QList<QPointer<NodeSelectorModelItem>>& itemsAdded);
-    void onProxyModelRowsInserted(const QModelIndex& parent, int first, int last);
 
 private:
     bool mManuallyResizedColumn;
@@ -266,6 +265,8 @@ private:
     QSet<mega::MegaHandle> mNodesToBeReplaced;
 
     QTimer mNodesUpdateTimer;
+
+    void checkNewFolderAdded(QPointer<NodeSelectorModelItem> item);
     mega::MegaHandle mNewFolderHandle;
     bool mNewFolderAdded;
 
