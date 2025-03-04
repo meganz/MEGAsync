@@ -255,7 +255,7 @@ void PlatformImplementation::pinOnTaskbar()
     {
         preferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_REQUEST_PIN_TASKBAR,
                                               true);
-        DesktopManager::requestPinToTaskBar();
+        DesktopManager::requestPinToTaskBarAsync();
     }
 }
 
