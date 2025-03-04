@@ -781,7 +781,7 @@ bool NodeSelectorTreeView::areAllEligibleForLinkShare(
         it != handlesAndAccess.keyValueEnd();
         ++it)
     {
-        if(it->second != mega::MegaShare::ACCESS_OWNER)
+        if (it->second != mega::MegaShare::ACCESS_OWNER)
         {
             result = false;
             break;

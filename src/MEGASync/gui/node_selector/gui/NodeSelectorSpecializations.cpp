@@ -378,7 +378,7 @@ void CloudDriveNodeSelector::performMergeAction(
 {
     QList<NodeSelectorTreeViewWidget::SourceHandle> sourceHandles;
     QList<NodeSelectorTreeViewWidget::TargetHandle> targetHandles;
-    for (auto& info: qAsConst(mergesInfo))
+    for (const auto& info: mergesInfo)
     {
         sourceHandles.append(info->nodeToMerge->getHandle());
         targetHandles.append(info->nodeTarget->getHandle());
@@ -400,7 +400,7 @@ void CloudDriveNodeSelector::performMergeAction(
         QMultiHash<NodeSelectorTreeViewWidget::SourceHandle,
                    NodeSelectorTreeViewWidget::TargetHandle>
             merges;
-        for (auto& info: qAsConst(mergesInfo))
+        for (const auto& info: mergesInfo)
         {
             if (targetHandlesByTab.contains(info->nodeTarget->getHandle()))
             {
@@ -534,7 +534,7 @@ CloudDriveNodeSelector::HandlesByTab
 
     if (!handles.isEmpty())
     {
-        for (auto& handle: qAsConst(handles))
+        for (const auto& handle: handles)
         {
             std::unique_ptr<mega::MegaNode> node(
                 MegaSyncApp->getMegaApi()->getNodeByHandle(handle));

@@ -250,14 +250,7 @@ public:
         auto dialog = findDialog<DialogType>();
         if (dialog)
         {
-            foreach(auto dialogInfo, mOpenedDialogs)
-            {
-                if (dialogInfo->sameDialog(dialog->getDialog()))
-                {
-                    dialog->close();
-                }
-            }
-
+            dialog->close();
             qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         }
     }

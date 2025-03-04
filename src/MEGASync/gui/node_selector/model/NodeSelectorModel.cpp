@@ -619,9 +619,10 @@ void NodeSelectorModel::executeAddExtraSpaceLogic(const QModelIndex& currentInde
 void NodeSelectorModel::executeExtraSpaceLogic()
 {
     executeRemoveExtraSpaceLogic(mCurrentRootIndex);
-    mPreviousRootIndex = mCurrentRootIndex;
-    mCurrentRootIndex = mPendingRootIndex.isValid() ? mPendingRootIndex : getTopRootIndex();
+    mCurrentRootIndex = mPendingRootIndex;
     executeAddExtraSpaceLogic(mCurrentRootIndex);
+
+    mPendingRootIndex = QModelIndex();
 }
 
 int NodeSelectorModel::columnCount(const QModelIndex &) const
@@ -996,7 +997,7 @@ void NodeSelectorModel::checkRestoreNodesTargetFolder(std::shared_ptr<ConflictTy
 {
     QSet<mega::MegaHandle> parentTargets;
 
-    for (auto& resolvedConflict: qAsConst(conflicts->mResolvedConflicts))
+    for (const auto& resolvedConflict: std::as_const(conflicts->mResolvedConflicts))
     {
         if (resolvedConflict->getSolution() == NodeItemType::DONT_UPLOAD ||
             !resolvedConflict->getParentNode())
@@ -1130,8 +1131,8 @@ void NodeSelectorModel::processMergeQueue(MoveActionType type)
                     MergeMEGAFolders::ActionForDuplicates::Rename,
                     // Remote is always case sensitive
                     Qt::CaseSensitive,
-                    info->type == MoveActionType::COPY ? MergeMEGAFolders::Strategy::COPY :
-                                                         MergeMEGAFolders::Strategy::MOVE));
+                    info->type == MoveActionType::COPY ? MergeMEGAFolders::Strategy::Copy :
+                                                         MergeMEGAFolders::Strategy::Move));
 
                 auto e = foldersMerger->merge(info->nodeTarget.get(), info->nodeToMerge.get());
 
@@ -1820,7 +1821,7 @@ bool NodeSelectorModel::areAllNodesEligibleForRestore(const QList<mega::MegaHand
 {
     auto restorableItems(handles.size());
 
-    for (auto nodeHandle: qAsConst(handles))
+    for (const auto& nodeHandle: handles)
     {
         std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(nodeHandle));
         if(node && MegaSyncApp->getMegaApi()->isInRubbish(node.get()))
@@ -2208,7 +2209,7 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
         {
             if (!mFailedMerges.isEmpty())
             {
-                for (auto& mergeInfo: qAsConst(mFailedMerges))
+                for (const auto& mergeInfo: std::as_const(mFailedMerges))
                 {
                     mRequestFailedByHandle.remove(mergeInfo->nodeTarget->getHandle());
                 }
@@ -2433,7 +2434,6 @@ void NodeSelectorModel::loadLevelFinished()
     {
         executeExtraSpaceLogic();
         mAddExpaceWhenLoadingFinish = false;
-        mPendingRootIndex = QModelIndex();
     }
 
     emit levelsAdded(mIndexesToBeExpanded);
@@ -2458,9 +2458,11 @@ bool NodeSelectorModel::canFetchMore(const QModelIndex &parent) const
 
 void NodeSelectorModel::setCurrentRootIndex(const QModelIndex& index)
 {
-    mPendingRootIndex = index;
+    mPendingRootIndex = index.isValid() ? index : getTopRootIndex();
 
-    NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(index.internalPointer());
+    NodeSelectorModelItem* item =
+        static_cast<NodeSelectorModelItem*>(mPendingRootIndex.internalPointer());
+
     if(item && item->areChildrenInitialized())
     {
         executeExtraSpaceLogic();

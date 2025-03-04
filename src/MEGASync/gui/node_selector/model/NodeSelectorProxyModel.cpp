@@ -268,7 +268,7 @@ bool NodeSelectorProxyModel::canBeDeleted() const
 
 bool NodeSelectorProxyModel::hasContextMenuOptions(const QModelIndexList& indexes) const
 {
-    for (auto& index: qAsConst(indexes))
+    for (const auto& index: indexes)
     {
         auto indexItem(getMegaModel()->getItemByIndex(mapToSource(index)));
         if (indexItem && indexItem->getNode())

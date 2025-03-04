@@ -71,7 +71,7 @@ private:
                 }
                 else
                 {
-                    error = nullptr;
+                    error.reset();
                 }
 
                 if (resultFunc)

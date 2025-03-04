@@ -85,7 +85,7 @@ void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
 
 bool NodeSelectorTreeViewWidget::eventFilter(QObject* watched, QEvent* event)
 {
-    if(event->type() == QEvent::Drop)
+    if (event->type() == QEvent::Drop)
     {
         if(auto dropEvent = static_cast<QDropEvent*>(event))
         {
@@ -610,7 +610,6 @@ void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool blockUi)
 
     if(!blockUi)
     {
-        //modelLoaded();
         expandPendingIndexes();
         selectPendingIndexes();
     }
@@ -731,10 +730,6 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
         {
             mModel->deleteNodes(handles, permanently);
         }
-        else
-        {
-            return;
-        }
     };
 
     if (permanently)
@@ -816,19 +811,11 @@ void NodeSelectorTreeViewWidget::onLeaveShareClicked(const QList<mega::MegaHandl
     msgInfo.informativeText =
         tr("If you leave the folder, you will not be able to see it again.", "", handles.size());
 
-    // msgInfo.text = tr("Leave these shared folders?");
-    // msgInfo.informativeText =
-    //     tr("If you leave these folders, you will not be able to see them again.");
-
     msgInfo.finishFunc = [this, handles](QPointer<QMessageBox> msg)
     {
         if (msg->result() == QMessageBox::Yes)
         {
             mModel->deleteNodes(handles, true);
-        }
-        else
-        {
-            return;
         }
     };
     QMegaMessageBox::warning(msgInfo);
@@ -1217,17 +1204,15 @@ void NodeSelectorTreeViewWidget::onNodesAdded(
     {
         auto moveProcessCounter(0);
 
-        for (auto& item: qAsConst(itemsAdded))
+        for (const auto& item: itemsAdded)
         {
-            if (!mMergeTargetFolders.isEmpty() &&
-                mMergeTargetFolders.key(item->getNode()->getParentHandle(), mega::INVALID_HANDLE) !=
+            if (mMergeTargetFolders.isEmpty() ||
+                mMergeTargetFolders.key(item->getNode()->getParentHandle(), mega::INVALID_HANDLE) ==
                     mega::INVALID_HANDLE)
             {
-                continue;
+                mMovedHandlesToSelect.insert(item->getNode()->getHandle());
+                moveProcessCounter++;
             }
-
-            mMovedHandlesToSelect.insert(item->getNode()->getHandle());
-            moveProcessCounter++;
         }
 
         mModel->moveProcessedByNumber(moveProcessCounter);
@@ -1235,7 +1220,7 @@ void NodeSelectorTreeViewWidget::onNodesAdded(
     // Creating a new folder using the "New folder" button never happens while moving nodes
     else
     {
-        for (auto& item: qAsConst(itemsAdded))
+        for (const auto& item: itemsAdded)
         {
             checkNewFolderAdded(item);
         }
@@ -1278,7 +1263,7 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
 
         if(!mModel->isBeingModified())
         {
-            for (auto& info: qAsConst(mRenamedNodesByHandle))
+            for (const auto& info: std::as_const(mRenamedNodesByHandle))
             {
                 updateNode(info, true);
             }
@@ -1287,7 +1272,7 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
 
         if(!mModel->isBeingModified())
         {
-            for (auto& info: qAsConst(mUpdatedNodes))
+            for (const auto& info: std::as_const(mUpdatedNodes))
             {
                 updateNode(info, false);
             }
@@ -1296,7 +1281,7 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
 
         if(!mModel->isBeingModified())
         {
-            for (auto& info: qAsConst(mRemovedNodes))
+            for (const auto& info: std::as_const(mRemovedNodes))
             {
                 removeItemByHandle(info.handle);
 
@@ -1310,7 +1295,7 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
 
         if(!mModel->isBeingModified())
         {
-            for (auto& info: qAsConst(mRemoveMovedNodes))
+            for (const auto& info: std::as_const(mRemoveMovedNodes))
             {
                 removeItemByHandle(info.handle);
             }
@@ -1319,7 +1304,7 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
 
         if (!mModel->isBeingModified() && !mUpdatedButInvisibleNodes.isEmpty())
         {
-            for (auto& info: qAsConst(mUpdatedButInvisibleNodes))
+            for (const auto& info: std::as_const(mUpdatedButInvisibleNodes))
             {
                 if (info.handle != mega::INVALID_HANDLE)
                 {
@@ -1341,7 +1326,7 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
 
         if (!mModel->isBeingModified() && !mMergeSourceFolderRemoved.isEmpty())
         {
-            for (auto& info: qAsConst(mMergeSourceFolderRemoved))
+            for (const auto& info: std::as_const(mMergeSourceFolderRemoved))
             {
                 if (info.handle != mega::INVALID_HANDLE)
                 {
@@ -1360,7 +1345,7 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
                 auto infos(mAddedNodesByParentHandle.values(parentHandle));
                 QList<std::shared_ptr<mega::MegaNode>> addedNodes;
 
-                for (auto& info: qAsConst(infos))
+                for (const auto& info: infos)
                 {
                     addedNodes.append(info.node);
                 }

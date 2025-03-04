@@ -358,7 +358,7 @@ public:
     template<class Container>
     void selectIndexesByHandleAsync(const Container& handles)
     {
-        for (auto& handle: qAsConst(handles))
+        for (const auto& handle: handles)
         {
             mIndexesToBeSelected.append(qMakePair(handle, QModelIndex()));
         }
@@ -493,7 +493,6 @@ private:
 
     // Current root index
     QModelIndex mCurrentRootIndex;
-    QModelIndex mPreviousRootIndex;
     QModelIndex mAddedIndex;
     bool mAddExpaceWhenLoadingFinish = false;
     QModelIndex mPendingRootIndex;

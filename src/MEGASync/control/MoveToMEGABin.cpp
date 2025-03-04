@@ -49,7 +49,7 @@ std::shared_ptr<mega::MegaError> MoveToMEGABin::moveToBin(mega::MegaHandle handl
                                      Utilities::getTranslatedError(e))
                                 .toUtf8()
                                 .constData());
-                        error = std::shared_ptr<mega::MegaError>(e->copy());
+                        error.reset(e->copy());
                     }
                 },
                 nodeToMove.get(),

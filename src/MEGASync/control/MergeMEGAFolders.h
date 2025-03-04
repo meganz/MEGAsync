@@ -25,22 +25,22 @@ class MergeMEGAFolders: public QObject
     Q_OBJECT
 
 public:
-    enum ActionForDuplicates
+    enum class ActionForDuplicates
     {
         Rename,
         IgnoreAndRemove,
         IgnoreAndMoveToBin,
     };
 
-    enum Strategy
+    enum class Strategy
     {
-        MOVE,
-        COPY
+        Move,
+        Copy
     };
 
     MergeMEGAFolders(ActionForDuplicates action,
                      Qt::CaseSensitivity sensitivity,
-                     Strategy strategy = Strategy::MOVE);
+                     Strategy strategy = Strategy::Move);
 
     int merge(mega::MegaNode* folderTarget, mega::MegaNode* folderToMerge);
 

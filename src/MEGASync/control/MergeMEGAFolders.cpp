@@ -142,7 +142,7 @@ int MergeMEGAFolders::finishMerge(mega::MegaNode* folderTarget, mega::MegaNode* 
         remove = folderChild->size() == 0;
     }
 
-    if (mStrategy == Strategy::MOVE)
+    if (mStrategy == Strategy::Move)
     {
         if (mAction == ActionForDuplicates::IgnoreAndRemove || remove)
         {
@@ -196,7 +196,7 @@ int MergeMEGAFolders::mergeNestedNodesIntoTargetFolder(
                 if (nodeToMoveFp == targetNodeFp)
                 {
                     // If it is a copy merge, we don´t need to remove the source node
-                    if (mStrategy == Strategy::MOVE)
+                    if (mStrategy == Strategy::Move)
                     {
                         auto result =
                             MegaApiSynchronizedRequest::runRequest(&mega::MegaApi::remove,
@@ -229,7 +229,7 @@ int MergeMEGAFolders::mergeNestedNodesIntoTargetFolder(
                 {
                     emit nestedItemMerged(node->getHandle());
 
-                    if (mStrategy == Strategy::MOVE)
+                    if (mStrategy == Strategy::Move)
                     {
                         MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener);
                     }
@@ -292,7 +292,7 @@ int MergeMEGAFolders::rename(mega::MegaNode* nodeToRename,
         {
             emit nestedItemMerged(node->getHandle());
 
-            if (mStrategy == Strategy::MOVE)
+            if (mStrategy == Strategy::Move)
             {
                 MegaSyncApp->getMegaApi()->moveNode(node, targetNode, newName, listener);
             }

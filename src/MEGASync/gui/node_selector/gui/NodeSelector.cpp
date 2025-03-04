@@ -87,7 +87,7 @@ NodeSelector::~NodeSelector()
 
 void NodeSelector::setAllFramesItsOnProperty()
 {
-    for (auto tabFrame : qAsConst(mTabFramesToggleGroup))
+    for (auto& tabFrame: mTabFramesToggleGroup)
     {
         tabFrame->setProperty(ITS_ON_NS, false);
     }
@@ -175,7 +175,7 @@ void NodeSelector::keyPressEvent(QKeyEvent *e)
 
 void NodeSelector::mousePressEvent(QMouseEvent *event)
 {
-    for(int page = 0; page < ui->stackedWidget->count(); ++page)
+    for (int page = 0; page < ui->stackedWidget->count(); ++page)
     {
         auto viewContainer = getTreeViewWidget(page);
         if (viewContainer)
@@ -189,7 +189,7 @@ void NodeSelector::mousePressEvent(QMouseEvent *event)
 
 void NodeSelector::showEvent(QShowEvent*)
 {
-    if(!mInitialised)
+    if (!mInitialised)
     {
         createSpecialisedWidgets();
         addSearch();
@@ -266,8 +266,8 @@ void NodeSelector::performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
     mSourceWid = nullptr;
 
     // IF we want to block the source or target, set values to false in order to look for them
-    bool foundSource(blockSource ? false : true);
-    bool foundTarget(blockTarget ? false : true);
+    bool foundSource(!blockSource);
+    bool foundTarget(!blockTarget);
 
     auto senderModel(dynamic_cast<NodeSelectorModel*>(sender()));
 

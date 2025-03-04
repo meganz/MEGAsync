@@ -1639,7 +1639,7 @@ Utilities::HandlesTypes Utilities::getHandlesType(const QList<MegaHandle>& handl
 {
     HandlesTypes type;
 
-    for (auto& handle: qAsConst(handles))
+    for (const auto& handle: handles)
     {
         std::unique_ptr<MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
         if (node)
@@ -1717,7 +1717,7 @@ bool Utilities::removeLocalFile(const QString& path, const MegaHandle& syncId)
     bool result(false);
 
     QFile file(path);
-    if(file.exists())
+    if (file.exists())
     {
         if(syncId != INVALID_HANDLE)
         {
