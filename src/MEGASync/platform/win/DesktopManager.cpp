@@ -4,6 +4,7 @@
 #include "megaapi.h"
 
 #include <QString>
+#include <QtConcurrent/QtConcurrent>
 #include <winrt/Windows.ApplicationModel.Activation.h>
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.ApplicationModel.h>
@@ -72,7 +73,19 @@ bool DesktopManager::TryUnlockPinningLaf()
     return false;
 }
 
-bool DesktopManager::requestPinToTaskBar()
+void DesktopManager::requestPinToTaskBarAsync()
+{
+    QtConcurrent::run(
+        []()
+        {
+            winrt::uninit_apartment();
+            winrt::init_apartment();
+
+            DesktopManager::requestPinToTaskBar();
+        });
+}
+
+void DesktopManager::requestPinToTaskBar()
 {
     try
     {
@@ -80,10 +93,10 @@ bool DesktopManager::requestPinToTaskBar()
         {
             auto taskbarManager = winrt::Windows::UI::Shell::TaskbarManager::GetDefault();
 
-            if (taskbarManager.IsSupported() && taskbarManager.IsPinningAllowed())
+            if (taskbarManager.IsSupported() && taskbarManager.IsPinningAllowed() &&
+                !taskbarManager.IsCurrentAppPinnedAsync().get())
             {
                 taskbarManager.RequestPinCurrentAppAsync();
-                return true;
             }
         }
     }
@@ -96,6 +109,4 @@ bool DesktopManager::requestPinToTaskBar()
     {
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, "unknown error.");
     }
-
-    return false;
 }
