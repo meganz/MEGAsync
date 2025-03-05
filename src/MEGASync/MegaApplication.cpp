@@ -266,6 +266,7 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     windowsUpdateAction = nullptr;
     windowsAboutAction = nullptr;
     windowsImportLinksAction = nullptr;
+    windowsFilesAction = nullptr;
     windowsUploadAction = nullptr;
     windowsDownloadAction = nullptr;
     windowsStreamAction = nullptr;
@@ -2932,6 +2933,7 @@ void MegaApplication::enableTransferActions(bool enable)
     }
     windowsSettingsAction->setEnabled(enable);
     windowsImportLinksAction->setEnabled(enable);
+    windowsFilesAction->setEnabled(enable);
     windowsUploadAction->setEnabled(enable);
     windowsDownloadAction->setEnabled(enable);
     windowsStreamAction->setEnabled(enable);
@@ -5551,6 +5553,7 @@ void MegaApplication::createInfoDialogMenus()
     recreateAction(&windowsExitAction, windowsMenu, PlatformStrings::exit(), &MegaApplication::tryExitApplication);
     recreateAction(&windowsSettingsAction, windowsMenu, tr("Settings"), &MegaApplication::openSettings);
     recreateAction(&windowsImportLinksAction, windowsMenu, tr("Open links"), &MegaApplication::importLinks);
+    recreateAction(&windowsFilesAction, windowsMenu, tr("Files"), &MegaApplication::goToFiles);
     recreateAction(&windowsUploadAction, windowsMenu, tr("Upload"), &MegaApplication::uploadActionClicked);
     recreateAction(&windowsDownloadAction, windowsMenu, tr("Download"), &MegaApplication::downloadActionClicked);
     recreateAction(&windowsStreamAction, windowsMenu, tr("Stream"), &MegaApplication::streamActionClicked);
@@ -5589,6 +5592,7 @@ void MegaApplication::createInfoDialogMenus()
     }
 
     windowsMenu->addSeparator();
+    windowsMenu->addAction(windowsFilesAction);
     windowsMenu->addAction(windowsImportLinksAction);
     windowsMenu->addAction(windowsUploadAction);
     windowsMenu->addAction(windowsDownloadAction);

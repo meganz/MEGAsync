@@ -354,6 +354,7 @@ protected:
     QAction *windowsUpdateAction;
     QAction *windowsAboutAction;
     QAction *windowsImportLinksAction;
+    QAction *windowsFilesAction;
     QAction *windowsUploadAction;
     QAction *windowsDownloadAction;
     QAction *windowsStreamAction;
