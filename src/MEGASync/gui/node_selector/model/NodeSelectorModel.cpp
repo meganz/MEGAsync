@@ -807,7 +807,7 @@ bool NodeSelectorModel::canDropMimeData(const QMimeData* data,
             if (item)
             {
                 auto node = item->getNode();
-                if (!node || node->isFolder())
+                if (node && !node->isFolder())
                 {
                     return false;
                 }
