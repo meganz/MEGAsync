@@ -809,15 +809,17 @@ bool NodeSelectorModel::canDropMimeData(const QMimeData* data,
                 auto node = item->getNode();
                 if (!node || node->isFolder())
                 {
-                    if (action == Qt::CopyAction)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return checkDraggedMimeData(data);
-                    }
+                    return false;
                 }
+            }
+
+            if (action == Qt::CopyAction)
+            {
+                return true;
+            }
+            else
+            {
+                return checkDraggedMimeData(data);
             }
         }
         else

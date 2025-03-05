@@ -4,6 +4,7 @@
 #include "DialogOpener.h"
 #include "MegaApplication.h"
 #include "NodeSelector.h"
+#include "NodeSelectorDelegates.h"
 #include "NodeSelectorModel.h"
 #include "NodeSelectorModelItem.h"
 #include "NodeSelectorProxyModel.h"
@@ -101,11 +102,12 @@ void NodeSelectorTreeView::setModel(QAbstractItemModel *model)
 
 void NodeSelectorTreeView::drawBranches(QPainter *painter, const QRect &rect, const QModelIndex &index) const
 {
+    QStyleOptionViewItem opt = viewOptions();
+    opt.rect = rect;
+
     auto item = qvariant_cast<NodeSelectorModelItem*>(index.data(toInt(NodeSelectorModelRoles::MODEL_ITEM_ROLE)));
     if(item && (item->isCloudDrive() || item->isVault() || item->isRubbishBin()))
     {
-        QStyleOptionViewItem opt = viewOptions();
-        opt.rect = rect;
         if(!selectionModel())
         {
             return;
@@ -118,6 +120,7 @@ void NodeSelectorTreeView::drawBranches(QPainter *painter, const QRect &rect, co
         return;
     }
     QTreeView::drawBranches(painter, rect, index);
+    NodeSelectorDelegate::ignoreAlternateBase(index, painter, opt);
 }
 
 void NodeSelectorTreeView::mousePressEvent(QMouseEvent *event)
@@ -947,7 +950,7 @@ void NodeSelectorTreeViewHeaderView::paintSection(QPainter *painter, const QRect
     QHeaderView::paintSection(painter, rect, logicalIndex);
     painter->restore();
     if(logicalIndex == NodeSelectorModel::USER || logicalIndex == NodeSelectorModel::STATUS)
-    {  
+    {
         QRect iconRect(QPoint(rect.topLeft()), QSize(18, 18));
         iconRect.moveCenter(rect.center());
         QIcon icon = model()->headerData(logicalIndex, Qt::Orientation::Horizontal, toInt(HeaderRoles::ICON_ROLE)).value<QIcon>();

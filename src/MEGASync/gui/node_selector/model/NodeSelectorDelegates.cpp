@@ -16,15 +16,35 @@ NodeSelectorDelegate::NodeSelectorDelegate(QObject* parent):
     mMainDevice(nullptr)
 {}
 
-bool NodeSelectorDelegate::ignorePaint(const QModelIndex& index) const
+bool NodeSelectorDelegate::ignoreAlternateBase(const QModelIndex& index,
+                                               QPainter* painter,
+                                               QStyleOptionViewItem& opt)
 {
-    return index.data(toInt(NodeSelectorModelRoles::EXTRA_ROW_ROLE)).toBool();
+    if (index.data(toInt(NodeSelectorModelRoles::EXTRA_ROW_ROLE)).toBool())
+    {
+        QPainterPath selectedPath;
+        selectedPath.addRect(opt.rect.x(), opt.rect.y(), opt.rect.width(), opt.rect.height());
+        painter->save();
+        painter->setPen(Qt::NoPen);
+        painter->setBrush(opt.palette.color(QPalette::Base));
+        painter->drawPath(selectedPath);
+        painter->restore();
+
+        return true;
+    }
+
+    return false;
 }
 
-void NodeSelectorDelegate::setPaintDevice(QPainter* painter) const
+void NodeSelectorDelegate::setPaintDevice(QPainter* painter, const QModelIndex& index) const
 {
-#ifdef Q_OS_LINUX
-    // On Linux the main device is not permanent, it may change
+    if ((index.row() != 0 && index.column() != 0) || index.parent().isValid())
+    {
+        return;
+    }
+
+#ifndef Q_OS_MACOS
+    // On Linux/Windows the main device is not permanent, it may change
     auto view = dynamic_cast<NodeSelectorTreeView*>(parent());
     if (mMainDevice != painter->device() && view->state() == NodeSelectorTreeView::NoState)
     {
@@ -68,17 +88,17 @@ IconDelegate::~IconDelegate()
 
 void IconDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    if (ignorePaint(index))
+    QStyleOptionViewItem opt(option);
+    if (ignoreAlternateBase(index, painter, opt))
     {
         return;
     }
 
-    NodeSelectorDelegate::setPaintDevice(painter);
+    NodeSelectorDelegate::setPaintDevice(painter, index);
 
     if (!isPaintingDrag(painter))
     {
         NodeSelectorDelegate::paint(painter, option, index);
-        QStyleOptionViewItem opt(option);
         opt.decorationAlignment = index.data(Qt::TextAlignmentRole).value<Qt::Alignment>();
 
         QIcon icon;
@@ -122,14 +142,14 @@ NodeRowDelegate::NodeRowDelegate(QObject* parent):
 
 void NodeRowDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    if (ignorePaint(index))
+    QStyleOptionViewItem opt(option);
+    if (ignoreAlternateBase(index, painter, opt))
     {
         return;
     }
 
-    NodeSelectorDelegate::setPaintDevice(painter);
+    NodeSelectorDelegate::setPaintDevice(painter, index);
 
-    QStyleOptionViewItem opt(option);
     int indentValue = index.data(toInt(NodeRowDelegateRoles::INDENT_ROLE)).toInt();
     opt.rect.adjust(indentValue, 0, 0, 0);
     QVariant small_icon = index.data(toInt(NodeRowDelegateRoles::SMALL_ICON_ROLE));
@@ -143,7 +163,7 @@ void NodeRowDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
             .addRoundedRect(opt.rect.x(), opt.rect.y(), opt.rect.width(), opt.rect.height(), 4, 4);
         painter->save();
         painter->setPen(Qt::NoPen);
-        painter->setBrush(option.palette.highlight());
+        painter->setBrush(opt.palette.highlight());
         painter->drawPath(selectedPath);
         painter->restore();
 
@@ -204,35 +224,36 @@ void TextColumnDelegate::paint(QPainter* painter,
                                const QStyleOptionViewItem& option,
                                const QModelIndex& index) const
 {
-    if (ignorePaint(index))
+    QStyleOptionViewItem opt(option);
+    if (ignoreAlternateBase(index, painter, opt))
     {
         return;
     }
 
-    NodeSelectorDelegate::setPaintDevice(painter);
+    NodeSelectorDelegate::setPaintDevice(painter, index);
 
     if (!isPaintingDrag(painter))
     {
-        NodeSelectorDelegate::paint(painter, option, index);
+        NodeSelectorDelegate::paint(painter, opt, index);
         painter->save();
         QPalette::ColorGroup cg = QPalette::Normal;
         if (!index.flags().testFlag(Qt::ItemIsEnabled))
         {
             cg = QPalette::Disabled;
         }
-        if (option.state & QStyle::State_Selected)
+        if (opt.state & QStyle::State_Selected)
         {
-            painter->setPen(option.palette.color(cg, QPalette::HighlightedText));
+            painter->setPen(opt.palette.color(cg, QPalette::HighlightedText));
         }
         else
         {
-            painter->setPen(option.palette.color(cg, QPalette::Text));
+            painter->setPen(opt.palette.color(cg, QPalette::Text));
         }
-        QRect rect = option.rect;
+        QRect rect = opt.rect;
         rect.adjust(10, 0, -5, 0);
-        QString elideText = option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(),
-                                                          Qt::ElideMiddle,
-                                                          rect.width());
+        QString elideText = opt.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(),
+                                                       Qt::ElideMiddle,
+                                                       rect.width());
         painter->drawText(rect, Qt::AlignVCenter, elideText);
         painter->restore();
     }

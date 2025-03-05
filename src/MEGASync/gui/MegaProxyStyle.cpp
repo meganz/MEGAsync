@@ -9,6 +9,7 @@
 #include <QOperatingSystemVersion>
 #include <QSpinBox>
 #include <QStyleOption>
+#include <QTreeView>
 #include <QWindow>
 
 const int TOOLTIP_DELAY = 250;
@@ -148,7 +149,10 @@ void MegaProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyl
 
         return;
     }
-
+    else if (element == QStyle::PE_FrameFocusRect && dynamic_cast<const QTreeView*>(widget))
+    {
+        return;
+    }
     QProxyStyle::drawPrimitive(element, option, painter, widget);
 }
 
