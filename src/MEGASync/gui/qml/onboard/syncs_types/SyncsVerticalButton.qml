@@ -13,7 +13,7 @@ CardVerticalButton {
     Layout.preferredHeight: height
     contentMargin: 24
     contentSpacing: 8
-    imageSourceSize: Qt.size(22, 20)
+    imageSourceSize: Qt.size(32, 32)
     checkable: false
 
 }

@@ -56,7 +56,7 @@ Rectangle {
             name: root.syncsFlow
             StateChangeScript {
                 script: {
-                    root.navInfo.typeSelected = Constants.SyncType.SYNC;
+                    root.navInfo.typeSelected = Constants.SyncType.SELECTIVE_SYNC;
                     rightPanel.replace(syncsFlowPage);
                 }
             }
@@ -90,11 +90,12 @@ Rectangle {
                     var toOpenTabIndex = 0;
                     switch(root.navInfo.typeSelected) {
                         case Constants.SyncType.SELECTIVE_SYNC:
-                            resumePageState = "stateSelectiveSync";
-                            toOpenTabIndex = SettingsDialog.SYNCS_TAB;
-                            break;
-                        case Constants.SyncType.FULL_SYNC:
-                            resumePageState = "stateFullSync";
+                            if (root.navInfo.fullSyncDone) {
+                                resumePageState = "stateFullSync";
+                            }
+                            else if (root.navInfo.selectiveSyncDone) {
+                                resumePageState = "stateSelectiveSync";
+                            }
                             toOpenTabIndex = SettingsDialog.SYNCS_TAB;
                             break;
                         case Constants.SyncType.BACKUP:
@@ -238,11 +239,8 @@ Rectangle {
                         root.navInfo.typeSelected = root.navInfo.previousTypeSelected;
                         root.state = root.resume;
                     }
-                    else if(fromSelectType) {
-                        root.state = root.syncType;
-                    }
                     else {
-                        syncsFlowPageItem.state = syncsFlowPageItem.syncType;
+                        root.state = root.syncType;
                     }
                 }
             }
