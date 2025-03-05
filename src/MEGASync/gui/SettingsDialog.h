@@ -147,7 +147,6 @@ private:
     void saveExcludeSyncNames();
     void updateNetworkTab();
     void setShortCutsForToolBarItems();
-    void showUnexpectedSyncError(const QString& message);
     void updateCacheSchedulerDaysLabel();
     void setGeneralTabEnabled(const bool enabled);
     void setOverlayCheckboxEnabled(const bool enabled, const bool checked);

@@ -14,7 +14,6 @@
 #include "Platform.h"
 #include "PowerOptions.h"
 #include "ProxySettings.h"
-#include "QMegaMessageBox.h"
 #include "RemoveBackupDialog.h"
 #include "StatsEventHandler.h"
 #include "ThemeManager.h"
@@ -1651,24 +1650,6 @@ void SettingsDialog::updateNetworkTab()
             mUi->lProxySettings->setText(tr("Manual"));
             break;
     }
-}
-
-void SettingsDialog::showUnexpectedSyncError(const QString& message)
-{
-    QObject temporary;
-
-    auto completion = [message]() {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.title = QMegaMessageBox::errorTitle();
-        msgInfo.text = message;
-        QMegaMessageBox::critical(msgInfo);
-    };
-
-    QObject::connect(&temporary,
-                     &QObject::destroyed,
-                     this,
-                     std::move(completion),
-                     Qt::QueuedConnection);
 }
 
 void SettingsDialog::setShortCutsForToolBarItems()
