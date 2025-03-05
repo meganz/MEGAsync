@@ -107,7 +107,7 @@ public:
 
 private:
     std::queue<T> mQueue;
-    std::mutex mMutex;
+    mutable std::mutex mMutex;
 };
 
 #endif // PROTECTED_QUEUE
