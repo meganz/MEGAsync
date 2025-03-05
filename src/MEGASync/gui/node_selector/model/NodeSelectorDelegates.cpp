@@ -16,6 +16,11 @@ NodeSelectorDelegate::NodeSelectorDelegate(QObject* parent):
     mMainDevice(nullptr)
 {}
 
+bool NodeSelectorDelegate::ignorePaint(const QModelIndex& index) const
+{
+    return index.data(toInt(NodeSelectorModelRoles::EXTRA_ROW_ROLE)).toBool();
+}
+
 void NodeSelectorDelegate::setPaintDevice(QPainter* painter) const
 {
 #ifdef Q_OS_LINUX
@@ -63,6 +68,11 @@ IconDelegate::~IconDelegate()
 
 void IconDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    if (ignorePaint(index))
+    {
+        return;
+    }
+
     NodeSelectorDelegate::setPaintDevice(painter);
 
     if (!isPaintingDrag(painter))
@@ -112,6 +122,13 @@ NodeRowDelegate::NodeRowDelegate(QObject* parent):
 
 void NodeRowDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    if (ignorePaint(index))
+    {
+        return;
+    }
+
+    NodeSelectorDelegate::setPaintDevice(painter);
+
     QStyleOptionViewItem opt(option);
     int indentValue = index.data(toInt(NodeRowDelegateRoles::INDENT_ROLE)).toInt();
     opt.rect.adjust(indentValue, 0, 0, 0);
@@ -119,7 +136,6 @@ void NodeRowDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
     if(small_icon.isValid() && small_icon.toBool())
         opt.decorationSize = QSize(opt.decorationSize.width() - DIFF_WITH_STD_ICON, opt.decorationSize.height() - DIFF_WITH_STD_ICON);
 
-    NodeSelectorDelegate::setPaintDevice(painter);
     if (isPaintingDrag(painter))
     {
         QPainterPath selectedPath;
@@ -188,6 +204,11 @@ void TextColumnDelegate::paint(QPainter* painter,
                                const QStyleOptionViewItem& option,
                                const QModelIndex& index) const
 {
+    if (ignorePaint(index))
+    {
+        return;
+    }
+
     NodeSelectorDelegate::setPaintDevice(painter);
 
     if (!isPaintingDrag(painter))

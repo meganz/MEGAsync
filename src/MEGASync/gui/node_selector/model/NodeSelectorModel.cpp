@@ -635,6 +635,19 @@ QVariant NodeSelectorModel::data(const QModelIndex &index, int role) const
     if (index.isValid())
     {
         NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(index.internalPointer());
+
+        switch (role)
+        {
+            case toInt(NodeSelectorModelRoles::EXTRA_ROW_ROLE):
+            {
+                return item == nullptr;
+            }
+            default:
+            {
+                break;
+            }
+        }
+
         if (item)
         {
             switch(role)

@@ -1673,7 +1673,7 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
 
 //This function is called to upload all files in the uploadQueue field
 //to the Mega node that is passed as parameter
-void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
+void MegaApplication::processUploadQueue(MegaHandle nodeHandle, QWidget* caller)
 {
     if (appfinished)
     {
@@ -1696,7 +1696,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
 
     if(!conflicts->isEmpty())
     {
-        auto checkUploadNameDialog(new DuplicatedNodeDialog());
+        auto checkUploadNameDialog(new DuplicatedNodeDialog(caller));
         checkUploadNameDialog->setConflicts(conflicts);
         DialogOpener::showDialog<DuplicatedNodeDialog>(
             checkUploadNameDialog,
@@ -4101,7 +4101,7 @@ void MegaApplication::runUploadActionWithTargetHandle(const MegaHandle &targetFo
         info.defaultDir = defaultFolderPath;
         info.multiSelection = true;
         info.parent = parent;
-        info.func = [this, targetFolder](QStringList files)
+        info.func = [this, targetFolder, parent](QStringList files)
         {
             if(files.size() >= 1)
             {
@@ -4112,12 +4112,13 @@ void MegaApplication::runUploadActionWithTargetHandle(const MegaHandle &targetFo
                     msgInfo.title = QMegaMessageBox::warningTitle();
                     msgInfo.text = QCoreApplication::translate("ShellExtension", "Are you sure you want to upload it to %1").arg(QString::fromUtf8(getMegaApi()->getNodePath(folder.get())));
                     msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-                    msgInfo.finishFunc = [this, files, targetFolder](QPointer<QMessageBox> msgBox)
+                    msgInfo.finishFunc =
+                        [this, files, targetFolder, parent](QPointer<QMessageBox> msgBox)
                     {
                         if (msgBox->result() == QMessageBox::Ok)
                         {
                             uploadQueue.append(createQueue(files));
-                            processUploadQueue(targetFolder);
+                            processUploadQueue(targetFolder, parent);
                         }
                     };
                     QMegaMessageBox::information(msgInfo);
@@ -4891,7 +4892,9 @@ void MegaApplication::externalDownload(QQueue<WrappedNode> newDownloadQueue)
     downloadQueue.append(newDownloadQueue);
 }
 
-void MegaApplication::uploadFilesToNode(const QList<QUrl>& files,  MegaHandle targetNode)
+void MegaApplication::uploadFilesToNode(const QList<QUrl>& files,
+                                        MegaHandle targetNode,
+                                        QWidget* caller)
 {
     if (appfinished)
     {
@@ -4910,7 +4913,7 @@ void MegaApplication::uploadFilesToNode(const QList<QUrl>& files,  MegaHandle ta
             uploadQueue.enqueue(item);
         }
     });
-    processUploadQueue(targetNode);
+    processUploadQueue(targetNode, caller);
 }
 
 void MegaApplication::externalLinkDownload(QString megaLink, QString auth)

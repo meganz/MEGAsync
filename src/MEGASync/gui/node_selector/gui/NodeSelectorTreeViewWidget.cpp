@@ -1483,12 +1483,9 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
     auto handlePos(mNavigationInfo.backwardHandles.indexOf(indexHandleToRemove));
     if (handlePos >= 0)
     {
-        while (mNavigationInfo.backwardHandles.last() != indexHandleToRemove)
-        {
-            mNavigationInfo.backwardHandles.removeLast();
-        }
-
-        mNavigationInfo.backwardHandles.removeLast();
+        auto it = mNavigationInfo.backwardHandles.begin();
+        std::advance(it, handlePos);
+        mNavigationInfo.backwardHandles.erase(it, mNavigationInfo.backwardHandles.end());
     }
 
     onRootIndexChanged(node_column_idx);

@@ -216,8 +216,12 @@ private:
     {
         return false;
     }
-    virtual bool isCurrentSelectionReadOnly(){return false;}
     void selectionHasChanged(const QModelIndexList& selected);
+
+    virtual bool isCurrentSelectionReadOnly()
+    {
+        return false;
+    }
     void checkOkButton(const QModelIndexList& selected);
     bool shouldUpdateImmediately();
     bool areThereNodesToUpdate();

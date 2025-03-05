@@ -101,7 +101,6 @@ public:
 
 signals:
     void requestBackupsRootCreation(mega::MegaHandle backupHandle);
-    void noBackupCenterAvailable();
 
 private slots:
     void onRootItemCreated();

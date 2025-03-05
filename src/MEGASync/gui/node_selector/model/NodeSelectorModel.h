@@ -15,7 +15,6 @@
 #include <QQueue>
 #include <QReadWriteLock>
 
-#include <megaapi.h>
 #include <memory>
 #include <optional>
 
@@ -36,6 +35,7 @@ enum class NodeSelectorModelRoles
     HANDLE_ROLE,
     MODEL_ITEM_ROLE,
     NODE_ROLE,
+    EXTRA_ROW_ROLE,
     last
 };
 

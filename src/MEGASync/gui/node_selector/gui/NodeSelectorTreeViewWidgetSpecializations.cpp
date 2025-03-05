@@ -207,15 +207,7 @@ QString NodeSelectorTreeViewWidgetBackups::getRootText()
 
 std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetBackups::createModel()
 {
-    auto model = std::unique_ptr<NodeSelectorModelBackups>(new NodeSelectorModelBackups);
-
-    // In case we don´t have any backup center yet
-    connect(model.get(),
-            &NodeSelectorModelBackups::noBackupCenterAvailable,
-            this,
-            &NodeSelectorTreeViewWidgetBackups::modelLoaded);
-
-    return model;
+    return std::unique_ptr<NodeSelectorModelBackups>(new NodeSelectorModelBackups);
 }
 
 QIcon NodeSelectorTreeViewWidgetBackups::getEmptyIcon()

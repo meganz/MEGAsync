@@ -575,7 +575,7 @@ void NodeSelector::initSpecialisedWidgets()
                         mDuplicatedConflicts = conflicts;
                         mDuplicatedType = type;
 
-                        auto checkUploadNameDialog = new DuplicatedNodeDialog();
+                        auto checkUploadNameDialog = new DuplicatedNodeDialog(this);
                         checkUploadNameDialog->setConflicts(conflicts);
 
                         DialogOpener::showDialog<DuplicatedNodeDialog, NodeSelector>(

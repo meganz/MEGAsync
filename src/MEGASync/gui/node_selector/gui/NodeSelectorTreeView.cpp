@@ -1,7 +1,9 @@
 #include "NodeSelectorTreeView.h"
 
 #include "CreateRemoveSyncsManager.h"
+#include "DialogOpener.h"
 #include "MegaApplication.h"
+#include "NodeSelector.h"
 #include "NodeSelectorModel.h"
 #include "NodeSelectorModelItem.h"
 #include "NodeSelectorProxyModel.h"
@@ -648,11 +650,13 @@ void NodeSelectorTreeView::dropEvent(QDropEvent* event)
         QList<QUrl> urlList = event->mimeData()->urls();
         if(!urlList.isEmpty())
         {
+            auto dialog = DialogOpener::findDialog<NodeSelector>();
+
             // get the node handle of the drop index from the proxy model
             auto node = getDropNode(dropIndex);
             if(node)
             {
-                MegaSyncApp->uploadFilesToNode(urlList, node->getHandle());
+                MegaSyncApp->uploadFilesToNode(urlList, node->getHandle(), dialog->getDialog());
             }
             else
             {
@@ -660,7 +664,9 @@ void NodeSelectorTreeView::dropEvent(QDropEvent* event)
                 auto parentNode = getDropNode(parentIndex);
                 if (parentNode)
                 {
-                    MegaSyncApp->uploadFilesToNode(urlList, parentNode->getHandle());
+                    MegaSyncApp->uploadFilesToNode(urlList,
+                                                   parentNode->getHandle(),
+                                                   dialog->getDialog());
                 }
                 else
                 {

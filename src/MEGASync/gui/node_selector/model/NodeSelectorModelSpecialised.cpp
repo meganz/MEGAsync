@@ -293,14 +293,7 @@ void NodeSelectorModelBackups::firstLoad()
     connect(backupsRequest.get(), &UserAttributes::MyBackupsHandle::attributeReady,
             this, &NodeSelectorModelBackups::onMyBackupsHandleReceived);
 
-    if (backupsRequest->isAttributeReady())
-    {
-        addRootItems();
-    }
-    else
-    {
-        emit noBackupCenterAvailable();
-    }
+    addRootItems();
 }
 
 bool NodeSelectorModelBackups::canBeDeleted() const

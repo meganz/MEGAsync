@@ -9,8 +9,9 @@ class NodeSelectorDelegate: public QStyledItemDelegate
 public:
     NodeSelectorDelegate(QObject* parent);
 
+protected:
+    bool ignorePaint(const QModelIndex& index) const;
     void setPaintDevice(QPainter* painter) const;
-
     bool isPaintingDrag(QPainter* painter) const;
 
 private:
