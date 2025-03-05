@@ -3974,10 +3974,10 @@ void MegaApplication::goToFiles()
         CloudDriveNodeSelector* nodeSelector = new CloudDriveNodeSelector();
         DialogOpener::showGeometryRetainerDialog<NodeSelector>(nodeSelector);
 
-        // mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::CLOUD_DRIVE_DIALOG_OPEN,
-        //                                      sender(),
-        //                                      filesAction,
-        //                                      true);
+        mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::CLOUD_DRIVE_OPENED,
+                                             sender(),
+                                             filesAction,
+                                             true);
     }
 }
 

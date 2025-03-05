@@ -146,20 +146,20 @@ void SyncController::addSync(SyncConfig& sync)
                     {
                         break;
                     }
-                        // case SyncInfo::CLOUD_DRIVE_DIALOG_ORIGIN:
-                        // {
-                        //     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
-                        //         AppStatsEvents::EventType::SYNC_ADDED_CLOUD_DRIVE_BUTTON,
-                        //         true);
-                        //     break;
-                        // }
-                        // case SyncInfo::INFODIALOG_BUTTON_ORIGIN:
-                        // {
-                        //     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
-                        //         AppStatsEvents::EventType::SYNC_ADDED_ADD_SYNC_BUTTON,
-                        //         true);
-                        //     break;
-                        // }
+                    case SyncInfo::CLOUD_DRIVE_DIALOG_ORIGIN:
+                    {
+                        MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+                            AppStatsEvents::EventType::SYNC_ADDED_CLOUD_DRIVE_BUTTON,
+                            true);
+                        break;
+                    }
+                    case SyncInfo::INFODIALOG_BUTTON_ORIGIN:
+                    {
+                        MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+                            AppStatsEvents::EventType::SYNC_ADDED_ADD_SYNC_BUTTON,
+                            true);
+                        break;
+                    }
                 }
             }
 

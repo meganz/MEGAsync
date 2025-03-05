@@ -143,6 +143,8 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     {AppStatsEvents::EventType::BIMONTHLY_SYNC_NOTIFICATION_SHOWN, 600035},
     {AppStatsEvents::EventType::SYNC_CREATED_AFTER_CLICKING_NOTIFICATION, 600036},
     {AppStatsEvents::EventType::SYNC_CREATED_AFTER_NOTIFICATION, 600037},
+    {AppStatsEvents::EventType::SYNC_ADDED_CLOUD_DRIVE_BUTTON, 600038},
+    {AppStatsEvents::EventType::CLOUD_DRIVE_OPENED, 600039},
 };
 
 // Deprecated are not displayed
@@ -305,6 +307,8 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
      "Sync created after clicking the notification - notif clicked: %1"},
     {AppStatsEvents::EventType::SYNC_CREATED_AFTER_NOTIFICATION,
      "Sync created after 15 min - last notif shown: %1"},
+    {AppStatsEvents::EventType::SYNC_ADDED_CLOUD_DRIVE_BUTTON, "Sync added from Cloud drive dialog"},
+    {AppStatsEvents::EventType::CLOUD_DRIVE_OPENED, "Cloud drive dialog opened"},
 };
 
 QString AppStatsEvents::getEventMessage(EventType event,
