@@ -501,7 +501,7 @@ protected:
 
     std::unique_ptr<mega::MegaGfxProvider> mGfxProvider;
 
-    SyncReminderNotificationManager* mSyncReminderNotificationManager;
+    QPointer<SyncReminderNotificationManager> mSyncReminderNotificationManager;
 
     bool misSyncingStateWrongLogged;
 

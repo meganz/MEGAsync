@@ -180,9 +180,17 @@ void FatalEventHandler::processEvent(std::unique_ptr<mega::MegaEvent> event, Meg
             .toUtf8()
             .constData());
 
-    // Put app in Fatal Error state. Further action taken in onAppStateChanged(), once the app is in
-    // Fatal Error state
-    emit requestAppState(AppState::FATAL_ERROR);
+    // Explicitly do nothing more for MegaEvent::REASON_ERROR_NO_ERROR
+    if (mErrorCode != FatalErrorCode::ERR_NO_ERROR)
+    {
+        // Put app in Fatal Error state. Further action taken in onAppStateChanged(), once the app
+        // is in Fatal Error state
+        emit requestAppState(AppState::FATAL_ERROR);
+    }
+    else
+    {
+        clear();
+    }
 }
 
 void FatalEventHandler::showFatalErrorBugReportDialog()

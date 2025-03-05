@@ -9,6 +9,7 @@ SelectiveSyncPageForm {
 
     signal selectiveSyncMoveToBack
     signal selectiveSyncMoveToSuccess
+    signal fullSyncMoveToSuccess
 
     localFolderChooser.folderField.hint.text: root.syncs.localError
     localFolderChooser.folderField.hint.visible: root.syncs.localError.length !== 0
@@ -45,9 +46,20 @@ SelectiveSyncPageForm {
         target: root.syncs
 
         function onSyncSetupSuccess() {
+            var remotePath = remoteFolderChooser.choosenPath;
+
             enableScreen();
             remoteFolderChooser.reset();
-            root.selectiveSyncMoveToSuccess();
+            localFolderChooser.reset();
+
+            if (remotePath === '/')
+            {
+                root.fullSyncMoveToSuccess();
+            }
+            else
+            {
+                root.selectiveSyncMoveToSuccess();
+            }
         }
 
         function onLocalErrorChanged() {

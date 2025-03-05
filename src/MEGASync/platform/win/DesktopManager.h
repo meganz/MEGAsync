@@ -7,9 +7,10 @@ public:
     DesktopManager() = delete;
     ~DesktopManager() = delete;
 
-    static bool requestPinToTaskBar();
+    static void requestPinToTaskBarAsync();
 
 private:
+    static void requestPinToTaskBar();
     static bool IsDesktopAppPinningSupported();
     static bool TryUnlockPinningLaf();
 };
