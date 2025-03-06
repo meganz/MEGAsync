@@ -2009,7 +2009,7 @@ In some cases they may contain details about your data, such as file or folder n
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Set up your first sync and backup to get the most out of the desktop app</source>
+        <source>Set up your first sync to get the most out of the desktop app</source>
         <translatorcomment>Description text in O.S. notification to remind that the user can create syncs after few hours (e.g. 2) from the first launch of the application if the user has never created a sync. CON-1207</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
@@ -7173,7 +7173,6 @@ Do you want to delete it anyway?</translation>
         <translatorcomment>Label descriping a sync stall is happening because the folder cannot be read.SNC-2565</translatorcomment>
         <translation>Can’t retrieve the metadata for this folder. Check the permissions and re-scan.</translation>
     </message>
-
     <message>
         <source>Error not detected</source>
         <translatorcomment>Label descripiwith default error of sync stall .SNC-2565</translatorcomment>
