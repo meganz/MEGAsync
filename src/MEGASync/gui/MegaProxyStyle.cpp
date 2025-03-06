@@ -22,7 +22,12 @@ void MegaProxyStyle::drawComplexControl(QStyle::ComplexControl control, const QS
 
 void MegaProxyStyle::drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
-    painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform, true);
+    painter->setRenderHints(QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform, true);
+    if (element != QStyle::CE_ItemViewItem)
+    {
+        painter->setRenderHints(QPainter::Antialiasing, true);
+    }
+
     switch (element)
     {
         case CE_HeaderLabel:
@@ -82,7 +87,20 @@ void MegaProxyStyle::drawItemText(QPainter *painter, const QRect &rect, int flag
 
 void MegaProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
-    painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
+    painter->setRenderHints(QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform, true);
+    switch (element)
+    {
+        case QStyle::PE_PanelItemViewItem:
+            // Fallthrough
+        case QStyle::PE_PanelItemViewRow:
+            // Fallthrough
+        case QStyle::PE_IndicatorBranch:
+            break;
+        default:
+        {
+            painter->setRenderHint(QPainter::Antialiasing, true);
+        }
+    }
 
     if (element == QStyle::PE_IndicatorItemViewItemDrop && !option->rect.isNull())
     {
