@@ -7,5 +7,5 @@ QString FirstSyncReminderAction::getTitle() const
 
 QString FirstSyncReminderAction::getMessage() const
 {
-    return tr("Set up your first sync and backup to get the most out of the desktop app");
+    return tr("Set up your first sync to get the most out of the desktop app");
 }
