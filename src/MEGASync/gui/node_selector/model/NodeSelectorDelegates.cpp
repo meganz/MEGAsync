@@ -16,26 +16,6 @@ NodeSelectorDelegate::NodeSelectorDelegate(QObject* parent):
     mMainDevice(nullptr)
 {}
 
-bool NodeSelectorDelegate::ignoreAlternateBase(const QModelIndex& index,
-                                               QPainter* painter,
-                                               QStyleOptionViewItem& opt)
-{
-    if (index.data(toInt(NodeSelectorModelRoles::EXTRA_ROW_ROLE)).toBool())
-    {
-        QPainterPath selectedPath;
-        selectedPath.addRect(opt.rect.x(), opt.rect.y(), opt.rect.width(), opt.rect.height());
-        painter->save();
-        painter->setPen(Qt::NoPen);
-        painter->setBrush(opt.palette.color(QPalette::Base));
-        painter->drawPath(selectedPath);
-        painter->restore();
-
-        return true;
-    }
-
-    return false;
-}
-
 void NodeSelectorDelegate::setPaintDevice(QPainter* painter, const QModelIndex& index) const
 {
     if ((index.row() != 0 && index.column() != 0) || index.parent().isValid())
@@ -85,14 +65,9 @@ IconDelegate::~IconDelegate()
 {
 }
 
-
 void IconDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QStyleOptionViewItem opt(option);
-    if (ignoreAlternateBase(index, painter, opt))
-    {
-        return;
-    }
 
     NodeSelectorDelegate::setPaintDevice(painter, index);
 
@@ -143,10 +118,6 @@ NodeRowDelegate::NodeRowDelegate(QObject* parent):
 void NodeRowDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QStyleOptionViewItem opt(option);
-    if (ignoreAlternateBase(index, painter, opt))
-    {
-        return;
-    }
 
     NodeSelectorDelegate::setPaintDevice(painter, index);
 
@@ -225,10 +196,6 @@ void TextColumnDelegate::paint(QPainter* painter,
                                const QModelIndex& index) const
 {
     QStyleOptionViewItem opt(option);
-    if (ignoreAlternateBase(index, painter, opt))
-    {
-        return;
-    }
 
     NodeSelectorDelegate::setPaintDevice(painter, index);
 

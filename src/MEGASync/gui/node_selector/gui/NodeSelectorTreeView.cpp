@@ -120,7 +120,6 @@ void NodeSelectorTreeView::drawBranches(QPainter *painter, const QRect &rect, co
         return;
     }
     QTreeView::drawBranches(painter, rect, index);
-    NodeSelectorDelegate::ignoreAlternateBase(index, painter, opt);
 }
 
 void NodeSelectorTreeView::mousePressEvent(QMouseEvent *event)

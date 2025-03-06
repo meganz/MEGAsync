@@ -23,46 +23,46 @@ void MegaProxyStyle::drawComplexControl(QStyle::ComplexControl control, const QS
 void MegaProxyStyle::drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
     painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform, true);
-    switch(element)
+    switch (element)
     {
-    case CE_HeaderLabel:
-    {
-        auto headerView = qobject_cast<const QHeaderView*>(widget);
-        if(!headerView)
+        case CE_HeaderLabel:
         {
-            break;
-        }
+            auto headerView = qobject_cast<const QHeaderView*>(widget);
+            if (!headerView)
+            {
+                break;
+            }
 
         if(!headerView->property("HeaderIconCenter").isValid()
                 || !headerView->property("HeaderIconCenter").toBool())
-        {
-            break;
-        }
+            {
+                break;
+            }
 
         if (const QStyleOptionHeader* header = qstyleoption_cast<const QStyleOptionHeader*>(option))
-        {
-            if(!header->icon.isNull() && header->text.isEmpty())
             {
-                QRect rect = header->rect;
+                if (!header->icon.isNull() && header->text.isEmpty())
+                {
+                    QRect rect = header->rect;
                 if (!header->icon.isNull()) {
-                    int size = qRound(headerView->height() * 0.8);
+                        int size = qRound(headerView->height() * 0.8);
                     QPixmap pixmap
                             = header->icon.pixmap(QSize(size, size), (header->state & State_Enabled) ? QIcon::Normal : QIcon::Disabled);
 
                     QRect aligned = alignedRect(header->direction, QFlag(Qt::AlignCenter), pixmap.size() / pixmap.devicePixelRatio(), rect);
-                    QRect inter = aligned.intersected(rect);
+                        QRect inter = aligned.intersected(rect);
                     painter->drawPixmap(inter.x(), inter.y(), pixmap,
                                         inter.x() - aligned.x(), inter.y() - aligned.y(),
-                                        qRound(aligned.width() * pixmap.devicePixelRatio() + 0.5),
-                                        qRound(pixmap.height() * pixmap.devicePixelRatio() + 0.5));
-                    return;
+                            qRound(aligned.width() * pixmap.devicePixelRatio() + 0.5),
+                            qRound(pixmap.height() * pixmap.devicePixelRatio() + 0.5));
+                        return;
+                    }
                 }
             }
+            break;
         }
-        break;
-    }
-    default:
-        break;
+        default:
+            break;
     }
 
     QProxyStyle::drawControl(element, option, painter, widget);
@@ -170,6 +170,10 @@ int MegaProxyStyle::styleHint(StyleHint hint, const QStyleOption *option, const 
     if (hint == QStyle::SH_ToolTip_WakeUpDelay)
     {
         return TOOLTIP_DELAY;
+    }
+    else if(hint == QStyle::SH_ItemView_PaintAlternatingRowColorsForEmptyArea)
+    {
+        return true;
     }
     return QProxyStyle::styleHint(hint, option, widget, returnData);
 }
