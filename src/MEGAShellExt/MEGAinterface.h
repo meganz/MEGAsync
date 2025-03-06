@@ -46,6 +46,7 @@ public:
     static bool hasVersions(PCWSTR path);
     static bool viewOnMEGA(PCWSTR path);
     static bool viewVersions(PCWSTR path);
+    static bool removeFromLeftPane(PCWSTR path);
     static bool startRequest();
     static bool endRequest();
     static bool isMEGASyncOpen();
@@ -63,6 +64,7 @@ private:
     static WCHAR OP_VIEW;
     static WCHAR OP_VERSIONS;
     static WCHAR OP_HASVERSIONS;
+    static WCHAR OP_REMOVE_FROM_LEFT_PANE;
     static int sendRequest(WCHAR type, PCWSTR content, PCWSTR response, int responseLen);
 };
 

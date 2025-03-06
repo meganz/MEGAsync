@@ -78,6 +78,7 @@ public:
     virtual void closeFileFolderSelectors(QWidget* parent);
 
     virtual void addSyncToLeftPane(QString syncPath, QString syncName, QString uuid);
+    virtual void removeSyncFromLeftPane(QString syncPath);
     virtual void removeAllSyncsFromLeftPane();
     virtual bool makePubliclyReadable(const QString& fileName);
 

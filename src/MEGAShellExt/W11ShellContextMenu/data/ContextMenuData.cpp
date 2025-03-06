@@ -220,7 +220,7 @@ void ContextMenuData::removeFromLeftPane()
 {
     if (!mInLeftPane.empty())
     {
-        CheckLeftPaneIcon(mInLeftPane.data(), true);
+        MegaInterface::removeFromLeftPane(mInLeftPane.data());
         MegaInterface::endRequest();
     }
 }

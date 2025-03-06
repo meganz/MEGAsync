@@ -1,6 +1,7 @@
 #include "WinShellDispatcherTask.h"
 
 #include "megaapi.h"
+#include "Platform.h"
 
 PIPEINST Pipe[INSTANCES];
 HANDLE hEvents[INSTANCES+1];
@@ -612,6 +613,29 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             break;
         }
         case L'I':
+        {
+            break;
+        }
+        case L'J':
+        {
+            if (lstrlen(pipe->chRequest) < 3)
+            {
+                break;
+            }
+
+            QByteArray filePath = QByteArray((const char*)content, lstrlen(content) * 2 + 2);
+            if (filePath.startsWith(QByteArray((const char*)L"\\\\?\\", 8)))
+            {
+                filePath = filePath.mid(8);
+            }
+
+            QString path = QString::fromWCharArray((const wchar_t*)filePath.constData());
+
+            Platform::getInstance()->removeSyncFromLeftPane(path);
+
+            break;
+        }
+
         default:;
     }
     pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(WCHAR);

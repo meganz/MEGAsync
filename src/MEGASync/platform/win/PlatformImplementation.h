@@ -52,6 +52,7 @@ public:
     QString getDeviceName() override;
 
     void addSyncToLeftPane(QString syncPath, QString syncName, QString uuid) override;
+    void removeSyncFromLeftPane(QString syncPath) override;
     void removeAllSyncsFromLeftPane() override;
     bool makePubliclyReadable(const QString &fileName) override;
 

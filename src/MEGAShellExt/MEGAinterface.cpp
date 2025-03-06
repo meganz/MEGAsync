@@ -12,6 +12,8 @@ WCHAR MegaInterface::OP_STRING      = L'T'; //Get Translated String
 WCHAR MegaInterface::OP_VIEW        = L'V'; //View on MEGA
 WCHAR MegaInterface::OP_VERSIONS    = L'R'; //View pRevious versions
 WCHAR MegaInterface::OP_HASVERSIONS = L'H'; //Has previous versions?
+WCHAR MegaInterface::OP_REMOVE_FROM_LEFT_PANE =
+    L'J'; // Remove a sync from left pane (navigation pane on shell)
 
 int MegaInterface::sendRequest(WCHAR type, PCWSTR content, PCWSTR response, int responseLen)
 {
@@ -54,6 +56,18 @@ MegaInterface::FileState MegaInterface::getPathState(PCWSTR filePath, bool overl
         return ((MegaInterface::FileState)(chReadBuf[0] - L'0'));
     }
     return MegaInterface::FILE_ERROR;
+}
+
+bool MegaInterface::removeFromLeftPane(PCWSTR path)
+{
+    WCHAR chReadBuf[2];
+    int cbRead =
+        sendRequest(MegaInterface::OP_REMOVE_FROM_LEFT_PANE, path, chReadBuf, sizeof(chReadBuf));
+    if (cbRead > sizeof(WCHAR))
+    {
+        return true;
+    }
+    return false;
 }
 
 LPWSTR MegaInterface::getString(StringID stringID, int numFiles, int numFolders)
