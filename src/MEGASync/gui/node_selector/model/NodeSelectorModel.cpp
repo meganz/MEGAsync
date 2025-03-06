@@ -773,9 +773,8 @@ Qt::ItemFlags NodeSelectorModel::flags(const QModelIndex &index) const
                 }
             }
         }
-
-        if (mExtraSpaceAdded &&
-            (mAddedIndex.row() == index.row() && mAddedIndex.parent() == index.parent()))
+        //no item -> extra space row
+        else if(mExtraSpaceAdded && mAddedIndex.parent() == index.parent())
         {
             flags |= Qt::ItemIsDropEnabled;
             flags &= ~(Qt::ItemIsSelectable);
