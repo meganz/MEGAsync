@@ -31,15 +31,18 @@ public:
     QModelIndex getIndexFromSource(const QModelIndex& index);
     QModelIndex getIndexFromHandle(const mega::MegaHandle& handle);
     QModelIndex getIndexFromNode(const std::shared_ptr<mega::MegaNode> node);
-    QVector<QModelIndex> getRelatedModelIndexes(const std::shared_ptr<mega::MegaNode> node);
-    void removeNode(const QModelIndex &item);
+    QModelIndex findIndexInParentList(const std::shared_ptr<mega::MegaNode> node);
+    void deleteNode(const QModelIndex& item);
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
     void setSourceModel(QAbstractItemModel *sourceModel) override;
-    void setExpandMapped(bool value){mExpandMapped = value;}
-    NodeSelectorModel* getMegaModel();
+    void setExpandMapped(bool value){mExpandMapped = value;
+    }
+
+    NodeSelectorModel* getMegaModel() const;
     bool isModelProcessing() const;
 
-    virtual bool isNotAProtectedModel() const;
+    virtual bool canBeDeleted() const;
+    bool hasContextMenuOptions(const QModelIndexList& indexes) const;
 
 signals:
     void expandReady();
@@ -48,7 +51,8 @@ signals:
     void modelSorted();
 
 private:
-    QVector<QModelIndex> forEach(std::shared_ptr<mega::MegaNodeList> parentNodeList, QModelIndex parent = QModelIndex());
+    QModelIndex findIndexInParentList(mega::MegaNode* NodeToFind,
+                                      QModelIndex sourceModelParent = QModelIndex());
     QCollator mCollator;
     int mSortColumn;
     Qt::SortOrder mOrder;
@@ -64,11 +68,15 @@ private slots:
 
 class NodeSelectorProxyModelSearch : public NodeSelectorProxyModel
 {
+    Q_OBJECT
 
 public:
     explicit NodeSelectorProxyModelSearch(QObject* parent = nullptr);
     void setMode(NodeSelectorModelItemSearch::Types mode);
-    bool isNotAProtectedModel() const override;
+    bool canBeDeleted() const override;
+
+signals:
+    void modeEmpty();
 
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;

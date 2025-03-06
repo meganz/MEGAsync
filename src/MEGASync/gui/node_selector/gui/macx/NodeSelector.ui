@@ -304,8 +304,11 @@ min-height:36px;
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
+              <property name="acceptDrops">
+               <bool>true</bool>
+              </property>
               <property name="text">
-               <string>Cloud Drive</string>
+               <string notr="true">Cloud Drive</string>
               </property>
               <property name="icon">
                <iconset theme="cloud_ico" resource="../../../Resources_macx.qrc">
@@ -389,7 +392,7 @@ min-height:36px;
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="text">
-               <string>Backups</string>
+               <string notr="true">Backups</string>
               </property>
               <property name="icon">
                <iconset theme="backups_ico" resource="../../../Resources_macx.qrc">
@@ -484,11 +487,14 @@ min-height:36px;
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
+              <property name="acceptDrops">
+               <bool>true</bool>
+              </property>
               <property name="text">
-               <string>Incoming Shares</string>
+               <string notr="true">Incoming Shares</string>
               </property>
               <property name="icon">
-               <iconset resource="../../../Resources_macx.qrc">
+               <iconset resource="../../../Resources_win.qrc">
                 <normaloff>:/images/node_selector/sidebar/folder-users_default.png</normaloff>:/images/node_selector/sidebar/folder-users_default.png</iconset>
               </property>
               <property name="checkable">
@@ -502,6 +508,62 @@ min-height:36px;
               </property>
               <property name="default_icon" stdset="0">
                <string notr="true">qrc:/images/node_selector/sidebar/folder-users_default.png</string>
+              </property>
+              <property name="icon_spacing" stdset="0">
+               <UInt>4</UInt>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="fRubbish">
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="spacing">
+             <number>3</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="bRubbish">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="acceptDrops">
+               <bool>true</bool>
+              </property>
+              <property name="text">
+               <string notr="true">Rubbish bin</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../Resources_macx.qrc">
+                <normaloff>:/images/node_selector/sidebar/rubbish_default.png</normaloff>:/images/node_selector/sidebar/rubbish_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+              <property name="default_icon" stdset="0">
+               <string notr="true">qrc:/images/node_selector/sidebar/rubbish_default.png</string>
               </property>
               <property name="icon_spacing" stdset="0">
                <UInt>4</UInt>
@@ -613,7 +675,7 @@ padding-right:1px;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../Resources_linux.qrc">
+               <iconset resource="../../../Resources_macx.qrc">
                 <normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</iconset>
               </property>
               <property name="iconSize">
@@ -665,8 +727,6 @@ padding-right:1px;
   </layout>
  </widget>
  <resources>
-  <include location="../../../Resources_macx.qrc"/>
-  <include location="../../../Resources_macx.qrc"/>
   <include location="../../../Resources_macx.qrc"/>
  </resources>
  <connections/>

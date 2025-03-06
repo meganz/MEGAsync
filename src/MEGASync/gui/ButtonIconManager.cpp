@@ -160,7 +160,17 @@ void ButtonIconManager::setHoverIcon(QAbstractButton *button)
         }
         else
         {
-            iconInfo.iconName.append(mSettings.hover_suffix);
+            auto hoverIconName(iconInfo.iconName + mSettings.hover_suffix);
+            QFile hoverIcon(iconInfo.iconPath + hoverIconName);
+            if(hoverIcon.exists())
+            {
+                iconInfo.iconName = hoverIconName;
+            }
+            else
+            {
+                iconInfo.iconName.append(mSettings.default_suffix);
+            }
+
             fillIcon(iconInfo, newIcon);
         }
 

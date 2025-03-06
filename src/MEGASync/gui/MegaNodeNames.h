@@ -30,6 +30,11 @@ public:
         return tr("Backups");
     }
 
+    static QString getRubbishName()
+    {
+        return tr("Rubbish bin");
+    }
+
     static QString getRootNodeName(mega::MegaNode* node)
     {
         if(node)

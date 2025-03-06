@@ -5,6 +5,7 @@
 #include "BlockingStageProgressController.h"
 #include "DesktopNotifications.h"
 #include "DownloadFromMegaDialog.h"
+#include "DuplicatedNodeInfo.h"
 #include "HTTPServer.h"
 #include "InfoDialog.h"
 #include "LinkProcessor.h"
@@ -231,12 +232,15 @@ public slots:
     void importLinks();
     void officialWeb();
     void goToMyCloud();
+    void goToFiles();
     void openDeviceCentre();
     void pauseTransfers();
     void showChangeLog();
     void uploadActionClicked();
-    void uploadActionClickedFromWindowAfterOverQuotaCheck();
+    void uploadActionFromWindowAfterOverQuotaCheck();
+    void runUploadActionWithTargetHandle(const mega::MegaHandle &targetFolder, QWidget *parent);
     void downloadActionClicked();
+    void downloadACtionClickedWithHandles(const QList<mega::MegaHandle>& handles);
     void streamActionClicked();
     void transferManagerActionClicked(int tab = 0);
     void logoutActionClicked();
@@ -248,6 +252,7 @@ public slots:
     void shellViewOnMega(QByteArray localPath, bool versions);
     void shellViewOnMega(mega::MegaHandle handle, bool versions);
     void exportNodes(QList<mega::MegaHandle> exportList, QStringList extraLinks = QStringList());
+    void uploadFilesToNode(const QList<QUrl>& files, mega::MegaHandle targetNode, QWidget* caller);
     void externalDownload(QQueue<WrappedNode> newDownloadQueue);
     void externalLinkDownload(QString megaLink, QString auth);
     void externalFileUpload(mega::MegaHandle targetFolder);
@@ -313,7 +318,7 @@ private slots:
     void cancelScanningStage();
 
 protected slots:
-    void onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> checkDialog);
+    void onUploadsCheckedAndReady(std::shared_ptr<ConflictTypes> conflicts);
     void onPasteMegaLinksDialogFinish(QPointer<PasteMegaLinksDialog>);
     void onDownloadFromMegaFinished(QPointer<DownloadFromMegaDialog> dialog);
     void onDownloadSetFolderDialogFinished(QPointer<DownloadFromMegaDialog> dialog);
@@ -323,7 +328,7 @@ protected:
     void createGuestMenu();
     bool showTrayIconAlwaysNEW();
     void applyStorageState(int state, bool doNotAskForUserStats = false);
-    void processUploadQueue(mega::MegaHandle nodeHandle);
+    void processUploadQueue(mega::MegaHandle nodeHandle, QWidget* caller = nullptr);
     void processDownloadQueue(QString path);
     void disableSyncs();
     void restoreSyncs();
@@ -349,6 +354,7 @@ protected:
     QAction *windowsUpdateAction;
     QAction *windowsAboutAction;
     QAction *windowsImportLinksAction;
+    QAction *windowsFilesAction;
     QAction *windowsUploadAction;
     QAction *windowsDownloadAction;
     QAction *windowsStreamAction;
@@ -366,7 +372,8 @@ protected:
     MenuItemAction *uploadAction;
     MenuItemAction *downloadAction;
     MenuItemAction *streamAction;
-    MenuItemAction *myCloudAction;
+    MenuItemAction* filesAction;
+    MenuItemAction* MEGAWebAction;
     MenuItemAction* deviceCentreAction;
     MenuItemAction *updateAction;
     MenuItemAction *aboutAction;

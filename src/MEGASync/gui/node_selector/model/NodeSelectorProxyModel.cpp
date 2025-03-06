@@ -33,7 +33,8 @@ void NodeSelectorProxyModel::sort(int column, Qt::SortOrder order)
     mSortColumn = column;
 
     //If it is already blocked, it is ignored.
-    emit getMegaModel()->blockUi(true);
+    getMegaModel()->sendBlockUiSignal(true);
+
     emit layoutAboutToBeChanged();
     if(mFilterWatcher.isFinished())
     {
@@ -50,6 +51,7 @@ void NodeSelectorProxyModel::sort(int column, Qt::SortOrder order)
                     auto proxyIndex = mapFromSource((*it));
                     hasChildren(proxyIndex);
                 }
+                mItemsToMap.clear();
                 if(mForceInvalidate)
                 {
                     invalidate();
@@ -86,32 +88,6 @@ QModelIndex NodeSelectorProxyModel::getIndexFromHandle(const mega::MegaHandle& h
     return ret;
 }
 
-QVector<QModelIndex> NodeSelectorProxyModel::getRelatedModelIndexes(const std::shared_ptr<mega::MegaNode> node)
-{
-    QVector<QModelIndex> ret;
-
-    if(!node)
-    {
-        return ret;
-    }
-    auto parentNodeList = std::shared_ptr<mega::MegaNodeList>(mega::MegaNodeList::createInstance());
-    parentNodeList->addNode(node.get());
-    mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
-
-    std::shared_ptr<mega::MegaNode> this_node = node;
-    while(this_node)
-    {
-        this_node.reset(megaApi->getParentNode(this_node.get()));
-        if(this_node)
-        {
-            parentNodeList->addNode(this_node.get());
-        }
-    }
-    ret.append(forEach(parentNodeList));
-
-    return ret;
-}
-
 std::shared_ptr<mega::MegaNode> NodeSelectorProxyModel::getNode(const QModelIndex &index)
 {
     if(!index.isValid())
@@ -121,18 +97,34 @@ std::shared_ptr<mega::MegaNode> NodeSelectorProxyModel::getNode(const QModelInde
     return qvariant_cast<std::shared_ptr<mega::MegaNode>>(index.data(toInt(NodeSelectorModelRoles::NODE_ROLE)));
 }
 
-void NodeSelectorProxyModel::removeNode(const QModelIndex& item)
+void NodeSelectorProxyModel::deleteNode(const QModelIndex& item)
 {
     if(NodeSelectorModel* megaModel = getMegaModel())
     {
-        megaModel->removeNodeFromModel(mapToSource(item));
+        megaModel->deleteNodeFromModel(mapToSource(item));
     }
 }
 
 bool NodeSelectorProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-    bool lIsFile = left.data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)).toBool();
-    bool rIsFile = right.data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)).toBool();
+    auto lIsFileVar(left.data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)));
+    auto rIsFileVar(right.data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)));
+
+    // Logic to put the empty space always at the bottom
+    {
+        if (!lIsFileVar.isValid())
+        {
+            return sortOrder() == Qt::DescendingOrder;
+        }
+
+        if (!rIsFileVar.isValid())
+        {
+            return sortOrder() != Qt::DescendingOrder;
+        }
+    }
+
+    bool lIsFile = lIsFileVar.toBool();
+    bool rIsFile = rIsFileVar.toBool();
 
     auto result(false);
 
@@ -170,6 +162,12 @@ bool NodeSelectorProxyModel::lessThan(const QModelIndex &left, const QModelIndex
                 result = mCollator.compare(left.data(Qt::ToolTipRole).toString(),
                                            right.data(Qt::ToolTipRole).toString()) < 0;
             }
+            else if (left.column() == NodeSelectorModel::ACCESS &&
+                     right.column() == NodeSelectorModel::ACCESS)
+            {
+                result = left.data(toInt(NodeSelectorModelRoles::ACCESS_ROLE)).toInt() <
+                         right.data(toInt(NodeSelectorModelRoles::ACCESS_ROLE)).toInt();
+            }
             else
             {
                 result = mCollator.compare(left.data(Qt::DisplayRole).toString(),
@@ -193,63 +191,67 @@ void NodeSelectorProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
     }
 }
 
-QVector<QModelIndex> NodeSelectorProxyModel::forEach(std::shared_ptr<mega::MegaNodeList> parentNodeList, QModelIndex parent)
+QModelIndex NodeSelectorProxyModel::findIndexInParentList(mega::MegaNode* NodeToFind,
+                                                          QModelIndex sourceModelParent)
 {
-    QVector<QModelIndex> ret;
+    auto handle = NodeToFind->getHandle();
 
-    for(int j = parentNodeList->size()-1; j >= 0; --j)
+    for (int i = 0; i < sourceModel()->rowCount(sourceModelParent); ++i)
     {
-        auto handle = parentNodeList->get(j)->getHandle();
-        for(int i = 0; i < sourceModel()->rowCount(parent); ++i)
+        QModelIndex index = sourceModel()->index(i, 0, sourceModelParent);
+
+        if (NodeSelectorModelItem* item =
+                static_cast<NodeSelectorModelItem*>(index.internalPointer()))
         {
-            QModelIndex index = sourceModel()->index(i, 0, parent);
-
-            if(NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(index.internalPointer()))
+            if (handle == item->getNode()->getHandle())
             {
-                if(handle == item->getNode()->getHandle())
-                {
-                    ret.append(mapFromSource(index));
-
-                    auto interList = std::shared_ptr<mega::MegaNodeList>(mega::MegaNodeList::createInstance());
-                    for(int k = 0; k < parentNodeList->size(); ++k)
-                    {
-                        interList->addNode(parentNodeList->get(k));
-                    }
-                    ret.append(forEach(interList, index));
-                    break;
-                }
+                return mapFromSource(index);
             }
         }
     }
 
-    return ret;
-}
-
-QModelIndex NodeSelectorProxyModel::getIndexFromNode(const std::shared_ptr<mega::MegaNode> node)
-{
-    if(!node)
-    {
-        return QModelIndex();
-    }
-    mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
-
-    std::shared_ptr<mega::MegaNode> root_p_node = node;
-    auto p_node = std::unique_ptr<mega::MegaNode>(megaApi->getParentNode(root_p_node.get()));
-    while(p_node)
-    {
-        root_p_node = std::move(p_node);
-        p_node.reset(megaApi->getParentNode(root_p_node.get()));
-    }
-
-    QVector<QModelIndex> indexList = getRelatedModelIndexes(node);
-    if(!indexList.isEmpty())
-    {
-        return indexList.last();
-    }
     return QModelIndex();
 }
 
-NodeSelectorModel *NodeSelectorProxyModel::getMegaModel()
+QModelIndex
+    NodeSelectorProxyModel::getIndexFromNode(const std::shared_ptr<mega::MegaNode> nodeToFind)
+{
+    if (!nodeToFind)
+    {
+        return QModelIndex();
+    }
+
+    auto parentNodeList = std::shared_ptr<mega::MegaNodeList>(mega::MegaNodeList::createInstance());
+    parentNodeList->addNode(nodeToFind.get());
+    mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
+
+    std::shared_ptr<mega::MegaNode> this_node = nodeToFind;
+    while (this_node)
+    {
+        this_node.reset(megaApi->getParentNode(this_node.get()));
+        if (this_node)
+        {
+            parentNodeList->addNode(this_node.get());
+        }
+    }
+
+    QModelIndex foundIndex;
+
+    // Start from top parent to last child
+    for (int i = parentNodeList->size() - 1; i >= 0; --i)
+    {
+        auto nodeFromList(parentNodeList->get(i));
+        foundIndex = findIndexInParentList(nodeFromList, mapToSource(foundIndex));
+        if (foundIndex.isValid() && nodeFromList->getHandle() == nodeToFind->getHandle())
+        {
+            return foundIndex;
+        }
+    }
+
+    return QModelIndex();
+}
+
+NodeSelectorModel* NodeSelectorProxyModel::getMegaModel() const
 {
     return dynamic_cast<NodeSelectorModel*>(sourceModel());
 }
@@ -259,14 +261,31 @@ bool NodeSelectorProxyModel::isModelProcessing() const
     return mFilterWatcher.isRunning();
 }
 
-bool NodeSelectorProxyModel::isNotAProtectedModel() const
+bool NodeSelectorProxyModel::canBeDeleted() const
 {
     return dynamic_cast<NodeSelectorModel*>(sourceModel())->canBeDeleted();
 }
 
+bool NodeSelectorProxyModel::hasContextMenuOptions(const QModelIndexList& indexes) const
+{
+    for (const auto& index: indexes)
+    {
+        auto indexItem(getMegaModel()->getItemByIndex(mapToSource(index)));
+        if (indexItem && indexItem->getNode())
+        {
+            if (indexItem->isCloudDrive() || indexItem->isRubbishBin() || indexItem->isVault() ||
+                indexItem->isVaultDevice())
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
 void NodeSelectorProxyModel::invalidateModel(const QList<QPair<mega::MegaHandle,QModelIndex>>& parents, bool force)
 {
-    mItemsToMap.clear();
     foreach(auto parent, parents)
     {
         mItemsToMap.append(parent.second);
@@ -295,17 +314,15 @@ void NodeSelectorProxyModel::onModelSortedFiltered()
     }
     else
     {
-        emit navigateReady(mItemsToMap.isEmpty() ? QModelIndex() : mapFromSource(mItemsToMap.first()));
-        if(auto nodeSelectorModel = dynamic_cast<NodeSelectorModel*>(sourceModel()))
-        {
-            nodeSelectorModel->clearIndexesNodeInfo();
-        }
+        emit navigateReady(mItemsToMap.isEmpty() ? QModelIndex() :
+                                                   mapFromSource(mItemsToMap.first()));
         mExpandMapped = true;
     }
-    emit getMegaModel()->blockUi(false);
-    mItemsToMap.clear();
 
     emit modelSorted();
+
+    getMegaModel()->sendBlockUiSignal(false);
+    mItemsToMap.clear();
 }
 
 NodeSelectorProxyModelSearch::NodeSelectorProxyModelSearch(QObject *parent)
@@ -321,19 +338,23 @@ void NodeSelectorProxyModelSearch::setMode(NodeSelectorModelItemSearch::Types mo
         return;
     }
 
-    emit getMegaModel()->blockUi(true);
+    getMegaModel()->sendBlockUiSignal(true);
     mMode = mode;
     invalidateFilter();
-    emit getMegaModel()->blockUi(false);
+    getMegaModel()->sendBlockUiSignal(false);
+    if (rowCount() == 0)
+    {
+        emit modeEmpty();
+    }
 }
 
-bool NodeSelectorProxyModelSearch::isNotAProtectedModel() const
+bool NodeSelectorProxyModelSearch::canBeDeleted() const
 {
-    if(mMode & NodeSelectorModelItemSearch::Type::BACKUP)
+    if (mMode & NodeSelectorModelItemSearch::Type::BACKUP)
     {
         return false;
     }
-    return NodeSelectorProxyModel::isNotAProtectedModel();
+    return NodeSelectorProxyModel::canBeDeleted();
 }
 
 bool NodeSelectorProxyModelSearch::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const

@@ -6,6 +6,7 @@
 #include "BugReportDialog.h"
 #include "ChangePassword.h"
 #include "CommonMessages.h"
+#include "CreateRemoveSyncsManager.h"
 #include "DialogOpener.h"
 #include "FullName.h"
 #include "MegaApplication.h"
@@ -1184,7 +1185,6 @@ void SettingsDialog::on_bLogout_clicked()
 }
 
 // Syncs -------------------------------------------------------------------------------------------
-
 void SettingsDialog::setEnabledAllControls(const bool enabled)
 {
     setGeneralTabEnabled(enabled);

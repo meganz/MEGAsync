@@ -15,7 +15,8 @@ enum class NodeItemType
     FILE_UPLOAD_AND_REPLACE,
     FILE_UPLOAD_AND_UPDATE,
     UPLOAD_AND_RENAME,
-    DONT_UPLOAD
+    DONT_UPLOAD,
+    UPLOAD
 };
 
 class DuplicatedUploadBase;
@@ -31,11 +32,11 @@ public:
     const std::shared_ptr<mega::MegaNode> &getParentNode() const;
     void setParentNode(const std::shared_ptr<mega::MegaNode> &newParentNode);
 
-    const std::shared_ptr<mega::MegaNode> &getRemoteConflictNode() const;
-    void setRemoteConflictNode(const std::shared_ptr<mega::MegaNode> &newRemoteConflictNode);
+    const std::shared_ptr<mega::MegaNode>& getConflictNode() const;
+    void setConflictNode(const std::shared_ptr<mega::MegaNode> &newRemoteConflictNode);
 
-    const QString &getLocalPath() const;
-    void setLocalPath(const QString &newLocalPath);
+    const QString& getSourceItemPath() const;
+    void setSourceItemPath(const QString &newLocalPath);
 
     NodeItemType getSolution() const;
     void setSolution(NodeItemType newSolution);
@@ -49,37 +50,84 @@ public:
     bool hasConflict() const;
     void setHasConflict(bool newHasConflict);
 
-    bool isLocalFile() const;
-    bool isRemoteFile() const;
+    virtual bool sourceItemIsFile() const;
+    bool conflictNodeIsFile() const;
 
     const QDateTime& getNodeModifiedTime() const;
 
-    const QDateTime &getLocalModifiedTime() const;
-    void setLocalModifiedTime(const QDateTime &newLocalModifiedTime);
+    const QDateTime& getSourceItemModifiedTime() const;
+    void setSourceItemModifiedTime(const QDateTime& newSourceItemModifiedTime);
 
     bool haveDifferentType() const;
 
     bool isNameConflict() const;
     void setIsNameConflict(bool newIsNameConflict);
 
-signals:
-    void localModifiedDateUpdated();
+    DuplicatedUploadBase* checker() const;
 
-private:
+protected:
     std::shared_ptr<mega::MegaNode> mParentNode;
-    std::shared_ptr<mega::MegaNode> mRemoteConflictNode;
-    QString mLocalPath;
+    std::shared_ptr<mega::MegaNode> mConflictNode;
+    QString mSourcePath;
     NodeItemType mSolution;
     QString mNewName;
     QString mDisplayNewName;
     QString mName;
-    bool mIsLocalFile;
+    bool mSourceItemIsFile;
     bool mHasConflict;
-    bool mHaveDifferentType;
     bool mIsNameConflict;
-    QDateTime mNodeModifiedTime;
-    QDateTime mLocalModifiedTime;
+    QDateTime mConflictNodeModifiedTime;
+    QDateTime mSourceItemModifiedTime;
     DuplicatedUploadBase* mChecker;
+};
+
+class DuplicatedMoveNodeInfo : public DuplicatedNodeInfo
+{
+    Q_OBJECT
+public:
+
+    DuplicatedMoveNodeInfo(DuplicatedUploadBase* checker)
+        : DuplicatedNodeInfo(checker)
+    {}
+
+    mega::MegaHandle getSourceItemHandle() const;
+    void setSourceItemHandle(const mega::MegaHandle& sourceItemHandle);
+
+    std::shared_ptr<mega::MegaNode> getSourceItemNode() const;
+
+    bool sourceItemIsFile() const override;
+
+private:
+    std::shared_ptr<mega::MegaNode> mSourceItemNode;
+};
+
+struct ConflictTypes
+{
+    ConflictTypes() = default;
+
+    std::shared_ptr<mega::MegaNode> mSourceNode = nullptr;
+    std::shared_ptr<mega::MegaNode> mTargetNode = nullptr;
+
+    DuplicatedUploadBase* mFolderCheck = nullptr;
+    DuplicatedUploadBase* mFileCheck = nullptr;
+
+    QList<std::shared_ptr<DuplicatedNodeInfo>> mResolvedConflicts;
+    QList<std::shared_ptr<DuplicatedNodeInfo>> mFileConflicts;
+    QList<std::shared_ptr<DuplicatedNodeInfo>> mFolderConflicts;
+    QList<std::shared_ptr<DuplicatedNodeInfo>> mFileNameConflicts;
+    QList<std::shared_ptr<DuplicatedNodeInfo>> mFolderNameConflicts;
+
+    bool isEmpty() const;
+};
+
+class CheckDuplicatedNodes
+{
+public:
+    static std::shared_ptr<ConflictTypes> checkMoves(
+        QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>> handlesAndTargetNode,
+        std::shared_ptr<mega::MegaNode> sourceNode);
+    static std::shared_ptr<ConflictTypes> checkUploads(
+        QQueue<QString>& nodePaths, std::shared_ptr<mega::MegaNode> targetNode);
 };
 
 #endif // DUPLICATEDNODEINFO_H

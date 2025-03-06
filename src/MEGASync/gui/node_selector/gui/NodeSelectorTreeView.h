@@ -2,11 +2,14 @@
 #define NODESELECTORTREEVIEW_H
 
 #include "megaapi.h"
-#include "ViewLoadingScene.h"
 #include "NodeSelectorLoadingDelegate.h"
+#include "ViewLoadingScene.h"
 
-#include <QTreeView>
 #include <QHeaderView>
+#include <QShortcut>
+#include <QTreeView>
+
+#include <optional>
 
 class NodeSelectorProxyModel;
 class NodeSelectorModel;
@@ -18,9 +21,35 @@ class NodeSelectorTreeView : public LoadingSceneView<NodeSelectorLoadingDelegate
 
 public:
     explicit NodeSelectorTreeView(QWidget *parent = nullptr);
+    ~NodeSelectorTreeView();
+
     MegaHandle getSelectedNodeHandle();
     QList<MegaHandle> getMultiSelectionNodeHandle() const;
     void setModel(QAbstractItemModel *model) override;
+
+    QModelIndexList selectedRows() const;
+
+    void dropEvent(QDropEvent *event) override;
+    void dragEnterEvent(QDragEnterEvent* event) override;
+    void dragMoveEvent(QDragMoveEvent* event) override;
+
+    enum ActionsOrder
+    {
+        RESTORE = 0,
+        SEPARATOR_1,
+        MEGA_LINK,
+        SYNC,
+        UNSYNC,
+        SEPARATOR_2,
+        RENAME,
+        COPY,
+        PASTE,
+        SEPARATOR_3,
+        DELETE_RUBBISH,
+        DELETE_PERMANENTLY,
+        LEAVE_SHARE
+    };
+    Q_ENUM(ActionsOrder)
 
 protected:
     void drawBranches(QPainter *painter,
@@ -31,27 +60,72 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
-    void contextMenuEvent(QContextMenuEvent *event) override;
+    void contextMenuEvent(QContextMenuEvent* event) override;
 
 signals:
-    void removeNodeClicked();
+    void deleteNodeClicked(const QList<MegaHandle>& handles, bool permanently);
+    void leaveShareClicked(const QList<MegaHandle>& handles);
     void renameNodeClicked();
-    void getMegaLinkClicked();
+    void pasteNodesClicked();
+    void getMegaLinkClicked(const QList<MegaHandle>& handles);
+    void restoreClicked(const QList<MegaHandle>& handles);
     void nodeSelected();
 
 private slots:
-    void removeNode();
+    void deleteNode(const QList<MegaHandle>& handles, bool permanently);
     void renameNode();
-    void getMegaLink();
+    void restore(const QList<MegaHandle>& handles);
     void onNavigateReady(const QModelIndex& index);
+    void onCopyShortcutActivated();
+    void onPasteShortcutActivated();
+    void onPasteClicked();
 
 private:
+    friend class NodeSelectorDelegate;
+
     bool mousePressorReleaseEvent(QMouseEvent* event);
     bool handleStandardMouseEvent(QMouseEvent* event);
     QModelIndex getIndexFromSourceModel(const QModelIndex& index) const;
     NodeSelectorProxyModel* proxyModel() const;
+    std::shared_ptr<MegaNode> getDropNode(const QModelIndex& dropIndex);
 
-    NodeSelectorModel* getSourceModel() const;
+    bool areAllEligibleForCopy(const QList<mega::MegaHandle>& handles) const;
+    enum class DeletionType
+    {
+        PERMANENT_REMOVE,
+        MOVE_TO_RUBBISH,
+        LEAVE_SHARE
+    };
+
+    std::optional<NodeSelectorTreeView::DeletionType>
+        areAllEligibleForDeletion(const QHash<mega::MegaHandle, int>& handles) const;
+    bool
+    areAllEligibleForLinkShare(const QHash<mega::MegaHandle, int>& handlesAndAccess) const;
+    bool areAllEligibleForRestore(const QList<MegaHandle> &handles) const;
+    bool isAnyNodeInALimitedDrive(const QList<MegaHandle>& handles) const;
+
+    void addShareLinkMenuAction(QMap<int, QAction*>& actions,
+                                QHash<mega::MegaHandle, int> selectionHandles);
+    void addPasteMenuAction(QMap<int, QAction*>& actions);
+    void addRestoreMenuAction(QMap<int, QAction*>& actions,
+                              QList<mega::MegaHandle> selectionHandles);
+    void addDeleteMenuAction(QMap<int, QAction*>& actions,
+                             QList<mega::MegaHandle> selectionHandles);
+    void addDeletePermanently(QMap<int, QAction*>& actions,
+                              QList<mega::MegaHandle> selectionHandles);
+    void addLeaveInshare(QMap<int, QAction*>& actions, QList<mega::MegaHandle> selectionHandles);
+    void addRemoveMenuActions(QMap<int, QAction*>& actions,
+                              QHash<mega::MegaHandle, int> selectionHandles);
+
+    //Access
+    QHash<mega::MegaHandle, int> getNodesAccess(const QList<mega::MegaHandle>& handles) const;
+
+    // Shortcuts
+    QShortcut* mCopyShortcut;
+    QShortcut* mPasteShortcut;
+
+    // Copied handles are common for all views
+    static QList<mega::MegaHandle> mCopiedHandles;
 
     MegaApi* mMegaApi;
 };

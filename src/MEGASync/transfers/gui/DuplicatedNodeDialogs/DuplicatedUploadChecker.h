@@ -62,5 +62,27 @@ private slots:
     void onUploadAndMergeSelected();
 };
 
+class DuplicatedMoveFile : public DuplicatedUploadBase
+{
+    Q_OBJECT
+
+public:
+    explicit DuplicatedMoveFile() = default;
+    ~DuplicatedMoveFile(){}
+
+    void fillUi(DuplicatedNodeDialog* dialog,  std::shared_ptr<DuplicatedNodeInfo> conflict) override;
+};
+
+class DuplicatedMoveFolder : public DuplicatedUploadBase
+{
+    Q_OBJECT
+
+public:
+    explicit DuplicatedMoveFolder() = default;
+    ~DuplicatedMoveFolder(){}
+
+    void fillUi(DuplicatedNodeDialog* dialog,  std::shared_ptr<DuplicatedNodeInfo> conflict) override;
+};
+
 
 #endif // DUPLICATEDUPLOADFILEDIALOG_H

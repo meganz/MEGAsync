@@ -406,12 +406,30 @@ public:
     static QString getCommonPath(const QString& path1, const QString& path2, bool cloudPaths);
 
     static bool isIncommingShare(mega::MegaNode* node);
+    static int getNodeAccess(mega::MegaHandle handle);
+    static int getNodeAccess(mega::MegaNode* handle);
+    static QString getNodeStringAccess(mega::MegaNode* handle);
+    static QString getNodeStringAccess(mega::MegaHandle handle);
+
+    enum HandlesType
+    {
+        FILES = 0x1,
+        FOLDERS = 0x2
+    };
+    Q_DECLARE_FLAGS(HandlesTypes, HandlesType)
+
+    static HandlesTypes getHandlesType(const QList<mega::MegaHandle>& handles);
 
     static bool dayHasChangedSince(qint64 msecs);
     static bool monthHasChangedSince(qint64 msecs);
 
     static QString getTranslatedError(const mega::MegaError* error);
 
+    static std::shared_ptr<mega::MegaError> removeRemoteFile(const mega::MegaNode* node);
+    static std::shared_ptr<mega::MegaError> removeSyncRemoteFile(const mega::MegaNode* node);
+    static std::shared_ptr<mega::MegaError> removeRemoteFile(const QString& path);
+    static std::shared_ptr<mega::MegaError> removeSyncRemoteFile(const QString& path);
+    static bool removeLocalFile(const QString& path, const mega::MegaHandle& syncId);
     static bool restoreNode(mega::MegaNode* node,
                             mega::MegaApi* megaApi,
                             bool async,

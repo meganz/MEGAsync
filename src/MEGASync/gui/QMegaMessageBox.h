@@ -46,7 +46,9 @@ public:
             ignoreCloseAll(false),
             hideCloseButton(false),
             checkboxText(QString())
-        {}
+        {
+            qRegisterMetaType<MessageBoxInfo>("QMegaMessageBox::MessageBoxInfo");
+        }
     };
 
     static void information(const MessageBoxInfo& info);

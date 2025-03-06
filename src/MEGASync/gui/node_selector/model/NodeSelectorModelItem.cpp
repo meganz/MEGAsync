@@ -3,6 +3,7 @@
 #include "Avatar.h"
 #include "FullName.h"
 #include "MegaApplication.h"
+#include "ViewLoadingScene.h"
 
 const int NodeSelectorModelItem::ICON_SIZE = 17;
 
@@ -17,12 +18,8 @@ NodeSelectorModelItem::NodeSelectorModelItem(std::unique_ptr<MegaNode> node, boo
     mMegaApi(MegaSyncApp->getMegaApi()),
     mNode(std::move(node)),
     mOwner(nullptr)
-{ 
-    mChildrenCounter = mShowFiles ? MegaSyncApp->getMegaApi()->getNumChildren(mNode.get())
-            : MegaSyncApp->getMegaApi()->getNumChildFolders(mNode.get());
-
-    //If it has no children, the item does not need to be init
-    mChildrenAreInit = mChildrenCounter > 0 ? false : true;
+{
+    resetChildrenCounter();
 
     if(mNode->isFile() || mNode->isInShare())
     {
@@ -42,14 +39,35 @@ std::shared_ptr<mega::MegaNode> NodeSelectorModelItem::getNode() const
     return mNode;
 }
 
+bool NodeSelectorModelItem::isSpecialNode() const
+{
+    return (isCloudDrive() || isVault() || isRubbishBin() || mNode->isInShare());
+}
+
 void NodeSelectorModelItem::createChildItems(std::unique_ptr<mega::MegaNodeList> nodeList)
 {
     if(!mNode->isFile())
     {
+        auto info = std::make_shared<MessageInfo>();
+        info->message = QLatin1String("Creating nodes");
+        info->total = nodeList->size();
+
         for(int i = 0; i < nodeList->size(); i++)
         {
+            if(i % 1000 == 0 ||
+               i == (nodeList->size() -1))
+            {
+                info->count = i + 1;
+                emit updateLoadingMessage(info);
+            }
+
             auto node = std::unique_ptr<MegaNode>(nodeList->get(i)->copy());
-            mChildItems.append(createModelItem(std::move(node), mShowFiles, this));
+            auto child = createModelItem(std::move(node), mShowFiles, this);
+            connect(child,
+                    &NodeSelectorModelItem::destroyed,
+                    this,
+                    &NodeSelectorModelItem::onChildDestroyed);
+            mChildItems.append(child);
         }
 
         mRequestingChildren = false;
@@ -84,6 +102,15 @@ bool NodeSelectorModelItem::requestingChildren() const
 void NodeSelectorModelItem::setRequestingChildren(bool newRequestingChildren)
 {
     mRequestingChildren = newRequestingChildren;
+}
+
+void NodeSelectorModelItem::resetChildrenCounter()
+{
+    mChildrenCounter = mShowFiles ? MegaSyncApp->getMegaApi()->getNumChildren(mNode.get()) :
+                                    MegaSyncApp->getMegaApi()->getNumChildFolders(mNode.get());
+
+    // If it has no children, the item does not need to be init
+    mChildrenAreInit = mChildrenCounter > 0 ? false : true;
 }
 
 QPointer<NodeSelectorModelItem> NodeSelectorModelItem::getParent()
@@ -174,6 +201,11 @@ void NodeSelectorModelItem::onAvatarAttributeReady()
     emit infoUpdated(Qt::DecorationRole);
 }
 
+void NodeSelectorModelItem::onChildDestroyed()
+{
+    mChildrenCounter--;
+}
+
 QPixmap NodeSelectorModelItem::getOwnerIcon()
 {
     if(mAvatarAttribute)
@@ -237,9 +269,14 @@ QList<QPointer<NodeSelectorModelItem>> NodeSelectorModelItem::addNodes(QList<std
     QList<QPointer<NodeSelectorModelItem>> items;
     foreach(auto& node, nodes)
     {
-        auto item = createModelItem(std::unique_ptr<MegaNode>(node->copy()), mShowFiles, this);
-        items.append(item);
-        mChildItems.append(item);
+        auto child = createModelItem(std::unique_ptr<MegaNode>(node->copy()), mShowFiles, this);
+        items.append(child);
+        connect(child,
+                &NodeSelectorModelItem::destroyed,
+                this,
+                &NodeSelectorModelItem::onChildDestroyed);
+        mChildItems.append(child);
+        mChildrenCounter++;
     }
     return items;
 }
@@ -285,6 +322,13 @@ void NodeSelectorModelItem::updateNode(std::shared_ptr<mega::MegaNode> node)
 
 void NodeSelectorModelItem::calculateSyncStatus()
 {
+    if(mNode->isFile())
+    {
+        return;
+    }
+
+    mStatus = Status::NONE;
+
     //if current item has a parent and the parent is already a sync or a sync_child, current item is also a sync_child
     //if not, continue checking. This avoid to block the mutex in the megaapi call below.
     if(parent())
@@ -297,7 +341,6 @@ void NodeSelectorModelItem::calculateSyncStatus()
             case Status::SYNC_CHILD:
             {
                 mStatus = Status::SYNC_CHILD;
-                return;
             }
             default:
                 break;
@@ -305,24 +348,27 @@ void NodeSelectorModelItem::calculateSyncStatus()
         }
     }
 
-    std::unique_ptr<MegaError> err (MegaSyncApp->getMegaApi()->isNodeSyncableWithError(mNode.get()));
-    switch(err->getSyncError())
+    if(mStatus == Status::NONE)
     {
-    case mega::MegaSync::Error::ACTIVE_SYNC_ABOVE_PATH:
-    {
-        mStatus = Status::SYNC_CHILD;
-        break;
-    }
-    case mega::MegaSync::Error::ACTIVE_SYNC_BELOW_PATH:
-    {
-        mStatus = Status::SYNC_PARENT;
-        break;
-    }
-    case mega::MegaSync::Error::ACTIVE_SYNC_SAME_PATH:
-    {
-        mStatus = Status::SYNC;
-        break;
-    }
+        std::unique_ptr<MegaError> err (MegaSyncApp->getMegaApi()->isNodeSyncableWithError(mNode.get()));
+        switch(err->getSyncError())
+        {
+        case mega::MegaSync::Error::ACTIVE_SYNC_ABOVE_PATH:
+        {
+            mStatus = Status::SYNC_CHILD;
+            break;
+        }
+        case mega::MegaSync::Error::ACTIVE_SYNC_BELOW_PATH:
+        {
+            mStatus = Status::SYNC_PARENT;
+            break;
+        }
+        case mega::MegaSync::Error::ACTIVE_SYNC_SAME_PATH:
+        {
+            mStatus = Status::SYNC;
+            break;
+        }
+        }
     }
 }
 
@@ -331,7 +377,17 @@ bool NodeSelectorModelItem::isCloudDrive() const
     return mNode->getHandle() == MegaSyncApp->getRootNode()->getHandle();
 }
 
-bool NodeSelectorModelItem::isVault()
+bool NodeSelectorModelItem::isRubbishBin() const
+{
+    return mNode->getHandle() == MegaSyncApp->getRubbishNode()->getHandle();
+}
+
+bool NodeSelectorModelItem::isVault() const
+{
+    return false;
+}
+
+bool NodeSelectorModelItem::isVaultDevice() const
 {
     return false;
 }
@@ -347,11 +403,22 @@ NodeSelectorModelItemSearch::NodeSelectorModelItemSearch(std::unique_ptr<mega::M
     }
 
     calculateSyncStatus();
+
+    qRegisterMetaType<Types>("Types");
 }
 
 NodeSelectorModelItemSearch::~NodeSelectorModelItemSearch()
 {
 
+}
+
+void NodeSelectorModelItemSearch::setType(Types type)
+{
+    if (mType != type)
+    {
+        mType = type;
+        emit typeChanged(type);
+    }
 }
 
 int NodeSelectorModelItemSearch::getNumChildren()
@@ -390,7 +457,7 @@ NodeSelectorModelItem *NodeSelectorModelItemIncomingShare::createModelItem(std::
 NodeSelectorModelItemBackup::NodeSelectorModelItemBackup(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem)
     : NodeSelectorModelItem(std::move(node), showFiles, parentItem)
 {
-
+    mStatus = Status::BACKUP;
 }
 
 NodeSelectorModelItemBackup::~NodeSelectorModelItemBackup()
@@ -403,10 +470,15 @@ bool NodeSelectorModelItemBackup::isSyncable()
     return false;
 }
 
-bool NodeSelectorModelItemBackup::isVault()
+bool NodeSelectorModelItemBackup::isVault() const
 {
     //if it is a backup item and it doesn´t have parent it is the root node in backups tree
     return parent() == nullptr;
+}
+
+bool NodeSelectorModelItemBackup::isVaultDevice() const
+{
+    return parent() && parent()->parent() == nullptr;
 }
 
 NodeSelectorModelItem *NodeSelectorModelItemBackup::createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem)
@@ -428,4 +500,20 @@ NodeSelectorModelItemCloudDrive::~NodeSelectorModelItemCloudDrive()
 NodeSelectorModelItem *NodeSelectorModelItemCloudDrive::createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem)
 {
     return new NodeSelectorModelItemCloudDrive(std::move(node), showFiles, parentItem);
+}
+
+////////////////
+NodeSelectorModelItemRubbish::NodeSelectorModelItemRubbish(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem)
+    : NodeSelectorModelItem(std::move(node), showFiles, parentItem)
+{
+}
+
+NodeSelectorModelItemRubbish::~NodeSelectorModelItemRubbish()
+{
+
+}
+
+NodeSelectorModelItem *NodeSelectorModelItemRubbish::createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem)
+{
+    return new NodeSelectorModelItemRubbish(std::move(node), showFiles, parentItem);
 }

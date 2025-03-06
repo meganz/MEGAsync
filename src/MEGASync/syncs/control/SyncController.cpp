@@ -146,6 +146,13 @@ void SyncController::addSync(SyncConfig& sync)
                     {
                         break;
                     }
+                    case SyncInfo::CLOUD_DRIVE_DIALOG_ORIGIN:
+                    {
+                        MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+                            AppStatsEvents::EventType::SYNC_ADDED_CLOUD_DRIVE_BUTTON,
+                            true);
+                        break;
+                    }
                     case SyncInfo::INFODIALOG_BUTTON_ORIGIN:
                     {
                         MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
@@ -804,8 +811,7 @@ bool SyncController::removeMegaIgnore(const QString& syncLocalFolder, mega::Mega
     {
         if (backupId != mega::INVALID_HANDLE)
         {
-            StalledIssuesUtilities utilities;
-            utilities.removeLocalFile(ignoreFile.fileName(), backupId);
+            Utilities::removeLocalFile(ignoreFile.fileName(), backupId);
         }
         else
         {

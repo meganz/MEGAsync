@@ -152,10 +152,9 @@ bool LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
                 mChosenSide = ChosenSide::LOCAL;
 
                 bool versionsDisabled(Preferences::instance()->fileVersioningDisabled());
-                StalledIssuesUtilities utilities;
                 if(versionsDisabled)
                 {
-                    mError = utilities.removeRemoteFile(node.get());
+                    mError = Utilities::removeSyncRemoteFile(node.get());
                     if(mError)
                     {
                         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Unable to remove file: %1. Error: %2")
@@ -185,10 +184,9 @@ bool LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
 
 bool LocalOrRemoteUserMustChooseStalledIssue::chooseRemoteSide()
 {
-    StalledIssuesUtilities utilities;
     auto syncId = syncIds().isEmpty() ? mega::INVALID_HANDLE : firstSyncId();
     mChosenSide = ChosenSide::REMOTE;
-    return utilities.removeLocalFile(consultLocalData()->getNativeFilePath(), syncId);
+    return Utilities::removeLocalFile(consultLocalData()->getNativeFilePath(), syncId);
 }
 
 bool LocalOrRemoteUserMustChooseStalledIssue::chooseBothSides()

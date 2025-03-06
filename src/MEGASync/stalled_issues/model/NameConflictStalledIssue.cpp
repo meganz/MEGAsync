@@ -859,28 +859,19 @@ NameConflictedStalledIssue::CloudConflictedNames::removeDuplicatedNodes()
                         NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::UNSOLVED &&
                     conflictedName != (*(conflictedNamesGroup.conflictedNames.end() - 1)))
                 {
-                    auto moveToBinErrors = MoveToMEGABin::moveToBin(
-                        conflictedName->mHandle, QLatin1String("SyncDuplicated"), true);
-                    if(!moveToBinErrors.binFolderCreationError && !moveToBinErrors.moveError)
+                    auto error = MoveToMEGABin()(conflictedName->mHandle,
+                                                 QLatin1String("SyncDuplicated"),
+                                                 true);
+                    if (error)
                     {
-                        conflictedName->solveByRemove();
-                    }
-                    else
-                    {
-                        std::shared_ptr<mega::MegaError> error;
-                        if(moveToBinErrors.binFolderCreationError)
-                        {
-                            error = moveToBinErrors.binFolderCreationError;
-                        }
-                        else
-                        {
-                            error = moveToBinErrors.moveError;
-                        }
-
                         auto errorStr = StalledIssuesStrings::RemoveRemoteFailedFile(error.get());
                         conflictedName->setFailed(errorStr);
 
                         return error;
+                    }
+                    else
+                    {
+                        conflictedName->solveByRemove();
                     }
                 }
             }
@@ -904,8 +895,7 @@ NameConflictedStalledIssue::CloudConflictedNames::keepMostRecentlyModifiedNode()
         std::unique_ptr<mega::MegaNode> conflictNode(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictedName->mHandle));
         if(conflictNode)
         {
-            auto error = StalledIssuesUtilities::removeRemoteFile(
-                conflictNode.get());
+            auto error = Utilities::removeSyncRemoteFile(conflictNode.get());
             if(error)
             {
                 auto errorStr = StalledIssuesStrings::RemoveRemoteFailedFile(
@@ -1013,7 +1003,7 @@ NameConflictedStalledIssue::CloudConflictedNames::mergeFolders()
 
                 auto error = foldersMerger.merge(targetFolder.get(), folderToMerge.get());
 
-                if(error)
+                if (error != mega::MegaError::API_OK)
                 {
                     errorInfo.conflictIndex = index;
                     errorInfo.error = tr("Unable to merge this folder.");

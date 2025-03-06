@@ -13,6 +13,8 @@ class FullName;
 class Avatar;
 }
 
+struct MessageInfo;
+
 class NodeSelectorModelItem : public QObject
 {
     Q_OBJECT
@@ -32,6 +34,7 @@ public:
     ~NodeSelectorModelItem();
 
     std::shared_ptr<mega::MegaNode> getNode() const;
+    bool isSpecialNode() const;
 
     void createChildItems(std::unique_ptr<mega::MegaNodeList> nodeList);
     bool areChildrenInitialized() const;
@@ -49,24 +52,29 @@ public:
     QIcon getStatusIcons();
     Status getStatus() const;
     virtual bool isSyncable();
-    virtual bool isVault();
+    virtual bool isVault() const;
+    virtual bool isVaultDevice() const;
     bool isCloudDrive() const;
+    bool isRubbishBin() const;
+    QPointer<NodeSelectorModelItem> addNode(std::shared_ptr<mega::MegaNode> node);
     QList<QPointer<NodeSelectorModelItem>> addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes);
     QPointer<NodeSelectorModelItem> findChildNode(std::shared_ptr<mega::MegaNode> node);
     void displayFiles(bool enable);
     void setChatFilesFolder();
     int row();
     void updateNode(std::shared_ptr<mega::MegaNode> node);
+    void calculateSyncStatus();
 
     bool requestingChildren() const;
     void setRequestingChildren(bool newRequestingChildren);
 
+    void resetChildrenCounter();
+
 signals:
     void infoUpdated(int role);
+    void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
 
 protected:
-    void calculateSyncStatus();
-
     QString mOwnerEmail;
     Status mStatus;
     bool mRequestingChildren;
@@ -82,6 +90,7 @@ protected:
 private slots:
     void onFullNameAttributeReady();
     void onAvatarAttributeReady();
+    void onChildDestroyed();
 
 private:
     virtual NodeSelectorModelItem* createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0) = 0;
@@ -117,7 +126,8 @@ public:
     explicit NodeSelectorModelItemBackup(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0);
     ~NodeSelectorModelItemBackup();
     bool isSyncable() override;
-    bool isVault() override;
+    bool isVault() const override;
+    bool isVaultDevice() const override;
 
 private:
     NodeSelectorModelItem* createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0) override;
@@ -125,6 +135,8 @@ private:
 
 class NodeSelectorModelItemSearch : public NodeSelectorModelItem
 {
+    Q_OBJECT
+
 public:
     enum class Type
     {
@@ -132,17 +144,37 @@ public:
         BACKUP = 0x01,
         INCOMING_SHARE = 0x02,
         CLOUD_DRIVE = 0x04,
+        RUBBISH = 0x08,
     };
     Q_DECLARE_FLAGS(Types, Type);
 
     explicit NodeSelectorModelItemSearch(std::unique_ptr<mega::MegaNode> node, Types type, NodeSelectorModelItem *parentItem = 0);
     ~NodeSelectorModelItemSearch();
-    Types getType(){return mType;}
+
+    Types getType()
+    {
+        return mType;
+    }
+
+    void setType(Types type);
     int getNumChildren() override;
+
+signals:
+    void typeChanged(Types type);
 
 private:
     NodeSelectorModelItem* createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0) override;
     Types mType;
+};
+
+class NodeSelectorModelItemRubbish : public NodeSelectorModelItem
+{
+public:
+    explicit NodeSelectorModelItemRubbish(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0);
+    ~NodeSelectorModelItemRubbish();
+
+private:
+    NodeSelectorModelItem* createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0) override;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(NodeSelectorModelItemSearch::Types)

@@ -218,6 +218,8 @@ struct MessageInfo
 
 Q_DECLARE_METATYPE(MessageInfo)
 
+class ViewLoadingMessage;
+
 class LoadingSceneMessageHandler : public QObject
 {
     Q_OBJECT
@@ -228,8 +230,6 @@ public:
 
     bool needsAnswerFromUser() const;
 
-    MessageInfo::ButtonType getButtonType() const;
-
     void hideLoadingMessage();
     void setTopParent(QWidget* widget);
 
@@ -239,24 +239,25 @@ public slots:
     void updateMessage(std::shared_ptr<MessageInfo> info);
 
 signals:
-    void onButtonPressed(MessageInfo::ButtonType);
-    void loadingMessageVisibilityChange(bool value);
+    void buttonPressed(MessageInfo::ButtonType);
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 
+private slots:
+    void onButtonPressed(int buttonType);
+
 private:
-    void sendLoadingMessageVisibilityChange(bool value);
-    void updateMessagePos();
+    void checkLoadingMessageVisibility();
+    void createLoadingMessage();
 
     Ui::ViewLoadingSceneUI* ui;
     QWidget* mViewBase;
     QWidget* mTopParent = nullptr;
-    QWidget* mFadeOutWidget;
+
+    QPointer<ViewLoadingMessage> mLoadingMessage;
 
     bool mLoadingViewVisible = false;
-
-    std::shared_ptr<MessageInfo> mCurrentInfo;
 };
 
 class ViewLoadingSceneBase : public QObject
@@ -321,11 +322,11 @@ private slots:
 template <class DelegateWidget, class ViewType>
 class ViewLoadingScene : public ViewLoadingSceneBase
 {
-    const uint8_t MAX_LOADING_ROWS = 20;
+    const uint8_t MAX_LOADING_ROWS = 50;
     const int MIN_TIME_DISPLAYING_VIEW = 350;
 
 public:
-    ViewLoadingScene() :
+    ViewLoadingScene():
         ViewLoadingSceneBase(),
         mViewDelegate(nullptr),
         mView(nullptr),
@@ -357,7 +358,6 @@ public:
         if (mLoadingViewSet != type)
         {
             mLoadingViewSet = type;
-            mMessageHandler->setLoadingViewVisible(type != LoadingViewType::NONE);
         }
     }
 
@@ -376,7 +376,7 @@ public:
 
     inline void toggleLoadingScene(bool state)
     {
-        if(!mView)
+        if (!mView)
         {
             return;
         }
@@ -506,8 +506,6 @@ private:
         mView->hide();
         mView->blockSignals(true);
         mView->header()->blockSignals(true);
-
-        //emit sceneVisibilityChange(true);
     }
 
     void showLoadingScene() override
