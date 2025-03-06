@@ -205,3 +205,12 @@ if(TARGET gfxworker)
         COMMENT "Copying gfxworker for MEGAsync."
     )
 endif()
+
+if (WIN32)
+    add_custom_command(
+            TARGET MEGAsync
+            POST_BUILD
+            COMMAND "del.exe \"${CMAKE_CURRENT_SOURCE_DIR}\\platform\\win\\Laf.h"
+            COMMENT "Remove Laf.h not needed after build."
+        )
+endif()
