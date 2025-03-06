@@ -327,7 +327,7 @@ void NodeSelectorTreeView::addRestoreMenuAction(QMap<int, QAction*>& actions,
 void NodeSelectorTreeView::addDeleteMenuAction(QMap<int, QAction*>& actions,
                                                QList<MegaHandle> selectionHandles)
 {
-    auto deleteAction(new QAction(tr("Delete")));
+    auto deleteAction(new QAction(tr("Move to Rubbish bin")));
     connect(deleteAction,
             &QAction::triggered,
             this,

@@ -763,16 +763,21 @@ Qt::ItemFlags NodeSelectorModel::flags(const QModelIndex &index) const
                 flags &= ~(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
             }
 
-            if(mAcceptDragAndDrop && !item->isSpecialNode())
+            if(mAcceptDragAndDrop)
             {
-                flags |= (Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+                flags |= Qt::ItemIsDropEnabled;
+
+                if(!item->isSpecialNode())
+                {
+                    flags |= Qt::ItemIsDragEnabled;
+                }
             }
         }
 
         if (mExtraSpaceAdded &&
             (mAddedIndex.row() == index.row() && mAddedIndex.parent() == index.parent()))
         {
-            flags |= (Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+            flags |= Qt::ItemIsDropEnabled;
             flags &= ~(Qt::ItemIsSelectable);
         }
     }

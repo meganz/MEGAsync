@@ -4947,11 +4947,6 @@ Enter a different name.</translation>
         <translation>Rename</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
-        <translation>Delete</translation>
-    </message>
-    <message>
         <source>Restore</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It restores the node (file or folder) from the rubbish bin. SAT-426</translatorcomment>
         <translation type="unfinished"></translation>
@@ -4989,6 +4984,11 @@ Enter a different name.</translation>
     <message>
         <source>Leave folder</source>
         <translatorcomment>Contextual menu text that appears when we right click on inshare folder on the incoming shared page on node selector. It leaves an inshared folder. CON-1255</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to Rubbish bin</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
