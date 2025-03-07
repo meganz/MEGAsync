@@ -65,9 +65,6 @@ built32/
 sign64/
 sign32/
 qt-deploy-*
-build/
-Debug/
-Release/
 
 .vs
 
