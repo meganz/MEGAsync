@@ -3657,7 +3657,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Log out</source>
         <translatorcomment>Label of the button used to log out of the account to try to resolve a fatal error - CON-844</translatorcomment>
-        <translation>Fazer logout</translation>
+        <translation>Fazer logout</translation>
     </message>
     <message>
         <source>No error</source>
@@ -5363,7 +5363,7 @@ Digite um nome diferente.
     <message>
         <source>View in Settings</source>
         <translatorcomment>Button text that opens the settings dialog CON-467</translatorcomment>
-        <translation>Exibir em configurações</translation>
+        <translation>Ver nas Configurações</translation>
     </message>
     <message>
         <source>Welcome to MEGA</source>
