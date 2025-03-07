@@ -196,9 +196,9 @@ if [ ${sign} -eq 1 -o ${signAdHoc} -eq 1 ]; then
         echo "Checking signature"
         codesign -dv ${MSYNC_PREFIX}$APP_NAME.app &> /dev/null
         if [ $? -ne 1 ]; then
-            echo "AdHoc signature correct"
+            echo "The ad hoc signature check is correct"
         else
-            echo "AdHoc signature failed"
+            echo "The ad hoc signature check is wrong"
             exit 1
         fi
     fi
