@@ -62,7 +62,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
     case DLL_PROCESS_ATTACH:
         g_hInst = hModule;
         DisableThreadLibraryCalls(hModule);
-        if (Utilities::isWindows11())
+        if (Utilities::haveModernContextMenu())
         {
             SparsePackageManager::EnsureRegistrationOnCurrentUser();
         }
@@ -87,7 +87,7 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void **ppv)
     }
 
     *ppv = NULL;
-    if (Utilities::isWindows11())
+    if (Utilities::haveModernContextMenu())
     {
         if (rclsid == __uuidof(ContextMenuCommand))
         {
@@ -167,7 +167,7 @@ STDAPI DllRegisterServer(void)
         }
 
         // Register the component.
-        if (Utilities::isWindows11())
+        if (Utilities::haveModernContextMenu())
         {
             SparsePackageManager::modifySparsePackage(SparsePackageManager::MODIFY_TYPE::INSTALL);
         }
@@ -273,7 +273,7 @@ STDAPI DllUnregisterServer(void)
         }
 
         // Unregister the component.
-        if (Utilities::isWindows11())
+        if (Utilities::haveModernContextMenu())
         {
             SparsePackageManager::modifySparsePackage(SparsePackageManager::MODIFY_TYPE::UNINSTALL);
         }
@@ -296,7 +296,7 @@ STDAPI DllUnregisterServer(void)
         hr = UnregisterInprocServer(CLSID_ShellExtNotFound);
         if (!SUCCEEDED(hr)) return hr;
 
-        if (!Utilities::isWindows11())
+        if (!Utilities::haveModernContextMenu())
         {
             UnregisterShellExtContextMenuHandler(L"*",
                                                  CLSID_ContextMenuExt,

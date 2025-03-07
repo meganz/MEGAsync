@@ -11,7 +11,7 @@ std::wstring getRegisterKeyStringValue(HKEY hKey,
                                        const std::wstring& subKey = L"",
                                        const std::wstring& valueName = L"");
 
-bool isWindows11();
+bool haveModernContextMenu();
 
 // Security and Identity
 void resetAcl();

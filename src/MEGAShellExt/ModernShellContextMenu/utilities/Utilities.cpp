@@ -58,7 +58,7 @@ std::wstring getRegisterKeyStringValue(HKEY hKey,
 // Paths
 constexpr int WINDOWS11_FIRST_BUILD_NUMBER = 22000;
 
-bool isWindows11()
+bool haveModernContextMenu()
 {
     std::wstring buildNumberStr(
         getRegisterKeyStringValue(HKEY_LOCAL_MACHINE,

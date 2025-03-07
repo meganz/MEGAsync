@@ -8,13 +8,7 @@ using namespace winrt::Windows::Foundation::Collections;
 extern HMODULE g_hInst;
 
 const std::wstring SparsePackageName = L"MEGASyncShellSparse";
-#if _WIN32 || _WIN64
-#if _WIN64
 const std::wstring SparseInstallerName = L"\\MEGAShellExt.msix";
-#else
-const std::wstring SparseInstallerName = L"\\MEGAShellExt.msix";
-#endif
-#endif
 
 winrt::Windows::ApplicationModel::Package SparsePackageManager::mSparsePackage = NULL;
 
@@ -136,11 +130,9 @@ void SparsePackageManager::ReRegisterSparsePackage()
 
 HRESULT SparsePackageManager::modifySparsePackage(MODIFY_TYPE type)
 {
-    const bool isWindows11 = Utilities::isWindows11();
-
     HRESULT result(S_OK);
 
-    if (isWindows11)
+    if (Utilities::haveModernContextMenu())
     {
         if (type == MODIFY_TYPE::INSTALL)
         {
@@ -188,9 +180,7 @@ void SparsePackageManager::EnsureRegistrationOnCurrentUser()
 
     if (moduleName == L"explorer.exe")
     {
-        const bool isWindows11 = Utilities::isWindows11();
-
-        if (isWindows11)
+        if (Utilities::haveModernContextMenu())
         {
             // We are being loaded into explorer.exe, so we can continue.
             // Explorer.exe only loads the DLL on the first time a user right-clicks a file
