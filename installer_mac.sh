@@ -189,11 +189,19 @@ if [ ${sign} -eq 1 -o ${signAdHoc} -eq 1 ]; then
 	echo "Signing 'APPBUNDLE'"
     if [ ${sign} -eq 1 ]; then
 	    codesign --force --verify --verbose --preserve-metadata=entitlements --options runtime --sign "Developer ID Application: Mega Limited" --deep ${MSYNC_PREFIX}$APP_NAME.app
+        echo "Checking signature"
+	    spctl -vv -a ${MSYNC_PREFIX}$APP_NAME.app
 	elif [ ${signAdHoc} -eq 1 ]; then
         codesign --force --verify --verbose --preserve-metadata=entitlements --sign - --deep ${MSYNC_PREFIX}$APP_NAME.app
+        echo "Checking signature"
+        codesign -dv ${MSYNC_PREFIX}$APP_NAME.app &> /dev/null
+        if [ $? -ne 1 ]; then
+            echo "AdHoc signature correct"
+        else
+            echo "AdHoc signature failed"
+            exit 1
+        fi
     fi
-    echo "Checking signature"
-	spctl -vv -a ${MSYNC_PREFIX}$APP_NAME.app
 	cd ..
     sign_time=`expr $(date +%s) - $sign_time_start`
 fi
