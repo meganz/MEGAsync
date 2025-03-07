@@ -5,7 +5,7 @@ Usage () {
     echo "    --arch [arm64|x86_64]  : Arch target. It will build for the host arch if not defined."
     echo "    --build-cmake          : Idem but using cmake"
     echo "    --sign                 : Sign the app"
-    echo "    --sign-adhoc            : Ad-Hoc Code Sign"
+    echo "    --sign-adhoc           : Ad-Hoc Code Sign"
     echo "    --create-dmg           : Create the dmg package"
     echo "    --notarize             : Notarize package against Apple systems."
     echo "    --full-pkg-cmake       : Idem but using cmake"
