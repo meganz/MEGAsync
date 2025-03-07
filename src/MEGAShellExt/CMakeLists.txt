@@ -10,7 +10,6 @@ project(MEGAShellExt
 add_library(MEGAShellExt SHARED)
 
 set(MEGAShellExt_HEADERS
-    ModernShellContextMenu/data/ContextMenuData.h
     ModernShellContextMenu/gui/ContextMenuCommand.h
     ModernShellContextMenu/gui/ContextMenuCommandBase.h
     ModernShellContextMenu/gui/ContextMenuCommandGetLink.h
@@ -24,11 +23,12 @@ set(MEGAShellExt_HEADERS
     ModernShellContextMenu/utilities/SparsePackageManager.h
     ModernShellContextMenu/utilities/SimpleFactory.h
     ModernShellContextMenu/utilities/Utilities.h
+    ClassicShellContextMenu/ContextMenuExt.h
+    ContextMenuData.h
     ShellExt.h
     ShellExtNotASync.h
     resource.h
     RegUtils.h
-    ClassicShellContextMenu/ContextMenuExt.h
     ClassFactoryShellExtSyncing.h
     ClassFactoryShellExtSynced.h
     ClassFactoryShellExtPending.h
@@ -39,7 +39,6 @@ set(MEGAShellExt_HEADERS
 )
 
 set(MEGAShellExt_SOURCES
-    ModernShellContextMenu/data/ContextMenuData.cpp
     ModernShellContextMenu/gui/ContextMenuCommandBase.cpp
     ModernShellContextMenu/gui/ContextMenuCommand.cpp
     ModernShellContextMenu/gui/ContextMenuCommandGetLink.cpp
@@ -50,11 +49,12 @@ set(MEGAShellExt_SOURCES
     ModernShellContextMenu/gui/ContextMenuCommandViewVersions.cpp
     ModernShellContextMenu/utilities/SparsePackageManager.cpp
     ModernShellContextMenu/utilities/Utilities.cpp
+    ClassicShellContextMenu/ContextMenuExt.cpp
+    ContextMenuData.cpp
     ShellExt.cpp
     ShellExtNotASync.cpp
     RegUtils.cpp
     dllmain.cpp
-    ClassicShellContextMenu/ContextMenuExt.cpp
     ClassFactoryShellExtSyncing.cpp
     ClassFactoryShellExtSynced.cpp
     ClassFactoryShellExtPending.cpp
@@ -90,7 +90,6 @@ target_link_libraries(MEGAShellExt
 target_include_directories(MEGAShellExt
     PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/ModernShellContextMenu/data
     ${CMAKE_CURRENT_SOURCE_DIR}/ModernShellContextMenu/gui
     ${CMAKE_CURRENT_SOURCE_DIR}/ModernShellContextMenu/utilities
     ${CMAKE_CURRENT_SOURCE_DIR}/ClassicShellContextMenu
