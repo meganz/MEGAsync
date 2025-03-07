@@ -4,7 +4,6 @@
 
 if(WIN32)
     option(ENABLE_EXPLORER_EXT "desc" ON)
-    option(ENABLE_EXPLORER_EXT_SPARSE "Enable Win11 sparse package" ON)
     option(ENABLE_DESKTOP_UPDATER "Enable desktop updater tool build" ON)
 elseif(APPLE)
     option(ENABLE_FINDER_EXT "desc" ON)

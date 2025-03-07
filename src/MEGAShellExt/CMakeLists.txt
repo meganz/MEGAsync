@@ -98,46 +98,44 @@ target_include_directories(MEGAShellExt
 
 target_compile_features(MEGAShellExt PRIVATE cxx_std_17)
 
-#if(ENABLE_EXPLORER_EXT_SPARSE)
-    if(MSVC)
-        # Create resources .pri
-        add_custom_command(
-            TARGET MEGAShellExt
-            POST_BUILD
-            COMMAND makepri createconfig "/o" "/cf" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/priconfig.xml" "/dq" "en-US"
-            COMMENT "Creating priconfig.xml"
-        )
+if(MSVC)
+    # Create resources .pri
+    add_custom_command(
+        TARGET MEGAShellExt
+        POST_BUILD
+        COMMAND makepri createconfig "/o" "/cf" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/priconfig.xml" "/dq" "en-US"
+        COMMENT "Creating priconfig.xml"
+    )
 
-        add_custom_command(
-            TARGET MEGAShellExt
-            POST_BUILD
-            COMMAND MakePri.exe new "/cf" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/priconfig.xml" "/pr" "${CMAKE_CURRENT_SOURCE_DIR}"
-            "/mn" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/AppAplication.xml" "/o" "/of" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/resources.pri"
-            COMMENT "Creating resources.pri"
-        )
+    add_custom_command(
+        TARGET MEGAShellExt
+        POST_BUILD
+        COMMAND MakePri.exe new "/cf" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/priconfig.xml" "/pr" "${CMAKE_CURRENT_SOURCE_DIR}"
+        "/mn" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/AppAplication.xml" "/o" "/of" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/resources.pri"
+        COMMENT "Creating resources.pri"
+    )
 
-        # Create sparse package
-        add_custom_command(
-            TARGET MEGAShellExt
-            POST_BUILD
-            COMMAND makeappx pack "/nv" "/o" "/d" "${CMAKE_CURRENT_SOURCE_DIR}/packaging" "/p" "$<TARGET_FILE_DIR:MEGAShellExt>/MEGAShellExt.msix"
-            COMMENT "Creating sparse package for Win11 context menus"
-        )
+    # Create sparse package
+    add_custom_command(
+        TARGET MEGAShellExt
+        POST_BUILD
+        COMMAND makeappx pack "/nv" "/o" "/d" "${CMAKE_CURRENT_SOURCE_DIR}/packaging" "/p" "$<TARGET_FILE_DIR:MEGAShellExt>/MEGAShellExt.msix"
+        COMMENT "Creating sparse package for Win11 context menus"
+    )
 
-        # Sign sparse package
-        add_custom_command(
-            TARGET MEGAShellExt
-            POST_BUILD
-            COMMAND signtool sign "/n" "Mega Limited" "/td" SHA256 "/fd" SHA256 "$<TARGET_FILE_DIR:MEGAShellExt>/MEGAShellExt.msix"
-            COMMENT "Signing sparse package"
-        )
+    # Sign sparse package
+    add_custom_command(
+        TARGET MEGAShellExt
+        POST_BUILD
+        COMMAND signtool sign "/n" "Mega Limited" "/td" SHA256 "/fd" SHA256 "$<TARGET_FILE_DIR:MEGAShellExt>/MEGAShellExt.msix"
+        COMMENT "Signing sparse package"
+    )
 
-        # Sign dll
-        add_custom_command(
-            TARGET MEGAShellExt
-            POST_BUILD
-            COMMAND signtool sign "/n" "Mega Limited"  "/td" SHA256 "/fd" SHA256 $<TARGET_FILE:MEGAShellExt>
-            COMMENT "Signing DLL"
-        )
-    endif()
-#endif()
+    # Sign dll
+    add_custom_command(
+        TARGET MEGAShellExt
+        POST_BUILD
+        COMMAND signtool sign "/n" "Mega Limited"  "/td" SHA256 "/fd" SHA256 $<TARGET_FILE:MEGAShellExt>
+        COMMENT "Signing DLL"
+    )
+endif()
