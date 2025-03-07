@@ -5,6 +5,7 @@ Usage () {
     echo "    --arch [arm64|x86_64]  : Arch target. It will build for the host arch if not defined."
     echo "    --build-cmake          : Idem but using cmake"
     echo "    --sign                 : Sign the app"
+    echo "    --sign-adhoc            : Ad-Hoc Code Sign"
     echo "    --create-dmg           : Create the dmg package"
     echo "    --notarize             : Notarize package against Apple systems."
     echo "    --full-pkg-cmake       : Idem but using cmake"
@@ -14,11 +15,6 @@ Usage () {
     echo "    VCPKGPATH : Point it to a directory containing a valid vcpkg installation"
     echo ""
 }
-
-if [ $# -eq 0 ]; then
-   Usage
-   exit 1
-fi
 
 APP_NAME=MEGAsync
 VOLUME_NAME="Install MEGA"
@@ -33,6 +29,7 @@ target_arch=${host_arch}
 full_pkg_cmake=0
 build_cmake=0
 sign=0
+signAdHoc=0
 createdmg=0
 notarize=0
 
@@ -55,6 +52,9 @@ while [ "$1" != "" ]; do
             ;;
         --sign )
             sign=1
+            ;;
+        --sign-adhoc )
+            signAdHoc=1
             ;;
         --create-dmg )
             createdmg=1
@@ -84,7 +84,13 @@ if [ ${full_pkg_cmake} -eq 1 ]; then
     notarize=1
 fi
 
-if [ ${build_cmake} -ne 1 -a ${sign} -ne 1 -a ${createdmg} -ne 1 -a ${notarize} -ne 1 ]; then
+if [ ${sign} -eq 1  -a ${signAdHoc} -eq 1 ]; then
+   Usage
+   echo "Error: Both sign arguments cannot be selected at the same time."
+   exit 1
+fi
+
+if [ ${build_cmake} -ne 1 -a ${sign} -ne 1 -a ${signAdHoc} -ne 1 -a ${createdmg} -ne 1 -a ${notarize} -ne 1 ]; then
    Usage
    echo "Error: No action selected. Nothing to do."
    exit 1
@@ -176,13 +182,17 @@ if [ ${build_cmake} -eq 1 ]; then
     build_time=`expr $(date +%s) - $build_time_start`
 fi
 
-if [ "$sign" = "1" ]; then
+if [ ${sign} -eq 1 -o ${signAdHoc} -eq 1 ]; then
     sign_time_start=`date +%s`
 	cd Release_${target_arch}
 	cp -R ${MSYNC_PREFIX}$APP_NAME.app ${MSYNC_PREFIX}${APP_NAME}_unsigned.app
 	echo "Signing 'APPBUNDLE'"
-	codesign --force --verify --verbose --preserve-metadata=entitlements --options runtime --sign "Developer ID Application: Mega Limited" --deep ${MSYNC_PREFIX}$APP_NAME.app
-	echo "Checking signature"
+    if [ ${sign} -eq 1 ]; then
+	    codesign --force --verify --verbose --preserve-metadata=entitlements --options runtime --sign "Developer ID Application: Mega Limited" --deep ${MSYNC_PREFIX}$APP_NAME.app
+	elif [ ${signAdHoc} -eq 1 ]; then
+        codesign --force --verify --verbose --preserve-metadata=entitlements --sign - --deep ${MSYNC_PREFIX}$APP_NAME.app
+    fi
+    echo "Checking signature"
 	spctl -vv -a ${MSYNC_PREFIX}$APP_NAME.app
 	cd ..
     sign_time=`expr $(date +%s) - $sign_time_start`

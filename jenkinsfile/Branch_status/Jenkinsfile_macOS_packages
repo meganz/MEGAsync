@@ -72,7 +72,7 @@ pipeline {
                     dir(macos_sources_workspace){
                         sh "sed -i'' -e 's/sysctl -n hw.ncpu/echo 2/g'  installer_mac.sh"
                         script {
-                            def commonArgs = params.IS_RELEASE_CANDIDATE == true ? "--build-cmake --create-dmg" : "--build-cmake"
+                            def commonArgs = params.IS_RELEASE_CANDIDATE == true ? "--build-cmake --sign-adhoc --create-dmg" : "--build-cmake"
 
                             if (params.ARM64 == true) {
                                 env.MEGAQTPATH = "${QT_BASE_PATH}/arm64"
