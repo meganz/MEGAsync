@@ -1,6 +1,8 @@
 #ifndef SUBCOMMAND_ENUMERATOR_H
 #define SUBCOMMAND_ENUMERATOR_H
 
+#include <Unknwn.h>
+
 #include <winrt/base.h>
 
 #include <shobjidl_core.h>
@@ -50,8 +52,7 @@ public:
         return S_OK;
     }
 
-    HRESULT STDMETHODCALLTYPE Clone(
-        /* [out] */ __RPC__deref_out_opt IEnumExplorerCommand** ppenum) override
+    HRESULT STDMETHODCALLTYPE Clone(__RPC__deref_out_opt IEnumExplorerCommand** ppenum) override
     {
         return S_OK;
     }
