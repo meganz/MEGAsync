@@ -4715,52 +4715,52 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>Error moving items</source>
-        <translatorcomment>Main text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translatorcomment>Main text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The items couldn´t be moved. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <source>The items couldn’t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error moving files</source>
-        <translatorcomment>Main text of a messagebox when moving some files in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translatorcomment>Main text of a messagebox when moving some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The files couldn´t be moved. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when moving some files in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <source>The files couldn’t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error moving folders</source>
-        <translatorcomment>Main text of a messagebox when moving some folders in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translatorcomment>Main text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The folders couldn´t be moved. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when moving some folders in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <source>The folders couldn’t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error moving file</source>
-        <translatorcomment>Main text of a messagebox when moving a file in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translatorcomment>Main text of a messagebox when moving a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The file %1 couldn´t be moved. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when moving a file in the Cloud Drive dialog failed. %1 is the file name. CON-426</translatorcomment>
+        <source>The file %1 couldn’t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error moving folder</source>
-        <translatorcomment>Main text of a messagebox when moving a folder in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translatorcomment>Main text of a messagebox when moving a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The folder %1 couldn´t be moved. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when moving a folder in the Cloud Drive dialog failed. %1 is the folder name. CON-426</translatorcomment>
+        <source>The folder %1 couldn’t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4790,152 +4790,152 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>Error copying items</source>
-        <translatorcomment>Main text of a messagebox when copying some items (files and folders) in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translatorcomment>Main text of a messagebox when copying some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The items couldn´t be copied. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when copying some items (files and folders) in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <source>The items couldn’t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error copying files</source>
-        <translatorcomment>Main text of a messagebox when copying some files in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translatorcomment>Main text of a messagebox when copying some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The files couldn´t be copied. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when copying some files in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <source>The files couldn’t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error copying folders</source>
-        <translatorcomment>Main text of a messagebox when copying some folders in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translatorcomment>Main text of a messagebox when copying some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The folders couldn´t be copied. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when copying some folders in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <source>The folders couldn’t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error copying file</source>
-        <translatorcomment>Main text of a messagebox when copying a file in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translatorcomment>Main text of a messagebox when copying a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The file %1 couldn’t be copied. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when copying a file in the Cloud Drive dialog failed. %1 is the file name. CON-426</translatorcomment>
+        <translatorcomment>Secondary text of a messagebox when copying a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error copying folder</source>
-        <translatorcomment>Main text of a messagebox when copying a folder in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translatorcomment>Main text of a messagebox when copying a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be copied. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when copying a folder in the Cloud Drive dialog failed. %1 is the folder name. CON-426</translatorcomment>
+        <translatorcomment>Secondary text of a messagebox when copying a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error restoring items</source>
-        <translatorcomment>Main text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translatorcomment>Main text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The items couldn´t be restored. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <source>The items couldn’t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error restoring files</source>
-        <translatorcomment>Main text of a messagebox when restoring some files in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translatorcomment>Main text of a messagebox when restoring some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The files couldn´t be restored. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when restoring some files in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <source>The files couldn’t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error restoring folders</source>
-        <translatorcomment>Main text of a messagebox when restoring some folders in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translatorcomment>Main text of a messagebox when restoring some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The folders couldn´t be restored. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when restoring some folders in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <source>The folders couldn’t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error restoring file</source>
-        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The file %1 couldn’t be restored. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. CON-426</translatorcomment>
+        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error restoring folder</source>
-        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be restored. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. CON-426</translatorcomment>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error deleting items</source>
-        <translatorcomment>Main text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translatorcomment>Main text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The items couldn´t be deleted. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <source>The items couldn’t be deleted. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error deleting files</source>
-        <translatorcomment>Main text of a messagebox when deleting some files in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translatorcomment>Main text of a messagebox when deleting some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The files couldn´t be deleted. Try again later</source>
-        <translatorcomment>Main text of a messagebox when deleting some files in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <source>The files couldn’t be deleted. Try again later</source>
+        <translatorcomment>Main text of a messagebox when deleting some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error deleting folders</source>
-        <translatorcomment>Main text of a messagebox when deleting some folders in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translatorcomment>Main text of a messagebox when deleting some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The folders couldn´t be deleted. Try again later</source>
-        <translatorcomment>Main text of a messagebox when deleting some folders in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <source>The folders couldn’t be deleted. Try again later</source>
+        <translatorcomment>Main text of a messagebox when deleting some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error deleting file</source>
-        <translatorcomment>Secondary text of a messagebox when deleting a file in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translatorcomment>Secondary text of a messagebox when deleting a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The file %1 couldn’t be deleted. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. CON-426</translatorcomment>
+        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error deleting folder</source>
-        <translatorcomment>Secondary text of a messagebox when deleting a folder in the Cloud Drive dialog failed. CON-426</translatorcomment>
+        <translatorcomment>Secondary text of a messagebox when deleting a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be deleted. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. CON-426</translatorcomment>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5068,16 +5068,16 @@ Enter a different name.</translation>
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a file(s) from the rubbish bin. %n is the number of files to delete. CON-1258</translatorcomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>You are about to permanently delete %n file. Would you like to proceed?</numerusform>
+            <numerusform>You are about to permanently delete %n files. Would you like to proceed?</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n folder. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a folder(s) from the rubbish bin. %n is the number of folders to delete. CON-1258</translatorcomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>You are about to permanently delete %n folder. Would you like to proceed?</numerusform>
+            <numerusform>You are about to permanently delete %n folders. Would you like to proceed?</numerusform>
         </translation>
     </message>
     <message>
@@ -5092,7 +5092,7 @@ Enter a different name.</translation>
     </message>
     <message numerus="yes">
         <source>Leave this shared folder?</source>
-        <translatorcomment>Main text of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
+        <translatorcomment>Title of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
         <translation type="unfinished">
             <numerusform>Leave this shared folder?</numerusform>
             <numerusform>Leave these shared folders?</numerusform>
@@ -5101,12 +5101,12 @@ Enter a different name.</translation>
     <message>
         <source>Move</source>
         <translatorcomment>Button to accept the confirmation messagebox to move an item (or more) to the rubbish bin. CON-334</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Move</translation>
     </message>
     <message>
-        <source>Don´t move</source>
+        <source>Don’t move</source>
         <translatorcomment>Button to cancel the confirmation messagebox to move an item (or more) to the rubbish bin. CON-334</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Don’t move</translation>
     </message>
     <message>
         <source>Move %1 to Rubbish bin?</source>
@@ -5120,6 +5120,7 @@ Enter a different name.</translation>
     </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
+        <translatorcomment>Body of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
         <translation type="unfinished">
             <numerusform>If you leave the folder, you will not be able to see it again.</numerusform>
             <numerusform>If you leave these folders, you will not be able to see them again.</numerusform>
@@ -7318,11 +7319,6 @@ Do you want to delete it anyway?</translation>
         </translation>
     </message>
     <message>
-        <source>Are you sure you want to upload it to %1</source>
-        <translatorcomment>Third part of the messagebox text when the user is about to remove permanently a node. %1 is the name of the node to remove. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Get MEGA link</source>
         <translatorcomment>Label displayed when a user is trying to get public link of a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
         <translation>Get MEGA link</translation>
@@ -7356,6 +7352,11 @@ Do you want to delete it anyway?</translation>
         <source>View previous versions</source>
         <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
         <translation>View previous versions</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to upload it to %1</source>
+        <translatorcomment>Third part of the messagebox text when the user is about to remove permanently a node. %1 is the name of the node to remove. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

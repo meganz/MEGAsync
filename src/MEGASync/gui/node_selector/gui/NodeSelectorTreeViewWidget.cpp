@@ -775,7 +775,7 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
     else
     {
         msgInfo.buttonsText.insert(QMessageBox::Yes, tr("Move"));
-        msgInfo.buttonsText.insert(QMessageBox::No, tr("Don´t move"));
+        msgInfo.buttonsText.insert(QMessageBox::No, tr("Don’t move"));
 
         auto node = getNode(handles.first());
         if (handles.size() == 1 && node)
