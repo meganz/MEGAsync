@@ -37,9 +37,7 @@ int MegaInterface::sendRequest(WCHAR type, PCWSTR content, PCWSTR response, int 
 
 bool MegaInterface::isMEGASyncOpen()
 {
-    DWORD timeout = 250;
-
-    return WaitNamedPipe(MegaInterface::MEGA_PIPE, timeout) != 0;
+    return WaitNamedPipe(MegaInterface::MEGA_PIPE, 0) != 0;
 }
 
 MegaInterface::FileState MegaInterface::getPathState(PCWSTR filePath, bool overlayIcons)
