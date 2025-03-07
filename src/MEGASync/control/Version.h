@@ -30,9 +30,12 @@ Format: 1 item by line, starting from line following the #define
 )*/
 #define VER_CHANGES_NOTES \
     QT_TRANSLATE_NOOP("Preferences", \
-                      "- Numerous interface improvements.\n" \
-                      "- Improved HiDpi handling in Windows.\n" \
-                      "- Updates to third party libraries.\n" \
+                      "- New remote cloud drive explorer.\n" \
+                      "- Initial onboarding wizard UX improvements.\n" \
+                      "- System notifications enhancements.\n" \
+                      "- Windows systems integration enhancements.\n" \
+                      "- System notifications enhancements.\n" \
+                      "- Some third party library updated.\n" \
                       "- Other bugs have been fixed and numerous improvements made.\n")
 
 #endif // VERSION_H

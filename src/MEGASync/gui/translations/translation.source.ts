@@ -6118,17 +6118,16 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Numerous interface improvements.
-- Improved HiDpi handling in Windows.
-- Updates to third party libraries.
+        <source>- New remote cloud drive explorer.
+- Initial onboarding wizard UX improvements.
+- System notifications enhancements.
+- Windows systems integration enhancements.
+- System notifications enhancements.
+- Some third party library updated.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.9.0. CON-1259</translatorcomment>
-        <translation>- Numerous interface improvements.
-- Improved HiDpi handling in Windows.
-- Updates to third party libraries.
-- Other bugs have been fixed and numerous improvements made.
-</translation>
+        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
