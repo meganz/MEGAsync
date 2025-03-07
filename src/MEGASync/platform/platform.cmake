@@ -124,6 +124,10 @@ else ()
         xcb
         Qt5::DBus
     )
+    target_compile_definitions(${ExecutableTarget}
+        PUBLIC
+        USE_DBUS
+    )
 endif()
 
 target_sources(${ExecutableTarget}
