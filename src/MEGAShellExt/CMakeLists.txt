@@ -10,25 +10,25 @@ project(MEGAShellExt
 add_library(MEGAShellExt SHARED)
 
 set(MEGAShellExt_HEADERS
-    W11ShellContextMenu/data/ContextMenuData.h
-    W11ShellContextMenu/gui/ContextMenuCommand.h
-    W11ShellContextMenu/gui/ContextMenuCommandBase.h
-    W11ShellContextMenu/gui/ContextMenuCommandGetLink.h
-    W11ShellContextMenu/gui/ContextMenuCommandRemoveFromLeftPane.h
-    W11ShellContextMenu/gui/ContextMenuCommandSeparator.h
-    W11ShellContextMenu/gui/ContextMenuCommandUpload.h
-    W11ShellContextMenu/gui/ContextMenuCommandView.h
-    W11ShellContextMenu/gui/ContextMenuCommandViewVersions.h
-    W11ShellContextMenu/gui/SubCommandEnumerator.h
-    W11ShellContextMenu/utilities/framework.h
-    W11ShellContextMenu/utilities/SparsePackageManager.h
-    W11ShellContextMenu/utilities/SimpleFactory.h
-    W11ShellContextMenu/utilities/Utilities.h
+    ModernShellContextMenu/data/ContextMenuData.h
+    ModernShellContextMenu/gui/ContextMenuCommand.h
+    ModernShellContextMenu/gui/ContextMenuCommandBase.h
+    ModernShellContextMenu/gui/ContextMenuCommandGetLink.h
+    ModernShellContextMenu/gui/ContextMenuCommandRemoveFromLeftPane.h
+    ModernShellContextMenu/gui/ContextMenuCommandSeparator.h
+    ModernShellContextMenu/gui/ContextMenuCommandUpload.h
+    ModernShellContextMenu/gui/ContextMenuCommandView.h
+    ModernShellContextMenu/gui/ContextMenuCommandViewVersions.h
+    ModernShellContextMenu/gui/SubCommandEnumerator.h
+    ModernShellContextMenu/utilities/framework.h
+    ModernShellContextMenu/utilities/SparsePackageManager.h
+    ModernShellContextMenu/utilities/SimpleFactory.h
+    ModernShellContextMenu/utilities/Utilities.h
     ShellExt.h
     ShellExtNotASync.h
     resource.h
     RegUtils.h
-    LegacyShellContextMenu/ContextMenuExt.h
+    ClassicShellContextMenu/ContextMenuExt.h
     ClassFactoryShellExtSyncing.h
     ClassFactoryShellExtSynced.h
     ClassFactoryShellExtPending.h
@@ -39,22 +39,22 @@ set(MEGAShellExt_HEADERS
 )
 
 set(MEGAShellExt_SOURCES
-    W11ShellContextMenu/data/ContextMenuData.cpp
-    W11ShellContextMenu/gui/ContextMenuCommandBase.cpp
-    W11ShellContextMenu/gui/ContextMenuCommand.cpp
-    W11ShellContextMenu/gui/ContextMenuCommandGetLink.cpp
-    W11ShellContextMenu/gui/ContextMenuCommandRemoveFromLeftPane.cpp
-    W11ShellContextMenu/gui/ContextMenuCommandSeparator.cpp
-    W11ShellContextMenu/gui/ContextMenuCommandUpload.cpp
-    W11ShellContextMenu/gui/ContextMenuCommandView.cpp
-    W11ShellContextMenu/gui/ContextMenuCommandViewVersions.cpp
-    W11ShellContextMenu/utilities/SparsePackageManager.cpp
-    W11ShellContextMenu/utilities/Utilities.cpp
+    ModernShellContextMenu/data/ContextMenuData.cpp
+    ModernShellContextMenu/gui/ContextMenuCommandBase.cpp
+    ModernShellContextMenu/gui/ContextMenuCommand.cpp
+    ModernShellContextMenu/gui/ContextMenuCommandGetLink.cpp
+    ModernShellContextMenu/gui/ContextMenuCommandRemoveFromLeftPane.cpp
+    ModernShellContextMenu/gui/ContextMenuCommandSeparator.cpp
+    ModernShellContextMenu/gui/ContextMenuCommandUpload.cpp
+    ModernShellContextMenu/gui/ContextMenuCommandView.cpp
+    ModernShellContextMenu/gui/ContextMenuCommandViewVersions.cpp
+    ModernShellContextMenu/utilities/SparsePackageManager.cpp
+    ModernShellContextMenu/utilities/Utilities.cpp
     ShellExt.cpp
     ShellExtNotASync.cpp
     RegUtils.cpp
     dllmain.cpp
-    LegacyShellContextMenu/ContextMenuExt.cpp
+    ClassicShellContextMenu/ContextMenuExt.cpp
     ClassFactoryShellExtSyncing.cpp
     ClassFactoryShellExtSynced.cpp
     ClassFactoryShellExtPending.cpp
@@ -90,10 +90,10 @@ target_link_libraries(MEGAShellExt
 target_include_directories(MEGAShellExt
     PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/W11ShellContextMenu/data
-    ${CMAKE_CURRENT_SOURCE_DIR}/W11ShellContextMenu/gui
-    ${CMAKE_CURRENT_SOURCE_DIR}/W11ShellContextMenu/utilities
-    ${CMAKE_CURRENT_SOURCE_DIR}/LegacyShellContextMenu
+    ${CMAKE_CURRENT_SOURCE_DIR}/ModernShellContextMenu/data
+    ${CMAKE_CURRENT_SOURCE_DIR}/ModernShellContextMenu/gui
+    ${CMAKE_CURRENT_SOURCE_DIR}/ModernShellContextMenu/utilities
+    ${CMAKE_CURRENT_SOURCE_DIR}/ClassicShellContextMenu
 )
 
 target_compile_features(MEGAShellExt PRIVATE cxx_std_17)
