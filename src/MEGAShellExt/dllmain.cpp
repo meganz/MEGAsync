@@ -89,31 +89,7 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void **ppv)
     *ppv = NULL;
     if (Utilities::isWindows11())
     {
-        if (rclsid == __uuidof(ContextMenuCommandGetLink))
-        {
-            hr = winrt::make<SimpleFactory<ContextMenuCommandGetLink>>().as(riid, ppv);
-        }
-        else if (rclsid == __uuidof(ContextMenuCommandRemoveFromLeftPane))
-        {
-            hr = winrt::make<SimpleFactory<ContextMenuCommandRemoveFromLeftPane>>().as(riid, ppv);
-        }
-        else if (rclsid == __uuidof(ContextMenuCommandSeparator))
-        {
-            hr = winrt::make<SimpleFactory<ContextMenuCommandSeparator>>().as(riid, ppv);
-        }
-        else if (rclsid == __uuidof(ContextMenuCommandUpload))
-        {
-            hr = winrt::make<SimpleFactory<ContextMenuCommandUpload>>().as(riid, ppv);
-        }
-        else if (rclsid == __uuidof(ContextMenuCommandView))
-        {
-            hr = winrt::make<SimpleFactory<ContextMenuCommandView>>().as(riid, ppv);
-        }
-        else if (rclsid == __uuidof(ContextMenuCommandViewVersions))
-        {
-            hr = winrt::make<SimpleFactory<ContextMenuCommandViewVersions>>().as(riid, ppv);
-        }
-        else if (rclsid == __uuidof(ContextMenuCommand))
+        if (rclsid == __uuidof(ContextMenuCommand))
         {
             hr = winrt::make<SimpleFactory<ContextMenuCommand>>().as(riid, ppv);
         }

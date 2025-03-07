@@ -3,8 +3,7 @@
 
 #include "ContextMenuCommandBase.h"
 
-class __declspec(uuid("0313D546-594C-49D6-AF85-F53575420E6C")) ContextMenuCommandGetLink:
-    public ContextMenuCommandBase
+class ContextMenuCommandGetLink: public ContextMenuCommandBase
 {
 public:
     ContextMenuCommandGetLink();

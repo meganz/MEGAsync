@@ -3,8 +3,7 @@
 
 #include "ContextMenuCommandBase.h"
 
-class __declspec(uuid("9172EFEE-604B-492A-B2B3-9CC6164F52CC")) ContextMenuCommandView:
-    public ContextMenuCommandBase
+class ContextMenuCommandView: public ContextMenuCommandBase
 {
 public:
     ContextMenuCommandView();
