@@ -2036,6 +2036,11 @@ In some cases they may contain details about your data, such as file or folder n
         <translatorcomment>Description text in O.S. notification to remind that the user can create syncs after few hours (e.g. 2) from the first launch of the application if the user has never created a sync. CON-1207</translatorcomment>
         <translation>Set up your first sync to get the most out of the desktop app</translation>
     </message>
+    <message>
+        <source>Finish set up</source>
+        <translatorcomment>Text on the O.S. notification button to open the window for creating the first sync after the onboarding process (first run of the application). CON-1207</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FolderMatchedAgainstFileHeader</name>
@@ -4431,6 +4436,11 @@ All your completed transfers will be cleared.</translation>
         <source>Access your data from anywhere, collaborate with ease, and instantly get the most up-to-date version of your files</source>
         <translatorcomment>Description text in O.S. notification to remind that the user can create syncs after days or months (e.g. 10 days, 1 month) if the user has never created a sync. CON-1207</translatorcomment>
         <translation>Access your data from anywhere, collaborate with ease, and instantly get the most up-to-date version of your files</translation>
+    </message>
+    <message>
+        <source>Set up sync</source>
+        <translatorcomment>Text on the O.S. notification button to open the window for creating the first sync. CON-1207</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
