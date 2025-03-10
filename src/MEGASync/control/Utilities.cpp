@@ -336,10 +336,10 @@ QString Utilities::languageCodeToString(QString code)
         languageNames[QString::fromLatin1("ro")] = QString::fromUtf8("Română");
         languageNames[QString::fromLatin1("ru")] = QString::fromUtf8("Pусский");
         languageNames[QString::fromLatin1("th")] = QString::fromUtf8("ภาษาไทย"); // thai
+        languageNames[QString::fromLatin1("tr")] = QString::fromUtf8("Türkçe");
         languageNames[QString::fromLatin1("vi")] = QString::fromUtf8("Tiếng Việt");
         languageNames[QString::fromLatin1("zh_CN")] = QString::fromUtf8("简体中文");
         languageNames[QString::fromLatin1("zh_TW")] = QString::fromUtf8("中文繁體");
-
 
         // Currently unsupported
         // languageNames[QString::fromLatin1("mi")] = QString::fromUtf8("Māori");
@@ -369,16 +369,12 @@ QString Utilities::languageCodeToString(QString code)
         // languageNames[QString::fromLatin1("sv")] = QString::fromUtf8("Svenska");
         // languageNames[QString::fromLatin1("bg")] = QString::fromUtf8("български");
         // languageNames[QString::fromLatin1("he")] = QString::fromUtf8("עברית");
-        // languageNames[QString::fromLatin1("tr")] = QString::fromUtf8("Türkçe");
         // languageNames[QString::fromLatin1("tl")] = QString::fromUtf8("Tagalog");
         // languageNames[QString::fromLatin1("uk")] = QString::fromUtf8("Українська");
         // languageNames[QString::fromLatin1("pt")] = QString::fromUtf8("Português");
-
-
     }
     return languageNames.value(code);
 }
-
 
 struct IconCache
 {
