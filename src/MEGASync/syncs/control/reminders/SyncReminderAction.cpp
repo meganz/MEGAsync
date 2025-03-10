@@ -33,6 +33,7 @@ void SyncReminderAction::showNotification()
     reminder.title = getTitle();
     reminder.message = getMessage();
     reminder.actions << getButtonText();
+    reminder.imagePath = DesktopAppNotification::defaultImage;
     reminder.activatedFunction = [this](DesktopAppNotificationBase::Action)
     {
         mClicked = true;
