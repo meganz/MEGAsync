@@ -14,7 +14,7 @@ set(DESKTOP_APP_PLATFORM_SOURCES
 
 if (WIN32)
     set(LAF_TOKEN $ENV{LAF_TOKEN})
-    configure_file(${CMAKE_CURRENT_LIST_DIR}/win/Laf.h.in ${CMAKE_CURRENT_LIST_DIR}/win/Laf.h @ONLY)
+    configure_file(${CMAKE_CURRENT_LIST_DIR}/win/Laf.h.in ${CMAKE_BINARY_DIR}/src/MEGASync/platform/win/Laf.h @ONLY)
 endif()
 
 target_sources_conditional(${ExecutableTarget}
