@@ -8,6 +8,7 @@
 #include "LoginController.h"
 #include "Onboarding.h"
 #include "OnboardingQmlDialog.h"
+#include "QmlDialogWrapper.h"
 #include "WhatsNewWindow.h"
 
 std::shared_ptr<QmlDialogManager> QmlDialogManager::instance()

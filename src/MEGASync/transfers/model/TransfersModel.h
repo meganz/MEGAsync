@@ -23,6 +23,9 @@ struct TransfersCount
     uint pendingUploads;
     uint pendingDownloads;
 
+    // Used for throttling logic
+    uint pendingSyncTransfers;
+
     uint failedUploads;
     uint failedDownloads;
 
@@ -40,6 +43,7 @@ struct TransfersCount
         totalDownloads(0),
         pendingUploads(0),
         pendingDownloads(0),
+        pendingSyncTransfers(0),
         failedUploads(0),
         failedDownloads(0),
         completedUploadBytes(0),
@@ -47,6 +51,46 @@ struct TransfersCount
         totalUploadBytes(0),
         totalDownloadBytes(0)
     {}
+
+    void addPendingUpload(mega::MegaTransfer* transfer)
+    {
+        if (transfer->isSyncTransfer())
+        {
+            pendingSyncTransfers++;
+        }
+
+        pendingUploads++;
+    }
+
+    void addPendingDownload(mega::MegaTransfer* transfer)
+    {
+        if (transfer->isSyncTransfer())
+        {
+            pendingSyncTransfers++;
+        }
+
+        pendingDownloads++;
+    }
+
+    void removePendingUpload(mega::MegaTransfer* transfer)
+    {
+        if (transfer->isSyncTransfer())
+        {
+            pendingSyncTransfers--;
+        }
+
+        pendingUploads--;
+    }
+
+    void removePendingDownload(mega::MegaTransfer* transfer)
+    {
+        if (transfer->isSyncTransfer())
+        {
+            pendingSyncTransfers--;
+        }
+
+        pendingDownloads--;
+    }
 
     uint completedDownloads()const {return totalDownloads - pendingDownloads - failedDownloads;}
     uint completedUploads() const {return totalUploads - pendingUploads - failedUploads;}
@@ -60,6 +104,7 @@ struct TransfersCount
         totalDownloads = 0;
         pendingUploads = 0;
         pendingDownloads = 0;
+        pendingSyncTransfers = 0;
         failedUploads = 0;
         failedDownloads = 0;
         completedUploadBytes = 0;
@@ -334,11 +379,11 @@ private slots:
     void cacheCancelTransfersTags();
     void processFailedTransfers();
     void onProcessTransfers();
-    void updateTransfersCount();
     void onClearTransfersFinished();
     void onUpdateTransfersFinished();
     void onAskForMostPriorityTransfersFinished();
     void onKeepPCAwake();
+    void updateTransfersCount();
 
 private:
     void removeRows(QModelIndexList &indexesToRemove);

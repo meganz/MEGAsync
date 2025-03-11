@@ -6,6 +6,7 @@
 #include "MyBackupsHandle.h"
 #include "RequestListenerManager.h"
 #include "StalledIssuesUtilities.h"
+#include "StatsEventHandler.h"
 
 #include <QStorageInfo>
 #include <QTemporaryFile>
@@ -127,6 +128,31 @@ void SyncController::addSync(SyncConfig& sync)
                     correctlyCreated.value() == mega::MegaError::API_OK)
                 {
                     removeMegaIgnore(sync.localFolder);
+                }
+            }
+            else
+            {
+                switch (sync.origin)
+                {
+                    case SyncInfo::NONE:
+                    // Fallthrough
+                    case SyncInfo::MAIN_APP_ORIGIN:
+                    // Fallthrough
+                    case SyncInfo::ONBOARDING_ORIGIN:
+                    // Fallthrough
+                    case SyncInfo::EXTERNAL_ORIGIN:
+                    // Fallthrough
+                    default:
+                    {
+                        break;
+                    }
+                    case SyncInfo::INFODIALOG_BUTTON_ORIGIN:
+                    {
+                        MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+                            AppStatsEvents::EventType::SYNC_ADDED_ADD_SYNC_BUTTON,
+                            true);
+                        break;
+                    }
                 }
             }
 
@@ -636,6 +662,14 @@ SyncController::Syncability SyncController::isLocalFolderSyncable(const QString&
     return (syncability);
 }
 
+SyncController::Syncability
+    SyncController::isLocalFolderSyncable(const QString& path,
+                                          const mega::MegaSync::SyncType& syncType)
+{
+    QString message;
+    return isLocalFolderSyncable(path, syncType, message);
+}
+
 // Returns wether the remote path is syncable.
 // The message to display to the user is stored in <message>.
 SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_ptr<mega::MegaNode> node, QString& message)
@@ -780,6 +814,20 @@ bool SyncController::removeMegaIgnore(const QString& syncLocalFolder, mega::Mega
     }
 
     return false;
+}
+
+Qt::CaseSensitivity SyncController::isSyncCaseSensitive(mega::MegaHandle backupId)
+{
+    if (auto syncSettings = SyncInfo::instance()->getSyncSettingByTag(backupId))
+    {
+        return Utilities::isCaseSensitive(syncSettings->getLocalFolder());
+    }
+
+#ifdef Q_OS_LINUX
+    return Qt::CaseSensitive;
+#else
+    return Qt::CaseInsensitive;
+#endif
 }
 
 QString SyncController::getSyncNameFromPath(const QString& path)

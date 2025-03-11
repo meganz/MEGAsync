@@ -27,7 +27,6 @@ public:
     void onSyncDeleted(mega::MegaApi* api, mega::MegaSync* sync) override;
 
     QUrl getQmlUrl() override;
-    QString contextName() override;
     static void registerQmlModules();
 
     Q_INVOKABLE void retrieveDeviceData(const QString& deviceId);

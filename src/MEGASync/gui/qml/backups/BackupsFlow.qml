@@ -5,15 +5,11 @@ import common 1.0
 
 import components.views 1.0
 
-import BackupsProxyModel 1.0
-
 Item {
     id: root
 
     required property Component selectFoldersPage
     required property Component confirmFoldersPage
-
-    property alias backupsProxyModel: backupsProxyModel
 
     readonly property string selectBackup: "selectBackup"
     readonly property string confirmBackup: "confirmBackup"
@@ -49,10 +45,6 @@ Item {
         }
     }
 
-    BackupsProxyModel {
-        id: backupsProxyModel
-    }
-
     Connections {
         id: selectFolderBackupNavigationConnection
 
@@ -64,7 +56,7 @@ Item {
         }
 
         function onSelectFolderMoveToConfirm() {
-            backupsProxyModel.selectedFilterEnabled = true;
+            backupCandidatesComponentAccess.selectFolderMoveToConfirm();
             root.state = root.confirmBackup;
         }
     }
@@ -76,12 +68,20 @@ Item {
         ignoreUnknownSignals: true
 
         function onConfirmFoldersMoveToSelect() {
-            backupsProxyModel.selectedFilterEnabled = false;
+            backupCandidatesComponentAccess.confirmFoldersMoveToSelect();
             root.state = root.selectBackup;
+        }
+
+        function onOpenExclusionsDialog() {
+            backupCandidatesComponentAccess.openExclusionsDialog();
         }
 
         function onConfirmFoldersMoveToFinal(success) {
             root.backupFlowMoveToFinal(success);
+        }
+
+        function onCreateBackups(syncOrigin) {
+            backupCandidatesComponentAccess.createBackups(syncOrigin);
         }
     }
 }

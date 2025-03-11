@@ -699,7 +699,7 @@ void AlertItem::processIncomingPendingContactClick()
     {
         for (int i = 0; i < icr->size(); i++)
         {
-            MegaContactRequest* request = icr->get(i);
+            const MegaContactRequest* request = icr->get(i);
             if (!request)
             {
                 continue;

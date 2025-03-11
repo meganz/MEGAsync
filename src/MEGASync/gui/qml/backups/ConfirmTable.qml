@@ -8,12 +8,10 @@ import components.texts 1.0 as Texts
 import components.images 1.0
 import components.busyIndicator 1.0
 
-import BackupsProxyModel 1.0
+import BackupCandidatesProxyModel 1.0
 
 Rectangle {
     id: root
-
-    required property BackupsProxyModel backupsProxyModelRef
 
     readonly property int headerMargin: 24
     readonly property int headerHeight: 40
@@ -42,7 +40,7 @@ Rectangle {
         id: listView
 
         anchors.fill: parent
-        model: root.backupsProxyModelRef
+        model: backupCandidatesProxyModelAccess
         headerPositioning: ListView.OverlayHeader
         focus: true
         clip: true
@@ -104,9 +102,9 @@ Rectangle {
 
                     Layout.rightMargin: root.headerMargin
                     Layout.alignment: Qt.AlignRight
-                    text: backupsModelAccess.totalSize
+                    text: backupCandidatesAccess.totalSize
                     color: ColorTheme.textPrimary
-                    visible: backupsModelAccess.totalSizeReady
+                    visible: backupCandidatesAccess.totalSizeReady
                     font {
                         pixelSize: Texts.Text.Size.SMALL
                         weight: Font.DemiBold
@@ -121,7 +119,7 @@ Rectangle {
                     Layout.preferredWidth: 16
                     Layout.preferredHeight: 16
                     imageSize: Qt.size(16, 16)
-                    visible: !backupsModelAccess.totalSizeReady
+                    visible: !backupCandidatesAccess.totalSizeReady
                     color: ColorTheme.textAccent
                 }
             }
@@ -155,8 +153,6 @@ Rectangle {
 
         FolderRow {
             id: folderRow
-
-            backupsProxyModelRef: root.backupsProxyModelRef
         }
     }
 }

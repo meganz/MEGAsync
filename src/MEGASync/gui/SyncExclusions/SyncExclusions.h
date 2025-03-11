@@ -53,9 +53,6 @@ public:
 
     QUrl getQmlUrl() override;
 
-    QString contextName() override;
-
-
 public slots:
     void applyChanges();
 

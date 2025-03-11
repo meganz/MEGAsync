@@ -10,18 +10,15 @@ import backups 1.0
 
 import onboard 1.0
 
-import BackupsProxyModel 1.0
-import BackupsModel 1.0
+import BackupCandidatesProxyModel 1.0
 
 FooterButtonsPage {
     id: root
 
-    required property BackupsProxyModel backupsProxyModelRef
-
     footerButtons.rightPrimary {
         text: BackupsStrings.backUp
         icons.source: Images.database
-        enabled: backupsModelAccess.checkAllState !== Qt.Unchecked
+        enabled: backupCandidatesAccess.checkAllState !== Qt.Unchecked
     }
 
     ColumnLayout {
@@ -59,6 +56,5 @@ FooterButtonsPage {
             topMargin: 8
             bottomMargin: selectFolderLayout.spacing
         }
-        backupsProxyModelRef: root.backupsProxyModelRef
     }
 }

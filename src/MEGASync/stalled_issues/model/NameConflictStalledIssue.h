@@ -191,7 +191,8 @@ public:
     class CloudConflictedNames
     {
     public:
-        CloudConflictedNames()
+        CloudConflictedNames(NameConflictedStalledIssue* issue):
+            mIssue(issue)
         {}
 
         void addFolderConflictedName(mega::MegaHandle handle, std::shared_ptr<ConflictedNameInfo> info)
@@ -490,6 +491,7 @@ public:
 
         QList<CloudConflictedNamesByAttributes> mConflictedNames;
         bool mDuplicatedSolved = false;
+        NameConflictedStalledIssue* mIssue;
     };
 
     enum ActionSelected

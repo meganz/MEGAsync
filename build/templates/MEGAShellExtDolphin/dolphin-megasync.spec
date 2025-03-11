@@ -11,30 +11,34 @@ Packager:	MEGA Linux Team <linux@mega.co.nz>
 
 AutoReq: 0
 
-#OpenSUSE
-%if 0%{?suse_version} || 0%{?sle_version}
-%if 0%{?sle_version} >= 120100 || 0%{?suse_version} < 1500
-BuildRequires:  kdelibs4support extra-cmake-modules libQt5Core-devel libQt5Network-devel kio-devel
-%global debug_package %{nil}
-%endif
+BuildRequires:  cmake
 
-%if 0%{?sle_version} == 0 && 0%{?suse_version} >= 1500
-BuildRequires:  kdelibs4support libQt5Core-devel libQt5Network-devel kio-devel kf6-extra-cmake-modules
-%global debug_package %{nil}
+#OpenSUSE
+%if 0%{?sle_version} && 0%{?suse_version} < 1600
+BuildRequires:  kf5-filesystem
+BuildRequires:  extra-cmake-modules
+BuildRequires:  kio-devel
+BuildRequires:  libqt5-qtbase-devel
+#%global debug_package %{nil}
 %endif
+%if 0%{?is_opensuse} && 0%{?suse_version} >= 1600
+BuildRequires:  kf6-extra-cmake-modules
+BuildRequires:  kf6-kio-devel
+BuildRequires:  qt6-base-devel
 %endif
 
 #Fedora specific
 %if 0%{?fedora}
-BuildRequires: extra-cmake-modules, kf5-kdelibs4support, kf5-kio-devel
+BuildRequires:  gcc-c++
+BuildRequires:  extra-cmake-modules
+%if 0%{?fedora} < 40
+BuildRequires:  kf5-rpm-macros
+BuildRequires:  kf5-kio-devel
 %endif
-
-%if 0%{?rhel_version} || 0%{?scientificlinux_version}
-BuildRequires: kdelibs-devel gcc-c++
+%if 0%{?fedora} >= 40
+BuildRequires:  kf6-rpm-macros
+BuildRequires:  kf6-kio-devel
 %endif
-
-%if 0%{?centos_version}
-BuildRequires: extra-cmake-modules, kf5-kdelibs4support, kf5-kio-devel
 %endif
 
 Requires:       megasync >= 5.3.0
@@ -52,38 +56,86 @@ Requires:       megasync >= 5.3.0
 %setup -q
 
 %build
-# Create a temporary file containing the list of files
-EXTRA_FILES=%{buildroot}/ExtraFiles.list
-touch %{EXTRA_FILES}
-
-cmake3 -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" $PWD || cmake -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" $PWD
-make
-make install DESTDIR=%{buildroot}
-
-echo %(kf5-config --path services | awk -NF ":" '{print $NF}')/megasync-plugin.desktop >> %{EXTRA_FILES}
-echo %(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/megasyncplugin.so >> %{EXTRA_FILES}
-
-if [ -d %{buildroot}/%(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/kf5/overlayicon ]; then
-echo %(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/kf5/overlayicon/megasyncdolphinoverlayplugin.so >> %{EXTRA_FILES}
-echo %(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/kf5/overlayicon >> %{EXTRA_FILES}
-echo %(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/kf5 >> %{EXTRA_FILES}
-echo '%{_datadir}/icons/hicolor/*/*/mega-*.png' >> %{EXTRA_FILES}
-echo '%{_datadir}/icons/hicolor/*/*' >> %{EXTRA_FILES}
+%if 0%{?fedora}
+KIO_PACKAGE=$(rpm -qa | grep 'kio-devel-')
+KF_VERSION=$(rpm -ql ${KIO_PACKAGE} | grep -m1 -oP '/usr/include/KF\K\w+(?=/)')
+if [ "${KF_VERSION}" == "5" ]
+then
+    %cmake_kf5 -DKF_VER=${KF_VERSION}
 fi
-
-%if 0%{?centos_version} || 0%{?rhel_version} || 0%{?scientificlinux_version}
-#fix conflict with existing /usr/lib64 (pointing to /usr/lib)
-if [ -d %{buildroot}/usr/lib ]; then
-    rsync -av %{buildroot}/usr/lib/ %{buildroot}/usr/lib64/
-    rm -rf %{buildroot}/usr/lib
+if [ "${KF_VERSION}" == "6" ]
+then
+    %cmake_kf6 -DKF_VER=${KF_VERSION}
 fi
+%cmake_build
+%endif
+%if 0%{?sle_version} && 0%{?suse_version} < 1600
+%cmake_kf5 -d build -- -DDKF_VER=5
+%make_jobs
+%endif
+%if 0%{?is_opensuse} && 0%{?suse_version} >= 1600
+%cmake_kf6 -DKF_VER=6
+%kf6_build
+%endif
+
+%install
+%if 0%{?fedora}
+%cmake_install
+%endif
+%if 0%{?sle_version} && 0%{?suse_version} < 1600
+%kf5_makeinstall -C build
+%endif
+%if 0%{?is_opensuse} && 0%{?suse_version} >= 1600
+%kf6_install
 %endif
 
 %clean
 echo cleaning
 %{?buildroot:%__rm -rf "%{buildroot}"}
 
-%files -f %{EXTRA_FILES}
+%files
 %defattr(-,root,root)
+%if 0%{?fedora}
+%if 0%{?fedora} >= 40
+%{_kf6_datadir}/icons/hicolor/32x32/emblems/mega-dolphin-pending.png
+%{_kf6_datadir}/icons/hicolor/32x32/emblems/mega-dolphin-synced.png
+%{_kf6_datadir}/icons/hicolor/32x32/emblems/mega-dolphin-syncing.png
+%{_kf6_datadir}/icons/hicolor/64x64/emblems/mega-dolphin-pending.png
+%{_kf6_datadir}/icons/hicolor/64x64/emblems/mega-dolphin-synced.png
+%{_kf6_datadir}/icons/hicolor/64x64/emblems/mega-dolphin-syncing.png
+%{_kf6_plugindir}/overlayicon/megasync-overlay-plugin.so
+%{_kf6_plugindir}/kfileitemaction/megasync-plugin.so
+%endif
+%if 0%{?fedora} < 40
+%{_kf5_datadir}/icons/hicolor/32x32/emblems/mega-dolphin-pending.png
+%{_kf5_datadir}/icons/hicolor/32x32/emblems/mega-dolphin-synced.png
+%{_kf5_datadir}/icons/hicolor/32x32/emblems/mega-dolphin-syncing.png
+%{_kf5_datadir}/icons/hicolor/64x64/emblems/mega-dolphin-pending.png
+%{_kf5_datadir}/icons/hicolor/64x64/emblems/mega-dolphin-synced.png
+%{_kf5_datadir}/icons/hicolor/64x64/emblems/mega-dolphin-syncing.png
+%{_kf5_plugindir}/overlayicon/megasync-overlay-plugin.so
+%{_kf5_plugindir}/kfileitemaction/megasync-plugin.so
+%endif
+%endif
+%if 0%{?sle_version} && 0%{?suse_version} < 1600
+%{_kf5_iconsdir}/hicolor/32x32/emblems/mega-dolphin-pending.png
+%{_kf5_iconsdir}/hicolor/32x32/emblems/mega-dolphin-synced.png
+%{_kf5_iconsdir}/hicolor/32x32/emblems/mega-dolphin-syncing.png
+%{_kf5_iconsdir}/hicolor/64x64/emblems/mega-dolphin-pending.png
+%{_kf5_iconsdir}/hicolor/64x64/emblems/mega-dolphin-synced.png
+%{_kf5_iconsdir}/hicolor/64x64/emblems/mega-dolphin-syncing.png
+%{_kf5_plugindir}/kf5/overlayicon/megasync-overlay-plugin.so
+%{_kf5_plugindir}/kf5/kfileitemaction/megasync-plugin.so
+%endif
+%if 0%{?is_opensuse} && 0%{?suse_version} >= 1600
+%{_kf6_iconsdir}/hicolor/32x32/emblems/mega-dolphin-pending.png
+%{_kf6_iconsdir}/hicolor/32x32/emblems/mega-dolphin-synced.png
+%{_kf6_iconsdir}/hicolor/32x32/emblems/mega-dolphin-syncing.png
+%{_kf6_iconsdir}/hicolor/64x64/emblems/mega-dolphin-pending.png
+%{_kf6_iconsdir}/hicolor/64x64/emblems/mega-dolphin-synced.png
+%{_kf6_iconsdir}/hicolor/64x64/emblems/mega-dolphin-syncing.png
+%{_kf6_plugindir}/kf6/overlayicon/megasync-overlay-plugin.so
+%{_kf6_plugindir}/kf6/kfileitemaction/megasync-plugin.so
+%endif
 
 %changelog

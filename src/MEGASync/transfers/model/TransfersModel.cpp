@@ -1,6 +1,7 @@
 #include "TransfersModel.h"
 
 #include "EventUpdater.h"
+#include "mega/types.h"
 #include "MegaApplication.h"
 #include "MegaTransferView.h"
 #include "Platform.h"
@@ -12,6 +13,7 @@
 #include "TransferMetaData.h"
 #include "Utilities.h"
 
+#include <QMegaMessageBox.h>
 #include <QSharedData>
 
 #include <algorithm>
@@ -248,24 +250,24 @@ void TransferThread::onTransferStart(MegaApi *, MegaTransfer *transfer)
                 if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
                 {
                     mTransfersCount.totalUploads++;
-                    mTransfersCount.pendingUploads++;
+                    mTransfersCount.addPendingUpload(transfer);
                     mTransfersCount.totalUploadBytes += transfer->getTotalBytes();
                     mTransfersCount.completedUploadBytes += transfer->getTransferredBytes();
 
                     mLastTransfersCount.totalUploads++;
-                    mLastTransfersCount.pendingUploads++;
+                    mLastTransfersCount.addPendingUpload(transfer);
                     mLastTransfersCount.totalUploadBytes += transfer->getTotalBytes();
                     mLastTransfersCount.completedUploadBytes += transfer->getTransferredBytes();
                 }
                 else
                 {
                     mTransfersCount.totalDownloads++;
-                    mTransfersCount.pendingDownloads++;
+                    mTransfersCount.addPendingDownload(transfer);
                     mTransfersCount.totalDownloadBytes += transfer->getTotalBytes();
                     mTransfersCount.completedDownloadBytes += transfer->getTransferredBytes();
 
                     mLastTransfersCount.totalDownloads++;
-                    mLastTransfersCount.pendingDownloads++;
+                    mLastTransfersCount.addPendingDownload(transfer);
                     mLastTransfersCount.totalDownloadBytes += transfer->getTotalBytes();
                     mLastTransfersCount.completedDownloadBytes += transfer->getTransferredBytes();
                 }
@@ -384,24 +386,24 @@ void TransferThread::onTransferFinish(MegaApi* megaApi, MegaTransfer *transfer, 
                         {
                             mTransfersCount.completedUploadBytes -= transfer->getTransferredBytes();
                             mTransfersCount.totalUploadBytes -= transfer->getTotalBytes();
-                            mTransfersCount.pendingUploads--;
+                            mTransfersCount.removePendingUpload(transfer);
                             mTransfersCount.totalUploads--;
 
                             mLastTransfersCount.completedUploadBytes -= transfer->getTransferredBytes();
                             mLastTransfersCount.totalUploadBytes -= transfer->getTotalBytes();
-                            mLastTransfersCount.pendingUploads--;
+                            mLastTransfersCount.removePendingUpload(transfer);
                             mLastTransfersCount.totalUploads--;
                         }
                         else
                         {
                             mTransfersCount.completedDownloadBytes -= transfer->getTransferredBytes();
                             mTransfersCount.totalDownloadBytes -= transfer->getTotalBytes();
-                            mTransfersCount.pendingDownloads--;
+                            mTransfersCount.removePendingDownload(transfer);
                             mTransfersCount.totalDownloads--;
 
                             mLastTransfersCount.completedDownloadBytes -= transfer->getTransferredBytes();
                             mLastTransfersCount.totalDownloadBytes -= transfer->getTotalBytes();
-                            mLastTransfersCount.pendingDownloads--;
+                            mLastTransfersCount.removePendingDownload(transfer);
                             mLastTransfersCount.totalDownloads--;
                         }
 
@@ -415,8 +417,8 @@ void TransferThread::onTransferFinish(MegaApi* megaApi, MegaTransfer *transfer, 
                         mTransfersCount.transfersFinishedByType[fileType]++;
                         if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
                         {
-                            mTransfersCount.pendingUploads--;
-                            mLastTransfersCount.pendingUploads--;
+                            mTransfersCount.removePendingUpload(transfer);
+                            mLastTransfersCount.removePendingUpload(transfer);
 
                             if(transfer->getTransferredBytes() < transfer->getTotalBytes())
                             {
@@ -433,8 +435,8 @@ void TransferThread::onTransferFinish(MegaApi* megaApi, MegaTransfer *transfer, 
                         }
                         else
                         {
-                            mTransfersCount.pendingDownloads--;
-                            mLastTransfersCount.pendingDownloads--;
+                            mTransfersCount.removePendingDownload(transfer);
+                            mLastTransfersCount.removePendingDownload(transfer);
 
                             if(transfer->getTransferredBytes() < transfer->getTotalBytes())
                             {
@@ -1416,7 +1418,6 @@ void TransfersModel::openInMEGA(const QList<int> &rows)
     {
         QMutexLocker lock(&mModelMutex);
         QStringList urlsOpened;
-
         for (auto row : rows)
         {
             auto node = getParentNodeToOpenByRow(row);
@@ -1427,8 +1428,22 @@ void TransfersModel::openInMEGA(const QList<int> &rows)
                 std::unique_ptr<char[]> key(node->getBase64Key());
                 if (handle && key)
                 {
-                    QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle.get());
-                    if(!urlsOpened.contains(url))
+                    QString url;
+                    std::unique_ptr<MegaError> err(
+                        MegaSyncApp->getMegaApi()->isNodeSyncableWithError(node.get()));
+                    if (err->getSyncError() == SyncError::ACTIVE_SYNC_SAME_PATH ||
+                        err->getSyncError() == SyncError::ACTIVE_SYNC_BELOW_PATH ||
+                        err->getSyncError() == SyncError::ACTIVE_SYNC_ABOVE_PATH)
+                    {
+                        auto deviceID = QString::fromUtf8(MegaSyncApp->getMegaApi()->getDeviceId());
+                        url = QString::fromUtf8("mega://#fm/device-centre/") + deviceID +
+                              QString::fromUtf8("/") + QString::fromUtf8(handle.get());
+                    }
+                    else
+                    {
+                        url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle.get());
+                    }
+                    if (!urlsOpened.contains(url))
                     {
                         urlsOpened.append(url);
                         Utilities::openUrl(QUrl(url));

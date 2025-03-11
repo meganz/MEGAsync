@@ -7,7 +7,7 @@ ResumePageForm {
 
     footerButtons {
         rightSecondary.onClicked: {
-            backupsAccess.openBackupsTabInPreferences();
+            backupCandidatesComponentAccess.openBackupsTabInPreferences();
             window.accept();
         }
 

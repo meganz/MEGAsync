@@ -34,6 +34,7 @@ class InfoDialog;
 
 class MegaApplication;
 class TransferManager;
+class UpsellController;
 
 class InfoDialog : public QDialog
 {
@@ -75,6 +76,7 @@ public:
     void clearUserAttributes();
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
     bool updateOverStorageState(int state);
+    void createUpsellController();
 
     void reset();
 
@@ -116,7 +118,7 @@ public slots:
     void dlAreaHovered(QMouseEvent *event);
     void upAreaHovered(QMouseEvent *event);
 
-    void addSync(mega::MegaHandle handle = mega::INVALID_HANDLE);
+    void addSync(SyncInfo::SyncOrigin origin, mega::MegaHandle handle = mega::INVALID_HANDLE);
     void onAddSync(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
     void onAddBackup();
     void updateDialogState();
@@ -135,8 +137,7 @@ private slots:
     void openFolder(QString path);
     void onOverlayClicked();
     void on_bTransferManager_clicked();
-    void on_bAddSync_clicked();
-    void on_bAddBackup_clicked();
+    void onAddSyncClicked();
     void on_bUpload_clicked();
     void resetLoggedInMode();
 
@@ -194,7 +195,6 @@ private:
     bool pendingUploadsTimerRunning = false;
     bool pendingDownloadsTimerRunning = false;
     bool circlesShowAllActiveTransfersProgress;
-    void showSyncsMenu(QPushButton* b, mega::MegaSync::SyncType type);
     SyncsMenu* initSyncsMenu(mega::MegaSync::SyncType type, bool isEnabled);
     void setUnseenNotifications(long long value);
 
@@ -228,10 +228,12 @@ private:
     QParallelAnimationGroup animationGroupSomeIssues;
     void hideSomeIssues();
     void showSomeIssues();
-    QHash<QPushButton*, SyncsMenu*> mSyncsMenus;
     MegaDelegateHoverManager mNotificationsViewHoverManager;
 
+    std::unique_ptr<UpsellController> mUpsellController;
+
     void updateUpgradeButtonText();
+    void updateCreateSyncButtonText();
 
 protected:
     void updateBlockedState();

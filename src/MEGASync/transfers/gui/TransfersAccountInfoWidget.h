@@ -21,6 +21,8 @@ public:
     void updateStorageElements() override;
     void updateAccountElements() override;
 
+    void setTransferOverquota(const bool isOverquota);
+
 protected:
     void changeEvent(QEvent* event) override;
 
@@ -29,12 +31,13 @@ private slots:
 
 private:
     Ui::TransfersAccountInfoWidget* mUi;
+    bool mIsBandwithOverquota = false;
 
     void updateStorageText();
     void updateStorageBar();
     void updateProgressBarStateUntilFull(int percentage);
     void refreshProgressBar();
-    void checkUpgradeButtonVisibility();
+    void updateUpgradeButtonVisibility();
     void updateUpgradeButtonText();
 };
 

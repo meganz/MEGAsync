@@ -3,17 +3,16 @@
 
 #include "QmlDialogWrapper.h"
 
-class Backups : public QMLComponent
+class Backups: public QMLComponent
 {
     Q_OBJECT
 
     Q_PROPERTY(bool comesFromSettings READ getComesFromSettings NOTIFY comesFromSettingsChanged)
 
 public:
-    explicit Backups(QObject *parent = 0);
+    explicit Backups(QObject* parent = 0);
 
     QUrl getQmlUrl() override;
-    QString contextName() override;
 
     static void registerQmlModules();
 
@@ -28,7 +27,6 @@ signals:
 
 private:
     bool mComesFromSettings;
-
 };
 
 #endif // BACKUPS_H

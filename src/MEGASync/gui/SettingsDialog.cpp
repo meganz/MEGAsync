@@ -87,9 +87,17 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mThreadPool(ThreadPoolSingleton::getInstance()),
     mCacheSize(-1),
     mRemoteCacheSize(-1),
-    mDebugCounter(0)
+    mDebugCounter(0),
+    usersUpdateListener(std::make_unique<UsersUpdateListener>())
 {
     mUi->setupUi(this);
+
+    connect(usersUpdateListener.get(),
+            &UsersUpdateListener::userEmailUpdated,
+            this,
+            &SettingsDialog::onUserEmailChanged);
+    mMegaApi->addListener(usersUpdateListener.get());
+
     // override whatever indexes might be set in .ui files (frequently checked in by mistake)
     mUi->wStack->setCurrentWidget(mUi->pGeneral);
     mUi->wStackFooter->setCurrentWidget(mUi->wGeneralFooter);
@@ -192,6 +200,8 @@ SettingsDialog::~SettingsDialog()
     AccountDetailsManager::instance()->dettachStorageObserver(*this);
     AccountDetailsManager::instance()->dettachBandwidthObserver(*this);
     AccountDetailsManager::instance()->dettachAccountObserver(*this);
+
+    mMegaApi->removeListener(usersUpdateListener.get());
 
     delete mUi;
 }
@@ -776,7 +786,7 @@ void SettingsDialog::on_cbSleepMode_toggled(bool checked)
     mPreferences->setAwakeIfActive(checked);
 
     PowerOptions options;
-    auto result = options.keepAwake(MegaSyncApp->getTransfersModel()->hasActiveTransfers() > 0);
+    auto result = options.keepAwake(checked);
 
     if (checked && !result)
     {
@@ -1006,69 +1016,62 @@ void SettingsDialog::updateAccountElements()
     QIcon icon;
     mUi->lAccountType->setText(Utilities::getReadablePlanFromId(mPreferences->accountType()));
 
+    const QuotaState quotaState = MegaSyncApp->getTransferQuota()->quotaState();
+    const bool isTransferOverquota = (quotaState != QuotaState::OK);
+    mUi->bUpgrade->setVisible(Utilities::shouldDisplayUpgradeButton(isTransferOverquota));
+
     switch (mPreferences->accountType())
     {
         case Preferences::ACCOUNT_TYPE_FREE:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Free.png"));
-            mUi->bUpgrade->show();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->hide();
             break;
         case Preferences::ACCOUNT_TYPE_PROI:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_I.png"));
-            mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROII:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_II.png"));
-            mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROIII:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_III.png"));
-            mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_LITE:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Lite.png"));
-            mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_BUSINESS:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Business.png"));
-            mUi->bUpgrade->hide();
             mUi->pStorageQuota->hide();
             mUi->pTransferQuota->hide();
             break;
         case Preferences::ACCOUNT_TYPE_PRO_FLEXI:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_Flexi.png"));
-            mUi->bUpgrade->hide();
             mUi->pStorageQuota->hide();
             mUi->pTransferQuota->hide();
             break;
         case Preferences::ACCOUNT_TYPE_STARTER:
-            mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_BASIC:
-            mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_ESSENTIAL:
-            mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         default:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Pro_I.png"));
             mUi->lAccountType->setText(QString());
-            mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
@@ -1523,6 +1526,21 @@ void SettingsDialog::on_bDownloadFolder_clicked()
 void SettingsDialog::onShellNotificationsProcessed()
 {
     setOverlayCheckboxEnabled(true, mUi->cOverlayIcons->isChecked());
+}
+
+void SettingsDialog::onUserEmailChanged(mega::MegaHandle userHandle, const QString& newEmail)
+{
+    if (!mPreferences->logged())
+    {
+        return;
+    }
+
+    MegaHandle myHandle = mMegaApi->getMyUserHandleBinary();
+    if (userHandle == myHandle)
+    {
+        mPreferences->setEmail(newEmail);
+        mUi->lEmail->setText(newEmail);
+    }
 }
 
 // Network -----------------------------------------------------------------------------------------

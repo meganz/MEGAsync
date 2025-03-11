@@ -16,11 +16,13 @@ DownloadQueueController::DownloadQueueController(MegaApi *_megaApi, const QMap<m
 {
 }
 
-void DownloadQueueController::initialize(QQueue<WrappedNode *> *downloadQueue, BlockingBatch &downloadBatches,
-                                   unsigned long long appDataId, const QString& path)
+void DownloadQueueController::initialize(QQueue<WrappedNode> downloadQueue,
+                                         BlockingBatch* downloadBatches,
+                                         unsigned long long appDataId,
+                                         const QString& path)
 {
     mDownloadQueue = downloadQueue;
-    mDownloadBatches = &downloadBatches;
+    mDownloadBatches = downloadBatches;
 
     mCurrentTargetPath = path;
     mCurrentAppDataId = appDataId;
@@ -30,14 +32,14 @@ void DownloadQueueController::startAvailableSpaceChecking()
 {
     mTotalQueueDiskSize = 0LL;
     mFolderCountPendingSizeComputation = 0;
-    auto accumulator = [this](long long partialSum, WrappedNode* currentNode)
+    auto accumulator = [this](long long partialSum, const WrappedNode& currentNode)
     {
-        MegaNode *node = currentNode->getMegaNode();
+        MegaNode* node = currentNode.getMegaNode();
         if (node->getType() == MegaNode::TYPE_FILE)
         {
             partialSum += node->getSize();
         }
-        else if (currentNode->getTransferOrigin() != WrappedNode::FROM_WEBSERVER)
+        else if (currentNode.getTransferOrigin() != WrappedNode::FROM_WEBSERVER)
         { // Ignore folders if the transfer comes from the webclient, because it provides
           // both all folders and all files, and not only top files/folders.
             mFolderCountPendingSizeComputation++;
@@ -48,8 +50,8 @@ void DownloadQueueController::startAvailableSpaceChecking()
         return partialSum;
     };
 
-    auto queueStart = mDownloadQueue->cbegin();
-    auto queueEnd = mDownloadQueue->cend();
+    auto queueStart = mDownloadQueue.cbegin();
+    auto queueEnd = mDownloadQueue.cend();
     mTotalQueueDiskSize += std::accumulate(queueStart, queueEnd, 0LL, accumulator);
 
     if (mFolderCountPendingSizeComputation == 0)
@@ -60,32 +62,38 @@ void DownloadQueueController::startAvailableSpaceChecking()
 
 void DownloadQueueController::addTransferBatch(std::shared_ptr<TransferBatch> batch)
 {
-    mDownloadBatches->add(batch);
+    if (mDownloadBatches)
+    {
+        mDownloadBatches->add(batch);
+    }
 }
 
 void DownloadQueueController::removeBatch()
 {
-    mDownloadBatches->removeBatch();
+    if (mDownloadBatches)
+    {
+        mDownloadBatches->removeBatch();
+    }
 }
 
 int DownloadQueueController::getDownloadQueueSize()
 {
-    return mDownloadQueue->size();
+    return mDownloadQueue.size();
 }
 
 bool DownloadQueueController::isDownloadQueueEmpty()
 {
-    return mDownloadQueue->empty();
+    return mDownloadQueue.empty();
 }
 
 void DownloadQueueController::clearDownloadQueue()
 {
-    mDownloadQueue->clear();
+    mDownloadQueue.clear();
 }
 
-WrappedNode *DownloadQueueController::dequeueDownloadQueue()
+WrappedNode DownloadQueueController::dequeueDownloadQueue()
 {
-    return mDownloadQueue->dequeue();
+    return mDownloadQueue.dequeue();
 }
 
 void DownloadQueueController::onRequestFinish(MegaRequest *request, MegaError *e)
@@ -138,25 +146,21 @@ void DownloadQueueController::askUserForChoice()
 {
     QStorageInfo destinationDrive(mCurrentTargetPath);
 
-    const DriveDisplayData driveDisplayData = getDriveDisplayData(destinationDrive);
+    const QString driveName = getDriveName(destinationDrive);
 
-    LowDiskSpaceDialog* dialog = new LowDiskSpaceDialog(mTotalQueueDiskSize, mCachedDriveData.mAvailableSpace,
-                              mCachedDriveData.mTotalSpace, driveDisplayData);
+    LowDiskSpaceDialog* dialog = new LowDiskSpaceDialog(mTotalQueueDiskSize,
+                                                        mCachedDriveData.mAvailableSpace,
+                                                        mCachedDriveData.mTotalSpace,
+                                                        driveName);
     DialogOpener::showDialog<LowDiskSpaceDialog>(dialog, [this, dialog](){
         dialog->result() == QDialog::Accepted ? tryDownload() : emit finishedAvailableSpaceCheck(false);
     });
 }
 
-DriveDisplayData DownloadQueueController::getDriveDisplayData(const QStorageInfo &driveInfo) const
+QString DownloadQueueController::getDriveName(const QStorageInfo& driveInfo) const
 {
-    DriveDisplayData data;
-    data.name = driveInfo.name();
-    if (data.name.isEmpty())
-    {
-        data.name = getDefaultDriveName();
-    }
-    data.icon = getDriveIcon();
-    return data;
+    const QString driveName = driveInfo.name();
+    return driveName.isEmpty() ? getDefaultDriveName() : driveName;
 }
 
 QString DownloadQueueController::getDefaultDriveName() const
@@ -173,11 +177,6 @@ QString DownloadQueueController::getDefaultDriveName() const
     }
 #endif
     return tr("Local drive");
-}
-
-QString DownloadQueueController::getDriveIcon() const
-{
-    return QString::fromLatin1(":/images/drive-low-space.svg");
 }
 
 DriveSpaceData DownloadQueueController::getDriveSpaceDataFromQt()

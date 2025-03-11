@@ -7,12 +7,13 @@
 #include "CreateRemoveSyncsManager.h"
 #include "DialogOpener.h"
 #include "MegaApplication.h"
-#include "MenuItemAction.h"
 #include "Platform.h"
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
 #include "TransferManager.h"
+#include "TransferQuota.h"
 #include "ui_InfoDialog.h"
+#include "UpsellController.h"
 #include "UserMessageController.h"
 #include "UserMessageDelegate.h"
 #include "Utilities.h"
@@ -90,16 +91,17 @@ void InfoDialog::upAreaHovered(QMouseEvent *event)
     QToolTip::showText(event->globalPos(), tr("Open Uploads"));
 }
 
-InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddialog) :
+InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddialog):
     QDialog(parent),
     ui(new Ui::InfoDialog),
-    mIndexing (false),
-    mWaiting (false),
-    mSyncing (false),
-    mTransferring (false),
+    mIndexing(false),
+    mWaiting(false),
+    mSyncing(false),
+    mTransferring(false),
     mTransferManager(nullptr),
-    mPreferences (Preferences::instance()),
-    mSyncInfo (SyncInfo::instance()),
+    mUpsellController(nullptr),
+    mPreferences(Preferences::instance()),
+    mSyncInfo(SyncInfo::instance()),
     qtBugFixer(this)
 {
     ui->setupUi(this);
@@ -117,9 +119,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
                     deleteLater();
                 }
             });
-
-    mSyncsMenus[ui->bAddSync] = nullptr;
-    mSyncsMenus[ui->bAddBackup] = nullptr;
 
     filterMenu = new FilterAlertWidget(this);
     connect(filterMenu, SIGNAL(filterClicked(MessageType)),
@@ -157,7 +156,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
                 }
             });
 
-    //Set window properties
+    connect(ui->bCreateSync, &QAbstractButton::clicked, this, &InfoDialog::onAddSyncClicked);
+
+    // Set window properties
 #ifdef Q_OS_LINUX
     doNotActAsPopup = Platform::getInstance()->getValue("USE_MEGASYNC_AS_REGULAR_WINDOW", false);
 
@@ -183,7 +184,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 #elif defined(_WIN32)
     setWindowFlags(Qt::FramelessWindowHint | Qt::Popup | Qt::NoDropShadowWindowHint);
 #else // OS X
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+    setWindowFlags(Qt::FramelessWindowHint);
 #endif
 
 #ifdef _WIN32
@@ -233,7 +234,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui->sStorage->setCurrentWidget(ui->wCircularStorage);
     ui->sQuota->setCurrentWidget(ui->wCircularQuota);
 
-#ifdef Q_OS_LINUX
+#if defined(__APPLE__) || defined(Q_OS_LINUX)
     installEventFilter(this);
 #endif
 
@@ -275,6 +276,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     {
         setAvatar();
         setUsage();
+        createUpsellController();
     }
     highDpiResize.init(this);
 
@@ -310,6 +312,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
             &InfoDialog::updateUsageAndAccountType);
 
     updateUpgradeButtonText();
+    updateCreateSyncButtonText();
 }
 
 InfoDialog::~InfoDialog()
@@ -349,6 +352,7 @@ void InfoDialog::showEvent(QShowEvent *event)
     app->getNotificationController()->requestNotifications();
 
     repositionInfoDialog();
+
     QDialog::showEvent(event);
 }
 
@@ -367,6 +371,10 @@ void InfoDialog::updateUsageAndAccountType()
 {
     setUsage();
     setAccountType(mPreferences->accountType());
+
+    const QuotaState quotaState = MegaSyncApp->getTransferQuota()->quotaState();
+    const bool isTransferOverquota = (quotaState != QuotaState::OK);
+    ui->bUpgrade->setVisible(Utilities::shouldDisplayUpgradeButton(isTransferOverquota));
 }
 
 void InfoDialog::enableTransferOverquotaAlert()
@@ -420,6 +428,15 @@ void InfoDialog::hideEvent(QHideEvent *event)
 void InfoDialog::setAvatar()
 {
     ui->bAvatar->setUserEmail(mPreferences->email().toUtf8().constData());
+}
+
+void InfoDialog::createUpsellController()
+{
+    if (!mUpsellController)
+    {
+        mUpsellController = std::make_unique<UpsellController>(nullptr);
+        mUpsellController->requestPricingData();
+    }
 }
 
 void InfoDialog::setUsage()
@@ -543,6 +560,11 @@ void InfoDialog::setUsage()
             {
                 ui->wCircularQuota->setState(CircularUsageProgressBar::STATE_OVER);
                 usageColorT = QString::fromLatin1("#D90007");
+                break;
+            }
+            default:
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Unknown transfer quota state");
                 break;
             }
         }
@@ -738,14 +760,6 @@ void InfoDialog::setAccountType(int accType)
     }
 
     actualAccountType = accType;
-    if (Utilities::isBusinessAccount())
-    {
-         ui->bUpgrade->hide();
-    }
-    else
-    {
-         ui->bUpgrade->show();
-    }
 }
 
 void InfoDialog::updateBlockedState()
@@ -827,7 +841,7 @@ void InfoDialog::onAddSync(mega::MegaSync::SyncType type)
         case mega::MegaSync::TYPE_TWOWAY:
         {
             MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::MENU_ADD_SYNC_CLICKED, true);
-            addSync();
+            addSync(SyncInfo::MAIN_APP_ORIGIN);
             break;
         }
         case mega::MegaSync::TYPE_BACKUP:
@@ -856,50 +870,77 @@ void InfoDialog::updateDialogState()
 
     if (storageState == Preferences::STATE_PAYWALL)
     {
-        MegaIntegerList* tsWarnings = megaApi->getOverquotaWarningsTs();
-        const char *email = megaApi->getMyEmail();
-
-        long long numFiles{mPreferences->cloudDriveFiles() + mPreferences->vaultFiles() + mPreferences->rubbishFiles()};
-        QString contactMessage = tr("We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].", "", static_cast<int>(numFiles));
-        QString overDiskText = QString::fromUtf8("<p style='line-height: 20px;'>") + contactMessage
-                .replace(QString::fromUtf8("[A]"), QString::fromUtf8(email))
-                .replace(QString::fromUtf8("[B]"), Utilities::getReadableStringFromTs(tsWarnings))
-                .replace(QString::fromUtf8("[D]"), Utilities::getSizeString(mPreferences->usedStorage()))
-                .replace(QString::fromUtf8("[E]"), Utilities::minProPlanNeeded(MegaSyncApp->getPricing(), mPreferences->usedStorage()))
-                + QString::fromUtf8("</p>");
-        ui->lOverDiskQuotaLabel->setText(overDiskText);
-
-        int64_t remainDaysOut(0);
-        int64_t remainHoursOut(0);
-        Utilities::getDaysAndHoursToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000, remainDaysOut, remainHoursOut);
-        if (remainDaysOut > 0)
+        if (mUpsellController)
         {
-            QString descriptionDays = tr("You have [A]%n day[/A] left to upgrade. After that, your data is subject to deletion.", "", static_cast<int>(remainDaysOut));
-            ui->lWarningOverDiskQuota->setText(QString::fromUtf8("<p style='line-height: 20px;'>") + descriptionDays
-                    .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style='color: #FF6F00;'>"))
-                    .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
-                    + QString::fromUtf8("</p>"));
-        }
-        else if (remainDaysOut == 0 && remainHoursOut > 0)
-        {
-            QString descriptionHours = tr("You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.", "", static_cast<int>(remainHoursOut));
-            ui->lWarningOverDiskQuota->setText(QString::fromUtf8("<p style='line-height: 20px;'>") + descriptionHours
-                    .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style='color: #FF6F00;'>"))
-                    .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
-                    + QString::fromUtf8("</p>"));
-        }
-        else
-        {
-            ui->lWarningOverDiskQuota->setText(tr("You must act immediately to save your data"));
-        }
+            MegaIntegerList* tsWarnings = megaApi->getOverquotaWarningsTs();
+            const char* email = megaApi->getMyEmail();
 
+            long long numFiles{mPreferences->cloudDriveFiles() + mPreferences->vaultFiles() +
+                               mPreferences->rubbishFiles()};
+            QString contactMessage =
+                tr("We have contacted you by email to [A] on [B] but you still have %n file taking "
+                   "up [D] in your MEGA account, which requires you to have [E].",
+                   "",
+                   static_cast<int>(numFiles));
 
-        delete tsWarnings;
-        delete [] email;
+            QString overDiskText =
+                QString::fromUtf8("<p style='line-height: 20px;'>") +
+                contactMessage.replace(QString::fromUtf8("[A]"), QString::fromUtf8(email))
+                    .replace(QString::fromUtf8("[B]"),
+                             Utilities::getReadableStringFromTs(tsWarnings))
+                    .replace(QString::fromUtf8("[D]"),
+                             Utilities::getSizeString(mPreferences->usedStorage()))
+                    .replace(QString::fromUtf8("[E]"),
+                             mUpsellController->getMinProPlanNeeded(mPreferences->usedStorage())) +
+                QString::fromUtf8("</p>");
+            ui->lOverDiskQuotaLabel->setText(overDiskText);
 
-        ui->sActiveTransfers->setCurrentWidget(ui->pOverDiskQuotaPaywall);
-        overlay->setVisible(false);
-        ui->wPSA->hidePSA();
+            int64_t remainDaysOut(0);
+            int64_t remainHoursOut(0);
+            Utilities::getDaysAndHoursToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000,
+                                                  remainDaysOut,
+                                                  remainHoursOut);
+            if (remainDaysOut > 0)
+            {
+                QString descriptionDays = tr("You have [A]%n day[/A] left to upgrade. After that, "
+                                             "your data is subject to deletion.",
+                                             "",
+                                             static_cast<int>(remainDaysOut));
+                ui->lWarningOverDiskQuota->setText(
+                    QString::fromUtf8("<p style='line-height: 20px;'>") +
+                    descriptionDays
+                        .replace(QString::fromUtf8("[A]"),
+                                 QString::fromUtf8("<span style='color: #FF6F00;'>"))
+                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) +
+                    QString::fromUtf8("</p>"));
+            }
+            else if (remainDaysOut == 0 && remainHoursOut > 0)
+            {
+                QString descriptionHours = tr("You have [A]%n hour[/A] left to upgrade. After "
+                                              "that, your data is subject to deletion.",
+                                              "",
+                                              static_cast<int>(remainHoursOut));
+                ui->lWarningOverDiskQuota->setText(
+                    QString::fromUtf8("<p style='line-height: 20px;'>") +
+                    descriptionHours
+                        .replace(QString::fromUtf8("[A]"),
+                                 QString::fromUtf8("<span style='color: #FF6F00;'>"))
+                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) +
+                    QString::fromUtf8("</p>"));
+            }
+            else
+            {
+                ui->lWarningOverDiskQuota->setText(
+                    tr("You must act immediately to save your data"));
+            }
+
+            delete tsWarnings;
+            delete[] email;
+
+            ui->sActiveTransfers->setCurrentWidget(ui->pOverDiskQuotaPaywall);
+            overlay->setVisible(false);
+            ui->wPSA->hidePSA();
+        }
     }
     else if(storageState == Preferences::STATE_OVER_STORAGE)
     {
@@ -1072,9 +1113,9 @@ void InfoDialog::openFolder(QString path)
     Utilities::openUrl(QUrl::fromLocalFile(path));
 }
 
-void InfoDialog::addSync(mega::MegaHandle handle)
+void InfoDialog::addSync(SyncInfo::SyncOrigin origin, mega::MegaHandle handle)
 {
-    CreateRemoveSyncsManager::addSync(handle);
+    CreateRemoveSyncsManager::addSync(origin, handle);
 }
 
 void InfoDialog::addBackup()
@@ -1098,30 +1139,12 @@ void InfoDialog::on_bTransferManager_clicked()
     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::OPEN_TRANSFER_MANAGER_CLICKED, true);
 }
 
-void InfoDialog::on_bAddSync_clicked()
+void InfoDialog::onAddSyncClicked()
 {
-    showSyncsMenu(ui->bAddSync, MegaSync::TYPE_TWOWAY);
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::ADD_SYNC_CLICKED, true);
-}
-
-void InfoDialog::on_bAddBackup_clicked()
-{
-    showSyncsMenu(ui->bAddBackup, MegaSync::TYPE_BACKUP);
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::ADD_BACKUP_CLICKED, true);
-}
-
-void InfoDialog::showSyncsMenu(QPushButton* b, mega::MegaSync::SyncType type)
-{
-    if (mPreferences->logged())
-    {
-        auto* menu (mSyncsMenus.value(b, nullptr));
-        if (!menu)
-        {
-            menu = initSyncsMenu(type, ui->bUpload->isEnabled());
-            mSyncsMenus.insert(b, menu);
-        }
-        if (menu) menu->callMenu(b->mapToGlobal(QPoint(b->width() - 100, b->height() + 3)));
-    }
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::INFO_DIALOG_ADD_SYNC_CLICKED,
+        true);
+    addSync(SyncInfo::INFODIALOG_BUTTON_ORIGIN);
 }
 
 SyncsMenu* InfoDialog::initSyncsMenu(mega::MegaSync::SyncType type, bool isEnabled)
@@ -1228,12 +1251,7 @@ void InfoDialog::changeEvent(QEvent* event)
     {
         ui->retranslateUi(this);
         updateUpgradeButtonText();
-        // if (mPreferences->logged())
-        // {
-        //     setUsage();
-        //     mState = StatusInfo::TRANSFERS_STATES::STATE_STARTING;
-        //     updateDialogState();
-        // }
+        updateCreateSyncButtonText();
     }
     QDialog::changeEvent(event);
 }
@@ -1279,6 +1297,26 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
         }
     }
 
+#endif
+
+#ifdef __APPLE__
+    if (obj == this)
+    {
+        if (QOperatingSystemVersion::current() <=
+            QOperatingSystemVersion::OSXMavericks) // manage spontaneus mouse press events
+        {
+            if (e->type() == QEvent::MouseButtonPress && e->spontaneous())
+            {
+                return true;
+            }
+        }
+
+        if (e->type() == QEvent::WindowDeactivate)
+        {
+            hide();
+            return true;
+        }
+    }
 #endif
 
     return QDialog::eventFilter(obj, e);
@@ -1551,6 +1589,13 @@ void InfoDialog::updateUpgradeButtonText()
     ui->bUpgrade->setText(QCoreApplication::translate("SettingsDialog", "Upgrade"));
 }
 
+void InfoDialog::updateCreateSyncButtonText()
+{
+    // We add a space to keep a distance from the button icon
+    const QString label = QString::fromLatin1(" ") + tr("Add sync");
+    ui->bCreateSync->setText(label);
+}
+
 void InfoDialog::on_bDismissSyncSettings_clicked()
 {
     mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
@@ -1624,28 +1669,7 @@ void InfoDialog::enableUserActions(bool newState)
 {
     ui->bAvatar->setEnabled(newState);
     ui->bUpgrade->setEnabled(newState);
-    ui->bUpload->setEnabled(newState);
-
-    // To set the state of the Syncs and Backups button,
-    // we have to first create them if they don't exist
-    auto buttonIt (mSyncsMenus.begin());
-    while (buttonIt != mSyncsMenus.end())
-    {
-        auto* syncMenu (buttonIt.value());
-        if (!syncMenu)
-        {
-            auto type (buttonIt.key() == ui->bAddSync ? MegaSync::TYPE_TWOWAY : MegaSync::TYPE_BACKUP);
-            syncMenu = initSyncsMenu(type, newState);
-            *buttonIt = syncMenu;
-        }
-        if (syncMenu)
-        {
-            syncMenu->setEnabled(newState);
-            buttonIt.key()->setEnabled(syncMenu->getAction()->isEnabled());
-        }
-
-        *buttonIt++;
-    }
+    ui->bCreateSync->setEnabled(newState);
 }
 
 void InfoDialog::changeStatusState(StatusInfo::TRANSFERS_STATES newState,

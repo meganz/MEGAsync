@@ -369,8 +369,7 @@ public:
     static void getPROurlWithParameters(QString &url);
     static QString joinLogZipFiles(mega::MegaApi *megaApi, const QDateTime *timestampSince = nullptr, QString appendHashReference = QString());
 
-    static void adjustToScreenFunc(QPoint position, QWidget *what);
-    static QString minProPlanNeeded(std::shared_ptr<mega::MegaPricing> pricing, long long usedStorage);
+    static void adjustToScreenFunc(QPoint position, QWidget* what);
     static QString getReadableStringFromTs(mega::MegaIntegerList* list);
     static QString getReadablePlanFromId(int identifier, bool shortPlan = false);
     static void animateFadeout(QWidget *object, int msecs = 700);
@@ -393,6 +392,9 @@ public:
 
     //get mega transfer nodepath
     static QString getNodePath(mega::MegaTransfer* transfer);
+
+    // Detect folder case sensitivity utils
+    static Qt::CaseSensitivity isCaseSensitive(const QString& folder);
 
     //Check is current account is business (either business or flexi pro)
     static bool isBusinessAccount();
@@ -437,7 +439,12 @@ private:
 
     static long long getNearestUnit(long long bytes);
 
-//Platform dependent functions
+    // Detect folder case sensitivity utils
+    static void createFile(const QDir& path, const QString& filename);
+    static uint8_t getFileCount(QDir path);
+
+    // Platform dependent functions
+
 public:
     static QString languageCodeToString(QString code);
     static QString getAvatarPath(QString email);
@@ -474,6 +481,8 @@ public:
     static constexpr int ERROR_DISPLAY_TIME_MS = 10000; //10s in milliseconds
 
     static bool isNodeNameValid(const QString& name);
+
+    static bool shouldDisplayUpgradeButton(const bool isTransferOverquota);
 };
 
 Q_DECLARE_METATYPE(Utilities::FileType)
@@ -508,10 +517,12 @@ class WrappedNode
 {
 public:
     // Enum used to record origin of transfer
-    enum TransferOrigin {
-        FROM_UNKNOWN   = 0,
-        FROM_APP       = 1,
+    enum TransferOrigin
+    {
+        FROM_UNKNOWN = 0,
+        FROM_APP = 1,
         FROM_WEBSERVER = 2,
+        FROM_LINK = 3,
     };
 
     // Constructor with origin and pointer to MEGA node. Default to unknown/nullptr
@@ -521,23 +532,23 @@ public:
                 mega::MegaNode* node = nullptr,
                 bool undelete = false);
 
+    WrappedNode(TransferOrigin from = WrappedNode::TransferOrigin::FROM_UNKNOWN,
+                std::shared_ptr<mega::MegaNode> node = nullptr,
+                bool undelete = false);
+
     // Destructor
-    ~WrappedNode()
-    {
-        // MEGA node should be deleted when this is deleted.
-        delete mNode;
-    }
+    ~WrappedNode() {}
 
     // Get the transfer origin
-    WrappedNode::TransferOrigin getTransferOrigin()
+    WrappedNode::TransferOrigin getTransferOrigin() const
     {
         return mTransfersFrom;
     }
 
     // Get the wrapped MEGA node pointer
-    mega::MegaNode* getMegaNode()
+    mega::MegaNode* getMegaNode() const
     {
-        return mNode;
+        return mNode.get();
     }
 
     bool getUndelete() const
@@ -550,11 +561,11 @@ private:
     WrappedNode::TransferOrigin  mTransfersFrom;
 
     // Wrapped MEGA node
-    mega::MegaNode* mNode;
+    std::shared_ptr<mega::MegaNode> mNode;
 
     bool mUndelete;
 };
 
-Q_DECLARE_METATYPE(QQueue<WrappedNode*>)
+Q_DECLARE_METATYPE(QQueue<WrappedNode>)
 
 #endif // UTILITIES_H

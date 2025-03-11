@@ -108,6 +108,8 @@ public:
     void setOverStorageDialogExecution(long long timestamp);
     long long getOverStorageNotificationExecution();
     void setOverStorageNotificationExecution(long long timestamp);
+    long long getAlmostOverStorageDialogExecution();
+    void setAlmostOverStorageDialogExecution(long long timestamp);
     long long getAlmostOverStorageNotificationExecution();
     void setAlmostOverStorageNotificationExecution(long long timestamp);
     long long getPayWallNotificationExecution();
@@ -465,7 +467,8 @@ public:
         ONE_TIME_ACTION_REGISTER_UPDATE_TASK = 3,
         ONE_TIME_ACTION_OS_TOO_OLD = 4,
         ONE_TIME_ACTION_HGFS_WARNING = 5,
-        ONE_TIME_ACTION_ONBOARDING_SHOWN
+        ONE_TIME_ACTION_ONBOARDING_SHOWN = 6,
+        ONE_TIME_ACTION_UNHIDE_TRAY_ICON
     };
 
     enum {
@@ -655,6 +658,7 @@ protected:
     static const QString usedBandwidthIntervalKey;
     static const QString overStorageDialogExecutionKey;
     static const QString overStorageNotificationExecutionKey;
+    static const QString almostOverStorageDialogExecutionKey;
     static const QString almostOverStorageNotificationExecutionKey;
     static const QString payWallNotificationExecutionKey;
     static const QString almostOverStorageDismissExecutionKey;

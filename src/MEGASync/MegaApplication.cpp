@@ -45,6 +45,7 @@
 #include "SyncsMenu.h"
 #include "TransferMetaData.h"
 #include "UploadToMegaDialog.h"
+#include "UpsellComponent.h"
 #include "UserAttributesManager.h"
 #include "UserMessageController.h"
 #include "Utilities.h"
@@ -134,7 +135,8 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     scanStageController(this),
     mDisableGfx(false),
     mUserMessageController(nullptr),
-    mGfxProvider(nullptr)
+    mGfxProvider(nullptr),
+    misSyncingStateWrongLogged(false)
 {
 #if defined Q_OS_MACX && !defined QT_DEBUG
     if (!qEnvironmentVariableIsSet("MEGA_DISABLE_RUN_MAC_RESTRICTION"))
@@ -311,9 +313,6 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     updateBlocked = false;
     updateThread = nullptr;
     updateTask = nullptr;
-    mPricing.reset();
-    mCurrency.reset();
-    mStorageOverquotaDialog = nullptr;
     mTransferManager = nullptr;
     cleaningSchedulerExecution = 0;
     lastUserActivityExecution = 0;
@@ -720,21 +719,23 @@ void MegaApplication::initialize()
     //! NOTE! Create a raw pointer, as the lifetime of this object needs to be carefully managed:
     //! mSetManager needs to be manually deleted, as the SDK needs to be destroyed first
     mSetManager = new SetManager(megaApi, megaApiFolders);
-    connect(mSetManager, &SetManager::onSetDownloadFinished, this, &MegaApplication::setDownloadFinished);
 
     mLinkProcessor = new LinkProcessor(megaApi, megaApiFolders);
-
     connect(mLinkProcessor,
-            &LinkProcessor::linkDownloadErrorDetected,
+            &LinkProcessor::linkCopyErrorDetected,
             this,
-            &MegaApplication::onOpenLinkError);
+            &MegaApplication::onCopyLinkError);
 
     connect(mLinkProcessor, &LinkProcessor::requestFetchSetFromLink, mSetManager, &SetManager::requestFetchSetFromLink);
     connect(mSetManager, &SetManager::onFetchSetFromLink, mLinkProcessor, &LinkProcessor::onFetchSetFromLink);
-    connect(mLinkProcessor, &LinkProcessor::requestDownloadSet, mSetManager, &SetManager::requestDownloadSet);
-    connect(mSetManager, &SetManager::onSetDownloadFinished, mLinkProcessor, &LinkProcessor::onSetDownloadFinished);
-    connect(mLinkProcessor, &LinkProcessor::requestImportSet, mSetManager, &SetManager::requestImportSet);
-    connect(mSetManager, &SetManager::onSetImportFinished, mLinkProcessor, &LinkProcessor::onSetImportFinished);
+    connect(mLinkProcessor,
+            &LinkProcessor::requestDownloadSet,
+            mSetManager,
+            &SetManager::requestDownloadSet);
+    connect(mLinkProcessor,
+            &LinkProcessor::requestImportSet,
+            mSetManager,
+            &SetManager::requestImportSet);
 
     createUserMessageController();
 
@@ -1252,7 +1253,6 @@ void MegaApplication::requestUserData()
     UserAttributes::FullName::requestFullName();
     UserAttributes::Avatar::requestAvatar();
 
-    megaApi->getPricing();
     megaApi->getFileVersionsOption();
     megaApi->getPSA();
 }
@@ -1332,6 +1332,7 @@ if (!preferences->lastExecutionTime())
     infoDialog->setUsage();
     infoDialog->setAvatar();
     infoDialog->setAccountType(preferences->accountType());
+    infoDialog->createUpsellController();
 
     if (!QSystemTrayIcon::isSystemTrayAvailable())
     {
@@ -1453,6 +1454,8 @@ if (!preferences->lastExecutionTime())
     }
     mStatusController->loggedIn();
     preferences->monitorUserAttributes();
+
+    checkOverStorageStates(true);
 }
 
 void MegaApplication::onLoginFinished()
@@ -1462,6 +1465,8 @@ void MegaApplication::onLoginFinished()
         connect(mIntervalExecutioner.get(), &IntervalExecutioner::execute,
                 this, &MegaApplication::onScheduledExecution);
     }
+
+    Platform::getInstance()->unHideTrayIcon();
 }
 
 void MegaApplication::onFetchNodesFinished()
@@ -1721,21 +1726,30 @@ void MegaApplication::processDownloadQueue(QString path)
     QDir dir(path);
     if (!dir.exists() && !dir.mkpath(QString::fromUtf8(".")))
     {
-        QQueue<WrappedNode *>::iterator it;
+        QQueue<WrappedNode>::iterator it;
         for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
         {
-            HTTPServer::onTransferDataUpdate((*it)->getMegaNode()->getHandle(),
+            HTTPServer::onTransferDataUpdate((*it).getMegaNode()->getHandle(),
                                              MegaTransfer::STATE_CANCELLED,
-                                             0, 0, 0, QString());
+                                             0,
+                                             0,
+                                             0,
+                                             QString());
         }
 
-        qDeleteAll(downloadQueue);
         downloadQueue.clear();
         showErrorMessage(tr("Error: Invalid destination folder. The download has been cancelled"));
         return;
     }
 
-    downloader->processDownloadQueue(&downloadQueue, mBlockingBatch, path);
+    MegaDownloader::DownloadInfo info;
+    info.downloadQueue = downloadQueue;
+    downloadQueue.clear();
+
+    info.downloadBatches = &mBlockingBatch;
+    info.path = path;
+
+    downloader->processDownloadQueue(info);
 }
 
 void MegaApplication::createTransferManagerDialog(TransfersWidget::TM_TAB tab)
@@ -1957,24 +1971,30 @@ void MegaApplication::checkMemoryUsage()
     }
 }
 
-void MegaApplication::checkOverStorageStates()
+void MegaApplication::checkOverStorageStates(bool isOnboardingAboutClosing)
 {
-    if (!preferences->logged() || ((!infoDialog || !infoDialog->isVisible()) && !mStorageOverquotaDialog && !Platform::getInstance()->isUserActive()))
+    if (!preferences->logged() ||
+        ((!infoDialog || !infoDialog->isVisible()) && !Platform::getInstance()->isUserActive()))
     {
         return;
     }
 
     if (appliedStorageState == MegaApi::STORAGE_STATE_RED)
     {
-        if (!preferences->getOverStorageDialogExecution()
-                || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_DIALOG_INTERVAL_MS))
+        bool isOnboardingDialogVisible(false);
+        if (auto dialogInfo = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+        {
+            isOnboardingDialogVisible = dialogInfo->getDialog()->isVisible();
+        }
+
+        if ((!isOnboardingDialogVisible || isOnboardingAboutClosing) &&
+            (!preferences->getOverStorageDialogExecution() ||
+             ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) >
+              Preferences::OQ_DIALOG_INTERVAL_MS)))
         {
             preferences->setOverStorageDialogExecution(QDateTime::currentMSecsSinceEpoch());
             mStatsEventHandler->sendEvent(AppStatsEvents::EventType::OVER_STORAGE_DIAL);
-            if (!mStorageOverquotaDialog)
-            {
-                mStorageOverquotaDialog = new UpgradeOverStorage(megaApi, mPricing, mCurrency);
-            }
+            showUpsellDialog(UpsellPlans::ViewMode::STORAGE_FULL);
         }
         else if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)
                      && (!preferences->getOverStorageNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)))
@@ -2002,6 +2022,21 @@ void MegaApplication::checkOverStorageStates()
     }
     else if (appliedStorageState == MegaApi::STORAGE_STATE_ORANGE)
     {
+        bool isOnboardingDialogVisible(false);
+        if (auto dialogInfo = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+        {
+            isOnboardingDialogVisible = dialogInfo->getDialog()->isVisible();
+        }
+        if ((!isOnboardingDialogVisible || isOnboardingAboutClosing) &&
+            (!preferences->getAlmostOverStorageDialogExecution() ||
+             ((QDateTime::currentMSecsSinceEpoch() -
+               preferences->getAlmostOverStorageDialogExecution()) >
+              Preferences::OQ_DIALOG_INTERVAL_MS)))
+        {
+            preferences->setAlmostOverStorageDialogExecution(QDateTime::currentMSecsSinceEpoch());
+            showUpsellDialog(UpsellPlans::ViewMode::STORAGE_ALMOST_FULL);
+        }
+
         if (infoDialog)
         {
             if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDismissExecution()) > Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS)
@@ -2029,11 +2064,6 @@ void MegaApplication::checkOverStorageStates()
             mStatsEventHandler->sendEvent(AppStatsEvents::EventType::ALMOST_OVER_STORAGE_NOTIF);
             mOsNotifications->sendOverStorageNotification(Preferences::STATE_ALMOST_OVER_STORAGE);
         }
-
-        if(mStorageOverquotaDialog)
-        {
-            mStorageOverquotaDialog->close();
-        }
     }
     else if (appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL)
     {
@@ -2056,10 +2086,7 @@ void MegaApplication::checkOverStorageStates()
                 }
             }
 
-            if(mStorageOverquotaDialog)
-            {
-                mStorageOverquotaDialog->close();
-            }
+            closeUpsellStorageDialog();
         }
     }
     else
@@ -2069,10 +2096,7 @@ void MegaApplication::checkOverStorageStates()
             infoDialog->updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
         }
 
-        if(mStorageOverquotaDialog)
-        {
-            mStorageOverquotaDialog->close();
-        }
+        closeUpsellStorageDialog();
     }
 
     if (infoDialog)
@@ -2201,8 +2225,6 @@ void MegaApplication::cleanAll()
     downloader = nullptr;
     delete delegateListener;
     delegateListener = nullptr;
-    mPricing.reset();
-    mCurrency.reset();
 
     mGfxProvider.reset();
     mUserMessageController.reset();
@@ -2309,13 +2331,13 @@ void MegaApplication::raiseInfoDialog()
     if (infoDialog)
     {
         infoDialog->updateDialogState();
-        infoDialog->show();
         DialogOpener::raiseAllDialogs();
 
 #ifdef __APPLE__
         Platform::getInstance()->raiseFileFolderSelectors();
 #endif
 
+        infoDialog->show();
         infoDialog->raise();
         infoDialog->activateWindow();
         infoDialog->highDpiResize.queueRedraw();
@@ -2518,26 +2540,6 @@ void MegaApplication::updateUsedStorage(const bool sendEvent)
     }
 }
 
-QuotaState MegaApplication::getTransferQuotaState() const
-{
-     QuotaState quotaState (QuotaState::OK);
-
-     if (mTransferQuota->isQuotaWarning())
-     {
-         quotaState = QuotaState::WARNING;
-     }
-     else if (mTransferQuota->isQuotaFull())
-     {
-         quotaState = QuotaState::FULL;
-     }
-     else if (mTransferQuota->isOverQuota())
-     {
-         quotaState = QuotaState::OVERQUOTA;
-     }
-
-     return quotaState;
-}
-
 std::shared_ptr<TransferQuota> MegaApplication::getTransferQuota() const
 {
     return mTransferQuota;
@@ -2551,11 +2553,6 @@ int MegaApplication::getAppliedStorageState() const
 bool MegaApplication::isAppliedStorageOverquota() const
 {
     return appliedStorageState == MegaApi::STORAGE_STATE_RED || appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL;
-}
-
-std::shared_ptr<MegaPricing> MegaApplication::getPricing() const
-{
-    return mPricing;
 }
 
 void MegaApplication::triggerInstallUpdate()
@@ -3104,9 +3101,15 @@ void MegaApplication::clearDownloadAndPendingLinks()
 {
     if (downloadQueue.size() || pendingLinks.size())
     {
-        for (QQueue<WrappedNode *>::iterator it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
+        for (QQueue<WrappedNode>::iterator it = downloadQueue.begin(); it != downloadQueue.end();
+             ++it)
         {
-            HTTPServer::onTransferDataUpdate((*it)->getMegaNode()->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0, QString());
+            HTTPServer::onTransferDataUpdate((*it).getMegaNode()->getHandle(),
+                                             MegaTransfer::STATE_CANCELLED,
+                                             0,
+                                             0,
+                                             0,
+                                             QString());
         }
 
         for (QMap<QString, QString>::iterator it = pendingLinks.begin(); it != pendingLinks.end(); it++)
@@ -3117,7 +3120,6 @@ void MegaApplication::clearDownloadAndPendingLinks()
                                              MegaTransfer::STATE_CANCELLED, 0, 0, 0, QString());
         }
 
-        qDeleteAll(downloadQueue);
         downloadQueue.clear();
         pendingLinks.clear();
         showInfoMessage(tr("Transfer canceled"));
@@ -3131,8 +3133,7 @@ void MegaApplication::unlink(bool keepLogs)
         return;
     }
 
-    //Reset fields that will be initialized again upon login
-    qDeleteAll(downloadQueue);
+    // Reset fields that will be initialized again upon login
     downloadQueue.clear();
     mRootNode.reset();
     mRubbishNode.reset();
@@ -3631,20 +3632,6 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
     }
 }
 
-void MegaApplication::setDownloadFinished(const QString& setName,
-                                          const QStringList& succeededDownloadedElements,
-                                          const QStringList& failedDownloadedElements,
-                                          const QString& destinationPath)
-{
-    if (mOsNotifications)
-    {
-        mOsNotifications->sendFinishedSetDownloadNotification(setName,
-                                                              succeededDownloadedElements,
-                                                              failedDownloadedElements,
-                                                              destinationPath);
-    }
-}
-
 #ifdef __APPLE__
 void MegaApplication::enableFinderExt()
 {
@@ -3955,7 +3942,7 @@ void MegaApplication::openDeviceCentre()
     }
 #endif
 
-    QMLComponent::openDialog<DeviceCentre>();
+    QMLComponent::showDialog<DeviceCentre>();
 }
 
 void MegaApplication::importLinks()
@@ -4159,7 +4146,8 @@ void MegaApplication::downloadActionClicked()
                         MegaNode *selectedNode = megaApi->getNodeByHandle(selectedMegaFolderHandle);
                         if (selectedNode)
                         {
-                            downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, selectedNode));
+                            downloadQueue.append(
+                                WrappedNode(WrappedNode::TransferOrigin::FROM_APP, selectedNode));
                         }
                     }
                     processDownloads();
@@ -4521,6 +4509,34 @@ void MegaApplication::createGfxProvider(const QString& basePath)
     mGfxProvider.reset(provider ? provider : MegaGfxProvider::createInternalInstance());
 }
 
+void MegaApplication::closeUpsellStorageDialog()
+{
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<UpsellComponent>>())
+    {
+        auto viewMode(dialog->getDialog()->wrapper()->viewMode());
+        if (viewMode == UpsellPlans::ViewMode::STORAGE_FULL ||
+            viewMode == UpsellPlans::ViewMode::STORAGE_ALMOST_FULL)
+        {
+            dialog->close();
+        }
+    }
+}
+
+void MegaApplication::showUpsellDialog(UpsellPlans::ViewMode viewMode)
+{
+    auto dialogInfo(DialogOpener::findDialog<QmlDialogWrapper<UpsellComponent>>());
+    if (dialogInfo)
+    {
+        dialogInfo->getDialog()->wrapper()->setViewMode(viewMode);
+        DialogOpener::showDialog(dialogInfo->getDialog());
+    }
+    else
+    {
+        dialogInfo = QMLComponent::addDialog<UpsellComponent>(nullptr, viewMode);
+        dialogInfo->getDialog()->setShowWhenCreated();
+    }
+}
+
 void MegaApplication::processSetDownload(const QString& publicLink,
                                          const QList<MegaHandle>& elementHandleList)
 {
@@ -4592,14 +4608,18 @@ void MegaApplication::onDownloadFromMegaFinished(QPointer<DownloadFromMegaDialog
         }
         else
         {
-            QQueue<WrappedNode *>::iterator it;
+            QQueue<WrappedNode>::iterator it;
             for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
             {
-                HTTPServer::onTransferDataUpdate((*it)->getMegaNode()->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0, QString());
+                HTTPServer::onTransferDataUpdate((*it).getMegaNode()->getHandle(),
+                                                 MegaTransfer::STATE_CANCELLED,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 QString());
             }
 
-            //If the dialog is rejected, cancel uploads
-            qDeleteAll(downloadQueue);
+            // If the dialog is rejected, cancel uploads
             downloadQueue.clear();
         }
     }
@@ -4727,7 +4747,7 @@ void MegaApplication::exportNodes(QList<MegaHandle> exportList, QStringList extr
     exportOps++;
 }
 
-void MegaApplication::externalDownload(QQueue<WrappedNode *> newDownloadQueue)
+void MegaApplication::externalDownload(QQueue<WrappedNode> newDownloadQueue)
 {
     if (appfinished)
     {
@@ -4851,17 +4871,7 @@ void MegaApplication::externalFolderSync(MegaHandle targetFolder)
 
     if (infoDialog)
     {
-        if (static_cast<MegaHandle>(targetFolder) == ::mega::INVALID_HANDLE)
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                         QString::fromUtf8("Invalid Mega handle when trying to add external sync")
-                             .toUtf8()
-                             .constData());
-        }
-        else
-        {
-            infoDialog->addSync(targetFolder);
-        }
+        infoDialog->addSync(SyncInfo::EXTERNAL_ORIGIN, targetFolder);
     }
 }
 
@@ -5116,7 +5126,6 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         DialogOpener::raiseAllDialogs();
         QmlDialogManager::instance()->raiseOnboardingDialog();
         QmlDialogManager::instance()->raiseOrHideInfoGuestDialog(infoDialogTimer, 200);
-
     }
 #ifdef Q_OS_WINDOWS
     else if (reason == QSystemTrayIcon::DoubleClick)
@@ -5268,7 +5277,7 @@ void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)
         }
         else
         {
-            CreateRemoveSyncsManager::addSync(megaFolderHandle);
+            CreateRemoveSyncsManager::addSync(SyncInfo::MAIN_APP_ORIGIN, megaFolderHandle);
         }
     }
 }
@@ -5611,13 +5620,8 @@ void MegaApplication::refreshStorageUIs()
         infoDialog->setUsage();
     }
 
-    AccountDetailsManager::instance()
-        ->notifyStorageObservers(); // Ideally this should be the only call here
-
-    if (mStorageOverquotaDialog)
-    {
-        mStorageOverquotaDialog->refreshStorageDetails();
-    }
+    // Ideally this should be the only call here
+    AccountDetailsManager::instance()->notifyStorageObservers();
 }
 
 void MegaApplication::manageBusinessStatus(int64_t event)
@@ -5793,28 +5797,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         break;
     }
-    case MegaRequest::TYPE_GET_PRICING:
-    {
-        if (e->getErrorCode() == MegaError::API_OK)
-        {
-            MegaPricing* pricing (request->getPricing());
-            MegaCurrency* currency (request->getCurrency());
-
-            if (pricing && currency)
-            {
-                mPricing.reset(pricing);
-                mCurrency.reset(currency);
-
-                mTransferQuota->setOverQuotaDialogPricing(mPricing, mCurrency);
-
-                if (mStorageOverquotaDialog)
-                {
-                    mStorageOverquotaDialog->setPricing(mPricing, mCurrency);
-                }
-            }
-        }
-        break;
-    }
     case MegaRequest::TYPE_SET_ATTR_USER:
     {
         if (!preferences->logged())
@@ -5945,7 +5927,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     node->setPrivateAuth(auth.toUtf8().constData());
                 }
 
-                downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, node));
+                downloadQueue.append(WrappedNode(WrappedNode::TransferOrigin::FROM_APP, node));
                 processDownloads();
                 break;
             }
@@ -6162,8 +6144,8 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
     }
 }
 
-//Called when there is a temporal problem in a transfer
-void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError* e)
+// Called when there is a temporal problem in a transfer
+void MegaApplication::onTransferTemporaryError(MegaApi* api, MegaTransfer* transfer, MegaError* e)
 {
     if (appfinished)
     {
@@ -6176,22 +6158,23 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     {
         if (transfer->isForeignOverquota())
         {
-            MegaUser *contact =  megaApi->getUserFromInShare(megaApi->getNodeByHandle(transfer->getParentHandle()), true);
-            showErrorMessage(tr("Your upload(s) cannot proceed because %1's account is full")
-                             .arg(contact?QString::fromUtf8(contact->getEmail()):tr("contact")));
-
+            MegaUser* contact =
+                megaApi->getUserFromInShare(megaApi->getNodeByHandle(transfer->getParentHandle()),
+                                            true);
+            showErrorMessage(
+                tr("Your upload(s) cannot proceed because %1's account is full")
+                    .arg(contact ? QString::fromUtf8(contact->getEmail()) : tr("contact")));
         }
         else if (e->getValue() && !mTransferQuota->isOverQuota())
         {
-            const auto waitTime = std::chrono::seconds(e->getValue());
             preferences->clearTemporalBandwidth();
-            megaApi->getPricing();
-            // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry).
+            // Get udpated transfer quota (also pro status in case out of quota is due to account
+            // paid period expiry).
             AccountDetailsManager::instance()->updateUserStats(
                 AccountDetailsManager::Flag::TRANSFER_PRO,
                 true,
                 USERSTATS_TRANSFERTEMPERROR);
-            mTransferQuota->setOverQuota(waitTime);
+            mTransferQuota->setOverQuota(std::chrono::seconds(e->getValue()));
         }
     }
 }
@@ -6274,31 +6257,23 @@ void MegaApplication::onScheduledExecution()
     onGlobalSyncStateChangedImpl();
 }
 
-void MegaApplication::onOpenLinkError(const QString& path, const int errorCode)
+void MegaApplication::onCopyLinkError(const QString& nodeName, const int errorCode)
 {
-    const QString title = tr("Folder download error");
+    const QString title = tr("Link import error");
 
     QString message;
-    if (errorCode == MegaError::API_EWRITE)
+    if (errorCode == MegaError::API_EOVERQUOTA)
     {
-        if (mightBeCaseSensitivityIssue(path))
-        {
-            message = tr("The folder %1 can't be downloaded. The download may have failed due to a "
-                         "casing mismatch. Ensure the folders match exactly and try again.")
-                          .arg(path);
-        }
-        else
-        {
-            message =
-                tr("The folder %1 can't be downloaded. Check the download destination folder.")
-                    .arg(path);
-        }
+        message = tr("Link can't be imported, your storage is full");
+    }
+    else if (errorCode == MegaError::API_EKEY)
+    {
+        message = tr("Link can't be imported, invalid key or decryption error");
     }
     else
     {
         const QString errorString = QString::fromUtf8(MegaError::getErrorString(errorCode));
-        message =
-            tr("The folder %1 can't be downloaded. Error received : %2.").arg(path, errorString);
+        message = tr("Link can't be imported: %1").arg(errorString);
     }
 
     showErrorMessage(message, title);
@@ -6324,11 +6299,49 @@ void MegaApplication::onGlobalSyncStateChangedImpl()
     if (megaApi && infoDialog && mTransfersModel)
     {
         mIndexing = megaApi->isScanning();
-        mSyncStalled = megaApi->isSyncStalled();
         mWaiting = megaApi->isWaiting() || mSyncStalled;
+
         mSyncing = megaApi->isSyncing();
+        mSyncStalled = megaApi->isSyncStalled();
 
         auto transferCount = mTransfersModel->getTransfersCount();
+        auto pendingSyncTransfers = transferCount.pendingSyncTransfers;
+
+        if (!mSyncStalled && mSyncing && pendingSyncTransfers == 0)
+        {
+            mSyncing = false;
+
+            if (!misSyncingStateWrongLogged)
+            {
+                misSyncingStateWrongLogged = true;
+
+                auto listener =
+                    RequestListenerManager::instance().registerAndGetCustomFinishListener(
+                        this,
+                        [](::mega::MegaRequest* request, ::mega::MegaError* e)
+                        {
+                            if (e->getErrorCode() == MegaError::API_OK)
+                            {
+                                // If mSyncing == true, mSyncStalled == false and
+                                // pendingSyncTransfers == 0 and we don´t have transfers in the
+                                // throttling queue, there is an unexpected scenario as mSyncing
+                                // should be false
+                                if (!request->getFlag())
+                                {
+                                    MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                                                 "isSyncing is set but no transfers in "
+                                                 "the throttling queue");
+                                }
+                            }
+                        });
+                megaApi->checkSyncUploadsThrottled(listener.get());
+            }
+        }
+        else if (misSyncingStateWrongLogged)
+        {
+            misSyncingStateWrongLogged = false;
+        }
+
         mTransferring = transferCount.pendingUploads || transferCount.pendingDownloads;
 
         auto pendingUploads = transferCount.pendingUploads;
@@ -6336,12 +6349,18 @@ void MegaApplication::onGlobalSyncStateChangedImpl()
 
         if (pendingUploads)
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending uploads: %1").arg(pendingUploads).toUtf8().constData());
+            MegaApi::log(
+                MegaApi::LOG_LEVEL_INFO,
+                QString::fromUtf8("Pending uploads: %1").arg(pendingUploads).toUtf8().constData());
         }
 
         if (pendingDownloads)
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending downloads: %1").arg(pendingDownloads).toUtf8().constData());
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                         QString::fromUtf8("Pending downloads: %1")
+                             .arg(pendingDownloads)
+                             .toUtf8()
+                             .constData());
         }
 
         infoDialog->setIndexing(mIndexing);
@@ -6350,8 +6369,16 @@ void MegaApplication::onGlobalSyncStateChangedImpl()
         infoDialog->setTransferring(mTransferring);
         infoDialog->updateDialogState();
 
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Current state. Paused = %1 Indexing = %2 Waiting = %3 Syncing = %4 Stalled = %5")
-                                                  .arg(paused).arg(mIndexing).arg(mWaiting).arg(mSyncing).arg(mSyncStalled).toUtf8().constData());
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                     QString::fromUtf8("Current state. Paused = %1 Indexing = %2 Waiting = %3 "
+                                       "Syncing = %4 Stalled = %5")
+                         .arg(paused)
+                         .arg(mIndexing)
+                         .arg(mWaiting)
+                         .arg(mSyncing)
+                         .arg(mSyncStalled)
+                         .toUtf8()
+                         .constData());
 
         updateTrayIcon();
     }

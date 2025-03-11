@@ -14,11 +14,6 @@ QUrl AddExclusionRule::getQmlUrl()
     return QUrl(QString::fromUtf8("qrc:/sync_exclusions/AddRuleDialog.qml"));
 }
 
-QString AddExclusionRule::contextName()
-{
-    return QString::fromUtf8("addRuleDialogAccess");
-}
-
 void AddExclusionRule::appendRuleToFolders(int targetType, int wildCard, QString ruleValue)
 {
     if(ruleValue.trimmed().isEmpty())
@@ -51,20 +46,13 @@ void AddExclusionRule::appendRuleToFolders(int targetType, int wildCard, QString
                 value = getRelative(folder, value);
             }
             MegaIgnoreNameRule::Target target = MegaIgnoreNameRule::Target::a;
-            switch (targetType)
+            if (targetType == ExclusionRulesModel::TargetType::FILE)
             {
-                case ExclusionRulesModel::TargetType::FILE:
-                    target = MegaIgnoreNameRule::Target::f;
-                    break;
-                case ExclusionRulesModel::TargetType::FOLDER:
-                    target = MegaIgnoreNameRule::Target::d;
-                    break;
-                case ExclusionRulesModel::TargetType::FILES_AND_FOLDERS:
-                    target = MegaIgnoreNameRule::Target::a;
-                    break;
-                default:
-                    target = MegaIgnoreNameRule::Target::a;
-                    break;
+                target = MegaIgnoreNameRule::Target::f;
+            }
+            else if (targetType == ExclusionRulesModel::TargetType::FOLDER)
+            {
+                target = MegaIgnoreNameRule::Target::d;
             }
             megaIgnoreLoader.addNameRule(MegaIgnoreNameRule::Class::EXCLUDE,
                                          value,

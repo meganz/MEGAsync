@@ -38,6 +38,7 @@ Rectangle {
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.step1DeviceName;
+                helpButtonLink: Links.installAppsDesktop;
             }
         },
         State {
@@ -48,6 +49,7 @@ Rectangle {
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.step2InstallationType;
+                helpButtonLink: Links.installAppsDesktop;
             }
         },
         State {
@@ -61,6 +63,7 @@ Rectangle {
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.step3;
+                helpButtonLink: Links.setUpSyncs;
             }
         },
         State {
@@ -74,6 +77,7 @@ Rectangle {
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.step3;
+                helpButtonLink: Links.createBackup;
             }
         },
         State {
@@ -114,6 +118,17 @@ Rectangle {
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.stepAllDone;
+                helpButtonLink: {
+                    switch(root.navInfo.typeSelected) {
+                        case Constants.SyncType.SELECTIVE_SYNC:
+                        case Constants.SyncType.FULL_SYNC:
+                            return Links.setUpSyncs;
+                        case Constants.SyncType.BACKUP:
+                            return Links.createBackup;
+                        default:
+                            return Links.installAppsDesktop;
+                    }
+                }
             }
         }
     ]

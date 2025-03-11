@@ -402,11 +402,6 @@
 </context>
 <context>
     <name>BackupsModel</name>
-    <message>
-        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
-        <translation>คุณไม่สามารถสำรองโฟลเดอร์ที่มีชื่อเดียวกันได้ หากต้องการสำรองข้อมูลต่อ กรุณาเปลี่ยนชื่อใหม่ ส่วนชื่อโฟลเดอร์บนคอมพิวเตอร์ของคุณจะไม่เปลี่ยนแปลง</translation>
-    </message>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
@@ -426,6 +421,11 @@
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
         <translation><numerusform>โฟลเดอร์เหล่านี้ไม่สามารถสำรองข้อมูลได้ ลองใหม่อีกครั้ง</numerusform></translation>
+    </message>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>คุณไม่สามารถสำรองโฟลเดอร์ที่มีชื่อเดียวกันได้ หากต้องการสำรองข้อมูลต่อ กรุณาเปลี่ยนชื่อใหม่ ส่วนชื่อโฟลเดอร์บนคอมพิวเตอร์ของคุณจะไม่เปลี่ยนแปลง</translation>
     </message>
 </context>
 <context>
@@ -838,7 +838,7 @@
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation><numerusform>การดำเนินการนี้จะดาวน์โหลดไฟล์ไปที่ตำแหน่งชั่วคราว จากนั้นจะทำการแก้ไขปัญหา และลบไฟล์ชั่วคราวออก</numerusform></translation>
+        <translation><numerusform>การดำเนินการนี้จะดาวน์โหลดไฟล์ไปที่ตำแหน่งชั่วคราว จากนั้นจะทำการแก้ไขปัญหาและลบไฟล์ชั่วคราวออก</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
@@ -1546,7 +1546,7 @@
     <message>
         <source>File and folder name</source>
         <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ชื่อไฟล์และโฟลเดอร์</translation>
     </message>
     <message>
         <source>Files</source>
@@ -1561,27 +1561,27 @@
     <message>
         <source>Files and folders beginning with “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์และโฟลเดอร์ที่ขึ้นต้นด้วยตัว “%1” จะถูกซิงค์ทั้งหมด</translation>
     </message>
     <message>
         <source>Files and folders containing “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์และโฟลเดอร์ที่ประกอบไปด้วยตัว “%1” จะถูกซิงค์ทั้งหมด</translation>
     </message>
     <message>
         <source>Files and folders ending with “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์และโฟลเดอร์ที่ลงท้ายด้วยตัว “%1” จะถูกซิงค์ทั้งหมด</translation>
     </message>
     <message>
         <source>Files and folders equal to “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์และโฟลเดอร์ที่มีชื่อตรงกับ “%1” จะถูกซิงค์ทั้งหมด</translation>
     </message>
     <message>
         <source>Files and folders matching wildcard “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์และโฟลเดอร์ที่ตรงกับอักขระตัวแทน “%1” จะถูกซิงค์ทั้งหมด</translation>
     </message>
     <message>
         <source>Files beginning with “%1” will be included on this sync.</source>
@@ -1626,37 +1626,37 @@
     <message>
         <source>Files matching wildcard “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์ที่ตรงกับอักขระตัวแทน “%1” จะถูกซิงค์ทั้งหมด</translation>
     </message>
     <message>
         <source>Files matching wildcard:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์ที่ตรงกับอักขระตัวแทน:</translation>
     </message>
     <message>
         <source>Files or folders beginning with:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์หรือโฟลเดอร์ที่ขึ้นต้นด้วย:</translation>
     </message>
     <message>
         <source>Files or folders containing:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์หรือโฟลเดอร์ที่ประกอบไปด้วย:</translation>
     </message>
     <message>
         <source>Files or folders ending with:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์หรือโฟลเดอร์ที่ลงท้ายด้วย:</translation>
     </message>
     <message>
         <source>Files or folders equal to:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์หรือโฟลเดอร์ที่ตรงกับ:</translation>
     </message>
     <message>
         <source>Files or folders matching wildcard:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์หรือโฟลเดอร์ที่ตรงกับอักขระตัวแทน:</translation>
     </message>
     <message>
         <source>Files with extension:</source>
@@ -1716,12 +1716,12 @@
     <message>
         <source>Folders matching wildcard “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>โฟลเดอร์ที่ตรงกับอักขระตัวแทน “%1” จะถูกซิงค์ทั้งหมด</translation>
     </message>
     <message>
         <source>Folders matching wildcard:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>โฟลเดอร์ที่ตรงกับอักขระตัวแทน:</translation>
     </message>
     <message>
         <source>Here you can exclude files and folders from being synced with your cloud drive. This can be useful for large files, files that you don&apos;t need on all of your devices,or certain file types that need not be synced.</source>
@@ -1736,7 +1736,7 @@
     <message>
         <source>Matching wildcard</source>
         <translatorcomment>Wild card type to be used for the new exclusion rule.Con-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ตรงกับอักขระตัวแทน</translation>
     </message>
     <message>
         <source>Outside of</source>
@@ -1851,7 +1851,7 @@
     <message>
         <source>wildcard</source>
         <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>อักขระตัวแทน</translation>
     </message>
 </context>
 <context>
@@ -2138,13 +2138,8 @@
 <context>
     <name>InfoDialog</name>
     <message>
-        <source>Add Backup</source>
-        <translatorcomment>Tooltip message shown while hovering backups button.</translatorcomment>
-        <translation>เพิ่มการสำรองข้อมูล</translation>
-    </message>
-    <message>
-        <source>Add Sync</source>
-        <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
+        <source>Add sync</source>
+        <translatorcomment>Label for the &quot;Add Sync&quot; button added in the InfoDialog (Max 20 characters). SNC-5182.</translatorcomment>
         <translation>เพิ่มซิงค์</translation>
     </message>
     <message>
@@ -2311,11 +2306,6 @@
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
         <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
         <translation>อัปเกรดทันที ก่อนที่พื้นที่บัญชีของคุณจะเต็มและการอัปโหลดไปที่ MEGA จะไม่สามารถดำเนินการได้</translation>
-    </message>
-    <message>
-        <source>Upload</source>
-        <translatorcomment>Label to indicate an upload.</translatorcomment>
-        <translation>อัปโหลด</translation>
     </message>
     <message>
         <source>Upload to MEGA now</source>
@@ -3025,7 +3015,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Alert</source>
         <translatorcomment>Title of the warning dialog shown when the SDK reports a fatal error - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>แจ้งเตือน</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
@@ -3145,7 +3135,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Link import error</source>
         <translatorcomment>Title of the error message when there is an error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เกิดข้อผิดพลาดในการนำเข้าลิงก์</translation>
     </message>
     <message>
         <source>Locked account</source>
@@ -3451,12 +3441,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>A critical error has been detected</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: failure to unserialize node - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>พบข้อผิดพลาดร้ายแรง</translation>
     </message>
     <message>
         <source>A serious issue has been detected in the MEGA software or the connection between this device and MEGA. Reinstall the app from [A]mega.io/desktop[/A] or contact support for further assistance.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: failure to unserialize node - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ระบบพบปัญหาขัดข้องร้ายแรงในซอฟต์แวร์ MEGA หรือการเชื่อมต่อระหว่างอุปกรณ์กับ MEGA กรุณาติดตั้งแอปพลิเคชันใหม่จาก [A]mega.io/desktop[/A] หากยังประสบปัญหาอยู่ กรุณาติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</translation>
     </message>
     <message>
         <source>Access denied</source>
@@ -3471,17 +3461,17 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>An error has been detected</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: DB index overflow - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>พบข้อผิดพลาด</translation>
     </message>
     <message>
         <source>An error is causing the communication with MEGA to fail. Your syncs and backups are unable to update, and there may be further issues if you continue using this app without restarting. We strongly recommend immediately restarting the app to resolve this problem.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: unknown - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>มีข้อผิดพลาดเกิดขึ้น ทำให้ไม่สามารถเชื่อมต่อกับ MEGA ได้ การซิงค์และการสำรองข้อมูลของคุณไม่สามารถอัปเดตได้ และอาจเกิดปัญหาอื่น ๆ ตามมาหากคุณยังคงใช้งานแอปโดยไม่เริ่มต้นการทำงานใหม่ เราขอแนะนำให้คุณเริ่มต้นการทำงานแอปทันทีเพื่อแก้ไขปัญหานี้</translation>
     </message>
     <message>
         <source>An unknown error has occurred</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: unknown - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -3496,7 +3486,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Check permissions</source>
         <translatorcomment>Label of the button used to open the application data folder for the user to check that the read/write permissions are good on that folder and the files inside - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ตรวจสอบสิทธิ์การเข้าถึง</translation>
     </message>
     <message>
         <source>Circular linkage detected</source>
@@ -3516,7 +3506,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Critical system files which are required by this app are unable to be reached. This may be the permissions of the folder the system files are in. You can also try restarting the app to see if this resolves the issue. If the folder permissions have been checked and the app restarted, please [A]contact support[/A].</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถเข้าถึงไฟล์ระบบที่จำเป็นสำหรับแอปนี้ได้ อาจเกิดจากสิทธิ์การเข้าถึงโฟลเดอร์ไม่ถูกต้อง กรุณาลองเริ่มการทำงานแอปและตรวจสอบสิทธิ์การเข้าถึงโฟลเดอร์ระบบ หากยังประสบปัญหาอยู่ กรุณา[A]ติดต่อฝ่ายสนับสนุน[/A]</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3531,12 +3521,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error reading app system files</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เกิดข้อผิดพลาดในการอ่านไฟล์ระบบแอป</translation>
     </message>
     <message>
         <source>Error with sync configuration files</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: JSCD atribute missing - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ข้อผิดพลาดกับไฟล์กำหนดค่าการซิงค์</translation>
     </message>
     <message>
         <source>Expired</source>
@@ -3631,7 +3621,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Restart MEGA</source>
         <translatorcomment>Label of the button used to restart the app to try to resolve a fatal error - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เริ่มการทำงาน MEGA ใหม่</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
@@ -3656,12 +3646,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>The app has detected an error and needs to reload. If you experience this issue more than once, contact our Support team.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: DB index overflow - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>แอปตรวจพบข้อผิดพลาดและจำเป็นต้องโหลดข้อมูลใหม่ หากพบปัญหานี้อีกหลายครั้ง กรุณาติดต่อทีมสนับสนุนของเรา</translation>
     </message>
     <message>
         <source>The app has detected an error in your sync configuration data. You need to log out of MEGA to resolve this issue. If the problem persists after logging back in, report the issue to our Support team.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: JSCD atribute missing - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>แอปตรวจพบข้อผิดพลาดในการตั้งค่าการซิงค์ข้อมูล คุณจำเป็นต้องออกจากระบบ MEGA เพื่อแก้ไขปัญหานี้ หากยังประสบปัญหาอยู่หลังจากเข้าสู่ระบบอีกครั้ง กรุณาแจ้งปัญหาให้ทีมสนับสนุนของเราทราบ</translation>
     </message>
     <message>
         <source>Too many concurrent connections or transfers</source>
@@ -3686,7 +3676,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>You need to make more space available in your local storage to be able to run MEGA.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>คุณจำเป็นต้องเพิ่มพื้นที่ว่างในที่เก็บข้อมูลภายในเครื่อง เพื่อให้สามารถใช้งาน MEGA ได้</translation>
     </message>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
@@ -3709,7 +3699,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your local storage is full</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>พื้นที่เก็บข้อมูลในเครื่องของคุณเต็มแล้ว</translation>
     </message>
 </context>
 <context>
@@ -4302,7 +4292,7 @@ Please refresh the view</source>
     <message>
         <source>Removed</source>
         <translatorcomment>Label in solved name conflict sync stalls by removing the file.SNC-2565</translatorcomment>
-        <translation>ถูกลบ</translation>
+        <translation>ลบ</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -4353,17 +4343,17 @@ Please refresh the view</source>
     <message>
         <source>Remove duplicates</source>
         <translatorcomment>Button to solve a name conflict sync stall by removing duplicated items.SNC-2565</translatorcomment>
-        <translation>เอารายการที่ซ้ำออก</translation>
+        <translation>ลบรายการที่ซ้ำกัน</translation>
     </message>
     <message>
         <source>Remove duplicates and rename the rest</source>
         <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation>ลบไฟล์ที่ซ้ำกัน และเปลี่ยนชื่อโฟลเดอร์ที่เหลือ</translation>
+        <translation>ลบไฟล์ที่ซ้ำกันและเปลี่ยนชื่อส่วนที่เหลือ</translation>
     </message>
     <message>
         <source>Remove duplicates, merge folders and rename the rest</source>
         <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation>ลบไฟล์ที่ซ้ำกัน ผสานโฟลเดอร์ที่มีชื่อซ้ำกันเข้าด้วยกัน และเปลี่ยนชื่อโฟลเดอร์ที่เหลือ</translation>
+        <translation>ลบไฟล์ที่ซ้ำกัน รวมโฟลเดอร์และเปลี่ยนชื่อส่วนที่เหลือ</translation>
     </message>
     <message>
         <source>Rename all items</source>
@@ -4506,27 +4496,27 @@ Enter a different name</source>
     <message>
         <source>Error removing file</source>
         <translatorcomment>Messagebox title when removing a single file has failed. SAT-426</translatorcomment>
-        <translation>เกิดข้อผิดพลาดในขณะลบไฟล์ออก</translation>
+        <translation>เกิดข้อผิดพลาดในการลบไฟล์</translation>
     </message>
     <message>
         <source>Error removing files</source>
         <translatorcomment>Messagebox title when removing multiple files has failed. SAT-426</translatorcomment>
-        <translation>เกิดข้อผิดพลาดในขณะลบไฟล์ออก</translation>
+        <translation>เกิดข้อผิดพลาดในการลบไฟล์</translation>
     </message>
     <message>
         <source>Error removing folder</source>
         <translatorcomment>Messagebox title when removing a single folder has failed. SAT-426</translatorcomment>
-        <translation>เกิดข้อผิดพลาดในขณะลบโฟลเดอร์ออก</translation>
+        <translation>เกิดข้อผิดพลาดในการลบโฟลเดอร์</translation>
     </message>
     <message>
         <source>Error removing folders</source>
         <translatorcomment>Messagebox title when removing multiple folders has failed. SAT-426</translatorcomment>
-        <translation>เกิดข้อผิดพลาดในขณะลบโฟลเดอร์ออก</translation>
+        <translation>เกิดข้อผิดพลาดในการลบโฟลเดอร์</translation>
     </message>
     <message>
         <source>Error removing items</source>
         <translatorcomment>Messagebox title when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation>เกิดข้อผิดพลาดในขณะลบรายการออก </translation>
+        <translation>เกิดข้อผิดพลาดในการลบรายการ</translation>
     </message>
     <message>
         <source>Folder already synced</source>
@@ -4571,27 +4561,27 @@ Enter a different name</source>
     <message>
         <source>The file %1 couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing a single file has failed. %1 is the file name. SAT-426</translatorcomment>
-        <translation>ไม่สามารถลบไฟล์ %1 ออกได้ ลองอีกครั้งในภายหลัง </translation>
+        <translation>ไม่สามารถลบไฟล์ %1 ได้ ลองใหม่อีกครั้งภายหลัง</translation>
     </message>
     <message>
         <source>The files couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple files has failed. SAT-426</translatorcomment>
-        <translation>ไม่สามารถลบไฟล์ออกได้ ลองอีกครั้งในภายหลัง </translation>
+        <translation>ไม่สามารถลบไฟล์ได้ ลองใหม่อีกครั้งภายหลัง</translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing a single folder has failed. %1 is the folder name. SAT-426</translatorcomment>
-        <translation>ไม่สามารถลบโฟลเดอร์ %1 ออกได้ ลองอีกครั้งในภายหลัง </translation>
+        <translation>ไม่สามารถลบโฟลเดอร์ %1 ได้ ลองใหม่อีกครั้งภายหลัง</translation>
     </message>
     <message>
         <source>The folders couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple folders has failed. SAT-426</translatorcomment>
-        <translation>ไม่สามารถลบโฟลเดอร์ออกได้ ลองอีกครั้งในภายหลัง </translation>
+        <translation>ไม่สามารถลบโฟลเดอร์ได้ ลองใหม่อีกครั้งภายหลัง</translation>
     </message>
     <message>
         <source>The items couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation>ไม่สามารถลบรายการออกได้ ลองอีกครั้งในภายหลัง </translation>
+        <translation>ไม่สามารถลบรายการได้ ลองใหม่อีกครั้งภายหลัง</translation>
     </message>
 </context>
 <context>
@@ -5673,15 +5663,16 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We’ve enhanced the interface and behaviour of the transfer manager feature.
-- You can now create sync exclusions using wildcards.
-- There are new releases available now for the Raspberry Pi OS.
-- We’ve fixed crashes that were occurring due to missing or broken OpenGL drivers on Windows.
-- Qt has been upgraded to a newer version.
+        <source>- Numerous interface improvements.
+- Improved HiDpi handling in Windows.
+- Updates to third party libraries.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Change log for version 5.9.0. CON-1259</translatorcomment>
+        <translation>- ปรับปรุงส่วนติดต่อผู้ใช้ให้ดีขึ้น
+- ปรับปรุงการรองรับ HiDpi ใน Windows
+- อัปเดตไลบรารีของบริษัทภายนอก
+- แก้ไขข้อบกพร่องอื่น ๆ และปรับปรุงเพิ่มเติมอีกมากมาย</translation>
     </message>
 </context>
 <context>
@@ -6177,22 +6168,22 @@ Do you want to delete it anyway?</source>
     <message>
         <source>MEGA has reloaded</source>
         <translatorcomment>Title for the desktop notification when receiving a RELOADING EVENT from API. 2nd notification: reloading done. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA ได้โหลดข้อมูลใหม่แล้ว</translation>
     </message>
     <message>
         <source>MEGA is reloading</source>
         <translatorcomment>Title for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA กำลังโหลดข้อมูลใหม่</translation>
     </message>
     <message>
         <source>The app has detected an issue and is reloading your account. Please wait…</source>
         <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>แอปตรวจพบปัญหาและกำลังโหลดบัญชีของคุณใหม่ กรุณารอสักครู่…</translation>
     </message>
     <message>
         <source>The app has reloaded. If you experience any further issues, please contact Support.</source>
         <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 12nd notification: reloading completed. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>แอปได้โหลดข้อมูลใหม่เรียบร้อยแล้ว หากคุณพบปัญหาใด ๆ เพิ่มเติม กรุณาติดต่อฝ่ายสนับสนุน</translation>
     </message>
 </context>
 <context>
@@ -6787,7 +6778,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
         <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the current account.</translatorcomment>
-        <translation>คุณกำลังจะลบเวอร์ชันไฟล์ทั้งหมดอย่างถาวร คุณต้องการดำเนินการต่อหรือไม่</translation>
+        <translation>คุณกำลังจะลบไฟล์ทุกเวอร์ชันอย่างถาวร คุณต้องการดำเนินการต่อหรือไม่</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -7428,6 +7419,11 @@ Please, refresh the list.</source>
         <translation>ไม่พบไฟล์</translation>
     </message>
     <message>
+        <source>Folder links can&apos;t be streamed</source>
+        <translatorcomment>Message displayed when the user tries to stream a folder. SNC-5215.</translatorcomment>
+        <translation>ลิงก์โฟลเดอร์ไม่สามารถสตรีมได้</translation>
+    </message>
+    <message>
         <source>Nothing selected</source>
         <translatorcomment>Text shown when no files have been selected for streaming yet</translatorcomment>
         <translation>ยังไม่ได้เลือก</translation>
@@ -7496,6 +7492,11 @@ Please, refresh the list.</source>
         <translation>เลือก</translation>
     </message>
     <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button label to dismiss and hide the survey. CON-942</translatorcomment>
+        <translation>ละทิ้ง</translation>
+    </message>
+    <message>
         <source>Done</source>
         <translatorcomment>Label for Done buttons. SAT-1678.</translatorcomment>
         <translation>เสร็จแล้ว</translation>
@@ -7539,6 +7540,44 @@ Please, refresh the list.</source>
         <source>Try again</source>
         <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
         <translation>ลองอีกครั้ง</translation>
+    </message>
+</context>
+<context>
+    <name>SurveyStrings</name>
+    <message>
+        <source>Excellent</source>
+        <translatorcomment>Label to indicate the highest score of the survey. CON-942</translatorcomment>
+        <translation>พึงพอใจเป็นอย่างมาก</translation>
+    </message>
+    <message>
+        <source>OK, got it</source>
+        <translatorcomment>Label for the button of the final view after the end of the survey. CON-942</translatorcomment>
+        <translation>ปิด</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <translatorcomment>Label to indicate the lowest score of the survey. CON-942</translatorcomment>
+        <translation>ไม่พึงพอใจ</translation>
+    </message>
+    <message>
+        <source>Submit</source>
+        <translatorcomment>Label for the button to submit the answers to the survey. CON-942</translatorcomment>
+        <translation>ส่ง</translation>
+    </message>
+    <message>
+        <source>Tell us more</source>
+        <translatorcomment>Placeholder text to request comments to the user. CON-942</translatorcomment>
+        <translation>ระบุรายละเอียดเพิ่มเติมถึงเราที่นี่</translation>
+    </message>
+    <message>
+        <source>Thank you for your feedback</source>
+        <translatorcomment>Title text of the final view after sending the survey responses thanking the user for his/her participation. CON-942</translatorcomment>
+        <translation>ขอบคุณสำหรับคำติชมของคุณ</translation>
+    </message>
+    <message>
+        <source>You’re helping to improve MEGA for you and everyone who uses it</source>
+        <translatorcomment>Description text of the final view after sending the survey responses. CON-942</translatorcomment>
+        <translation>คุณมีส่วนช่วยในการพัฒนา MEGA ให้ดียิ่งขึ้นสำหรับตัวคุณเองและผู้ใช้งานทุกคน</translation>
     </message>
 </context>
 <context>
@@ -8143,6 +8182,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>TextArea</name>
+    <message numerus="yes">
+        <source>Maximum length is %n characters.</source>
+        <translatorcomment>Label to indicate the maximum number of characters in the text area. The %n placeholder indicates the number of characters, please keep it. CON-942</translatorcomment>
+        <translation><numerusform>ความยาวสูงสุดคือ %n ตัวอักษร</numerusform></translation>
+    </message>
+</context>
+<context>
     <name>TransferBaseDelegateWidget</name>
     <message>
         <source>(in queue)</source>
@@ -8396,7 +8443,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>All transfers paused.</source>
         <translatorcomment>Information text indicating that all transfers are paused. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>หยุดการโอนข้อมูลทั้งหมดชั่วคราวแล้ว</translation>
     </message>
     <message>
         <source>Transfer quota exceeded.</source>
@@ -8406,17 +8453,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>[B]Storage almost full[/B][BR][A]Upgrade now[/A] before your storage becomes full and your uploads, syncs and backups stop.</source>
         <translatorcomment>Warning text indicating that the storage quota is almost full. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]พื้นที่เก็บข้อมูลของคุณใกล้เต็มแล้ว[/B][BR][A]อัปเกรดตอนนี้[/A]ก่อนที่พื้นที่เก็บข้อมูลจะเต็มและการอัปโหลด ซิงค์ และสำรองข้อมูลของคุณจะหยุดทำงาน</translation>
     </message>
     <message>
         <source>[B]Storage full[/B][BR]Uploads are disabled and sync and backups are paused.</source>
         <translatorcomment>Error text indicating that the storage quota is full. Please, keep the [BR] placeholder for breaking the line and [B][/B] used for formatting the bold text. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]พื้นที่จัดเก็บเต็มแล้ว[/B][BR]การอัปโหลดไฟล์ใหม่ถูกระงับชั่วคราว และการซิงค์ข้อมูลพร้อมกับการสำรองข้อมูลก็หยุดทำงานไปด้วย</translation>
     </message>
     <message>
         <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
         <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]โควต้าการถ่ายโอนข้อมูลเกินกำหนด[/B][BR]ขณะนี้คุณไม่สามารถดาวน์โหลดต่อได้ เนื่องจากโควต้าการถ่ายโอนข้อมูลของที่อยู่ IP นี้เกินกำหนดแล้ว หากต้องการเพิ่มโควต้า กรุณาอัปเกรดบัญชีของคุณ หรือรอจนถึง %1 เพื่อให้โควต้าฟรีสำหรับที่อยู่ IP ของคุณกลับมาใช้งานได้อีกครั้ง [A]เรียนรู้เพิ่มเติม[/A]เกี่ยวกับโควต้าการถ่ายโอนข้อมูล</translation>
     </message>
 </context>
 <context>
@@ -8921,82 +8968,6 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
 </context>
 <context>
-    <name>UpgradeDialog</name>
-    <message>
-        <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
-        <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* ราคาประมาณในสกุลเงินท้องถิ่นของคุณ แต่คุณจะถูกเรียกเก็บเงินเป็นสกุลยูโรในทุกการทำธุรกรรม</translation>
-    </message>
-    <message>
-        <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
-        <translation>หากคุณเลือกการเรียกเก็บเงินรายปี คุณสามารถซื้อ 12 เดือนได้ในราคา 10 เดือน</translation>
-    </message>
-    <message>
-        <source>Depleted transfer quota</source>
-        <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
-        <translation>โควต้าการถ่ายโอนมีไม่เพียงพอ</translation>
-    </message>
-    <message>
-        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
-        <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>อัปเกรดบัญชีของคุณเพื่อใช้งานต่อได้ทันที หรือรอ %1 เพื่อใช้งานแบบฟรีต่อ</translation>
-    </message>
-    <message>
-        <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
-        <translation>ขีดจำกัดการถ่ายโอนเป็นแบบไดนามิกและขึ้นอยู่กับแบนด์วิธที่มีอยู่</translation>
-    </message>
-    <message>
-        <source>Transfer quota exceeded</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>เกินโควต้าการถ่ายโอนแล้ว</translation>
-    </message>
-    <message>
-        <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
-        <translatorcomment>Informative message to inform users that downloads could not continue because user has reached over transfer situation.</translatorcomment>
-        <translation>การดาวน์โหลดของคุณไม่สามารถดำเนินการได้ เนื่องจากเกินโควต้าการถ่ายโอนฟรีของคุณแล้ว</translation>
-    </message>
-</context>
-<context>
-    <name>UpgradeOverStorage</name>
-    <message>
-        <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
-        <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* ราคาประมาณในสกุลเงินท้องถิ่นของคุณ แต่คุณจะถูกเรียกเก็บเงินเป็นสกุลยูโรในทุกการทำธุรกรรม</translation>
-    </message>
-    <message>
-        <source>100% of the %1 available used on your account.</source>
-        <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation>บัญชีของคุณมีการใช้พื้นที่เก็บข้อมูลครบ 100% จาก %1 แล้ว</translation>
-    </message>
-    <message>
-        <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
-        <translation>หากคุณเลือกการเรียกเก็บเงินรายปี คุณสามารถซื้อ 12 เดือนได้ในราคา 10 เดือน</translation>
-    </message>
-    <message>
-        <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
-        <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>อัปเกรดบัญชีของคุณ เพื่อให้มีพื้นที่เก็บข้อมูลมากขึ้น (การอัปโหลดของคุณจะกลับมาทำงานต่อโดยอัตโนมัติ)</translation>
-    </message>
-    <message>
-        <source>Storage full</source>
-        <translatorcomment>Title of the over storage dialog</translatorcomment>
-        <translation>พื้นที่เก็บข้อมูลเต็มแล้ว</translation>
-    </message>
-    <message>
-        <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>
-        <translatorcomment>Informative message shown when user reaches over storage situation, encouraging to upgrade and get more extra storage space.</translatorcomment>
-        <translation>หากไม่ต้องการให้มีข้อจำกัดนี้ คุณสามารถอัปเกรดบัญชีของคุณ ซึ่งจะทำให้มีพื้นที่จัดเก็บเพิ่มมากขึ้น</translation>
-    </message>
-    <message>
-        <source>Your MEGA account is full</source>
-        <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>บัญชี MEGA ของคุณมีพื้นที่เต็มแล้ว</translation>
-    </message>
-</context>
-<context>
     <name>UploadIssueHeader</name>
     <message>
         <source>Cannot reach the destination folder.</source>
@@ -9053,6 +9024,109 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to upload a file/folder to MEGA.(MAX 20 characters)</translatorcomment>
         <translation>อัปโหลดไปยัง MEGA</translation>
+    </message>
+</context>
+<context>
+    <name>UpsellStrings</name>
+    <message>
+        <source>%1 billed yearly</source>
+        <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
+        <translation>%1 เก็บเงินทุกปี</translation>
+    </message>
+    <message>
+        <source>%1 per month</source>
+        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
+        <translation>%1 ทุกเดือน</translation>
+    </message>
+    <message>
+        <source>%1 storage</source>
+        <translatorcomment>Text to show the total amount of space available for the plan. The placeholder %1 shall be replaced by the amount of storage including the units (e.g. 1TB storage). CON-945</translatorcomment>
+        <translation>พื้นที่เก็บข้อมูล %1</translation>
+    </message>
+    <message>
+        <source>%1 transfer</source>
+        <translatorcomment>Text to show the transfer amount for the plan. The placeholder %1 shall be replaced by the amount of transfer including the units (e.g. 1TB transfer). CON-945</translatorcomment>
+        <translation>ถ่ายโอน %1</translation>
+    </message>
+    <message>
+        <source>(%1 per month)</source>
+        <translatorcomment>Price per month with yealy billing. The placeholder %1 shall be replaced by the monthly price (e.g. 49.9€ transfer). CON-945</translatorcomment>
+        <translation>(%1 ทุกเดือน)</translation>
+    </message>
+    <message>
+        <source>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</source>
+        <translatorcomment>Billing clarification message according to currency. CON-945</translatorcomment>
+        <translation>* ราคาประมาณการในเงินสกุลท้องถิ่นของคุณ บัญชีของคุณจะถูกเรียกเก็บเงินเป็นเงินยูโรสำหรับทุกการทำธุรกรรม</translation>
+    </message>
+    <message>
+        <source>Billed monthly</source>
+        <translatorcomment>Button to display plans with monthly subscription. CON-945</translatorcomment>
+        <translation>เก็บเงินทุกเดือน</translation>
+    </message>
+    <message>
+        <source>Billed yearly</source>
+        <translatorcomment>Button to display plans with yearly subscription. CON-945</translatorcomment>
+        <translation>เก็บเงินทุกปี</translation>
+    </message>
+    <message>
+        <source>Buy %1</source>
+        <translatorcomment>Button that redirects to the website to purchase the selected plan. The placeholder %1 shall be replaced by the name of the plan selected in the window. CON-945</translatorcomment>
+        <translation>ซื้อแผน %1</translation>
+    </message>
+    <message>
+        <source>Current plan</source>
+        <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
+        <translation>แพลนปัจจุบัน</translation>
+    </message>
+    <message>
+        <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
+        <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
+        <translation>ต้องการเพิ่มพื้นที่หรือไม่[BR][B][A]ลองใช้ Pro Flexi ดูสิ[/A][/B]</translation>
+    </message>
+    <message>
+        <source>Recommended</source>
+        <translatorcomment>Label to indicate which is the recommended plan. CON-945</translatorcomment>
+        <translation>แนะนำ</translation>
+    </message>
+    <message>
+        <source>Save up to %1% with yearly billing</source>
+        <translatorcomment>Label with information about the discount of the annual subscription compared to the monthly subscription for the plan selected in the window. The placeholder %1 shall be replaced by the discount percentage. CON-945</translatorcomment>
+        <translation>ถ้าเลือกเก็บเงินทุกปี จะประหยัดได้สูงสุดถึง %1%</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Title of the window showing that the transfer quota has been exceeded. CON-945</translatorcomment>
+        <translation>เกินโควต้าการถ่ายโอนแล้ว</translation>
+    </message>
+    <message>
+        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
+        <translation>พื้นที่เก็บข้อมูลของคุณใกล้เต็มแล้ว [BR][BR]หากต้องการพื้นที่เพิ่ม กรุณาอัปเกรดบัญชีของคุณหรือ[B][A]ลบไฟล์[/A][/B]บางส่วนเพื่อเพิ่มพื้นที่ว่าง</translation>
+    </message>
+    <message>
+        <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
+        <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
+        <translation>คุณไม่สามารถดาวน์โหลดต่อได้อีก เนื่องจากคุณใช้โควต้าการถ่ายโอนข้อมูลทั้งหมดของคุณแล้ว [BR][BR]หากต้องการโควต้าเพิ่ม กรุณาซื้อแผนบริการแบบชำระเงินเพิ่มเติม [BR][BR][B][A]เรียนรู้เพิ่มเติมเกี่ยวกับโควต้าการถ่ายโอนข้อมูล[/A][/B]</translation>
+    </message>
+    <message>
+        <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]Upgrade your account to get more transfer quota or you can wait for [B]%1[/B] until more free quota becomes available for you.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
+        <translatorcomment>Explanatory message informing free users they have reached their download limit, offering options to upgrade or wait. The placeholder %1 shall be replaced by the remaining time to reset the transfer quota (e.g. 13m 34s or 6h). The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945</translatorcomment>
+        <translation>คุณไม่สามารถดาวน์โหลดต่อได้อีก เนื่องจากคุณใช้โควต้าการถ่ายโอนทั้งหมดของคุณแล้ว[BR][BR]กรุณาอัปเกรดบัญชีของคุณเพื่อรับโควต้าการถ่ายโอนเพิ่มหรือคุณสามารถรออีก [B]%1[/B] จนกว่าโควต้าฟรีจะพร้อมใช้งานสำหรับคุณอีกครั้ง [BR][BR][B][A]เรียนรู้เพิ่มเติมเกี่ยวกับโควต้าการถ่ายโอน[/A][/B]</translation>
+    </message>
+    <message>
+        <source>Your MEGA cloud storage is almost full</source>
+        <translatorcomment>Title indicating that the storage is almost full. CON-945</translatorcomment>
+        <translation>พื้นที่เก็บข้อมูลบนคลาวด์ MEGA ของคุณใกล้เต็มแล้ว</translation>
+    </message>
+    <message>
+        <source>Your MEGA cloud storage is full</source>
+        <translatorcomment>Title indicating that the storage is full. CON-945</translatorcomment>
+        <translation>พื้นที่เก็บข้อมูลบนคลาวด์ MEGA ของคุณเต็มแล้ว</translation>
+    </message>
+    <message>
+        <source>per month</source>
+        <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
+        <translation>ทุกเดือน</translation>
     </message>
 </context>
 <context>

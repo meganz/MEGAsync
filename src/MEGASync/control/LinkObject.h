@@ -34,8 +34,6 @@ public:
     virtual bool isSelected() const;
     virtual void setImportNode(MegaNodeSPtr node);
     virtual MegaNodeSPtr getImportNode() const;
-    virtual void setDownloadPath(const QString& path);
-    virtual QString getDownloadPath() const;
     virtual bool showFolderIcon() const;
     virtual bool readyForProcessing() const;
     virtual void reset();
@@ -46,7 +44,6 @@ protected:
     MegaNodeSPtr mNode;
     MegaNodeSPtr mImportNode;
     QString mName;
-    QString mDownloadPath;
     bool mIsSelected;
     linkType mLinkType;
     linkStatus mLinkStatus;

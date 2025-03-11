@@ -154,11 +154,6 @@ QUrl DeviceCentre::getQmlUrl()
     return QUrl(QString::fromUtf8("qrc:/deviceCentre/DeviceCentreDialog.qml"));
 }
 
-QString DeviceCentre::contextName()
-{
-    return QString::fromUtf8("deviceCentreAccess");
-}
-
 void DeviceCentre::registerQmlModules()
 {
     if (!qmlRegistrationDone)
@@ -274,7 +269,9 @@ DeviceOs::Os DeviceCentre::getCurrentOS()
 void DeviceCentre::openAddSyncDialog()
 {
     const bool comesFromSettings = true;
-    CreateRemoveSyncsManager::addSync(mega::INVALID_HANDLE, comesFromSettings);
+    CreateRemoveSyncsManager::addSync(SyncInfo::MAIN_APP_ORIGIN,
+                                      mega::INVALID_HANDLE,
+                                      comesFromSettings);
 }
 
 DeviceModel* DeviceCentre::getDeviceModel() const

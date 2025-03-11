@@ -50,7 +50,7 @@ QHash<QString, QString> Utilities::languageNames;
 std::unique_ptr<ThreadPool> ThreadPoolSingleton::instance = nullptr;
 
 const QString Utilities::SUPPORT_URL = QString::fromUtf8("https://mega.nz/contact");
-const QString Utilities::BACKUP_CENTER_URL = QString::fromLatin1("mega://#fm/devices");
+const QString Utilities::BACKUP_CENTER_URL = QString::fromLatin1("mega://#fm/device-centre");
 const QString Utilities::SYNC_SUPPORT_URL =
     QString::fromLatin1("https://help.mega.io/installs-apps/desktop/how-does-syncing-work");
 const QString Utilities::DESKTOP_APP_URL = QString::fromLatin1("https://mega.io/desktop#download");
@@ -1080,36 +1080,6 @@ void Utilities::adjustToScreenFunc(QPoint position, QWidget *what)
     }
 }
 
-QString Utilities::minProPlanNeeded(std::shared_ptr<MegaPricing> pricing, long long usedStorage)
-{
-    if (!pricing)
-    {
-        return QString::fromUtf8("Pro");
-    }
-
-    int planNeeded = -1;
-    int amountPlanNeeded = 0;
-    int products = pricing->getNumProducts();
-    for (int i = 0; i < products; i++)
-    {
-        //Skip business & non monthly plans to offer
-        if (!pricing->isBusinessType(i) && pricing->getMonths(i) == 1)
-        {
-            if (usedStorage < (pricing->getGBStorage(i) * (long long)GB))
-            {
-                int currentAmountMonth = pricing->getAmountMonth(i);
-                if (planNeeded == -1 || currentAmountMonth < amountPlanNeeded)
-                {
-                    planNeeded = i;
-                    amountPlanNeeded = currentAmountMonth;
-                }
-            }
-        }
-    }
-
-    return getReadablePlanFromId(pricing->getProLevel(planNeeded));
-}
-
 QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
 {
     if (!list || !list->size())
@@ -1429,6 +1399,71 @@ QString Utilities::getNodePath(MegaTransfer* transfer)
     return QString::fromUtf8(transfer->getParentPath()) + QString::fromUtf8(transfer->getFileName());
 }
 
+// Start of case sensitivity detection logic
+Qt::CaseSensitivity Utilities::isCaseSensitive(const QString& folder)
+{
+    Qt::CaseSensitivity caseSensitivity(Qt::CaseInsensitive);
+
+    QDir tempPath(folder);
+
+    const QLatin1String CASE_SENSITIVE_FOLDER = QLatin1String(".case_sensitive");
+    // Creates the folder if it does not exist but it also returns true if it already exists
+    if (tempPath.mkpath(QLatin1String(CASE_SENSITIVE_FOLDER)))
+    {
+        tempPath.cd(QLatin1String(CASE_SENSITIVE_FOLDER));
+
+#ifdef Q_OS_WINDOWS
+        // macOS and Linux are automatically hidden as the name starts with a dot
+        auto pathString(tempPath.absolutePath().toStdString());
+        std::wstring stemp = std::wstring(pathString.begin(), pathString.end());
+        LPCWSTR path = stemp.c_str();
+        int attr = GetFileAttributes(path);
+        if ((attr & FILE_ATTRIBUTE_HIDDEN) == 0)
+        {
+            SetFileAttributes(path, FILE_ATTRIBUTE_HIDDEN);
+        }
+#endif
+        // Create lower case file
+        createFile(tempPath, QLatin1String("mega"));
+        createFile(tempPath, QLatin1String("MEGA"));
+
+        // Check if both files have been created
+        const int FILE_COUNT_FOR_CASE_SENSITIVE_CASE = 2;
+        caseSensitivity = getFileCount(tempPath) == FILE_COUNT_FOR_CASE_SENSITIVE_CASE ?
+                              Qt::CaseSensitive :
+                              Qt::CaseInsensitive;
+
+        tempPath.removeRecursively();
+    }
+
+    return caseSensitivity;
+}
+
+void Utilities::createFile(const QDir& path, const QString& filename)
+{
+    QFile file(path.absoluteFilePath(filename));
+    file.open(QFile::ReadWrite);
+    file.close();
+}
+
+uint8_t Utilities::getFileCount(QDir path)
+{
+    QDirIterator filesIt(path.absolutePath(),
+                         QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
+                         QDirIterator::NoIteratorFlags);
+    uint8_t counter(0);
+
+    while (filesIt.hasNext())
+    {
+        filesIt.next();
+        counter++;
+    }
+
+    return counter;
+}
+
+// End of case sensitivity detection logic
+/////////////////////////////////////////////////////
 bool Utilities::isBusinessAccount()
 {
     int accountType = Preferences::instance()->accountType();
@@ -1454,10 +1489,12 @@ void Utilities::openInMega(MegaHandle handle)
         std::unique_ptr<MegaNode> node (api->getNodeByHandle(handle));
         if (node)
         {
+            auto deviceID = QString::fromUtf8(api->getDeviceId());
             std::unique_ptr<char[]> h (node->getBase64Handle());
             if(h)
             {
-                openUrl(QUrl(QLatin1String("mega://#fm/") + QString::fromLatin1(h.get())));
+                openUrl(QUrl(QLatin1String("mega://#fm//device-centre/") + deviceID +
+                             QString::fromUtf8("/") + QString::fromLatin1(h.get())));
             }
         }
     }
@@ -1706,6 +1743,28 @@ bool Utilities::isNodeNameValid(const QString& name)
     return !trimmedName.isEmpty() && !trimmedName.contains(FORBIDDEN_CHARS_RX);
 }
 
+bool Utilities::shouldDisplayUpgradeButton(const bool isTransferOverquota)
+{
+    auto preferences = Preferences::instance();
+    const int storageState = preferences->getStorageState();
+    if (preferences->accountType() == Preferences::ACCOUNT_TYPE_FREE)
+    {
+        return true;
+    }
+    else if (storageState == MegaApi::STORAGE_STATE_PAYWALL ||
+             storageState == MegaApi::STORAGE_STATE_RED ||
+             storageState == MegaApi::STORAGE_STATE_ORANGE)
+    {
+        return true;
+    }
+    else if (isTransferOverquota)
+    {
+        return true;
+    }
+
+    return false;
+}
+
 QString Utilities::getFileHash(const QString& filePath)
 {
     QFile file(filePath);
@@ -1774,10 +1833,16 @@ void MegaListenerFuncExecuter::onRequestFinish(MegaApi *api, MegaRequest *reques
     }
 }
 
-WrappedNode::WrappedNode(TransferOrigin from, MegaNode *node, bool undelete)
-    : mTransfersFrom(from), mNode(node), mUndelete(undelete)
+WrappedNode::WrappedNode(TransferOrigin from, MegaNode* node, bool undelete):
+    WrappedNode(from, std::shared_ptr<MegaNode>(node), undelete)
+{}
+
+WrappedNode::WrappedNode(TransferOrigin from, std::shared_ptr<MegaNode> node, bool undelete):
+    mTransfersFrom(from),
+    mNode(node),
+    mUndelete(undelete)
 {
-    qRegisterMetaType<QQueue<WrappedNode*>>("QQueue<WrappedNode*>");
+    qRegisterMetaType<QQueue<WrappedNode>>("QQueue<WrappedNode>");
 }
 
 TimeInterval::TimeInterval(long long secs, bool secondPrecision)

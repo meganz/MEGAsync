@@ -84,17 +84,17 @@ MegaIgnoreNameRule::MegaIgnoreNameRule(const QString& rule, bool isCommented)
                 }
                 else
                 {
-                    if (detectValue(chr, &mTarget, Qt::CaseSensitive))
+                    if (detectValue(chr, &mTarget))
                     {
                         continue;
                     }
 
-                    if (detectValue(chr, &mType, Qt::CaseSensitive))
+                    if (detectValue(chr, &mType))
                     {
                         continue;
                     }
 
-                    if (detectValue(chr, &mStrategy, Qt::CaseInsensitive))
+                    if (detectValue(chr, &mStrategy))
                     {
                         continue;
                     }
@@ -260,6 +260,16 @@ void MegaIgnoreNameRule::fillWildCardType(const QString& rightSidePart)
     {
         mPattern = mPattern.remove(asterisk);
     }
+}
+
+MegaIgnoreNameRule::Strategy MegaIgnoreNameRule::getStrategy() const
+{
+    return mStrategy;
+}
+
+void MegaIgnoreNameRule::setStrategy(Strategy newStrategy)
+{
+    mStrategy = newStrategy;
 }
 
 ////////////////MEGA IGNORE EXTENSION RULE

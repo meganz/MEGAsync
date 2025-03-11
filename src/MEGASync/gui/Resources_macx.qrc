@@ -1186,6 +1186,24 @@
         <file>fonts/Inter-Regular.ttf</file>
         <file>fonts/Inter-SemiBold.ttf</file>
         <file>fonts/Inter-Thin.ttf</file>
+        <file>fonts/Poppins-Black.ttf</file>
+        <file>fonts/Poppins-BlackItalic.ttf</file>
+        <file>fonts/Poppins-Bold.ttf</file>
+        <file>fonts/Poppins-BoldItalic.ttf</file>
+        <file>fonts/Poppins-ExtraBold.ttf</file>
+        <file>fonts/Poppins-ExtraBoldItalic.ttf</file>
+        <file>fonts/Poppins-ExtraLight.ttf</file>
+        <file>fonts/Poppins-ExtraLightItalic.ttf</file>
+        <file>fonts/Poppins-Italic.ttf</file>
+        <file>fonts/Poppins-Light.ttf</file>
+        <file>fonts/Poppins-LightItalic.ttf</file>
+        <file>fonts/Poppins-Medium.ttf</file>
+        <file>fonts/Poppins-MediumItalic.ttf</file>
+        <file>fonts/Poppins-Regular.ttf</file>
+        <file>fonts/Poppins-SemiBold.ttf</file>
+        <file>fonts/Poppins-SemiBoldItalic.ttf</file>
+        <file>fonts/Poppins-Thin.ttf</file>
+        <file>fonts/Poppins-ThinItalic.ttf</file>
         <file>images/copy.png</file>
         <file>images/copy@2x.png</file>
         <file>images/copy@3x.png</file>
@@ -1227,7 +1245,6 @@
         <file>images/StalledIssues/x-circle-solid.png</file>
         <file>images/StalledIssues/x-circle-solid@2x.png</file>
         <file>images/StalledIssues/x-circle-solid@3x.png</file>
-        <file>images/star-spark.svg</file>
         <file>images/banner/warning.svg</file>
         <file>images/banner/error.svg</file>
         <file>images/banner/info.svg</file>
@@ -1237,5 +1254,6 @@
         <file>images/default-avatar.jpg</file>
         <file>images/default-avatar@2x.jpg</file>
         <file>images/default-avatar@3x.jpg</file>
+        <file>images/icon_plus.svg</file>
     </qresource>
 </RCC>

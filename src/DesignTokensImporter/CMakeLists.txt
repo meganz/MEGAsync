@@ -3,6 +3,15 @@
 # Binary to import design resources from the megadesignassets repository to be
 # used by the MEGASync desktop app.
 #
+cmake_minimum_required(VERSION 3.18)
+
+project(DesignTokensImporter
+    DESCRIPTION "Binary to import design resources from the megadesignassets repository to be used by the MEGASync desktop app."
+)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 set(CMAKE_AUTOMOC ON)
 
 include(FetchContent)
@@ -15,7 +24,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(megadesignassets)
 
 add_executable(DesignTokensImporter)
-set_target_properties(DesignTokensImporter PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/src/DesignTokensImporter)
+set_target_properties(DesignTokensImporter PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 
 find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Gui Xml)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui Xml)

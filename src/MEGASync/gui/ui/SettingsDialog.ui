@@ -2036,13 +2036,13 @@ margin-bottom: 3px;
          <property name="styleSheet">
           <string notr="true">#downloadIcon, #uploadIcon
 {
-border-with: 0px;
+border-width: 0px;
 border-style: none;
 }
 
 #eUploadFolder, #eDownloadFolder
 {
-border-with: 0px;
+border-width: 0px;
 border-style: none;
 }
 

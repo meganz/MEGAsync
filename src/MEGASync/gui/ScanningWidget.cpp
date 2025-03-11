@@ -7,6 +7,15 @@
 
 #include <QMovie>
 
+namespace
+{
+constexpr qreal RATIO_2X(2.0);
+constexpr qreal RATIO_3X(3.0);
+const QLatin1String SCANNING_FILE(":/animations/scanning.gif");
+const QLatin1String SCANNING_FILE_2X(":/animations/scanning@2x.gif");
+const QLatin1String SCANNING_FILE_3X(":/animations/scanning@3x.gif");
+}
+
 ScanningWidget::ScanningWidget(QWidget *parent) :
     QWidget(parent),
     mUi(new Ui::ScanningWidget)
@@ -14,11 +23,7 @@ ScanningWidget::ScanningWidget(QWidget *parent) :
     mUi->setupUi(this);
     mMovie = new QMovie(this);
     mMovie->setCacheMode(QMovie::CacheAll);
-
-    qreal ratio = Utilities::getDevicePixelRatio();
-    QString gifFile = (ratio < 2) ? QString::fromUtf8(":/animations/scanning.gif")
-                                  : QString::fromUtf8(":/animations/scanning@2x.gif");
-    mMovie->setFileName(gifFile);
+    mMovie->setFileName(getScanningFileName());
 
     setRole(mUi->lStepTitle, "title");
     setRole(mUi->lStepDescription, "details");
@@ -137,4 +142,23 @@ QString ScanningWidget::formattedNode(const QString &name)
     const QString quote = QString::fromLatin1("");
     const QChar ellipsis(0x2026);
     return quote + name + quote + ellipsis;
+}
+
+QString ScanningWidget::getScanningFileName() const
+{
+    QString gifFile;
+    qreal ratio(Utilities::getDevicePixelRatio());
+    if (ratio >= RATIO_2X && ratio < RATIO_3X)
+    {
+        gifFile = SCANNING_FILE_2X;
+    }
+    else if (ratio >= RATIO_3X)
+    {
+        gifFile = SCANNING_FILE_3X;
+    }
+    else
+    {
+        gifFile = SCANNING_FILE;
+    }
+    return gifFile;
 }
