@@ -19,7 +19,7 @@ bool EventHelper::eventFilter(QObject *obj, QEvent *e)
     {
         if(mData.func != nullptr)
         {
-            return mData.func();
+            return mData.func(e);
         }
         else if(mData.action == BLOCK)
         {
@@ -48,9 +48,12 @@ void EventManager::addEvent(QObject *obj, const QEvent::Type& eType, const Event
     addEvent(data);
 }
 
-void EventManager::addEvent(QObject *obj, const QEvent::Type& eType, const std::function<bool ()>& func)
+void EventManager::addEvent(QObject* obj,
+                            const QEvent::Type& eType,
+                            const std::function<bool(QEvent*)>& func)
 {
     EventHelper::Data data;
+    data.action = EventHelper::Action::BLOCK;
     data.func = func;
     data.eventType = eType;
     data.object = obj;

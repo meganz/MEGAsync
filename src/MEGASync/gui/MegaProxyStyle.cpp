@@ -6,6 +6,7 @@
 
 #include <QComboBox>
 #include <QHeaderView>
+#include <QMouseEvent>
 #include <QOperatingSystemVersion>
 #include <QSpinBox>
 #include <QStyleOption>
@@ -228,6 +229,21 @@ void MegaProxyStyle::polish(QWidget *widget)
     else if(auto comboBox = qobject_cast<QComboBox*>(widget))
     {
         EventManager::addEvent(comboBox, QEvent::Wheel, EventHelper::BLOCK);
+    }
+    else if (auto comboBox = qobject_cast<QMenu*>(widget))
+    {
+        // Left button is the only click allowed in context menus
+        EventManager::addEvent(comboBox,
+                               QEvent::MouseButtonRelease,
+                               [](QEvent* event)
+                               {
+                                   if (auto mouseEvent = dynamic_cast<QMouseEvent*>(event))
+                                   {
+                                       return mouseEvent->button() != Qt::MouseButton::LeftButton;
+                                   }
+
+                                   return false;
+                               });
     }
     else if(qobject_cast<QDialog*>(widget) || qobject_cast<QWindow*>(widget))
     {
