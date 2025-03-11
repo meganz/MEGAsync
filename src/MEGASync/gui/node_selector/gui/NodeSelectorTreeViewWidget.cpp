@@ -768,7 +768,7 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
         else
         {
             msgInfo.text =
-                tr("You are about to permanently delete %1 items. Would you like to proceed?",
+                tr("You are about to permanently delete %n items. Would you like to proceed?",
                    "",
                    handles.size());
         }
@@ -786,7 +786,7 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
         }
         else
         {
-            msgInfo.text = tr("Move %1 items to Rubbish bin?", "", handles.size());
+            msgInfo.text = tr("Move %n items to Rubbish bin?", "", handles.size());
         }
     }
 

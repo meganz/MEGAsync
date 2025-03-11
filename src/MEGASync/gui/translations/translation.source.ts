@@ -5100,14 +5100,6 @@ Enter a different name.</translation>
             <numerusform>You are about to permanently delete %n folders. Would you like to proceed?</numerusform>
         </translation>
     </message>
-    <message numerus="yes">
-        <source>You are about to permanently delete %1 items. Would you like to proceed?</source>
-        <translatorcomment>Main text of the confirmation messagebox to delete permanently some items (files and folders) from the rubbish bin. %n is the number of items to delete. CON-1258</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>You are about to permanently delete %1 item. Would you like to proceed?</numerusform>
-            <numerusform>You are about to permanently delete %1 items. Would you like to proceed?</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Delete</source>
         <translatorcomment>Button to accept the confirmation messagebox to delete permanently a file/folder in the rubbish bin. CON-1258</translatorcomment>
@@ -5134,22 +5126,30 @@ Enter a different name.</translation>
     <message>
         <source>Move %1 to Rubbish bin?</source>
         <translatorcomment>Main text of the confirmation messagebox to move a single item (file or folder) pto the rubbish bin. %1 is the name of the item to delete. CON-334</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>Move %1 items to Rubbish bin?</source>
-        <translatorcomment>Main text of the confirmation messagebox to move some items (files or folders) pto the rubbish bin. %1 is the number of items to delete. CON-334</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>Move %1 item to Rubbish bin?</numerusform>
-            <numerusform>Move %1 items to Rubbish bin?</numerusform>
-        </translation>
+        <translation>Move %1 to Rubbish bin?</translation>
     </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
         <translatorcomment>Body of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>If you leave the folder, you will not be able to see it again.</numerusform>
             <numerusform>If you leave these folders, you will not be able to see them again.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>You are about to permanently delete %n items. Would you like to proceed?</source>
+        <translatorcomment>Main text of the confirmation messagebox to delete permanently some items (files and folders) from the rubbish bin. %n is the number of items to delete. CON-1258</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>You are about to permanently delete %n item. Would you like to proceed?</numerusform>
+            <numerusform>You are about to permanently delete %n items. Would you like to proceed?</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Move %n items to Rubbish bin?</source>
+        <translatorcomment>Main text of the confirmation messagebox to move some items (files or folders) pto the rubbish bin. %n is the number of items to delete. CON-334</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>Move %n item to Rubbish bin?</numerusform>
+            <numerusform>Move %n items to Rubbish bin?</numerusform>
         </translation>
     </message>
 </context>
