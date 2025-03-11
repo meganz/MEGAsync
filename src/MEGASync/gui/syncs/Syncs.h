@@ -1,17 +1,15 @@
 #ifndef SYNCS_H
 #define SYNCS_H
 
-#include "SyncController.h"
-
-#include "megaapi.h"
 #include "mega/bindings/qt/QTMegaRequestListener.h"
+#include "megaapi.h"
+#include "SyncController.h"
 
 #include <QObject>
 
 #include <memory>
 #include <optional>
 
-class SyncController;
 class Syncs : public QObject, public mega::MegaRequestListener
 {
     Q_OBJECT
