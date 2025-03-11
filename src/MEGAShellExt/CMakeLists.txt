@@ -92,49 +92,30 @@ target_include_directories(MEGAShellExt
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/ModernShellContextMenu/gui
     ${CMAKE_CURRENT_SOURCE_DIR}/ModernShellContextMenu/utilities
+    ${CMAKE_CURRENT_SOURCE_DIR}/ModernShellContextMenu/msix
     ${CMAKE_CURRENT_SOURCE_DIR}/ClassicShellContextMenu
 )
 
 target_compile_features(MEGAShellExt PRIVATE cxx_std_17)
 
-if(MSVC)
-    # Create resources .pri
-    add_custom_command(
-        TARGET MEGAShellExt
-        POST_BUILD
-        COMMAND makepri createconfig "/o" "/cf" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/priconfig.xml" "/dq" "en-US"
-        COMMENT "Creating priconfig.xml"
-    )
+if(WIN32)
+    set(PackagingPath "${CMAKE_CURRENT_SOURCE_DIR}/packaging")
+    set(SparsePackageName "MEGAShellExt.msix")
+    set(MsixOutputPath "$<TARGET_FILE_DIR:MEGAShellExt>/${SparsePackageName}")
 
-    add_custom_command(
-        TARGET MEGAShellExt
-        POST_BUILD
-        COMMAND MakePri.exe new "/cf" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/priconfig.xml" "/pr" "${CMAKE_CURRENT_SOURCE_DIR}"
-        "/mn" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/AppAplication.xml" "/o" "/of" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/resources.pri"
-        COMMENT "Creating resources.pri"
-    )
+    # Generate Appxmanifest.xml
+    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+        set(DLL "ShellExtX64.dll")
+    elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
+        set(DLL "ShellExtX32.dll")
+    endif()
 
-    # Create sparse package
+    set(GenerateAppxManifestXmlScript "${CMAKE_CURRENT_SOURCE_DIR}/ModernShellContextMenu/msix/generateAppxManifest.cmake")
     add_custom_command(
         TARGET MEGAShellExt
         POST_BUILD
-        COMMAND makeappx pack "/nv" "/o" "/d" "${CMAKE_CURRENT_SOURCE_DIR}/packaging" "/p" "$<TARGET_FILE_DIR:MEGAShellExt>/MEGAShellExt.msix"
-        COMMENT "Creating sparse package for Win11 context menus"
-    )
-
-    # Sign sparse package
-    add_custom_command(
-        TARGET MEGAShellExt
-        POST_BUILD
-        COMMAND signtool sign "/n" "Mega Limited" "/td" SHA256 "/fd" SHA256 "$<TARGET_FILE_DIR:MEGAShellExt>/MEGAShellExt.msix"
-        COMMENT "Signing sparse package"
-    )
-
-    # Sign dll
-    add_custom_command(
-        TARGET MEGAShellExt
-        POST_BUILD
-        COMMAND signtool sign "/n" "Mega Limited"  "/td" SHA256 "/fd" SHA256 $<TARGET_FILE:MEGAShellExt>
-        COMMENT "Signing DLL"
+        COMMAND ${CMAKE_COMMAND} -DPackagingPath=${PackagingPath} -DDLL=${DLL} -DMsixOutputPath=${MsixOutputPath}
+        -P ${GenerateAppxManifestXmlScript}
+        COMMENT "Generating AppxManifest.xml"
     )
 endif()
