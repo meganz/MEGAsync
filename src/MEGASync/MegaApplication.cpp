@@ -4110,20 +4110,8 @@ void MegaApplication::runUploadActionWithTargetHandle(const MegaHandle &targetFo
                 std::unique_ptr<MegaNode> folder(getMegaApi()->getNodeByHandle(targetFolder));
                 if(folder)
                 {
-                    QMegaMessageBox::MessageBoxInfo msgInfo;
-                    msgInfo.title = QMegaMessageBox::warningTitle();
-                    msgInfo.text = QCoreApplication::translate("ShellExtension", "Are you sure you want to upload it to %1").arg(QString::fromUtf8(getMegaApi()->getNodePath(folder.get())));
-                    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-                    msgInfo.finishFunc =
-                        [this, files, targetFolder, parent](QPointer<QMessageBox> msgBox)
-                    {
-                        if (msgBox->result() == QMessageBox::Ok)
-                        {
-                            uploadQueue.append(createQueue(files));
-                            processUploadQueue(targetFolder, parent);
-                        }
-                    };
-                    QMegaMessageBox::information(msgInfo);
+                    uploadQueue.append(createQueue(files));
+                    processUploadQueue(targetFolder, parent);
                 }
                 else
                 {
