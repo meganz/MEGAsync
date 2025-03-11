@@ -58,7 +58,6 @@ void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin,
             syncsDialog->wrapper()->setComesFromSettings(comesFromSettings);
             syncsDialog->wrapper()->setSyncOrigin(origin);
             syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
-            syncsDialog->wrapper()->setOriginSync(origin);
             DialogOpener::showDialog(syncsDialog, [this]() {
                 deleteLater();
             });

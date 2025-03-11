@@ -8,7 +8,6 @@ class SyncsComponent : public QMLComponent
     Q_OBJECT
 
     Q_PROPERTY(bool comesFromSettings READ getComesFromSettings NOTIFY comesFromSettingsChanged)
-    Q_PROPERTY(int origin READ getOriginSync NOTIFY originSyncChanged)
     Q_PROPERTY(QString remoteFolder READ getRemoteFolder NOTIFY remoteFolderChanged)
 
 public:
@@ -27,9 +26,6 @@ public:
     void setComesFromSettings(bool value);
     bool getComesFromSettings() const;
 
-    void setOriginSync(int value);
-    int getOriginSync() const;
-
     void setRemoteFolder(const QString& remoteFolder);
     QString getRemoteFolder() const;
 
@@ -40,7 +36,6 @@ signals:
 
 private:
     bool mComesFromSettings;
-    int mOrigin;
     QString mRemoteFolder;
     SyncInfo::SyncOrigin mSyncOrigin;
 };
