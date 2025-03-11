@@ -5080,10 +5080,13 @@ Enter a different name.</translation>
             <numerusform>You are about to permanently delete %n folders. Would you like to proceed?</numerusform>
         </translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>You are about to permanently delete %1 items. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently some items (files and folders) from the rubbish bin. %n is the number of items to delete. CON-1258</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">
+            <numerusform>You are about to permanently delete %1 item. Would you like to proceed?</numerusform>
+            <numerusform>You are about to permanently delete %1 items. Would you like to proceed?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Delete</source>
@@ -5113,10 +5116,13 @@ Enter a different name.</translation>
         <translatorcomment>Main text of the confirmation messagebox to move a single item (file or folder) pto the rubbish bin. %1 is the name of the item to delete. CON-334</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>Move %1 items to Rubbish bin?</source>
         <translatorcomment>Main text of the confirmation messagebox to move some items (files or folders) pto the rubbish bin. %1 is the number of items to delete. CON-334</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">
+            <numerusform>Move %1 item to Rubbish bin?</numerusform>
+            <numerusform>Move %1 items to Rubbish bin?</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
@@ -7351,11 +7357,6 @@ Do you want to delete it anyway?</translation>
         <source>View previous versions</source>
         <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
         <translation>View previous versions</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to upload it to %1</source>
-        <translatorcomment>Third part of the messagebox text when the user is about to remove permanently a node. %1 is the name of the node to remove. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
