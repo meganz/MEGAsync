@@ -799,6 +799,29 @@
     </message>
 </context>
 <context>
+    <name>CloudDriveNodeSelector</name>
+    <message>
+        <source>Empty</source>
+        <translatorcomment>Messagebox accept button string to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>비우기</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Messagebox cancel button string to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>취소</translation>
+    </message>
+    <message>
+        <source>Empty Rubbish bin?</source>
+        <translatorcomment>Messagebox main string to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>휴지통을 비울까요?</translation>
+    </message>
+    <message>
+        <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
+        <translatorcomment>Messagebox secondary string to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>모든 항목이 영구적으로 삭제됩니다. 이 행동은 되돌릴 수 [B]없습니다[/B]</translation>
+    </message>
+</context>
+<context>
     <name>CloudFingerprintMissingHeader</name>
     <message>
         <source>Apply</source>
@@ -1942,6 +1965,19 @@
     </message>
 </context>
 <context>
+    <name>FirstSyncReminderAction</name>
+    <message>
+        <source>You’re almost done</source>
+        <translatorcomment>Title text in O.S. notification to remind that the user can create syncs after few hours (e.g. 2) from the first launch of the application if the user has never created a sync. CON-1207</translatorcomment>
+        <translation>거의 다 되었습니다</translation>
+    </message>
+    <message>
+        <source>Set up your first sync to get the most out of the desktop app</source>
+        <translatorcomment>Description text in O.S. notification to remind that the user can create syncs after few hours (e.g. 2) from the first launch of the application if the user has never created a sync. CON-1207</translatorcomment>
+        <translation>첫 동기화를 설정하고 데스크톱 앱을 최대한 활용하세요</translation>
+    </message>
+</context>
+<context>
     <name>FolderMatchedAgainstFileHeader</name>
     <message>
         <source>Cannot sync folders against files.</source>
@@ -2105,6 +2141,34 @@
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>당신은 이 로컬 폴더에 쓰기 권한을 가지고 있지 않습니다.</translation>
+    </message>
+</context>
+<context>
+    <name>IncomingShareAccess</name>
+    <message>
+        <source>Unknown</source>
+        <translatorcomment>The incoming shared folder access is unknown. CON-1266</translatorcomment>
+        <translation>알 수 없음</translation>
+    </message>
+    <message>
+        <source>Read-only</source>
+        <translatorcomment>The incoming shared folder access is read-only. CON-1266</translatorcomment>
+        <translation>읽기 전용</translation>
+    </message>
+    <message>
+        <source>Read and write</source>
+        <translatorcomment>The incoming shared folder access is read and write. CON-1266</translatorcomment>
+        <translation>읽기와 쓰기</translation>
+    </message>
+    <message>
+        <source>Full access</source>
+        <translatorcomment>The incoming shared folder has full access. CON-1266</translatorcomment>
+        <translation>전체 권한</translation>
+    </message>
+    <message>
+        <source>Owner</source>
+        <translatorcomment>The user is the owner of the folder. CON-1266</translatorcomment>
+        <translation>소유자</translation>
     </message>
 </context>
 <context>
@@ -3029,11 +3093,6 @@ Please wait for the upload to complete.</source>
         <translation>업데이트 확인중…</translation>
     </message>
     <message>
-        <source>Cloud drive</source>
-        <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
-        <translation>클라우드 드라이브</translation>
-    </message>
-    <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
         <translation>앱 트레이 아이콘을 배치할 시스템 트레이를 찾지 못 했습니다. 앱을 다시 실행해보세요.</translation>
@@ -3436,6 +3495,16 @@ https://mega.co.nz/#sync</source>
         <translatorcomment>Label to indicate a contact of a user.</translatorcomment>
         <translation>연락처</translation>
     </message>
+    <message>
+        <source>MEGA web</source>
+        <translatorcomment>InfoDialog menu action to open the webclient. CON-1245</translatorcomment>
+        <translation>MEGA 웹</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translatorcomment>InfoDialog menu action to open the Cloud Drive dialog</translatorcomment>
+        <translation>파일</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -3732,6 +3801,11 @@ https://mega.co.nz/#sync</source>
         <source>Incoming shares</source>
         <translatorcomment>Title of the Incoming shares root node</translatorcomment>
         <translation>들어오는 공유</translation>
+    </message>
+    <message>
+        <source>Rubbish bin</source>
+        <translatorcomment>Title of the Rubbish section. SAT-426</translatorcomment>
+        <translation>휴지통</translation>
     </message>
 </context>
 <context>
@@ -4229,6 +4303,19 @@ All your completed transfers will be cleared.</source>
     </message>
 </context>
 <context>
+    <name>MultiSyncReminderAction</name>
+    <message>
+        <source>Sync your data</source>
+        <translatorcomment>Title text in O.S. notification to remind that the user can create syncs after days or months (e.g. 10 days, 1 month) if the user has never created a sync. CON-1207</translatorcomment>
+        <translation>데이터 동기화</translation>
+    </message>
+    <message>
+        <source>Access your data from anywhere, collaborate with ease, and instantly get the most up-to-date version of your files</source>
+        <translatorcomment>Description text in O.S. notification to remind that the user can create syncs after days or months (e.g. 10 days, 1 month) if the user has never created a sync. CON-1207</translatorcomment>
+        <translation>어디서든 데이터에 접근하고, 쉽게 협업하고, 파일의 최신 버전을 즉시 받으세요</translation>
+    </message>
+</context>
+<context>
     <name>NameConflict</name>
     <message>
         <source>%1 no longer exists.
@@ -4499,31 +4586,6 @@ Enter a different name</source>
 <context>
     <name>NodeSelectorModel</name>
     <message>
-        <source>Error removing file</source>
-        <translatorcomment>Messagebox title when removing a single file has failed. SAT-426</translatorcomment>
-        <translation>파일을 삭제하던 중 오류</translation>
-    </message>
-    <message>
-        <source>Error removing files</source>
-        <translatorcomment>Messagebox title when removing multiple files has failed. SAT-426</translatorcomment>
-        <translation>파일을 삭제하던 중 오류</translation>
-    </message>
-    <message>
-        <source>Error removing folder</source>
-        <translatorcomment>Messagebox title when removing a single folder has failed. SAT-426</translatorcomment>
-        <translation>폴더를 삭제하던 중 오류</translation>
-    </message>
-    <message>
-        <source>Error removing folders</source>
-        <translatorcomment>Messagebox title when removing multiple folders has failed. SAT-426</translatorcomment>
-        <translation>폴더를 삭제하던 중 오류</translation>
-    </message>
-    <message>
-        <source>Error removing items</source>
-        <translatorcomment>Messagebox title when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation>항목을 삭제하던 중 오류</translation>
-    </message>
-    <message>
         <source>Folder already synced</source>
         <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
         <translation>폴더가 이미 동기화 됨</translation>
@@ -4554,6 +4616,56 @@ Enter a different name</source>
         <translation>이름으로 정렬</translation>
     </message>
     <message>
+        <source>Error moving items</source>
+        <translatorcomment>Main text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>항목 이동 중 오류</translation>
+    </message>
+    <message>
+        <source>The items couldn’t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>항목을 이동할 수 없었습니다. 나중에 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>Error moving files</source>
+        <translatorcomment>Main text of a messagebox when moving some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>파일 이동 중 오류</translation>
+    </message>
+    <message>
+        <source>The files couldn’t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>파일을 이동할 수 없었습니다. 나중에 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>Error moving folders</source>
+        <translatorcomment>Main text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>폴더 이동 중 오류</translation>
+    </message>
+    <message>
+        <source>The folders couldn’t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>폴더를 이동할 수 없었습니다. 나중에 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>Error moving file</source>
+        <translatorcomment>Main text of a messagebox when moving a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>파일 이동 중 오류</translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
+        <translation>%1 파일을 이동할 수 없었습니다. 나중에 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>Error moving folder</source>
+        <translatorcomment>Main text of a messagebox when moving a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>폴더 이동 중 오류</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
+        <translation>%1 폴더를 이동할 수 없었습니다. 나중에 다시 시도하세요.</translation>
+    </message>
+    <message>
         <source>Sort by owner name</source>
         <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
         <translation>소유자 이름으로 정렬</translation>
@@ -4564,47 +4676,222 @@ Enter a different name</source>
         <translation>상태로 정렬</translation>
     </message>
     <message>
-        <source>The file %1 couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing a single file has failed. %1 is the file name. SAT-426</translatorcomment>
-        <translation>%1 파일을 삭제할 수 없습니다. 나중에 다시 시도하세요.</translation>
+        <source>Access</source>
+        <translatorcomment>Column title. This column shows the incoming shared folder access rights.CON-1266</translatorcomment>
+        <translation>접근</translation>
     </message>
     <message>
-        <source>The files couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing multiple files has failed. SAT-426</translatorcomment>
+        <source>Sort by access</source>
+        <translatorcomment>Access column tooltip. Sorts the order of the column by incoming shared folder access.CON-1266</translatorcomment>
+        <translation>접근 권한으로 정렬</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Cancel button string for failed action in Cloud Drive dialog.SAT-426</translatorcomment>
+        <translation>닫기</translation>
+    </message>
+    <message>
+        <source>Error copying items</source>
+        <translatorcomment>Main text of a messagebox when copying some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>항목 복사 중 오류</translation>
+    </message>
+    <message>
+        <source>The items couldn’t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>항목을 복사할 수 없었습니다. 나중에 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>Error copying files</source>
+        <translatorcomment>Main text of a messagebox when copying some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>파일 복사 중 오류</translation>
+    </message>
+    <message>
+        <source>The files couldn’t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>파일을 복사할 수 없었습니다. 나중에 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>Error copying folders</source>
+        <translatorcomment>Main text of a messagebox when copying some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>폴더 복사 중 오류</translation>
+    </message>
+    <message>
+        <source>The folders couldn’t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>폴더를 복사할 수 없었습니다. 나중에 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>Error copying file</source>
+        <translatorcomment>Main text of a messagebox when copying a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>파일 복사 중 오류</translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
+        <translation>%1 파일을 복사할 수 없었습니다. 나중에 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>Error copying folder</source>
+        <translatorcomment>Main text of a messagebox when copying a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>폴더 복사 중 오류</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
+        <translation>%1 폴더를 복사할 수 없었습니다. 나중에 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>Error restoring items</source>
+        <translatorcomment>Main text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>항목 복원 중 오류</translation>
+    </message>
+    <message>
+        <source>The items couldn’t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>항목을 복원할 수 없었습니다. 나중에 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>Error restoring files</source>
+        <translatorcomment>Main text of a messagebox when restoring some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>파일 복원 중 오류</translation>
+    </message>
+    <message>
+        <source>The files couldn’t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>파일을 복원할 수 없었습니다. 나중에 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>Error restoring folders</source>
+        <translatorcomment>Main text of a messagebox when restoring some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>폴더 복원 중 오류</translation>
+    </message>
+    <message>
+        <source>The folders couldn’t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>폴더를 복원할 수 없었습니다. 나중에 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>Error restoring file</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>파일 복원 중 오류</translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
+        <translation>%1 파일을 복원할 수 없었습니다. 나중에 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>Error restoring folder</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>폴더 복원 중 오류</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
+        <translation>%1 폴더를 복원할 수 없었습니다. 나중에 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>Error deleting items</source>
+        <translatorcomment>Main text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>항목을 삭제하던 중 오류</translation>
+    </message>
+    <message>
+        <source>The items couldn’t be deleted. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>항목을 삭제할 수 없습니다. 나중에 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>Error deleting files</source>
+        <translatorcomment>Main text of a messagebox when deleting some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>파일을 삭제하던 중 오류</translation>
+    </message>
+    <message>
+        <source>The files couldn’t be deleted. Try again later</source>
+        <translatorcomment>Main text of a messagebox when deleting some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>파일을 삭제할 수 없습니다. 나중에 다시 시도하세요.</translation>
     </message>
     <message>
-        <source>The folder %1 couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing a single folder has failed. %1 is the folder name. SAT-426</translatorcomment>
-        <translation>%1 폴더를 삭제할 수 없습니다. 나중에 다시 시도하세요.</translation>
+        <source>Error deleting folders</source>
+        <translatorcomment>Main text of a messagebox when deleting some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>폴더를 삭제하던 중 오류</translation>
     </message>
     <message>
-        <source>The folders couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing multiple folders has failed. SAT-426</translatorcomment>
+        <source>The folders couldn’t be deleted. Try again later</source>
+        <translatorcomment>Main text of a messagebox when deleting some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>폴더를 삭제할 수 없습니다. 나중에 다시 시도하세요.</translation>
     </message>
     <message>
-        <source>The items couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation>항목을 삭제할 수 없습니다. 나중에 다시 시도하세요.</translation>
+        <source>Error deleting file</source>
+        <translatorcomment>Secondary text of a messagebox when deleting a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>파일을 삭제하던 중 오류</translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be deleted. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
+        <translation>%1 파일을 삭제할 수 없습니다. 나중에 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>Error deleting folder</source>
+        <translatorcomment>Secondary text of a messagebox when deleting a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>폴더를 삭제하던 중 오류</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be deleted. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
+        <translation>%1 폴더를 삭제할 수 없습니다. 나중에 다시 시도하세요.</translation>
     </message>
 </context>
 <context>
     <name>NodeSelectorTreeView</name>
     <message>
-        <source>Delete</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
-        <translation>삭제</translation>
-    </message>
-    <message>
-        <source>Get MEGA link</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
-        <translation>MEGA 링크 가져오기</translation>
-    </message>
-    <message>
         <source>Rename</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It renames the node (file or folder).</translatorcomment>
         <translation>이름 바꾸기</translation>
+    </message>
+    <message>
+        <source>Restore</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It restores the node (file or folder) from the rubbish bin. SAT-426</translatorcomment>
+        <translation>복구</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It creates a sync in the selected folder. SAT-426</translatorcomment>
+        <translation>동기화</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It paste the copied nodes (files and folders). SAT-426</translatorcomment>
+        <translation>붙여넣기</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It copy the selected nodes (files or folders), waiting for the paste action. SAT-426</translatorcomment>
+        <translation>복사</translation>
+    </message>
+    <message>
+        <source>Share link</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It copies the selected items MEGA link to the clipboard. SAT-426</translatorcomment>
+        <translation>링크 공유</translation>
+    </message>
+    <message>
+        <source>Stop syncing</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It deletes the sync on the selected folder. SAT-426</translatorcomment>
+        <translation>동기화 중단</translation>
+    </message>
+    <message>
+        <source>Permanently delete</source>
+        <translatorcomment>Contextual menu text that appears when we right click on an item on the rubbish page on node selector. It deletes the item and it can be undone. SAT-426</translatorcomment>
+        <translation>영구적으로 삭제</translation>
+    </message>
+    <message>
+        <source>Leave folder</source>
+        <translatorcomment>Contextual menu text that appears when we right click on inshare folder on the incoming shared page on node selector. It leaves an inshared folder. CON-1255</translatorcomment>
+        <translation>폴더 나가기</translation>
+    </message>
+    <message>
+        <source>Move to Rubbish bin</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
+        <translation>휴지통으로 이동</translation>
     </message>
 </context>
 <context>
@@ -4635,29 +4922,19 @@ Enter a different name</source>
         <translation>클라우드 드라이브</translation>
     </message>
     <message>
-        <source>Don’t move</source>
-        <translatorcomment>Messagebox button to cancel moving nodes to the rubbish bin. CON-334</translatorcomment>
-        <translation>이동하지 않기</translation>
-    </message>
-    <message>
         <source>Incoming Shares</source>
         <translatorcomment>Button to filter search results from incoming shares</translatorcomment>
         <translation>들어오는 공유</translation>
     </message>
     <message>
-        <source>Move</source>
-        <translatorcomment>Messagebox button to move nodes to the rubbish bin. CON-334</translatorcomment>
-        <translation>이동</translation>
-    </message>
-    <message numerus="yes">
-        <source>Move %n item to Rubbish bin?</source>
-        <translatorcomment>Title of the messagebox when moving a multiple nodes to the rubbish bin. %n is the number of nodes CON-334</translatorcomment>
-        <translation><numerusform>항목 %n개를 휴지통으로 옮길까요?</numerusform></translation>
+        <source>Empty Rubbish bin</source>
+        <translatorcomment>Button text to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>휴지통 비우기</translation>
     </message>
     <message>
-        <source>Move “%1” to Rubbish bin?</source>
-        <translatorcomment>Title of the messagebox when moving a single node to the rubbish bin. %1 is the file/folder name. CON-334</translatorcomment>
-        <translation>“%1”을/를 휴지통으로 옮길까요?</translation>
+        <source>You cannot undo this action</source>
+        <translatorcomment>Second part of the messagebox text when the user is about to remove permanently a node. SAT-426</translatorcomment>
+        <translation>이 행동을 되돌릴 수 없습니다</translation>
     </message>
     <message>
         <source>New folder</source>
@@ -4673,6 +4950,71 @@ Enter a different name</source>
         <source>Ok</source>
         <translatorcomment>Button text to accept and close the dialog</translatorcomment>
         <translation>OK</translation>
+    </message>
+    <message>
+        <source>Leave</source>
+        <translatorcomment>Button text to accept the confirm messagebox when leaving a inshared folder</translatorcomment>
+        <translation>떠나기</translation>
+    </message>
+    <message>
+        <source>Don’t leave</source>
+        <translatorcomment>Button text to cancel the confirm messagebox when leaving a inshared folder</translatorcomment>
+        <translation>떠나지 않기</translation>
+    </message>
+    <message>
+        <source>Rubbish bin</source>
+        <translatorcomment>Button to filter search results from rubbish bin</translatorcomment>
+        <translation>휴지통</translation>
+    </message>
+    <message numerus="yes">
+        <source>You are about to permanently delete %n file. Would you like to proceed?</source>
+        <translatorcomment>Main text of the confirmation messagebox to delete permanently a file(s) from the rubbish bin. %n is the number of files to delete. CON-1258</translatorcomment>
+        <translation><numerusform>영구적으로 파일 %n개를 삭제하려고 합니다. 진행하시겠습니까?</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>You are about to permanently delete %n folder. Would you like to proceed?</source>
+        <translatorcomment>Main text of the confirmation messagebox to delete permanently a folder(s) from the rubbish bin. %n is the number of folders to delete. CON-1258</translatorcomment>
+        <translation><numerusform>영구적으로 폴더 %n개를 삭제하려고 합니다. 진행하시겠습니까?</numerusform></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Button to accept the confirmation messagebox to delete permanently a file/folder in the rubbish bin. CON-1258</translatorcomment>
+        <translation>삭제</translation>
+    </message>
+    <message numerus="yes">
+        <source>Leave this shared folder?</source>
+        <translatorcomment>Title of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
+        <translation><numerusform>이 공유된 폴더를 나갈까요?</numerusform></translation>
+    </message>
+    <message>
+        <source>Move</source>
+        <translatorcomment>Button to accept the confirmation messagebox to move an item (or more) to the rubbish bin. CON-334</translatorcomment>
+        <translation>이동</translation>
+    </message>
+    <message>
+        <source>Don’t move</source>
+        <translatorcomment>Button to cancel the confirmation messagebox to move an item (or more) to the rubbish bin. CON-334</translatorcomment>
+        <translation>이동하지 않기</translation>
+    </message>
+    <message>
+        <source>Move %1 to Rubbish bin?</source>
+        <translatorcomment>Main text of the confirmation messagebox to move a single item (file or folder) pto the rubbish bin. %1 is the name of the item to delete. CON-334</translatorcomment>
+        <translation>%1를/을 휴지통으로 옮길까요?</translation>
+    </message>
+    <message numerus="yes">
+        <source>If you leave the folder, you will not be able to see it again.</source>
+        <translatorcomment>Body of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
+        <translation><numerusform>이 폴더들을 떠나면, 다시는 볼 수 없습니다.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>You are about to permanently delete %n items. Would you like to proceed?</source>
+        <translatorcomment>Main text of the confirmation messagebox to delete permanently some items (files and folders) from the rubbish bin. %n is the number of items to delete. CON-1258</translatorcomment>
+        <translation><numerusform>영구적으로 항목 %n개를 삭제하려고 합니다. 진행하시겠습니까?</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Move %n items to Rubbish bin?</source>
+        <translatorcomment>Main text of the confirmation messagebox to move some items (files or folders) pto the rubbish bin. %n is the number of items to delete. CON-334</translatorcomment>
+        <translation><numerusform>항목 %n개를 휴지통으로 옮길까요?</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4807,11 +5149,6 @@ Enter a different name</source>
         <translation>가입 완료</translation>
     </message>
     <message>
-        <source>Add device name</source>
-        <translatorcomment>Device name text input box title CON-467</translatorcomment>
-        <translation>장치 이름 추가</translation>
-    </message>
-    <message>
         <source>Add folder</source>
         <translatorcomment>Button text to add a new folder to the backups table CON-468</translatorcomment>
         <translation>폴더 추가</translation>
@@ -4882,11 +5219,6 @@ Enter a different name</source>
         <translation>이메일 주소 변경</translation>
     </message>
     <message>
-        <source>Choose sync type</source>
-        <translatorcomment>Text indicating the user to choose between different available sync types CON-467</translatorcomment>
-        <translation>동기화 유형 선택</translation>
-    </message>
-    <message>
         <source>Choose:</source>
         <translatorcomment>Label that indicates the user to choose between different options CON-467</translatorcomment>
         <translation>선택:</translation>
@@ -4935,11 +5267,6 @@ Enter a different name</source>
         <source>Creating account…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-466</translatorcomment>
         <translation>계정 생성 중…</translation>
-    </message>
-    <message>
-        <source>Data from your device will automatically and consistently back up to MEGA in real-time.</source>
-        <translatorcomment>Button description, on click it goes to the backups section CON-468</translatorcomment>
-        <translation>당신의 장치의 데이터가 자동으로 지속적으로 MEGA에 실시간으로 백업됩니다.</translation>
     </message>
     <message>
         <source>Device name</source>
@@ -5015,11 +5342,6 @@ Enter a different name</source>
         <source>Forgot password?</source>
         <translatorcomment>Button text that user have to click in case he forgot the password. Button has no borders and it looks like a label CON-465</translatorcomment>
         <translation>암호를 잊었나요?</translation>
-    </message>
-    <message>
-        <source>Full sync</source>
-        <translatorcomment>Full sync button title CON-467</translatorcomment>
-        <translation>전체 동기화</translation>
     </message>
     <message>
         <source>I agree with MEGA&apos;s [B][A]Terms of service[/A][/B]</source>
@@ -5207,16 +5529,6 @@ Enter a different name</source>
         <translation>동기화 설정</translation>
     </message>
     <message>
-        <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
-        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>장치를 MEGA와 동기화하고, 모든 로컬의 변경사항은 자동으로 즉시 MEGA에 적응되며 반대로도 마찬가지입니다.</translation>
-    </message>
-    <message>
-        <source>Sync your entire MEGA Cloud drive with your local device.</source>
-        <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation>양방향 동기화는 MEGA 클라우드 전체를 로컬 장치와 동기화합니다. 폴더는 로컬에서 또는 MEGA에서 수정할 수 있는 상태로 최신 상태를 유지합니다.</translation>
-    </message>
-    <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to choose sync type button description CON-467</translatorcomment>
         <translation>컴퓨터들과 MEGA 사이의 파일을 동기화합니다; 한쪽에서 바뀐 내용이 다른 쪽에 적용됩니다.</translation>
@@ -5300,6 +5612,16 @@ Enter a different name</source>
         <source>[B]Select all[/B]</source>
         <translatorcomment>Backups table checkbox text to select all lines in the table CON-466</translatorcomment>
         <translation>[B]모두 선택[/B]</translation>
+    </message>
+    <message>
+        <source>Data from your device will automatically and consistently back up to MEGA in real-time. Files deleted from your computer will be deleted from MEGA.</source>
+        <translatorcomment>Button description, on click it goes to the backups section CON-1268</translatorcomment>
+        <translation>당신의 장치의 데이터가 자동으로 지속적으로 MEGA에 실시간으로 백업됩니다. 컴퓨터에서 삭제된 파일은 MEGA에서도 삭제됩니다.</translation>
+    </message>
+    <message>
+        <source>Access the latest version of your files from anywhere. Changes made to synced files will automatically update in both directions.</source>
+        <translatorcomment>Selective sync button text description CON-1268</translatorcomment>
+        <translation>어디서든 파일의 최신 버전에 접근하세요. 동기화된 파일의 변경점은 양쪽 모두 자동으로 업데이트 됩니다.</translation>
     </message>
 </context>
 <context>
@@ -7031,11 +7353,6 @@ Do you want to delete it anyway?</source>
         <translation>이 폴더의 메타데이터를 가져올 수 없습니다. 권한을 확인하고 다시 스캔하세요.</translation>
     </message>
     <message>
-        <source>Error identifying folder content in filesystem.</source>
-        <translatorcomment>Label descriping a sync stall is happening because the folder cannot be parsed for unnkown reason.SNC-2565</translatorcomment>
-        <translation>이 폴더의 내용물을 읽을 수 없습니다. 폴더 권한을 확인하고 어떠한 항목도 다른 애플리케이션에 의해 사용 중이지 않은지 확인하세요.</translation>
-    </message>
-    <message>
         <source>Error not detected</source>
         <translatorcomment>Label descripiwith default error of sync stall .SNC-2565</translatorcomment>
         <translation>알 수 없는 오류</translation>
@@ -8185,6 +8502,21 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Add sync</source>
         <translatorcomment>Page title to add syncs. CON-833</translatorcomment>
         <translation>동기화 추가</translation>
+    </message>
+    <message>
+        <source>Select folders to sync</source>
+        <translatorcomment>Page title to add syncs. CON-1268</translatorcomment>
+        <translation>동기화할 폴더 선택</translation>
+    </message>
+    <message>
+        <source>Changes made to synced folders in MEGA or on your device will automatically update in both directions.</source>
+        <translatorcomment>Page description to add syncs. CON-1268</translatorcomment>
+        <translation>MEGA 또는 장치의 동기화된 폴더의 변경점은 양쪽 모두 자동으로 업데이트 됩니다.</translation>
+    </message>
+    <message>
+        <source>Select folders</source>
+        <translatorcomment>Left pane current state literal. CON-1268</translatorcomment>
+        <translation>폴더 선택</translation>
     </message>
 </context>
 <context>
@@ -9363,14 +9695,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
         <translation>악의적인 로그인이 감지된 후 당신의 계정이 잠겼고, 암호를 재설정할 것을 요구합니다. 
 계정 잠금을 해제하는 방법과 다시 이런 일이 일어나지 않도록 하는 팁을 이메일 수신함에서 확인하세요.</translation>
-    </message>
-</context>
-<context>
-    <name>ViewLoadingSceneUI</name>
-    <message>
-        <source>Stop</source>
-        <translatorcomment>button in auto solve view of stalled issues to stop the auto solve process.SNC-2565</translatorcomment>
-        <translation>정지</translation>
     </message>
 </context>
 <context>
