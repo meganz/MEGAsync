@@ -17,8 +17,8 @@ class Syncs : public QObject, public mega::MegaRequestListener
     Q_PROPERTY(QString defaultMegaFolder READ getDefaultMegaFolder CONSTANT FINAL)
     Q_PROPERTY(QString defaultMegaPath READ getDefaultMegaPath CONSTANT FINAL)
     Q_PROPERTY(SyncStatusCode syncStatus READ getSyncStatus WRITE setSyncStatus NOTIFY syncStatusChanged)
-    Q_PROPERTY(QString localError READ getLocalError WRITE setLocalError NOTIFY localErrorChanged)
-    Q_PROPERTY(QString remoteError READ getRemoteError WRITE setRemoteError NOTIFY remoteErrorChanged)
+    Q_PROPERTY(QString localError READ getLocalError NOTIFY localErrorChanged)
+    Q_PROPERTY(QString remoteError READ getRemoteError NOTIFY remoteErrorChanged)
 
 public:
     enum SyncStatusCode
@@ -29,8 +29,9 @@ public:
     };
     Q_ENUM(SyncStatusCode)
 
-    static const QString DEFAULT_MEGA_FOLDER;
-    static const QString DEFAULT_MEGA_PATH;
+    static inline const QString DEFAULT_MEGA_FOLDER = QString::fromUtf8("MEGA");
+    static inline const QString DEFAULT_MEGA_PATH =
+        QString::fromUtf8("/") + Syncs::DEFAULT_MEGA_FOLDER;
 
     Syncs(QObject* parent = nullptr);
     virtual ~Syncs() = default;
@@ -50,9 +51,7 @@ public:
     void setSyncStatus(SyncStatusCode status);
 
     QString getLocalError() const;
-    void setLocalError(QString){}
     QString getRemoteError() const;
-    void setRemoteError(QString){}
 
 signals:
     void syncSetupSuccess();
@@ -87,10 +86,12 @@ private:
     mega::MegaApi* mMegaApi;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::unique_ptr<SyncController> mSyncController;
-    MegaRemoteCodeError mRemoteMegaError;
+
     bool mCreatingFolder;
     SyncStatusCode mSyncStatus;
-    QString mRemoteFolder;
+
+    // vars with de command error return data.
+    MegaRemoteCodeError mRemoteMegaError;
     std::optional<LocalErrors> mLocalError;
     std::optional<RemoteErrors> mRemoteError;
     QString mRemoteStringMessage;
@@ -99,8 +100,6 @@ private:
     void helperCheckLocalSync(const QString& path);
     void helperCheckRemoteSync(const QString& path);
     void cleanErrors();
-
-    QString getLocalError(const QString& path) const;
 
 private slots:
     void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name);
