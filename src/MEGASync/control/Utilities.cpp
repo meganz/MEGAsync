@@ -1501,7 +1501,7 @@ void Utilities::openInMega(MegaHandle handle)
             std::unique_ptr<char[]> h (node->getBase64Handle());
             if(h)
             {
-                openUrl(QUrl(QLatin1String("mega://#fm//device-centre/") + deviceID +
+                openUrl(QUrl(QLatin1String("mega://#fm/device-centre/") + deviceID +
                              QString::fromUtf8("/") + QString::fromLatin1(h.get())));
             }
         }
