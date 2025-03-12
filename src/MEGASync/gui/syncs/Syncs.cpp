@@ -14,9 +14,7 @@ const QString DEFAULT_MEGA_PATH = QString::fromUtf8("/") + DEFAULT_MEGA_FOLDER;
 }
 
 Syncs::Syncs(QObject* parent):
-    QObject(parent),
-    mMegaApi(MegaSyncApp->getMegaApi()),
-    mCreatingFolder(false)
+    QObject(parent)
 {
     connect(&SyncController::instance(), &SyncController::syncAddStatus,
             this, &Syncs::onSyncAddRequestStatus);

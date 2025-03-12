@@ -89,11 +89,11 @@ private:
         int syncError;
     };
 
-    mega::MegaApi* mMegaApi;
+    mega::MegaApi* mMegaApi = nullptr;
     std::unique_ptr<SyncController> mSyncController;
 
-    bool mCreatingFolder;
-    SyncStatusCode mSyncStatus;
+    bool mCreatingFolder = false;
+    SyncStatusCode mSyncStatus = SyncStatusCode::NONE;
     SyncController::SyncConfig mSyncConfig;
 
     // vars with de command error data, used to generate error messages.
