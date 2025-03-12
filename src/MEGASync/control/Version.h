@@ -29,13 +29,14 @@ Format: 1 item by line, starting from line following the #define
 "- item n\n"
 )*/
 #define VER_CHANGES_NOTES \
-    QT_TRANSLATE_NOOP("Preferences", \
-                      "- New remote cloud drive explorer.\n" \
-                      "- Initial onboarding wizard UX improvements.\n" \
-                      "- System notifications enhancements.\n" \
-                      "- Windows systems integration enhancements.\n" \
-                      "- System notifications enhancements.\n" \
-                      "- Some third party library updated.\n" \
-                      "- Other bugs have been fixed and numerous improvements made.\n")
+    QT_TRANSLATE_NOOP( \
+        "Preferences", \
+        "- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and " \
+        "manage your files and folders in the new sleek and easy-to-use interface.\n" \
+        "- We’ve made more improvements to the initial onboarding wizard.\n" \
+        "- Systems notifications have been enhanced.\n" \
+        "- You can now pin the MEGA app to the Windows taskbar.\n" \
+        "- Some third party libraries have been updated.\n" \
+        "- Other bugs have been fixed and numerous improvements made.\n")
 
 #endif // VERSION_H
