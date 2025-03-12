@@ -21,6 +21,10 @@ execute_process(
     "/mn" "${MSIPath}/" "/o" "/of" "${MSIPath}/resources.pri"
 )
 
+set(MEGA_CERTIFICATE_PUBLISHER $ENV{MEGA_CERTIFICATE_PUBLISHER})
+
+message (STATUS "Using certificate publisher: ${MEGA_CERTIFICATE_PUBLISHER}")
+
 configure_file(${CMAKE_CURRENT_LIST_DIR}/AppxManifest.xml.in ${MSIPath}/AppxManifest.xml @ONLY)
 
 # Create msix package in the root build dir
