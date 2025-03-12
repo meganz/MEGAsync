@@ -25,6 +25,7 @@ if "%DIR_PATH%"=="" (
         exit /b 1
     )
 
+echo The files path is %DIR_PATH%
 :: Set the subject of the certificate you want to use
 set CERT_SUBJECT=Mega Limited
 
@@ -70,4 +71,3 @@ signtool verify /pa "%DLL_PATH%"
 signtool verify /pa "%MSIX_PATH%"
 
 echo Files signed successfully.
-pause

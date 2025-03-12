@@ -106,11 +106,12 @@ if(WIN32)
         set(DLL "ShellExtX32.dll")
     endif()
 
+    set(OutputPath "$<TARGET_FILE_DIR:MEGAShellExt>")
     set(GenerateAppxManifestXmlScript "${CMAKE_CURRENT_SOURCE_DIR}/ModernShellContextMenu/msix/generateAppxManifest.cmake")
     add_custom_command(
         TARGET MEGAShellExt
         POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -DDLL=${DLL}
+        COMMAND ${CMAKE_COMMAND} -DDLL=${DLL} -DOutputPath=${OutputPath}
         -P ${GenerateAppxManifestXmlScript}
         COMMENT "Generating AppxManifest.xml"
     )

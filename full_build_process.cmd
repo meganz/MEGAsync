@@ -96,6 +96,7 @@ IF EXIST build-x86-windows-mega (
 
 REM Build installers
 call production_build.cmd  || exit 1 /b
+call sign_products.cmd  || exit 1 /b
 call deploy_qt.cmd  || exit 1 /b
 call gather_built_products.cmd  || exit 1 /b
 call make_uninstallers.cmd  || exit 1 /b

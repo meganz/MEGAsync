@@ -1,5 +1,5 @@
 set(AppxManifestPath "${CMAKE_CURRENT_LIST_DIR}/AppxManifest.xml")
-set(MSIPath "${CMAKE_CURRENT_BINARY_DIR}/msi")
+set(MSIPath "${OutputPath}/msi")
 set(MSIName "MEGAShellExt.msix")
 set(AssetsFolder "assets")
 
@@ -25,5 +25,5 @@ configure_file(${CMAKE_CURRENT_LIST_DIR}/AppxManifest.xml.in ${MSIPath}/AppxMani
 
 # Create msix package in the root build dir
 execute_process(
-    COMMAND makeappx pack "/nv" "/o" "/d" "${MSIPath}" "/p" "${CMAKE_CURRENT_BINARY_DIR}/${MSIName}"
+    COMMAND makeappx pack "/nv" "/o" "/d" "${MSIPath}" "/p" "${OutputPath}/${MSIName}"
 )
