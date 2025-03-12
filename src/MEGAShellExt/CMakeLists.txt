@@ -99,10 +99,6 @@ target_include_directories(MEGAShellExt
 target_compile_features(MEGAShellExt PRIVATE cxx_std_17)
 
 if(WIN32)
-    set(PackagingPath "${CMAKE_CURRENT_SOURCE_DIR}/packaging")
-    set(SparsePackageName "MEGAShellExt.msix")
-    set(MsixOutputPath "$<TARGET_FILE_DIR:MEGAShellExt>/${SparsePackageName}")
-
     # Generate Appxmanifest.xml
     if(CMAKE_SIZEOF_VOID_P EQUAL 8)
         set(DLL "ShellExtX64.dll")
@@ -114,7 +110,7 @@ if(WIN32)
     add_custom_command(
         TARGET MEGAShellExt
         POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -DPackagingPath=${PackagingPath} -DDLL=${DLL} -DMsixOutputPath=${MsixOutputPath}
+        COMMAND ${CMAKE_COMMAND} -DDLL=${DLL}
         -P ${GenerateAppxManifestXmlScript}
         COMMENT "Generating AppxManifest.xml"
     )

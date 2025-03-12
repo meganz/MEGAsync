@@ -1,41 +1,29 @@
-set(AppxManifestPath "${PackagingPath}/AppxManifest.xml")
+set(AppxManifestPath "${CMAKE_CURRENT_LIST_DIR}/AppxManifest.xml")
+set(MSIPath "${CMAKE_CURRENT_BINARY_DIR}/msi")
+set(MSIName "MEGAShellExt.msix")
+set(AssetsFolder "assets")
+
+if(NOT EXISTS "${MSIPath}")
+    file(MAKE_DIRECTORY ${MSIPath})
+endif()
+
+# Copy the assets folder to the build dir (and remove the previous one, in case it is outdated)
+file(REMOVE_RECURSE "${MSIPath}/${AssetsFolder}")
+file(COPY "${CMAKE_CURRENT_LIST_DIR}/${AssetsFolder}" DESTINATION "${MSIPath}/")
+message(STATUS "Assets folder copied")
 
 execute_process(
-    COMMAND makepri createconfig "/o" "/cf" "${PackagingPath}/priconfig.xml" "/dq" "en-US"
+    COMMAND makepri createconfig "/o" "/cf" "${MSIPath}/priconfig.xml" "/dq" "en-US"
 )
 
 execute_process(
-    COMMAND MakePri.exe new "/cf" "${PackagingPath}/priconfig.xml" "/pr" "${PackagingPath}"
-    "/mn" "${AppxManifestPath}" "/o" "/of" "${PackagingPath}/resources.pri"
+    COMMAND MakePri.exe new "/cf" "${MSIPath}/priconfig.xml" "/pr" "${MSIPath}"
+    "/mn" "${MSIPath}/" "/o" "/of" "${MSIPath}/resources.pri"
 )
 
-message(STATUS "${CMAKE_CURRENT_LIST_DIR}/AppxManifest.xml.in")
-configure_file(${CMAKE_CURRENT_LIST_DIR}/AppxManifest.xml.in ${PackagingPath}/AppxManifest.xml @ONLY)
+configure_file(${CMAKE_CURRENT_LIST_DIR}/AppxManifest.xml.in ${MSIPath}/AppxManifest.xml @ONLY)
 
-# Remove resource temp files
-message(STATUS "Remove temporary files .xml and .pri")
-
-# Remove priconfig,xml
+# Create msix package in the root build dir
 execute_process(
-        COMMAND ${CMAKE_COMMAND} -E rm "${PackagingPath}/priconfig.xml"
-    )
-
-# Create msix package
-execute_process(
-    COMMAND makeappx pack "/nv" "/o" "/d" "${PackagingPath}" "/p" "${MsixOutputPath}"
+    COMMAND makeappx pack "/nv" "/o" "/d" "${MSIPath}" "/p" "${CMAKE_CURRENT_BINARY_DIR}/${MSIName}"
 )
-
-# Remove the rest of xml files
-file(GLOB XML_FILES "${PackagingPath}/*.xml")
-foreach(XML_FILE ${XML_FILES})
-    execute_process(
-        COMMAND ${CMAKE_COMMAND} -E rm "${XML_FILE}"
-    )
-endforeach()
-
-file(GLOB PRI_FILES "${PackagingPath}/*.pri")
-foreach(PRI_FILE ${PRI_FILES})
-    execute_process(
-        COMMAND ${CMAKE_COMMAND} -E rm "${PRI_FILE}"
-    )
-endforeach()
