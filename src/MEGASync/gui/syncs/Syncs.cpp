@@ -2,9 +2,16 @@
 
 #include "ChooseFolder.h"
 #include "mega/types.h"
+#include "megaapi.h"
 #include "MegaApplication.h"
 #include "RequestListenerManager.h"
 #include "TextDecorator.h"
+
+namespace
+{
+const QString DEFAULT_MEGA_FOLDER = QString::fromUtf8("MEGA");
+const QString DEFAULT_MEGA_PATH = QString::fromUtf8("/") + DEFAULT_MEGA_FOLDER;
+}
 
 Syncs::Syncs(QObject* parent):
     QObject(parent),
@@ -144,7 +151,7 @@ void Syncs::helperCheckRemoteSync(const QString& path)
                 mRemoteMegaError.syncError = remoteMegaError->getSyncError();
             }
         }
-        else if (path != Syncs::DEFAULT_MEGA_PATH)
+        else if (path != DEFAULT_MEGA_PATH)
         {
             remoteError = RemoteErrors::CantSync;
         }
@@ -169,12 +176,12 @@ bool Syncs::checkRemoteSync(const QString& path)
     return (!mRemoteError.has_value());
 }
 
-QString Syncs::getDefaultMegaFolder() const
+QString Syncs::getDefaultMegaFolder()
 {
     return DEFAULT_MEGA_FOLDER;
 }
 
-QString Syncs::getDefaultMegaPath() const
+QString Syncs::getDefaultMegaPath()
 {
     return DEFAULT_MEGA_PATH;
 }
