@@ -1,7 +1,6 @@
 #ifndef SYNCS_H
 #define SYNCS_H
 
-#include "mega/bindings/qt/QTMegaRequestListener.h"
 #include "megaapi.h"
 #include "SyncController.h"
 
@@ -10,7 +9,7 @@
 #include <memory>
 #include <optional>
 
-class Syncs : public QObject, public mega::MegaRequestListener
+class Syncs: public QObject
 {
     Q_OBJECT
 
@@ -52,6 +51,7 @@ public:
 
     QString getLocalError() const;
     QString getRemoteError() const;
+    void onRequestFinish(mega::MegaRequest* request, mega::MegaError* error);
 
 signals:
     void syncSetupSuccess();
@@ -84,7 +84,6 @@ private:
     };
 
     mega::MegaApi* mMegaApi;
-    std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::unique_ptr<SyncController> mSyncController;
 
     bool mCreatingFolder;
@@ -103,7 +102,6 @@ private:
 
 private slots:
     void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name);
-    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
     void onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings);
 
 private:

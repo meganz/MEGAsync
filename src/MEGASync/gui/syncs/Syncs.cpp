@@ -3,17 +3,14 @@
 #include "ChooseFolder.h"
 #include "mega/types.h"
 #include "MegaApplication.h"
+#include "RequestListenerManager.h"
 #include "TextDecorator.h"
 
 Syncs::Syncs(QObject* parent):
     QObject(parent),
     mMegaApi(MegaSyncApp->getMegaApi()),
-    mDelegateListener(
-        std::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this)),
     mCreatingFolder(false)
 {
-    mMegaApi->addRequestListener(mDelegateListener.get());
-
     connect(&SyncController::instance(), &SyncController::syncAddStatus,
             this, &Syncs::onSyncAddRequestStatus);
     connect(SyncInfo::instance(), &SyncInfo::syncRemoved,
@@ -58,8 +55,10 @@ void Syncs::addSync(SyncInfo::SyncOrigin origin, const QString& local, const QSt
             mSyncConfig.remoteFolder.remove(0, 1);
         }
 
+        auto listener = RequestListenerManager::instance().registerAndGetFinishListener(this, true);
         mMegaApi->createFolder(mSyncConfig.remoteFolder.toUtf8().constData(),
-                               MegaSyncApp->getRootNode().get());
+                               MegaSyncApp->getRootNode().get(),
+                               listener.get());
     }
     else
     {
@@ -194,12 +193,8 @@ void Syncs::setSyncStatus(SyncStatusCode status)
     }
 }
 
-void Syncs::onRequestFinish(mega::MegaApi* api,
-                            mega::MegaRequest* request,
-                            mega::MegaError* error)
+void Syncs::onRequestFinish(mega::MegaRequest* request, mega::MegaError* error)
 {
-    Q_UNUSED(api)
-
     if (request->getType() == mega::MegaRequest::TYPE_CREATE_FOLDER && mCreatingFolder &&
         (mSyncConfig.remoteFolder.compare(QString::fromUtf8(request->getName())) == 0))
     {
