@@ -26,22 +26,18 @@ if "%DIR_PATH%"=="" (
     )
 
 echo The files path is %DIR_PATH%
-:: Set the subject of the certificate you want to use
-set CERT_SUBJECT=%MEGA_CERTIFICATE_PUBLISHER%
-
-echo %CERT_SUBJECT%
 
 :: Define the store (can be "My" for Current User, "CA" for Certificate Authorities, etc.)
 set CERT_STORE=My
 
 :: Check if the certificate is installed in the specified store
-echo Checking if the certificate with subject containing "%MEGA_CERTIFICATE_PUBLISHER%" is installed in the "%CERT_STORE%" store...
+echo Checking if the certificate with subject containing "Mega Limited" is installed in the "%CERT_STORE%" store...
 
 ::certutil -store "%CERT_STORE%" | findstr /i "*%CERT_SUBJECT%*" >nul
-for /f "delims=" %%i in ('powershell -Command "$cert = Get-ChildItem -Path Cert:\CurrentUser\My| Where-Object { $_.Subject -match '%MEGA_CERTIFICATE_PUBLISHER%' }; if ($cert) { $cert.Thumbprint } else { 'Certificate not found' }"') do set Thumbprint=%%i
+for /f "delims=" %%i in ('powershell -Command "$cert = Get-ChildItem -Path Cert:\CurrentUser\My| Where-Object { $_.Subject -match 'Mega Limited' }; if ($cert) { $cert.Thumbprint } else { 'Certificate not found' }"') do set Thumbprint=%%i
 
 if errorlevel 1 (
-    echo Certificate with subject "%CERT_SUBJECT%" not found in the "%CERT_STORE%" store.
+    echo Certificate with subject containing "Mega Limited" not found in the "%CERT_STORE%" store.
     exit /b
 ) else (
     echo Certificate found. Proceeding with signing.
