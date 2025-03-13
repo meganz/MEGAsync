@@ -27,16 +27,18 @@ if "%DIR_PATH%"=="" (
 
 echo The files path is %DIR_PATH%
 :: Set the subject of the certificate you want to use
-set CERT_SUBJECT=Mega Limited
+set CERT_SUBJECT=%MEGA_CERTIFICATE_PUBLISHER%
+
+echo %CERT_SUBJECT%
 
 :: Define the store (can be "My" for Current User, "CA" for Certificate Authorities, etc.)
 set CERT_STORE=My
 
 :: Check if the certificate is installed in the specified store
-echo Checking if the certificate with subject "%CERT_SUBJECT%" is installed in the "%CERT_STORE%" store...
+echo Checking if the certificate with subject containing "%MEGA_CERTIFICATE_PUBLISHER%" is installed in the "%CERT_STORE%" store...
 
 ::certutil -store "%CERT_STORE%" | findstr /i "*%CERT_SUBJECT%*" >nul
-powershell -Command "if (Get-ChildItem -Path Cert:\CurrentUser\%CERT_STORE% | Where-Object {$_.Subject -match '%CERT_SUBJECT%'}) {exit 0} else {exit 1}"
+for /f "delims=" %%i in ('powershell -Command "$cert = Get-ChildItem -Path Cert:\CurrentUser\My| Where-Object { $_.Subject -match '%MEGA_CERTIFICATE_PUBLISHER%' }; if ($cert) { $cert.Thumbprint } else { 'Certificate not found' }"') do set Thumbprint=%%i
 
 if errorlevel 1 (
     echo Certificate with subject "%CERT_SUBJECT%" not found in the "%CERT_STORE%" store.
@@ -61,10 +63,10 @@ if not exist "%MSIX_PATH%" (
 )
 
 :: Sign the DLL file
-signtool sign /n "%CERT_SUBJECT%" /td SHA256 /fd SHA256 %DLL_PATH%
+signtool sign /sha1 "%Thumbprint%" /td SHA256 /fd SHA256 %DLL_PATH%
 
 :: Sign the MSIX file
-signtool sign /n "%CERT_SUBJECT%" /td SHA256 /fd SHA256 %MSIX_PATH%
+signtool sign /sha1 "%Thumbprint%" /td SHA256 /fd SHA256 %MSIX_PATH%
 
 :: Verify the signed files
 signtool verify /pa "%DLL_PATH%"
