@@ -6,6 +6,7 @@
 #include "Syncs.h"
 #include "SyncsData.h"
 #include "SyncsQmlDialog.h"
+#include "SyncsUtils.h"
 
 static bool qmlRegistrationDone = false;
 
@@ -35,15 +36,17 @@ void SyncsComponent::registerQmlModules()
 {
     if (!qmlRegistrationDone)
     {
-        qmlRegisterModule("Syncs", 1, 0);
-        qmlRegisterType<SyncsQmlDialog>("SyncsQmlDialog", 1, 0, "SyncsQmlDialog");
-        qmlRegisterType<ChooseRemoteFolder>("ChooseRemoteFolder", 1, 0, "ChooseRemoteFolder");
-        qmlRegisterUncreatableType<Syncs>(
-            "Syncs",
+        qmlRegisterModule("SyncsComponents", 1, 0);
+        qmlRegisterType<SyncsQmlDialog>("SyncsComponents", 1, 0, "SyncsQmlDialog");
+        qmlRegisterType<ChooseRemoteFolder>("SyncsComponents", 1, 0, "ChooseRemoteFolder");
+        qmlRegisterType<ChooseLocalFolder>("SyncsComponents", 1, 0, "ChooseLocalFolder");
+        qmlRegisterUncreatableType<SyncsUtils>(
+            "SyncsComponents",
             1,
             0,
             "SyncStatusCode",
-            QString::fromUtf8("Cannot register Syncs::SyncStatusCode in QML"));
+            QString::fromUtf8("Cannot register SyncsUtils::SyncStatusCode in QML"));
+
         qmlRegistrationDone = true;
     }
 }

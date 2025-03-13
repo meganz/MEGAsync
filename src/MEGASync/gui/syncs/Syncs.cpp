@@ -180,12 +180,12 @@ bool Syncs::checkRemoteSync(const QString& path)
     return (!mRemoteError.has_value());
 }
 
-Syncs::SyncStatusCode Syncs::getSyncStatus() const
+SyncsUtils::SyncStatusCode Syncs::getSyncStatus() const
 {
     return mSyncStatus;
 }
 
-void Syncs::setSyncStatus(SyncStatusCode status)
+void Syncs::setSyncStatus(SyncsUtils::SyncStatusCode status)
 {
     if (status != mSyncStatus)
     {
@@ -242,11 +242,11 @@ void Syncs::onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings)
     SyncInfo* syncInfo = SyncInfo::instance();
     if(syncInfo->getNumSyncedFolders(mega::MegaSync::SyncType::TYPE_TWOWAY) <= 0)
     {
-        setSyncStatus(NONE);
+        setSyncStatus(SyncsUtils::SyncStatusCode::NONE);
     }
     else
     {
-        setSyncStatus(FULL);
+        setSyncStatus(SyncsUtils::SyncStatusCode::FULL);
     }
     emit syncRemoved();
 }

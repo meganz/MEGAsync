@@ -1,5 +1,7 @@
 #include "SyncsData.h"
 
+#include "Syncs.h"
+
 #include <cassert>
 
 namespace
@@ -22,7 +24,7 @@ QString SyncsData::getDefaultMegaPath()
     return DEFAULT_MEGA_PATH;
 }
 
-Syncs::SyncStatusCode SyncsData::getSyncStatus() const
+SyncsUtils::SyncStatusCode SyncsData::getSyncStatus() const
 {
     assert(mSyncs != nullptr);
     return mSyncs->getSyncStatus();

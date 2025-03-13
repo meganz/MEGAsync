@@ -113,6 +113,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsQmlDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/syncs/Syncs.h
     ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsData.h
+    ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsUtils.h
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyComponent.h
     ${CMAKE_CURRENT_LIST_DIR}/surveys/Surveys.h

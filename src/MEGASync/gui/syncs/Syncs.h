@@ -2,6 +2,7 @@
 #define SYNCS_H
 
 #include "SyncController.h"
+#include "SyncsUtils.h"
 
 #include <QObject>
 
@@ -18,18 +19,10 @@ class Syncs: public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(
-        SyncStatusCode syncStatus READ getSyncStatus WRITE setSyncStatus NOTIFY syncStatusChanged)
+    Q_PROPERTY(SyncsUtils::SyncStatusCode syncStatus READ getSyncStatus WRITE setSyncStatus NOTIFY
+                   syncStatusChanged)
 
 public:
-    enum SyncStatusCode
-    {
-        NONE = 0,
-        FULL,
-        SELECTIVE
-    };
-    Q_ENUM(SyncStatusCode)
-
     Syncs(QObject* parent = nullptr);
     virtual ~Syncs() = default;
 
@@ -41,8 +34,8 @@ public:
     Q_INVOKABLE void clearRemoteError();
     Q_INVOKABLE void clearLocalError();
 
-    SyncStatusCode getSyncStatus() const;
-    void setSyncStatus(SyncStatusCode status);
+    SyncsUtils::SyncStatusCode getSyncStatus() const;
+    void setSyncStatus(SyncsUtils::SyncStatusCode status);
 
     QString getLocalError() const;
     QString getRemoteError() const;
@@ -95,7 +88,7 @@ private:
     std::unique_ptr<SyncController> mSyncController;
 
     bool mCreatingFolder = false;
-    SyncStatusCode mSyncStatus = SyncStatusCode::NONE;
+    SyncsUtils::SyncStatusCode mSyncStatus = SyncsUtils::SyncStatusCode::NONE;
     SyncController::SyncConfig mSyncConfig;
 
     // vars with de command error data, used to generate error messages.

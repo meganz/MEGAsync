@@ -1,7 +1,7 @@
 import QtQuick 2.15
 
 import syncs 1.0
-import ChooseLocalFolder 1.0
+import SyncsComponents 1.0
 import SyncInfo 1.0
 
 SelectiveSyncPageForm {

@@ -9,8 +9,7 @@ import components.buttons 1.0
 import components.textFields 1.0
 
 import syncs 1.0
-import ChooseLocalFolder 1.0
-import ChooseRemoteFolder 1.0
+import SyncsComponents 1.0
 
 FocusScope {
     id: root

@@ -4,7 +4,8 @@ import common 1.0
 
 import components.steps 1.0
 
-import Syncs 1.0
+import syncs 1.0
+import SyncsComponents 1.0
 
 SyncsFlow {
     id: root
@@ -34,11 +35,11 @@ SyncsFlow {
                     text: Strings.setExclusions
                     visible: localFolderChooser.choosenPath.length !== 0
                 }
-                rightSecondary.text: (syncsData.syncStatus === syncs.SyncStatusCode.NONE) ? Strings.previous : Strings.cancel
+                rightSecondary.text: (syncsData.syncStatus === SyncStatusCode.NONE) ? Strings.previous : Strings.cancel
             }
 
             onSelectiveSyncMoveToBack: {
-                if(syncsData.syncStatus === syncs.SyncStatusCode.NONE) {
+                if(syncsData.syncStatus === SyncStatusCode.NONE) {
                     root.state = root.syncType;
                 }
                 else {
@@ -47,12 +48,12 @@ SyncsFlow {
             }
 
             onSelectiveSyncMoveToSuccess: {
-                syncs.syncStatus = syncs.SyncStatusCode.SELECTIVE;
+                syncs.syncStatus = SyncStatusCode.SELECTIVE;
                 root.syncsFlowMoveToFinal(Constants.SyncType.SELECTIVE_SYNC);
             }
 
             onFullSyncMoveToSuccess: {
-                syncs.syncStatus = syncs.SyncStatusCode.FULL;
+                syncs.syncStatus = SyncStatusCode.FULL;
                 root.syncsFlowMoveToFinal(Constants.SyncType.FULL_SYNC);
             }
         }

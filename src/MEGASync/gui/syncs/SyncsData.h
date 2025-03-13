@@ -1,17 +1,18 @@
 #ifndef SYNCS_DATA_H
 #define SYNCS_DATA_H
 
-#include "Syncs.h"
+#include "SyncsUtils.h"
 
 #include <QObject>
 
+class Syncs;
 class SyncsData: public QObject
 {
     Q_OBJECT
 
     Q_PROPERTY(QString defaultMegaFolder READ getDefaultMegaFolder CONSTANT FINAL)
     Q_PROPERTY(QString defaultMegaPath READ getDefaultMegaPath CONSTANT FINAL)
-    Q_PROPERTY(Syncs::SyncStatusCode syncStatus READ getSyncStatus NOTIFY syncStatusChanged)
+    Q_PROPERTY(SyncsUtils::SyncStatusCode syncStatus READ getSyncStatus NOTIFY syncStatusChanged)
     Q_PROPERTY(QString localError READ getLocalError NOTIFY localErrorChanged)
     Q_PROPERTY(QString remoteError READ getRemoteError NOTIFY remoteErrorChanged)
 
@@ -27,7 +28,7 @@ signals:
     void remoteErrorChanged();
 
 private:
-    Syncs::SyncStatusCode getSyncStatus() const;
+    SyncsUtils::SyncStatusCode getSyncStatus() const;
     QString getLocalError() const;
     QString getRemoteError() const;
 
