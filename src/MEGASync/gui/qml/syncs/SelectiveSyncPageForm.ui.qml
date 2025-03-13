@@ -7,8 +7,6 @@ import common 1.0
 import components.accountData 1.0
 import components.pages 1.0
 
-import Syncs 1.0
-
 FooterButtonsPage {
     id: root
 
@@ -16,7 +14,6 @@ FooterButtonsPage {
 
     property alias localFolderChooser: localFolder
     property alias remoteFolderChooser: remoteFolder
-    property alias syncs: syncsItem
 
     footerButtons.rightPrimary {
         text: SyncsStrings.sync
@@ -24,10 +21,6 @@ FooterButtonsPage {
     }
 
     footerButtons.rightSecondary.visible: root.isOnboarding
-
-    Syncs {
-        id: syncsItem
-    }
 
     ColumnLayout {
         id: column
@@ -58,7 +51,6 @@ FooterButtonsPage {
         ChooseSyncFolder {
             id: localFolder
 
-            syncs: syncsItem
             Layout.preferredWidth: parent.width + 8
             Layout.leftMargin: -4
             Layout.topMargin: 16
@@ -68,7 +60,6 @@ FooterButtonsPage {
         ChooseSyncFolder {
             id: remoteFolder
 
-            syncs: syncsItem
             Layout.preferredWidth: parent.width + 8
             Layout.leftMargin: -4
             local: false

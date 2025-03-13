@@ -13,15 +13,13 @@ namespace mega
 class MegaApi;
 }
 
+class SyncsData;
 class Syncs: public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString defaultMegaFolder READ getDefaultMegaFolder CONSTANT FINAL)
-    Q_PROPERTY(QString defaultMegaPath READ getDefaultMegaPath CONSTANT FINAL)
-    Q_PROPERTY(SyncStatusCode syncStatus READ getSyncStatus WRITE setSyncStatus NOTIFY syncStatusChanged)
-    Q_PROPERTY(QString localError READ getLocalError NOTIFY localErrorChanged)
-    Q_PROPERTY(QString remoteError READ getRemoteError NOTIFY remoteErrorChanged)
+    Q_PROPERTY(
+        SyncStatusCode syncStatus READ getSyncStatus WRITE setSyncStatus NOTIFY syncStatusChanged)
 
 public:
     enum SyncStatusCode
@@ -43,14 +41,17 @@ public:
     Q_INVOKABLE void clearRemoteError();
     Q_INVOKABLE void clearLocalError();
 
-    static QString getDefaultMegaFolder();
-    static QString getDefaultMegaPath();
-
     SyncStatusCode getSyncStatus() const;
     void setSyncStatus(SyncStatusCode status);
 
     QString getLocalError() const;
     QString getRemoteError() const;
+
+    /* dev only, remove it should be the contructor */
+    void setSyncsData(SyncsData* syncsData)
+    {
+        mSyncsData = syncsData;
+    }
 
 signals:
     void syncSetupSuccess();
@@ -89,6 +90,7 @@ private:
         int syncError;
     };
 
+    SyncsData* mSyncsData = nullptr;
     mega::MegaApi* mMegaApi = nullptr;
     std::unique_ptr<SyncController> mSyncController;
 

@@ -8,7 +8,7 @@ import common 1.0
 import components.buttons 1.0
 import components.textFields 1.0
 
-import Syncs 1.0
+import syncs 1.0
 import ChooseLocalFolder 1.0
 import ChooseRemoteFolder 1.0
 
@@ -16,7 +16,6 @@ FocusScope {
     id: root
 
     required property bool isOnboarding
-    required property Syncs syncs
 
     readonly property int textEditMargin: 2
 
@@ -36,10 +35,10 @@ FocusScope {
 
         if(root.isOnboarding) {
             if (local) {
-                defaultFolder = localFolderChooser.getDefaultFolder(syncs.defaultMegaFolder);
+                defaultFolder = localFolderChooser.getDefaultFolder(syncsData.defaultMegaFolder);
             }
             else {
-                defaultFolder = syncs.defaultMegaPath;
+                defaultFolder = syncsData.defaultMegaPath;
             }
         }
         else { // Standalone syncs window
@@ -49,12 +48,12 @@ FocusScope {
 
             if (local) {
                 if(syncsComponentAccess.remoteFolder === "") {
-                    defaultFolder = localFolderChooser.getDefaultFolder(syncs.defaultMegaFolder);
+                    defaultFolder = localFolderChooser.getDefaultFolder(syncsData.defaultMegaFolder);
                 }
             }
             else {
                 if(syncsComponentAccess.remoteFolder === "") {
-                    defaultFolder = syncs.defaultMegaPath;
+                    defaultFolder = syncsData.defaultMegaPath;
                 }
                 else {
                     defaultFolder = syncsComponentAccess.remoteFolder;

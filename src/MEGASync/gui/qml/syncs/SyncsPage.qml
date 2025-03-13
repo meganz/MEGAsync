@@ -34,11 +34,11 @@ SyncsFlow {
                     text: Strings.setExclusions
                     visible: localFolderChooser.choosenPath.length !== 0
                 }
-                rightSecondary.text: (root.sync.syncStatus === root.sync.SyncStatusCode.NONE) ? Strings.previous : Strings.cancel
+                rightSecondary.text: (syncsData.syncStatus === syncs.SyncStatusCode.NONE) ? Strings.previous : Strings.cancel
             }
 
             onSelectiveSyncMoveToBack: {
-                if(root.sync.syncStatus === root.sync.SyncStatusCode.NONE) {
+                if(syncsData.syncStatus === syncs.SyncStatusCode.NONE) {
                     root.state = root.syncType;
                 }
                 else {
@@ -47,12 +47,12 @@ SyncsFlow {
             }
 
             onSelectiveSyncMoveToSuccess: {
-                root.sync.syncStatus = root.sync.SyncStatusCode.SELECTIVE;
+                syncs.syncStatus = syncs.SyncStatusCode.SELECTIVE;
                 root.syncsFlowMoveToFinal(Constants.SyncType.SELECTIVE_SYNC);
             }
 
             onFullSyncMoveToSuccess: {
-                root.sync.syncStatus = root.sync.SyncStatusCode.FULL;
+                syncs.syncStatus = syncs.SyncStatusCode.FULL;
                 root.syncsFlowMoveToFinal(Constants.SyncType.FULL_SYNC);
             }
         }

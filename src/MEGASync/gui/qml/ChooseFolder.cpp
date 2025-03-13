@@ -6,6 +6,7 @@
 #include "NodeSelectorSpecializations.h"
 #include "Platform.h"
 #include "Syncs.h"
+#include "SyncsData.h"
 
 #include <QDir>
 
@@ -24,7 +25,7 @@ void ChooseLocalFolder::openFolderSelector(const QString& folderPath, bool folde
         openFromFolder = QDir::toNativeSeparators(folderPath);
         QDir openFromFolderDir(openFromFolder);
 
-        if(folderUp)
+        if (folderUp)
         {
             if (openFromFolderDir.cdUp())
             {
@@ -99,7 +100,7 @@ bool ChooseLocalFolder::createFolder(const QString& folderPath)
     auto folder = QDir::toNativeSeparators(folderPath);
 
     QDir defaultFolder(folder);
-    if (!defaultFolder.exists() && (folder != getDefaultFolder(Syncs::getDefaultMegaFolder()) ||
+    if (!defaultFolder.exists() && (folder != getDefaultFolder(SyncsData::getDefaultMegaFolder()) ||
                                     !defaultFolder.mkpath(QString::fromUtf8("."))))
     {
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,

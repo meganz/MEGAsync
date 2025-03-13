@@ -1,5 +1,7 @@
 #include "SyncsData.h"
 
+#include <cassert>
+
 namespace
 {
 const QString DEFAULT_MEGA_FOLDER = QString::fromUtf8("MEGA");
@@ -10,27 +12,30 @@ SyncsData::SyncsData(const Syncs* syncs):
     mSyncs(syncs)
 {}
 
-QString SyncsData::getDefaultMegaFolder() const
+QString SyncsData::getDefaultMegaFolder()
 {
-    return Syncs::getDefaultMegaFolder();
+    return DEFAULT_MEGA_FOLDER;
 }
 
-QString SyncsData::getDefaultMegaPath() const
+QString SyncsData::getDefaultMegaPath()
 {
-    return Syncs::getDefaultMegaPath();
+    return DEFAULT_MEGA_PATH;
 }
 
 Syncs::SyncStatusCode SyncsData::getSyncStatus() const
 {
+    assert(mSyncs != nullptr);
     return mSyncs->getSyncStatus();
 }
 
 QString SyncsData::getLocalError() const
 {
+    assert(mSyncs != nullptr);
     return mSyncs->getLocalError();
 }
 
 QString SyncsData::getRemoteError() const
 {
+    assert(mSyncs != nullptr);
     return mSyncs->getRemoteError();
 }

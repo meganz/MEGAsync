@@ -3,6 +3,8 @@
 
 #include "QmlDialogWrapper.h"
 
+class Syncs;
+class SyncsData;
 class SyncsComponent : public QMLComponent
 {
     Q_OBJECT
@@ -38,6 +40,8 @@ private:
     bool mComesFromSettings;
     QString mRemoteFolder;
     SyncInfo::SyncOrigin mSyncOrigin;
+    std::unique_ptr<Syncs> mSyncs;
+    std::unique_ptr<SyncsData> mSyncsData;
 };
 
 #endif // SYNCS_COMPONENT_H

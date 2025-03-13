@@ -5,16 +5,12 @@
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "RequestListenerManager.h"
+#include "SyncsData.h"
 #include "TextDecorator.h"
 
-namespace
-{
-const QString DEFAULT_MEGA_FOLDER = QString::fromUtf8("MEGA");
-const QString DEFAULT_MEGA_PATH = QString::fromUtf8("/") + DEFAULT_MEGA_FOLDER;
-}
-
 Syncs::Syncs(QObject* parent):
-    QObject(parent)
+    QObject(parent),
+    mMegaApi(MegaSyncApp->getMegaApi())
 {
     connect(&SyncController::instance(), &SyncController::syncAddStatus,
             this, &Syncs::onSyncAddRequestStatus);
@@ -94,7 +90,7 @@ void Syncs::helperCheckLocalSync(const QString& path)
         if (!openFromFolderDir.exists())
         {
             ChooseLocalFolder localFolder;
-            if (localFolderPath == localFolder.getDefaultFolder(DEFAULT_MEGA_FOLDER))
+            if (localFolderPath == localFolder.getDefaultFolder(mSyncsData->getDefaultMegaFolder()))
             {
                 if (!localFolder.createFolder(localFolderPath))
                 {
@@ -125,6 +121,11 @@ void Syncs::helperCheckLocalSync(const QString& path)
     {
         mLocalError.swap(localError);
         emit localErrorChanged();
+
+        if (mSyncsData != nullptr)
+        {
+            emit mSyncsData->localErrorChanged();
+        }
     }
 }
 
@@ -149,7 +150,7 @@ void Syncs::helperCheckRemoteSync(const QString& path)
                 mRemoteMegaError.syncError = remoteMegaError->getSyncError();
             }
         }
-        else if (path != DEFAULT_MEGA_PATH)
+        else if (path != mSyncsData->getDefaultMegaPath())
         {
             remoteError = RemoteErrors::CantSync;
         }
@@ -159,6 +160,11 @@ void Syncs::helperCheckRemoteSync(const QString& path)
     {
         mRemoteError.swap(remoteError);
         emit remoteErrorChanged();
+
+        if (mSyncsData != nullptr)
+        {
+            emit mSyncsData->remoteErrorChanged();
+        }
     }
 }
 
@@ -174,16 +180,6 @@ bool Syncs::checkRemoteSync(const QString& path)
     return (!mRemoteError.has_value());
 }
 
-QString Syncs::getDefaultMegaFolder()
-{
-    return DEFAULT_MEGA_FOLDER;
-}
-
-QString Syncs::getDefaultMegaPath()
-{
-    return DEFAULT_MEGA_PATH;
-}
-
 Syncs::SyncStatusCode Syncs::getSyncStatus() const
 {
     return mSyncStatus;
@@ -191,10 +187,15 @@ Syncs::SyncStatusCode Syncs::getSyncStatus() const
 
 void Syncs::setSyncStatus(SyncStatusCode status)
 {
-    if(status != mSyncStatus)
+    if (status != mSyncStatus)
     {
         mSyncStatus = status;
         emit syncStatusChanged();
+
+        if (mSyncsData != nullptr)
+        {
+            emit mSyncsData->syncStatusChanged();
+        }
     }
 }
 
@@ -378,10 +379,20 @@ void Syncs::clearRemoteError()
     mRemoteMegaError.syncError = mega::SyncError::NO_SYNC_ERROR;
 
     emit remoteErrorChanged();
+
+    if (mSyncsData != nullptr)
+    {
+        emit mSyncsData->remoteErrorChanged();
+    }
 }
 
 void Syncs::clearLocalError()
 {
     mLocalError.reset();
     emit localErrorChanged();
+
+    if (mSyncsData != nullptr)
+    {
+        emit mSyncsData->localErrorChanged();
+    }
 }

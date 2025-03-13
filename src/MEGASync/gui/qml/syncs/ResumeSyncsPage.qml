@@ -2,8 +2,6 @@ import QtQuick 2.15
 
 import common 1.0
 
-import Syncs 1.0
-
 ResumeSyncsPageForm {
     id: root
 

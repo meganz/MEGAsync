@@ -18,6 +18,8 @@ class SyncsData: public QObject
 public:
     SyncsData(const Syncs* const syncs);
     virtual ~SyncsData() = default;
+    static QString getDefaultMegaFolder();
+    static QString getDefaultMegaPath();
 
 signals:
     void syncStatusChanged();
@@ -25,8 +27,6 @@ signals:
     void remoteErrorChanged();
 
 private:
-    QString getDefaultMegaFolder() const;
-    QString getDefaultMegaPath() const;
     Syncs::SyncStatusCode getSyncStatus() const;
     QString getLocalError() const;
     QString getRemoteError() const;

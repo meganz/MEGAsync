@@ -4,6 +4,7 @@
 #include "ChooseFolder.h"
 #include "DialogOpener.h"
 #include "Syncs.h"
+#include "SyncsData.h"
 #include "SyncsQmlDialog.h"
 
 static bool qmlRegistrationDone = false;
@@ -11,9 +12,18 @@ static bool qmlRegistrationDone = false;
 SyncsComponent::SyncsComponent(QObject* parent):
     QMLComponent(parent),
     mRemoteFolder(QString()),
-    mSyncOrigin(SyncInfo::SyncOrigin::MAIN_APP_ORIGIN)
+    mSyncOrigin(SyncInfo::SyncOrigin::MAIN_APP_ORIGIN),
+    mSyncs(std::make_unique<Syncs>()),
+    mSyncsData(std::make_unique<SyncsData>(mSyncs.get()))
 {
     registerQmlModules();
+
+    QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsData"),
+                                                   mSyncsData.get());
+
+    QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncs"), mSyncs.get());
+
+    mSyncs->setSyncsData(mSyncsData.get());
 }
 
 QUrl SyncsComponent::getQmlUrl()
@@ -27,7 +37,6 @@ void SyncsComponent::registerQmlModules()
     {
         qmlRegisterModule("Syncs", 1, 0);
         qmlRegisterType<SyncsQmlDialog>("SyncsQmlDialog", 1, 0, "SyncsQmlDialog");
-        qmlRegisterType<Syncs>("Syncs", 1, 0, "Syncs");
         qmlRegisterType<ChooseRemoteFolder>("ChooseRemoteFolder", 1, 0, "ChooseRemoteFolder");
         qmlRegisterUncreatableType<Syncs>(
             "Syncs",

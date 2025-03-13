@@ -5,8 +5,6 @@ import common 1.0
 import syncs 1.0
 import onboard 1.0
 
-import Syncs 1.0
-
 SyncsFlow {
     id: root
 
@@ -68,12 +66,12 @@ SyncsFlow {
             }
 
             onSelectiveSyncMoveToSuccess: {
-                root.sync.syncStatus = root.sync.SyncStatusCode.SELECTIVE;
+                syncs.syncStatus = syncs.SyncStatusCode.SELECTIVE;
                 root.syncsFlowMoveToFinal(Constants.SyncType.SELECTIVE_SYNC);
             }
 
             onFullSyncMoveToSuccess: {
-                root.sync.syncStatus = root.sync.SyncStatusCode.FULL;
+                syncs.syncStatus = syncs.SyncStatusCode.FULL;
                 root.syncsFlowMoveToFinal(Constants.SyncType.FULL_SYNC);
             }
         }

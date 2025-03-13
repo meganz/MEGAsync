@@ -4,12 +4,8 @@ import common 1.0
 
 import components.views 1.0
 
-import Syncs 1.0
-
 Item {
     id: root
-
-    property alias sync: syncItem
 
     required property Component selectiveSyncPageComponent
 
@@ -35,10 +31,6 @@ Item {
             }
         }
     ]
-
-    Syncs {
-        id: syncItem
-    }
 
     StackViewBase {
         id: view

@@ -1,6 +1,6 @@
 import QtQuick 2.15
 
-import Syncs 1.0
+import syncs 1.0
 import ChooseLocalFolder 1.0
 import SyncInfo 1.0
 
@@ -11,13 +11,13 @@ SelectiveSyncPageForm {
     signal selectiveSyncMoveToSuccess
     signal fullSyncMoveToSuccess
 
-    localFolderChooser.folderField.hint.text: root.syncs.localError
-    localFolderChooser.folderField.hint.visible: root.syncs.localError.length !== 0
-    localFolderChooser.folderField.error: root.syncs.localError.length !== 0
+    localFolderChooser.folderField.hint.text: syncsData.localError
+    localFolderChooser.folderField.hint.visible: syncsData.localError.length !== 0
+    localFolderChooser.folderField.error: syncsData.localError.length !== 0
 
-    remoteFolderChooser.folderField.hint.text: root.syncs.remoteError
-    remoteFolderChooser.folderField.hint.visible: root.syncs.remoteError.length !== 0
-    remoteFolderChooser.folderField.error: root.syncs.remoteError.length !== 0
+    remoteFolderChooser.folderField.hint.text: syncsData.remoteError
+    remoteFolderChooser.folderField.hint.visible: syncsData.remoteError.length !== 0
+    remoteFolderChooser.folderField.error: syncsData.remoteError.length !== 0
 
     function enableScreen() {
         root.enabled = true;
@@ -36,14 +36,14 @@ SelectiveSyncPageForm {
         rightPrimary.onClicked: {
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            root.syncs.addSync(isOnboarding ?  SyncInfo.ONBOARDING_ORIGIN : syncsComponentAccess.getSyncOrigin(),
+            syncs.addSync(isOnboarding ?  SyncInfo.ONBOARDING_ORIGIN : syncsComponentAccess.getSyncOrigin(),
                                localFolderChooser.choosenPath,
                                remoteFolderChooser.choosenPath);
         }
     }
 
     Connections {
-        target: root.syncs
+        target: syncs
 
         function onSyncSetupSuccess() {
             var remotePath = remoteFolderChooser.choosenPath;
