@@ -48,6 +48,25 @@ bool MessageDialogCheckboxInfo::getChecked() const
 }
 
 // =================================================================================================
+// MessageDialogTextInfo
+// =================================================================================================
+
+MessageDialogTextInfo::MessageDialogTextInfo(const QString& newText, TextFormat textFormat):
+    text(newText),
+    format(textFormat)
+{}
+
+QString MessageDialogTextInfo::getText() const
+{
+    return text;
+}
+
+MessageDialogTextInfo::TextFormat MessageDialogTextInfo::getFormat() const
+{
+    return format;
+}
+
+// =================================================================================================
 // MessageBoxResult
 // =================================================================================================
 
@@ -131,14 +150,14 @@ QUrl MessageDialogData::getImageUrl() const
     return mInfo.imageUrl;
 }
 
-QString MessageDialogData::getTitleText() const
+MessageDialogTextInfo MessageDialogData::getTitleTextInfo() const
 {
-    return mInfo.text;
+    return MessageDialogTextInfo(mInfo.text, getTextFormat());
 }
 
-QString MessageDialogData::getDescriptionText() const
+MessageDialogTextInfo MessageDialogData::getDescriptionTextInfo() const
 {
-    return mInfo.informativeText;
+    return MessageDialogTextInfo(mInfo.informativeText, getTextFormat());
 }
 
 bool MessageDialogData::enqueue() const
@@ -303,5 +322,30 @@ void MessageDialogData::updateWidgetsByType()
     if (mInfo.imageUrl.isEmpty())
     {
         setImageUrl(imageUrl);
+    }
+}
+
+MessageDialogTextInfo::TextFormat MessageDialogData::getTextFormat() const
+{
+    switch (mInfo.textFormat)
+    {
+        case Qt::RichText:
+        {
+            return MessageDialogTextInfo::TextFormat::RICH;
+        }
+        case Qt::PlainText:
+        {
+            return MessageDialogTextInfo::TextFormat::PLAIN;
+        }
+        default:
+        {
+            mega::MegaApi::log(
+                mega::MegaApi::LOG_LEVEL_WARNING,
+                QString::fromUtf8("MessageDialogData: unsupported text format %1, using plain text")
+                    .arg(QString::number(mInfo.textFormat))
+                    .toUtf8()
+                    .constData());
+            return MessageDialogTextInfo::TextFormat::PLAIN;
+        }
     }
 }

@@ -77,36 +77,18 @@ QmlDialog {
                     width: parent.width
                     spacing: sizes.textColumnSpacing
 
-                    Texts.RichText {
-                        id: titleTextItem
-
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                        }
-                        lineHeightMode: Text.FixedHeight
-                        lineHeight: sizes.titleTextLineHeight
-                        wrapMode: Text.Wrap
-                        font {
-                            pixelSize: Texts.Text.Size.MEDIUM_LARGE
-                            weight: Font.DemiBold
-                        }
-                        text: messageDialogDataAccess ? messageDialogDataAccess.titleText : ""
-                        visible: titleTextItem.text !== ""
+                    TextLoader {
+                        textInfo: messageDialogDataAccess ? messageDialogDataAccess.titleTextInfo : null
+                        textLineHeight: sizes.titleTextLineHeight
+                        textPixelSize: Texts.Text.Size.MEDIUM_LARGE
+                        textWeight: Font.DemiBold
                     }
 
-                    Texts.RichText {
-                        id: descriptionTextItem
-
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                        }
-                        lineHeightMode: Text.FixedHeight
-                        lineHeight: sizes.descriptionTextLineHeight
-                        font.pixelSize: Texts.Text.Size.NORMAL
-                        text: messageDialogDataAccess ? messageDialogDataAccess.descriptionText : ""
-                        visible: descriptionTextItem.text !== ""
+                    TextLoader {
+                        textInfo: messageDialogDataAccess ? messageDialogDataAccess.descriptionTextInfo : null
+                        textLineHeight: sizes.descriptionTextLineHeight
+                        textPixelSize: Texts.Text.Size.NORMAL
+                        textWeight: Font.Normal
                     }
 
                     CheckBox {

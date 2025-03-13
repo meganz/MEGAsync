@@ -55,6 +55,32 @@ public:
 };
 Q_DECLARE_METATYPE(MessageDialogCheckboxInfo)
 
+struct MessageDialogTextInfo
+{
+    Q_GADGET
+
+    Q_PROPERTY(QString text READ getText MEMBER text)
+    Q_PROPERTY(TextFormat format READ getFormat MEMBER format)
+
+public:
+    enum class TextFormat
+    {
+        PLAIN = 0,
+        RICH = 1,
+    };
+    Q_ENUM(TextFormat)
+
+    QString text = QString();
+    TextFormat format = TextFormat::PLAIN;
+
+    MessageDialogTextInfo() = default;
+    MessageDialogTextInfo(const QString& text, TextFormat format = TextFormat::PLAIN);
+
+    QString getText() const;
+    TextFormat getFormat() const;
+};
+Q_DECLARE_METATYPE(MessageDialogTextInfo)
+
 class MessageBoxResult: public QObject
 {
     Q_OBJECT
@@ -102,8 +128,8 @@ class MessageDialogData: public QObject
 
     Q_PROPERTY(QString title READ getTitle CONSTANT)
     Q_PROPERTY(QUrl imageUrl READ getImageUrl NOTIFY imageChanged)
-    Q_PROPERTY(QString titleText READ getTitleText CONSTANT)
-    Q_PROPERTY(QString descriptionText READ getDescriptionText CONSTANT)
+    Q_PROPERTY(MessageDialogTextInfo titleTextInfo READ getTitleTextInfo CONSTANT)
+    Q_PROPERTY(MessageDialogTextInfo descriptionTextInfo READ getDescriptionTextInfo CONSTANT)
     Q_PROPERTY(QVariantList buttons READ getButtons NOTIFY buttonsChanged)
     Q_PROPERTY(MessageDialogCheckboxInfo checkbox READ getCheckbox NOTIFY checkboxChanged)
 
@@ -123,8 +149,8 @@ public:
     QWidget* getParentWidget() const;
     QString getTitle() const;
     QUrl getImageUrl() const;
-    QString getTitleText() const;
-    QString getDescriptionText() const;
+    MessageDialogTextInfo getTitleTextInfo() const;
+    MessageDialogTextInfo getDescriptionTextInfo() const;
     QVariantList getButtons() const;
     std::function<void(QPointer<MessageBoxResult>)> getFinishFunction() const;
     bool enqueue() const;
@@ -159,6 +185,7 @@ private:
     void updateButtonsByDefault(QMessageBox::StandardButtons buttons,
                                 QMessageBox::StandardButton defaultButton = QMessageBox::Ok);
     void updateWidgetsByType();
+    MessageDialogTextInfo::TextFormat getTextFormat() const;
 };
 
 #endif // MESSAGE_DIALOG_DATA_H
