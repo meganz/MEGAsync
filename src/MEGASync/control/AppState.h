@@ -39,6 +39,7 @@ public:
         NOMINAL,
         RELOADING,
         FATAL_ERROR,
+        FATAL_ERROR_PENDING_FETCHNODES,
         FINISHED,
     };
     Q_ENUM(AppStates)

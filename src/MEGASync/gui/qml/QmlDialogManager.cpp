@@ -42,9 +42,9 @@ void QmlDialogManager::openGuestDialog()
     DialogOpener::showDialog(dialogWrapper->getDialog());
 }
 
-bool QmlDialogManager::openOnboardingDialog()
+bool QmlDialogManager::openOnboardingDialog(bool force)
 {
-    if(MegaSyncApp->finished() || Preferences::instance()->logged())
+    if (MegaSyncApp->finished() || (!force && Preferences::instance()->logged()))
     {
         return false;
     }

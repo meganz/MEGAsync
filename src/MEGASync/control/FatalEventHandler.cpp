@@ -48,6 +48,10 @@ QString FatalEventHandler::getErrorTitle() const
         {
             return QCoreApplication::translate("MegaError", "Error with sync configuration files");
         }
+        case FatalErrorCode::ERR_REGENERATE_JSCD:
+        {
+            return QCoreApplication::translate("MegaError", "Sync configuration error");
+        }
         case FatalErrorCode::ERR_DB_INDEX_OVERFLOW:
         {
             return QCoreApplication::translate("MegaError", "An error has been detected");
@@ -114,6 +118,13 @@ QString FatalEventHandler::getErrorReason() const
                 "The app has detected an error and needs to reload. If you experience this issue "
                 "more than once, contact our Support team.");
         }
+        case FatalErrorCode::ERR_REGENERATE_JSCD:
+        {
+            return QCoreApplication::translate(
+                "MegaError",
+                "Your sync and backup settings were corrupted and have been reset. If you had any, "
+                "please set them up again.");
+        }
         case FatalErrorCode::ERR_NO_ERROR:
         {
             return {};
@@ -146,6 +157,8 @@ QString FatalEventHandler::getErrorReasonUrl() const
         case FatalErrorCode::ERR_NO_ERROR:
         // Fallthrough
         case FatalErrorCode::ERR_DB_INDEX_OVERFLOW:
+        // Fallthrough
+        case FatalErrorCode::ERR_REGENERATE_JSCD:
         {
             return {};
         }
@@ -181,15 +194,21 @@ void FatalEventHandler::processEvent(std::unique_ptr<mega::MegaEvent> event, Meg
             .constData());
 
     // Explicitly do nothing more for MegaEvent::REASON_ERROR_NO_ERROR
-    if (mErrorCode != FatalErrorCode::ERR_NO_ERROR)
+    if (mErrorCode == FatalErrorCode::ERR_NO_ERROR)
+    {
+        clear();
+    }
+    else if (mErrorCode == FatalErrorCode::ERR_REGENERATE_JSCD)
+    {
+        // Put app in Fatal Error state after fetchnodes. Further action taken in
+        // onAppStateChanged(), once the app is in Fatal Error state
+        emit requestAppState(AppState::FATAL_ERROR_PENDING_FETCHNODES);
+    }
+    else
     {
         // Put app in Fatal Error state. Further action taken in onAppStateChanged(), once the app
         // is in Fatal Error state
         emit requestAppState(AppState::FATAL_ERROR);
-    }
-    else
-    {
-        clear();
     }
 }
 
@@ -245,6 +264,20 @@ void FatalEventHandler::openAppDataFolder()
 {
     mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Fatal error event: action: open app folder");
     Utilities::openAppDataPath();
+}
+
+void FatalEventHandler::forceOnboarding()
+{
+    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO,
+                       "Fatal error event: action: force onboarding");
+    emit requestForceOnBoarding();
+    emit requestAppState(AppState::NOMINAL);
+}
+
+void FatalEventHandler::dismissWarning()
+{
+    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Fatal error event: action: dismiss warning");
+    emit requestAppState(AppState::NOMINAL);
 }
 
 QString FatalEventHandler::getDefaultActionLabel() const
@@ -310,6 +343,10 @@ FatalEventHandler::FatalErrorCorrectiveAction FatalEventHandler::getDefaultActio
         {
             return FatalErrorCorrectiveAction::RELOAD;
         }
+        case FatalErrorCode::ERR_REGENERATE_JSCD:
+        {
+            return FatalErrorCorrectiveAction::FORCE_ONBOARDING;
+        }
         case FatalErrorCode::ERR_NO_ERROR:
         {
             return FatalErrorCorrectiveAction::NO_ACTION;
@@ -335,6 +372,10 @@ FatalEventHandler::FatalErrorCorrectiveAction FatalEventHandler::getSecondaryAct
         case FatalErrorCode::ERR_DB_IO_FAILURE:
         {
             return FatalErrorCorrectiveAction::RESTART_APP;
+        }
+        case FatalErrorCode::ERR_REGENERATE_JSCD:
+        {
+            return FatalErrorCorrectiveAction::DISMISS_WARNING;
         }
         case FatalErrorCode::ERR_DB_FULL:
         // Fallthrough
@@ -373,6 +414,14 @@ QString
         {
             return QCoreApplication::translate("MegaError", "Reload");
         }
+        case FatalErrorCorrectiveAction::FORCE_ONBOARDING:
+        {
+            return QCoreApplication::translate("MegaError", "Reconfigure");
+        }
+        case FatalErrorCorrectiveAction::DISMISS_WARNING:
+        {
+            return QCoreApplication::translate("MegaError", "Dismiss");
+        }
         case FatalErrorCorrectiveAction::NO_ACTION:
         {
             // No associated user interaction
@@ -402,7 +451,12 @@ QString FatalEventHandler::getActionIcon(FatalEventHandler::FatalErrorCorrective
         {
             return QLatin1String("icons/file_edit.svg");
         }
+        case FatalErrorCorrectiveAction::FORCE_ONBOARDING:
+        // Fallthrough
+        case FatalErrorCorrectiveAction::DISMISS_WARNING:
+        // Fallthrough
         case FatalErrorCorrectiveAction::RELOAD:
+        // Fallthrough
         case FatalErrorCorrectiveAction::NO_ACTION:
         {
             // No associated user interaction
@@ -439,6 +493,16 @@ void FatalEventHandler::triggerAction(FatalEventHandler::FatalErrorCorrectiveAct
         case FatalErrorCorrectiveAction::RELOAD:
         {
             reloadOnFatalError();
+            break;
+        }
+        case FatalErrorCorrectiveAction::FORCE_ONBOARDING:
+        {
+            forceOnboarding();
+            break;
+        }
+        case FatalErrorCorrectiveAction::DISMISS_WARNING:
+        {
+            dismissWarning();
             break;
         }
         case FatalErrorCorrectiveAction::NO_ACTION:
