@@ -36,14 +36,14 @@ SelectiveSyncPageForm {
         rightPrimary.onClicked: {
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            syncs.addSync(isOnboarding ?  SyncInfo.ONBOARDING_ORIGIN : syncsComponentAccess.getSyncOrigin(),
+            syncsComponentAccess.addSync(isOnboarding ?  SyncInfo.ONBOARDING_ORIGIN : syncsComponentAccess.getSyncOrigin(),
                                localFolderChooser.choosenPath,
                                remoteFolderChooser.choosenPath);
         }
     }
 
     Connections {
-        target: syncs
+        target: syncsData
 
         function onSyncSetupSuccess() {
             var remotePath = remoteFolderChooser.choosenPath;

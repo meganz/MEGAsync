@@ -19,10 +19,11 @@ SyncsComponent::SyncsComponent(QObject* parent):
 {
     registerQmlModules();
 
+    QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsComponentAccess"),
+                                                   this);
+
     QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsData"),
                                                    mSyncsData.get());
-
-    QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncs"), mSyncs.get());
 
     mSyncs->setSyncsData(mSyncsData.get());
 }
@@ -44,11 +45,16 @@ void SyncsComponent::registerQmlModules()
             "SyncsComponents",
             1,
             0,
-            "SyncStatusCode",
-            QString::fromUtf8("Cannot register SyncsUtils::SyncStatusCode in QML"));
+            "SyncsUtils",
+            QString::fromUtf8("Cannot register SyncsUtils in QML"));
 
         qmlRegistrationDone = true;
     }
+}
+
+SyncsUtils::SyncStatusCode SyncsComponent::getSyncStatus() const
+{
+    return mSyncsData->getSyncStatus();
 }
 
 void SyncsComponent::openSyncsTabInPreferences() const
@@ -100,4 +106,39 @@ void SyncsComponent::openExclusionsDialog(const QString& folder) const
             new QmlDialogWrapper<AddExclusionRule>(parentWidget, QStringList() << folder);
         DialogOpener::showDialog(exclusions);
     }
+}
+
+/*
+ * public slots to be called from qml code
+ */
+void SyncsComponent::addSync(SyncInfo::SyncOrigin origin,
+                             const QString& local,
+                             const QString& remote)
+{
+    mSyncs->addSync(origin, local, remote);
+}
+
+bool SyncsComponent::checkLocalSync(const QString& path)
+{
+    return mSyncs->checkLocalSync(path);
+}
+
+bool SyncsComponent::checkRemoteSync(const QString& path)
+{
+    return mSyncs->checkRemoteSync(path);
+}
+
+void SyncsComponent::clearRemoteError()
+{
+    mSyncs->clearRemoteError();
+}
+
+void SyncsComponent::clearLocalError()
+{
+    mSyncs->clearLocalError();
+}
+
+void SyncsComponent::setSyncStatus(SyncsUtils::SyncStatusCode status)
+{
+    mSyncs->setSyncStatus(status);
 }

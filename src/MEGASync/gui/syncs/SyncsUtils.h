@@ -10,7 +10,7 @@ class SyncsUtils: public QObject
 public:
     SyncsUtils() = delete;
 
-    enum SyncStatusCode
+    enum class SyncStatusCode
     {
         NONE = 0,
         FULL,

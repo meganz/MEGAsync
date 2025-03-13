@@ -19,20 +19,17 @@ class Syncs: public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(SyncsUtils::SyncStatusCode syncStatus READ getSyncStatus WRITE setSyncStatus NOTIFY
-                   syncStatusChanged)
-
 public:
     Syncs(QObject* parent = nullptr);
     virtual ~Syncs() = default;
 
-    Q_INVOKABLE void addSync(SyncInfo::SyncOrigin origin,
-                             const QString& local,
-                             const QString& remote = QLatin1String("/"));
-    Q_INVOKABLE bool checkLocalSync(const QString& path);
-    Q_INVOKABLE bool checkRemoteSync(const QString& path);
-    Q_INVOKABLE void clearRemoteError();
-    Q_INVOKABLE void clearLocalError();
+    void addSync(SyncInfo::SyncOrigin origin,
+                 const QString& local,
+                 const QString& remote = QLatin1String("/"));
+    bool checkLocalSync(const QString& path);
+    bool checkRemoteSync(const QString& path);
+    void clearRemoteError();
+    void clearLocalError();
 
     SyncsUtils::SyncStatusCode getSyncStatus() const;
     void setSyncStatus(SyncsUtils::SyncStatusCode status);
@@ -45,13 +42,6 @@ public:
     {
         mSyncsData = syncsData;
     }
-
-signals:
-    void syncSetupSuccess();
-    void syncStatusChanged();
-    void syncRemoved();
-    void localErrorChanged();
-    void remoteErrorChanged();
 
 public slots:
     void onRequestFinish(mega::MegaRequest* request, mega::MegaError* error);

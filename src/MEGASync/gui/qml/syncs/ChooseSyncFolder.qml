@@ -60,14 +60,14 @@ FocusScope {
             }
         }
 
-        if ((local && !syncs.checkLocalSync(defaultFolder)) || (!local && !syncs.checkRemoteSync(defaultFolder))) {
+        if ((local && !syncsComponentAccess.checkLocalSync(defaultFolder)) || (!local && !syncsComponentAccess.checkRemoteSync(defaultFolder))) {
             defaultFolder = "";
 
             if (local) {
-                syncs.clearLocalError();
+                syncsComponentAccess.clearLocalError();
             }
             else {
-                syncs.clearRemoteError();
+                syncsComponentAccess.clearRemoteError();
             }
         }
 
@@ -82,7 +82,7 @@ FocusScope {
     Connections {
         id: syncsConnection
 
-        target: syncs
+        target: syncsData
 
         function onSyncRemoved() {
             // Check if MEGA is available again when removed
@@ -123,11 +123,11 @@ FocusScope {
         text: Strings.choose
         onClicked: {
             if (local) {
-                syncs.clearLocalError();
+                syncsComponentAccess.clearLocalError();
                 localFolderChooser.openFolderSelector(folderItem.text);
             }
             else {
-                syncs.clearRemoteError();
+                syncsComponentAccess.clearRemoteError();
                 remoteFolderChooser.openFolderSelector();
             }
         }

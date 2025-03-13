@@ -21,14 +21,16 @@ public:
     virtual ~SyncsData() = default;
     static QString getDefaultMegaFolder();
     static QString getDefaultMegaPath();
+    SyncsUtils::SyncStatusCode getSyncStatus() const;
 
 signals:
     void syncStatusChanged();
     void localErrorChanged();
     void remoteErrorChanged();
+    void syncSetupSuccess();
+    void syncRemoved();
 
 private:
-    SyncsUtils::SyncStatusCode getSyncStatus() const;
     QString getLocalError() const;
     QString getRemoteError() const;
 
