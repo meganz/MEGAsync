@@ -561,7 +561,7 @@ void SettingsDialog::on_bClearCache_clicked()
         }
     }
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.parent = this;
     msgInfo.title = tr("Clear local backup");
     msgInfo.text = tr("Backups of the previous versions of your synced files in your computer"
@@ -572,7 +572,7 @@ void SettingsDialog::on_bClearCache_clicked()
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
     {
         if (msg->result() == QMessageBox::Yes)
         {
@@ -596,7 +596,7 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
 
     std::unique_ptr<const char[]> base64Handle(syncDebris->getBase64Handle());
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.parent = this;
     msgInfo.title = tr("Clear remote backup");
     msgInfo.text = tr("Backups of the previous versions of your synced files in MEGA will be"
@@ -611,7 +611,7 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
     {
         if (msg->result() == QMessageBox::Yes)
         {
@@ -626,7 +626,7 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
 
 void SettingsDialog::on_bClearFileVersions_clicked()
 {
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.parent = this;
     msgInfo.title = MegaSyncApp->getMEGAString();
     msgInfo.text = tr("You are about to permanently remove all file versions."
@@ -634,7 +634,7 @@ void SettingsDialog::on_bClearFileVersions_clicked()
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.textFormat = Qt::RichText;
     msgInfo.defaultButton = QMessageBox::No;
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
     {
         if (msg->result() == QMessageBox::Yes)
         {
@@ -752,7 +752,7 @@ void SettingsDialog::on_cFileVersioning_toggled(bool checked)
         mUi->cFileVersioning->blockSignals(true);
         mUi->cFileVersioning->setChecked(true);
 
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageBoxInfo msgInfo;
         msgInfo.title = MegaSyncApp->getMEGAString();
         msgInfo.text = tr("Disabling file versioning will prevent"
                           " the creation and storage of new file versions."
@@ -760,7 +760,7 @@ void SettingsDialog::on_cFileVersioning_toggled(bool checked)
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
         msgInfo.defaultButton = QMessageBox::No;
         msgInfo.parent = this;
-        msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+        msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
         {
             // We want to make changes only if the answer is Yes.
             // If the user clicks No or closes the dialog with he X button, we don't want to disable
@@ -793,14 +793,14 @@ void SettingsDialog::on_cbSleepMode_toggled(bool checked)
 
     if (checked && !result)
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageBoxInfo msgInfo;
         msgInfo.title = tr("Sleep mode can't be setup");
         msgInfo.text =
             tr("Your operating system doesn't allow its sleep setting to be overwritten.");
         msgInfo.buttons = QMessageBox::Ok;
         msgInfo.defaultButton = QMessageBox::Ok;
         msgInfo.parent = this;
-        msgInfo.finishFunc = [this, checked](QPointer<QMessageBox> msg)
+        msgInfo.finishFunc = [this, checked](QPointer<MessageBoxResult> msg)
         {
             mUi->cbSleepMode->blockSignals(true);
             mUi->cbSleepMode->setChecked(!checked);
@@ -1160,13 +1160,13 @@ void SettingsDialog::on_bLogout_clicked()
     }
     else
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageBoxInfo msgInfo;
         msgInfo.title = tr("Log out");
         msgInfo.text = text + QLatin1Char(' ') + tr("Are you sure?");
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
         msgInfo.defaultButton = QMessageBox::Yes;
         msgInfo.parent = this;
-        msgInfo.finishFunc = [unlink](QPointer<QMessageBox> msg)
+        msgInfo.finishFunc = [unlink](QPointer<MessageBoxResult> msg)
         {
             if (msg->result() == QMessageBox::Yes)
             {
@@ -1354,7 +1354,7 @@ void SettingsDialog::on_bExportMasterKey_clicked()
                 QFile file(fileNames.first());
                 if (!file.open(QIODevice::WriteOnly | QFile::Truncate))
                 {
-                    QMegaMessageBox::MessageBoxInfo msgInfo;
+                    MessageBoxInfo msgInfo;
                     msgInfo.parent = this;
                     msgInfo.title = tr("Unable to write file");
                     msgInfo.text = file.errorString();
@@ -1369,7 +1369,7 @@ void SettingsDialog::on_bExportMasterKey_clicked()
 
                     mMegaApi->masterKeyExported();
 
-                    QMegaMessageBox::MessageBoxInfo msgInfo;
+                    MessageBoxInfo msgInfo;
                     msgInfo.parent = this;
                     msgInfo.title = QMegaMessageBox::warningTitle();
                     msgInfo.text = tr("Exporting the master key and keeping it in a secure location"
@@ -1508,7 +1508,7 @@ void SettingsDialog::on_bDownloadFolder_clicked()
                     }
                     else
                     {
-                        QMegaMessageBox::MessageBoxInfo msgInfo;
+                        MessageBoxInfo msgInfo;
                         msgInfo.parent = this;
                         msgInfo.title = QMegaMessageBox::errorTitle();
                         msgInfo.text = tr("You don't have write permissions"

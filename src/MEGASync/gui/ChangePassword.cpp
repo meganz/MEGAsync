@@ -50,7 +50,7 @@ void ChangePassword::onRequestFinish(mega::MegaRequest* req, mega::MegaError* e)
             }
             else
             {
-                QMegaMessageBox::MessageBoxInfo info;
+                MessageBoxInfo info;
                 info.title = QMegaMessageBox::errorTitle();
                 info.text = QCoreApplication::translate("MegaError", e->getErrorString());
                 info.parent = this;
@@ -66,11 +66,12 @@ void ChangePassword::onRequestFinish(mega::MegaRequest* req, mega::MegaError* e)
             {
                 hide();
 
-                QMegaMessageBox::MessageBoxInfo msgInfo;
+                MessageBoxInfo msgInfo;
                 msgInfo.parent = parentWidget();
                 msgInfo.title =  tr("Password changed");
                 msgInfo.text =   tr("Your password has been changed.");
-                msgInfo.finishFunc = [this](QPointer<QMessageBox>){
+                msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
+                {
                     accept();
                 };
                 QMegaMessageBox::information(msgInfo);
@@ -84,7 +85,7 @@ void ChangePassword::onRequestFinish(mega::MegaRequest* req, mega::MegaError* e)
             {
                 setEnabled(true);
 
-                QMegaMessageBox::MessageBoxInfo info;
+                MessageBoxInfo info;
                 info.title = QMegaMessageBox::errorTitle();
                 info.text = tr("Too many requests. Please wait.");
                 info.parent = this;
@@ -94,7 +95,7 @@ void ChangePassword::onRequestFinish(mega::MegaRequest* req, mega::MegaError* e)
             {
                 setEnabled(true);
 
-                QMegaMessageBox::MessageBoxInfo info;
+                MessageBoxInfo info;
                 info.title = QMegaMessageBox::errorTitle();
                 info.text = QCoreApplication::translate("MegaError",e->getErrorString());
                 info.parent = this;
@@ -143,7 +144,7 @@ void ChangePassword::on_bOk_clicked()
     const bool passwordIsWeak{mMegaApi->getPasswordStrength(newPassword().toUtf8().constData())
                 == MegaApi::PASSWORD_STRENGTH_VERYWEAK};
 
-    QMegaMessageBox::MessageBoxInfo info;
+    MessageBoxInfo info;
     info.title = QMegaMessageBox::errorTitle();
     info.parent = this;
 

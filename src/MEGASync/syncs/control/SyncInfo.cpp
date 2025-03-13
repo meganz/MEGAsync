@@ -176,7 +176,7 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
         break;
     }
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.title =  MegaSyncApp->getMEGAString();
 
     // TODO: extract the QMegaMessageBoxes from the model, use signal to send message
@@ -193,7 +193,7 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
                           "folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).")
                 .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://help.mega.nz/megasync/syncing.html#can-i-sync-fat-fat32-partitions-under-windows\">"))
                 .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>"));
-        msgInfo.finishFunc = [this](QPointer<QMessageBox>)
+        msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
         {
             preferences->setFatWarningShown();
         };
@@ -203,7 +203,7 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
     else if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING) && syncSetting->getError() == MegaSync::Warning::LOCAL_IS_HGFS)
     {
         msgInfo.text = tr("You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.");
-        msgInfo.finishFunc = [this](QPointer<QMessageBox>)
+        msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
         {
             preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING, true);
         };

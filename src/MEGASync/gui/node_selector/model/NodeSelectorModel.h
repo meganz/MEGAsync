@@ -376,7 +376,7 @@ signals:
     void deleteWorker();
     void blockUi(bool state, QPrivateSignal);
     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
-    void showMessageBox(QMegaMessageBox::MessageBoxInfo info) const;
+    void showMessageBox(MessageBoxInfo info) const;
     void showDuplicatedNodeDialog(std::shared_ptr<ConflictTypes> conflicts, MoveActionType type);
     void allNodeRequestsFinished();
     void modelIsBeingModifiedChanged(bool status);

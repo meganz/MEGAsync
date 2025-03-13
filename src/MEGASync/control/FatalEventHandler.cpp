@@ -559,10 +559,10 @@ bool FatalEventHandler::useContactSupportUrlHandler() const
 void FatalEventHandler::showFatalErrorMessage()
 {
     mRespawnWarningDialog = true;
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.textFormat = Qt::RichText;
     msgInfo.title = QMegaMessageBox::fatalErrorTitle();
-    msgInfo.iconPixmap = QPixmap(QLatin1String(":images/alert-triangle-small.png"));
+    msgInfo.imageUrl = QLatin1String(":images/alert-triangle-small.png");
 
     msgInfo.text = QLatin1String("<b>%1</b>").arg(getErrorTitle());
     msgInfo.informativeText = getErrorReason();
@@ -596,7 +596,7 @@ void FatalEventHandler::showFatalErrorMessage()
     }
 
     // User choice handling
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
     {
         auto choice = msg->result();
         if (choice == DEFAULT_ACTION_BUTTON)

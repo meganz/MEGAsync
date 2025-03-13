@@ -94,7 +94,7 @@ void StalledIssuesUtilities::openLink(bool isCloud, const QString& path)
         }
         else
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
+            MessageBoxInfo msgInfo;
             msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
             msgInfo.title = QMegaMessageBox::warningTitle();
             msgInfo.text = QString::fromUtf8("Node %1 does not exist.").arg(path);
@@ -113,7 +113,7 @@ void StalledIssuesUtilities::openLink(bool isCloud, const QString& path)
         }
         else
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
+            MessageBoxInfo msgInfo;
             msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
             msgInfo.title = QMegaMessageBox::warningTitle();
             msgInfo.text =  QString::fromUtf8("Path %1 does not exist.").arg(path);

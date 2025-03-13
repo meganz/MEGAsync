@@ -48,7 +48,7 @@ protected:
     {
         QModelIndexList selection;
         QModelIndexList similarSelection;
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageBoxInfo msgInfo;
     };
     bool checkSelection(const QList<mega::MegaSyncStall::SyncStallReason>& reasons, SelectionInfo& info);
 

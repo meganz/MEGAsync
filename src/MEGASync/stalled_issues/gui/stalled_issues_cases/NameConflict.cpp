@@ -411,7 +411,7 @@ void NameConflict::onActionClicked(int actionId)
                 }
                 else
                 {
-                    QMegaMessageBox::MessageBoxInfo msgInfo;
+                    MessageBoxInfo msgInfo;
                     msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
                     msgInfo.title = MegaSyncApp->getMEGAString();
                     msgInfo.textFormat = Qt::RichText;
@@ -490,7 +490,7 @@ void NameConflict::onActionClicked(int actionId)
                 }
                 else
                 {
-                    QMegaMessageBox::MessageBoxInfo msgInfo;
+                    MessageBoxInfo msgInfo;
                     msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
                     msgInfo.title = MegaSyncApp->getMEGAString();
                     msgInfo.textFormat = Qt::RichText;
@@ -501,7 +501,7 @@ void NameConflict::onActionClicked(int actionId)
                 }
             }
 
-            QMegaMessageBox::MessageBoxInfo msgInfo;
+            MessageBoxInfo msgInfo;
             msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
             msgInfo.title = MegaSyncApp->getMEGAString();
             msgInfo.textFormat = Qt::RichText;
@@ -534,8 +534,7 @@ void NameConflict::onActionClicked(int actionId)
                 }
             }
 
-            msgInfo.finishFunc = [=](
-                                     QMessageBox* msgBox)
+            msgInfo.finishFunc = [=](QPointer<MessageBoxResult> msgBox)
             {
                 if (msgBox->result() == QDialogButtonBox::Yes)
                 {

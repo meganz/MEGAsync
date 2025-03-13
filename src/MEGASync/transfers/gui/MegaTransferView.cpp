@@ -394,7 +394,7 @@ void MegaTransferView::onCancelVisibleTransfers()
 
     if(!info.areAllSync)
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageBoxInfo msgInfo;
         msgInfo.title = MegaSyncApp->getMEGAString();
         msgInfo.text = info.actionText;
         msgInfo.parent = this;
@@ -402,7 +402,7 @@ void MegaTransferView::onCancelVisibleTransfers()
         msgInfo.defaultButton = QMessageBox::No;
         msgInfo.buttonsText = info.buttonsText;
 
-        msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+        msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
         {
             if(msg->result() == QMessageBox::Yes)
             {
@@ -413,7 +413,6 @@ void MegaTransferView::onCancelVisibleTransfers()
             }
         };
 
-
         QMegaMessageBox::warning(msgInfo);
     }
 }
@@ -422,7 +421,7 @@ void MegaTransferView::onCancelSelectedTransfers()
 {
     auto info = getSelectedCancelOrClearInfo();
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.title = MegaSyncApp->getMEGAString();
     msgInfo.text = info.actionText;
     msgInfo.parent = this;
@@ -430,7 +429,7 @@ void MegaTransferView::onCancelSelectedTransfers()
     msgInfo.defaultButton = QMessageBox::No;
     msgInfo.buttonsText = info.buttonsText;
 
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
     {
         if(msg->result() == QMessageBox::Yes)
         {
@@ -452,7 +451,7 @@ void MegaTransferView::onCancelAllTransfers()
 
     if (proxy)
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageBoxInfo msgInfo;
         msgInfo.title = MegaSyncApp->getMEGAString();
         msgInfo.text = proxy->isAnySync() ?  cancelWithSyncAskActionText() : cancelAllAskActionText();
         msgInfo.parent = this;
@@ -460,7 +459,7 @@ void MegaTransferView::onCancelAllTransfers()
         msgInfo.defaultButton = QMessageBox::No;
         msgInfo.buttonsText = getCancelDialogButtons();
 
-        msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+        msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
         {
             if(msg->result() == QMessageBox::Yes)
             {
@@ -475,7 +474,7 @@ void MegaTransferView::onCancelAllTransfers()
 
 void MegaTransferView::onClearAllTransfers()
 {
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.title = MegaSyncApp->getMEGAString();
     msgInfo.text = clearAllCompletedAskActionText();
     msgInfo.parent = this;
@@ -483,7 +482,7 @@ void MegaTransferView::onClearAllTransfers()
     msgInfo.defaultButton = QMessageBox::No;
     msgInfo.buttonsText = getClearDialogButtons();
 
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
     {
         if(msg->result() == QMessageBox::Yes)
         {
@@ -498,7 +497,7 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
 {
     auto info = getVisibleCancelOrClearInfo();
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.title = MegaSyncApp->getMEGAString();
     msgInfo.text = info.actionText;
     msgInfo.parent = this;
@@ -506,7 +505,7 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
     msgInfo.defaultButton = QMessageBox::No;
     msgInfo.buttonsText = info.buttonsText;
 
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
     {
         if(msg->result() == QMessageBox::Yes)
         {
@@ -526,7 +525,7 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
 
 void MegaTransferView::onClearVisibleTransfers()
 {
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.title = MegaSyncApp->getMEGAString();
     msgInfo.text = clearCompletedAskActionText();
     msgInfo.parent = this;
@@ -534,7 +533,7 @@ void MegaTransferView::onClearVisibleTransfers()
     msgInfo.defaultButton = QMessageBox::No;
     msgInfo.buttonsText = getClearDialogButtons();
 
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
     {
         if(msg->result() == QMessageBox::Yes)
         {
@@ -1410,7 +1409,7 @@ void MegaTransferView::onOpenUrlFinished()
 
 void MegaTransferView::showOpeningFileError()
 {
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.parent = this;
     msgInfo.title =  QMegaMessageBox::errorTitle();
     msgInfo.text =   errorOpeningFileText();

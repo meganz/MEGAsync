@@ -23,7 +23,7 @@ BackupSettingsUI::BackupSettingsUI(QWidget* parent):
             [this](std::shared_ptr<mega::MegaError> err)
             {
                 onSavingSyncsCompleted(SAVING_FINISHED);
-                QMegaMessageBox::MessageBoxInfo msgInfo;
+                MessageBoxInfo msgInfo;
                 msgInfo.title = tr("Error moving or removing remote backup folder");
                 msgInfo.text =
                     tr("Failed to move or remove the remote backup folder. Reason: %1")

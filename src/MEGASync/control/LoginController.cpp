@@ -992,7 +992,7 @@ void FastLoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e
         else if (errorCode != mega::MegaError::API_ESID && errorCode != mega::MegaError::API_ESSL)
         //Invalid session or public key, already managed in TYPE_LOGOUT
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
+            MessageBoxInfo msgInfo;
             msgInfo.title = MegaSyncApp->getMEGAString();
             msgInfo.text = tr("Login error: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString()));
 
@@ -1060,7 +1060,7 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
 
         if (paramType == mega::MegaError::API_ESID)
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
+            MessageBoxInfo msgInfo;
             msgInfo.title = MegaSyncApp->getMEGAString();
             msgInfo.text = tr("You have been logged out on this computer from another location");
             msgInfo.ignoreCloseAll = true;
@@ -1069,7 +1069,7 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
         }
         else if (paramType == mega::MegaError::API_ESSL)
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
+            MessageBoxInfo msgInfo;
             msgInfo.title = MegaSyncApp->getMEGAString();
             msgInfo.text = tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software "
                                "could be intercepting your communications and causing this problem. Please disable it and try again.")
@@ -1081,7 +1081,7 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
         }
         else if (paramType != mega::MegaError::API_EACCESS && paramType != mega::MegaError::API_EBLOCKED)
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
+            MessageBoxInfo msgInfo;
             msgInfo.title = MegaSyncApp->getMEGAString();
             if(errorCode != mega::MegaError::API_OK)
             {

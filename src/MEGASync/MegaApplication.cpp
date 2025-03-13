@@ -435,7 +435,7 @@ void MegaApplication::initialize()
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Encountered corrupt prefrences.").toUtf8().constData());
 
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageBoxInfo msgInfo;
         msgInfo.title = getMEGAString();
         msgInfo.text = tr("Your config is corrupt, please start over");
         msgInfo.enqueue = true;
@@ -527,7 +527,7 @@ void MegaApplication::initialize()
         megaApi->changeApiUrl(apiURL.toUtf8(), disablepkp == QString::fromUtf8("1"));
         megaApiFolders->changeApiUrl(apiURL.toUtf8());
 
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageBoxInfo msgInfo;
         msgInfo.title = MegaSyncApp->getMEGAString();
         msgInfo.text = QString::fromUtf8("API URL changed to ")+ apiURL;
         msgInfo.enqueue = true;
@@ -1338,7 +1338,7 @@ if (!preferences->lastExecutionTime())
         // Display the message if it has been set
         if (!message.isEmpty())
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
+            MessageBoxInfo msgInfo;
             msgInfo.title = QCoreApplication::applicationName();
             msgInfo.text = message;
             msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
@@ -1347,7 +1347,7 @@ if (!preferences->lastExecutionTime())
             textsByButton.insert(QMessageBox::No, tr("Dismiss"));
             msgInfo.buttonsText = textsByButton;
             msgInfo.defaultButton = QMessageBox::No;
-            msgInfo.finishFunc = [this, settingsTabToOpen](QPointer<QMessageBox> msg)
+            msgInfo.finishFunc = [this, settingsTabToOpen](QPointer<MessageBoxResult> msg)
             {
                 if (msg->result() == QMessageBox::Yes)
                 {
@@ -1514,12 +1514,12 @@ void MegaApplication::checkSystemTray()
         return;
     }
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.title = getMEGAString();
     msgInfo.text = tr("Could not find a system tray to place MEGAsync tray icon. "
                       "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
                       "If you want to open the interface, just try to open MEGAsync again.");
-    msgInfo.finishFunc = [this](QPointer<QMessageBox>)
+    msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
     {
         preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE, true);
     };
@@ -1776,7 +1776,7 @@ void MegaApplication::tryExitApplication(bool force)
     }
     else
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageBoxInfo msgInfo;
         msgInfo.title = getMEGAString();
         msgInfo.text = tr("There is an active transfer. Exit the app?\n"
                                  "Transfer will automatically resume when you re-open the app.",
@@ -1787,7 +1787,7 @@ void MegaApplication::tryExitApplication(bool force)
         textsByButton.insert(QMessageBox::Yes, tr("Exit app"));
         textsByButton.insert(QMessageBox::No, tr("Stay in app"));
         msgInfo.buttonsText = textsByButton;
-        msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+        msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
         {
             if (msg->result() == QMessageBox::Yes)
             {
@@ -3002,12 +3002,12 @@ void MegaApplication::processUpgradeSecurityEvent()
                   .arg(outSharesStrings.values().join(QLatin1String(", "))));
     }
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.title = tr("Security upgrade");
     msgInfo.text = message;
     msgInfo.buttons = QMessageBox::Ok|QMessageBox::Cancel;
     msgInfo.textFormat = Qt::RichText;
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
     {
         if (msg->result() == QMessageBox::Ok && !appfinished)
         {
@@ -3211,7 +3211,7 @@ void MegaApplication::showInfoMessage(DesktopNotifications::NotificationInfo inf
     }
     else
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageBoxInfo msgInfo;
         msgInfo.title = info.title;
         msgInfo.text = info.message;
         QMegaMessageBox::information(msgInfo);
@@ -3234,7 +3234,7 @@ void MegaApplication::showWarningMessage(QString message, QString title)
     }
     else
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageBoxInfo msgInfo;
         msgInfo.title = title;
         msgInfo.text = message;
         QMegaMessageBox::warning(msgInfo);
@@ -3272,7 +3272,7 @@ void MegaApplication::showErrorMessage(QString message, QString title)
     }
     else
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageBoxInfo msgInfo;
         msgInfo.title = title;
         msgInfo.text = message;
         QMegaMessageBox::critical(msgInfo);
@@ -3566,7 +3566,7 @@ void MegaApplication::checkOperatingSystem()
 
         if (isOSdeprecated)
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
+            MessageBoxInfo msgInfo;
             msgInfo.title = getMEGAString();
             QString message =
                 tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
@@ -3578,9 +3578,9 @@ void MegaApplication::checkOperatingSystem()
 #endif
 
             msgInfo.text = message;
-            msgInfo.finishFunc = [this](QPointer<QMessageBox>)
+            msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
             {
-            preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_OS_TOO_OLD, true);
+                preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_OS_TOO_OLD, true);
             };
             QMegaMessageBox::warning(msgInfo);
         }
@@ -5792,7 +5792,7 @@ void MegaApplication::manageBusinessStatus(int64_t event)
             }
             else
             {
-                QMegaMessageBox::MessageBoxInfo msgInfo;
+                MessageBoxInfo msgInfo;
                 msgInfo.title = getMEGAString();
                 msgInfo.text = tr("Account Suspended");
                 msgInfo.textFormat = Qt::RichText;

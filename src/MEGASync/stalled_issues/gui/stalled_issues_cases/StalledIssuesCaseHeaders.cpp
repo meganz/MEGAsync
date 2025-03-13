@@ -56,8 +56,8 @@ StalledIssueHeaderCase::SelectionInfo StalledIssueHeaderCase::getSelectionInfo(
 
     if (info.selection.size() != info.similarToSelected.size())
     {
-        auto checkBox = new QCheckBox(QApplication::translate("CloudFingerprintMissingHeader", "Apply to all"));
-        info.msgInfo.checkBox = checkBox;
+        info.msgInfo.checkboxText =
+            QApplication::translate("CloudFingerprintMissingHeader", "Apply to all");
     }
 
     return info;
@@ -142,11 +142,12 @@ void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(Stalled
         selectionInfo.msgInfo.informativeText.append(informativeMessage);
     }
 
-    selectionInfo.msgInfo.finishFunc = [selectionInfo](QMessageBox* msgBox)
+    selectionInfo.msgInfo.finishFunc = [selectionInfo](QPointer<MessageBoxResult> msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
-            MegaSyncApp->getStalledIssuesModel()->fixFingerprint((msgBox->checkBox() && msgBox->checkBox()->isChecked())? selectionInfo.similarToSelected: selectionInfo.selection);
+            MegaSyncApp->getStalledIssuesModel()->fixFingerprint(
+                (msgBox->isChecked()) ? selectionInfo.similarToSelected : selectionInfo.selection);
         }
     };
 
@@ -379,11 +380,12 @@ void FolderMatchedAgainstFileHeader::onMultipleActionButtonOptionSelected(
     selectionInfo.msgInfo.text = areYouSure(pluralNumber);
     selectionInfo.msgInfo.informativeText = RENAMING_CONFLICTED_ITEMS_STRING;
 
-    selectionInfo.msgInfo.finishFunc = [selectionInfo](QMessageBox* msgBox)
+    selectionInfo.msgInfo.finishFunc = [selectionInfo](QPointer<MessageBoxResult> msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
-            MegaSyncApp->getStalledIssuesModel()->fixFolderMatchedAgainstFile((msgBox->checkBox() && msgBox->checkBox()->isChecked())? selectionInfo.similarToSelected: selectionInfo.selection);
+            MegaSyncApp->getStalledIssuesModel()->fixFolderMatchedAgainstFile(
+                (msgBox->isChecked()) ? selectionInfo.similarToSelected : selectionInfo.selection);
         }
     };
 
@@ -595,11 +597,14 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
             }
         }
 
-        selectionInfo.msgInfo.finishFunc = [index, selectionInfo, nameConflict](QMessageBox* msgBox)
+        selectionInfo.msgInfo.finishFunc =
+            [index, selectionInfo, nameConflict](QPointer<MessageBoxResult> msgBox)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
-                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveNameConflictIssues((msgBox->checkBox() && msgBox->checkBox()->isChecked())? selectionInfo.similarToSelected : selectionInfo.selection, index);
+                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveNameConflictIssues(
+                    msgBox->isChecked() ? selectionInfo.similarToSelected : selectionInfo.selection,
+                    index);
             }
         };
 

@@ -149,7 +149,7 @@ void BugReportDialog::onReportFinished()
 {
     closeProgressDialog();
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.parent = this->parentWidget();
     msgInfo.title = tr("Bug report");
     msgInfo.text = tr("Bug report success!");
@@ -157,9 +157,9 @@ void BugReportDialog::onReportFinished()
                                  "will sent to you accordingly.");
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok;
-    msgInfo.iconPixmap = QPixmap(Utilities::getDevicePixelRatio() < 2 ?
-                                     QString::fromUtf8(":/images/bug_report_success.png") :
-                                     QString::fromUtf8(":/images/bug_report_success@2x.png"));
+    msgInfo.imageUrl = Utilities::getDevicePixelRatio() < 2 ?
+                           QString::fromUtf8(":/images/bug_report_success.png") :
+                           QString::fromUtf8(":/images/bug_report_success@2x.png");
 
     accept();
     QMegaMessageBox::information(msgInfo);
@@ -169,7 +169,7 @@ void BugReportDialog::onReportFailed()
 {
     closeProgressDialog();
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.parent = this;
     msgInfo.title = tr("Bug report");
     msgInfo.text = tr("Error on submitting bug report");
@@ -228,7 +228,7 @@ void BugReportDialog::cancelSendReport()
     mController->prepareForCancellation();
     closeProgressDialog();
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.parent = this;
     msgInfo.title = tr("Bug report");
     msgInfo.text = tr("Are you sure you want to exit uploading?");
@@ -239,9 +239,9 @@ void BugReportDialog::cancelSendReport()
     QMap<QMessageBox::Button, QString> textsByButton;
     textsByButton.insert(QMessageBox::No, tr("Continue"));
     textsByButton.insert(QMessageBox::Yes, tr("Yes"));
-    msgInfo.defaultButton = QMegaMessageBox::Yes;
+    msgInfo.defaultButton = QMessageBox::Yes;
     msgInfo.buttonsText = textsByButton;
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
     {
         if (msg->result() == QMessageBox::Yes)
         {

@@ -641,16 +641,17 @@ bool PlatformImplementation::isFedoraWithGnome()
 
 void PlatformImplementation::promptFedoraGnomeUser()
 {
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.title = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Install notification area icon");
     msgInfo.text = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "For a better experience on Fedora with GNOME, we recommend you enable the notification area icon.\n"
                                                                                     "Would you like to install the necessary components now?");
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::Yes;
     msgInfo.checkboxText = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Do not show again");
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
     {
-        if (!msg) return;
+        if (!msg)
+            return;
 
         bool isInstallationAttempted = (msg->result() == QMessageBox::Yes);
         bool isInstallationSuccessful = false;
@@ -720,7 +721,7 @@ bool PlatformImplementation::installAppIndicatorForFedoraGnome()
             installProcess.waitForFinished();
             progressDialog.close();
 
-            QMegaMessageBox::MessageBoxInfo msgWarnInfo;
+            MessageBoxInfo msgWarnInfo;
             msgWarnInfo.title = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Installation Cancelled");
             msgWarnInfo.text = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "The notification area icon installation was cancelled.");
             QMegaMessageBox::warning(msgWarnInfo);
@@ -746,7 +747,7 @@ bool PlatformImplementation::installAppIndicatorForFedoraGnome()
             loop.exit(0);
         } else
         {
-            QMegaMessageBox::MessageBoxInfo errorInfo;
+            MessageBoxInfo errorInfo;
             errorInfo.title = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Error installing components");
             errorInfo.text = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Failed to install the necessary components.");
             errorInfo.informativeText = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "To install manually, please run the following commands:\n\n"
@@ -771,7 +772,7 @@ bool PlatformImplementation::installAppIndicatorForFedoraGnome()
     enableProcess.start(QString::fromUtf8(GNOME_EXTENSIONS_CMD), { QStringLiteral("enable"), QString::fromUtf8(APP_INDICATOR_EXTENSION_ID) });
     enableProcess.waitForFinished(PROCESS_TIMEOUT_MS);
 
-    QMegaMessageBox::MessageBoxInfo successInfo;
+    MessageBoxInfo successInfo;
     successInfo.title = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Install complete");
     successInfo.text = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "The notification area icon was installed successfully.\n"
                                                                                         "Please log out of your computer to complete the installation.");

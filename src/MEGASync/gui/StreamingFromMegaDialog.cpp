@@ -85,13 +85,13 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
 
     event->ignore();
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.title = tr("Stream from MEGA");
     msgInfo.text = tr("Are you sure that you want to stop the streaming?");
     msgInfo.buttons = QMessageBox::Yes|QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
     msgInfo.parent = this;
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
     {
         if(msg->result() == QMessageBox::Yes)
         {
@@ -165,7 +165,7 @@ bool StreamingFromMegaDialog::isFolderLink(const QString& link) const
 
 void StreamingFromMegaDialog::showErrorMessage(const QString& message)
 {
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.title = QMegaMessageBox::errorTitle();
     msgInfo.text = message;
     msgInfo.buttons = QMessageBox::Ok;
@@ -197,12 +197,12 @@ void StreamingFromMegaDialog::onLinkInfoAvailable()
     }
     else
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageBoxInfo msgInfo;
         msgInfo.parent = this;
         msgInfo.title = QMegaMessageBox::errorTitle();
         msgInfo.text = tr("Error getting link information");
         msgInfo.defaultButton = QMessageBox::Ok;
-        msgInfo.finishFunc = [this](QPointer<QMessageBox>)
+        msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
         {
             //This deletes the LinkProcess
             ui->sFileInfo->setCurrentWidget(ui->pNothingSelected);
@@ -231,14 +231,14 @@ void StreamingFromMegaDialog::on_bClose_clicked()
         return;
     }
 
-
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.title = tr("Stream from MEGA");
     msgInfo.text = tr("Are you sure that you want to stop the streaming?");
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
     msgInfo.parent = this;
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
+    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
+    {
         if(msg->result() == QMessageBox::Yes)
         {
             done(QDialog::Accepted);
@@ -370,7 +370,7 @@ void StreamingFromMegaDialog::updateFileInfoFromNode(MegaNode *node)
 {
     if (!node)
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageBoxInfo msgInfo;
         msgInfo.parent = this;
         msgInfo.title = QMegaMessageBox::errorTitle();
         msgInfo.text = tr("File not found");

@@ -64,11 +64,11 @@ void MoveOrRenameCannotOccur::onLocalButtonClicked()
         info.msgInfo.text = LocalAndRemoteDifferentWidget::keepLocalSideString(stringInfo);
         textDecorator.process(info.msgInfo.text);
 
-        info.msgInfo.finishFunc = [info](QMessageBox* msgBox)
+        info.msgInfo.finishFunc = [info](QPointer<MessageBoxResult> msgBox)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
-                if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+                if (msgBox->isChecked())
                 {
                     MegaSyncApp->getStalledIssuesModel()->fixMoveOrRenameCannotOccur(
                         info.similarSelection, MoveOrRenameIssueChosenSide::LOCAL);
@@ -107,11 +107,11 @@ void MoveOrRenameCannotOccur::onRemoteButtonClicked()
         info.msgInfo.text = LocalAndRemoteDifferentWidget::keepRemoteSideString(stringInfo);
         textDecorator.process(info.msgInfo.text);
 
-        info.msgInfo.finishFunc = [info](QMessageBox* msgBox)
+        info.msgInfo.finishFunc = [info](QPointer<MessageBoxResult> msgBox)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
-                if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+                if (msgBox->isChecked())
                 {
                     MegaSyncApp->getStalledIssuesModel()->fixMoveOrRenameCannotOccur(
                         info.similarSelection, MoveOrRenameIssueChosenSide::REMOTE);

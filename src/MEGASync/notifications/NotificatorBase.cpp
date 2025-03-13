@@ -212,7 +212,7 @@ void NotificatorBase::notify(Class cls, const QString &title, const QString &tex
             break;
         default:
         {
-            QMegaMessageBox::MessageBoxInfo info;
+            MessageBoxInfo info;
             info.title = title;
             info.text = text;
 

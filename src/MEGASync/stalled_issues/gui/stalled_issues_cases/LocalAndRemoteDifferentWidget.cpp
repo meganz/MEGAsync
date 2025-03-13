@@ -306,11 +306,11 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.informativeText);
     StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(info.msgInfo.informativeText);
 
-    info.msgInfo.finishFunc = [info](QMessageBox* msgBox)
+    info.msgInfo.finishFunc = [info](QPointer<MessageBoxResult> msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
-            if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+            if (msgBox->isChecked())
             {
                 MegaSyncApp->getStalledIssuesModel()->chooseSideManually(false, info.similarSelection);
             }
@@ -398,13 +398,13 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
     }
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.informativeText);
 
-    info.msgInfo.finishFunc = [this, info](QMessageBox* msgBox)
+    info.msgInfo.finishFunc = [this, info](QPointer<MessageBoxResult> msgBox)
     {
         if(getData().consultData()->getSyncType() == mega::MegaSync::SyncType::TYPE_TWOWAY)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
-                if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+                if (msgBox->isChecked())
                 {
                     MegaSyncApp->getStalledIssuesModel()->chooseSideManually(true, info.similarSelection);
                 }
@@ -418,7 +418,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
-                if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+                if (msgBox->isChecked())
                 {
                     MegaSyncApp->getStalledIssuesModel()->chooseRemoteForBackups(info.similarSelection);
                 }
@@ -481,11 +481,11 @@ void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
         }
         StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.informativeText);
 
-        info.msgInfo.finishFunc = [info](QMessageBox* msgBox)
+        info.msgInfo.finishFunc = [info](QPointer<MessageBoxResult> msgBox)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
-                if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+                if (msgBox->isChecked())
                 {
                     MegaSyncApp->getStalledIssuesModel()->chooseBothSides(info.similarSelection);
                 }
@@ -520,11 +520,11 @@ void LocalAndRemoteDifferentWidget::onKeepLastModifiedTimeButtonClicked(int)
         info.msgInfo.informativeText = tr("This action will choose the remote side");
     }
 
-    info.msgInfo.finishFunc = [info](QMessageBox* msgBox)
+    info.msgInfo.finishFunc = [info](QPointer<MessageBoxResult> msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
-            if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+            if (msgBox->isChecked())
             {
                 MegaSyncApp->getStalledIssuesModel()->chooseLastModifiedLocalRemoteIssues(
                     info.similarSelection);

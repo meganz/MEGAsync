@@ -84,7 +84,7 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
         return StalledIssue::convert<IgnoredStalledIssue>(issue) != nullptr;
     };
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
     msgInfo.title = MegaSyncApp->getMEGAString();
     msgInfo.textFormat = Qt::RichText;
@@ -96,24 +96,23 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
     auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(canBeIgnoredChecker);
     if(allSimilarIssues.size() != selection.size())
     {
-        auto checkBox = new QCheckBox(tr("Apply to all"));
-        msgInfo.checkBox = checkBox;
+        msgInfo.checkboxText = tr("Apply to all");
     }
     msgInfo.buttonsText = textsByButton;
     msgInfo.text = tr("Are you sure you want to ignore this issue?");
     msgInfo.informativeText = tr("This action will ignore this issue and it will not be synced.");
 
-    msgInfo.finishFunc = [selection](QMessageBox* msgBox)
+    msgInfo.finishFunc = [selection](QPointer<MessageBoxResult> msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
-            if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+            if (msgBox->isChecked())
             {
                 MegaSyncApp->getStalledIssuesModel()->ignoreAllSimilarIssues();
             }
             else
             {
-            MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection);
+                MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection);
             }
         }
     };

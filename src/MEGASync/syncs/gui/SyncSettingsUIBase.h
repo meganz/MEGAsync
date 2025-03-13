@@ -133,7 +133,7 @@ public:
                     QString messageBoxTitle(getOperationFailTitle());
                     auto it = messageBoxTitle.begin();
                     (*it) = it->toUpper();
-                    QMegaMessageBox::MessageBoxInfo msgInfo;
+                    MessageBoxInfo msgInfo;
                     msgInfo.parent = this;
                     msgInfo.title = messageBoxTitle;
                     msgInfo.text = getOperationFailText(sync);
@@ -173,7 +173,7 @@ public:
                                 Controller::instance().getErrorString(errorCode, syncErrorCode);
                             dec.process(msg);
 
-                            QMegaMessageBox::MessageBoxInfo msgInfo;
+                            MessageBoxInfo msgInfo;
                             msgInfo.parent = this;
                             msgInfo.title = title;
                             msgInfo.text = msg;
@@ -188,7 +188,7 @@ public:
                 this,
                 [this](std::shared_ptr<mega::MegaError> err)
                 {
-                    QMegaMessageBox::MessageBoxInfo msgInfo;
+                    MessageBoxInfo msgInfo;
                     msgInfo.parent = this;
                     msgInfo.title = getErrorRemovingTitle();
                     msgInfo.text = getErrorRemovingText(err);

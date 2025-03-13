@@ -485,7 +485,7 @@ std::shared_ptr<MegaNode> NodeSelector::getSelectedNode()
 
 void NodeSelector::showNotFoundNodeMessageBox()
 {
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.title = QMegaMessageBox::errorTitle();
     msgInfo.text = tr("The item you selected has been removed. To reselect, close this window and try again.");
     QMegaMessageBox::warning(msgInfo);
@@ -560,7 +560,7 @@ void NodeSelector::initSpecialisedWidgets()
             connect(model,
                     &NodeSelectorModel::showMessageBox,
                     this,
-                    [this](QMegaMessageBox::MessageBoxInfo info)
+                    [this](MessageBoxInfo info)
                     {
                         info.parent = this;
                         QMegaMessageBox::warning(info);

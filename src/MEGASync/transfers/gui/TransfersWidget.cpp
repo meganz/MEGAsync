@@ -573,14 +573,15 @@ void TransfersWidget::onCancelClearButtonPressedOnDelegate()
 
     auto info = ui->tvTransfers->getSelectedCancelOrClearInfo();
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.parent = this;
     msgInfo.title = MegaSyncApp->getMEGAString();
     msgInfo.text = info.actionText;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
     msgInfo.buttonsText = info.buttonsText;
-    msgInfo.finishFunc = [this, sourceSelectionIndexes](QPointer<QMessageBox> msg){
+    msgInfo.finishFunc = [this, sourceSelectionIndexes](QPointer<MessageBoxResult> msg)
+    {
         if(msg->result() == QMessageBox::Yes)
         {
             getModel()->cancelAndClearTransfers(sourceSelectionIndexes, this);

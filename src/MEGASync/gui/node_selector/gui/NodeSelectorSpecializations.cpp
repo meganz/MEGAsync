@@ -40,11 +40,12 @@ void UploadNodeSelector::onOkButtonClicked()
         int access = Utilities::getNodeAccess(node->getHandle());
         if (access < mega::MegaShare::ACCESS_READWRITE)
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
+            MessageBoxInfo msgInfo;
             msgInfo.parent = this;
             msgInfo.title = QMegaMessageBox::errorTitle();
             msgInfo.text = tr("You need Read & Write or Full access rights to be able to upload to the selected folder.");
-            msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
+            msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
+            {
                 reject();
             };
             QMegaMessageBox::warning(msgInfo);
@@ -88,10 +89,11 @@ void DownloadNodeSelector::onOkButtonClicked()
         }
     }
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.parent = this;
     msgInfo.title = QMegaMessageBox::errorTitle();
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
+    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
+    {
         reject();
     };
 
@@ -159,10 +161,11 @@ void SyncNodeSelector::onOkButtonClicked()
     auto node = getSelectedNode();
     if(node)
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageBoxInfo msgInfo;
         msgInfo.parent = this;
         msgInfo.title = QMegaMessageBox::errorTitle();
-        msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
+        msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
+        {
             reject();
         };
 
@@ -213,11 +216,11 @@ void StreamNodeSelector::onOkButtonClicked()
     {
         if (node->isFolder())
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
+            MessageBoxInfo msgInfo;
             msgInfo.parent = this;
             msgInfo.title = QMegaMessageBox::errorTitle();
             msgInfo.text = tr("Only files can be used for streaming.");
-            msgInfo.finishFunc = [this](QPointer<QMessageBox>)
+            msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
             {
                 reject();
             };
@@ -345,7 +348,7 @@ void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint id)
     }
     else if(id == CloudDriveType::ClearRubbish)
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageBoxInfo msgInfo;
         msgInfo.parent = this;
         msgInfo.title = QMegaMessageBox::errorTitle();
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
@@ -358,7 +361,7 @@ void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint id)
         Text::Decorator dec(&bold);
         msgInfo.informativeText = tr("All items will be permanently deleted. This action can [B]not[/B] be undone");
         dec.process(msgInfo.informativeText);
-        msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+        msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
         {
             if (msg->result() == QMessageBox::Yes)
             {

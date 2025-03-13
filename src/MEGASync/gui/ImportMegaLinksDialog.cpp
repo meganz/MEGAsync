@@ -144,7 +144,7 @@ void ImportMegaLinksDialog::onLocalFolderSet(const QString& path)
         QTemporaryFile test(nativePath + QDir::separator());
         if (!test.open())
         {
-            QMegaMessageBox::MessageBoxInfo info;
+            MessageBoxInfo info;
             info.title = QMegaMessageBox::errorTitle();
             info.text = tr("You don't have write permissions in this local folder.");
             info.parent = this;
@@ -235,7 +235,7 @@ void ImportMegaLinksDialog::on_bOk_clicked()
         QTemporaryFile test(qFilePath + QDir::separator());
         if (!test.open())
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
+            MessageBoxInfo msgInfo;
             msgInfo.title = QMegaMessageBox::errorTitle();
             msgInfo.text = tr("You don't have write permissions in this local folder.");
             QMegaMessageBox::critical(msgInfo);

@@ -2049,7 +2049,7 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
         {
             if (!mRequestFailedByHandle.isEmpty())
             {
-                QMegaMessageBox::MessageBoxInfo msgInfo;
+                MessageBoxInfo msgInfo;
                 msgInfo.buttonsText.insert(QMessageBox::StandardButton::Ok, tr("Close"));
                 msgInfo.title = MegaSyncApp->getMEGAString();
 

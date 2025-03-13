@@ -129,7 +129,7 @@ bool NameConflictedStalledIssue::shouldBeIgnored() const
 
 void NameConflictedStalledIssue::showRemoteRenameHasFailedMessageBox(const mega::MegaError& error, bool isFile)
 {
-    QMegaMessageBox::MessageBoxInfo failedInfo;
+    MessageBoxInfo failedInfo;
     failedInfo.title = MegaSyncApp->getMEGAString();
     failedInfo.textFormat = Qt::RichText;
     failedInfo.buttons = QMessageBox::Yes;
@@ -148,7 +148,7 @@ void NameConflictedStalledIssue::showRemoteRenameHasFailedMessageBox(const mega:
 
 void NameConflictedStalledIssue::showLocalRenameHasFailedMessageBox(bool isFile)
 {
-    QMegaMessageBox::MessageBoxInfo failedInfo;
+    MessageBoxInfo failedInfo;
     failedInfo.title = MegaSyncApp->getMEGAString();
     failedInfo.textFormat = Qt::RichText;
     failedInfo.buttons = QMessageBox::Yes;

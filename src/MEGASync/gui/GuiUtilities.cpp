@@ -39,7 +39,7 @@ void GuiUtilities::showPayOrDismiss(const QString &title, const QString &message
 {
     const QString dismissLabel = QCoreApplication::translate("GuiUtilities", "Dismiss");
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.parent = nullptr;
 #ifdef Q_OS_MAC
     msgInfo.text = title;
@@ -55,7 +55,7 @@ void GuiUtilities::showPayOrDismiss(const QString &title, const QString &message
     msgInfo.defaultButton = QMessageBox::Yes;
     msgInfo.textFormat = Qt::TextFormat::RichText;
 
-    msgInfo.finishFunc = [](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [](QPointer<MessageBoxResult> msg)
     {
         if(msg->result() == QMessageBox::Yes)
         {

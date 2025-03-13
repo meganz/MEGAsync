@@ -726,12 +726,12 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
         return node;
     };
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.parent = ui->tMegaFolders;
     msgInfo.title = MegaSyncApp->getMEGAString();
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::Yes;
-    msgInfo.finishFunc = [this, handles, permanently](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this, handles, permanently](QPointer<MessageBoxResult> msg)
     {
         if (msg->result() == QMessageBox::Yes)
         {
@@ -807,7 +807,7 @@ void NodeSelectorTreeViewWidget::onLeaveShareClicked(const QList<mega::MegaHandl
         return;
     }
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.parent = ui->tMegaFolders;
     msgInfo.title = MegaSyncApp->getMEGAString();
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
@@ -819,7 +819,7 @@ void NodeSelectorTreeViewWidget::onLeaveShareClicked(const QList<mega::MegaHandl
     msgInfo.informativeText =
         tr("If you leave the folder, you will not be able to see it again.", "", handles.size());
 
-    msgInfo.finishFunc = [this, handles](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this, handles](QPointer<MessageBoxResult> msg)
     {
         if (msg->result() == QMessageBox::Yes)
         {

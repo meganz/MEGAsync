@@ -41,7 +41,7 @@ void PasteMegaLinksDialog::on_bSubmit_clicked()
     links = QSet<QString>(links.begin(), links.end()).values();
     if (links.size() == 0)
     {
-        QMegaMessageBox::MessageBoxInfo info;
+        MessageBoxInfo info;
         info.parent = this;
         info.title = QMegaMessageBox::warningTitle();
 

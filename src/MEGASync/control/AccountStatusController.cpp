@@ -49,7 +49,7 @@ void AccountStatusController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
             }
             case mega::MegaApi::ACCOUNT_BLOCKED_SUBUSER_DISABLED:
             {
-                QMegaMessageBox::MessageBoxInfo msgInfo;
+                MessageBoxInfo msgInfo;
                 msgInfo.title = MegaSyncApp->getMEGAString();
                 msgInfo.text = tr("Your account has been disabled by your administrator. Please contact your business account administrator for further details.");
                 msgInfo.ignoreCloseAll = true;
@@ -58,7 +58,7 @@ void AccountStatusController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
             }
             default:
             {
-                QMegaMessageBox::MessageBoxInfo msgInfo;
+                MessageBoxInfo msgInfo;
                 msgInfo.title = MegaSyncApp->getMEGAString();
                 msgInfo.text = QCoreApplication::translate("MegaError", event->getText());
                 msgInfo.ignoreCloseAll = true;

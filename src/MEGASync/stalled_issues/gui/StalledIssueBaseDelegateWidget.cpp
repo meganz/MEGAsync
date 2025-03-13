@@ -176,8 +176,8 @@ bool StalledIssueBaseDelegateWidget::checkSelection(const QList<mega::MegaSyncSt
     info.similarSelection = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
     if(info.similarSelection.size() != info.selection.size())
     {
-        auto checkBox = new QCheckBox(QCoreApplication::translate("LocalAndRemoteDifferentWidget", "Apply to all"));
-        info.msgInfo.checkBox = checkBox;
+        info.msgInfo.checkboxText =
+            QCoreApplication::translate("LocalAndRemoteDifferentWidget", "Apply to all");
     }
     info.msgInfo.buttonsText = textsByButton;
 

@@ -24,7 +24,7 @@ public:
 
         bool hasBeenExternallyChanged = false;
 
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageBoxInfo msgInfo;
     };
 
     SelectionInfo getSelectionInfo(

@@ -433,7 +433,7 @@ void DeviceCentre::learnMore() const
 
 void DeviceCentre::applyPreviousExclusionRules() const
 {
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.text = /*tr*/ QString::fromUtf8("[B]Apply previous exclusion rules?[/B]");
     Text::Bold boldDecorator;
     boldDecorator.process(msgInfo.text);
@@ -447,7 +447,7 @@ void DeviceCentre::applyPreviousExclusionRules() const
     QMap<QMessageBox::Button, QString> textsByButton;
     textsByButton.insert(QMessageBox::Ok, /*tr*/ QString::fromUtf8("Apply"));
     msgInfo.buttonsText = textsByButton;
-    msgInfo.finishFunc = [](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [](QPointer<MessageBoxResult> msg)
     {
         if (msg->result() == QMessageBox::Ok)
         {

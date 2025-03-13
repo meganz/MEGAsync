@@ -486,7 +486,7 @@ void StalledIssuesModel::onSendEvent()
     }
 }
 
-void StalledIssuesModel::runMessageBox(QMegaMessageBox::MessageBoxInfo info)
+void StalledIssuesModel::runMessageBox(MessageBoxInfo info)
 {
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
     info.parent = dialog ? dialog->getDialog() : nullptr;
@@ -1148,7 +1148,7 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
 
 void StalledIssuesModel::showIssueExternallyChangedMessageBox()
 {
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.title = MegaSyncApp->getMEGAString();
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok;
@@ -1156,7 +1156,8 @@ void StalledIssuesModel::showIssueExternallyChangedMessageBox()
     buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
     msgInfo.buttonsText = buttonsText;
     msgInfo.text = tr("The issue may have been solved externally.\nPlease, refresh the list.");
-    msgInfo.finishFunc = [this](QPointer<QMessageBox>) {
+    msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
+    {
         updateActiveStalledIssues();
     };
 
@@ -1582,7 +1583,7 @@ void StalledIssuesModel::ignoreSymLinks()
 
 void StalledIssuesModel::showIgnoreItemsError(bool allFailed)
 {
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageBoxInfo msgInfo;
     msgInfo.title = MegaSyncApp->getMEGAString();
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok;
