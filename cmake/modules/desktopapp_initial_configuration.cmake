@@ -29,3 +29,6 @@ if(CMAKE_HOST_APPLE)
 
 endif()
 
+if (WIN32)
+    set(CMAKE_GENERATOR_TOOLSET "v142")
+endif()
