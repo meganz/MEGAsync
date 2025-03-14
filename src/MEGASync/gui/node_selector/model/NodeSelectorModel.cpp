@@ -1888,6 +1888,8 @@ void NodeSelectorModel::deleteNodeFromModel(const QModelIndex& index)
             if (mExtraSpaceAdded && mCurrentRootIndex == index.parent())
             {
                 auto currentRowCount(rowCount(index.parent()));
+                // 2 is the result of 1 for the extra row + 1 for the row
+                // about to be removed
                 if (currentRowCount == 2)
                 {
                     executeRemoveExtraSpaceLogic(mCurrentRootIndex);
