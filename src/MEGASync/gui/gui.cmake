@@ -27,7 +27,6 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/ChangeLogDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/StreamingFromMegaDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/MegaProgressCustomDialog.h
-    ${CMAKE_CURRENT_LIST_DIR}/QMegaMessageBox.h
     ${CMAKE_CURRENT_LIST_DIR}/AvatarWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/MenuItemAction.h
     ${CMAKE_CURRENT_LIST_DIR}/StatusInfo.h
@@ -117,6 +116,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyController.h
     ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/MessageDialogComponent.h
     ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/MessageDialogData.h
+    ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/QMegaMessageBox.h
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellComponent.h
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellController.h
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellModel.h
@@ -170,7 +170,6 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/ChangeLogDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/StreamingFromMegaDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/MegaProgressCustomDialog.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/QMegaMessageBox.cpp
     ${CMAKE_CURRENT_LIST_DIR}/AvatarWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/MenuItemAction.cpp
     ${CMAKE_CURRENT_LIST_DIR}/StatusInfo.cpp
@@ -257,6 +256,7 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyController.cpp
     ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/MessageDialogComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/MessageDialogData.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/QMegaMessageBox.cpp
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellController.cpp
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellModel.cpp
