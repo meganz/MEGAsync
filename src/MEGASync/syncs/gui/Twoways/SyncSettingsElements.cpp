@@ -150,10 +150,10 @@ void SyncSettingsElements::applyPreviousExclusions()
 {
     MessageBoxInfo msgInfo;
     msgInfo.parent = mSyncStallModeSelector;
-    msgInfo.text = tr("[B]Apply previous exclusion rules?[/B]");
+    msgInfo.titleText = tr("[B]Apply previous exclusion rules?[/B]");
     Text::Bold boldDecroator;
-    boldDecroator.process(msgInfo.text);
-    msgInfo.informativeText =
+    boldDecroator.process(msgInfo.titleText);
+    msgInfo.descriptionText =
         tr("The exclusion rules you set up in a previous version of the app will be applied to all "
            "of your syncs and backups. Any rules created since then will be overwritten.");
     msgInfo.textFormat = Qt::RichText;

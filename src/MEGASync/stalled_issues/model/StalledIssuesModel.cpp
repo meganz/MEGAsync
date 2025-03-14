@@ -1149,13 +1149,13 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
 void StalledIssuesModel::showIssueExternallyChangedMessageBox()
 {
     MessageBoxInfo msgInfo;
-    msgInfo.title = MegaSyncApp->getMEGAString();
+    msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok;
     QMap<QMessageBox::StandardButton, QString> buttonsText;
     buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
     msgInfo.buttonsText = buttonsText;
-    msgInfo.text = tr("The issue may have been solved externally.\nPlease, refresh the list.");
+    msgInfo.titleText = tr("The issue may have been solved externally.\nPlease, refresh the list.");
     msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
     {
         updateActiveStalledIssues();
@@ -1584,11 +1584,13 @@ void StalledIssuesModel::ignoreSymLinks()
 void StalledIssuesModel::showIgnoreItemsError(bool allFailed)
 {
     MessageBoxInfo msgInfo;
-    msgInfo.title = MegaSyncApp->getMEGAString();
+    msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok;
-    msgInfo.text = allFailed ? tr("Some issues can't be fixed.\nVerify the permissions of the .megaignore file on your local sync folder locations.")
-                             : tr("Issues can't be fixed.\nVerify the permissions of the .megaignore on file your local sync folder locations.");
+    msgInfo.titleText = allFailed ? tr("Some issues can't be fixed.\nVerify the permissions of the "
+                                       ".megaignore file on your local sync folder locations.") :
+                                    tr("Issues can't be fixed.\nVerify the permissions of the "
+                                       ".megaignore on file your local sync folder locations.");
 
     runMessageBox(std::move(msgInfo));
 }

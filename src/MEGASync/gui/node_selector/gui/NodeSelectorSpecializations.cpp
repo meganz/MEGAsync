@@ -42,9 +42,10 @@ void UploadNodeSelector::onOkButtonClicked()
         {
             MessageBoxInfo msgInfo;
             msgInfo.parent = this;
-            msgInfo.title = QMegaMessageBox::errorTitle();
-            msgInfo.text = tr("You need Read & Write or Full access rights to be able to upload to the selected folder.");
-            msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
+            msgInfo.dialogTitle = QMegaMessageBox::errorTitle();
+            msgInfo.titleText = tr("You need Read & Write or Full access rights to be able to "
+                                   "upload to the selected folder.");
+            msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
             {
                 reject();
             };
@@ -91,8 +92,8 @@ void DownloadNodeSelector::onOkButtonClicked()
 
     MessageBoxInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.title = QMegaMessageBox::errorTitle();
-    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
+    msgInfo.dialogTitle = QMegaMessageBox::errorTitle();
+    msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
     {
         reject();
     };
@@ -101,19 +102,30 @@ void DownloadNodeSelector::onOkButtonClicked()
     {
         if(ui->stackedWidget->currentIndex() == CLOUD_DRIVE)
         {
-            msgInfo.text = tr("The item you selected has been removed. To reselect, close this window and try again.", "", wrongNodes);
+            msgInfo.titleText = tr("The item you selected has been removed. To reselect, close "
+                                   "this window and try again.",
+                                   "",
+                                   wrongNodes);
             QMegaMessageBox::warning(msgInfo);
         }
         else
         {
-            msgInfo.text = tr("You no longer have access to this item. Ask the owner to share again.", "", wrongNodes);
+            msgInfo.titleText =
+                tr("You no longer have access to this item. Ask the owner to share again.",
+                   "",
+                   wrongNodes);
             QMegaMessageBox::warning(msgInfo);
         }
     }
     else if(wrongNodes > 0)
     {
         QString warningMsg1 = tr("%1 item selected", "", nodes.size()).arg(nodes.size());
-        msgInfo.text = tr("%1. %2 has been removed. To reselect, close this window and try again.", "", wrongNodes).arg(warningMsg1).arg(wrongNodes);
+        msgInfo.titleText =
+            tr("%1. %2 has been removed. To reselect, close this window and try again.",
+               "",
+               wrongNodes)
+                .arg(warningMsg1)
+                .arg(wrongNodes);
         QMegaMessageBox::warning(msgInfo);
     }
     else
@@ -163,8 +175,8 @@ void SyncNodeSelector::onOkButtonClicked()
     {
         MessageBoxInfo msgInfo;
         msgInfo.parent = this;
-        msgInfo.title = QMegaMessageBox::errorTitle();
-        msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
+        msgInfo.dialogTitle = QMegaMessageBox::errorTitle();
+        msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
         {
             reject();
         };
@@ -172,7 +184,8 @@ void SyncNodeSelector::onOkButtonClicked()
         int access = Utilities::getNodeAccess(node->getHandle());
         if (access < mega::MegaShare::ACCESS_FULL)
         {
-            msgInfo.text = tr("You need Full access right to be able to sync the selected folder.");
+            msgInfo.titleText =
+                tr("You need Full access right to be able to sync the selected folder.");
             QMegaMessageBox::warning(msgInfo);
         }
         else
@@ -181,8 +194,9 @@ void SyncNodeSelector::onOkButtonClicked()
             auto check = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(path.get()));
             if (!check)
             {
-                msgInfo.text = tr("Invalid folder for synchronization.\n"
-                                  "Please, ensure that you don't use characters like '\\' '/' or ':' in your folder names.");
+                msgInfo.titleText = tr("Invalid folder for synchronization.\n"
+                                       "Please, ensure that you don't use characters like '\\' '/' "
+                                       "or ':' in your folder names.");
                 QMegaMessageBox::warning(msgInfo);
             }
             else
@@ -218,8 +232,8 @@ void StreamNodeSelector::onOkButtonClicked()
         {
             MessageBoxInfo msgInfo;
             msgInfo.parent = this;
-            msgInfo.title = QMegaMessageBox::errorTitle();
-            msgInfo.text = tr("Only files can be used for streaming.");
+            msgInfo.dialogTitle = QMegaMessageBox::errorTitle();
+            msgInfo.titleText = tr("Only files can be used for streaming.");
             msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
             {
                 reject();
@@ -350,17 +364,18 @@ void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint id)
     {
         MessageBoxInfo msgInfo;
         msgInfo.parent = this;
-        msgInfo.title = QMegaMessageBox::errorTitle();
+        msgInfo.dialogTitle = QMegaMessageBox::errorTitle();
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
         QMap<QMessageBox::Button, QString> textsByButton;
         textsByButton.insert(QMessageBox::Yes, tr("Empty"));
         textsByButton.insert(QMessageBox::No, tr("Cancel"));
         msgInfo.buttonsText = textsByButton;
-        msgInfo.text = tr("Empty Rubbish bin?");
+        msgInfo.titleText = tr("Empty Rubbish bin?");
         Text::Bold bold;
         Text::Decorator dec(&bold);
-        msgInfo.informativeText = tr("All items will be permanently deleted. This action can [B]not[/B] be undone");
-        dec.process(msgInfo.informativeText);
+        msgInfo.descriptionText =
+            tr("All items will be permanently deleted. This action can [B]not[/B] be undone");
+        dec.process(msgInfo.descriptionText);
         msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
         {
             if (msg->result() == QMessageBox::Yes)

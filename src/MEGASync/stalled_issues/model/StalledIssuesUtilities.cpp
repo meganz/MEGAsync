@@ -96,8 +96,8 @@ void StalledIssuesUtilities::openLink(bool isCloud, const QString& path)
         {
             MessageBoxInfo msgInfo;
             msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-            msgInfo.title = QMegaMessageBox::warningTitle();
-            msgInfo.text = QString::fromUtf8("Node %1 does not exist.").arg(path);
+            msgInfo.dialogTitle = QMegaMessageBox::warningTitle();
+            msgInfo.titleText = QString::fromUtf8("Node %1 does not exist.").arg(path);
             QMegaMessageBox::warning(msgInfo);
         }
     }
@@ -115,8 +115,8 @@ void StalledIssuesUtilities::openLink(bool isCloud, const QString& path)
         {
             MessageBoxInfo msgInfo;
             msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-            msgInfo.title = QMegaMessageBox::warningTitle();
-            msgInfo.text =  QString::fromUtf8("Path %1 does not exist.").arg(path);
+            msgInfo.dialogTitle = QMegaMessageBox::warningTitle();
+            msgInfo.titleText = QString::fromUtf8("Path %1 does not exist.").arg(path);
             QMegaMessageBox::warning(msgInfo);
         }
     }

@@ -413,10 +413,11 @@ void NameConflict::onActionClicked(int actionId)
                 {
                     MessageBoxInfo msgInfo;
                     msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-                    msgInfo.title = MegaSyncApp->getMEGAString();
+                    msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
                     msgInfo.textFormat = Qt::RichText;
                     msgInfo.buttons = QMessageBox::Ok;
-                    msgInfo.text = tr("%1 no longer exists.\nPlease refresh the view").arg(info.fileName());
+                    msgInfo.titleText =
+                        tr("%1 no longer exists.\nPlease refresh the view").arg(info.fileName());
                     QMegaMessageBox::warning(msgInfo);
                     return;
                 }
@@ -492,10 +493,11 @@ void NameConflict::onActionClicked(int actionId)
                 {
                     MessageBoxInfo msgInfo;
                     msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-                    msgInfo.title = MegaSyncApp->getMEGAString();
+                    msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
                     msgInfo.textFormat = Qt::RichText;
                     msgInfo.buttons = QMessageBox::Ok;
-                    msgInfo.text = tr("%1 no longer exists.\nPlease refresh the view").arg(info.fileName());
+                    msgInfo.titleText =
+                        tr("%1 no longer exists.\nPlease refresh the view").arg(info.fileName());
                     QMegaMessageBox::warning(msgInfo);
                     return;
                 }
@@ -503,7 +505,7 @@ void NameConflict::onActionClicked(int actionId)
 
             MessageBoxInfo msgInfo;
             msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-            msgInfo.title = MegaSyncApp->getMEGAString();
+            msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
             msgInfo.textFormat = Qt::RichText;
             msgInfo.buttons = QMessageBox::Yes | QMessageBox::Cancel;
 
@@ -511,26 +513,39 @@ void NameConflict::onActionClicked(int actionId)
             {
                 if(isFile)
                 {
-                    msgInfo.text = tr("Are you sure you want to remove the remote file %1?").arg(fileName);
-                    msgInfo.informativeText = tr("It will be moved to the SyncDebris folder on the MEGA Rubbish Bin along with its versions.[BR]You will be able to retrieve the file and its versions from there.[/BR]");
+                    msgInfo.titleText =
+                        tr("Are you sure you want to remove the remote file %1?").arg(fileName);
+                    msgInfo.descriptionText =
+                        tr("It will be moved to the SyncDebris folder on the MEGA Rubbish Bin "
+                           "along with its versions.[BR]You will be able to retrieve the file and "
+                           "its versions from there.[/BR]");
                 }
                 else
                 {
-                    msgInfo.text = tr("Are you sure you want to remove the remote folder %1?").arg(fileName);
-                    msgInfo.informativeText = tr("It will be moved to the SyncDebris folder on the MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]");
+                    msgInfo.titleText =
+                        tr("Are you sure you want to remove the remote folder %1?").arg(fileName);
+                    msgInfo.descriptionText =
+                        tr("It will be moved to the SyncDebris folder on the MEGA Rubbish "
+                           "Bin.[BR]You will be able to retrieve the folder from there.[/BR]");
                 }
             }
             else
             {
                 if(isFile)
                 {
-                    msgInfo.text = tr("Are you sure you want to remove the local file %1?").arg(fileName);
-                    msgInfo.informativeText = tr("It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the file from there.[/BR]");
+                    msgInfo.titleText =
+                        tr("Are you sure you want to remove the local file %1?").arg(fileName);
+                    msgInfo.descriptionText =
+                        tr("It will be moved to the sync rubbish folder.[BR]You will be able to "
+                           "retrieve the file from there.[/BR]");
                 }
                 else
                 {
-                    msgInfo.text = tr("Are you sure you want to remove the local folder %1?").arg(fileName);
-                    msgInfo.informativeText = tr("It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the folder from there.[/BR]");
+                    msgInfo.titleText =
+                        tr("Are you sure you want to remove the local folder %1?").arg(fileName);
+                    msgInfo.descriptionText =
+                        tr("It will be moved to the sync rubbish folder.[BR]You will be able to "
+                           "retrieve the folder from there.[/BR]");
                 }
             }
 
@@ -596,9 +611,10 @@ void NameConflict::onActionClicked(int actionId)
                     }
                 }
             };
-            StalledIssuesBoldTextDecorator::boldTextDecorator.process(msgInfo.informativeText);
-            StalledIssuesBoldTextDecorator::boldTextDecorator.process(msgInfo.text);
-            StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(msgInfo.informativeText);
+            StalledIssuesBoldTextDecorator::boldTextDecorator.process(msgInfo.descriptionText);
+            StalledIssuesBoldTextDecorator::boldTextDecorator.process(msgInfo.titleText);
+            StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(
+                msgInfo.descriptionText);
             QMegaMessageBox::warning(msgInfo);
         }
     }

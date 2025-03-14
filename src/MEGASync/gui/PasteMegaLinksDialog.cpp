@@ -43,15 +43,15 @@ void PasteMegaLinksDialog::on_bSubmit_clicked()
     {
         MessageBoxInfo info;
         info.parent = this;
-        info.title = QMegaMessageBox::warningTitle();
+        info.dialogTitle = QMegaMessageBox::warningTitle();
 
         if (!text.trimmed().size())
         {
-            info.text = tr("Enter one or more MEGA file links");
+            info.titleText = tr("Enter one or more MEGA file links");
         }
         else
         {
-            info.text =  tr("Invalid MEGA Link");
+            info.titleText = tr("Invalid MEGA Link");
         }
 
         QMegaMessageBox::warning(info);

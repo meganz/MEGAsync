@@ -135,8 +135,8 @@ public:
                     (*it) = it->toUpper();
                     MessageBoxInfo msgInfo;
                     msgInfo.parent = this;
-                    msgInfo.title = messageBoxTitle;
-                    msgInfo.text = getOperationFailText(sync);
+                    msgInfo.dialogTitle = messageBoxTitle;
+                    msgInfo.titleText = getOperationFailText(sync);
                     msgInfo.textFormat = Qt::RichText;
                     QMegaMessageBox::critical(msgInfo);
                 });
@@ -175,8 +175,8 @@ public:
 
                             MessageBoxInfo msgInfo;
                             msgInfo.parent = this;
-                            msgInfo.title = title;
-                            msgInfo.text = msg;
+                            msgInfo.dialogTitle = title;
+                            msgInfo.titleText = msg;
                             msgInfo.textFormat = Qt::RichText;
                             QMegaMessageBox::warning(msgInfo);
                         }
@@ -190,8 +190,8 @@ public:
                 {
                     MessageBoxInfo msgInfo;
                     msgInfo.parent = this;
-                    msgInfo.title = getErrorRemovingTitle();
-                    msgInfo.text = getErrorRemovingText(err);
+                    msgInfo.dialogTitle = getErrorRemovingTitle();
+                    msgInfo.titleText = getErrorRemovingText(err);
                     msgInfo.textFormat = Qt::RichText;
                     QMegaMessageBox::warning(msgInfo);
                 });

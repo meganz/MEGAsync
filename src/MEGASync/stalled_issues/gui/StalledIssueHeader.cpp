@@ -86,7 +86,7 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
 
     MessageBoxInfo msgInfo;
     msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-    msgInfo.title = MegaSyncApp->getMEGAString();
+    msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
     QMap<QMessageBox::Button, QString> textsByButton;
@@ -99,8 +99,8 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
         msgInfo.checkboxText = tr("Apply to all");
     }
     msgInfo.buttonsText = textsByButton;
-    msgInfo.text = tr("Are you sure you want to ignore this issue?");
-    msgInfo.informativeText = tr("This action will ignore this issue and it will not be synced.");
+    msgInfo.titleText = tr("Are you sure you want to ignore this issue?");
+    msgInfo.descriptionText = tr("This action will ignore this issue and it will not be synced.");
 
     msgInfo.finishFunc = [selection](QPointer<MessageBoxResult> msgBox)
     {

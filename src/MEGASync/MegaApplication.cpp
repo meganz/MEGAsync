@@ -436,8 +436,8 @@ void MegaApplication::initialize()
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Encountered corrupt prefrences.").toUtf8().constData());
 
         MessageBoxInfo msgInfo;
-        msgInfo.title = getMEGAString();
-        msgInfo.text = tr("Your config is corrupt, please start over");
+        msgInfo.dialogTitle = getMEGAString();
+        msgInfo.titleText = tr("Your config is corrupt, please start over");
         msgInfo.enqueue = true;
         QMegaMessageBox::critical(msgInfo);
     }
@@ -528,8 +528,8 @@ void MegaApplication::initialize()
         megaApiFolders->changeApiUrl(apiURL.toUtf8());
 
         MessageBoxInfo msgInfo;
-        msgInfo.title = MegaSyncApp->getMEGAString();
-        msgInfo.text = QString::fromUtf8("API URL changed to ")+ apiURL;
+        msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
+        msgInfo.titleText = QString::fromUtf8("API URL changed to ") + apiURL;
         msgInfo.enqueue = true;
         QMegaMessageBox::warning(msgInfo);
 
@@ -537,7 +537,7 @@ void MegaApplication::initialize()
         Preferences::setBaseUrl(baseURL);
         if (baseURL.compare(QString::fromUtf8("https://mega.nz")))
         {
-            msgInfo.text = QString::fromUtf8("base URL changed to ") + Preferences::BASE_URL;
+            msgInfo.titleText = QString::fromUtf8("base URL changed to ") + Preferences::BASE_URL;
             QMegaMessageBox::warning(msgInfo);
         }
 
@@ -1339,8 +1339,8 @@ if (!preferences->lastExecutionTime())
         if (!message.isEmpty())
         {
             MessageBoxInfo msgInfo;
-            msgInfo.title = QCoreApplication::applicationName();
-            msgInfo.text = message;
+            msgInfo.dialogTitle = QCoreApplication::applicationName();
+            msgInfo.titleText = message;
             msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
             QMap<QMessageBox::Button, QString> textsByButton;
             textsByButton.insert(QMessageBox::Yes, tr("Open settings"));
@@ -1515,10 +1515,11 @@ void MegaApplication::checkSystemTray()
     }
 
     MessageBoxInfo msgInfo;
-    msgInfo.title = getMEGAString();
-    msgInfo.text = tr("Could not find a system tray to place MEGAsync tray icon. "
-                      "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
-                      "If you want to open the interface, just try to open MEGAsync again.");
+    msgInfo.dialogTitle = getMEGAString();
+    msgInfo.titleText = tr(
+        "Could not find a system tray to place MEGAsync tray icon. "
+        "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
+        "If you want to open the interface, just try to open MEGAsync again.");
     msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
     {
         preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE, true);
@@ -1777,11 +1778,11 @@ void MegaApplication::tryExitApplication(bool force)
     else
     {
         MessageBoxInfo msgInfo;
-        msgInfo.title = getMEGAString();
-        msgInfo.text = tr("There is an active transfer. Exit the app?\n"
-                                 "Transfer will automatically resume when you re-open the app.",
-                                 "",
-                                 mTransfersModel->hasActiveTransfers());
+        msgInfo.dialogTitle = getMEGAString();
+        msgInfo.titleText = tr("There is an active transfer. Exit the app?\n"
+                               "Transfer will automatically resume when you re-open the app.",
+                               "",
+                               mTransfersModel->hasActiveTransfers());
         msgInfo.buttons = QMessageBox::Yes|QMessageBox::No;
         QMap<QMessageBox::Button, QString> textsByButton;
         textsByButton.insert(QMessageBox::Yes, tr("Exit app"));
@@ -3003,8 +3004,8 @@ void MegaApplication::processUpgradeSecurityEvent()
     }
 
     MessageBoxInfo msgInfo;
-    msgInfo.title = tr("Security upgrade");
-    msgInfo.text = message;
+    msgInfo.dialogTitle = tr("Security upgrade");
+    msgInfo.titleText = message;
     msgInfo.buttons = QMessageBox::Ok|QMessageBox::Cancel;
     msgInfo.textFormat = Qt::RichText;
     msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
@@ -3212,8 +3213,8 @@ void MegaApplication::showInfoMessage(DesktopNotifications::NotificationInfo inf
     else
     {
         MessageBoxInfo msgInfo;
-        msgInfo.title = info.title;
-        msgInfo.text = info.message;
+        msgInfo.dialogTitle = info.title;
+        msgInfo.titleText = info.message;
         QMegaMessageBox::information(msgInfo);
     }
 }
@@ -3235,8 +3236,8 @@ void MegaApplication::showWarningMessage(QString message, QString title)
     else
     {
         MessageBoxInfo msgInfo;
-        msgInfo.title = title;
-        msgInfo.text = message;
+        msgInfo.dialogTitle = title;
+        msgInfo.titleText = message;
         QMegaMessageBox::warning(msgInfo);
     }
 }
@@ -3273,8 +3274,8 @@ void MegaApplication::showErrorMessage(QString message, QString title)
     else
     {
         MessageBoxInfo msgInfo;
-        msgInfo.title = title;
-        msgInfo.text = message;
+        msgInfo.dialogTitle = title;
+        msgInfo.titleText = message;
         QMegaMessageBox::critical(msgInfo);
     }
 }
@@ -3567,7 +3568,7 @@ void MegaApplication::checkOperatingSystem()
         if (isOSdeprecated)
         {
             MessageBoxInfo msgInfo;
-            msgInfo.title = getMEGAString();
+            msgInfo.dialogTitle = getMEGAString();
             QString message =
                 tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
 #ifdef WIN32
@@ -3577,7 +3578,7 @@ void MegaApplication::checkOperatingSystem()
                 + tr("MEGAsync will continue to work, however you might not receive new updates.");
 #endif
 
-            msgInfo.text = message;
+            msgInfo.titleText = message;
             msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
             {
                 preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_OS_TOO_OLD, true);
@@ -5793,16 +5794,23 @@ void MegaApplication::manageBusinessStatus(int64_t event)
             else
             {
                 MessageBoxInfo msgInfo;
-                msgInfo.title = getMEGAString();
-                msgInfo.text = tr("Account Suspended");
+                msgInfo.dialogTitle = getMEGAString();
+                msgInfo.titleText = tr("Account Suspended");
                 msgInfo.textFormat = Qt::RichText;
-                msgInfo.informativeText = tr("Your account is currently [A]suspended[/A]. You can only browse your data.")
-                            .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
-                            .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
-                            + QString::fromUtf8("<br>") + QString::fromUtf8("<br>") +
-                            tr("[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.")
-                            .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; color:#DF4843; text-decoration:none;\">"))
-                            .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) + QString::fromUtf8("\n");
+                msgInfo.descriptionText =
+                    tr("Your account is currently [A]suspended[/A]. You can only browse your data.")
+                        .replace(QString::fromUtf8("[A]"),
+                                 QString::fromUtf8(
+                                     "<span style=\"font-weight: bold; text-decoration:none;\">"))
+                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) +
+                    QString::fromUtf8("<br>") + QString::fromUtf8("<br>") +
+                    tr("[A]Important:[/A] Contact your business account administrator to resolve "
+                       "the issue and activate your account.")
+                        .replace(QString::fromUtf8("[A]"),
+                                 QString::fromUtf8("<span style=\"font-weight: bold; "
+                                                   "color:#DF4843; text-decoration:none;\">"))
+                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) +
+                    QString::fromUtf8("\n");
 
                 msgInfo.buttonsText.insert(QMessageBox::No, tr("Dismiss"));
                 QMegaMessageBox::warning(msgInfo);

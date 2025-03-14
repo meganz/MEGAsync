@@ -151,9 +151,9 @@ void BugReportDialog::onReportFinished()
 
     MessageBoxInfo msgInfo;
     msgInfo.parent = this->parentWidget();
-    msgInfo.title = tr("Bug report");
-    msgInfo.text = tr("Bug report success!");
-    msgInfo.informativeText = tr("Your bug report has been submitted, a confirmation email "
+    msgInfo.dialogTitle = tr("Bug report");
+    msgInfo.titleText = tr("Bug report success!");
+    msgInfo.descriptionText = tr("Your bug report has been submitted, a confirmation email "
                                  "will sent to you accordingly.");
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok;
@@ -171,8 +171,8 @@ void BugReportDialog::onReportFailed()
 
     MessageBoxInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.title = tr("Bug report");
-    msgInfo.text = tr("Error on submitting bug report");
+    msgInfo.dialogTitle = tr("Bug report");
+    msgInfo.titleText = tr("Error on submitting bug report");
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok;
 
@@ -181,7 +181,7 @@ void BugReportDialog::onReportFailed()
     if (data.getStatus() == BugReportData::STATUS::LOG_UPLOAD_FAILED &&
         data.getTransferError() == MegaError::API_EEXIST)
     {
-        msgInfo.informativeText = tr("There is an ongoing report being uploaded.") +
+        msgInfo.descriptionText = tr("There is an ongoing report being uploaded.") +
                                   QString::fromUtf8("<br>") +
                                   tr("Please wait until the current upload is completed.");
         QMegaMessageBox::information(msgInfo);
@@ -189,8 +189,8 @@ void BugReportDialog::onReportFailed()
     else if (data.getStatus() == BugReportData::STATUS::REPORT_SUBMIT_FAILED &&
              data.getRequestError() == MegaError::API_ETOOMANY)
     {
-        msgInfo.text = tr("You must wait 10 minutes before submitting another issue");
-        msgInfo.informativeText =
+        msgInfo.titleText = tr("You must wait 10 minutes before submitting another issue");
+        msgInfo.descriptionText =
             tr("Please try again later or contact our support team via [A]support@mega.co.nz[/A] "
                "if the problem persists.")
                 .replace(
@@ -201,7 +201,7 @@ void BugReportDialog::onReportFailed()
     }
     else
     {
-        msgInfo.informativeText =
+        msgInfo.descriptionText =
             tr("Bug report can't be submitted due to some error. Please try again or contact our "
                "support team via [A]support@mega.co.nz[/A]")
                 .replace(
@@ -230,9 +230,9 @@ void BugReportDialog::cancelSendReport()
 
     MessageBoxInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.title = tr("Bug report");
-    msgInfo.text = tr("Are you sure you want to exit uploading?");
-    msgInfo.informativeText = tr("The bug report will not be submitted if you exit uploading.");
+    msgInfo.dialogTitle = tr("Bug report");
+    msgInfo.titleText = tr("Are you sure you want to exit uploading?");
+    msgInfo.descriptionText = tr("The bug report will not be submitted if you exit uploading.");
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
 

@@ -134,8 +134,8 @@ void ProxySettings::onProxyTestFinished(bool success)
         }
         MessageBoxInfo msgInfo;
         msgInfo.parent = this;
-        msgInfo.title =  QMegaMessageBox::errorTitle();
-        msgInfo.text =   tr("Your proxy settings are invalid or the proxy doesn't respond");
+        msgInfo.dialogTitle = QMegaMessageBox::errorTitle();
+        msgInfo.titleText = tr("Your proxy settings are invalid or the proxy doesn't respond");
         QMegaMessageBox::critical(msgInfo);
     }
 }

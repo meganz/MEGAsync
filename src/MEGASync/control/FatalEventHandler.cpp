@@ -561,17 +561,17 @@ void FatalEventHandler::showFatalErrorMessage()
     mRespawnWarningDialog = true;
     MessageBoxInfo msgInfo;
     msgInfo.textFormat = Qt::RichText;
-    msgInfo.title = QMegaMessageBox::fatalErrorTitle();
+    msgInfo.dialogTitle = QMegaMessageBox::fatalErrorTitle();
     msgInfo.imageUrl = QLatin1String(":images/alert-triangle-small.png");
 
-    msgInfo.text = QLatin1String("<b>%1</b>").arg(getErrorTitle());
-    msgInfo.informativeText = getErrorReason();
+    msgInfo.titleText = QLatin1String("<b>%1</b>").arg(getErrorTitle());
+    msgInfo.descriptionText = getErrorReason();
 
     auto url(getErrorReasonUrl());
     if (!url.isEmpty())
     {
         const Text::Link link(url);
-        link.process(msgInfo.informativeText);
+        link.process(msgInfo.descriptionText);
     }
 
     // Close button

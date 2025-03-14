@@ -993,8 +993,10 @@ void FastLoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e
         //Invalid session or public key, already managed in TYPE_LOGOUT
         {
             MessageBoxInfo msgInfo;
-            msgInfo.title = MegaSyncApp->getMEGAString();
-            msgInfo.text = tr("Login error: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString()));
+            msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
+            msgInfo.titleText =
+                tr("Login error: %1")
+                    .arg(QCoreApplication::translate("MegaError", e->getErrorString()));
 
             QMegaMessageBox::warning(msgInfo);
         }
@@ -1061,8 +1063,9 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
         if (paramType == mega::MegaError::API_ESID)
         {
             MessageBoxInfo msgInfo;
-            msgInfo.title = MegaSyncApp->getMEGAString();
-            msgInfo.text = tr("You have been logged out on this computer from another location");
+            msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
+            msgInfo.titleText =
+                tr("You have been logged out on this computer from another location");
             msgInfo.ignoreCloseAll = true;
 
             QMegaMessageBox::information(msgInfo);
@@ -1070,10 +1073,14 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
         else if (paramType == mega::MegaError::API_ESSL)
         {
             MessageBoxInfo msgInfo;
-            msgInfo.title = MegaSyncApp->getMEGAString();
-            msgInfo.text = tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software "
-                               "could be intercepting your communications and causing this problem. Please disable it and try again.")
-                           + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown"));
+            msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
+            msgInfo.titleText =
+                tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle "
+                   "attack or your antivirus software "
+                   "could be intercepting your communications and causing this problem. Please "
+                   "disable it and try again.") +
+                QString::fromUtf8(" (Issuer: %1)")
+                    .arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown"));
             msgInfo.ignoreCloseAll = true;
 
             QMegaMessageBox::critical(msgInfo);
@@ -1082,17 +1089,19 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
         else if (paramType != mega::MegaError::API_EACCESS && paramType != mega::MegaError::API_EBLOCKED)
         {
             MessageBoxInfo msgInfo;
-            msgInfo.title = MegaSyncApp->getMEGAString();
+            msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
             if(errorCode != mega::MegaError::API_OK)
             {
-                msgInfo.text =tr("You have been logged out because of this error: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString()));
+                msgInfo.titleText =
+                    tr("You have been logged out because of this error: %1")
+                        .arg(QCoreApplication::translate("MegaError", e->getErrorString()));
             }
             else
             {
                 Text::Link link(QString::fromLatin1("mailto:support@mega.nz"));
                 QString text = tr("You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.");
                 link.process(text);
-                msgInfo.text = text;
+                msgInfo.titleText = text;
                 msgInfo.textFormat = Qt::RichText;
             }
             msgInfo.ignoreCloseAll = true;

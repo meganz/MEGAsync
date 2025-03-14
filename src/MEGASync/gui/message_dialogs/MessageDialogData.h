@@ -106,9 +106,9 @@ struct MessageBoxInfo
 
     std::function<void(QPointer<MessageBoxResult>)> finishFunc;
     QWidget* parent;
-    QString title;
-    QString text;
-    QString informativeText;
+    QString dialogTitle;
+    QString titleText;
+    QString descriptionText;
     QMessageBox::StandardButtons buttons;
     QMessageBox::StandardButton defaultButton;
     QMap<QMessageBox::StandardButton, QString> buttonsText;

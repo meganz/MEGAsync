@@ -45,8 +45,8 @@ void GuiUtilities::showPayOrDismiss(const QString &title, const QString &message
     msgInfo.text = title;
     msgInfo.informativeText = message;
 #else
-    msgInfo.title = title;
-    msgInfo.text = message;
+    msgInfo.dialogTitle = title;
+    msgInfo.titleText = message;
 #endif
 
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;

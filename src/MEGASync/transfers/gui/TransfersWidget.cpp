@@ -575,8 +575,8 @@ void TransfersWidget::onCancelClearButtonPressedOnDelegate()
 
     MessageBoxInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.title = MegaSyncApp->getMEGAString();
-    msgInfo.text = info.actionText;
+    msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
+    msgInfo.titleText = info.actionText;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
     msgInfo.buttonsText = info.buttonsText;

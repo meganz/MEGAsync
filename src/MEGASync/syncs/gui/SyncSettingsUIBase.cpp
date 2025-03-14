@@ -225,8 +225,8 @@ void SyncSettingsUIBase::showOpenMegaIgnoreError()
 {
     MessageBoxInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.title = QMegaMessageBox::errorTitle();
-    msgInfo.text = tr("Error opening megaignore file");
+    msgInfo.dialogTitle = QMegaMessageBox::errorTitle();
+    msgInfo.titleText = tr("Error opening megaignore file");
     QMegaMessageBox::warning(msgInfo);
 }
 

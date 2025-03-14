@@ -434,10 +434,10 @@ void DeviceCentre::learnMore() const
 void DeviceCentre::applyPreviousExclusionRules() const
 {
     MessageBoxInfo msgInfo;
-    msgInfo.text = /*tr*/ QString::fromUtf8("[B]Apply previous exclusion rules?[/B]");
+    msgInfo.titleText = /*tr*/ QString::fromUtf8("[B]Apply previous exclusion rules?[/B]");
     Text::Bold boldDecorator;
-    boldDecorator.process(msgInfo.text);
-    msgInfo.informativeText =
+    boldDecorator.process(msgInfo.titleText);
+    msgInfo.descriptionText =
         /*tr*/ QString::fromUtf8(
             "The exclusion rules you set up in a previous version of the app will be applied to "
             "all "

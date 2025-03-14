@@ -102,9 +102,9 @@ bool MessageBoxResult::isChecked() const
 MessageBoxInfo::MessageBoxInfo():
     finishFunc(nullptr),
     parent(nullptr),
-    title(MegaSyncApp->getMEGAString()),
-    text(QString()),
-    informativeText(QString()),
+    dialogTitle(MegaSyncApp->getMEGAString()),
+    titleText(QString()),
+    descriptionText(QString()),
     buttons(QMessageBox::NoButton),
     defaultButton(QMessageBox::NoButton),
     textFormat(Qt::PlainText),
@@ -142,7 +142,7 @@ QWidget* MessageDialogData::getParentWidget() const
 
 QString MessageDialogData::getTitle() const
 {
-    return mInfo.title;
+    return mInfo.dialogTitle;
 }
 
 QUrl MessageDialogData::getImageUrl() const
@@ -152,12 +152,12 @@ QUrl MessageDialogData::getImageUrl() const
 
 MessageDialogTextInfo MessageDialogData::getTitleTextInfo() const
 {
-    return MessageDialogTextInfo(mInfo.text, getTextFormat());
+    return MessageDialogTextInfo(mInfo.titleText, getTextFormat());
 }
 
 MessageDialogTextInfo MessageDialogData::getDescriptionTextInfo() const
 {
-    return MessageDialogTextInfo(mInfo.informativeText, getTextFormat());
+    return MessageDialogTextInfo(mInfo.descriptionText, getTextFormat());
 }
 
 bool MessageDialogData::enqueue() const

@@ -145,8 +145,8 @@ void ImportMegaLinksDialog::onLocalFolderSet(const QString& path)
         if (!test.open())
         {
             MessageBoxInfo info;
-            info.title = QMegaMessageBox::errorTitle();
-            info.text = tr("You don't have write permissions in this local folder.");
+            info.dialogTitle = QMegaMessageBox::errorTitle();
+            info.titleText = tr("You don't have write permissions in this local folder.");
             info.parent = this;
             QMegaMessageBox::critical(info);
         }
@@ -236,8 +236,8 @@ void ImportMegaLinksDialog::on_bOk_clicked()
         if (!test.open())
         {
             MessageBoxInfo msgInfo;
-            msgInfo.title = QMegaMessageBox::errorTitle();
-            msgInfo.text = tr("You don't have write permissions in this local folder.");
+            msgInfo.dialogTitle = QMegaMessageBox::errorTitle();
+            msgInfo.titleText = tr("You don't have write permissions in this local folder.");
             QMegaMessageBox::critical(msgInfo);
             return;
         }
