@@ -2533,6 +2533,11 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
         }
     }
 
+    if (!appfinished && e->type() == QEvent::LanguageChange)
+    {
+        emit languageChanged();
+    }
+
     return QApplication::eventFilter(obj, e);
 }
 

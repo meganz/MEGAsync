@@ -16,6 +16,7 @@ Syncs::Syncs(QObject* parent):
 {
     connect(&mSyncController, &SyncController::syncAddStatus, this, &Syncs::onSyncAddRequestStatus);
     connect(SyncInfo::instance(), &SyncInfo::syncRemoved, this, &Syncs::onSyncRemoved);
+    connect(MegaSyncApp, &MegaApplication::languageChanged, this, &Syncs::onLanguageChanged);
 
     onSyncRemoved(nullptr);
 }
@@ -353,4 +354,10 @@ void Syncs::clearLocalError()
 SyncsData* Syncs::getSyncsData() const
 {
     return mSyncsData.get();
+}
+
+void Syncs::onLanguageChanged()
+{
+    mSyncsData->setLocalError(getLocalError());
+    mSyncsData->setRemoteError(getRemoteError());
 }
