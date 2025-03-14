@@ -285,6 +285,7 @@ public:
                   std::shared_ptr<mega::MegaNode> targetParentFolder);
     void copyNode(std::shared_ptr<mega::MegaNode> copyNode,
                   std::shared_ptr<mega::MegaNode> targetParentFolder);
+    //
 
     void showFiles(bool show);
     void showReadOnlyFolders(bool show);
