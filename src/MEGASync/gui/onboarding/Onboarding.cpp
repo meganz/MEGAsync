@@ -16,8 +16,7 @@ using namespace mega;
 
 Onboarding::Onboarding(QObject* parent):
     QMLComponent(parent),
-    mSyncs(std::make_unique<Syncs>()),
-    mSyncsData(std::make_unique<SyncsData>(mSyncs.get()))
+    mSyncs(std::make_unique<Syncs>())
 {
     qmlRegisterModule("Onboarding", 1, 0);
     qmlRegisterType<OnboardingQmlDialog>("OnboardingQmlDialog", 1, 0, "OnboardingQmlDialog");
@@ -32,10 +31,8 @@ Onboarding::Onboarding(QObject* parent):
     QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsComponentAccess"),
                                                    this);
 
-    QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsData"),
-                                                   mSyncsData.get());
-
-    mSyncs->setSyncsData(mSyncsData.get());
+    auto syncsData = mSyncs->getSyncsData();
+    QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsData"), syncsData);
 
     // Makes the Guest window transparent (macOS)
     QQuickWindow::setDefaultAlphaBuffer(true);

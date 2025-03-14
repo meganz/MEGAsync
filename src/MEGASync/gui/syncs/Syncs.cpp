@@ -10,12 +10,12 @@
 
 Syncs::Syncs(QObject* parent):
     QObject(parent),
-    mMegaApi(MegaSyncApp->getMegaApi())
+    mMegaApi(MegaSyncApp->getMegaApi()),
+    mSyncController(SyncController::instance()),
+    mSyncsData(std::make_unique<SyncsData>())
 {
-    connect(&SyncController::instance(), &SyncController::syncAddStatus,
-            this, &Syncs::onSyncAddRequestStatus);
-    connect(SyncInfo::instance(), &SyncInfo::syncRemoved,
-            this, &Syncs::onSyncRemoved);
+    connect(&mSyncController, &SyncController::syncAddStatus, this, &Syncs::onSyncAddRequestStatus);
+    connect(SyncInfo::instance(), &SyncInfo::syncRemoved, this, &Syncs::onSyncRemoved);
 
     onSyncRemoved(nullptr);
 }
@@ -63,7 +63,7 @@ void Syncs::addSync(SyncInfo::SyncOrigin origin, const QString& local, const QSt
     }
     else
     {
-        SyncController::instance().addSync(mSyncConfig);
+        mSyncController.addSync(mSyncConfig);
     }
 }
 
@@ -108,9 +108,7 @@ void Syncs::helperCheckLocalSync(const QString& path)
     {
         QString errorMessage;
         auto syncability =
-            SyncController::instance().isLocalFolderSyncable(path,
-                                                             mega::MegaSync::TYPE_TWOWAY,
-                                                             errorMessage);
+            mSyncController.isLocalFolderSyncable(path, mega::MegaSync::TYPE_TWOWAY, errorMessage);
         if (syncability == SyncController::CANT_SYNC)
         {
             localError = LocalErrors::CantSync;
@@ -120,11 +118,7 @@ void Syncs::helperCheckLocalSync(const QString& path)
     if (mLocalError != localError)
     {
         mLocalError.swap(localError);
-
-        if (mSyncsData != nullptr)
-        {
-            emit mSyncsData->localErrorChanged();
-        }
+        mSyncsData->setLocalError(getLocalError());
     }
 }
 
@@ -158,11 +152,7 @@ void Syncs::helperCheckRemoteSync(const QString& path)
     if (mRemoteError != remoteError)
     {
         mRemoteError.swap(remoteError);
-
-        if (mSyncsData != nullptr)
-        {
-            emit mSyncsData->remoteErrorChanged();
-        }
+        mSyncsData->setRemoteError(getRemoteError());
     }
 }
 
@@ -193,15 +183,13 @@ void Syncs::onRequestFinish(mega::MegaRequest* request, mega::MegaError* error)
             if (megaNode != nullptr)
             {
                 mSyncConfig.remoteHandle = request->getNodeHandle();
-                SyncController::instance().addSync(mSyncConfig);
+                mSyncController.addSync(mSyncConfig);
             }
             else
             {
                 mRemoteError = RemoteErrors::CantCreateRemoteFolder;
-                if (mSyncsData != nullptr)
-                {
-                    emit mSyncsData->remoteErrorChanged();
-                }
+
+                mSyncsData->setRemoteError(getRemoteError());
             }
         }
         else if (error->getErrorCode() != mega::MegaError::API_ESSL
@@ -212,10 +200,7 @@ void Syncs::onRequestFinish(mega::MegaRequest* request, mega::MegaError* error)
             mRemoteMegaError.syncError = mega::SyncError::NO_SYNC_ERROR;
             mRemoteStringMessage = QString::fromUtf8(error->getErrorString());
 
-            if (mSyncsData != nullptr)
-            {
-                emit mSyncsData->remoteErrorChanged();
-            }
+            mSyncsData->setRemoteError(getRemoteError());
         }
     }
 }
@@ -224,10 +209,7 @@ void Syncs::onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings)
 {
     Q_UNUSED(syncSettings)
 
-    if (mSyncsData != nullptr)
-    {
-        emit mSyncsData->syncRemoved();
-    }
+    emit mSyncsData->syncRemoved();
 }
 
 void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name)
@@ -240,17 +222,11 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString nam
         mRemoteMegaError.error = errorCode;
         mRemoteMegaError.syncError = syncErrorCode;
 
-        if (mSyncsData != nullptr)
-        {
-            emit mSyncsData->remoteErrorChanged();
-        }
+        mSyncsData->setRemoteError(getRemoteError());
     }
     else
     {
-        if (mSyncsData != nullptr)
-        {
-            emit mSyncsData->syncSetupSuccess();
-        }
+        emit mSyncsData->syncSetupSuccess();
     }
 }
 
@@ -284,9 +260,9 @@ QString Syncs::getLocalError() const
         case LocalErrors::CantSync:
         {
             QString errorMessage;
-            SyncController::instance().isLocalFolderSyncable(mSyncConfig.localFolder,
-                                                             mega::MegaSync::TYPE_TWOWAY,
-                                                             errorMessage);
+            mSyncController.isLocalFolderSyncable(mSyncConfig.localFolder,
+                                                  mega::MegaSync::TYPE_TWOWAY,
+                                                  errorMessage);
             return errorMessage;
         }
     }
@@ -312,7 +288,8 @@ QString Syncs::getRemoteError() const
         {
             if (mRemoteMegaError.error != mega::MegaError::API_OK)
             {
-                return SyncController::instance().getRemoteFolderErrorMessage(mRemoteMegaError.error, mRemoteMegaError.syncError);
+                return mSyncController.getRemoteFolderErrorMessage(mRemoteMegaError.error,
+                                                                   mRemoteMegaError.syncError);
             }
             else
             {
@@ -340,7 +317,8 @@ QString Syncs::getRemoteError() const
         {
             Text::Link link(Utilities::SUPPORT_URL);
             Text::Decorator dec(&link);
-            QString msg = SyncController::instance().getErrorString(mRemoteMegaError.error, mRemoteMegaError.syncError);
+            QString msg =
+                mSyncController.getErrorString(mRemoteMegaError.error, mRemoteMegaError.syncError);
             dec.process(msg);
 
             return msg;
@@ -363,18 +341,16 @@ void Syncs::clearRemoteError()
     mRemoteMegaError.error = mega::MegaError::API_OK;
     mRemoteMegaError.syncError = mega::SyncError::NO_SYNC_ERROR;
 
-    if (mSyncsData != nullptr)
-    {
-        emit mSyncsData->remoteErrorChanged();
-    }
+    mSyncsData->setRemoteError({});
 }
 
 void Syncs::clearLocalError()
 {
     mLocalError.reset();
+    mSyncsData->setLocalError({});
+}
 
-    if (mSyncsData != nullptr)
-    {
-        emit mSyncsData->localErrorChanged();
-    }
+SyncsData* Syncs::getSyncsData() const
+{
+    return mSyncsData.get();
 }

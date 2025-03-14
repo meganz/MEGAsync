@@ -13,18 +13,15 @@ SyncsComponent::SyncsComponent(QObject* parent):
     QMLComponent(parent),
     mRemoteFolder(QString()),
     mSyncOrigin(SyncInfo::SyncOrigin::MAIN_APP_ORIGIN),
-    mSyncs(std::make_unique<Syncs>()),
-    mSyncsData(std::make_unique<SyncsData>(mSyncs.get()))
+    mSyncs(std::make_unique<Syncs>())
 {
     registerQmlModules();
 
     QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsComponentAccess"),
                                                    this);
 
-    QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsData"),
-                                                   mSyncsData.get());
-
-    mSyncs->setSyncsData(mSyncsData.get());
+    auto syncsData = mSyncs->getSyncsData();
+    QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsData"), syncsData);
 }
 
 QUrl SyncsComponent::getQmlUrl()

@@ -13,8 +13,10 @@ class SyncsData: public QObject
     Q_PROPERTY(QString localError READ getLocalError NOTIFY localErrorChanged)
     Q_PROPERTY(QString remoteError READ getRemoteError NOTIFY remoteErrorChanged)
 
+    friend class Syncs;
+
 public:
-    SyncsData(const Syncs* const syncs);
+    explicit SyncsData(QObject* parent = nullptr);
     virtual ~SyncsData() = default;
     static QString getDefaultMegaFolder();
     static QString getDefaultMegaPath();
@@ -29,7 +31,11 @@ private:
     QString getLocalError() const;
     QString getRemoteError() const;
 
-    const Syncs* mSyncs = nullptr;
+    void setLocalError(const QString& error);
+    void setRemoteError(const QString& error);
+
+    QString mLocalError;
+    QString mRemoteError;
 };
 
 #endif

@@ -10,8 +10,8 @@ const QString DEFAULT_MEGA_FOLDER = QString::fromUtf8("MEGA");
 const QString DEFAULT_MEGA_PATH = QString::fromUtf8("/") + DEFAULT_MEGA_FOLDER;
 }
 
-SyncsData::SyncsData(const Syncs* syncs):
-    mSyncs(syncs)
+SyncsData::SyncsData(QObject* parent):
+    QObject(parent)
 {}
 
 QString SyncsData::getDefaultMegaFolder()
@@ -26,12 +26,30 @@ QString SyncsData::getDefaultMegaPath()
 
 QString SyncsData::getLocalError() const
 {
-    assert(mSyncs != nullptr);
-    return mSyncs->getLocalError();
+    return mLocalError;
 }
 
 QString SyncsData::getRemoteError() const
 {
-    assert(mSyncs != nullptr);
-    return mSyncs->getRemoteError();
+    return mRemoteError;
+}
+
+void SyncsData::setLocalError(const QString& error)
+{
+    if (mLocalError != error)
+    {
+        mLocalError = error;
+
+        emit localErrorChanged();
+    }
+}
+
+void SyncsData::setRemoteError(const QString& error)
+{
+    if (mRemoteError != error)
+    {
+        mRemoteError = error;
+
+        emit remoteErrorChanged();
+    }
 }

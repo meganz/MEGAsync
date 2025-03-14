@@ -33,11 +33,7 @@ public:
     QString getLocalError() const;
     QString getRemoteError() const;
 
-    /* dev only, remove it should be the contructor */
-    void setSyncsData(SyncsData* syncsData)
-    {
-        mSyncsData = syncsData;
-    }
+    SyncsData* getSyncsData() const;
 
 public slots:
     void onRequestFinish(mega::MegaRequest* request, mega::MegaError* error);
@@ -69,9 +65,9 @@ private:
         int syncError;
     };
 
-    SyncsData* mSyncsData = nullptr;
     mega::MegaApi* mMegaApi = nullptr;
-    std::unique_ptr<SyncController> mSyncController;
+    SyncController& mSyncController;
+    std::unique_ptr<SyncsData> mSyncsData;
 
     bool mCreatingFolder = false;
     SyncController::SyncConfig mSyncConfig;
