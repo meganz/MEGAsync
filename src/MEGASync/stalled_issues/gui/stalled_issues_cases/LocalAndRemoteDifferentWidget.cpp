@@ -2,8 +2,8 @@
 
 #include "LocalOrRemoteUserMustChooseStalledIssue.h"
 #include "MegaApplication.h"
+#include "MessageDialogOpener.h"
 #include "Preferences.h"
-#include "QMegaMessageBox.h"
 #include "StalledIssueChooseWidget.h"
 #include "StalledIssueHeader.h"
 #include "StalledIssuesModel.h"
@@ -313,7 +313,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.descriptionText);
     StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(info.msgInfo.descriptionText);
 
-    info.msgInfo.finishFunc = [info](QPointer<MessageBoxResult> msgBox)
+    info.msgInfo.finishFunc = [info](QPointer<MessageDialogResult> msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
@@ -328,7 +328,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
         }
     };
 
-    QMegaMessageBox::warning(info.msgInfo);
+    MessageDialogOpener::warning(info.msgInfo);
 }
 
 void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
@@ -418,7 +418,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
     }
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.descriptionText);
 
-    info.msgInfo.finishFunc = [this, info](QPointer<MessageBoxResult> msgBox)
+    info.msgInfo.finishFunc = [this, info](QPointer<MessageDialogResult> msgBox)
     {
         if(getData().consultData()->getSyncType() == mega::MegaSync::SyncType::TYPE_TWOWAY)
         {
@@ -450,7 +450,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
         }
     };
 
-    QMegaMessageBox::warning(info.msgInfo);
+    MessageDialogOpener::warning(info.msgInfo);
 }
 
 void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
@@ -507,7 +507,7 @@ void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
         }
         StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.descriptionText);
 
-        info.msgInfo.finishFunc = [info](QPointer<MessageBoxResult> msgBox)
+        info.msgInfo.finishFunc = [info](QPointer<MessageDialogResult> msgBox)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
@@ -522,7 +522,7 @@ void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
             }
         };
 
-        QMegaMessageBox::warning(info.msgInfo);
+        MessageDialogOpener::warning(info.msgInfo);
     }
 }
 
@@ -546,7 +546,7 @@ void LocalAndRemoteDifferentWidget::onKeepLastModifiedTimeButtonClicked(int)
         info.msgInfo.descriptionText = tr("This action will choose the remote side");
     }
 
-    info.msgInfo.finishFunc = [info](QPointer<MessageBoxResult> msgBox)
+    info.msgInfo.finishFunc = [info](QPointer<MessageDialogResult> msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
@@ -563,7 +563,7 @@ void LocalAndRemoteDifferentWidget::onKeepLastModifiedTimeButtonClicked(int)
         }
     };
 
-    QMegaMessageBox::warning(info.msgInfo);
+    MessageDialogOpener::warning(info.msgInfo);
 }
 
 void LocalAndRemoteDifferentWidget::unSetFailedChooseWidget()

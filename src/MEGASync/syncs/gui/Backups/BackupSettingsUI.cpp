@@ -6,8 +6,8 @@
 #include "BackupTableView.h"
 #include "CreateRemoveBackupsManager.h"
 #include "DialogOpener.h"
+#include "MessageDialogOpener.h"
 #include "Onboarding.h"
-#include "QMegaMessageBox.h"
 #include "QmlDialogWrapper.h"
 #include "ui_SyncSettingsUIBase.h"
 
@@ -23,12 +23,12 @@ BackupSettingsUI::BackupSettingsUI(QWidget* parent):
             [this](std::shared_ptr<mega::MegaError> err)
             {
                 onSavingSyncsCompleted(SAVING_FINISHED);
-                MessageBoxInfo msgInfo;
+                MessageDialogInfo msgInfo;
                 msgInfo.dialogTitle = tr("Error moving or removing remote backup folder");
                 msgInfo.titleText =
                     tr("Failed to move or remove the remote backup folder. Reason: %1")
                         .arg(QCoreApplication::translate("MegaError", err->getErrorString()));
-                QMegaMessageBox::warning(msgInfo);
+                MessageDialogOpener::warning(msgInfo);
             });
 
     mElements.initElements(this);

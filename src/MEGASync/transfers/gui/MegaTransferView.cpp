@@ -1,8 +1,8 @@
 #include "MegaTransferView.h"
 
 #include "MegaApplication.h"
+#include "MessageDialogOpener.h"
 #include "Platform.h"
-#include "QMegaMessageBox.h"
 #include "TransfersWidget.h"
 #include "Utilities.h"
 
@@ -394,7 +394,7 @@ void MegaTransferView::onCancelVisibleTransfers()
 
     if(!info.areAllSync)
     {
-        MessageBoxInfo msgInfo;
+        MessageDialogInfo msgInfo;
         msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
         msgInfo.titleText = info.actionText;
         msgInfo.parent = this;
@@ -402,7 +402,7 @@ void MegaTransferView::onCancelVisibleTransfers()
         msgInfo.defaultButton = QMessageBox::No;
         msgInfo.buttonsText = info.buttonsText;
 
-        msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
+        msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
         {
             if(msg->result() == QMessageBox::Yes)
             {
@@ -413,7 +413,7 @@ void MegaTransferView::onCancelVisibleTransfers()
             }
         };
 
-        QMegaMessageBox::warning(msgInfo);
+        MessageDialogOpener::warning(msgInfo);
     }
 }
 
@@ -421,7 +421,7 @@ void MegaTransferView::onCancelSelectedTransfers()
 {
     auto info = getSelectedCancelOrClearInfo();
 
-    MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     msgInfo.titleText = info.actionText;
     msgInfo.parent = this;
@@ -429,7 +429,7 @@ void MegaTransferView::onCancelSelectedTransfers()
     msgInfo.defaultButton = QMessageBox::No;
     msgInfo.buttonsText = info.buttonsText;
 
-    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         if(msg->result() == QMessageBox::Yes)
         {
@@ -442,7 +442,7 @@ void MegaTransferView::onCancelSelectedTransfers()
         }
     };
 
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }
 
 void MegaTransferView::onCancelAllTransfers()
@@ -451,7 +451,7 @@ void MegaTransferView::onCancelAllTransfers()
 
     if (proxy)
     {
-        MessageBoxInfo msgInfo;
+        MessageDialogInfo msgInfo;
         msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
         msgInfo.titleText =
             proxy->isAnySync() ? cancelWithSyncAskActionText() : cancelAllAskActionText();
@@ -460,7 +460,7 @@ void MegaTransferView::onCancelAllTransfers()
         msgInfo.defaultButton = QMessageBox::No;
         msgInfo.buttonsText = getCancelDialogButtons();
 
-        msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
+        msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
         {
             if(msg->result() == QMessageBox::Yes)
             {
@@ -469,13 +469,13 @@ void MegaTransferView::onCancelAllTransfers()
             }
         };
 
-        QMegaMessageBox::warning(msgInfo);
+        MessageDialogOpener::warning(msgInfo);
     }
 }
 
 void MegaTransferView::onClearAllTransfers()
 {
-    MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     msgInfo.titleText = clearAllCompletedAskActionText();
     msgInfo.parent = this;
@@ -483,7 +483,7 @@ void MegaTransferView::onClearAllTransfers()
     msgInfo.defaultButton = QMessageBox::No;
     msgInfo.buttonsText = getClearDialogButtons();
 
-    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         if(msg->result() == QMessageBox::Yes)
         {
@@ -491,14 +491,14 @@ void MegaTransferView::onClearAllTransfers()
         }
     };
 
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }
 
 void MegaTransferView::onCancelAndClearVisibleTransfers()
 {
     auto info = getVisibleCancelOrClearInfo();
 
-    MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     msgInfo.titleText = info.actionText;
     msgInfo.parent = this;
@@ -506,7 +506,7 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
     msgInfo.defaultButton = QMessageBox::No;
     msgInfo.buttonsText = info.buttonsText;
 
-    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         if(msg->result() == QMessageBox::Yes)
         {
@@ -521,12 +521,12 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
         }
     };
 
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }
 
 void MegaTransferView::onClearVisibleTransfers()
 {
-    MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     msgInfo.titleText = clearCompletedAskActionText();
     msgInfo.parent = this;
@@ -534,7 +534,7 @@ void MegaTransferView::onClearVisibleTransfers()
     msgInfo.defaultButton = QMessageBox::No;
     msgInfo.buttonsText = getClearDialogButtons();
 
-    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         if(msg->result() == QMessageBox::Yes)
         {
@@ -545,7 +545,7 @@ void MegaTransferView::onClearVisibleTransfers()
         }
     };
 
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }
 
 void MegaTransferView::clearAllTransfers()
@@ -1410,9 +1410,9 @@ void MegaTransferView::onOpenUrlFinished()
 
 void MegaTransferView::showOpeningFileError()
 {
-    MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.dialogTitle = QMegaMessageBox::errorTitle();
+    msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
     msgInfo.titleText = errorOpeningFileText();
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }

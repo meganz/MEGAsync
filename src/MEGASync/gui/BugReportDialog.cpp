@@ -3,10 +3,10 @@
 #include "DialogOpener.h"
 #include "ui_BugReportDialog.h"
 #include <BugReportController.h>
+#include <MessageDialogOpener.h>
 #include <TransfersModel.h>
 
 #include <QCloseEvent>
-#include <QMegaMessageBox.h>
 #include <QRegExp>
 
 using namespace mega;
@@ -149,7 +149,7 @@ void BugReportDialog::onReportFinished()
 {
     closeProgressDialog();
 
-    MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.parent = this->parentWidget();
     msgInfo.dialogTitle = tr("Bug report");
     msgInfo.titleText = tr("Bug report success!");
@@ -162,14 +162,14 @@ void BugReportDialog::onReportFinished()
                            QString::fromUtf8(":/images/bug_report_success@2x.png");
 
     accept();
-    QMegaMessageBox::information(msgInfo);
+    MessageDialogOpener::information(msgInfo);
 }
 
 void BugReportDialog::onReportFailed()
 {
     closeProgressDialog();
 
-    MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.parent = this;
     msgInfo.dialogTitle = tr("Bug report");
     msgInfo.titleText = tr("Error on submitting bug report");
@@ -184,7 +184,7 @@ void BugReportDialog::onReportFailed()
         msgInfo.descriptionText = tr("There is an ongoing report being uploaded.") +
                                   QString::fromUtf8("<br>") +
                                   tr("Please wait until the current upload is completed.");
-        QMegaMessageBox::information(msgInfo);
+        MessageDialogOpener::information(msgInfo);
     }
     else if (data.getStatus() == BugReportData::STATUS::REPORT_SUBMIT_FAILED &&
              data.getRequestError() == MegaError::API_ETOOMANY)
@@ -197,7 +197,7 @@ void BugReportDialog::onReportFailed()
                     QString::fromUtf8("[A]"),
                     QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
                 .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"));
-        QMegaMessageBox::warning(msgInfo);
+        MessageDialogOpener::warning(msgInfo);
     }
     else
     {
@@ -209,7 +209,7 @@ void BugReportDialog::onReportFailed()
                     QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
                 .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) +
             QString::fromLatin1("\n");
-        QMegaMessageBox::warning(msgInfo);
+        MessageDialogOpener::warning(msgInfo);
     }
 }
 
@@ -228,7 +228,7 @@ void BugReportDialog::cancelSendReport()
     mController->prepareForCancellation();
     closeProgressDialog();
 
-    MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.parent = this;
     msgInfo.dialogTitle = tr("Bug report");
     msgInfo.titleText = tr("Are you sure you want to exit uploading?");
@@ -241,7 +241,7 @@ void BugReportDialog::cancelSendReport()
     textsByButton.insert(QMessageBox::Yes, tr("Yes"));
     msgInfo.defaultButton = QMessageBox::Yes;
     msgInfo.buttonsText = textsByButton;
-    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         if (msg->result() == QMessageBox::Yes)
         {
@@ -253,7 +253,7 @@ void BugReportDialog::cancelSendReport()
         }
     };
 
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }
 
 void BugReportDialog::onDescriptionChanged()

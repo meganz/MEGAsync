@@ -24,6 +24,7 @@
 #include "IntervalExecutioner.h"
 #include "LoginController.h"
 #include "mega/types.h"
+#include "MessageDialogOpener.h"
 #include "MyBackupsHandle.h"
 #include "NodeSelector.h"
 #include "NodeSelectorSpecializations.h"
@@ -33,7 +34,6 @@
 #include "PlatformStrings.h"
 #include "PowerOptions.h"
 #include "ProxyStatsEventHandler.h"
-#include "QMegaMessageBox.h"
 #include "QmlDialogManager.h"
 #include "QmlDialogWrapper.h"
 #include "QTMegaApiManager.h"
@@ -148,11 +148,11 @@ MegaApplication::MegaApplication(int& argc, char** argv):
         QString path = appBundlePath();
         if (path.compare(QStringLiteral("/Applications/MEGAsync.app")))
         {
-            // Use regular QMessageBox with modal behaviour instead of QMegaMessageBox to avoid
+            // Use regular QMessageBox with modal behaviour instead of MessageDialogOpener to avoid
             // issues.
             QMessageBox::warning(
                 nullptr,
-                QMegaMessageBox::errorTitle(),
+                MessageDialogOpener::errorTitle(),
                 QCoreApplication::translate("MegaSyncError",
                                             "You can't run MEGA Desktop App from this location. "
                                             "Move it into the Applications folder then run it."),
@@ -435,11 +435,11 @@ void MegaApplication::initialize()
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Encountered corrupt prefrences.").toUtf8().constData());
 
-        MessageBoxInfo msgInfo;
+        MessageDialogInfo msgInfo;
         msgInfo.dialogTitle = getMEGAString();
         msgInfo.titleText = tr("Your config is corrupt, please start over");
         msgInfo.enqueue = true;
-        QMegaMessageBox::critical(msgInfo);
+        MessageDialogOpener::critical(msgInfo);
     }
 
     preferences->setLastStatsRequest(0);
@@ -527,18 +527,18 @@ void MegaApplication::initialize()
         megaApi->changeApiUrl(apiURL.toUtf8(), disablepkp == QString::fromUtf8("1"));
         megaApiFolders->changeApiUrl(apiURL.toUtf8());
 
-        MessageBoxInfo msgInfo;
+        MessageDialogInfo msgInfo;
         msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
         msgInfo.titleText = QString::fromUtf8("API URL changed to ") + apiURL;
         msgInfo.enqueue = true;
-        QMegaMessageBox::warning(msgInfo);
+        MessageDialogOpener::warning(msgInfo);
 
         QString baseURL = settings.value(QString::fromUtf8("baseurl"), Preferences::BASE_URL).toString();
         Preferences::setBaseUrl(baseURL);
         if (baseURL.compare(QString::fromUtf8("https://mega.nz")))
         {
             msgInfo.titleText = QString::fromUtf8("base URL changed to ") + Preferences::BASE_URL;
-            QMegaMessageBox::warning(msgInfo);
+            MessageDialogOpener::warning(msgInfo);
         }
 
         gCrashableForTesting = settings.value(QString::fromUtf8("crashable"), false).toBool();
@@ -1338,7 +1338,7 @@ if (!preferences->lastExecutionTime())
         // Display the message if it has been set
         if (!message.isEmpty())
         {
-            MessageBoxInfo msgInfo;
+            MessageDialogInfo msgInfo;
             msgInfo.dialogTitle = QCoreApplication::applicationName();
             msgInfo.titleText = message;
             msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
@@ -1347,14 +1347,14 @@ if (!preferences->lastExecutionTime())
             textsByButton.insert(QMessageBox::No, tr("Dismiss"));
             msgInfo.buttonsText = textsByButton;
             msgInfo.defaultButton = QMessageBox::No;
-            msgInfo.finishFunc = [this, settingsTabToOpen](QPointer<MessageBoxResult> msg)
+            msgInfo.finishFunc = [this, settingsTabToOpen](QPointer<MessageDialogResult> msg)
             {
                 if (msg->result() == QMessageBox::Yes)
                 {
                     openSettings(settingsTabToOpen);
                 }
             };
-            QMegaMessageBox::warning(msgInfo);
+            MessageDialogOpener::warning(msgInfo);
         }
 
         preferences->setNotifyDisabledSyncsOnLogin(false);
@@ -1514,17 +1514,17 @@ void MegaApplication::checkSystemTray()
         return;
     }
 
-    MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.dialogTitle = getMEGAString();
     msgInfo.titleText = tr(
         "Could not find a system tray to place MEGAsync tray icon. "
         "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
         "If you want to open the interface, just try to open MEGAsync again.");
-    msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
     {
         preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE, true);
     };
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }
 
 void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
@@ -1777,7 +1777,7 @@ void MegaApplication::tryExitApplication(bool force)
     }
     else
     {
-        MessageBoxInfo msgInfo;
+        MessageDialogInfo msgInfo;
         msgInfo.dialogTitle = getMEGAString();
         msgInfo.titleText = tr("There is an active transfer. Exit the app?\n"
                                "Transfer will automatically resume when you re-open the app.",
@@ -1788,7 +1788,7 @@ void MegaApplication::tryExitApplication(bool force)
         textsByButton.insert(QMessageBox::Yes, tr("Exit app"));
         textsByButton.insert(QMessageBox::No, tr("Stay in app"));
         msgInfo.buttonsText = textsByButton;
-        msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
+        msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
         {
             if (msg->result() == QMessageBox::Yes)
             {
@@ -1799,7 +1799,7 @@ void MegaApplication::tryExitApplication(bool force)
                 *testCrashPtr = 0;
             }
         };
-        QMegaMessageBox::question(msgInfo);
+        MessageDialogOpener::question(msgInfo);
     }
 }
 
@@ -3003,12 +3003,12 @@ void MegaApplication::processUpgradeSecurityEvent()
                   .arg(outSharesStrings.values().join(QLatin1String(", "))));
     }
 
-    MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.dialogTitle = tr("Security upgrade");
     msgInfo.titleText = message;
     msgInfo.buttons = QMessageBox::Ok|QMessageBox::Cancel;
     msgInfo.textFormat = Qt::RichText;
-    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         if (msg->result() == QMessageBox::Ok && !appfinished)
         {
@@ -3019,7 +3019,7 @@ void MegaApplication::processUpgradeSecurityEvent()
                     {
                         QString errorMessage = tr("Failed to ugrade security. Error: %1")
                                 .arg(tr(e->getErrorString()));
-                        showErrorMessage(errorMessage, QMegaMessageBox::errorTitle());
+                        showErrorMessage(errorMessage, MessageDialogOpener::errorTitle());
                         exitApplication();
                     }
             });
@@ -3032,7 +3032,7 @@ void MegaApplication::processUpgradeSecurityEvent()
         }
     };
 
-    QMegaMessageBox::information(msgInfo);
+    MessageDialogOpener::information(msgInfo);
 }
 
 QQueue<QString> MegaApplication::createQueue(const QStringList &newUploads) const
@@ -3212,10 +3212,10 @@ void MegaApplication::showInfoMessage(DesktopNotifications::NotificationInfo inf
     }
     else
     {
-        MessageBoxInfo msgInfo;
+        MessageDialogInfo msgInfo;
         msgInfo.dialogTitle = info.title;
         msgInfo.titleText = info.message;
-        QMegaMessageBox::information(msgInfo);
+        MessageDialogOpener::information(msgInfo);
     }
 }
 
@@ -3235,10 +3235,10 @@ void MegaApplication::showWarningMessage(QString message, QString title)
     }
     else
     {
-        MessageBoxInfo msgInfo;
+        MessageDialogInfo msgInfo;
         msgInfo.dialogTitle = title;
         msgInfo.titleText = message;
-        QMegaMessageBox::warning(msgInfo);
+        MessageDialogOpener::warning(msgInfo);
     }
 }
 
@@ -3273,10 +3273,10 @@ void MegaApplication::showErrorMessage(QString message, QString title)
     }
     else
     {
-        MessageBoxInfo msgInfo;
+        MessageDialogInfo msgInfo;
         msgInfo.dialogTitle = title;
         msgInfo.titleText = message;
-        QMegaMessageBox::critical(msgInfo);
+        MessageDialogOpener::critical(msgInfo);
     }
 }
 
@@ -3567,7 +3567,7 @@ void MegaApplication::checkOperatingSystem()
 
         if (isOSdeprecated)
         {
-            MessageBoxInfo msgInfo;
+            MessageDialogInfo msgInfo;
             msgInfo.dialogTitle = getMEGAString();
             QString message =
                 tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
@@ -3579,11 +3579,11 @@ void MegaApplication::checkOperatingSystem()
 #endif
 
             msgInfo.titleText = message;
-            msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
+            msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
             {
                 preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_OS_TOO_OLD, true);
             };
-            QMegaMessageBox::warning(msgInfo);
+            MessageDialogOpener::warning(msgInfo);
         }
     }
 }
@@ -5793,7 +5793,7 @@ void MegaApplication::manageBusinessStatus(int64_t event)
             }
             else
             {
-                MessageBoxInfo msgInfo;
+                MessageDialogInfo msgInfo;
                 msgInfo.dialogTitle = getMEGAString();
                 msgInfo.titleText = tr("Account Suspended");
                 msgInfo.textFormat = Qt::RichText;
@@ -5813,7 +5813,7 @@ void MegaApplication::manageBusinessStatus(int64_t event)
                     QString::fromUtf8("\n");
 
                 msgInfo.buttonsText.insert(QMessageBox::No, tr("Dismiss"));
-                QMegaMessageBox::warning(msgInfo);
+                MessageDialogOpener::warning(msgInfo);
             }
 
             break;

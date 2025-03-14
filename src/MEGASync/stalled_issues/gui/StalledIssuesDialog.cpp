@@ -200,7 +200,7 @@ void StalledIssuesDialog::onSyncRootChanged(std::shared_ptr<SyncSettings> sync)
         {
             DialogOpener::closeDialogsByParentClass<StalledIssuesDialog>();
 
-            MessageBoxInfo msgInfo;
+            MessageDialogInfo msgInfo;
             msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
             msgInfo.textFormat = Qt::RichText;
             msgInfo.buttons = QMessageBox::Ok;
@@ -209,7 +209,7 @@ void StalledIssuesDialog::onSyncRootChanged(std::shared_ptr<SyncSettings> sync)
             msgInfo.buttonsText = buttonsText;
             msgInfo.titleText =
                 tr("One of your synced folders has been renamed. Refresh the list of sync issues.");
-            msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
+            msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
             {
                 mProxyModel->updateStalledIssues();
             };

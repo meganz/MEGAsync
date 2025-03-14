@@ -4,7 +4,7 @@
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
-#include "QMegaMessageBox.h"
+#include "MessageDialogOpener.h"
 #include "RenameNodeDialog.h"
 #include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
@@ -411,14 +411,14 @@ void NameConflict::onActionClicked(int actionId)
                 }
                 else
                 {
-                    MessageBoxInfo msgInfo;
+                    MessageDialogInfo msgInfo;
                     msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
                     msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
                     msgInfo.textFormat = Qt::RichText;
                     msgInfo.buttons = QMessageBox::Ok;
                     msgInfo.titleText =
                         tr("%1 no longer exists.\nPlease refresh the view").arg(info.fileName());
-                    QMegaMessageBox::warning(msgInfo);
+                    MessageDialogOpener::warning(msgInfo);
                     return;
                 }
             }
@@ -491,19 +491,19 @@ void NameConflict::onActionClicked(int actionId)
                 }
                 else
                 {
-                    MessageBoxInfo msgInfo;
+                    MessageDialogInfo msgInfo;
                     msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
                     msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
                     msgInfo.textFormat = Qt::RichText;
                     msgInfo.buttons = QMessageBox::Ok;
                     msgInfo.titleText =
                         tr("%1 no longer exists.\nPlease refresh the view").arg(info.fileName());
-                    QMegaMessageBox::warning(msgInfo);
+                    MessageDialogOpener::warning(msgInfo);
                     return;
                 }
             }
 
-            MessageBoxInfo msgInfo;
+            MessageDialogInfo msgInfo;
             msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
             msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
             msgInfo.textFormat = Qt::RichText;
@@ -549,7 +549,7 @@ void NameConflict::onActionClicked(int actionId)
                 }
             }
 
-            msgInfo.finishFunc = [=](QPointer<MessageBoxResult> msgBox)
+            msgInfo.finishFunc = [=](QPointer<MessageDialogResult> msgBox)
             {
                 if (msgBox->result() == QDialogButtonBox::Yes)
                 {
@@ -615,7 +615,7 @@ void NameConflict::onActionClicked(int actionId)
             StalledIssuesBoldTextDecorator::boldTextDecorator.process(msgInfo.titleText);
             StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(
                 msgInfo.descriptionText);
-            QMegaMessageBox::warning(msgInfo);
+            MessageDialogOpener::warning(msgInfo);
         }
     }
 }

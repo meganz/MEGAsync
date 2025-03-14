@@ -1,6 +1,6 @@
 #include "PasteMegaLinksDialog.h"
 
-#include "QMegaMessageBox.h"
+#include "MessageDialogOpener.h"
 #include "ui_PasteMegaLinksDialog.h"
 
 #include <QClipboard>
@@ -41,9 +41,9 @@ void PasteMegaLinksDialog::on_bSubmit_clicked()
     links = QSet<QString>(links.begin(), links.end()).values();
     if (links.size() == 0)
     {
-        MessageBoxInfo info;
+        MessageDialogInfo info;
         info.parent = this;
-        info.dialogTitle = QMegaMessageBox::warningTitle();
+        info.dialogTitle = MessageDialogOpener::warningTitle();
 
         if (!text.trimmed().size())
         {
@@ -54,7 +54,7 @@ void PasteMegaLinksDialog::on_bSubmit_clicked()
             info.titleText = tr("Invalid MEGA Link");
         }
 
-        QMegaMessageBox::warning(info);
+        MessageDialogOpener::warning(info);
     }
     else
     {

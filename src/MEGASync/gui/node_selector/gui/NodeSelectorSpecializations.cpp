@@ -4,11 +4,11 @@
 #include "DuplicatedNodeDialog.h"
 #include "megaapi.h"
 #include "MegaNodeNames.h"
+#include "MessageDialogOpener.h"
 #include "NodeSelectorModel.h"
 #include "NodeSelectorProxyModel.h"
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
 #include "Preferences.h"
-#include "QMegaMessageBox.h"
 #include "RequestListenerManager.h"
 #include "StatsEventHandler.h"
 #include "SyncInfo.h"
@@ -40,16 +40,16 @@ void UploadNodeSelector::onOkButtonClicked()
         int access = Utilities::getNodeAccess(node->getHandle());
         if (access < mega::MegaShare::ACCESS_READWRITE)
         {
-            MessageBoxInfo msgInfo;
+            MessageDialogInfo msgInfo;
             msgInfo.parent = this;
-            msgInfo.dialogTitle = QMegaMessageBox::errorTitle();
+            msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
             msgInfo.titleText = tr("You need Read & Write or Full access rights to be able to "
                                    "upload to the selected folder.");
-            msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
+            msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
             {
                 reject();
             };
-            QMegaMessageBox::warning(msgInfo);
+            MessageDialogOpener::warning(msgInfo);
         }
         else
         {
@@ -90,10 +90,10 @@ void DownloadNodeSelector::onOkButtonClicked()
         }
     }
 
-    MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.dialogTitle = QMegaMessageBox::errorTitle();
-    msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
+    msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
     {
         reject();
     };
@@ -106,7 +106,7 @@ void DownloadNodeSelector::onOkButtonClicked()
                                    "this window and try again.",
                                    "",
                                    wrongNodes);
-            QMegaMessageBox::warning(msgInfo);
+            MessageDialogOpener::warning(msgInfo);
         }
         else
         {
@@ -114,7 +114,7 @@ void DownloadNodeSelector::onOkButtonClicked()
                 tr("You no longer have access to this item. Ask the owner to share again.",
                    "",
                    wrongNodes);
-            QMegaMessageBox::warning(msgInfo);
+            MessageDialogOpener::warning(msgInfo);
         }
     }
     else if(wrongNodes > 0)
@@ -126,7 +126,7 @@ void DownloadNodeSelector::onOkButtonClicked()
                wrongNodes)
                 .arg(warningMsg1)
                 .arg(wrongNodes);
-        QMegaMessageBox::warning(msgInfo);
+        MessageDialogOpener::warning(msgInfo);
     }
     else
     {
@@ -173,10 +173,10 @@ void SyncNodeSelector::onOkButtonClicked()
     auto node = getSelectedNode();
     if(node)
     {
-        MessageBoxInfo msgInfo;
+        MessageDialogInfo msgInfo;
         msgInfo.parent = this;
-        msgInfo.dialogTitle = QMegaMessageBox::errorTitle();
-        msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
+        msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
+        msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
         {
             reject();
         };
@@ -186,7 +186,7 @@ void SyncNodeSelector::onOkButtonClicked()
         {
             msgInfo.titleText =
                 tr("You need Full access right to be able to sync the selected folder.");
-            QMegaMessageBox::warning(msgInfo);
+            MessageDialogOpener::warning(msgInfo);
         }
         else
         {
@@ -197,7 +197,7 @@ void SyncNodeSelector::onOkButtonClicked()
                 msgInfo.titleText = tr("Invalid folder for synchronization.\n"
                                        "Please, ensure that you don't use characters like '\\' '/' "
                                        "or ':' in your folder names.");
-                QMegaMessageBox::warning(msgInfo);
+                MessageDialogOpener::warning(msgInfo);
             }
             else
             {
@@ -230,15 +230,15 @@ void StreamNodeSelector::onOkButtonClicked()
     {
         if (node->isFolder())
         {
-            MessageBoxInfo msgInfo;
+            MessageDialogInfo msgInfo;
             msgInfo.parent = this;
-            msgInfo.dialogTitle = QMegaMessageBox::errorTitle();
+            msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
             msgInfo.titleText = tr("Only files can be used for streaming.");
-            msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
+            msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
             {
                 reject();
             };
-            QMegaMessageBox::warning(msgInfo);
+            MessageDialogOpener::warning(msgInfo);
         }
         else
         {
@@ -362,9 +362,9 @@ void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint id)
     }
     else if(id == CloudDriveType::ClearRubbish)
     {
-        MessageBoxInfo msgInfo;
+        MessageDialogInfo msgInfo;
         msgInfo.parent = this;
-        msgInfo.dialogTitle = QMegaMessageBox::errorTitle();
+        msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
         QMap<QMessageBox::Button, QString> textsByButton;
         textsByButton.insert(QMessageBox::Yes, tr("Empty"));
@@ -376,7 +376,7 @@ void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint id)
         msgInfo.descriptionText =
             tr("All items will be permanently deleted. This action can [B]not[/B] be undone");
         dec.process(msgInfo.descriptionText);
-        msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
+        msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
         {
             if (msg->result() == QMessageBox::Yes)
             {
@@ -384,7 +384,7 @@ void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint id)
                 MegaSyncApp->getMegaApi()->cleanRubbishBin();
             }
         };
-        QMegaMessageBox::warning(msgInfo);
+        MessageDialogOpener::warning(msgInfo);
     }
 }
 

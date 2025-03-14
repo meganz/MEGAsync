@@ -1,8 +1,8 @@
 #include "PlatformImplementation.h"
 
 #include "DolphinFileManager.h"
+#include "MessageDialogOpener.h"
 #include "NautilusFileManager.h"
-#include "QMegaMessageBox.h"
 
 #include <QHostInfo>
 #include <QProgressBar>
@@ -641,14 +641,14 @@ bool PlatformImplementation::isFedoraWithGnome()
 
 void PlatformImplementation::promptFedoraGnomeUser()
 {
-    MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.title = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Install notification area icon");
     msgInfo.text = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "For a better experience on Fedora with GNOME, we recommend you enable the notification area icon.\n"
                                                                                     "Would you like to install the necessary components now?");
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::Yes;
     msgInfo.checkboxText = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Do not show again");
-    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         if (!msg)
             return;
@@ -678,7 +678,7 @@ void PlatformImplementation::promptFedoraGnomeUser()
         }
     };
 
-    QMegaMessageBox::question(msgInfo);
+    MessageDialogOpener::question(msgInfo);
 }
 
 bool PlatformImplementation::installAppIndicatorForFedoraGnome()
@@ -721,10 +721,10 @@ bool PlatformImplementation::installAppIndicatorForFedoraGnome()
             installProcess.waitForFinished();
             progressDialog.close();
 
-            MessageBoxInfo msgWarnInfo;
+            MessageDialogInfo msgWarnInfo;
             msgWarnInfo.title = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Installation Cancelled");
             msgWarnInfo.text = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "The notification area icon installation was cancelled.");
-            QMegaMessageBox::warning(msgWarnInfo);
+            MessageDialogOpener::warning(msgWarnInfo);
 
             loop.exit(1);
         }
@@ -747,14 +747,14 @@ bool PlatformImplementation::installAppIndicatorForFedoraGnome()
             loop.exit(0);
         } else
         {
-            MessageBoxInfo errorInfo;
+            MessageDialogInfo errorInfo;
             errorInfo.title = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Error installing components");
             errorInfo.text = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Failed to install the necessary components.");
             errorInfo.informativeText = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "To install manually, please run the following commands:\n\n"
                                                        "sudo dnf install gnome-shell-extensions\n"
                                                        "sudo dnf install gnome-shell-extension-appindicator\n"
                                                        "gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com");
-            QMegaMessageBox::critical(errorInfo);
+            MessageDialogOpener::critical(errorInfo);
             loop.exit(1);
         }
     });
@@ -772,11 +772,11 @@ bool PlatformImplementation::installAppIndicatorForFedoraGnome()
     enableProcess.start(QString::fromUtf8(GNOME_EXTENSIONS_CMD), { QStringLiteral("enable"), QString::fromUtf8(APP_INDICATOR_EXTENSION_ID) });
     enableProcess.waitForFinished(PROCESS_TIMEOUT_MS);
 
-    MessageBoxInfo successInfo;
+    MessageDialogInfo successInfo;
     successInfo.title = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Install complete");
     successInfo.text = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "The notification area icon was installed successfully.\n"
                                                                                         "Please log out of your computer to complete the installation.");
-    QMegaMessageBox::information(successInfo);
+    MessageDialogOpener::information(successInfo);
 
     return true;
 }

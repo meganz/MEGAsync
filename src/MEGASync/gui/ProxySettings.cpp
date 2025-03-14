@@ -2,7 +2,7 @@
 
 #include "DialogOpener.h"
 #include "megaapi.h"
-#include "QMegaMessageBox.h"
+#include "MessageDialogOpener.h"
 #include "ui_ProxySettings.h"
 
 #include <QNetworkProxy>
@@ -132,11 +132,11 @@ void ProxySettings::onProxyTestFinished(bool success)
         {
             mProgressDialog->close();
         }
-        MessageBoxInfo msgInfo;
+        MessageDialogInfo msgInfo;
         msgInfo.parent = this;
-        msgInfo.dialogTitle = QMegaMessageBox::errorTitle();
+        msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
         msgInfo.titleText = tr("Your proxy settings are invalid or the proxy doesn't respond");
-        QMegaMessageBox::critical(msgInfo);
+        MessageDialogOpener::critical(msgInfo);
     }
 }
 

@@ -1,7 +1,7 @@
 #include "FatalEventHandler.h"
 
 #include "DialogOpener.h"
-#include "QMegaMessageBox.h"
+#include "MessageDialogOpener.h"
 #include "QmlManager.h"
 #include "TextDecorator.h"
 #include "Utilities.h"
@@ -559,9 +559,9 @@ bool FatalEventHandler::useContactSupportUrlHandler() const
 void FatalEventHandler::showFatalErrorMessage()
 {
     mRespawnWarningDialog = true;
-    MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.textFormat = Qt::RichText;
-    msgInfo.dialogTitle = QMegaMessageBox::fatalErrorTitle();
+    msgInfo.dialogTitle = MessageDialogOpener::fatalErrorTitle();
     msgInfo.imageUrl = QLatin1String(":images/alert-triangle-small.png");
 
     msgInfo.titleText = QLatin1String("<b>%1</b>").arg(getErrorTitle());
@@ -596,7 +596,7 @@ void FatalEventHandler::showFatalErrorMessage()
     }
 
     // User choice handling
-    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         auto choice = msg->result();
         if (choice == DEFAULT_ACTION_BUTTON)
@@ -614,7 +614,7 @@ void FatalEventHandler::showFatalErrorMessage()
         }
     };
 
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }
 
 void FatalEventHandler::onAppStateChanged(AppState::AppStates oldAppState,

@@ -64,7 +64,7 @@ void MoveOrRenameCannotOccur::onLocalButtonClicked()
         info.msgInfo.titleText = LocalAndRemoteDifferentWidget::keepLocalSideString(stringInfo);
         textDecorator.process(info.msgInfo.titleText);
 
-        info.msgInfo.finishFunc = [info](QPointer<MessageBoxResult> msgBox)
+        info.msgInfo.finishFunc = [info](QPointer<MessageDialogResult> msgBox)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
@@ -81,7 +81,7 @@ void MoveOrRenameCannotOccur::onLocalButtonClicked()
             }
         };
 
-        QMegaMessageBox::warning(info.msgInfo);
+        MessageDialogOpener::warning(info.msgInfo);
     }
     else
     {
@@ -107,7 +107,7 @@ void MoveOrRenameCannotOccur::onRemoteButtonClicked()
         info.msgInfo.titleText = LocalAndRemoteDifferentWidget::keepRemoteSideString(stringInfo);
         textDecorator.process(info.msgInfo.titleText);
 
-        info.msgInfo.finishFunc = [info](QPointer<MessageBoxResult> msgBox)
+        info.msgInfo.finishFunc = [info](QPointer<MessageDialogResult> msgBox)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
@@ -124,7 +124,7 @@ void MoveOrRenameCannotOccur::onRemoteButtonClicked()
             }
         };
 
-        QMegaMessageBox::warning(info.msgInfo);
+        MessageDialogOpener::warning(info.msgInfo);
     }
     else
     {

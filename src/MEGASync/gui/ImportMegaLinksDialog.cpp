@@ -4,9 +4,9 @@
 #include "DialogOpener.h"
 #include "ImportListWidgetItem.h"
 #include "MegaApplication.h"
+#include "MessageDialogOpener.h"
 #include "NodeSelectorSpecializations.h"
 #include "Platform.h"
-#include "QMegaMessageBox.h"
 #include "ui_ImportMegaLinksDialog.h"
 #include "Utilities.h"
 
@@ -144,11 +144,11 @@ void ImportMegaLinksDialog::onLocalFolderSet(const QString& path)
         QTemporaryFile test(nativePath + QDir::separator());
         if (!test.open())
         {
-            MessageBoxInfo info;
-            info.dialogTitle = QMegaMessageBox::errorTitle();
+            MessageDialogInfo info;
+            info.dialogTitle = MessageDialogOpener::errorTitle();
             info.titleText = tr("You don't have write permissions in this local folder.");
             info.parent = this;
-            QMegaMessageBox::critical(info);
+            MessageDialogOpener::critical(info);
         }
         else
         {
@@ -235,10 +235,10 @@ void ImportMegaLinksDialog::on_bOk_clicked()
         QTemporaryFile test(qFilePath + QDir::separator());
         if (!test.open())
         {
-            MessageBoxInfo msgInfo;
-            msgInfo.dialogTitle = QMegaMessageBox::errorTitle();
+            MessageDialogInfo msgInfo;
+            msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
             msgInfo.titleText = tr("You don't have write permissions in this local folder.");
-            QMegaMessageBox::critical(msgInfo);
+            MessageDialogOpener::critical(msgInfo);
             return;
         }
     }

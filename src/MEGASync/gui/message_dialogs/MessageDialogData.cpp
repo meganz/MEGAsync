@@ -67,30 +67,30 @@ MessageDialogTextInfo::TextFormat MessageDialogTextInfo::getFormat() const
 }
 
 // =================================================================================================
-// MessageBoxResult
+// MessageDialogResult
 // =================================================================================================
 
-MessageBoxResult::MessageBoxResult():
+MessageDialogResult::MessageDialogResult():
     mButton(QMessageBox::StandardButton::NoButton),
     mChecked(false)
 {}
 
-void MessageBoxResult::setButton(QMessageBox::StandardButton button)
+void MessageDialogResult::setButton(QMessageBox::StandardButton button)
 {
     mButton = button;
 }
 
-void MessageBoxResult::setChecked(bool checked)
+void MessageDialogResult::setChecked(bool checked)
 {
     mChecked = checked;
 }
 
-QMessageBox::StandardButton MessageBoxResult::result() const
+QMessageBox::StandardButton MessageDialogResult::result() const
 {
     return mButton;
 }
 
-bool MessageBoxResult::isChecked() const
+bool MessageDialogResult::isChecked() const
 {
     return mChecked;
 }
@@ -99,7 +99,7 @@ bool MessageBoxResult::isChecked() const
 // MessageBoxInfo
 // =================================================================================================
 
-MessageBoxInfo::MessageBoxInfo():
+MessageDialogInfo::MessageDialogInfo():
     finishFunc(nullptr),
     parent(nullptr),
     dialogTitle(MegaSyncApp->getMEGAString()),
@@ -120,11 +120,11 @@ MessageBoxInfo::MessageBoxInfo():
 // MessageDialogData
 // =================================================================================================
 
-MessageDialogData::MessageDialogData(Type type, MessageBoxInfo info, QObject* parent):
+MessageDialogData::MessageDialogData(Type type, MessageDialogInfo info, QObject* parent):
     QObject(parent),
     mType(type),
     mInfo(info),
-    mResult(new MessageBoxResult)
+    mResult(new MessageDialogResult)
 {
     updateWidgetsByType();
     setButtons(mInfo.buttons, mInfo.defaultButton);
@@ -175,7 +175,7 @@ MessageDialogCheckboxInfo MessageDialogData::getCheckbox() const
     return MessageDialogCheckboxInfo(mInfo.checkboxText, mInfo.checkboxChecked);
 }
 
-QPointer<MessageBoxResult> MessageDialogData::result() const
+QPointer<MessageDialogResult> MessageDialogData::result() const
 {
     return mResult;
 }
@@ -220,7 +220,7 @@ void MessageDialogData::setImageUrl(const QUrl& url)
     emit imageChanged();
 }
 
-std::function<void(QPointer<MessageBoxResult>)> MessageDialogData::getFinishFunction() const
+std::function<void(QPointer<MessageDialogResult>)> MessageDialogData::getFinishFunction() const
 {
     return mInfo.finishFunc;
 }

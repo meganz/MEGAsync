@@ -2,9 +2,9 @@
 
 #include "DialogOpener.h"
 #include "MegaNodeNames.h"
+#include "MessageDialogOpener.h"
 #include "NodeSelectorSpecializations.h"
 #include "Platform.h"
-#include "QMegaMessageBox.h"
 #include "QTMegaApiManager.h"
 #include "ui_StreamingFromMegaDialog.h"
 #include "Utilities.h"
@@ -85,13 +85,13 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
 
     event->ignore();
 
-    MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.dialogTitle = tr("Stream from MEGA");
     msgInfo.titleText = tr("Are you sure that you want to stop the streaming?");
     msgInfo.buttons = QMessageBox::Yes|QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
     msgInfo.parent = this;
-    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         if(msg->result() == QMessageBox::Yes)
         {
@@ -99,7 +99,7 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
         }
     };
 
-    QMegaMessageBox::question(msgInfo);
+    MessageDialogOpener::question(msgInfo);
 }
 
 void StreamingFromMegaDialog::on_bFromCloud_clicked()
@@ -165,13 +165,13 @@ bool StreamingFromMegaDialog::isFolderLink(const QString& link) const
 
 void StreamingFromMegaDialog::showErrorMessage(const QString& message)
 {
-    MessageBoxInfo msgInfo;
-    msgInfo.dialogTitle = QMegaMessageBox::errorTitle();
+    MessageDialogInfo msgInfo;
+    msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
     msgInfo.titleText = message;
     msgInfo.buttons = QMessageBox::Ok;
     msgInfo.parent = this;
 
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }
 
 //Connected only to onLinkImportFinish as only one link makes sense on streaming and it is always the first one
@@ -197,12 +197,12 @@ void StreamingFromMegaDialog::onLinkInfoAvailable()
     }
     else
     {
-        MessageBoxInfo msgInfo;
+        MessageDialogInfo msgInfo;
         msgInfo.parent = this;
-        msgInfo.dialogTitle = QMegaMessageBox::errorTitle();
+        msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
         msgInfo.titleText = tr("Error getting link information");
         msgInfo.defaultButton = QMessageBox::Ok;
-        msgInfo.finishFunc = [this](QPointer<MessageBoxResult>)
+        msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
         {
             //This deletes the LinkProcess
             ui->sFileInfo->setCurrentWidget(ui->pNothingSelected);
@@ -210,7 +210,7 @@ void StreamingFromMegaDialog::onLinkInfoAvailable()
             ui->bCopyLink->setDisabled(true);
         };
 
-        QMegaMessageBox::warning(msgInfo);
+        MessageDialogOpener::warning(msgInfo);
     }
 }
 
@@ -231,13 +231,13 @@ void StreamingFromMegaDialog::on_bClose_clicked()
         return;
     }
 
-    MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.dialogTitle = tr("Stream from MEGA");
     msgInfo.titleText = tr("Are you sure that you want to stop the streaming?");
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
     msgInfo.parent = this;
-    msgInfo.finishFunc = [this](QPointer<MessageBoxResult> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         if(msg->result() == QMessageBox::Yes)
         {
@@ -245,7 +245,7 @@ void StreamingFromMegaDialog::on_bClose_clicked()
         }
     };
 
-    QMegaMessageBox::question(msgInfo);
+    MessageDialogOpener::question(msgInfo);
 }
 
 void StreamingFromMegaDialog::on_bOpenDefault_clicked()
@@ -370,13 +370,13 @@ void StreamingFromMegaDialog::updateFileInfoFromNode(MegaNode *node)
 {
     if (!node)
     {
-        MessageBoxInfo msgInfo;
+        MessageDialogInfo msgInfo;
         msgInfo.parent = this;
-        msgInfo.dialogTitle = QMegaMessageBox::errorTitle();
+        msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
         msgInfo.titleText = tr("File not found");
         msgInfo.defaultButton = QMessageBox::Ok;
 
-        QMegaMessageBox::warning(msgInfo);
+        MessageDialogOpener::warning(msgInfo);
     }
     else
     {

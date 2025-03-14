@@ -4,12 +4,12 @@
 #include "EventUpdater.h"
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
+#include "MessageDialogOpener.h"
 #include "NewFolderDialog.h"
 #include "NodeSelectorDelegates.h"
 #include "NodeSelectorModel.h"
 #include "NodeSelectorProxyModel.h"
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
-#include "QMegaMessageBox.h"
 #include "RenameNodeDialog.h"
 #include "RequestListenerManager.h"
 #include "ui_NodeSelectorTreeViewWidget.h"
@@ -726,12 +726,12 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
         return node;
     };
 
-    MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.parent = ui->tMegaFolders;
     msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::Yes;
-    msgInfo.finishFunc = [this, handles, permanently](QPointer<MessageBoxResult> msg)
+    msgInfo.finishFunc = [this, handles, permanently](QPointer<MessageDialogResult> msg)
     {
         if (msg->result() == QMessageBox::Yes)
         {
@@ -797,7 +797,7 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
         }
     }
 
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }
 
 void NodeSelectorTreeViewWidget::onLeaveShareClicked(const QList<mega::MegaHandle>& handles)
@@ -807,7 +807,7 @@ void NodeSelectorTreeViewWidget::onLeaveShareClicked(const QList<mega::MegaHandl
         return;
     }
 
-    MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.parent = ui->tMegaFolders;
     msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
@@ -819,14 +819,14 @@ void NodeSelectorTreeViewWidget::onLeaveShareClicked(const QList<mega::MegaHandl
     msgInfo.descriptionText =
         tr("If you leave the folder, you will not be able to see it again.", "", handles.size());
 
-    msgInfo.finishFunc = [this, handles](QPointer<MessageBoxResult> msg)
+    msgInfo.finishFunc = [this, handles](QPointer<MessageDialogResult> msg)
     {
         if (msg->result() == QMessageBox::Yes)
         {
             mModel->deleteNodes(handles, true);
         }
     };
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }
 
 NodeSelectorTreeViewWidget::NodeState

@@ -3,8 +3,8 @@
 
 #include "HighDpiResize.h"
 #include "MessageDialogData.h"
+#include "MessageDialogOpener.h"
 #include "Platform.h"
-#include "QMegaMessageBox.h"
 #include "TokenParserWidgetManager.h"
 
 #include <QApplication>

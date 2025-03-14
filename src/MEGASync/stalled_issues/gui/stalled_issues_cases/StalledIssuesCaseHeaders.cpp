@@ -3,9 +3,9 @@
 #include "DialogOpener.h"
 #include "IgnoredStalledIssue.h"
 #include "MegaApplication.h"
+#include "MessageDialogOpener.h"
 #include "MoveOrRenameCannotOccurIssue.h"
 #include "NameConflictStalledIssue.h"
-#include "QMegaMessageBox.h"
 #include "StalledIssue.h"
 #include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
@@ -145,7 +145,7 @@ void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(Stalled
         selectionInfo.msgInfo.descriptionText.append(informativeMessage);
     }
 
-    selectionInfo.msgInfo.finishFunc = [selectionInfo](QPointer<MessageBoxResult> msgBox)
+    selectionInfo.msgInfo.finishFunc = [selectionInfo](QPointer<MessageDialogResult> msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
@@ -154,7 +154,7 @@ void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(Stalled
         }
     };
 
-    QMegaMessageBox::warning(selectionInfo.msgInfo);
+    MessageDialogOpener::warning(selectionInfo.msgInfo);
 }
 
 void CloudFingerprintMissingHeader::refreshCaseTitles(StalledIssueHeader* header)
@@ -383,7 +383,7 @@ void FolderMatchedAgainstFileHeader::onMultipleActionButtonOptionSelected(
     selectionInfo.msgInfo.titleText = areYouSure(pluralNumber);
     selectionInfo.msgInfo.descriptionText = RENAMING_CONFLICTED_ITEMS_STRING;
 
-    selectionInfo.msgInfo.finishFunc = [selectionInfo](QPointer<MessageBoxResult> msgBox)
+    selectionInfo.msgInfo.finishFunc = [selectionInfo](QPointer<MessageDialogResult> msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
@@ -392,7 +392,7 @@ void FolderMatchedAgainstFileHeader::onMultipleActionButtonOptionSelected(
         }
     };
 
-    QMegaMessageBox::warning(selectionInfo.msgInfo);
+    MessageDialogOpener::warning(selectionInfo.msgInfo);
 }
 
 ////////////////////
@@ -613,7 +613,7 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
         }
 
         selectionInfo.msgInfo.finishFunc =
-            [index, selectionInfo, nameConflict](QPointer<MessageBoxResult> msgBox)
+            [index, selectionInfo, nameConflict](QPointer<MessageDialogResult> msgBox)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
@@ -623,6 +623,6 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
             }
         };
 
-        QMegaMessageBox::warning(selectionInfo.msgInfo);
+        MessageDialogOpener::warning(selectionInfo.msgInfo);
     }
 }

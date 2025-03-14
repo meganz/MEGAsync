@@ -6,11 +6,11 @@
 #include "MegaApplication.h"
 #include "NodeSelectorModelItem.h"
 #include "Utilities.h"
+#include <MessageDialogOpener.h>
 
 #include <QAbstractItemModel>
 #include <QIcon>
 #include <QList>
-#include <QMegaMessageBox.h>
 #include <QPointer>
 #include <QQueue>
 #include <QReadWriteLock>
@@ -376,7 +376,7 @@ signals:
     void deleteWorker();
     void blockUi(bool state, QPrivateSignal);
     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
-    void showMessageBox(MessageBoxInfo info) const;
+    void showMessageBox(MessageDialogInfo info) const;
     void showDuplicatedNodeDialog(std::shared_ptr<ConflictTypes> conflicts, MoveActionType type);
     void allNodeRequestsFinished();
     void modelIsBeingModifiedChanged(bool status);

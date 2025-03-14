@@ -148,7 +148,7 @@ void SyncSettingsElements::onPreferencesValueChanged(QString key)
 
 void SyncSettingsElements::applyPreviousExclusions()
 {
-    MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.parent = mSyncStallModeSelector;
     msgInfo.titleText = tr("[B]Apply previous exclusion rules?[/B]");
     Text::Bold boldDecroator;
@@ -161,7 +161,7 @@ void SyncSettingsElements::applyPreviousExclusions()
     QMap<QMessageBox::Button, QString> textsByButton;
     textsByButton.insert(QMessageBox::Ok, tr("Apply"));
     msgInfo.buttonsText = textsByButton;
-    msgInfo.finishFunc = [](QPointer<MessageBoxResult> msg)
+    msgInfo.finishFunc = [](QPointer<MessageDialogResult> msg)
     {
         if (msg->result() == QMessageBox::Ok)
         {
@@ -169,5 +169,5 @@ void SyncSettingsElements::applyPreviousExclusions()
             SyncController::instance().resetAllSyncsMegaIgnoreUsingLegacyRules();
         }
     };
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }

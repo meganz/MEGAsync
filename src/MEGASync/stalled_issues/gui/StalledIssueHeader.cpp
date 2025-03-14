@@ -3,7 +3,7 @@
 #include "DialogOpener.h"
 #include "IgnoredStalledIssue.h"
 #include "MegaApplication.h"
-#include "QMegaMessageBox.h"
+#include "MessageDialogOpener.h"
 #include "StalledIssuesCaseHeaders.h"
 #include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
@@ -84,7 +84,7 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
         return StalledIssue::convert<IgnoredStalledIssue>(issue) != nullptr;
     };
 
-    MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
     msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     msgInfo.textFormat = Qt::RichText;
@@ -102,7 +102,7 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
     msgInfo.titleText = tr("Are you sure you want to ignore this issue?");
     msgInfo.descriptionText = tr("This action will ignore this issue and it will not be synced.");
 
-    msgInfo.finishFunc = [selection](QPointer<MessageBoxResult> msgBox)
+    msgInfo.finishFunc = [selection](QPointer<MessageDialogResult> msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
@@ -117,8 +117,7 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
         }
     };
 
-    QMegaMessageBox::warning(msgInfo);
-
+    MessageDialogOpener::warning(msgInfo);
 }
 
 void StalledIssueHeader::showIgnoreFile()

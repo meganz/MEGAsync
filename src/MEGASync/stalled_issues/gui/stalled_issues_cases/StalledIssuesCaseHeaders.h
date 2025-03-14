@@ -24,7 +24,7 @@ public:
 
         bool hasBeenExternallyChanged = false;
 
-        MessageBoxInfo msgInfo;
+        MessageDialogInfo msgInfo;
     };
 
     SelectionInfo getSelectionInfo(

@@ -3,7 +3,7 @@
 #include "DialogOpener.h"
 #include "GuestContent.h"
 #include "MegaApplication.h"
-#include "QMegaMessageBox.h"
+#include "MessageDialogOpener.h"
 #include "VerifyLockMessage.h"
 
 #include <QDebug>
@@ -49,22 +49,22 @@ void AccountStatusController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
             }
             case mega::MegaApi::ACCOUNT_BLOCKED_SUBUSER_DISABLED:
             {
-                MessageBoxInfo msgInfo;
+                MessageDialogInfo msgInfo;
                 msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
                 msgInfo.titleText =
                     tr("Your account has been disabled by your administrator. Please contact your "
                        "business account administrator for further details.");
                 msgInfo.ignoreCloseAll = true;
-                QMegaMessageBox::warning(msgInfo);
+                MessageDialogOpener::warning(msgInfo);
                 break;
             }
             default:
             {
-                MessageBoxInfo msgInfo;
+                MessageDialogInfo msgInfo;
                 msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
                 msgInfo.titleText = QCoreApplication::translate("MegaError", event->getText());
                 msgInfo.ignoreCloseAll = true;
-                QMegaMessageBox::critical(msgInfo);
+                MessageDialogOpener::critical(msgInfo);
                 break;
             }
         }

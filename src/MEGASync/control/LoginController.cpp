@@ -3,9 +3,9 @@
 #include "ConnectivityChecker.h"
 #include "FatalEventHandler.h"
 #include "MegaApplication.h"
+#include "MessageDialogOpener.h"
 #include "Platform.h"
 #include "Preferences.h"
-#include "QMegaMessageBox.h"
 #include "QmlDialogManager.h"
 #include "RequestListenerManager.h"
 #include "StatsEventHandler.h"
@@ -992,13 +992,13 @@ void FastLoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e
         else if (errorCode != mega::MegaError::API_ESID && errorCode != mega::MegaError::API_ESSL)
         //Invalid session or public key, already managed in TYPE_LOGOUT
         {
-            MessageBoxInfo msgInfo;
+            MessageDialogInfo msgInfo;
             msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
             msgInfo.titleText =
                 tr("Login error: %1")
                     .arg(QCoreApplication::translate("MegaError", e->getErrorString()));
 
-            QMegaMessageBox::warning(msgInfo);
+            MessageDialogOpener::warning(msgInfo);
         }
 
         //Wrong login -> logout
@@ -1062,17 +1062,17 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
 
         if (paramType == mega::MegaError::API_ESID)
         {
-            MessageBoxInfo msgInfo;
+            MessageDialogInfo msgInfo;
             msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
             msgInfo.titleText =
                 tr("You have been logged out on this computer from another location");
             msgInfo.ignoreCloseAll = true;
 
-            QMegaMessageBox::information(msgInfo);
+            MessageDialogOpener::information(msgInfo);
         }
         else if (paramType == mega::MegaError::API_ESSL)
         {
-            MessageBoxInfo msgInfo;
+            MessageDialogInfo msgInfo;
             msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
             msgInfo.titleText =
                 tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle "
@@ -1083,12 +1083,12 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
                     .arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown"));
             msgInfo.ignoreCloseAll = true;
 
-            QMegaMessageBox::critical(msgInfo);
+            MessageDialogOpener::critical(msgInfo);
             mMegaApi->localLogout();
         }
         else if (paramType != mega::MegaError::API_EACCESS && paramType != mega::MegaError::API_EBLOCKED)
         {
-            MessageBoxInfo msgInfo;
+            MessageDialogInfo msgInfo;
             msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
             if(errorCode != mega::MegaError::API_OK)
             {
@@ -1106,7 +1106,7 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
             }
             msgInfo.ignoreCloseAll = true;
 
-            QMegaMessageBox::information(msgInfo);
+            MessageDialogOpener::information(msgInfo);
         }
         MegaSyncApp->unlink();
     }

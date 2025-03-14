@@ -81,13 +81,13 @@ public:
 };
 Q_DECLARE_METATYPE(MessageDialogTextInfo)
 
-class MessageBoxResult: public QObject
+class MessageDialogResult: public QObject
 {
     Q_OBJECT
 
 public:
-    MessageBoxResult();
-    virtual ~MessageBoxResult() = default;
+    MessageDialogResult();
+    virtual ~MessageDialogResult() = default;
 
     void setButton(QMessageBox::StandardButton button);
     void setChecked(bool checked);
@@ -100,11 +100,11 @@ private:
     bool mChecked;
 };
 
-struct MessageBoxInfo
+struct MessageDialogInfo
 {
-    MessageBoxInfo();
+    MessageDialogInfo();
 
-    std::function<void(QPointer<MessageBoxResult>)> finishFunc;
+    std::function<void(QPointer<MessageDialogResult>)> finishFunc;
     QWidget* parent;
     QString dialogTitle;
     QString titleText;
@@ -142,7 +142,7 @@ public:
         CRITICAL = 4,
     };
 
-    explicit MessageDialogData(Type type, MessageBoxInfo info, QObject* parent = nullptr);
+    explicit MessageDialogData(Type type, MessageDialogInfo info, QObject* parent = nullptr);
     virtual ~MessageDialogData() = default;
 
     Type getType() const;
@@ -152,12 +152,12 @@ public:
     MessageDialogTextInfo getTitleTextInfo() const;
     MessageDialogTextInfo getDescriptionTextInfo() const;
     QVariantList getButtons() const;
-    std::function<void(QPointer<MessageBoxResult>)> getFinishFunction() const;
+    std::function<void(QPointer<MessageDialogResult>)> getFinishFunction() const;
     bool enqueue() const;
     bool ignoreCloseAll() const;
     MessageDialogCheckboxInfo getCheckbox() const;
 
-    QPointer<MessageBoxResult> result() const;
+    QPointer<MessageDialogResult> result() const;
 
 signals:
     void typeChanged();
@@ -167,8 +167,8 @@ signals:
 
 private:
     std::optional<Type> mType;
-    MessageBoxInfo mInfo;
-    QPointer<MessageBoxResult> mResult;
+    MessageDialogInfo mInfo;
+    QPointer<MessageDialogResult> mResult;
     QMap<QMessageBox::StandardButton, MessageDialogButtonInfo> mButtons;
 
     friend class MessageDialogComponent;

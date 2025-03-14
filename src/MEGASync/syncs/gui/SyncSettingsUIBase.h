@@ -2,8 +2,8 @@
 #define SYNCSETTINGSUIBASE_H
 
 #include "GuiUtilities.h"
+#include "MessageDialogOpener.h"
 #include "Preferences.h"
-#include "QMegaMessageBox.h"
 #include "SyncInfo.h"
 #include "SyncSettings.h"
 #include "TextDecorator.h"
@@ -133,12 +133,12 @@ public:
                     QString messageBoxTitle(getOperationFailTitle());
                     auto it = messageBoxTitle.begin();
                     (*it) = it->toUpper();
-                    MessageBoxInfo msgInfo;
+                    MessageDialogInfo msgInfo;
                     msgInfo.parent = this;
                     msgInfo.dialogTitle = messageBoxTitle;
                     msgInfo.titleText = getOperationFailText(sync);
                     msgInfo.textFormat = Qt::RichText;
-                    QMegaMessageBox::critical(msgInfo);
+                    MessageDialogOpener::critical(msgInfo);
                 });
 
         connect(&Controller::instance(),
@@ -173,12 +173,12 @@ public:
                                 Controller::instance().getErrorString(errorCode, syncErrorCode);
                             dec.process(msg);
 
-                            MessageBoxInfo msgInfo;
+                            MessageDialogInfo msgInfo;
                             msgInfo.parent = this;
                             msgInfo.dialogTitle = title;
                             msgInfo.titleText = msg;
                             msgInfo.textFormat = Qt::RichText;
-                            QMegaMessageBox::warning(msgInfo);
+                            MessageDialogOpener::warning(msgInfo);
                         }
                     }
                 });
@@ -188,12 +188,12 @@ public:
                 this,
                 [this](std::shared_ptr<mega::MegaError> err)
                 {
-                    MessageBoxInfo msgInfo;
+                    MessageDialogInfo msgInfo;
                     msgInfo.parent = this;
                     msgInfo.dialogTitle = getErrorRemovingTitle();
                     msgInfo.titleText = getErrorRemovingText(err);
                     msgInfo.textFormat = Qt::RichText;
-                    QMegaMessageBox::warning(msgInfo);
+                    MessageDialogOpener::warning(msgInfo);
                 });
 
         setDisabledSyncsText();

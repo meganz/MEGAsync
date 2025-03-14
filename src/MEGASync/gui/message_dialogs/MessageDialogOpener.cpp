@@ -1,4 +1,4 @@
-#include "QMegaMessageBox.h"
+#include "MessageDialogOpener.h"
 
 #include "DialogOpener.h"
 #include "MessageDialogComponent.h"
@@ -7,42 +7,42 @@
 
 #include <QPointer>
 
-QString QMegaMessageBox::warningTitle()
+QString MessageDialogOpener::warningTitle()
 {
     return QCoreApplication::translate("MegaApplication", "Warning");
 }
 
-QString QMegaMessageBox::errorTitle()
+QString MessageDialogOpener::errorTitle()
 {
     return QCoreApplication::translate("MegaApplication", "Error");
 }
 
-QString QMegaMessageBox::fatalErrorTitle()
+QString MessageDialogOpener::fatalErrorTitle()
 {
     return QCoreApplication::translate("MegaApplication", "Alert");
 }
 
-void QMegaMessageBox::information(const MessageBoxInfo& info)
+void MessageDialogOpener::information(const MessageDialogInfo& info)
 {
     return show(MessageDialogData::Type::INFORMATION, info);
 }
 
-void QMegaMessageBox::warning(const MessageBoxInfo& info)
+void MessageDialogOpener::warning(const MessageDialogInfo& info)
 {
     return show(MessageDialogData::Type::WARNING, info);
 }
 
-void QMegaMessageBox::question(const MessageBoxInfo& info)
+void MessageDialogOpener::question(const MessageDialogInfo& info)
 {
     return show(MessageDialogData::Type::QUESTION, info);
 }
 
-void QMegaMessageBox::critical(const MessageBoxInfo& info)
+void MessageDialogOpener::critical(const MessageDialogInfo& info)
 {
     return show(MessageDialogData::Type::CRITICAL, info);
 }
 
-void QMegaMessageBox::show(MessageDialogData::Type type, const MessageBoxInfo& info)
+void MessageDialogOpener::show(MessageDialogData::Type type, const MessageDialogInfo& info)
 {
     auto showDialog = [type, info]()
     {
