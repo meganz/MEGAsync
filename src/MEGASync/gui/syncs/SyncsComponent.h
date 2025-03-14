@@ -43,7 +43,6 @@ public slots:
 signals:
     void comesFromSettingsChanged();
     void remoteFolderChanged();
-    void originSyncChanged();
 
 private:
     bool mComesFromSettings;

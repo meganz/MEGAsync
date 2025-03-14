@@ -55,7 +55,6 @@ void SyncsComponent::setSyncOrigin(SyncInfo::SyncOrigin origin)
     if (mSyncOrigin != origin)
     {
         mSyncOrigin = origin;
-        emit originSyncChanged(); // todo rename it!
     }
 }
 
