@@ -6,14 +6,18 @@
 #include "OnboardingQmlDialog.h"
 #include "PasswordStrengthChecker.h"
 #include "SettingsDialog.h"
+#include "Syncs.h"
 #include "SyncsComponent.h"
+#include "SyncsData.h"
 
 #include <QQmlEngine>
 
 using namespace mega;
 
 Onboarding::Onboarding(QObject* parent):
-    QMLComponent(parent)
+    QMLComponent(parent),
+    mSyncs(std::make_unique<Syncs>()),
+    mSyncsData(std::make_unique<SyncsData>(mSyncs.get()))
 {
     qmlRegisterModule("Onboarding", 1, 0);
     qmlRegisterType<OnboardingQmlDialog>("OnboardingQmlDialog", 1, 0, "OnboardingQmlDialog");
@@ -24,6 +28,14 @@ Onboarding::Onboarding(QObject* parent):
 
     SyncsComponent::registerQmlModules();
     BackupCandidatesComponent::registerQmlModules();
+
+    QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsComponentAccess"),
+                                                   this);
+
+    QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsData"),
+                                                   mSyncsData.get());
+
+    mSyncs->setSyncsData(mSyncsData.get());
 
     // Makes the Guest window transparent (macOS)
     QQuickWindow::setDefaultAlphaBuffer(true);
@@ -43,4 +55,32 @@ bool Onboarding::deviceNameAlreadyExists(const QString& name) const
 {
     // TODO : SAT-1645 implement this
     return false;
+}
+
+/*
+ * public slots to be called from qml code
+ */
+void Onboarding::addSync(SyncInfo::SyncOrigin origin, const QString& local, const QString& remote)
+{
+    mSyncs->addSync(origin, local, remote);
+}
+
+bool Onboarding::checkLocalSync(const QString& path)
+{
+    return mSyncs->checkLocalSync(path);
+}
+
+bool Onboarding::checkRemoteSync(const QString& path)
+{
+    return mSyncs->checkRemoteSync(path);
+}
+
+void Onboarding::clearRemoteError()
+{
+    mSyncs->clearRemoteError();
+}
+
+void Onboarding::clearLocalError()
+{
+    mSyncs->clearLocalError();
 }

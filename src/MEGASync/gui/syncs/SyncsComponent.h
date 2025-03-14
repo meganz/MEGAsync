@@ -2,7 +2,6 @@
 #define SYNCS_COMPONENT_H
 
 #include "QmlDialogWrapper.h"
-#include "SyncsUtils.h"
 
 class Syncs;
 class SyncsData;
@@ -12,8 +11,6 @@ class SyncsComponent : public QMLComponent
 
     Q_PROPERTY(bool comesFromSettings READ getComesFromSettings NOTIFY comesFromSettingsChanged)
     Q_PROPERTY(QString remoteFolder READ getRemoteFolder NOTIFY remoteFolderChanged)
-    Q_PROPERTY(SyncsUtils::SyncStatusCode syncStatus READ getSyncStatus WRITE setSyncStatus NOTIFY
-                   syncStatusChanged)
 
 public:
     explicit SyncsComponent(QObject* parent = 0);
@@ -42,14 +39,11 @@ public slots:
     bool checkRemoteSync(const QString& path);
     void clearRemoteError();
     void clearLocalError();
-    void setSyncStatus(SyncsUtils::SyncStatusCode status);
-    SyncsUtils::SyncStatusCode getSyncStatus() const;
 
 signals:
     void comesFromSettingsChanged();
     void remoteFolderChanged();
     void originSyncChanged();
-    void syncStatusChanged();
 
 private:
     bool mComesFromSettings;

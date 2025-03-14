@@ -178,24 +178,6 @@ bool Syncs::checkRemoteSync(const QString& path)
     return (!mRemoteError.has_value());
 }
 
-SyncsUtils::SyncStatusCode Syncs::getSyncStatus() const
-{
-    return mSyncStatus;
-}
-
-void Syncs::setSyncStatus(SyncsUtils::SyncStatusCode status)
-{
-    if (status != mSyncStatus)
-    {
-        mSyncStatus = status;
-
-        if (mSyncsData != nullptr)
-        {
-            emit mSyncsData->syncStatusChanged();
-        }
-    }
-}
-
 void Syncs::onRequestFinish(mega::MegaRequest* request, mega::MegaError* error)
 {
     if (request->getType() == mega::MegaRequest::TYPE_CREATE_FOLDER && mCreatingFolder &&
@@ -241,16 +223,6 @@ void Syncs::onRequestFinish(mega::MegaRequest* request, mega::MegaError* error)
 void Syncs::onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings)
 {
     Q_UNUSED(syncSettings)
-
-    SyncInfo* syncInfo = SyncInfo::instance();
-    if(syncInfo->getNumSyncedFolders(mega::MegaSync::SyncType::TYPE_TWOWAY) <= 0)
-    {
-        setSyncStatus(SyncsUtils::SyncStatusCode::NONE);
-    }
-    else
-    {
-        setSyncStatus(SyncsUtils::SyncStatusCode::FULL);
-    }
 
     if (mSyncsData != nullptr)
     {

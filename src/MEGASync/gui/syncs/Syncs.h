@@ -2,7 +2,6 @@
 #define SYNCS_H
 
 #include "SyncController.h"
-#include "SyncsUtils.h"
 
 #include <QObject>
 
@@ -30,9 +29,6 @@ public:
     bool checkRemoteSync(const QString& path);
     void clearRemoteError();
     void clearLocalError();
-
-    SyncsUtils::SyncStatusCode getSyncStatus() const;
-    void setSyncStatus(SyncsUtils::SyncStatusCode status);
 
     QString getLocalError() const;
     QString getRemoteError() const;
@@ -78,7 +74,6 @@ private:
     std::unique_ptr<SyncController> mSyncController;
 
     bool mCreatingFolder = false;
-    SyncsUtils::SyncStatusCode mSyncStatus = SyncsUtils::SyncStatusCode::NONE;
     SyncController::SyncConfig mSyncConfig;
 
     // vars with de command error data, used to generate error messages.

@@ -35,25 +35,13 @@ SyncsFlow {
                     text: Strings.setExclusions
                     visible: localFolderChooser.choosenPath.length !== 0
                 }
-                rightSecondary.text: (syncsData.syncStatus === SyncsUtils.SyncStatusCode.NONE) ? Strings.previous : Strings.cancel
-            }
-
-            onSelectiveSyncMoveToBack: {
-                if(syncsData.syncStatus === SyncsUtils.SyncStatusCode.NONE) {
-                    root.state = root.syncType;
-                }
-                else {
-                    window.close();
-                }
             }
 
             onSelectiveSyncMoveToSuccess: {
-                syncsComponentAccess.syncStatus = SyncsUtils.SyncStatusCode.SELECTIVE;
                 root.syncsFlowMoveToFinal(Constants.SyncType.SELECTIVE_SYNC);
             }
 
             onFullSyncMoveToSuccess: {
-                syncsComponentAccess.syncStatus = SyncsUtils.SyncStatusCode.FULL;
                 root.syncsFlowMoveToFinal(Constants.SyncType.FULL_SYNC);
             }
         }

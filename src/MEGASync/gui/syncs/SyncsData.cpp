@@ -24,12 +24,6 @@ QString SyncsData::getDefaultMegaPath()
     return DEFAULT_MEGA_PATH;
 }
 
-SyncsUtils::SyncStatusCode SyncsData::getSyncStatus() const
-{
-    assert(mSyncs != nullptr);
-    return mSyncs->getSyncStatus();
-}
-
 QString SyncsData::getLocalError() const
 {
     assert(mSyncs != nullptr);

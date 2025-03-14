@@ -68,12 +68,10 @@ SyncsFlow {
             }
 
             onSelectiveSyncMoveToSuccess: {
-                syncsComponentAccess.syncStatus = SyncsUtils.SyncStatusCode.SELECTIVE;
                 root.syncsFlowMoveToFinal(Constants.SyncType.SELECTIVE_SYNC);
             }
 
             onFullSyncMoveToSuccess: {
-                syncsComponentAccess.syncStatus = SyncsUtils.SyncStatusCode.FULL;
                 root.syncsFlowMoveToFinal(Constants.SyncType.FULL_SYNC);
             }
         }
