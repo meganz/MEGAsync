@@ -93,9 +93,9 @@ void ViewLoadingMessage::updateGeometry()
     raise();
 }
 
-bool ViewLoadingMessage::isButtonVisible() const
+bool ViewLoadingMessage::isWaitingForAnswer() const
 {
-    return ui->bButton->isVisible();
+    return ui->bButton->isVisible() && ui->bButton->isEnabled();
 }
 
 int ViewLoadingMessage::getButtonType() const

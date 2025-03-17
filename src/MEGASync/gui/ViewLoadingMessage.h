@@ -21,7 +21,7 @@ public:
     void updateMessage(std::shared_ptr<MessageInfo> info);
     void updateGeometry();
 
-    bool isButtonVisible() const;
+    bool isWaitingForAnswer() const;
     int getButtonType() const;
 
     void setCloseWhenAnyButtonIsPressed(bool newCloseWhenAnyButtonIsPressed);
