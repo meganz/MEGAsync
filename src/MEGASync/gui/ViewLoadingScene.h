@@ -1,20 +1,19 @@
 #ifndef VIEWLOADINGSCENE_H
 #define VIEWLOADINGSCENE_H
 
-#include <QWidget>
-#include <QTreeView>
+#include <QDateTime>
+#include <QEvent>
+#include <QHeaderView>
+#include <QLayout>
+#include <QPainter>
+#include <QPointer>
+#include <QScrollBar>
+#include <QSortFilterProxyModel>
 #include <QStandardItemModel>
 #include <QStyledItemDelegate>
 #include <QTimer>
-#include <QPainter>
-#include <QSortFilterProxyModel>
-#include <QPointer>
-#include <QLayout>
-#include <QHeaderView>
-#include <QScrollBar>
-#include <QDateTime>
-#include <QEvent>
-#include <QPainter>
+#include <QTreeView>
+#include <QWidget>
 
 #include <memory>
 
@@ -486,8 +485,6 @@ protected:
         {
             mTopParent = mView->window();
             mTopParent->installEventFilter(this);
-
-
         }
 
         return ViewLoadingSceneBase::getTopParent();

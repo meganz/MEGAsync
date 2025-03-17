@@ -86,15 +86,22 @@ StalledIssuesModel::StalledIssuesModel():
     mGlobalListener = std::make_unique<mega::QTMegaGlobalListener>(mMegaApi, this);
     mMegaApi->addGlobalListener(mGlobalListener.get());
 
-    connect(mStalledIssuesReceiver, &StalledIssuesReceiver::solvingIssues, this, [this](StalledIssuesCreator::IssuesCount count)
-    {
-        auto info = std::make_shared<MessageInfo>();
-        info->message = processingIssuesString();
-        info->buttonType = MessageInfo::ButtonType::NONE;
-        info->count = count.currentIssueBeingSolved;
-        info->total = count.totalIssues;
-        emit updateLoadingMessage(info);
-    }, Qt::QueuedConnection);
+    connect(
+        mStalledIssuesReceiver,
+        &StalledIssuesReceiver::solvingIssues,
+        this,
+        [this](StalledIssuesCreator::IssuesCount count)
+        {
+            blockUi();
+
+            auto info = std::make_shared<MessageInfo>();
+            info->message = processingIssuesString();
+            info->buttonType = MessageInfo::ButtonType::NONE;
+            info->count = count.currentIssueBeingSolved;
+            info->total = count.totalIssues;
+            emit updateLoadingMessage(info);
+        },
+        Qt::QueuedConnection);
 
     connect(mStalledIssuesReceiver, &StalledIssuesReceiver::solvingIssuesFinished, this, [this](StalledIssuesCreator::IssuesCount count)
         {
