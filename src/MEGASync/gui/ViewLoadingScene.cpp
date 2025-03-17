@@ -121,14 +121,13 @@ LoadingSceneMessageHandler::~LoadingSceneMessageHandler()
 
 bool LoadingSceneMessageHandler::needsAnswerFromUser() const
 {
-    return mLoadingMessage && mLoadingMessage->isButtonVisible();
+    return mLoadingMessage && mLoadingMessage->isWaitingForAnswer();
 }
 
 void LoadingSceneMessageHandler::hideLoadingMessage()
 {
     updateMessage(nullptr);
-    mLoadingViewVisible = false;
-    checkLoadingMessageVisibility();
+    setLoadingViewVisible(false);
 }
 
 void LoadingSceneMessageHandler::setTopParent(QWidget *widget)
