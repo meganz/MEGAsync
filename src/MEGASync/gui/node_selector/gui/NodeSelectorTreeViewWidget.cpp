@@ -339,7 +339,11 @@ void NodeSelectorTreeViewWidget::checkNewFolderAdded(QPointer<NodeSelectorModelI
         // If the row inserted is the new row, stop iterating over the new insertions
         if (item->getNode()->getHandle() == mNewFolderHandle)
         {
-            onItemDoubleClick(mProxyModel->getIndexFromHandle(mNewFolderHandle));
+            auto newFolderIndex(mProxyModel->getIndexFromHandle(mNewFolderHandle));
+
+            onItemDoubleClick(newFolderIndex);
+            selectionHasChanged(QModelIndexList() << newFolderIndex);
+
             mNewFolderHandle = mega::INVALID_HANDLE;
             mNewFolderAdded = false;
         }
