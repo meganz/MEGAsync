@@ -21,9 +21,9 @@ execute_process(
     "/mn" "${MSIPath}/" "/o" "/of" "${MSIPath}/resources.pri"
 )
 
-set(MEGA_DESKTOP_APP_CERTIFICATE_PUBLISHER $ENV{MEGA_CERTIFICATE_PUBLISHER})
+set(MEGA_DESKTOP_APP_CERTIFICATE_PUBLISHER $ENV{MEGA_DESKTOP_APP_CERTIFICATE_PUBLISHER})
 
-message (STATUS "Using certificate publisher: $ENV{MEGA_CERTIFICATE_PUBLISHER}")
+message (STATUS "Using certificate publisher: ${MEGA_DESKTOP_APP_CERTIFICATE_PUBLISHER}")
 
 configure_file(${CMAKE_CURRENT_LIST_DIR}/AppxManifest.xml.in ${MSIPath}/AppxManifest.xml @ONLY)
 
