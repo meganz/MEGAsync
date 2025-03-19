@@ -223,8 +223,9 @@ public:
             }
             else
             {
-                auto dialog = showDialogImpl(msg, false, false);
+                auto dialog = addDialog(msg);
                 dialog->setIgnoreCloseAllAction(msgInfo->ignoreCloseAll());
+                dialog->getDialog()->setShowWhenCreated();
             }
         }
     }

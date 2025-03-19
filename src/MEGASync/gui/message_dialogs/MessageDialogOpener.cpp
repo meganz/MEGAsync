@@ -50,6 +50,7 @@ void MessageDialogOpener::show(MessageDialogData::Type type, const MessageDialog
         QPointer<QmlDialogWrapper<MessageDialogComponent>> dialog =
             new QmlDialogWrapper<MessageDialogComponent>(info.parent, data);
         DialogOpener::showMessageBox(dialog, data);
+        emit dialog->wrapper()->dataReady();
     };
 
     if (MegaSyncApp->thread() != MegaSyncApp->thread()->currentThread())
