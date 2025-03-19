@@ -134,6 +134,7 @@ QmlDialog {
                         id: buttonLoader
 
                         property string buttonText: model.modelData ? model.modelData.text : ""
+                        property url buttonIcon: model.modelData ? model.modelData.iconUrl : ""
                         property var onClicked: () => {
                             if (model.modelData) {
                                 messageDialogComponentAccess.buttonClicked(model.modelData.type);
@@ -162,6 +163,10 @@ QmlDialog {
 
                             PrimaryButton {
                                 text: buttonLoader.buttonText
+                                icons {
+                                    source: buttonLoader.buttonIcon
+                                    position: Icon.Position.LEFT
+                                }
                                 onClicked: buttonLoader.onClicked()
                             }
                         }
@@ -171,6 +176,10 @@ QmlDialog {
 
                             OutlineButton {
                                 text: buttonLoader.buttonText
+                                icons {
+                                    source: buttonLoader.buttonIcon
+                                    position: Icon.Position.LEFT
+                                }
                                 onClicked: buttonLoader.onClicked()
                             }
                         }
@@ -180,6 +189,10 @@ QmlDialog {
 
                             SecondaryButton {
                                 text: buttonLoader.buttonText
+                                icons {
+                                    source: buttonLoader.buttonIcon
+                                    position: Icon.Position.LEFT
+                                }
                                 onClicked: buttonLoader.onClicked()
                             }
                         }
@@ -189,6 +202,10 @@ QmlDialog {
 
                             LinkButton {
                                 text: buttonLoader.buttonText
+                                icons {
+                                    source: buttonLoader.buttonIcon
+                                    position: Icon.Position.LEFT
+                                }
                                 onClicked: buttonLoader.onClicked()
                             }
                         }
@@ -198,6 +215,10 @@ QmlDialog {
 
                             TextButton {
                                 text: buttonLoader.buttonText
+                                icons {
+                                    source: buttonLoader.buttonIcon
+                                    position: Icon.Position.LEFT
+                                }
                                 onClicked: buttonLoader.onClicked()
                             }
                         }

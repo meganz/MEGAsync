@@ -583,7 +583,7 @@ void FatalEventHandler::showFatalErrorMessage()
     {
         msgInfo.buttons |= DEFAULT_ACTION_BUTTON;
         msgInfo.buttonsText.insert(DEFAULT_ACTION_BUTTON, getDefaultActionLabel());
-        msgInfo.buttonsIcons.insert(DEFAULT_ACTION_BUTTON, QIcon());
+        msgInfo.buttonsIcons.insert(DEFAULT_ACTION_BUTTON, QUrl());
         msgInfo.defaultButton = DEFAULT_ACTION_BUTTON;
     }
 
@@ -592,7 +592,7 @@ void FatalEventHandler::showFatalErrorMessage()
     {
         msgInfo.buttons |= SECONDARY_ACTION_BUTTON;
         msgInfo.buttonsText.insert(SECONDARY_ACTION_BUTTON, getSecondaryActionLabel());
-        msgInfo.buttonsIcons.insert(SECONDARY_ACTION_BUTTON, QIcon());
+        msgInfo.buttonsIcons.insert(SECONDARY_ACTION_BUTTON, QUrl());
     }
 
     // User choice handling

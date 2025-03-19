@@ -29,6 +29,7 @@ public:
     Q_ENUM(ButtonStyle)
 
     QString text = QString();
+    QUrl iconUrl = QUrl();
     QMessageBox::StandardButton type = QMessageBox::StandardButton::NoButton;
     ButtonStyle style = ButtonStyle::OUTLINE;
 
@@ -112,7 +113,7 @@ struct MessageDialogInfo
     QMessageBox::StandardButtons buttons;
     QMessageBox::StandardButton defaultButton;
     QMap<QMessageBox::StandardButton, QString> buttonsText;
-    QMap<QMessageBox::StandardButton, QIcon> buttonsIcons;
+    QMap<QMessageBox::StandardButton, QUrl> buttonsIcons;
     Qt::TextFormat textFormat;
     QUrl imageUrl;
     bool enqueue;
@@ -177,8 +178,7 @@ private:
     void buttonClicked(QMessageBox::StandardButton type);
 
     void setImageUrl(const QUrl& url);
-    void setButtons(QMessageBox::StandardButtons buttons,
-                    QMessageBox::StandardButton defaultButton = QMessageBox::NoButton);
+    void buildButtons();
     void processButtonInfo(QMessageBox::StandardButtons buttons,
                            QMessageBox::StandardButton type,
                            const QString& defaultText);

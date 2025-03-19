@@ -11,6 +11,7 @@ namespace
 const QLatin1String BUTTON_VARIANT_LIST_TEXT("text");
 const QLatin1String BUTTON_VARIANT_LIST_TYPE("type");
 const QLatin1String BUTTON_VARIANT_LIST_STYLE("style");
+const QLatin1String BUTTON_VARIANT_LIST_ICON("iconUrl");
 const QUrl IMAGE_OK(QStringLiteral("qrc:/images/qml/ok.png"));
 const QUrl IMAGE_WARNING(QStringLiteral("qrc:/images/qml/warning.png"));
 const QUrl IMAGE_QUESTION(QStringLiteral("qrc:/images/qml/question.png"));
@@ -127,7 +128,7 @@ MessageDialogData::MessageDialogData(Type type, MessageDialogInfo info, QObject*
     mResult(new MessageDialogResult)
 {
     updateWidgetsByType();
-    setButtons(mInfo.buttons, mInfo.defaultButton);
+    buildButtons();
 }
 
 MessageDialogData::Type MessageDialogData::getType() const
@@ -189,6 +190,7 @@ QVariantList MessageDialogData::getButtons() const
         buttonData[BUTTON_VARIANT_LIST_TEXT] = it.value().text;
         buttonData[BUTTON_VARIANT_LIST_TYPE] = static_cast<int>(it.value().type);
         buttonData[BUTTON_VARIANT_LIST_STYLE] = static_cast<int>(it.value().style);
+        buttonData[BUTTON_VARIANT_LIST_ICON] = it.value().iconUrl;
         list.append(buttonData);
     }
     return list;
@@ -237,22 +239,29 @@ void MessageDialogData::setCheckboxChecked(bool checked)
     emit checkboxChanged();
 }
 
-void MessageDialogData::setButtons(QMessageBox::StandardButtons buttons,
-                                   QMessageBox::StandardButton defaultButton)
+void MessageDialogData::buildButtons()
 {
-    if (buttons.testFlag(QMessageBox::StandardButton::NoButton))
+    if (mInfo.buttons.testFlag(QMessageBox::StandardButton::NoButton))
     {
         return;
     }
 
-    processButtonInfo(buttons, QMessageBox::StandardButton::Ok, tr("OK"));
-    processButtonInfo(buttons, QMessageBox::StandardButton::Yes, tr("Yes"));
-    processButtonInfo(buttons, QMessageBox::StandardButton::No, tr("No"));
-    processButtonInfo(buttons, QMessageBox::StandardButton::Cancel, tr("Cancel"));
+    processButtonInfo(mInfo.buttons, QMessageBox::StandardButton::Ok, tr("OK"));
+    processButtonInfo(mInfo.buttons, QMessageBox::StandardButton::Yes, tr("Yes"));
+    processButtonInfo(mInfo.buttons, QMessageBox::StandardButton::No, tr("No"));
+    processButtonInfo(mInfo.buttons, QMessageBox::StandardButton::Cancel, tr("Cancel"));
 
-    if (mButtons.contains(defaultButton))
+    if (mButtons.contains(mInfo.defaultButton))
     {
-        mButtons[defaultButton].style = MessageDialogButtonInfo::ButtonStyle::PRIMARY;
+        mButtons[mInfo.defaultButton].style = MessageDialogButtonInfo::ButtonStyle::PRIMARY;
+    }
+
+    for (auto it = mInfo.buttonsIcons.constBegin(); it != mInfo.buttonsIcons.constEnd(); ++it)
+    {
+        if (mButtons.contains(it.key()))
+        {
+            mButtons[it.key()].iconUrl = it.value();
+        }
     }
 
     emit buttonsChanged();

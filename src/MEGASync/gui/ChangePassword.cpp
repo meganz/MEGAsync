@@ -76,8 +76,8 @@ void ChangePassword::onRequestFinish(mega::MegaRequest* req, mega::MegaError* e)
                 };
                 MessageDialogOpener::information(msgInfo);
             }
-            else if (e->getErrorCode() == MegaError::API_EFAILED
-                     || e->getErrorCode() == MegaError::API_EEXPIRED)
+            else if (e->getErrorCode() == MegaError::API_EFAILED ||
+                     e->getErrorCode() == MegaError::API_EEXPIRED)
             {
                 show2FA(true);
             }
