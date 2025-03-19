@@ -661,8 +661,10 @@ QString SyncController::getIsLocalFolderAllowedForSyncMsg(const QString& path, c
     }
 #endif
 
-    // Use canonicalPath() to resolve links
+    // Use canonicalPath() to resolve links except on Linux
+#ifndef Q_OS_LINUX
     inputPath = QDir(inputPath).canonicalPath();
+#endif
 
     if (inputPath == QDir::rootPath())
     {

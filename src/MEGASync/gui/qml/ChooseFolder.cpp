@@ -47,12 +47,8 @@ void ChooseLocalFolder::openFolderSelector(const QString& folderPath, bool folde
     {
         if(context && !selection.isEmpty())
         {
-            QString fPath = selection.first();
-            auto folder = QDir::toNativeSeparators(QDir(fPath).canonicalPath());
-            if(!folder.isNull() && !folder.isEmpty())
-            {
-                emit folderChoosen(folder);
-            }
+            auto folder = getNativePath(selection.first());
+            sendFolderChosenSignal(folder, QString());
         }
     };
 
@@ -77,16 +73,38 @@ void ChooseLocalFolder::openRelativeFolderSelector(const QString& folderPath)
     {
         if(context && !selection.isEmpty())
         {
-            QString fPath = selection.first();
-            auto folder = QDir::toNativeSeparators(QDir(fPath).canonicalPath());
-            if(!folder.isNull() && !folder.isEmpty())
-            {
-                emit folderChoosen(QDir(openFromFolder).relativeFilePath(folder));
-            }
+            auto folder = getNativePath(selection.first());
+            sendFolderChosenSignal(folder, openFromFolder);
         }
     };
 
     Platform::getInstance()->folderSelector(info);
+}
+
+QString ChooseLocalFolder::getNativePath(const QString& path)
+{
+    return QDir::toNativeSeparators(
+#ifdef Q_OS_LINUX
+        path
+#else
+        QDir(path).canonicalPath()
+#endif
+    );
+}
+
+void ChooseLocalFolder::sendFolderChosenSignal(const QString& folder, const QString& relativePath)
+{
+    if (!folder.isNull() && !folder.isEmpty())
+    {
+        if (relativePath.isEmpty())
+        {
+            emit folderChoosen(folder);
+        }
+        else
+        {
+            emit folderChoosen(QDir(relativePath).relativeFilePath(folder));
+        }
+    }
 }
 
 bool ChooseLocalFolder::createFolder(const QString& folderPath)

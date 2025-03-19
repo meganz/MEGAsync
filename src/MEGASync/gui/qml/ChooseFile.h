@@ -19,6 +19,8 @@ signals:
     void fileChoosen(QString folderPath);
 
 private:
+    QString getNativePath(const QString& path);
+
     QString mTitle;
 
 };

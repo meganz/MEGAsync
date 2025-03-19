@@ -23,6 +23,8 @@ signals:
     void folderChoosen(QString folderPath);
 
 private:
+    QString getNativePath(const QString& path);
+    void sendFolderChosenSignal(const QString& folder, const QString& relativePath);
     QString mTitle;
 };
 
