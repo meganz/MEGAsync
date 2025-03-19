@@ -82,7 +82,7 @@ void Syncs::helperCheckLocalSync(const QString& path)
 
     if (path.isEmpty())
     {
-        localError = LocalErrors::EmptyPath;
+        localError = LocalErrors::EMPTY_PATH;
     }
     else
     {
@@ -95,12 +95,12 @@ void Syncs::helperCheckLocalSync(const QString& path)
             {
                 if (!localFolder.createFolder(localFolderPath))
                 {
-                    localError = LocalErrors::NoAccessPermissionsCantCreate;
+                    localError = LocalErrors::NO_ACCESS_PERMISSIONS_CANT_CREATE;
                 }
             }
             else
             {
-                localError = LocalErrors::NoAccessPermissionsNoExist;
+                localError = LocalErrors::NO_ACCESS_PERMISSIONS_NO_EXIST;
             }
         }
     }
@@ -112,7 +112,7 @@ void Syncs::helperCheckLocalSync(const QString& path)
             mSyncController.isLocalFolderSyncable(path, mega::MegaSync::TYPE_TWOWAY, errorMessage);
         if (syncability == SyncController::CANT_SYNC)
         {
-            localError = LocalErrors::CantSync;
+            localError = LocalErrors::CANT_SYNC;
         }
     }
 
@@ -129,7 +129,7 @@ void Syncs::helperCheckRemoteSync(const QString& path)
 
     if (path.isEmpty())
     {
-        remoteError = RemoteErrors::EmptyPath;
+        remoteError = RemoteErrors::EMPTY_PATH;
     }
     else
     {
@@ -139,14 +139,14 @@ void Syncs::helperCheckRemoteSync(const QString& path)
             std::unique_ptr<mega::MegaError> remoteMegaError(MegaSyncApp->getMegaApi()->isNodeSyncableWithError(megaNode.get()));
             if (remoteMegaError->getErrorCode() != mega::MegaError::API_OK)
             {
-                remoteError = RemoteErrors::CantSync;
+                remoteError = RemoteErrors::CANT_SYNC;
                 mRemoteMegaError.error = remoteMegaError->getErrorCode();
                 mRemoteMegaError.syncError = remoteMegaError->getSyncError();
             }
         }
         else if (path != mSyncsData->getDefaultMegaPath())
         {
-            remoteError = RemoteErrors::CantSync;
+            remoteError = RemoteErrors::CANT_SYNC;
         }
     }
 
@@ -188,7 +188,7 @@ void Syncs::onRequestFinish(mega::MegaRequest* request, mega::MegaError* error)
             }
             else
             {
-                mRemoteError = RemoteErrors::CantCreateRemoteFolder;
+                mRemoteError = RemoteErrors::CANT_CREATE_REMOTE_FOLDER;
 
                 mSyncsData->setRemoteError(getRemoteError());
             }
@@ -196,7 +196,7 @@ void Syncs::onRequestFinish(mega::MegaRequest* request, mega::MegaError* error)
         else if (error->getErrorCode() != mega::MegaError::API_ESSL
                 && error->getErrorCode() != mega::MegaError::API_ESID)
         {
-            mRemoteError = RemoteErrors::CantCreateRemoteFolderMsg;
+            mRemoteError = RemoteErrors::CANT_CREATE_REMOTE_FOLDER_MSG;
             mRemoteMegaError.error = mega::MegaError::API_OK;
             mRemoteMegaError.syncError = mega::SyncError::NO_SYNC_ERROR;
             mRemoteStringMessage = QString::fromUtf8(error->getErrorString());
@@ -219,7 +219,7 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString nam
 
     if (errorCode != mega::MegaError::API_OK)
     {
-        mRemoteError = RemoteErrors::CantAddSync;
+        mRemoteError = RemoteErrors::CANT_ADD_SYNC;
         mRemoteMegaError.error = errorCode;
         mRemoteMegaError.syncError = syncErrorCode;
 
@@ -240,12 +240,12 @@ QString Syncs::getLocalError() const
 
     switch (mLocalError.value())
     {
-        case LocalErrors::EmptyPath:
+        case LocalErrors::EMPTY_PATH:
         {
             return tr("Select a local folder to sync.");
         }
 
-        case LocalErrors::NoAccessPermissionsCantCreate:
+        case LocalErrors::NO_ACCESS_PERMISSIONS_CANT_CREATE:
         {
             return QCoreApplication::translate(
                 "OnboardingStrings",
@@ -253,12 +253,12 @@ QString Syncs::getLocalError() const
                 "continue, select an existing folder.");
         }
 
-        case LocalErrors::NoAccessPermissionsNoExist:
+        case LocalErrors::NO_ACCESS_PERMISSIONS_NO_EXIST:
         {
             return QCoreApplication::translate("MegaSyncError", "Local path not available");
         }
 
-        case LocalErrors::CantSync:
+        case LocalErrors::CANT_SYNC:
         {
             QString errorMessage;
             mSyncController.isLocalFolderSyncable(mSyncConfig.localFolder,
@@ -280,12 +280,12 @@ QString Syncs::getRemoteError() const
 
     switch (mRemoteError.value())
     {
-        case RemoteErrors::EmptyPath:
+        case RemoteErrors::EMPTY_PATH:
         {
             return tr("Select a MEGA folder to sync.");
         }
 
-        case RemoteErrors::CantSync:
+        case RemoteErrors::CANT_SYNC:
         {
             if (mRemoteMegaError.error != mega::MegaError::API_OK)
             {
@@ -299,12 +299,12 @@ QString Syncs::getRemoteError() const
             }
         }
 
-        case RemoteErrors::CantCreateRemoteFolder:
+        case RemoteErrors::CANT_CREATE_REMOTE_FOLDER:
         {
             return tr("%1 folder doesn't exist").arg(mSyncConfig.remoteFolder);
         }
 
-        case RemoteErrors::CantCreateRemoteFolderMsg:
+        case RemoteErrors::CANT_CREATE_REMOTE_FOLDER_MSG:
         {
             if (!mRemoteStringMessage.isEmpty())
             {
@@ -314,7 +314,7 @@ QString Syncs::getRemoteError() const
             break;
         }
 
-        case RemoteErrors::CantAddSync:
+        case RemoteErrors::CANT_ADD_SYNC:
         {
             Text::Link link(Utilities::SUPPORT_URL);
             Text::Decorator dec(&link);

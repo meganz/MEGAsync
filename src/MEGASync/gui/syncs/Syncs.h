@@ -46,19 +46,19 @@ private slots:
 private:
     enum class LocalErrors
     {
-        EmptyPath,
-        NoAccessPermissionsNoExist,
-        NoAccessPermissionsCantCreate,
-        CantSync
+        EMPTY_PATH,
+        NO_ACCESS_PERMISSIONS_NO_EXIST,
+        NO_ACCESS_PERMISSIONS_CANT_CREATE,
+        CANT_SYNC
     };
 
     enum class RemoteErrors
     {
-        EmptyPath,
-        CantSync,
-        CantCreateRemoteFolder,
-        CantCreateRemoteFolderMsg,
-        CantAddSync
+        EMPTY_PATH,
+        CANT_SYNC,
+        CANT_CREATE_REMOTE_FOLDER,
+        CANT_CREATE_REMOTE_FOLDER_MSG,
+        CANT_ADD_SYNC
     };
 
     struct MegaRemoteCodeError

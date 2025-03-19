@@ -34,10 +34,10 @@ FocusScope {
 
         if(root.isOnboarding) {
             if (local) {
-                defaultFolder = localFolderChooser.getDefaultFolder(syncsData.defaultMegaFolder);
+                defaultFolder = localFolderChooser.getDefaultFolder(syncsDataAccess.defaultMegaFolder);
             }
             else {
-                defaultFolder = syncsData.defaultMegaPath;
+                defaultFolder = syncsDataAccess.defaultMegaPath;
             }
         }
         else { // Standalone syncs window
@@ -47,12 +47,12 @@ FocusScope {
 
             if (local) {
                 if(syncsComponentAccess.remoteFolder === "") {
-                    defaultFolder = localFolderChooser.getDefaultFolder(syncsData.defaultMegaFolder);
+                    defaultFolder = localFolderChooser.getDefaultFolder(syncsDataAccess.defaultMegaFolder);
                 }
             }
             else {
                 if(syncsComponentAccess.remoteFolder === "") {
-                    defaultFolder = syncsData.defaultMegaPath;
+                    defaultFolder = syncsDataAccess.defaultMegaPath;
                 }
                 else {
                     defaultFolder = syncsComponentAccess.remoteFolder;
@@ -82,7 +82,7 @@ FocusScope {
     Connections {
         id: syncsConnection
 
-        target: syncsData
+        target: syncsDataAccess
 
         function onSyncRemoved() {
             // Check if MEGA is available again when removed
