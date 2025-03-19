@@ -17,6 +17,8 @@ Loader {
         left: parent.left
         right: parent.right
     }
+    activeFocusOnTab: root.visible
+    focus: root.visible
     visible: root.textInfo ? root.textInfo.text !== "" : false
 
     sourceComponent: {
@@ -60,6 +62,7 @@ Loader {
                 weight: root.textWeight
             }
             rawText: root.textInfo ? root.textInfo.text : ""
+            focus: root.activeFocus
         }
     }
 
