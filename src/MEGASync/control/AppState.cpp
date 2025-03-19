@@ -55,9 +55,16 @@ void AppState::setAppState(AppStates newState)
             // Fallthrough
             case AppState::FATAL_ERROR:
             {
-                DialogOpener::closeAllDialogs();
+                // We don't want to close the onboarding wizard when coming from
+                // AppState::FATAL_ERROR_PENDING_FETCHNODES!
+                if (oldState != AppState::FATAL_ERROR_PENDING_FETCHNODES)
+                {
+                    DialogOpener::closeAllDialogs();
+                }
                 break;
             }
+            case AppState::FATAL_ERROR_PENDING_FETCHNODES:
+            // Fallthrough
             case AppState::NOMINAL:
             // Fallthrough
             case AppState::FINISHED:

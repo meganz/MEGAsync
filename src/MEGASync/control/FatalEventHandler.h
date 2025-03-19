@@ -26,6 +26,7 @@ public:
         ERR_DB_FULL = mega::MegaEvent::REASON_ERROR_DB_FULL,
         ERR_DB_INDEX_OVERFLOW = mega::MegaEvent::REASON_ERROR_DB_INDEX_OVERFLOW,
         ERR_NO_JSCD = mega::MegaEvent::REASON_ERROR_NO_JSCD,
+        ERR_REGENERATE_JSCD = mega::MegaEvent::REASON_ERROR_REGENERATE_JSCD,
         // In case there is a new event the app does not support yet:
         // It will be processed as ERR_UNKNOWN (logs and report will show sdk code though)
         // Make sure this value is not used by any mega::MegaEvent::REASON_ERROR_* !!
@@ -42,6 +43,8 @@ public:
         RESTART_APP,
         CHECK_PERMISSIONS,
         RELOAD,
+        FORCE_ONBOARDING,
+        DISMISS_WARNING,
     };
     Q_ENUM(FatalErrorCorrectiveAction)
 
@@ -76,6 +79,7 @@ signals:
     void requestExitApp(bool force);
     void requestRebootApp(bool update);
     void requestUnlink(bool keepLogs);
+    void requestForceOnBoarding();
 
 private:
     explicit FatalEventHandler();
@@ -98,6 +102,8 @@ private:
     void logoutOnFatalError();
     void reloadOnFatalError();
     void openAppDataFolder();
+    void forceOnboarding();
+    void dismissWarning();
 
     void clear();
     bool useContactSupportUrlHandler() const;
