@@ -21,16 +21,6 @@ protected:
     std::wstring GetIcon() const override;
 
 private:
-    template<typename T>
-    void addSubCommand()
-    {
-        if (mEnumCommands)
-        {
-            winrt::com_ptr<T> comPointer = winrt::make_self<T>();
-            mEnumCommands->subCommands.push_back(comPointer);
-        }
-    }
-
     winrt::com_ptr<SubCommandEnumerator> mEnumCommands;
 };
 

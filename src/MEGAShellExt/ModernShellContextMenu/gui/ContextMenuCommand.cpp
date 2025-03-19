@@ -1,23 +1,11 @@
 #include "ContextMenuCommand.h"
 
-#include "ContextMenuCommandGetLink.h"
-#include "ContextMenuCommandRemoveFromLeftPane.h"
-#include "ContextMenuCommandUpload.h"
-#include "ContextMenuCommandView.h"
-#include "ContextMenuCommandViewVersions.h"
-
 static const std::wstring ICON = L"mega.ico";
 
 ContextMenuCommand::ContextMenuCommand():
     ContextMenuCommandBase(L"ContextMenuCommand")
 {
     mEnumCommands = winrt::make_self<SubCommandEnumerator>();
-
-    addSubCommand<ContextMenuCommandGetLink>();
-    addSubCommand<ContextMenuCommandView>();
-    addSubCommand<ContextMenuCommandViewVersions>();
-    addSubCommand<ContextMenuCommandUpload>();
-    addSubCommand<ContextMenuCommandRemoveFromLeftPane>();
 }
 
 IFACEMETHODIMP ContextMenuCommand::GetFlags(EXPCMDFLAGS* flags)
