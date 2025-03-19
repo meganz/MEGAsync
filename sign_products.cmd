@@ -1,3 +1,5 @@
+if not "%MEGA_SIGN_PRODUCTS%"=="" if /I "%MEGA_SIGN_PRODUCTS%"=="true" (
+
 REM Sign products
 
 call sign_modern_context_menu_products.cmd --path "build-x64-windows-mega\src\MEGAShellExt\RelWithDebInfo" || exit 1 /b
@@ -7,3 +9,5 @@ IF "%MEGA_SKIP_32_BIT_BUILD%" == "true" (
 )
 
 call sign_modern_context_menu_products.cmd --path "build-x86-windows-mega\src\MEGAShellExt\RelWithDebInfo" || exit 1 /b
+
+)

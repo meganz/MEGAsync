@@ -116,4 +116,5 @@ echo 	- Suffix for installer: The installer will add this suffix to the version.
 echo MEGA_VCPKGPATH environment variable should be set to the root of the 3rd party dir.
 echo MEGA_QTPATH environment variable should be set to the Qt install dir. Takes the value of MEGAQTPATH, or defaults to C:\Qt\5.15.16\x64
 echo MEGA_WIN_KITVER environment variable can be used to set the Windows sdk to use. Value defaults to "10.0.19041.0". Set to "." to use the Universal Kit
+echo MEGA_SIGN_PRODUCTS environment variable can be used to sign some of the build products. False by default.  	
 exit /B
