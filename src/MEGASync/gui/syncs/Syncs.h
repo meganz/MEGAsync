@@ -21,7 +21,6 @@ class Syncs: public QObject
 public:
     Syncs(QObject* parent = nullptr);
     virtual ~Syncs() = default;
-
     void addSync(SyncInfo::SyncOrigin origin,
                  const QString& local,
                  const QString& remote = QLatin1String("/"));
@@ -29,10 +28,6 @@ public:
     bool checkRemoteSync(const QString& path);
     void clearRemoteError();
     void clearLocalError();
-
-    QString getLocalError() const;
-    QString getRemoteError() const;
-
     SyncsData* getSyncsData() const;
 
 public slots:
@@ -84,6 +79,8 @@ private:
     void helperCheckLocalSync(const QString& path);
     void helperCheckRemoteSync(const QString& path);
     void cleanErrors();
+    QString getLocalError() const;
+    QString getRemoteError() const;
 };
 
 #endif // SYNCS_H
