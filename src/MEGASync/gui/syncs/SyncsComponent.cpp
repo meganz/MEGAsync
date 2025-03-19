@@ -19,9 +19,8 @@ SyncsComponent::SyncsComponent(QObject* parent):
 
     QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsComponentAccess"),
                                                    this);
-
-    auto syncsData = mSyncs->getSyncsData();
-    QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsData"), syncsData);
+    QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsDataAccess"),
+                                                   mSyncs->getSyncsData());
 }
 
 QUrl SyncsComponent::getQmlUrl()
@@ -92,9 +91,6 @@ void SyncsComponent::openExclusionsDialog(const QString& folder) const
     }
 }
 
-/*
- * public slots to be called from qml code
- */
 void SyncsComponent::addSync(SyncInfo::SyncOrigin origin,
                              const QString& local,
                              const QString& remote)

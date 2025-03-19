@@ -2,8 +2,6 @@
 
 #include "Syncs.h"
 
-#include <cassert>
-
 namespace
 {
 const QString DEFAULT_MEGA_FOLDER = QString::fromUtf8("MEGA");

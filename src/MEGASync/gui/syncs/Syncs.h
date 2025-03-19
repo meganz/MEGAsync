@@ -61,7 +61,8 @@ private:
         CantAddSync
     };
 
-    struct MegaRemoteCodeError{
+    struct MegaRemoteCodeError
+    {
         int error;
         int syncError;
     };

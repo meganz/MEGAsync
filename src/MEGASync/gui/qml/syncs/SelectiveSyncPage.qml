@@ -11,13 +11,13 @@ SelectiveSyncPageForm {
     signal selectiveSyncMoveToSuccess
     signal fullSyncMoveToSuccess
 
-    localFolderChooser.folderField.hint.text: syncsData.localError
-    localFolderChooser.folderField.hint.visible: syncsData.localError.length !== 0
-    localFolderChooser.folderField.error: syncsData.localError.length !== 0
+    localFolderChooser.folderField.hint.text: syncsDataAccess.localError
+    localFolderChooser.folderField.hint.visible: syncsDataAccess.localError.length !== 0
+    localFolderChooser.folderField.error: syncsDataAccess.localError.length !== 0
 
-    remoteFolderChooser.folderField.hint.text: syncsData.remoteError
-    remoteFolderChooser.folderField.hint.visible: syncsData.remoteError.length !== 0
-    remoteFolderChooser.folderField.error: syncsData.remoteError.length !== 0
+    remoteFolderChooser.folderField.hint.text: syncsDataAccess.remoteError
+    remoteFolderChooser.folderField.hint.visible: syncsDataAccess.remoteError.length !== 0
+    remoteFolderChooser.folderField.error: syncsDataAccess.remoteError.length !== 0
 
     function enableScreen() {
         root.enabled = true;
@@ -36,14 +36,14 @@ SelectiveSyncPageForm {
         rightPrimary.onClicked: {
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            syncsComponentAccess.addSync(isOnboarding ?  SyncInfo.ONBOARDING_ORIGIN : syncsComponentAccess.getSyncOrigin(),
+            syncsComponentAccess.addSync(isOnboarding ? SyncInfo.ONBOARDING_ORIGIN : syncsComponentAccess.getSyncOrigin(),
                                localFolderChooser.choosenPath,
                                remoteFolderChooser.choosenPath);
         }
     }
 
     Connections {
-        target: syncsData
+        target: syncsDataAccess
 
         function onSyncSetupSuccess() {
             var remotePath = remoteFolderChooser.choosenPath;

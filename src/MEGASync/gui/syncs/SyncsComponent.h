@@ -31,14 +31,13 @@ public:
     void setRemoteFolder(const QString& remoteFolder);
     QString getRemoteFolder() const;
 
-public slots:
-    void addSync(SyncInfo::SyncOrigin origin,
-                 const QString& local,
-                 const QString& remote = QLatin1String("/"));
-    bool checkLocalSync(const QString& path);
-    bool checkRemoteSync(const QString& path);
-    void clearRemoteError();
-    void clearLocalError();
+    Q_INVOKABLE void addSync(SyncInfo::SyncOrigin origin,
+                             const QString& local,
+                             const QString& remote = QLatin1String("/"));
+    Q_INVOKABLE bool checkLocalSync(const QString& path);
+    Q_INVOKABLE bool checkRemoteSync(const QString& path);
+    Q_INVOKABLE void clearRemoteError();
+    Q_INVOKABLE void clearLocalError();
 
 signals:
     void comesFromSettingsChanged();
