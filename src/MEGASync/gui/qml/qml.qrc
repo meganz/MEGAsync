@@ -147,7 +147,6 @@
         <file>syncs/qmldir</file>
         <file>syncs/SyncsDialog.qml</file>
         <file>syncs/SyncsStrings.qml</file>
-        <file>syncs/ChooseSyncFolder.qml</file>
         <file>syncs/SelectiveSyncPage.qml</file>
         <file>syncs/SelectiveSyncPageForm.ui.qml</file>
         <file>syncs/SyncsFlow.qml</file>
@@ -221,5 +220,6 @@
         <file>components/dialogs/TitleBodyDialog.qml</file>
         <file>syncs/ChooseSyncRemoteFolder.qml</file>
         <file>syncs/ChooseSyncLocalFolder.qml</file>
+        <file>syncs/ChooseSyncFolderCore.qml</file>
     </qresource>
 </RCC>

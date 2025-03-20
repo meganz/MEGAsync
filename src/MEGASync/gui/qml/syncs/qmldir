@@ -5,7 +5,7 @@ SyncsFlow 1.0 SyncsFlow.qml
 SyncsPage 1.0 SyncsPage.qml
 SelectiveSyncPage 1.0 SelectiveSyncPage.qml
 SelectiveSyncPageForm 1.0 SelectiveSyncPageForm.ui.qml
-ChooseSyncFolder 1.0 ChooseSyncFolder.qml
+ChooseSyncFolderCore 1.0 ChooseSyncFolderCore.qml
 ChooseSyncLocalFolder 1.0 ChooseSyncLocalFolder.qml
 ChooseSyncRemoteFolder 1.0 ChooseSyncRemoteFolder.qml
 ResumeSyncsPageForm 1.0 ResumeSyncsPageForm.ui.qml

@@ -1,34 +1,27 @@
-import QtQuick 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Controls 2.15
-import QtQuick.Dialogs 1.3
-
 import common 1.0
-
-import components.buttons 1.0
-import components.textFields 1.0
 
 import syncs 1.0
 import SyncsComponents 1.0
 
-FocusScope {
+ChooseSyncFolderCore {
     id: root
 
-    required property bool isOnboarding
+    title: SyncsStrings.selectMEGAFolder
+    leftIconSource: Images.megaOutline
 
-    readonly property int textEditMargin: 2
-
-    property alias choosenPath: folderItem.text
-    property alias folderField: folderItem
+    onButtonClicked: {
+        syncsComponentAccess.clearRemoteError();
+        remoteFolderChooser.openFolderSelector();
+    }
 
     function reset() {
-            remoteFolderChooser.reset();
+        remoteFolderChooser.reset();
     }
 
     function getFolder() {
         var defaultFolder = "";
 
-        if(root.isOnboarding) {
+        if (root.isOnboarding) {
             defaultFolder = syncsDataAccess.defaultMegaPath;
         }
         else { // Standalone syncs window
@@ -52,70 +45,12 @@ FocusScope {
         return defaultFolder;
     }
 
-    width: parent.width
-    height: folderItem.height
-    Layout.preferredWidth: width
-    Layout.preferredHeight: folderItem.height
-
-    Connections {
-        id: syncsConnection
-
-        target: syncsDataAccess
-
-        function onSyncRemoved() {
-            // Check if MEGA is available again when removed
-            folderItem.text = getFolder();
-        }
-    }
-
-    TextField {
-        id: folderItem
-
-        anchors {
-            left: parent.left
-            right: changeButtonItem.left
-            top: parent.top
-            rightMargin: textEditMargin
-        }
-        title: SyncsStrings.selectMEGAFolder
-        text: getFolder()
-        leftIconSource: Images.megaOutline
-        leftIconColor: enabled ? ColorTheme.iconSecondary : ColorTheme.iconDisabled
-        textField.readOnly: true
-        toolTip {
-            leftIconSource: leftIconSource
-            timeout: 5000
-        }
-    }
-
-    OutlineButton {
-        id: changeButtonItem
-
-        height: folderItem.textField.height
-        anchors {
-            right: parent.right
-            top: parent.top
-            topMargin: 15
-        }
-        focus: true
-        text: Strings.choose
-        onClicked: {
-            syncsComponentAccess.clearRemoteError();
-            remoteFolderChooser.openFolderSelector();
-        }
-    }
-
     ChooseRemoteFolder {
         id: remoteFolderChooser
-    }
 
-    Connections {
-        id: remoteFolderChooserConnection
-
-        target: remoteFolderChooser
-
-        function onFolderChoosen(remoteFolderPath) {
-            folderItem.text = remoteFolderPath;
+        onFolderChoosen: (folderPath) => {
+            folderField.text = folderPath;
         }
     }
+
 }
