@@ -24,7 +24,7 @@ signals:
 
 private:
     QString getNativePath(const QString& path);
-    void sendFolderChosenSignal(const QString& folder, const QString& relativePath);
+    void sendFolderChosenSignal(const QString& folder, const QString& openFromFolder = QString());
     QString mTitle;
 };
 

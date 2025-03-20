@@ -92,17 +92,17 @@ QString ChooseLocalFolder::getNativePath(const QString& path)
     );
 }
 
-void ChooseLocalFolder::sendFolderChosenSignal(const QString& folder, const QString& relativePath)
+void ChooseLocalFolder::sendFolderChosenSignal(const QString& folder, const QString& openFromFolder)
 {
     if (!folder.isNull() && !folder.isEmpty())
     {
-        if (relativePath.isEmpty())
+        if (openFromFolder.isEmpty())
         {
             emit folderChoosen(folder);
         }
         else
         {
-            emit folderChoosen(QDir(relativePath).relativeFilePath(folder));
+            emit folderChoosen(QDir(openFromFolder).relativeFilePath(folder));
         }
     }
 }
