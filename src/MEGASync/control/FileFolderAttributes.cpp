@@ -637,8 +637,10 @@ void RemoteFileFolderAttributes::requestVersions(QObject* caller, std::function<
             std::unique_ptr<mega::MegaNode> node = getNode();
             if (node)
             {
-                mValues.insert(RemoteAttributeTypes::VERSIONS,
-                               MegaSyncApp->getMegaApi()->getVersions(node.get())->size());
+                std::unique_ptr<mega::MegaNodeList> nodeList(
+                    MegaSyncApp->getMegaApi()->getVersions(node.get()));
+
+                mValues.insert(RemoteAttributeTypes::VERSIONS, nodeList->size());
             }
         }
 
