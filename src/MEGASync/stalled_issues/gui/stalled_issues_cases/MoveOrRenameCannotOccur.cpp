@@ -66,7 +66,7 @@ void MoveOrRenameCannotOccur::onLocalButtonClicked()
 
         info.msgInfo.finishFunc = [info](QPointer<MessageDialogResult> msgBox)
         {
-            if(msgBox->result() == QDialogButtonBox::Ok)
+            if (msgBox->result() == QMessageBox::Ok)
             {
                 if (msgBox->isChecked())
                 {
@@ -109,7 +109,7 @@ void MoveOrRenameCannotOccur::onRemoteButtonClicked()
 
         info.msgInfo.finishFunc = [info](QPointer<MessageDialogResult> msgBox)
         {
-            if(msgBox->result() == QDialogButtonBox::Ok)
+            if (msgBox->result() == QMessageBox::Ok)
             {
                 if (msgBox->isChecked())
                 {

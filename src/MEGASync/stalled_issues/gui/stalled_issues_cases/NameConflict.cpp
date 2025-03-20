@@ -551,7 +551,7 @@ void NameConflict::onActionClicked(int actionId)
 
             msgInfo.finishFunc = [=](QPointer<MessageDialogResult> msgBox)
             {
-                if (msgBox->result() == QDialogButtonBox::Yes)
+                if (msgBox->result() == QMessageBox::Yes)
                 {
                     bool areAllSolved(false);
 

@@ -147,7 +147,7 @@ void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(Stalled
 
     selectionInfo.msgInfo.finishFunc = [selectionInfo](QPointer<MessageDialogResult> msgBox)
     {
-        if(msgBox->result() == QDialogButtonBox::Ok)
+        if (msgBox->result() == QMessageBox::Ok)
         {
             MegaSyncApp->getStalledIssuesModel()->fixFingerprint(
                 (msgBox->isChecked()) ? selectionInfo.similarToSelected : selectionInfo.selection);
@@ -385,7 +385,7 @@ void FolderMatchedAgainstFileHeader::onMultipleActionButtonOptionSelected(
 
     selectionInfo.msgInfo.finishFunc = [selectionInfo](QPointer<MessageDialogResult> msgBox)
     {
-        if(msgBox->result() == QDialogButtonBox::Ok)
+        if (msgBox->result() == QMessageBox::Ok)
         {
             MegaSyncApp->getStalledIssuesModel()->fixFolderMatchedAgainstFile(
                 (msgBox->isChecked()) ? selectionInfo.similarToSelected : selectionInfo.selection);
@@ -615,7 +615,7 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
         selectionInfo.msgInfo.finishFunc =
             [index, selectionInfo, nameConflict](QPointer<MessageDialogResult> msgBox)
         {
-            if(msgBox->result() == QDialogButtonBox::Ok)
+            if (msgBox->result() == QMessageBox::Ok)
             {
                 MegaSyncApp->getStalledIssuesModel()->semiAutoSolveNameConflictIssues(
                     msgBox->isChecked() ? selectionInfo.similarToSelected : selectionInfo.selection,

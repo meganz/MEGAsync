@@ -41,20 +41,13 @@ void GuiUtilities::showPayOrDismiss(const QString &title, const QString &message
 
     MessageDialogInfo msgInfo;
     msgInfo.parent = nullptr;
-#ifdef Q_OS_MAC
-    msgInfo.text = title;
-    msgInfo.informativeText = message;
-#else
-    msgInfo.dialogTitle = title;
-    msgInfo.titleText = message;
-#endif
-
+    msgInfo.titleText = title;
+    msgInfo.descriptionText = message;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.buttonsText.insert(QMessageBox::Yes, payButtonLabel);
     msgInfo.buttonsText.insert(QMessageBox::No, dismissLabel);
     msgInfo.defaultButton = QMessageBox::Yes;
     msgInfo.textFormat = Qt::TextFormat::RichText;
-
     msgInfo.finishFunc = [](QPointer<MessageDialogResult> msg)
     {
         if(msg->result() == QMessageBox::Yes)

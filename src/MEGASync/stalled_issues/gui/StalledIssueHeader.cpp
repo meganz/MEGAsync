@@ -104,7 +104,7 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
 
     msgInfo.finishFunc = [selection](QPointer<MessageDialogResult> msgBox)
     {
-        if(msgBox->result() == QDialogButtonBox::Ok)
+        if (msgBox->result() == QMessageBox::Ok)
         {
             if (msgBox->isChecked())
             {

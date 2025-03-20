@@ -315,7 +315,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 
     info.msgInfo.finishFunc = [info](QPointer<MessageDialogResult> msgBox)
     {
-        if(msgBox->result() == QDialogButtonBox::Ok)
+        if (msgBox->result() == QMessageBox::Ok)
         {
             if (msgBox->isChecked())
             {
@@ -422,7 +422,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
     {
         if(getData().consultData()->getSyncType() == mega::MegaSync::SyncType::TYPE_TWOWAY)
         {
-            if(msgBox->result() == QDialogButtonBox::Ok)
+            if (msgBox->result() == QMessageBox::Ok)
             {
                 if (msgBox->isChecked())
                 {
@@ -436,7 +436,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
         }
         else
         {
-            if(msgBox->result() == QDialogButtonBox::Ok)
+            if (msgBox->result() == QMessageBox::Ok)
             {
                 if (msgBox->isChecked())
                 {
@@ -509,7 +509,7 @@ void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
 
         info.msgInfo.finishFunc = [info](QPointer<MessageDialogResult> msgBox)
         {
-            if(msgBox->result() == QDialogButtonBox::Ok)
+            if (msgBox->result() == QMessageBox::Ok)
             {
                 if (msgBox->isChecked())
                 {
@@ -548,7 +548,7 @@ void LocalAndRemoteDifferentWidget::onKeepLastModifiedTimeButtonClicked(int)
 
     info.msgInfo.finishFunc = [info](QPointer<MessageDialogResult> msgBox)
     {
-        if(msgBox->result() == QDialogButtonBox::Ok)
+        if (msgBox->result() == QMessageBox::Ok)
         {
             if (msgBox->isChecked())
             {
