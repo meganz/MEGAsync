@@ -78,9 +78,7 @@ public slots:
     // General
     void onLocalCacheSizeAvailable();
     void onRemoteCacheSizeAvailable();
-#ifndef Q_OS_WINDOWS
-    void onPermissionsClicked();
-#endif
+
     //Enable/Disable controls
     void setEnabledAllControls(const bool enabled);
 
