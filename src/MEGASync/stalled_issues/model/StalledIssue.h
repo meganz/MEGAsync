@@ -395,7 +395,7 @@ public:
 
     mega::MegaHandle firstSyncId() const;
     const QSet<mega::MegaHandle>& syncIds() const;
-    void addSyncId(mega::MegaHandle syncId);
+    bool addSyncId(mega::MegaHandle syncId);
     //In case there are two syncs, use the first one
     mega::MegaSync::SyncType getSyncType() const;
 
@@ -510,9 +510,14 @@ public:
         return mData->shouldBeIgnored();
     }
 
-    void addSyncId(mega::MegaHandle backupId)
+    bool addSyncId(mega::MegaHandle syncId)
     {
-        mData->addSyncId(backupId);
+        return mData->addSyncId(syncId);
+    }
+
+    const QSet<mega::MegaHandle>& syncIds() const
+    {
+        return mData->syncIds();
     }
 
     template <class Type>

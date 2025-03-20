@@ -341,9 +341,15 @@ const QSet<mega::MegaHandle>& StalledIssue::syncIds() const
     return mSyncIds;
 }
 
-void StalledIssue::addSyncId(mega::MegaHandle syncId)
+bool StalledIssue::addSyncId(mega::MegaHandle syncId)
 {
-    mSyncIds.insert(syncId);
+    if (!mSyncIds.contains(syncId))
+    {
+        mSyncIds.insert(syncId);
+        return true;
+    }
+
+    return false;
 }
 
 mega::MegaSync::SyncType StalledIssue::getSyncType() const

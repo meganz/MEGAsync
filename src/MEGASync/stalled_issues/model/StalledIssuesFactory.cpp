@@ -39,6 +39,8 @@ void StalledIssuesCreator::createIssues(const mega::MegaSyncStallMap* stallsMap,
 
         start();
 
+        QHash<size_t, StalledIssueVariant> processedStalledIssues;
+
         auto syncIds(stallsMap->getKeys());
         for (unsigned int index = 0; index < syncIds->size(); ++index)
         {
@@ -49,6 +51,45 @@ void StalledIssuesCreator::createIssues(const mega::MegaSyncStallMap* stallsMap,
             for (size_t i = 0; i < stalls->size(); ++i)
             {
                 auto stall = stalls->get(i);
+
+                auto hash(stall->getHash());
+                if (processedStalledIssues.contains(hash))
+                {
+                    auto variant(processedStalledIssues[hash]);
+
+                    if (variant.addSyncId(syncId))
+                    {
+                        // Log as it is not supposed to happen
+                        QString syncIdsMessage;
+                        for (const auto& syncId: variant.syncIds())
+                        {
+                            if (!syncIdsMessage.isEmpty())
+                            {
+                                syncIdsMessage.append(QLatin1String(" "));
+                            }
+                            syncIdsMessage.append(QString::number(syncId));
+                        }
+
+                        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
+                                           QString::fromUtf8("Repeated stalled issue received with "
+                                                             "different syncID. SyncIds: %1")
+                                               .arg(syncIdsMessage)
+                                               .toUtf8()
+                                               .constData());
+                    }
+                    else
+                    {
+                        mega::MegaApi::log(
+                            mega::MegaApi::LOG_LEVEL_WARNING,
+                            QString::fromUtf8(
+                                "Repeated stalled issue received with the same syncID. SyncId: %1")
+                                .arg(QString::number(syncId))
+                                .toUtf8()
+                                .constData());
+                    }
+
+                    continue;
+                }
 
                 // Just in case this is not the first issue of a multistep issue solver
                 auto multiStepIssueSolver(getMultiStepIssueSolverByStall(stall, syncId));
@@ -120,6 +161,7 @@ void StalledIssuesCreator::createIssues(const mega::MegaSyncStallMap* stallsMap,
                     continue;
                 }
 
+                processedStalledIssues.insert(hash, variant);
                 variant.addSyncId(syncId);
 
                 // If multiStepIssueSolver is nullptr but a new one was created and added in the
