@@ -579,7 +579,7 @@ void NodeSelectorModel::executeRemoveExtraSpaceLogic(const QModelIndex& previous
     if (canDropMimeData())
     {
         // Remove the previous current index extra row
-        if (previousIndex.isValid() && !mExtraSpaceRemoved)
+        if (mExtraSpaceAdded && previousIndex.isValid() && !mExtraSpaceRemoved)
         {
             mRemovingPreviousExtraSpace = true;
 
@@ -605,12 +605,16 @@ void NodeSelectorModel::executeAddExtraSpaceLogic(const QModelIndex& currentInde
         {
             if (currentIndex.isValid() && !mExtraSpaceAdded)
             {
-                auto totalRows = rowCount(currentIndex);
-                beginInsertRows(currentIndex, totalRows, totalRows);
-                endInsertRows();
-                mExtraSpaceAdded = true;
-                mExtraSpaceRemoved = false;
-                mAddedIndex = createIndex(totalRows, 0, nullptr);
+                auto currentRowCount(rowCount(currentIndex));
+                if (currentRowCount > 0)
+                {
+                    auto totalRows = rowCount(currentIndex);
+                    beginInsertRows(currentIndex, totalRows, totalRows);
+                    endInsertRows();
+                    mExtraSpaceAdded = true;
+                    mExtraSpaceRemoved = false;
+                    mAddedIndex = createIndex(totalRows, 0, nullptr);
+                }
             }
         }
     }
@@ -1703,13 +1707,24 @@ void NodeSelectorModel::onNodesAdded(QList<QPointer<NodeSelectorModelItem>> chil
 {
     endInsertRows();
 
-    foreach(auto child, childrenItem)
+    if (!childrenItem.isEmpty())
     {
-        auto index = child->property(INDEX_PROPERTY).toModelIndex();
-        emit dataChanged(index, index);
-    }
+        auto parentIndex(childrenItem.first()->property(INDEX_PROPERTY).toModelIndex().parent());
 
-    emit nodesAdded(childrenItem);
+        // Check if extra space is needed
+        if (!mExtraSpaceAdded && mCurrentRootIndex == parentIndex)
+        {
+            executeAddExtraSpaceLogic(mCurrentRootIndex);
+        }
+
+        foreach(auto child, childrenItem)
+        {
+            auto index = child->property(INDEX_PROPERTY).toModelIndex();
+            emit dataChanged(index, index);
+        }
+
+        emit nodesAdded(childrenItem);
+    }
 }
 
 void NodeSelectorModel::onSyncStateChanged(std::shared_ptr<SyncSettings> sync)
@@ -1870,6 +1885,17 @@ void NodeSelectorModel::deleteNodeFromModel(const QModelIndex& index)
         std::shared_ptr<mega::MegaNode> node = item->getNode();
         if (node)
         {
+            if (mExtraSpaceAdded && mCurrentRootIndex == index.parent())
+            {
+                auto currentRowCount(rowCount(index.parent()));
+                // 2 is the result of 1 for the extra row + 1 for the row
+                // about to be removed
+                if (currentRowCount == 2)
+                {
+                    executeRemoveExtraSpaceLogic(mCurrentRootIndex);
+                }
+            }
+
             NodeSelectorModelItem* parent = static_cast<NodeSelectorModelItem*>(index.parent().internalPointer());
             if(parent)
             {
