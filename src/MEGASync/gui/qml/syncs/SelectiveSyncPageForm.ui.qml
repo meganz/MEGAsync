@@ -48,7 +48,7 @@ FooterButtonsPage {
             Layout.topMargin: 8
         }
 
-        ChooseSyncFolder {
+        ChooseSyncLocalFolder {
             id: localFolder
 
             Layout.preferredWidth: parent.width + 8
@@ -57,12 +57,11 @@ FooterButtonsPage {
             isOnboarding: root.isOnboarding
         }
 
-        ChooseSyncFolder {
+        ChooseSyncRemoteFolder {
             id: remoteFolder
 
             Layout.preferredWidth: parent.width + 8
             Layout.leftMargin: -4
-            local: false
             isOnboarding: root.isOnboarding
         }
     }

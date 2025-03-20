@@ -219,5 +219,7 @@
         <file>common/DeviceName.qml</file>
         <file>components/dialogs/ErrorDialog.qml</file>
         <file>components/dialogs/TitleBodyDialog.qml</file>
+        <file>syncs/ChooseSyncRemoteFolder.qml</file>
+        <file>syncs/ChooseSyncLocalFolder.qml</file>
     </qresource>
 </RCC>
