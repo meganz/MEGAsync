@@ -25,7 +25,14 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
 {
     if(stalls)
     {
-        StalledIssuesVariantList solvableIssues;
+        struct SolvableIssues
+        {
+            StalledIssueVariant variant;
+            bool solvedSynchronously = true;
+        };
+
+        QList<SolvableIssues> solvableIssues;
+
         auto totalSize(stalls->size());
 
         QSet<mega::MegaSyncStall::SyncStallReason> reasonsToFilter;
@@ -134,7 +141,16 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
                 {
                     if(variant.getData()->isAutoSolvable())
                     {
-                        solvableIssues.append(variant);
+                        SolvableIssues issueToSolve;
+                        issueToSolve.variant = variant;
+
+                        // For the moment MoveOrRenameCannotOccur are the only issues solved
+                        // asynchronously
+                        issueToSolve.solvedSynchronously =
+                            stall->reason() !=
+                            mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur;
+
+                        solvableIssues.append(issueToSolve);
                     }
                     else if(updateType == UpdateType::UI)
                     {
@@ -161,34 +177,50 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
             }
         }
 
+        // Solve autosolvable issues
         IssuesCount solvingIssuesStats;
         solvingIssuesStats.totalIssues = solvableIssues.size();
         solvingIssuesStats.currentIssueBeingSolved = 1;
-        foreach(auto solvableIssue, solvableIssues)
+
+        foreach(auto solvableIssueInfo, solvableIssues)
         {
-            emit solvingIssues(solvingIssuesStats);
+            auto solvableIssue(solvableIssueInfo.variant);
+
+            // Blocks the UI and displays a message
+            if (solvableIssueInfo.solvedSynchronously)
+            {
+                emit solvingIssues(solvingIssuesStats);
+            }
+
             auto result(solvableIssue.getData()->autoSolveIssue());
 
-            if (result == StalledIssue::AutoSolveIssueResult::FAILED)
+            // Keeps the count of fixed and failed issues
+            if (solvableIssueInfo.solvedSynchronously)
             {
-                solvableIssue.getData()->setIsSolved(StalledIssue::SolveType::FAILED);
-                mStalledIssues.mFailedAutoSolvedStalledIssues.append(solvableIssue);
-                solvingIssuesStats.issuesFailed++;
-            }
-            else if (result == StalledIssue::AutoSolveIssueResult::SOLVED)
-            {
-                solvableIssue.getData()->setIsSolved(StalledIssue::SolveType::SOLVED);
-                mStalledIssues.mAutoSolvedStalledIssues.append(solvableIssue);
-                solvingIssuesStats.issuesFixed++;
-            }
+                if (result == StalledIssue::AutoSolveIssueResult::FAILED)
+                {
+                    solvableIssue.getData()->setIsSolved(StalledIssue::SolveType::FAILED);
+                    mStalledIssues.mFailedAutoSolvedStalledIssues.append(solvableIssue);
+                    solvingIssuesStats.issuesFailed++;
+                }
+                else if (result == StalledIssue::AutoSolveIssueResult::SOLVED)
+                {
+                    solvableIssue.getData()->setIsSolved(StalledIssue::SolveType::SOLVED);
+                    mStalledIssues.mAutoSolvedStalledIssues.append(solvableIssue);
+                    solvingIssuesStats.issuesFixed++;
+                }
 
-            solvingIssuesStats.currentIssueBeingSolved++;
+                solvingIssuesStats.currentIssueBeingSolved++;
+            }
         }
 
-        if((solvingIssuesStats.issuesFailed + solvingIssuesStats.issuesFixed) != 0)
+        // Only synchronously solved issues increase the issuesFailed and issuesFixed count
+        // Even if this signal is sents after solving async issues, it only hides the message
+        if ((solvingIssuesStats.issuesFailed + solvingIssuesStats.issuesFixed) != 0)
         {
             emit solvingIssuesFinished(solvingIssuesStats);
         }
+        // Finish solving autosolvable issues
 
         //Filter some issues depending on what you have found on the list or if the issue is invalid
         //We don´t filter the solvable issues as these issues must be solved and not filtered
