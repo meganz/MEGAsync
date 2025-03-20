@@ -21,9 +21,10 @@ StalledIssuesCreator::StalledIssuesCreator():
     qRegisterMetaType<UpdateType>("UpdateType");
 }
 
-void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateType updateType)
+void StalledIssuesCreator::createIssues(const mega::MegaSyncStallMap* stallsMap,
+                                        UpdateType updateType)
 {
-    if(stalls)
+    if (stallsMap)
     {
         struct SolvableIssues
         {
@@ -33,133 +34,146 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
 
         QList<SolvableIssues> solvableIssues;
 
-        auto totalSize(stalls->size());
-
         QSet<mega::MegaSyncStall::SyncStallReason> reasonsToFilter;
         QList<MultiStepIssueSolverBase*> solversWithStall;
 
-        clear();
+        start();
 
-        for(size_t i = 0; i < totalSize; ++i)
+        auto syncIds(stallsMap->getKeys());
+        for (unsigned int index = 0; index < syncIds->size(); ++index)
         {
-            auto stall = stalls->get(i);
+            auto syncId(syncIds->get(index));
 
-            //Just in case this is not the first issue of a multistep issue solver
-            auto multiStepIssueSolver(getMultiStepIssueSolverByStall(stall));
+            auto stalls(stallsMap->get(syncId));
 
-            if(multiStepIssueSolver)
+            for (size_t i = 0; i < stalls->size(); ++i)
             {
-                solversWithStall.append(multiStepIssueSolver);
-            }
+                auto stall = stalls->get(i);
 
-            StalledIssueVariant variant;
-            StalledIssueSPtr d;
+                // Just in case this is not the first issue of a multistep issue solver
+                auto multiStepIssueSolver(getMultiStepIssueSolverByStall(stall, syncId));
 
-            if(stall->reason() == mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur)
-            {
-                d = mMoveOrRenameCannotOccurFactory->createIssue(multiStepIssueSolver, stall);
+                if (multiStepIssueSolver)
+                {
+                    solversWithStall.append(multiStepIssueSolver);
+                }
 
-                //If we find a MoveOrRenameCannotOccur issue, we don´t want to show
-                //the DeleteWaitingOnMove and DeleteOrMoveWaitingOnScanning
-                reasonsToFilter << mega::MegaSyncStall::SyncStallReason::DeleteWaitingOnMoves
-                                << mega::MegaSyncStall::SyncStallReason::DeleteOrMoveWaitingOnScanning;
-            }
-            else
-            {
-                if(stall->reason() ==
-                    mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced)
+                StalledIssueVariant variant;
+                StalledIssueSPtr d;
+
+                if (stall->reason() ==
+                    mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur)
                 {
-                    d = std::make_shared<NameConflictedStalledIssue>(stall);
-                }
-                else if(stall->couldSuggestIgnoreThisPath(false, 0) ||
-                        stall->couldSuggestIgnoreThisPath(false, 1) ||
-                        stall->couldSuggestIgnoreThisPath(true, 0) ||
-                        stall->couldSuggestIgnoreThisPath(true, 1))
-                {
-                    d = std::make_shared<IgnoredStalledIssue>(stall);
-                }
-                else if(StalledIssue::isCloudNodeBlocked(stall))
-                {
-                    d = std::make_shared<CloudNodeIsBlockedIssue>(stall);
-                }
-                else if (stall->reason() ==
-                         mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile)
-                {
-                    d = std::make_shared<FolderMatchedAgainstFileIssue>(stall);
-                }
-                else if(stall->reason() ==
-                            mega::MegaSyncStall::SyncStallReason::
-                                LocalAndRemoteChangedSinceLastSyncedState_userMustChoose ||
-                        stall->reason() ==
-                            mega::MegaSyncStall::SyncStallReason::
-                                LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose)
-                {
-                    d = std::make_shared<LocalOrRemoteUserMustChooseStalledIssue>(stall);
+                    d = mMoveOrRenameCannotOccurFactory->createIssue(multiStepIssueSolver, stall);
+
+                    // If we find a MoveOrRenameCannotOccur issue, we don´t want to show
+                    // the DeleteWaitingOnMove and DeleteOrMoveWaitingOnScanning
+                    reasonsToFilter
+                        << mega::MegaSyncStall::SyncStallReason::DeleteWaitingOnMoves
+                        << mega::MegaSyncStall::SyncStallReason::DeleteOrMoveWaitingOnScanning;
                 }
                 else
                 {
-                    d = std::make_shared<StalledIssue>(stall);
-                }
-            }
-
-            if(d)
-            {
-                variant = StalledIssueVariant(d, stall);
-            }
-
-            if(!variant.isValid() || variant.shouldBeIgnored())
-            {
-                continue;
-            }
-
-            //If multiStepIssueSolver is nullptr but a new one was created and added in the previous line, we don´t need to reset it
-            if(multiStepIssueSolver && updateType == UpdateType::AUTO_SOLVE)
-            {
-                multiStepIssueSolver->resetDeadlineIfNeeded(variant);
-            }
-
-            //Check if it is being solved...
-            if(!variant.getData()->isSolved())
-            {
-                // Init issue file/folder attributes, needed to check if the issue is autosolvable
-                variant.getData()->endFillingIssue();
-
-                if(updateType == UpdateType::EVENT)
-                {
-                    if(!variant.getData()->isAutoSolvable())
+                    if (stall->reason() ==
+                        mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced)
                     {
-                        QString eventMessage(QString::fromLatin1("Stalled issue received: Type %1")
-                                                 .arg(QString::number(stall->reason())));
-                        MegaSyncApp->getStatsEventHandler()->sendEvent(
-                            AppStatsEvents::EventType::SI_STALLED_ISSUE_RECEIVED, QStringList() << eventMessage);
+                        d = std::make_shared<NameConflictedStalledIssue>(stall);
                     }
+                    else if (stall->couldSuggestIgnoreThisPath(false, 0) ||
+                             stall->couldSuggestIgnoreThisPath(false, 1) ||
+                             stall->couldSuggestIgnoreThisPath(true, 0) ||
+                             stall->couldSuggestIgnoreThisPath(true, 1))
+                    {
+                        d = std::make_shared<IgnoredStalledIssue>(stall);
+                    }
+                    else if (StalledIssue::isCloudNodeBlocked(stall))
+                    {
+                        d = std::make_shared<CloudNodeIsBlockedIssue>(stall);
+                    }
+                    else if (stall->reason() ==
+                             mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile)
+                    {
+                        d = std::make_shared<FolderMatchedAgainstFileIssue>(stall);
+                    }
+                    else if (stall->reason() ==
+                                 mega::MegaSyncStall::SyncStallReason::
+                                     LocalAndRemoteChangedSinceLastSyncedState_userMustChoose ||
+                             stall->reason() ==
+                                 mega::MegaSyncStall::SyncStallReason::
+                                     LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose)
+                    {
+                        d = std::make_shared<LocalOrRemoteUserMustChooseStalledIssue>(stall);
+                    }
+                    else
+                    {
+                        d = std::make_shared<StalledIssue>(stall);
+                    }
+                }
 
-                    // We don´t work with these issues, they are just needed to send the event
+                if (d)
+                {
+                    variant = StalledIssueVariant(d, stall);
+                }
+
+                if (!variant.isValid() || variant.shouldBeIgnored())
+                {
                     continue;
                 }
-                else
+
+                variant.addSyncId(syncId);
+
+                // If multiStepIssueSolver is nullptr but a new one was created and added in the
+                // previous line, we don´t need to reset it
+                if (multiStepIssueSolver && updateType == UpdateType::AUTO_SOLVE)
                 {
-                    if(variant.getData()->isAutoSolvable())
+                    multiStepIssueSolver->resetDeadlineIfNeeded(variant);
+                }
+
+                // Check if it is being solved...
+                if (!variant.getData()->isSolved())
+                {
+                    // Init issue file/folder attributes, needed to check if the issue is
+                    // autosolvable
+                    variant.getData()->endFillingIssue();
+
+                    if (updateType == UpdateType::EVENT)
                     {
-                        SolvableIssues issueToSolve;
-                        issueToSolve.variant = variant;
+                        if (!variant.getData()->isAutoSolvable())
+                        {
+                            QString eventMessage(
+                                QString::fromLatin1("Stalled issue received: Type %1")
+                                    .arg(QString::number(stall->reason())));
+                            MegaSyncApp->getStatsEventHandler()->sendEvent(
+                                AppStatsEvents::EventType::SI_STALLED_ISSUE_RECEIVED,
+                                QStringList() << eventMessage);
+                        }
 
-                        // For the moment MoveOrRenameCannotOccur are the only issues solved
-                        // asynchronously
-                        issueToSolve.solvedSynchronously =
-                            stall->reason() !=
-                            mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur;
-
-                        solvableIssues.append(issueToSolve);
+                        // We don´t work with these issues, they are just needed to send the event
+                        continue;
                     }
-                    else if(updateType == UpdateType::UI)
+                    else
                     {
-                        mStalledIssues.mActiveStalledIssues.append(variant);
+                        if (variant.getData()->isAutoSolvable())
+                        {
+                            SolvableIssues issueToSolve;
+                            issueToSolve.variant = variant;
+
+                            // For the moment MoveOrRenameCannotOccur are the only issues solved
+                            // asynchronously
+                            issueToSolve.solvedSynchronously =
+                                stall->reason() !=
+                                mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur;
+
+                            solvableIssues.append(issueToSolve);
+                        }
+                        else if (updateType == UpdateType::UI)
+                        {
+                            mStalledIssues.mActiveStalledIssues.append(variant);
+                        }
                     }
                 }
             }
         }
-
         // Add being solved issues taken from the MultiStepIssueSolvers
         if (updateType == UpdateType::UI)
         {
@@ -252,7 +266,7 @@ bool StalledIssuesCreator::multiStepIssueSolveActive() const
     return false;
 }
 
-void StalledIssuesCreator::clear()
+void StalledIssuesCreator::start()
 {
     mStalledIssues.clear();
     mMoveOrRenameCannotOccurFactory->clear();
@@ -293,14 +307,18 @@ ReceivedStalledIssues StalledIssuesCreator::getStalledIssues() const
     return mStalledIssues;
 }
 
-QPointer<MultiStepIssueSolverBase> StalledIssuesCreator::getMultiStepIssueSolverByStall(const mega::MegaSyncStall* stall)
+QPointer<MultiStepIssueSolverBase>
+    StalledIssuesCreator::getMultiStepIssueSolverByStall(const mega::MegaSyncStall* stall,
+                                                         mega::MegaHandle syncId)
 {
     if (!mMultiStepIssueSolversByReason.isEmpty())
     {
         auto solverFound = std::find_if(mMultiStepIssueSolversByReason.begin(),
-            mMultiStepIssueSolversByReason.end(),
-            [stall](const MultiStepIssueSolverBase* solver)
-            { return solver->checkIssue(stall); });
+                                        mMultiStepIssueSolversByReason.end(),
+                                        [stall, syncId](const MultiStepIssueSolverBase* solver)
+                                        {
+                                            return solver->checkIssue(stall, syncId);
+                                        });
 
         if (solverFound != mMultiStepIssueSolversByReason.end() )
         {
