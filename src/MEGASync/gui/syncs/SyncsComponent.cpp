@@ -117,3 +117,60 @@ void SyncsComponent::clearLocalError()
 {
     mSyncs->clearLocalError();
 }
+
+QString SyncsComponent::getInitialLocalFolder()
+{
+    QString defaultFolder;
+
+    ChooseLocalFolder localFolderChooser;
+    auto syncsData = mSyncs->getSyncsData();
+
+    if (mComesFromSettings)
+    {
+        if (getRemoteFolder().isEmpty())
+        {
+            defaultFolder = localFolderChooser.getDefaultFolder(syncsData->getDefaultMegaFolder());
+        }
+    }
+    else
+    {
+        defaultFolder = localFolderChooser.getDefaultFolder(syncsData->getDefaultMegaFolder());
+    }
+
+    if (!checkLocalSync(defaultFolder))
+    {
+        defaultFolder.clear();
+        clearLocalError();
+    }
+
+    return defaultFolder;
+}
+
+QString SyncsComponent::getInitialRemoteFolder()
+{
+    QString defaultFolder;
+
+    auto syncsData = mSyncs->getSyncsData();
+
+    if (mComesFromSettings)
+    {
+        defaultFolder = getRemoteFolder();
+
+        if (defaultFolder.isEmpty())
+        {
+            defaultFolder = syncsData->getDefaultMegaPath();
+        }
+    }
+    else
+    {
+        defaultFolder = syncsData->getDefaultMegaPath();
+    }
+
+    if (!checkRemoteSync(defaultFolder))
+    {
+        defaultFolder.clear();
+        clearRemoteError();
+    }
+
+    return defaultFolder;
+}

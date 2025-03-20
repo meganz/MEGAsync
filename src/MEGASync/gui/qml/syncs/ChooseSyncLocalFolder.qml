@@ -8,36 +8,11 @@ ChooseSyncFolderCore {
 
     title: SyncsStrings.selectLocalFolder
     leftIconSource: Images.pc
+    choosenPath: syncsComponentAccess.getInitialLocalFolder()
 
     onButtonClicked:{
         syncsComponentAccess.clearLocalError();
         localFolderChooser.openFolderSelector(folderField.text);
-    }
-
-    function reset() {}
-
-    function getFolder() {
-        var defaultFolder = "";
-
-        if(root.isOnboarding) {
-            defaultFolder = localFolderChooser.getDefaultFolder(syncsDataAccess.defaultMegaFolder);
-        }
-        else { // Standalone syncs window
-            if(syncsComponentAccess === null) {
-                return defaultFolder;
-            }
-
-            if(syncsComponentAccess.remoteFolder === "") {
-                defaultFolder = localFolderChooser.getDefaultFolder(syncsDataAccess.defaultMegaFolder);
-            }
-        }
-
-        if (!syncsComponentAccess.checkLocalSync(defaultFolder)) {
-            defaultFolder = "";
-            syncsComponentAccess.clearLocalError();
-        }
-
-        return defaultFolder;
     }
 
     ChooseLocalFolder {

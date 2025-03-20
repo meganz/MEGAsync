@@ -49,8 +49,6 @@ SelectiveSyncPageForm {
             var remotePath = remoteFolderChooser.choosenPath;
 
             enableScreen();
-            remoteFolderChooser.reset();
-            localFolderChooser.reset();
 
             if (remotePath === '/')
             {

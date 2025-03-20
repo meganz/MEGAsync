@@ -50,7 +50,6 @@ FocusScope {
             top: parent.top
             rightMargin: textEditMargin
         }
-        text: getFolder()
         leftIconColor: enabled ? ColorTheme.iconSecondary : ColorTheme.iconDisabled
         textField.readOnly: true
         toolTip {

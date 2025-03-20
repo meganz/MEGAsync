@@ -8,41 +8,11 @@ ChooseSyncFolderCore {
 
     title: SyncsStrings.selectMEGAFolder
     leftIconSource: Images.megaOutline
+    choosenPath: syncsComponentAccess.getInitialRemoteFolder()
 
     onButtonClicked: {
         syncsComponentAccess.clearRemoteError();
         remoteFolderChooser.openFolderSelector();
-    }
-
-    function reset() {
-        remoteFolderChooser.reset();
-    }
-
-    function getFolder() {
-        var defaultFolder = "";
-
-        if (root.isOnboarding) {
-            defaultFolder = syncsDataAccess.defaultMegaPath;
-        }
-        else { // Standalone syncs window
-            if(syncsComponentAccess === null) {
-                return defaultFolder;
-            }
-
-            if(syncsComponentAccess.remoteFolder === "") {
-                defaultFolder = syncsDataAccess.defaultMegaPath;
-            }
-            else {
-                defaultFolder = syncsComponentAccess.remoteFolder;
-            }
-        }
-
-        if (!syncsComponentAccess.checkRemoteSync(defaultFolder)) {
-            defaultFolder = "";
-            syncsComponentAccess.clearRemoteError();
-        }
-
-        return defaultFolder;
     }
 
     ChooseRemoteFolder {

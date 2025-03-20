@@ -38,6 +38,8 @@ public:
     Q_INVOKABLE bool checkRemoteSync(const QString& path);
     Q_INVOKABLE void clearRemoteError();
     Q_INVOKABLE void clearLocalError();
+    Q_INVOKABLE QString getInitialLocalFolder();
+    Q_INVOKABLE QString getInitialRemoteFolder();
 
 signals:
     void comesFromSettingsChanged();
