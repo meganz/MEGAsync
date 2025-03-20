@@ -174,3 +174,13 @@ QString SyncsComponent::getInitialRemoteFolder()
 
     return defaultFolder;
 }
+
+void SyncsComponent::chooseRemoteFolderButtonClicked()
+{
+    clearRemoteError();
+}
+
+void SyncsComponent::chooseLocalFolderButtonClicked()
+{
+    clearLocalError();
+}

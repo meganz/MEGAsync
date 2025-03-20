@@ -11,8 +11,6 @@ Item {
 
     readonly property string selectiveSync: "selectiveSync"
 
-    property bool isOnboarding: false
-
     signal syncsFlowMoveToFinal(int syncType)
     signal syncsFlowMoveToBack()
 
@@ -44,8 +42,8 @@ Item {
     Connections {
         id: syncsComponentAccessConnection
 
-        target: isOnboarding ? null : syncsComponentAccess
-        enabled: !isOnboarding
+        target: syncsComponentAccess
+        enabled: syncsComponentAccess.comesFromSettings
         ignoreUnknownSignals: true
 
         function onRemoteFolderChanged() {

@@ -15,8 +15,6 @@ SyncsFlow {
 
     selectiveSyncPageComponent: selectiveSyncPageComponentItem
 
-    isOnboarding: true
-
     state: root.selectiveSync
 
     Item {
@@ -55,7 +53,6 @@ SyncsFlow {
         SelectiveSyncPage {
             id: selectiveSyncPage
 
-            isOnboarding: true
             footerButtons.rightSecondary.visible: true
             footerButtons.leftSecondary.visible: false
             footerButtons.leftPrimary.text: Strings.skip
@@ -78,4 +75,3 @@ SyncsFlow {
     }
 
 }
-

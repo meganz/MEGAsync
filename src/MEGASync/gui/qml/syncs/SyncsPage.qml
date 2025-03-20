@@ -28,7 +28,6 @@ SyncsFlow {
         SelectiveSyncPage {
             id: selectiveSyncPage
 
-            isOnboarding: false
             footerButtons {
                 leftPrimary.visible: false
                 leftSecondary {

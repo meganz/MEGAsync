@@ -11,7 +11,7 @@ ChooseSyncFolderCore {
     choosenPath: syncsComponentAccess.getInitialLocalFolder()
 
     onButtonClicked:{
-        syncsComponentAccess.clearLocalError();
+        syncsComponentAccess.chooseLocalFolderButtonClicked();
         localFolderChooser.openFolderSelector(folderField.text);
     }
 

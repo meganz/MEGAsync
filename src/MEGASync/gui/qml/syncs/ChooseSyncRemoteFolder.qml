@@ -11,7 +11,7 @@ ChooseSyncFolderCore {
     choosenPath: syncsComponentAccess.getInitialRemoteFolder()
 
     onButtonClicked: {
-        syncsComponentAccess.clearRemoteError();
+        syncsComponentAccess.chooseRemoteFolderButtonClicked();
         remoteFolderChooser.openFolderSelector();
     }
 

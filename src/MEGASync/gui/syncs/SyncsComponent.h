@@ -41,6 +41,9 @@ public:
     Q_INVOKABLE QString getInitialLocalFolder();
     Q_INVOKABLE QString getInitialRemoteFolder();
 
+    Q_INVOKABLE void chooseRemoteFolderButtonClicked();
+    Q_INVOKABLE void chooseLocalFolderButtonClicked();
+
 signals:
     void comesFromSettingsChanged();
     void remoteFolderChanged();

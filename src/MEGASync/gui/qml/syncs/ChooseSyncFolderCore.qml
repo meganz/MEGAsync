@@ -14,8 +14,6 @@ import SyncsComponents 1.0
 FocusScope {
     id: root
 
-    required property bool isOnboarding
-
     readonly property int textEditMargin: 2
 
     property alias choosenPath: folderItem.text

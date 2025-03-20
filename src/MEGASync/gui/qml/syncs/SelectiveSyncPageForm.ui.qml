@@ -10,8 +10,6 @@ import components.pages 1.0
 FooterButtonsPage {
     id: root
 
-    required property bool isOnboarding
-
     property alias localFolderChooser: localFolder
     property alias remoteFolderChooser: remoteFolder
 
@@ -20,7 +18,7 @@ FooterButtonsPage {
         icons.source: Images.syncIcon
     }
 
-    footerButtons.rightSecondary.visible: root.isOnboarding
+    footerButtons.rightSecondary.visible: !syncsComponentAccess.comesFromSettings
 
     ColumnLayout {
         id: column
@@ -54,7 +52,6 @@ FooterButtonsPage {
             Layout.preferredWidth: parent.width + 8
             Layout.leftMargin: -4
             Layout.topMargin: 16
-            isOnboarding: root.isOnboarding
         }
 
         ChooseSyncRemoteFolder {
@@ -62,7 +59,6 @@ FooterButtonsPage {
 
             Layout.preferredWidth: parent.width + 8
             Layout.leftMargin: -4
-            isOnboarding: root.isOnboarding
         }
     }
 
