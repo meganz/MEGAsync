@@ -47,7 +47,6 @@ QmlDialog {
         }
         width: topContentRow.width
         height: topContentRow.height + contentColum.spacing + bottomButtonsRow.height
-                    + sizes.numberOfMargins * Constants.focusAdjustment
         spacing: sizes.defaultSpacing
 
         Row {
