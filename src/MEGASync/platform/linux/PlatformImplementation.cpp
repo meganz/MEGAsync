@@ -642,12 +642,17 @@ bool PlatformImplementation::isFedoraWithGnome()
 void PlatformImplementation::promptFedoraGnomeUser()
 {
     MessageDialogInfo msgInfo;
-    msgInfo.title = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Install notification area icon");
-    msgInfo.text = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "For a better experience on Fedora with GNOME, we recommend you enable the notification area icon.\n"
-                                                                                    "Would you like to install the necessary components now?");
+    msgInfo.dialogTitle = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon",
+                                                      "Install notification area icon");
+    msgInfo.titleText =
+        QCoreApplication::translate("LinuxPlatformNotificationAreaIcon",
+                                    "For a better experience on Fedora with GNOME, we recommend "
+                                    "you enable the notification area icon.\n"
+                                    "Would you like to install the necessary components now?");
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::Yes;
-    msgInfo.checkboxText = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Do not show again");
+    msgInfo.checkboxText =
+        QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Do not show again");
     msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         if (!msg)
@@ -662,13 +667,14 @@ void PlatformImplementation::promptFedoraGnomeUser()
             isInstallationSuccessful = installAppIndicatorForFedoraGnome();
         }
 
-        if (msg->checkBox() && msg->checkBox()->isChecked())
+        if (msg->isChecked())
         {
             Preferences::instance()->setSystemTrayPromptSuppressed(true);
         }
         else
         {
-            Preferences::instance()->setSystemTrayLastPromptTimestamp(QDateTime::currentSecsSinceEpoch());
+            Preferences::instance()->setSystemTrayLastPromptTimestamp(
+                QDateTime::currentSecsSinceEpoch());
         }
 
         // Set the one-time action done if the user clicked "No" or if the installation was successful.
@@ -722,8 +728,12 @@ bool PlatformImplementation::installAppIndicatorForFedoraGnome()
             progressDialog.close();
 
             MessageDialogInfo msgWarnInfo;
-            msgWarnInfo.title = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Installation Cancelled");
-            msgWarnInfo.text = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "The notification area icon installation was cancelled.");
+            msgWarnInfo.dialogTitle =
+                QCoreApplication::translate("LinuxPlatformNotificationAreaIcon",
+                                            "Installation Cancelled");
+            msgWarnInfo.titleText = QCoreApplication::translate(
+                "LinuxPlatformNotificationAreaIcon",
+                "The notification area icon installation was cancelled.");
             MessageDialogOpener::warning(msgWarnInfo);
 
             loop.exit(1);
@@ -748,12 +758,17 @@ bool PlatformImplementation::installAppIndicatorForFedoraGnome()
         } else
         {
             MessageDialogInfo errorInfo;
-            errorInfo.title = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Error installing components");
-            errorInfo.text = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Failed to install the necessary components.");
-            errorInfo.informativeText = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "To install manually, please run the following commands:\n\n"
-                                                       "sudo dnf install gnome-shell-extensions\n"
-                                                       "sudo dnf install gnome-shell-extension-appindicator\n"
-                                                       "gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com");
+            errorInfo.dialogTitle = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon",
+                                                                "Error installing components");
+            errorInfo.titleText =
+                QCoreApplication::translate("LinuxPlatformNotificationAreaIcon",
+                                            "Failed to install the necessary components.");
+            errorInfo.descriptionText = QCoreApplication::translate(
+                "LinuxPlatformNotificationAreaIcon",
+                "To install manually, please run the following commands:\n\n"
+                "sudo dnf install gnome-shell-extensions\n"
+                "sudo dnf install gnome-shell-extension-appindicator\n"
+                "gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com");
             MessageDialogOpener::critical(errorInfo);
             loop.exit(1);
         }
@@ -773,9 +788,12 @@ bool PlatformImplementation::installAppIndicatorForFedoraGnome()
     enableProcess.waitForFinished(PROCESS_TIMEOUT_MS);
 
     MessageDialogInfo successInfo;
-    successInfo.title = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Install complete");
-    successInfo.text = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "The notification area icon was installed successfully.\n"
-                                                                                        "Please log out of your computer to complete the installation.");
+    successInfo.dialogTitle =
+        QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Install complete");
+    successInfo.titleText = QCoreApplication::translate(
+        "LinuxPlatformNotificationAreaIcon",
+        "The notification area icon was installed successfully.\n"
+        "Please log out of your computer to complete the installation.");
     MessageDialogOpener::information(successInfo);
 
     return true;
