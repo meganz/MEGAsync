@@ -159,18 +159,21 @@ void SyncSettingsUIBase::onPermissionsClicked()
     dialog->setFilePermissions(filePermissions);
     DialogOpener::showDialog<PermissionsDialog>(
         dialog,
-        [dialog, &folderPermissions, &filePermissions]()
+        [dialog]()
         {
             if (dialog->result() == QDialog::Accepted)
             {
-                filePermissions = dialog->filePermissions();
-                folderPermissions = dialog->folderPermissions();
+                const auto filePermissions = dialog->filePermissions();
+                const auto folderPermissions = dialog->folderPermissions();
 
                 if (filePermissions != Preferences::instance()->filePermissionsValue() ||
                     folderPermissions != Preferences::instance()->folderPermissionsValue())
                 {
                     Preferences::instance()->setFilePermissionsValue(filePermissions);
+                    MegaSyncApp->getMegaApi()->setDefaultFilePermissions(filePermissions);
+
                     Preferences::instance()->setFolderPermissionsValue(folderPermissions);
+                    MegaSyncApp->getMegaApi()->setDefaultFolderPermissions(folderPermissions);
                 }
             }
         });

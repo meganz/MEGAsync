@@ -1699,39 +1699,6 @@ void SettingsDialog::updateCacheSchedulerDaysLabel()
     mUi->lCacheSchedulerSuffix->setText(tr("day", "", mPreferences->cleanerDaysLimitValue()));
 }
 
-#ifndef Q_OS_WIN
-void SettingsDialog::onPermissionsClicked()
-{
-    MegaSyncApp->getMegaApi()->setDefaultFolderPermissions(
-        Preferences::instance()->folderPermissionsValue());
-    int folderPermissions = MegaSyncApp->getMegaApi()->getDefaultFolderPermissions();
-    MegaSyncApp->getMegaApi()->setDefaultFilePermissions(
-        Preferences::instance()->filePermissionsValue());
-    int filePermissions = MegaSyncApp->getMegaApi()->getDefaultFilePermissions();
-
-    QPointer<PermissionsDialog> dialog = new PermissionsDialog(this);
-    dialog->setFolderPermissions(folderPermissions);
-    dialog->setFilePermissions(filePermissions);
-    DialogOpener::showDialog<PermissionsDialog>(
-        dialog,
-        [dialog, &folderPermissions, &filePermissions]()
-        {
-            if (dialog->result() == QDialog::Accepted)
-            {
-                filePermissions = dialog->filePermissions();
-                folderPermissions = dialog->folderPermissions();
-
-                if (filePermissions != Preferences::instance()->filePermissionsValue() ||
-                    folderPermissions != Preferences::instance()->folderPermissionsValue())
-                {
-                    Preferences::instance()->setFilePermissionsValue(filePermissions);
-                    Preferences::instance()->setFolderPermissionsValue(folderPermissions);
-                }
-            }
-        });
-}
-#endif
-
 void SettingsDialog::startRequestTaskbarPinningTimer()
 {
     auto preferences = Preferences::instance();
