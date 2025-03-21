@@ -117,6 +117,11 @@ MessageDialogInfo::MessageDialogInfo():
     checkboxChecked(false)
 {}
 
+QString MessageDialogInfo::getDialogTitle() const
+{
+    return dialogTitle;
+}
+
 // =================================================================================================
 // MessageDialogData
 // =================================================================================================
@@ -143,7 +148,7 @@ QWidget* MessageDialogData::getParentWidget() const
 
 QString MessageDialogData::getTitle() const
 {
-    return mInfo.dialogTitle;
+    return mInfo.getDialogTitle();
 }
 
 QUrl MessageDialogData::getImageUrl() const

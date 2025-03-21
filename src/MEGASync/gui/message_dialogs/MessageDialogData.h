@@ -107,7 +107,6 @@ struct MessageDialogInfo
 
     std::function<void(QPointer<MessageDialogResult>)> finishFunc;
     QWidget* parent;
-    QString dialogTitle;
     QString titleText;
     QString descriptionText;
     QMessageBox::StandardButtons buttons;
@@ -121,6 +120,13 @@ struct MessageDialogInfo
     bool hideCloseButton;
     QString checkboxText;
     bool checkboxChecked;
+
+    QString getDialogTitle() const;
+
+private:
+    // Dialog title must always be the same for all message dialogs, in order to avoid unexpexted
+    // changes in the dialog title this member is maintained as private.
+    QString dialogTitle;
 };
 
 class MessageDialogData: public QObject
