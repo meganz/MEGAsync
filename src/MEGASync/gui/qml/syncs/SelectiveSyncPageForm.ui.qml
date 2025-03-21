@@ -18,7 +18,7 @@ FooterButtonsPage {
         icons.source: Images.syncIcon
     }
 
-    footerButtons.rightSecondary.visible: !syncsComponentAccess.comesFromSettings
+    footerButtons.rightSecondary.visible: syncsComponentAccess.originIsOnboarding()
 
     ColumnLayout {
         id: column

@@ -70,16 +70,6 @@ QString SyncsComponent::getRemoteFolder() const
     return mRemoteFolder;
 }
 
-bool SyncsComponent::getComesFromSettings() const
-{
-    return mComesFromSettings;
-}
-
-void SyncsComponent::setComesFromSettings(bool value)
-{
-    mComesFromSettings = value;
-}
-
 void SyncsComponent::openExclusionsDialog(const QString& folder) const
 {
     if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
@@ -120,21 +110,14 @@ void SyncsComponent::clearLocalError()
 
 QString SyncsComponent::getInitialLocalFolder()
 {
-    QString defaultFolder;
-
     ChooseLocalFolder localFolderChooser;
     auto syncsData = mSyncs->getSyncsData();
 
-    if (mComesFromSettings)
+    QString defaultFolder = localFolderChooser.getDefaultFolder(syncsData->getDefaultMegaFolder());
+
+    if (mSyncOrigin != SyncInfo::ONBOARDING_ORIGIN && !mRemoteFolder.isEmpty())
     {
-        if (getRemoteFolder().isEmpty())
-        {
-            defaultFolder = localFolderChooser.getDefaultFolder(syncsData->getDefaultMegaFolder());
-        }
-    }
-    else
-    {
-        defaultFolder = localFolderChooser.getDefaultFolder(syncsData->getDefaultMegaFolder());
+        defaultFolder.clear();
     }
 
     if (!checkLocalSync(defaultFolder))
@@ -148,22 +131,13 @@ QString SyncsComponent::getInitialLocalFolder()
 
 QString SyncsComponent::getInitialRemoteFolder()
 {
-    QString defaultFolder;
-
     auto syncsData = mSyncs->getSyncsData();
 
-    if (mComesFromSettings)
-    {
-        defaultFolder = getRemoteFolder();
+    QString defaultFolder = syncsData->getDefaultMegaPath();
 
-        if (defaultFolder.isEmpty())
-        {
-            defaultFolder = syncsData->getDefaultMegaPath();
-        }
-    }
-    else
+    if (mSyncOrigin != SyncInfo::ONBOARDING_ORIGIN && !mRemoteFolder.isEmpty())
     {
-        defaultFolder = syncsData->getDefaultMegaPath();
+        defaultFolder = mRemoteFolder;
     }
 
     if (!checkRemoteSync(defaultFolder))
@@ -183,4 +157,9 @@ void SyncsComponent::chooseRemoteFolderButtonClicked()
 void SyncsComponent::chooseLocalFolderButtonClicked()
 {
     clearLocalError();
+}
+
+bool SyncsComponent::originIsOnboarding() const
+{
+    return mSyncOrigin == SyncInfo::ONBOARDING_ORIGIN;
 }

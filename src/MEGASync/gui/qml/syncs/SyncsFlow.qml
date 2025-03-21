@@ -38,19 +38,4 @@ Item {
             currentItem.setInitialFocusPosition();
         }
     }
-
-    Connections {
-        id: syncsComponentAccessConnection
-
-        target: syncsComponentAccess
-        enabled: syncsComponentAccess.comesFromSettings
-        ignoreUnknownSignals: true
-
-        function onRemoteFolderChanged() {
-            if(syncsComponentAccess.remoteFolder !== "") {
-                root.state = root.selectiveSync;
-            }
-        }
-    }
-
 }
