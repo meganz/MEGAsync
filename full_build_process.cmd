@@ -38,7 +38,7 @@ IF NOT "%1" == "" (
 	)
 )
 
-IF NOT [%MEGA_QTPATH%]==[] (
+IF [%MEGA_QTPATH%]==[] (
 	SET MEGA_QTPATH=C:\Qt\5.15.16\x64
 )
 
