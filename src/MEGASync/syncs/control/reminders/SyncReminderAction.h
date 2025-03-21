@@ -26,6 +26,7 @@ public:
 protected:
     virtual QString getTitle() const = 0;
     virtual QString getMessage() const = 0;
+    virtual QString getButtonText() const = 0;
 
 private:
     SyncReminderNotificationManager* mManager;
