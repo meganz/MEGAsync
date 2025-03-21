@@ -629,8 +629,8 @@ void SettingsDialog::on_bClearFileVersions_clicked()
 {
     MessageDialogInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.titleText = tr("You are about to permanently remove all file versions."
-                           " Would you like to proceed?");
+    msgInfo.descriptionText = tr("You are about to permanently remove all file versions."
+                                 " Would you like to proceed?");
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.textFormat = Qt::RichText;
     msgInfo.defaultButton = QMessageBox::No;
@@ -753,9 +753,9 @@ void SettingsDialog::on_cFileVersioning_toggled(bool checked)
         mUi->cFileVersioning->setChecked(true);
 
         MessageDialogInfo msgInfo;
-        msgInfo.titleText = tr("Disabling file versioning will prevent"
-                               " the creation and storage of new file versions."
-                               " Do you want to continue?");
+        msgInfo.descriptionText = tr("Disabling file versioning will prevent"
+                                     " the creation and storage of new file versions."
+                                     " Do you want to continue?");
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
         msgInfo.defaultButton = QMessageBox::No;
         msgInfo.parent = this;
@@ -1172,7 +1172,6 @@ void SettingsDialog::on_bLogout_clicked()
                 unlink();
             }
         };
-
         MessageDialogOpener::question(msgInfo);
     }
 }
@@ -1370,7 +1369,7 @@ void SettingsDialog::on_bExportMasterKey_clicked()
 
                     MessageDialogInfo msgInfo;
                     msgInfo.parent = this;
-                    msgInfo.titleText =
+                    msgInfo.descriptionText =
                         tr("Exporting the master key and keeping it in a secure location"
                            " enables you to set a new password without data loss.") +
                         QString::fromUtf8("\n") +
@@ -1509,8 +1508,8 @@ void SettingsDialog::on_bDownloadFolder_clicked()
                     {
                         MessageDialogInfo msgInfo;
                         msgInfo.parent = this;
-                        msgInfo.titleText = tr("You don't have write permissions"
-                                               " in this local folder.");
+                        msgInfo.descriptionText = tr("You don't have write permissions"
+                                                     " in this local folder.");
                         MessageDialogOpener::critical(msgInfo);
                     }
                 }

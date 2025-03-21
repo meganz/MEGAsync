@@ -46,11 +46,11 @@ void PasteMegaLinksDialog::on_bSubmit_clicked()
 
         if (!text.trimmed().size())
         {
-            info.titleText = tr("Enter one or more MEGA file links");
+            info.descriptionText = tr("Enter one or more MEGA file links");
         }
         else
         {
-            info.titleText = tr("Invalid MEGA Link");
+            info.descriptionText = tr("Invalid MEGA Link");
         }
 
         MessageDialogOpener::warning(info);

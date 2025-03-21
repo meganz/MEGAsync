@@ -131,7 +131,7 @@ void NameConflictedStalledIssue::showRemoteRenameHasFailedMessageBox(const mega:
 {
     MessageDialogInfo failedInfo;
     failedInfo.textFormat = Qt::RichText;
-    failedInfo.buttons = QMessageBox::Yes;
+    failedInfo.buttons = QMessageBox::Ok;
     if(isFile)
     {
         failedInfo.titleText = StalledIssuesStrings::RemoveFileFailedTitle();
@@ -149,7 +149,7 @@ void NameConflictedStalledIssue::showLocalRenameHasFailedMessageBox(bool isFile)
 {
     MessageDialogInfo failedInfo;
     failedInfo.textFormat = Qt::RichText;
-    failedInfo.buttons = QMessageBox::Yes;
+    failedInfo.buttons = QMessageBox::Ok;
     if(isFile)
     {
         failedInfo.titleText = StalledIssuesStrings::RemoveFileFailedTitle();

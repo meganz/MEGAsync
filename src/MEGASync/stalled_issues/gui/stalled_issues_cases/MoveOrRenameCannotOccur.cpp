@@ -61,9 +61,8 @@ void MoveOrRenameCannotOccur::onLocalButtonClicked()
         LocalAndRemoteDifferentWidget::KeepSideInfo stringInfo;
         stringInfo.numberOfIssues = info.selection.size();
         stringInfo.itemName = getData().convert<MoveOrRenameCannotOccurIssue>()->syncName();
-        info.msgInfo.titleText = LocalAndRemoteDifferentWidget::keepLocalSideString(stringInfo);
-        textDecorator.process(info.msgInfo.titleText);
-
+        info.msgInfo.descriptionText =
+            LocalAndRemoteDifferentWidget::keepLocalSideString(stringInfo);
         info.msgInfo.finishFunc = [info](QPointer<MessageDialogResult> msgBox)
         {
             if (msgBox->result() == QMessageBox::Ok)
@@ -80,7 +79,6 @@ void MoveOrRenameCannotOccur::onLocalButtonClicked()
                 }
             }
         };
-
         MessageDialogOpener::warning(info.msgInfo);
     }
     else
@@ -104,9 +102,8 @@ void MoveOrRenameCannotOccur::onRemoteButtonClicked()
         LocalAndRemoteDifferentWidget::KeepSideInfo stringInfo;
         stringInfo.numberOfIssues = info.selection.size();
         stringInfo.itemName = getData().convert<MoveOrRenameCannotOccurIssue>()->syncName();
-        info.msgInfo.titleText = LocalAndRemoteDifferentWidget::keepRemoteSideString(stringInfo);
-        textDecorator.process(info.msgInfo.titleText);
-
+        info.msgInfo.descriptionText =
+            LocalAndRemoteDifferentWidget::keepRemoteSideString(stringInfo);
         info.msgInfo.finishFunc = [info](QPointer<MessageDialogResult> msgBox)
         {
             if (msgBox->result() == QMessageBox::Ok)
@@ -123,7 +120,6 @@ void MoveOrRenameCannotOccur::onRemoteButtonClicked()
                 }
             }
         };
-
         MessageDialogOpener::warning(info.msgInfo);
     }
     else

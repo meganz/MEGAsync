@@ -1514,7 +1514,7 @@ void TransfersModel::openFolder(const QFileInfo& info)
     else
     {
         MessageDialogInfo msgInfo;
-        msgInfo.titleText = MegaTransferView::errorOpeningFileText();
+        msgInfo.descriptionText = MegaTransferView::errorOpeningFileText();
         MessageDialogOpener::warning(msgInfo);
     }
 }
@@ -1910,14 +1910,15 @@ void TransfersModel::showSyncCancelledWarning()
     if(syncsInRowsToCancel())
     {
         MessageDialogInfo msgInfo;
-        msgInfo.titleText = tr("Sync transfers cannot be cancelled individually.\n"
-                               "Please delete the folder sync from settings to cancel them.");
+        msgInfo.descriptionText = tr("Sync transfers cannot be cancelled individually.\n"
+                                     "Please delete the folder sync from settings to cancel them.");
         msgInfo.parent = mCancelledFrom;
         msgInfo.buttons = QMessageBox::Yes|QMessageBox::No;
         QMap<QMessageBox::Button, QString> textsByButton;
         textsByButton.insert(QMessageBox::Yes, tr("Open settings"));
         textsByButton.insert(QMessageBox::No, tr("Dismiss"));
         msgInfo.buttonsText = textsByButton;
+        msgInfo.defaultButton = QMessageBox::Yes;
         msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
         {
             if(msg->result() == QMessageBox::Yes)

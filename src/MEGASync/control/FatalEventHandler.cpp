@@ -11,7 +11,7 @@
 #include <QVariant>
 
 const QMessageBox::StandardButton FatalEventHandler::DEFAULT_ACTION_BUTTON = QMessageBox::Ok;
-const QMessageBox::StandardButton FatalEventHandler::SECONDARY_ACTION_BUTTON = QMessageBox::Help;
+const QMessageBox::StandardButton FatalEventHandler::SECONDARY_ACTION_BUTTON = QMessageBox::Cancel;
 const QString FatalEventHandler::SCHEME_CONTACT_SUPPORT_URL = QLatin1String("support");
 const QString FatalEventHandler::CONTACT_SUPPORT_URL =
     SCHEME_CONTACT_SUPPORT_URL + QLatin1String("://open-bug-report-dialog");
@@ -559,11 +559,10 @@ bool FatalEventHandler::useContactSupportUrlHandler() const
 void FatalEventHandler::showFatalErrorMessage()
 {
     mRespawnWarningDialog = true;
+
     MessageDialogInfo msgInfo;
     msgInfo.textFormat = Qt::RichText;
-    msgInfo.imageUrl = QLatin1String(":images/alert-triangle-small.png");
-
-    msgInfo.titleText = QLatin1String("<b>%1</b>").arg(getErrorTitle());
+    msgInfo.titleText = getErrorTitle();
     msgInfo.descriptionText = getErrorReason();
 
     auto url(getErrorReasonUrl());

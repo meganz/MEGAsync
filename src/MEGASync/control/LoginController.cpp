@@ -993,7 +993,7 @@ void FastLoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e
         //Invalid session or public key, already managed in TYPE_LOGOUT
         {
             MessageDialogInfo msgInfo;
-            msgInfo.titleText =
+            msgInfo.descriptionText =
                 tr("Login error: %1")
                     .arg(QCoreApplication::translate("MegaError", e->getErrorString()));
 
@@ -1062,7 +1062,7 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
         if (paramType == mega::MegaError::API_ESID)
         {
             MessageDialogInfo msgInfo;
-            msgInfo.titleText =
+            msgInfo.descriptionText =
                 tr("You have been logged out on this computer from another location");
             msgInfo.ignoreCloseAll = true;
 
@@ -1071,7 +1071,7 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
         else if (paramType == mega::MegaError::API_ESSL)
         {
             MessageDialogInfo msgInfo;
-            msgInfo.titleText =
+            msgInfo.descriptionText =
                 tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle "
                    "attack or your antivirus software "
                    "could be intercepting your communications and causing this problem. Please "
@@ -1088,7 +1088,7 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
             MessageDialogInfo msgInfo;
             if(errorCode != mega::MegaError::API_OK)
             {
-                msgInfo.titleText =
+                msgInfo.descriptionText =
                     tr("You have been logged out because of this error: %1")
                         .arg(QCoreApplication::translate("MegaError", e->getErrorString()));
             }
@@ -1097,7 +1097,7 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
                 Text::Link link(QString::fromLatin1("mailto:support@mega.nz"));
                 QString text = tr("You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.");
                 link.process(text);
-                msgInfo.titleText = text;
+                msgInfo.descriptionText = text;
                 msgInfo.textFormat = Qt::RichText;
             }
             msgInfo.ignoreCloseAll = true;

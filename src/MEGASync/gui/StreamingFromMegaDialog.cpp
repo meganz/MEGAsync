@@ -88,8 +88,6 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
     MessageDialogInfo msgInfo;
     msgInfo.titleText = tr("Stream from MEGA");
     msgInfo.descriptionText = tr("Are you sure that you want to stop the streaming?");
-    msgInfo.buttons = QMessageBox::Yes|QMessageBox::No;
-    msgInfo.defaultButton = QMessageBox::No;
     msgInfo.parent = this;
     msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
@@ -98,7 +96,6 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
             accept();
         }
     };
-
     MessageDialogOpener::question(msgInfo);
 }
 
@@ -166,10 +163,8 @@ bool StreamingFromMegaDialog::isFolderLink(const QString& link) const
 void StreamingFromMegaDialog::showErrorMessage(const QString& message)
 {
     MessageDialogInfo msgInfo;
-    msgInfo.titleText = message;
-    msgInfo.buttons = QMessageBox::Ok;
+    msgInfo.descriptionText = message;
     msgInfo.parent = this;
-
     MessageDialogOpener::warning(msgInfo);
 }
 
@@ -198,8 +193,7 @@ void StreamingFromMegaDialog::onLinkInfoAvailable()
     {
         MessageDialogInfo msgInfo;
         msgInfo.parent = this;
-        msgInfo.titleText = tr("Error getting link information");
-        msgInfo.defaultButton = QMessageBox::Ok;
+        msgInfo.descriptionText = tr("Error getting link information");
         msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
         {
             //This deletes the LinkProcess
@@ -207,7 +201,6 @@ void StreamingFromMegaDialog::onLinkInfoAvailable()
             streamURL.clear();
             ui->bCopyLink->setDisabled(true);
         };
-
         MessageDialogOpener::warning(msgInfo);
     }
 }
@@ -232,8 +225,6 @@ void StreamingFromMegaDialog::on_bClose_clicked()
     MessageDialogInfo msgInfo;
     msgInfo.titleText = tr("Stream from MEGA");
     msgInfo.descriptionText = tr("Are you sure that you want to stop the streaming?");
-    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
-    msgInfo.defaultButton = QMessageBox::No;
     msgInfo.parent = this;
     msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
@@ -242,7 +233,6 @@ void StreamingFromMegaDialog::on_bClose_clicked()
             done(QDialog::Accepted);
         }
     };
-
     MessageDialogOpener::question(msgInfo);
 }
 
@@ -370,9 +360,7 @@ void StreamingFromMegaDialog::updateFileInfoFromNode(MegaNode *node)
     {
         MessageDialogInfo msgInfo;
         msgInfo.parent = this;
-        msgInfo.titleText = tr("File not found");
-        msgInfo.defaultButton = QMessageBox::Ok;
-
+        msgInfo.descriptionText = tr("File not found");
         MessageDialogOpener::warning(msgInfo);
     }
     else

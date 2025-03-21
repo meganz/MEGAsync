@@ -486,7 +486,7 @@ std::shared_ptr<MegaNode> NodeSelector::getSelectedNode()
 void NodeSelector::showNotFoundNodeMessageBox()
 {
     MessageDialogInfo msgInfo;
-    msgInfo.titleText =
+    msgInfo.descriptionText =
         tr("The item you selected has been removed. To reselect, close this window and try again.");
     MessageDialogOpener::warning(msgInfo);
 }

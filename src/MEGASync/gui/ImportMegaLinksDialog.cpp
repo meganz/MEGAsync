@@ -145,7 +145,7 @@ void ImportMegaLinksDialog::onLocalFolderSet(const QString& path)
         if (!test.open())
         {
             MessageDialogInfo info;
-            info.titleText = tr("You don't have write permissions in this local folder.");
+            info.descriptionText = tr("You don't have write permissions in this local folder.");
             info.parent = this;
             MessageDialogOpener::critical(info);
         }
@@ -235,7 +235,7 @@ void ImportMegaLinksDialog::on_bOk_clicked()
         if (!test.open())
         {
             MessageDialogInfo msgInfo;
-            msgInfo.titleText = tr("You don't have write permissions in this local folder.");
+            msgInfo.descriptionText = tr("You don't have write permissions in this local folder.");
             MessageDialogOpener::critical(msgInfo);
             return;
         }

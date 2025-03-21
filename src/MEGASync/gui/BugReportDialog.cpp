@@ -1,6 +1,7 @@
 #include "BugReportDialog.h"
 
 #include "DialogOpener.h"
+#include "TextDecorator.h"
 #include "ui_BugReportDialog.h"
 #include <BugReportController.h>
 #include <MessageDialogOpener.h>
@@ -154,12 +155,6 @@ void BugReportDialog::onReportFinished()
     msgInfo.titleText = tr("Bug report success!");
     msgInfo.descriptionText = tr("Your bug report has been submitted, a confirmation email "
                                  "will sent to you accordingly.");
-    msgInfo.textFormat = Qt::RichText;
-    msgInfo.buttons = QMessageBox::Ok;
-    msgInfo.imageUrl = Utilities::getDevicePixelRatio() < 2 ?
-                           QString::fromUtf8(":/images/bug_report_success.png") :
-                           QString::fromUtf8(":/images/bug_report_success@2x.png");
-
     accept();
     MessageDialogOpener::information(msgInfo);
 }
@@ -170,8 +165,7 @@ void BugReportDialog::onReportFailed()
 
     MessageDialogInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.titleText = tr("Bug report");
-    msgInfo.descriptionText = tr("Error on submitting bug report");
+    msgInfo.titleText = tr("Error on submitting bug report");
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok;
 
@@ -189,25 +183,22 @@ void BugReportDialog::onReportFailed()
              data.getRequestError() == MegaError::API_ETOOMANY)
     {
         msgInfo.titleText = tr("You must wait 10 minutes before submitting another issue");
-        msgInfo.descriptionText =
+        Text::Link link(QString::fromLatin1("mailto:support@mega.nz"));
+        QString text =
             tr("Please try again later or contact our support team via [A]support@mega.co.nz[/A] "
-               "if the problem persists.")
-                .replace(
-                    QString::fromUtf8("[A]"),
-                    QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
-                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"));
+               "if the problem persists.");
+        link.process(text);
+        msgInfo.descriptionText = text;
         MessageDialogOpener::warning(msgInfo);
     }
     else
     {
-        msgInfo.descriptionText =
+        Text::Link link(QString::fromLatin1("mailto:support@mega.nz"));
+        QString text =
             tr("Bug report can't be submitted due to some error. Please try again or contact our "
-               "support team via [A]support@mega.co.nz[/A]")
-                .replace(
-                    QString::fromUtf8("[A]"),
-                    QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
-                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) +
-            QString::fromLatin1("\n");
+               "support team via [A]support@mega.co.nz[/A]");
+        link.process(text);
+        msgInfo.descriptionText = text;
         MessageDialogOpener::warning(msgInfo);
     }
 }
@@ -231,14 +222,14 @@ void BugReportDialog::cancelSendReport()
     msgInfo.parent = this;
     msgInfo.titleText = tr("Are you sure you want to exit uploading?");
     msgInfo.descriptionText = tr("The bug report will not be submitted if you exit uploading.");
-    msgInfo.textFormat = Qt::RichText;
-    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
 
     QMap<QMessageBox::Button, QString> textsByButton;
     textsByButton.insert(QMessageBox::No, tr("Continue"));
     textsByButton.insert(QMessageBox::Yes, tr("Yes"));
-    msgInfo.defaultButton = QMessageBox::Yes;
+    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.buttonsText = textsByButton;
+    msgInfo.defaultButton = QMessageBox::Yes;
+
     msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         if (msg->result() == QMessageBox::Yes)

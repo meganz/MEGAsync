@@ -812,11 +812,9 @@ void NodeSelectorTreeViewWidget::onLeaveShareClicked(const QList<mega::MegaHandl
     msgInfo.defaultButton = QMessageBox::Yes;
     msgInfo.buttonsText.insert(QMessageBox::Yes, tr("Leave"));
     msgInfo.buttonsText.insert(QMessageBox::No, tr("Don’t leave"));
-
     msgInfo.titleText = tr("Leave this shared folder?", "", handles.size());
     msgInfo.descriptionText =
         tr("If you leave the folder, you will not be able to see it again.", "", handles.size());
-
     msgInfo.finishFunc = [this, handles](QPointer<MessageDialogResult> msg)
     {
         if (msg->result() == QMessageBox::Yes)

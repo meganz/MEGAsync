@@ -243,7 +243,6 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
     stringInfo.itemName = ui->chooseLocalCopy->data()->getFileName();
     stringInfo.numberOfIssues = info.selection.size();
     info.msgInfo.titleText = keepLocalSideString(stringInfo);
-    StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.titleText);
 
     if(node->isFile())
     {
@@ -310,8 +309,6 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
             tr("[B]Please, resume your transfers to fix the issue[/B]", "", info.selection.size()) +
             QString::fromUtf8("[BR]"));
     }
-    StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.descriptionText);
-    StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(info.msgInfo.descriptionText);
 
     info.msgInfo.finishFunc = [info](QPointer<MessageDialogResult> msgBox)
     {
@@ -364,7 +361,6 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
             info.msgInfo.titleText = tr("Keep the [B]remote items[/B]?");
         }
     }
-    StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.titleText);
     //For the moment, TYPE_TWOWAY or TYPE_UNKNOWN
     if(getData().consultData()->getSyncType() != mega::MegaSync::SyncType::TYPE_BACKUP)
     {
@@ -416,7 +412,6 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
             }
         }
     }
-    StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.descriptionText);
 
     info.msgInfo.finishFunc = [this, info](QPointer<MessageDialogResult> msgBox)
     {
@@ -505,7 +500,6 @@ void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
                    "",
                    info.selection.size());
         }
-        StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.descriptionText);
 
         info.msgInfo.finishFunc = [info](QPointer<MessageDialogResult> msgBox)
         {

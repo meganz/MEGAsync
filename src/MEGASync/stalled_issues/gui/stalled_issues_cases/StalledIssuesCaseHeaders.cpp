@@ -138,9 +138,9 @@ void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(Stalled
                                                pluralNumber);
     if(MegaSyncApp->getTransfersModel()->areAllPaused())
     {
-        QString informativeMessage = QString::fromUtf8("[BR]") + tr("[B]Please, resume your transfers to fix the issue[/B]", "", pluralNumber);
-        StalledIssuesBoldTextDecorator::boldTextDecorator.process(informativeMessage);
-        StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(informativeMessage);
+        QString informativeMessage =
+            QString::fromUtf8("[BR]") +
+            tr("[B]Please, resume your transfers to fix the issue[/B]", "", pluralNumber);
         selectionInfo.msgInfo.descriptionText.append(informativeMessage);
     }
 

@@ -179,6 +179,7 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
     }
 
     MessageDialogInfo msgInfo;
+    msgInfo.textFormat = Qt::RichText;
 
     // TODO: extract the MessageDialogOpeneres from the model, use signal to send message
 
@@ -187,7 +188,7 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
 
     if (!preferences->isFatWarningShown() && syncSetting->getWarning() == MegaSync::Warning::LOCAL_IS_FAT)
     {
-        msgInfo.titleText =
+        msgInfo.descriptionText =
             tr("You are syncing a local folder formatted with a FAT filesystem. "
                "That filesystem has deficiencies managing big files and modification"
                " times that can cause synchronization problems (e.g. when daylight "
@@ -209,7 +210,7 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
     }
     else if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING) && syncSetting->getError() == MegaSync::Warning::LOCAL_IS_HGFS)
     {
-        msgInfo.titleText =
+        msgInfo.descriptionText =
             tr("You are syncing a local folder shared with VMWare. Those folders do not support "
                "filesystem notifications so MEGAsync will have to be continuously scanning to "
                "detect changes in your files and folders. Please use a different folder if "

@@ -51,7 +51,8 @@ void ChangePassword::onRequestFinish(mega::MegaRequest* req, mega::MegaError* e)
             else
             {
                 MessageDialogInfo info;
-                info.titleText = QCoreApplication::translate("MegaError", e->getErrorString());
+                info.descriptionText =
+                    QCoreApplication::translate("MegaError", e->getErrorString());
                 info.parent = this;
                 MessageDialogOpener::critical(info);
 
@@ -85,7 +86,7 @@ void ChangePassword::onRequestFinish(mega::MegaRequest* req, mega::MegaError* e)
                 setEnabled(true);
 
                 MessageDialogInfo info;
-                info.titleText = tr("Too many requests. Please wait.");
+                info.descriptionText = tr("Too many requests. Please wait.");
                 info.parent = this;
                 MessageDialogOpener::critical(info);
             }
@@ -94,7 +95,8 @@ void ChangePassword::onRequestFinish(mega::MegaRequest* req, mega::MegaError* e)
                 setEnabled(true);
 
                 MessageDialogInfo info;
-                info.titleText = QCoreApplication::translate("MegaError", e->getErrorString());
+                info.descriptionText =
+                    QCoreApplication::translate("MegaError", e->getErrorString());
                 info.parent = this;
 
                 MessageDialogOpener::critical(info);
@@ -146,23 +148,23 @@ void ChangePassword::on_bOk_clicked()
 
     if (fieldIsEmpty)
     {
-        info.titleText = tr("Please enter your password");
+        info.descriptionText = tr("Please enter your password");
         MessageDialogOpener::warning(info);
     }
     else if (!passwordsAreEqual)
     {
-        info.titleText = tr("The entered passwords don't match");
+        info.descriptionText = tr("The entered passwords don't match");
         MessageDialogOpener::warning(info);
     }
     else if (newAndOldPasswordsAreTheSame)
     {
-        info.titleText = tr("You have entered your current password,"
-                            " please enter a new password.");
+        info.descriptionText = tr("You have entered your current password,"
+                                  " please enter a new password.");
         MessageDialogOpener::warning(info);
     }
     else if (passwordIsWeak)
     {
-        info.titleText = tr("Please, enter a stronger password");
+        info.descriptionText = tr("Please, enter a stronger password");
         MessageDialogOpener::warning(info);
     }
     else

@@ -434,7 +434,7 @@ void DeviceCentre::learnMore() const
 void DeviceCentre::applyPreviousExclusionRules() const
 {
     MessageDialogInfo msgInfo;
-    msgInfo.titleText = /*tr*/ QString::fromUtf8("[B]Apply previous exclusion rules?[/B]");
+    msgInfo.titleText = /*tr*/ QString::fromUtf8("Apply previous exclusion rules?");
     Text::Bold boldDecorator;
     boldDecorator.process(msgInfo.titleText);
     msgInfo.descriptionText =
@@ -442,7 +442,6 @@ void DeviceCentre::applyPreviousExclusionRules() const
             "The exclusion rules you set up in a previous version of the app will be applied to "
             "all "
             "of your syncs and backups. Any rules created since then will be overwritten.");
-    msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
     QMap<QMessageBox::Button, QString> textsByButton;
     textsByButton.insert(QMessageBox::Ok, /*tr*/ QString::fromUtf8("Apply"));

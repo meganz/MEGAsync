@@ -395,7 +395,7 @@ void MegaTransferView::onCancelVisibleTransfers()
     if(!info.areAllSync)
     {
         MessageDialogInfo msgInfo;
-        msgInfo.titleText = info.actionText;
+        msgInfo.descriptionText = info.actionText;
         msgInfo.parent = this;
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
         msgInfo.defaultButton = QMessageBox::No;
@@ -421,7 +421,7 @@ void MegaTransferView::onCancelSelectedTransfers()
     auto info = getSelectedCancelOrClearInfo();
 
     MessageDialogInfo msgInfo;
-    msgInfo.titleText = info.actionText;
+    msgInfo.descriptionText = info.actionText;
     msgInfo.parent = this;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
@@ -450,7 +450,7 @@ void MegaTransferView::onCancelAllTransfers()
     if (proxy)
     {
         MessageDialogInfo msgInfo;
-        msgInfo.titleText =
+        msgInfo.descriptionText =
             proxy->isAnySync() ? cancelWithSyncAskActionText() : cancelAllAskActionText();
         msgInfo.parent = this;
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
@@ -522,7 +522,7 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
 void MegaTransferView::onClearVisibleTransfers()
 {
     MessageDialogInfo msgInfo;
-    msgInfo.titleText = clearCompletedAskActionText();
+    msgInfo.descriptionText = clearCompletedAskActionText();
     msgInfo.parent = this;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
@@ -1406,6 +1406,6 @@ void MegaTransferView::showOpeningFileError()
 {
     MessageDialogInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.titleText = errorOpeningFileText();
+    msgInfo.descriptionText = errorOpeningFileText();
     MessageDialogOpener::warning(msgInfo);
 }

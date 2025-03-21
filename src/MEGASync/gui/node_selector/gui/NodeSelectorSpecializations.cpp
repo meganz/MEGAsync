@@ -42,8 +42,9 @@ void UploadNodeSelector::onOkButtonClicked()
         {
             MessageDialogInfo msgInfo;
             msgInfo.parent = this;
-            msgInfo.titleText = tr("You need Read & Write or Full access rights to be able to "
-                                   "upload to the selected folder.");
+            msgInfo.descriptionText =
+                tr("You need Read & Write or Full access rights to be able to "
+                   "upload to the selected folder.");
             msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
             {
                 reject();
@@ -100,15 +101,16 @@ void DownloadNodeSelector::onOkButtonClicked()
     {
         if(ui->stackedWidget->currentIndex() == CLOUD_DRIVE)
         {
-            msgInfo.titleText = tr("The item you selected has been removed. To reselect, close "
-                                   "this window and try again.",
-                                   "",
-                                   wrongNodes);
+            msgInfo.descriptionText =
+                tr("The item you selected has been removed. To reselect, close "
+                   "this window and try again.",
+                   "",
+                   wrongNodes);
             MessageDialogOpener::warning(msgInfo);
         }
         else
         {
-            msgInfo.titleText =
+            msgInfo.descriptionText =
                 tr("You no longer have access to this item. Ask the owner to share again.",
                    "",
                    wrongNodes);
@@ -118,7 +120,7 @@ void DownloadNodeSelector::onOkButtonClicked()
     else if(wrongNodes > 0)
     {
         QString warningMsg1 = tr("%1 item selected", "", nodes.size()).arg(nodes.size());
-        msgInfo.titleText =
+        msgInfo.descriptionText =
             tr("%1. %2 has been removed. To reselect, close this window and try again.",
                "",
                wrongNodes)
@@ -181,7 +183,7 @@ void SyncNodeSelector::onOkButtonClicked()
         int access = Utilities::getNodeAccess(node->getHandle());
         if (access < mega::MegaShare::ACCESS_FULL)
         {
-            msgInfo.titleText =
+            msgInfo.descriptionText =
                 tr("You need Full access right to be able to sync the selected folder.");
             MessageDialogOpener::warning(msgInfo);
         }
@@ -191,9 +193,10 @@ void SyncNodeSelector::onOkButtonClicked()
             auto check = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(path.get()));
             if (!check)
             {
-                msgInfo.titleText = tr("Invalid folder for synchronization.\n"
-                                       "Please, ensure that you don't use characters like '\\' '/' "
-                                       "or ':' in your folder names.");
+                msgInfo.descriptionText =
+                    tr("Invalid folder for synchronization.\n"
+                       "Please, ensure that you don't use characters like '\\' '/' "
+                       "or ':' in your folder names.");
                 MessageDialogOpener::warning(msgInfo);
             }
             else
@@ -229,7 +232,7 @@ void StreamNodeSelector::onOkButtonClicked()
         {
             MessageDialogInfo msgInfo;
             msgInfo.parent = this;
-            msgInfo.titleText = tr("Only files can be used for streaming.");
+            msgInfo.descriptionText = tr("Only files can be used for streaming.");
             msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
             {
                 reject();
@@ -365,12 +368,11 @@ void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint id)
         textsByButton.insert(QMessageBox::Yes, tr("Empty"));
         textsByButton.insert(QMessageBox::No, tr("Cancel"));
         msgInfo.buttonsText = textsByButton;
+        msgInfo.defaultButton = QMessageBox::No;
+        msgInfo.textFormat = Qt::RichText;
         msgInfo.titleText = tr("Empty Rubbish bin?");
-        Text::Bold bold;
-        Text::Decorator dec(&bold);
         msgInfo.descriptionText =
             tr("All items will be permanently deleted. This action can [B]not[/B] be undone");
-        dec.process(msgInfo.descriptionText);
         msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
         {
             if (msg->result() == QMessageBox::Yes)

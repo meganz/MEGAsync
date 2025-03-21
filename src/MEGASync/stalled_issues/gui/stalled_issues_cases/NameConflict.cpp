@@ -414,8 +414,7 @@ void NameConflict::onActionClicked(int actionId)
                     MessageDialogInfo msgInfo;
                     msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
                     msgInfo.textFormat = Qt::RichText;
-                    msgInfo.buttons = QMessageBox::Ok;
-                    msgInfo.titleText =
+                    msgInfo.descriptionText =
                         tr("%1 no longer exists.\nPlease refresh the view").arg(info.fileName());
                     MessageDialogOpener::warning(msgInfo);
                     return;
@@ -493,8 +492,7 @@ void NameConflict::onActionClicked(int actionId)
                     MessageDialogInfo msgInfo;
                     msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
                     msgInfo.textFormat = Qt::RichText;
-                    msgInfo.buttons = QMessageBox::Ok;
-                    msgInfo.titleText =
+                    msgInfo.descriptionText =
                         tr("%1 no longer exists.\nPlease refresh the view").arg(info.fileName());
                     MessageDialogOpener::warning(msgInfo);
                     return;
@@ -505,6 +503,7 @@ void NameConflict::onActionClicked(int actionId)
             msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
             msgInfo.textFormat = Qt::RichText;
             msgInfo.buttons = QMessageBox::Yes | QMessageBox::Cancel;
+            msgInfo.defaultButton = QMessageBox::Yes;
 
             if(isCloud())
             {
@@ -608,10 +607,6 @@ void NameConflict::onActionClicked(int actionId)
                     }
                 }
             };
-            StalledIssuesBoldTextDecorator::boldTextDecorator.process(msgInfo.descriptionText);
-            StalledIssuesBoldTextDecorator::boldTextDecorator.process(msgInfo.titleText);
-            StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(
-                msgInfo.descriptionText);
             MessageDialogOpener::warning(msgInfo);
         }
     }

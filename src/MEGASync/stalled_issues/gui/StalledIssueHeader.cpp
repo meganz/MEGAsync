@@ -89,17 +89,17 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
     QMap<QMessageBox::Button, QString> textsByButton;
+    textsByButton.insert(QMessageBox::Ok, tr("Apply"));
+    msgInfo.buttonsText = textsByButton;
+    msgInfo.titleText = tr("Are you sure you want to ignore this issue?");
+    msgInfo.descriptionText = tr("This action will ignore this issue and it will not be synced.");
 
     auto selection = dialog->getDialog()->getSelection(canBeIgnoredChecker);
-    textsByButton.insert(QMessageBox::Ok, tr("Apply"));
     auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(canBeIgnoredChecker);
     if(allSimilarIssues.size() != selection.size())
     {
         msgInfo.checkboxText = tr("Apply to all");
     }
-    msgInfo.buttonsText = textsByButton;
-    msgInfo.titleText = tr("Are you sure you want to ignore this issue?");
-    msgInfo.descriptionText = tr("This action will ignore this issue and it will not be synced.");
 
     msgInfo.finishFunc = [selection](QPointer<MessageDialogResult> msgBox)
     {

@@ -169,7 +169,8 @@ bool StalledIssueBaseDelegateWidget::checkSelection(const QList<mega::MegaSyncSt
 
     QMap<QMessageBox::Button, QString> textsByButton;
     //In order to keep the same context as before
-    textsByButton.insert(QMessageBox::No, QCoreApplication::translate("LocalAndRemoteDifferentWidget", "Cancel"));
+    textsByButton.insert(QMessageBox::Cancel,
+                         QCoreApplication::translate("LocalAndRemoteDifferentWidget", "Cancel"));
     textsByButton.insert(QMessageBox::Ok, QCoreApplication::translate("LocalAndRemoteDifferentWidget", "Apply"));
 
     info.similarSelection = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);

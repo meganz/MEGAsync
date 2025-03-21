@@ -206,7 +206,7 @@ void StalledIssuesDialog::onSyncRootChanged(std::shared_ptr<SyncSettings> sync)
             QMap<QMessageBox::StandardButton, QString> buttonsText;
             buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
             msgInfo.buttonsText = buttonsText;
-            msgInfo.titleText =
+            msgInfo.descriptionText =
                 tr("One of your synced folders has been renamed. Refresh the list of sync issues.");
             msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
             {
