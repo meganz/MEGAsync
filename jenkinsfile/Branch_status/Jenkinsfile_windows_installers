@@ -68,8 +68,7 @@ pipeline {
             environment{
                 MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\vcpkg"
                 //QT path is automatically changed to x86 with nsis when needed
-                MEGAQTPATH = "C:\\Qt\\Qt5.15.16\\5.15.16\\x64"
-	            MEGA_SIGN_PRODUCTS = "true"
+                MEGA_QTPATH = "C:\\Qt\\Qt5.15.16\\5.15.16\\x64"
                 LAF_TOKEN = credentials('MEGASYNC_LAF_TOKEN')
             }
             steps {
@@ -81,7 +80,7 @@ pipeline {
                             set TMP=${Workspace}\\tmp
                             set TEMP=${Workspace}\\tmp
                             set TMPDIR=${Workspace}\\tmp   
-                            full_build_process.cmd ${params.ARCHITECTURE} 2
+                            full_build_process.cmd ${params.ARCHITECTURE} 2 true
                         """
                     }
                 }
