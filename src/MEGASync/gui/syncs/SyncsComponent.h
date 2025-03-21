@@ -8,6 +8,7 @@ class SyncsData;
 class SyncsComponent : public QMLComponent
 {
     Q_OBJECT
+    Q_PROPERTY(bool comesFromOnboarding READ getComesFromOnboarding CONSTANT)
 
 public:
     explicit SyncsComponent(QObject* parent = 0);
@@ -34,10 +35,10 @@ public:
     Q_INVOKABLE void clearLocalError();
     Q_INVOKABLE QString getInitialLocalFolder();
     Q_INVOKABLE QString getInitialRemoteFolder();
-    Q_INVOKABLE bool originIsOnboarding() const;
-
     Q_INVOKABLE void chooseRemoteFolderButtonClicked();
     Q_INVOKABLE void chooseLocalFolderButtonClicked();
+
+    bool getComesFromOnboarding() const;
 
 signals:
     void comesFromSettingsChanged();

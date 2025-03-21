@@ -159,7 +159,7 @@ void SyncsComponent::chooseLocalFolderButtonClicked()
     clearLocalError();
 }
 
-bool SyncsComponent::originIsOnboarding() const
+bool SyncsComponent::getComesFromOnboarding() const
 {
     return mSyncOrigin == SyncInfo::ONBOARDING_ORIGIN;
 }
