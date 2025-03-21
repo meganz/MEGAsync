@@ -62,12 +62,6 @@ SyncInfo::SyncOrigin SyncsComponent::getSyncOrigin() const
 void SyncsComponent::setRemoteFolder(const QString& remoteFolder)
 {
     mRemoteFolder = remoteFolder;
-    emit remoteFolderChanged();
-}
-
-QString SyncsComponent::getRemoteFolder() const
-{
-    return mRemoteFolder;
 }
 
 void SyncsComponent::openExclusionsDialog(const QString& folder) const
@@ -79,13 +73,6 @@ void SyncsComponent::openExclusionsDialog(const QString& folder) const
             new QmlDialogWrapper<AddExclusionRule>(parentWidget, QStringList() << folder);
         DialogOpener::showDialog(exclusions);
     }
-}
-
-void SyncsComponent::addSync(SyncInfo::SyncOrigin origin,
-                             const QString& local,
-                             const QString& remote)
-{
-    mSyncs->addSync(origin, local, remote);
 }
 
 bool SyncsComponent::checkLocalSync(const QString& path)
@@ -126,6 +113,8 @@ QString SyncsComponent::getInitialLocalFolder()
         clearLocalError();
     }
 
+    mLocalFolderSyncCandidate = defaultFolder;
+
     return defaultFolder;
 }
 
@@ -146,6 +135,8 @@ QString SyncsComponent::getInitialRemoteFolder()
         clearRemoteError();
     }
 
+    mRemoteFolderSyncCandidate = defaultFolder;
+
     return defaultFolder;
 }
 
@@ -162,4 +153,19 @@ void SyncsComponent::chooseLocalFolderButtonClicked()
 bool SyncsComponent::getComesFromOnboarding() const
 {
     return mSyncOrigin == SyncInfo::ONBOARDING_ORIGIN;
+}
+
+void SyncsComponent::setSyncCandidateLocalFolder(const QString& path)
+{
+    mLocalFolderSyncCandidate = path;
+}
+
+void SyncsComponent::setSyncCandidateRemoteFolder(const QString& path)
+{
+    mRemoteFolderSyncCandidate = path;
+}
+
+void SyncsComponent::syncButtonClicked()
+{
+    mSyncs->addSync(mSyncOrigin, mLocalFolderSyncCandidate, mRemoteFolderSyncCandidate);
 }

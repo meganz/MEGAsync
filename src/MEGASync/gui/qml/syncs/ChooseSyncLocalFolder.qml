@@ -20,6 +20,7 @@ ChooseSyncFolderCore {
 
         onFolderChoosen: (folderPath) => {
             folderField.text = folderPath;
+            syncsComponentAccess.setSyncCandidateLocalFolder(folderPath);
         }
     }
 
