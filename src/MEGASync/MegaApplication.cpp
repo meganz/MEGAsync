@@ -436,7 +436,6 @@ void MegaApplication::initialize()
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Encountered corrupt prefrences.").toUtf8().constData());
 
         MessageDialogInfo msgInfo;
-        msgInfo.dialogTitle = getMEGAString();
         msgInfo.titleText = tr("Your config is corrupt, please start over");
         msgInfo.enqueue = true;
         MessageDialogOpener::critical(msgInfo);
@@ -528,7 +527,6 @@ void MegaApplication::initialize()
         megaApiFolders->changeApiUrl(apiURL.toUtf8());
 
         MessageDialogInfo msgInfo;
-        msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
         msgInfo.titleText = QString::fromUtf8("API URL changed to ") + apiURL;
         msgInfo.enqueue = true;
         MessageDialogOpener::warning(msgInfo);
@@ -1339,7 +1337,6 @@ if (!preferences->lastExecutionTime())
         if (!message.isEmpty())
         {
             MessageDialogInfo msgInfo;
-            msgInfo.dialogTitle = QCoreApplication::applicationName();
             msgInfo.titleText = message;
             msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
             QMap<QMessageBox::Button, QString> textsByButton;
@@ -1515,7 +1512,6 @@ void MegaApplication::checkSystemTray()
     }
 
     MessageDialogInfo msgInfo;
-    msgInfo.dialogTitle = getMEGAString();
     msgInfo.titleText = tr(
         "Could not find a system tray to place MEGAsync tray icon. "
         "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
@@ -1778,7 +1774,6 @@ void MegaApplication::tryExitApplication(bool force)
     else
     {
         MessageDialogInfo msgInfo;
-        msgInfo.dialogTitle = getMEGAString();
         msgInfo.titleText = tr("There is an active transfer. Exit the app?\n"
                                "Transfer will automatically resume when you re-open the app.",
                                "",
@@ -3004,8 +2999,8 @@ void MegaApplication::processUpgradeSecurityEvent()
     }
 
     MessageDialogInfo msgInfo;
-    msgInfo.dialogTitle = tr("Security upgrade");
-    msgInfo.titleText = message;
+    msgInfo.titleText = tr("Security upgrade");
+    msgInfo.descriptionText = message;
     msgInfo.buttons = QMessageBox::Ok|QMessageBox::Cancel;
     msgInfo.textFormat = Qt::RichText;
     msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
@@ -3017,9 +3012,8 @@ void MegaApplication::processUpgradeSecurityEvent()
                 [=](::mega::MegaRequest* request, ::mega::MegaError* e) {
                     if (e->getErrorCode() != MegaError::API_OK)
                     {
-                        QString errorMessage = tr("Failed to ugrade security. Error: %1")
-                                .arg(tr(e->getErrorString()));
-                        showErrorMessage(errorMessage, MessageDialogOpener::errorTitle());
+                        showErrorMessage(tr("Failed to ugrade security. Error: %1")
+                                             .arg(tr(e->getErrorString())));
                         exitApplication();
                     }
             });
@@ -3213,7 +3207,6 @@ void MegaApplication::showInfoMessage(DesktopNotifications::NotificationInfo inf
     else
     {
         MessageDialogInfo msgInfo;
-        msgInfo.dialogTitle = info.title;
         msgInfo.titleText = info.message;
         MessageDialogOpener::information(msgInfo);
     }
@@ -3236,7 +3229,6 @@ void MegaApplication::showWarningMessage(QString message, QString title)
     else
     {
         MessageDialogInfo msgInfo;
-        msgInfo.dialogTitle = title;
         msgInfo.titleText = message;
         MessageDialogOpener::warning(msgInfo);
     }
@@ -3274,7 +3266,6 @@ void MegaApplication::showErrorMessage(QString message, QString title)
     else
     {
         MessageDialogInfo msgInfo;
-        msgInfo.dialogTitle = title;
         msgInfo.titleText = message;
         MessageDialogOpener::critical(msgInfo);
     }
@@ -3568,7 +3559,6 @@ void MegaApplication::checkOperatingSystem()
         if (isOSdeprecated)
         {
             MessageDialogInfo msgInfo;
-            msgInfo.dialogTitle = getMEGAString();
             QString message =
                 tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
 #ifdef WIN32
@@ -5794,7 +5784,6 @@ void MegaApplication::manageBusinessStatus(int64_t event)
             else
             {
                 MessageDialogInfo msgInfo;
-                msgInfo.dialogTitle = getMEGAString();
                 msgInfo.titleText = tr("Account Suspended");
                 msgInfo.textFormat = Qt::RichText;
                 msgInfo.descriptionText =

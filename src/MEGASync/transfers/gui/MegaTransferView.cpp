@@ -395,7 +395,6 @@ void MegaTransferView::onCancelVisibleTransfers()
     if(!info.areAllSync)
     {
         MessageDialogInfo msgInfo;
-        msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
         msgInfo.titleText = info.actionText;
         msgInfo.parent = this;
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
@@ -422,7 +421,6 @@ void MegaTransferView::onCancelSelectedTransfers()
     auto info = getSelectedCancelOrClearInfo();
 
     MessageDialogInfo msgInfo;
-    msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     msgInfo.titleText = info.actionText;
     msgInfo.parent = this;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
@@ -452,7 +450,6 @@ void MegaTransferView::onCancelAllTransfers()
     if (proxy)
     {
         MessageDialogInfo msgInfo;
-        msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
         msgInfo.titleText =
             proxy->isAnySync() ? cancelWithSyncAskActionText() : cancelAllAskActionText();
         msgInfo.parent = this;
@@ -476,7 +473,6 @@ void MegaTransferView::onCancelAllTransfers()
 void MegaTransferView::onClearAllTransfers()
 {
     MessageDialogInfo msgInfo;
-    msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     msgInfo.titleText = clearAllCompletedAskActionText();
     msgInfo.parent = this;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
@@ -499,7 +495,6 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
     auto info = getVisibleCancelOrClearInfo();
 
     MessageDialogInfo msgInfo;
-    msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     msgInfo.titleText = info.actionText;
     msgInfo.parent = this;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
@@ -527,7 +522,6 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
 void MegaTransferView::onClearVisibleTransfers()
 {
     MessageDialogInfo msgInfo;
-    msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     msgInfo.titleText = clearCompletedAskActionText();
     msgInfo.parent = this;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
@@ -1412,7 +1406,6 @@ void MegaTransferView::showOpeningFileError()
 {
     MessageDialogInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
     msgInfo.titleText = errorOpeningFileText();
     MessageDialogOpener::warning(msgInfo);
 }

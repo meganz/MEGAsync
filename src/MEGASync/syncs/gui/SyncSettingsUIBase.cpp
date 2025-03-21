@@ -225,7 +225,6 @@ void SyncSettingsUIBase::showOpenMegaIgnoreError()
 {
     MessageDialogInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
     msgInfo.titleText = tr("Error opening megaignore file");
     MessageDialogOpener::warning(msgInfo);
 }

@@ -86,7 +86,6 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
 
     MessageDialogInfo msgInfo;
     msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-    msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
     QMap<QMessageBox::Button, QString> textsByButton;

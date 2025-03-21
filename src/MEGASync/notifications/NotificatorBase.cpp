@@ -213,7 +213,6 @@ void NotificatorBase::notify(Class cls, const QString &title, const QString &tex
         default:
         {
             MessageDialogInfo info;
-            info.dialogTitle = title;
             info.titleText = text;
 
             switch(cls) // Set icon based on class

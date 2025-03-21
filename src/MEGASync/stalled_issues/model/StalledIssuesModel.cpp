@@ -1149,7 +1149,6 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
 void StalledIssuesModel::showIssueExternallyChangedMessageBox()
 {
     MessageDialogInfo msgInfo;
-    msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok;
     QMap<QMessageBox::StandardButton, QString> buttonsText;
@@ -1584,7 +1583,6 @@ void StalledIssuesModel::ignoreSymLinks()
 void StalledIssuesModel::showIgnoreItemsError(bool allFailed)
 {
     MessageDialogInfo msgInfo;
-    msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok;
     msgInfo.titleText = allFailed ? tr("Some issues can't be fixed.\nVerify the permissions of the "

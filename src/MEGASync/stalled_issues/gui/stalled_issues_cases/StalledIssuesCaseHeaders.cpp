@@ -46,7 +46,6 @@ StalledIssueHeaderCase::SelectionInfo StalledIssueHeaderCase::getSelectionInfo(
     info.hasBeenExternallyChanged = header->checkForExternalChanges(info.selection.size() == 1);
 
     info.msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-    info.msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     info.msgInfo.textFormat = Qt::RichText;
     info.msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
     info.msgInfo.buttonsText.insert(

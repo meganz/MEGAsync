@@ -7,21 +7,6 @@
 
 #include <QPointer>
 
-QString MessageDialogOpener::warningTitle()
-{
-    return QCoreApplication::translate("MegaApplication", "Warning");
-}
-
-QString MessageDialogOpener::errorTitle()
-{
-    return QCoreApplication::translate("MegaApplication", "Error");
-}
-
-QString MessageDialogOpener::fatalErrorTitle()
-{
-    return QCoreApplication::translate("MegaApplication", "Alert");
-}
-
 void MessageDialogOpener::information(const MessageDialogInfo& info)
 {
     return show(MessageDialogData::Type::INFORMATION, info);

@@ -86,7 +86,6 @@ void DownloadFromMegaDialog::onPathChanged(const QString& path)
     {
         MessageDialogInfo msgInfo;
         msgInfo.parent = this;
-        msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
         msgInfo.titleText = tr("You don't have write permissions in this local folder.");
 
         MessageDialogOpener::critical(msgInfo);
@@ -133,7 +132,6 @@ void DownloadFromMegaDialog::on_bOK_clicked()
         if (!test.open())
         {
             MessageDialogInfo msgInfo;
-            msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
             msgInfo.titleText = tr("You don't have write permissions in this local folder.");
             MessageDialogOpener::critical(msgInfo);
         }

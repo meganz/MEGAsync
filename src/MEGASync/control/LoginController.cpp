@@ -993,7 +993,6 @@ void FastLoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e
         //Invalid session or public key, already managed in TYPE_LOGOUT
         {
             MessageDialogInfo msgInfo;
-            msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
             msgInfo.titleText =
                 tr("Login error: %1")
                     .arg(QCoreApplication::translate("MegaError", e->getErrorString()));
@@ -1063,7 +1062,6 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
         if (paramType == mega::MegaError::API_ESID)
         {
             MessageDialogInfo msgInfo;
-            msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
             msgInfo.titleText =
                 tr("You have been logged out on this computer from another location");
             msgInfo.ignoreCloseAll = true;
@@ -1073,7 +1071,6 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
         else if (paramType == mega::MegaError::API_ESSL)
         {
             MessageDialogInfo msgInfo;
-            msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
             msgInfo.titleText =
                 tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle "
                    "attack or your antivirus software "
@@ -1089,7 +1086,6 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
         else if (paramType != mega::MegaError::API_EACCESS && paramType != mega::MegaError::API_EBLOCKED)
         {
             MessageDialogInfo msgInfo;
-            msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
             if(errorCode != mega::MegaError::API_OK)
             {
                 msgInfo.titleText =

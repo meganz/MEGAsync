@@ -728,7 +728,6 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
 
     MessageDialogInfo msgInfo;
     msgInfo.parent = ui->tMegaFolders;
-    msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::Yes;
     msgInfo.finishFunc = [this, handles, permanently](QPointer<MessageDialogResult> msg)
@@ -809,7 +808,6 @@ void NodeSelectorTreeViewWidget::onLeaveShareClicked(const QList<mega::MegaHandl
 
     MessageDialogInfo msgInfo;
     msgInfo.parent = ui->tMegaFolders;
-    msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::Yes;
     msgInfo.buttonsText.insert(QMessageBox::Yes, tr("Leave"));

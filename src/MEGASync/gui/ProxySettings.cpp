@@ -134,7 +134,6 @@ void ProxySettings::onProxyTestFinished(bool success)
         }
         MessageDialogInfo msgInfo;
         msgInfo.parent = this;
-        msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
         msgInfo.titleText = tr("Your proxy settings are invalid or the proxy doesn't respond");
         MessageDialogOpener::critical(msgInfo);
     }

@@ -43,7 +43,6 @@ void PasteMegaLinksDialog::on_bSubmit_clicked()
     {
         MessageDialogInfo info;
         info.parent = this;
-        info.dialogTitle = MessageDialogOpener::warningTitle();
 
         if (!text.trimmed().size())
         {

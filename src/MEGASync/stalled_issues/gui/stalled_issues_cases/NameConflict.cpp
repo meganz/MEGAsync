@@ -413,7 +413,6 @@ void NameConflict::onActionClicked(int actionId)
                 {
                     MessageDialogInfo msgInfo;
                     msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-                    msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
                     msgInfo.textFormat = Qt::RichText;
                     msgInfo.buttons = QMessageBox::Ok;
                     msgInfo.titleText =
@@ -493,7 +492,6 @@ void NameConflict::onActionClicked(int actionId)
                 {
                     MessageDialogInfo msgInfo;
                     msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-                    msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
                     msgInfo.textFormat = Qt::RichText;
                     msgInfo.buttons = QMessageBox::Ok;
                     msgInfo.titleText =
@@ -505,7 +503,6 @@ void NameConflict::onActionClicked(int actionId)
 
             MessageDialogInfo msgInfo;
             msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-            msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
             msgInfo.textFormat = Qt::RichText;
             msgInfo.buttons = QMessageBox::Yes | QMessageBox::Cancel;
 

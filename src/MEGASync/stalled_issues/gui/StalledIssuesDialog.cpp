@@ -201,7 +201,6 @@ void StalledIssuesDialog::onSyncRootChanged(std::shared_ptr<SyncSettings> sync)
             DialogOpener::closeDialogsByParentClass<StalledIssuesDialog>();
 
             MessageDialogInfo msgInfo;
-            msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
             msgInfo.textFormat = Qt::RichText;
             msgInfo.buttons = QMessageBox::Ok;
             QMap<QMessageBox::StandardButton, QString> buttonsText;

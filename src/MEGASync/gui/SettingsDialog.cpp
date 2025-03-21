@@ -563,12 +563,13 @@ void SettingsDialog::on_bClearCache_clicked()
 
     MessageDialogInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.dialogTitle = tr("Clear local backup");
-    msgInfo.titleText = tr("Backups of the previous versions of your synced files in your computer"
-                           " will be permanently deleted. Please, check your backup folders to see"
-                           " if you need to rescue something before continuing:") +
-                        QString::fromUtf8("<br/>") + syncs + QString::fromUtf8("<br/><br/>") +
-                        tr("Do you want to delete your local backup now?");
+    msgInfo.titleText = tr("Clear local backup");
+    msgInfo.descriptionText =
+        tr("Backups of the previous versions of your synced files in your computer"
+           " will be permanently deleted. Please, check your backup folders to see"
+           " if you need to rescue something before continuing:") +
+        QString::fromUtf8("<br/>") + syncs + QString::fromUtf8("<br/><br/>") +
+        tr("Do you want to delete your local backup now?");
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
@@ -598,16 +599,16 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
 
     MessageDialogInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.dialogTitle = tr("Clear remote backup");
-    msgInfo.titleText = tr("Backups of the previous versions of your synced files in MEGA will be"
-                           " permanently deleted. Please, check your [A] folder in the Rubbish Bin"
-                           " of your MEGA account to see if you need to rescue something"
-                           " before continuing.")
-                            .replace(QString::fromUtf8("[A]"),
-                                     QString::fromUtf8("<a href=\"mega://#fm/%1\">SyncDebris</a>")
-                                         .arg(QString::fromUtf8(base64Handle.get()))) +
-                        QString::fromUtf8("<br/><br/>") +
-                        tr("Do you want to delete your remote backup now?");
+    msgInfo.titleText = tr("Clear remote backup");
+    msgInfo.descriptionText =
+        tr("Backups of the previous versions of your synced files in MEGA will be"
+           " permanently deleted. Please, check your [A] folder in the Rubbish Bin"
+           " of your MEGA account to see if you need to rescue something"
+           " before continuing.")
+            .replace(QString::fromUtf8("[A]"),
+                     QString::fromUtf8("<a href=\"mega://#fm/%1\">SyncDebris</a>")
+                         .arg(QString::fromUtf8(base64Handle.get()))) +
+        QString::fromUtf8("<br/><br/>") + tr("Do you want to delete your remote backup now?");
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
@@ -628,7 +629,6 @@ void SettingsDialog::on_bClearFileVersions_clicked()
 {
     MessageDialogInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     msgInfo.titleText = tr("You are about to permanently remove all file versions."
                            " Would you like to proceed?");
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
@@ -753,7 +753,6 @@ void SettingsDialog::on_cFileVersioning_toggled(bool checked)
         mUi->cFileVersioning->setChecked(true);
 
         MessageDialogInfo msgInfo;
-        msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
         msgInfo.titleText = tr("Disabling file versioning will prevent"
                                " the creation and storage of new file versions."
                                " Do you want to continue?");
@@ -794,8 +793,8 @@ void SettingsDialog::on_cbSleepMode_toggled(bool checked)
     if (checked && !result)
     {
         MessageDialogInfo msgInfo;
-        msgInfo.dialogTitle = tr("Sleep mode can't be setup");
-        msgInfo.titleText =
+        msgInfo.titleText = tr("Sleep mode can't be setup");
+        msgInfo.descriptionText =
             tr("Your operating system doesn't allow its sleep setting to be overwritten.");
         msgInfo.buttons = QMessageBox::Ok;
         msgInfo.defaultButton = QMessageBox::Ok;
@@ -1161,8 +1160,8 @@ void SettingsDialog::on_bLogout_clicked()
     else
     {
         MessageDialogInfo msgInfo;
-        msgInfo.dialogTitle = tr("Log out");
-        msgInfo.titleText = text + QLatin1Char(' ') + tr("Are you sure?");
+        msgInfo.titleText = tr("Log out");
+        msgInfo.descriptionText = text + QLatin1Char(' ') + tr("Are you sure?");
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
         msgInfo.defaultButton = QMessageBox::Yes;
         msgInfo.parent = this;
@@ -1356,8 +1355,8 @@ void SettingsDialog::on_bExportMasterKey_clicked()
                 {
                     MessageDialogInfo msgInfo;
                     msgInfo.parent = this;
-                    msgInfo.dialogTitle = tr("Unable to write file");
-                    msgInfo.titleText = file.errorString();
+                    msgInfo.titleText = tr("Unable to write file");
+                    msgInfo.descriptionText = file.errorString();
                     MessageDialogOpener::warning(msgInfo);
                 }
                 else
@@ -1371,7 +1370,6 @@ void SettingsDialog::on_bExportMasterKey_clicked()
 
                     MessageDialogInfo msgInfo;
                     msgInfo.parent = this;
-                    msgInfo.dialogTitle = MessageDialogOpener::warningTitle();
                     msgInfo.titleText =
                         tr("Exporting the master key and keeping it in a secure location"
                            " enables you to set a new password without data loss.") +
@@ -1511,7 +1509,6 @@ void SettingsDialog::on_bDownloadFolder_clicked()
                     {
                         MessageDialogInfo msgInfo;
                         msgInfo.parent = this;
-                        msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
                         msgInfo.titleText = tr("You don't have write permissions"
                                                " in this local folder.");
                         MessageDialogOpener::critical(msgInfo);

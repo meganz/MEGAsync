@@ -2051,7 +2051,6 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
             {
                 MessageDialogInfo msgInfo;
                 msgInfo.buttonsText.insert(QMessageBox::StandardButton::Ok, tr("Close"));
-                msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
 
                 auto multipleRequest(mRequestFailedByHandle.size() > 1);
 

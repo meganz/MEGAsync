@@ -179,7 +179,6 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
     }
 
     MessageDialogInfo msgInfo;
-    msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
 
     // TODO: extract the MessageDialogOpeneres from the model, use signal to send message
 

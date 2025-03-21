@@ -51,7 +51,6 @@ void ChangePassword::onRequestFinish(mega::MegaRequest* req, mega::MegaError* e)
             else
             {
                 MessageDialogInfo info;
-                info.dialogTitle = MessageDialogOpener::errorTitle();
                 info.titleText = QCoreApplication::translate("MegaError", e->getErrorString());
                 info.parent = this;
                 MessageDialogOpener::critical(info);
@@ -68,8 +67,8 @@ void ChangePassword::onRequestFinish(mega::MegaRequest* req, mega::MegaError* e)
 
                 MessageDialogInfo msgInfo;
                 msgInfo.parent = parentWidget();
-                msgInfo.dialogTitle = tr("Password changed");
-                msgInfo.titleText = tr("Your password has been changed.");
+                msgInfo.titleText = tr("Password changed");
+                msgInfo.descriptionText = tr("Your password has been changed.");
                 msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
                 {
                     accept();
@@ -86,7 +85,6 @@ void ChangePassword::onRequestFinish(mega::MegaRequest* req, mega::MegaError* e)
                 setEnabled(true);
 
                 MessageDialogInfo info;
-                info.dialogTitle = MessageDialogOpener::errorTitle();
                 info.titleText = tr("Too many requests. Please wait.");
                 info.parent = this;
                 MessageDialogOpener::critical(info);
@@ -96,7 +94,6 @@ void ChangePassword::onRequestFinish(mega::MegaRequest* req, mega::MegaError* e)
                 setEnabled(true);
 
                 MessageDialogInfo info;
-                info.dialogTitle = MessageDialogOpener::errorTitle();
                 info.titleText = QCoreApplication::translate("MegaError", e->getErrorString());
                 info.parent = this;
 
@@ -145,7 +142,6 @@ void ChangePassword::on_bOk_clicked()
                 == MegaApi::PASSWORD_STRENGTH_VERYWEAK};
 
     MessageDialogInfo info;
-    info.dialogTitle = MessageDialogOpener::errorTitle();
     info.parent = this;
 
     if (fieldIsEmpty)

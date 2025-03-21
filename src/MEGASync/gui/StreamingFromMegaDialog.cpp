@@ -86,8 +86,8 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
     event->ignore();
 
     MessageDialogInfo msgInfo;
-    msgInfo.dialogTitle = tr("Stream from MEGA");
-    msgInfo.titleText = tr("Are you sure that you want to stop the streaming?");
+    msgInfo.titleText = tr("Stream from MEGA");
+    msgInfo.descriptionText = tr("Are you sure that you want to stop the streaming?");
     msgInfo.buttons = QMessageBox::Yes|QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
     msgInfo.parent = this;
@@ -166,7 +166,6 @@ bool StreamingFromMegaDialog::isFolderLink(const QString& link) const
 void StreamingFromMegaDialog::showErrorMessage(const QString& message)
 {
     MessageDialogInfo msgInfo;
-    msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
     msgInfo.titleText = message;
     msgInfo.buttons = QMessageBox::Ok;
     msgInfo.parent = this;
@@ -199,7 +198,6 @@ void StreamingFromMegaDialog::onLinkInfoAvailable()
     {
         MessageDialogInfo msgInfo;
         msgInfo.parent = this;
-        msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
         msgInfo.titleText = tr("Error getting link information");
         msgInfo.defaultButton = QMessageBox::Ok;
         msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
@@ -232,8 +230,8 @@ void StreamingFromMegaDialog::on_bClose_clicked()
     }
 
     MessageDialogInfo msgInfo;
-    msgInfo.dialogTitle = tr("Stream from MEGA");
-    msgInfo.titleText = tr("Are you sure that you want to stop the streaming?");
+    msgInfo.titleText = tr("Stream from MEGA");
+    msgInfo.descriptionText = tr("Are you sure that you want to stop the streaming?");
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
     msgInfo.parent = this;
@@ -372,7 +370,6 @@ void StreamingFromMegaDialog::updateFileInfoFromNode(MegaNode *node)
     {
         MessageDialogInfo msgInfo;
         msgInfo.parent = this;
-        msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
         msgInfo.titleText = tr("File not found");
         msgInfo.defaultButton = QMessageBox::Ok;
 

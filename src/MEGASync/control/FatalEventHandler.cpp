@@ -561,7 +561,6 @@ void FatalEventHandler::showFatalErrorMessage()
     mRespawnWarningDialog = true;
     MessageDialogInfo msgInfo;
     msgInfo.textFormat = Qt::RichText;
-    msgInfo.dialogTitle = MessageDialogOpener::fatalErrorTitle();
     msgInfo.imageUrl = QLatin1String(":images/alert-triangle-small.png");
 
     msgInfo.titleText = QLatin1String("<b>%1</b>").arg(getErrorTitle());

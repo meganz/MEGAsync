@@ -9,10 +9,6 @@ public:
     explicit MessageDialogOpener() = delete;
     virtual ~MessageDialogOpener() = delete;
 
-    static QString warningTitle();
-    static QString errorTitle();
-    static QString fatalErrorTitle();
-
     static void information(const MessageDialogInfo& info);
     static void warning(const MessageDialogInfo& info);
     static void question(const MessageDialogInfo& info);

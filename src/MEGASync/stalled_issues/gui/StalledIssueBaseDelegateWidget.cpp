@@ -164,7 +164,6 @@ bool StalledIssueBaseDelegateWidget::checkSelection(const QList<mega::MegaSyncSt
     }
 
     info.msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-    info.msgInfo.dialogTitle = MegaSyncApp->getMEGAString();
     info.msgInfo.textFormat = Qt::RichText;
     info.msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
 

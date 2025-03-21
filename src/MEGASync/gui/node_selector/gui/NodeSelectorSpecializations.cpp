@@ -42,7 +42,6 @@ void UploadNodeSelector::onOkButtonClicked()
         {
             MessageDialogInfo msgInfo;
             msgInfo.parent = this;
-            msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
             msgInfo.titleText = tr("You need Read & Write or Full access rights to be able to "
                                    "upload to the selected folder.");
             msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
@@ -92,7 +91,6 @@ void DownloadNodeSelector::onOkButtonClicked()
 
     MessageDialogInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
     msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
     {
         reject();
@@ -175,7 +173,6 @@ void SyncNodeSelector::onOkButtonClicked()
     {
         MessageDialogInfo msgInfo;
         msgInfo.parent = this;
-        msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
         msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
         {
             reject();
@@ -232,7 +229,6 @@ void StreamNodeSelector::onOkButtonClicked()
         {
             MessageDialogInfo msgInfo;
             msgInfo.parent = this;
-            msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
             msgInfo.titleText = tr("Only files can be used for streaming.");
             msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
             {
@@ -364,7 +360,6 @@ void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint id)
     {
         MessageDialogInfo msgInfo;
         msgInfo.parent = this;
-        msgInfo.dialogTitle = MessageDialogOpener::errorTitle();
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
         QMap<QMessageBox::Button, QString> textsByButton;
         textsByButton.insert(QMessageBox::Yes, tr("Empty"));

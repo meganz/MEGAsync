@@ -151,7 +151,6 @@ void BugReportDialog::onReportFinished()
 
     MessageDialogInfo msgInfo;
     msgInfo.parent = this->parentWidget();
-    msgInfo.dialogTitle = tr("Bug report");
     msgInfo.titleText = tr("Bug report success!");
     msgInfo.descriptionText = tr("Your bug report has been submitted, a confirmation email "
                                  "will sent to you accordingly.");
@@ -171,8 +170,8 @@ void BugReportDialog::onReportFailed()
 
     MessageDialogInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.dialogTitle = tr("Bug report");
-    msgInfo.titleText = tr("Error on submitting bug report");
+    msgInfo.titleText = tr("Bug report");
+    msgInfo.descriptionText = tr("Error on submitting bug report");
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok;
 
@@ -230,7 +229,6 @@ void BugReportDialog::cancelSendReport()
 
     MessageDialogInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.dialogTitle = tr("Bug report");
     msgInfo.titleText = tr("Are you sure you want to exit uploading?");
     msgInfo.descriptionText = tr("The bug report will not be submitted if you exit uploading.");
     msgInfo.textFormat = Qt::RichText;

@@ -135,8 +135,8 @@ public:
                     (*it) = it->toUpper();
                     MessageDialogInfo msgInfo;
                     msgInfo.parent = this;
-                    msgInfo.dialogTitle = messageBoxTitle;
-                    msgInfo.titleText = getOperationFailText(sync);
+                    msgInfo.titleText = messageBoxTitle;
+                    msgInfo.descriptionText = getOperationFailText(sync);
                     msgInfo.textFormat = Qt::RichText;
                     MessageDialogOpener::critical(msgInfo);
                 });
@@ -175,8 +175,8 @@ public:
 
                             MessageDialogInfo msgInfo;
                             msgInfo.parent = this;
-                            msgInfo.dialogTitle = title;
-                            msgInfo.titleText = msg;
+                            msgInfo.titleText = title;
+                            msgInfo.descriptionText = msg;
                             msgInfo.textFormat = Qt::RichText;
                             MessageDialogOpener::warning(msgInfo);
                         }
@@ -190,8 +190,8 @@ public:
                 {
                     MessageDialogInfo msgInfo;
                     msgInfo.parent = this;
-                    msgInfo.dialogTitle = getErrorRemovingTitle();
-                    msgInfo.titleText = getErrorRemovingText(err);
+                    msgInfo.titleText = getErrorRemovingTitle();
+                    msgInfo.descriptionText = getErrorRemovingText(err);
                     msgInfo.textFormat = Qt::RichText;
                     MessageDialogOpener::warning(msgInfo);
                 });
