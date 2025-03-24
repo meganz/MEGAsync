@@ -38,6 +38,7 @@ public slots:
 
 private slots:
     void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name);
+    void onSyncPrevalidateRequestStatus(int errorCode, int syncErrorCode, QString name);
     void onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings);
     void onLanguageChanged();
 

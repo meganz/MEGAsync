@@ -22,6 +22,10 @@ Syncs::Syncs(QObject* parent):
     mSyncsData(std::make_unique<SyncsData>())
 {
     connect(&mSyncController, &SyncController::syncAddStatus, this, &Syncs::onSyncAddRequestStatus);
+    connect(&mSyncController,
+            &SyncController::syncPrevalidateStatus,
+            this,
+            &Syncs::onSyncPrevalidateRequestStatus);
     connect(SyncInfo::instance(), &SyncInfo::syncRemoved, this, &Syncs::onSyncRemoved);
     connect(MegaSyncApp, &MegaApplication::languageChanged, this, &Syncs::onLanguageChanged);
 
@@ -71,7 +75,7 @@ void Syncs::addSync()
     }
     else
     {
-        mSyncController.addSync(mSyncConfig);
+        mSyncController.prevalidateSync(mSyncConfig);
     }
 }
 
@@ -264,7 +268,7 @@ void Syncs::onRequestFinish(mega::MegaRequest* request, mega::MegaError* error)
             if (megaNode != nullptr)
             {
                 mSyncConfig.remoteHandle = request->getNodeHandle();
-                mSyncController.addSync(mSyncConfig);
+                mSyncController.prevalidateSync(mSyncConfig);
             }
             else
             {
@@ -314,6 +318,24 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString nam
         setDefaultRemoteFolder();
 
         emit mSyncsData->syncSetupSuccess(mSyncConfig.remoteFolder == FULL_SYNC_PATH);
+    }
+}
+
+void Syncs::onSyncPrevalidateRequestStatus(int errorCode, int syncErrorCode, QString name)
+{
+    Q_UNUSED(name)
+
+    if (errorCode != mega::MegaError::API_OK)
+    {
+        mRemoteError = RemoteErrors::CANT_ADD_SYNC;
+        mRemoteMegaError.error = errorCode;
+        mRemoteMegaError.syncError = syncErrorCode;
+
+        mSyncsData->setRemoteError(getRemoteError());
+    }
+    else
+    {
+        mSyncController.addSync(mSyncConfig);
     }
 }
 
