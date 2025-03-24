@@ -24,7 +24,7 @@ public:
 signals:
     void localErrorChanged();
     void remoteErrorChanged();
-    void syncSetupSuccess();
+    void syncSetupSuccess(bool isFullSync);
     void syncRemoved();
 
 private:

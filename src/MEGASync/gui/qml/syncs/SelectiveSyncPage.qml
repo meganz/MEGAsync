@@ -43,12 +43,10 @@ SelectiveSyncPageForm {
     Connections {
         target: syncsDataAccess
 
-        function onSyncSetupSuccess() {
-            var remotePath = remoteFolderChooser.choosenPath;
-
+        function onSyncSetupSuccess(isFullSync) {
             enableScreen();
 
-            if (remotePath === '/')
+            if (isFullSync)
             {
                 root.fullSyncMoveToSuccess();
             }

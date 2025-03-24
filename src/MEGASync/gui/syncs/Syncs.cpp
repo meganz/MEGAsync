@@ -8,6 +8,11 @@
 #include "SyncsData.h"
 #include "TextDecorator.h"
 
+namespace
+{
+const QString FULL_SYNC_PATH = QString::fromLatin1(R"(/)");
+}
+
 Syncs::Syncs(QObject* parent):
     QObject(parent),
     mMegaApi(MegaSyncApp->getMegaApi()),
@@ -227,7 +232,7 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString nam
     }
     else
     {
-        emit mSyncsData->syncSetupSuccess();
+        emit mSyncsData->syncSetupSuccess(mSyncConfig.remoteFolder == FULL_SYNC_PATH);
     }
 }
 
