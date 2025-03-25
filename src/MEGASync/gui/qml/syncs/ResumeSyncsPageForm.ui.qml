@@ -19,7 +19,7 @@ FooterButtonsPage {
         leftSecondary.visible: false
         rightSecondary {
             text: Strings.viewInSettings
-            visible: syncsComponentAccess.getSyncOrigin() != SyncInfo.MAIN_APP_ORIGIN
+            visible: syncsComponentAccess.getSyncOrigin() !== SyncInfo.MAIN_APP_ORIGIN
         }
         rightPrimary {
             text: Strings.done
