@@ -8,7 +8,6 @@ class SyncsData;
 class SyncsComponent : public QMLComponent
 {
     Q_OBJECT
-    Q_PROPERTY(bool comesFromOnboarding READ getComesFromOnboarding CONSTANT)
 
 public:
     explicit SyncsComponent(QObject* parent = 0);
@@ -22,8 +21,6 @@ public:
     Q_INVOKABLE SyncInfo::SyncOrigin getSyncOrigin() const;
     Q_INVOKABLE bool checkLocalSync(const QString& path);
     Q_INVOKABLE bool checkRemoteSync(const QString& path);
-    Q_INVOKABLE void clearRemoteError();
-    Q_INVOKABLE void clearLocalError();
     Q_INVOKABLE QString getInitialLocalFolder();
     Q_INVOKABLE QString getInitialRemoteFolder();
     Q_INVOKABLE void chooseRemoteFolderButtonClicked();
@@ -34,7 +31,6 @@ public:
 
     void setSyncOrigin(SyncInfo::SyncOrigin origin);
     void setRemoteFolder(const QString& remoteFolder);
-    bool getComesFromOnboarding() const;
 
 private:
     QString mRemoteFolder;
@@ -42,6 +38,9 @@ private:
     std::unique_ptr<Syncs> mSyncs;
     QString mLocalFolderSyncCandidate;
     QString mRemoteFolderSyncCandidate;
+
+    void clearRemoteError();
+    void clearLocalError();
 };
 
 #endif // SYNCS_COMPONENT_H

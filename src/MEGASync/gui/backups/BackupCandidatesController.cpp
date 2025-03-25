@@ -770,7 +770,7 @@ QStringList BackupCandidatesController::getSelectedCandidates() const
     return selectedCandidates;
 }
 
-void BackupCandidatesController::createBackups(int syncOrigin)
+void BackupCandidatesController::createBackups(SyncInfo::SyncOrigin syncOrigin)
 {
     if (!handleDirectoriesAvailabilityErrors())
     {
@@ -789,8 +789,7 @@ void BackupCandidatesController::createBackups(int syncOrigin)
         }
     }
 
-    BackupsController::instance().addBackups(candidateList,
-                                             static_cast<SyncInfo::SyncOrigin>(syncOrigin));
+    BackupsController::instance().addBackups(candidateList, syncOrigin);
 }
 
 void BackupCandidatesController::onBackupsCreationFinished(bool success)

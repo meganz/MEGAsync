@@ -130,7 +130,7 @@ void BackupCandidatesComponent::selectAllFolders(Qt::CheckState state, bool from
     mBackupCandidatesController->setCheckAllState(state, fromModel);
 }
 
-void BackupCandidatesComponent::createBackups(int syncOrigin)
+void BackupCandidatesComponent::createBackups(SyncInfo::SyncOrigin syncOrigin)
 {
     mBackupCandidatesController->createBackups(syncOrigin);
 }

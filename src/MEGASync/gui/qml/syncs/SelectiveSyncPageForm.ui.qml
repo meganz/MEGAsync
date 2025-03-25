@@ -7,18 +7,24 @@ import common 1.0
 import components.accountData 1.0
 import components.pages 1.0
 
+import SyncInfo 1.0
+
 FooterButtonsPage {
     id: root
 
     property alias localFolderChooser: localFolder
     property alias remoteFolderChooser: remoteFolder
 
-    footerButtons.rightPrimary {
-        text: SyncsStrings.sync
-        icons.source: Images.syncIcon
-    }
+    footerButtons {
+        rightPrimary {
+            text: SyncsStrings.sync
+            icons.source: Images.syncIcon
+        }
 
-    footerButtons.rightSecondary.visible : syncsComponentAccess.comesFromOnboarding
+        rightSecondary {
+            visible : syncsComponentAccess.getSyncOrigin() === SyncInfo.ONBOARDING_ORIGIN
+        }
+    }
 
     ColumnLayout {
         id: column

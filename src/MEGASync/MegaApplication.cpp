@@ -5037,7 +5037,7 @@ void MegaApplication::externalFolderSync(MegaHandle targetFolder)
 
     if (infoDialog)
     {
-        infoDialog->addSync(SyncInfo::EXTERNAL_ORIGIN, targetFolder);
+        infoDialog->addSync(SyncInfo::SyncOrigin::EXTERNAL_ORIGIN, targetFolder);
     }
 }
 
@@ -5443,7 +5443,8 @@ void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)
         }
         else
         {
-            CreateRemoveSyncsManager::addSync(SyncInfo::MAIN_APP_ORIGIN, megaFolderHandle);
+            CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin::MAIN_APP_ORIGIN,
+                                              megaFolderHandle);
         }
     }
 }

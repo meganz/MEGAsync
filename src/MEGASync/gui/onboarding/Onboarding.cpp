@@ -18,7 +18,7 @@ Onboarding::Onboarding(QObject* parent):
     QMLComponent(parent),
     mSyncsComponent(std::make_unique<SyncsComponent>())
 {
-    mSyncsComponent->setSyncOrigin(SyncInfo::ONBOARDING_ORIGIN);
+    mSyncsComponent->setSyncOrigin(SyncInfo::SyncOrigin::ONBOARDING_ORIGIN);
 
     qmlRegisterModule("Onboarding", 1, 0);
     qmlRegisterType<OnboardingQmlDialog>("OnboardingQmlDialog", 1, 0, "OnboardingQmlDialog");

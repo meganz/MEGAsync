@@ -268,7 +268,7 @@ DeviceOs::Os DeviceCentre::getCurrentOS()
 
 void DeviceCentre::openAddSyncDialog()
 {
-    CreateRemoveSyncsManager::addSync(SyncInfo::MAIN_APP_ORIGIN, mega::INVALID_HANDLE);
+    CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin::MAIN_APP_ORIGIN, mega::INVALID_HANDLE);
 }
 
 DeviceModel* DeviceCentre::getDeviceModel() const

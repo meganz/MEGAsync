@@ -102,7 +102,7 @@ QString SyncsComponent::getInitialLocalFolder()
 
     QString defaultFolder = localFolderChooser.getDefaultFolder(syncsData->getDefaultMegaFolder());
 
-    if (mSyncOrigin != SyncInfo::ONBOARDING_ORIGIN && !mRemoteFolder.isEmpty())
+    if (mSyncOrigin != SyncInfo::SyncOrigin::ONBOARDING_ORIGIN && !mRemoteFolder.isEmpty())
     {
         defaultFolder.clear();
     }
@@ -124,7 +124,7 @@ QString SyncsComponent::getInitialRemoteFolder()
 
     QString defaultFolder = syncsData->getDefaultMegaPath();
 
-    if (mSyncOrigin != SyncInfo::ONBOARDING_ORIGIN && !mRemoteFolder.isEmpty())
+    if (mSyncOrigin != SyncInfo::SyncOrigin::ONBOARDING_ORIGIN && !mRemoteFolder.isEmpty())
     {
         defaultFolder = mRemoteFolder;
     }
@@ -148,11 +148,6 @@ void SyncsComponent::chooseRemoteFolderButtonClicked()
 void SyncsComponent::chooseLocalFolderButtonClicked()
 {
     clearLocalError();
-}
-
-bool SyncsComponent::getComesFromOnboarding() const
-{
-    return mSyncOrigin == SyncInfo::ONBOARDING_ORIGIN;
 }
 
 void SyncsComponent::setSyncCandidateLocalFolder(const QString& path)

@@ -65,6 +65,7 @@ void QmlManager::registerCommonQmlElements()
         0,
         "SyncInfo",
         QString::fromUtf8("Cannot register SyncInfo::SyncOrigin in QML"));
+    qRegisterMetaType<SyncInfo::SyncOrigin>();
     qRegisterMetaType<AppStatsEvents::EventType>();
 
     qmlRegisterSingletonType<QmlUtils>("QmlUtils", 1, 0, "QmlUtils", &QmlUtils::getQmlInstance);
