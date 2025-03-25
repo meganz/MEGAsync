@@ -11,8 +11,6 @@ import SyncInfo 1.0
 SyncsQmlDialog {
     id: window
 
-    readonly property int syncOrigin: SyncInfo.MAIN_APP_ORIGIN
-
     title: SyncsStrings.syncsWindowTitle
     visible: true
     modality: Qt.NonModal
