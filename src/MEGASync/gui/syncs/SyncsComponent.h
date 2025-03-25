@@ -19,8 +19,6 @@ public:
     Q_INVOKABLE void openSyncsTabInPreferences() const;
     Q_INVOKABLE void openExclusionsDialog(const QString& folder) const;
     Q_INVOKABLE SyncInfo::SyncOrigin getSyncOrigin() const;
-    Q_INVOKABLE bool checkLocalSync(const QString& path);
-    Q_INVOKABLE bool checkRemoteSync(const QString& path);
     Q_INVOKABLE QString getInitialLocalFolder();
     Q_INVOKABLE QString getInitialRemoteFolder();
     Q_INVOKABLE void chooseRemoteFolderButtonClicked();
@@ -41,6 +39,8 @@ private:
 
     void clearRemoteError();
     void clearLocalError();
+    bool checkLocalSync(const QString& path);
+    bool checkRemoteSync(const QString& path);
 };
 
 #endif // SYNCS_COMPONENT_H
