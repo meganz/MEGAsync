@@ -28,17 +28,6 @@ FocusScope {
     Layout.preferredWidth: width
     Layout.preferredHeight: folderItem.height
 
-    Connections {
-        id: syncsConnection
-
-        target: syncsDataAccess
-
-        function onSyncRemoved() {
-            // Check if MEGA is available again when removed
-            folderItem.text = getFolder();
-        }
-    }
-
     TextField {
         id: folderItem
 
@@ -69,6 +58,17 @@ FocusScope {
         text: Strings.choose
         onClicked: {
             root.buttonClicked();
+        }
+    }
+
+    Connections {
+        id: syncsConnection
+
+        target: syncsDataAccess
+
+        function onSyncRemoved() {
+            // Check if MEGA is available again when removed
+            folderItem.text = syncsComponentAccess.getInitialLocalFolder()
         }
     }
 }

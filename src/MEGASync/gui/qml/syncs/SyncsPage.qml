@@ -16,10 +16,8 @@ SyncsFlow {
     selectiveSyncPageComponent: selectiveSyncPageComponentItem
     state: root.selectiveSync
 
-    onSyncsFlowMoveToFinal: (success) => {
-        if (success) {
-            syncsContentItemRef.state = syncsContentItemRef.resume;
-        }
+    onSyncsFlowMoveToFinal: {
+        syncsContentItemRef.state = syncsContentItemRef.resume;
     }
 
     Component {
