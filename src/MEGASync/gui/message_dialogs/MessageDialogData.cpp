@@ -290,6 +290,9 @@ void MessageDialogData::updateButtonsByDefault(QMessageBox::StandardButtons butt
     if (mInfo.buttons == QMessageBox::NoButton)
     {
         mInfo.buttons = buttons;
+    }
+    if (mInfo.defaultButton == QMessageBox::NoButton)
+    {
         mInfo.defaultButton = defaultButton;
     }
 }
