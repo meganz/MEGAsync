@@ -11,6 +11,8 @@
 namespace
 {
 const QString FULL_SYNC_PATH = QString::fromLatin1(R"(/)");
+const QString DEFAULT_MEGA_FOLDER = QString::fromLatin1("MEGA");
+const QString DEFAULT_MEGA_PATH = FULL_SYNC_PATH + DEFAULT_MEGA_FOLDER;
 }
 
 Syncs::Syncs(QObject* parent):
@@ -26,7 +28,7 @@ Syncs::Syncs(QObject* parent):
     onSyncRemoved(nullptr);
 }
 
-void Syncs::addSync(SyncInfo::SyncOrigin origin, const QString& local, const QString& remote)
+void Syncs::addSync(const QString& local, const QString& remote)
 {
     cleanErrors();
 
@@ -46,7 +48,7 @@ void Syncs::addSync(SyncInfo::SyncOrigin origin, const QString& local, const QSt
 
     mSyncConfig.remoteFolder = remote;
     mSyncConfig.localFolder = local;
-    mSyncConfig.origin = origin;
+    mSyncConfig.origin = mSyncsData->mSyncOrigin;
     mSyncConfig.remoteHandle = remoteHandle;
 
     if (remoteHandle == mega::INVALID_HANDLE)
@@ -73,12 +75,85 @@ void Syncs::addSync(SyncInfo::SyncOrigin origin, const QString& local, const QSt
     }
 }
 
+void Syncs::setDefaultLocalFolder()
+{
+    ChooseLocalFolder localFolderChooser;
+
+    QString defaultFolder = localFolderChooser.getDefaultFolder(getDefaultMegaFolder());
+
+    if (mSyncsData->mSyncOrigin != SyncInfo::SyncOrigin::ONBOARDING_ORIGIN &&
+        !mRemoteFolder.isEmpty())
+    {
+        defaultFolder.clear();
+    }
+
+    if (!checkLocalSync(defaultFolder))
+    {
+        defaultFolder.clear();
+        clearLocalError();
+    }
+
+    mSyncsData->mDefaultLocalFolder = defaultFolder;
+    emit mSyncsData->defaultLocalFolderChanged();
+}
+
+void Syncs::setDefaultRemoteFolder()
+{
+    QString defaultFolder = getDefaultMegaPath();
+
+    if (mSyncsData->mSyncOrigin != SyncInfo::SyncOrigin::ONBOARDING_ORIGIN &&
+        !mRemoteFolder.isEmpty())
+    {
+        defaultFolder = mRemoteFolder;
+    }
+
+    if (!checkRemoteSync(defaultFolder))
+    {
+        defaultFolder.clear();
+        clearRemoteError();
+    }
+
+    mSyncsData->mDefaultRemoteFolder = defaultFolder;
+    emit mSyncsData->defaultRemoteFolderChanged();
+}
+
+void Syncs::setSyncOrigin(SyncInfo::SyncOrigin origin)
+{
+    if (mSyncsData->mSyncOrigin != origin)
+    {
+        mSyncsData->mSyncOrigin = origin;
+
+        setDefaultLocalFolder();
+        setDefaultRemoteFolder();
+
+        emit mSyncsData->syncOriginChanged();
+    }
+}
+
+void Syncs::setRemoteFolder(const QString& remoteFolder)
+{
+    mRemoteFolder = remoteFolder;
+
+    setDefaultLocalFolder();
+    setDefaultRemoteFolder();
+}
+
 bool Syncs::checkErrorsOnSyncPaths(const QString& localPath, const QString& remotePath)
 {
     helperCheckLocalSync(localPath);
     helperCheckRemoteSync(remotePath);
 
     return (mLocalError.has_value() || mRemoteError.has_value());
+}
+
+QString Syncs::getDefaultMegaFolder()
+{
+    return DEFAULT_MEGA_FOLDER;
+}
+
+QString Syncs::getDefaultMegaPath()
+{
+    return DEFAULT_MEGA_PATH;
 }
 
 void Syncs::helperCheckLocalSync(const QString& path)
@@ -96,7 +171,7 @@ void Syncs::helperCheckLocalSync(const QString& path)
         if (!openFromFolderDir.exists())
         {
             ChooseLocalFolder localFolder;
-            if (localFolderPath == localFolder.getDefaultFolder(mSyncsData->getDefaultMegaFolder()))
+            if (localFolderPath == localFolder.getDefaultFolder(DEFAULT_MEGA_FOLDER))
             {
                 if (!localFolder.createFolder(localFolderPath))
                 {
@@ -149,7 +224,7 @@ void Syncs::helperCheckRemoteSync(const QString& path)
                 mRemoteMegaError.syncError = remoteMegaError->getSyncError();
             }
         }
-        else if (path != mSyncsData->getDefaultMegaPath())
+        else if (path != getDefaultMegaPath())
         {
             remoteError = RemoteErrors::CANT_SYNC;
         }
@@ -215,6 +290,9 @@ void Syncs::onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings)
 {
     Q_UNUSED(syncSettings)
 
+    setDefaultLocalFolder();
+    setDefaultRemoteFolder();
+
     emit mSyncsData->syncRemoved();
 }
 
@@ -232,6 +310,9 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString nam
     }
     else
     {
+        setDefaultLocalFolder();
+        setDefaultRemoteFolder();
+
         emit mSyncsData->syncSetupSuccess(mSyncConfig.remoteFolder == FULL_SYNC_PATH);
     }
 }

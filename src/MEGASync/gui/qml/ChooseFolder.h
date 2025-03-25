@@ -45,7 +45,6 @@ public:
     Q_INVOKABLE void reset();
     Q_INVOKABLE QString getFolderName();
 
-    static QString DEFAULT_FOLDER;
     static QString DEFAULT_FOLDER_PATH;
 
 private:

@@ -22,7 +22,7 @@ FooterButtonsPage {
         }
 
         rightSecondary {
-            visible : syncsComponentAccess.getSyncOrigin() === SyncInfo.ONBOARDING_ORIGIN
+            visible : syncsDataAccess.syncOrigin === SyncInfo.ONBOARDING_ORIGIN
         }
     }
 

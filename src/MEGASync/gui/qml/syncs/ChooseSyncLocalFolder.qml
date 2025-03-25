@@ -8,7 +8,11 @@ ChooseSyncFolderCore {
 
     title: SyncsStrings.selectLocalFolder
     leftIconSource: Images.pc
-    choosenPath: syncsComponentAccess.getInitialLocalFolder()
+    choosenPath: syncsDataAccess.defaultLocalFolder
+
+    onChoosenPathChanged: {
+        syncsComponentAccess.setSyncCandidateLocalFolder(choosenPath);
+    }
 
     onButtonClicked:{
         syncsComponentAccess.chooseLocalFolderButtonClicked();

@@ -21,14 +21,15 @@ class Syncs: public QObject
 public:
     Syncs(QObject* parent = nullptr);
     virtual ~Syncs() = default;
-    void addSync(SyncInfo::SyncOrigin origin,
-                 const QString& local,
-                 const QString& remote = QLatin1String("/"));
-    bool checkLocalSync(const QString& path);
-    bool checkRemoteSync(const QString& path);
+    void addSync(const QString& local, const QString& remote = QLatin1String("/"));
     void clearRemoteError();
     void clearLocalError();
     SyncsData* getSyncsData() const;
+    void setSyncOrigin(SyncInfo::SyncOrigin origin);
+    void setRemoteFolder(const QString& remoteFolder);
+
+    static QString getDefaultMegaFolder();
+    static QString getDefaultMegaPath();
 
 public slots:
     void onRequestFinish(mega::MegaRequest* request, mega::MegaError* error);
@@ -74,6 +75,7 @@ private:
     std::optional<LocalErrors> mLocalError;
     std::optional<RemoteErrors> mRemoteError;
     QString mRemoteStringMessage;
+    QString mRemoteFolder;
 
     bool checkErrorsOnSyncPaths(const QString& localPath, const QString& remotePath);
     void helperCheckLocalSync(const QString& path);
@@ -81,6 +83,10 @@ private:
     void cleanErrors();
     QString getLocalError() const;
     QString getRemoteError() const;
+    void setDefaultLocalFolder();
+    void setDefaultRemoteFolder();
+    bool checkLocalSync(const QString& path);
+    bool checkRemoteSync(const QString& path);
 };
 
 #endif // SYNCS_H

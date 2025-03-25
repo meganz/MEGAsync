@@ -8,7 +8,11 @@ ChooseSyncFolderCore {
 
     title: SyncsStrings.selectMEGAFolder
     leftIconSource: Images.megaOutline
-    choosenPath: syncsComponentAccess.getInitialRemoteFolder()
+    choosenPath: syncsDataAccess.defaultRemoteFolder
+
+    onChoosenPathChanged: {
+        syncsComponentAccess.setSyncCandidateRemoteFolder(choosenPath);
+    }
 
     onButtonClicked: {
         syncsComponentAccess.chooseRemoteFolderButtonClicked();
