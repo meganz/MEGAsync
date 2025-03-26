@@ -19,6 +19,8 @@
 #include <QQuickWindow>
 #include <QScreen>
 
+#include <iostream>
+
 template<class Type>
 class QmlDialogWrapper;
 
@@ -220,6 +222,10 @@ public:
                 QString message = QString::fromUtf8("QML import path: ") + path;
                 ::mega::MegaApi::log(::mega::MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
             }
+
+#ifdef DEBUG
+            std::cout << qmlComponent.errorString().toStdString() << std::endl;
+#endif
         }
     }
 
