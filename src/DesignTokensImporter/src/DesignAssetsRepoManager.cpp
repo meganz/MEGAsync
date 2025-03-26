@@ -22,6 +22,8 @@ static const QString RepoAttributeColorId = QString::fromLatin1("color");
 static const QRegularExpression CORE_COLOR_TOKEN_REGULAR_EXPRESSION{
     QString("^#([a-f,A-F,0-9]{6}|[a-f,A-F,0-9]{8})$")};
 
+static QMap<QString, QString> tokenIdNamingExceptions = {{"focus", "focus-color"}};
+
 std::optional<DesignAssets> DesignAssetsRepoManager::getDesignAssets()
 {
     auto colorTokens = getColorData();
@@ -255,7 +257,8 @@ ColorData DesignAssetsRepoManager::parseColorTheme(const QJsonObject& jsonThemeO
     for (const auto& category: categoryKeys)
     {
         QJsonObject categoryObject = jsonThemeObject.value(category).toObject();
-        parseCategory(categoryObject, coreData, colorData);
+
+        parseCategory(category, categoryObject, coreData, colorData);
     }
 
     return colorData;
@@ -271,7 +274,7 @@ ColorData DesignAssetsRepoManager::parseColorTheme(const QJsonObject& jsonThemeO
 //! \param categoryObject The JSON object representing a category in the color theme.
 //! \param coreData The core data mapping color IDs to color values.
 //! \param colorData The ColorData object to store the extracted color information.
-void DesignAssetsRepoManager::parseCategory(const QJsonObject& categoryObject,
+void DesignAssetsRepoManager::parseCategory(const QString& categoryName, const QJsonObject& categoryObject,
                                             const CoreData& coreData,
                                             ColorData& colorData)
 {
@@ -280,7 +283,7 @@ void DesignAssetsRepoManager::parseCategory(const QJsonObject& categoryObject,
     for (const auto& token: tokenKeys)
     {
         QJsonObject tokenObject = categoryObject[token].toObject();
-        processToken(token, tokenObject, coreData, colorData);
+        processToken(categoryName, token, tokenObject, coreData, colorData);
     }
 }
 
@@ -295,7 +298,7 @@ void DesignAssetsRepoManager::parseCategory(const QJsonObject& categoryObject,
 //! \param tokenObject The JSON object representing the token.
 //! \param coreData The core data mapping color IDs to color values.
 //! \param colorData The ColorData object to store the extracted color information.
-void DesignAssetsRepoManager::processToken(const QString& token,
+void DesignAssetsRepoManager::processToken(const QString& categoryName, const QString& token,
                                            const QJsonObject& tokenObject,
                                            const CoreData& coreData,
                                            ColorData& colorData)
@@ -313,7 +316,7 @@ void DesignAssetsRepoManager::processToken(const QString& token,
     if (type == RepoAttributeColorId)
     {
         QString value = jValue.toString();
-        processColorToken(token, value, coreData, colorData);
+        processColorToken(categoryName, token, value, coreData, colorData);
     }
 }
 
@@ -328,7 +331,7 @@ void DesignAssetsRepoManager::processToken(const QString& token,
 //! \param value The color value from the token.
 //! \param coreData The core data mapping color IDs to color values.
 //! \param colorData The ColorData object to store the extracted color information.
-void DesignAssetsRepoManager::processColorToken(const QString& token,
+void DesignAssetsRepoManager::processColorToken(const QString& categoryName, const QString& token,
                                                 QString& value,
                                                 const CoreData& coreData,
                                                 ColorData& colorData)
@@ -348,6 +351,23 @@ void DesignAssetsRepoManager::processColorToken(const QString& token,
     int indexPrefix = token.indexOf(ColorTokenStart);
     if (indexPrefix != -1)
     {
-        colorData.insert(token.mid(indexPrefix + ColorTokenStart.size()), color);
+        // we want to ensure the token id starts with the category.
+        QString tokenName = token.mid(indexPrefix + ColorTokenStart.size());
+
+        /*
+         * Check if the token id is in the exceptions list.
+         * We realize that some token names, like "focus" can't be used as a token id in qml,
+         * because they are reserved words.
+        */
+        if (tokenIdNamingExceptions.contains(tokenName))
+        {
+            tokenName = tokenIdNamingExceptions[tokenName];
+        }
+        else if (tokenName.count(QChar('-')) == 0)
+        {
+            tokenName = QLatin1String("%0-%1").arg(categoryName.toLower(), tokenName);
+        }
+
+        colorData.insert(tokenName, color);
     }
 }
