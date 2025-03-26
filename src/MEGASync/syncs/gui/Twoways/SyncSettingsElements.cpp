@@ -1,8 +1,5 @@
 #include "SyncSettingsElements.h"
 
-#ifdef Q_OS_MACOS
-#include "CocoaHelpButton.h"
-#endif
 #include "MegaApplication.h"
 #include "Preferences.h"
 #include "StalledIssuesModel.h"

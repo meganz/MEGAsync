@@ -18,7 +18,9 @@ Login2FA::Login2FA(QWidget *parent) :
     ui->lError->setText(ui->lError->text().toUpper());
     ui->lError->hide();
 
-    connect(ui->wHelp, SIGNAL(clicked()), this, SLOT(on_bHelp_clicked()));
+    connect(ui->bNext, &QPushButton::clicked, this, &Login2FA::onNextClicked);
+    connect(ui->bCancel, &QPushButton::clicked, this, &Login2FA::onCancelClicked);
+    connect(ui->wHelp, &QPushButton::clicked, this, &Login2FA::onHelpClicked);
     connect(ui->leCode, SIGNAL(textChanged(QString)), this, SLOT(inputCodeChanged()));
     ui->bNext->setDefault(true);
     ui->leCode->setFocus();
@@ -50,7 +52,7 @@ void Login2FA::invalidCode(bool showWarning)
     }
 }
 
-void Login2FA::on_bNext_clicked()
+void Login2FA::onNextClicked()
 {
     QRegExp re(QString::fromUtf8("\\d\\d\\d\\d\\d\\d"));
     QString text = pinCode();
@@ -64,20 +66,20 @@ void Login2FA::on_bNext_clicked()
     }
 }
 
-void Login2FA::on_bCancel_clicked()
+void Login2FA::onCancelClicked()
 {
     reject();
+}
+
+void Login2FA::onHelpClicked()
+{
+    QString helpUrl = Preferences::BASE_URL + QString::fromLatin1("/recovery");
+    Utilities::openUrl(QUrl(helpUrl));
 }
 
 void Login2FA::inputCodeChanged()
 {
     ui->lError->hide();
-}
-
-void Login2FA::on_bHelp_clicked()
-{
-    QString helpUrl = Preferences::BASE_URL + QString::fromLatin1("/recovery");
-    Utilities::openUrl(QUrl(helpUrl));
 }
 
 void Login2FA::changeEvent(QEvent *event)
