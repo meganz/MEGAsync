@@ -17,7 +17,7 @@ execute_process(
 )
 
 execute_process(
-    COMMAND MakePri.exe new "/cf" "${MSIPath}/priconfig.xml" "/pr" "${MSIPath}"
+    COMMAND makepri new "/cf" "${MSIPath}/priconfig.xml" "/pr" "${MSIPath}"
     "/mn" "${MSIPath}/" "/o" "/of" "${MSIPath}/resources.pri"
 )
 
