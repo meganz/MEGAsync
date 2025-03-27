@@ -30,8 +30,8 @@ signals:
     void syncSetupSuccess(bool isFullSync);
     void syncRemoved();
     void syncOriginChanged();
-    void defaultLocalFolderChanged();
-    void defaultRemoteFolderChanged();
+    void defaultLocalFolderChanged(QString localPath);
+    void defaultRemoteFolderChanged(QString remotePath);
 
 private:
     QString getLocalError() const;

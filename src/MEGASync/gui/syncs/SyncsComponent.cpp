@@ -19,6 +19,45 @@ SyncsComponent::SyncsComponent(QObject* parent):
                                                    this);
     QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsDataAccess"),
                                                    mSyncs->getSyncsData());
+
+    connect(&mRemoteFolderChooser,
+            &ChooseRemoteFolder::folderChoosen,
+            this,
+            &SyncsComponent::onRemoteFolderChoosen);
+
+    connect(&mLocalFolderChooser,
+            &ChooseLocalFolder::folderChoosen,
+            this,
+            &SyncsComponent::onLocalFolderChoosen);
+
+    connect(mSyncs->getSyncsData(),
+            &SyncsData::defaultLocalFolderChanged,
+            this,
+            &SyncsComponent::onLocalFolderChoosen);
+
+    connect(mSyncs->getSyncsData(),
+            &SyncsData::defaultRemoteFolderChanged,
+            this,
+            &SyncsComponent::onRemoteFolderChoosen);
+}
+
+void SyncsComponent::onRemoteFolderChoosen(QString remotePath)
+{
+    mRemoteFolderSyncCandidate = remotePath;
+
+    emit remoteFolderChoosenChanged(remotePath);
+}
+
+void SyncsComponent::onLocalFolderChoosen(QString localPath)
+{
+    mLocalFolderSyncCandidate = localPath;
+
+    emit localFolderChoosenChanged(localPath);
+}
+
+void SyncsComponent::exclusionsButtonClicked()
+{
+    openExclusionsDialog(mLocalFolderSyncCandidate);
 }
 
 QUrl SyncsComponent::getQmlUrl()
@@ -32,14 +71,12 @@ void SyncsComponent::registerQmlModules()
     {
         qmlRegisterModule("SyncsComponents", 1, 0);
         qmlRegisterType<SyncsQmlDialog>("SyncsComponents", 1, 0, "SyncsQmlDialog");
-        qmlRegisterType<ChooseRemoteFolder>("SyncsComponents", 1, 0, "ChooseRemoteFolder");
-        qmlRegisterType<ChooseLocalFolder>("SyncsComponents", 1, 0, "ChooseLocalFolder");
 
         qmlRegistrationDone = true;
     }
 }
 
-void SyncsComponent::openSyncsTabInPreferences() const
+void SyncsComponent::viewSyncsInSettingsButtonClicked()
 {
     MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
 }
@@ -68,21 +105,13 @@ void SyncsComponent::openExclusionsDialog(const QString& folder) const
 void SyncsComponent::chooseRemoteFolderButtonClicked()
 {
     mSyncs->clearRemoteError();
+    mRemoteFolderChooser.openFolderSelector();
 }
 
 void SyncsComponent::chooseLocalFolderButtonClicked()
 {
     mSyncs->clearLocalError();
-}
-
-void SyncsComponent::setSyncCandidateLocalFolder(const QString& path)
-{
-    mLocalFolderSyncCandidate = path;
-}
-
-void SyncsComponent::setSyncCandidateRemoteFolder(const QString& path)
-{
-    mRemoteFolderSyncCandidate = path;
+    mLocalFolderChooser.openFolderSelector();
 }
 
 void SyncsComponent::syncButtonClicked()

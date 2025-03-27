@@ -21,9 +21,9 @@ public:
 
 signals:
     void folderChoosen(QString folderPath);
+
 private:
     QString mTitle;
-
 };
 
 class ChooseRemoteFolder : public QObject

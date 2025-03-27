@@ -19,6 +19,14 @@ SelectiveSyncPageForm {
     remoteFolderChooser.folderField.hint.visible: syncsDataAccess.remoteError.length !== 0
     remoteFolderChooser.folderField.error: syncsDataAccess.remoteError.length !== 0
 
+    localFolderChooser.onButtonClicked: {
+        syncsComponentAccess.chooseLocalFolderButtonClicked();
+    }
+
+    remoteFolderChooser.onButtonClicked: {
+        syncsComponentAccess.chooseRemoteFolderButtonClicked();
+    }
+
     function enableScreen() {
         root.enabled = true;
         footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
@@ -26,7 +34,7 @@ SelectiveSyncPageForm {
 
     footerButtons {
         leftSecondary.onClicked: {
-            syncsComponentAccess.openExclusionsDialog(localFolderChooser.choosenPath);
+            syncsComponentAccess.exclusionsButtonClicked();
         }
 
         rightSecondary.onClicked: {
@@ -46,12 +54,10 @@ SelectiveSyncPageForm {
         function onSyncSetupSuccess(isFullSync) {
             enableScreen();
 
-            if (isFullSync)
-            {
+            if (isFullSync) {
                 root.fullSyncMoveToSuccess();
             }
-            else
-            {
+            else {
                 root.selectiveSyncMoveToSuccess();
             }
         }
@@ -70,6 +76,20 @@ SelectiveSyncPageForm {
 
         function onInitializePageFocus() {
             localFolderChooser.forceActiveFocus();
+        }
+    }
+
+    Connections {
+        id: syncCompAccessConnection
+
+        target: syncsComponentAccess
+
+        function onRemoteFolderChoosenChanged(remoteFolder) {
+            remoteFolderChooser.folderField.text = remoteFolder;
+        }
+
+        function onLocalFolderChoosenChanged(localFolder) {
+            localFolderChooser.folderField.text = localFolder;
         }
     }
 }
