@@ -43,21 +43,17 @@ SyncsComponent::SyncsComponent(QObject* parent):
 
 void SyncsComponent::onRemoteFolderChoosen(QString remotePath)
 {
-    mRemoteFolderSyncCandidate = remotePath;
-
-    emit remoteFolderChoosenChanged(remotePath);
+    mSyncs->setRemoteFolderCandidate(remotePath);
 }
 
 void SyncsComponent::onLocalFolderChoosen(QString localPath)
 {
-    mLocalFolderSyncCandidate = localPath;
-
-    emit localFolderChoosenChanged(localPath);
+    mSyncs->setLocalFolderCandidate(localPath);
 }
 
 void SyncsComponent::exclusionsButtonClicked()
 {
-    openExclusionsDialog(mLocalFolderSyncCandidate);
+    openExclusionsDialog(mSyncs->getSyncsData()->getLocalFolderCandidate());
 }
 
 QUrl SyncsComponent::getQmlUrl()
@@ -116,5 +112,5 @@ void SyncsComponent::chooseLocalFolderButtonClicked()
 
 void SyncsComponent::syncButtonClicked()
 {
-    mSyncs->addSync(mLocalFolderSyncCandidate, mRemoteFolderSyncCandidate);
+    mSyncs->addSync();
 }

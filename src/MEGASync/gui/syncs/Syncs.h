@@ -21,12 +21,14 @@ class Syncs: public QObject
 public:
     Syncs(QObject* parent = nullptr);
     virtual ~Syncs() = default;
-    void addSync(const QString& local, const QString& remote = QLatin1String("/"));
+    void addSync();
     void clearRemoteError();
     void clearLocalError();
     SyncsData* getSyncsData() const;
     void setSyncOrigin(SyncInfo::SyncOrigin origin);
     void setRemoteFolder(const QString& remoteFolder);
+    void setRemoteFolderCandidate(const QString& remoteFolderCandidate);
+    void setLocalFolderCandidate(const QString& localFolderCandidate);
 
     static QString getDefaultMegaFolder();
     static QString getDefaultMegaPath();

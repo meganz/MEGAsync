@@ -28,26 +28,26 @@ Syncs::Syncs(QObject* parent):
     onSyncRemoved(nullptr);
 }
 
-void Syncs::addSync(const QString& local, const QString& remote)
+void Syncs::addSync()
 {
     cleanErrors();
 
-    mSyncConfig.localFolder = local;
+    mSyncConfig.localFolder = mSyncsData->getLocalFolderCandidate();
+    mSyncConfig.remoteFolder = mSyncsData->getRemoteFolderCandidate();
 
-    if (checkErrorsOnSyncPaths(local, remote))
+    if (checkErrorsOnSyncPaths(mSyncConfig.localFolder, mSyncConfig.remoteFolder))
     {
         return;
     }
 
     auto remoteHandle = mega::INVALID_HANDLE;
-    auto megaNode = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(remote.toUtf8().constData()));
+    auto megaNode = std::unique_ptr<mega::MegaNode>(
+        mMegaApi->getNodeByPath(mSyncConfig.remoteFolder.toUtf8().constData()));
     if (megaNode != nullptr)
     {
         remoteHandle = megaNode->getHandle();
     }
 
-    mSyncConfig.remoteFolder = remote;
-    mSyncConfig.localFolder = local;
     mSyncConfig.origin = mSyncsData->mSyncOrigin;
     mSyncConfig.remoteHandle = remoteHandle;
 
@@ -446,4 +446,14 @@ void Syncs::onLanguageChanged()
 {
     mSyncsData->setLocalError(getLocalError());
     mSyncsData->setRemoteError(getRemoteError());
+}
+
+void Syncs::setRemoteFolderCandidate(const QString& remoteFolderCandidate)
+{
+    mSyncsData->setRemoteFolderCandidate(remoteFolderCandidate);
+}
+
+void Syncs::setLocalFolderCandidate(const QString& localFolderCandidate)
+{
+    mSyncsData->setLocalFolderCandidate(localFolderCandidate);
 }

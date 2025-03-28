@@ -27,14 +27,8 @@ public:
     void setSyncOrigin(SyncInfo::SyncOrigin origin);
     void setRemoteFolder(const QString& remoteFolder);
 
-signals:
-    void remoteFolderChoosenChanged(QString remoteFolder);
-    void localFolderChoosenChanged(QString localFolder);
-
 private:
     std::unique_ptr<Syncs> mSyncs;
-    QString mLocalFolderSyncCandidate;
-    QString mRemoteFolderSyncCandidate;
     ChooseRemoteFolder mRemoteFolderChooser;
     ChooseLocalFolder mLocalFolderChooser;
 

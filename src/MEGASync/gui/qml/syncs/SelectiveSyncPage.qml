@@ -11,13 +11,23 @@ SelectiveSyncPageForm {
     signal selectiveSyncMoveToSuccess
     signal fullSyncMoveToSuccess
 
-    localFolderChooser.folderField.hint.text: syncsDataAccess.localError
-    localFolderChooser.folderField.hint.visible: syncsDataAccess.localError.length !== 0
-    localFolderChooser.folderField.error: syncsDataAccess.localError.length !== 0
+    localFolderChooser.folderField {
+        hint {
+            text: syncsDataAccess.localError
+            visible: syncsDataAccess.localError.length !== 0
+        }
+        error: syncsDataAccess.localError.length !== 0
+        text: syncsDataAccess.localFolderCandidate
+    }
 
-    remoteFolderChooser.folderField.hint.text: syncsDataAccess.remoteError
-    remoteFolderChooser.folderField.hint.visible: syncsDataAccess.remoteError.length !== 0
-    remoteFolderChooser.folderField.error: syncsDataAccess.remoteError.length !== 0
+    remoteFolderChooser.folderField {
+        hint {
+            text: syncsDataAccess.remoteError
+            visible: syncsDataAccess.remoteError.length !== 0
+        }
+        error: syncsDataAccess.remoteError.length !== 0
+        text: syncsDataAccess.remoteFolderCandidate
+    }
 
     localFolderChooser.onButtonClicked: {
         syncsComponentAccess.chooseLocalFolderButtonClicked();
@@ -76,20 +86,6 @@ SelectiveSyncPageForm {
 
         function onInitializePageFocus() {
             localFolderChooser.forceActiveFocus();
-        }
-    }
-
-    Connections {
-        id: syncCompAccessConnection
-
-        target: syncsComponentAccess
-
-        function onRemoteFolderChoosenChanged(remoteFolder) {
-            remoteFolderChooser.folderField.text = remoteFolder;
-        }
-
-        function onLocalFolderChoosenChanged(localFolder) {
-            localFolderChooser.folderField.text = localFolder;
         }
     }
 }
