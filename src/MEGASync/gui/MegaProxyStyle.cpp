@@ -230,10 +230,10 @@ void MegaProxyStyle::polish(QWidget *widget)
     {
         EventManager::addEvent(comboBox, QEvent::Wheel, EventHelper::BLOCK);
     }
-    else if (auto comboBox = qobject_cast<QMenu*>(widget))
+    else if (auto menu = qobject_cast<QMenu*>(widget))
     {
         // Left button is the only click allowed in context menus
-        EventManager::addEvent(comboBox,
+        EventManager::addEvent(menu,
                                QEvent::MouseButtonRelease,
                                [](QEvent* event)
                                {

@@ -45,6 +45,7 @@ void EventManager::addEvent(QObject *obj, const QEvent::Type& eType, const Event
     data.action = act;
     data.eventType = eType;
     data.object = obj;
+    data.func = nullptr;
     addEvent(data);
 }
 
