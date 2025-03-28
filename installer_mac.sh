@@ -195,7 +195,7 @@ if [ ${sign} -eq 1 -o ${signAdHoc} -eq 1 ]; then
         codesign --force --verify --verbose --preserve-metadata=entitlements --sign - --deep ${MSYNC_PREFIX}$APP_NAME.app
         echo "Checking signature"
         codesign -dv ${MSYNC_PREFIX}$APP_NAME.app &> /dev/null
-        if [ $? -ne 1 ]; then
+        if [ $? -eq 0 ]; then
             echo "The ad hoc signature check is correct"
         else
             echo "The ad hoc signature check is wrong"
