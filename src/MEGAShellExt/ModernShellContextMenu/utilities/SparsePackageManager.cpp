@@ -8,7 +8,13 @@ using namespace winrt::Windows::Foundation::Collections;
 extern HMODULE g_hInst;
 
 const std::wstring SparsePackageName = L"MEGASyncShellSparse";
-const std::wstring SparseInstallerName = L"\\MEGAShellExt.msix";
+#if _WIN32 || _WIN64
+#if _WIN64
+const std::wstring SparseInstallerName = L"\\ShellExtX64.msix";
+#else
+const std::wstring SparseInstallerName = L"\\ShellExtX32.msix";
+#endif
+#endif
 
 winrt::Windows::ApplicationModel::Package SparsePackageManager::mSparsePackage = NULL;
 

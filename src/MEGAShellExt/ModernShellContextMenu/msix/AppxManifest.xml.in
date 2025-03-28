@@ -11,7 +11,7 @@
   xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10"
   xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
   IgnorableNamespaces="uap uap2 uap3 rescap desktop desktop4 desktop5 uap10 com">
-  <Identity Name="MEGASyncShellSparse" ProcessorArchitecture="neutral" Publisher="CN=Mega Limited" Version="1.0.0.0" />
+  <Identity Name="MEGASyncShellSparse" ProcessorArchitecture="neutral" Publisher="@MEGA_DESKTOP_APP_CERTIFICATE_PUBLISHER@" Version="1.0.0.0" />
   <Properties>
     <DisplayName>MEGAsync</DisplayName>
     <PublisherDisplayName>MEGAsync</PublisherDisplayName>
@@ -43,7 +43,7 @@
         <com:Extension Category="windows.comServer">
           <com:ComServer>
             <com:SurrogateServer DisplayName="MEGAsync Shell Extension">
-              <com:Class Id="F9E3E837-B080-4BB1-A508-632CC3E751B7" Path="MEGAShellExt.dll" ThreadingModel="STA"/>
+              <com:Class Id="F9E3E837-B080-4BB1-A508-632CC3E751B7" Path="@DLL@" ThreadingModel="STA"/>
             </com:SurrogateServer>
           </com:ComServer>
         </com:Extension>

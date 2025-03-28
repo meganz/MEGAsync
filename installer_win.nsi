@@ -560,6 +560,7 @@ modeselected:
         !define LIBRARY_COM
         !define LIBRARY_SHELL_EXTENSION
         !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
+        !insertmacro InstallLib DLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.msix" "$INSTDIR\ShellExtX32.msix" "$INSTDIR"
         !undef LIBRARY_COM
         !undef LIBRARY_SHELL_EXTENSION
 
@@ -586,6 +587,7 @@ modeselected:
         !define LIBRARY_COM
         !define LIBRARY_SHELL_EXTENSION
         !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.dll" "$INSTDIR\ShellExtX64.dll" "$INSTDIR"
+        !insertmacro InstallLib DLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.msix" "$INSTDIR\ShellExtX64.msix" "$INSTDIR"
         !undef LIBRARY_X64
         !undef LIBRARY_COM
         !undef LIBRARY_SHELL_EXTENSION
