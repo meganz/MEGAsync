@@ -265,6 +265,8 @@ void AbstractPlatform::removeAllSyncsFromLeftPane()
 {
 }
 
+void AbstractPlatform::removeSyncFromLeftPane(QString /*syncPath*/) {}
+
 bool AbstractPlatform::makePubliclyReadable(const QString& /*fileName*/)
 {
     return false;

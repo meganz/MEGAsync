@@ -137,7 +137,7 @@ pipeline {
                     }
                     environment{
                         MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\vcpkg"
-                        MEGAQTPATH = "C:\\Qt\\Qt5.15.16\\5.15.16\\x64"
+                        MEGA_QTPATH = "C:\\Qt\\Qt5.15.16\\5.15.16\\x64"
                         LAF_TOKEN = credentials('MEGASYNC_LAF_TOKEN')
                     }
                     steps {
@@ -148,7 +148,7 @@ pipeline {
                                 set TMP=${Workspace}\\tmp
                                 set TEMP=${Workspace}\\tmp
                                 set TMPDIR=${Workspace}\\tmp   
-                                full_build_process.cmd ${env.ARCHITECTURE} 2
+                                full_build_process.cmd ${env.ARCHITECTURE} 2 true
                             """
                         }
                     }
