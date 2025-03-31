@@ -3,14 +3,13 @@
 
 #include "QmlDialogWrapper.h"
 
+class SyncsComponent;
 class Onboarding: public QMLComponent
 {
     Q_OBJECT
 
 public:
-
-    explicit Onboarding(QObject *parent = 0);
-
+    explicit Onboarding(QObject* parent = 0);
     QUrl getQmlUrl() override;
 
     Q_INVOKABLE void openPreferences(int tabIndex) const;
@@ -19,6 +18,9 @@ public:
 signals:
     void accountBlocked(int errorCode);
     void logout();
+
+private:
+    std::unique_ptr<SyncsComponent> mSyncsComponent;
 };
 
 #endif // ONBOARDING_H

@@ -1,7 +1,7 @@
 import QtQuick 2.15
 
-import Syncs 1.0
-import ChooseLocalFolder 1.0
+import syncs 1.0
+import SyncsComponents 1.0
 import SyncInfo 1.0
 
 SelectiveSyncPageForm {
@@ -11,13 +11,31 @@ SelectiveSyncPageForm {
     signal selectiveSyncMoveToSuccess
     signal fullSyncMoveToSuccess
 
-    localFolderChooser.folderField.hint.text: root.syncs.localError
-    localFolderChooser.folderField.hint.visible: root.syncs.localError.length !== 0
-    localFolderChooser.folderField.error: root.syncs.localError.length !== 0
+    localFolderChooser.folderField {
+        hint {
+            text: syncsDataAccess.localError
+            visible: syncsDataAccess.localError.length !== 0
+        }
+        error: syncsDataAccess.localError.length !== 0
+        text: syncsDataAccess.localFolderCandidate
+    }
 
-    remoteFolderChooser.folderField.hint.text: root.syncs.remoteError
-    remoteFolderChooser.folderField.hint.visible: root.syncs.remoteError.length !== 0
-    remoteFolderChooser.folderField.error: root.syncs.remoteError.length !== 0
+    remoteFolderChooser.folderField {
+        hint {
+            text: syncsDataAccess.remoteError
+            visible: syncsDataAccess.remoteError.length !== 0
+        }
+        error: syncsDataAccess.remoteError.length !== 0
+        text: syncsDataAccess.remoteFolderCandidate
+    }
+
+    localFolderChooser.onButtonClicked: {
+        syncsComponentAccess.chooseLocalFolderButtonClicked();
+    }
+
+    remoteFolderChooser.onButtonClicked: {
+        syncsComponentAccess.chooseRemoteFolderButtonClicked();
+    }
 
     function enableScreen() {
         root.enabled = true;
@@ -26,7 +44,7 @@ SelectiveSyncPageForm {
 
     footerButtons {
         leftSecondary.onClicked: {
-            syncsComponentAccess.openExclusionsDialog(localFolderChooser.choosenPath);
+            syncsComponentAccess.exclusionsButtonClicked();
         }
 
         rightSecondary.onClicked: {
@@ -36,28 +54,20 @@ SelectiveSyncPageForm {
         rightPrimary.onClicked: {
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            root.syncs.addSync(isOnboarding ?  SyncInfo.ONBOARDING_ORIGIN : syncsComponentAccess.origin,
-                               localFolderChooser.choosenPath,
-                               remoteFolderChooser.choosenPath);
+            syncsComponentAccess.syncButtonClicked();
         }
     }
 
     Connections {
-        target: root.syncs
+        target: syncsDataAccess
 
-        function onSyncSetupSuccess() {
-            var remotePath = remoteFolderChooser.choosenPath;
-
+        function onSyncSetupSuccess(isFullSync) {
             enableScreen();
-            remoteFolderChooser.reset();
-            localFolderChooser.reset();
 
-            if (remotePath === '/')
-            {
+            if (isFullSync) {
                 root.fullSyncMoveToSuccess();
             }
-            else
-            {
+            else {
                 root.selectiveSyncMoveToSuccess();
             }
         }

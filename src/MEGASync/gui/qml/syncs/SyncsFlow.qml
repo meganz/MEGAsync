@@ -4,18 +4,12 @@ import common 1.0
 
 import components.views 1.0
 
-import Syncs 1.0
-
 Item {
     id: root
-
-    property alias sync: syncItem
 
     required property Component selectiveSyncPageComponent
 
     readonly property string selectiveSync: "selectiveSync"
-
-    property bool isOnboarding: false
 
     signal syncsFlowMoveToFinal(int syncType)
     signal syncsFlowMoveToBack()
@@ -36,10 +30,6 @@ Item {
         }
     ]
 
-    Syncs {
-        id: syncItem
-    }
-
     StackViewBase {
         id: view
 
@@ -48,19 +38,4 @@ Item {
             currentItem.setInitialFocusPosition();
         }
     }
-
-    Connections {
-        id: syncsComponentAccessConnection
-
-        target: isOnboarding ? null : syncsComponentAccess
-        enabled: !isOnboarding
-        ignoreUnknownSignals: true
-
-        function onRemoteFolderChanged() {
-            if(syncsComponentAccess.remoteFolder !== "") {
-                root.state = root.selectiveSync;
-            }
-        }
-    }
-
 }

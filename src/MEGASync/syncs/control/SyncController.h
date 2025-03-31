@@ -34,6 +34,7 @@ public:
     struct SyncConfig
     {
         QString localFolder;
+        QString remoteFolder;
         mega::MegaHandle remoteHandle = mega::INVALID_HANDLE;
         QString syncName;
         mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY;

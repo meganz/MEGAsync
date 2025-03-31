@@ -64,7 +64,7 @@ public:
     // Model data that needs to be kept even before the window is shown
     std::map<::mega::MegaHandle, std::shared_ptr<::mega::MegaSyncStats>> mSyncStatsMap;
 
-    enum SyncOrigin
+    enum class SyncOrigin
     {
         NONE = 0,
         ONBOARDING_ORIGIN,

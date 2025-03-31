@@ -8,6 +8,8 @@ import components.texts 1.0 as Texts
 import components.buttons 1.0
 import components.pages 1.0
 
+import SyncInfo 1.0
+
 FooterButtonsPage {
     id: root
 
@@ -17,7 +19,7 @@ FooterButtonsPage {
         leftSecondary.visible: false
         rightSecondary {
             text: Strings.viewInSettings
-            visible: syncsComponentAccess != null ? !syncsComponentAccess.comesFromSettings : false
+            visible: syncsDataAccess.syncOrigin  !== SyncInfo.MAIN_APP_ORIGIN
         }
         rightPrimary {
             text: Strings.done

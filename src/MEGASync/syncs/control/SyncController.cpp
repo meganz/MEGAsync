@@ -134,26 +134,26 @@ void SyncController::addSync(SyncConfig& sync)
             {
                 switch (sync.origin)
                 {
-                    case SyncInfo::NONE:
+                    case SyncInfo::SyncOrigin::NONE:
                     // Fallthrough
-                    case SyncInfo::MAIN_APP_ORIGIN:
+                    case SyncInfo::SyncOrigin::MAIN_APP_ORIGIN:
                     // Fallthrough
-                    case SyncInfo::ONBOARDING_ORIGIN:
+                    case SyncInfo::SyncOrigin::ONBOARDING_ORIGIN:
                     // Fallthrough
-                    case SyncInfo::EXTERNAL_ORIGIN:
+                    case SyncInfo::SyncOrigin::EXTERNAL_ORIGIN:
                     // Fallthrough
                     default:
                     {
                         break;
                     }
-                    case SyncInfo::CLOUD_DRIVE_DIALOG_ORIGIN:
+                    case SyncInfo::SyncOrigin::CLOUD_DRIVE_DIALOG_ORIGIN:
                     {
                         MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
                             AppStatsEvents::EventType::SYNC_ADDED_CLOUD_DRIVE_BUTTON,
                             true);
                         break;
                     }
-                    case SyncInfo::INFODIALOG_BUTTON_ORIGIN:
+                    case SyncInfo::SyncOrigin::INFODIALOG_BUTTON_ORIGIN:
                     {
                         MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
                             AppStatsEvents::EventType::SYNC_ADDED_ADD_SYNC_BUTTON,

@@ -37,7 +37,7 @@ public:
 
     Q_INVOKABLE void selectAllFolders(Qt::CheckState state, bool fromModel);
 
-    Q_INVOKABLE void createBackups(int syncOrigin);
+    Q_INVOKABLE void createBackups(SyncInfo::SyncOrigin syncOrigin);
 
     void setComesFromSettings(bool value = false);
     bool getComesFromSettings() const;

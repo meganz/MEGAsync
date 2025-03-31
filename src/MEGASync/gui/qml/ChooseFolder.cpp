@@ -24,7 +24,7 @@ void ChooseLocalFolder::openFolderSelector(const QString& folderPath, bool folde
         openFromFolder = QDir::toNativeSeparators(folderPath);
         QDir openFromFolderDir(openFromFolder);
 
-        if(folderUp)
+        if (folderUp)
         {
             if (openFromFolderDir.cdUp())
             {
@@ -99,7 +99,8 @@ bool ChooseLocalFolder::createFolder(const QString& folderPath)
     auto folder = QDir::toNativeSeparators(folderPath);
 
     QDir defaultFolder(folder);
-    if (!defaultFolder.exists() &&  (folder != getDefaultFolder(Syncs::DEFAULT_MEGA_FOLDER) || !defaultFolder.mkpath(QString::fromUtf8("."))))
+    if (!defaultFolder.exists() && (folder != getDefaultFolder(Syncs::getDefaultMegaFolder()) ||
+                                    !defaultFolder.mkpath(QString::fromUtf8("."))))
     {
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
                            QString::fromUtf8("ChooseFolder: %1 cannot be created.").arg(folderPath).toUtf8().constData());
