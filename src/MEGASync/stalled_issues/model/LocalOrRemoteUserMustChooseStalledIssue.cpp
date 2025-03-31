@@ -6,6 +6,8 @@
 #include "StatsEventHandler.h"
 #include "TransfersModel.h"
 
+#include <QRandomGenerator>
+
 LocalOrRemoteUserMustChooseStalledIssue::LocalOrRemoteUserMustChooseStalledIssue(
     const mega::MegaSyncStall* stallIssue):
     StalledIssue(stallIssue)
@@ -15,7 +17,45 @@ LocalOrRemoteUserMustChooseStalledIssue::LocalOrRemoteUserMustChooseStalledIssue
 StalledIssue::AutoSolveIssueResult LocalOrRemoteUserMustChooseStalledIssue::autoSolveIssue()
 {
     setAutoResolutionApplied(true);
-    if(chooseLastMTimeSide())
+
+    auto sideSelector = [this](qint64 localValue, qint64 remoteValue) -> std::optional<bool>
+    {
+        if (localValue != remoteValue)
+        {
+            return std::optional<bool>(localValue > remoteValue ? chooseLocalSide() :
+                                                                  chooseRemoteSide());
+        }
+
+        return std::nullopt;
+    };
+
+    // Check modified time
+    auto localModifiedTimeInMSecs(consultLocalData()->getAttributes()->modifiedTimeInMSecs());
+    auto cloudModifiedTimeInMSecs(consultCloudData()->getAttributes()->modifiedTimeInMSecs());
+
+    auto result(sideSelector(localModifiedTimeInMSecs, cloudModifiedTimeInMSecs));
+    if (!result.has_value())
+    {
+        // if the modified time was the same, check size
+        auto localSize(consultLocalData()->getAttributes()->size());
+        auto cloudSize(consultCloudData()->getAttributes()->size());
+
+        result = sideSelector(localSize, cloudSize);
+
+        if (!result.has_value())
+        {
+            // If the size is the same, randomly choose the local or remote side. We will still have
+            // a 50% success rate.
+            // We get a random number between 0 (inclusive) and 2 (exclusive) and choose the local
+            // or remote side
+            result = std::optional<bool>(QRandomGenerator::global()->bounded(0, 2) == 0 ?
+                                             chooseLocalSide() :
+                                             chooseRemoteSide());
+        }
+    }
+
+    // If the result is true, the issue has been solved.
+    if (result.has_value() && result.value())
     {
         MegaSyncApp->getStatsEventHandler()->sendEvent(
             AppStatsEvents::EventType::SI_LOCALREMOTE_SOLVED_AUTOMATICALLY);
@@ -27,14 +67,21 @@ StalledIssue::AutoSolveIssueResult LocalOrRemoteUserMustChooseStalledIssue::auto
 
 bool LocalOrRemoteUserMustChooseStalledIssue::chooseLastMTimeSide()
 {
-    if(consultLocalData()->getAttributes()->modifiedTimeInSecs() >= consultCloudData()->getAttributes()->modifiedTimeInSecs())
+    return lastModifiedSide() == ChosenSide::LOCAL ? chooseLocalSide() : chooseRemoteSide();
+}
+
+LocalOrRemoteUserMustChooseStalledIssue::ChosenSide
+    LocalOrRemoteUserMustChooseStalledIssue::lastModifiedSide() const
+{
+    if (isFile())
     {
-        return chooseLocalSide();
+        return consultLocalData()->getAttributes()->modifiedTimeInMSecs() >
+                       consultCloudData()->getAttributes()->modifiedTimeInMSecs() ?
+                   ChosenSide::LOCAL :
+                   ChosenSide::REMOTE;
     }
-    else
-    {
-        return chooseRemoteSide();
-    }
+
+    return ChosenSide::NONE;
 }
 
 bool LocalOrRemoteUserMustChooseStalledIssue::UIShowFileAttributes() const
@@ -44,29 +91,33 @@ bool LocalOrRemoteUserMustChooseStalledIssue::UIShowFileAttributes() const
 
 bool LocalOrRemoteUserMustChooseStalledIssue::isAutoSolvable() const
 {
-    //Only in smart mode
+    // Only in smart mode
     auto result(false);
 
-    if(Preferences::instance()->isStalledIssueSmartModeActivated())
+    if (Preferences::instance()->isStalledIssueSmartModeActivated())
     {
-        //In case it is a backup, we cannot automatically solve it
-        if(getSyncType() == mega::MegaSync::SyncType::TYPE_BACKUP)
+        // In case it is a backup, we cannot automatically solve it
+        if (getSyncType() != mega::MegaSync::SyncType::TYPE_BACKUP && isFile())
         {
-            return false;
-        }
-
-        if(isFile() && (consultLocalData()->getAttributes()->size() == consultCloudData()->getAttributes()->size()))
-        {
-            //Check names
-            auto localName(QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(
-                consultLocalData()->getFileName().toUtf8().constData(),
-                nullptr)));
-            auto cloudName(QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(
-                consultCloudData()->getFileName().toUtf8().constData(),
-                nullptr)));
-            if(localName.compare(cloudName, Qt::CaseSensitive) == 0)
+            if ((consultLocalData()->getAttributes()->size() !=
+                 consultCloudData()->getAttributes()->size()) ||
+                (consultLocalData()->getAttributes()->modifiedTimeInMSecs() !=
+                 consultCloudData()->getAttributes()->modifiedTimeInMSecs()) ||
+                consultLocalData()->getAttributes()->getCRC() !=
+                    consultCloudData()->getAttributes()->getCRC())
             {
-                result = true;
+                // Check names
+                auto localName(QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(
+                    consultLocalData()->getFileName().toUtf8().constData(),
+                    nullptr)));
+                auto cloudName(QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(
+                    consultCloudData()->getFileName().toUtf8().constData(),
+                    nullptr)));
+
+                if (localName.compare(cloudName, Qt::CaseSensitive) == 0)
+                {
+                    result = true;
+                }
             }
         }
     }
@@ -203,17 +254,6 @@ bool LocalOrRemoteUserMustChooseStalledIssue::chooseBothSides()
     }
 
     return result.error == nullptr;
-}
-
-LocalOrRemoteUserMustChooseStalledIssue::ChosenSide LocalOrRemoteUserMustChooseStalledIssue::lastModifiedSide() const
-{
-    if(isFile())
-    {
-        return consultLocalData()->getAttributes()->modifiedTimeInSecs() > consultCloudData()->getAttributes()->modifiedTimeInSecs()
-                   ? ChosenSide::LOCAL : ChosenSide::REMOTE;
-    }
-
-    return ChosenSide::NONE;
 }
 
 std::shared_ptr<mega::MegaError> LocalOrRemoteUserMustChooseStalledIssue::getRemoveRemoteError() const

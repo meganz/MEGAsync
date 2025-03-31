@@ -526,11 +526,13 @@ void LocalAndRemoteDifferentWidget::onKeepLastModifiedTimeButtonClicked(int)
         {
             if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
             {
-                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveLocalRemoteIssues(info.similarSelection);
+                MegaSyncApp->getStalledIssuesModel()->chooseLastModifiedLocalRemoteIssues(
+                    info.similarSelection);
             }
             else
             {
-                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveLocalRemoteIssues(info.selection);
+                MegaSyncApp->getStalledIssuesModel()->chooseLastModifiedLocalRemoteIssues(
+                    info.selection);
             }
         }
     };

@@ -200,7 +200,7 @@ public:
     void chooseRemoteForBackups(const QModelIndexList& list);
     void chooseSideManually(bool remote, const QModelIndexList& list);
     void chooseBothSides(const QModelIndexList& list);
-    void semiAutoSolveLocalRemoteIssues(const QModelIndexList& list);
+    void chooseLastModifiedLocalRemoteIssues(const QModelIndexList& list);
 
     //IgnoreConflicts
     void ignoreItems(const QModelIndexList& list);

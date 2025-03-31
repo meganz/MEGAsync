@@ -1343,7 +1343,7 @@ void StalledIssuesModel::chooseRemoteForBackups(const QModelIndexList& list)
     solveListOfIssues(info);
 }
 
-void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList& list)
+void StalledIssuesModel::chooseLastModifiedLocalRemoteIssues(const QModelIndexList& list)
 {
     auto resolveIssue = [this](int row) -> bool
     {
