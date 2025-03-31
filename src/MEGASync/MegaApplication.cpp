@@ -4825,8 +4825,6 @@ void MegaApplication::shellExport(QQueue<QString> newExportQueue)
 
 void MegaApplication::shellViewOnMega(QByteArray localPath, bool versions)
 {
-    MegaNode *node = nullptr;
-
 #ifdef WIN32
     if (!localPath.startsWith(QByteArray((const char *)(void*)L"\\\\", 4)))
     {
@@ -4838,14 +4836,11 @@ void MegaApplication::shellViewOnMega(QByteArray localPath, bool versions)
     string tmpPath((const char*)localPath.constData());
 #endif
 
-    node = megaApi->getSyncedNode(&tmpPath);
-    if (!node)
+    std::unique_ptr<MegaNode> node(megaApi->getSyncedNode(&tmpPath));
+    if (node)
     {
-        return;
+        shellViewOnMega(node->getHandle(), versions);
     }
-
-    shellViewOnMega(node->getHandle(), versions);
-    delete node;
 }
 
 void MegaApplication::shellViewOnMega(MegaHandle handle, bool versions)

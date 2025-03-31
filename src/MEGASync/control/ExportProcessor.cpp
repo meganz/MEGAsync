@@ -39,7 +39,7 @@ void ExportProcessor::requestLinks()
 
     for (int i = 0; i < size; i++)
     {
-        MegaNode *node = NULL;
+        std::unique_ptr<MegaNode> node(nullptr);
         if (mode == MODE_PATHS)
         {
     #ifdef WIN32
@@ -53,25 +53,23 @@ void ExportProcessor::requestLinks()
             std::string tmpPath((const char*)fileList[i].toUtf8().constData());
     #endif
 
-            node = megaApi->getSyncedNode(&tmpPath);
+            node.reset(megaApi->getSyncedNode(&tmpPath));
             if (!node)
             {
-                const char *fpLocal = megaApi->getFingerprint(tmpPath.c_str());
-                node = megaApi->getNodeByFingerprint(fpLocal);
-                delete [] fpLocal;
+                std::unique_ptr<const char[]> fpLocal(megaApi->getFingerprint(tmpPath.c_str()));
+                node.reset(megaApi->getNodeByFingerprint(fpLocal.get()));
             }
         }
         else
         {
-            node = megaApi->getNodeByHandle(handleList[i]);
+            node.reset(megaApi->getNodeByHandle(handleList[i]));
         }
         megaApi->exportNode(
-            node,
+            node.get(),
             0,
             false,
             false,
             RequestListenerManager::instance().registerAndGetFinishListener(this, true).get());
-        delete node;
     }
 }
 
