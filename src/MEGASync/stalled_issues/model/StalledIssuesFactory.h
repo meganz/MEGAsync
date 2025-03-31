@@ -96,26 +96,26 @@ public:
 
     StalledIssuesCreator();
 
-    void createIssues(mega::MegaSyncStallList* issues,
-        UpdateType updateType);
+    void createIssues(const mega::MegaSyncStallMap* stallsMap, UpdateType updateType);
 
     bool multiStepIssueSolveActive() const;
     void addMultiStepIssueSolver(MultiStepIssueSolverBase* issue);
 
     ReceivedStalledIssues getStalledIssues() const;
 
+    void start();
+    void finish();
+
 signals:
     void solvingIssues(IssuesCount count);
     void solvingIssuesFinished(IssuesCount count);
 
 protected:
-    void clear();
-    void finish();
-
     ReceivedStalledIssues mStalledIssues;
 
 private:
-    QPointer<MultiStepIssueSolverBase> getMultiStepIssueSolverByStall(const mega::MegaSyncStall* stall);
+    QPointer<MultiStepIssueSolverBase>
+        getMultiStepIssueSolverByStall(const mega::MegaSyncStall* stall, mega::MegaHandle syncId);
 
     QMultiMap<mega::MegaSyncStall::SyncStallReason,
         MultiStepIssueSolverBase*> mMultiStepIssueSolversByReason;

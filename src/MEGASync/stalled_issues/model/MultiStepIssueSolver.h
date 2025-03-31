@@ -19,7 +19,10 @@ public:
     virtual void start();
     bool isActive() const;
 
-    virtual bool checkIssue(const mega::MegaSyncStall*) const {return false;}
+    virtual bool checkIssue(const mega::MegaSyncStall*, mega::MegaHandle) const
+    {
+        return false;
+    }
 
     void sendStartNotification();
     void sendFinishNotification();

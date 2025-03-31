@@ -126,12 +126,11 @@ public:
 
     ~MoveOrRenameMultiStepIssueSolver() override{}
 
-    bool checkIssue(const mega::MegaSyncStall* stall) const override
+    bool checkIssue(const mega::MegaSyncStall* stall, mega::MegaHandle syncId) const override
     {
         if(stall->reason() == mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur)
         {
-            auto syncIds(StalledIssuesBySyncFilter::getSyncIdsByStall(stall));
-            return syncIds.contains(mSyncId);
+            return mSyncId == syncId;
         }
         return false;
     }
