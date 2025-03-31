@@ -91,8 +91,6 @@ void SyncController::prevalidateSync(SyncConfig& sync)
                      .toUtf8()
                      .constData());
 
-    syncOperationBegins();
-
     QString syncCleanName = sync.syncName;
     if (syncCleanName.isEmpty())
     {
@@ -120,7 +118,6 @@ void SyncController::prevalidateSync(SyncConfig& sync)
             }
 
             emit syncPrevalidateStatus(errorCode, syncErrorCode, sync.localFolder);
-            syncOperationEnds();
         });
 
     mApi->prevalidateSyncFolder(sync.type,
