@@ -32,15 +32,10 @@
 #include <QVBoxLayout>
 
 #include <cassert>
-
-#ifdef _WIN32
 #include <chrono>
-using namespace std::chrono;
-#endif
-
-#include <QtConcurrent/QtConcurrent>
 
 using namespace mega;
+using namespace std::chrono;
 
 static constexpr int DEFAULT_MIN_PERCENTAGE{1};
 static constexpr int FONT_SIZE_BUSINESS_PX{20};
@@ -1432,75 +1427,7 @@ void InfoDialog::applyFilterOption(MessageType opt)
         filterMenu->hide();
     }
 
-    switch (opt)
-    {
-        case MessageType::ALERT_CONTACTS:
-        {
-            ui->wSortNotifications->setActualFilter(opt);
-
-            if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_CONTACTS))
-            {
-                ui->sNotifications->setCurrentWidget(ui->pNotifications);
-            }
-            else
-            {
-                ui->lNoNotifications->setText(tr("No notifications for contacts"));
-                ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
-            }
-
-            break;
-        }
-        case MessageType::ALERT_SHARES:
-        {
-            ui->wSortNotifications->setActualFilter(opt);
-
-            if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_SHARES))
-            {
-                ui->sNotifications->setCurrentWidget(ui->pNotifications);
-            }
-            else
-            {
-                ui->lNoNotifications->setText(tr("No notifications for incoming shares"));
-                ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
-            }
-
-            break;
-        }
-        case MessageType::ALERT_PAYMENTS:
-        {
-            ui->wSortNotifications->setActualFilter(opt);
-
-            if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_PAYMENTS))
-            {
-                ui->sNotifications->setCurrentWidget(ui->pNotifications);
-            }
-            else
-            {
-                ui->lNoNotifications->setText(tr("No notifications for payments"));
-                ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
-            }
-            break;
-        }
-        case MessageType::ALL:
-        case MessageType::ALERT_TAKEDOWNS:
-        default:
-        {
-            ui->wSortNotifications->setActualFilter(opt);
-
-            if (app->getNotificationController()->hasNotifications())
-            {
-                ui->sNotifications->setCurrentWidget(ui->pNotifications);
-            }
-            else
-            {
-                ui->lNoNotifications->setText(tr("No notifications"));
-                ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
-            }
-            break;
-        }
-    }
-
-    app->getNotificationController()->applyFilter(opt);
+    applyNotificationFilter(opt);
 }
 
 void InfoDialog::on_bNotificationsSettings_clicked()
@@ -1767,8 +1694,81 @@ void InfoDialog::initNotificationArea()
     {
         // We need to check if there is any user message to display or not
         // with the actual selected filter.
-        applyFilterOption(filterMenu->getCurrentFilter());
+        applyNotificationFilter(filterMenu->getCurrentFilter());
     });
 
     notificationsReady = true;
+}
+
+void InfoDialog::applyNotificationFilter(MessageType opt)
+{
+    switch (opt)
+    {
+        case MessageType::ALERT_CONTACTS:
+        {
+            ui->wSortNotifications->setActualFilter(opt);
+
+            if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_CONTACTS))
+            {
+                ui->sNotifications->setCurrentWidget(ui->pNotifications);
+            }
+            else
+            {
+                ui->lNoNotifications->setText(tr("No notifications for contacts"));
+                ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
+            }
+
+            break;
+        }
+        case MessageType::ALERT_SHARES:
+        {
+            ui->wSortNotifications->setActualFilter(opt);
+
+            if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_SHARES))
+            {
+                ui->sNotifications->setCurrentWidget(ui->pNotifications);
+            }
+            else
+            {
+                ui->lNoNotifications->setText(tr("No notifications for incoming shares"));
+                ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
+            }
+
+            break;
+        }
+        case MessageType::ALERT_PAYMENTS:
+        {
+            ui->wSortNotifications->setActualFilter(opt);
+
+            if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_PAYMENTS))
+            {
+                ui->sNotifications->setCurrentWidget(ui->pNotifications);
+            }
+            else
+            {
+                ui->lNoNotifications->setText(tr("No notifications for payments"));
+                ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
+            }
+            break;
+        }
+        case MessageType::ALL:
+        case MessageType::ALERT_TAKEDOWNS:
+        default:
+        {
+            ui->wSortNotifications->setActualFilter(opt);
+
+            if (app->getNotificationController()->hasNotifications())
+            {
+                ui->sNotifications->setCurrentWidget(ui->pNotifications);
+            }
+            else
+            {
+                ui->lNoNotifications->setText(tr("No notifications"));
+                ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
+            }
+            break;
+        }
+    }
+
+    app->getNotificationController()->applyFilter(opt);
 }

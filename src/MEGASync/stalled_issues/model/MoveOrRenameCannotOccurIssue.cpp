@@ -121,8 +121,7 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
         }
 
         const auto syncState = syncSettings->getRunState();
-        if (syncState == mega::MegaSync::RUNSTATE_PAUSED ||
-            syncState == mega::MegaSync::RUNSTATE_SUSPENDED)
+        if (syncState == mega::MegaSync::RUNSTATE_SUSPENDED)
         {
             bool stopSolvingIssue(false);
 
@@ -222,7 +221,7 @@ bool MoveOrRenameCannotOccurIssue::solveSourceWasMovedToElsewhere(StalledIssueSP
     }
     else
     {
-        if (StalledIssuesUtilities::removeLocalFile(issue->getLocalData()->getMoveFilePath(),
+        if (Utilities::removeLocalFile(issue->getLocalData()->getMoveFilePath(),
                                                     firstSyncId()))
         {
             mUndoSuccessful--;
@@ -253,7 +252,7 @@ bool MoveOrRenameCannotOccurIssue::solveDestinationPathInUnresolvedArea(StalledI
                 QFileInfo localFile(localData->getFilePath());
                 localFile.setFile(localFile.path(), cloudData->getFileName());
                 auto removeLocal =
-                    StalledIssuesUtilities::removeLocalFile(localFile.filePath(), firstSyncId());
+                    Utilities::removeLocalFile(localFile.filePath(), firstSyncId());
 
                 if (removeLocal)
                 {
@@ -518,7 +517,7 @@ bool MoveOrRenameCannotOccurIssue::solveRemoteGenericIssues(StalledIssueSPtr iss
     {
         if (previousPath.exists())
         {
-            StalledIssuesUtilities::removeLocalFile(localData->getFilePath(), firstSyncId());
+            Utilities::removeLocalFile(localData->getFilePath(), firstSyncId());
         }
 
         QFile file(currentPath);

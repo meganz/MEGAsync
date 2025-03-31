@@ -25,6 +25,7 @@
 #include "LoginController.h"
 #include "mega/types.h"
 #include "MyBackupsHandle.h"
+#include "NodeSelector.h"
 #include "NodeSelectorSpecializations.h"
 #include "Onboarding.h"
 #include "OverQuotaDialog.h"
@@ -42,6 +43,8 @@
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
 #include "StreamingFromMegaDialog.h"
+#include "SyncController.h"
+#include "SyncReminderNotificationManager.h"
 #include "SyncsMenu.h"
 #include "TransferMetaData.h"
 #include "UploadToMegaDialog.h"
@@ -75,7 +78,7 @@
 #endif
 
 #ifndef WIN32
-//sleep
+// sleep
 #include <unistd.h>
 #else
 #include <Windows.h>
@@ -136,6 +139,7 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     mDisableGfx(false),
     mUserMessageController(nullptr),
     mGfxProvider(nullptr),
+    mSyncReminderNotificationManager(nullptr),
     misSyncingStateWrongLogged(false)
 {
 #if defined Q_OS_MACX && !defined QT_DEBUG
@@ -262,6 +266,7 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     windowsUpdateAction = nullptr;
     windowsAboutAction = nullptr;
     windowsImportLinksAction = nullptr;
+    windowsFilesAction = nullptr;
     windowsUploadAction = nullptr;
     windowsDownloadAction = nullptr;
     windowsStreamAction = nullptr;
@@ -298,7 +303,8 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     uploadAction = nullptr;
     downloadAction = nullptr;
     streamAction = nullptr;
-    myCloudAction = nullptr;
+    filesAction = nullptr;
+    MEGAWebAction = nullptr;
     deviceCentreAction = nullptr;
     mWaiting = false;
     updated = false;
@@ -607,33 +613,49 @@ void MegaApplication::initialize()
         QStringList reports = CrashHandler::instance()->getPendingCrashReports();
         if (reports.size())
         {
-            QPointer<CrashReportDialog> crashDialog = new CrashReportDialog(reports.join(QString::fromUtf8("------------------------------\n")));
+            QPointer<CrashReportDialog> crashDialog = new CrashReportDialog(
+                reports.join(QString::fromUtf8("------------------------------\n")));
             if (crashDialog->exec() == QDialog::Accepted)
             {
                 applyProxySettings();
                 CrashHandler::instance()->sendPendingCrashReports(crashDialog->getUserMessage());
                 if (crashDialog->sendLogs())
                 {
-                    auto timestampString = reports[0].mid(reports[0].indexOf(QString::fromUtf8("Timestamp: "))+11,20);
-                    timestampString = timestampString.left(timestampString.indexOf(QString::fromUtf8("\n")));
-                    QDateTime crashTimestamp = QDateTime::fromMSecsSinceEpoch(timestampString.toLongLong());
+                    auto timestampString =
+                        reports[0].mid(reports[0].indexOf(QString::fromUtf8("Timestamp: ")) + 11,
+                                       20);
+                    timestampString =
+                        timestampString.left(timestampString.indexOf(QString::fromUtf8("\n")));
+                    QDateTime crashTimestamp =
+                        QDateTime::fromMSecsSinceEpoch(timestampString.toLongLong());
 
                     if (crashTimestamp != QDateTime::fromMSecsSinceEpoch(0))
                     {
-                        crashTimestamp = crashTimestamp.addSecs(-300); //to gather some logging before the crash
+                        // to gather some logging before the crash
+                        crashTimestamp = crashTimestamp.addSecs(-300);
                     }
 
-                    connect(logger.get(), &MegaSyncLogger::logReadyForReporting, context, [this, crashTimestamp]()
-                    {
-                        crashReportFilePath = Utilities::joinLogZipFiles(megaApi, &crashTimestamp, CrashHandler::instance()->getLastCrashHash());
-                        if (!crashReportFilePath.isNull()
-                                && megaApi && megaApi->isLoggedIn())
-                        {
-                            megaApi->startUploadForSupport(QDir::toNativeSeparators(crashReportFilePath).toUtf8().constData(), false);
-                            crashReportFilePath.clear();
-                        }
-                        context->deleteLater();
-                    });
+                    connect(logger.get(),
+                            &MegaSyncLogger::logReadyForReporting,
+                            context,
+                            [this, crashTimestamp]()
+                            {
+                                crashReportFilePath = Utilities::joinLogZipFiles(
+                                    megaApi,
+                                    &crashTimestamp,
+                                    CrashHandler::instance()->getLastCrashHash());
+                                if (!crashReportFilePath.isNull() && megaApi &&
+                                    megaApi->isLoggedIn())
+                                {
+                                    megaApi->startUploadForSupport(
+                                        QDir::toNativeSeparators(crashReportFilePath)
+                                            .toUtf8()
+                                            .constData(),
+                                        false);
+                                    crashReportFilePath.clear();
+                                }
+                                context->deleteLater();
+                            });
 
                     logger->prepareForReporting();
                 }
@@ -1144,7 +1166,6 @@ void MegaApplication::start()
     if (updated)
     {
         showInfoMessage(tr("MEGAsync has been updated"));
-        preferences->setFirstSyncDone();
         preferences->setFirstFileSynced();
         preferences->setFirstBackupDone();
         preferences->setFirstFileBackedUp();
@@ -1456,6 +1477,21 @@ if (!preferences->lastExecutionTime())
     preferences->monitorUserAttributes();
 
     checkOverStorageStates(true);
+
+    if (!preferences->isFirstSyncDone())
+    {
+        bool comesFromOnboarding(
+            !preferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN));
+        mSyncReminderNotificationManager = new SyncReminderNotificationManager(comesFromOnboarding);
+        connect(&SyncController::instance(),
+                &SyncController::syncAddStatus,
+                mSyncReminderNotificationManager,
+                &SyncReminderNotificationManager::onSyncAddRequestStatus);
+        connect(this,
+                &MegaApplication::syncsDialogClosed,
+                mSyncReminderNotificationManager,
+                &SyncReminderNotificationManager::onSyncsDialogClosed);
+    }
 }
 
 void MegaApplication::onLoginFinished()
@@ -1522,6 +1558,7 @@ void MegaApplication::onLogout()
                 DialogOpener::closeAllDialogs();
                 mGfxProvider.reset();
                 mUserMessageController.reset();
+                mSyncReminderNotificationManager->deleteLater();
                 createUserMessageController();
                 infoDialog->deleteLater();
                 infoDialog = nullptr;
@@ -1637,7 +1674,7 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
 
 //This function is called to upload all files in the uploadQueue field
 //to the Mega node that is passed as parameter
-void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
+void MegaApplication::processUploadQueue(MegaHandle nodeHandle, QWidget* caller)
 {
     if (appfinished)
     {
@@ -1656,29 +1693,32 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
 
     noUploadedStarted = true;
 
-    auto checkUploadNameDialog = new DuplicatedNodeDialog(node);
-    checkUploadNameDialog->checkUploads(uploadQueue, node);
+    auto conflicts = CheckDuplicatedNodes::checkUploads(uploadQueue, node);
 
-    if(!checkUploadNameDialog->isEmpty())
+    if(!conflicts->isEmpty())
     {
-        DialogOpener::showDialog<DuplicatedNodeDialog>(checkUploadNameDialog, this, &MegaApplication::onUploadsCheckedAndReady);
+        auto checkUploadNameDialog(new DuplicatedNodeDialog(caller));
+        checkUploadNameDialog->setConflicts(conflicts);
+        DialogOpener::showDialog<DuplicatedNodeDialog>(
+            checkUploadNameDialog,
+            [this, checkUploadNameDialog]() {
+                if (checkUploadNameDialog && checkUploadNameDialog->result() == QDialog::Accepted)
+                {
+                    onUploadsCheckedAndReady(checkUploadNameDialog->conflicts());
+                }
+            });
     }
     else
     {
-        checkUploadNameDialog->accept();
-        onUploadsCheckedAndReady(checkUploadNameDialog);
-        checkUploadNameDialog->close();
-        checkUploadNameDialog->deleteLater();
+        onUploadsCheckedAndReady(conflicts);
     }
 }
 
-void MegaApplication::onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> checkDialog)
+void MegaApplication::onUploadsCheckedAndReady(std::shared_ptr<ConflictTypes> conflicts)
 {
-    if(checkDialog && checkDialog->result() == QDialog::Accepted)
-    {
-        auto uploads = checkDialog->getResolvedConflicts();
+        auto uploads = conflicts->mResolvedConflicts;
 
-        auto data = TransferMetaDataContainer::createTransferMetaData<UploadTransferMetaData>(checkDialog->getNode()->getHandle());
+        auto data = TransferMetaDataContainer::createTransferMetaData<UploadTransferMetaData>(conflicts->mTargetNode->getHandle());
         preferences->setOverStorageDismissExecution(0);
 
         auto batch = std::shared_ptr<TransferBatch>(new TransferBatch(data->getAppId()));
@@ -1690,8 +1730,8 @@ void MegaApplication::onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> ch
         data->setInitialTransfers(uploads.size());
         foreach(auto uploadInfo, uploads)
         {
-            QString filePath = uploadInfo->getLocalPath();
-            uploader->upload(filePath, uploadInfo->getNewName(), checkDialog->getNode(), data->getAppId(), batch);
+            QString filePath = uploadInfo->getSourceItemPath();
+            uploader->upload(filePath, uploadInfo->getNewName(), conflicts->mTargetNode, data->getAppId(), batch);
 
             //Do not update the last items, leave Qt to do it in its natural way
             //If you update them, the flag mProcessingUploadQueue will be false and the scanning widget
@@ -1713,7 +1753,6 @@ void MegaApplication::onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> ch
             mBlockingBatch.removeBatch();
             data->remove();
         }
-    }
 }
 
 void MegaApplication::processDownloadQueue(QString path)
@@ -2144,17 +2183,16 @@ void MegaApplication::periodicTasks()
             }
 
             checkMemoryUsage();
-            mThreadPool->push([=]()
-            {//thread pool function
-                megaApi->update();
-
-                Utilities::queueFunctionInAppThread([=]()
-                {//queued function
-                    checkOverStorageStates();
-                    checkOverQuotaStates();
-                });//end of queued function
-
-            });// end of thread pool function
+            mThreadPool->push(
+                [=]()
+                {
+                    Utilities::queueFunctionInAppThread(
+                        [=]()
+                        {
+                            checkOverStorageStates();
+                            checkOverQuotaStates();
+                        });
+                });
         }
 
         onGlobalSyncStateChanged(megaApi);
@@ -2228,6 +2266,7 @@ void MegaApplication::cleanAll()
 
     mGfxProvider.reset();
     mUserMessageController.reset();
+    mSyncReminderNotificationManager->deleteLater();
     infoDialog->deleteLater();
 
     // Delete menus and menu items
@@ -2894,6 +2933,7 @@ void MegaApplication::enableTransferActions(bool enable)
     }
     windowsSettingsAction->setEnabled(enable);
     windowsImportLinksAction->setEnabled(enable);
+    windowsFilesAction->setEnabled(enable);
     windowsUploadAction->setEnabled(enable);
     windowsDownloadAction->setEnabled(enable);
     windowsStreamAction->setEnabled(enable);
@@ -3922,7 +3962,23 @@ void MegaApplication::goToMyCloud()
     megaApi->getSessionTransferURL(url.toUtf8().constData());
 
     mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_CLOUD_DRIVE_CLICKED,
-                                         sender(), myCloudAction, true);
+                                         sender(),
+                                         MEGAWebAction,
+                                         true);
+}
+
+void MegaApplication::goToFiles()
+{
+    if (infoDialog)
+    {
+        CloudDriveNodeSelector* nodeSelector = new CloudDriveNodeSelector();
+        DialogOpener::showGeometryRetainerDialog<NodeSelector>(nodeSelector);
+
+        mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::CLOUD_DRIVE_OPENED,
+                                             sender(),
+                                             filesAction,
+                                             true);
+    }
 }
 
 void MegaApplication::openDeviceCentre()
@@ -4032,6 +4088,58 @@ void MegaApplication::showChangeLog()
     DialogOpener::showDialog<ChangeLogDialog>(changeLogDialog);
 }
 
+void MegaApplication::runUploadActionWithTargetHandle(const MegaHandle &targetFolder, QWidget* parent)
+{
+    if (appfinished)
+    {
+        return;
+    }
+    QString  defaultFolderPath = getDefaultUploadPath();
+
+    auto processUpload = [this, defaultFolderPath, targetFolder, parent]()
+    {
+        SelectorInfo info;
+        info.title = QCoreApplication::translate("ShellExtension", "Upload to MEGA");
+        info.defaultDir = defaultFolderPath;
+        info.multiSelection = true;
+        info.parent = parent;
+        info.func = [this, targetFolder, parent](QStringList files)
+        {
+            if(files.size() >= 1)
+            {
+                std::unique_ptr<MegaNode> folder(getMegaApi()->getNodeByHandle(targetFolder));
+                if(folder)
+                {
+                    uploadQueue.append(createQueue(files));
+                    processUploadQueue(targetFolder, parent);
+                }
+                else
+                {
+                    NodeSelector::showNotFoundNodeMessageBox();
+                }
+            }
+        };
+
+        Platform::getInstance()->fileAndFolderSelector(info);
+    };
+
+    const bool storageIsOverQuota(storageState == MegaApi::STORAGE_STATE_RED || storageState == MegaApi::STORAGE_STATE_PAYWALL);
+    if(storageIsOverQuota)
+    {
+        auto overQuotaDialog = OverQuotaDialog::showDialog(OverQuotaDialogType::STORAGE_UPLOAD);
+        if(overQuotaDialog)
+        {
+            overQuotaDialog->setParent(parent);
+            DialogOpener::showDialog<OverQuotaDialog>(overQuotaDialog, [processUpload]()
+            {
+                processUpload();
+            });
+        }
+    }
+
+    processUpload();
+}
+
 void MegaApplication::uploadActionClicked()
 {
     if (appfinished)
@@ -4049,17 +4157,17 @@ void MegaApplication::uploadActionClicked()
         if(overQuotaDialog)
         {
             DialogOpener::showDialog<OverQuotaDialog, TransferManager>(overQuotaDialog, false, [this](){
-                uploadActionClickedFromWindowAfterOverQuotaCheck();
+                uploadActionFromWindowAfterOverQuotaCheck();
             });
 
             return;
         }
     }
 
-    uploadActionClickedFromWindowAfterOverQuotaCheck();
+    uploadActionFromWindowAfterOverQuotaCheck();
 }
 
-void MegaApplication::uploadActionClickedFromWindowAfterOverQuotaCheck()
+void MegaApplication::uploadActionFromWindowAfterOverQuotaCheck()
 {
     QString  defaultFolderPath = getDefaultUploadPath();
 
@@ -4070,20 +4178,23 @@ void MegaApplication::uploadActionClickedFromWindowAfterOverQuotaCheck()
         return;
     }
 
-    QWidget* parent(nullptr);
+    QWidget* selectorParent(nullptr);
 
-    auto TMDialog = DialogOpener::findDialog<TransferManager>();
-    if(TMDialog && (TMDialog->getDialog()->isActiveWindow() || !TMDialog->getDialog()->isMinimized()))
+    if(!selectorParent)
     {
-        parent = TMDialog->getDialog();
-        DialogOpener::closeDialogsByParentClass<TransferManager>();
+        auto TMDialog = DialogOpener::findDialog<TransferManager>();
+        if(TMDialog && (TMDialog->getDialog()->isActiveWindow() || !TMDialog->getDialog()->isMinimized()))
+        {
+            selectorParent = TMDialog->getDialog();
+            DialogOpener::closeDialogsByParentClass<TransferManager>();
+        }
     }
 
     SelectorInfo info;
     info.title = QCoreApplication::translate("ShellExtension", "Upload to MEGA");
     info.defaultDir = defaultFolderPath;
     info.multiSelection = true;
-    info.parent = parent;
+    info.parent = selectorParent;
     info.func = [this/*, blocker*/](QStringList files)
     {
         shellUpload(createQueue(files));
@@ -4155,6 +4266,20 @@ void MegaApplication::downloadActionClicked()
             });
         }
     });
+}
+
+void MegaApplication::downloadACtionClickedWithHandles(const QList<MegaHandle> &handles)
+{
+    foreach(auto& selectedMegaFolderHandle, handles)
+    {
+        MegaNode *selectedNode = megaApi->getNodeByHandle(selectedMegaFolderHandle);
+        if (selectedNode)
+        {
+            downloadQueue.append(WrappedNode(WrappedNode::TransferOrigin::FROM_APP, selectedNode));
+        }
+    }
+
+    processDownloads();
 }
 
 void MegaApplication::streamActionClicked()
@@ -4755,6 +4880,30 @@ void MegaApplication::externalDownload(QQueue<WrappedNode> newDownloadQueue)
     }
 
     downloadQueue.append(newDownloadQueue);
+}
+
+void MegaApplication::uploadFilesToNode(const QList<QUrl>& files,
+                                        MegaHandle targetNode,
+                                        QWidget* caller)
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    //Append the list of files to the upload queue, but avoid duplicates
+    std::for_each(files.begin(), files.end(), [&](const QUrl &file) {
+        if (!uploadQueue.contains(file.toLocalFile()))
+        {
+            auto item(file.toLocalFile());
+            if(item.endsWith(QDir::separator()))
+            {
+                item = item.left(item.lastIndexOf(QDir::separator()));
+            }
+            uploadQueue.enqueue(item);
+        }
+    });
+    processUploadQueue(targetNode, caller);
 }
 
 void MegaApplication::externalLinkDownload(QString megaLink, QString auth)
@@ -5392,6 +5541,7 @@ void MegaApplication::createInfoDialogMenus()
     recreateAction(&windowsExitAction, windowsMenu, PlatformStrings::exit(), &MegaApplication::tryExitApplication);
     recreateAction(&windowsSettingsAction, windowsMenu, tr("Settings"), &MegaApplication::openSettings);
     recreateAction(&windowsImportLinksAction, windowsMenu, tr("Open links"), &MegaApplication::importLinks);
+    recreateAction(&windowsFilesAction, windowsMenu, tr("Files"), &MegaApplication::goToFiles);
     recreateAction(&windowsUploadAction, windowsMenu, tr("Upload"), &MegaApplication::uploadActionClicked);
     recreateAction(&windowsDownloadAction, windowsMenu, tr("Download"), &MegaApplication::downloadActionClicked);
     recreateAction(&windowsStreamAction, windowsMenu, tr("Stream"), &MegaApplication::streamActionClicked);
@@ -5430,6 +5580,7 @@ void MegaApplication::createInfoDialogMenus()
     }
 
     windowsMenu->addSeparator();
+    windowsMenu->addAction(windowsFilesAction);
     windowsMenu->addAction(windowsImportLinksAction);
     windowsMenu->addAction(windowsUploadAction);
     windowsMenu->addAction(windowsDownloadAction);
@@ -5469,7 +5620,16 @@ void MegaApplication::createInfoDialogMenus()
                        "://images/ico_quit.png", &MegaApplication::tryExitApplication);
     recreateMenuAction(&settingsAction, infoDialogMenu, tr("Settings"),
                        "://images/ico_preferences.png", &MegaApplication::openSettings);
-    recreateMenuAction(&myCloudAction, infoDialogMenu, tr("Cloud drive"), "://images/ico-cloud-drive.png", &MegaApplication::goToMyCloud);
+    recreateMenuAction(&MEGAWebAction,
+                       infoDialogMenu,
+                       tr("MEGA web"),
+                       "://images/ico_MEGA_website.png",
+                       &MegaApplication::goToMyCloud);
+    recreateMenuAction(&filesAction,
+                       infoDialogMenu,
+                       tr("Files"),
+                       "://images/small_folder.png",
+                       &MegaApplication::goToFiles);
 
     // recreateMenuAction(&deviceCentreAction,
     //                    infoDialogMenu,
@@ -5529,7 +5689,8 @@ void MegaApplication::createInfoDialogMenus()
         infoDialogMenu->addAction(aboutAction);
     }
 
-    infoDialogMenu->addAction(myCloudAction);
+    infoDialogMenu->addAction(MEGAWebAction);
+    infoDialogMenu->addAction(filesAction);
     // infoDialogMenu->addAction(deviceCentreAction);
     infoDialogMenu->addSeparator();
     if (mSyncs2waysMenu)

@@ -32,8 +32,8 @@ SyncsQmlDialog {
             id: stepPanelItem
 
             width: parent.width
-            step1String: SyncsStrings.syncTitle
-            step2String: SyncsStrings.sync
+            step1String: SyncsStrings.selectFolders
+            step2String: SyncsStrings.confirm
             helpUrl: Links.setUpSyncs
         }
 
@@ -60,7 +60,11 @@ SyncsQmlDialog {
                     StateChangeScript {
                         script: stackView.replace(resumePage);
                     }
-                    PropertyChanges { target: stepPanelItem; state: stepPanelItem.stepCurrentDone; }
+                    PropertyChanges {
+                        target: stepPanelItem;
+                        state: stepPanelItem.stepCurrentDone;
+                        step2String: SyncsStrings.syncSetUp;
+                    }
                 }
             ]
 

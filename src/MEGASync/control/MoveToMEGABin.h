@@ -12,16 +12,14 @@
 class MoveToMEGABin
 {
 public:
-    struct MoveToBinError
-    {
-        std::shared_ptr<mega::MegaError> moveError;
-        std::shared_ptr<mega::MegaError> binFolderCreationError;
-    };
+    std::shared_ptr<mega::MegaError> operator()(mega::MegaHandle handle,
+                                                const QString& binFolderName,
+                                                bool addDateFolder);
 
-    static MoveToBinError moveToBin(mega::MegaHandle handle,
-                                    const QString& binFolderName,
-                                    bool addDateFolder);
+private:
+    std::shared_ptr<mega::MegaError> moveToBin(mega::MegaHandle handle,
+                                               const QString& binFolderName,
+                                               bool addDateFolder);
 };
-
 
 #endif // MOVETOMEGABIN_H

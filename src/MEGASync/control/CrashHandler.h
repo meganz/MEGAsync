@@ -29,7 +29,9 @@ public:
     QString getLastCrashHash() const;
 
 private slots:
-    void onPostFinished(QNetworkReply *reply);
+
+    void onPostFinished(QNetworkReply* reply);
+
     void onCrashPostTimeout();
 
 private:
@@ -37,6 +39,7 @@ private:
 
     CrashHandler();
     ~CrashHandler();
+
     CrashHandlerPrivate* d;
     QString dumpPath;
     QNetworkAccessManager *networkManager;

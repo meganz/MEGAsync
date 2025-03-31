@@ -12,27 +12,16 @@
         <file>images/qml/x_circle.svg</file>
         <file>images/qml/tip.svg</file>
         <file>images/qml/small_circle.svg</file>
-        <file>images/qml/onboarding/building.svg</file>
         <file>images/qml/onboarding/database.svg</file>
         <file>images/qml/onboarding/edit.svg</file>
         <file>images/qml/onboarding/folder.svg</file>
-        <file>images/qml/onboarding/full_sync.svg</file>
-        <file>images/qml/onboarding/infinity.svg</file>
-        <file>images/qml/onboarding/installation_type_backups.svg</file>
         <file>images/qml/onboarding/key.svg</file>
         <file>images/qml/onboarding/login.png</file>
         <file>images/qml/onboarding/login@2x.png</file>
         <file>images/qml/onboarding/login@3x.png</file>
         <file>images/qml/onboarding/pc.svg</file>
-        <file>images/qml/onboarding/pc_mega.svg</file>
         <file>images/qml/onboarding/person.svg</file>
         <file>images/qml/onboarding/resume.svg</file>
-        <file>images/qml/onboarding/selective_sync.svg</file>
-        <file>images/qml/onboarding/shield_account_free.svg</file>
-        <file>images/qml/onboarding/shield_account_lite.svg</file>
-        <file>images/qml/onboarding/shield_account_proI.svg</file>
-        <file>images/qml/onboarding/shield_account_proII.svg</file>
-        <file>images/qml/onboarding/shield_account_proIII.svg</file>
         <file>images/qml/onboarding/twofa.png</file>
         <file>images/qml/onboarding/mail.svg</file>
         <file>images/qml/device_center/addbackup.svg</file>
@@ -70,7 +59,6 @@
         <file>images/qml/guest/warning@2x.png</file>
         <file>images/qml/guest/warning@3x.png</file>
         <file>images/qml/onboarding/syncb.svg</file>
-        <file>images/qml/onboarding/sync.svg</file>
         <file>images/qml/guest/setting_up.png</file>
         <file>images/qml/guest/setting_up@2x.png</file>
         <file>images/qml/guest/setting_up@3x.png</file>
@@ -97,8 +85,6 @@
         <file>images/qml/mega-cloud@3x.png</file>
         <file>images/qml/alert_circle_filled.svg</file>
         <file>images/qml/check_circle_filled.svg</file>
-        <file>images/qml/syncs/selective_sync.svg</file>
-        <file>images/qml/syncs/full_sync.svg</file>
         <file>images/qml/device_center/backup_folder.svg</file>
         <file>images/qml/device_center/sync_folder.svg</file>
         <file>images/qml/three_dots.svg</file>
@@ -131,5 +117,14 @@
         <file>images/icons/log-out-01.svg</file>
         <file>images/qml/sync_exclusions/folder-file.svg</file>
         <file>images/icon_plus.svg</file>
+        <file>images/qml/onboarding/multidevices@3x.png</file>
+        <file>images/qml/onboarding/multidevices@2x.png</file>
+        <file>images/qml/onboarding/multidevices.png</file>
+        <file>images/qml/onboarding/sync@3x.png</file>
+        <file>images/qml/onboarding/sync@2x.png</file>
+        <file>images/qml/onboarding/backup@3x.png</file>
+        <file>images/qml/onboarding/backup@2x.png</file>
+        <file>images/qml/onboarding/backup.png</file>
+        <file>images/qml/onboarding/sync.png</file>
     </qresource>
 </RCC>

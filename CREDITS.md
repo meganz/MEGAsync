@@ -331,3 +331,35 @@ SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
 https://github.com/adobe-fonts/source-sans-pro/blob/master/LICENSE.txt
 
 --------------------------------------------------------------------
+
+#### Catch2
+https://github.com/catchorg/Catch2
+
+###### Description:
+A modern, C++-native, test framework for unit-tests, TDD and BDD - using C++14, C++17 and later. 
+
+###### Usage:
+This framework is used to run automated tests on MEGASync modules.
+
+###### License: 
+Boost Software License Version 1.0
+
+https://github.com/catchorg/Catch2/blob/devel/LICENSE.txt
+
+--------------------------------------------------------------------
+
+#### Trompeloeil
+https://github.com/rollbear/trompeloeil
+
+###### Description:
+A thread-safe header-only mocking framework for C++11/14 using the Boost Software License 1.0
+
+###### Usage:
+This framework is used for mocking in automated tests
+
+###### License: 
+Boost Software License Version 1.0
+
+https://github.com/rollbear/trompeloeil/blob/main/LICENSE_1_0.txt
+
+--------------------------------------------------------------------

@@ -799,6 +799,29 @@
     </message>
 </context>
 <context>
+    <name>CloudDriveNodeSelector</name>
+    <message>
+        <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
+        <translatorcomment>Messagebox secondary string to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>รายการทั้งหมดจะถูกลบอย่างถาวร การดำเนินการนี้[B]ไม่[/B]สามารถยกเลิกได้</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Messagebox cancel button string to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>ยกเลิก</translation>
+    </message>
+    <message>
+        <source>Empty</source>
+        <translatorcomment>Messagebox accept button string to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>ว่างเปล่า</translation>
+    </message>
+    <message>
+        <source>Empty Rubbish bin?</source>
+        <translatorcomment>Messagebox main string to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>ล้างข้อมูลในถังขยะหรือไม่</translation>
+    </message>
+</context>
+<context>
     <name>CloudFingerprintMissingHeader</name>
     <message>
         <source>Apply</source>
@@ -1942,6 +1965,24 @@
     </message>
 </context>
 <context>
+    <name>FirstSyncReminderAction</name>
+    <message>
+        <source>Finish set up</source>
+        <translatorcomment>Text on the O.S. notification button to open the window for creating the first sync after the onboarding process (first run of the application). CON-1207</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set up your first sync to get the most out of the desktop app</source>
+        <translatorcomment>Description text in O.S. notification to remind that the user can create syncs after few hours (e.g. 2) from the first launch of the application if the user has never created a sync. CON-1207</translatorcomment>
+        <translation>ตั้งค่าการซิงค์ครั้งแรกของคุณ เพื่อใช้ประโยชน์สูงสุดจากแอปเดสก์ท็อป</translation>
+    </message>
+    <message>
+        <source>You’re almost done</source>
+        <translatorcomment>Title text in O.S. notification to remind that the user can create syncs after few hours (e.g. 2) from the first launch of the application if the user has never created a sync. CON-1207</translatorcomment>
+        <translation>คุณใกล้จะเสร็จสิ้นแล้ว</translation>
+    </message>
+</context>
+<context>
     <name>FolderMatchedAgainstFileHeader</name>
     <message>
         <source>Cannot sync folders against files.</source>
@@ -2105,6 +2146,34 @@
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>คุณไม่มีสิทธิ์เขียนลงโฟลเดอร์บนเครื่อง</translation>
+    </message>
+</context>
+<context>
+    <name>IncomingShareAccess</name>
+    <message>
+        <source>Full access</source>
+        <translatorcomment>The incoming shared folder has full access. CON-1266</translatorcomment>
+        <translation>เข้าถึงแบบเต็มที่</translation>
+    </message>
+    <message>
+        <source>Owner</source>
+        <translatorcomment>The user is the owner of the folder. CON-1266</translatorcomment>
+        <translation>เจ้าของ</translation>
+    </message>
+    <message>
+        <source>Read and write</source>
+        <translatorcomment>The incoming shared folder access is read and write. CON-1266</translatorcomment>
+        <translation>อ่านและเขียน</translation>
+    </message>
+    <message>
+        <source>Read-only</source>
+        <translatorcomment>The incoming shared folder access is read-only. CON-1266</translatorcomment>
+        <translation>อ่านอย่างเดียว</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translatorcomment>The incoming shared folder access is unknown. CON-1266</translatorcomment>
+        <translation>ไม่ทราบ</translation>
     </message>
 </context>
 <context>
@@ -3028,11 +3097,6 @@ Please wait for the upload to complete.</source>
         <translation>กำลังตรวจสอบการอัปเดต…</translation>
     </message>
     <message>
-        <source>Cloud drive</source>
-        <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
-        <translation>คลาวด์ไดรฟ์</translation>
-    </message>
-    <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
         <translation>เราไม่พบถาดระบบที่จะวางไอคอนถาดแอปไว้ ลองเปิดแอปอีกครั้ง</translation>
@@ -3098,6 +3162,11 @@ Please wait for the upload to complete.</source>
         <translation>กำลังดึงรายการแฟ้ม…</translation>
     </message>
     <message>
+        <source>Files</source>
+        <translatorcomment>InfoDialog menu action to open the Cloud Drive dialog</translatorcomment>
+        <translation>ไฟล์</translation>
+    </message>
+    <message>
         <source>Folder download error</source>
         <translatorcomment>Title of the error message when there is an error downloading a MEGA link. SNC-2549.</translatorcomment>
         <translation>ข้อผิดพลาดในการดาวน์โหลดโฟลเดอร์</translation>
@@ -3146,6 +3215,11 @@ Please wait for the upload to complete.</source>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
         <translation>กำลังเข้าสู่ระบบ</translation>
+    </message>
+    <message>
+        <source>MEGA web</source>
+        <translatorcomment>InfoDialog menu action to open the webclient. CON-1245</translatorcomment>
+        <translation>เว็บไซต์ MEGA</translation>
     </message>
     <message>
         <source>MEGAsync has been updated</source>
@@ -3519,6 +3593,11 @@ https://mega.co.nz/#sync</source>
         <translation>พื้นที่เก็บข้อมูลปลายทางเต็มแล้ว</translation>
     </message>
     <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button to dismiss the warning message - CON-1311</translatorcomment>
+        <translation>ละทิ้ง</translation>
+    </message>
+    <message>
         <source>Error reading app system files</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
         <translation>เกิดข้อผิดพลาดในการอ่านไฟล์ระบบแอป</translation>
@@ -3609,6 +3688,11 @@ https://mega.co.nz/#sync</source>
         <translation>อ่านผิดพลาด</translation>
     </message>
     <message>
+        <source>Reconfigure</source>
+        <translatorcomment>Button to reconfigure syncs and backups (opens Onboarding wizard) - CON-1311</translatorcomment>
+        <translation>กำหนดค่าใหม่</translation>
+    </message>
+    <message>
         <source>Reload</source>
         <translatorcomment>Label of the button used to reload (fetch nodes) the account to try to resolve a fatal error - CON-1023</translatorcomment>
         <translation>โหลดซ้ำ</translation>
@@ -3632,6 +3716,11 @@ https://mega.co.nz/#sync</source>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
         <translation>พื้นที่เก็บข้อมูลเต็มแล้ว อัปเกรดเลย</translation>
+    </message>
+    <message>
+        <source>Sync configuration error</source>
+        <translatorcomment>Title of the warning dialog shown when the syncs configuration file has been re-generated by the sdk  - CON-1311</translatorcomment>
+        <translation>เกิดข้อผิดพลาดในการกำหนดค่าการซิงค์</translation>
     </message>
     <message>
         <source>Temporarily not available</source>
@@ -3701,6 +3790,11 @@ https://mega.co.nz/#sync</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
         <translation>พื้นที่เก็บข้อมูลในเครื่องของคุณเต็มแล้ว</translation>
     </message>
+    <message>
+        <source>Your sync and backup settings were corrupted and have been reset. If you had any, please set them up again.</source>
+        <translatorcomment>Body of the warning dialog shown when the syncs configuration file has been re-generated by the sdk - CON-1311</translatorcomment>
+        <translation>การตั้งค่าการซิงค์และการสำรองข้อมูลของคุณเสียหายและถูกรีเซ็ต คุณจะต้องตั้งค่าการซิงค์และการสำรองข้อมูลที่คุณเคยตั้งค่าไว้อีกครั้ง</translation>
+    </message>
 </context>
 <context>
     <name>MegaInfoMessage</name>
@@ -3731,6 +3825,11 @@ https://mega.co.nz/#sync</source>
         <source>Incoming shares</source>
         <translatorcomment>Title of the Incoming shares root node</translatorcomment>
         <translation>แชร์ขาเข้า</translation>
+    </message>
+    <message>
+        <source>Rubbish bin</source>
+        <translatorcomment>Title of the Rubbish section. SAT-426</translatorcomment>
+        <translation>ถังขยะ</translation>
     </message>
 </context>
 <context>
@@ -4226,6 +4325,24 @@ All your completed transfers will be cleared.</source>
     </message>
 </context>
 <context>
+    <name>MultiSyncReminderAction</name>
+    <message>
+        <source>Access your data from anywhere, collaborate with ease, and instantly get the most up-to-date version of your files</source>
+        <translatorcomment>Description text in O.S. notification to remind that the user can create syncs after days or months (e.g. 10 days, 1 month) if the user has never created a sync. CON-1207</translatorcomment>
+        <translation>เข้าถึงข้อมูลได้จากทุกที่ ทำงานร่วมกันได้ง่ายดาย และรับไฟล์เวอร์ชันล่าสุดได้ทันที</translation>
+    </message>
+    <message>
+        <source>Set up sync</source>
+        <translatorcomment>Text on the O.S. notification button to open the window for creating the first sync. CON-1207</translatorcomment>
+        <translation>ตั้งค่าการซิงค์</translation>
+    </message>
+    <message>
+        <source>Sync your data</source>
+        <translatorcomment>Title text in O.S. notification to remind that the user can create syncs after days or months (e.g. 10 days, 1 month) if the user has never created a sync. CON-1207</translatorcomment>
+        <translation>ซิงค์ข้อมูลของคุณ</translation>
+    </message>
+</context>
+<context>
     <name>NameConflict</name>
     <message>
         <source>%1 no longer exists.
@@ -4494,29 +4611,114 @@ Enter a different name</source>
 <context>
     <name>NodeSelectorModel</name>
     <message>
-        <source>Error removing file</source>
-        <translatorcomment>Messagebox title when removing a single file has failed. SAT-426</translatorcomment>
+        <source>Access</source>
+        <translatorcomment>Column title. This column shows the incoming shared folder access rights.CON-1266</translatorcomment>
+        <translation>เข้าถึง</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Cancel button string for failed action in Cloud Drive dialog.SAT-426</translatorcomment>
+        <translation>ปิด</translation>
+    </message>
+    <message>
+        <source>Error copying file</source>
+        <translatorcomment>Main text of a messagebox when copying a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>เกิดข้อผิดพลาดในการคัดลอกไฟล์</translation>
+    </message>
+    <message>
+        <source>Error copying files</source>
+        <translatorcomment>Main text of a messagebox when copying some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>เกิดข้อผิดพลาดในการคัดลอกไฟล์</translation>
+    </message>
+    <message>
+        <source>Error copying folder</source>
+        <translatorcomment>Main text of a messagebox when copying a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>เกิดข้อผิดพลาดในการคัดลอกโฟลเดอร์</translation>
+    </message>
+    <message>
+        <source>Error copying folders</source>
+        <translatorcomment>Main text of a messagebox when copying some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>เกิดข้อผิดพลาดในการคัดลอกโฟลเดอร์</translation>
+    </message>
+    <message>
+        <source>Error copying items</source>
+        <translatorcomment>Main text of a messagebox when copying some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>เกิดข้อผิดพลาดในการคัดลอกรายการ</translation>
+    </message>
+    <message>
+        <source>Error deleting file</source>
+        <translatorcomment>Secondary text of a messagebox when deleting a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>เกิดข้อผิดพลาดในการลบไฟล์</translation>
     </message>
     <message>
-        <source>Error removing files</source>
-        <translatorcomment>Messagebox title when removing multiple files has failed. SAT-426</translatorcomment>
+        <source>Error deleting files</source>
+        <translatorcomment>Main text of a messagebox when deleting some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>เกิดข้อผิดพลาดในการลบไฟล์</translation>
     </message>
     <message>
-        <source>Error removing folder</source>
-        <translatorcomment>Messagebox title when removing a single folder has failed. SAT-426</translatorcomment>
+        <source>Error deleting folder</source>
+        <translatorcomment>Secondary text of a messagebox when deleting a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>เกิดข้อผิดพลาดในการลบโฟลเดอร์</translation>
     </message>
     <message>
-        <source>Error removing folders</source>
-        <translatorcomment>Messagebox title when removing multiple folders has failed. SAT-426</translatorcomment>
+        <source>Error deleting folders</source>
+        <translatorcomment>Main text of a messagebox when deleting some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>เกิดข้อผิดพลาดในการลบโฟลเดอร์</translation>
     </message>
     <message>
-        <source>Error removing items</source>
-        <translatorcomment>Messagebox title when removing multiple files and folders has failed. SAT-426</translatorcomment>
+        <source>Error deleting items</source>
+        <translatorcomment>Main text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>เกิดข้อผิดพลาดในการลบรายการ</translation>
+    </message>
+    <message>
+        <source>Error moving file</source>
+        <translatorcomment>Main text of a messagebox when moving a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>เกิดข้อผิดพลาดในการย้ายไฟล์</translation>
+    </message>
+    <message>
+        <source>Error moving files</source>
+        <translatorcomment>Main text of a messagebox when moving some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>เกิดข้อผิดพลาดในการย้ายไฟล์</translation>
+    </message>
+    <message>
+        <source>Error moving folder</source>
+        <translatorcomment>Main text of a messagebox when moving a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>เกิดข้อผิดพลาดในการย้ายโฟลเดอร์</translation>
+    </message>
+    <message>
+        <source>Error moving folders</source>
+        <translatorcomment>Main text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>เกิดข้อผิดพลาดในการย้ายโฟลเดอร์</translation>
+    </message>
+    <message>
+        <source>Error moving items</source>
+        <translatorcomment>Main text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>เกิดข้อผิดพลาดในการย้ายรายการ</translation>
+    </message>
+    <message>
+        <source>Error restoring file</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>เกิดข้อผิดพลาดในการกู้คืนไฟล์</translation>
+    </message>
+    <message>
+        <source>Error restoring files</source>
+        <translatorcomment>Main text of a messagebox when restoring some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>เกิดข้อผิดพลาดในการกู้คืนไฟล์</translation>
+    </message>
+    <message>
+        <source>Error restoring folder</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>เกิดข้อผิดพลาดในการกู้คืนโฟลเดอร์</translation>
+    </message>
+    <message>
+        <source>Error restoring folders</source>
+        <translatorcomment>Main text of a messagebox when restoring some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>เกิดข้อผิดพลาดในการกู้คืนโฟลเดอร์</translation>
+    </message>
+    <message>
+        <source>Error restoring items</source>
+        <translatorcomment>Main text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>เกิดข้อผิดพลาดในการกู้คืนรายการ</translation>
     </message>
     <message>
         <source>Folder already synced</source>
@@ -4539,6 +4741,11 @@ Enter a different name</source>
         <translation>แก้ไขล่าสุด</translation>
     </message>
     <message>
+        <source>Sort by access</source>
+        <translatorcomment>Access column tooltip. Sorts the order of the column by incoming shared folder access.CON-1266</translatorcomment>
+        <translation>เรียงตามการเข้าถึง</translation>
+    </message>
+    <message>
         <source>Sort by date</source>
         <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>เรียงตามวันที่</translation>
@@ -4559,47 +4766,157 @@ Enter a different name</source>
         <translation>เรียงตามสถานะ</translation>
     </message>
     <message>
-        <source>The file %1 couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing a single file has failed. %1 is the file name. SAT-426</translatorcomment>
+        <source>The file %1 couldn’t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
+        <translation>ไม่สามารถคัดลอกไฟล์ %1 ได้ ลองใหม่อีกครั้งภายหลัง</translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be deleted. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
         <translation>ไม่สามารถลบไฟล์ %1 ได้ ลองใหม่อีกครั้งภายหลัง</translation>
     </message>
     <message>
-        <source>The files couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing multiple files has failed. SAT-426</translatorcomment>
+        <source>The file %1 couldn’t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
+        <translation>ไม่สามารถย้ายไฟล์ %1 ได้ ลองใหม่อีกครั้งภายหลัง</translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
+        <translation>ไม่สามารถกู้คืนไฟล์ %1 ได้ ลองใหม่อีกครั้งภายหลัง</translation>
+    </message>
+    <message>
+        <source>The files couldn’t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>ไม่สามารถคัดลอกไฟล์ได้ ลองใหม่อีกครั้งภายหลัง</translation>
+    </message>
+    <message>
+        <source>The files couldn’t be deleted. Try again later</source>
+        <translatorcomment>Main text of a messagebox when deleting some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>ไม่สามารถลบไฟล์ได้ ลองใหม่อีกครั้งภายหลัง</translation>
     </message>
     <message>
-        <source>The folder %1 couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing a single folder has failed. %1 is the folder name. SAT-426</translatorcomment>
+        <source>The files couldn’t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>ไม่สามารถย้ายไฟล์ได้ ลองอีกครั้งในภายหลัง </translation>
+    </message>
+    <message>
+        <source>The files couldn’t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>ไม่สามารถกู้คืนไฟล์ได้ ลองใหม่อีกครั้งภายหลัง</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
+        <translation>ไม่สามารถคัดลอกโฟลเดอร์ %1 ได้ ลองใหม่อีกครั้งภายหลัง</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be deleted. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
         <translation>ไม่สามารถลบโฟลเดอร์ %1 ได้ ลองใหม่อีกครั้งภายหลัง</translation>
     </message>
     <message>
-        <source>The folders couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing multiple folders has failed. SAT-426</translatorcomment>
+        <source>The folder %1 couldn’t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
+        <translation>ไม่สามารถย้ายโฟลเดอร์ %1 ได้ ลองอีกครั้งในภายหลัง </translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
+        <translation>ไม่สามารถกู้คืนโฟลเดอร์ %1 ได้ ลองใหม่อีกครั้งภายหลัง</translation>
+    </message>
+    <message>
+        <source>The folders couldn’t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>ไม่สามารถคัดลอกโฟลเดอร์ได้ ลองใหม่อีกครั้งภายหลัง</translation>
+    </message>
+    <message>
+        <source>The folders couldn’t be deleted. Try again later</source>
+        <translatorcomment>Main text of a messagebox when deleting some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>ไม่สามารถลบโฟลเดอร์ได้ ลองใหม่อีกครั้งภายหลัง</translation>
     </message>
     <message>
-        <source>The items couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing multiple files and folders has failed. SAT-426</translatorcomment>
+        <source>The folders couldn’t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>ไม่สามารถย้ายโฟลเดอร์ได้ ลองอีกครั้งในภายหลัง </translation>
+    </message>
+    <message>
+        <source>The folders couldn’t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>ไม่สามารถกู้คืนโฟลเดอร์ได้ ลองใหม่อีกครั้งภายหลัง</translation>
+    </message>
+    <message>
+        <source>The items couldn’t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>ไม่สามารถคัดลอกรายการได้ ลองใหม่อีกครั้งภายหลัง</translation>
+    </message>
+    <message>
+        <source>The items couldn’t be deleted. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>ไม่สามารถลบรายการได้ ลองใหม่อีกครั้งภายหลัง</translation>
+    </message>
+    <message>
+        <source>The items couldn’t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>ไม่สามารถย้ายรายการได้ ลองอีกครั้งในภายหลัง </translation>
+    </message>
+    <message>
+        <source>The items couldn’t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>ไม่สามารถกู้คืนรายการได้ ลองใหม่อีกครั้งภายหลัง</translation>
     </message>
 </context>
 <context>
     <name>NodeSelectorTreeView</name>
     <message>
-        <source>Delete</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
-        <translation>ลบ</translation>
+        <source>Copy</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It copy the selected nodes (files or folders), waiting for the paste action. SAT-426</translatorcomment>
+        <translation>คัดลอก</translation>
     </message>
     <message>
-        <source>Get MEGA link</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
-        <translation>รับลิงก์ MEGA</translation>
+        <source>Leave folder</source>
+        <translatorcomment>Contextual menu text that appears when we right click on inshare folder on the incoming shared page on node selector. It leaves an inshared folder. CON-1255</translatorcomment>
+        <translation>ออกจากโฟลเดอร์</translation>
+    </message>
+    <message>
+        <source>Move to Rubbish bin</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
+        <translation>ย้ายไปที่ถังขยะ</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It paste the copied nodes (files and folders). SAT-426</translatorcomment>
+        <translation>วาง</translation>
+    </message>
+    <message>
+        <source>Permanently delete</source>
+        <translatorcomment>Contextual menu text that appears when we right click on an item on the rubbish page on node selector. It deletes the item and it can be undone. SAT-426</translatorcomment>
+        <translation>ลบอย่างถาวร</translation>
     </message>
     <message>
         <source>Rename</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It renames the node (file or folder).</translatorcomment>
         <translation>เปลี่ยนชื่อ</translation>
+    </message>
+    <message>
+        <source>Restore</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It restores the node (file or folder) from the rubbish bin. SAT-426</translatorcomment>
+        <translation>กู้คืน</translation>
+    </message>
+    <message>
+        <source>Share link</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It copies the selected items MEGA link to the clipboard. SAT-426</translatorcomment>
+        <translation>แชร์ลิงก์</translation>
+    </message>
+    <message>
+        <source>Stop syncing</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It deletes the sync on the selected folder. SAT-426</translatorcomment>
+        <translation>หยุดการซิงค์</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It creates a sync in the selected folder. SAT-426</translatorcomment>
+        <translation>ซิงค์</translation>
     </message>
 </context>
 <context>
@@ -4630,9 +4947,29 @@ Enter a different name</source>
         <translation>คลาวด์ไดรฟ์</translation>
     </message>
     <message>
+        <source>Delete</source>
+        <translatorcomment>Button to accept the confirmation messagebox to delete permanently a file/folder in the rubbish bin. CON-1258</translatorcomment>
+        <translation>ลบ</translation>
+    </message>
+    <message>
+        <source>Don’t leave</source>
+        <translatorcomment>Button text to cancel the confirm messagebox when leaving a inshared folder</translatorcomment>
+        <translation>ไม่ต้องออก</translation>
+    </message>
+    <message>
         <source>Don’t move</source>
-        <translatorcomment>Messagebox button to cancel moving nodes to the rubbish bin. CON-334</translatorcomment>
+        <translatorcomment>Button to cancel the confirmation messagebox to move an item (or more) to the rubbish bin. CON-334</translatorcomment>
         <translation>ไม่ต้องย้าย</translation>
+    </message>
+    <message>
+        <source>Empty Rubbish bin</source>
+        <translatorcomment>Button text to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>ล้างข้อมูลในถังขยะ</translation>
+    </message>
+    <message numerus="yes">
+        <source>If you leave the folder, you will not be able to see it again.</source>
+        <translatorcomment>Body of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
+        <translation><numerusform>หากคุณออกจากโฟลเดอร์เหล่านี้ คุณจะไม่สามารถมองเห็นได้อีก</numerusform></translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -4640,19 +4977,29 @@ Enter a different name</source>
         <translation>แชร์ขาเข้า</translation>
     </message>
     <message>
-        <source>Move</source>
-        <translatorcomment>Messagebox button to move nodes to the rubbish bin. CON-334</translatorcomment>
-        <translation>ย้าย</translation>
+        <source>Leave</source>
+        <translatorcomment>Button text to accept the confirm messagebox when leaving a inshared folder</translatorcomment>
+        <translation>ออก</translation>
     </message>
     <message numerus="yes">
-        <source>Move %n item to Rubbish bin?</source>
-        <translatorcomment>Title of the messagebox when moving a multiple nodes to the rubbish bin. %n is the number of nodes CON-334</translatorcomment>
-        <translation><numerusform>ย้าย %n รายการไปที่ถังขยะหรือไม่</numerusform></translation>
+        <source>Leave this shared folder?</source>
+        <translatorcomment>Title of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
+        <translation><numerusform>ต้องการออกจากโฟลเดอร์ที่แชร์เหล่านี้หรือไม่</numerusform></translation>
     </message>
     <message>
-        <source>Move “%1” to Rubbish bin?</source>
-        <translatorcomment>Title of the messagebox when moving a single node to the rubbish bin. %1 is the file/folder name. CON-334</translatorcomment>
-        <translation>ย้าย “%1” ไปที่ถังขยะหรือไม่</translation>
+        <source>Move</source>
+        <translatorcomment>Button to accept the confirmation messagebox to move an item (or more) to the rubbish bin. CON-334</translatorcomment>
+        <translation>ย้าย</translation>
+    </message>
+    <message>
+        <source>Move %1 to Rubbish bin?</source>
+        <translatorcomment>Main text of the confirmation messagebox to move a single item (file or folder) pto the rubbish bin. %1 is the name of the item to delete. CON-334</translatorcomment>
+        <translation>ย้าย %1 ไปที่ถังขยะหรือไม่</translation>
+    </message>
+    <message numerus="yes">
+        <source>Move %n items to Rubbish bin?</source>
+        <translatorcomment>Main text of the confirmation messagebox to move some items (files or folders) pto the rubbish bin. %n is the number of items to delete. CON-334</translatorcomment>
+        <translation><numerusform>ย้าย %n รายการไปที่ถังขยะหรือไม่</numerusform></translation>
     </message>
     <message>
         <source>New folder</source>
@@ -4668,6 +5015,31 @@ Enter a different name</source>
         <source>Ok</source>
         <translatorcomment>Button text to accept and close the dialog</translatorcomment>
         <translation>ตกลง</translation>
+    </message>
+    <message>
+        <source>Rubbish bin</source>
+        <translatorcomment>Button to filter search results from rubbish bin</translatorcomment>
+        <translation>ถังขยะ</translation>
+    </message>
+    <message numerus="yes">
+        <source>You are about to permanently delete %n file. Would you like to proceed?</source>
+        <translatorcomment>Main text of the confirmation messagebox to delete permanently a file(s) from the rubbish bin. %n is the number of files to delete. CON-1258</translatorcomment>
+        <translation><numerusform>คุณกำลังจะลบไฟล์ %n รายการอย่างถาวร คุณต้องการดำเนินการต่อหรือไม่</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>You are about to permanently delete %n folder. Would you like to proceed?</source>
+        <translatorcomment>Main text of the confirmation messagebox to delete permanently a folder(s) from the rubbish bin. %n is the number of folders to delete. CON-1258</translatorcomment>
+        <translation><numerusform>คุณกำลังจะลบโฟลเดอร์ %n รายการอย่างถาวร คุณต้องการดำเนินการต่อหรือไม่</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>You are about to permanently delete %n items. Would you like to proceed?</source>
+        <translatorcomment>Main text of the confirmation messagebox to delete permanently some items (files and folders) from the rubbish bin. %n is the number of items to delete. CON-1258</translatorcomment>
+        <translation><numerusform>คุณกำลังจะลบ %n รายการอย่างถาวร คุณต้องการดำเนินการต่อหรือไม่</numerusform></translation>
+    </message>
+    <message>
+        <source>You cannot undo this action</source>
+        <translatorcomment>Second part of the messagebox text when the user is about to remove permanently a node. SAT-426</translatorcomment>
+        <translation>คุณไม่สามารถยกเลิกการกระทำนี้ได้</translation>
     </message>
 </context>
 <context>
@@ -4797,14 +5169,14 @@ Enter a different name</source>
         <translation>มีโฟลเดอร์ชื่อนี้อยู่ในการสำรองข้อมูลของคุณแล้ว</translation>
     </message>
     <message>
+        <source>Access the latest version of your files from anywhere. Changes made to synced files will automatically update in both directions.</source>
+        <translatorcomment>Selective sync button text description CON-1268</translatorcomment>
+        <translation>เข้าถึงไฟล์เวอร์ชันล่าสุดของคุณได้จากทุกที่ การเปลี่ยนแปลงไฟล์ที่ซิงค์จะอัปเดตโดยอัตโนมัติทั้งสองทาง</translation>
+    </message>
+    <message>
         <source>Account created</source>
         <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
         <translation>ลงทะเบียนเรียบร้อยแล้ว</translation>
-    </message>
-    <message>
-        <source>Add device name</source>
-        <translatorcomment>Device name text input box title CON-467</translatorcomment>
-        <translation>เพิ่มชื่ออุปกรณ์</translation>
     </message>
     <message>
         <source>Add folder</source>
@@ -4877,11 +5249,6 @@ Enter a different name</source>
         <translation>เปลี่ยนอีเมลของคุณ</translation>
     </message>
     <message>
-        <source>Choose sync type</source>
-        <translatorcomment>Text indicating the user to choose between different available sync types CON-467</translatorcomment>
-        <translation>เลือกประเภทที่จะซิงค์</translation>
-    </message>
-    <message>
         <source>Choose:</source>
         <translatorcomment>Label that indicates the user to choose between different options CON-467</translatorcomment>
         <translation>กรุณาเลือก:</translation>
@@ -4932,9 +5299,9 @@ Enter a different name</source>
         <translation>กำลังสร้างบัญชี…</translation>
     </message>
     <message>
-        <source>Data from your device will automatically and consistently back up to MEGA in real-time.</source>
-        <translatorcomment>Button description, on click it goes to the backups section CON-468</translatorcomment>
-        <translation>ข้อมูลของคุณจะถูกสำรองไปยัง MEGA โดยอัตโนมัติและต่อเนื่องแบบเรียลไทม์</translation>
+        <source>Data from your device will automatically and consistently back up to MEGA in real-time. Files deleted from your computer will be deleted from MEGA.</source>
+        <translatorcomment>Button description, on click it goes to the backups section CON-1268</translatorcomment>
+        <translation>ข้อมูลจากอุปกรณ์ของคุณจะสำรองข้อมูลไปยัง MEGA โดยอัตโนมัติและสม่ำเสมอแบบเรียลไทม์ ไฟล์ที่ลบออกจากคอมพิวเตอร์ของคุณจะถูกลบออกจาก MEGA ด้วย</translation>
     </message>
     <message>
         <source>Device name</source>
@@ -5010,11 +5377,6 @@ Enter a different name</source>
         <source>Forgot password?</source>
         <translatorcomment>Button text that user have to click in case he forgot the password. Button has no borders and it looks like a label CON-465</translatorcomment>
         <translation>ลืมรหัสผ่านหรือไม่</translation>
-    </message>
-    <message>
-        <source>Full sync</source>
-        <translatorcomment>Full sync button title CON-467</translatorcomment>
-        <translation>ซิงค์เต็มรูปแบบ</translation>
     </message>
     <message>
         <source>I agree with MEGA&apos;s [B][A]Terms of service[/A][/B]</source>
@@ -5200,16 +5562,6 @@ Enter a different name</source>
         <source>Sync set up</source>
         <translatorcomment>Onboarding step text indicating the user that he is in the sync setup step CON-467</translatorcomment>
         <translation>ตั้งค่าการซิงค์</translation>
-    </message>
-    <message>
-        <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
-        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>ซิงค์อุปกรณ์ของคุณกับ MEGA เพื่อทำให้ไฟล์และโฟลเดอร์ของคุณบนอุปกรณ์และบนคลาวด์ MEGA เหมือนกัน</translation>
-    </message>
-    <message>
-        <source>Sync your entire MEGA Cloud drive with your local device.</source>
-        <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation>ซิงค์ข้อมูลสองทางระหว่างพื้นที่เก็บข้อมูล MEGA คลาวด์กับอุปกรณ์ของคุณ โฟลเดอร์จะอัปเดตอัตโนมัติเมื่อมีการแก้ไขทั้งในเครื่องและใน MEGA</translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
@@ -5663,16 +6015,20 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Numerous interface improvements.
-- Improved HiDpi handling in Windows.
-- Updates to third party libraries.
+        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
+- We’ve made more improvements to the initial onboarding wizard.
+- Systems notifications have been enhanced.
+- You can now pin the MEGA app to the Windows taskbar.
+- Some third party libraries have been updated.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.9.0. CON-1259</translatorcomment>
-        <translation>- ปรับปรุงส่วนติดต่อผู้ใช้ให้ดีขึ้น
-- ปรับปรุงการรองรับ HiDpi ใน Windows
-- อัปเดตไลบรารีของบริษัทภายนอก
-- แก้ไขข้อบกพร่องอื่น ๆ และปรับปรุงเพิ่มเติมอีกมากมาย</translation>
+        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
+        <translation>- แนะนำตัวสำรวจคลาวด์ไดร์ฟระยะไกลแบบใหม่ เรียกดูคลาวด์ไดร์ฟของคุณอย่างมีสไตล์ และจัดการไฟล์และโฟลเดอร์ของคุณในอินเทอร์เฟซที่ทันสมัยและใช้งานง่ายแบบใหม่
+- เราได้ปรับปรุงตัวช่วยการตั้งค่าเริ่มต้น
+- ปรับปรุงการแจ้งเตือนของระบบให้ดียิ่งขึ้น
+- ปักหมุดแอป MEGA ไปยังแถบงาน Windows ได้แล้ว
+- มีการอัปเดตไลบรารีจากภายนอกด้วย
+- แก้ไขข้อผิดพลาดอื่น ๆ และปรับปรุงเพิ่มเติมอีกมากมาย</translation>
     </message>
 </context>
 <context>
@@ -7025,11 +7381,6 @@ Do you want to delete it anyway?</source>
         <translation>ไม่สามารถดึงข้อมูลเมตาของโฟลเดอร์นี้ได้ กรุณาตรวจสอบสิทธิ์การเข้าถึงและสแกนใหม่อีกครั้ง</translation>
     </message>
     <message>
-        <source>Error identifying folder content in filesystem.</source>
-        <translatorcomment>Label descriping a sync stall is happening because the folder cannot be parsed for unnkown reason.SNC-2565</translatorcomment>
-        <translation>ไม่สามารถอ่านเนื้อหาในโฟลเดอร์นี้ได้ ตรวจสอบสิทธิ์การเข้าถึงโฟลเดอร์ และตรวจสอบว่าไม่มีรายการใดถูกใช้งานโดยแอปพลิเคชันอื่นอยู่</translation>
-    </message>
-    <message>
         <source>Error not detected</source>
         <translatorcomment>Label descripiwith default error of sync stall .SNC-2565</translatorcomment>
         <translation>ข้อผิดพลาดที่ไม่รู้จัก</translation>
@@ -8179,6 +8530,21 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Add sync</source>
         <translatorcomment>Page title to add syncs. CON-833</translatorcomment>
         <translation>เพิ่มการซิงค์</translation>
+    </message>
+    <message>
+        <source>Changes made to synced folders in MEGA or on your device will automatically update in both directions.</source>
+        <translatorcomment>Page description to add syncs. CON-1268</translatorcomment>
+        <translation>การเปลี่ยนแปลงโฟลเดอร์ที่ซิงค์ใน MEGA หรือบนอุปกรณ์ของคุณ จะอัปเดตโดยอัตโนมัติทั้งสองทาง</translation>
+    </message>
+    <message>
+        <source>Select folders</source>
+        <translatorcomment>Left pane current state literal. CON-1268</translatorcomment>
+        <translation>เลือกโฟลเดอร์</translation>
+    </message>
+    <message>
+        <source>Select folders to sync</source>
+        <translatorcomment>Page title to add syncs. CON-1268</translatorcomment>
+        <translation>เลือกโฟลเดอร์ที่จะซิงค์</translation>
     </message>
 </context>
 <context>
@@ -9357,14 +9723,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
         <translation>บัญชีของคุณถูกล็อกชั่วคราวเพื่อความปลอดภัย เนื่องจากตรวจพบการเข้าสู่ระบบที่อาจเป็นอันตราย กรุณาเปลี่ยนรหัสผ่านของคุณเพื่อกู้คืนการเข้าถึงบัญชี
 ตรวจสอบกล่องจดหมายอีเมลของคุณเพื่อดูวิธีการปลดล็อกบัญชีและเคล็ดลับป้องกันไม่ให้เกิดเหตุการณ์นี้ซ้ำอีก</translation>
-    </message>
-</context>
-<context>
-    <name>ViewLoadingSceneUI</name>
-    <message>
-        <source>Stop</source>
-        <translatorcomment>button in auto solve view of stalled issues to stop the auto solve process.SNC-2565</translatorcomment>
-        <translation>หยุด</translation>
     </message>
 </context>
 <context>

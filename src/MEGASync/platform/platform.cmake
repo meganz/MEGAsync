@@ -1,124 +1,136 @@
 set(DESKTOP_APP_PLATFORM_HEADERS
-    platform/Platform.h
-    platform/AbstractPlatform.h
-    platform/ShellNotifier.h
-    platform/PowerOptions.h
-    platform/PlatformStrings.h
+    ${CMAKE_CURRENT_LIST_DIR}/Platform.h
+    ${CMAKE_CURRENT_LIST_DIR}/AbstractPlatform.h
+    ${CMAKE_CURRENT_LIST_DIR}/ShellNotifier.h
+    ${CMAKE_CURRENT_LIST_DIR}/PowerOptions.h
+    ${CMAKE_CURRENT_LIST_DIR}/PlatformStrings.h
 )
 
 set(DESKTOP_APP_PLATFORM_SOURCES
-    platform/AbstractPlatform.cpp
-    platform/Platform.cpp
-    platform/ShellNotifier.cpp
-)
-
-target_sources_conditional(MEGAsync
-   FLAG WIN32
-   QT_AWARE
-   PRIVATE
-   platform/win/PlatformImplementation.h
-   platform/win/RecursiveShellNotifier.h
-   platform/win/ThreadedQueueShellNotifier.h
-   platform/win/WinShellDispatcherTask.h
-   platform/win/WinTrayReceiver.h
-   platform/win/wintoastlib.h
-   platform/win/WintoastCompat.h
-   platform/win/WinAPIShell.h
-   platform/win/PlatformImplementation.cpp
-   platform/win/RecursiveShellNotifier.cpp
-   platform/win/ThreadedQueueShellNotifier.cpp
-   platform/win/WinShellDispatcherTask.cpp
-   platform/win/WinTrayReceiver.cpp
-   platform/win/wintoastlib.cpp
-   platform/win/PowerOptions.cpp
-   platform/win/PlatformStrings.cpp
-)
-
-target_sources_conditional(MEGAsync
-   FLAG APPLE
-   QT_AWARE
-   PRIVATE
-   platform/macx/PlatformImplementation.h
-   platform/macx/MacXFunctions.h
-   platform/macx/MacXSystemServiceTask.h
-   platform/macx/MEGAService.h
-   platform/macx/ClientSide.h
-   platform/macx/ServerSide.h
-   platform/macx/MacXExtServer.h
-   platform/macx/MacXLocalServer.h
-   platform/macx/MacXLocalServerPrivate.h
-   platform/macx/MacXLocalSocket.h
-   platform/macx/MacXLocalSocketPrivate.h
-   platform/macx/NSPopover+MISSINGBackgroundView.h
-   platform/macx/Protocol.h
-   platform/macx/MacXExtServerService.h
-   platform/macx/NativeMacPopover.h
-   platform/macx/NativeMacPopoverPrivate.h
-   platform/macx/PlatformImplementation.cpp
-   platform/macx/MacXExtServerService.cpp
-   platform/macx/PlatformStrings.cpp
-   platform/macx/MacXFunctions.mm
-   platform/macx/MacXSystemServiceTask.mm
-   platform/macx/MEGAService.mm
-   platform/macx/ClientSide.mm
-   platform/macx/ServerSide.mm
-   platform/macx/MacXExtServer.mm
-   platform/macx/MacXLocalServer.mm
-   platform/macx/MacXLocalServerPrivate.mm
-   platform/macx/MacXLocalSocket.mm
-   platform/macx/MacXLocalSocketPrivate.mm
-   platform/macx/NSPopover+MISSINGBackgroundView.mm
-   platform/macx/PowerOptions.mm
-   platform/macx/NativeMacPopover.mm
-   platform/macx/NativeMacPopoverPrivate.mm
-   platform/macx/LockedPopOver.h
-   platform/macx/LockedPopOver.mm
-)
-
-target_sources_conditional(MEGAsync
-   FLAG UNIX AND NOT APPLE
-   QT_AWARE
-   PRIVATE
-   platform/linux/PlatformImplementation.h
-   platform/linux/ExtServer.h
-   platform/linux/NotifyServer.h
-   platform/linux/DolphinFileManager.h
-   platform/linux/NautilusFileManager.h
-   platform/linux/PlatformImplementation.cpp
-   platform/linux/ExtServer.cpp
-   platform/linux/NotifyServer.cpp
-   platform/linux/PowerOptions.cpp
-   platform/linux/PlatformStrings.cpp
-   platform/linux/DolphinFileManager.cpp
-   platform/linux/NautilusFileManager.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/AbstractPlatform.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Platform.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ShellNotifier.cpp
 )
 
 if (WIN32)
-    target_compile_definitions(MEGAsync
+    set(LAF_TOKEN $ENV{LAF_TOKEN})
+    configure_file(${CMAKE_CURRENT_LIST_DIR}/win/Laf.h.in ${CMAKE_CURRENT_LIST_DIR}/win/Laf.h @ONLY)
+endif()
+
+target_sources_conditional(${ExecutableTarget}
+   FLAG WIN32
+   QT_AWARE
+   PRIVATE
+   ${CMAKE_CURRENT_LIST_DIR}/win/PlatformImplementation.h
+   ${CMAKE_CURRENT_LIST_DIR}/win/RecursiveShellNotifier.h
+   ${CMAKE_CURRENT_LIST_DIR}/win/ThreadedQueueShellNotifier.h
+   ${CMAKE_CURRENT_LIST_DIR}/win/WinShellDispatcherTask.h
+   ${CMAKE_CURRENT_LIST_DIR}/win/WinTrayReceiver.h
+   ${CMAKE_CURRENT_LIST_DIR}/win/wintoastlib.h
+   ${CMAKE_CURRENT_LIST_DIR}/win/WintoastCompat.h
+   ${CMAKE_CURRENT_LIST_DIR}/win/WinAPIShell.h
+   ${CMAKE_CURRENT_LIST_DIR}/win/DesktopManager.h
+   ${CMAKE_CURRENT_LIST_DIR}/win/PlatformImplementation.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/win/RecursiveShellNotifier.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/win/ThreadedQueueShellNotifier.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/win/WinShellDispatcherTask.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/win/WinTrayReceiver.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/win/wintoastlib.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/win/PowerOptions.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/win/PlatformStrings.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/win/DesktopManager.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/win/Laf.h.in
+)
+
+target_sources_conditional(${ExecutableTarget}
+   FLAG APPLE
+   QT_AWARE
+   PRIVATE
+   ${CMAKE_CURRENT_LIST_DIR}/macx/PlatformImplementation.h
+   ${CMAKE_CURRENT_LIST_DIR}/macx/MacXFunctions.h
+   ${CMAKE_CURRENT_LIST_DIR}/macx/MacXSystemServiceTask.h
+   ${CMAKE_CURRENT_LIST_DIR}/macx/MEGAService.h
+   ${CMAKE_CURRENT_LIST_DIR}/macx/ClientSide.h
+   ${CMAKE_CURRENT_LIST_DIR}/macx/ServerSide.h
+   ${CMAKE_CURRENT_LIST_DIR}/macx/MacXExtServer.h
+   ${CMAKE_CURRENT_LIST_DIR}/macx/MacXLocalServer.h
+   ${CMAKE_CURRENT_LIST_DIR}/macx/MacXLocalServerPrivate.h
+   ${CMAKE_CURRENT_LIST_DIR}/macx/MacXLocalSocket.h
+   ${CMAKE_CURRENT_LIST_DIR}/macx/MacXLocalSocketPrivate.h
+   ${CMAKE_CURRENT_LIST_DIR}/macx/NSPopover+MISSINGBackgroundView.h
+   ${CMAKE_CURRENT_LIST_DIR}/macx/Protocol.h
+   ${CMAKE_CURRENT_LIST_DIR}/macx/MacXExtServerService.h
+   ${CMAKE_CURRENT_LIST_DIR}/macx/NativeMacPopover.h
+   ${CMAKE_CURRENT_LIST_DIR}/macx/NativeMacPopoverPrivate.h
+   ${CMAKE_CURRENT_LIST_DIR}/macx/PlatformImplementation.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/macx/MacXExtServerService.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/macx/PlatformStrings.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/macx/MacXFunctions.mm
+   ${CMAKE_CURRENT_LIST_DIR}/macx/MacXSystemServiceTask.mm
+   ${CMAKE_CURRENT_LIST_DIR}/macx/MEGAService.mm
+   ${CMAKE_CURRENT_LIST_DIR}/macx/ClientSide.mm
+   ${CMAKE_CURRENT_LIST_DIR}/macx/ServerSide.mm
+   ${CMAKE_CURRENT_LIST_DIR}/macx/MacXExtServer.mm
+   ${CMAKE_CURRENT_LIST_DIR}/macx/MacXLocalServer.mm
+   ${CMAKE_CURRENT_LIST_DIR}/macx/MacXLocalServerPrivate.mm
+   ${CMAKE_CURRENT_LIST_DIR}/macx/MacXLocalSocket.mm
+   ${CMAKE_CURRENT_LIST_DIR}/macx/MacXLocalSocketPrivate.mm
+   ${CMAKE_CURRENT_LIST_DIR}/macx/NSPopover+MISSINGBackgroundView.mm
+   ${CMAKE_CURRENT_LIST_DIR}/macx/PowerOptions.mm
+   ${CMAKE_CURRENT_LIST_DIR}/macx/NativeMacPopover.mm
+   ${CMAKE_CURRENT_LIST_DIR}/macx/NativeMacPopoverPrivate.mm
+   ${CMAKE_CURRENT_LIST_DIR}/macx/LockedPopOver.h
+   ${CMAKE_CURRENT_LIST_DIR}/macx/LockedPopOver.mm
+)
+
+target_sources_conditional(${ExecutableTarget}
+   FLAG UNIX AND NOT APPLE
+   QT_AWARE
+   PRIVATE
+   ${CMAKE_CURRENT_LIST_DIR}/linux/PlatformImplementation.h
+   ${CMAKE_CURRENT_LIST_DIR}/linux/ExtServer.h
+   ${CMAKE_CURRENT_LIST_DIR}/linux/NotifyServer.h
+   ${CMAKE_CURRENT_LIST_DIR}/linux/DolphinFileManager.h
+   ${CMAKE_CURRENT_LIST_DIR}/linux/NautilusFileManager.h
+   ${CMAKE_CURRENT_LIST_DIR}/linux/PlatformImplementation.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/linux/ExtServer.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/linux/NotifyServer.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/linux/PowerOptions.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/linux/PlatformStrings.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/linux/DolphinFileManager.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/linux/NautilusFileManager.cpp
+)
+
+if (WIN32)
+    target_compile_definitions(${ExecutableTarget}
         PUBLIC
         _UNICODE
     )
 
-    target_link_libraries(MEGAsync
+    target_link_libraries(${ExecutableTarget}
         PRIVATE
         Shell32 Shlwapi Powrprof taskschd
     )
 elseif (APPLE)
-    target_link_libraries(MEGAsync
+    target_link_libraries(${ExecutableTarget}
         PRIVATE
         "-framework IOKit"
     )
 else ()
     find_package(Qt5 REQUIRED COMPONENTS X11Extras DBus)
-    target_link_libraries(MEGAsync
+    target_link_libraries(${ExecutableTarget}
         PRIVATE
         Qt5::X11Extras
         xcb
         Qt5::DBus
     )
+    target_compile_definitions(${ExecutableTarget}
+        PUBLIC
+        USE_DBUS
+    )
 endif()
 
-target_sources(MEGAsync
+target_sources(${ExecutableTarget}
     PRIVATE
     ${DESKTOP_APP_PLATFORM_HEADERS}
     ${DESKTOP_APP_PLATFORM_SOURCES}
@@ -126,22 +138,22 @@ target_sources(MEGAsync
 
 set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}
-    ${CMAKE_CURRENT_LIST_DIR}/platform
-    ${CMAKE_CURRENT_LIST_DIR}/platform/linux
-    ${CMAKE_CURRENT_LIST_DIR}/platform/mac
-    ${CMAKE_CURRENT_LIST_DIR}/platform/win
+    ${CMAKE_CURRENT_LIST_DIR}/linux
+    ${CMAKE_CURRENT_LIST_DIR}/mac
+    ${CMAKE_CURRENT_LIST_DIR}/win
+    ${CMAKE_CURRENT_BINARY_DIR}/win
 )
-target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})
+target_include_directories(${ExecutableTarget} PRIVATE ${INCLUDE_DIRECTORIES})
 
-if (UNIX AND NOT APPLE)
+if (UNIX AND NOT APPLE AND NOT DontUseResources)
 
-    # Install app icons
-    install(DIRECTORY platform/linux/data/icons
-        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share"
-    )
-    # Install .desktop
-    install(FILES platform/linux/data/megasync.desktop
-        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/applications"
-    )
+   # Install app icons
+   install(DIRECTORY platform/linux/data/icons
+       DESTINATION "${CMAKE_INSTALL_BINDIR}/../share"
+   )
+   # Install .desktop
+   install(FILES platform/linux/data/megasync.desktop
+       DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/applications"
+   )
 
 endif()

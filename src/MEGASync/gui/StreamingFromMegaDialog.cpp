@@ -14,6 +14,8 @@
 #include <QInputDialog>
 #include <QtConcurrent/QtConcurrent>
 
+#include <regex>
+
 #define MAX_STREAMING_BUFFER_SIZE 8242880 // 8 MB
 
 //Streaming always first NODE = 0
@@ -127,8 +129,15 @@ void StreamingFromMegaDialog::on_bFromPublicLink_clicked()
     {
         if (inputDialog->result() == QDialog::Accepted)
         {
-            mPublicLink = inputDialog->textValue();
-            requestNodeToLinkProcessor();
+            if (isFolderLink(inputDialog->textValue()))
+            {
+                showErrorMessage(tr("Folder links can't be streamed"));
+            }
+            else
+            {
+                mPublicLink = inputDialog->textValue();
+                requestNodeToLinkProcessor();
+            }
         }
     });
 }
@@ -146,6 +155,23 @@ void StreamingFromMegaDialog::requestNodeToLinkProcessor()
     updateFileInfo(QString(),LinkStatus::LOADING);
 
     mLinkProcessor->requestLinkInfo();
+}
+
+bool StreamingFromMegaDialog::isFolderLink(const QString& link) const
+{
+    auto folderLinkRegexp = std::regex(R"(^https://mega\.nz/folder/.*$)");
+    return std::regex_match(link.trimmed().toUtf8().constData(), folderLinkRegexp);
+}
+
+void StreamingFromMegaDialog::showErrorMessage(const QString& message)
+{
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.title = QMegaMessageBox::errorTitle();
+    msgInfo.text = message;
+    msgInfo.buttons = QMessageBox::Ok;
+    msgInfo.parent = this;
+
+    QMegaMessageBox::warning(msgInfo);
 }
 
 //Connected only to onLinkImportFinish as only one link makes sense on streaming and it is always the first one
@@ -307,14 +333,7 @@ bool StreamingFromMegaDialog::generateStreamURL()
     std::unique_ptr<char[]> link(megaApi->httpServerGetLocalLink(mSelectedMegaNode.get()));
     if (!link)
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.title = QMegaMessageBox::errorTitle();
-        msgInfo.text = tr("Error generating streaming link");
-        msgInfo.buttons = QMessageBox::Ok;
-        msgInfo.parent = this;
-
-        QMegaMessageBox::warning(msgInfo);
-
+        showErrorMessage(tr("Error generating streaming link"));
         return false;
     }
     else

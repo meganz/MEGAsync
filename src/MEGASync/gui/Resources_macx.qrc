@@ -1002,36 +1002,24 @@
         <file>images/node_selector/sidebar/backup_ico_default.png</file>
         <file>images/node_selector/sidebar/backup_ico_default@2x.png</file>
         <file>images/node_selector/sidebar/backup_ico_default@3x.png</file>
-        <file>images/node_selector/sidebar/backup_ico_hover.png</file>
-        <file>images/node_selector/sidebar/backup_ico_hover@2x.png</file>
-        <file>images/node_selector/sidebar/backup_ico_hover@3x.png</file>
         <file>images/node_selector/sidebar/backup_ico_selected.png</file>
         <file>images/node_selector/sidebar/backup_ico_selected@2x.png</file>
         <file>images/node_selector/sidebar/backup_ico_selected@3x.png</file>
         <file>images/node_selector/sidebar/cloud_ico_default.png</file>
         <file>images/node_selector/sidebar/cloud_ico_default@2x.png</file>
         <file>images/node_selector/sidebar/cloud_ico_default@3x.png</file>
-        <file>images/node_selector/sidebar/cloud_ico_hover.png</file>
-        <file>images/node_selector/sidebar/cloud_ico_hover@2x.png</file>
-        <file>images/node_selector/sidebar/cloud_ico_hover@3x.png</file>
         <file>images/node_selector/sidebar/cloud_ico_selected.png</file>
         <file>images/node_selector/sidebar/cloud_ico_selected@2x.png</file>
         <file>images/node_selector/sidebar/cloud_ico_selected@3x.png</file>
         <file>images/node_selector/sidebar/folder-users_default.png</file>
         <file>images/node_selector/sidebar/folder-users_default@2x.png</file>
         <file>images/node_selector/sidebar/folder-users_default@3x.png</file>
-        <file>images/node_selector/sidebar/folder-users_hover.png</file>
-        <file>images/node_selector/sidebar/folder-users_hover@2x.png</file>
-        <file>images/node_selector/sidebar/folder-users_hover@3x.png</file>
         <file>images/node_selector/sidebar/folder-users_selected.png</file>
         <file>images/node_selector/sidebar/folder-users_selected@2x.png</file>
         <file>images/node_selector/sidebar/folder-users_selected@3x.png</file>
         <file>images/node_selector/sidebar/search_default.png</file>
         <file>images/node_selector/sidebar/search_default@2x.png</file>
         <file>images/node_selector/sidebar/search_default@3x.png</file>
-        <file>images/node_selector/sidebar/search_hover.png</file>
-        <file>images/node_selector/sidebar/search_hover@2x.png</file>
-        <file>images/node_selector/sidebar/search_hover@3x .png</file>
         <file>images/node_selector/sidebar/search_selected.png</file>
         <file>images/node_selector/sidebar/search_selected@2x.png</file>
         <file>images/node_selector/sidebar/search_selected@3x.png</file>
@@ -1110,6 +1098,12 @@
         <file>images/icons/folder/small-folder-outgoing-disabled.png</file>
         <file>images/icons/folder/small-folder-outgoing-disabled@2x.png</file>
         <file>images/icons/folder/small-folder-outgoing-disabled@3x.png</file>
+        <file>images/node_selector/sidebar/rubbish_default.png</file>
+        <file>images/node_selector/sidebar/rubbish_default@2x.png</file>
+        <file>images/node_selector/sidebar/rubbish_default@3x.png</file>
+        <file>images/node_selector/sidebar/rubbish_selected.png</file>
+        <file>images/node_selector/sidebar/rubbish_selected@2x.png</file>
+        <file>images/node_selector/sidebar/rubbish_selected@3x.png</file>
         <file>images/sync_context_menu/edit-small.png</file>
         <file>images/sync_context_menu/edit-small@2x.png</file>
         <file>images/sync_context_menu/edit-small@3x.png</file>
@@ -1254,6 +1248,27 @@
         <file>images/default-avatar.jpg</file>
         <file>images/default-avatar@2x.jpg</file>
         <file>images/default-avatar@3x.jpg</file>
+        <file>images/node_selector/view/trash.png</file>
+        <file>images/node_selector/view/trash@2x.png</file>
+        <file>images/node_selector/view/trash@3x.png</file>
         <file>images/icon_plus.svg</file>
+        <file>images/ico_MEGA_website.png</file>
+        <file>images/ico_MEGA_website@2x.png</file>
+        <file>images/ico_MEGA_website@3x.png</file>
+        <file>images/node_selector/view/rubbish_empty.png</file>
+        <file>images/node_selector/view/rubbish_empty@2x.png</file>
+        <file>images/node_selector/view/rubbish_empty@3x.png</file>
+        <file>images/node_selector/search_filter/small_trash_default.png</file>
+        <file>images/node_selector/search_filter/small_trash_default@2x.png</file>
+        <file>images/node_selector/search_filter/small_trash_default@3x.png</file>
+        <file>images/node_selector/search_filter/small_trash_hover_selected.png</file>
+        <file>images/node_selector/search_filter/small_trash_hover_selected@2x.png</file>
+        <file>images/node_selector/search_filter/small_trash_hover_selected@3x.png</file>
+        <file>images/node_selector/search_filter/small_trash_hover.png</file>
+        <file>images/node_selector/search_filter/small_trash_hover@3x.png</file>
+        <file>images/node_selector/search_filter/small_trash_hoverr@2x.png</file>
+        <file>images/node_selector/search_filter/small_trash_selected.png</file>
+        <file>images/node_selector/search_filter/small_trash_selected@2x.png</file>
+        <file>images/node_selector/search_filter/small_trash_selected@3x.png</file>
     </qresource>
 </RCC>

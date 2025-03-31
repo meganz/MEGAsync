@@ -5,6 +5,7 @@
 #include "gzjoin.h"
 #include "MegaApiSynchronizedRequest.h"
 #include "MegaApplication.h"
+#include "MoveToMEGABin.h"
 #include "Preferences.h"
 // clang-format on
 
@@ -546,7 +547,7 @@ QString Utilities::getAvatarPath(QString email)
 }
 
 void Utilities::removeAvatars()
-{   
+{
     const QString avatarsPath = QString::fromUtf8("%1/avatars/").arg(Preferences::instance()->getDataPath());
     QDir avatarsDirectory(avatarsPath);
     avatarsDirectory.setNameFilters(QStringList() << QString::fromUtf8(::AVATARS_EXTENSION_FILTER));
@@ -673,7 +674,7 @@ QString Utilities::getSizeString(long long bytes)
 {
     QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
     QLocale locale(language);
-    
+
     if (bytes >= TB)
     {
         return locale.toString(toDoubleInUnit(bytes, TB)) + QString::fromLatin1(" ")
@@ -751,7 +752,7 @@ Utilities::ProgressSize Utilities::getProgressSizes(long long transferredBytes, 
     Q_ASSERT(totalBytes >= transferredBytes);
 
     if (transferredBytes >= 0 && totalBytes >= 0)
-    {    
+    {
         QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
         QLocale locale(language);
 
@@ -1240,7 +1241,9 @@ QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode
 
     if(unescapeName)
     {
-        nodeName = QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(nodeName.toUtf8().constData()));
+        nodeName = QString::fromUtf8(
+            MegaSyncApp->getMegaApi()->unescapeFsIncompatible(nodeName.toUtf8().constData(),
+                                                              nullptr));
     }
 
     int counter(1);
@@ -1289,7 +1292,9 @@ QString Utilities::getNonDuplicatedLocalName(const QFileInfo &currentFile, bool 
     QString fileName;
     if(unescapeName)
     {
-        fileName = QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(currentFile.baseName().toUtf8().constData()));
+        fileName = QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(
+            currentFile.baseName().toUtf8().constData(),
+            nullptr));
     }
     else
     {
@@ -1319,7 +1324,10 @@ QString Utilities::getNonDuplicatedLocalName(const QFileInfo &currentFile, bool 
 
                 if(unescapeName)
                 {
-                    checkFileName = QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(filesIt.fileName().toUtf8().constData()));
+                    checkFileName =
+                        QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(
+                            filesIt.fileName().toUtf8().constData(),
+                            nullptr));
                 }
                 else
                 {
@@ -1493,7 +1501,7 @@ void Utilities::openInMega(MegaHandle handle)
             std::unique_ptr<char[]> h (node->getBase64Handle());
             if(h)
             {
-                openUrl(QUrl(QLatin1String("mega://#fm//device-centre/") + deviceID +
+                openUrl(QUrl(QLatin1String("mega://#fm/device-centre/") + deviceID +
                              QString::fromUtf8("/") + QString::fromLatin1(h.get())));
             }
         }
@@ -1565,12 +1573,87 @@ QString Utilities::getCommonPath(const QString &path1, const QString &path2, boo
 
 bool Utilities::isIncommingShare(MegaNode *node)
 {
-    if(node && MegaSyncApp->getMegaApi()->checkAccess(node, MegaShare::ACCESS_OWNER).getErrorCode() != MegaError::API_OK)
+    if (node && MegaSyncApp->getMegaApi()
+                        ->checkAccessErrorExtended(node, MegaShare::ACCESS_OWNER)
+                        ->getErrorCode() != MegaError::API_OK)
     {
         return true;
     }
 
     return false;
+}
+
+int Utilities::getNodeAccess(MegaHandle handle)
+{
+    auto node = std::unique_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+    return getNodeAccess(node.get());
+}
+
+int Utilities::getNodeAccess(MegaNode* node)
+{
+    if (node)
+    {
+        return MegaSyncApp->getMegaApi()->getAccess(node);
+    }
+    else
+    {
+        return MegaShare::ACCESS_UNKNOWN;
+    }
+}
+
+QString Utilities::getNodeStringAccess(MegaNode* node)
+{
+    auto access(getNodeAccess(node));
+    switch (access)
+    {
+        case MegaShare::ACCESS_READ:
+        {
+            return QCoreApplication::translate("IncomingShareAccess", "Read-only");
+        }
+        case MegaShare::ACCESS_READWRITE:
+        {
+            return QCoreApplication::translate("IncomingShareAccess", "Read and write");
+        }
+        case MegaShare::ACCESS_FULL:
+        {
+            return QCoreApplication::translate("IncomingShareAccess", "Full access");
+        }
+        case MegaShare::ACCESS_OWNER:
+        {
+            return QCoreApplication::translate("IncomingShareAccess", "Owner");
+        }
+        default:
+        {
+            return QCoreApplication::translate("IncomingShareAccess", "Unknown");
+        }
+    }
+}
+
+QString Utilities::getNodeStringAccess(MegaHandle handle)
+{
+    auto node = std::unique_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+    return getNodeStringAccess(node.get());
+}
+
+Utilities::HandlesTypes Utilities::getHandlesType(const QList<MegaHandle>& handles)
+{
+    HandlesTypes type;
+
+    for (const auto& handle: handles)
+    {
+        std::unique_ptr<MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+        if (node)
+        {
+            type |= node->isFile() ? HandlesType::FILES : HandlesType::FOLDERS;
+        }
+
+        if (type & (HandlesType::FILES & HandlesType::FOLDERS))
+        {
+            break;
+        }
+    }
+
+    return type;
 }
 
 bool Utilities::dayHasChangedSince(qint64 msecs)
@@ -1590,6 +1673,99 @@ bool Utilities::monthHasChangedSince(qint64 msecs)
 QString Utilities::getTranslatedError(const MegaError* error)
 {
     return QCoreApplication::translate("MegaError", error->getErrorString());
+}
+
+std::shared_ptr<MegaError> Utilities::removeRemoteFile(const MegaNode* node)
+{
+    std::shared_ptr<MegaError> error;
+
+    if(node)
+    {
+        error = MoveToMEGABin()(node->getHandle(), QLatin1String(""), true);
+    }
+
+    return error;
+}
+
+std::shared_ptr<MegaError> Utilities::removeRemoteFile(const QString& path)
+{
+    std::unique_ptr<MegaNode>fileNode(MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
+    return removeRemoteFile(fileNode.get());
+}
+
+std::shared_ptr<MegaError> Utilities::removeSyncRemoteFile(const QString& path)
+{
+    std::unique_ptr<MegaNode> fileNode(
+        MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
+    return removeSyncRemoteFile(fileNode.get());
+}
+
+std::shared_ptr<MegaError> Utilities::removeSyncRemoteFile(const MegaNode* node)
+{
+    std::shared_ptr<MegaError> error;
+
+    if (node)
+    {
+        error = MoveToMEGABin()(node->getHandle(), QLatin1String("SyncDebris"), true);
+    }
+
+    return error;
+}
+
+bool Utilities::removeLocalFile(const QString& path, const MegaHandle& syncId)
+{
+    bool result(false);
+
+    QFile file(path);
+    if (file.exists())
+    {
+        if(syncId != INVALID_HANDLE)
+        {
+            MegaApiSynchronizedRequest::runRequestWithResult(&MegaApi::moveToDebris,
+                MegaSyncApp->getMegaApi(),
+                [&](
+                    MegaRequest*, MegaError* e)
+                {
+                    //In case of error, move to OS trash
+                    if(e->getErrorCode() != MegaError::API_OK)
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                            QString::fromUtf8("Unable to move file to debris: %1. Error: %2")
+                                .arg(path, Utilities::getTranslatedError(e))
+                                .toUtf8()
+                                .constData());
+                        result = QFile::moveToTrash(path);
+
+#ifdef Q_OS_WIN
+                        //When the file has no rights, the QFile::moveToTrash fails on Windows
+                        if(result && file.exists())
+                        {
+                            result = false;
+                        }
+#endif
+                    }
+                    else
+                    {
+                        result = true;
+                    }
+                },path.toStdString().c_str(),
+                syncId);
+        }
+        else
+        {
+            result = QFile::moveToTrash(path);
+
+#ifdef Q_OS_WIN
+            //When the file has no rights, the QFile::moveToTrash fails on Windows
+            if(result && file.exists())
+            {
+                result = false;
+            }
+#endif
+        }
+    }
+
+    return result;
 }
 
 bool Utilities::restoreNode(MegaNode* node,
@@ -1863,3 +2039,4 @@ TimeInterval& TimeInterval::operator=(const TimeInterval& other)
     useSecondPrecision = other.useSecondPrecision;
     return *this;
 }
+

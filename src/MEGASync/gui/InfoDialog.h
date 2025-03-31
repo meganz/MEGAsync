@@ -248,14 +248,14 @@ protected:
     QTimer uploadsFinishedTimer;
     QTimer transfersFinishedTimer;
     QTimer mResetTransferSummaryWidget;
-    MegaApplication *app;
+    MegaApplication* app;
     std::shared_ptr<Preferences> mPreferences;
-    SyncInfo *mSyncInfo;
-    mega::MegaApi *megaApi;
-    mega::MegaTransfer *activeDownload;
-    mega::MegaTransfer *activeUpload;
+    SyncInfo* mSyncInfo;
+    mega::MegaApi* megaApi;
+    mega::MegaTransfer* activeDownload;
+    mega::MegaTransfer* activeUpload;
 
- private:
+private:
     static double computeRatio(long long completed, long long remaining);
     void enableUserActions(bool newState);
     void changeStatusState(StatusInfo::TRANSFERS_STATES newState,
@@ -263,6 +263,7 @@ protected:
     void fixMultiscreenResizeBug(int& posX, int& posY);
     void repositionInfoDialog();
     void initNotificationArea();
+    void applyNotificationFilter(MessageType opt);
 
     TransferScanCancelUi* mTransferScanCancelUi = nullptr;
     QtPositioningBugFixer qtBugFixer;

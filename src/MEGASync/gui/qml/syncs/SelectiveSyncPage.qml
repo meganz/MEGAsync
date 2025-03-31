@@ -9,6 +9,7 @@ SelectiveSyncPageForm {
 
     signal selectiveSyncMoveToBack
     signal selectiveSyncMoveToSuccess
+    signal fullSyncMoveToSuccess
 
     localFolderChooser.folderField.hint.text: root.syncs.localError
     localFolderChooser.folderField.hint.visible: root.syncs.localError.length !== 0
@@ -35,7 +36,9 @@ SelectiveSyncPageForm {
         rightPrimary.onClicked: {
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            root.syncs.addSync(isOnboarding ?  SyncInfo.ONBOARDING_ORIGIN : syncsComponentAccess.origin, localFolderChooser.choosenPath, remoteFolderChooser.choosenPath);
+            root.syncs.addSync(isOnboarding ?  SyncInfo.ONBOARDING_ORIGIN : syncsComponentAccess.origin,
+                               localFolderChooser.choosenPath,
+                               remoteFolderChooser.choosenPath);
         }
     }
 
@@ -43,9 +46,20 @@ SelectiveSyncPageForm {
         target: root.syncs
 
         function onSyncSetupSuccess() {
+            var remotePath = remoteFolderChooser.choosenPath;
+
             enableScreen();
             remoteFolderChooser.reset();
-            root.selectiveSyncMoveToSuccess();
+            localFolderChooser.reset();
+
+            if (remotePath === '/')
+            {
+                root.fullSyncMoveToSuccess();
+            }
+            else
+            {
+                root.selectiveSyncMoveToSuccess();
+            }
         }
 
         function onLocalErrorChanged() {

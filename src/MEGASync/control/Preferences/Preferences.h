@@ -283,6 +283,10 @@ public:
     void setMaxMemoryReportTime(long long timestamp);
     long long lastDailyStatTime();
     void setLastDailyStatTime(long long time);
+    long long lastSyncReminderTime();
+    void setSyncReminderTime(long long time);
+    int lastSyncReminderState();
+    void setLastSyncReminderState(int state);
 
     long long lastUpdateTime();
     void setLastUpdateTime(long long time);
@@ -468,7 +472,8 @@ public:
         ONE_TIME_ACTION_OS_TOO_OLD = 4,
         ONE_TIME_ACTION_HGFS_WARNING = 5,
         ONE_TIME_ACTION_ONBOARDING_SHOWN = 6,
-        ONE_TIME_ACTION_UNHIDE_TRAY_ICON
+        ONE_TIME_ACTION_UNHIDE_TRAY_ICON = 7,
+        ONE_TIME_ACTION_REQUEST_PIN_TASKBAR
     };
 
     enum {
@@ -769,6 +774,8 @@ protected:
     static const QString lastDailyStatTimeKey;
     static const QString askOnExclusionRemove;
     static const QString themeKey;
+    static const QString lastSyncReminderTimeKey;
+    static const QString lastSyncReminderStateKey;
 #if defined(ENABLE_SDK_ISOLATED_GFX)
     static const QString gfxWorkerEndpointKey;
 #endif

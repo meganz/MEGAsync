@@ -23,6 +23,8 @@ FooterButtonsPage {
         icons.source: Images.syncIcon
     }
 
+    footerButtons.rightSecondary.visible: root.isOnboarding
+
     Syncs {
         id: syncsItem
     }
@@ -42,7 +44,7 @@ FooterButtonsPage {
             id: header
 
             Layout.preferredWidth: parent.width
-            title: SyncsStrings.selectiveSync
+            title: SyncsStrings.selectiveSyncTitle
             description: SyncsStrings.selectiveSyncDescription
         }
 

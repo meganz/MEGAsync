@@ -70,7 +70,9 @@ public:
         ONBOARDING_ORIGIN,
         MAIN_APP_ORIGIN,
         INFODIALOG_BUTTON_ORIGIN,
-        EXTERNAL_ORIGIN
+        CLOUD_DRIVE_DIALOG_ORIGIN,
+        EXTERNAL_ORIGIN,
+        OS_NOTIFICATION_ORIGIN
     };
     Q_ENUM(SyncOrigin)
 

@@ -148,13 +148,8 @@
         <file>syncs/SyncsDialog.qml</file>
         <file>syncs/SyncsStrings.qml</file>
         <file>syncs/ChooseSyncFolder.qml</file>
-        <file>syncs/FullSyncPage.qml</file>
-        <file>syncs/FullSyncPageForm.ui.qml</file>
         <file>syncs/SelectiveSyncPage.qml</file>
         <file>syncs/SelectiveSyncPageForm.ui.qml</file>
-        <file>syncs/SyncTypeButton.qml</file>
-        <file>syncs/SyncTypePage.qml</file>
-        <file>syncs/SyncTypePageForm.ui.qml</file>
         <file>syncs/SyncsFlow.qml</file>
         <file>syncs/SyncsPage.qml</file>
         <file>syncs/ResumeSyncsPageForm.ui.qml</file>

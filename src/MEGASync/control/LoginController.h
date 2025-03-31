@@ -144,6 +144,8 @@ private:
     QString mLastName;
     QString mPassword;
     bool mNewAccount;
+    bool mTriggerFatalErrorAfterFetchnodes;
+    bool mForceOnboarding;
 };
 
 class FastLoginController : public LoginController

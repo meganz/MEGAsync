@@ -1,5 +1,7 @@
 #include "NodeSelector.h"
 
+#include "DialogOpener.h"
+#include "DuplicatedNodeDialog.h"
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
@@ -9,6 +11,7 @@
 #include "QMegaMessageBox.h"
 #include "ui_NodeSelector.h"
 #include "Utilities.h"
+#include "ViewLoadingScene.h"
 
 #include <QKeyEvent>
 #include <QMessageBox>
@@ -21,20 +24,31 @@ using namespace mega;
 
 const char* ITS_ON_NS = "itsOn";
 
-NodeSelector::NodeSelector(QWidget *parent) :
+NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
     QDialog(parent),
     mMegaApi(MegaSyncApp->getMegaApi()),
-    ui(new Ui::NodeSelector)
+    ui(new Ui::NodeSelector),
+    mSelectType(selectType),
+    mDelegateListener(std::make_unique<QTMegaListener>(mMegaApi, this)),
+    mInitialised(false),
+    mDuplicatedType(std::nullopt),
+    mDuplicatedModel(nullptr),
+    mSourceWid(nullptr),
+    mTargetWid(nullptr)
 {
     ui->setupUi(this);
+
+    mMegaApi->addListener(mDelegateListener.get());
 
     connect(ui->bShowIncomingShares, &QPushButton::clicked, this, &NodeSelector::onbShowIncomingSharesClicked, Qt::QueuedConnection);
     connect(ui->bShowCloudDrive, &QPushButton::clicked, this, &NodeSelector::onbShowCloudDriveClicked);
     connect(ui->bShowBackups, &QPushButton::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
     connect(ui->bSearchNS, &QPushButton::clicked, this, &NodeSelector::onbShowSearchClicked);
+    connect(ui->bRubbish, &QPushButton::clicked, this, &NodeSelector::onbShowRubbishClicked);
 
     foreach(auto& button, ui->wLeftPaneNS->findChildren<QAbstractButton*>())
     {
+        button->installEventFilter(this);
         mButtonIconManager.addButton(button);
     }
 
@@ -50,8 +64,10 @@ NodeSelector::NodeSelector(QWidget *parent) :
     mTabFramesToggleGroup[BACKUPS] = ui->fBackups;
     mTabFramesToggleGroup[SHARES] = ui->fIncomingShares;
     mTabFramesToggleGroup[CLOUD_DRIVE] = ui->fCloudDrive;
+    mTabFramesToggleGroup[RUBBISH] = ui->fRubbish;
     ui->wSearchNS->hide();
     ui->bSearchNS->hide();
+    ui->fRubbish->hide();
     setAllFramesItsOnProperty();
 
     updateNodeSelectorTabs();
@@ -60,12 +76,18 @@ NodeSelector::NodeSelector(QWidget *parent) :
 
 NodeSelector::~NodeSelector()
 {
+    // Remove duplicated node dialog if it is currently open
+    if (mDuplicatedType.has_value())
+    {
+        DialogOpener::closeDialogsByClass<DuplicatedNodeDialog>();
+    }
+    mMegaApi->removeListener(mDelegateListener.get());
     delete ui;
 }
 
 void NodeSelector::setAllFramesItsOnProperty()
 {
-    for (auto tabFrame : qAsConst(mTabFramesToggleGroup))
+    for (auto& tabFrame: mTabFramesToggleGroup)
     {
         tabFrame->setProperty(ITS_ON_NS, false);
     }
@@ -76,6 +98,7 @@ void NodeSelector::updateNodeSelectorTabs()
     ui->bShowCloudDrive->setText(MegaNodeNames::getCloudDriveName());
     ui->bShowIncomingShares->setText(MegaNodeNames::getIncomingSharesName());
     ui->bShowBackups->setText(MegaNodeNames::getBackupsName());
+    ui->bRubbish->setText(MegaNodeNames::getRubbishName());
 }
 
 void NodeSelector::onSearch(const QString &text)
@@ -89,8 +112,8 @@ void NodeSelector::onSearch(const QString &text)
     onbShowSearchClicked();
     ui->bSearchNS->setChecked(true);
 
-    auto senderViewWidget = dynamic_cast<NodeSelectorTreeViewWidget*>(sender());
-    if(senderViewWidget != mSearchWidget)
+    auto senderViewWidget = getTreeViewWidget(sender());
+    if (senderViewWidget && senderViewWidget != mSearchWidget)
     {
         senderViewWidget->clearSearchText();
     }
@@ -100,7 +123,7 @@ void NodeSelector::showDefaultUploadOption(bool show)
 {
     for(int page = 0; page < ui->stackedWidget->count(); ++page)
     {
-        auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
+        auto viewContainer = getTreeViewWidget(page);
         if(viewContainer)
         {
             viewContainer->showDefaultUploadOption(show);
@@ -112,7 +135,7 @@ void NodeSelector::setDefaultUploadOption(bool value)
 {
     for(int page = 0; page < ui->stackedWidget->count(); ++page)
     {
-        auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
+        auto viewContainer = getTreeViewWidget(page);
         if(viewContainer)
         {
             viewContainer->setDefaultUploadOption(value);
@@ -143,7 +166,36 @@ void NodeSelector::keyPressEvent(QKeyEvent *e)
     case Qt::Key_Return:
     {
         e->ignore();
+        return;
     }
+    }
+
+    QDialog::keyPressEvent(e);
+}
+
+void NodeSelector::mousePressEvent(QMouseEvent *event)
+{
+    for (int page = 0; page < ui->stackedWidget->count(); ++page)
+    {
+        auto viewContainer = getTreeViewWidget(page);
+        if (viewContainer)
+        {
+            viewContainer->clearSelection();
+        }
+    }
+
+    QDialog::mousePressEvent(event);
+}
+
+void NodeSelector::showEvent(QShowEvent*)
+{
+    if (!mInitialised)
+    {
+        createSpecialisedWidgets();
+        addSearch();
+        initSpecialisedWidgets();
+
+        mInitialised = true;
     }
 }
 
@@ -151,14 +203,14 @@ void NodeSelector::onbOkClicked()
 {
     for(int page = 0; page < ui->stackedWidget->count(); ++page)
     {
-        auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
-        if(viewContainer && viewContainer != ui->stackedWidget->currentWidget())
+        auto viewContainer = getTreeViewWidget(page);
+        if (viewContainer && viewContainer != getCurrentTreeViewWidget())
         {
             viewContainer->abort();
         }
     }
 
-    checkSelection();
+    onOkButtonClicked();
 }
 
 void NodeSelector::on_tClearSearchResultNS_clicked()
@@ -167,9 +219,118 @@ void NodeSelector::on_tClearSearchResultNS_clicked()
     ui->bSearchNS->hide();
     ui->bSearchNS->setText(QString());
     mSearchWidget->stopSearch();
-    if(ui->stackedWidget->currentWidget() == mSearchWidget)
+    if (getCurrentTreeViewWidget() == mSearchWidget)
     {
         onbShowCloudDriveClicked();
+    }
+}
+
+void NodeSelector::onUpdateLoadingMessage(std::shared_ptr<MessageInfo> message)
+{
+    auto viewContainer = getCurrentTreeViewWidget();
+    if (viewContainer && viewContainer->getProxyModel()->getMegaModel() == sender())
+    {
+        viewContainer->updateLoadingMessage(message);
+    }
+}
+
+void NodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles, int)
+{
+    performItemsToBeMoved(handles, IncreaseOrDecrease::INCREASE, true, true);
+}
+
+void NodeSelector::onItemsAboutToBeMovedFailed(const QList<mega::MegaHandle>& handles, int)
+{
+    performItemsToBeMoved(handles, IncreaseOrDecrease::DECREASE, true, true);
+}
+
+void NodeSelector::performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
+                                         IncreaseOrDecrease type,
+                                         bool blockSource,
+                                         bool blockTarget)
+{
+    if (handles.isEmpty())
+    {
+        return;
+    }
+
+    if (mTargetWid)
+    {
+        disconnect(mTargetWid->getProxyModel()->getMegaModel(),
+                   &NodeSelectorModel::itemsMoved,
+                   mSearchWidget,
+                   &NodeSelectorTreeViewWidgetSearch::resetMovingNumber);
+    }
+
+    mTargetWid = nullptr;
+    mSourceWid = nullptr;
+
+    // IF we want to block the source or target, set values to false in order to look for them
+    bool foundSource(!blockSource);
+    bool foundTarget(!blockTarget);
+
+    auto senderModel(dynamic_cast<NodeSelectorModel*>(sender()));
+
+    auto targetOrSourceFound = [type](NodeSelectorTreeViewWidget* wid, int nodesUpdateToReceive)
+    {
+        if (wid)
+        {
+            if (type == IncreaseOrDecrease::INCREASE)
+            {
+                wid->increaseMovingNodes(nodesUpdateToReceive);
+            }
+            else
+            {
+                wid->decreaseMovingNodes(nodesUpdateToReceive);
+            }
+        }
+    };
+
+    auto findSource = [this, handles, &foundSource](NodeSelectorTreeViewWidget* wid)
+    {
+        if (!foundSource && wid->areItemsAboutToBeMovedFromHere(handles.first()))
+        {
+            foundSource = true;
+            mSourceWid = wid;
+        }
+    };
+
+    for (int index = 0; index < ui->stackedWidget->count(); ++index)
+    {
+        if (auto wid = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(index)))
+        {
+            if (!foundTarget && wid->getProxyModel()->getMegaModel() == senderModel)
+            {
+                foundTarget = true;
+                mTargetWid = wid;
+
+                findSource(wid);
+            }
+            else if (!foundSource)
+            {
+                findSource(wid);
+            }
+
+            if (foundSource && foundTarget)
+            {
+                break;
+            }
+        }
+    }
+
+    targetOrSourceFound(mTargetWid, handles.size());
+
+    if (mTargetWid != mSourceWid)
+    {
+        targetOrSourceFound(mSourceWid, handles.size());
+    }
+
+    if (mTargetWid && mSourceWid == mSearchWidget)
+    {
+        connect(mTargetWid->getProxyModel()->getMegaModel(),
+                &NodeSelectorModel::itemsMoved,
+                mSearchWidget,
+                &NodeSelectorTreeViewWidgetSearch::resetMovingNumber);
     }
 }
 
@@ -186,6 +347,9 @@ void NodeSelector::onOptionSelected(int index)
         case NodeSelector::BACKUPS:
             ui->bShowBackups->click();
             break;
+        case NodeSelector::RUBBISH:
+            ui->bRubbish->click();
+            break;
         default:
             break;
     }
@@ -195,6 +359,12 @@ void NodeSelector::onbShowCloudDriveClicked()
 {
     ui->stackedWidget->setCurrentIndex(CLOUD_DRIVE);
     setToggledStyle(CLOUD_DRIVE);
+}
+
+void NodeSelector::onbShowRubbishClicked()
+{
+    ui->stackedWidget->setCurrentIndex(RUBBISH);
+    setToggledStyle(RUBBISH);
 }
 
 void NodeSelector::onbShowIncomingSharesClicked()
@@ -238,23 +408,38 @@ void NodeSelector::shortCutConnects(int ignoreThis)
     }
 }
 
+NodeSelectorTreeViewWidget* NodeSelector::getTreeViewWidget(int page) const
+{
+    return dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
+}
+
+NodeSelectorTreeViewWidget* NodeSelector::getTreeViewWidget(QObject* object) const
+{
+    return dynamic_cast<NodeSelectorTreeViewWidget*>(object);
+}
+
+NodeSelectorTreeViewWidget* NodeSelector::getCurrentTreeViewWidget() const
+{
+    return getTreeViewWidget(ui->stackedWidget->currentWidget());
+}
+
 MegaHandle NodeSelector::getSelectedNodeHandle()
 {
-    auto tree_view = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
-    return tree_view->getSelectedNodeHandle();
+    auto tree_view = getCurrentTreeViewWidget();
+    return tree_view ? tree_view->getSelectedNodeHandle() : mega::INVALID_HANDLE;
 }
 
 QList<MegaHandle> NodeSelector::getMultiSelectionNodeHandle()
 {
-    auto tree_view = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
-    return tree_view->getMultiSelectionNodeHandle();
+    auto tree_view = getCurrentTreeViewWidget();
+    return tree_view ? tree_view->getMultiSelectionNodeHandle() : QList<MegaHandle>();
 }
 
 void NodeSelector::closeEvent(QCloseEvent* event)
 {
     for(int page = 0; page < ui->stackedWidget->count(); ++page)
     {
-        auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
+        auto viewContainer = getTreeViewWidget(page);
         if(viewContainer)
         {
             viewContainer->abort();
@@ -292,17 +477,6 @@ void NodeSelector::setToggledStyle(TabItem item)
     ui->wLeftPaneNS->setStyleSheet(ui->wLeftPaneNS->styleSheet());
 }
 
-int NodeSelector::getNodeAccess(std::shared_ptr<MegaNode> node)
-{
-    int access = MegaShare::ACCESS_UNKNOWN;
-    if (node)
-    {
-        access = mMegaApi->getAccess(node.get());
-    }
-
-    return access;
-}
-
 std::shared_ptr<MegaNode> NodeSelector::getSelectedNode()
 {
     auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
@@ -314,69 +488,260 @@ void NodeSelector::showNotFoundNodeMessageBox()
     QMegaMessageBox::MessageBoxInfo msgInfo;
     msgInfo.title = QMegaMessageBox::errorTitle();
     msgInfo.text = tr("The item you selected has been removed. To reselect, close this window and try again.");
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
-        reject();
-    };
     QMegaMessageBox::warning(msgInfo);
 }
 
-void NodeSelector::makeConnections(SelectTypeSPtr selectType)
+void NodeSelector::initSpecialisedWidgets()
 {
-    mSearchWidget = new NodeSelectorTreeViewWidgetSearch(selectType);
-    mSearchWidget->setObjectName(QString::fromUtf8("Search"));
-    connect(mSearchWidget, &NodeSelectorTreeViewWidgetSearch::nodeDoubleClicked, this, &NodeSelector::setSelectedNodeHandle);
-    ui->stackedWidget->addWidget(mSearchWidget);
     NodeSelectorModel* model(nullptr);
+
+    auto selectedTab = selectedNodeTab();
+
     for(int page = 0; page < ui->stackedWidget->count(); ++page)
     {
-        auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
+        auto viewContainer = getTreeViewWidget(page);
         if(viewContainer)
         {
             viewContainer->init();
+            connect(viewContainer, &NodeSelectorTreeViewWidget::onCustomBottomButtonClicked, this, &NodeSelector::onCustomBottomButtonClicked, Qt::UniqueConnection);
             connect(viewContainer, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked, Qt::UniqueConnection);
             connect(viewContainer, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject, Qt::UniqueConnection);
-            connect(viewContainer, &NodeSelectorTreeViewWidget::onSearch, this, &NodeSelector::onSearch, Qt::UniqueConnection);
-            if (!model)
+            connect(viewContainer,
+                    &NodeSelectorTreeViewWidget::onSearch,
+                    this,
+                    &NodeSelector::onSearch,
+                    Qt::UniqueConnection);
+
+            if (selectedTab.has_value() && selectedTab.value() == page)
             {
-                model = viewContainer->getProxyModel()->getMegaModel();
-                connect(model,
-                        &NodeSelectorModel::showMessageBox,
+                connect(viewContainer,
+                        &NodeSelectorTreeViewWidget::viewReady,
                         this,
-                        [this](QMegaMessageBox::MessageBoxInfo info) {
-                            info.parent = this;
-                            QMegaMessageBox::warning(info);
-                        });
+                        &NodeSelector::performNodeSelection);
+            }
+
+            model = viewContainer->getProxyModel()->getMegaModel();
+
+            connect(model,
+                    &NodeSelectorModel::itemsAboutToBeMoved,
+                    this,
+                    &NodeSelector::onItemsAboutToBeMoved);
+
+            connect(model,
+                    &NodeSelectorModel::itemsAboutToBeMovedFailed,
+                    this,
+                    &NodeSelector::onItemsAboutToBeMovedFailed);
+
+            connect(model,
+                    &NodeSelectorModel::itemsAboutToBeRestored,
+                    this,
+                    &NodeSelector::onItemsAboutToBeRestored);
+
+            connect(model,
+                    &NodeSelectorModel::itemAboutToBeReplaced,
+                    this,
+                    &NodeSelector::onItemAboutToBeReplaced);
+
+            connect(model,
+                    &NodeSelectorModel::itemsAboutToBeMerged,
+                    this,
+                    &NodeSelector::onItemsAboutToBeMerged);
+
+            connect(model,
+                    &NodeSelectorModel::itemsAboutToBeMergedFailed,
+                    this,
+                    &NodeSelector::onItemsAboutToBeMergedFailed);
+
+            connect(model,
+                    &NodeSelectorModel::updateLoadingMessage,
+                    this,
+                    &NodeSelector::onUpdateLoadingMessage);
+
+            connect(model,
+                    &NodeSelectorModel::showMessageBox,
+                    this,
+                    [this](QMegaMessageBox::MessageBoxInfo info)
+                    {
+                        info.parent = this;
+                        QMegaMessageBox::warning(info);
+                    });
+
+            connect(model,
+                    &NodeSelectorModel::showDuplicatedNodeDialog,
+                    this,
+                    [this, model](std::shared_ptr<ConflictTypes> conflicts, MoveActionType type)
+                    {
+                        mDuplicatedModel = model;
+                        mDuplicatedConflicts = conflicts;
+                        mDuplicatedType = type;
+
+                        auto checkUploadNameDialog = new DuplicatedNodeDialog(this);
+                        checkUploadNameDialog->setConflicts(conflicts);
+
+                        DialogOpener::showDialog<DuplicatedNodeDialog, NodeSelector>(
+                            checkUploadNameDialog,
+                            this,
+                            &NodeSelector::onShowDuplicatedNodeDialog);
+                    });
+        }
+    }
+
+    connect(ui->stackedWidget,
+            &QStackedWidget::currentChanged,
+            this,
+            &NodeSelector::onCurrentWidgetChanged);
+}
+
+bool NodeSelector::eventFilter(QObject* obj, QEvent* event)
+{
+    if(event->type() == QEvent::DragEnter)
+    {
+        if(auto button = dynamic_cast<QPushButton*>(obj))
+        {
+            button->click();
+        }
+    }
+
+    return QDialog::eventFilter(obj,event);
+}
+
+void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
+{
+    mNodeToBeSelected = node;
+    if (mInitialised)
+    {
+        performNodeSelection();
+    }
+}
+
+void NodeSelector::performNodeSelection()
+{
+    if (mNodeToBeSelected)
+    {
+        std::optional<TabItem> option = selectedNodeTab();
+
+        if (option.has_value())
+        {
+            auto optionValue(option.value());
+            if (ui->stackedWidget->currentIndex() == optionValue)
+            {
+                onCurrentWidgetChanged(optionValue);
+            }
+            else
+            {
+                onOptionSelected(optionValue);
             }
         }
     }
 }
 
-void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node, bool goToInit)
+std::optional<NodeSelector::TabItem> NodeSelector::selectedNodeTab()
 {
-    if (node)
+    if (mNodeToBeSelected)
     {
         std::optional<TabItem> option;
 
-        if (mMegaApi->isInCloud(node.get()))
+        if (mMegaApi->isInCloud(mNodeToBeSelected.get()))
         {
             option = CLOUD_DRIVE;
         }
-        else if (mMegaApi->isInVault(node.get()))
+        else if (mMegaApi->isInVault(mNodeToBeSelected.get()))
         {
             option = BACKUPS;
         }
-        else if (mMegaApi->isInShare(node.get()))
+        else if (mMegaApi->isInRubbish(mNodeToBeSelected.get()))
+        {
+            option = RUBBISH;
+        }
+        else
         {
             option = SHARES;
         }
 
         if (option.has_value())
         {
-            onOptionSelected(option.value());
-
-            auto tree_view_widget =
-                static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
-            tree_view_widget->setSelectedNodeHandle(node->getHandle(), goToInit);
+            return option.value();
         }
     }
+
+    return std::nullopt;
+}
+
+void NodeSelector::onCurrentWidgetChanged(int index)
+{
+    if (mNodeToBeSelected)
+    {
+        if (auto wid = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(index)))
+        {
+            wid->clearSelection();
+            wid->setSelectedNodeHandle(mNodeToBeSelected->getHandle());
+            mNodeToBeSelected.reset();
+        }
+    }
+}
+
+void NodeSelector::onShowDuplicatedNodeDialog(QPointer<DuplicatedNodeDialog>)
+{
+    if (mDuplicatedType.has_value())
+    {
+        mDuplicatedModel->processNodesAfterConflictCheck(
+            mDuplicatedConflicts,
+            static_cast<MoveActionType>(mDuplicatedType.value()));
+        mDuplicatedType = std::nullopt;
+        mDuplicatedModel = nullptr;
+        mDuplicatedConflicts.reset();
+    }
+}
+
+void NodeSelector::onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList* nodes)
+{
+    for (int index = 0; index < ui->stackedWidget->count(); ++index)
+    {
+        if (auto wid = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(index)))
+        {
+            if (wid != mSearchWidget || !ui->wSearchNS->isHidden())
+            {
+                wid->onNodesUpdate(api, nodes);
+            }
+        }
+    }
+}
+
+void NodeSelector::addCloudDrive()
+{
+    mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(mSelectType);
+    mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
+    ui->stackedWidget->addWidget(mCloudDriveWidget);
+}
+
+void NodeSelector::addIncomingShares()
+{
+    mIncomingSharesWidget = new NodeSelectorTreeViewWidgetIncomingShares(mSelectType);
+    mIncomingSharesWidget->setObjectName(QString::fromUtf8("IncomingShares"));
+    ui->stackedWidget->addWidget(mIncomingSharesWidget);
+}
+
+void NodeSelector::addBackups()
+{
+    mBackupsWidget = new NodeSelectorTreeViewWidgetBackups(mSelectType);
+    mBackupsWidget->setObjectName(QString::fromUtf8("Backups"));
+    ui->stackedWidget->addWidget(mBackupsWidget);
+}
+
+void NodeSelector::addSearch()
+{
+    mSearchWidget = new NodeSelectorTreeViewWidgetSearch(mSelectType);
+    mSearchWidget->setObjectName(QString::fromUtf8("Search"));
+    connect(mSearchWidget,
+            &NodeSelectorTreeViewWidgetSearch::nodeDoubleClicked,
+            this,
+            &NodeSelector::setSelectedNodeHandle);
+    ui->stackedWidget->addWidget(mSearchWidget);
+}
+
+void NodeSelector::addRubbish()
+{
+    mRubbishWidget = new NodeSelectorTreeViewWidgetRubbish(mSelectType);
+    mRubbishWidget->setObjectName(QString::fromUtf8("Rubbish"));
+    ui->stackedWidget->addWidget(mRubbishWidget);
 }

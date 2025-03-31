@@ -814,6 +814,29 @@
     </message>
 </context>
 <context>
+    <name>CloudDriveNodeSelector</name>
+    <message>
+        <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
+        <translatorcomment>Messagebox secondary string to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>Tous les éléments seront irrémédiablement supprimés. Cette action peut [B]pas[/B] être annulé.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Messagebox cancel button string to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Empty</source>
+        <translatorcomment>Messagebox accept button string to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>Vide</translation>
+    </message>
+    <message>
+        <source>Empty Rubbish bin?</source>
+        <translatorcomment>Messagebox main string to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>Vider la Corbeille ?</translation>
+    </message>
+</context>
+<context>
     <name>CloudFingerprintMissingHeader</name>
     <message>
         <source>Apply</source>
@@ -2002,6 +2025,24 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     </message>
 </context>
 <context>
+    <name>FirstSyncReminderAction</name>
+    <message>
+        <source>Finish set up</source>
+        <translatorcomment>Text on the O.S. notification button to open the window for creating the first sync after the onboarding process (first run of the application). CON-1207</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set up your first sync to get the most out of the desktop app</source>
+        <translatorcomment>Description text in O.S. notification to remind that the user can create syncs after few hours (e.g. 2) from the first launch of the application if the user has never created a sync. CON-1207</translatorcomment>
+        <translation>Configurez votre première synchronisation pour tirer le meilleur parti de l’application pour ordinateur</translation>
+    </message>
+    <message>
+        <source>You’re almost done</source>
+        <translatorcomment>Title text in O.S. notification to remind that the user can create syncs after few hours (e.g. 2) from the first launch of the application if the user has never created a sync. CON-1207</translatorcomment>
+        <translation>Tu as presque terminé</translation>
+    </message>
+</context>
+<context>
     <name>FolderMatchedAgainstFileHeader</name>
     <message>
         <source>Cannot sync folders against files.</source>
@@ -2165,6 +2206,34 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>Vous n’avez pas le droit d’écriture sur ce dossier local.</translation>
+    </message>
+</context>
+<context>
+    <name>IncomingShareAccess</name>
+    <message>
+        <source>Full access</source>
+        <translatorcomment>The incoming shared folder has full access. CON-1266</translatorcomment>
+        <translation>Accès total</translation>
+    </message>
+    <message>
+        <source>Owner</source>
+        <translatorcomment>The user is the owner of the folder. CON-1266</translatorcomment>
+        <translation>Propriétaire</translation>
+    </message>
+    <message>
+        <source>Read and write</source>
+        <translatorcomment>The incoming shared folder access is read and write. CON-1266</translatorcomment>
+        <translation>Lecture et écriture</translation>
+    </message>
+    <message>
+        <source>Read-only</source>
+        <translatorcomment>The incoming shared folder access is read-only. CON-1266</translatorcomment>
+        <translation>Lecture seule</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translatorcomment>The incoming shared folder access is unknown. CON-1266</translatorcomment>
+        <translation>Unknown</translation>
     </message>
 </context>
 <context>
@@ -3107,11 +3176,6 @@ Attendez la fin du téléversement.</translation>
         <translation>Recherche de mises à jour…</translation>
     </message>
     <message>
-        <source>Cloud drive</source>
-        <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
-        <translation>Disque nuagique</translation>
-    </message>
-    <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
         <translation>Impossible de trouver une zone de notification pour y placer l’icône de l’appli. Essayez de relancer l’appli.</translation>
@@ -3177,6 +3241,11 @@ Attendez la fin du téléversement.</translation>
         <translation>Récupération de la liste de fichiers…</translation>
     </message>
     <message>
+        <source>Files</source>
+        <translatorcomment>InfoDialog menu action to open the Cloud Drive dialog</translatorcomment>
+        <translation>Fichiers</translation>
+    </message>
+    <message>
         <source>Folder download error</source>
         <translatorcomment>Title of the error message when there is an error downloading a MEGA link. SNC-2549.</translatorcomment>
         <translation>Erreur lors du téléchargement du dossier</translation>
@@ -3225,6 +3294,11 @@ Attendez la fin du téléversement.</translation>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
         <translation>Connexion</translation>
+    </message>
+    <message>
+        <source>MEGA web</source>
+        <translatorcomment>InfoDialog menu action to open the webclient. CON-1245</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>MEGAsync has been updated</source>
@@ -3605,6 +3679,11 @@ https://mega.co.nz/#sync</source>
         <translation>Le dispositif de stockage de destination est plein</translation>
     </message>
     <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button to dismiss the warning message - CON-1311</translatorcomment>
+        <translation>Fermer</translation>
+    </message>
+    <message>
         <source>Error reading app system files</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
         <translation>Erreur lors de la lecture des fichiers système de l’application</translation>
@@ -3695,6 +3774,11 @@ https://mega.co.nz/#sync</source>
         <translation>Erreur de lecture</translation>
     </message>
     <message>
+        <source>Reconfigure</source>
+        <translatorcomment>Button to reconfigure syncs and backups (opens Onboarding wizard) - CON-1311</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Reload</source>
         <translatorcomment>Label of the button used to reload (fetch nodes) the account to try to resolve a fatal error - CON-1023</translatorcomment>
         <translation>Recharger</translation>
@@ -3718,6 +3802,11 @@ https://mega.co.nz/#sync</source>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
         <translation>Le quota d’espace de stockage a été dépassé. Surclassez votre compte maintenant.</translation>
+    </message>
+    <message>
+        <source>Sync configuration error</source>
+        <translatorcomment>Title of the warning dialog shown when the syncs configuration file has been re-generated by the sdk  - CON-1311</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Temporarily not available</source>
@@ -3787,6 +3876,11 @@ Vous ne pourrez pas accéder à vos données stockées de nouveau ni être autor
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
         <translation>Votre espace de stockage local est plein</translation>
     </message>
+    <message>
+        <source>Your sync and backup settings were corrupted and have been reset. If you had any, please set them up again.</source>
+        <translatorcomment>Body of the warning dialog shown when the syncs configuration file has been re-generated by the sdk - CON-1311</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaInfoMessage</name>
@@ -3817,6 +3911,11 @@ Vous ne pourrez pas accéder à vos données stockées de nouveau ni être autor
         <source>Incoming shares</source>
         <translatorcomment>Title of the Incoming shares root node</translatorcomment>
         <translation>Partages entrants</translation>
+    </message>
+    <message>
+        <source>Rubbish bin</source>
+        <translatorcomment>Title of the Rubbish section. SAT-426</translatorcomment>
+        <translation>Corbeille</translation>
     </message>
 </context>
 <context>
@@ -4328,6 +4427,24 @@ Tous vos transferts sélectionnés seront effacés.</translation>
     </message>
 </context>
 <context>
+    <name>MultiSyncReminderAction</name>
+    <message>
+        <source>Access your data from anywhere, collaborate with ease, and instantly get the most up-to-date version of your files</source>
+        <translatorcomment>Description text in O.S. notification to remind that the user can create syncs after days or months (e.g. 10 days, 1 month) if the user has never created a sync. CON-1207</translatorcomment>
+        <translation>Accédez à vos données où que vous soyez, collaborez facilement et obtenez instantanément la version la plus récente de vos fichiers</translation>
+    </message>
+    <message>
+        <source>Set up sync</source>
+        <translatorcomment>Text on the O.S. notification button to open the window for creating the first sync. CON-1207</translatorcomment>
+        <translation>Configurer la synchronisation</translation>
+    </message>
+    <message>
+        <source>Sync your data</source>
+        <translatorcomment>Title text in O.S. notification to remind that the user can create syncs after days or months (e.g. 10 days, 1 month) if the user has never created a sync. CON-1207</translatorcomment>
+        <translation>Synchronisez vos données</translation>
+    </message>
+</context>
+<context>
     <name>NameConflict</name>
     <message>
         <source>%1 no longer exists.
@@ -4598,29 +4715,114 @@ Saisissez un nom différent.</translation>
 <context>
     <name>NodeSelectorModel</name>
     <message>
-        <source>Error removing file</source>
-        <translatorcomment>Messagebox title when removing a single file has failed. SAT-426</translatorcomment>
+        <source>Access</source>
+        <translatorcomment>Column title. This column shows the incoming shared folder access rights.CON-1266</translatorcomment>
+        <translation>Accès</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Cancel button string for failed action in Cloud Drive dialog.SAT-426</translatorcomment>
+        <translation>Fermer</translation>
+    </message>
+    <message>
+        <source>Error copying file</source>
+        <translatorcomment>Main text of a messagebox when copying a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>Erreur lors de la copie du fichier</translation>
+    </message>
+    <message>
+        <source>Error copying files</source>
+        <translatorcomment>Main text of a messagebox when copying some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>Erreur lors de la copie des fichiers</translation>
+    </message>
+    <message>
+        <source>Error copying folder</source>
+        <translatorcomment>Main text of a messagebox when copying a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>Erreur lors de la copie du dossier</translation>
+    </message>
+    <message>
+        <source>Error copying folders</source>
+        <translatorcomment>Main text of a messagebox when copying some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>Erreur lors de la copie des dossiers</translation>
+    </message>
+    <message>
+        <source>Error copying items</source>
+        <translatorcomment>Main text of a messagebox when copying some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>Erreur lors de la copie d’un élément</translation>
+    </message>
+    <message>
+        <source>Error deleting file</source>
+        <translatorcomment>Secondary text of a messagebox when deleting a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>Erreur lors de la suppression du fichier</translation>
     </message>
     <message>
-        <source>Error removing files</source>
-        <translatorcomment>Messagebox title when removing multiple files has failed. SAT-426</translatorcomment>
+        <source>Error deleting files</source>
+        <translatorcomment>Main text of a messagebox when deleting some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>Erreur lors de la suppression de fichiers</translation>
     </message>
     <message>
-        <source>Error removing folder</source>
-        <translatorcomment>Messagebox title when removing a single folder has failed. SAT-426</translatorcomment>
+        <source>Error deleting folder</source>
+        <translatorcomment>Secondary text of a messagebox when deleting a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>Erreur lors de la suppression du dossier</translation>
     </message>
     <message>
-        <source>Error removing folders</source>
-        <translatorcomment>Messagebox title when removing multiple folders has failed. SAT-426</translatorcomment>
+        <source>Error deleting folders</source>
+        <translatorcomment>Main text of a messagebox when deleting some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>Erreur lors de la suppression de dossiers</translation>
     </message>
     <message>
-        <source>Error removing items</source>
-        <translatorcomment>Messagebox title when removing multiple files and folders has failed. SAT-426</translatorcomment>
+        <source>Error deleting items</source>
+        <translatorcomment>Main text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>Erreur lors de la suppression des éléments</translation>
+    </message>
+    <message>
+        <source>Error moving file</source>
+        <translatorcomment>Main text of a messagebox when moving a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>Erreur lors du déplacement du fichier</translation>
+    </message>
+    <message>
+        <source>Error moving files</source>
+        <translatorcomment>Main text of a messagebox when moving some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>Erreur lors du déplacement des fichiers</translation>
+    </message>
+    <message>
+        <source>Error moving folder</source>
+        <translatorcomment>Main text of a messagebox when moving a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>Erreur lors du déplacement du dossier</translation>
+    </message>
+    <message>
+        <source>Error moving folders</source>
+        <translatorcomment>Main text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>Erreur lors du déplacement des dossiers</translation>
+    </message>
+    <message>
+        <source>Error moving items</source>
+        <translatorcomment>Main text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>Erreur lors du déplacement des éléments</translation>
+    </message>
+    <message>
+        <source>Error restoring file</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>Erreur lors de la restauration du fichier</translation>
+    </message>
+    <message>
+        <source>Error restoring files</source>
+        <translatorcomment>Main text of a messagebox when restoring some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>Erreur lors de la restauration des fichiers</translation>
+    </message>
+    <message>
+        <source>Error restoring folder</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>Erreur lors de la restauration du dossier</translation>
+    </message>
+    <message>
+        <source>Error restoring folders</source>
+        <translatorcomment>Main text of a messagebox when restoring some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>Erreur lors de la restauration des dossiers</translation>
+    </message>
+    <message>
+        <source>Error restoring items</source>
+        <translatorcomment>Main text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>Erreur lors de la restauration des éléments</translation>
     </message>
     <message>
         <source>Folder already synced</source>
@@ -4643,6 +4845,11 @@ Saisissez un nom différent.</translation>
         <translation>Dernière modification</translation>
     </message>
     <message>
+        <source>Sort by access</source>
+        <translatorcomment>Access column tooltip. Sorts the order of the column by incoming shared folder access.CON-1266</translatorcomment>
+        <translation>Trier par accès</translation>
+    </message>
+    <message>
         <source>Sort by date</source>
         <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>Trier par date</translation>
@@ -4663,47 +4870,157 @@ Saisissez un nom différent.</translation>
         <translation>Trier par état</translation>
     </message>
     <message>
-        <source>The file %1 couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing a single file has failed. %1 is the file name. SAT-426</translatorcomment>
+        <source>The file %1 couldn’t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
+        <translation>Le dossier %1 n’a pas pu être copié. Réessayez plus tard.</translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be deleted. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
         <translation>Le dossier %1 n’a pas pu être supprimé. Réessayez plus tard.</translation>
     </message>
     <message>
-        <source>The files couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing multiple files has failed. SAT-426</translatorcomment>
+        <source>The file %1 couldn’t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
+        <translation>Le dossier %1 n’a pas pu être déplacé. Réessayez plus tard.</translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
+        <translation>Le dossier %1 n’a pas pu être restauré. Réessayez plus tard.</translation>
+    </message>
+    <message>
+        <source>The files couldn’t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>Les fichiers n’ont pas pu être copiés. Réessayez plus tard.</translation>
+    </message>
+    <message>
+        <source>The files couldn’t be deleted. Try again later</source>
+        <translatorcomment>Main text of a messagebox when deleting some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>Les fichiers n’ont pas pu être supprimés. Réessayez plus tard.</translation>
     </message>
     <message>
-        <source>The folder %1 couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing a single folder has failed. %1 is the folder name. SAT-426</translatorcomment>
+        <source>The files couldn’t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>Les fichiers n’ont pas pu être déplacés. Réessayez plus tard.</translation>
+    </message>
+    <message>
+        <source>The files couldn’t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>Les fichiers n’ont pas pu être restaurés. Réessayez plus tard.</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
+        <translation>Le dossier %1 n’a pas pu être copié. Réessayez plus tard.</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be deleted. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
         <translation>Le dossier %1 n’a pas pu être supprimé. Réessayez plus tard.</translation>
     </message>
     <message>
-        <source>The folders couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing multiple folders has failed. SAT-426</translatorcomment>
+        <source>The folder %1 couldn’t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
+        <translation>Le dossier %1 n’a pas pu être déplacé. Réessayez plus tard.</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
+        <translation>Le dossier %1 n’a pas pu être restauré. Réessayez plus tard.</translation>
+    </message>
+    <message>
+        <source>The folders couldn’t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>Les dossiers n’ont pas pu être copiés. Réessayez plus tard.</translation>
+    </message>
+    <message>
+        <source>The folders couldn’t be deleted. Try again later</source>
+        <translatorcomment>Main text of a messagebox when deleting some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>Les dossiers n’ont pas pu être supprimés. Réessayez plus tard.</translation>
     </message>
     <message>
-        <source>The items couldn’t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing multiple files and folders has failed. SAT-426</translatorcomment>
+        <source>The folders couldn’t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>Les dossiers n’ont pas pu être déplacés. Réessayez plus tard.</translation>
+    </message>
+    <message>
+        <source>The folders couldn’t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>Les dossiers n’ont pas pu être restaurés. Réessayez plus tard.</translation>
+    </message>
+    <message>
+        <source>The items couldn’t be copied. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when copying some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>L’élément n’a pas pu être copié. Réessayez plus tard.</translation>
+    </message>
+    <message>
+        <source>The items couldn’t be deleted. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>Les éléments n’ont pas pu être supprimés. Réessayez plus tard.</translation>
+    </message>
+    <message>
+        <source>The items couldn’t be moved. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>L’élément n’a pas pu être déplacé. Réessayez plus tard.</translation>
+    </message>
+    <message>
+        <source>The items couldn’t be restored. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
+        <translation>L’élément n’a pas pu être restauré. Réessayez plus tard.</translation>
     </message>
 </context>
 <context>
     <name>NodeSelectorTreeView</name>
     <message>
-        <source>Delete</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
-        <translation>Supprimer</translation>
+        <source>Copy</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It copy the selected nodes (files or folders), waiting for the paste action. SAT-426</translatorcomment>
+        <translation>Copier</translation>
     </message>
     <message>
-        <source>Get MEGA link</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
-        <translation>Obtenir le lien sur MEGA</translation>
+        <source>Leave folder</source>
+        <translatorcomment>Contextual menu text that appears when we right click on inshare folder on the incoming shared page on node selector. It leaves an inshared folder. CON-1255</translatorcomment>
+        <translation>Laisser le dossier</translation>
+    </message>
+    <message>
+        <source>Move to Rubbish bin</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
+        <translation>Déplacer vers la Corbeille</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It paste the copied nodes (files and folders). SAT-426</translatorcomment>
+        <translation>Coller</translation>
+    </message>
+    <message>
+        <source>Permanently delete</source>
+        <translatorcomment>Contextual menu text that appears when we right click on an item on the rubbish page on node selector. It deletes the item and it can be undone. SAT-426</translatorcomment>
+        <translation>Supprimer définitivement</translation>
     </message>
     <message>
         <source>Rename</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It renames the node (file or folder).</translatorcomment>
         <translation>Renommer</translation>
+    </message>
+    <message>
+        <source>Restore</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It restores the node (file or folder) from the rubbish bin. SAT-426</translatorcomment>
+        <translation>Restaurer</translation>
+    </message>
+    <message>
+        <source>Share link</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It copies the selected items MEGA link to the clipboard. SAT-426</translatorcomment>
+        <translation>Partager le lien</translation>
+    </message>
+    <message>
+        <source>Stop syncing</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It deletes the sync on the selected folder. SAT-426</translatorcomment>
+        <translation>Arrêter la synchronisation</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It creates a sync in the selected folder. SAT-426</translatorcomment>
+        <translation>Synchroniser</translation>
     </message>
 </context>
 <context>
@@ -4734,9 +5051,32 @@ Saisissez un nom différent.</translation>
         <translation>Disque nuagique</translation>
     </message>
     <message>
+        <source>Delete</source>
+        <translatorcomment>Button to accept the confirmation messagebox to delete permanently a file/folder in the rubbish bin. CON-1258</translatorcomment>
+        <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Don’t leave</source>
+        <translatorcomment>Button text to cancel the confirm messagebox when leaving a inshared folder</translatorcomment>
+        <translation>Ne pas le quitter</translation>
+    </message>
+    <message>
         <source>Don’t move</source>
-        <translatorcomment>Messagebox button to cancel moving nodes to the rubbish bin. CON-334</translatorcomment>
+        <translatorcomment>Button to cancel the confirmation messagebox to move an item (or more) to the rubbish bin. CON-334</translatorcomment>
         <translation>Ne pas déplacer</translation>
+    </message>
+    <message>
+        <source>Empty Rubbish bin</source>
+        <translatorcomment>Button text to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>Vider la Corbeille</translation>
+    </message>
+    <message numerus="yes">
+        <source>If you leave the folder, you will not be able to see it again.</source>
+        <translatorcomment>Body of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
+        <translation>
+            <numerusform>Si vous quittez le dossier, vous ne pourrez plus le voir.</numerusform>
+            <numerusform>Si vous quittez ces dossiers, vous ne pourrez plus les voir.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -4744,22 +5084,35 @@ Saisissez un nom différent.</translation>
         <translation>Partages entrants</translation>
     </message>
     <message>
-        <source>Move</source>
-        <translatorcomment>Messagebox button to move nodes to the rubbish bin. CON-334</translatorcomment>
-        <translation>Déplacer</translation>
+        <source>Leave</source>
+        <translatorcomment>Button text to accept the confirm messagebox when leaving a inshared folder</translatorcomment>
+        <translation>Quitter</translation>
     </message>
     <message numerus="yes">
-        <source>Move %n item to Rubbish bin?</source>
-        <translatorcomment>Title of the messagebox when moving a multiple nodes to the rubbish bin. %n is the number of nodes CON-334</translatorcomment>
+        <source>Leave this shared folder?</source>
+        <translatorcomment>Title of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
+        <translation>
+            <numerusform>Quitter ce dossier partagé ?</numerusform>
+            <numerusform>Quitter ces dossiers partagés ?</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Move</source>
+        <translatorcomment>Button to accept the confirmation messagebox to move an item (or more) to the rubbish bin. CON-334</translatorcomment>
+        <translation>Déplacer</translation>
+    </message>
+    <message>
+        <source>Move %1 to Rubbish bin?</source>
+        <translatorcomment>Main text of the confirmation messagebox to move a single item (file or folder) pto the rubbish bin. %1 is the name of the item to delete. CON-334</translatorcomment>
+        <translation>Déplacer %1 à la Corbeille ?</translation>
+    </message>
+    <message numerus="yes">
+        <source>Move %n items to Rubbish bin?</source>
+        <translatorcomment>Main text of the confirmation messagebox to move some items (files or folders) pto the rubbish bin. %n is the number of items to delete. CON-334</translatorcomment>
         <translation>
             <numerusform>Déplacer %n un élément à la Corbeille ?</numerusform>
             <numerusform>Déplacer %n des éléments à la Corbeille ?</numerusform>
         </translation>
-    </message>
-    <message>
-        <source>Move “%1” to Rubbish bin?</source>
-        <translatorcomment>Title of the messagebox when moving a single node to the rubbish bin. %1 is the file/folder name. CON-334</translatorcomment>
-        <translation>Déplacer »%1» vers la Corbeille ?</translation>
     </message>
     <message>
         <source>New folder</source>
@@ -4775,6 +5128,40 @@ Saisissez un nom différent.</translation>
         <source>Ok</source>
         <translatorcomment>Button text to accept and close the dialog</translatorcomment>
         <translation>Valider</translation>
+    </message>
+    <message>
+        <source>Rubbish bin</source>
+        <translatorcomment>Button to filter search results from rubbish bin</translatorcomment>
+        <translation>Corbeille</translation>
+    </message>
+    <message numerus="yes">
+        <source>You are about to permanently delete %n file. Would you like to proceed?</source>
+        <translatorcomment>Main text of the confirmation messagebox to delete permanently a file(s) from the rubbish bin. %n is the number of files to delete. CON-1258</translatorcomment>
+        <translation>
+            <numerusform>Vous êtes sur le point de supprimer irrémédiablement %n fichier. Désirez-vous continuer ?</numerusform>
+            <numerusform>Vous êtes sur le point de supprimer irrémédiablement %n fichiers. Désirez-vous continuer ?</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>You are about to permanently delete %n folder. Would you like to proceed?</source>
+        <translatorcomment>Main text of the confirmation messagebox to delete permanently a folder(s) from the rubbish bin. %n is the number of folders to delete. CON-1258</translatorcomment>
+        <translation>
+            <numerusform>Vous êtes sur le point de supprimer irrémédiablement %n dossier. Désirez-vous continuer ?</numerusform>
+            <numerusform>Vous êtes sur le point de supprimer irrémédiablement %n dossiers. Désirez-vous continuer ?</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>You are about to permanently delete %n items. Would you like to proceed?</source>
+        <translatorcomment>Main text of the confirmation messagebox to delete permanently some items (files and folders) from the rubbish bin. %n is the number of items to delete. CON-1258</translatorcomment>
+        <translation>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>You cannot undo this action</source>
+        <translatorcomment>Second part of the messagebox text when the user is about to remove permanently a node. SAT-426</translatorcomment>
+        <translation>Vous ne pouvez pas annuler cette action</translation>
     </message>
 </context>
 <context>
@@ -4916,14 +5303,14 @@ Saisissez un nom différent.</translation>
         <translation>Un dossier du même nom existe déjà dans vos sauvegardes</translation>
     </message>
     <message>
+        <source>Access the latest version of your files from anywhere. Changes made to synced files will automatically update in both directions.</source>
+        <translatorcomment>Selective sync button text description CON-1268</translatorcomment>
+        <translation>Accédez à la version la plus récente de vos fichiers où que vous soyez. Les modifications apportées aux fichiers synchronisés seront automatiquement mises à jour dans les deux sens.</translation>
+    </message>
+    <message>
         <source>Account created</source>
         <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
         <translation>Inscription complète</translation>
-    </message>
-    <message>
-        <source>Add device name</source>
-        <translatorcomment>Device name text input box title CON-467</translatorcomment>
-        <translation>Ajouter le nom de l’appareil</translation>
     </message>
     <message>
         <source>Add folder</source>
@@ -4996,11 +5383,6 @@ Saisissez un nom différent.</translation>
         <translation>Changer votre adresse courriel</translation>
     </message>
     <message>
-        <source>Choose sync type</source>
-        <translatorcomment>Text indicating the user to choose between different available sync types CON-467</translatorcomment>
-        <translation>Choisir le type de synchronisation</translation>
-    </message>
-    <message>
         <source>Choose:</source>
         <translatorcomment>Label that indicates the user to choose between different options CON-467</translatorcomment>
         <translation>Vos choix :</translation>
@@ -5051,9 +5433,9 @@ Saisissez un nom différent.</translation>
         <translation>Création du compte…</translation>
     </message>
     <message>
-        <source>Data from your device will automatically and consistently back up to MEGA in real-time.</source>
-        <translatorcomment>Button description, on click it goes to the backups section CON-468</translatorcomment>
-        <translation>Les données de votre appareil seront sauvegardées automatiquement et systématiquement sur MEGA en temps réel.</translation>
+        <source>Data from your device will automatically and consistently back up to MEGA in real-time. Files deleted from your computer will be deleted from MEGA.</source>
+        <translatorcomment>Button description, on click it goes to the backups section CON-1268</translatorcomment>
+        <translation>Les données de votre appareil seront automatiquement et systématiquement sauvegardées sur MEGA en temps réel. Les fichiers supprimés de votre ordinateur seront supprimés de MEGA.</translation>
     </message>
     <message>
         <source>Device name</source>
@@ -5129,11 +5511,6 @@ Saisissez un nom différent.</translation>
         <source>Forgot password?</source>
         <translatorcomment>Button text that user have to click in case he forgot the password. Button has no borders and it looks like a label CON-465</translatorcomment>
         <translation>Mot de passe oublié ?</translation>
-    </message>
-    <message>
-        <source>Full sync</source>
-        <translatorcomment>Full sync button title CON-467</translatorcomment>
-        <translation>Synchronisation intégrale</translation>
     </message>
     <message>
         <source>I agree with MEGA&apos;s [B][A]Terms of service[/A][/B]</source>
@@ -5319,16 +5696,6 @@ Saisissez un nom différent.</translation>
         <source>Sync set up</source>
         <translatorcomment>Onboarding step text indicating the user that he is in the sync setup step CON-467</translatorcomment>
         <translation>La synchronisation est configurée</translation>
-    </message>
-    <message>
-        <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
-        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>Synchronisez votre appareil avec MEGA et les modifications locales se refléteront automatiquement et instantanément sur MEGA, et vice versa.</translation>
-    </message>
-    <message>
-        <source>Sync your entire MEGA Cloud drive with your local device.</source>
-        <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation>Synchronisez l’intégralité de votre MEGA Cloud dans les deux sens avec un appareil local. Les dossiers resteront à jour avec les modifications apportées localement ou dans MEGA.</translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
@@ -5788,17 +6155,15 @@ Saisissez un nom différent.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Numerous interface improvements.
-- Improved HiDpi handling in Windows.
-- Updates to third party libraries.
+        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
+- We’ve made more improvements to the initial onboarding wizard.
+- Systems notifications have been enhanced.
+- You can now pin the MEGA app to the Windows taskbar.
+- Some third party libraries have been updated.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.9.0. CON-1259</translatorcomment>
-        <translation>- De nombreuses améliorations de l’interface.
-- Amélioration de la gestion HiDPI sous Windows.
-- Mises à jour de bibliothèques tierces.
-- D’autres bogues ont été corrigés et de nombreuses améliorations ont été apportées.
-</translation>
+        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7169,11 +7534,6 @@ Voulez-vous le supprimer quand même ?</translation>
         <translation>Impossible de récupérer les métadonnées de ce dossier. Vérifiez les droits et réanalysez.</translation>
     </message>
     <message>
-        <source>Error identifying folder content in filesystem.</source>
-        <translatorcomment>Label descriping a sync stall is happening because the folder cannot be parsed for unnkown reason.SNC-2565</translatorcomment>
-        <translation>Impossible de lire le contenu de ce dossier. Vérifiez les droits du dossier et assurez-vous qu’aucun élément n’est utilisé par d’autres applications.</translation>
-    </message>
-    <message>
         <source>Error not detected</source>
         <translatorcomment>Label descripiwith default error of sync stall .SNC-2565</translatorcomment>
         <translation>Erreur inconnue</translation>
@@ -8353,6 +8713,21 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Add sync</source>
         <translatorcomment>Page title to add syncs. CON-833</translatorcomment>
         <translation>Ajouter une synchronisation</translation>
+    </message>
+    <message>
+        <source>Changes made to synced folders in MEGA or on your device will automatically update in both directions.</source>
+        <translatorcomment>Page description to add syncs. CON-1268</translatorcomment>
+        <translation>Les modifications apportées aux dossiers synchronisés dans MEGA ou sur votre appareil seront automatiquement mises à jour dans les deux sens.</translation>
+    </message>
+    <message>
+        <source>Select folders</source>
+        <translatorcomment>Left pane current state literal. CON-1268</translatorcomment>
+        <translation>Choisir des dossiers</translation>
+    </message>
+    <message>
+        <source>Select folders to sync</source>
+        <translatorcomment>Page title to add syncs. CON-1268</translatorcomment>
+        <translation>Sélectionnez les dossiers à synchroniser</translation>
     </message>
 </context>
 <context>
@@ -9603,14 +9978,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
         <translation>Votre compte a été verrouillé pour votre protection après détection d’une connexion malveillante. Nous vous demandons donc de réinitialiser votre mot de passe.
 Vous trouverez dans votre boîte de réception des courriels des instructions pour déverrouiller votre compte, ainsi que des conseils pour éviter que cela ne se reproduise.</translation>
-    </message>
-</context>
-<context>
-    <name>ViewLoadingSceneUI</name>
-    <message>
-        <source>Stop</source>
-        <translatorcomment>button in auto solve view of stalled issues to stop the auto solve process.SNC-2565</translatorcomment>
-        <translation>Arrêter</translation>
     </message>
 </context>
 <context>

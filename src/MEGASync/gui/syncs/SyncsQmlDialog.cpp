@@ -13,6 +13,11 @@ bool SyncsQmlDialog::event(QEvent* event)
         {
             dialog->getDialog()->setSyncAddButtonEnabled(event->type() == QEvent::Close);
         }
+
+        if (event->type() == QEvent::Close)
+        {
+            emit MegaSyncApp->syncsDialogClosed();
+        }
     }
 
     return QmlDialog::event(event);

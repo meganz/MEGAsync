@@ -50,7 +50,7 @@ FooterButtonsPage {
             PropertyChanges {
                 target: stepPanelRef;
                 state: stepPanelRef.stepAllDone;
-                step3Text: OnboardingStrings.syncChooseType;
+                step3Text: SyncsStrings.selectFolders;
                 step4Text: OnboardingStrings.syncSetUp;
             }
         },
@@ -78,9 +78,7 @@ FooterButtonsPage {
                       ? Constants.SyncType.SYNC
                       : Constants.SyncType.SELECTIVE_SYNC;
                 visible: !fullSyncDone;
-                title: !fullSyncDone && !selectiveSyncDone
-                       ? SyncsStrings.sync
-                       : SyncsStrings.selectiveSync;
+                title: SyncsStrings.sync
                 description: !fullSyncDone && !selectiveSyncDone
                              ? OnboardingStrings.finalPageButtonSync
                              : OnboardingStrings.finalPageButtonSelectiveSync;
@@ -167,7 +165,7 @@ FooterButtonsPage {
                     id: syncButtonItem
 
                     width: (parent.width - parent.spacing) / 2
-                    title: SyncsStrings.selectiveSync
+                    title: SyncsStrings.sync
                     description: OnboardingStrings.finalPageButtonSelectiveSync
                     imageSource: Images.sync
                     focus: true

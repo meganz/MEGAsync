@@ -42,6 +42,7 @@ set(MEGA_DESKTOP_APP_SOURCES
 if (WIN32)
     set(RESOURCE_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/icon.rc
+        ${CMAKE_CURRENT_SOURCE_DIR}/config.rc
     )
 elseif (APPLE)
     set(RESOURCE_FILES
@@ -88,6 +89,8 @@ target_include_directories(MEGAsync PRIVATE ${CMAKE_CURRENT_LIST_DIR}
 
 # Include modules in subdirectories with sources for Desktop App
 add_subdirectory(google_breakpad)
+
+set(ExecutableTarget MEGAsync)
 
 include(control/control.cmake)
 include(gui/gui.cmake)

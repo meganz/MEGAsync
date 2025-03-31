@@ -20,6 +20,7 @@ option(ENABLE_DESKTOP_UPDATE_GEN "Enable desktop update generator tool" ON)
 
 option(ENABLE_DESKTOP_APP_WERROR "Enable warnings as errors" ON)
 option(ENABLE_DESIGN_TOKENS_IMPORTER "Enable design tokens importer tool" OFF)
+option(ENABLE_DESKTOP_APP_TESTS "Enable Desktop app Automated tests" ON)
 
 # MEGAsdk options
 # Configure MEGAsdk specific options for MEGAchat and then load the rest of MEGAsdk configuration

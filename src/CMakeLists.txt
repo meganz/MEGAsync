@@ -36,3 +36,7 @@ endif()
 if (ENABLE_DESIGN_TOKENS_IMPORTER)
     add_subdirectory(DesignTokensImporter)
 endif()
+
+if (ENABLE_DESKTOP_APP_TESTS)
+    add_subdirectory(MEGAAutoTests)
+endif()

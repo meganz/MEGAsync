@@ -146,6 +146,13 @@ void SyncController::addSync(SyncConfig& sync)
                     {
                         break;
                     }
+                    case SyncInfo::CLOUD_DRIVE_DIALOG_ORIGIN:
+                    {
+                        MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+                            AppStatsEvents::EventType::SYNC_ADDED_CLOUD_DRIVE_BUTTON,
+                            true);
+                        break;
+                    }
                     case SyncInfo::INFODIALOG_BUTTON_ORIGIN:
                     {
                         MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
@@ -321,7 +328,7 @@ void SyncController::setSyncToPause(std::shared_ptr<SyncSettings> syncSetting)
             syncOperationEnds();
         });
 
-    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_PAUSED, listener.get());
+    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_SUSPENDED, listener.get());
 }
 
 void SyncController::setSyncToSuspend(std::shared_ptr<SyncSettings> syncSetting)
@@ -804,8 +811,7 @@ bool SyncController::removeMegaIgnore(const QString& syncLocalFolder, mega::Mega
     {
         if (backupId != mega::INVALID_HANDLE)
         {
-            StalledIssuesUtilities utilities;
-            utilities.removeLocalFile(ignoreFile.fileName(), backupId);
+            Utilities::removeLocalFile(ignoreFile.fileName(), backupId);
         }
         else
         {

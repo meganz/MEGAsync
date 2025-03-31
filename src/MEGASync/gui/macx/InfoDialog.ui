@@ -41,7 +41,7 @@
   padding: 0px 4px 0px 16px;
 }
 
-#bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon, #bBusinessQuota, #bBusinessStorage, #bSyncsDisabled, #bAddSync, #bAddBackup, #bSettings, #bUpload, #bBackupsDisabled, #bAllSyncsDisabled
+#bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon, #bBusinessQuota, #bBusinessStorage, #bSyncsDisabled, #bAddSync, #bAddBackup, #bSettings, #bUpload, #bBackupsDisabled, #bAllSyncsDisabled, #bCloudDrive
 {
 	border: none;
 }
@@ -3656,7 +3656,7 @@ background-color: #F4F6F8;
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_2">
                <property name="spacing">
-                <number>0</number>
+                <number>3</number>
                </property>
                <property name="leftMargin">
                 <number>14</number>

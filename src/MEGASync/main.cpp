@@ -26,6 +26,8 @@
 #include <Shellapi.h>
 #include <Strsafe.h>
 #include <Windows.h>
+
+#include <winrt/base.h>
 #endif
 
 #if defined(WIN32) || defined(Q_OS_LINUX)

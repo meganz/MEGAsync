@@ -1,13 +1,13 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-#define VER_FILEVERSION 5, 9, 0, 3
-#define VER_FILEVERSION_CODE 50900
-#define VER_PRODUCTVERSION 5, 9, 0, 3
+#define VER_FILEVERSION 5, 10, 0, 2
+#define VER_FILEVERSION_CODE 51000
+#define VER_PRODUCTVERSION 5, 10, 0, 2
 // Update scripts relying on this value if you move it
-#define VER_PRODUCTVERSION_STR "5.9.0.3\0"
+#define VER_PRODUCTVERSION_STR "5.10.0.2\0"
 
-#define VER_BUILD_ID 3
+#define VER_BUILD_ID 2
 
 #define VER_COMPANYNAME_STR         "Mega Limited\0"
 #define VER_FILEDESCRIPTION_STR     "MEGAsync\0"
@@ -18,7 +18,7 @@
 #define VER_PRODUCTNAME_STR         "MEGAsync\0"
 
 /* SDK commit hash, 7 chars */
-#define VER_SDK_ID "7b90513"
+#define VER_SDK_ID "b28f39f"
 
 /* Update scrips relying on this value if you move it
 Format: 1 item by line, starting from line following the #define
@@ -29,10 +29,14 @@ Format: 1 item by line, starting from line following the #define
 "- item n\n"
 )*/
 #define VER_CHANGES_NOTES \
-    QT_TRANSLATE_NOOP("Preferences", \
-                      "- Numerous interface improvements.\n" \
-                      "- Improved HiDpi handling in Windows.\n" \
-                      "- Updates to third party libraries.\n" \
-                      "- Other bugs have been fixed and numerous improvements made.\n")
+    QT_TRANSLATE_NOOP( \
+        "Preferences", \
+        "- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and " \
+        "manage your files and folders in the new sleek and easy-to-use interface.\n" \
+        "- We’ve made more improvements to the initial onboarding wizard.\n" \
+        "- Systems notifications have been enhanced.\n" \
+        "- You can now pin the MEGA app to the Windows taskbar.\n" \
+        "- Some third party libraries have been updated.\n" \
+        "- Other bugs have been fixed and numerous improvements made.\n")
 
 #endif // VERSION_H

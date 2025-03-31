@@ -4,7 +4,20 @@
 #include <QStyledItemDelegate>
 #include <QHelpEvent>
 
-class IconDelegate : public QStyledItemDelegate
+class NodeSelectorDelegate: public QStyledItemDelegate
+{
+public:
+    NodeSelectorDelegate(QObject* parent);
+
+protected:
+    void setPaintDevice(QPainter* painter, const QModelIndex& index) const;
+    bool isPaintingDrag(QPainter* painter) const;
+
+private:
+    mutable QPaintDevice* mMainDevice;
+};
+
+class IconDelegate: public NodeSelectorDelegate
 {
     static const int ICON_HEIGHT;
 
@@ -19,7 +32,7 @@ private:
     void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
 };
 
-class NodeRowDelegate : public QStyledItemDelegate
+class NodeRowDelegate: public NodeSelectorDelegate
 {
 public:
     static const int MARGIN;
@@ -41,10 +54,10 @@ private:
                          const QModelIndex &index) const override;
 };
 
-class DateColumnDelegate : public QStyledItemDelegate
+class TextColumnDelegate: public NodeSelectorDelegate
 {
 public:
-    explicit DateColumnDelegate(QObject *parent = nullptr);
+    explicit TextColumnDelegate(QObject* parent = nullptr);
     void paint(QPainter* painter, const QStyleOptionViewItem& option,
                const QModelIndex& index) const override;
     bool helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index) override;

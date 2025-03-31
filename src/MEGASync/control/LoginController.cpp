@@ -1,6 +1,7 @@
 #include "LoginController.h"
 
 #include "ConnectivityChecker.h"
+#include "FatalEventHandler.h"
 #include "MegaApplication.h"
 #include "Platform.h"
 #include "Preferences.h"
@@ -12,16 +13,18 @@
 
 #include <QQmlContext>
 
-LoginController::LoginController(QObject* parent)
-    : QObject{parent}
-      , mMegaApi(MegaSyncApp->getMegaApi())
-      , mPreferences(Preferences::instance())
-      , mGlobalListener(std::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
-      , mEmailError(false)
-      , mPasswordError(false)
-      , mProgress(0)
-      , mState(LOGGED_OUT)
-      , mNewAccount(false)
+LoginController::LoginController(QObject* parent):
+    QObject{parent},
+    mMegaApi(MegaSyncApp->getMegaApi()),
+    mPreferences(Preferences::instance()),
+    mGlobalListener(std::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this)),
+    mEmailError(false),
+    mPasswordError(false),
+    mProgress(0),
+    mState(LOGGED_OUT),
+    mNewAccount(false),
+    mTriggerFatalErrorAfterFetchnodes(false),
+    mForceOnboarding(false)
 {
     ListenerCallbacks lcInfo{
         this,
@@ -44,6 +47,16 @@ LoginController::LoginController(QObject* parent)
     {
         mMegaApi->resumeCreateAccount(credentials.sessionId.toUtf8().constData());
     }
+
+    // Connect to FatalEventHandler signals
+    auto fatalEventHandler = FatalEventHandler::instance();
+    connect(fatalEventHandler.get(),
+            &FatalEventHandler::requestForceOnBoarding,
+            this,
+            [this]()
+            {
+                mForceOnboarding = true;
+            });
 
     // Plug into AppStates
     connect(this,
@@ -106,12 +119,51 @@ LoginController::State LoginController::getState() const
 
 void LoginController::setState(State state)
 {
-    if(mState != state)
+    if ((getState() == State::FETCHING_NODES || getState() == State::FETCHING_NODES_2FA) &&
+        state == State::FETCH_NODES_FINISHED)
     {
+        // Should the onboarding be shown (without taking "force" into account)?
+        auto showOnboarding =
+            !mPreferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN) &&
+            !(mPreferences->isFirstBackupDone() || mPreferences->isFirstSyncDone());
+
+        if (mTriggerFatalErrorAfterFetchnodes)
+        {
+            // The user, if mTriggerFatalErrorAfterFetchnodes is set to true, is presented
+            // with a dialog enjoining them to re-create new syncs/backups, and if the user accepts,
+            // The onboarding dialog is shown. Avoid showing the warning dialog in the first
+            // place if the onboarding dialog will be shown anyway.
+            // Put app in NOMINAL state, which will not show the warning dialog,
+            // or in FATAL_ERROR state, which will show the warning dialog.
+            emit requestAppState(showOnboarding ? AppState::NOMINAL : AppState::FATAL_ERROR);
+            // Return here because we are interrupting the nominal workflow, and requesting
+            // app state change will call LoginController::setState again.
+            return;
+        }
+        else if (mForceOnboarding || showOnboarding)
+        {
+            QmlDialogManager::instance()->openOnboardingDialog(mForceOnboarding);
+            state = State::FETCH_NODES_FINISHED_ONBOARDING;
+        }
+    }
+    if (getState() != state)
+    {
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
+                           QString::fromUtf8("LoginController switching state from: %1 to: %2")
+                               .arg(QVariant::fromValue<State>(mState).toString(),
+                                    QVariant::fromValue<State>(state).toString())
+                               .toUtf8()
+                               .constData());
+
         mState = state;
         emit stateChanged();
 
-        if (mState == State::FETCH_NODES_FINISHED &&
+        if (state == State::FETCH_NODES_FINISHED)
+        {
+            onboardingFinished();
+        }
+
+        if (state == State::FETCH_NODES_FINISHED &&
             AppState::instance()->getAppState() == AppState::RELOADING)
         {
             emit requestAppState(AppState::NOMINAL);
@@ -194,14 +246,14 @@ void LoginController::processOnboardingClosed()
     if(getState() == LoginController::State::FETCH_NODES_FINISHED_ONBOARDING)
     {
         if (!Preferences::instance()->isFirstSyncDone() &&
-            !Preferences::instance()->isFirstBackupDone())
+            !Preferences::instance()->isFirstBackupDone() && !mForceOnboarding)
         {
             MegaSyncApp->getStatsEventHandler()->sendEvent(
                 AppStatsEvents::EventType::ONBOARDING_CLOSED_WITHOUT_SETTING_SYNCS);
         }
 
+        mForceOnboarding = false;
         setState(LoginController::State::FETCH_NODES_FINISHED);
-        onboardingFinished();
     }
 }
 
@@ -421,9 +473,9 @@ void LoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e)
 
 void LoginController::onboardingFinished()
 {
-    SyncInfo::instance()->rewriteSyncSettings(); //write sync settings into user's preferences
-
+    SyncInfo::instance()->rewriteSyncSettings(); // write sync settings into user's preferences
     MegaSyncApp->onboardingFinished(false);
+    mPreferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN, true);
 }
 
 void LoginController::onAccountCreation(mega::MegaRequest* request, mega::MegaError* e)
@@ -511,19 +563,7 @@ void LoginController::onFetchNodes(mega::MegaRequest* request, mega::MegaError* 
 
     if(e->getErrorCode() == mega::MegaError::API_OK)
     {
-        if(!mPreferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN)
-            && !(mPreferences->isFirstBackupDone() || mPreferences->isFirstSyncDone())) //Onboarding don´t has to be shown to users that
-                                                                                        //doesn´t have one_time_action_onboarding_shown
-        {                                                                               //and they have first backup or first sync done
-            QmlDialogManager::instance()->openOnboardingDialog();
-            setState(FETCH_NODES_FINISHED_ONBOARDING);
-            mPreferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN, true);
-        }
-        else
-        {
-            setState(FETCH_NODES_FINISHED);
-            onboardingFinished();
-        }
+        setState(FETCH_NODES_FINISHED);
 
         if(eventPendingStorage)
         {
@@ -889,6 +929,27 @@ void LoginController::onAppStateChanged(AppState::AppStates oldAppState,
         else
         {
             setState(FETCHING_NODES);
+        }
+    }
+    // Transition to FATAL_ERROR_PENDING_FETCHNODES, which can happen when jsacd attribute has been
+    // re-generated and a warning message can be shown to the user.
+    // However the message has to be shown after fetchnodes, so we need to defer processing.
+    else if (newAppState == AppState::FATAL_ERROR_PENDING_FETCHNODES)
+    {
+        mTriggerFatalErrorAfterFetchnodes = true;
+    }
+    // Transition from FATAL_ERROR or FATAL_ERROR_PENDING_FETCHNODES to nominal:
+    // Only act when the app went through FATAL_ERROR_PENDING_FETCHNODES state (this is known by
+    // checking the value of  mTriggerFatalErrorAfterFetchnodes).
+    else if ((oldAppState == AppState::FATAL_ERROR ||
+              oldAppState == AppState::FATAL_ERROR_PENDING_FETCHNODES) &&
+             newAppState == AppState::NOMINAL)
+    {
+        if (mTriggerFatalErrorAfterFetchnodes)
+        {
+            mTriggerFatalErrorAfterFetchnodes = false;
+
+            setState(FETCH_NODES_FINISHED);
         }
     }
 }

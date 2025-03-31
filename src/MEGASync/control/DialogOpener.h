@@ -244,6 +244,17 @@ public:
         }
     }
 
+    template<class DialogType>
+    static void closeDialogsByClass()
+    {
+        auto dialog = findDialog<DialogType>();
+        if (dialog)
+        {
+            dialog->close();
+            qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+        }
+    }
+
     template <class DialogType, class ParentType>
     static void setParent(QPointer<DialogType> dialog, bool whenParentIsActivated)
     {
