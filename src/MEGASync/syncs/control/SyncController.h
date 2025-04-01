@@ -56,6 +56,7 @@ public:
                    SyncInfo::SyncOrigin origin);
     void addSync(SyncConfig& sync);
     void removeSync(std::shared_ptr<SyncSettings> syncSetting, const mega::MegaHandle& remoteHandle = mega::INVALID_HANDLE);
+    void prevalidateSync(SyncConfig& sync);
 
     void setSyncToRun(std::shared_ptr<SyncSettings> syncSetting);
     void setSyncToPause(std::shared_ptr<SyncSettings> syncSetting);
@@ -97,6 +98,7 @@ public:
 
 signals:
     void syncAddStatus(int errorCode, int syncErrorCode, QString name);
+    void syncPrevalidateStatus(int errorCode, int syncErrorCode);
     void syncRemoveStatus(int errorCode);
     void syncRemoveError(std::shared_ptr<mega::MegaError> err);
     void signalSyncOperationBegins();
