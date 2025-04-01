@@ -271,7 +271,7 @@ public:
         mDelayTimeToShowInMs = newDelayTimeToShowInMs;
     }
 
-    LoadingSceneMessageHandler* getLoadingMessageHandler()
+    LoadingSceneMessageHandler* getLoadingMessageHandler() const
     {
         return mMessageHandler;
     }
@@ -350,6 +350,12 @@ public:
     bool isLoadingViewSet() const
     {
         return mLoadingViewSet != LoadingViewType::NONE;
+    }
+
+    bool isLoadingViewWaitingForUserAnswer() const
+    {
+        return getLoadingMessageHandler() ? getLoadingMessageHandler()->needsAnswerFromUser() :
+                                            false;
     }
 
     void setLoadingViewSet(LoadingViewType type)

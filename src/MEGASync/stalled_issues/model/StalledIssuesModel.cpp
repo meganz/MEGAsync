@@ -321,7 +321,10 @@ void StalledIssuesModel::onProcessStalledIssues(ReceivedStalledIssues issuesRece
                     mIssuesRequested = false;
                     emit stalledIssuesReceived();
                 }
-                else
+                // If we have solved or failed issues, we display the message so we don´t need to
+                // refresh the filter now
+                else if (issuesReceived.autoSolvedStalledIssues().isEmpty() &&
+                         issuesReceived.failedAutoSolvedStalledIssues().isEmpty())
                 {
                     emit refreshFilter();
                 }
@@ -987,7 +990,7 @@ void StalledIssuesModel::stopSolvingIssues(MessageInfo::ButtonType buttonType)
         }
         else
         {
-            unBlockUi();
+            emit refreshFilter();
         }
     }
 }

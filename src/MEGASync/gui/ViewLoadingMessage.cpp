@@ -3,10 +3,13 @@
 #include "ui_ViewLoadingMessage.h"
 #include "ViewLoadingScene.h"
 
+#include <QDebug>
+
 ViewLoadingMessage::ViewLoadingMessage(QWidget* parent):
     QWidget(parent),
     ui(new Ui::ViewLoadingMessage),
-    mCloseWhenAnyButtonIsPressed(false)
+    mCloseWhenAnyButtonIsPressed(false),
+    mWaitingForAnswer(false)
 {
     ui->setupUi(this);
 
@@ -24,6 +27,7 @@ ViewLoadingMessage::~ViewLoadingMessage()
 void ViewLoadingMessage::onButtonPressed()
 {
     ui->bButton->setDisabled(true);
+    mWaitingForAnswer = false;
     emit buttonPressed(getButtonType());
 
     // The message is not longer needed, as the user has closed it
@@ -75,11 +79,15 @@ void ViewLoadingMessage::updateMessage(std::shared_ptr<MessageInfo> info)
                 ui->bButton->setVisible(true);
                 ui->bButton->setText(QApplication::translate("LoadingSceneMessageHandler", "Ok"));
             }
+
+            mWaitingForAnswer = true;
         }
         else
         {
             ui->bButton->hide();
             ui->bButton->setText(QString());
+
+            mWaitingForAnswer = false;
         }
 
         ui->wMessageContainer->adjustSize();
@@ -95,7 +103,7 @@ void ViewLoadingMessage::updateGeometry()
 
 bool ViewLoadingMessage::isWaitingForAnswer() const
 {
-    return ui->bButton->isVisible() && ui->bButton->isEnabled();
+    return mWaitingForAnswer;
 }
 
 int ViewLoadingMessage::getButtonType() const

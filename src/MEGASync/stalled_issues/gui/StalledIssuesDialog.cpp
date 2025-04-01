@@ -175,10 +175,14 @@ void StalledIssuesDialog::on_refreshButton_clicked()
 
 void StalledIssuesDialog::checkIfViewIsEmpty()
 {
-    if(auto proxyModel = dynamic_cast<StalledIssuesProxyModel*>(ui->stalledIssuesTree->model()))
+    if (auto proxyModel = dynamic_cast<StalledIssuesProxyModel*>(ui->stalledIssuesTree->model()))
     {
-        auto isEmpty = proxyModel->rowCount(QModelIndex()) == 0;
-        ui->TreeViewContainer->setCurrentWidget(isEmpty ? ui->EmptyViewContainerPage : ui->TreeViewContainerPage);
+        if (!ui->stalledIssuesTree->loadingView().isLoadingViewSet())
+        {
+            auto isEmpty = proxyModel->rowCount(QModelIndex()) == 0;
+            ui->TreeViewContainer->setCurrentWidget(isEmpty ? ui->EmptyViewContainerPage :
+                                                              ui->TreeViewContainerPage);
+        }
     }
 }
 
@@ -287,19 +291,17 @@ bool StalledIssuesDialog::toggleTabAndScroll(
 
 void StalledIssuesDialog::onUiBlocked()
 {
-    if(!ui->stalledIssuesTree->loadingView().isLoadingViewSet())
+    if (!ui->stalledIssuesTree->loadingView().isLoadingViewSet())
     {
         ui->TreeViewContainer->setCurrentWidget(ui->TreeViewContainerPage);
-        ui->stalledIssuesTree->loadingView().toggleLoadingScene(true);
     }
+
+    ui->stalledIssuesTree->loadingView().toggleLoadingScene(true);
 }
 
 void StalledIssuesDialog::onUiUnblocked()
 {
-    if(ui->stalledIssuesTree->loadingView().isLoadingViewSet())
-    {
-        ui->stalledIssuesTree->loadingView().toggleLoadingScene(false);
-    }
+    ui->stalledIssuesTree->loadingView().toggleLoadingScene(false);
 }
 
 void StalledIssuesDialog::onStalledIssuesLoaded()
@@ -316,14 +318,17 @@ void StalledIssuesDialog::onModelFiltered()
         ui->stalledIssuesTree->setModel(mProxyModel);
         mViewHoverManager.setView(ui->stalledIssuesTree);
     }
-
-    checkIfViewIsEmpty();
 }
 
 void StalledIssuesDialog::onLoadingSceneVisibilityChange(bool state)
 {
     ui->footer->setDisabled(state);
     ui->header->setDisabled(state);
+
+    if (!state)
+    {
+        checkIfViewIsEmpty();
+    }
 }
 
 void StalledIssuesDialog::showView()

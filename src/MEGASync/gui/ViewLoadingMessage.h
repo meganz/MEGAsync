@@ -39,6 +39,7 @@ private:
     Ui::ViewLoadingMessage* ui;
     std::shared_ptr<MessageInfo> mInfo;
     bool mCloseWhenAnyButtonIsPressed;
+    bool mWaitingForAnswer;
 };
 
 #endif // VIEWLOADINGMESSAGE_H
