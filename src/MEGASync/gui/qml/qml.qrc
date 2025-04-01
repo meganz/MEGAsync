@@ -96,8 +96,6 @@
         <file>components/views/GroupBox.qml</file>
         <file>components/views/ScrollPanel.qml</file>
         <file>components/views/StackViewBase.qml</file>
-        <file>components/dialogs/qmldir</file>
-        <file>components/dialogs/ConfirmCloseDialog.qml</file>
         <file>components/menus/MenuItem.qml</file>
         <file>components/menus/qmldir</file>
         <file>components/menus/ContextMenuItem.qml</file>
@@ -219,8 +217,6 @@
         <file>components/menus/Sizes.qml</file>
         <file>deviceCentre/RenameDeviceDialog.qml</file>
         <file>common/DeviceName.qml</file>
-        <file>components/dialogs/ErrorDialog.qml</file>
-        <file>components/dialogs/TitleBodyDialog.qml</file>
         <file>syncs/ChooseSyncFolder.qml</file>
     </qresource>
 </RCC>

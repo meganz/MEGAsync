@@ -1,5 +1,6 @@
 #include "SyncExclusions.h"
 
+#include "MessageDialogOpener.h"
 #include "Preferences.h"
 
 #include <QQmlEngine>
@@ -231,6 +232,32 @@ void SyncExclusions::setFolder(const QString& folderName)
 void SyncExclusions::restoreDefaults()
 {
     mMegaIgnoreManager->restreDefaults();
+}
+
+void SyncExclusions::showRemoveRuleConfirmationMessageDialog(const QString& descriptionText)
+{
+    MessageDialogInfo msgInfo;
+    msgInfo.titleText = QCoreApplication::translate("ExclusionsStrings", "Remove this exclusion?");
+    msgInfo.descriptionText = descriptionText;
+    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+    QMap<QMessageBox::Button, QString> textsByButton;
+    textsByButton.insert(QMessageBox::Ok,
+                         QCoreApplication::translate("ExclusionsStrings", "Remove"));
+    textsByButton.insert(QMessageBox::Cancel,
+                         QCoreApplication::translate("ExclusionsStrings", "Cancel"));
+    msgInfo.buttonsText = textsByButton;
+    msgInfo.defaultButton = QMessageBox::Ok;
+    msgInfo.checkboxText = QCoreApplication::translate("ExclusionsStrings", "Don’t ask me again");
+    msgInfo.checkboxChecked = true;
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
+    {
+        if (msg->result() == QMessageBox::Ok)
+        {
+            emit acceptedClicked();
+            setAskOnExclusionRemove(!msg->isChecked());
+        }
+    };
+    MessageDialogOpener::warning(msgInfo);
 }
 
 bool SyncExclusions::isAskOnExclusionRemove()  const

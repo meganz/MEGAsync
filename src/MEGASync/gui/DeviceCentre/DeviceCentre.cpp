@@ -499,6 +499,38 @@ bool DeviceCentre::isSmartModeSelected() const
     return Preferences::instance()->isStalledIssueSmartModeActivated();
 }
 
+void DeviceCentre::showWarningMessageDialog(const QString& descriptionText) const
+{
+    MessageDialogInfo msgInfo;
+    msgInfo.textFormat = Qt::TextFormat::RichText;
+    msgInfo.descriptionText = descriptionText;
+    MessageDialogOpener::warning(msgInfo);
+}
+
+void DeviceCentre::showRebootWarningDialog(const QString& titleText,
+                                           const QString& descriptionText,
+                                           int row) const
+{
+    MessageDialogInfo msgInfo;
+    msgInfo.textFormat = Qt::TextFormat::RichText;
+    msgInfo.titleText = titleText;
+    msgInfo.descriptionText = descriptionText;
+    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+    QMap<QMessageBox::Button, QString> textsByButton;
+    textsByButton.insert(QMessageBox::Ok, QCoreApplication::translate("Strings", "Continue"));
+    textsByButton.insert(QMessageBox::Cancel, QCoreApplication::translate("Strings", "Cancel"));
+    msgInfo.buttonsText = textsByButton;
+    msgInfo.defaultButton = QMessageBox::Ok;
+    msgInfo.finishFunc = [this, row](QPointer<MessageDialogResult> msg)
+    {
+        if (msg->result() == QMessageBox::Ok)
+        {
+            rebootSync(row);
+        }
+    };
+    MessageDialogOpener::warning(msgInfo);
+}
+
 int DeviceCentre::getRowCount() const
 {
     return mSyncModel->rowCount();

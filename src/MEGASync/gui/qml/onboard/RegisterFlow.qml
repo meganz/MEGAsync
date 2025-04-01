@@ -76,35 +76,6 @@ Rectangle {
         }
     ]
 
-    // DO NOT REMOVE, windows qt bug. Without this line CancelLogin does not close when RegisterFlow is deleted
-    Component.onDestruction: {}
-
-    ConfirmCloseDialog {
-        id: cancelLogin
-
-        titleText: OnboardingStrings.cancelLoginTitle
-        bodyText: OnboardingStrings.cancelLoginBodyText
-        cancelButtonText: OnboardingStrings.cancelLoginSecondaryButton
-        acceptButtonText: OnboardingStrings.cancelLoginPrimaryButton
-        visible: false
-        onAccepted: {
-            loginControllerAccess.cancelLogin();
-        }
-    }
-
-    ConfirmCloseDialog {
-        id: cancelCreateAccount
-
-        titleText: OnboardingStrings.cancelAccountCreationTitle
-        bodyText: OnboardingStrings.cancelAccountCreationBody
-        cancelButtonText: OnboardingStrings.cancelAccountCancelButton
-        acceptButtonText: OnboardingStrings.cancelAccountAcceptButton
-        visible: false
-        onAccepted: {
-            loginControllerAccess.cancelCreateAccount();
-        }
-    }
-
     Item {
         id: leftItem
 
@@ -203,7 +174,6 @@ Rectangle {
 
         function onAccountCreationCancelled() {
             window.creatingAccount = false;
-            cancelCreateAccount.close();
             window.forceClose();
         }
     }
@@ -212,11 +182,11 @@ Rectangle {
         target: window
 
         function onClosingButLoggingIn() {
-            cancelLogin.visible = true;
+            onboardingAccess.showClosingButLoggingInWarningDialog();
         }
 
         function onClosingButCreatingAccount() {
-            cancelCreateAccount.visible = true;
+            onboardingAccess.showClosingButCreatingAccount();
         }
     }
 }

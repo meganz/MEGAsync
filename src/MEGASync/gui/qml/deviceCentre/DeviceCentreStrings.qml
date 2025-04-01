@@ -53,9 +53,9 @@ QtObject {
     readonly property string rebootDialogTitleSync: /*qsTr*/("Reboot sync?")
     readonly property string rebootDialogTitleBackup: /*qsTr*/("Reboot backup?")
     readonly property string rebootDialogBodySync: /*qsTr*/("This action automatically restarts your sync, which can resolve sync issues. Files that are the same on both sides of the sync will not be affected.
-[Br]It may take some time to complete synchronising. If this doesn't resolve your sync issues, report the issue to Support.")
+[BR][BR]It may take some time to complete synchronising. If this doesn't resolve your sync issues, report the issue to Support.")
     readonly property string rebootDialogBodyBackup: /*qsTr*/("This action automatically restarts your backup, which can resolve backup issues. Files that are the same on both sides of the backup will not be affected.
-[Br]It may take some time to complete synchronising. If this doesn't resolve your backup issues, report the issue to Support.")
+[BR][BR]It may take some time to complete synchronising. If this doesn't resolve your backup issues, report the issue to Support.")
 
     function folderCount(count) {
         return /*qsTr*/("%n folders"/*, "", count*/)
