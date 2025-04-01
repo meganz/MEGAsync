@@ -231,8 +231,7 @@ void PlatformImplementation::notifyAllSyncFoldersRemoved()
 
 QString AbstractPlatform::preparePathForSync(const QString& path)
 {
-    QDir dir(QDir::cleanPath(path));
-    return dir.path();
+    return QDir::toNativeSeparators(QDir::cleanPath(path));
 }
 
 void PlatformImplementation::processSymLinks()

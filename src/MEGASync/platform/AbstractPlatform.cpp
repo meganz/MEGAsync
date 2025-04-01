@@ -269,8 +269,8 @@ void AbstractPlatform::removeSyncFromLeftPane(QString /*syncPath*/) {}
 
 QString AbstractPlatform::preparePathForSync(const QString& path)
 {
-    QDir dir(QDir::cleanPath(path));
-    return dir.canonicalPath();
+    QDir dir(path);
+    return QDir::toNativeSeparators(dir.canonicalPath());
 }
 
 bool AbstractPlatform::makePubliclyReadable(const QString& /*fileName*/)

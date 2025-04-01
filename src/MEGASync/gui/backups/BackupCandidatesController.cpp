@@ -70,8 +70,8 @@ void BackupCandidatesController::initWithDefaultDirectories()
     for (auto type: qAsConst(defaultPaths))
     {
         const auto standardPaths(QStandardPaths::standardLocations(type));
-        QDir dir(Platform::getInstance()->preparePathForSync(standardPaths.first()));
-        QString path(QDir::toNativeSeparators(dir.path()));
+        QString path(Platform::getInstance()->preparePathForSync(standardPaths.first()));
+        QDir dir(path);
         if (dir.exists() && dir != QDir::home() && isLocalFolderSyncable(path))
         {
             auto data =
