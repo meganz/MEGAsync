@@ -180,12 +180,12 @@
     <message>
         <source>Takedown Notice</source>
         <translatorcomment>Notification label related to takedown notice</translatorcomment>
-        <translation>Thông báo gỡ bỏ</translation>
+        <translation>Cáo thị yêu cầu gỡ bỏ</translation>
     </message>
     <message>
         <source>Takedown notice</source>
         <translatorcomment>Label title for Takedown category of a notification</translatorcomment>
-        <translation>Thông báo gỡ bỏ</translation>
+        <translation>Cáo thị yêu cầu gỡ bỏ</translation>
     </message>
     <message>
         <source>You accepted a contact request</source>
@@ -803,7 +803,7 @@
     <message>
         <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
         <translatorcomment>Messagebox secondary string to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tất cả các mục sẽ bị xóa vĩnh viễn. Hành động này [B]không[/B] thể hồi lại được.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1151,7 +1151,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Takedown Notice</source>
         <translatorcomment>Notification label related to takedown notice</translatorcomment>
-        <translation>Thông báo gỡ bỏ nội dung</translation>
+        <translation>Cáo thị yêu cầu gỡ bỏ</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -1969,17 +1969,17 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Finish set up</source>
         <translatorcomment>Text on the O.S. notification button to open the window for creating the first sync after the onboarding process (first run of the application). CON-1207</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hoàn tất thiết lập</translation>
     </message>
     <message>
         <source>Set up your first sync to get the most out of the desktop app</source>
         <translatorcomment>Description text in O.S. notification to remind that the user can create syncs after few hours (e.g. 2) from the first launch of the application if the user has never created a sync. CON-1207</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thiết lập phiên đồng bộ hóa đầu tiên của bạn để tận dụng tối đa của ứng dụng</translation>
     </message>
     <message>
         <source>You’re almost done</source>
         <translatorcomment>Title text in O.S. notification to remind that the user can create syncs after few hours (e.g. 2) from the first launch of the application if the user has never created a sync. CON-1207</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bạn sắp xong rồi</translation>
     </message>
 </context>
 <context>
@@ -2173,7 +2173,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Unknown</source>
         <translatorcomment>The incoming shared folder access is unknown. CON-1266</translatorcomment>
-        <translation>Unknown</translation>
+        <translation>Không rõ</translation>
     </message>
 </context>
 <context>
@@ -2460,7 +2460,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Choose Users</source>
         <translatorcomment>Label to indicate for which users you want to install the app.</translatorcomment>
-        <translation>Chọn Người dùng</translation>
+        <translation>Chọn người dùng</translation>
     </message>
     <message>
         <source>Choose for which users you want to install $(^NameDA).</source>
@@ -3190,17 +3190,17 @@ Hãy chờ cho phiên tải lên được hoàn tất.</translation>
     <message>
         <source>Link can&apos;t be imported, invalid key or decryption error</source>
         <translatorcomment>Error message when there is a decryption error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không thể chuyển nhập đường liên kết, chìa khóa không hợp lệ hoặc lỗi giải mã</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported, your storage is full</source>
         <translatorcomment>Error message when there is an error importing a MEGA link because the storage quota is exceeded. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không thể chuyển nhập đường liên kết, không gian lưu trữ bị đầy</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported: %1</source>
         <translatorcomment>Error message when there is a generic error importing a MEGA link. %1 the error message coming from the SDK. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không thể chuyển nhập đường liên kết: %1</translation>
     </message>
     <message>
         <source>Link import error</source>
@@ -3220,7 +3220,7 @@ Hãy chờ cho phiên tải lên được hoàn tất.</translation>
     <message>
         <source>MEGA web</source>
         <translatorcomment>InfoDialog menu action to open the webclient. CON-1245</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Trang web MEGA</translation>
     </message>
     <message>
         <source>MEGAsync has been updated</source>
@@ -3691,7 +3691,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Reconfigure</source>
         <translatorcomment>Button to reconfigure syncs and backups (opens Onboarding wizard) - CON-1311</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cấu hình lại</translation>
     </message>
     <message>
         <source>Reload</source>
@@ -3721,7 +3721,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Sync configuration error</source>
         <translatorcomment>Title of the warning dialog shown when the syncs configuration file has been re-generated by the sdk  - CON-1311</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi cấu hình đồng bộ</translation>
     </message>
     <message>
         <source>Temporarily not available</source>
@@ -3773,7 +3773,7 @@ https://mega.co.nz/#sync</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
         <translation>Tài khoản MEGA của quý vị đã bị đình chỉ do đã nhiều lần bị cáo buộc vi phạm bản quyền. Điều này có nghĩa là quý vị không được phép truy cập tài khoản của mình hoặc bất cứ dữ liệu bên trong.
 
-Kiểm tra hộp thư email của quý vị để biết thêm thông tin và về cách gửi đơn phản đối.</translation>
+Kiểm tra hộp thư email của quý vị để biết thêm thông tin và về cách gửi đơn phản cáo.</translation>
     </message>
     <message>
         <source>Your account has expired</source>
@@ -3794,7 +3794,7 @@ Bạn sẽ không thể lấy lại quyền truy cập vào dữ liệu đã �
     <message>
         <source>Your sync and backup settings were corrupted and have been reset. If you had any, please set them up again.</source>
         <translatorcomment>Body of the warning dialog shown when the syncs configuration file has been re-generated by the sdk - CON-1311</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các thiết đặt của đồng bộ và sao lưu đã bị hỏng và đã được đặt lại từ đầu. Bạn sẽ cần phải thiết lập lại bất kỳ đồng bộ hóa và sao lưu nào bạn đã có trước đây một lần nữa.</translation>
     </message>
 </context>
 <context>
@@ -4329,7 +4329,7 @@ Tất cả các phiên truyền tải đã hoàn tất của bạn sẽ bị d�
     <message>
         <source>Access your data from anywhere, collaborate with ease, and instantly get the most up-to-date version of your files</source>
         <translatorcomment>Description text in O.S. notification to remind that the user can create syncs after days or months (e.g. 10 days, 1 month) if the user has never created a sync. CON-1207</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Truy cập dữ liệu của mình từ mọi nơi, cộng tác dễ dàng và ngay lập tức nhận được phiên bản cập nhật mới nhất của các tệp tin.</translation>
     </message>
     <message>
         <source>Set up sync</source>
@@ -4339,7 +4339,7 @@ Tất cả các phiên truyền tải đã hoàn tất của bạn sẽ bị d�
     <message>
         <source>Sync your data</source>
         <translatorcomment>Title text in O.S. notification to remind that the user can create syncs after days or months (e.g. 10 days, 1 month) if the user has never created a sync. CON-1207</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đồng bộ hóa dữ liệu của bạn</translation>
     </message>
 </context>
 <context>
@@ -4625,27 +4625,27 @@ Nhập một tên khác.</translation>
     <message>
         <source>Error copying file</source>
         <translatorcomment>Main text of a messagebox when copying a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi khi sao chép tệp</translation>
     </message>
     <message>
         <source>Error copying files</source>
         <translatorcomment>Main text of a messagebox when copying some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi khi sao chép các tệp tin</translation>
     </message>
     <message>
         <source>Error copying folder</source>
         <translatorcomment>Main text of a messagebox when copying a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi khi sao chép thư mục</translation>
     </message>
     <message>
         <source>Error copying folders</source>
         <translatorcomment>Main text of a messagebox when copying some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi khi sao chép các thư mục</translation>
     </message>
     <message>
         <source>Error copying items</source>
         <translatorcomment>Main text of a messagebox when copying some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi khi sao chép các mục</translation>
     </message>
     <message>
         <source>Error deleting file</source>
@@ -4675,52 +4675,52 @@ Nhập một tên khác.</translation>
     <message>
         <source>Error moving file</source>
         <translatorcomment>Main text of a messagebox when moving a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi khi di chuyển tệp</translation>
     </message>
     <message>
         <source>Error moving files</source>
         <translatorcomment>Main text of a messagebox when moving some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi khi di chuyển các tệp tin</translation>
     </message>
     <message>
         <source>Error moving folder</source>
         <translatorcomment>Main text of a messagebox when moving a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi khi di chuyển thư mục</translation>
     </message>
     <message>
         <source>Error moving folders</source>
         <translatorcomment>Main text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi khi di chuyển các thư mục</translation>
     </message>
     <message>
         <source>Error moving items</source>
         <translatorcomment>Main text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi khi di chuyển các mục</translation>
     </message>
     <message>
         <source>Error restoring file</source>
         <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi khi khôi phục tệp</translation>
     </message>
     <message>
         <source>Error restoring files</source>
         <translatorcomment>Main text of a messagebox when restoring some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi khi khôi phục các tệp tin</translation>
     </message>
     <message>
         <source>Error restoring folder</source>
         <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi khi khôi phục thư mục</translation>
     </message>
     <message>
         <source>Error restoring folders</source>
         <translatorcomment>Main text of a messagebox when restoring some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi khi khôi phục các thư mục</translation>
     </message>
     <message>
         <source>Error restoring items</source>
         <translatorcomment>Main text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi khi khôi phục các mục</translation>
     </message>
     <message>
         <source>Folder already synced</source>
@@ -4745,7 +4745,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Sort by access</source>
         <translatorcomment>Access column tooltip. Sorts the order of the column by incoming shared folder access.CON-1266</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Xếp theo quyền truy cập</translation>
     </message>
     <message>
         <source>Sort by date</source>
@@ -4770,7 +4770,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>The file %1 couldn’t be copied. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when copying a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tệp tin %1 đã không thể sao chép được. Thử lại sau.</translation>
     </message>
     <message>
         <source>The file %1 couldn’t be deleted. Try again later</source>
@@ -4780,17 +4780,17 @@ Nhập một tên khác.</translation>
     <message>
         <source>The file %1 couldn’t be moved. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when moving a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tệp tin %1 đã không thể di chuyển được. Thử lại sau.</translation>
     </message>
     <message>
         <source>The file %1 couldn’t be restored. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tệp tin %1 đã không thể khôi phục được. Thử lại sau.</translation>
     </message>
     <message>
         <source>The files couldn’t be copied. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when copying some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các tệp tin đã không thể sao chép được. Thử lại sau.</translation>
     </message>
     <message>
         <source>The files couldn’t be deleted. Try again later</source>
@@ -4800,17 +4800,17 @@ Nhập một tên khác.</translation>
     <message>
         <source>The files couldn’t be moved. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when moving some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các tệp tin đã không thể di chuyển được. Thử lại sau.</translation>
     </message>
     <message>
         <source>The files couldn’t be restored. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when restoring some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các tệp tin đã không thể khôi phục được. Thử lại sau.</translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be copied. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when copying a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thư mục %1 đã không thể sao chép được. Thử lại sau.</translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be deleted. Try again later</source>
@@ -4820,17 +4820,17 @@ Nhập một tên khác.</translation>
     <message>
         <source>The folder %1 couldn’t be moved. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when moving a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thư mục %1 đã không thể di chuyển được. Thử lại sau.</translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be restored. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thư mục %1 đã không thể khôi phục được. Thử lại sau.</translation>
     </message>
     <message>
         <source>The folders couldn’t be copied. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when copying some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các thư mục đã không thể sao chép được. Thử lại sau.</translation>
     </message>
     <message>
         <source>The folders couldn’t be deleted. Try again later</source>
@@ -4840,17 +4840,17 @@ Nhập một tên khác.</translation>
     <message>
         <source>The folders couldn’t be moved. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các thư mục đã không thể di chuyển được. Thử lại sau.</translation>
     </message>
     <message>
         <source>The folders couldn’t be restored. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when restoring some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các thư mục đã không thể khôi phục được. Thử lại sau.</translation>
     </message>
     <message>
         <source>The items couldn’t be copied. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when copying some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các mục đã không thể sao chép được. Thử lại sau.</translation>
     </message>
     <message>
         <source>The items couldn’t be deleted. Try again later</source>
@@ -4860,12 +4860,12 @@ Nhập một tên khác.</translation>
     <message>
         <source>The items couldn’t be moved. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các mục đã không thể di chuyển được. Thử lại sau.</translation>
     </message>
     <message>
         <source>The items couldn’t be restored. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các mục đã không thể khôi phục được. Thử lại sau.</translation>
     </message>
 </context>
 <context>
@@ -4893,7 +4893,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Permanently delete</source>
         <translatorcomment>Contextual menu text that appears when we right click on an item on the rubbish page on node selector. It deletes the item and it can be undone. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Xóa vĩnh viễn</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -4986,7 +4986,7 @@ Nhập một tên khác.</translation>
     <message numerus="yes">
         <source>Leave this shared folder?</source>
         <translatorcomment>Title of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Rời khỏi thư mục chia sẻ này?</numerusform></translation>
     </message>
     <message>
         <source>Move</source>
@@ -4996,7 +4996,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Move %1 to Rubbish bin?</source>
         <translatorcomment>Main text of the confirmation messagebox to move a single item (file or folder) pto the rubbish bin. %1 is the name of the item to delete. CON-334</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Di chuyển %1 vào Thùng Rác?</translation>
     </message>
     <message numerus="yes">
         <source>Move %n items to Rubbish bin?</source>
@@ -5026,22 +5026,22 @@ Nhập một tên khác.</translation>
     <message numerus="yes">
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a file(s) from the rubbish bin. %n is the number of files to delete. CON-1258</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Bạn đang chuẩn bị xóa đi vĩnh viễn %n tệp tin. Bạn có muốn tiến hành không?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n folder. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a folder(s) from the rubbish bin. %n is the number of folders to delete. CON-1258</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Bạn đang chuẩn bị xóa đi vĩnh viễn %n thư mục. Bạn có muốn tiến hành không?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n items. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently some items (files and folders) from the rubbish bin. %n is the number of items to delete. CON-1258</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Bạn đang chuẩn bị xóa đi vĩnh viễn %n mục. Bạn có muốn tiến hành không?</numerusform></translation>
     </message>
     <message>
         <source>You cannot undo this action</source>
         <translatorcomment>Second part of the messagebox text when the user is about to remove permanently a node. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bạn sẽ không thể hoàn tác hành động này được</translation>
     </message>
 </context>
 <context>
@@ -5173,7 +5173,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Access the latest version of your files from anywhere. Changes made to synced files will automatically update in both directions.</source>
         <translatorcomment>Selective sync button text description CON-1268</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Truy cập phiên bản mới nhất của các tệp tin của mình từ mọi nơi. Các thay đổi được thực hiện đối với tất cả tệp tin được đồng bộ sẽ tự động cập nhật với hai bên.</translation>
     </message>
     <message>
         <source>Account created</source>
@@ -5303,7 +5303,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Data from your device will automatically and consistently back up to MEGA in real-time. Files deleted from your computer will be deleted from MEGA.</source>
         <translatorcomment>Button description, on click it goes to the backups section CON-1268</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Dữ liệu từ thiết bị của bạn sẽ tự động và nhất quán sao lưu lên MEGA theo thời gian thực. Tệp tin nào bị xóa khỏi máy tính của bạn sẽ đồng thời bị xóa khỏi MEGA.</translation>
     </message>
     <message>
         <source>Device name</source>
@@ -5398,7 +5398,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
-        <translation>Mã XT2B không đúng</translation>
+        <translation>Mã 2FA không đúng</translation>
     </message>
     <message>
         <source>It’s better to have:</source>
@@ -5523,7 +5523,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Set up MEGA</source>
         <translatorcomment>Onboarding window title CON-467</translatorcomment>
-        <translation>Thiếp Lập MEGA</translation>
+        <translation>Thiết lập MEGA</translation>
     </message>
     <message>
         <source>Setup options</source>
@@ -6025,7 +6025,13 @@ Nhập một tên khác.</translation>
 - Other bugs have been fixed and numerous improvements made.
 </source>
         <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Giới thiệu một trình duyệt tệp tin từ xa mới cho Ổ Mây. Duyệt Ổ Mây của bạn thật phong cách và quản lý các tệp tin và thư mục của bạn trong giao diện mới, đẹp và dễ sử dụng.
+- Chúng tôi đã thực hiện nhiều cải tiến hơn đối với trình hướng dẫn giới thiệu ban đầu.
+- Thông báo hệ thống đã được cải tiến thêm.
+- Bây giờ bạn có thể ghim ứng dụng MEGA vào thanh tác vụ Windows.
+- Một số thư viện bên thứ ba đã được cập nhật.
+- Các lỗi khác đã được sửa và nhiều cải tiến được thực hiện.
+</translation>
     </message>
 </context>
 <context>
@@ -8531,7 +8537,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Changes made to synced folders in MEGA or on your device will automatically update in both directions.</source>
         <translatorcomment>Page description to add syncs. CON-1268</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các thay đổi được thực hiện đối với các thư mục được đồng bộ trên MEGA hoặc trong thiết bị của bạn sẽ tự động cập nhật theo cả hai bên.</translation>
     </message>
     <message>
         <source>Select folders</source>
@@ -8541,7 +8547,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Select folders to sync</source>
         <translatorcomment>Page title to add syncs. CON-1268</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Chọn các thư mục để đồng bộ</translation>
     </message>
 </context>
 <context>
