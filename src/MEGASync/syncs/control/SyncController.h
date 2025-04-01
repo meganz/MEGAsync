@@ -98,7 +98,7 @@ public:
 
 signals:
     void syncAddStatus(int errorCode, int syncErrorCode, QString name);
-    void syncPrevalidateStatus(int errorCode, int syncErrorCode, QString name);
+    void syncPrevalidateStatus(int errorCode, int syncErrorCode);
     void syncRemoveStatus(int errorCode);
     void syncRemoveError(std::shared_ptr<mega::MegaError> err);
     void signalSyncOperationBegins();

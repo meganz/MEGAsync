@@ -38,7 +38,7 @@ public slots:
 
 private slots:
     void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name);
-    void onSyncPrevalidateRequestStatus(int errorCode, int syncErrorCode, QString name);
+    void onSyncPrevalidateRequestStatus(int errorCode, int syncErrorCode);
     void onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings);
     void onLanguageChanged();
 
@@ -90,6 +90,7 @@ private:
     void setDefaultRemoteFolder();
     bool checkLocalSync(const QString& path);
     bool checkRemoteSync(const QString& path);
+    bool setErrorIfExist(int errorCode, int syncErrorCode);
 };
 
 #endif // SYNCS_H

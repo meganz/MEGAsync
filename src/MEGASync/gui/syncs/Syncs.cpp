@@ -300,10 +300,8 @@ void Syncs::onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings)
     emit mSyncsData->syncRemoved();
 }
 
-void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name)
+bool Syncs::setErrorIfExist(int errorCode, int syncErrorCode)
 {
-    Q_UNUSED(name)
-
     if (errorCode != mega::MegaError::API_OK)
     {
         mRemoteError = RemoteErrors::CANT_ADD_SYNC;
@@ -311,8 +309,18 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString nam
         mRemoteMegaError.syncError = syncErrorCode;
 
         mSyncsData->setRemoteError(getRemoteError());
+
+        return true;
     }
-    else
+
+    return false;
+}
+
+void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name)
+{
+    Q_UNUSED(name)
+
+    if (!setErrorIfExist(errorCode, syncErrorCode))
     {
         setDefaultLocalFolder();
         setDefaultRemoteFolder();
@@ -321,19 +329,9 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString nam
     }
 }
 
-void Syncs::onSyncPrevalidateRequestStatus(int errorCode, int syncErrorCode, QString name)
+void Syncs::onSyncPrevalidateRequestStatus(int errorCode, int syncErrorCode)
 {
-    Q_UNUSED(name)
-
-    if (errorCode != mega::MegaError::API_OK)
-    {
-        mRemoteError = RemoteErrors::CANT_ADD_SYNC;
-        mRemoteMegaError.error = errorCode;
-        mRemoteMegaError.syncError = syncErrorCode;
-
-        mSyncsData->setRemoteError(getRemoteError());
-    }
-    else
+    if (!setErrorIfExist(errorCode, syncErrorCode))
     {
         mSyncController.addSync(mSyncConfig);
     }

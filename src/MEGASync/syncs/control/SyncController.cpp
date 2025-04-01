@@ -117,7 +117,7 @@ void SyncController::prevalidateSync(SyncConfig& sync)
                 MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
             }
 
-            emit syncPrevalidateStatus(errorCode, syncErrorCode, sync.localFolder);
+            emit syncPrevalidateStatus(errorCode, syncErrorCode);
         });
 
     mApi->prevalidateSyncFolder(sync.type,
