@@ -2233,7 +2233,7 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
     <message>
         <source>Unknown</source>
         <translatorcomment>The incoming shared folder access is unknown. CON-1266</translatorcomment>
-        <translation>Unknown</translation>
+        <translation>Desconhecido</translation>
     </message>
 </context>
 <context>
@@ -6416,7 +6416,7 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>Detail View</source>
         <translatorcomment>Button for changing to filesystem detail view mode</translatorcomment>
-        <translation>Visualização de detalhes</translation>
+        <translation>Visualização em detalhes</translation>
     </message>
     <message>
         <source>Directories</source>
