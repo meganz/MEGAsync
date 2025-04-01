@@ -149,7 +149,8 @@ Text {
                              + ";\" href=\"" + url + "\">"
             },
             { pattern: /\[\/A\]/g, replacement: "</a>" },
-            { pattern: /\[BR\]/g, replacement: "<br>" }
+            { pattern: /\[BR\]/g, replacement: "<br>" },
+            { pattern: /\[\/BR\]/g, replacement: "" }
         ];
 
         replacements.forEach(replacement => {
