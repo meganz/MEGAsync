@@ -2,6 +2,33 @@
 
 #include <QVariant>
 
+/*
+ * HOW TO USE THIS CLASS?
+ */
+
+/*
+ * If you want to block a type of event on a QWidget -> Example: addEvent(mMenu, QEvent::Wheel,
+ * Action::BLOCKED) -> This will block all mouse wheel events
+ */
+
+/* If you want to block a type of event
+ * depending on a more complex logic -> Example: addEvent(mMenu, QEvent::Wheel, const
+ * std::function<bool(QEvent*)>& func) -> This will block mouse wheel events depending on the
+ * function return, return true when the event is blocked and false when it is accepted
+ */
+
+/* If you want to run some logic when an event is received without blocking any event just use the
+ * previous example but returning always false in the function provided
+ * -> Example: addEvent(mMenu, QEvent::Wheel, const
+ * std::function<bool(QEvent*)>& func) -> This will run the function every time a wheel event is
+ * received, but as you are returning false from the function, no event is blocked
+ */
+
+/* If you want to clear the state and keep it as default:
+ * -> Example: addEvent(mMenu, QEvent::Wheel, Action::ACCEPT) -> This will remove the existing state
+ * for the object
+ */
+
 const QString EventManager::EVENT_PROPERTY = QString::fromUtf8("EVENTMANAGER_EVENT_%1");
 
 EventHelper::EventHelper(const Data &data) : QObject(data.object)
@@ -41,12 +68,18 @@ bool EventHelper::Data::operator==(const Data& data)
 
 void EventManager::addEvent(QObject *obj, const QEvent::Type& eType, const EventHelper::Action& act)
 {
-    EventHelper::Data data;
-    data.action = act;
-    data.eventType = eType;
-    data.object = obj;
-    data.func = nullptr;
-    addEvent(data);
+    if (act == EventHelper::ACCEPT)
+    {
+        removeEvent(obj, eType);
+    }
+    else
+    {
+        EventHelper::Data data;
+        data.action = act;
+        data.eventType = eType;
+        data.object = obj;
+        addEvent(data);
+    }
 }
 
 void EventManager::addEvent(QObject* obj,
@@ -54,7 +87,6 @@ void EventManager::addEvent(QObject* obj,
                             const std::function<bool(QEvent*)>& func)
 {
     EventHelper::Data data;
-    data.action = EventHelper::Action::BLOCK;
     data.func = func;
     data.eventType = eType;
     data.object = obj;
@@ -77,12 +109,6 @@ void EventManager::addEvent(const EventHelper::Data& data)
 {
     if(!data.object)
     {
-        return;
-    }
-
-    if(data.action == EventHelper::ACCEPT)
-    {
-        removeEvent(data.object, data.eventType);
         return;
     }
 
