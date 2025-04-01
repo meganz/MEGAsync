@@ -47,8 +47,8 @@ void ChooseLocalFolder::openFolderSelector(const QString& folderPath, bool folde
     {
         if(context && !selection.isEmpty())
         {
-            auto folder = getNativePath(selection.first());
-            sendFolderChosenSignal(folder, QString());
+            sendFolderChosenSignal(Platform::getInstance()->preparePathForSync(selection.first()),
+                                   QString());
         }
     };
 
@@ -73,23 +73,12 @@ void ChooseLocalFolder::openRelativeFolderSelector(const QString& folderPath)
     {
         if(context && !selection.isEmpty())
         {
-            auto folder = getNativePath(selection.first());
-            sendFolderChosenSignal(folder, openFromFolder);
+            sendFolderChosenSignal(Platform::getInstance()->preparePathForSync(selection.first()),
+                                   openFromFolder);
         }
     };
 
     Platform::getInstance()->folderSelector(info);
-}
-
-QString ChooseLocalFolder::getNativePath(const QString& path)
-{
-    return QDir::toNativeSeparators(
-#ifdef Q_OS_LINUX
-        path
-#else
-        QDir(path).canonicalPath()
-#endif
-    );
 }
 
 void ChooseLocalFolder::sendFolderChosenSignal(const QString& folder, const QString& openFromFolder)

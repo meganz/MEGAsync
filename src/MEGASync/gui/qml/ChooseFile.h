@@ -19,7 +19,6 @@ signals:
     void fileChoosen(QString folderPath);
 
 private:
-    QString getNativePath(const QString& path);
     void sendFileChosenSignal(const QString& file, const QString& openFromFolder = QString());
 
     QString mTitle;

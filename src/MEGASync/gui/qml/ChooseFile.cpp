@@ -38,7 +38,7 @@ void ChooseLocalFile::openFileSelector(const QString& folderPath)
     {
         if(context && !selection.isEmpty())
         {
-            sendFileChosenSignal(getNativePath(selection.first()));
+            sendFileChosenSignal(Platform::getInstance()->preparePathForSync(selection.first()));
         }
     };
 
@@ -63,22 +63,12 @@ void ChooseLocalFile::openRelativeFileSelector(const QString& folderPath)
     {
         if(context && !selection.isEmpty())
         {
-            sendFileChosenSignal(getNativePath(selection.first()), openFromFolder);
+            sendFileChosenSignal(Platform::getInstance()->preparePathForSync(selection.first()),
+                                 openFromFolder);
         }
     };
 
     Platform::getInstance()->fileSelector(info);
-}
-
-QString ChooseLocalFile::getNativePath(const QString& path)
-{
-    return QDir::toNativeSeparators(
-#ifdef Q_OS_LINUX
-        path
-#else
-        QDir(path).canonicalPath()
-#endif
-    );
 }
 
 void ChooseLocalFile::sendFileChosenSignal(const QString& file, const QString& relativePath)
