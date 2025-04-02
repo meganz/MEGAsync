@@ -66,7 +66,7 @@ void Onboarding::showClosingButLoggingInWarningDialog() const
                          QCoreApplication::translate("OnboardingStrings", "Stop Loggin in"));
     msgInfo.buttonsText = textsByButton;
     msgInfo.defaultButton = QMessageBox::Cancel;
-    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
+    msgInfo.finishFunc = [](QPointer<MessageDialogResult> msg)
     {
         if (msg->result() == QMessageBox::Cancel)
         {
@@ -92,7 +92,7 @@ void Onboarding::showClosingButCreatingAccount() const
                          QCoreApplication::translate("OnboardingStrings", "Cancel account"));
     msgInfo.buttonsText = textsByButton;
     msgInfo.defaultButton = QMessageBox::Cancel;
-    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
+    msgInfo.finishFunc = [](QPointer<MessageDialogResult> msg)
     {
         if (msg->result() == QMessageBox::Cancel)
         {

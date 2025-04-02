@@ -57,7 +57,7 @@ void DialogOpener::showMessageDialog(QPointer<QmlMessageDialogWrapper> wrapper,
 #ifdef Q_OS_MACOS
         // If the message dialog is not WindowModal, the parent is not greyed out.
         // So, we use a dummy dialog WindowModal
-        if (msg->parent())
+        if (msgInfo->parent())
         {
             blocker = new DialogBlocker(wrapper->parentWidget());
             qApp->setActiveWindow(wrapper);
