@@ -4,6 +4,7 @@
 #include "MegaApiSynchronizedRequest.h"
 #include "MegaApplication.h"
 #include "MyBackupsHandle.h"
+#include "Platform.h"
 #include "RequestListenerManager.h"
 #include "StalledIssuesUtilities.h"
 #include "StatsEventHandler.h"
@@ -661,10 +662,7 @@ QString SyncController::getIsLocalFolderAllowedForSyncMsg(const QString& path, c
     }
 #endif
 
-    // Use canonicalPath() to resolve links except on Linux
-#ifndef Q_OS_LINUX
-    inputPath = QDir(inputPath).canonicalPath();
-#endif
+    inputPath = Platform::getInstance()->preparePathForSync(inputPath);
 
     if (inputPath == QDir::rootPath())
     {
