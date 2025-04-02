@@ -4098,10 +4098,11 @@ void MegaApplication::runUploadActionWithTargetHandle(const MegaHandle &targetFo
     };
 
     const bool storageIsOverQuota(storageState == MegaApi::STORAGE_STATE_RED || storageState == MegaApi::STORAGE_STATE_PAYWALL);
-    if(storageIsOverQuota)
+    if (storageIsOverQuota)
     {
-        auto overQuotaDialog = OverQuotaDialog::showDialog(OverQuotaDialogType::STORAGE_UPLOAD);
-        if(overQuotaDialog)
+        auto overQuotaDialog =
+            OverQuotaDialog::createDialogIfNeeded(OverQuotaDialogType::STORAGE_UPLOAD);
+        if (overQuotaDialog)
         {
             overQuotaDialog->setParent(parent);
             DialogOpener::showDialog<OverQuotaDialog>(overQuotaDialog, [processUpload]()
@@ -4125,10 +4126,11 @@ void MegaApplication::uploadActionClicked()
                                          sender(), uploadAction, true);
 
     const bool storageIsOverQuota(storageState == MegaApi::STORAGE_STATE_RED || storageState == MegaApi::STORAGE_STATE_PAYWALL);
-    if(storageIsOverQuota)
+    if (storageIsOverQuota)
     {
-        auto overQuotaDialog = OverQuotaDialog::showDialog(OverQuotaDialogType::STORAGE_UPLOAD);
-        if(overQuotaDialog)
+        auto overQuotaDialog =
+            OverQuotaDialog::createDialogIfNeeded(OverQuotaDialogType::STORAGE_UPLOAD);
+        if (overQuotaDialog)
         {
             DialogOpener::showDialog<OverQuotaDialog, TransferManager>(overQuotaDialog, false, [this](){
                 uploadActionFromWindowAfterOverQuotaCheck();
@@ -4177,17 +4179,17 @@ void MegaApplication::uploadActionFromWindowAfterOverQuotaCheck()
     Platform::getInstance()->fileAndFolderSelector(info);
 }
 
-QPointer<OverQuotaDialog> MegaApplication::showSyncOverquotaDialog()
+QPointer<OverQuotaDialog> MegaApplication::createSyncOverquotaDialog()
 {
     QPointer<OverQuotaDialog> dialog(nullptr);
 
-    if(storageState == MegaApi::STORAGE_STATE_RED)
+    if (storageState == MegaApi::STORAGE_STATE_RED)
     {
-        dialog = OverQuotaDialog::showDialog(OverQuotaDialogType::STORAGE_SYNCS);
+        dialog = OverQuotaDialog::createDialogIfNeeded(OverQuotaDialogType::STORAGE_SYNCS);
     }
-    else if(mTransferQuota->isOverQuota())
+    else if (mTransferQuota->isOverQuota())
     {
-        dialog = OverQuotaDialog::showDialog(OverQuotaDialogType::BANDWITH_SYNC);
+        dialog = OverQuotaDialog::createDialogIfNeeded(OverQuotaDialogType::BANDWITH_SYNC);
     }
 
     return dialog;

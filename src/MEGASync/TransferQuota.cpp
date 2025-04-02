@@ -230,7 +230,7 @@ void TransferQuota::checkAlertDismissed(OverQuotaDialogType type, std::function<
 {
     if(isOverQuota())
     {
-        auto dialog = OverQuotaDialog::showDialog(type);
+        auto dialog = OverQuotaDialog::createDialogIfNeeded(type);
         if(dialog)
         {
             DialogOpener::showDialog(dialog, [dialog, func]()

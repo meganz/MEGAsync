@@ -33,22 +33,16 @@ void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin, mega:
         remoteFolder = QString::fromUtf8(MegaSyncApp->getMegaApi()->getNodePath(node.get()));
     }
 
-    auto overQuotaDialog = MegaSyncApp->showSyncOverquotaDialog();
+    auto overQuotaDialog = MegaSyncApp->createSyncOverquotaDialog();
     auto addSyncLambda = [overQuotaDialog, origin, remoteFolder]()
     {
         if (!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
-            QPointer<QmlDialogWrapper<SyncsComponent>> syncsDialog;
-            if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
-            {
-                syncsDialog = dialog->getDialog();
-            }
-            else
-            {
-                syncsDialog = new QmlDialogWrapper<SyncsComponent>();
-            }
+            QPointer<QmlDialogWrapper<SyncsComponent>> syncsDialog =
+                new QmlDialogWrapper<SyncsComponent>();
             syncsDialog->wrapper()->setSyncOrigin(origin);
             syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
+
             DialogOpener::showDialog(syncsDialog);
         }
     };

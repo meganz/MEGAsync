@@ -7,53 +7,33 @@
 #include "RemoveBackupDialog.h"
 #include "SyncSettings.h"
 
-const CreateRemoveBackupsManager*
-    CreateRemoveBackupsManager::addBackup(bool comesFromSettings, const QStringList& localFolders)
+void CreateRemoveBackupsManager::addBackup(bool comesFromSettings)
 {
-    auto backupManager(new CreateRemoveBackupsManager());
-    backupManager->performAddBackup(localFolders, comesFromSettings);
-    return backupManager;
+    CreateRemoveBackupsManager::performAddBackup(comesFromSettings);
 }
 
-const CreateRemoveBackupsManager *CreateRemoveBackupsManager::removeBackup(std::shared_ptr<SyncSettings> backup, QWidget* parent)
+void CreateRemoveBackupsManager::removeBackup(std::shared_ptr<SyncSettings> backup, QWidget* parent)
 {
-    auto backupManager(new CreateRemoveBackupsManager());
-    backupManager->performRemoveBackup(backup, parent);
-    return backupManager;
+    CreateRemoveBackupsManager::performRemoveBackup(backup, parent);
 }
 
-bool CreateRemoveBackupsManager::isBackupsDialogOpen() const
+bool CreateRemoveBackupsManager::isBackupsDialogOpen()
 {
     return DialogOpener::findDialog<QmlDialogWrapper<BackupCandidatesComponent>>() != nullptr;
 }
 
-void CreateRemoveBackupsManager::performAddBackup(const QStringList& localFolders,
-                                                  bool comesFromSettings)
+void CreateRemoveBackupsManager::performAddBackup(bool comesFromSettings)
 {
-    auto overQuotaDialog = MegaSyncApp->showSyncOverquotaDialog();
-    auto addBackupLambda = [overQuotaDialog, comesFromSettings, localFolders, this]()
+    auto overQuotaDialog = MegaSyncApp->createSyncOverquotaDialog();
+    auto addBackupLambda = [overQuotaDialog, comesFromSettings]()
     {
         if (!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
-            QPointer<QmlDialogWrapper<BackupCandidatesComponent>> backupsDialog;
-            if (auto dialog =
-                    DialogOpener::findDialog<QmlDialogWrapper<BackupCandidatesComponent>>())
-            {
-                backupsDialog = dialog->getDialog();
-            }
-            else
-            {
-                backupsDialog = new QmlDialogWrapper<BackupCandidatesComponent>();
-            }
-            DialogOpener::showDialog(backupsDialog, [this]() {
-                deleteLater();
-            });
+            QPointer<QmlDialogWrapper<BackupCandidatesComponent>> backupsDialog =
+                new QmlDialogWrapper<BackupCandidatesComponent>();
             backupsDialog->wrapper()->setComesFromSettings(comesFromSettings);
-            backupsDialog->wrapper()->insertFolders(localFolders);
-        }
-        else
-        {
-            deleteLater();
+
+            DialogOpener::showDialog(backupsDialog);
         }
     };
 
@@ -72,24 +52,17 @@ void CreateRemoveBackupsManager::performRemoveBackup(std::shared_ptr<SyncSetting
 {
     QPointer<RemoveBackupDialog> dialog = new RemoveBackupDialog(backup, parent);
 
-    DialogOpener::showDialog(dialog, [this, dialog]() {
-        if (dialog->result() == QDialog::Accepted)
-        {
-            MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
-                AppStatsEvents::EventType::CONFIRM_REMOVE_BACKUP);
-            connect(&BackupsController::instance(),
-                    &BackupsController::syncRemoveStatus,
-                    this,
-                    [this](const int) {
-                        deleteLater();
-                    });
+    DialogOpener::showDialog(dialog,
+                             [dialog]()
+                             {
+                                 if (dialog->result() == QDialog::Accepted)
+                                 {
+                                     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+                                         AppStatsEvents::EventType::CONFIRM_REMOVE_BACKUP);
 
-            BackupsController::instance().removeSync(dialog->backupToRemove(),
-                                                     dialog->targetFolder());
-        }
-        else
-        {
-            deleteLater();
-        }
-    });
+                                     BackupsController::instance().removeSync(
+                                         dialog->backupToRemove(),
+                                         dialog->targetFolder());
+                                 }
+                             });
 }
