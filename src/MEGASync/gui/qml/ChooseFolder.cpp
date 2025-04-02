@@ -47,12 +47,8 @@ void ChooseLocalFolder::openFolderSelector(const QString& folderPath, bool folde
     {
         if(context && !selection.isEmpty())
         {
-            QString fPath = selection.first();
-            auto folder = QDir::toNativeSeparators(QDir(fPath).canonicalPath());
-            if(!folder.isNull() && !folder.isEmpty())
-            {
-                emit folderChoosen(folder);
-            }
+            sendFolderChosenSignal(Platform::getInstance()->preparePathForSync(selection.first()),
+                                   QString());
         }
     };
 
@@ -77,16 +73,27 @@ void ChooseLocalFolder::openRelativeFolderSelector(const QString& folderPath)
     {
         if(context && !selection.isEmpty())
         {
-            QString fPath = selection.first();
-            auto folder = QDir::toNativeSeparators(QDir(fPath).canonicalPath());
-            if(!folder.isNull() && !folder.isEmpty())
-            {
-                emit folderChoosen(QDir(openFromFolder).relativeFilePath(folder));
-            }
+            sendFolderChosenSignal(Platform::getInstance()->preparePathForSync(selection.first()),
+                                   openFromFolder);
         }
     };
 
     Platform::getInstance()->folderSelector(info);
+}
+
+void ChooseLocalFolder::sendFolderChosenSignal(const QString& folder, const QString& openFromFolder)
+{
+    if (!folder.isNull() && !folder.isEmpty())
+    {
+        if (openFromFolder.isEmpty())
+        {
+            emit folderChosen(folder);
+        }
+        else
+        {
+            emit folderChosen(QDir(openFromFolder).relativeFilePath(folder));
+        }
+    }
 }
 
 bool ChooseLocalFolder::createFolder(const QString& folderPath)
@@ -163,7 +170,7 @@ void ChooseRemoteFolder::openFolderSelector()
                 mFolderName = QString::fromUtf8(MegaSyncApp->getMegaApi()->getNodePath(node));
                 if(!mFolderName.isNull() && !mFolderName.isEmpty())
                 {
-                    emit folderChoosen(mFolderName);
+                    emit folderChosen(mFolderName);
                     emit folderNameChanged();
                 }
             }

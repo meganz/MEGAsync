@@ -52,6 +52,7 @@ public:
     virtual void notifyRestartSyncFolders() = 0;
     virtual void notifyAllSyncFoldersAdded() = 0;
     virtual void notifyAllSyncFoldersRemoved() = 0;
+    virtual QString preparePathForSync(const QString& path);
     virtual QByteArray encrypt(QByteArray data, QByteArray key);
     virtual QByteArray decrypt(QByteArray data, QByteArray key);
     virtual QByteArray getLocalStorageKey();

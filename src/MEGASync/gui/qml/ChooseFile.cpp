@@ -38,12 +38,7 @@ void ChooseLocalFile::openFileSelector(const QString& folderPath)
     {
         if(context && !selection.isEmpty())
         {
-            QString fPath = selection.first();
-            auto folder = QDir::toNativeSeparators(QDir(fPath).canonicalPath());
-            if(!folder.isNull() && !folder.isEmpty())
-            {
-                emit fileChoosen(folder);
-            }
+            sendFileChosenSignal(Platform::getInstance()->preparePathForSync(selection.first()));
         }
     };
 
@@ -68,14 +63,25 @@ void ChooseLocalFile::openRelativeFileSelector(const QString& folderPath)
     {
         if(context && !selection.isEmpty())
         {
-            QString fPath = selection.first();
-            auto folder = QDir::toNativeSeparators(QDir(fPath).canonicalPath());
-            if(!folder.isNull() && !folder.isEmpty())
-            {
-                emit fileChoosen(QDir(openFromFolder).relativeFilePath(folder));
-            }
+            sendFileChosenSignal(Platform::getInstance()->preparePathForSync(selection.first()),
+                                 openFromFolder);
         }
     };
 
     Platform::getInstance()->fileSelector(info);
+}
+
+void ChooseLocalFile::sendFileChosenSignal(const QString& file, const QString& relativePath)
+{
+    if (!file.isNull() && !file.isEmpty())
+    {
+        if (relativePath.isEmpty())
+        {
+            emit fileChosen(file);
+        }
+        else
+        {
+            emit fileChosen(QDir(relativePath).relativeFilePath(file));
+        }
+    }
 }

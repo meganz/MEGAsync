@@ -32,8 +32,8 @@ private:
     ChooseRemoteFolder mRemoteFolderChooser;
     ChooseLocalFolder mLocalFolderChooser;
 
-    void onRemoteFolderChoosen(QString remotePath);
-    void onLocalFolderChoosen(QString localPath);
+    void onRemoteFolderChosen(QString remotePath);
+    void onLocalFolderChosen(QString localPath);
 };
 
 #endif // SYNCS_COMPONENT_H

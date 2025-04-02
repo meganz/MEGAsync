@@ -57,7 +57,7 @@ FooterButtonsPage {
 
             title: SyncsStrings.selectLocalFolder
             leftIconSource: Images.pc
-            choosenPath: syncsDataAccess.defaultLocalFolder
+            chosenPath: syncsDataAccess.defaultLocalFolder
             Layout.preferredWidth: parent.width + 8
             Layout.leftMargin: -4
             Layout.topMargin: 16
@@ -68,7 +68,7 @@ FooterButtonsPage {
 
             title: SyncsStrings.selectMEGAFolder
             leftIconSource: Images.megaOutline
-            choosenPath: syncsDataAccess.defaultRemoteFolder
+            chosenPath: syncsDataAccess.defaultRemoteFolder
             Layout.preferredWidth: parent.width + 8
             Layout.leftMargin: -4
         }

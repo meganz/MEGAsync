@@ -27,6 +27,7 @@ public:
     void notifyRestartSyncFolders() override;
     void notifyAllSyncFoldersAdded() override;
     void notifyAllSyncFoldersRemoved() override;
+    QString preparePathForSync(const QString& path) override;
     QString getDefaultFileBrowserApp() override;
     QString getDefaultOpenApp(QString extension) override;
     QString getDefaultOpenAppByMimeType(QString mimeType) override;

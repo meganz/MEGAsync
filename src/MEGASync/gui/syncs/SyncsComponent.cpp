@@ -21,32 +21,32 @@ SyncsComponent::SyncsComponent(QObject* parent):
                                                    mSyncs->getSyncsData());
 
     connect(&mRemoteFolderChooser,
-            &ChooseRemoteFolder::folderChoosen,
+            &ChooseRemoteFolder::folderChosen,
             this,
-            &SyncsComponent::onRemoteFolderChoosen);
+            &SyncsComponent::onRemoteFolderChosen);
 
     connect(&mLocalFolderChooser,
-            &ChooseLocalFolder::folderChoosen,
+            &ChooseLocalFolder::folderChosen,
             this,
-            &SyncsComponent::onLocalFolderChoosen);
+            &SyncsComponent::onLocalFolderChosen);
 
     connect(mSyncs->getSyncsData(),
             &SyncsData::defaultLocalFolderChanged,
             this,
-            &SyncsComponent::onLocalFolderChoosen);
+            &SyncsComponent::onLocalFolderChosen);
 
     connect(mSyncs->getSyncsData(),
             &SyncsData::defaultRemoteFolderChanged,
             this,
-            &SyncsComponent::onRemoteFolderChoosen);
+            &SyncsComponent::onRemoteFolderChosen);
 }
 
-void SyncsComponent::onRemoteFolderChoosen(QString remotePath)
+void SyncsComponent::onRemoteFolderChosen(QString remotePath)
 {
     mSyncs->setRemoteFolderCandidate(remotePath);
 }
 
-void SyncsComponent::onLocalFolderChoosen(QString localPath)
+void SyncsComponent::onLocalFolderChosen(QString localPath)
 {
     mSyncs->setLocalFolderCandidate(localPath);
 }

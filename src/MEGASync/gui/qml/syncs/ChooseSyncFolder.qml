@@ -16,7 +16,7 @@ FocusScope {
 
     readonly property int textEditMargin: 2
 
-    property alias choosenPath: folderItem.text
+    property alias chosenPath: folderItem.text
     property alias folderField: folderItem
     property alias title: folderItem.title
     property alias leftIconSource: folderItem.leftIconSource

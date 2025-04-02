@@ -30,7 +30,7 @@ SyncsFlow {
                 leftPrimary.visible: false
                 leftSecondary {
                     text: Strings.setExclusions
-                    visible: localFolderChooser.choosenPath.length !== 0
+                    visible: localFolderChooser.chosenPath.length !== 0
                 }
             }
 

@@ -312,7 +312,7 @@ QmlDialog{
 
         title: ExclusionsStrings.selectFolderTitle
 
-        onFolderChoosen: (folderPath) => {
+        onFolderChosen: (folderPath) => {
             root.ruleValue = folderPath;
         }
     }
@@ -322,7 +322,7 @@ QmlDialog{
 
         title: ExclusionsStrings.selectFileTitle
 
-        onFileChoosen: (folderPath) => {
+        onFileChosen: (folderPath) => {
             root.ruleValue = folderPath;
         }
     }
