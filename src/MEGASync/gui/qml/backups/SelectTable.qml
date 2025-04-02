@@ -221,7 +221,7 @@ Item {
 
             target: folderDialog
 
-            function onFolderChoosen(folderPath) {
+            function onFolderChosen(folderPath) {
                 backupCandidatesComponentAccess.insertFolder(folderPath);
             }
         }

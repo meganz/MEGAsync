@@ -77,11 +77,11 @@ void ChooseLocalFile::sendFileChosenSignal(const QString& file, const QString& r
     {
         if (relativePath.isEmpty())
         {
-            emit fileChoosen(file);
+            emit fileChosen(file);
         }
         else
         {
-            emit fileChoosen(QDir(relativePath).relativeFilePath(file));
+            emit fileChosen(QDir(relativePath).relativeFilePath(file));
         }
     }
 }

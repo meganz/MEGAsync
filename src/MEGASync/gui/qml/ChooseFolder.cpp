@@ -87,11 +87,11 @@ void ChooseLocalFolder::sendFolderChosenSignal(const QString& folder, const QStr
     {
         if (openFromFolder.isEmpty())
         {
-            emit folderChoosen(folder);
+            emit folderChosen(folder);
         }
         else
         {
-            emit folderChoosen(QDir(openFromFolder).relativeFilePath(folder));
+            emit folderChosen(QDir(openFromFolder).relativeFilePath(folder));
         }
     }
 }
@@ -170,7 +170,7 @@ void ChooseRemoteFolder::openFolderSelector()
                 mFolderName = QString::fromUtf8(MegaSyncApp->getMegaApi()->getNodePath(node));
                 if(!mFolderName.isNull() && !mFolderName.isEmpty())
                 {
-                    emit folderChoosen(mFolderName);
+                    emit folderChosen(mFolderName);
                     emit folderNameChanged();
                 }
             }

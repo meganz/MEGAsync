@@ -16,7 +16,7 @@ public:
     Q_INVOKABLE void openRelativeFileSelector(const QString& folderPath = QString());
 
 signals:
-    void fileChoosen(QString folderPath);
+    void fileChosen(QString folderPath);
 
 private:
     void sendFileChosenSignal(const QString& file, const QString& openFromFolder = QString());
