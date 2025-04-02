@@ -8,6 +8,8 @@
 
 #include <QRandomGenerator>
 
+#include <optional>
+
 LocalOrRemoteUserMustChooseStalledIssue::LocalOrRemoteUserMustChooseStalledIssue(
     const mega::MegaSyncStall* stallIssue):
     StalledIssue(stallIssue)
@@ -103,8 +105,8 @@ bool LocalOrRemoteUserMustChooseStalledIssue::isAutoSolvable() const
                  consultCloudData()->getAttributes()->size()) ||
                 (consultLocalData()->getAttributes()->modifiedTimeInMSecs() !=
                  consultCloudData()->getAttributes()->modifiedTimeInMSecs()) ||
-                consultLocalData()->getAttributes()->getCRC() !=
-                    consultCloudData()->getAttributes()->getCRC())
+                (consultLocalData()->getAttributes()->getCRC() !=
+                 consultCloudData()->getAttributes()->getCRC()))
             {
                 // Check names
                 auto localName(QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(
