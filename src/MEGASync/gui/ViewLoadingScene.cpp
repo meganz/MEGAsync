@@ -176,7 +176,6 @@ void LoadingSceneMessageHandler::checkLoadingMessageVisibility()
         {
             mLoadingMessage->updateGeometry();
             mLoadingMessage->setVisible(true);
-            ¡
         }
         else
         {

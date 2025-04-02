@@ -3,8 +3,6 @@
 #include "ui_ViewLoadingMessage.h"
 #include "ViewLoadingScene.h"
 
-#include <QDebug>
-
 ViewLoadingMessage::ViewLoadingMessage(QWidget* parent):
     QWidget(parent),
     ui(new Ui::ViewLoadingMessage),
