@@ -51,11 +51,6 @@ void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin, mega:
             syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
             DialogOpener::showDialog(syncsDialog);
         }
-        else
-        {
-            syncsDialog->wrapper()->setOriginSync(origin);
-            DialogOpener::showDialog(syncsDialog);
-        }
     };
 
     if (overQuotaDialog)
