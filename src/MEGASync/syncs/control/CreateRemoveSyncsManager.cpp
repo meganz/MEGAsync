@@ -7,31 +7,23 @@
 #include "SyncsComponent.h"
 #include "SyncSettings.h"
 
-const CreateRemoveSyncsManager* CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin origin,
-                                                                  mega::MegaHandle handle,
-                                                                  const QString& localPath)
+void CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin origin, mega::MegaHandle handle)
 {
-    auto syncManager(new CreateRemoveSyncsManager());
-    syncManager->performAddSync(origin, handle, localPath);
-    return syncManager;
+    CreateRemoveSyncsManager::performAddSync(origin, handle);
 }
 
 bool CreateRemoveSyncsManager::removeSync(mega::MegaHandle handle, QWidget* parent)
 {
-    auto syncManager(new CreateRemoveSyncsManager());
-    return syncManager->performRemoveSync(handle, parent);
+    return CreateRemoveSyncsManager::performRemoveSync(handle, parent);
 }
 
 bool CreateRemoveSyncsManager::removeSync(std::shared_ptr<SyncSettings> syncSettings,
                                           QWidget* parent)
 {
-    auto syncManager(new CreateRemoveSyncsManager());
-    return syncManager->performRemoveSync(syncSettings, parent);
+    return CreateRemoveSyncsManager::performRemoveSync(syncSettings, parent);
 }
 
-void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin,
-                                              mega::MegaHandle handle,
-                                              const QString& localPath)
+void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin, mega::MegaHandle handle)
 {
     QString remoteFolder;
 
@@ -42,7 +34,7 @@ void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin,
     }
 
     auto overQuotaDialog = MegaSyncApp->showSyncOverquotaDialog();
-    auto addSyncLambda = [overQuotaDialog, origin, remoteFolder, localPath, this]()
+    auto addSyncLambda = [overQuotaDialog, origin, remoteFolder]()
     {
         if (!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
@@ -57,14 +49,12 @@ void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin,
             }
             syncsDialog->wrapper()->setSyncOrigin(origin);
             syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
-            syncsDialog->wrapper()->setLocalFolder(localPath);
-            DialogOpener::showDialog(syncsDialog, [this]() {
-                deleteLater();
-            });
+            DialogOpener::showDialog(syncsDialog);
         }
         else
         {
-            deleteLater();
+            syncsDialog->wrapper()->setOriginSync(origin);
+            DialogOpener::showDialog(syncsDialog);
         }
     };
 
@@ -83,19 +73,18 @@ bool CreateRemoveSyncsManager::performRemoveSync(mega::MegaHandle remoteHandle, 
     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(remoteHandle));
     if (!node)
     {
-        deleteLater();
         return false;
     }
+
     std::unique_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByNode(node.get()));
     if (!sync)
     {
-        deleteLater();
         return false;
     }
+
     auto syncSettings(SyncInfo::instance()->getSyncSettingByTag(sync->getBackupId()));
     if (!syncSettings)
     {
-        deleteLater();
         return false;
     }
 
@@ -111,30 +100,16 @@ bool CreateRemoveSyncsManager::performRemoveSync(std::shared_ptr<SyncSettings> s
 
         DialogOpener::showDialog<RemoveSyncConfirmationDialog>(
             dialog,
-            [dialog, syncSettings, this]()
+            [dialog, syncSettings]()
             {
                 if (dialog->result() == QDialog::Accepted)
                 {
                     SyncController::instance().removeSync(syncSettings);
-                    connect(&SyncController::instance(),
-                            &SyncController::syncRemoveStatus,
-                            this,
-                            [this](const int)
-                            {
-                                deleteLater();
-                            });
-                }
-                else
-                {
-                    deleteLater();
                 }
             });
 
         return true;
     }
-    else
-    {
-        deleteLater();
-        return false;
-    }
+
+    return false;
 }
