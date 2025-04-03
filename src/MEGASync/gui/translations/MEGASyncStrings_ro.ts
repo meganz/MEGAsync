@@ -3480,7 +3480,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>You are not logged in</source>
         <translatorcomment>Tooltip displayed in Desktop app tray icon when no user is logged in</translatorcomment>
-        <translation>Nu ești autentificat(ă)</translation>
+        <translation>Nu sunteți autentificat</translation>
     </message>
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
@@ -9422,7 +9422,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</source>
         <translatorcomment>Billing clarification message according to currency. CON-945</translatorcomment>
-        <translation>* Preț estimat în moneda locală. Contul dvs. va fi facturat în euro pentru toate tranzacțiile.</translation>
+        <translation>*Prețul estimat în moneda locală. Veți fi taxat în euro pentru toate tranzacțiile.</translation>
     </message>
     <message>
         <source>Billed monthly</source>

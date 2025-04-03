@@ -6029,7 +6029,7 @@ Enter a different name.</translation>
         <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
         <translation>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
 - We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
+- System notifications have been enhanced.
 - You can now pin the MEGA app to the Windows taskbar.
 - Some third party libraries have been updated.
 - Other bugs have been fixed and numerous improvements made.

@@ -9659,7 +9659,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</source>
         <translatorcomment>Billing clarification message according to currency. CON-945</translatorcomment>
-        <translation>* O preço na sua moeda local é apenas uma estimativa. A sua conta, em todas as transações, será cobrada o preço indicado em euros.</translation>
+        <translation>* O preço na sua moeda local é apenas uma estimativa. Você será cobrado em euros por todas as transações.</translation>
     </message>
     <message>
         <source>Billed monthly</source>
