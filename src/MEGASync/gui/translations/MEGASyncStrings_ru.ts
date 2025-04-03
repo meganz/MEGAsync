@@ -9429,7 +9429,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</source>
         <translatorcomment>Billing clarification message according to currency. CON-945</translatorcomment>
-        <translation>* Ориентировочная цена в вашей местной валюте. Счета за все транзакции будут выставляться в евро.</translation>
+        <translation>* Ориентировочная цена в вашей местной валюте. Все транзакции будут выполняться в евро.</translation>
     </message>
     <message>
         <source>Billed monthly</source>
