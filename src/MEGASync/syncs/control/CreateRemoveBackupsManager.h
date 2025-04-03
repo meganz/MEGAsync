@@ -20,6 +20,7 @@ public:
 private:
     static void performAddBackup(bool comesFromSettings);
     static void performRemoveBackup(std::shared_ptr<SyncSettings> backup, QWidget* parent);
+    static void showBackupDialog(bool comesFromSettings);
 };
 
 #endif // CREATEREMOVEBACKUPSMANAGER_H

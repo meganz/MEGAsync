@@ -34,26 +34,20 @@ void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin, mega:
     }
 
     auto overQuotaDialog = MegaSyncApp->createSyncOverquotaDialog();
-    auto addSyncLambda = [overQuotaDialog, origin, remoteFolder]()
-    {
-        if (!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
-        {
-            QPointer<QmlDialogWrapper<SyncsComponent>> syncsDialog =
-                new QmlDialogWrapper<SyncsComponent>();
-            syncsDialog->wrapper()->setSyncOrigin(origin);
-            syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
-
-            DialogOpener::showDialog(syncsDialog);
-        }
-    };
-
     if (overQuotaDialog)
     {
-        DialogOpener::showDialog(overQuotaDialog, addSyncLambda);
+        DialogOpener::showDialog(overQuotaDialog,
+                                 [overQuotaDialog, origin, remoteFolder]()
+                                 {
+                                     if (overQuotaDialog->result() == QDialog::Rejected)
+                                     {
+                                         showSyncDialog(origin, remoteFolder);
+                                     }
+                                 });
     }
     else
     {
-        addSyncLambda();
+        showSyncDialog(origin, remoteFolder);
     }
 }
 
@@ -101,4 +95,13 @@ bool CreateRemoveSyncsManager::performRemoveSync(std::shared_ptr<SyncSettings> s
     }
 
     return false;
+}
+
+void CreateRemoveSyncsManager::showSyncDialog(SyncInfo::SyncOrigin origin, QString remoteFolder)
+{
+    QPointer<QmlDialogWrapper<SyncsComponent>> syncsDialog = new QmlDialogWrapper<SyncsComponent>();
+    syncsDialog->wrapper()->setSyncOrigin(origin);
+    syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
+
+    DialogOpener::showDialog(syncsDialog);
 }

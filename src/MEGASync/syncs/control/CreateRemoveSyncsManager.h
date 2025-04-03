@@ -25,6 +25,7 @@ private:
                                mega::MegaHandle handle = mega::INVALID_HANDLE);
     static bool performRemoveSync(mega::MegaHandle remoteHandle, QWidget* parent);
     static bool performRemoveSync(std::shared_ptr<SyncSettings> syncSettings, QWidget* parent);
+    static void showSyncDialog(SyncInfo::SyncOrigin origin, QString remoteFolder);
 };
 
 #endif // CREATEREMOVESYNCFROMUIMANAGER_H

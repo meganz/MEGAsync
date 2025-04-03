@@ -25,25 +25,21 @@ bool CreateRemoveBackupsManager::isBackupsDialogOpen()
 void CreateRemoveBackupsManager::performAddBackup(bool comesFromSettings)
 {
     auto overQuotaDialog = MegaSyncApp->createSyncOverquotaDialog();
-    auto addBackupLambda = [overQuotaDialog, comesFromSettings]()
-    {
-        if (!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
-        {
-            QPointer<QmlDialogWrapper<BackupCandidatesComponent>> backupsDialog =
-                new QmlDialogWrapper<BackupCandidatesComponent>();
-            backupsDialog->wrapper()->setComesFromSettings(comesFromSettings);
-
-            DialogOpener::showDialog(backupsDialog);
-        }
-    };
 
     if (overQuotaDialog)
     {
-        DialogOpener::showDialog(overQuotaDialog, addBackupLambda);
+        DialogOpener::showDialog(overQuotaDialog,
+                                 [overQuotaDialog, comesFromSettings]()
+                                 {
+                                     if (overQuotaDialog->result() == QDialog::Rejected)
+                                     {
+                                         showBackupDialog(comesFromSettings);
+                                     }
+                                 });
     }
     else
     {
-        addBackupLambda();
+        showBackupDialog(comesFromSettings);
     }
 }
 
@@ -65,4 +61,13 @@ void CreateRemoveBackupsManager::performRemoveBackup(std::shared_ptr<SyncSetting
                                          dialog->targetFolder());
                                  }
                              });
+}
+
+void CreateRemoveBackupsManager::showBackupDialog(bool comesFromSettings)
+{
+    QPointer<QmlDialogWrapper<BackupCandidatesComponent>> backupsDialog =
+        new QmlDialogWrapper<BackupCandidatesComponent>();
+    backupsDialog->wrapper()->setComesFromSettings(comesFromSettings);
+
+    DialogOpener::showDialog(backupsDialog);
 }
