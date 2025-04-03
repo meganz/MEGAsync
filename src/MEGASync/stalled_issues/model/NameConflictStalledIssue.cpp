@@ -442,10 +442,16 @@ bool NameConflictedStalledIssue::solveCloudConflictedNameByRename(int conflictIn
 
 bool NameConflictedStalledIssue::renameNodesAutomatically()
 {
-    auto sortLogic = [](QList<std::shared_ptr<ConflictedNameInfo>>& names){
-        std::sort(names.begin(), names.end(), [](const std::shared_ptr<ConflictedNameInfo>& check1, const std::shared_ptr<ConflictedNameInfo>& check2){
-            return check1->mItemAttributes->modifiedTimeInSecs() > check2->mItemAttributes->modifiedTimeInSecs();
-        });
+    auto sortLogic = [](QList<std::shared_ptr<ConflictedNameInfo>>& names)
+    {
+        std::sort(names.begin(),
+                  names.end(),
+                  [](const std::shared_ptr<ConflictedNameInfo>& check1,
+                     const std::shared_ptr<ConflictedNameInfo>& check2)
+                  {
+                      return check1->mItemAttributes->modifiedTimeInMSecs() >
+                             check2->mItemAttributes->modifiedTimeInMSecs();
+                  });
     };
 
     auto result(true);
@@ -470,8 +476,8 @@ bool NameConflictedStalledIssue::renameNodesAutomatically()
         auto lastModifiedCloudName = cloudConflictedNames.first();
         auto lastModifiedLocalName = localConflictedNames.first();
 
-        if(lastModifiedCloudName->mItemAttributes->modifiedTimeInSecs() >
-            lastModifiedLocalName->mItemAttributes->modifiedTimeInSecs())
+        if (lastModifiedCloudName->mItemAttributes->modifiedTimeInMSecs() >
+            lastModifiedLocalName->mItemAttributes->modifiedTimeInMSecs())
         {
             if((result = renameCloudNodesAutomatically(
                    cloudConflictedNames, localConflictedNames, true, itemsBeingRenamed)))
