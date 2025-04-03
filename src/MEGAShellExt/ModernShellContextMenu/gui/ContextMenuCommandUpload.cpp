@@ -2,7 +2,7 @@
 
 #include "MEGAinterface.h"
 
-static const std::wstring ICON = L"cmd3.ico";
+static const std::wstring ICON = L"upload.ico";
 
 ContextMenuCommandUpload::ContextMenuCommandUpload():
     ContextMenuCommandBase(L"ContextMenuCommandUpload")
