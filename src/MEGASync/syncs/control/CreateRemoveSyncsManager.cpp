@@ -33,7 +33,7 @@ void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin, mega:
         remoteFolder = QString::fromUtf8(MegaSyncApp->getMegaApi()->getNodePath(node.get()));
     }
 
-    auto overQuotaDialog = MegaSyncApp->createSyncOverquotaDialog();
+    auto overQuotaDialog = MegaSyncApp->createOverquotaDialogIfNeeded();
     if (overQuotaDialog)
     {
         DialogOpener::showDialog(overQuotaDialog,

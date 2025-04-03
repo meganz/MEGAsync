@@ -4179,7 +4179,7 @@ void MegaApplication::uploadActionFromWindowAfterOverQuotaCheck()
     Platform::getInstance()->fileAndFolderSelector(info);
 }
 
-QPointer<OverQuotaDialog> MegaApplication::createSyncOverquotaDialog()
+QPointer<OverQuotaDialog> MegaApplication::createOverquotaDialogIfNeeded()
 {
     QPointer<OverQuotaDialog> dialog(nullptr);
 

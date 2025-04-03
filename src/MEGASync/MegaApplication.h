@@ -179,7 +179,7 @@ public:
      * @param email of sync configuration to migrate from previous sessions. If present
      * syncs configured in previous sessions will be loaded.
      */
-    QPointer<OverQuotaDialog> createSyncOverquotaDialog();
+    QPointer<OverQuotaDialog> createOverquotaDialogIfNeeded();
     bool finished() const;
     bool isInfoDialogVisible() const;
 

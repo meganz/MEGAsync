@@ -24,7 +24,7 @@ bool CreateRemoveBackupsManager::isBackupsDialogOpen()
 
 void CreateRemoveBackupsManager::performAddBackup(bool comesFromSettings)
 {
-    auto overQuotaDialog = MegaSyncApp->createSyncOverquotaDialog();
+    auto overQuotaDialog = MegaSyncApp->createOverquotaDialogIfNeeded();
 
     if (overQuotaDialog)
     {
