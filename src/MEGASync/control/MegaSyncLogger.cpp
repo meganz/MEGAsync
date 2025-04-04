@@ -600,17 +600,10 @@ void LoggingThread::log(int loglevel, const char *message, const char **directMe
 //    }
 //#endif
 
-<<<<<<< HEAD
     if (gAppExit)
     {
         return;
     }
-=======
-if (gAppExit)
-{
-    return;
-}
->>>>>>> 8d7cacc99 (Recover TransferTrack file (It was accidentally removed))
 
     bool direct = directMessages != nullptr;
 
