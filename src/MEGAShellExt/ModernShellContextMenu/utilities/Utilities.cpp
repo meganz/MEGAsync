@@ -168,6 +168,10 @@ void log(const std::wstring& file, const std::wstring& message)
     CloseHandle(hFile);
 }
 
+/*
+ * These functions have been copied from microsoft samples.
+ * https://learn.microsoft.com/en-us/windows/apps/desktop/modernize/ui/apply-windows-themes
+ */
 inline bool IsColorLight(winrt::Windows::UI::Color& clr)
 {
     return (((5 * clr.G) + (2 * clr.R) + clr.B) > (8 * 128));
