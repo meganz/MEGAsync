@@ -4633,11 +4633,6 @@ and rename the files with the same name but different content (adding a suffix l
         <translatorcomment>Info text for confirmation message for picked solution (keep most recently modified file) in a name conflict sync stall.SAT-1147</translatorcomment>
         <translation>This action will replace the older files with the same name with the most recently modified file (%1).</translation>
     </message>
-    <message>
-        <source>Solve options</source>
-        <translatorcomment>Button text to show the solve action of sync stall.SNC-2565</translatorcomment>
-        <translation>Resolve options</translation>
-    </message>
 </context>
 <context>
     <name>NameDuplicatedContainer</name>
@@ -9578,6 +9573,7 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
     <name>UploadIssueHeader</name>
     <message>
         <source>Cannot reach the destination folder.</source>
