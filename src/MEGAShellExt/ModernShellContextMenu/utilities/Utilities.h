@@ -21,6 +21,8 @@ const std::wstring GetMEGADesktopAppPath();
 const std::wstring GetContextMenuPath();
 const std::wstring GetExecutingModuleName();
 void log(const std::wstring& file, const std::wstring& message);
+
+bool isDarkModeActive();
 }
 
 #endif // UTILITIES_H

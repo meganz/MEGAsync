@@ -2,11 +2,14 @@
 #include "Utilities.h"
 
 #include "framework.h"
+#include <winrt/Windows.UI.ViewManagement.h>
 
 #include <filesystem>
 #include <string>
 #include <iostream>
 #include <sstream>
+
+using namespace winrt::Windows::UI::ViewManagement;
 
 extern HMODULE g_hInst;
 
@@ -163,5 +166,18 @@ void log(const std::wstring& file, const std::wstring& message)
         NULL);
 
     CloseHandle(hFile);
+}
+
+inline bool IsColorLight(winrt::Windows::UI::Color& clr)
+{
+    return (((5 * clr.G) + (2 * clr.R) + clr.B) > (8 * 128));
+}
+
+bool isDarkModeActive()
+{
+    auto settings = UISettings();
+    auto foreground = settings.GetColorValue(UIColorType::Foreground);
+
+    return IsColorLight(foreground);
 }
 }
