@@ -1320,7 +1320,7 @@ void TransfersModel::processUpdateTransfers()
 
         auto row(getRowByTransferTag(itValue->mTag));
         auto d  = getTransfer(row);
-        if (d && !d->ignoreUpdate(itValue->getState()) && !d->isSyncTransfer())
+        if (d && !d->ignoreUpdate(itValue->getState()))
         {
             if(!mCompletedTransfersByTag.contains(itValue->mNodeHandle))
             {
@@ -1338,7 +1338,8 @@ void TransfersModel::processUpdateTransfers()
                                                                { QString::number(itValue->mTag) });
             }
 
-            if (d->isCompleted() && itValue->mNodeHandle != mega::INVALID_HANDLE &&
+            if (!d->isSyncTransfer() && d->isCompleted() &&
+                itValue->mNodeHandle != mega::INVALID_HANDLE &&
                 !mCompletedTransfersByTag.contains(itValue->mNodeHandle))
             {
                 mCompletedTransfersByTag.insert(d->mNodeHandle, index(row, 0));

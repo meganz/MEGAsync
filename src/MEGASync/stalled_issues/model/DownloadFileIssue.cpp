@@ -217,22 +217,19 @@ void InvalidFingerprintDownloadIssue::solveIssues()
     {
         auto tempPath(Preferences::instance()->getTempTransfersPath());
 
-        QMap<QString, std::shared_ptr<QQueue<WrappedNode*>>> nodesToDownloadByPath;
+        QMap<QString, QQueue<WrappedNode>> nodesToDownloadByPath;
         auto appendNodeToQueue = [&](const QString& targetPath, mega::MegaNode* node)
         {
             if (!nodesToDownloadByPath.contains(targetPath))
             {
-                auto queue(std::make_shared<QQueue<WrappedNode*>>());
-                queue->append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, node));
+                QQueue<WrappedNode> queue;
+                queue.append(WrappedNode(WrappedNode::TransferOrigin::FROM_APP, node));
                 nodesToDownloadByPath.insert(targetPath, queue);
             }
             else
             {
-                auto queue = nodesToDownloadByPath.value(targetPath);
-                if (queue)
-                {
-                    queue->append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, node));
-                }
+                auto& queue = nodesToDownloadByPath[targetPath];
+                queue.append(WrappedNode(WrappedNode::TransferOrigin::FROM_APP, node));
             }
         };
 
@@ -274,12 +271,12 @@ void InvalidFingerprintDownloadIssue::solveIssues()
 
         foreach(auto targetFolder, nodesToDownloadByPath.keys())
         {
-            std::shared_ptr<QQueue<WrappedNode*>> nodesToDownload(
-                nodesToDownloadByPath.value(targetFolder));
-            StalledIssuesUtilities::getMegaDownloader()->processTempDownloadQueue(
-                nodesToDownload.get(),
-                targetFolder);
-            qDeleteAll(*nodesToDownload.get());
+            MegaDownloader::DownloadInfo info;
+            info.createAppId = false;
+            info.checkLocalSpace = false;
+            info.downloadQueue = nodesToDownloadByPath[targetFolder];
+            info.path = targetFolder;
+            StalledIssuesUtilities::getMegaDownloader()->processDownloadQueue(info);
         }
 
         mFingerprintIssuesToFix.clear();

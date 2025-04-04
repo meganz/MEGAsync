@@ -424,12 +424,12 @@ bool TransferData::canBeRetried(mega::MegaTransfer* transfer)
     {
         if (transfer->getType() == mega::MegaTransfer::TYPE_DOWNLOAD)
         {
-            mega::MegaError error = transfer->getLastError();
+            auto error = transfer->getLastErrorExtended();
 
             // If it is not any of these errors, it can be retried
-            result = error.getErrorCode() != mega::MegaError::API_EKEY &&
-                     error.getErrorCode() != mega::MegaError::API_EBLOCKED
-                /* && error.getErrorCode() != mega::MegaError::API_EWRITE*/;
+            result = error->getErrorCode() != mega::MegaError::API_EKEY &&
+                     error->getErrorCode() != mega::MegaError::API_EBLOCKED &&
+                     error->getErrorCode() != mega::MegaError::API_EWRITE;
         }
     }
     else
@@ -440,12 +440,12 @@ bool TransferData::canBeRetried(mega::MegaTransfer* transfer)
         }
         else
         {
-            mega::MegaError error = transfer->getLastErrorExtended();
+            auto error = transfer->getLastErrorExtended();
 
             // If it is not any of these errors, it can be retried
-            result = error.getErrorCode() != mega::MegaError::API_EARGS &&
-                     error.getErrorCode() != mega::MegaError::API_ENOENT &&
-                     error.getErrorCode() != mega::MegaError::API_EREAD;
+            result = error->getErrorCode() != mega::MegaError::API_EARGS &&
+                     error->getErrorCode() != mega::MegaError::API_ENOENT &&
+                     error->getErrorCode() != mega::MegaError::API_EREAD;
         }
     }
 
