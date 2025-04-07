@@ -172,7 +172,7 @@ void log(const std::wstring& file, const std::wstring& message)
  * These functions have been copied from microsoft samples.
  * https://learn.microsoft.com/en-us/windows/apps/desktop/modernize/ui/apply-windows-themes
  */
-inline bool IsColorLight(winrt::Windows::UI::Color& clr)
+inline bool isColorLight(winrt::Windows::UI::Color& clr)
 {
     return (((5 * clr.G) + (2 * clr.R) + clr.B) > (8 * 128));
 }
@@ -182,6 +182,6 @@ bool isDarkModeActive()
     auto settings = UISettings();
     auto foreground = settings.GetColorValue(UIColorType::Foreground);
 
-    return IsColorLight(foreground);
+    return isColorLight(foreground);
 }
 }
