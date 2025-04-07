@@ -119,5 +119,8 @@
         <file>images/themed/dark/checkbox_off_focus_error.svg</file>
         <file>images/themed/dark/checkbox_on_error.svg</file>
         <file>images/themed/dark/checkbox_on_focus_error.svg</file>
+        <file>images/icons/settings.svg</file>
+        <file>images/icons/exit.svg</file>
+        <file>images/icons/status.svg</file>
     </qresource>
 </RCC>

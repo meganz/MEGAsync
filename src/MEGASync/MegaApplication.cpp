@@ -5407,12 +5407,14 @@ void MegaApplication::createTrayIconMenus()
     }
 
     guestSettingsAction = new QAction(tr("Settings"), this);
+    guestSettingsAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/settings.svg")));
 
     // When triggered, open "Settings" window. As the user is not logged in, it
     // will only show proxy settings.
     connect(guestSettingsAction, &QAction::triggered, this, &MegaApplication::openSettings);
 
     initialExitAction = new QAction(PlatformStrings::exit(), this);
+    initialExitAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/exit.svg")));
     connect(initialExitAction, &QAction::triggered, this, &MegaApplication::tryExitApplication);
 
     initialTrayMenu->addAction(guestSettingsAction);
@@ -5421,7 +5423,17 @@ void MegaApplication::createTrayIconMenus()
     // On Linux, add a "Show Status" action, which opens the Info Dialog.
     if (isLinux && infoDialog)
     {
-        showStatusAction = new QAction(tr("Show status"), this);
+        // Create action
+        if (showStatusAction)
+        {
+            showStatusAction->deleteLater();
+            showStatusAction = nullptr;
+        }
+        showStatusAction = new QAction(QIcon(QString::fromUtf8(":/images/icons/status.svg")),
+                                       tr("Show status"),
+                                       this);
+        showStatusAction->setIconVisibleInMenu(true);
+
         connect(showStatusAction, &QAction::triggered, this, [this](){
             DialogOpener::raiseAllDialogs();
             QmlDialogManager::instance()->raiseOnboardingDialog();
