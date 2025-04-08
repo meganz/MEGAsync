@@ -5429,10 +5429,9 @@ void MegaApplication::createTrayIconMenus()
             showStatusAction->deleteLater();
             showStatusAction = nullptr;
         }
-        showStatusAction = new QAction(QIcon(QString::fromUtf8(":/images/icons/status.svg")),
-                                       tr("Show status"),
-                                       this);
-        showStatusAction->setIconVisibleInMenu(true);
+
+        showStatusAction = new QAction(tr("Show status"), this);
+        showStatusAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/status.svg")));
 
         connect(showStatusAction, &QAction::triggered, this, [this](){
             DialogOpener::raiseAllDialogs();
