@@ -334,7 +334,8 @@ protected:
     void disableSyncs();
     void restoreSyncs();
     void createTransferManagerDialog(TransfersWidget::TM_TAB tab);
-    void deleteMenu(QMenu *menu);
+    void deleteMenu(QMenu* menu);
+    void clearMenu(QMenu* menu, bool deleteAction = false);
     void startHttpServer();
     void startHttpsServer();
     void refreshStorageUIs();
