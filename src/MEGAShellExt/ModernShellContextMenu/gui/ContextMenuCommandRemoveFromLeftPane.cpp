@@ -2,7 +2,7 @@
 
 #include "MEGAinterface.h"
 
-static const std::wstring ICON = L"cmd2.ico";
+static const std::wstring ICON = L"removeleftpane.ico";
 
 ContextMenuCommandRemoveFromLeftPane::ContextMenuCommandRemoveFromLeftPane():
     ContextMenuCommandBase(L"ContextMenuCommandRemoveFromLeftPane")
