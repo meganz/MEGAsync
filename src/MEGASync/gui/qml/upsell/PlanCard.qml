@@ -48,7 +48,7 @@ Rectangle {
             return ColorTheme.notificationInfo;
         }
         else if (root.recommended) {
-            return ColorTheme.borderInteractive;
+            return ColorTheme.borderBrand;
         }
         else {
             return "transparent";
@@ -84,7 +84,7 @@ Rectangle {
 
     border {
         width: root.recommended ? root.borderWidthRecommended : root.borderWidthDefault
-        color: root.recommended ? ColorTheme.borderInteractive : ColorTheme.borderStrong
+        color: root.recommended ? ColorTheme.borderBrand : ColorTheme.borderStrong
     }
     radius: root.cardRadius
     color: ColorTheme.pageBackground
