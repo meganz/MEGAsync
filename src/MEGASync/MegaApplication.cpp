@@ -5641,14 +5641,16 @@ void MegaApplication::createInfoDialogMenus()
     bool previousEnabledState = exitAction->isEnabled();
     if (!mSyncs2waysMenu)
     {
-        mSyncs2waysMenu = SyncsMenu::newSyncsMenu(MegaSync::TYPE_TWOWAY, previousEnabledState, infoDialog);
+        mSyncs2waysMenu =
+            SyncsMenu::newSyncsMenu(MegaSync::TYPE_TWOWAY, previousEnabledState, infoDialogMenu);
         connect(mSyncs2waysMenu.data(), &SyncsMenu::addSync,
                 infoDialog.data(), &InfoDialog::onAddSync);
     }
 
     if (!mBackupsMenu)
     {
-        mBackupsMenu = SyncsMenu::newSyncsMenu(MegaSync::TYPE_BACKUP, previousEnabledState, infoDialog);
+        mBackupsMenu =
+            SyncsMenu::newSyncsMenu(MegaSync::TYPE_BACKUP, previousEnabledState, infoDialogMenu);
         connect(mBackupsMenu.data(), &SyncsMenu::addSync,
                 infoDialog.data(), &InfoDialog::onAddSync);
     }
