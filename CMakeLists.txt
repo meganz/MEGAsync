@@ -19,9 +19,11 @@ include(desktopapp_options)
 if(NOT PROJECT_NAME)
     if(VCPKG_ROOT)
         # Include VCPKG management tools.
+        include(desktopapp_vcpkg_management)
         include(vcpkg_management)
         list(APPEND vcpkg_overlay ${CMAKE_CURRENT_LIST_DIR}/src/MEGASync/mega/cmake) # MEGAsdk overlays
         process_vcpkg_libraries("${vcpkg_overlay}") # Choose and build libraries depending on the configured options.
+        process_desktop_app_vcpkg_libraries()
     else()
         # For packages with no pkg-config in the system.
         list(APPEND CMAKE_MODULE_PATH third-party/mega/cmake/modules/packages)

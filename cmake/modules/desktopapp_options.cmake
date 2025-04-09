@@ -22,6 +22,13 @@ option(ENABLE_DESKTOP_APP_WERROR "Enable warnings as errors" ON)
 option(ENABLE_DESIGN_TOKENS_IMPORTER "Enable design tokens importer tool" OFF)
 option(ENABLE_DESKTOP_APP_TESTS "Enable Desktop app Automated tests" ON)
 
+if(WIN32 AND CMAKE_GENERATOR_PLATFORM MATCHES "ARM64")
+    option(USE_BREAKPAD "Enable Usage of breakpad" OFF)
+else()
+    option(USE_BREAKPAD "Enable Usage of breakpad" ON)
+endif()
+
+
 # MEGAsdk options
 # Configure MEGAsdk specific options for MEGAchat and then load the rest of MEGAsdk configuration
 if (ENABLE_DESKTOP_APP)

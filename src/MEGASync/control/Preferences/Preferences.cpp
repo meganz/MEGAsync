@@ -64,6 +64,8 @@ unsigned int Preferences::MUTEX_STEALER_MS                    = 0;
 unsigned int Preferences::MUTEX_STEALER_PERIOD_MS             = 0;
 unsigned int Preferences::MUTEX_STEALER_PERIOD_ONLY_ONCE      = 0;
 
+int Preferences::CRASH_REPORT_TIMEOUT_MS = 30000;
+
 #if defined(ENABLE_SDK_ISOLATED_GFX)
 unsigned int Preferences::GFXWORKER_KEEPALIVE_S = 60u;
 #endif
@@ -168,7 +170,7 @@ const QString Preferences::stalledIssuesEventDateKey = QString::fromLatin1("stal
 
 const QString Preferences::accountTypeKey           = QString::fromLatin1("accountType");
 const QString Preferences::proExpirityTimeKey       = QString::fromLatin1("proExpirityTime");
-const QString Preferences::startOnStartupKey        = QString::fromLatin1("startOnStartup");
+const QString Preferences::startOnStartupKey = QString::fromLatin1("startOnStartup");
 const QString Preferences::languageKey              = QString::fromLatin1("language");
 const QString Preferences::updateAutomaticallyKey   = QString::fromLatin1("updateAutomatically");
 const QString Preferences::uploadLimitKBKey         = QString::fromLatin1("uploadLimitKB");
@@ -215,6 +217,7 @@ const QString Preferences::hasDefaultUploadFolderKey    = QString::fromLatin1("h
 const QString Preferences::hasDefaultDownloadFolderKey  = QString::fromLatin1("hasDefaultDownloadFolder");
 const QString Preferences::localFingerprintKey      = QString::fromLatin1("localFingerprint");
 const QString Preferences::isCrashedKey             = QString::fromLatin1("isCrashed");
+const QString Preferences::crashedUserIDKey = QString::fromLatin1("crashedUserID");
 const QString Preferences::wasPausedKey             = QString::fromLatin1("wasPaused");
 const QString Preferences::wasUploadsPausedKey      = QString::fromLatin1("wasUploadsPaused");
 const QString Preferences::wasDownloadsPausedKey    = QString::fromLatin1("wasDownloadsPaused");
@@ -273,7 +276,7 @@ const QString Preferences::gfxWorkerEndpointKey = QString::fromLatin1("gfxWorker
 const QString Preferences::awakeIfActiveKey = QString::fromLatin1("sleepIfInactiveEnabledKey");
 const bool Preferences::defaultAwakeIfActive = false;
 
-const bool Preferences::defaultStartOnStartup       = true;
+const bool Preferences::defaultStartOnStartup = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
 const bool Preferences::defaultUpperSizeLimit       = false;
 const bool Preferences::defaultLowerSizeLimit       = false;
@@ -2432,6 +2435,17 @@ bool Preferences::isCrashed()
 void Preferences::setCrashed(bool value)
 {
     setValueConcurrently(isCrashedKey, value);
+    sync();
+}
+
+QString Preferences::crashedUserID()
+{
+    return getValueConcurrent<QString>(crashedUserIDKey, {});
+}
+
+void Preferences::setCrashedUserID(const QString& value)
+{
+    setValueConcurrently(crashedUserIDKey, value);
     sync();
 }
 

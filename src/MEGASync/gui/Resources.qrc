@@ -111,5 +111,13 @@
         <file>images/key_pass@3x.png</file>
         <file>images/themed/light/error_sync_icon.svg</file>
         <file>images/themed/dark/error_sync_icon.svg</file>
+        <file>images/themed/light/checkbox_off_error.svg</file>
+        <file>images/themed/light/checkbox_off_focus_error.svg</file>
+        <file>images/themed/light/checkbox_on_error.svg</file>
+        <file>images/themed/light/checkbox_on_focus_error.svg</file>
+        <file>images/themed/dark/checkbox_off_error.svg</file>
+        <file>images/themed/dark/checkbox_off_focus_error.svg</file>
+        <file>images/themed/dark/checkbox_on_error.svg</file>
+        <file>images/themed/dark/checkbox_on_focus_error.svg</file>
     </qresource>
 </RCC>

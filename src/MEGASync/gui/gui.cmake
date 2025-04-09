@@ -287,7 +287,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/win/PasteMegaLinksDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/ImportMegaLinksDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/ImportListWidgetItem.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/CrashReportDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/ChangeLogDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/StreamingFromMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/MegaProgressCustomDialog.ui
@@ -325,7 +324,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/macx/PasteMegaLinksDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/ImportMegaLinksDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/ImportListWidgetItem.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/CrashReportDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/ChangeLogDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/StreamingFromMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/MegaProgressCustomDialog.ui
@@ -363,7 +361,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/linux/PasteMegaLinksDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/ImportMegaLinksDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/ImportListWidgetItem.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/CrashReportDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/ChangeLogDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/StreamingFromMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/MegaProgressCustomDialog.ui
@@ -515,6 +512,8 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/PermissionsWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/ProxySettings.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/SettingsDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/CrashReportDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/CrashReportDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/NotificationsSettings.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/OpenBackupsFolder.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/ProgressIndicatorDialog.ui
@@ -527,6 +526,7 @@ set (DESKTOP_APP_GUI_UI_FILES
 
 set (DESKTOP_APP_GUI_UI_FILES_ROOT
     ${CMAKE_CURRENT_LIST_DIR}/ui/SettingsDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/CrashReportDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/AccountDetailsDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveBackupDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveSyncConfirmationDialog.ui

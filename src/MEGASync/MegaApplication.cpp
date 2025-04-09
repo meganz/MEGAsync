@@ -258,8 +258,6 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     mStatusController = nullptr;
     mStatsEventHandler = nullptr;
 
-    context = new QObject(this);
-
 #ifdef _WIN32
     windowsMenu = nullptr;
     windowsExitAction = nullptr;
@@ -606,71 +604,7 @@ void MegaApplication::initialize()
             preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_REGISTER_UPDATE_TASK, true);
         }
     }
-
-    if (preferences->isCrashed())
-    {
-        preferences->setCrashed(false);
-        QStringList reports = CrashHandler::instance()->getPendingCrashReports();
-        if (reports.size())
-        {
-            QPointer<CrashReportDialog> crashDialog = new CrashReportDialog(
-                reports.join(QString::fromUtf8("------------------------------\n")));
-            if (crashDialog->exec() == QDialog::Accepted)
-            {
-                applyProxySettings();
-                CrashHandler::instance()->sendPendingCrashReports(crashDialog->getUserMessage());
-                if (crashDialog->sendLogs())
-                {
-                    auto timestampString =
-                        reports[0].mid(reports[0].indexOf(QString::fromUtf8("Timestamp: ")) + 11,
-                                       20);
-                    timestampString =
-                        timestampString.left(timestampString.indexOf(QString::fromUtf8("\n")));
-                    QDateTime crashTimestamp =
-                        QDateTime::fromMSecsSinceEpoch(timestampString.toLongLong());
-
-                    if (crashTimestamp != QDateTime::fromMSecsSinceEpoch(0))
-                    {
-                        // to gather some logging before the crash
-                        crashTimestamp = crashTimestamp.addSecs(-300);
-                    }
-
-                    connect(logger.get(),
-                            &MegaSyncLogger::logReadyForReporting,
-                            context,
-                            [this, crashTimestamp]()
-                            {
-                                crashReportFilePath = Utilities::joinLogZipFiles(
-                                    megaApi,
-                                    &crashTimestamp,
-                                    CrashHandler::instance()->getLastCrashHash());
-                                if (!crashReportFilePath.isNull() && megaApi &&
-                                    megaApi->isLoggedIn())
-                                {
-                                    megaApi->startUploadForSupport(
-                                        QDir::toNativeSeparators(crashReportFilePath)
-                                            .toUtf8()
-                                            .constData(),
-                                        false);
-                                    crashReportFilePath.clear();
-                                }
-                                context->deleteLater();
-                            });
-
-                    logger->prepareForReporting();
-                }
-
-#ifndef __APPLE__
-                QMegaMessageBox::MessageBoxInfo msgInfo;
-                msgInfo.title = MegaSyncApp->getMEGAString();
-                msgInfo.text = tr("Thank you for your collaboration");
-                msgInfo.enqueue = true;
-                QMegaMessageBox::information(msgInfo);
-#endif
-            }
-        }
-    }
-
+    startCrashReportingDialog();
     mTransferQuota = std::make_shared<TransferQuota>(mOsNotifications);
     connect(mTransferQuota.get(), &TransferQuota::waitTimeIsOver, this, &MegaApplication::updateStatesAfterTransferOverQuotaTimeHasExpired);
 
@@ -1283,15 +1217,6 @@ void MegaApplication::onboardingFinished(bool fastLogin)
     if (appfinished)
     {
         return;
-    }
-
-    //Send pending crash report log if neccessary
-    if (!crashReportFilePath.isNull() && megaApi)
-    {
-        QFileInfo crashReportFile{crashReportFilePath};
-        megaApi->startUploadForSupport(QDir::toNativeSeparators(crashReportFilePath).toUtf8().constData(),
-                                       false);
-        crashReportFilePath.clear();
     }
 
     registerUserActivity();
@@ -2222,10 +2147,6 @@ void MegaApplication::cleanAll()
     appfinished = true;
 
     emit requestAppState(AppState::FINISHED);
-
-#ifndef DEBUG
-    CrashHandler::instance()->Disable();
-#endif
 
     qInstallMessageHandler(0);
 
@@ -6530,4 +6451,38 @@ bool MegaApplication::mightBeCaseSensitivityIssue(const QString& folderPath)
 {
     QFileInfo info(folderPath);
     return info.exists();
+}
+
+void MegaApplication::startCrashReportingDialog()
+{
+#ifdef USE_BREAKPAD
+    if (preferences->isCrashed())
+    {
+        preferences->setCrashed(false);
+        QStringList reports = CrashHandler::instance()->getPendingCrashReports();
+        if (reports.size())
+        {
+            QPointer<CrashReportDialog> crashDialog = new CrashReportDialog();
+            crashDialog->setAttribute(Qt::WA_DeleteOnClose);
+            TokenParserWidgetManager::instance()->applyCurrentTheme(crashDialog);
+            connect(crashDialog,
+                    &CrashReportDialog::finished,
+                    this,
+                    [crashDialog, reports, this]()
+                    {
+                        if (crashDialog->result() != QDialog::Accepted)
+                        {
+                            CrashHandler::instance()->deletePendingCrashReports(reports);
+                            return;
+                        }
+                        applyProxySettings();
+                        const bool shouldSendLogs = crashDialog->sendLogs();
+                        CrashHandler::instance()->sendPendingCrashReports(
+                            crashDialog->getUserMessage(),
+                            shouldSendLogs);
+                    });
+            crashDialog->exec();
+        }
+    }
+#endif
 }
