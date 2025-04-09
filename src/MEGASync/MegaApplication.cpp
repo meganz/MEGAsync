@@ -5473,7 +5473,8 @@ void MegaApplication::createTrayIconMenus()
     // Clear menu if it exists
     if (initialTrayMenu)
     {
-        clearMenu(initialTrayMenu, true);
+        const bool deleteActions(true);
+        clearMenu(initialTrayMenu, deleteActions);
     }
 #ifndef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
     else
@@ -5702,7 +5703,8 @@ void MegaApplication::createGuestMenu()
 
     if (guestMenu)
     {
-        clearMenu(guestMenu, true);
+        const bool deleteActions(true);
+        clearMenu(guestMenu, deleteActions);
     }
 #ifndef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
     else
