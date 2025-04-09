@@ -1,17 +1,28 @@
 {
-    "$schema" : "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
-    "name" : "mega-desktop-app",
-    "homepage" : "https://github.com/meganz/megasync",
-    "features" :
-    {
-        "use-openssl":
-        {
+    "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+    "name": "mega-desktop-app",
+    "homepage": "https://github.com/meganz/megasync",
+    "features": {
+        "use-openssl": {
             "description": "OpenSSL library",
-            "dependencies": [ "openssl" ]
+            "dependencies": [
+                "openssl"
+            ]
         },
         "use-mediainfo": {
             "description": "MediaInfo library",
-            "dependencies": [ "libmediainfo" ]
+            "dependencies": [
+                "libmediainfo"
+            ]
+        },
+        "use-breakpad": {
+            "description": "google breakpad library",
+            "dependencies": [
+                {
+                    "name": "breakpad",
+                    "version>=": "2023-06-01#2"
+                }
+            ]
         },
         "use-freeimage": {
             "description": "FreeImage library",
@@ -29,40 +40,58 @@
                 {
                     "name": "ffmpeg",
                     "default-features": false,
-                    "features": ["avcodec", "avformat", "swresample", "swscale"]
+                    "features": [
+                        "avcodec",
+                        "avformat",
+                        "swresample",
+                        "swscale"
+                    ]
                 }
             ]
         },
         "use-libuv": {
             "description": "libuv library",
-            "dependencies": [ "libuv" ]
+            "dependencies": [
+                "libuv"
+            ]
         },
         "use-pdfium": {
             "description": "pdfium library",
-            "dependencies": [ "pdfium" ]
+            "dependencies": [
+                "pdfium"
+            ]
         },
         "use-cares": {
             "description": "c-ares library",
-            "dependencies": [ "c-ares" ]
+            "dependencies": [
+                "c-ares"
+            ]
         },
         "use-readline": {
             "description": "Readline library",
-            "dependencies": [ "readline" ]
+            "dependencies": [
+                "readline"
+            ]
         },
         "sdk-tests": {
             "description": "gtests library for the integration and unit tests",
-            "dependencies": [ "gtest" ]
+            "dependencies": [
+                "gtest"
+            ]
         }
     },
     "dependencies": [
-      "cryptopp",
-      "libsodium",
-      "curl",
-      "icu",
-      "sqlite3"
+        "cryptopp",
+        "libsodium",
+        "curl",
+        "icu",
+        "sqlite3"
     ],
-    "builtin-baseline" : "d5ec528843d29e3a52d745a64b469f810b2cedbf",
+    "builtin-baseline": "d5ec528843d29e3a52d745a64b469f810b2cedbf",
     "overrides": [
-        { "name" : "libuv", "version": "1.44.2" }
+        {
+            "name": "libuv",
+            "version": "1.44.2"
+        }
     ]
 }

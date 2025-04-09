@@ -19,7 +19,9 @@ target_compile_definitions(UnitTests
     PUBLIC
     $<$<BOOL:${WIN32}>:PUBLIC NOMINMAX WIN32_LEAN_AND_MEAN UNICODE>
     $<$<BOOL:${ENABLE_ISOLATED_GFX}>:ENABLE_SDK_ISOLATED_GFX>
+    $<$<BOOL:${USE_BREAKPAD}>:USE_BREAKPAD>
 )
+target_platform_compile_options(TARGET UnitTests UNIX -D__STDC_FORMAT_MACROS)
 
 set(UNIT_TEST_FILES
     AllMegaIncludes.h
@@ -33,6 +35,15 @@ set(UNIT_TEST_FILES
     control/TransferRemainingTimeTests.cpp
     control/UtilitiesTests.cpp
 )
+
+if(USE_BREAKPAD)
+    find_package(unofficial-breakpad CONFIG REQUIRED)
+
+    set(CRASH_BACKEND_URL "$ENV{MEGA_CRASH_BACKEND_URL}" CACHE STRING "Crash backend URL")
+    target_compile_definitions(UnitTests PRIVATE CRASH_BACKEND_URL="${CRASH_BACKEND_URL}")
+
+    message(STATUS "Breakpad added")
+endif()
 
 if (WIN32)
     find_package(Qt5 REQUIRED COMPONENTS WinExtras)
@@ -51,10 +62,6 @@ target_sources(UnitTests
     PRIVATE
     ${UNIT_TEST_FILES}
     ${MEGA_DESKTOP_APP_SOURCES}
-)
-
-target_include_directories(UnitTests PRIVATE ${CMAKE_CURRENT_LIST_DIR}
-    ${CMAKE_CURRENT_LIST_DIR}/google_breakpad
 )
 
 set(ExecutableTarget UnitTests)
@@ -77,6 +84,8 @@ target_link_libraries(UnitTests
     $<$<BOOL:${WIN32}>:Qt5::WinExtras>
     $<$<BOOL:${APPLE}>:Qt5::MacExtras>
     $<$<BOOL:${UNIX}>:Qt5::Svg>
+    $<$<BOOL:${USE_BREAKPAD}>:unofficial::breakpad::libbreakpad>
+    $<$<BOOL:${USE_BREAKPAD}>:unofficial::breakpad::libbreakpad_client>
     Qt5::Widgets
     Qt5::Core
     Qt5::Gui
@@ -84,7 +93,6 @@ target_link_libraries(UnitTests
     Qt5::Qml
     Qt5::Quick
     Qt5::QuickWidgets
-    MEGA::google_breakpad
     )
 
 target_include_directories(UnitTests PRIVATE ../3rdparty ${MegaSyncDir})

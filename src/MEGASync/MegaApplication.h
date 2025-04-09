@@ -398,9 +398,7 @@ protected:
     std::shared_ptr<Preferences> preferences;
     SyncInfo *model;
     mega::MegaApi *megaApi;
-    mega::MegaApi *megaApiFolders;
-    QObject *context;
-    QString crashReportFilePath;
+    mega::MegaApi* megaApiFolders;
 
     HTTPServer *httpServer;
     mega::MegaHandle fileUploadTarget;
@@ -613,6 +611,7 @@ private:
     void closeUpsellStorageDialog();
 
     void createGfxProvider(const QString& basePath);
+    void startCrashReportingDialog();
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);

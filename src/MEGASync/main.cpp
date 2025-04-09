@@ -569,11 +569,11 @@ int main(int argc, char *argv[])
     {
         avatarsDir.mkpath(QString::fromUtf8("."));
     }
-
+#ifdef USE_BREAKPAD
 #ifndef DEBUG
-    CrashHandler::instance()->Init(QDir::toNativeSeparators(crashPath));
+    CrashHandler::instance()->init(QDir::toNativeSeparators(crashPath));
 #endif
-
+#endif
     QtLockedFile singleInstanceChecker(appLockPath);
     bool alreadyStarted = true;
     for (int i = 0; i < 10; i++)

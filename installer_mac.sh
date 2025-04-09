@@ -9,6 +9,7 @@ Usage () {
     echo "    --create-dmg           : Create the dmg package"
     echo "    --notarize             : Notarize package against Apple systems."
     echo "    --full-pkg-cmake       : Idem but using cmake"
+    echo "    --unzip-debug-folder   : unzip the folder containing debug symbols"
     echo ""
     echo "Environment variables needed to build:"
     echo "    MEGAQTPATH : Point it to a valid Qt installation path"
@@ -32,6 +33,7 @@ sign=0
 signAdHoc=0
 createdmg=0
 notarize=0
+unzip_debug_folder=0
 
 build_time=0
 sign_time=0
@@ -61,6 +63,9 @@ while [ "$1" != "" ]; do
             ;;
         --notarize )
             notarize=1
+            ;;
+        --unzip-debug-folder )
+            unzip_debug_folder=1
             ;;
         --full-pkg-cmake )
             full_pkg_cmake=1
@@ -138,12 +143,16 @@ if [ ${build_cmake} -eq 1 ]; then
     cp -R ${MSYNC_PREFIX}MEGAsync.app ${MSYNC_PREFIX}MEGAsync_orig.app
     ${MEGAQTPATH}/bin/macdeployqt ${MSYNC_PREFIX}MEGAsync.app -qmldir=../src/MEGASync/gui/qml -no-strip
     dsymutil ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAsync -o ${MSYNC_PREFIX}MEGAsync.app.dSYM 
-    zip -r ${MSYNC_PREFIX}MEGAsync.app.dSYM.zip ${MSYNC_PREFIX}MEGAsync.app.dSYM
-    rm -rf ${MSYNC_PREFIX}MEGAsync.app.dSYM
+    if [ ${unzip_debug_folder} -eq 0 ]; then
+        zip -r ${MSYNC_PREFIX}MEGAsync.app.dSYM.zip ${MSYNC_PREFIX}MEGAsync.app.dSYM
+        rm -rf ${MSYNC_PREFIX}MEGAsync.app.dSYM
+    fi
     strip ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAsync
     dsymutil ${MUPDATER_PREFIX}MEGAupdater.app/Contents/MacOS/MEGAupdater -o ${MUPDATER_PREFIX}MEGAupdater.dSYM 
-    zip -r ${MUPDATER_PREFIX}MEGAupdater.app.dSYM.zip ${MUPDATER_PREFIX}MEGAupdater.dSYM 
-    rm -rf ${MUPDATER_PREFIX}MEGAupdater.dSYM
+    if [ ${unzip_debug_folder} -eq 0 ]; then
+        zip -r ${MUPDATER_PREFIX}MEGAupdater.app.dSYM.zip ${MUPDATER_PREFIX}MEGAupdater.dSYM
+        rm -rf ${MUPDATER_PREFIX}MEGAupdater.dSYM
+    fi
     strip ${MUPDATER_PREFIX}MEGAupdater.app/Contents/MacOS/MEGAupdater
 
     mv ${MUPDATER_PREFIX}MEGAupdater.app/Contents/MacOS/MEGAupdater ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAupdater

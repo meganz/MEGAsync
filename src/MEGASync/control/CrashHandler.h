@@ -1,52 +1,37 @@
 #ifndef CRASHHANDLER_H
 #define CRASHHANDLER_H
 
-#include <QString>
+#ifdef USE_BREAKPAD
 #include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QCryptographicHash>
-#include <QEventLoop>
-#include <QTimer>
+#include <QObject>
+#include <QString>
 
-class CrashHandlerPrivate;
+class CrashHandlerImpl;
+
 class CrashHandler: public QObject
 {
     Q_OBJECT
 
 public:
     static CrashHandler* instance();
+
+    void init(const QString& reportPath);
     static void tryReboot();
-    void Init(const QString&  reportPath);
-    void Disable();
-    void setReportCrashesToSystem(bool report);
-    bool writeMinidump();
-
+    void sendPendingCrashReports(QString userMessage, bool shouldSendLogs);
     QStringList getPendingCrashReports();
-    void sendPendingCrashReports(QString userMessage);
-    void discardPendingCrashReports();
-
-    QString getLastCrashHash() const;
-
-private slots:
-
-    void onPostFinished(QNetworkReply* reply);
-
-    void onCrashPostTimeout();
+    void deletePendingCrashReports(const QStringList& crashes);
 
 private:
-    void deletePendingCrashReports();
-
     CrashHandler();
     ~CrashHandler();
+    void sendLogs(const QString& crashID);
+    QString sendCrashReport(const std::string& url,
+                            const std::map<std::string, std::string>& parameters,
+                            const std::map<std::string, std::string>& files);
+    static void sendOSNotification(bool succeeded);
 
-    CrashHandlerPrivate* d;
-    QString dumpPath;
-    QNetworkAccessManager *networkManager;
-    QNetworkRequest request;
-    QEventLoop loop;
-    QTimer crashPostTimer;
-    QString lastCrashHash;
+    CrashHandlerImpl* mImpl;
+    QString mDumpPath;
 };
-
+#endif
 #endif // CRASHHANDLER_H
