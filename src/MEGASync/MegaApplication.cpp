@@ -5407,14 +5407,15 @@ void MegaApplication::createTrayIconMenus()
     }
 
     guestSettingsAction = new QAction(tr("Settings"), this);
-    guestSettingsAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/tray/settings.svg")));
+    guestSettingsAction->setIcon(
+        QIcon(QString::fromUtf8(":/images/icons/tray/linux/settings.svg")));
 
     // When triggered, open "Settings" window. As the user is not logged in, it
     // will only show proxy settings.
     connect(guestSettingsAction, &QAction::triggered, this, &MegaApplication::openSettings);
 
     initialExitAction = new QAction(PlatformStrings::exit(), this);
-    initialExitAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/tray/exit.svg")));
+    initialExitAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/tray/linux/exit.svg")));
     connect(initialExitAction, &QAction::triggered, this, &MegaApplication::tryExitApplication);
 
     initialTrayMenu->addAction(guestSettingsAction);
@@ -5431,7 +5432,7 @@ void MegaApplication::createTrayIconMenus()
         }
 
         showStatusAction = new QAction(tr("Show status"), this);
-        showStatusAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/tray/status.svg")));
+        showStatusAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/tray/linux/status.svg")));
 
         connect(showStatusAction, &QAction::triggered, this, [this](){
             DialogOpener::raiseAllDialogs();
@@ -5466,42 +5467,42 @@ void MegaApplication::createInfoDialogMenus()
                    windowsMenu,
                    PlatformStrings::exit(),
                    &MegaApplication::tryExitApplication,
-                   QString::fromLatin1(":/images/icons/tray/exit.svg"));
+                   QString::fromLatin1(":/images/icons/tray/windows/exit.svg"));
     recreateAction(&windowsSettingsAction,
                    windowsMenu,
                    tr("Settings"),
                    &MegaApplication::openSettings,
-                   QString::fromLatin1(":/images/icons/tray/settings.svg"));
+                   QString::fromLatin1(":/images/icons/tray/windows/settings.svg"));
     recreateAction(&windowsImportLinksAction,
                    windowsMenu,
                    tr("Open links"),
                    &MegaApplication::importLinks,
-                   QString::fromLatin1(":/images/icons/tray/open_links.svg"));
+                   QString::fromLatin1(":/images/icons/tray/windows/open_links.svg"));
     recreateAction(&windowsFilesAction,
                    windowsMenu,
                    tr("Files"),
                    &MegaApplication::goToFiles,
-                   QString::fromLatin1(":/images/icons/tray/about.svg"));
+                   QString::fromLatin1(":/images/icons/tray/windows/about.svg"));
     recreateAction(&windowsUploadAction,
                    windowsMenu,
                    tr("Upload"),
                    &MegaApplication::uploadActionClicked,
-                   QString::fromLatin1(":/images/icons/tray/upload.svg"));
+                   QString::fromLatin1(":/images/icons/tray/windows/upload.svg"));
     recreateAction(&windowsDownloadAction,
                    windowsMenu,
                    tr("Download"),
                    &MegaApplication::downloadActionClicked,
-                   QString::fromLatin1(":/images/icons/tray/download.svg"));
+                   QString::fromLatin1(":/images/icons/tray/windows/download.svg"));
     recreateAction(&windowsStreamAction,
                    windowsMenu,
                    tr("Stream"),
                    &MegaApplication::streamActionClicked,
-                   QString::fromLatin1(":/images/icons/tray/stream.svg"));
+                   QString::fromLatin1(":/images/icons/tray/windows/stream.svg"));
     recreateAction(&windowsTransferManagerAction,
                    windowsMenu,
                    tr("Transfer manager"),
                    &MegaApplication::transferManagerActionClicked,
-                   QString::fromLatin1(":/images/icons/tray/transfer_manager.svg"));
+                   QString::fromLatin1(":/images/icons/tray/windows/transfer_manager.svg"));
 
     bool windowsUpdateActionEnabled = true;
     if (windowsUpdateAction)
@@ -5529,7 +5530,8 @@ void MegaApplication::createInfoDialogMenus()
     else
     {
         windowsAboutAction = new QAction(tr("About"), this);
-        windowsAboutAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/tray/about.svg")));
+        windowsAboutAction->setIcon(
+            QIcon(QString::fromUtf8(":/images/icons/tray/windows/about.svg")));
 
         windowsMenu->addAction(windowsAboutAction);
         connect(windowsAboutAction, &QAction::triggered, this, &MegaApplication::onAboutClicked);
