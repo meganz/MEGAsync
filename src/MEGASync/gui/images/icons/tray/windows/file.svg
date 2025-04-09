@@ -5,17 +5,17 @@
    viewBox="0 0 22 22"
    fill="none"
    version="1.1"
-   id="svg2"
+   id="svg1"
    sodipodi:docname="file.svg"
-   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   inkscape:version="1.4.1-rc (06eac75fbf, 2025-03-29)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <defs
-     id="defs2" />
+     id="defs1" />
   <sodipodi:namedview
-     id="namedview2"
+     id="namedview1"
      pagecolor="#ffffff"
      bordercolor="#000000"
      borderopacity="0.25"
@@ -23,39 +23,20 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     showgrid="true"
-     inkscape:zoom="26.59375"
-     inkscape:cx="15.341951"
-     inkscape:cy="13.894242"
-     inkscape:window-width="2400"
-     inkscape:window-height="1261"
-     inkscape:window-x="1911"
-     inkscape:window-y="-9"
+     showgrid="false"
+     inkscape:zoom="25.34375"
+     inkscape:cx="13.967941"
+     inkscape:cy="10.475956"
+     inkscape:window-width="1850"
+     inkscape:window-height="1016"
+     inkscape:window-x="1990"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg2">
-    <inkscape:grid
-       id="grid2"
-       units="px"
-       originx="0"
-       originy="0"
-       spacingx="1"
-       spacingy="1"
-       empcolor="#0099e5"
-       empopacity="0.30196078"
-       color="#0099e5"
-       opacity="0.14901961"
-       empspacing="5"
-       enabled="true"
-       visible="true" />
-  </sodipodi:namedview>
-  <path
-     d="m 14.0683,13.4451 c 0.106,0 0.1915,-0.0856 0.1915,-0.1956 V 8.7505796 c 0,-0.11003 -0.0855,-0.1956 -0.1915,-0.1956 h -0.5664 c -0.1019,0 -0.1997,0.04075 -0.273,0.1141 L 11.06907,10.85739 c -0.03667,0.03667 -0.10187,0.03667 -0.13855,0 L 8.77074,8.6690796 c -0.07335,-0.07335 -0.17116,-0.1141 -0.27303,-0.1141 H 7.93127 c -0.10595,0 -0.19152,0.08557 -0.19152,0.1956 V 13.2495 c 0,0.11 0.08557,0.1956 0.19152,0.1956 h 0.82317 c 0.10595,0 0.19152,-0.0856 0.19152,-0.1956 v -2.55511 c 0,-0.02445 0.02853,-0.0326 0.04076,-0.02038 l 1.74005,1.76043 c 0.15077,0.15485 0.39528,0.15485 0.54606,0 l 1.74007,-1.76043 c 0.0122,-0.01222 0.0407,-0.0041 0.0407,0.02038 v 2.55511 c 0,0.11 0.0856,0.1956 0.1916,0.1956 z"
-     fill="#303233"
-     id="path1" />
+     inkscape:current-layer="svg1" />
   <path
      fill-rule="evenodd"
      clip-rule="evenodd"
-     d="m 11,3.9999996 c -3.86599,0 -7,3.13401 -7,7.0000004 0,3.866 3.13401,7 7,7 3.866,0 7,-3.134 7,-7 C 18,7.1340096 14.866,3.9999996 11,3.9999996 Z M 5,11 c 0,-3.3137104 2.68629,-6.0000004 6,-6.0000004 3.3137,0 6,2.68629 6,6.0000004 0,3.3137 -2.6863,6 -6,6 -3.31371,0 -6,-2.6863 -6,-6 z"
+     d="m 5.99995,5 c -1.10457,0 -2.000008,0.89544 -2,2.00001 L 4.00001,15 c 0,1.1046 0.89543,2 2,2 h 10.00004 c 1.1045,0 2,-0.8954 2,-2 V 8 c 0,-1.10457 -0.8955,-2 -2,-2 H 12.20707 C 11.75436,6 11.32019,5.82014 11.0001,5.5 10.68001,5.17986 10.24584,5 9.79313,5 Z m 1.5e-4,2 c -0.55228,0 -1,0.44772 -1,1 v 7 c 0,0.5523 0.44772,1 1,1 h 10.00005 c 0.5522,0 1,-0.4477 1,-1 V 8 c 0,-0.55228 -0.4478,-1 -1,-1 z"
      fill="#303233"
-     id="path2" />
+     id="path1" />
 </svg>
