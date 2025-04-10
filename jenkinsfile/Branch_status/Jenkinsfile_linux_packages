@@ -84,7 +84,7 @@ pipeline {
                                       jf rt upload \
                                           --url ${REPO_URL} \
                                           --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
-                                          --regexp '((x86_64|amd64|i386)/megasync.*deb\$|(x86_64|amd64|i386)/megasync.*rpm\$|(x86_64|amd64|i386)/megasync.*\\.pkg\\.tar\\.zst\$|(x86_64|amd64|i386)/megasync.*\\.pkg\\.tar\\.xz\$)' \
+                                          --regexp '((x86_64|amd64|i386|armhf)/megasync.*deb\$|(x86_64|amd64|i386|armhf)/megasync.*rpm\$|(x86_64|amd64|i386|armhf)/megasync.*\\.pkg\\.tar\\.zst\$|(x86_64|amd64|i386|armhf)/megasync.*\\.pkg\\.tar\\.xz\$)' \
                                           MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO_TO_BUILD/
                                     """
                                 }
@@ -175,7 +175,7 @@ pipeline {
                                                 jf rt upload \
                                                     --url ${REPO_URL} \
                                                     --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
-                                                    --regexp '((x86_64|amd64|i386)/megasync.*deb\$|(x86_64|amd64|i386)/megasync.*rpm\$|(x86_64|amd64|i386)/megasync.*\\.pkg\\.tar\\.zst\$|(x86_64|amd64|i386)/megasync.*\\.pkg\\.tar\\.xz\$)' \
+                                                    --regexp '((x86_64|amd64|i386|armhf)/megasync.*deb\$|(x86_64|amd64|i386|armhf)/megasync.*rpm\$|(x86_64|amd64|i386|armhf)/megasync.*\\.pkg\\.tar\\.zst\$|(x86_64|amd64|i386|armhf)/megasync.*\\.pkg\\.tar\\.xz\$)' \
                                                     MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/
                                             """
                                         }
