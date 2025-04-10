@@ -129,7 +129,7 @@
         <file>images/icons/tray/windows/upload.svg</file>
         <file>images/icons/tray/windows/download.svg</file>
         <file>images/icons/tray/windows/about.svg</file>
-        <file>images/icons/tray/windows/file.svg</file>
+        <file>images/icons/tray/windows/drive.svg</file>
         <file>images/icons/tray/windows/open_links.svg</file>
     </qresource>
 </RCC>

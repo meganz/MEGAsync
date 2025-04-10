@@ -5482,7 +5482,7 @@ void MegaApplication::createInfoDialogMenus()
                    windowsMenu,
                    tr("Files"),
                    &MegaApplication::goToFiles,
-                   QString::fromLatin1(":/images/icons/tray/windows/about.svg"));
+                   QString::fromLatin1(":/images/icons/tray/windows/drive.svg"));
     recreateAction(&windowsUploadAction,
                    windowsMenu,
                    tr("Upload"),
