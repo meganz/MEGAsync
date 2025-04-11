@@ -72,8 +72,10 @@ TransferThread::TransfersToProcess TransferThread::processTransfers()
 void TransferThread::clear()
 {
     QMutexLocker lock(&mCacheMutex);
+
     mTransfersToProcess.clear();
     mTransfersCount.clear();
+    mLastTransfersCount.clear();
 }
 
 QList<QExplicitlySharedDataPointer<TransferData>> TransferThread::extractFromCache(QMap<int, QExplicitlySharedDataPointer<TransferData>>& dataMap, int spaceForTransfers)
