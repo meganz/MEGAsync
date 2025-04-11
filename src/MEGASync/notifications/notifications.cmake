@@ -25,6 +25,8 @@ target_sources_conditional(${ExecutableTarget}
    ${CMAKE_CURRENT_LIST_DIR}/macx/NotificationHandler.h
    ${CMAKE_CURRENT_LIST_DIR}/macx/UNUserNotificationHandler.h
    ${CMAKE_CURRENT_LIST_DIR}/macx/NotificationDelegate.h
+   ${CMAKE_CURRENT_LIST_DIR}/macx/NotificationCategoryManager.h
+   ${CMAKE_CURRENT_LIST_DIR}/macx/NotificationCategoryManager.mm
 )
 
 target_sources_conditional(${ExecutableTarget}

@@ -4,6 +4,7 @@
 
 #include "UNUserNotificationHandler.h"
 #include "NotificationDelegate.h"
+#include "NotificationCategoryManager.h"
 
 #undef slots
 #include <UserNotifications/UserNotifications.h>
@@ -38,8 +39,7 @@ void UNUserNotificationHandler::showNotification(DesktopAppNotification *notific
     NSString* categoryText = @(currentNotificationId).stringValue;
     UNNotificationCategory *category = [UNNotificationCategory categoryWithIdentifier:categoryText actions: actionButtons intentIdentifiers:@[] options:UNNotificationCategoryOptionCustomDismissAction];
 
-    NSSet *categories = [NSSet setWithObject:category];
-    [center setNotificationCategories:categories];
+    [[NotificationCategoryManager sharedManager] addCategory:category];
 
     UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
     [content setTitle:[NSString stringWithUTF8String:notification->getTitle().toUtf8().constData()]];
@@ -65,6 +65,8 @@ void UNUserNotificationHandler::showNotification(DesktopAppNotification *notific
         {
             NSLog(@"%@", error);
         }
+
+        [[NotificationCategoryManager sharedManager] removeCategoryByIdentifier: request.content.categoryIdentifier];
     }];
 }
 
