@@ -6152,21 +6152,12 @@ Inserisci un nome differente.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
+        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
+- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation>- Introduzione di un nuovo Cloud Drive Explorer remoto. Naviga sul tuo Cloud Drive con stile e gestisci file e cartelle nella nuova interfaccia elegante e facile da usare
-- Abbiamo apportato ulteriori miglioramenti alla procedura guidata iniziale di onboarding.
-- Le notifiche di sistema sono state migliorate.
-- Ora puoi aggiungere l’app MEGA alla barra delle applicazioni di Windows.
-- Alcune librerie di terze parti sono state aggiornate.
-- Altri bug sono stati corretti e sono stati apportati numerosi miglioramenti.
-</translation>
+        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

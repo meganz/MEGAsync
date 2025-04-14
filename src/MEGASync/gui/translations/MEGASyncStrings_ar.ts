@@ -6023,21 +6023,14 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
+        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
+- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation>- تقديم مستكشف السواقة السحابية الجديد عن بعد. تصفح السواقة السحابية بأناقة وقم بإدارة ملفاتك ومجلداتك في الواجهة الجديدة الأنيقة وسهلة الاستخدام.
-- لقد أجرينا المزيد من التحسينات على معالج الإعداد الأولي.
-- تم تحسين إشعارات الأنظمة.
-- يمكنك الآن تثبيت تطبيق ميغا MEGA على شريط مهام ويندوز Windows.
-- تم تحديث بعض مكتبات الطرف الثالث.
-- تم إصلاح الأخطاء الأخرى وإجراء العديد من التحسينات.
-</translation>
+        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
+        <translation>- تمت إضافة تحسينات إلى قائمة سياق مستكشف ويندوز Windows 11 مما يوفر تجربة مستخدم أكثر انسيابية وصقلًا.
+- تم حل المشكلة مع إعدادات الأذونات الافتراضية غير الصحيحة المطبقة على الملفات والمجلدات التي تم إنشاؤها أثناء المزامنة.
+- تم إصلاح الأخطاء الأخرى وإجراء العديد من التحسينات.</translation>
     </message>
 </context>
 <context>

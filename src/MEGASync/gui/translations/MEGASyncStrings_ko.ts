@@ -6020,15 +6020,14 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
+        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
+- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
+        <translation>- Windows 11 탐색기 컨텍스트 메뉴를 개선하여, 더욱 부드럽고 깔끔한 이용자 경험을 전달하게 되었습니다.
+- 동기화 중 파일과 폴더에 대한 잘못된 기본 권한 설정 문제를 해결하였습니다.
+- 다른 버그가 수정되었고 다양한 개선을 하였습니다.</translation>
     </message>
 </context>
 <context>

@@ -6018,21 +6018,14 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
+        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
+- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation>- 全新的雲端硬碟操作介面。全新視覺風格的雲端空間，在時尚且易於使用的介面中管理您的檔案和資料夾。
-- 操作引導進行了更多改進。
-- 增強系統通知。
-- 您現在可以將MEGA應用程式固定在Windows工作列。
-- 更新部分第三方函式庫。
-- 修復其它錯誤，並進行了諸多改進。
-</translation>
+        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
+        <translation>- 對Windows 11瀏覽器右鍵選單進行了改進，提供了更精簡和完善的使用者體驗。
+- 解決了同步期間建立的檔案和資料夾套用不正確的預設權限設定問題。
+- 修復其它錯誤並進行許多改進。</translation>
     </message>
 </context>
 <context>
@@ -9426,7 +9419,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</source>
         <translatorcomment>Billing clarification message according to currency. CON-945</translatorcomment>
-        <translation>*當地貨幣估算價格僅供參考。您帳戶的所有交易將依歐元計費。</translation>
+        <translation>*當地貨幣估算價格僅供參考。所有交易都將以歐元計費。</translation>
     </message>
     <message>
         <source>Billed monthly</source>

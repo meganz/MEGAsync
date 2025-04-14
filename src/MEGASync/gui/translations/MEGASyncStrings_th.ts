@@ -6015,20 +6015,14 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
+        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
+- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation>- แนะนำตัวสำรวจคลาวด์ไดร์ฟระยะไกลแบบใหม่ เรียกดูคลาวด์ไดร์ฟของคุณอย่างมีสไตล์ และจัดการไฟล์และโฟลเดอร์ของคุณในอินเทอร์เฟซที่ทันสมัยและใช้งานง่ายแบบใหม่
-- เราได้ปรับปรุงตัวช่วยการตั้งค่าเริ่มต้น
-- ปรับปรุงการแจ้งเตือนของระบบให้ดียิ่งขึ้น
-- ปักหมุดแอป MEGA ไปยังแถบงาน Windows ได้แล้ว
-- มีการอัปเดตไลบรารีจากภายนอกด้วย
-- แก้ไขข้อผิดพลาดอื่น ๆ และปรับปรุงเพิ่มเติมอีกมากมาย</translation>
+        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
+        <translation>- เพิ่มการปรับแต่งให้กับ Windows 11 เมนูบริบท Explorer มอบประสบการณ์การใช้งานที่คล่องตัวและประณีตมากขึ้น
+- แก้ไขปัญหาเกี่ยวกับการตั้งค่าสิทธิ์เริ่มต้นที่ไม่ถูกต้องที่ใช้กับไฟล์และโฟลเดอร์ที่สร้างระหว่างการซิงโครไนซ์
+- ข้อบกพร่องอื่น ๆ ได้รับการแก้ไขและมีการปรับปรุงมากมาย</translation>
     </message>
 </context>
 <context>
