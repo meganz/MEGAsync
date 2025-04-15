@@ -6021,21 +6021,14 @@ Wprowadź inną nazwę.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
+        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
+- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation>- Wprowadzenie nowego zdalnego eksploratora Dysku w chmurze. Przeglądaj swój Dysk w chmurze w stylowy sposób i zarządzaj plikami oraz katalogami w nowym, eleganckim i łatwym w obsłudze interfejsie.
-- Wprowadziliśmy więcej usprawnień do początkowego kreatora konfiguracji.
-- Powiadomienia systemowe zostały ulepszone.
-- Teraz możesz przypiąć aplikację MEGA do paska zadań systemu Windows.
-- Zaktualizowano niektóre biblioteki zewnętrzne.
-- Naprawiono inne błędy i wprowadzono liczne ulepszenia.
-</translation>
+        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
+        <translation>- Dodano udoskonalenia do menu kontekstowego Eksploratora Windows 11, co zapewnia bardziej uproszczone i dopracowane doświadczenie użytkownika.
+- Rozwiązano problem z nieprawidłowymi domyślnymi ustawieniami uprawnień stosowanymi do plików i katalogów tworzonych podczas synchronizacji.
+- Naprawiono inne błędy i wprowadzono liczne usprawnienia.</translation>
     </message>
 </context>
 <context>
@@ -9429,7 +9422,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</source>
         <translatorcomment>Billing clarification message according to currency. CON-945</translatorcomment>
-        <translation>* Szacunkowa cena w lokalnej walucie. Wszystkie transakcje będą rozliczane w euro.</translation>
+        <translation>* Szacunkowa cena w lokalnej walucie. Za wszystkie transakcje zostaniesz obciążony w euro.</translation>
     </message>
     <message>
         <source>Billed monthly</source>

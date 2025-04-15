@@ -6017,21 +6017,14 @@ Nhập một tên khác.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
+        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
+- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation>- Giới thiệu một trình duyệt tệp tin từ xa mới cho Ổ Mây. Duyệt Ổ Mây của bạn thật phong cách và quản lý các tệp tin và thư mục của bạn trong giao diện mới, đẹp và dễ sử dụng.
-- Chúng tôi đã thực hiện nhiều cải tiến hơn đối với trình hướng dẫn giới thiệu ban đầu.
-- Thông báo hệ thống đã được cải tiến thêm.
-- Bây giờ bạn có thể ghim ứng dụng MEGA vào thanh tác vụ Windows.
-- Một số thư viện bên thứ ba đã được cập nhật.
-- Các lỗi khác đã được sửa và nhiều cải tiến được thực hiện.
-</translation>
+        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
+        <translation>- Thêm tinh chỉnh cho menu ngữ cảnh Explorer của Windows 11, mang lại trải nghiệm người dùng được hợp lý và tinh tế hơn.
+- Giải quyết vấn đề với các thiết đặt quyền mặc định không chính xác áp dụng đối với các tệp tin và thư mục được tạo trong quá trình đồng bộ hóa.
+- Các lỗi khác đã được sửa và nhiều cải tiến đã được thực hiện.</translation>
     </message>
 </context>
 <context>
@@ -9425,7 +9418,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</source>
         <translatorcomment>Billing clarification message according to currency. CON-945</translatorcomment>
-        <translation>* Giá ước tính bằng đơn vị tiền tệ địa phương của bạn. Tài khoản của bạn sẽ được tính phí bằng Euro cho tất cả các giao dịch.</translation>
+        <translation>* Giá ước tính bằng đơn vị tiền tệ địa phương của bạn. Bạn sẽ tính phí bằng euro cho tất cả các giao dịch.</translation>
     </message>
     <message>
         <source>Billed monthly</source>
@@ -9460,7 +9453,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Save up to %1% with yearly billing</source>
         <translatorcomment>Label with information about the discount of the annual subscription compared to the monthly subscription for the plan selected in the window. The placeholder %1 shall be replaced by the discount percentage. CON-945</translatorcomment>
-        <translation>Tiết kiệm lên đến 1%1% khi thanh toán thường niên</translation>
+        <translation>Tiết kiệm lên đến %1% khi thanh toán hằng năm</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>

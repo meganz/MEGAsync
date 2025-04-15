@@ -6020,21 +6020,12 @@ Voer een andere naam in.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
+        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
+- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation>- Maak kennis met een nieuwe verkenner voor cloudschijven op afstand. Blader in stijl door uw Cloud-schijf en beheer uw bestanden en mappen in de nieuwe slanke en gebruiksvriendelijke interface.
-- We hebben meer verbeteringen aangebracht in de initiële onboarding-wizard.
-- Systeemmeldingen zijn verbeterd.
-- U kunt de MEGA-applicatie nu vastzetten op de Windows-taakbalk.
-- Sommige bibliotheken van derden zijn bijgewerkt.
-- Andere bugs zijn opgelost en er zijn talloze verbeteringen aangebracht.
-</translation>
+        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9428,7 +9419,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</source>
         <translatorcomment>Billing clarification message according to currency. CON-945</translatorcomment>
-        <translation>Geschatte prijs in uw lokale valuta. Uw account wordt gefactureerd in euro’s voor alle transacties.</translation>
+        <translation>* Geschatte prijs in uw lokale valuta. Voor alle transacties wordt u in euro in rekening gebracht.</translation>
     </message>
     <message>
         <source>Billed monthly</source>
