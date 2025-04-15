@@ -1142,13 +1142,6 @@ void InfoDialog::onAddSyncClicked()
     addSync(SyncInfo::SyncOrigin::INFODIALOG_BUTTON_ORIGIN);
 }
 
-SyncsMenu* InfoDialog::initSyncsMenu(mega::MegaSync::SyncType type, bool isEnabled)
-{
-    SyncsMenu* menu (SyncsMenu::newSyncsMenu(type, isEnabled, this));
-    connect(menu, &SyncsMenu::addSync, this, &InfoDialog::onAddSync);
-    return menu;
-}
-
 void InfoDialog::on_bUpload_clicked()
 {
     app->uploadActionClicked();
