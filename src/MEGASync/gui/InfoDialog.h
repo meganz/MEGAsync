@@ -195,7 +195,6 @@ private:
     bool pendingUploadsTimerRunning = false;
     bool pendingDownloadsTimerRunning = false;
     bool circlesShowAllActiveTransfersProgress;
-    SyncsMenu* initSyncsMenu(mega::MegaSync::SyncType type, bool isEnabled);
     void setUnseenNotifications(long long value);
 
     bool mIndexing; //scanning
