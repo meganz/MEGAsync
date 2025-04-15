@@ -1562,6 +1562,7 @@ void MegaApplication::onLogout()
                 createUserMessageController();
                 infoDialog->deleteLater();
                 infoDialog = nullptr;
+                removeSyncsAndBackupsMenus();
                 start();
                 periodicTasks();
             }
@@ -2276,14 +2277,8 @@ void MegaApplication::cleanAll()
 #ifdef _WIN32
     deleteMenu(windowsMenu);
 #endif
-    if (mSyncs2waysMenu)
-    {
-        mSyncs2waysMenu->deleteLater();
-    }
-    if (mBackupsMenu)
-    {
-        mBackupsMenu->deleteLater();
-    }
+
+    removeSyncsAndBackupsMenus();
 
     preferences->setLastExit(QDateTime::currentMSecsSinceEpoch());
 
@@ -4651,6 +4646,21 @@ void MegaApplication::createGfxProvider(const QString& basePath)
 #endif
 
     mGfxProvider.reset(provider ? provider : MegaGfxProvider::createInternalInstance());
+}
+
+void MegaApplication::removeSyncsAndBackupsMenus()
+{
+    if (mSyncs2waysMenu)
+    {
+        mSyncs2waysMenu->deleteLater();
+        mSyncs2waysMenu = nullptr;
+    }
+
+    if (mBackupsMenu)
+    {
+        mBackupsMenu->deleteLater();
+        mBackupsMenu = nullptr;
+    }
 }
 
 void MegaApplication::closeUpsellStorageDialog()
