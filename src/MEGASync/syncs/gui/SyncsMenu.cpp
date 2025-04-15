@@ -18,16 +18,13 @@ const QLatin1String DEVICE_ICON ("://images/icons/pc/pc-linux_24.png");
 #endif
 
 // SyncsMenu ----------
-SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type,
-                     int itemIndent,
-                     const QIcon& iconMenu,
-                     QWidget *parent)
-    : QWidget(parent)
-    , mMenu (new QMenu(this))
-    , mLastHovered (nullptr)
-    , mType (type)
-    , mItemIndent (itemIndent)
-    , mMenuIcon(iconMenu)
+SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, int itemIndent, const QIcon& iconMenu):
+    QObject(nullptr),
+    mMenu(new QMenu(nullptr)),
+    mLastHovered(nullptr),
+    mType(type),
+    mItemIndent(itemIndent),
+    mMenuIcon(iconMenu)
 {
     mAddAction = new MenuItemAction(QString(), QString(), mMenu);
     mAddAction->setManagesHoverStates(true);
@@ -46,7 +43,12 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type,
     mMenu->installEventFilter(this);
 }
 
-SyncsMenu* SyncsMenu::newSyncsMenu(mega::MegaSync::SyncType type, bool isEnabled, QWidget* parent)
+SyncsMenu::~SyncsMenu()
+{
+    mMenu->deleteLater();
+}
+
+SyncsMenu* SyncsMenu::newSyncsMenu(mega::MegaSync::SyncType type, bool isEnabled)
 {
     SyncsMenu* menu (nullptr);
 
@@ -54,12 +56,12 @@ SyncsMenu* SyncsMenu::newSyncsMenu(mega::MegaSync::SyncType type, bool isEnabled
     {
         case mega::MegaSync::TYPE_TWOWAY:
         {
-            menu = new TwoWaySyncsMenu(parent);
+            menu = new TwoWaySyncsMenu();
             break;
         }
         case mega::MegaSync::TYPE_BACKUP:
         {
-            menu = new BackupSyncsMenu(parent);
+            menu = new BackupSyncsMenu();
             break;
         }
         default:
@@ -211,11 +213,10 @@ void SyncsMenu::highLightMenuEntry(QAction* action)
 }
 
 // TwoWaySyncsMenu ----
-TwoWaySyncsMenu::TwoWaySyncsMenu(QWidget* parent)
-    : SyncsMenu(mega::MegaSync::TYPE_TWOWAY,
-                    mTwoWaySyncItemIndent,
-                    QIcon(QLatin1String("://images/icons/ico_sync.png")),
-                    parent)
+TwoWaySyncsMenu::TwoWaySyncsMenu():
+    SyncsMenu(mega::MegaSync::TYPE_TWOWAY,
+              mTwoWaySyncItemIndent,
+              QIcon(QLatin1String("://images/icons/ico_sync.png")))
 {
     Platform::getInstance()->initMenu(mMenu, "SyncsMenu - Syncs");
 }
@@ -237,14 +238,13 @@ QString TwoWaySyncsMenu::getAddActionText() const
 }
 
 // BackupSyncsMenu ----
-BackupSyncsMenu::BackupSyncsMenu(QWidget* parent)
-    : SyncsMenu(mega::MegaSync::TYPE_BACKUP,
-                    mBackupItemIndent,
-                    QIcon(QLatin1String("://images/icons/ico_backup.png")),
-                    parent)
-    , mDevNameAction(nullptr)
-    , mDeviceNameRequest(UserAttributes::DeviceName::requestDeviceName())
-    , mMyBackupsHandleRequest(UserAttributes::MyBackupsHandle::requestMyBackupsHandle())
+BackupSyncsMenu::BackupSyncsMenu():
+    SyncsMenu(mega::MegaSync::TYPE_BACKUP,
+              mBackupItemIndent,
+              QIcon(QLatin1String("://images/icons/ico_backup.png"))),
+    mDevNameAction(nullptr),
+    mDeviceNameRequest(UserAttributes::DeviceName::requestDeviceName()),
+    mMyBackupsHandleRequest(UserAttributes::MyBackupsHandle::requestMyBackupsHandle())
 {
     Platform::getInstance()->initMenu(mMenu, "SyncsMenu - Backups");
 

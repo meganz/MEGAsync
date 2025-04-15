@@ -614,6 +614,8 @@ private:
     void createGfxProvider(const QString& basePath);
     void startCrashReportingDialog();
 
+    void removeSyncsAndBackupsMenus();
+
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();
