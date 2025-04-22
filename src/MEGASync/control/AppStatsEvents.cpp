@@ -130,7 +130,7 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     {AppStatsEvents::EventType::UPSELL_DIALOG_STORAGE_ALMOST_FULL_SHOWN, 600022},
     {AppStatsEvents::EventType::UPSELL_DIALOG_TX_QUOTA_EXCEEDED_SHOWN, 600023},
     {AppStatsEvents::EventType::UPSELL_DIALOG_LEARN_MORE_TX_QUOTA_CLICKED, 600024},
-    {AppStatsEvents::EventType::UPSELL_DIALOG_EMPTY_RUBBISH_BIN_CLICKED, 600025},
+    //{ (Deprecated) UPSELL_DIALOG_EMPTY_RUBBISH_BIN_CLICKED, 600025 },
     {AppStatsEvents::EventType::UPSELL_DIALOG_TRY_PRO_FLEXI_CLICKED, 600026},
     {AppStatsEvents::EventType::UPSELL_DIALOG_BILLED_MONTHLY_CLICKED, 600027},
     {AppStatsEvents::EventType::UPSELL_DIALOG_BILLED_YEARLY_CLICKED, 600028},
@@ -282,8 +282,6 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
      "Transfer quota exceeded dialog shown"},
     {AppStatsEvents::EventType::UPSELL_DIALOG_LEARN_MORE_TX_QUOTA_CLICKED,
      "Link learn more about transfer quota clicked"},
-    {AppStatsEvents::EventType::UPSELL_DIALOG_EMPTY_RUBBISH_BIN_CLICKED,
-     "Link empty your rubbish bin clicked - view mode: %1"},
     {AppStatsEvents::EventType::UPSELL_DIALOG_TRY_PRO_FLEXI_CLICKED,
      "Link try pro flexi clicked - view mode: %1"},
     {AppStatsEvents::EventType::UPSELL_DIALOG_BILLED_MONTHLY_CLICKED,
@@ -307,7 +305,8 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
      "Sync created after clicking the notification - notif clicked: %1"},
     {AppStatsEvents::EventType::SYNC_CREATED_AFTER_NOTIFICATION,
      "Sync created after 15 min - last notif shown: %1"},
-    {AppStatsEvents::EventType::SYNC_ADDED_CLOUD_DRIVE_BUTTON, "Sync added from Cloud drive dialog"},
+    {AppStatsEvents::EventType::SYNC_ADDED_CLOUD_DRIVE_BUTTON,
+     "Sync added from Cloud drive dialog"},
     {AppStatsEvents::EventType::CLOUD_DRIVE_OPENED, "Cloud drive dialog opened"},
 };
 

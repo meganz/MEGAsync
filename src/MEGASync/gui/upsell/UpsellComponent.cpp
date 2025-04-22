@@ -7,7 +7,6 @@ namespace
 {
 const QLatin1String
     URL_ABOUT_TRANSFER_QUOTA("https://help.mega.io/plans-storage/space-storage/transfer-quota");
-const QLatin1String URL_RUBBISH("mega://#fm/rubbish");
 const QLatin1String URL_PRO_FLEXI("mega://#pro?tab=flexi");
 }
 
@@ -84,34 +83,11 @@ void UpsellComponent::billedRadioButtonClicked(bool isMonthly)
 
 void UpsellComponent::linkInDescriptionClicked()
 {
-    QString urlString;
-    switch (viewMode())
+    if (viewMode() == UpsellPlans::ViewMode::TRANSFER_EXCEEDED)
     {
-        case UpsellPlans::ViewMode::STORAGE_ALMOST_FULL:
-        case UpsellPlans::ViewMode::STORAGE_FULL:
-        {
-            urlString = URL_RUBBISH;
-            MegaSyncApp->getStatsEventHandler()->sendTrackedEventArg(
-                AppStatsEvents::EventType::UPSELL_DIALOG_EMPTY_RUBBISH_BIN_CLICKED,
-                {getViewModeString()});
-            break;
-        }
-        case UpsellPlans::ViewMode::TRANSFER_EXCEEDED:
-        {
-            urlString = URL_ABOUT_TRANSFER_QUOTA;
-            MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
-                AppStatsEvents::EventType::UPSELL_DIALOG_LEARN_MORE_TX_QUOTA_CLICKED);
-            break;
-        }
-        default:
-        {
-            break;
-        }
-    }
-
-    if (!urlString.isEmpty())
-    {
-        Utilities::openUrl(QUrl(urlString));
+        MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+            AppStatsEvents::EventType::UPSELL_DIALOG_LEARN_MORE_TX_QUOTA_CLICKED);
+        Utilities::openUrl(QUrl(URL_ABOUT_TRANSFER_QUOTA));
     }
 }
 
