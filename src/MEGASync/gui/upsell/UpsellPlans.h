@@ -137,6 +137,7 @@ public:
     long long getTransferFinishTime() const;
     bool isOnlyProFlexiAvailable() const;
     bool isPro() const;
+    bool isAnyPlanClicked() const;
 
 signals:
     void viewModeChanged();
@@ -160,6 +161,7 @@ private:
     long long mTransferFinishTime; // Seconds since epoch.
     bool mIsOnlyProFlexiAvailable;
     bool mIsPro;
+    bool mIsAnyPlanClicked;
 
     friend class UpsellController;
 
@@ -172,6 +174,7 @@ private:
     void setTransferFinishTime(long long newTime);
     void setOnlyProFlexiAvailable(bool onlyProFlexiAvailable);
     void setPro(bool isPro);
+    void setIsAnyPlanClicked(bool isAnyPlanClicked);
 };
 
 #endif // UPSELL_PLANS_H

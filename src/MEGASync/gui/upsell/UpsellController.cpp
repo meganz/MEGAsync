@@ -6,6 +6,7 @@
 #include "Preferences.h"
 #include "QmlManager.h"
 #include "RequestListenerManager.h"
+#include "StatsEventHandler.h"
 #include "UpsellPlans.h"
 #include "Utilities.h"
 
@@ -260,7 +261,18 @@ void UpsellController::openPlanUrl(int index)
         return;
     }
 
+    mPlans->setIsAnyPlanClicked(true);
+
     Utilities::openUrl(getUpsellPlanUrl(plan->proLevel()));
+}
+
+void UpsellController::sendCloseEvent() const
+{
+    AppStatsEvents::EventType eventType =
+        mPlans->isAnyPlanClicked() ?
+            AppStatsEvents::EventType::UPSELL_DIALOG_AFTER_ANY_PLAN_CLOSE_BUTTON_CLICKED :
+            AppStatsEvents::EventType::UPSELL_DIALOG_WITHOUT_ANY_PLAN_CLOSE_BUTTON_CLICKED;
+    MegaSyncApp->getStatsEventHandler()->sendEvent(eventType);
 }
 
 void UpsellController::setBilledPeriod(bool isMonthly)

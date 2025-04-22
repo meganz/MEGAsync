@@ -39,6 +39,7 @@ public:
     QVariant data(std::shared_ptr<UpsellPlans::Data> data, int role) const;
 
     void openPlanUrl(int index);
+    void sendCloseEvent() const;
 
     std::shared_ptr<UpsellPlans> getPlans() const;
     QString getMinProPlanNeeded(long long usedStorage) const;
