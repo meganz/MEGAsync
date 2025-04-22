@@ -2,6 +2,7 @@
 
 #include "UpsellController.h"
 #include "UpsellModel.h"
+#include "UpsellQmlDialog.h"
 
 namespace
 {
@@ -43,6 +44,8 @@ void UpsellComponent::registerQmlModules()
             0,
             "UpsellPlans",
             QString::fromLatin1("UpsellPlans can only be used for the enum values"));
+        qmlRegisterModule("UpsellComponents", 1, 0);
+        qmlRegisterType<UpsellQmlDialog>("UpsellComponents", 1, 0, "UpsellQmlDialog");
         qmlRegistrationDone = true;
     }
 }
@@ -61,6 +64,11 @@ UpsellPlans::ViewMode UpsellComponent::viewMode() const
 void UpsellComponent::setViewMode(UpsellPlans::ViewMode mode)
 {
     mController->setViewMode(mode);
+}
+
+void UpsellComponent::sendCloseEvent() const
+{
+    mController->sendCloseEvent();
 }
 
 void UpsellComponent::buyButtonClicked(int index)
