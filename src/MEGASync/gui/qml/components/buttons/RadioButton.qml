@@ -11,6 +11,8 @@ Qml.RadioButton {
     property RadioButtonColors colors: RadioButtonColors {}
     property RadioButtonSizes sizes: RadioButtonSizes {}
 
+    signal userChecked(bool checked)
+
     height: Math.max(indicator.implicitHeight, contentItem.implicitHeight)
     width: indicator.implicitWidth + contentItem.implicitWidth + 2 * sizes.focusBorderWidth
 
@@ -92,24 +94,33 @@ Qml.RadioButton {
             id: mouseAreaText
 
             anchors.fill: parent
-            onPressed: { mouse.accepted = false; }
+            onClicked: {
+                if (!root.checked) {
+                    root.checked = true;
+                    root.userChecked(true);
+                }
+            }
             cursorShape: Qt.PointingHandCursor
         }
     }
 
     Keys.onPressed: {
-        if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter || event.key === Qt.Key_Space) {
+        if ((event.key === Qt.Key_Return || event.key === Qt.Key_Enter || event.key === Qt.Key_Space) && !root.checked) {
             root.checked = true;
+            root.userChecked(true);
             event.accepted = true;
         }
     }
 
     MouseArea {
         id: mouseArea
-
         anchors.fill: parent
-        width: parent.width
-        onPressed: { mouse.accepted = false; }
+        onClicked: {
+            if (!root.checked) {
+                root.checked = true;
+                root.userChecked(true);
+            }
+        }
         cursorShape: Qt.PointingHandCursor
     }
 
