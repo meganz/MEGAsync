@@ -39,7 +39,6 @@ public:
     QVariant data(std::shared_ptr<UpsellPlans::Data> data, int role) const;
 
     void openPlanUrl(int index);
-    void sendCloseEvent() const;
 
     std::shared_ptr<UpsellPlans> getPlans() const;
     QString getMinProPlanNeeded(long long usedStorage) const;
@@ -48,7 +47,6 @@ public:
     void setBilledPeriod(bool isMonthly);
     void setViewMode(UpsellPlans::ViewMode mode);
     void setTransferFinishTime(long long finishTime);
-    void resetIsAnyPlanClicked();
 
 public slots:
     void onBilledPeriodChanged();

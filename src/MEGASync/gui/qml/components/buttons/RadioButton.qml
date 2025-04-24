@@ -41,6 +41,13 @@ Qml.RadioButton {
         }
     }
 
+    function processClick() {
+        if (!root.checked) {
+            root.checked = true;
+            root.userChecked(true);
+        }
+    }
+
     indicator: Rectangle {
         id: focusCircle
 
@@ -95,31 +102,26 @@ Qml.RadioButton {
 
             anchors.fill: parent
             onClicked: {
-                if (!root.checked) {
-                    root.checked = true;
-                    root.userChecked(true);
-                }
+                processClick();
             }
             cursorShape: Qt.PointingHandCursor
         }
     }
 
     Keys.onPressed: {
-        if ((event.key === Qt.Key_Return || event.key === Qt.Key_Enter || event.key === Qt.Key_Space) && !root.checked) {
-            root.checked = true;
-            root.userChecked(true);
+        if ((event.key === Qt.Key_Return || event.key === Qt.Key_Enter || event.key === Qt.Key_Space)
+                && !root.checked) {
+            processClick();
             event.accepted = true;
         }
     }
 
     MouseArea {
         id: mouseArea
+
         anchors.fill: parent
         onClicked: {
-            if (!root.checked) {
-                root.checked = true;
-                root.userChecked(true);
-            }
+            processClick();
         }
         cursorShape: Qt.PointingHandCursor
     }

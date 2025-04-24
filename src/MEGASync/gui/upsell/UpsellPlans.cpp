@@ -97,6 +97,11 @@ void UpsellPlans::setIsAnyPlanClicked(bool isAnyPlanClicked)
     mIsAnyPlanClicked = isAnyPlanClicked;
 }
 
+bool UpsellPlans::isAnyPlanClicked() const
+{
+    return mIsAnyPlanClicked;
+}
+
 long long UpsellPlans::getTransferFinishTime() const
 {
     return mTransferFinishTime;
@@ -110,11 +115,6 @@ bool UpsellPlans::isOnlyProFlexiAvailable() const
 bool UpsellPlans::isPro() const
 {
     return mIsPro;
-}
-
-bool UpsellPlans::isAnyPlanClicked() const
-{
-    return mIsAnyPlanClicked;
 }
 
 bool UpsellPlans::isMonthly() const
