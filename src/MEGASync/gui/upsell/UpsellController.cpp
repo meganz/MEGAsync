@@ -6,7 +6,6 @@
 #include "Preferences.h"
 #include "QmlManager.h"
 #include "RequestListenerManager.h"
-#include "StatsEventHandler.h"
 #include "UpsellPlans.h"
 #include "Utilities.h"
 
@@ -265,15 +264,6 @@ void UpsellController::openPlanUrl(int index)
     Utilities::openUrl(getUpsellPlanUrl(plan->proLevel()));
 }
 
-void UpsellController::sendCloseEvent() const
-{
-    AppStatsEvents::EventType eventType =
-        mPlans->isAnyPlanClicked() ?
-            AppStatsEvents::EventType::UPSELL_DIALOG_AFTER_ANY_PLAN_CLOSE_BUTTON_CLICKED :
-            AppStatsEvents::EventType::UPSELL_DIALOG_WITHOUT_ANY_PLAN_CLOSE_BUTTON_CLICKED;
-    MegaSyncApp->getStatsEventHandler()->sendEvent(eventType);
-}
-
 void UpsellController::setBilledPeriod(bool isMonthly)
 {
     mPlans->setMonthly(isMonthly);
@@ -297,6 +287,8 @@ void UpsellController::setViewMode(UpsellPlans::ViewMode mode)
             }
         }
 
+        mPlans->setIsAnyPlanClicked(false);
+
         // Force update of the plans to show the correct ones.
         emit dataChanged(0, mPlans->size() - 1, QVector<int>() << UpsellPlans::AVAILABLE_ROLE);
     }
@@ -310,11 +302,6 @@ void UpsellController::setTransferFinishTime(long long finishTime)
     {
         mTransferFinishTimer->start(TRANSFER_REMAINING_TIME_INTERVAL_MS);
     }
-}
-
-void UpsellController::resetIsAnyPlanClicked()
-{
-    mPlans->setIsAnyPlanClicked(false);
 }
 
 QString UpsellController::getMinProPlanNeeded(long long usedStorage) const

@@ -64,15 +64,19 @@ void UpsellComponent::setViewMode(UpsellPlans::ViewMode mode)
     if (mode != viewMode())
     {
         mController->setViewMode(mode);
-        mController->resetIsAnyPlanClicked();
         sendStats();
     }
 }
 
 void UpsellComponent::sendCloseEvent() const
 {
-    mController->sendCloseEvent();
     mController->setViewMode(UpsellPlans::ViewMode::NONE);
+
+    AppStatsEvents::EventType eventType =
+        mController->getPlans()->isAnyPlanClicked() ?
+            AppStatsEvents::EventType::UPSELL_DIALOG_AFTER_ANY_PLAN_CLOSE_BUTTON_CLICKED :
+            AppStatsEvents::EventType::UPSELL_DIALOG_WITHOUT_ANY_PLAN_CLOSE_BUTTON_CLICKED;
+    MegaSyncApp->getStatsEventHandler()->sendEvent(eventType);
 }
 
 void UpsellComponent::buyButtonClicked(int index)
