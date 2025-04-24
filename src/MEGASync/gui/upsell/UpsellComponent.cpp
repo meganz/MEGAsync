@@ -19,8 +19,7 @@ UpsellComponent::UpsellComponent(QObject* parent, UpsellPlans::ViewMode mode):
     mModel(std::make_shared<UpsellModel>(mController))
 {
     registerQmlModules();
-    mController->setViewMode(mode);
-    sendStats();
+    setViewMode(mode);
 
     mController->registerQmlRootContextProperties();
 
@@ -62,12 +61,17 @@ UpsellPlans::ViewMode UpsellComponent::viewMode() const
 
 void UpsellComponent::setViewMode(UpsellPlans::ViewMode mode)
 {
-    mController->setViewMode(mode);
+    if (mode != viewMode())
+    {
+        mController->setViewMode(mode);
+        sendStats();
+    }
 }
 
 void UpsellComponent::sendCloseEvent() const
 {
     mController->sendCloseEvent();
+    mController->setViewMode(UpsellPlans::ViewMode::NONE);
 }
 
 void UpsellComponent::buyButtonClicked(int index)
