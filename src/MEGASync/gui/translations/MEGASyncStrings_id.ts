@@ -9463,9 +9463,9 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
         <translation>Kuota transfer telah terlewati</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <source>Upgrade your account to get more storage quota.</source>
         <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Tingkatkan akun Anda untuk mendapatkan lebih banyak kuota penyimpanan.[BR][BR]Atau hapus beberapa file dan [B][A]kosongkan tempat sampah Anda[/A][/B] untuk membebaskan ruang penyimpanan.</translation>
+        <translation>Tingkatkan akun Anda untuk mendapatkan lebih banyak kuota penyimpanan.</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>

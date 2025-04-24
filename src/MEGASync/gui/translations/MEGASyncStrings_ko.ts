@@ -9464,9 +9464,9 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>전송 할당량 초과</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <source>Upgrade your account to get more storage quota.</source>
         <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>더 많은 저장소 할당량을 받으려면 계정을 업그레이드하세요.[BR][BR]또는 파일을 삭제하고 저장 공간을 확보하기 위해 [B][A]휴지통을 비우세요[/A][/B]</translation>
+        <translation>더 많은 저장소 할당량을 받으려면 계정을 업그레이드하세요.</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>

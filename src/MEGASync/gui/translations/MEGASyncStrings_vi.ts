@@ -21,7 +21,7 @@
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Label for Cloud drive space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation>Ổ Mây</translation>
+        <translation>Ổ Mây</translation>
     </message>
     <message>
         <source>Loading...</source>
@@ -1046,7 +1046,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Chat</source>
         <translatorcomment>Button of system notification that forwards the user to webclient to chat section.</translatorcomment>
-        <translation>Chát</translation>
+        <translation>Chat</translation>
     </message>
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -1056,7 +1056,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Get Pro</source>
         <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
-        <translation>Lên hạng Pro</translation>
+        <translation>Mua gói Pro</translation>
     </message>
     <message>
         <source>New Contact Established</source>
@@ -1141,7 +1141,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Show in MEGA</source>
         <translatorcomment>Notification button to redirect the user to remote location. It will open webclient at specific location.</translatorcomment>
-        <translation>Hiện trên trang MEGA</translation>
+        <translation>Hiện trên MEGA</translation>
     </message>
     <message>
         <source>Sync</source>
@@ -2120,7 +2120,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Import to my cloud drive</source>
         <translatorcomment>Label to indicate if the user wants to import the selected MEGA link(s) to his cloud drive.</translatorcomment>
-        <translation>Chuyển nhập vào Ổ Mây của tôi</translation>
+        <translation>Chuyển nhập vào Ổ Mây của tôi</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -2163,7 +2163,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Read and write</source>
         <translatorcomment>The incoming shared folder access is read and write. CON-1266</translatorcomment>
-        <translation>Xem và sửa</translation>
+        <translation>Xem và ghi</translation>
     </message>
     <message>
         <source>Read-only</source>
@@ -3820,7 +3820,7 @@ Bạn sẽ không thể lấy lại quyền truy cập vào dữ liệu đã �
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
-        <translation>Ổ mây</translation>
+        <translation>Ổ Mây</translation>
     </message>
     <message>
         <source>Incoming shares</source>
@@ -4308,7 +4308,7 @@ Tất cả các phiên truyền tải đã hoàn tất của bạn sẽ bị d�
     <message>
         <source>Too many items selected. To continue, deselect some or select the parent folder instead.</source>
         <translatorcomment>Message displayed as a tooltip on the OK button when there are too many items selected. See CON-326.</translatorcomment>
-        <translation>Đã chọn quá nhiều mục. Để có thể tiếp tục, hãy bỏ chọn một số mục hoặc đi ra chọn thư mục chính để thay thế.</translation>
+        <translation>Đã chọn quá nhiều mục. Để có thể tiếp tục, hãy bỏ chọn một số mục hoặc đi ra chọn thư mục mẹ để thay thế.</translation>
     </message>
 </context>
 <context>
@@ -6001,7 +6001,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation>Hiện trong File Explorer</translation>
+        <translation>Hiện chỗ chứa trong File Explorer</translation>
     </message>
     <message>
         <source>Show in Finder</source>
@@ -6341,7 +6341,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Đi đến thư mục chính</translation>
+        <translation>Đi đến thư mục mẹ</translation>
     </message>
     <message>
         <source>List View</source>
@@ -6376,7 +6376,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>Thư mục chính</translation>
+        <translation>Thư mục mẹ</translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -8104,7 +8104,7 @@ Làm mới danh sách.</translation>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
-        <translation>Sao lưu “%1” của bạn đã bị vô hiệu hóa vì thư mục cục bộ không khả dụng hoặc bạn không có quyền đọc và ghi.</translation>
+        <translation>Sao lưu “%1” của bạn đã bị vô hiệu hóa vì thư mục cục bộ không khả dụng hoặc bạn không có quyền xem và ghi.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -8149,7 +8149,7 @@ Làm mới danh sách.</translation>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
-        <translation>Phiên đồng bộ “%1” của bạn đã bị vô hiệu do thư mục cục bộ không có khả dụng hoặc bạn không có quyền hạn đọc và ghi.</translation>
+        <translation>Phiên đồng bộ “%1” của bạn đã bị vô hiệu do thư mục cục bộ không có khả dụng hoặc bạn không có quyền hạn xem và ghi.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -8159,7 +8159,7 @@ Làm mới danh sách.</translation>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
-        <translation>Phiên đồng bộ “%1” của bạn đã bị vô hiệu do thư mục cục bộ không có khả dụng hoặc bạn không có quyền hạn đọc và ghi.</translation>
+        <translation>Phiên đồng bộ “%1” của bạn đã bị vô hiệu do thư mục cục bộ không có khả dụng hoặc bạn không có quyền hạn xem và ghi.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
@@ -9347,7 +9347,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation>Để tải thư mục này lên, bạn cần có quyền đọc &amp; ghi hoặc toàn quyền truy cập vào thư mục đó.</translation>
+        <translation>Để tải thư mục này lên, bạn cần có quyền xem và ghi hoặc toàn quyền truy cập vào thư mục đó.</translation>
     </message>
 </context>
 <context>
@@ -9461,9 +9461,9 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Vượt mức băng thông truyền tải</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <source>Upgrade your account to get more storage quota.</source>
         <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Nâng cấp tài khoản của bạn để nhận thêm mức dung lượng .[BR][BR]Hoặc xóa một số tệp tin và [B][A]dọn thùng rác của bạn[/A][/B] để giải phóng không gian lưu trữ.</translation>
+        <translation>Nâng cấp tài khoản của bạn để nhận thêm mức dung lượng .</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>

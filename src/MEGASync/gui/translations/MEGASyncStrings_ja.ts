@@ -9459,9 +9459,9 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>転送容量制限を超過しました</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <source>Upgrade your account to get more storage quota.</source>
         <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>アカウントをアップグレードしていただくと、より豊富なストレージ容量をご利用いただけます。[BR][BR]あるいは、ファイルを一部削除してごみ箱を空にして[/A][/B]、ストレージ領域を解放してください。</translation>
+        <translation>アカウントをアップグレードしていただくと、より豊富なストレージ容量をご利用いただけます。</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
