@@ -6023,7 +6023,7 @@ Enter a different name</source>
 - Other bugs have been fixed and numerous improvements made.
 </source>
         <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
-        <translation>- 對Windows 11瀏覽器右鍵選單進行了改進，提供了更精簡和完善的使用者體驗。
+        <translation>- 對Windows 11檔案總管右鍵選單進行了改進，提供了更精簡和完善的使用者體驗。
 - 解決了同步期間建立的檔案和資料夾套用不正確的預設權限設定問題。
 - 修復其它錯誤並進行許多改進。</translation>
     </message>
@@ -9462,9 +9462,9 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>已超過傳輸配額</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <source>Upgrade your account to get more storage quota.</source>
         <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>升級您的帳戶以取得更多儲存配額。[BR][BR]或刪除一些檔案並[B][A]清空垃圾筒[/A][/B]以釋放儲存空間。</translation>
+        <translation>升級您的帳戶以取得更多儲存配額。</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
