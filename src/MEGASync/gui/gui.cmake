@@ -121,6 +121,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellController.h
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellModel.h
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellPlans.h
+    ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellQmlDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserMessageCacheManager.h
     ${CMAKE_CURRENT_LIST_DIR}/user_messages/AlertFilterType.h
     ${CMAKE_CURRENT_LIST_DIR}/user_messages/AlertItem.h
@@ -260,6 +261,7 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellController.cpp
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellModel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellPlans.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellQmlDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserMessageCacheManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/user_messages/AlertFilterType.cpp
     ${CMAKE_CURRENT_LIST_DIR}/user_messages/AlertItem.cpp

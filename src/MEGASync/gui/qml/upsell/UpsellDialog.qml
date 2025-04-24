@@ -6,9 +6,9 @@ import components.images 1.0
 import components.texts 1.0
 import components.buttons 1.0
 
-import QmlDialog 1.0
+import UpsellComponents 1.0
 
-QmlDialog {
+UpsellQmlDialog {
     id: window
 
     readonly property int contentMargin: 24

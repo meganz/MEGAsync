@@ -7,12 +7,13 @@
 UpsellPlans::UpsellPlans(QObject* parent):
     QObject(parent),
     mViewMode(ViewMode::NONE),
-    mIsMonthly(false),
+    mIsMonthly(true),
     mIsBillingCurrency(true),
     mCurrentDiscount(-1),
     mTransferFinishTime(0ll),
     mIsOnlyProFlexiAvailable(false),
-    mIsPro(false)
+    mIsPro(false),
+    mIsAnyPlanClicked(false)
 {}
 
 void UpsellPlans::addPlans(const QList<std::shared_ptr<Data>>& plans)
@@ -89,6 +90,16 @@ void UpsellPlans::setPro(bool isPro)
         mIsPro = isPro;
         emit isProChanged();
     }
+}
+
+void UpsellPlans::setIsAnyPlanClicked(bool isAnyPlanClicked)
+{
+    mIsAnyPlanClicked = isAnyPlanClicked;
+}
+
+bool UpsellPlans::isAnyPlanClicked() const
+{
+    return mIsAnyPlanClicked;
 }
 
 long long UpsellPlans::getTransferFinishTime() const
