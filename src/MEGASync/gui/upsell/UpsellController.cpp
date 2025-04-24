@@ -24,7 +24,6 @@ constexpr long long TRANSFER_REMAINING_TIME_INTERVAL_MS(1000ll);
 constexpr int64_t NB_B_IN_1GB(1024 * 1024 * 1024);
 constexpr QLatin1Char BILLING_CURRENCY_REMARK('*');
 constexpr const char* DEFAULT_PRO_URL("mega://#pro");
-constexpr const char* PERIOD_SUFFIX_URL("?m=");
 const std::map<int, const char*> PRO_LEVEL_TO_URL = {
     {Preferences::AccountType::ACCOUNT_TYPE_PROI,      "mega://#propay_1"  },
     {Preferences::AccountType::ACCOUNT_TYPE_PROII,     "mega://#propay_2"  },
@@ -260,6 +259,8 @@ void UpsellController::openPlanUrl(int index)
         return;
     }
 
+    mPlans->setIsAnyPlanClicked(true);
+
     Utilities::openUrl(getUpsellPlanUrl(plan->proLevel()));
 }
 
@@ -285,6 +286,8 @@ void UpsellController::setViewMode(UpsellPlans::ViewMode mode)
                         &UpsellController::onTransferRemainingTimeElapsed);
             }
         }
+
+        mPlans->setIsAnyPlanClicked(false);
 
         // Force update of the plans to show the correct ones.
         emit dataChanged(0, mPlans->size() - 1, QVector<int>() << UpsellPlans::AVAILABLE_ROLE);
@@ -476,10 +479,7 @@ QUrl UpsellController::getUpsellPlanUrl(int proLevel)
         planUrlChar = DEFAULT_PRO_URL;
     }
 
-    QString planUrlString(QString::fromLatin1(planUrlChar) +
-                          QString::fromLatin1(PERIOD_SUFFIX_URL));
-    planUrlString +=
-        (mPlans->isMonthly() ? QString::number(MONTH_PERIOD) : QString::number(YEAR_PERIOD));
+    QString planUrlString(QString::fromLatin1(planUrlChar));
     Utilities::getPROurlWithParameters(planUrlString);
 
     return QUrl(planUrlString);

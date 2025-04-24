@@ -145,6 +145,8 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     {AppStatsEvents::EventType::SYNC_CREATED_AFTER_NOTIFICATION, 600037},
     {AppStatsEvents::EventType::SYNC_ADDED_CLOUD_DRIVE_BUTTON, 600038},
     {AppStatsEvents::EventType::CLOUD_DRIVE_OPENED, 600039},
+    {AppStatsEvents::EventType::UPSELL_DIALOG_AFTER_ANY_PLAN_CLOSE_BUTTON_CLICKED, 600040},
+    {AppStatsEvents::EventType::UPSELL_DIALOG_WITHOUT_ANY_PLAN_CLOSE_BUTTON_CLICKED, 600041},
 };
 
 // Deprecated are not displayed
@@ -308,6 +310,10 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
     {AppStatsEvents::EventType::SYNC_ADDED_CLOUD_DRIVE_BUTTON,
      "Sync added from Cloud drive dialog"},
     {AppStatsEvents::EventType::CLOUD_DRIVE_OPENED, "Cloud drive dialog opened"},
+    {AppStatsEvents::EventType::UPSELL_DIALOG_AFTER_ANY_PLAN_CLOSE_BUTTON_CLICKED,
+     "Upsell dialog closed after clicking any plan button"},
+    {AppStatsEvents::EventType::UPSELL_DIALOG_WITHOUT_ANY_PLAN_CLOSE_BUTTON_CLICKED,
+     "Upsell dialog closed without clicking any plan button"},
 };
 
 QString AppStatsEvents::getEventMessage(EventType event,
