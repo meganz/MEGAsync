@@ -936,12 +936,39 @@
     </message>
 </context>
 <context>
+    <name>CrashHandler</name>
+    <message>
+        <source>Contact support</source>
+        <translatorcomment>Button label for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>Support kontaktieren</translation>
+    </message>
+    <message>
+        <source>Error report sent</source>
+        <translatorcomment>Title for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
+        <translation>Fehlerbericht gesendet</translation>
+    </message>
+    <message>
+        <source>Failed to send error report</source>
+        <translatorcomment>Title for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>Fehlerbericht konnte nicht gesendet werden</translation>
+    </message>
+    <message>
+        <source>Unable to send the error report. Please contact support for assistance.</source>
+        <translatorcomment>Body for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>Der Fehlerbericht konnte nicht gesendet werden. Bitte wenden Sie sich für Unterstützung an den Support.</translation>
+    </message>
+    <message>
+        <source>Your error report was successfully submitted. Thank you for your feedback!</source>
+        <translatorcomment>Body for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
+        <translation>Ihr Fehlerbericht wurde erfolgreich übermittelt. Vielen Dank für Ihr Feedback!</translation>
+    </message>
+</context>
+<context>
     <name>CrashReportDialog</name>
     <message>
-        <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
-        <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation>Bitte Diagnoseprotokolle zur Debug-Unterstützung beifügen.
-(Diese können Details zu Ihren Daten enthalten, z. B. Datei- und Ordnernamen.)</translation>
+        <source>Attach diagnostic log files to assist with debugging</source>
+        <translatorcomment>Label for a check box to attach user logs with in the crash report. Con-1280</translatorcomment>
+        <translation>Diagnoseprotokolle zur Debug-Unterstützung beifügen</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -949,14 +976,24 @@
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <source>Error report</source>
-        <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
-        <translation>Fehlerbericht</translation>
+        <source>Describe the issue</source>
+        <translatorcomment>Title for the input field in the crash reporting dialog. Con-1280</translatorcomment>
+        <translation>Fehlerbeschreibung</translation>
     </message>
     <message>
-        <source>MEGAsync has detected a problem. These are the details:</source>
-        <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>Die MEGA-App hat ein Problem festgestellt. Dies sind die Details:</translation>
+        <source>Logs may contain personal information, such as file or folder names. These logs are not shared with MEGA unless you choose to send them to the Helpdesk for debugging.</source>
+        <translatorcomment>Info label shown in the crash report dialog, informing user about logs contents. Con-1280</translatorcomment>
+        <translation>Protokolle können personenbezogene Informationen enthalten, z. B. Datei- oder Ordnernamen. Diese Protokolle werden nicht an MEGA übermittelt, es sei denn, Sie selbst senden sie zur Unterstützung der Fehlersuche an den Helpdesk.</translation>
+    </message>
+    <message>
+        <source>Please describe the issue or attach diagnostic log files to send the error report.</source>
+        <translatorcomment>Error label shown when the user tries to send the report without both logs and issue description. Con-1280</translatorcomment>
+        <translation>Bitte beschreiben Sie das Problem oder hängen Sie Diagnoseprotokolldateien an, um den Fehlerbericht versenden zu können</translation>
+    </message>
+    <message>
+        <source>Send crash report</source>
+        <translatorcomment>Title for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
+        <translation>Absturzbericht senden</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -964,9 +1001,9 @@
         <translation>Bericht absenden</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
-        <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Sie können uns helfen, die MEGA-App zu verbessern, indem Sie diesen Fehlerbericht absenden. Er enthält keine personenbezogenen Informationen. Wenn Sie uns weitere Details mitteilen möchten, geben Sie sie bitte unten ein:</translation>
+        <source>You can help us to improve MEGA by sending this error report to the Helpdesk.</source>
+        <translatorcomment>Body for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
+        <translation>Sie können uns helfen, MEGA zu verbessern, indem Sie diesen Fehlerbericht an unseren Helpdesk senden</translation>
     </message>
 </context>
 <context>
@@ -3371,11 +3408,6 @@ Warten Sie, bis der Upload abgeschlossen ist.</translation>
         <source>Syncing</source>
         <translatorcomment>Label of tray icon to indicate that the app is in a syncing state.</translatorcomment>
         <translation>Synchronisierung</translation>
-    </message>
-    <message>
-        <source>Thank you for your collaboration</source>
-        <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
-        <translation>Vielen Dank für Ihre Mithilfe!</translation>
     </message>
     <message>
         <source>The folder %1 can&apos;t be downloaded. Check the download destination folder.</source>
@@ -6019,21 +6051,14 @@ Bitte geben Sie einen anderen Namen ein.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
+        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
+- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation>- Wir stellen einen neuen Remote-Explorer für Ihr Cloud Drive vor. Die schlanke und benutzerfreundliche neue Oberfläche bietet Ihnen eine bequeme Möglichkeit, Ihr Cloud Drive zu durchsuchen und Ihre Dateien und Ordner zu verwalten.
-- Der Assistent für die Ersteinrichtung wurde weiter verbessert.
-- Die Systembenachrichtigungen wurden optimiert.
-- Sie können die MEGA-App jetzt an die Windows-Taskleiste anheften.
-- Einige Drittanbieter-Bibliotheken wurden aktualisiert.
-- Es wurden weitere Fehlerkorrekturen und zahlreiche Verbesserungen vorgenommen.
-</translation>
+        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
+        <translation>- Das Explorer-Kontextmenü unter Windows 11 wurde verbessert und bietet nun eine optimierte Benutzererfahrung.
+- Es wurde ein Problem behoben, das bei Dateien und Ordnern, die bei der Synchronisierung erstellt wurden, zu falschen Standard-Berechtigungseinstellungen führte.
+- Es wurden weitere Fehlerkorrekturen und zahlreiche Verbesserungen vorgenommen.</translation>
     </message>
 </context>
 <context>
@@ -9470,9 +9495,9 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Transfervolumen verbraucht</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <source>Upgrade your account to get more storage quota.</source>
         <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Upgraden Sie Ihren Account, um mehr Speicherplatz zu erhalten.[BR][BR]Oder löschen Sie einige Dateien und [B][A]leeren Sie Ihren Papierkorb[/A][/B], um Speicherplatz freizugeben.</translation>
+        <translation>Upgraden Sie Ihren Account, um mehr Speicherplatz zu erhalten.</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>

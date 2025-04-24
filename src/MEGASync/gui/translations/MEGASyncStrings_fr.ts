@@ -966,12 +966,39 @@
     </message>
 </context>
 <context>
+    <name>CrashHandler</name>
+    <message>
+        <source>Contact support</source>
+        <translatorcomment>Button label for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>Contacter l’assistance</translation>
+    </message>
+    <message>
+        <source>Error report sent</source>
+        <translatorcomment>Title for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
+        <translation>Rapport d’erreur envoyé</translation>
+    </message>
+    <message>
+        <source>Failed to send error report</source>
+        <translatorcomment>Title for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>Impossible d’envoyer le rapport d’erreur</translation>
+    </message>
+    <message>
+        <source>Unable to send the error report. Please contact support for assistance.</source>
+        <translatorcomment>Body for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>Impossible d’envoyer le rapport d’erreur. Veuillez prendre en charge l’assistance pour obtenir de l’aide.</translation>
+    </message>
+    <message>
+        <source>Your error report was successfully submitted. Thank you for your feedback!</source>
+        <translatorcomment>Body for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
+        <translation>Votre rapport d’erreur a été envoyé avec succès. Merci pour vos commentaires !</translation>
+    </message>
+</context>
+<context>
     <name>CrashReportDialog</name>
     <message>
-        <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
-        <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation>Joindre des fichiers journaux de diagnostic pour faciliter le débogage.
-Dans certains cas, ils pourraient comprendre des détails sur vos données, tels que des noms de fichier ou de dossier.</translation>
+        <source>Attach diagnostic log files to assist with debugging</source>
+        <translatorcomment>Label for a check box to attach user logs with in the crash report. Con-1280</translatorcomment>
+        <translation>Joindre des fichiers journaux de diagnostic pour faciliter le débogage</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -979,14 +1006,24 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
         <translation>Annuler</translation>
     </message>
     <message>
-        <source>Error report</source>
-        <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
-        <translation>Relevé d’erreur</translation>
+        <source>Describe the issue</source>
+        <translatorcomment>Title for the input field in the crash reporting dialog. Con-1280</translatorcomment>
+        <translation>Décrivez le problème</translation>
     </message>
     <message>
-        <source>MEGAsync has detected a problem. These are the details:</source>
-        <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>L’appli MEGA a détecté un problème. En voici les détails :</translation>
+        <source>Logs may contain personal information, such as file or folder names. These logs are not shared with MEGA unless you choose to send them to the Helpdesk for debugging.</source>
+        <translatorcomment>Info label shown in the crash report dialog, informing user about logs contents. Con-1280</translatorcomment>
+        <translation>Les journaux peuvent contenir des renseignements personnels, tels que des noms de fichiers ou de dossiers. Ces journaux ne sont pas partagés avec MEGA à moins que vous ne choisissiez de les envoyer au centre dqu`assistance pour le débogage.</translation>
+    </message>
+    <message>
+        <source>Please describe the issue or attach diagnostic log files to send the error report.</source>
+        <translatorcomment>Error label shown when the user tries to send the report without both logs and issue description. Con-1280</translatorcomment>
+        <translation>Veuillez décrire le problème ou attacher des fichiers journaux de diagnostic pour envoyer le rapport d’erreur</translation>
+    </message>
+    <message>
+        <source>Send crash report</source>
+        <translatorcomment>Title for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
+        <translation>Envoyer un rapport de bogue</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -994,9 +1031,9 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
         <translation>Envoyer le relevé</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
-        <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Vous pouvez nous aider à améliorer l’appli MEGA en envoyant ce relevé d’erreurs. Il ne contient aucun renseignement personnel. Si vous voulez nous donner plus de détails, écrivez-les ci-dessous :</translation>
+        <source>You can help us to improve MEGA by sending this error report to the Helpdesk.</source>
+        <translatorcomment>Body for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
+        <translation>Vous pouvez nous aider à améliorer MEGA en envoyant ce rapport d’erreur au centre dʼassistance</translation>
     </message>
 </context>
 <context>
@@ -3449,11 +3486,6 @@ Attendez la fin du téléversement.</translation>
         <source>Syncing</source>
         <translatorcomment>Label of tray icon to indicate that the app is in a syncing state.</translatorcomment>
         <translation>Synchronisation</translation>
-    </message>
-    <message>
-        <source>Thank you for your collaboration</source>
-        <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
-        <translation>Nous vous remercions de votre collaboration</translation>
     </message>
     <message>
         <source>The folder %1 can&apos;t be downloaded. Check the download destination folder.</source>
@@ -6155,21 +6187,14 @@ Saisissez un nom différent.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
+        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
+- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation>- Présentation d’un nouvel explorateur de Disque nuagique à distance. Parcourez votre Disque nuagique avec style et gérez vos fichiers et dossiers dans la nouvelle interface élégante et facile à utiliser.
-- Nous avons apporté d’autres améliorations à l’assistant d’intégration initial.
-- Les notifications du système ont été améliorées.
-- Vous pouvez désormais épingler l’application MEGA à la barre des tâches de Windows.
-- Certaines bibliothèques tierces ont été mises à jour.
-- D’autres bogues ont été corrigés et de nombreuses améliorations ont été apportées.
-</translation>
+        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
+        <translation>- Des améliorations ont été apportées à Windows 11 Menu contextuel de l’Explorateur, offrant une expérience utilisateur plus rationalisée et plus raffinée.
+- Résolution d’un problème lié à l’application de paramètres d’autorisation par défaut incorrects aux fichiers et dossiers créés lors de la synchronisation.
+- D’autres bogues ont été corrigés et de nombreuses améliorations ont été apportées.</translation>
     </message>
 </context>
 <context>
@@ -9702,9 +9727,9 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Le quota de transfert a été dépassé</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <source>Upgrade your account to get more storage quota.</source>
         <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Améliorez votre compte pour augmenter votre quota d’espace de stockage.[BR][BR]Ou supprimez certains fichiers et [B][A]videz votre Corbeille[/A][/B] pour libérer de l’espace de stockage.</translation>
+        <translation>Améliorez votre compte pour augmenter votre quota d’espace de stockage.</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>

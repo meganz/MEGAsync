@@ -29,14 +29,11 @@ Format: 1 item by line, starting from line following the #define
 "- item n\n"
 )*/
 #define VER_CHANGES_NOTES \
-    QT_TRANSLATE_NOOP( \
-        "Preferences", \
-        "- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and " \
-        "manage your files and folders in the new sleek and easy-to-use interface.\n" \
-        "- We’ve made more improvements to the initial onboarding wizard.\n" \
-        "- Systems notifications have been enhanced.\n" \
-        "- You can now pin the MEGA app to the Windows taskbar.\n" \
-        "- Some third party libraries have been updated.\n" \
-        "- Other bugs have been fixed and numerous improvements made.\n")
+    QT_TRANSLATE_NOOP("Preferences", \
+                      "- Added refinements to the Windows 11 Explorer context menu, delivering a " \
+                      "more streamlined and polished user experience.\n" \
+                      "- Resolved issue with incorrect default permission settings applied to " \
+                      "files and folders created during synchronization.\n" \
+                      "- Other bugs have been fixed and numerous improvements made.\n")
 
 #endif // VERSION_H

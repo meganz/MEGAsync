@@ -415,8 +415,8 @@
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
         <translation>
-            <numerusform>Uma pasta com o mesmo nome já existe em seus backups. Renomeie a nova pasta para continuar com o backup. O nome da pasta não mudará no seu computador.</numerusform>
-            <numerusform>Algumas pastas com o mesmo nome já existem em seus backups. Renomeie as novas pastas para continuar com o backup. Os nomes das pastas não mudarão no seu computador.</numerusform>
+            <numerusform>Uma pasta com o mesmo nome já existe nos seus Backups. Renomeie a nova pasta para continuar com o backup. O nome da pasta não mudará no seu computador.</numerusform>
+            <numerusform>Algumas pastas com o mesmo nome já existem nos seus Backups. Renomeie as novas pastas para continuar com o backup. Os nomes das pastas não mudarão no seu computador.</numerusform>
         </translation>
     </message>
     <message>
@@ -966,12 +966,39 @@
     </message>
 </context>
 <context>
+    <name>CrashHandler</name>
+    <message>
+        <source>Contact support</source>
+        <translatorcomment>Button label for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>Contatar o suporte</translation>
+    </message>
+    <message>
+        <source>Error report sent</source>
+        <translatorcomment>Title for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
+        <translation>Informe de erro enviado</translation>
+    </message>
+    <message>
+        <source>Failed to send error report</source>
+        <translatorcomment>Title for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>Não foi possível enviar o informe de erro</translation>
+    </message>
+    <message>
+        <source>Unable to send the error report. Please contact support for assistance.</source>
+        <translatorcomment>Body for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>Não foi possível enviar o informe de erro. Por favor, entre em contato com o nosso Suporte técnico para obter ajuda.</translation>
+    </message>
+    <message>
+        <source>Your error report was successfully submitted. Thank you for your feedback!</source>
+        <translatorcomment>Body for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
+        <translation>O seu informe de erro foi enviado corretamente. Obrigado pelo seu feedback!</translation>
+    </message>
+</context>
+<context>
     <name>CrashReportDialog</name>
     <message>
-        <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
-        <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation>Anexar arquivos de log de diagnóstico para ajudar na depuração.
-Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos ou pastas.</translation>
+        <source>Attach diagnostic log files to assist with debugging</source>
+        <translatorcomment>Label for a check box to attach user logs with in the crash report. Con-1280</translatorcomment>
+        <translation>Anexar arquivos de log de diagnóstico para ajudar na depuração</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -979,14 +1006,24 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
         <translation>Cancelar</translation>
     </message>
     <message>
-        <source>Error report</source>
-        <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
-        <translation>Informe de erro</translation>
+        <source>Describe the issue</source>
+        <translatorcomment>Title for the input field in the crash reporting dialog. Con-1280</translatorcomment>
+        <translation>Descrição do problema</translation>
     </message>
     <message>
-        <source>MEGAsync has detected a problem. These are the details:</source>
-        <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>O aplicativo para desktop do MEGA detectou um problema. Mais informações:</translation>
+        <source>Logs may contain personal information, such as file or folder names. These logs are not shared with MEGA unless you choose to send them to the Helpdesk for debugging.</source>
+        <translatorcomment>Info label shown in the crash report dialog, informing user about logs contents. Con-1280</translatorcomment>
+        <translation>Os logs podem conter informação pessoal, como nomes de pastas ou arquivos. Esses registros não são compartilhados com o MEGA, a menos que você decida enviá-los ao Suporte técnico para depuração.</translation>
+    </message>
+    <message>
+        <source>Please describe the issue or attach diagnostic log files to send the error report.</source>
+        <translatorcomment>Error label shown when the user tries to send the report without both logs and issue description. Con-1280</translatorcomment>
+        <translation>Descreva o problema ou anexe arquivos de log de diagnóstico para enviar o informe de erro</translation>
+    </message>
+    <message>
+        <source>Send crash report</source>
+        <translatorcomment>Title for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
+        <translation>Enviar informe de falha</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -994,9 +1031,9 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
         <translation>Enviar informe</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
-        <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Você pode nos ajudar a melhorar o aplicativo do MEGA para desktop enviando este informe de erro, que não contém nenhuma informação pessoal. Se você quiser nos dar mais detalhes, escreva-os abaixo:</translation>
+        <source>You can help us to improve MEGA by sending this error report to the Helpdesk.</source>
+        <translatorcomment>Body for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
+        <translation>Você pode nos ajudar a melhorar o MEGA enviando este informe de erro para o Suporte técnico</translation>
     </message>
 </context>
 <context>
@@ -3451,11 +3488,6 @@ Espere que o upload seja finalizado.</translation>
         <translation>Sincronizando</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration</source>
-        <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
-        <translation>Obrigado pela sua colaboração</translation>
-    </message>
-    <message>
         <source>The folder %1 can&apos;t be downloaded. Check the download destination folder.</source>
         <translatorcomment>Error message when there is an error downloading a MEGA link, and this error is a generic write error. SNC-2549.</translatorcomment>
         <translation>Não foi possível fazer o download da pasta %1. Verifique a pasta de destino do download.</translation>
@@ -5020,7 +5052,7 @@ Digite um nome diferente.
     <message>
         <source>Sync</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It creates a sync in the selected folder. SAT-426</translatorcomment>
-        <translation>Sincronização</translation>
+        <translation>Sincronizar</translation>
     </message>
 </context>
 <context>
@@ -6155,21 +6187,14 @@ Digite um nome diferente.
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
+        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
+- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation>- Novo explorador remoto da Nuvem de arquivos: navegue na sua Nuvem de arquivos com estilo e gerencie os seus arquivos e pastas com uma nova interface elegante e fácil de usar.
-- Aprimoramento do assistente de integração inicial.
-- Melhoria nas notificações do sistema foram aprimoradas.
-- Possibilidade de fixar o aplicativo do MEGA na barra de tarefas do Windows.
-- Atualização de algumas bibliotecas de terceiros.
-- Correção de bugs e melhorias variadas.
-</translation>
+        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
+        <translation>- Aprimoramento do menu de contexto do Windows 11, oferecendo uma experiência de usuário melhor e mais simplificada.
+- Resolução de problema com configurações predeterminadas de permissão incorretas aplicadas a arquivos e pastas criados durante a sincronização.
+- Correções de bugs e melhorias variadas.</translation>
     </message>
 </context>
 <context>
@@ -9702,9 +9727,9 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Cota de transferência excedida</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <source>Upgrade your account to get more storage quota.</source>
         <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Faça o upgrade da sua conta para obter mais cota de armazenamento.[BR][BR]Você também pode deletar arquivos antigos e [B][A]esvaziar a sua Lixeira[/A][/B] para liberar espaço.</translation>
+        <translation>Faça o upgrade da sua conta para obter mais cota de armazenamento.</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>

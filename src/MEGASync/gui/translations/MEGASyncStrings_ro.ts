@@ -803,7 +803,7 @@
     <message>
         <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
         <translatorcomment>Messagebox secondary string to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Toate elementele vor fi șterse definitiv. Această acțiune poate [B]nu[/B] să fie anulat.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -936,12 +936,39 @@
     </message>
 </context>
 <context>
+    <name>CrashHandler</name>
+    <message>
+        <source>Contact support</source>
+        <translatorcomment>Button label for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>Contactați asistența</translation>
+    </message>
+    <message>
+        <source>Error report sent</source>
+        <translatorcomment>Title for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
+        <translation>Raport de eroare trimis</translation>
+    </message>
+    <message>
+        <source>Failed to send error report</source>
+        <translatorcomment>Title for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>Nu s-a reușit trimiterea raportului de eroare</translation>
+    </message>
+    <message>
+        <source>Unable to send the error report. Please contact support for assistance.</source>
+        <translatorcomment>Body for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>Imposibil de trimis raportul de eroare. Vă rugăm să contactați asistența pentru asistență.</translation>
+    </message>
+    <message>
+        <source>Your error report was successfully submitted. Thank you for your feedback!</source>
+        <translatorcomment>Body for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
+        <translation>Raportul de eroare a fost trimis cu succes. Vă mulțumim pentru feedback!</translation>
+    </message>
+</context>
+<context>
     <name>CrashReportDialog</name>
     <message>
-        <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
-        <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation>Atașează fișiere jurnal de diagnosticare pentru a ajuta la depanare.
-În unele cazuri, acestea pot conține detalii despre datele tale, precum numele fișierelor sau folderelor.</translation>
+        <source>Attach diagnostic log files to assist with debugging</source>
+        <translatorcomment>Label for a check box to attach user logs with in the crash report. Con-1280</translatorcomment>
+        <translation>Atașați fișiere jurnal de diagnosticare pentru a ajuta la depanare</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -949,14 +976,24 @@
         <translation>Anulează</translation>
     </message>
     <message>
-        <source>Error report</source>
-        <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
-        <translation>Raport de eroare</translation>
+        <source>Describe the issue</source>
+        <translatorcomment>Title for the input field in the crash reporting dialog. Con-1280</translatorcomment>
+        <translation>Descrie problema</translation>
     </message>
     <message>
-        <source>MEGAsync has detected a problem. These are the details:</source>
-        <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>Aplicația MEGA a detectat o problemă. Acestea sunt detaliile:</translation>
+        <source>Logs may contain personal information, such as file or folder names. These logs are not shared with MEGA unless you choose to send them to the Helpdesk for debugging.</source>
+        <translatorcomment>Info label shown in the crash report dialog, informing user about logs contents. Con-1280</translatorcomment>
+        <translation>Jurnalele pot conține informații personale, cum ar fi numele fișierelor sau folderelor. Aceste jurnale nu sunt partajate cu MEGA decât dacă alegeți să le trimiteți la Serviciul de asistență pentru depanare.</translation>
+    </message>
+    <message>
+        <source>Please describe the issue or attach diagnostic log files to send the error report.</source>
+        <translatorcomment>Error label shown when the user tries to send the report without both logs and issue description. Con-1280</translatorcomment>
+        <translation>Descrieți problema sau atașați fișiere jurnal de diagnosticare pentru a trimite raportul de eroare</translation>
+    </message>
+    <message>
+        <source>Send crash report</source>
+        <translatorcomment>Title for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
+        <translation>Trimiteți un raport de eroare</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -964,9 +1001,9 @@
         <translation>Trimite raportul</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
-        <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Ne puteți ajuta să îmbunătățim aplicația MEGA trimițând acest raport de eroare. Nu conține informații personale. Dacă doriți să ne oferiți mai multe detalii, scrieți-le mai jos:</translation>
+        <source>You can help us to improve MEGA by sending this error report to the Helpdesk.</source>
+        <translatorcomment>Body for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
+        <translation>Ne puteți ajuta să îmbunătățim MEGA trimițând acest raport de eroare la Serviciul de asistență</translation>
     </message>
 </context>
 <context>
@@ -1974,12 +2011,12 @@
     <message>
         <source>Set up your first sync to get the most out of the desktop app</source>
         <translatorcomment>Description text in O.S. notification to remind that the user can create syncs after few hours (e.g. 2) from the first launch of the application if the user has never created a sync. CON-1207</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Configurați prima sincronizare pentru a profita la maximum de aplicația desktop</translation>
     </message>
     <message>
         <source>You’re almost done</source>
         <translatorcomment>Title text in O.S. notification to remind that the user can create syncs after few hours (e.g. 2) from the first launch of the application if the user has never created a sync. CON-1207</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Aproape că ai terminat</translation>
     </message>
 </context>
 <context>
@@ -3220,7 +3257,7 @@ Așteptați finalizarea încărcării.</translation>
     <message>
         <source>MEGA web</source>
         <translatorcomment>InfoDialog menu action to open the webclient. CON-1245</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA web</translation>
     </message>
     <message>
         <source>MEGAsync has been updated</source>
@@ -3371,11 +3408,6 @@ Așteptați finalizarea încărcării.</translation>
         <source>Syncing</source>
         <translatorcomment>Label of tray icon to indicate that the app is in a syncing state.</translatorcomment>
         <translation>Sincronizare în curs</translation>
-    </message>
-    <message>
-        <source>Thank you for your collaboration</source>
-        <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
-        <translation>Îți mulțumim pentru colaborare</translation>
     </message>
     <message>
         <source>The folder %1 can&apos;t be downloaded. Check the download destination folder.</source>
@@ -3693,7 +3725,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Reconfigure</source>
         <translatorcomment>Button to reconfigure syncs and backups (opens Onboarding wizard) - CON-1311</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Reconfigurați</translation>
     </message>
     <message>
         <source>Reload</source>
@@ -3723,7 +3755,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Sync configuration error</source>
         <translatorcomment>Title of the warning dialog shown when the syncs configuration file has been re-generated by the sdk  - CON-1311</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Eroare de configurare sincronizare</translation>
     </message>
     <message>
         <source>Temporarily not available</source>
@@ -3796,7 +3828,7 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
     <message>
         <source>Your sync and backup settings were corrupted and have been reset. If you had any, please set them up again.</source>
         <translatorcomment>Body of the warning dialog shown when the syncs configuration file has been re-generated by the sdk - CON-1311</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Setările de sincronizare și backup au fost corupte și au fost resetate. Va trebui să configurați din nou toate sincronizările și backup-urile pe care le-ați avut.</translation>
     </message>
 </context>
 <context>
@@ -4332,7 +4364,7 @@ Toate transferurile finalizate vor fi șterse.</translation>
     <message>
         <source>Access your data from anywhere, collaborate with ease, and instantly get the most up-to-date version of your files</source>
         <translatorcomment>Description text in O.S. notification to remind that the user can create syncs after days or months (e.g. 10 days, 1 month) if the user has never created a sync. CON-1207</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Accesați datele de oriunde, colaborați cu ușurință și obțineți instantaneu cea mai actualizată versiune a fișierelor</translation>
     </message>
     <message>
         <source>Set up sync</source>
@@ -4342,7 +4374,7 @@ Toate transferurile finalizate vor fi șterse.</translation>
     <message>
         <source>Sync your data</source>
         <translatorcomment>Title text in O.S. notification to remind that the user can create syncs after days or months (e.g. 10 days, 1 month) if the user has never created a sync. CON-1207</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sincronizați-vă datele</translation>
     </message>
 </context>
 <context>
@@ -4628,27 +4660,27 @@ Introdu un alt nume.</translation>
     <message>
         <source>Error copying file</source>
         <translatorcomment>Main text of a messagebox when copying a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Eroare la copierea fișierului</translation>
     </message>
     <message>
         <source>Error copying files</source>
         <translatorcomment>Main text of a messagebox when copying some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Eroare la copierea fișierelor</translation>
     </message>
     <message>
         <source>Error copying folder</source>
         <translatorcomment>Main text of a messagebox when copying a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Eroare la copierea folderului</translation>
     </message>
     <message>
         <source>Error copying folders</source>
         <translatorcomment>Main text of a messagebox when copying some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Eroare la copierea folderelor</translation>
     </message>
     <message>
         <source>Error copying items</source>
         <translatorcomment>Main text of a messagebox when copying some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Eroare la copierea elementelor</translation>
     </message>
     <message>
         <source>Error deleting file</source>
@@ -4678,52 +4710,52 @@ Introdu un alt nume.</translation>
     <message>
         <source>Error moving file</source>
         <translatorcomment>Main text of a messagebox when moving a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Eroare la mutarea fișierului</translation>
     </message>
     <message>
         <source>Error moving files</source>
         <translatorcomment>Main text of a messagebox when moving some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Eroare la mutarea fișierelor</translation>
     </message>
     <message>
         <source>Error moving folder</source>
         <translatorcomment>Main text of a messagebox when moving a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Eroare la mutarea folderului</translation>
     </message>
     <message>
         <source>Error moving folders</source>
         <translatorcomment>Main text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Eroare la mutarea folderelor</translation>
     </message>
     <message>
         <source>Error moving items</source>
         <translatorcomment>Main text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Eroare la mutarea elementelor</translation>
     </message>
     <message>
         <source>Error restoring file</source>
         <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Eroare la restaurarea fișierului</translation>
     </message>
     <message>
         <source>Error restoring files</source>
         <translatorcomment>Main text of a messagebox when restoring some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Eroare la restaurarea fișierelor</translation>
     </message>
     <message>
         <source>Error restoring folder</source>
         <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Eroare la restaurarea folderului</translation>
     </message>
     <message>
         <source>Error restoring folders</source>
         <translatorcomment>Main text of a messagebox when restoring some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Eroare la restaurarea folderelor</translation>
     </message>
     <message>
         <source>Error restoring items</source>
         <translatorcomment>Main text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Eroare la restaurarea elementelor</translation>
     </message>
     <message>
         <source>Folder already synced</source>
@@ -4748,7 +4780,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Sort by access</source>
         <translatorcomment>Access column tooltip. Sorts the order of the column by incoming shared folder access.CON-1266</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sortare după acces</translation>
     </message>
     <message>
         <source>Sort by date</source>
@@ -4773,7 +4805,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>The file %1 couldn’t be copied. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when copying a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Fișierul %1 nu a putut fi copiat. Încercați din nou mai târziu.</translation>
     </message>
     <message>
         <source>The file %1 couldn’t be deleted. Try again later</source>
@@ -4783,17 +4815,17 @@ Introdu un alt nume.</translation>
     <message>
         <source>The file %1 couldn’t be moved. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when moving a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Fișierul %1 nu putea fi mutat. Încercați din nou mai târziu.</translation>
     </message>
     <message>
         <source>The file %1 couldn’t be restored. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Fișierului %1 nu a putut fi restaurat. Încercați din nou mai târziu.</translation>
     </message>
     <message>
         <source>The files couldn’t be copied. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when copying some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Fișierele nu au putut fi copiate. Încercați din nou mai târziu.</translation>
     </message>
     <message>
         <source>The files couldn’t be deleted. Try again later</source>
@@ -4803,17 +4835,17 @@ Introdu un alt nume.</translation>
     <message>
         <source>The files couldn’t be moved. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when moving some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Fișierele nu au putut fi mutate. Încercați din nou mai târziu.</translation>
     </message>
     <message>
         <source>The files couldn’t be restored. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when restoring some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Fișierele nu au putut fi restaurate. Încercați din nou mai târziu.</translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be copied. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when copying a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folderul %1 nu a putut fi copiat. Încercați din nou mai târziu.</translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be deleted. Try again later</source>
@@ -4823,17 +4855,17 @@ Introdu un alt nume.</translation>
     <message>
         <source>The folder %1 couldn’t be moved. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when moving a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folderul %1 nu putea fi mutat. Încercați din nou mai târziu.</translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be restored. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folderul %1 nu a putut fi restaurat. Încercați din nou mai târziu.</translation>
     </message>
     <message>
         <source>The folders couldn’t be copied. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when copying some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folderele nu au putut fi copiate. Încercați din nou mai târziu.</translation>
     </message>
     <message>
         <source>The folders couldn’t be deleted. Try again later</source>
@@ -4843,17 +4875,17 @@ Introdu un alt nume.</translation>
     <message>
         <source>The folders couldn’t be moved. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folderele nu au putut fi mutate. Încercați din nou mai târziu.</translation>
     </message>
     <message>
         <source>The folders couldn’t be restored. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when restoring some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folderele nu au putut fi restaurate. Încercați din nou mai târziu.</translation>
     </message>
     <message>
         <source>The items couldn’t be copied. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when copying some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Elementele nu au putut fi copiate. Încercați din nou mai târziu.</translation>
     </message>
     <message>
         <source>The items couldn’t be deleted. Try again later</source>
@@ -4863,12 +4895,12 @@ Introdu un alt nume.</translation>
     <message>
         <source>The items couldn’t be moved. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Elementele nu au putut fi mutate. Încercați din nou mai târziu.</translation>
     </message>
     <message>
         <source>The items couldn’t be restored. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Elementele nu au putut fi restaurate. Încercați din nou mai târziu.</translation>
     </message>
 </context>
 <context>
@@ -4881,7 +4913,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Leave folder</source>
         <translatorcomment>Contextual menu text that appears when we right click on inshare folder on the incoming shared page on node selector. It leaves an inshared folder. CON-1255</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lăsați folderul</translation>
     </message>
     <message>
         <source>Move to Rubbish bin</source>
@@ -4896,7 +4928,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Permanently delete</source>
         <translatorcomment>Contextual menu text that appears when we right click on an item on the rubbish page on node selector. It deletes the item and it can be undone. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ștergeți definitiv</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -4916,7 +4948,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Stop syncing</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It deletes the sync on the selected folder. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Opriți sincronizarea</translation>
     </message>
     <message>
         <source>Sync</source>
@@ -4989,7 +5021,7 @@ Introdu un alt nume.</translation>
     <message numerus="yes">
         <source>Leave this shared folder?</source>
         <translatorcomment>Title of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Părăsiți acest dosar partajat?</numerusform><numerusform>Părăsiți aceste dosare partajate?</numerusform><numerusform>Părăsiți aceste dosare partajate?</numerusform></translation>
     </message>
     <message>
         <source>Move</source>
@@ -4999,7 +5031,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Move %1 to Rubbish bin?</source>
         <translatorcomment>Main text of the confirmation messagebox to move a single item (file or folder) pto the rubbish bin. %1 is the name of the item to delete. CON-334</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mutați %1 în Coșul de gunoi?</translation>
     </message>
     <message numerus="yes">
         <source>Move %n items to Rubbish bin?</source>
@@ -5029,22 +5061,22 @@ Introdu un alt nume.</translation>
     <message numerus="yes">
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a file(s) from the rubbish bin. %n is the number of files to delete. CON-1258</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Sunteți pe cale să ștergeți definitiv %n fișier. Doriți să continuați?</numerusform><numerusform>Sunteți pe cale să ștergeți definitiv %n fișierele. Doriți să continuați?</numerusform><numerusform>Sunteți pe cale să ștergeți definitiv %n fișierele. Doriți să continuați?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n folder. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a folder(s) from the rubbish bin. %n is the number of folders to delete. CON-1258</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Sunteți pe cale să elimini definitiv %n folder. Dorești să continui?</numerusform><numerusform>Sunteți pe cale să elimini definitiv %n foldere. Dorești să continui?</numerusform><numerusform>Sunteți pe cale să elimini definitiv %n foldere. Dorești să continui?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n items. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently some items (files and folders) from the rubbish bin. %n is the number of items to delete. CON-1258</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Sunteți pe cale să ștergeți definitiv #%n elementul. Doriți să continuați?</numerusform><numerusform>Sunteți pe cale să ștergi definitiv %n elemente. Doriți să continuați?</numerusform><numerusform>Sunteți pe cale să ștergi definitiv %n elemente. Doriți să continuați?</numerusform></translation>
     </message>
     <message>
         <source>You cannot undo this action</source>
         <translatorcomment>Second part of the messagebox text when the user is about to remove permanently a node. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nu poți anula această acțiune</translation>
     </message>
 </context>
 <context>
@@ -5176,7 +5208,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Access the latest version of your files from anywhere. Changes made to synced files will automatically update in both directions.</source>
         <translatorcomment>Selective sync button text description CON-1268</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Accesați cea mai recentă versiune a fișierelor dvs. de oriunde. Modificările aduse fișierelor sincronizate se vor actualiza automat în ambele direcții.</translation>
     </message>
     <message>
         <source>Account created</source>
@@ -5306,7 +5338,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Data from your device will automatically and consistently back up to MEGA in real-time. Files deleted from your computer will be deleted from MEGA.</source>
         <translatorcomment>Button description, on click it goes to the backups section CON-1268</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Datele de pe dispozitivul dvs. vor fi salvate automat și constant în MEGA în timp real. Fișierele șterse de pe calculator vor fi șterse din MEGA.</translation>
     </message>
     <message>
         <source>Device name</source>
@@ -6020,15 +6052,14 @@ Introdu un alt nume.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
+        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
+- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
+        <translation>- Adăugat rafinamente la Windows 11 Meniul contextual Explorer, oferind o experiență de utilizare mai simplificată și mai rafinată.
+- Problema rezolvată cu setările de permisiune implicite incorecte aplicate fișierelor și folderelor create în timpul sincronizării.
+- Alte erori au fost remediate și s-au făcut numeroase îmbunătățiri.</translation>
     </message>
 </context>
 <context>
@@ -8534,7 +8565,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Changes made to synced folders in MEGA or on your device will automatically update in both directions.</source>
         <translatorcomment>Page description to add syncs. CON-1268</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Modificările aduse folderelor sincronizate în MEGA sau pe dispozitivul dvs. se vor actualiza automat în ambele direcții.</translation>
     </message>
     <message>
         <source>Select folders</source>
@@ -8544,7 +8575,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Select folders to sync</source>
         <translatorcomment>Page title to add syncs. CON-1268</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Selectați folderele de sincronizat</translation>
     </message>
 </context>
 <context>
@@ -9465,9 +9496,9 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Cotă de transfer depășită</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <source>Upgrade your account to get more storage quota.</source>
         <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Actualizează-ți contul pentru a obține mai multă cotă de stocare.[BR][BR]Sau ștergeți unele fișiere și [B][A]goliți coșul de gunoi[/A][/B] pentru a elibera spațiu de stocare.</translation>
+        <translation>Actualizează-ți contul pentru a obține mai multă cotă de stocare.</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
