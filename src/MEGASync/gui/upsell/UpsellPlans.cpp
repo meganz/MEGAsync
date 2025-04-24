@@ -7,7 +7,7 @@
 UpsellPlans::UpsellPlans(QObject* parent):
     QObject(parent),
     mViewMode(ViewMode::NONE),
-    mIsMonthly(false),
+    mIsMonthly(true),
     mIsBillingCurrency(true),
     mCurrentDiscount(-1),
     mTransferFinishTime(0ll),
