@@ -134,7 +134,10 @@ void UpsellComponent::linkInDescriptionClicked()
 
 void UpsellComponent::linkTryProFlexiClicked()
 {
-    Utilities::openUrl(QUrl(URL_PRO_FLEXI));
+    QString urlString(URL_PRO_FLEXI);
+    Utilities::getPROurlWithParameters(urlString);
+    Utilities::openUrl(QUrl(urlString));
+
     MegaSyncApp->getStatsEventHandler()->sendTrackedEventArg(
         AppStatsEvents::EventType::UPSELL_DIALOG_TRY_PRO_FLEXI_CLICKED,
         {getViewModeString()});
