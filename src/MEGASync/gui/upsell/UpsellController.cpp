@@ -312,6 +312,11 @@ void UpsellController::setTransferFinishTime(long long finishTime)
     }
 }
 
+void UpsellController::resetIsAnyPlanClicked()
+{
+    mPlans->setIsAnyPlanClicked(false);
+}
+
 QString UpsellController::getMinProPlanNeeded(long long usedStorage) const
 {
     if (!mPlans)

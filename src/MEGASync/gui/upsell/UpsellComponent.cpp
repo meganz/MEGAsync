@@ -65,6 +65,7 @@ void UpsellComponent::setViewMode(UpsellPlans::ViewMode mode)
     if (mode != viewMode())
     {
         mController->setViewMode(mode);
+        mController->resetIsAnyPlanClicked();
         sendStats();
     }
 }
