@@ -6,8 +6,6 @@
 #include <QFileInfo>
 #include <QString>
 
-#include <optional>
-
 class BugReportData
 {
 public:

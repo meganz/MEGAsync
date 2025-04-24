@@ -172,7 +172,7 @@ protected slots:
     void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 
-// Unkown download issue
+// Unknown download issue
 class UnknownDownloadIssueHeader: public DownloadIssueHeader
 {
     Q_OBJECT

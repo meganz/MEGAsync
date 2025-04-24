@@ -292,7 +292,7 @@ void DownloadIssueHeader::refreshCaseTitles(StalledIssueHeader* header)
     header->setTitleDescriptionText(tr("A failure occurred either downloading the file, or moving the downloaded temporary file to its final name and location."));
 }
 
-// Unkown download issue
+// Unknown download issue
 UnknownDownloadIssueHeader::UnknownDownloadIssueHeader(StalledIssueHeader* header):
     DownloadIssueHeader(header)
 {}

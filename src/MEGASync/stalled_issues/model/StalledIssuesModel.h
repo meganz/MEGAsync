@@ -211,7 +211,7 @@ public:
     //Fingerprint missing
     void fixFingerprint(const QModelIndexList& list);
 
-    // UnkownDownloadIssue
+    // UnknownDownloadIssue
     void fixUnknownDownloadIssueByRetry(const QModelIndexList& list);
     void sendReportForUnknownDownloadIssue(const QModelIndex& index);
 

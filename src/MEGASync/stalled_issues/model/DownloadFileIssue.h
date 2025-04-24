@@ -53,7 +53,6 @@ public:
     bool canBeRetried() const;
     bool checkForExternalChanges() override;
 
-    void solveIssue();
     static void solveIssuesByRetry();
     void addIssueToSolveQueue();
 
