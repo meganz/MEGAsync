@@ -48,6 +48,7 @@ public:
     void setBilledPeriod(bool isMonthly);
     void setViewMode(UpsellPlans::ViewMode mode);
     void setTransferFinishTime(long long finishTime);
+    void resetIsAnyPlanClicked();
 
 public slots:
     void onBilledPeriodChanged();
