@@ -936,12 +936,39 @@
     </message>
 </context>
 <context>
+    <name>CrashHandler</name>
+    <message>
+        <source>Contact support</source>
+        <translatorcomment>Button label for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>ติดต่อฝ่ายสนับสนุน</translation>
+    </message>
+    <message>
+        <source>Error report sent</source>
+        <translatorcomment>Title for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
+        <translation>ส่งรายงานข้อผิดพลาดเรียบร้อยแล้ว</translation>
+    </message>
+    <message>
+        <source>Failed to send error report</source>
+        <translatorcomment>Title for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>ไม่สามารถส่งรายงานข้อผิดพลาดได้</translation>
+    </message>
+    <message>
+        <source>Unable to send the error report. Please contact support for assistance.</source>
+        <translatorcomment>Body for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>ไม่สามารถส่งรายงานข้อผิดพลาดได้ กรุณาติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือ</translation>
+    </message>
+    <message>
+        <source>Your error report was successfully submitted. Thank you for your feedback!</source>
+        <translatorcomment>Body for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
+        <translation>ส่งรายงานข้อผิดพลาดเรียบร้อยแล้ว ขอบคุณสำหรับคำติชม</translation>
+    </message>
+</context>
+<context>
     <name>CrashReportDialog</name>
     <message>
-        <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
-        <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation>แนบไฟล์บันทึกการวินิจฉัยเพื่อช่วยในการดีบัก
-ในบางกรณีอาจมีรายละเอียดเกี่ยวกับข้อมูลของคุณ เช่น ชื่อไฟล์หรือโฟลเดอร์</translation>
+        <source>Attach diagnostic log files to assist with debugging</source>
+        <translatorcomment>Label for a check box to attach user logs with in the crash report. Con-1280</translatorcomment>
+        <translation>แนบไฟล์บันทึกการวินิจฉัยเพื่อช่วยในการแก้ไขข้อบกพร่อง</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -949,14 +976,24 @@
         <translation>ยกเลิก</translation>
     </message>
     <message>
-        <source>Error report</source>
-        <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
-        <translation>รายงานข้อผิดพลาด</translation>
+        <source>Describe the issue</source>
+        <translatorcomment>Title for the input field in the crash reporting dialog. Con-1280</translatorcomment>
+        <translation>อธิบายปัญหาที่พบ</translation>
     </message>
     <message>
-        <source>MEGAsync has detected a problem. These are the details:</source>
-        <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>แอป MEGA ตรวจพบปัญหา นี่คือรายละเอียดที่ตรวจเจอ:</translation>
+        <source>Logs may contain personal information, such as file or folder names. These logs are not shared with MEGA unless you choose to send them to the Helpdesk for debugging.</source>
+        <translatorcomment>Info label shown in the crash report dialog, informing user about logs contents. Con-1280</translatorcomment>
+        <translation>ไฟล์บันทึกอาจมีข้อมูลส่วนบุคคล เช่น ชื่อไฟล์หรือโฟลเดอร์ ไฟล์บันทึกเหล่านี้จะไม่ถูกแชร์กับ MEGA เว้นแต่คุณจะเลือกส่งไปยังฝ่ายช่วยเหลือเพื่อแก้ไขข้อบกพร่อง</translation>
+    </message>
+    <message>
+        <source>Please describe the issue or attach diagnostic log files to send the error report.</source>
+        <translatorcomment>Error label shown when the user tries to send the report without both logs and issue description. Con-1280</translatorcomment>
+        <translation>กรุณาอธิบายปัญหาหรือแนบไฟล์บันทึก เพื่อส่งรายงานข้อผิดพลาด</translation>
+    </message>
+    <message>
+        <source>Send crash report</source>
+        <translatorcomment>Title for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
+        <translation>ส่งรายงานข้อผิดพลาด</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -964,9 +1001,9 @@
         <translation>ส่งรายงาน</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
-        <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>คุณสามารถช่วยปรับปรุงแอป MEGA ได้โดยส่งรายงานข้อผิดพลาดนี้ จะไม่มีการแนบข้อมูลส่วนบุคคลใด ๆ หากคุณต้องการให้รายละเอียดเพิ่มเติม กรุณาเขียนไว้ด้านล่างนี้:</translation>
+        <source>You can help us to improve MEGA by sending this error report to the Helpdesk.</source>
+        <translatorcomment>Body for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
+        <translation>คุณสามารถช่วยเราปรับปรุง MEGA ได้โดยส่งรายงานข้อผิดพลาดนี้ให้เจ้าหน้าที่ให้ความช่วยเหลือ</translation>
     </message>
 </context>
 <context>
@@ -3370,11 +3407,6 @@ Please wait for the upload to complete.</source>
         <source>Syncing</source>
         <translatorcomment>Label of tray icon to indicate that the app is in a syncing state.</translatorcomment>
         <translation>กำลังซิงค์</translation>
-    </message>
-    <message>
-        <source>Thank you for your collaboration</source>
-        <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
-        <translation>ขอบคุณสำหรับความร่วมมือของคุณ</translation>
     </message>
     <message>
         <source>The folder %1 can&apos;t be downloaded. Check the download destination folder.</source>
@@ -6015,20 +6047,14 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
+        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
+- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation>- แนะนำตัวสำรวจคลาวด์ไดร์ฟระยะไกลแบบใหม่ เรียกดูคลาวด์ไดร์ฟของคุณอย่างมีสไตล์ และจัดการไฟล์และโฟลเดอร์ของคุณในอินเทอร์เฟซที่ทันสมัยและใช้งานง่ายแบบใหม่
-- เราได้ปรับปรุงตัวช่วยการตั้งค่าเริ่มต้น
-- ปรับปรุงการแจ้งเตือนของระบบให้ดียิ่งขึ้น
-- ปักหมุดแอป MEGA ไปยังแถบงาน Windows ได้แล้ว
-- มีการอัปเดตไลบรารีจากภายนอกด้วย
-- แก้ไขข้อผิดพลาดอื่น ๆ และปรับปรุงเพิ่มเติมอีกมากมาย</translation>
+        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
+        <translation>- ปรับปรุงเมนูคลิกขวาของ Explorer ใน Windows 11 ให้ใช้งานได้คล่องตัวและสวยงามยิ่งขึ้น เพื่อประสบการณ์การใช้งานที่ดียิ่งขึ้น
+- แก้ไขปัญหาการตั้งค่าสิทธิ์เริ่มต้นที่ไม่ถูกต้องสำหรับไฟล์และโฟลเดอร์ที่สร้างขึ้นระหว่างการซิงค์ข้อมูล
+- แก้ไขข้อผิดพลาดอื่น ๆ และปรับปรุงประสิทธิภาพการทำงานหลายส่วน</translation>
     </message>
 </context>
 <context>
@@ -9465,9 +9491,9 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>เกินโควต้าการถ่ายโอนแล้ว</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <source>Upgrade your account to get more storage quota.</source>
         <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>พื้นที่เก็บข้อมูลของคุณใกล้เต็มแล้ว [BR][BR]หากต้องการพื้นที่เพิ่ม กรุณาอัปเกรดบัญชีของคุณหรือ[B][A]ลบไฟล์[/A][/B]บางส่วนเพื่อเพิ่มพื้นที่ว่าง</translation>
+        <translation>พื้นที่เก็บข้อมูลของคุณใกล้เต็มแล้ว</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>

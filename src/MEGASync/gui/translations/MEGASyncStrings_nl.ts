@@ -937,12 +937,39 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     </message>
 </context>
 <context>
+    <name>CrashHandler</name>
+    <message>
+        <source>Contact support</source>
+        <translatorcomment>Button label for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>Neem contact op met de ondersteuning</translation>
+    </message>
+    <message>
+        <source>Error report sent</source>
+        <translatorcomment>Title for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
+        <translation>Foutrapport verzonden</translation>
+    </message>
+    <message>
+        <source>Failed to send error report</source>
+        <translatorcomment>Title for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>Foutrapport verzenden is mislukt</translation>
+    </message>
+    <message>
+        <source>Unable to send the error report. Please contact support for assistance.</source>
+        <translatorcomment>Body for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>Kan het foutenrapport niet verzenden. Neem contact op met de klantenservice voor hulp.</translation>
+    </message>
+    <message>
+        <source>Your error report was successfully submitted. Thank you for your feedback!</source>
+        <translatorcomment>Body for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
+        <translation>Uw foutenrapport is succesvol verzonden. Bedankt voor uw feedback!</translation>
+    </message>
+</context>
+<context>
     <name>CrashReportDialog</name>
     <message>
-        <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
-        <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation>Voeg diagnostische logbestanden toe om te helpen bij het opsporen van fouten.
-In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands- of mapnamen.</translation>
+        <source>Attach diagnostic log files to assist with debugging</source>
+        <translatorcomment>Label for a check box to attach user logs with in the crash report. Con-1280</translatorcomment>
+        <translation>Diagnostische logbestanden bijvoegen om te helpen bij het opsporen van fouten</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -950,14 +977,24 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
         <translation>Annuleren</translation>
     </message>
     <message>
-        <source>Error report</source>
-        <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
-        <translation>Foutenrapport</translation>
+        <source>Describe the issue</source>
+        <translatorcomment>Title for the input field in the crash reporting dialog. Con-1280</translatorcomment>
+        <translation>Beschrijf het probleem</translation>
     </message>
     <message>
-        <source>MEGAsync has detected a problem. These are the details:</source>
-        <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>De MEGA-applicatie heeft een probleem gedetecteerd. Dit zijn de details:</translation>
+        <source>Logs may contain personal information, such as file or folder names. These logs are not shared with MEGA unless you choose to send them to the Helpdesk for debugging.</source>
+        <translatorcomment>Info label shown in the crash report dialog, informing user about logs contents. Con-1280</translatorcomment>
+        <translation>Logboeken bevatten mogelijk persoonlijke informatie, zoals bestands- of mapnamen. Deze logboeken worden niet gedeeld met MEGA, tenzij u ervoor kiest om ze naar de Helpdesk te sturen voor foutopsporing.</translation>
+    </message>
+    <message>
+        <source>Please describe the issue or attach diagnostic log files to send the error report.</source>
+        <translatorcomment>Error label shown when the user tries to send the report without both logs and issue description. Con-1280</translatorcomment>
+        <translation>Beschrijf het probleem of voeg diagnostische logbestanden bij om het foutenrapport te verzenden</translation>
+    </message>
+    <message>
+        <source>Send crash report</source>
+        <translatorcomment>Title for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
+        <translation>Crashrapport verzenden</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -965,9 +1002,9 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
         <translation>Rapport versturen</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
-        <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>U kunt ons helpen de MEGA-applicatie te verbeteren door dit foutenrapport te sturen. Het bevat geen persoonlijke informatie. Als u ons meer informatie wilt geven, schrijf het dan hieronder:</translation>
+        <source>You can help us to improve MEGA by sending this error report to the Helpdesk.</source>
+        <translatorcomment>Body for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
+        <translation>U kunt ons helpen om MEGA te verbeteren door dit foutenrapport naar de Helpdesk te sturen</translation>
     </message>
 </context>
 <context>
@@ -3372,11 +3409,6 @@ Wacht tot het uploaden is voltooid.</translation>
         <source>Syncing</source>
         <translatorcomment>Label of tray icon to indicate that the app is in a syncing state.</translatorcomment>
         <translation>Synchroniseren</translation>
-    </message>
-    <message>
-        <source>Thank you for your collaboration</source>
-        <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
-        <translation>Bedankt voor uw samenwerking</translation>
     </message>
     <message>
         <source>The folder %1 can&apos;t be downloaded. Check the download destination folder.</source>
@@ -6020,21 +6052,14 @@ Voer een andere naam in.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
+        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
+- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation>- Maak kennis met een nieuwe verkenner voor cloudschijven op afstand. Blader in stijl door uw Cloud-schijf en beheer uw bestanden en mappen in de nieuwe slanke en gebruiksvriendelijke interface.
-- We hebben meer verbeteringen aangebracht in de initiële onboarding-wizard.
-- Systeemmeldingen zijn verbeterd.
-- U kunt de MEGA-applicatie nu vastzetten op de Windows-taakbalk.
-- Sommige bibliotheken van derden zijn bijgewerkt.
-- Andere bugs zijn opgelost en er zijn talloze verbeteringen aangebracht.
-</translation>
+        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
+        <translation>- Verfijningen toegevoegd aan de Windows 11 Explorer-contextmenu, voor een meer gestroomlijnde en gepolijste gebruikerservaring.
+- Probleem opgelost waarbij onjuiste standaard toestemmingsinstellingen werden toegepast op bestanden en mappen die tijdens de synchronisatie zijn gemaakt.
+- Andere bugs zijn opgelost en er zijn talloze verbeteringen aangebracht.</translation>
     </message>
 </context>
 <context>
@@ -9428,7 +9453,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</source>
         <translatorcomment>Billing clarification message according to currency. CON-945</translatorcomment>
-        <translation>Geschatte prijs in uw lokale valuta. Uw account wordt gefactureerd in euro’s voor alle transacties.</translation>
+        <translation>* Geschatte prijs in uw lokale valuta. Voor alle transacties wordt u in euro in rekening gebracht.</translation>
     </message>
     <message>
         <source>Billed monthly</source>
@@ -9471,9 +9496,9 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Overdracht tegoed overschreden</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <source>Upgrade your account to get more storage quota.</source>
         <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Uw account upgraden om meer opslagruimte toe te voegen.[BR][BR]Of sommige bestanden verwijderen en [B][A]maak uw vuilnisbak leeg[/A][/B] om gratis opslagruimte vrij te maken.</translation>
+        <translation>Uw account upgraden om meer opslagruimte toe te voegen.</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
