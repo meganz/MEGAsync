@@ -486,8 +486,6 @@ void TransferThread::onTransferFinish(MegaApi* megaApi, MegaTransfer *transfer, 
             {
                 data =  createData(transfer, e);
 
-                trackTransfer(data);
-
                 if(transfer->isFolderTransfer())
                 {
                     if(transfer->getState() == MegaTransfer::STATE_FAILED
@@ -514,9 +512,9 @@ void TransferThread::onTransferFinish(MegaApi* megaApi, MegaTransfer *transfer, 
                         mTransfersToProcess.updateTransfersByTag.insert(transfer->getTag(), data);
                     }
                 }
-
-                data->mIsTempTransfer = isTemp;
             }
+
+            trackTransfer(data);
 
             data->mIsTempTransfer = isTemp;
         }

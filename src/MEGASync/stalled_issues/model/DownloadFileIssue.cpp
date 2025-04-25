@@ -51,8 +51,6 @@ DownloadIssue::DownloadIssue(std::optional<IssueType> type, const mega::MegaSync
 /// \param stall
 ///
 
-QList<mega::MegaHandle> UnknownDownloadIssue::mIssuesToRetry = QList<mega::MegaHandle>();
-
 UnknownDownloadIssue::UnknownDownloadIssue(const mega::MegaSyncStall* stall):
     DownloadIssue(stall)
 {
@@ -86,30 +84,22 @@ bool UnknownDownloadIssue::checkForExternalChanges()
     return !canBeRetried();
 }
 
-void UnknownDownloadIssue::solveIssuesByRetry()
+void UnknownDownloadIssue::solveIssueByRetry()
 {
-    MegaSyncApp->getTransfersModel()->retrySyncFailedTransfers(mIssuesToRetry);
-    mIssuesToRetry.clear();
-}
+    auto pathHandle(consultCloudData()->getPathHandle());
 
-void UnknownDownloadIssue::addIssueToSolveQueue()
-{
-    if (isValid() && consultCloudData())
+    if (!mTrack)
     {
-        auto pathHandle(consultCloudData()->getPathHandle());
-
-        if (!mTrack)
-        {
-            mTrack = MegaSyncApp->getTransfersModel()->addTrackToTransfer(
-                QString::number(getOriginalStall()->getHash()),
-                TransferData::TRANSFER_DOWNLOAD);
-            connectTrack();
-        }
-
-        mTrack->addTransferToTrack(QVariant::fromValue<uint64_t>(pathHandle));
-
-        mIssuesToRetry.append(pathHandle);
+        mTrack = MegaSyncApp->getTransfersModel()->addTrackToTransfer(
+            QString::number(getOriginalStall()->getHash()),
+            TransferData::TRANSFER_DOWNLOAD);
+        connectTrack();
     }
+
+    mTrack->addTransferToTrack(QVariant::fromValue<uint64_t>(pathHandle));
+
+    MegaSyncApp->getTransfersModel()->retrySyncFailedTransfers(QList<mega::MegaHandle>()
+                                                               << pathHandle);
 }
 
 void UnknownDownloadIssue::sendFeedback()

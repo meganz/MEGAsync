@@ -21,7 +21,7 @@ void TransferTrack::checkTransfer(QExplicitlySharedDataPointer<TransferData> dat
         auto emitSignal =
             [this](QExplicitlySharedDataPointer<TransferData> data, QVariant transferId)
         {
-            if (data->isCompleted())
+            if (data->isFinished())
             {
                 emit transferFinished(data);
                 mTrackedTransfers.removeAll(transferId);

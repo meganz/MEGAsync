@@ -1604,7 +1604,7 @@ void StalledIssuesModel::fixFingerprint(const QModelIndexList& list)
         InvalidFingerprintDownloadIssue::solveIssues();
     };
 
-    auto resolveIssue = [this](int row) -> bool
+    auto joinFingerprintIssues = [this](int row) -> bool
     {
         auto item(getStalledIssueByRow(row));
         InvalidFingerprintDownloadIssue::addIssueToSolve(item);
@@ -1613,24 +1613,19 @@ void StalledIssuesModel::fixFingerprint(const QModelIndexList& list)
         return true;
     };
 
-    SolveListInfo info(list, resolveIssue);
+    SolveListInfo info(list, joinFingerprintIssues);
     info.finishFunc = finishIssue;
     solveListOfIssues(info);
 }
 
 void StalledIssuesModel::fixUnknownDownloadIssueByRetry(const QModelIndexList& list)
 {
-    auto finishIssue = [](int, bool)
-    {
-        UnknownDownloadIssue::solveIssuesByRetry();
-    };
-
     auto resolveIssue = [this](int row) -> bool
     {
         auto item(getStalledIssueByRow(row));
         if (auto unknownIssue = item.convert<UnknownDownloadIssue>())
         {
-            unknownIssue->addIssueToSolveQueue();
+            unknownIssue->solveIssueByRetry();
 
             MegaSyncApp->getStatsEventHandler()->sendEvent(
                 AppStatsEvents::EventType::SI_UNKNOWN_DOWNLOAD_ISSUE_SOLVED_BY_RETRY);
@@ -1644,7 +1639,6 @@ void StalledIssuesModel::fixUnknownDownloadIssueByRetry(const QModelIndexList& l
     };
 
     SolveListInfo info(list, resolveIssue);
-    info.finishFunc = finishIssue;
     info.async = true;
     solveListOfIssues(info);
 }

@@ -53,8 +53,7 @@ public:
     bool canBeRetried() const;
     bool checkForExternalChanges() override;
 
-    static void solveIssuesByRetry();
-    void addIssueToSolveQueue();
+    void solveIssueByRetry();
 
     void sendFeedback();
     bool isSendingFeedback() const;
@@ -70,7 +69,6 @@ private slots:
 private:
     void connectTrack();
 
-    static QList<mega::MegaHandle> mIssuesToRetry;
     std::shared_ptr<TransferTrack> mTrack;
     std::shared_ptr<BugReportController> mReportController;
 };
