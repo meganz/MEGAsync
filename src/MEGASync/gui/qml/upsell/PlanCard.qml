@@ -10,6 +10,7 @@ import components.buttons 1.0
 Rectangle {
     id: root
 
+    readonly property real planDefaultWidth: 160
     readonly property real cardRadius: 8
     readonly property real contentMargin: 12
     readonly property real contentSpacing: 8
@@ -25,6 +26,10 @@ Rectangle {
     readonly property real tryProFlexiLineHeight: 16
     readonly property int borderWidthDefault: 1
     readonly property int borderWidthRecommended: 2
+
+    property real localHeight: root.calculateContentHeight(root.calculateBottomTextsHeight())
+                                + 2 * root.contentMargin + Constants.focusAdjustment
+    property real externalMaxHeight: 0
 
     property bool recommended: false
     property bool currentPlan: false
@@ -42,6 +47,8 @@ Rectangle {
     property string buttonName: ""
 
     signal buyButtonClicked()
+    signal reportHeight(real height)
+    signal forceUpdate()
 
     function getChipBackgroundColor() {
         if (root.currentPlan) {
@@ -82,6 +89,25 @@ Rectangle {
         }
     }
 
+    function calculateBottomTextsHeight() {
+        let currentHeight = storageTransferTextColumn.height
+            + (root.showProFlexiMessage ? tryProFlexiText.height : 0)
+            + bottomTextsColumn.spacing;
+        return Math.max(76, currentHeight);
+    }
+
+    function calculateContentHeight(bottomHeight) {
+        return titleText.height
+                + recommendedChip.height
+                + priceColumn.height
+                + bottomHeight
+                + buyButtonContainer.height
+                + root.totalNumContentSpacing * root.contentSpacing;
+    }
+
+    width: root.planDefaultWidth
+    height: root.localHeight
+
     border {
         width: root.recommended ? root.borderWidthRecommended : root.borderWidthDefault
         color: root.recommended ? ColorTheme.borderBrand : ColorTheme.borderStrong
@@ -96,13 +122,18 @@ Rectangle {
     }
 
     Column {
+        id: contentColumn
+
         anchors {
-            fill: parent
+            left: parent.left
+            right: parent.right
+            top: parent.top
             leftMargin: root.contentMargin
             rightMargin: root.contentMargin
             topMargin: root.contentMargin
             bottomMargin: root.contentMargin + Constants.focusAdjustment
         }
+        height: root.calculateContentHeight(bottomTextsColumn.height)
         spacing: root.contentSpacing
 
         Text {
@@ -145,8 +176,14 @@ Rectangle {
                 left: parent.left
                 right: parent.right
             }
+            height: (root.monthly ? 0 : priceTextWithDiscount.height)
+                        + priceText.height
+                        + billedPeriodInfoText.height
+                        + (root.monthly ? 0 : pricePerMonthText.height)
 
             SecondaryText {
+                id: priceTextWithDiscount
+
                 anchors {
                     left: parent.left
                     right: parent.right
@@ -160,6 +197,8 @@ Rectangle {
             }
 
             Text {
+                id: priceText
+
                 anchors {
                     left: parent.left
                     right: parent.right
@@ -189,6 +228,8 @@ Rectangle {
             }
 
             SecondaryText {
+                id: pricePerMonthText
+
                 anchors {
                     left: parent.left
                     right: parent.right
@@ -202,56 +243,56 @@ Rectangle {
         }
 
         Column {
+            id: bottomTextsColumn
+
             anchors {
                 left: parent.left
                 right: parent.right
             }
-            height: parent.height
-                        - titleText.height
-                        - recommendedChip.height
-                        - priceColumn.height
-                        - buyButtonContainer.height
-                        - root.totalNumContentSpacing * root.contentSpacing
-            spacing: root.bottomTextsSpacing
+            height: {
+                let diff = (root.externalMaxHeight > root.localHeight)
+                            ? root.externalMaxHeight - root.localHeight : 0;
+                return root.calculateBottomTextsHeight() + diff;
+            }
+            spacing: root.showProFlexiMessage ? root.bottomTextsSpacing : 0
 
-            Item {
+            Column {
+                id: storageTransferTextColumn
+
                 anchors {
                     left: parent.left
                     right: parent.right
+                    verticalCenter: root.showProFlexiMessage ? null : parent.verticalCenter
                 }
-                height: parent.height - root.bottomTextsSpacing
-                            - (tryProFlexiText.visible ? tryProFlexiText.height : 0)
+                height: storageText.height + transferText.height
+                        + root.bottomSpacing
+                spacing: root.bottomSpacing
                 enabled: root.enabled && !root.showOnlyProFlexi
 
-                Column {
-                    spacing: root.bottomSpacing
+                Text {
+                    id: storageText
+
                     anchors {
                         left: parent.left
                         right: parent.right
-                        verticalCenter: parent.verticalCenter
                     }
-
-                    Text {
-                        id: storageText
-
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                        }
-                        font.weight: Font.DemiBold
-                        text: UpsellStrings.storage.arg(gbStorage)
+                    font.weight: Font.DemiBold
+                    text: UpsellStrings.storage.arg(gbStorage)
+                    onTextChanged: {
+                        // Force to update the height of the component when the text is changed
+                        forceUpdate();
                     }
+                }
 
-                    Text {
-                        id: transferText
+                Text {
+                    id: transferText
 
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                        }
-                        font.weight: Font.DemiBold
-                        text: UpsellStrings.transfer.arg(gbTransfer)
+                    anchors {
+                        left: parent.left
+                        right: parent.right
                     }
+                    font.weight: Font.DemiBold
+                    text: UpsellStrings.transfer.arg(gbTransfer)
                 }
             }
 
@@ -294,6 +335,7 @@ Rectangle {
                 left: parent.left
                 right: parent.right
             }
+            height: buyButton.height
 
             PrimaryButton {
                 id: buyButton
@@ -337,5 +379,10 @@ Rectangle {
         }
 
     }
+
+    Component.onCompleted: {
+        reportHeight(root.height)
+    }
+
 
 }
