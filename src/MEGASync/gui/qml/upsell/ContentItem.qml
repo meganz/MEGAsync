@@ -22,9 +22,10 @@ FocusScope {
     property real totalPlansRowSpacing: root.plansRowSpacing * (upsellPlansAccess.plansCount - 1)
     property real plansWidth: root.planDefaultWidth * upsellPlansAccess.plansCount
                                 + root.totalPlansRowSpacing
+    property real contentWidth: Math.max(topRow.width, root.plansWidth)
 
     height: columnItem.height
-    width: Math.max(root.minimumWidth, root.plansWidth)
+    width: Math.max(root.minimumWidth, root.contentWidth)
 
     Column {
         id: columnItem
@@ -37,12 +38,9 @@ FocusScope {
         Row {
             id: topRow
 
-            anchors {
-                left: parent.left
-                leftMargin: root.chipSpacing + Constants.focusAdjustment
-            }
             spacing: root.chipSpacing
             height: Math.max(comboBoxRow.height, billedChip.height)
+            width: comboBoxRow.width + root.chipSpacing + billedChip.width
 
             Row {
                 id: comboBoxRow
