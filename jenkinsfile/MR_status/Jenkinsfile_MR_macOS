@@ -24,7 +24,7 @@ pipeline {
                     steps {
                         script{
                             env.BUILD_OPTIONS = ' '
-                            env.BUILD_OPTIONS = sh(script: 'echo "gitlabTriggerPhrase" | grep BUILD_OPTIONS | awk -F "BUILD_OPTIONS="  \'{print \$2}\' | cut -d"\\"" -f2 || :', returnStdout: true).trim()
+                            env.BUILD_OPTIONS = sh(script: 'echo "$gitlabTriggerPhrase" | grep BUILD_OPTIONS | awk -F "BUILD_OPTIONS="  \'{print \$2}\' | cut -d"\\"" -f2 || :', returnStdout: true).trim()
                             env.ARCHITECTURE = sh(script: 'echo "$gitlabTriggerPhrase" | grep ARCHITECTURE | awk -F "ARCHITECTURE="  \'{print \$2}\' | cut -d\\" -f2', returnStdout: true).trim()
                             if (env.ARCHITECTURE == "")
                                 { env.ARCHITECTURE = "arm64" }
