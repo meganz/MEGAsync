@@ -46,6 +46,14 @@ Rectangle {
     property string monthlyPriceWithDiscount: ""
     property string buttonName: ""
 
+    property string billedText: {
+        root.billingCurrency
+            ? (root.monthly ? UpsellStrings.perMonth : UpsellStrings.billedYearly)
+            : (root.monthly
+                ? UpsellStrings.perMonthWithBillingCurrency.arg(root.currencyName)
+                : UpsellStrings.billedYearlyWithBillingCurrency.arg(root.currencyName))
+    }
+
     signal buyButtonClicked()
     signal reportHeight(real height)
     signal forceUpdate()
@@ -74,21 +82,6 @@ Rectangle {
         }
     }
 
-    function getBilledPeriodInfoText() {
-        if (root.billingCurrency) {
-            return root.monthly
-                    ? UpsellStrings.perMonth
-                    : UpsellStrings.billedYearly;
-        }
-        else {
-            return root.monthly
-                    ? UpsellStrings.perMonthWithBillingCurrency
-                        .arg(root.currencyName)
-                    : UpsellStrings.billedYearlyWithBillingCurrency
-                        .arg(root.currencyName);
-        }
-    }
-
     function calculateBottomTextsHeight() {
         let currentHeight = storageTransferTextColumn.height
             + (root.showProFlexiMessage ? tryProFlexiText.height : 0)
@@ -105,6 +98,12 @@ Rectangle {
                 + root.totalNumContentSpacing * root.contentSpacing;
     }
 
+    function updateBilledPeriodText() {
+        if (!billedPeriodInfoText.enabled) {
+            billedPeriodInfoText.text = root.billedText;
+        }
+    }
+
     width: root.planDefaultWidth
     height: root.localHeight
 
@@ -114,12 +113,6 @@ Rectangle {
     }
     radius: root.cardRadius
     color: ColorTheme.pageBackground
-
-    onMonthlyChanged: {
-        // When the component is disabled, the text is not being updated.
-        // Force to update the text when the component is disabled.
-        billedPeriodInfoText.text = getBilledPeriodInfoText();
-    }
 
     Column {
         id: contentColumn
@@ -224,7 +217,13 @@ Rectangle {
                 lineHeight: root.pricePeriodLineHeight
                 lineHeightMode: Text.FixedHeight
                 enabled: root.enabled && !root.showOnlyProFlexi
-                text: getBilledPeriodInfoText()
+
+                Binding {
+                    target: billedPeriodInfoText
+                    property: "text"
+                    value: root.billedText
+                    when: true
+                }
             }
 
             SecondaryText {
@@ -281,6 +280,10 @@ Rectangle {
                     onTextChanged: {
                         // Force to update the height of the component when the text is changed
                         forceUpdate();
+
+                        // When the component is disabled, the text is not being updated.
+                        // Force to update the text when the component is disabled.
+                        Qt.callLater(updateBilledPeriodText);
                     }
                 }
 
@@ -383,6 +386,5 @@ Rectangle {
     Component.onCompleted: {
         reportHeight(root.height)
     }
-
 
 }
