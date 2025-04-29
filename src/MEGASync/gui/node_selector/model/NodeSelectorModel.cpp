@@ -1723,6 +1723,7 @@ void NodeSelectorModel::onNodesAdded(QList<QPointer<NodeSelectorModelItem>> chil
             emit dataChanged(index, index);
         }
 
+        emit modelModified();
         emit nodesAdded(childrenItem);
     }
 }
@@ -1914,6 +1915,8 @@ void NodeSelectorModel::deleteNodeFromModel(const QModelIndex& index)
                 emit removeRootItem(item);
                 endRemoveRows();
             }
+
+            emit modelModified();
         }
     }
 }

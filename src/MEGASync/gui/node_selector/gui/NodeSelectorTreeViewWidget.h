@@ -165,7 +165,7 @@ private slots:
     void onbNewFolderClicked();
     void oncbAlwaysUploadToLocationChanged(bool value);
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
-    void onModelDataChanged(const QModelIndex& first, const QModelIndex& last, const QVector<int> &roles = QVector<int>());
+    void onModelModified();
     void onDeleteClicked(const QList<mega::MegaHandle>& handles, bool permanently);
     void onLeaveShareClicked(const QList<mega::MegaHandle>& handles);
     void onRenameClicked();
