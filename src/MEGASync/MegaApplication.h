@@ -589,7 +589,7 @@ private:
                         QMenu* menu,
                         const QString& actionName,
                         Func slotFunc,
-                        const QString& iconPath = QString::fromLatin1(""))
+                        const QString& iconPath = QString())
     {
         bool previousEnabledState = true;
         if (*action)
