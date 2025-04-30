@@ -445,7 +445,7 @@
 background-color: #00BFA5;
  border-radius: 3px;
  border: 1px solid rgba(0, 0, 0, 5%);
-boder-color:#00AC94;
+ border-color:#00AC94;
  padding: 7px 14px 7px 14px;
  font-family: &quot;Lato&quot;;
  font-size: 14px;
