@@ -10,6 +10,7 @@ import components.buttons 1.0
 Rectangle {
     id: root
 
+    readonly property real planDefaultWidth: 160
     readonly property real cardRadius: 8
     readonly property real contentMargin: 12
     readonly property real contentSpacing: 8
@@ -26,6 +27,10 @@ Rectangle {
     readonly property int borderWidthDefault: 1
     readonly property int borderWidthRecommended: 2
 
+    property real localHeight: root.calculateContentHeight(root.calculateBottomTextsHeight())
+                                + 2 * root.contentMargin + Constants.focusAdjustment
+    property real externalMaxHeight: 0
+
     property bool recommended: false
     property bool currentPlan: false
     property bool monthly: false
@@ -41,7 +46,17 @@ Rectangle {
     property string monthlyPriceWithDiscount: ""
     property string buttonName: ""
 
+    property string billedText: {
+        root.billingCurrency
+            ? (root.monthly ? UpsellStrings.perMonth : UpsellStrings.billedYearly)
+            : (root.monthly
+                ? UpsellStrings.perMonthWithBillingCurrency.arg(root.currencyName)
+                : UpsellStrings.billedYearlyWithBillingCurrency.arg(root.currencyName))
+    }
+
     signal buyButtonClicked()
+    signal reportHeight(real height)
+    signal forceUpdate()
 
     function getChipBackgroundColor() {
         if (root.currentPlan) {
@@ -67,20 +82,30 @@ Rectangle {
         }
     }
 
-    function getBilledPeriodInfoText() {
-        if (root.billingCurrency) {
-            return root.monthly
-                    ? UpsellStrings.perMonth
-                    : UpsellStrings.billedYearly;
-        }
-        else {
-            return root.monthly
-                    ? UpsellStrings.perMonthWithBillingCurrency
-                        .arg(root.currencyName)
-                    : UpsellStrings.billedYearlyWithBillingCurrency
-                        .arg(root.currencyName);
+    function calculateBottomTextsHeight() {
+        let currentHeight = storageTransferTextColumn.height
+            + (root.showProFlexiMessage ? tryProFlexiText.height : 0)
+            + bottomTextsColumn.spacing;
+        return Math.max(76, currentHeight);
+    }
+
+    function calculateContentHeight(bottomHeight) {
+        return titleText.height
+                + recommendedChip.height
+                + priceColumn.height
+                + bottomHeight
+                + buyButtonContainer.height
+                + root.totalNumContentSpacing * root.contentSpacing;
+    }
+
+    function updateBilledPeriodText() {
+        if (!billedPeriodInfoText.enabled) {
+            billedPeriodInfoText.text = root.billedText;
         }
     }
+
+    width: root.planDefaultWidth
+    height: root.localHeight
 
     border {
         width: root.recommended ? root.borderWidthRecommended : root.borderWidthDefault
@@ -89,20 +114,19 @@ Rectangle {
     radius: root.cardRadius
     color: ColorTheme.pageBackground
 
-    onMonthlyChanged: {
-        // When the component is disabled, the text is not being updated.
-        // Force to update the text when the component is disabled.
-        billedPeriodInfoText.text = getBilledPeriodInfoText();
-    }
-
     Column {
+        id: contentColumn
+
         anchors {
-            fill: parent
+            left: parent.left
+            right: parent.right
+            top: parent.top
             leftMargin: root.contentMargin
             rightMargin: root.contentMargin
             topMargin: root.contentMargin
             bottomMargin: root.contentMargin + Constants.focusAdjustment
         }
+        height: root.calculateContentHeight(bottomTextsColumn.height)
         spacing: root.contentSpacing
 
         Text {
@@ -145,8 +169,14 @@ Rectangle {
                 left: parent.left
                 right: parent.right
             }
+            height: (root.monthly ? 0 : priceTextWithDiscount.height)
+                        + priceText.height
+                        + billedPeriodInfoText.height
+                        + (root.monthly ? 0 : pricePerMonthText.height)
 
             SecondaryText {
+                id: priceTextWithDiscount
+
                 anchors {
                     left: parent.left
                     right: parent.right
@@ -160,6 +190,8 @@ Rectangle {
             }
 
             Text {
+                id: priceText
+
                 anchors {
                     left: parent.left
                     right: parent.right
@@ -185,10 +217,18 @@ Rectangle {
                 lineHeight: root.pricePeriodLineHeight
                 lineHeightMode: Text.FixedHeight
                 enabled: root.enabled && !root.showOnlyProFlexi
-                text: getBilledPeriodInfoText()
+
+                Binding {
+                    target: billedPeriodInfoText
+                    property: "text"
+                    value: root.billedText
+                    when: true
+                }
             }
 
             SecondaryText {
+                id: pricePerMonthText
+
                 anchors {
                     left: parent.left
                     right: parent.right
@@ -202,34 +242,39 @@ Rectangle {
         }
 
         Column {
+            id: bottomTextsColumn
+
             anchors {
                 left: parent.left
                 right: parent.right
             }
-            height: parent.height
-                        - titleText.height
-                        - recommendedChip.height
-                        - priceColumn.height
-                        - buyButtonContainer.height
-                        - root.totalNumContentSpacing * root.contentSpacing
-            spacing: root.bottomTextsSpacing
+            height: {
+                let diff = (root.externalMaxHeight > root.localHeight)
+                            ? root.externalMaxHeight - root.localHeight : 0;
+                return root.calculateBottomTextsHeight() + diff;
+            }
+            spacing: root.showProFlexiMessage ? root.bottomTextsSpacing : 0
 
             Item {
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-                height: parent.height - root.bottomTextsSpacing
+                id: storageTransferItem
+
+                width: parent.width
+                height: parent.height
+                            - bottomTextsColumn.spacing
                             - (tryProFlexiText.visible ? tryProFlexiText.height : 0)
                 enabled: root.enabled && !root.showOnlyProFlexi
 
                 Column {
-                    spacing: root.bottomSpacing
+                    id: storageTransferTextColumn
+
                     anchors {
                         left: parent.left
                         right: parent.right
                         verticalCenter: parent.verticalCenter
                     }
+                    height: storageText.height + transferText.height + root.bottomSpacing
+                    spacing: root.bottomSpacing
+                    enabled: parent.enabled
 
                     Text {
                         id: storageText
@@ -240,6 +285,14 @@ Rectangle {
                         }
                         font.weight: Font.DemiBold
                         text: UpsellStrings.storage.arg(gbStorage)
+                        onTextChanged: {
+                            // Force to update the height of the component when the text is changed
+                            forceUpdate();
+
+                            // When the component is disabled, the text is not being updated.
+                            // Force to update the text when the component is disabled.
+                            Qt.callLater(updateBilledPeriodText);
+                        }
                     }
 
                     Text {
@@ -294,6 +347,7 @@ Rectangle {
                 left: parent.left
                 right: parent.right
             }
+            height: buyButton.height
 
             PrimaryButton {
                 id: buyButton
@@ -336,6 +390,10 @@ Rectangle {
 
         }
 
+    }
+
+    Component.onCompleted: {
+        reportHeight(root.height)
     }
 
 }
