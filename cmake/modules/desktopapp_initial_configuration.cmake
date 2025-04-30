@@ -5,9 +5,6 @@
 include(detect_host_architecture)
 
 if(CMAKE_HOST_APPLE)
-    # Required flags required to generate correct stack traces on a crash
-    set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-    set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 
     # Minimum deployment target differs if we are building for intel or arm64 targets
     # CMAKE_SYSTEM_PROCESSOR and CMAKE_HOST_SYSTEM_PROCESSOR are only available after project()
