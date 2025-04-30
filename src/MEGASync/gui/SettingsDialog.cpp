@@ -877,11 +877,6 @@ void SettingsDialog::on_bUpdate_clicked()
     }
 }
 
-void SettingsDialog::on_bFullCheck_clicked()
-{
-    mMegaApi->rescanSync(INVALID_HANDLE, true);
-}
-
 void SettingsDialog::on_bSendBug_clicked()
 {
     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(

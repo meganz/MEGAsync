@@ -138,7 +138,6 @@ private slots:
     void onOverlayClicked();
     void on_bTransferManager_clicked();
     void onAddSyncClicked();
-    void on_bUpload_clicked();
     void resetLoggedInMode();
 
     void on_tTransfers_clicked();

@@ -104,7 +104,6 @@ private slots:
 #endif
     void on_cbTheme_currentIndexChanged(int index);
     void on_bUpdate_clicked();
-    void on_bFullCheck_clicked();
     void on_bSendBug_clicked();
 
     // Account
