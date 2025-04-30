@@ -93,6 +93,7 @@ FocusScope {
 
         Item {
             id: plansItem
+
             anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width
             height: plansRepeater.maxCardHeight
@@ -113,26 +114,17 @@ FocusScope {
                         var newMaxHeight = 0;
                         for (var i = 0; i < plansRepeater.count; i++) {
                             var card = plansRepeater.itemAt(i);
-                            newMaxHeight = Math.max(newMaxHeight, card.localHeight);
+                            if (card !== null) {
+                                newMaxHeight = Math.max(newMaxHeight, card.localHeight);
+                            }
                         }
                         plansRepeater.maxCardHeight = newMaxHeight;
                     }
 
                     model: upsellModelAccess
 
-                    onMaxCardHeightChanged: {
-                        if (plansRepeater.maxCardHeight !== maxCardHeight) {
-                            plansRepeater.maxCardHeight = maxCardHeight;
-                        }
-                    }
-
                     Component.onCompleted: {
-                        var initialMaxHeight = 0;
-                        for (var i = 0; i < plansRepeater.count; i++) {
-                            var card = plansRepeater.itemAt(i);
-                            initialMaxHeight = Math.max(initialMaxHeight, card.localHeight);
-                        }
-                        plansRepeater.maxCardHeight = initialMaxHeight;
+                        recalculateCardHeight();
                     }
 
                     PlanCard {

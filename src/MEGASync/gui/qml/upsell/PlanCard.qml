@@ -255,47 +255,56 @@ Rectangle {
             }
             spacing: root.showProFlexiMessage ? root.bottomTextsSpacing : 0
 
-            Column {
-                id: storageTransferTextColumn
+            Item {
+                id: storageTransferItem
 
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    verticalCenter: root.showProFlexiMessage ? null : parent.verticalCenter
-                }
-                height: storageText.height + transferText.height
-                        + root.bottomSpacing
-                spacing: root.bottomSpacing
+                width: parent.width
+                height: parent.height
+                            - bottomTextsColumn.spacing
+                            - (tryProFlexiText.visible ? tryProFlexiText.height : 0)
                 enabled: root.enabled && !root.showOnlyProFlexi
 
-                Text {
-                    id: storageText
+                Column {
+                    id: storageTransferTextColumn
 
                     anchors {
                         left: parent.left
                         right: parent.right
+                        verticalCenter: parent.verticalCenter
                     }
-                    font.weight: Font.DemiBold
-                    text: UpsellStrings.storage.arg(gbStorage)
-                    onTextChanged: {
-                        // Force to update the height of the component when the text is changed
-                        forceUpdate();
+                    height: storageText.height + transferText.height + root.bottomSpacing
+                    spacing: root.bottomSpacing
+                    enabled: parent.enabled
 
-                        // When the component is disabled, the text is not being updated.
-                        // Force to update the text when the component is disabled.
-                        Qt.callLater(updateBilledPeriodText);
+                    Text {
+                        id: storageText
+
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                        }
+                        font.weight: Font.DemiBold
+                        text: UpsellStrings.storage.arg(gbStorage)
+                        onTextChanged: {
+                            // Force to update the height of the component when the text is changed
+                            forceUpdate();
+
+                            // When the component is disabled, the text is not being updated.
+                            // Force to update the text when the component is disabled.
+                            Qt.callLater(updateBilledPeriodText);
+                        }
                     }
-                }
 
-                Text {
-                    id: transferText
+                    Text {
+                        id: transferText
 
-                    anchors {
-                        left: parent.left
-                        right: parent.right
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                        }
+                        font.weight: Font.DemiBold
+                        text: UpsellStrings.transfer.arg(gbTransfer)
                     }
-                    font.weight: Font.DemiBold
-                    text: UpsellStrings.transfer.arg(gbTransfer)
                 }
             }
 
