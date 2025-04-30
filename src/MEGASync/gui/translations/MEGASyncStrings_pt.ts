@@ -415,8 +415,8 @@
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
         <translation>
-            <numerusform>Uma pasta com o mesmo nome já existe em seus backups. Renomeie a nova pasta para continuar com o backup. O nome da pasta não mudará no seu computador.</numerusform>
-            <numerusform>Algumas pastas com o mesmo nome já existem em seus backups. Renomeie as novas pastas para continuar com o backup. Os nomes das pastas não mudarão no seu computador.</numerusform>
+            <numerusform>Uma pasta com o mesmo nome já existe nos seus Backups. Renomeie a nova pasta para continuar com o backup. O nome da pasta não mudará no seu computador.</numerusform>
+            <numerusform>Algumas pastas com o mesmo nome já existem nos seus Backups. Renomeie as novas pastas para continuar com o backup. Os nomes das pastas não mudarão no seu computador.</numerusform>
         </translation>
     </message>
     <message>
@@ -5020,7 +5020,7 @@ Digite um nome diferente.
     <message>
         <source>Sync</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It creates a sync in the selected folder. SAT-426</translatorcomment>
-        <translation>Sincronização</translation>
+        <translation>Sincronizar</translation>
     </message>
 </context>
 <context>
@@ -6155,21 +6155,14 @@ Digite um nome diferente.
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
+        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
+- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation>- Novo explorador remoto da Nuvem de arquivos: navegue na sua Nuvem de arquivos com estilo e gerencie os seus arquivos e pastas com uma nova interface elegante e fácil de usar.
-- Aprimoramento do assistente de integração inicial.
-- Melhoria nas notificações do sistema foram aprimoradas.
-- Possibilidade de fixar o aplicativo do MEGA na barra de tarefas do Windows.
-- Atualização de algumas bibliotecas de terceiros.
-- Correção de bugs e melhorias variadas.
-</translation>
+        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
+        <translation>- Aprimoramento do menu de contexto do Windows 11, oferecendo uma experiência de usuário melhor e mais simplificada.
+- Resolução de problema com configurações predeterminadas de permissão incorretas aplicadas a arquivos e pastas criados durante a sincronização.
+- Correções de bugs e melhorias variadas.</translation>
     </message>
 </context>
 <context>
@@ -9659,7 +9652,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</source>
         <translatorcomment>Billing clarification message according to currency. CON-945</translatorcomment>
-        <translation>* O preço na sua moeda local é apenas uma estimativa. A sua conta, em todas as transações, será cobrada o preço indicado em euros.</translation>
+        <translation>* O preço na sua moeda local é apenas uma estimativa. Você será cobrado em euros por todas as transações.</translation>
     </message>
     <message>
         <source>Billed monthly</source>
@@ -9702,9 +9695,9 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Cota de transferência excedida</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <source>Upgrade your account to get more storage quota.</source>
         <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Faça o upgrade da sua conta para obter mais cota de armazenamento.[BR][BR]Você também pode deletar arquivos antigos e [B][A]esvaziar a sua Lixeira[/A][/B] para liberar espaço.</translation>
+        <translation>Faça o upgrade da sua conta para obter mais cota de armazenamento.</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>

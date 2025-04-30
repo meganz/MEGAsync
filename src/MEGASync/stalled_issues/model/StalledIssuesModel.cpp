@@ -32,7 +32,7 @@ void StalledIssuesReceiver::onUpdateStalledISsues(UpdateType type)
     {
         mUpdateRequests++;
         mUpdateType = type;
-        MegaSyncApp->getMegaApi()->getMegaSyncStallList(nullptr);
+        MegaSyncApp->getMegaApi()->getMegaSyncStallMap(nullptr);
     }
 }
 
@@ -45,7 +45,8 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest* r
             mStalledIssues.clear();
             IgnoredStalledIssue::clearIgnoredSyncs();
 
-            mIssueCreator.createIssues(request->getMegaSyncStallList(), mUpdateType);
+            mIssueCreator.createIssues(request->getMegaSyncStallMap(), mUpdateType);
+
             mStalledIssues = mIssueCreator.getStalledIssues();
             mUpdateRequests = 0;
         }
@@ -1343,7 +1344,7 @@ void StalledIssuesModel::chooseRemoteForBackups(const QModelIndexList& list)
     solveListOfIssues(info);
 }
 
-void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList& list)
+void StalledIssuesModel::chooseLastModifiedLocalRemoteIssues(const QModelIndexList& list)
 {
     auto resolveIssue = [this](int row) -> bool
     {

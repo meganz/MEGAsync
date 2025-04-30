@@ -5,6 +5,7 @@
 #include <BackupCandidatesModel.h>
 #include <BackupsController.h>
 #include <FileFolderAttributes.h>
+#include <Platform.h>
 #include <StandardIconProvider.h>
 #include <SyncSettings.h>
 #include <Utilities.h>
@@ -69,8 +70,8 @@ void BackupCandidatesController::initWithDefaultDirectories()
     for (auto type: qAsConst(defaultPaths))
     {
         const auto standardPaths(QStandardPaths::standardLocations(type));
-        QDir dir(QDir::cleanPath(standardPaths.first()));
-        QString path(QDir::toNativeSeparators(dir.canonicalPath()));
+        QString path(Platform::getInstance()->preparePathForSync(standardPaths.first()));
+        QDir dir(path);
         if (dir.exists() && dir != QDir::home() && isLocalFolderSyncable(path))
         {
             auto data =
@@ -770,7 +771,7 @@ QStringList BackupCandidatesController::getSelectedCandidates() const
     return selectedCandidates;
 }
 
-void BackupCandidatesController::createBackups(int syncOrigin)
+void BackupCandidatesController::createBackups(SyncInfo::SyncOrigin syncOrigin)
 {
     if (!handleDirectoriesAvailabilityErrors())
     {
@@ -789,8 +790,7 @@ void BackupCandidatesController::createBackups(int syncOrigin)
         }
     }
 
-    BackupsController::instance().addBackups(candidateList,
-                                             static_cast<SyncInfo::SyncOrigin>(syncOrigin));
+    BackupsController::instance().addBackups(candidateList, syncOrigin);
 }
 
 void BackupCandidatesController::onBackupsCreationFinished(bool success)

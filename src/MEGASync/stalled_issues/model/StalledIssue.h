@@ -395,6 +395,7 @@ public:
 
     mega::MegaHandle firstSyncId() const;
     const QSet<mega::MegaHandle>& syncIds() const;
+    bool addSyncId(mega::MegaHandle syncId);
     //In case there are two syncs, use the first one
     mega::MegaSync::SyncType getSyncType() const;
 
@@ -493,10 +494,12 @@ public:
         }
         return QSize();
     }
+
     void setDelegateSize(const QSize &newDelegateSize, StalledIssue::Type type)
     {
         mData->setDelegateSize(newDelegateSize, type);
     }
+
     void removeDelegateSize(StalledIssue::Type type)
     {
         mData->removeDelegateSize(type);
@@ -505,6 +508,16 @@ public:
     bool shouldBeIgnored() const
     {
         return mData->shouldBeIgnored();
+    }
+
+    bool addSyncId(mega::MegaHandle syncId)
+    {
+        return mData->addSyncId(syncId);
+    }
+
+    const QSet<mega::MegaHandle>& syncIds() const
+    {
+        return mData->syncIds();
     }
 
     template <class Type>

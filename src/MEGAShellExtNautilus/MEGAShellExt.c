@@ -495,9 +495,6 @@ static NautilusOperationResult mega_ext_update_file_info(NautilusInfoProvider *p
     GFile *fp;
     FileState state;
 
-    // invalidate current emblems.
-    nautilus_file_info_invalidate_extension_info(file);
-
     fp = nautilus_file_info_get_location(file);
     if (!fp)
     {
@@ -572,7 +569,8 @@ static NautilusOperationResult mega_ext_update_file_info(NautilusInfoProvider *p
         default:
             break;
     }
-
+    // invalidate current emblems.
+    nautilus_file_info_invalidate_extension_info(file);
     return NAUTILUS_OPERATION_COMPLETE;
 }
 

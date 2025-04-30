@@ -112,6 +112,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsComponent.h
     ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsQmlDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/syncs/Syncs.h
+    ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsData.h
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyComponent.h
     ${CMAKE_CURRENT_LIST_DIR}/surveys/Surveys.h
@@ -120,6 +121,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellController.h
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellModel.h
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellPlans.h
+    ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellQmlDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserMessageCacheManager.h
     ${CMAKE_CURRENT_LIST_DIR}/user_messages/AlertFilterType.h
     ${CMAKE_CURRENT_LIST_DIR}/user_messages/AlertItem.h
@@ -250,6 +252,7 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsQmlDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/syncs/Syncs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsData.cpp
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/surveys/Surveys.cpp
@@ -258,6 +261,7 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellController.cpp
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellModel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellPlans.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellQmlDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserMessageCacheManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/user_messages/AlertFilterType.cpp
     ${CMAKE_CURRENT_LIST_DIR}/user_messages/AlertItem.cpp
@@ -458,6 +462,7 @@ set (DESKTOP_APP_TS_FILES
     ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_ro.ts
     ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_ru.ts
     ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_th.ts
+    ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_tr.ts
     ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_vi.ts
     ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_zh_CN.ts
     ${CMAKE_CURRENT_LIST_DIR}/translations/MEGASyncStrings_zh_TW.ts

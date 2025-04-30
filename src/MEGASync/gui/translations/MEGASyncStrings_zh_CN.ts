@@ -6018,21 +6018,14 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
+        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
+- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation>－推出全新的远程云盘浏览方式。以时尚和易于使用的全新界面浏览您的云盘并管理您的文件和文件夹。
-－我们对初始入门向导进行了更多改进。
-－系统通知获得增强。
-－您现在可以将MEGA应用程序固定到Windows任务栏上。
-－部分第三方库已更新。
-－修复其它错误，并进行诸多改进。
-</translation>
+        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
+        <translation>－增加了对Windows 11浏览器快捷菜单的改进，提供更加简化和精致的用户体验。
+－解决了对同步期间创建的文件和文件夹应用错误的默认权限设置问题。
+－修复了其它错误，并进行了诸多改进。</translation>
     </message>
 </context>
 <context>
@@ -9469,9 +9462,9 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>已超出传输流量上限</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <source>Upgrade your account to get more storage quota.</source>
         <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>升级您的帐户以获得更多存储空间。[BR][BR]或者删除一些文件然后[B][A]清空您的回收站[/A][/B]以释放存储空间。</translation>
+        <translation>升级您的帐户以获得更多存储空间。</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>

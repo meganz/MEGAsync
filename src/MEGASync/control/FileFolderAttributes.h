@@ -58,7 +58,7 @@ public:
     }
 
     int64_t size() const;
-    int64_t modifiedTimeInSecs() const;
+    int64_t modifiedTimeInMSecs() const;
     QDateTime modifiedTime() const;
     int64_t createdTimeInSecs() const;
     QDateTime createdTime() const;

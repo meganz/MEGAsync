@@ -2027,6 +2027,11 @@ In some cases they may contain details about your data, such as file or folder n
 <context>
     <name>FirstSyncReminderAction</name>
     <message>
+        <source>Finish set up</source>
+        <translatorcomment>Text on the O.S. notification button to open the window for creating the first sync after the onboarding process (first run of the application). CON-1207</translatorcomment>
+        <translation>Finish set up</translation>
+    </message>
+    <message>
         <source>Set up your first sync to get the most out of the desktop app</source>
         <translatorcomment>Description text in O.S. notification to remind that the user can create syncs after few hours (e.g. 2) from the first launch of the application if the user has never created a sync. CON-1207</translatorcomment>
         <translation>Set up your first sync to get the most out of the desktop app</translation>
@@ -4428,6 +4433,11 @@ All your completed transfers will be cleared.</translation>
         <translation>Access your data from anywhere, collaborate with ease, and instantly get the most up-to-date version of your files</translation>
     </message>
     <message>
+        <source>Set up sync</source>
+        <translatorcomment>Text on the O.S. notification button to open the window for creating the first sync. CON-1207</translatorcomment>
+        <translation>Set up sync</translation>
+    </message>
+    <message>
         <source>Sync your data</source>
         <translatorcomment>Title text in O.S. notification to remind that the user can create syncs after days or months (e.g. 10 days, 1 month) if the user has never created a sync. CON-1207</translatorcomment>
         <translation>Sync your data</translation>
@@ -6144,21 +6154,12 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
+        <source>- Added refinements to the Windows&#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
+- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
-- Other bugs have been fixed and numerous improvements made.
-</translation>
+        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9691,11 +9692,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Transfer quota exceeded</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
-        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</translation>
-    </message>
-    <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
         <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
         <translation>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</translation>
@@ -9719,6 +9715,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>per month</translation>
+    </message>
+    <message>
+        <source>Upgrade your account to get more storage quota.</source>
+        <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

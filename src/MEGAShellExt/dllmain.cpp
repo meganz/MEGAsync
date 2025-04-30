@@ -1,13 +1,23 @@
-#include <windows.h>
-#include <Guiddef.h>
 #include "ClassFactoryContextMenuExt.h"
-#include "ClassFactoryShellExtSynced.h" 
-#include "ClassFactoryShellExtPending.h"
-#include "ClassFactoryShellExtSyncing.h"
 #include "ClassFactoryShellExtNotFound.h"
+#include "ClassFactoryShellExtPending.h"
+#include "ClassFactoryShellExtSynced.h"
+#include "ClassFactoryShellExtSyncing.h"
+#include "ContextMenuCommand.h"
+#include "ContextMenuCommandGetLink.h"
+#include "ContextMenuCommandRemoveFromLeftPane.h"
+#include "ContextMenuCommandSeparator.h"
+#include "ContextMenuCommandUpload.h"
+#include "ContextMenuCommandView.h"
+#include "ContextMenuCommandViewVersions.h"
 #include "RegUtils.h"
+#include "SimpleFactory.h"
+#include "SparsePackageManager.h"
+#include "Utilities.h"
+#include <Guiddef.h>
 
 #include <new>
+#include <windows.h>
 
 STDAPI DllRegisterServer(void);
 STDAPI DllUnregisterServer(void);
@@ -52,6 +62,10 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
     case DLL_PROCESS_ATTACH:
         g_hInst = hModule;
         DisableThreadLibraryCalls(hModule);
+        if (Utilities::haveModernContextMenu())
+        {
+            SparsePackageManager::EnsureRegistrationOnCurrentUser();
+        }
         break;
     case DLL_THREAD_ATTACH:
     case DLL_THREAD_DETACH:
@@ -73,12 +87,23 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void **ppv)
     }
 
     *ppv = NULL;
-    if (IsEqualCLSID(CLSID_ContextMenuExt, rclsid))
+    if (Utilities::haveModernContextMenu())
     {
-        hr = E_OUTOFMEMORY;
-        pClassFactory = new (std::nothrow) ClassFactoryContextMenuExt();
+        if (rclsid == __uuidof(ContextMenuCommand))
+        {
+            hr = winrt::make<SimpleFactory<ContextMenuCommand>>().as(riid, ppv);
+        }
     }
-    else if (IsEqualCLSID(CLSID_ShellExtSynced, rclsid))
+    else
+    {
+        if (IsEqualCLSID(CLSID_ContextMenuExt, rclsid))
+        {
+            hr = E_OUTOFMEMORY;
+            pClassFactory = new (std::nothrow) ClassFactoryContextMenuExt();
+        }
+    }
+
+    if (IsEqualCLSID(CLSID_ShellExtSynced, rclsid))
     {
         hr = E_OUTOFMEMORY;
         pClassFactory = new (std::nothrow) ClassFactoryShellExtSynced();
@@ -142,69 +167,89 @@ STDAPI DllRegisterServer(void)
         }
 
         // Register the component.
-        hr = RegisterInprocServer(szModule, CLSID_ContextMenuExt,
-            ContextMenuExtFriendlyName,
-            L"Apartment");
-        if (!SUCCEEDED(hr)) return hr;
+        if (Utilities::haveModernContextMenu())
+        {
+            SparsePackageManager::modifySparsePackage(SparsePackageManager::MODIFY_TYPE::INSTALL);
+        }
+        else
+        {
+            hr = RegisterInprocServer(szModule,
+                                      CLSID_ContextMenuExt,
+                                      ContextMenuExtFriendlyName,
+                                      L"Apartment");
+            if (!SUCCEEDED(hr))
+                return hr;
 
-        // Register the context menu handler. The context menu handler is
-        // associated with the .cpp file class.
-        hr = RegisterShellExtContextMenuHandler(L"*",
-            CLSID_ContextMenuExt,
-            ContextMenuExtFriendlyName);
-        if (!SUCCEEDED(hr)) return hr;
+            hr = RegisterShellExtContextMenuHandler(L"*",
+                                                    CLSID_ContextMenuExt,
+                                                    ContextMenuExtFriendlyName);
+            if (!SUCCEEDED(hr))
+                return hr;
 
-        hr = RegisterShellExtContextMenuHandler(L"AllFilesystemObjects",
-            CLSID_ContextMenuExt,
-            ContextMenuExtFriendlyName);
-        if (!SUCCEEDED(hr)) return hr;
+            hr = RegisterShellExtContextMenuHandler(L"AllFilesystemObjects",
+                                                    CLSID_ContextMenuExt,
+                                                    ContextMenuExtFriendlyName);
+            if (!SUCCEEDED(hr))
+                return hr;
 
-        hr = RegisterShellExtContextMenuHandler(L"Drive",
-            CLSID_ContextMenuExt,
-            ContextMenuExtFriendlyName);
-        if (!SUCCEEDED(hr)) return hr;
+            hr = RegisterShellExtContextMenuHandler(L"Drive",
+                                                    CLSID_ContextMenuExt,
+                                                    ContextMenuExtFriendlyName);
+            if (!SUCCEEDED(hr))
+                return hr;
+        }
 
-        hr = RegisterInprocServer(szModule, CLSID_ShellExtSynced,
-            ShellExtSyncedFriendlyName,
-            L"Apartment");
-        if (!SUCCEEDED(hr)) return hr;
+        hr = RegisterInprocServer(szModule,
+                                  CLSID_ShellExtSynced,
+                                  ShellExtSyncedFriendlyName,
+                                  L"Apartment");
+        if (!SUCCEEDED(hr))
+            return hr;
 
         hr = RegisterShellExtIconOverlayHandler(CLSID_ShellExtSynced,
             ShellExtSyncedFriendlyName);
-        if (!SUCCEEDED(hr)) return hr;
+        if (!SUCCEEDED(hr))
+            return hr;
 
         hr = RegisterInprocServer(szModule, CLSID_ShellExtPending,
             ShellExtPendingFriendlyName,
             L"Apartment");
-        if (!SUCCEEDED(hr)) return hr;
+        if (!SUCCEEDED(hr))
+            return hr;
 
         hr = RegisterShellExtIconOverlayHandler(CLSID_ShellExtPending,
             ShellExtPendingFriendlyName);
-        if (!SUCCEEDED(hr)) return hr;
+        if (!SUCCEEDED(hr))
+            return hr;
 
         hr = RegisterInprocServer(szModule, CLSID_ShellExtSyncing,
             ShellExtSyncingFriendlyName,
             L"Apartment");
-        if (!SUCCEEDED(hr)) return hr;
+        if (!SUCCEEDED(hr))
+            return hr;
 
         hr = RegisterShellExtIconOverlayHandler(CLSID_ShellExtSyncing,
             ShellExtSyncingFriendlyName);
-        if (!SUCCEEDED(hr)) return hr;
+        if (!SUCCEEDED(hr))
+            return hr;
 
         hr = RegisterInprocServer(szModule, CLSID_ShellExtNotFound,
             ShellExtNotFoundFriendlyName,
             L"Apartment");
-        if (!SUCCEEDED(hr)) return hr;
+        if (!SUCCEEDED(hr))
+            return hr;
 
         hr = RegisterShellExtIconOverlayHandler(CLSID_ShellExtNotFound,
             ShellExtNotFoundFriendlyName);
-        if (!SUCCEEDED(hr)) return hr;
+        if (!SUCCEEDED(hr))
+            return hr;
 
         return hr;
     }
     __except(EXCEPTION_EXECUTE_HANDLER)
     {
     }
+
     return E_UNEXPECTED;
 }
 
@@ -228,8 +273,16 @@ STDAPI DllUnregisterServer(void)
         }
 
         // Unregister the component.
-        hr = UnregisterInprocServer(CLSID_ContextMenuExt);
-        if (!SUCCEEDED(hr)) return hr;
+        if (Utilities::haveModernContextMenu())
+        {
+            SparsePackageManager::modifySparsePackage(SparsePackageManager::MODIFY_TYPE::UNINSTALL);
+        }
+        else
+        {
+            hr = UnregisterInprocServer(CLSID_ContextMenuExt);
+            if (!SUCCEEDED(hr))
+                return hr;
+        }
 
         hr = UnregisterInprocServer(CLSID_ShellExtSynced);
         if (!SUCCEEDED(hr)) return hr;;
@@ -243,10 +296,21 @@ STDAPI DllUnregisterServer(void)
         hr = UnregisterInprocServer(CLSID_ShellExtNotFound);
         if (!SUCCEEDED(hr)) return hr;
 
-        UnregisterShellExtContextMenuHandler(L"*", CLSID_ContextMenuExt, ContextMenuExtFriendlyNameOld);
-        UnregisterShellExtContextMenuHandler(L"*", CLSID_ContextMenuExt, ContextMenuExtFriendlyName);
-        UnregisterShellExtContextMenuHandler(L"AllFilesystemObjects", CLSID_ContextMenuExt, ContextMenuExtFriendlyName);
-        UnregisterShellExtContextMenuHandler(L"Drive", CLSID_ContextMenuExt, ContextMenuExtFriendlyName);
+        if (!Utilities::haveModernContextMenu())
+        {
+            UnregisterShellExtContextMenuHandler(L"*",
+                                                 CLSID_ContextMenuExt,
+                                                 ContextMenuExtFriendlyNameOld);
+            UnregisterShellExtContextMenuHandler(L"*",
+                                                 CLSID_ContextMenuExt,
+                                                 ContextMenuExtFriendlyName);
+            UnregisterShellExtContextMenuHandler(L"AllFilesystemObjects",
+                                                 CLSID_ContextMenuExt,
+                                                 ContextMenuExtFriendlyName);
+            UnregisterShellExtContextMenuHandler(L"Drive",
+                                                 CLSID_ContextMenuExt,
+                                                 ContextMenuExtFriendlyName);
+        }
         UnregisterShellExtOverlayHandler(CLSID_ShellExtSynced, ShellExtSyncedFriendlyNameOld);
         UnregisterShellExtOverlayHandler(CLSID_ShellExtSynced, ShellExtSyncedFriendlyName);
         UnregisterShellExtOverlayHandler(CLSID_ShellExtPending, ShellExtPendingFriendlyNameOld);

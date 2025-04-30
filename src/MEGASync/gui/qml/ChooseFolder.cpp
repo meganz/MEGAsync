@@ -24,7 +24,7 @@ void ChooseLocalFolder::openFolderSelector(const QString& folderPath, bool folde
         openFromFolder = QDir::toNativeSeparators(folderPath);
         QDir openFromFolderDir(openFromFolder);
 
-        if(folderUp)
+        if (folderUp)
         {
             if (openFromFolderDir.cdUp())
             {
@@ -47,12 +47,8 @@ void ChooseLocalFolder::openFolderSelector(const QString& folderPath, bool folde
     {
         if(context && !selection.isEmpty())
         {
-            QString fPath = selection.first();
-            auto folder = QDir::toNativeSeparators(QDir(fPath).canonicalPath());
-            if(!folder.isNull() && !folder.isEmpty())
-            {
-                emit folderChoosen(folder);
-            }
+            sendFolderChosenSignal(Platform::getInstance()->preparePathForSync(selection.first()),
+                                   QString());
         }
     };
 
@@ -77,16 +73,27 @@ void ChooseLocalFolder::openRelativeFolderSelector(const QString& folderPath)
     {
         if(context && !selection.isEmpty())
         {
-            QString fPath = selection.first();
-            auto folder = QDir::toNativeSeparators(QDir(fPath).canonicalPath());
-            if(!folder.isNull() && !folder.isEmpty())
-            {
-                emit folderChoosen(QDir(openFromFolder).relativeFilePath(folder));
-            }
+            sendFolderChosenSignal(Platform::getInstance()->preparePathForSync(selection.first()),
+                                   openFromFolder);
         }
     };
 
     Platform::getInstance()->folderSelector(info);
+}
+
+void ChooseLocalFolder::sendFolderChosenSignal(const QString& folder, const QString& openFromFolder)
+{
+    if (!folder.isNull() && !folder.isEmpty())
+    {
+        if (openFromFolder.isEmpty())
+        {
+            emit folderChosen(folder);
+        }
+        else
+        {
+            emit folderChosen(QDir(openFromFolder).relativeFilePath(folder));
+        }
+    }
 }
 
 bool ChooseLocalFolder::createFolder(const QString& folderPath)
@@ -99,7 +106,8 @@ bool ChooseLocalFolder::createFolder(const QString& folderPath)
     auto folder = QDir::toNativeSeparators(folderPath);
 
     QDir defaultFolder(folder);
-    if (!defaultFolder.exists() &&  (folder != getDefaultFolder(Syncs::DEFAULT_MEGA_FOLDER) || !defaultFolder.mkpath(QString::fromUtf8("."))))
+    if (!defaultFolder.exists() && (folder != getDefaultFolder(Syncs::getDefaultMegaFolder()) ||
+                                    !defaultFolder.mkpath(QString::fromUtf8("."))))
     {
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
                            QString::fromUtf8("ChooseFolder: %1 cannot be created.").arg(folderPath).toUtf8().constData());
@@ -162,7 +170,7 @@ void ChooseRemoteFolder::openFolderSelector()
                 mFolderName = QString::fromUtf8(MegaSyncApp->getMegaApi()->getNodePath(node));
                 if(!mFolderName.isNull() && !mFolderName.isEmpty())
                 {
-                    emit folderChoosen(mFolderName);
+                    emit folderChosen(mFolderName);
                     emit folderNameChanged();
                 }
             }

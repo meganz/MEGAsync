@@ -7,26 +7,23 @@ import common 1.0
 import components.accountData 1.0
 import components.pages 1.0
 
-import Syncs 1.0
+import SyncInfo 1.0
 
 FooterButtonsPage {
     id: root
 
-    required property bool isOnboarding
-
     property alias localFolderChooser: localFolder
     property alias remoteFolderChooser: remoteFolder
-    property alias syncs: syncsItem
 
-    footerButtons.rightPrimary {
-        text: SyncsStrings.sync
-        icons.source: Images.syncIcon
-    }
+    footerButtons {
+        rightPrimary {
+            text: SyncsStrings.sync
+            icons.source: Images.syncIcon
+        }
 
-    footerButtons.rightSecondary.visible: root.isOnboarding
-
-    Syncs {
-        id: syncsItem
+        rightSecondary {
+            visible : syncsDataAccess.syncOrigin === SyncInfo.ONBOARDING_ORIGIN
+        }
     }
 
     ColumnLayout {
@@ -58,21 +55,22 @@ FooterButtonsPage {
         ChooseSyncFolder {
             id: localFolder
 
-            syncs: syncsItem
+            title: SyncsStrings.selectLocalFolder
+            leftIconSource: Images.pc
+            chosenPath: syncsDataAccess.defaultLocalFolder
             Layout.preferredWidth: parent.width + 8
             Layout.leftMargin: -4
             Layout.topMargin: 16
-            isOnboarding: root.isOnboarding
         }
 
         ChooseSyncFolder {
             id: remoteFolder
 
-            syncs: syncsItem
+            title: SyncsStrings.selectMEGAFolder
+            leftIconSource: Images.megaOutline
+            chosenPath: syncsDataAccess.defaultRemoteFolder
             Layout.preferredWidth: parent.width + 8
             Layout.leftMargin: -4
-            local: false
-            isOnboarding: root.isOnboarding
         }
     }
 

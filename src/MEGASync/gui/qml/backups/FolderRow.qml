@@ -349,7 +349,7 @@ Item {
 
                         target: folderDialog
 
-                        function onFolderChoosen(folderPath) {
+                        function onFolderChosen(folderPath) {
                             backupCandidatesComponentAccess.change(folder, folderPath);
                         }
                     }

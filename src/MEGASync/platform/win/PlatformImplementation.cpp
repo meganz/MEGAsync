@@ -326,9 +326,11 @@ DWORD MEGARegDeleteKeyEx(HKEY hKey, LPCWSTR lpSubKey, REGSAM samDesired, DWORD R
     HMODULE hMod = GetModuleHandleW(L"advapi32.dll");
     if (!hMod || !(RegDeleteKeyExWFunc = (RegDeleteKeyExWPtr)GetProcAddress(hMod, "RegDeleteKeyExW")))
     {
+        std::cout << L"PATH A : " << lpSubKey << std::endl;
         return RegDeleteKey(hKey, lpSubKey);
     }
 
+    std::cout << L"PATH B : " << lpSubKey << std::endl;
     return RegDeleteKeyExWFunc(hKey, lpSubKey, samDesired, Reserved);
 }
 
@@ -527,6 +529,11 @@ bool CheckLeftPaneIcon(wchar_t *path, bool remove)
     }
     RegCloseKey(hKey);
     return false;
+}
+
+void PlatformImplementation::removeSyncFromLeftPane(QString syncPath)
+{
+    CheckLeftPaneIcon(syncPath.toStdWString().data(), true);
 }
 
 void PlatformImplementation::addSyncToLeftPane(QString syncPath, QString syncName, QString uuid)

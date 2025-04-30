@@ -9,12 +9,14 @@ IF "%1%" EQU "-help" (
 SET MEGA_ARCH=32/64
 SET MEGA_SKIP_32_BIT_BUILD=false
 SET MEGA_CORES=0
+SET MEGA_SIGN_PRODUCTS=false
 SET MEGA_VERSION_SUFFIX=
 
 IF NOT "%1" == "" (
 	SET MEGA_ARCH=%1
 	SET MEGA_CORES=%2
-	SET MEGA_VERSION_SUFFIX=%3
+	SET MEGA_SIGN_PRODUCTS=%3
+	SET MEGA_VERSION_SUFFIX=%4
 	
 	IF [%MEGA_VCPKGPATH%]==[] (
 		echo "Error: MEGA_VCPKGPATH environment variable is not set. Please set it."
@@ -26,7 +28,7 @@ IF NOT "%1" == "" (
 		echo "Error: too few arguments"
 		goto Usage
 	)
-	IF NOT "%4" == "" (
+	IF NOT "%5" == "" (
 		echo "Error: too many arguments"
 		goto Usage
 	)
@@ -37,17 +39,14 @@ IF NOT "%1" == "" (
 )
 
 IF [%MEGA_QTPATH%]==[] (
-	IF NOT [%MEGAQTPATH%]==[] (
-		SET MEGA_QTPATH=%MEGAQTPATH%
-	) ELSE (
-		SET MEGA_QTPATH=C:\Qt\5.15.16\x64
-	)
+	SET MEGA_QTPATH=C:\Qt\5.15.16\x64
 )
+
+echo "Info: QT PATH SET to %MEGA_QTPATH%"
 
 IF [%MEGA_WIN_KITVER%]==[] (
 	SET MEGA_WIN_KITVER=10.0.19041.0
 )
-
 
 :: CHECK ARCHITECTURE
 IF "%MEGA_ARCH%" EQU "64" (
@@ -78,6 +77,12 @@ IF %VALID_CORES% EQU 0 (
 	goto Usage
 )
 
+:: CHECK SIGN
+IF NOT "%MEGA_SIGN_PRODUCTS%" EQU "" IF NOT "%MEGA_SIGN_PRODUCTS%" EQU "true" IF NOT "%MEGA_SIGN_PRODUCTS%" EQU "false" (
+	echo "Please add a correct sign argument: true or false"
+	goto Usage
+)
+
 echo "Info: CORES SET to %MEGA_CORES%"
 
 REM Clean up any previous leftovers
@@ -96,6 +101,7 @@ IF EXIST build-x86-windows-mega (
 
 REM Build installers
 call production_build.cmd  || exit 1 /b
+call sign_products.cmd %MEGA_SIGN_PRODUCTS%  || exit 1 /b
 call deploy_qt.cmd  || exit 1 /b
 call gather_built_products.cmd  || exit 1 /b
 call make_uninstallers.cmd  || exit 1 /b
@@ -104,15 +110,16 @@ call make_installers.cmd  || exit 1 /b
 exit /B
 
 :Usage
-echo "Usage: %~0 [-help] [64|32/64 <cores number> [<suffix>]]"
+echo "Usage: %~0 [-help] [64|32/64 <cores number> [<sign>] [<suffix>]]"
 echo Script building, signing and creating the installer(s)
-echo It can take 0, 1, 2 or 3 arguments:
+echo It can take 0, 1, 2, 3 or 4 arguments:
 echo 	- -help: this message
 echo 	- 0 arguments: use these settings: 32/64 1
 echo 	- Architecture : 64 or 32/64 to build either for 64 bit or both 32 and 64 bit
 echo 	- Cores: the number of cores to build the project, or 0 for default value (number of logical cores on the machine)
-echo 	- Suffix for installer: The installer will add this suffix to the version. [OPTIONAl]
+echo 	- Sign: True if you want to sign some of the compilation artifacts. Default is False. [OPTIONAL]
+echo 	- Suffix for installer: The installer will add this suffix to the version. If you want to use this argument, please set the Sign argument to false [OPTIONAL]
 echo MEGA_VCPKGPATH environment variable should be set to the root of the 3rd party dir.
-echo MEGA_QTPATH environment variable should be set to the Qt install dir. Takes the value of MEGAQTPATH, or defaults to C:\Qt\5.15.16\x64
+echo MEGA_QTPATH environment variable should be set to the Qt install dir. Defaults to C:\Qt\5.15.16\x64
 echo MEGA_WIN_KITVER environment variable can be used to set the Windows sdk to use. Value defaults to "10.0.19041.0". Set to "." to use the Universal Kit
 exit /B

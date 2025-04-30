@@ -10,3 +10,8 @@ QString MultiSyncReminderAction::getMessage() const
     return tr("Access your data from anywhere, collaborate with ease, and instantly get "
               "the most up-to-date version of your files");
 }
+
+QString MultiSyncReminderAction::getButtonText() const
+{
+    return tr("Set up sync");
+}

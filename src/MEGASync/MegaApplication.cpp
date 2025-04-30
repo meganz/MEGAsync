@@ -1562,6 +1562,7 @@ void MegaApplication::onLogout()
                 createUserMessageController();
                 infoDialog->deleteLater();
                 infoDialog = nullptr;
+                removeSyncsAndBackupsMenus();
                 start();
                 periodicTasks();
             }
@@ -2276,8 +2277,8 @@ void MegaApplication::cleanAll()
 #ifdef _WIN32
     deleteMenu(windowsMenu);
 #endif
-    mSyncs2waysMenu->deleteLater();
-    mBackupsMenu->deleteLater();
+
+    removeSyncsAndBackupsMenus();
 
     preferences->setLastExit(QDateTime::currentMSecsSinceEpoch());
 
@@ -2488,16 +2489,24 @@ void MegaApplication::deleteMenu(QMenu *menu)
 {
     if (menu)
     {
+        clearMenu(menu, true);
+        menu->deleteLater();
+    }
+}
+
+void MegaApplication::clearMenu(QMenu* menu, bool deleteAction)
+{
+    if (menu)
+    {
         QList<QAction *> actions = menu->actions();
         for (int i = 0; i < actions.size(); i++)
         {
-            if(!actions[i]->parent())
+            menu->removeAction(actions[i]);
+            if (deleteAction)
             {
-                menu->removeAction(actions[i]);
                 delete actions[i];
             }
         }
-        menu->deleteLater();
     }
 }
 
@@ -2531,6 +2540,11 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
                 lastHovered = nullptr;
             }
         }
+    }
+
+    if (!appfinished && e->type() == QEvent::LanguageChange)
+    {
+        emit languageChanged();
     }
 
     return QApplication::eventFilter(obj, e);
@@ -4634,6 +4648,21 @@ void MegaApplication::createGfxProvider(const QString& basePath)
     mGfxProvider.reset(provider ? provider : MegaGfxProvider::createInternalInstance());
 }
 
+void MegaApplication::removeSyncsAndBackupsMenus()
+{
+    if (mSyncs2waysMenu)
+    {
+        mSyncs2waysMenu->deleteLater();
+        mSyncs2waysMenu = nullptr;
+    }
+
+    if (mBackupsMenu)
+    {
+        mBackupsMenu->deleteLater();
+        mBackupsMenu = nullptr;
+    }
+}
+
 void MegaApplication::closeUpsellStorageDialog()
 {
     if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<UpsellComponent>>())
@@ -4825,8 +4854,6 @@ void MegaApplication::shellExport(QQueue<QString> newExportQueue)
 
 void MegaApplication::shellViewOnMega(QByteArray localPath, bool versions)
 {
-    MegaNode *node = nullptr;
-
 #ifdef WIN32
     if (!localPath.startsWith(QByteArray((const char *)(void*)L"\\\\", 4)))
     {
@@ -4838,14 +4865,11 @@ void MegaApplication::shellViewOnMega(QByteArray localPath, bool versions)
     string tmpPath((const char*)localPath.constData());
 #endif
 
-    node = megaApi->getSyncedNode(&tmpPath);
-    if (!node)
+    std::unique_ptr<MegaNode> node(megaApi->getSyncedNode(&tmpPath));
+    if (node)
     {
-        return;
+        shellViewOnMega(node->getHandle(), versions);
     }
-
-    shellViewOnMega(node->getHandle(), versions);
-    delete node;
 }
 
 void MegaApplication::shellViewOnMega(MegaHandle handle, bool versions)
@@ -5020,7 +5044,7 @@ void MegaApplication::externalFolderSync(MegaHandle targetFolder)
 
     if (infoDialog)
     {
-        infoDialog->addSync(SyncInfo::EXTERNAL_ORIGIN, targetFolder);
+        infoDialog->addSync(SyncInfo::SyncOrigin::EXTERNAL_ORIGIN, targetFolder);
     }
 }
 
@@ -5426,7 +5450,8 @@ void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)
         }
         else
         {
-            CreateRemoveSyncsManager::addSync(SyncInfo::MAIN_APP_ORIGIN, megaFolderHandle);
+            CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin::MAIN_APP_ORIGIN,
+                                              megaFolderHandle);
         }
     }
 }
@@ -5458,37 +5483,24 @@ void MegaApplication::createTrayIconMenus()
     // Clear menu if it exists
     if (initialTrayMenu)
     {
-        QList<QAction *> actions = initialTrayMenu->actions();
-        for (int i = 0; i < actions.size(); i++)
-        {
-            initialTrayMenu->removeAction(actions[i]);
-        }
+        const bool deleteActions(true);
+        clearMenu(initialTrayMenu, deleteActions);
     }
 #ifndef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
     else
 #endif
     {
-        initialTrayMenu->deleteLater();
+        deleteMenu(initialTrayMenu);
         initialTrayMenu = new QMenu();
         Platform::getInstance()->initMenu(initialTrayMenu, "TrayMenu", false);
     }
 
-    if (guestSettingsAction)
-    {
-        guestSettingsAction->deleteLater();
-        guestSettingsAction = nullptr;
-    }
     guestSettingsAction = new QAction(tr("Settings"), this);
 
     // When triggered, open "Settings" window. As the user is not logged in, it
     // will only show proxy settings.
     connect(guestSettingsAction, &QAction::triggered, this, &MegaApplication::openSettings);
 
-    if (initialExitAction)
-    {
-        initialExitAction->deleteLater();
-        initialExitAction = nullptr;
-    }
     initialExitAction = new QAction(PlatformStrings::exit(), this);
     connect(initialExitAction, &QAction::triggered, this, &MegaApplication::tryExitApplication);
 
@@ -5498,12 +5510,6 @@ void MegaApplication::createTrayIconMenus()
     // On Linux, add a "Show Status" action, which opens the Info Dialog.
     if (isLinux && infoDialog)
     {
-        // Create action
-        if (showStatusAction)
-        {
-            showStatusAction->deleteLater();
-            showStatusAction = nullptr;
-        }
         showStatusAction = new QAction(tr("Show status"), this);
         connect(showStatusAction, &QAction::triggered, this, [this](){
             DialogOpener::raiseAllDialogs();
@@ -5525,17 +5531,13 @@ void MegaApplication::createInfoDialogMenus()
 #ifdef _WIN32
     if (!windowsMenu)
     {
-        windowsMenu->deleteLater();
+        deleteMenu(windowsMenu);
         windowsMenu = new QMenu();
         Platform::getInstance()->initMenu(windowsMenu, "WindowsMenu", false);
     }
     else
     {
-        QList<QAction *> actions = windowsMenu->actions();
-        for (int i = 0; i < actions.size(); i++)
-        {
-            windowsMenu->removeAction(actions[i]);
-        }
+        clearMenu(windowsMenu);
     }
 
     recreateAction(&windowsExitAction, windowsMenu, PlatformStrings::exit(), &MegaApplication::tryExitApplication);
@@ -5595,17 +5597,13 @@ void MegaApplication::createInfoDialogMenus()
     // Info Dialog overflow menu
     if (infoDialogMenu)
     {
-        QList<QAction*> actions = infoDialogMenu->actions();
-        for (int i = 0; i < actions.size(); i++)
-        {
-            infoDialogMenu->removeAction(actions[i]);
-        }
+        clearMenu(infoDialogMenu);
     }
 #ifndef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
     else
 #endif
     {
-        infoDialogMenu->deleteLater();
+        deleteMenu(infoDialogMenu);
         infoDialogMenu = new QMenu();
         Platform::getInstance()->initMenu(infoDialogMenu, "InfoDialogMenu");
 
@@ -5640,14 +5638,14 @@ void MegaApplication::createInfoDialogMenus()
     bool previousEnabledState = exitAction->isEnabled();
     if (!mSyncs2waysMenu)
     {
-        mSyncs2waysMenu = SyncsMenu::newSyncsMenu(MegaSync::TYPE_TWOWAY, previousEnabledState, infoDialog);
+        mSyncs2waysMenu = SyncsMenu::newSyncsMenu(MegaSync::TYPE_TWOWAY, previousEnabledState);
         connect(mSyncs2waysMenu.data(), &SyncsMenu::addSync,
                 infoDialog.data(), &InfoDialog::onAddSync);
     }
 
     if (!mBackupsMenu)
     {
-        mBackupsMenu = SyncsMenu::newSyncsMenu(MegaSync::TYPE_BACKUP, previousEnabledState, infoDialog);
+        mBackupsMenu = SyncsMenu::newSyncsMenu(MegaSync::TYPE_BACKUP, previousEnabledState);
         connect(mBackupsMenu.data(), &SyncsMenu::addSync,
                 infoDialog.data(), &InfoDialog::onAddSync);
     }
@@ -5715,36 +5713,21 @@ void MegaApplication::createGuestMenu()
 
     if (guestMenu)
     {
-        QList<QAction *> actions = guestMenu->actions();
-        for (int i = 0; i < actions.size(); i++)
-        {
-            guestMenu->removeAction(actions[i]);
-        }
+        const bool deleteActions(true);
+        clearMenu(guestMenu, deleteActions);
     }
 #ifndef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
     else
 #endif
     {
-        guestMenu->deleteLater();
+        deleteMenu(guestMenu);
         guestMenu = new QMenu();
         Platform::getInstance()->initMenu(guestMenu, "GuestMenu");
-    }
-
-    if (exitActionGuest)
-    {
-        exitActionGuest->deleteLater();
-        exitActionGuest = nullptr;
     }
 
     exitActionGuest = new MenuItemAction(PlatformStrings::exit(), QLatin1String("://images/ico_quit.png"), guestMenu);
 
     connect(exitActionGuest, &QAction::triggered, this, &MegaApplication::tryExitApplication);
-
-    if (updateActionGuest)
-    {
-        updateActionGuest->deleteLater();
-        updateActionGuest = nullptr;
-    }
 
     if (updateAvailable)
     {
@@ -5757,12 +5740,6 @@ void MegaApplication::createGuestMenu()
         connect(updateActionGuest, &QAction::triggered, this, &MegaApplication::onAboutClicked);
     }
 
-
-    if (settingsActionGuest)
-    {
-        settingsActionGuest->deleteLater();
-        settingsActionGuest = nullptr;
-    }
     settingsActionGuest = new MenuItemAction(tr("Settings"), QLatin1String("://images/ico_preferences.png"), guestMenu);
 
     connect(settingsActionGuest, &QAction::triggered, this, &MegaApplication::openSettings);

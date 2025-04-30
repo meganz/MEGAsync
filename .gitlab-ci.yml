@@ -1,14 +1,18 @@
+---
 variables:
   GIT_STRATEGY: clone
-  GIT_DEPTH: 0
+  GIT_DEPTH: "0"
 
 stages:
   - scan
 
-scan:
+gitleaks:
+  tags:
+    - secret-scanning
   stage: scan
   image:
-    name: mega-docker.artifactory.developers.mega.co.nz:8443/gitleaks:v8.18.2-mega-1.0
+    name: mega-docker.artifactory.developers.mega.co.nz:8443/gitleaks:v8.24.0-mega
     entrypoint: [""]
   script:
-    - gitleaks detect -v --redact -c .gitleaks/gitleaks.toml
+    - git fetch origin $CI_DEFAULT_BRANCH:$CI_DEFAULT_BRANCH
+    - gitleaks git --verbose --redact -c .gitleaks/gitleaks.toml --log-opts="$CI_DEFAULT_BRANCH..$CI_COMMIT_SHA"

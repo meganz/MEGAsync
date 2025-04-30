@@ -20,10 +20,11 @@ public:
     Q_INVOKABLE QString getDefaultFolder(const QString& folderName = QString());
 
 signals:
-    void folderChoosen(QString folderPath);
-private:
-    QString mTitle;
+    void folderChosen(QString folderPath);
 
+private:
+    void sendFolderChosenSignal(const QString& folder, const QString& openFromFolder = QString());
+    QString mTitle;
 };
 
 class ChooseRemoteFolder : public QObject
@@ -35,7 +36,7 @@ class ChooseRemoteFolder : public QObject
 
 signals:
     void folderNameChanged();
-    void folderChoosen(QString folderPath);
+    void folderChosen(QString folderPath);
 
 public:
     ChooseRemoteFolder(QObject* parent = nullptr);
@@ -45,7 +46,6 @@ public:
     Q_INVOKABLE void reset();
     Q_INVOKABLE QString getFolderName();
 
-    static QString DEFAULT_FOLDER;
     static QString DEFAULT_FOLDER_PATH;
 
 private:

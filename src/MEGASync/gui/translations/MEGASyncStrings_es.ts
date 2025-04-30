@@ -6154,21 +6154,14 @@ Introduzca un nombre diferente.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
+        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
+- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation>- Nuevo explorador para la Nube. Navega por tu Nube y gestiona tus archivos y carpetas con la nueva interfaz fácil de usar.
-- Mejoras en el asistente de instalación
-- Mejoras en las notificaciones del sistema.
-- Ya puedes anclar la aplicación de MEGA a la barra de tareas de Windows.
-- Se han actualizado algunas bibliotecas de terceros.
-- Se han corregido otros errores y se han realizado numerosas mejoras.
-</translation>
+        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
+        <translation>- Se han añadido mejoras en el menú contextual del explorador de Windows 11, para una experiencia de usuario más optimizada y refinada.
+- Se ha resuelto el problema por el que se aplicaban ajustes de permisos predeterminados incorrectos a los archivos y carpetas creados durante la sincronización.
+- Se han corregido otros errores y se han realizado numerosas mejoras.</translation>
     </message>
 </context>
 <context>
@@ -8648,7 +8641,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Pause</source>
         <translatorcomment>Menu action to pause syncing for syncs or backups.SNC-2565</translatorcomment>
-        <translation>Pausa</translation>
+        <translation>Pausar</translation>
     </message>
     <message>
         <source>Reboot backup</source>
@@ -9701,9 +9694,9 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Cuota de transferencia agotada</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <source>Upgrade your account to get more storage quota.</source>
         <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Amplía tu cuenta para obtener más cuota de almacenamiento.[BR][BR]O elimina algunos archivos y [B][A]vacía la papelera[/A][/B] para liberar espacio de almacenamiento.</translation>
+        <translation>Amplía tu cuenta para obtener más cuota de almacenamiento.</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>

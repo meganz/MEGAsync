@@ -4,6 +4,7 @@
 #include "MegaApiSynchronizedRequest.h"
 #include "MegaApplication.h"
 #include "MyBackupsHandle.h"
+#include "Platform.h"
 #include "RequestListenerManager.h"
 #include "StalledIssuesUtilities.h"
 #include "StatsEventHandler.h"
@@ -83,6 +84,51 @@ QString SyncController::getErrorString(int errorCode, int syncErrorCode) const
     return errorMsg;
 }
 
+void SyncController::prevalidateSync(SyncConfig& sync)
+{
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                 QString::fromUtf8("prevalide Sync (%1) \"%2\" for path \"%3\"")
+                     .arg(getSyncTypeString(sync.type), sync.syncName, sync.localFolder)
+                     .toUtf8()
+                     .constData());
+
+    QString syncCleanName = sync.syncName;
+    if (syncCleanName.isEmpty())
+    {
+        syncCleanName = SyncController::getSyncNameFromPath(sync.localFolder);
+    }
+    syncCleanName.remove(Utilities::FORBIDDEN_CHARS_RX);
+
+    auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
+        this,
+        [sync, this](MegaRequest* request, MegaError* e)
+        {
+            int errorCode = e->getErrorCode();
+            int syncErrorCode = request->getNumDetails();
+
+            if (syncErrorCode != MegaSync::NO_SYNC_ERROR || errorCode != MegaError::API_OK)
+            {
+                QString logMsg = QString::fromUtf8("Error on prevalidate sync (%1) \"%2\" for "
+                                                   "\"%3\" to \"%4\" (request error): %5")
+                                     .arg(getSyncTypeString(sync.type),
+                                          QString::fromUtf8(request->getName()),
+                                          sync.localFolder,
+                                          sync.remoteFolder,
+                                          getErrorString(errorCode, syncErrorCode));
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
+            }
+
+            emit syncPrevalidateStatus(errorCode, syncErrorCode);
+        });
+
+    mApi->prevalidateSyncFolder(sync.type,
+                                sync.localFolder.toUtf8().constData(),
+                                syncCleanName.toUtf8().constData(),
+                                sync.remoteHandle,
+                                std::string(),
+                                listener.get());
+}
+
 void SyncController::addSync(SyncConfig& sync)
 {
     MegaApi::log(MegaApi::LOG_LEVEL_INFO,
@@ -134,26 +180,26 @@ void SyncController::addSync(SyncConfig& sync)
             {
                 switch (sync.origin)
                 {
-                    case SyncInfo::NONE:
+                    case SyncInfo::SyncOrigin::NONE:
                     // Fallthrough
-                    case SyncInfo::MAIN_APP_ORIGIN:
+                    case SyncInfo::SyncOrigin::MAIN_APP_ORIGIN:
                     // Fallthrough
-                    case SyncInfo::ONBOARDING_ORIGIN:
+                    case SyncInfo::SyncOrigin::ONBOARDING_ORIGIN:
                     // Fallthrough
-                    case SyncInfo::EXTERNAL_ORIGIN:
+                    case SyncInfo::SyncOrigin::EXTERNAL_ORIGIN:
                     // Fallthrough
                     default:
                     {
                         break;
                     }
-                    case SyncInfo::CLOUD_DRIVE_DIALOG_ORIGIN:
+                    case SyncInfo::SyncOrigin::CLOUD_DRIVE_DIALOG_ORIGIN:
                     {
                         MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
                             AppStatsEvents::EventType::SYNC_ADDED_CLOUD_DRIVE_BUTTON,
                             true);
                         break;
                     }
-                    case SyncInfo::INFODIALOG_BUTTON_ORIGIN:
+                    case SyncInfo::SyncOrigin::INFODIALOG_BUTTON_ORIGIN:
                     {
                         MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
                             AppStatsEvents::EventType::SYNC_ADDED_ADD_SYNC_BUTTON,
@@ -616,8 +662,7 @@ QString SyncController::getIsLocalFolderAllowedForSyncMsg(const QString& path, c
     }
 #endif
 
-    // Use canonicalPath() to resolve links
-    inputPath = QDir(inputPath).canonicalPath();
+    inputPath = Platform::getInstance()->preparePathForSync(inputPath);
 
     if (inputPath == QDir::rootPath())
     {

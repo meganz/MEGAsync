@@ -9,3 +9,8 @@ QString FirstSyncReminderAction::getMessage() const
 {
     return tr("Set up your first sync to get the most out of the desktop app");
 }
+
+QString FirstSyncReminderAction::getButtonText() const
+{
+    return tr("Finish set up");
+}

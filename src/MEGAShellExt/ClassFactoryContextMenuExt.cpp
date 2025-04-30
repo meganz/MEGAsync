@@ -1,8 +1,10 @@
 #include "ClassFactoryContextMenuExt.h"
+
 #include "ContextMenuExt.h"
+#include <Shlwapi.h>
 
 #include <new>
-#include <Shlwapi.h>
+
 #pragma comment(lib, "shlwapi.lib")
 
 IFACEMETHODIMP ClassFactoryContextMenuExt::CreateInstance(IUnknown *pUnkOuter, REFIID riid, void **ppv)

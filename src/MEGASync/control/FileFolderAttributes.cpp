@@ -55,9 +55,9 @@ int64_t FileFolderAttributes::size() const
     return mValues.value(AttributeTypes::SIZE, -1).value<qint64>();
 }
 
-int64_t FileFolderAttributes::modifiedTimeInSecs() const
+int64_t FileFolderAttributes::modifiedTimeInMSecs() const
 {
-    return mValues.value(AttributeTypes::MODIFIED_TIME).value<QDateTime>().toSecsSinceEpoch();
+    return mValues.value(AttributeTypes::MODIFIED_TIME).value<QDateTime>().toMSecsSinceEpoch();
 }
 
 QDateTime FileFolderAttributes::modifiedTime() const
@@ -637,8 +637,10 @@ void RemoteFileFolderAttributes::requestVersions(QObject* caller, std::function<
             std::unique_ptr<mega::MegaNode> node = getNode();
             if (node)
             {
-                mValues.insert(RemoteAttributeTypes::VERSIONS,
-                               MegaSyncApp->getMegaApi()->getVersions(node.get())->size());
+                std::unique_ptr<mega::MegaNodeList> nodeList(
+                    MegaSyncApp->getMegaApi()->getVersions(node.get()));
+
+                mValues.insert(RemoteAttributeTypes::VERSIONS, nodeList->size());
             }
         }
 

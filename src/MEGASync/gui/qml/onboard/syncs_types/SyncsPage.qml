@@ -5,7 +5,7 @@ import common 1.0
 import syncs 1.0
 import onboard 1.0
 
-import Syncs 1.0
+import SyncsComponents 1.0
 
 SyncsFlow {
     id: root
@@ -14,8 +14,6 @@ SyncsFlow {
     required property NavigationInfo navInfoRef
 
     selectiveSyncPageComponent: selectiveSyncPageComponentItem
-
-    isOnboarding: true
 
     state: root.selectiveSync
 
@@ -55,7 +53,6 @@ SyncsFlow {
         SelectiveSyncPage {
             id: selectiveSyncPage
 
-            isOnboarding: true
             footerButtons.rightSecondary.visible: true
             footerButtons.leftSecondary.visible: false
             footerButtons.leftPrimary.text: Strings.skip
@@ -68,16 +65,13 @@ SyncsFlow {
             }
 
             onSelectiveSyncMoveToSuccess: {
-                root.sync.syncStatus = root.sync.SyncStatusCode.SELECTIVE;
                 root.syncsFlowMoveToFinal(Constants.SyncType.SELECTIVE_SYNC);
             }
 
             onFullSyncMoveToSuccess: {
-                root.sync.syncStatus = root.sync.SyncStatusCode.FULL;
                 root.syncsFlowMoveToFinal(Constants.SyncType.FULL_SYNC);
             }
         }
     }
 
 }
-

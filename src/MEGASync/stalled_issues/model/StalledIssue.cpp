@@ -318,8 +318,6 @@ void StalledIssue::fillBasicInfo(const mega::MegaSyncStall* stall)
 {
     mReason = stall->reason();
     mDetectedCloudSide = stall->detectedCloudSide();
-
-    mSyncIds = StalledIssuesBySyncFilter::getSyncIdsByStall(stall);
 }
 
 void StalledIssue::endFillingIssue()
@@ -341,6 +339,17 @@ void StalledIssue::endFillingIssue()
 const QSet<mega::MegaHandle>& StalledIssue::syncIds() const
 {
     return mSyncIds;
+}
+
+bool StalledIssue::addSyncId(mega::MegaHandle syncId)
+{
+    if (!mSyncIds.contains(syncId))
+    {
+        mSyncIds.insert(syncId);
+        return true;
+    }
+
+    return false;
 }
 
 mega::MegaSync::SyncType StalledIssue::getSyncType() const

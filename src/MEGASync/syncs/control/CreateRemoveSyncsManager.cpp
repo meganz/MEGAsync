@@ -8,11 +8,10 @@
 #include "SyncSettings.h"
 
 const CreateRemoveSyncsManager* CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin origin,
-                                                                  mega::MegaHandle handle,
-                                                                  bool comesFromSettings)
+                                                                  mega::MegaHandle handle)
 {
     auto syncManager(new CreateRemoveSyncsManager());
-    syncManager->performAddSync(origin, handle, comesFromSettings);
+    syncManager->performAddSync(origin, handle);
     return syncManager;
 }
 
@@ -29,9 +28,7 @@ bool CreateRemoveSyncsManager::removeSync(std::shared_ptr<SyncSettings> syncSett
     return syncManager->performRemoveSync(syncSettings, parent);
 }
 
-void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin,
-                                              mega::MegaHandle handle,
-                                              bool comesFromSettings)
+void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin, mega::MegaHandle handle)
 {
     QString remoteFolder;
 
@@ -42,7 +39,7 @@ void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin,
     }
 
     auto overQuotaDialog = MegaSyncApp->showSyncOverquotaDialog();
-    auto addSyncLambda = [overQuotaDialog, origin, remoteFolder, comesFromSettings, this]()
+    auto addSyncLambda = [overQuotaDialog, origin, remoteFolder, this]()
     {
         if (!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
@@ -55,10 +52,8 @@ void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin,
             {
                 syncsDialog = new QmlDialogWrapper<SyncsComponent>();
             }
-            syncsDialog->wrapper()->setComesFromSettings(comesFromSettings);
             syncsDialog->wrapper()->setSyncOrigin(origin);
             syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
-            syncsDialog->wrapper()->setOriginSync(origin);
             DialogOpener::showDialog(syncsDialog, [this]() {
                 deleteLater();
             });

@@ -25,6 +25,7 @@ public:
 
     UpsellPlans::ViewMode viewMode() const;
     void setViewMode(UpsellPlans::ViewMode mode);
+    void sendCloseEvent() const;
 
 public slots:
     void buyButtonClicked(int index);

@@ -340,7 +340,6 @@ QString Utilities::languageCodeToString(QString code)
         languageNames[QString::fromLatin1("zh_CN")] = QString::fromUtf8("简体中文");
         languageNames[QString::fromLatin1("zh_TW")] = QString::fromUtf8("中文繁體");
 
-
         // Currently unsupported
         // languageNames[QString::fromLatin1("mi")] = QString::fromUtf8("Māori");
         // languageNames[QString::fromLatin1("ca")] = QString::fromUtf8("Català");
@@ -373,12 +372,9 @@ QString Utilities::languageCodeToString(QString code)
         // languageNames[QString::fromLatin1("tl")] = QString::fromUtf8("Tagalog");
         // languageNames[QString::fromLatin1("uk")] = QString::fromUtf8("Українська");
         // languageNames[QString::fromLatin1("pt")] = QString::fromUtf8("Português");
-
-
     }
     return languageNames.value(code);
 }
-
 
 struct IconCache
 {

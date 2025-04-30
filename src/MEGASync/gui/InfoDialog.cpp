@@ -836,7 +836,7 @@ void InfoDialog::onAddSync(mega::MegaSync::SyncType type)
         case mega::MegaSync::TYPE_TWOWAY:
         {
             MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::MENU_ADD_SYNC_CLICKED, true);
-            addSync(SyncInfo::MAIN_APP_ORIGIN);
+            addSync(SyncInfo::SyncOrigin::MAIN_APP_ORIGIN);
             break;
         }
         case mega::MegaSync::TYPE_BACKUP:
@@ -1139,14 +1139,7 @@ void InfoDialog::onAddSyncClicked()
     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
         AppStatsEvents::EventType::INFO_DIALOG_ADD_SYNC_CLICKED,
         true);
-    addSync(SyncInfo::INFODIALOG_BUTTON_ORIGIN);
-}
-
-SyncsMenu* InfoDialog::initSyncsMenu(mega::MegaSync::SyncType type, bool isEnabled)
-{
-    SyncsMenu* menu (SyncsMenu::newSyncsMenu(type, isEnabled, this));
-    connect(menu, &SyncsMenu::addSync, this, &InfoDialog::onAddSync);
-    return menu;
+    addSync(SyncInfo::SyncOrigin::INFODIALOG_BUTTON_ORIGIN);
 }
 
 void InfoDialog::on_bUpload_clicked()

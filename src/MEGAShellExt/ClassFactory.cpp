@@ -1,6 +1,5 @@
 #include "ClassFactory.h"
 
-#include <new>
 #include <Shlwapi.h>
 #pragma comment(lib, "shlwapi.lib")
 

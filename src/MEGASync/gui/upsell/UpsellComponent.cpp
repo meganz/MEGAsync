@@ -2,12 +2,12 @@
 
 #include "UpsellController.h"
 #include "UpsellModel.h"
+#include "UpsellQmlDialog.h"
 
 namespace
 {
 const QLatin1String
     URL_ABOUT_TRANSFER_QUOTA("https://help.mega.io/plans-storage/space-storage/transfer-quota");
-const QLatin1String URL_RUBBISH("mega://#fm/rubbish");
 const QLatin1String URL_PRO_FLEXI("mega://#pro?tab=flexi");
 }
 
@@ -19,8 +19,7 @@ UpsellComponent::UpsellComponent(QObject* parent, UpsellPlans::ViewMode mode):
     mModel(std::make_shared<UpsellModel>(mController))
 {
     registerQmlModules();
-    mController->setViewMode(mode);
-    sendStats();
+    setViewMode(mode);
 
     mController->registerQmlRootContextProperties();
 
@@ -43,6 +42,8 @@ void UpsellComponent::registerQmlModules()
             0,
             "UpsellPlans",
             QString::fromLatin1("UpsellPlans can only be used for the enum values"));
+        qmlRegisterModule("UpsellComponents", 1, 0);
+        qmlRegisterType<UpsellQmlDialog>("UpsellComponents", 1, 0, "UpsellQmlDialog");
         qmlRegistrationDone = true;
     }
 }
@@ -60,7 +61,22 @@ UpsellPlans::ViewMode UpsellComponent::viewMode() const
 
 void UpsellComponent::setViewMode(UpsellPlans::ViewMode mode)
 {
-    mController->setViewMode(mode);
+    if (mode != viewMode())
+    {
+        mController->setViewMode(mode);
+        sendStats();
+    }
+}
+
+void UpsellComponent::sendCloseEvent() const
+{
+    mController->setViewMode(UpsellPlans::ViewMode::NONE);
+
+    AppStatsEvents::EventType eventType =
+        mController->getPlans()->isAnyPlanClicked() ?
+            AppStatsEvents::EventType::UPSELL_DIALOG_AFTER_ANY_PLAN_CLOSE_BUTTON_CLICKED :
+            AppStatsEvents::EventType::UPSELL_DIALOG_WITHOUT_ANY_PLAN_CLOSE_BUTTON_CLICKED;
+    MegaSyncApp->getStatsEventHandler()->sendEvent(eventType);
 }
 
 void UpsellComponent::buyButtonClicked(int index)
@@ -84,40 +100,20 @@ void UpsellComponent::billedRadioButtonClicked(bool isMonthly)
 
 void UpsellComponent::linkInDescriptionClicked()
 {
-    QString urlString;
-    switch (viewMode())
+    if (viewMode() == UpsellPlans::ViewMode::TRANSFER_EXCEEDED)
     {
-        case UpsellPlans::ViewMode::STORAGE_ALMOST_FULL:
-        case UpsellPlans::ViewMode::STORAGE_FULL:
-        {
-            urlString = URL_RUBBISH;
-            MegaSyncApp->getStatsEventHandler()->sendTrackedEventArg(
-                AppStatsEvents::EventType::UPSELL_DIALOG_EMPTY_RUBBISH_BIN_CLICKED,
-                {getViewModeString()});
-            break;
-        }
-        case UpsellPlans::ViewMode::TRANSFER_EXCEEDED:
-        {
-            urlString = URL_ABOUT_TRANSFER_QUOTA;
-            MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
-                AppStatsEvents::EventType::UPSELL_DIALOG_LEARN_MORE_TX_QUOTA_CLICKED);
-            break;
-        }
-        default:
-        {
-            break;
-        }
-    }
-
-    if (!urlString.isEmpty())
-    {
-        Utilities::openUrl(QUrl(urlString));
+        MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+            AppStatsEvents::EventType::UPSELL_DIALOG_LEARN_MORE_TX_QUOTA_CLICKED);
+        Utilities::openUrl(QUrl(URL_ABOUT_TRANSFER_QUOTA));
     }
 }
 
 void UpsellComponent::linkTryProFlexiClicked()
 {
-    Utilities::openUrl(QUrl(URL_PRO_FLEXI));
+    QString urlString(URL_PRO_FLEXI);
+    Utilities::getPROurlWithParameters(urlString);
+    Utilities::openUrl(QUrl(urlString));
+
     MegaSyncApp->getStatsEventHandler()->sendTrackedEventArg(
         AppStatsEvents::EventType::UPSELL_DIALOG_TRY_PRO_FLEXI_CLICKED,
         {getViewModeString()});

@@ -6019,21 +6019,14 @@ Bitte geben Sie einen anderen Namen ein.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
+        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
+- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation>- Wir stellen einen neuen Remote-Explorer für Ihr Cloud Drive vor. Die schlanke und benutzerfreundliche neue Oberfläche bietet Ihnen eine bequeme Möglichkeit, Ihr Cloud Drive zu durchsuchen und Ihre Dateien und Ordner zu verwalten.
-- Der Assistent für die Ersteinrichtung wurde weiter verbessert.
-- Die Systembenachrichtigungen wurden optimiert.
-- Sie können die MEGA-App jetzt an die Windows-Taskleiste anheften.
-- Einige Drittanbieter-Bibliotheken wurden aktualisiert.
-- Es wurden weitere Fehlerkorrekturen und zahlreiche Verbesserungen vorgenommen.
-</translation>
+        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
+        <translation>- Das Explorer-Kontextmenü unter Windows 11 wurde verbessert und bietet nun eine optimierte Benutzererfahrung.
+- Es wurde ein Problem behoben, das bei Dateien und Ordnern, die bei der Synchronisierung erstellt wurden, zu falschen Standard-Berechtigungseinstellungen führte.
+- Es wurden weitere Fehlerkorrekturen und zahlreiche Verbesserungen vorgenommen.</translation>
     </message>
 </context>
 <context>
@@ -9470,9 +9463,9 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Transfervolumen verbraucht</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <source>Upgrade your account to get more storage quota.</source>
         <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Upgraden Sie Ihren Account, um mehr Speicherplatz zu erhalten.[BR][BR]Oder löschen Sie einige Dateien und [B][A]leeren Sie Ihren Papierkorb[/A][/B], um Speicherplatz freizugeben.</translation>
+        <translation>Upgraden Sie Ihren Account, um mehr Speicherplatz zu erhalten.</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>

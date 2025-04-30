@@ -6021,21 +6021,14 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
+        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
+- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation>- Представляем новый удаленный обозреватель Облачного диска. Просматривайте Облачный диск с комфортом и управляйте файлами и папками с помощью нового элегантного и простого в использовании интерфейса.
-- Дополнительные улучшения в мастере первоначальной настройки.
-- Улучшены системные уведомления.
-- Теперь приложение MEGA можно прикрепить к панели задач Windows.
-- Обновлены некоторые сторонние библиотеки.
-- Исправлены другие ошибки и внесено множество улучшений.
-</translation>
+        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
+        <translation>- Интеграция с контекстным меню проводника Windows 11 стала проще и удобнее.
+- Исправлены неправильные настройки разрешений по умолчанию, применяемые к файлам и папкам, созданным во время синхронизации.
+- Другие исправления ошибок и многочисленные улучшения.</translation>
     </message>
 </context>
 <context>
@@ -9472,9 +9465,9 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Превышен лимит передачи данных</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <source>Upgrade your account to get more storage quota.</source>
         <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Улучшите аккаунт, чтобы увеличить объём хранилища.[BR][BR]Или удалите некоторые файлы и [B][A]очистите Корзину[/A][/B], чтобы освободить место.</translation>
+        <translation>Улучшите аккаунт, чтобы увеличить объём хранилища.</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>

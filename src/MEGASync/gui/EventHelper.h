@@ -25,7 +25,7 @@ public:
 private:
     struct Data{
       Action action = ACCEPT;
-      std::function<bool()> func = nullptr;
+      std::function<bool(QEvent*)> func = nullptr;
       QPointer<QObject> object;
       QEvent::Type eventType;
 
@@ -44,7 +44,9 @@ class EventManager
 public:
     static const QString EVENT_PROPERTY;
     static void addEvent(QObject *obj, const QEvent::Type& eType, const EventHelper::Action& act);
-    static void addEvent(QObject *obj, const QEvent::Type& eType, const std::function<bool()> &func);
+    static void addEvent(QObject* obj,
+                         const QEvent::Type& eType,
+                         const std::function<bool(QEvent*)>& func);
     static void removeEvent(QObject* obj, const QEvent::Type &eType);
     static void removeAllEvents(QObject* obj);
 

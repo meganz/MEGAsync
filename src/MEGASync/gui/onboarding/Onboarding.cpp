@@ -6,15 +6,20 @@
 #include "OnboardingQmlDialog.h"
 #include "PasswordStrengthChecker.h"
 #include "SettingsDialog.h"
+#include "Syncs.h"
 #include "SyncsComponent.h"
+#include "SyncsData.h"
 
 #include <QQmlEngine>
 
 using namespace mega;
 
 Onboarding::Onboarding(QObject* parent):
-    QMLComponent(parent)
+    QMLComponent(parent),
+    mSyncsComponent(std::make_unique<SyncsComponent>())
 {
+    mSyncsComponent->setSyncOrigin(SyncInfo::SyncOrigin::ONBOARDING_ORIGIN);
+
     qmlRegisterModule("Onboarding", 1, 0);
     qmlRegisterType<OnboardingQmlDialog>("OnboardingQmlDialog", 1, 0, "OnboardingQmlDialog");
     qmlRegisterType<AccountStatusController>("AccountStatusController", 1, 0, "AccountStatusController");
@@ -22,7 +27,6 @@ Onboarding::Onboarding(QObject* parent):
     qmlRegisterUncreatableType<SettingsDialog>("SettingsDialog", 1, 0, "SettingsDialog",
                                                QString::fromUtf8("Warning SettingsDialog : not allowed to be instantiated"));
 
-    SyncsComponent::registerQmlModules();
     BackupCandidatesComponent::registerQmlModules();
 
     // Makes the Guest window transparent (macOS)

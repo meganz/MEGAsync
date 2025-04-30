@@ -2,8 +2,6 @@ import QtQuick 2.15
 
 import common 1.0
 
-import Syncs 1.0
-
 ResumeSyncsPageForm {
     id: root
 
@@ -13,7 +11,7 @@ ResumeSyncsPageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
-            syncsComponentAccess.openSyncsTabInPreferences();
+            syncsComponentAccess.viewSyncsInSettingsButtonClicked();
             window.accept();
         }
 

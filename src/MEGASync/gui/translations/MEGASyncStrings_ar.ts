@@ -6023,21 +6023,14 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing a new remote Cloud drive explorer. Browse your Cloud drive in style and manage your files and folders in the new sleek and easy-to-use interface.
-- We’ve made more improvements to the initial onboarding wizard.
-- Systems notifications have been enhanced.
-- You can now pin the MEGA app to the Windows taskbar.
-- Some third party libraries have been updated.
+        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
+- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.10.0. CON-1298</translatorcomment>
-        <translation>- تقديم مستكشف السواقة السحابية الجديد عن بعد. تصفح السواقة السحابية بأناقة وقم بإدارة ملفاتك ومجلداتك في الواجهة الجديدة الأنيقة وسهلة الاستخدام.
-- لقد أجرينا المزيد من التحسينات على معالج الإعداد الأولي.
-- تم تحسين إشعارات الأنظمة.
-- يمكنك الآن تثبيت تطبيق ميغا MEGA على شريط مهام ويندوز Windows.
-- تم تحديث بعض مكتبات الطرف الثالث.
-- تم إصلاح الأخطاء الأخرى وإجراء العديد من التحسينات.
-</translation>
+        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
+        <translation>- تمت إضافة تحسينات إلى قائمة سياق مستكشف ويندوز Windows 11 مما يوفر تجربة مستخدم أكثر انسيابية وصقلًا.
+- تم حل المشكلة مع إعدادات الأذونات الافتراضية غير الصحيحة المطبقة على الملفات والمجلدات التي تم إنشاؤها أثناء المزامنة.
+- تم إصلاح الأخطاء الأخرى وإجراء العديد من التحسينات.</translation>
     </message>
 </context>
 <context>
@@ -9431,7 +9424,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</source>
         <translatorcomment>Billing clarification message according to currency. CON-945</translatorcomment>
-        <translation>* السعر المقدر بعملتك المحلية. ستتم محاسبة حسابك باليورو لجميع المعاملات.</translation>
+        <translation>* السعر المقدر بعملتك المحلية. سيتم محاسبتك باليورو على جميع المعاملات.</translation>
     </message>
     <message>
         <source>Billed monthly</source>
@@ -9474,9 +9467,9 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>تم تجاوز حجم التراسل المتاح</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <source>Upgrade your account to get more storage quota.</source>
         <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>قم بترقية حسابك للحصول على المزيد من مساحة التخزين.[BR][BR]أو احذف بعض الملفات و [B][A]أفرغ سلة المحذوفات[/A][/B] لتحرير مساحة التخزين.</translation>
+        <translation>قم بترقية حسابك للحصول على المزيد من مساحة التخزين.</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
