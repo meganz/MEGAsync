@@ -1131,7 +1131,9 @@ void InfoDialog::on_bTransferManager_clicked()
 {
     emit userActivity();
     app->transferManagerActionClicked();
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::OPEN_TRANSFER_MANAGER_CLICKED, true);
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::OPEN_TRANSFER_MANAGER_CLICKED,
+        true);
 }
 
 void InfoDialog::onAddSyncClicked()
