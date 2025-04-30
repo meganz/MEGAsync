@@ -6,7 +6,7 @@
 
 #include <QFileIconProvider>
 
-LowDiskSpaceDialog::LowDiskSpaceDialog(long neededSize,
+LowDiskSpaceDialog::LowDiskSpaceDialog(long long neededSize,
                                        long long freeSize,
                                        long long driveSize,
                                        const QString& driveName,
