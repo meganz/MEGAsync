@@ -771,7 +771,7 @@ Qt::ItemFlags NodeSelectorModel::flags(const QModelIndex &index) const
             {
                 flags |= Qt::ItemIsDropEnabled;
 
-                if(!item->isSpecialNode())
+                if (!item->isSpecialNode() && !item->isInShare())
                 {
                     flags |= Qt::ItemIsDragEnabled;
                 }

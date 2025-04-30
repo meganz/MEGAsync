@@ -1460,7 +1460,8 @@ MegaHandle NodeSelectorTreeViewWidget::getSelectedNodeHandle()
 
 QList<MegaHandle> NodeSelectorTreeViewWidget::getMultiSelectionNodeHandle()
 {
-    return ui->tMegaFolders->getMultiSelectionNodeHandle();
+    auto selectedRows(ui->tMegaFolders->selectedRows());
+    return ui->tMegaFolders->getMultiSelectionNodeHandle(selectedRows);
 }
 
 QModelIndexList NodeSelectorTreeViewWidget::getSelectedIndexes() const

@@ -3,18 +3,24 @@
 #include "Avatar.h"
 #include "FullName.h"
 #include "MegaApplication.h"
+#include "Utilities.h"
 #include "ViewLoadingScene.h"
 
 const int NodeSelectorModelItem::ICON_SIZE = 17;
+const int UPDATE_ACCESS_THRESHOLD_MS = 50;
 
 using namespace mega;
 
-NodeSelectorModelItem::NodeSelectorModelItem(std::unique_ptr<MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem) :
+NodeSelectorModelItem::NodeSelectorModelItem(std::unique_ptr<MegaNode> node,
+                                             bool showFiles,
+                                             NodeSelectorModelItem* parentItem):
     QObject(parentItem),
     mOwnerEmail(QString()),
     mStatus(Status::NONE),
     mRequestingChildren(false),
     mShowFiles(showFiles),
+    mNodeAccess(mega::MegaShare::ACCESS_OWNER),
+    mNodeAccessLastUpdate(0),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mNode(std::move(node)),
     mOwner(nullptr)
@@ -24,7 +30,6 @@ NodeSelectorModelItem::NodeSelectorModelItem(std::unique_ptr<MegaNode> node, boo
     if(mNode->isFile() || mNode->isInShare())
     {
         mStatus = Status::NONE;
-        return;
     }
 }
 
@@ -41,7 +46,18 @@ std::shared_ptr<mega::MegaNode> NodeSelectorModelItem::getNode() const
 
 bool NodeSelectorModelItem::isSpecialNode() const
 {
-    return (isCloudDrive() || isVault() || isRubbishBin() || mNode->isInShare());
+    return (isCloudDrive() || isVault() || isRubbishBin());
+}
+
+bool NodeSelectorModelItem::canBeRenamed() const
+{
+    if (isCloudDrive() || isVault() || isRubbishBin() || isInRubbishBin() ||
+        (mMegaApi->isInVault(mNode.get())) || (getNodeAccess() < mega::MegaShare::ACCESS_FULL))
+    {
+        return false;
+    }
+
+    return true;
 }
 
 void NodeSelectorModelItem::createChildItems(std::unique_ptr<mega::MegaNodeList> nodeList)
@@ -111,6 +127,18 @@ void NodeSelectorModelItem::resetChildrenCounter()
 
     // If it has no children, the item does not need to be init
     mChildrenAreInit = mChildrenCounter > 0 ? false : true;
+}
+
+int NodeSelectorModelItem::getNodeAccess() const
+{
+    auto currentTimestamp(QDateTime::currentMSecsSinceEpoch());
+    if ((currentTimestamp - mNodeAccessLastUpdate) > UPDATE_ACCESS_THRESHOLD_MS)
+    {
+        mNodeAccess = Utilities::getNodeAccess(mNode.get());
+        mNodeAccessLastUpdate = currentTimestamp;
+    }
+
+    return mNodeAccess;
 }
 
 QPointer<NodeSelectorModelItem> NodeSelectorModelItem::getParent()
@@ -257,11 +285,10 @@ NodeSelectorModelItem::Status NodeSelectorModelItem::getStatus() const
 }
 
 bool NodeSelectorModelItem::isSyncable()
-{       
-    return mStatus != Status::SYNC
-            && mStatus != Status::SYNC_PARENT
-            && mStatus != Status::SYNC_CHILD
-            && mStatus != Status::BACKUP;
+{
+    return mStatus != Status::SYNC && mStatus != Status::SYNC_PARENT &&
+           mStatus != Status::SYNC_CHILD && mStatus != Status::BACKUP &&
+           getNodeAccess() >= mega::MegaShare::ACCESS_FULL;
 }
 
 QList<QPointer<NodeSelectorModelItem>> NodeSelectorModelItem::addNodes(QList<std::shared_ptr<MegaNode>> nodes)
@@ -382,6 +409,11 @@ bool NodeSelectorModelItem::isRubbishBin() const
     return mNode->getHandle() == MegaSyncApp->getRubbishNode()->getHandle();
 }
 
+bool NodeSelectorModelItem::isInRubbishBin() const
+{
+    return mNode && mMegaApi->isInRubbish(mNode.get());
+}
+
 bool NodeSelectorModelItem::isVault() const
 {
     return false;
@@ -390,6 +422,16 @@ bool NodeSelectorModelItem::isVault() const
 bool NodeSelectorModelItem::isVaultDevice() const
 {
     return false;
+}
+
+bool NodeSelectorModelItem::isInShare() const
+{
+    return mNode->isInShare();
+}
+
+bool NodeSelectorModelItem::isInVault() const
+{
+    return MegaSyncApp->getMegaApi()->isInVault(mNode.get());
 }
 
 NodeSelectorModelItemSearch::NodeSelectorModelItemSearch(std::unique_ptr<mega::MegaNode> node, Types type, NodeSelectorModelItem *parentItem)
