@@ -8,7 +8,8 @@ namespace
 {
 const QLatin1String
     URL_ABOUT_TRANSFER_QUOTA("https://help.mega.io/plans-storage/space-storage/transfer-quota");
-const QLatin1String URL_PRO_FLEXI("mega://#pro?tab=flexi");
+const QLatin1String URL_PRO("mega://#pro");
+const QLatin1String URL_PRO_FLEXI_PARAM("?tab=flexi");
 }
 
 static bool qmlRegistrationDone = false;
@@ -110,8 +111,9 @@ void UpsellComponent::linkInDescriptionClicked()
 
 void UpsellComponent::linkTryProFlexiClicked()
 {
-    QString urlString(URL_PRO_FLEXI);
+    QString urlString(URL_PRO);
     Utilities::getPROurlWithParameters(urlString);
+    urlString += URL_PRO_FLEXI_PARAM;
     Utilities::openUrl(QUrl(urlString));
 
     MegaSyncApp->getStatsEventHandler()->sendTrackedEventArg(

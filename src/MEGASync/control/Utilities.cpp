@@ -1383,6 +1383,7 @@ QPair<QString, QString> Utilities::getFilenameBasenameAndSuffix(const QString& f
 void Utilities::upgradeClicked()
 {
     QString url = QString::fromUtf8("mega://#pro");
+    getPROurlWithParameters(url);
     int accountType = Preferences::instance()->accountType();
     if(accountType == Preferences::ACCOUNT_TYPE_STARTER
         || accountType == Preferences::ACCOUNT_TYPE_BASIC
@@ -1390,7 +1391,6 @@ void Utilities::upgradeClicked()
     {
         url.append(QString::fromUtf8("?tab=exc"));
     }
-    getPROurlWithParameters(url);
     openUrl(QUrl(url));
 }
 
