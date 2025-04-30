@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 
 import common 1.0
 
@@ -27,10 +28,6 @@ Rectangle {
     readonly property int borderWidthDefault: 1
     readonly property int borderWidthRecommended: 2
 
-    property real localHeight: root.calculateContentHeight(root.calculateBottomTextsHeight())
-                                + 2 * root.contentMargin + Constants.focusAdjustment
-    property real externalMaxHeight: 0
-
     property bool recommended: false
     property bool currentPlan: false
     property bool monthly: false
@@ -55,8 +52,6 @@ Rectangle {
     }
 
     signal buyButtonClicked()
-    signal reportHeight(real height)
-    signal forceUpdate()
 
     function getChipBackgroundColor() {
         if (root.currentPlan) {
@@ -82,22 +77,6 @@ Rectangle {
         }
     }
 
-    function calculateBottomTextsHeight() {
-        let currentHeight = storageTransferTextColumn.height
-            + (root.showProFlexiMessage ? tryProFlexiText.height : 0)
-            + bottomTextsColumn.spacing;
-        return Math.max(76, currentHeight);
-    }
-
-    function calculateContentHeight(bottomHeight) {
-        return titleText.height
-                + recommendedChip.height
-                + priceColumn.height
-                + bottomHeight
-                + buyButtonContainer.height
-                + root.totalNumContentSpacing * root.contentSpacing;
-    }
-
     function updateBilledPeriodText() {
         if (!billedPeriodInfoText.enabled) {
             billedPeriodInfoText.text = root.billedText;
@@ -105,7 +84,7 @@ Rectangle {
     }
 
     width: root.planDefaultWidth
-    height: root.localHeight
+    height: contentColumn.implicitHeight
 
     border {
         width: root.recommended ? root.borderWidthRecommended : root.borderWidthDefault
@@ -114,28 +93,35 @@ Rectangle {
     radius: root.cardRadius
     color: ColorTheme.pageBackground
 
-    Column {
+    ColumnLayout {
         id: contentColumn
 
         anchors {
             left: parent.left
             right: parent.right
-            top: parent.top
+
             leftMargin: root.contentMargin
             rightMargin: root.contentMargin
             topMargin: root.contentMargin
-            bottomMargin: root.contentMargin + Constants.focusAdjustment
+            bottomMargin: root.contentMargin //+ Constants.focusAdjustment
         }
-        height: root.calculateContentHeight(bottomTextsColumn.height)
+
         spacing: root.contentSpacing
+
+/*
+        Rectangle
+        {
+            color: "green"
+
+            width: 50
+            height: 50
+        }
+        */
 
         Text {
             id: titleText
 
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
+            //width: parent.width
             font {
                 family: FontStyles.poppinsFontFamily
                 pixelSize: Text.Size.LARGE
@@ -146,6 +132,17 @@ Rectangle {
             text: root.name
             enabled: root.enabled && !root.showOnlyProFlexi
         }
+
+        /*
+        Rectangle
+        {
+            color: "blue"
+
+            width: 50
+            height: 50
+        }
+        */
+
 
         Chips.Chip {
             id: recommendedChip
@@ -161,26 +158,17 @@ Rectangle {
             }
         }
 
-        Column {
+
+        ColumnLayout {
             id: priceColumn
 
             spacing: root.priceSpacing
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            height: (root.monthly ? 0 : priceTextWithDiscount.height)
-                        + priceText.height
-                        + billedPeriodInfoText.height
-                        + (root.monthly ? 0 : pricePerMonthText.height)
+            //width: parent.width
 
             SecondaryText {
                 id: priceTextWithDiscount
 
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
+                //width: parent.width
                 lineHeight: root.discountLineHeight
                 lineHeightMode: Text.FixedHeight
                 font.strikeout: true
@@ -192,10 +180,7 @@ Rectangle {
             Text {
                 id: priceText
 
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
+                //width: parent.width
                 font {
                     family: FontStyles.poppinsFontFamily
                     pixelSize: Text.Size.EXTRA_LARGE
@@ -210,10 +195,7 @@ Rectangle {
             SecondaryText {
                 id: billedPeriodInfoText
 
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
+                //width: parent.width
                 lineHeight: root.pricePeriodLineHeight
                 lineHeightMode: Text.FixedHeight
                 enabled: root.enabled && !root.showOnlyProFlexi
@@ -229,10 +211,7 @@ Rectangle {
             SecondaryText {
                 id: pricePerMonthText
 
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
+                //width: parent.width
                 lineHeight: root.pricePeriodLineHeight
                 lineHeightMode: Text.FixedHeight
                 text: UpsellStrings.pricePerMonth.arg(root.monthlyPriceWithDiscount)
@@ -241,80 +220,49 @@ Rectangle {
             }
         }
 
-        Column {
+        ColumnLayout {
             id: bottomTextsColumn
 
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            height: {
-                let diff = (root.externalMaxHeight > root.localHeight)
-                            ? root.externalMaxHeight - root.localHeight : 0;
-                return root.calculateBottomTextsHeight() + diff;
-            }
+            //width: parent.width
             spacing: root.showProFlexiMessage ? root.bottomTextsSpacing : 0
 
-            Item {
-                id: storageTransferItem
+            ColumnLayout {
+                id: storageTransferTextColumn
 
-                width: parent.width
-                height: parent.height
-                            - bottomTextsColumn.spacing
-                            - (tryProFlexiText.visible ? tryProFlexiText.height : 0)
                 enabled: root.enabled && !root.showOnlyProFlexi
 
-                Column {
-                    id: storageTransferTextColumn
+                /*
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                }
+                */
 
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                        verticalCenter: parent.verticalCenter
+                spacing: root.bottomSpacing
+
+                Text {
+                    id: storageText
+
+                    font.weight: Font.DemiBold
+                    text: UpsellStrings.storage.arg(gbStorage)
+                    onTextChanged: {
+                        // When the component is disabled, the text is not being updated.
+                        // Force to update the text when the component is disabled.
+                        Qt.callLater(updateBilledPeriodText);
                     }
-                    height: storageText.height + transferText.height + root.bottomSpacing
-                    spacing: root.bottomSpacing
-                    enabled: parent.enabled
+                }
 
-                    Text {
-                        id: storageText
+                Text {
+                    id: transferText
 
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                        }
-                        font.weight: Font.DemiBold
-                        text: UpsellStrings.storage.arg(gbStorage)
-                        onTextChanged: {
-                            // Force to update the height of the component when the text is changed
-                            forceUpdate();
-
-                            // When the component is disabled, the text is not being updated.
-                            // Force to update the text when the component is disabled.
-                            Qt.callLater(updateBilledPeriodText);
-                        }
-                    }
-
-                    Text {
-                        id: transferText
-
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                        }
-                        font.weight: Font.DemiBold
-                        text: UpsellStrings.transfer.arg(gbTransfer)
-                    }
+                    font.weight: Font.DemiBold
+                    text: UpsellStrings.transfer.arg(gbTransfer)
                 }
             }
 
             SecondaryText {
                 id: tryProFlexiText
 
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
+                //width: parent.width
                 lineHeight: root.tryProFlexiLineHeight
                 lineHeightMode: Text.FixedHeight
                 font {
@@ -340,27 +288,27 @@ Rectangle {
 
         }
 
-        Column {
+        ColumnLayout {
             id: buyButtonContainer
 
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            height: buyButton.height
+            Layout.preferredWidth: contentColumn.implicitWidth
 
             PrimaryButton {
                 id: buyButton
 
+                /*
                 anchors {
                     left: parent.left
                     right: parent.right
                     margins: Constants.focusAdjustment
                 }
+                */
                 sizes {
-                    fillWidth: true
+                    fillWidth: false
                     textFontSize: Text.Size.NORMAL
                 }
+
+                Layout.fillWidth: true
                 height: root.buttonHeight + 2 * Constants.focusBorderWidth
                 text: UpsellStrings.buyPlan.arg(root.buttonName)
                 onClicked: {
@@ -370,15 +318,19 @@ Rectangle {
             }
 
             OutlineButton {
+                /*
                 anchors {
                     left: parent.left
                     right: parent.right
                     margins: Constants.focusAdjustment
                 }
+                */
                 sizes {
-                    fillWidth: true
+                    fillWidth: false
                     textFontSize: Text.Size.NORMAL
                 }
+
+                Layout.fillWidth: true
                 height: root.buttonHeight + 2 * Constants.focusBorderWidth
                 text: UpsellStrings.buyPlan.arg(root.buttonName)
                 onClicked: {
@@ -391,9 +343,4 @@ Rectangle {
         }
 
     }
-
-    Component.onCompleted: {
-        reportHeight(root.height)
-    }
-
 }

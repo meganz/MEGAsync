@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 
 import common 1.0
 
@@ -96,42 +97,25 @@ FocusScope {
 
             anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width
-            height: plansRepeater.maxCardHeight
+            height: rowLayout.implicitHeight
 
-            Row {
+            RowLayout {
+                id: rowLayout
+
                 anchors.horizontalCenter: parent.horizontalCenter
-                height: plansRepeater.maxCardHeight
                 spacing: root.plansRowSpacing
 
                 Repeater {
                     id: plansRepeater
 
-                    property real maxCardHeight: 0
-                    property var reportedHeights: []
-                    property bool heightCalculated: false
-
-                    function recalculateCardHeight() {
-                        var newMaxHeight = 0;
-                        for (var i = 0; i < plansRepeater.count; i++) {
-                            var card = plansRepeater.itemAt(i);
-                            if (card !== null) {
-                                newMaxHeight = Math.max(newMaxHeight, card.localHeight);
-                            }
-                        }
-                        plansRepeater.maxCardHeight = newMaxHeight;
-                    }
-
                     model: upsellModelAccess
-
-                    Component.onCompleted: {
-                        recalculateCardHeight();
-                    }
 
                     PlanCard {
                         id: card
 
-                        height: plansRepeater.heightCalculated ? plansRepeater.maxCardHeight : card.localHeight
-                        externalMaxHeight: plansRepeater.maxCardHeight
+                        Layout.preferredHeight: rowLayout.implicitHeight
+                        Layout.minimumHeight: height
+                        Layout.preferredWidth: width
 
                         name: model.name
                         buttonName: model.buttonName
@@ -153,34 +137,11 @@ FocusScope {
                         onBuyButtonClicked: {
                             upsellComponentAccess.buyButtonClicked(index);
                         }
-
-                        onReportHeight: (height) => {
-                            if (!plansRepeater.heightCalculated) {
-                                plansRepeater.reportedHeights[model.index] = height;
-                                const reportedCount = plansRepeater.reportedHeights.filter(h => typeof h === "number").length;
-                                if (reportedCount === upsellPlansAccess.plansCount) {
-                                    const maxHeight = Math.max.apply(null, plansRepeater.reportedHeights);
-                                    plansRepeater.maxCardHeight = maxHeight;
-                                    plansRepeater.heightCalculated = true;
-                                }
-                            }
-                        }
-
-                        onHeightChanged: {
-                            if (height < plansRepeater.maxCardHeight) {
-                                plansRepeater.maxCardHeight = height;
-                            }
-                        }
-
-                        onForceUpdate: {
-                            plansRepeater.recalculateCardHeight();
-                        }
                     }
                 }
 
             }
-
-        } // Item: plansItem
+        }
 
         SecondaryText {
             id: footerText
