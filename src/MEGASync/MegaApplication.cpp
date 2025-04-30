@@ -5427,13 +5427,6 @@ void MegaApplication::createTrayIconMenus()
     // On Linux, add a "Show Status" action, which opens the Info Dialog.
     if (isLinux && infoDialog)
     {
-        // Create action
-        if (showStatusAction)
-        {
-            showStatusAction->deleteLater();
-            showStatusAction = nullptr;
-        }
-
         showStatusAction = new QAction(tr("Show status"), this);
         showStatusAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/tray/linux/status.svg")));
 
