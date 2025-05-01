@@ -86,7 +86,7 @@ bool NodeNameSetterDialog::checkAlreadyExistingNode(const QString& nodeName, std
     for(int index = 0; index < nodes->size(); ++index)
     {
         QString remoteNodeName(QString::fromUtf8(nodes->get(index)->getName()));
-        if(nodeName.compare(remoteNodeName, Qt::CaseInsensitive) == 0)
+        if (nodeName.compare(remoteNodeName, Qt::CaseSensitive) == 0)
         {
             showAlreadyExistingNodeError(nodes->get(index)->isFile());
             return true;
