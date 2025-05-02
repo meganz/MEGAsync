@@ -41,7 +41,7 @@ border: none;
 padding: 0px 4px 0px 16px;
 }
 
-#bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon, #bBusinessQuota, #bBusinessStorage, #bSyncsDisabled, #bAddSync, #bAddBackup, #bSettings, #bUpload, #bBackupsDisabled, #bAllSyncsDisabled, #bCloudDrive
+#bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon, #bBusinessQuota, #bBusinessStorage, #bSyncsDisabled, #bAddSync, #bAddBackup, #bSettings, #bBackupsDisabled, #bAllSyncsDisabled, #bCloudDrive
 {
 border: none;
 }
