@@ -1144,12 +1144,6 @@ void InfoDialog::onAddSyncClicked()
     addSync(SyncInfo::SyncOrigin::INFODIALOG_BUTTON_ORIGIN);
 }
 
-void InfoDialog::on_bUpload_clicked()
-{
-    app->uploadActionClicked();
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::UPLOAD_CLICKED, true);
-}
-
 void InfoDialog::clearUserAttributes()
 {
     ui->bAvatar->clearData();
