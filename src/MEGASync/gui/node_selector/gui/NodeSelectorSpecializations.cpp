@@ -7,8 +7,10 @@
 #include "NodeSelectorModel.h"
 #include "NodeSelectorProxyModel.h"
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
+#include "Preferences.h"
 #include "QMegaMessageBox.h"
 #include "RequestListenerManager.h"
+#include "StatsEventHandler.h"
 #include "SyncInfo.h"
 #include "TextDecorator.h"
 #include "ui_NodeSelector.h"
@@ -253,6 +255,9 @@ CloudDriveNodeSelector::CloudDriveNodeSelector(QWidget* parent):
     this->setWindowFlags(this->windowFlags());
 #endif
 #endif
+
+    // Last time opened
+    Preferences::instance()->cloudDriveDialogOpened();
 }
 
 void CloudDriveNodeSelector::createSpecialisedWidgets()
@@ -270,6 +275,35 @@ void CloudDriveNodeSelector::enableDragAndDrop(bool enable)
     mCloudDriveWidget->enableDragAndDrop(enable);
     mRubbishWidget->enableDragAndDrop(true);
     mIncomingSharesWidget->enableDragAndDrop(true);
+}
+
+void CloudDriveNodeSelector::sendStats()
+{
+    auto cloudDriveLastDateTimeStatSent(
+        Preferences::instance()->cloudDriveDialogLastDateTimeStatSent());
+    auto cloudDriveLastDateTimeOpened(
+        Preferences::instance()->cloudDriveDialogLastDateTimeOpened());
+
+    // Not send any stat if the last time you send it was in the current hour
+    if (Utilities::hourHasChanged(cloudDriveLastDateTimeStatSent,
+                                  QDateTime::currentDateTime().toSecsSinceEpoch()))
+    {
+        // If the CloudDrive is currently open and we sent the stats in the last hour, send it again
+        //  or If the CloudDrive is not currently open but it was opened during the  this hour, send
+        //  the event
+        auto cloudDriveDialog(DialogOpener::findDialog<NodeSelector>());
+        if ((cloudDriveDialog &&
+             dynamic_cast<CloudDriveNodeSelector*>(cloudDriveDialog->getDialog().data())) ||
+            (cloudDriveLastDateTimeOpened > 0 &&
+             Utilities::hourHasChanged(cloudDriveLastDateTimeStatSent,
+                                       cloudDriveLastDateTimeOpened)))
+        {
+            MegaSyncApp->getStatsEventHandler()->sendEvent(
+                AppStatsEvents::EventType::CLOUD_DRIVE_HOURLY_ACTIVE_USERS);
+
+            Preferences::instance()->updateCloudDriveDialogLastDateTimeStatSent();
+        }
+    }
 }
 
 void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint id)

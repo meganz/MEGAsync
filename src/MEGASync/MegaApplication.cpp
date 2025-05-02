@@ -4530,6 +4530,8 @@ void MegaApplication::sendPeriodicStats() const
             mStatsEventHandler->sendEvent(AppStatsEvents::EventType::MONTHLY_ACTIVE_USER, { accountType });
         }
     }
+
+    CloudDriveNodeSelector::sendStats();
 }
 
 void MegaApplication::createUserMessageController()
