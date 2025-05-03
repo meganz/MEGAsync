@@ -1,4 +1,5 @@
-{
+{https://mega.nz/folder/tPMwyJaS
+    
     "$schema" : "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
     "name" : "mega-desktop-app",
     "homepage" : "https://github.com/meganz/megasync",
