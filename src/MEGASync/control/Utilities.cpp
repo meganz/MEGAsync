@@ -7,6 +7,7 @@
 #include "MegaApplication.h"
 #include "MoveToMEGABin.h"
 #include "Preferences.h"
+#include "StatsEventHandler.h"
 // clang-format on
 
 #include <QApplication>
