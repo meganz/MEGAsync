@@ -1392,6 +1392,10 @@ void Utilities::upgradeClicked()
     }
     getPROurlWithParameters(url);
     openUrl(QUrl(url));
+
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::UPGRADE_ACCOUNT_CLICKED,
+        true);
 }
 
 QString Utilities::getNodePath(MegaTransfer* transfer)
