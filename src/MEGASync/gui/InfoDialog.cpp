@@ -1095,7 +1095,6 @@ void InfoDialog::on_bSettings_clicked()
 void InfoDialog::on_bUpgrade_clicked()
 {
     Utilities::upgradeClicked();
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::UPGRADE_ACCOUNT_CLICKED, true);
 }
 
 void InfoDialog::on_bUpgradeOverDiskQuota_clicked()
