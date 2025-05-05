@@ -836,7 +836,7 @@ void InfoDialog::onAddSync(mega::MegaSync::SyncType type)
         case mega::MegaSync::TYPE_TWOWAY:
         {
             MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::MENU_ADD_SYNC_CLICKED, true);
-            addSync(SyncInfo::SyncOrigin::MAIN_APP_ORIGIN);
+            addSync(SyncInfo::SyncOrigin::CONTEXT_MENU_ORIGIN);
             break;
         }
         case mega::MegaSync::TYPE_BACKUP:
