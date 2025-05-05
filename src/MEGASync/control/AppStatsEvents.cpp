@@ -80,7 +80,7 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     {AppStatsEvents::EventType::NOTIFICATION_SETTINGS_CLICKED, 99572},
     {AppStatsEvents::EventType::UPGRADE_ACCOUNT_CLICKED, 99573},
     {AppStatsEvents::EventType::OPEN_TRANSFER_MANAGER_CLICKED, 99574},
-    {AppStatsEvents::EventType::ADD_SYNC_CLICKED, 99575},
+    //{ (Deprecated)                                                       , 99575},
     {AppStatsEvents::EventType::ADD_BACKUP_CLICKED, 99576},
     {AppStatsEvents::EventType::UPLOAD_CLICKED, 99577},
     {AppStatsEvents::EventType::AVATAR_CLICKED, 99578},
@@ -147,6 +147,12 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     {AppStatsEvents::EventType::CLOUD_DRIVE_OPENED, 600039},
     {AppStatsEvents::EventType::UPSELL_DIALOG_AFTER_ANY_PLAN_CLOSE_BUTTON_CLICKED, 600040},
     {AppStatsEvents::EventType::UPSELL_DIALOG_WITHOUT_ANY_PLAN_CLOSE_BUTTON_CLICKED, 600041},
+    {AppStatsEvents::EventType::SYNC_ADDED_SETTINGS, 600042},
+    {AppStatsEvents::EventType::SYNC_ADDED_WEBCLIENT, 600043},
+    {AppStatsEvents::EventType::SYNC_ADDED_CONTEXT_MENU, 600044},
+    {AppStatsEvents::EventType::SYNC_ADDED_ONBOARDING, 600045},
+    {AppStatsEvents::EventType::SYNC_ADDED_OS_NOTIFICATION, 600046},
+    {AppStatsEvents::EventType::SYNC_ADDED_MAIN_APP, 600047},
 };
 
 // Deprecated are not displayed
@@ -215,7 +221,6 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
      "Show notification settings clicked"},
     {AppStatsEvents::EventType::UPGRADE_ACCOUNT_CLICKED, "Upgrade account clicked"},
     {AppStatsEvents::EventType::OPEN_TRANSFER_MANAGER_CLICKED, "Open transfer manager clicked"},
-    {AppStatsEvents::EventType::ADD_SYNC_CLICKED, "Add sync clicked"},
     {AppStatsEvents::EventType::ADD_BACKUP_CLICKED, "Add backup clicked"},
     {AppStatsEvents::EventType::UPLOAD_CLICKED, "Upload clicked"},
     {AppStatsEvents::EventType::AVATAR_CLICKED, "Settings clicked (avatar)"},
@@ -314,7 +319,12 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
      "Upsell dialog closed after clicking any plan button"},
     {AppStatsEvents::EventType::UPSELL_DIALOG_WITHOUT_ANY_PLAN_CLOSE_BUTTON_CLICKED,
      "Upsell dialog closed without clicking any plan button"},
-};
+    {AppStatsEvents::EventType::SYNC_ADDED_SETTINGS, "Sync added from Settings "},
+    {AppStatsEvents::EventType::SYNC_ADDED_WEBCLIENT, "Sync added from the Webclient"},
+    {AppStatsEvents::EventType::SYNC_ADDED_CONTEXT_MENU, "Sync added from the context menu"},
+    {AppStatsEvents::EventType::SYNC_ADDED_ONBOARDING, "Sync added from the Onboarding"},
+    {AppStatsEvents::EventType::SYNC_ADDED_OS_NOTIFICATION, "Sync added from an OS notification"},
+    {AppStatsEvents::EventType::SYNC_ADDED_MAIN_APP, "Sync added from main app"}};
 
 QString AppStatsEvents::getEventMessage(EventType event,
                                          const QStringList& args)

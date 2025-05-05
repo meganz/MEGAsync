@@ -178,34 +178,12 @@ void SyncController::addSync(SyncConfig& sync)
             }
             else
             {
-                switch (sync.origin)
+                std::optional<AppStatsEvents::EventType> syncAddEvent =
+                    getSyncAddedEventType(sync.origin);
+                if (syncAddEvent.has_value())
                 {
-                    case SyncInfo::SyncOrigin::NONE:
-                    // Fallthrough
-                    case SyncInfo::SyncOrigin::MAIN_APP_ORIGIN:
-                    // Fallthrough
-                    case SyncInfo::SyncOrigin::ONBOARDING_ORIGIN:
-                    // Fallthrough
-                    case SyncInfo::SyncOrigin::EXTERNAL_ORIGIN:
-                    // Fallthrough
-                    default:
-                    {
-                        break;
-                    }
-                    case SyncInfo::SyncOrigin::CLOUD_DRIVE_DIALOG_ORIGIN:
-                    {
-                        MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
-                            AppStatsEvents::EventType::SYNC_ADDED_CLOUD_DRIVE_BUTTON,
-                            true);
-                        break;
-                    }
-                    case SyncInfo::SyncOrigin::INFODIALOG_BUTTON_ORIGIN:
-                    {
-                        MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
-                            AppStatsEvents::EventType::SYNC_ADDED_ADD_SYNC_BUTTON,
-                            true);
-                        break;
-                    }
+                    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(syncAddEvent.value(),
+                                                                          true);
                 }
             }
 
@@ -969,6 +947,31 @@ QString SyncController::getSyncTypeString(const mega::MegaSync::SyncType& syncTy
         }
     }
     return typeString;
+}
+
+std::optional<AppStatsEvents::EventType>
+    SyncController::getSyncAddedEventType(const SyncInfo::SyncOrigin origin)
+{
+    switch (origin)
+    {
+        case SyncInfo::SyncOrigin::CONTEXT_MENU_ORIGIN:
+            return AppStatsEvents::EventType::SYNC_ADDED_CONTEXT_MENU;
+        case SyncInfo::SyncOrigin::ONBOARDING_ORIGIN:
+            return AppStatsEvents::EventType::SYNC_ADDED_ONBOARDING;
+        case SyncInfo::SyncOrigin::EXTERNAL_ORIGIN:
+            return AppStatsEvents::EventType::SYNC_ADDED_WEBCLIENT;
+        case SyncInfo::SyncOrigin::INFODIALOG_BUTTON_ORIGIN:
+            return AppStatsEvents::EventType::SYNC_ADDED_ADD_SYNC_BUTTON;
+        case SyncInfo::SyncOrigin::CLOUD_DRIVE_DIALOG_ORIGIN:
+            return AppStatsEvents::EventType::SYNC_ADDED_CLOUD_DRIVE_BUTTON;
+        case SyncInfo::SyncOrigin::OS_NOTIFICATION_ORIGIN:
+            return AppStatsEvents::EventType::SYNC_ADDED_OS_NOTIFICATION;
+        case SyncInfo::SyncOrigin::SETTINGS_ORIGIN:
+            return AppStatsEvents::EventType::SYNC_ADDED_SETTINGS;
+        case SyncInfo::SyncOrigin::MAIN_APP_ORIGIN:
+        default:
+            return AppStatsEvents::EventType::SYNC_ADDED_MAIN_APP;
+    }
 }
 
 //This system has been designed for Backups, as several backups can be created in a row
