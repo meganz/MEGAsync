@@ -60,14 +60,7 @@ constexpr int WINDOWS11_FIRST_BUILD_NUMBER = 22000;
 
 bool haveModernContextMenu()
 {
-    std::wstring buildNumberStr(
-        getRegisterKeyStringValue(HKEY_LOCAL_MACHINE,
-                                  L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion",
-                                  L"CurrentBuildNumber"));
-
-    const int buildNumber = std::stoi(buildNumberStr);
-
-    return buildNumber >= WINDOWS11_FIRST_BUILD_NUMBER;
+    return false;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
