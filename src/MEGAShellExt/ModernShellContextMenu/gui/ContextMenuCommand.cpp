@@ -35,7 +35,7 @@ IFACEMETHODIMP ContextMenuCommand::Invoke(IShellItemArray* psiItemArray, IBindCt
 
 HRESULT ContextMenuCommand::EnumSubCommands(IEnumExplorerCommand** ppEnum)
 {
-    if (mEnumCommands)
+    if (g_enumCommands)
     {
         *ppEnum = g_enumCommands.get();
     }

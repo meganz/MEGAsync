@@ -9,7 +9,6 @@ class __declspec(uuid("F9E3E837-B080-4BB1-A508-632CC3E751B7")) ContextMenuComman
 {
 public:
     ContextMenuCommand();
-
     virtual ~ContextMenuCommand() {}
 
     IFACEMETHODIMP GetTitle(IShellItemArray* psiItemArray, LPWSTR* ppszName) override;
@@ -21,9 +20,6 @@ public:
 protected:
     EXPCMDSTATE GetState(IShellItemArray* psiItemArray) override;
     std::wstring GetIcon() const override;
-
-private:
-    SubCommandEnumerator* mEnumCommands;
 };
 
 #endif
