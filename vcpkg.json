@@ -78,6 +78,13 @@
             "dependencies": [
                 "gtest"
             ]
+        },
+        "desktop-tests": {
+            "description": "Dependencies for Desktop app unit tests",
+            "dependencies": [
+                "catch2",
+                "trompeloeil"
+            ]
         }
     },
     "dependencies": [

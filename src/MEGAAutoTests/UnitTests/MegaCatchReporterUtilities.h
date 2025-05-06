@@ -2,7 +2,7 @@
 #define MEGACATCHREPORTERUTILITIES_H
 
 #define CATCH_CONFIG_EXTERNAL_INTERFACES
-#include <catch/catch.hpp>
+#include <catch.hpp>
 
 #include <map>
 

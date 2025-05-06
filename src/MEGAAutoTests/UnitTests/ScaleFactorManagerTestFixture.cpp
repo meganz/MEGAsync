@@ -1,6 +1,6 @@
 #include "ScaleFactorManagerTestFixture.h"
 
-#include "catch/catch.hpp"
+#include <catch.hpp>
 
 ScaleFactorManagerTests::ScaleFactorManagerTests()
 #if defined(_WIN32) || defined(__APPLE__)

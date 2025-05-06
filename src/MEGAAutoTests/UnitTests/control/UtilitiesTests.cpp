@@ -1,6 +1,5 @@
 #include "Utilities.h"
-
-#include <catch/catch.hpp>
+#include <catch.hpp>
 
 class UtilitiesTests
 {

@@ -1,6 +1,6 @@
-#include "catch/catch.hpp"
 #include "TransferBatch.h"
-#include "trompeloeil.hpp"
+#include <catch.hpp>
+#include <trompeloeil.hpp>
 
 #include <QDir>
 
