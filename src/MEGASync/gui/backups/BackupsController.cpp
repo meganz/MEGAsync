@@ -53,7 +53,7 @@ void BackupsController::showErrorMessage() const
 {
     auto completedItems(mBackupsToDoSize - mBackupsProcessedWithError);
     QString successItems(tr("%n folder was backed up", "", completedItems));
-    QString message(tr("%1, but %n folder couldn’t be backed up.", "", mBackupsProcessedWithError)
+    QString message(tr("%1, but %n folder couldn’t be backed up", "", mBackupsProcessedWithError)
                         .arg(successItems));
     MegaSyncApp->showErrorMessage(message, tr("Not all folders were backed up"));
 }
