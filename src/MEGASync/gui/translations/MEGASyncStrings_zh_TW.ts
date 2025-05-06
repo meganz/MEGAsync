@@ -4751,12 +4751,12 @@ Enter a different name</source>
     <message>
         <source>Sort by date</source>
         <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>依日期排序</translation>
+        <translation>按日期排序</translation>
     </message>
     <message>
         <source>Sort by name</source>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>依名稱排序</translation>
+        <translation>按名稱排序</translation>
     </message>
     <message>
         <source>Sort by owner name</source>

@@ -6157,7 +6157,9 @@ Inserisci un nome differente.</translation>
 - Other bugs have been fixed and numerous improvements made.
 </source>
         <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Sono stati aggiunti perfezionamenti al menù contestuale dell’Explorer di Windows 11, che offre un’esperienza utente più snella e raffinata.
+- Risolto il problema relativo alle impostazioni di autorizzazione predefinite errate applicate a file e cartelle creati durante la sincronizzazione.
+- Altri bug sono stati corretti e sono stati apportati numerosi miglioramenti.</translation>
     </message>
 </context>
 <context>
@@ -9647,7 +9649,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</source>
         <translatorcomment>Billing clarification message according to currency. CON-945</translatorcomment>
-        <translation>* Prezzo stimato nella tua valuta locale. Il tuo account verrà fatturato in Euro per tutte le transazioni.</translation>
+        <translation>* Prezzo stimato nella tua valuta locale. Il tuo account verrà addebitato in euro per tutte le transazioni.</translation>
     </message>
     <message>
         <source>Billed monthly</source>

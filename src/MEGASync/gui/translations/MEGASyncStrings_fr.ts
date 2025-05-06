@@ -2246,7 +2246,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>Business</source>
         <translatorcomment>Label to refer Business tier CON-467</translatorcomment>
-        <translation>Pour entreprise</translation>
+        <translation>Entreprise</translation>
     </message>
     <message>
         <source>Free</source>
@@ -9842,7 +9842,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Business</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
-        <translation>Pour entreprise</translation>
+        <translation>Entreprise</translation>
     </message>
     <message>
         <source>Bytes</source>
