@@ -5406,23 +5406,20 @@ void MegaApplication::createTrayIconMenus()
         Platform::getInstance()->initMenu(initialTrayMenu, "TrayMenu", false);
     }
 
-    if (isLinux)
-    {
-        guestSettingsAction = new QAction(tr("Settings"), this);
-        guestSettingsAction->setIcon(
-            QIcon(QString::fromUtf8(":/images/icons/tray/linux/settings.svg")));
+    guestSettingsAction = new QAction(tr("Settings"), this);
+    guestSettingsAction->setIcon(
+        QIcon(QString::fromUtf8(":/images/icons/tray/linux/settings.svg")));
 
-        // When triggered, open "Settings" window. As the user is not logged in, it
-        // will only show proxy settings.
-        connect(guestSettingsAction, &QAction::triggered, this, &MegaApplication::openSettings);
+    // When triggered, open "Settings" window. As the user is not logged in, it
+    // will only show proxy settings.
+    connect(guestSettingsAction, &QAction::triggered, this, &MegaApplication::openSettings);
 
-        initialExitAction = new QAction(PlatformStrings::exit(), this);
-        initialExitAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/tray/linux/exit.svg")));
-        connect(initialExitAction, &QAction::triggered, this, &MegaApplication::tryExitApplication);
+    initialExitAction = new QAction(PlatformStrings::exit(), this);
+    initialExitAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/tray/linux/exit.svg")));
+    connect(initialExitAction, &QAction::triggered, this, &MegaApplication::tryExitApplication);
 
-        initialTrayMenu->addAction(guestSettingsAction);
-        initialTrayMenu->addAction(initialExitAction);
-    }
+    initialTrayMenu->addAction(guestSettingsAction);
+    initialTrayMenu->addAction(initialExitAction);
 
     // On Linux, add a "Show Status" action, which opens the Info Dialog.
     if (isLinux && infoDialog)
