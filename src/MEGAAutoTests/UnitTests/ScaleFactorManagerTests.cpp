@@ -1,5 +1,5 @@
-#include "catch/catch.hpp"
 #include "ScaleFactorManagerTestFixture.h"
+#include <catch.hpp>
 
 #include <string>
 

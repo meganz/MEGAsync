@@ -1,5 +1,5 @@
-#include "catch/catch.hpp"
 #include "TransferRemainingTime.h"
+#include <catch.hpp>
 
 using namespace std::chrono_literals;
 

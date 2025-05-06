@@ -3,26 +3,25 @@
 
 #include "MegaCatchReporterUtilities.h"
 
-class MegaCatchReporter: public Catch::StreamingReporterBase<MegaCatchReporter>
+#include <catch2/reporters/catch_reporter_streaming_base.hpp>
+
+class MegaCatchReporter: public Catch::StreamingReporterBase
 {
 public:
-    MegaCatchReporter(const Catch::ReporterConfig& config);
+    MegaCatchReporter(Catch::ReporterConfig&& config);
     virtual ~MegaCatchReporter() = default;
 
     static std::string getDescription();
     static std::set<Catch::Verbosity> getSupportedVerbosities();
 
     void assertionStarting(Catch::AssertionInfo const&) override;
-    bool assertionEnded(Catch::AssertionStats const& assertionStats) override;
+    void assertionEnded(Catch::AssertionStats const& assertionStats) override;
 
     void sectionStarting(Catch::SectionInfo const& sectionInfo) override;
     void sectionEnded(Catch::SectionStats const& sectionStats) override;
 
     void testCaseStarting(Catch::TestCaseInfo const& testCaseInfo) override;
     void testCaseEnded(Catch::TestCaseStats const& testCaseStats) override;
-
-    void testGroupStarting(Catch::GroupInfo const& groupInfo) override;
-    void testGroupEnded(Catch::TestGroupStats const& testGroupStats) override;
 
     void testRunStarting(Catch::TestRunInfo const& testRunInfo) override;
     void testRunEnded(Catch::TestRunStats const& testRunStats) override;

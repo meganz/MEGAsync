@@ -3,6 +3,9 @@ cmake_policy(SET CMP0091 NEW)
 
 find_package(Qt5 REQUIRED COMPONENTS Widgets Core Gui Network Qml Quick QuickWidgets)
 
+find_package(Catch2 REQUIRED)
+find_package(TrompeLoeil REQUIRED)
+
 #-------------- MEGA Sync unit tests --------------------
 
 add_executable(UnitTests)
@@ -93,6 +96,7 @@ target_link_libraries(UnitTests
     Qt5::Qml
     Qt5::Quick
     Qt5::QuickWidgets
+    Catch2::Catch2
     )
 
 target_include_directories(UnitTests PRIVATE ../3rdparty ${MegaSyncDir})
