@@ -1,7 +1,6 @@
 #include "ContextMenuCommand.h"
 
 static const std::wstring ICON = L"mega.ico";
-extern winrt::com_ptr<SubCommandEnumerator> g_enumCommands;
 
 ContextMenuCommand::ContextMenuCommand():
     ContextMenuCommandBase(L"ContextMenuCommand")
@@ -35,16 +34,9 @@ IFACEMETHODIMP ContextMenuCommand::Invoke(IShellItemArray* psiItemArray, IBindCt
 
 HRESULT ContextMenuCommand::EnumSubCommands(IEnumExplorerCommand** ppEnum)
 {
-    if (g_enumCommands)
-    {
-        *ppEnum = g_enumCommands.get();
-    }
-    else
-    {
-        *ppEnum = nullptr;
-    }
-
-    return S_OK;
+    *ppEnum = nullptr;
+    auto e = winrt::make<SubCommandEnumerator>();
+    return e->QueryInterface(IID_PPV_ARGS(ppEnum));
 }
 
 EXPCMDSTATE ContextMenuCommand::GetState(IShellItemArray* psiItemArray)

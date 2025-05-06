@@ -54,8 +54,7 @@ const TCHAR ShellExtNotFoundFriendlyNameOld[] = L"###MegaShellExtNotFound";
 const TCHAR ShellExtNotFoundFriendlyName[] = L"\x01 MEGA (NotFound)";
 
 HINSTANCE   g_hInst     = NULL;
-long        g_cDllRef   = 0;
-winrt::com_ptr<SubCommandEnumerator> g_enumCommands = winrt::make_self<SubCommandEnumerator>();
+long g_cDllRef = 0;
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
 {

@@ -6,9 +6,7 @@ ContextMenuData ContextMenuCommandBase::mContextMenuData;
 
 ContextMenuCommandBase::ContextMenuCommandBase(const std::wstring& id):
     mId(id)
-{
-    mContextMenuData.reset();
-}
+{}
 
 IFACEMETHODIMP ContextMenuCommandBase::GetCanonicalName(GUID* pguidCommandName)
 {
