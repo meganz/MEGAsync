@@ -119,5 +119,19 @@
         <file>images/themed/dark/checkbox_off_focus_error.svg</file>
         <file>images/themed/dark/checkbox_on_error.svg</file>
         <file>images/themed/dark/checkbox_on_focus_error.svg</file>
+        <file>images/icons/tray/linux/settings.svg</file>
+        <file>images/icons/tray/linux/exit.svg</file>
+        <file>images/icons/tray/linux/status.svg</file>
+        <file>images/icons/tray/windows/settings.svg</file>
+        <file>images/icons/tray/windows/exit.svg</file>
+        <file>images/icons/tray/windows/stream.svg</file>
+        <file>images/icons/tray/windows/transfer_manager.svg</file>
+        <file>images/icons/tray/windows/upload.svg</file>
+        <file>images/icons/tray/windows/download.svg</file>
+        <file>images/icons/tray/windows/about.svg</file>
+        <file>images/icons/tray/windows/drive.svg</file>
+        <file>images/icons/tray/windows/open_links.svg</file>
+        <file>images/icons/tray/macos/exit.svg</file>
+        <file>images/icons/tray/macos/settings.svg</file>
     </qresource>
 </RCC>

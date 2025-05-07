@@ -584,8 +584,12 @@ private:
         (*action)->setEnabled(previousEnabledState);
     }
 
-    template <class Func>
-    void recreateAction(QAction** action, QMenu* menu, const QString& actionName, Func slotFunc)
+    template<class Func>
+    void recreateAction(QAction** action,
+                        QMenu* menu,
+                        const QString& actionName,
+                        Func slotFunc,
+                        const QString& iconPath = QString())
     {
         bool previousEnabledState = true;
         if (*action)
@@ -598,6 +602,11 @@ private:
         *action = new QAction(actionName, menu);
         connect(*action, &QAction::triggered, this, slotFunc);
         (*action)->setEnabled(previousEnabledState);
+
+        if (!iconPath.isEmpty())
+        {
+            (*action)->setIcon(QIcon(iconPath));
+        }
     }
 
     void processUpgradeSecurityEvent();
