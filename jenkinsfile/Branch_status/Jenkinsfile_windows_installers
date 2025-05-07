@@ -70,6 +70,7 @@ pipeline {
                 //QT path is automatically changed to x86 with nsis when needed
                 MEGA_QTPATH = "C:\\Qt\\Qt5.15.16\\5.15.16\\x64"
                 LAF_TOKEN = credentials('MEGASYNC_LAF_TOKEN')
+                MEGA_CRASH_BACKEND_URL = credentials('MEGA_CRASH_URL')
             }
             steps {
                 gitlabCommitStatus (name: 'Build windows packages'){
