@@ -135,6 +135,7 @@ pipeline {
                     environment{
                         VCPKGPATH = "${env.HOME}/jenkins/vcpkg"
                         QT_BASE_PATH = "${env.HOME}/Qt-build/5.15.16/5.15.16"
+                        MEGA_CRASH_BACKEND_URL = credentials('MEGA_CRASH_URL')
                     }
                     steps {
                         dir(macos_sources_workspace){

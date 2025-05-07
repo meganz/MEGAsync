@@ -139,6 +139,7 @@ pipeline {
                         MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\vcpkg"
                         MEGA_QTPATH = "C:\\Qt\\Qt5.15.16\\5.15.16\\x64"
                         LAF_TOKEN = credentials('MEGASYNC_LAF_TOKEN')
+                        MEGA_CRASH_BACKEND_URL = credentials('MEGA_CRASH_URL')
                     }
                     steps {
                         dir(windows_sources_workspace){
