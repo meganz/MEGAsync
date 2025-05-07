@@ -35,8 +35,16 @@ IFACEMETHODIMP ContextMenuCommand::Invoke(IShellItemArray* psiItemArray, IBindCt
 HRESULT ContextMenuCommand::EnumSubCommands(IEnumExplorerCommand** ppEnum)
 {
     *ppEnum = nullptr;
-    auto e = winrt::make<SubCommandEnumerator>();
-    return e->QueryInterface(IID_PPV_ARGS(ppEnum));
+
+    try
+    {
+        auto e = winrt::make<SubCommandEnumerator>();
+        return e->QueryInterface(IID_PPV_ARGS(ppEnum));
+    }
+    catch (...)
+    {
+        return winrt::to_hresult();
+    }
 }
 
 EXPCMDSTATE ContextMenuCommand::GetState(IShellItemArray* psiItemArray)
