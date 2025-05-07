@@ -5418,6 +5418,11 @@ void MegaApplication::createTrayIconMenus()
         QIcon(QString::fromUtf8(":/images/icons/tray/linux/settings.svg")));
 #endif
 
+#ifdef _WIN32
+    guestSettingsAction->setIcon(
+        QIcon(QString::fromUtf8(":/images/icons/tray/windows/settings.svg")));
+#endif
+
     // When triggered, open "Settings" window. As the user is not logged in, it
     // will only show proxy settings.
     connect(guestSettingsAction, &QAction::triggered, this, &MegaApplication::openSettings);
@@ -5430,6 +5435,10 @@ void MegaApplication::createTrayIconMenus()
 
 #ifdef __LINUX__
     initialExitAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/tray/linux/exit.svg")));
+#endif
+
+#ifdef _WIN32
+    initialExitAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/tray/windows/exit.svg")));
 #endif
     connect(initialExitAction, &QAction::triggered, this, &MegaApplication::tryExitApplication);
 
