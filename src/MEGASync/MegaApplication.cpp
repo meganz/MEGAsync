@@ -5423,7 +5423,7 @@ void MegaApplication::createTrayIconMenus()
         QIcon(QString::fromUtf8(":/images/icons/tray/macos/settings.svg")));
 #endif
 
-#ifdef __linux__
+#ifdef Q_OS_LINUX
     guestSettingsAction->setIcon(
         QIcon(QString::fromUtf8(":/images/icons/tray/linux/settings.svg")));
 #endif
@@ -5443,7 +5443,7 @@ void MegaApplication::createTrayIconMenus()
     initialExitAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/tray/macos/exit.svg")));
 #endif
 
-#ifdef __linux__
+#ifdef Q_OS_LINUX
     initialExitAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/tray/linux/exit.svg")));
 #endif
 
