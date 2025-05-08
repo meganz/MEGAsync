@@ -1,19 +1,24 @@
 #include "QMLColorThemeManagerTarget.h"
 
-#include "Utilities.h"
-#include "QMLTargetUtils.h"
 #include "DesignTargetFactory.h"
+#include "PathProvider.h"
+#include "QMLTargetUtils.h"
+#include "Utilities.h"
 
-#include <QDir>
 #include <QDebug>
+#include <QDir>
 #include <QFileInfo>
 #include <QTextStream>
 
 using namespace DTI;
 
-static const QString qmlColorThemeManagerTargetPath = "%1/gui/qml/common/ColorTheme.qml";
-static const QString colorThemeManagerHeader = QString::fromUtf8("pragma Singleton\n\nimport QtQuick 2.15\n\nItem {\n    id: root\n\n    Loader{\n        id: loader\n        source: \"qrc:/common/themes/\"+themeManager.theme+\"/Colors.qml\"\n    }\n\n");
-static const QString colorThemeManagerLine = QString::fromUtf8("\treadonly property color %1: loader.item.%2\n");
+static const QString COLOR_THEME_QML_PATH = "/qml/common/ColorTheme.qml";
+static const QString colorThemeManagerHeader =
+    QString::fromUtf8("pragma Singleton\n\nimport QtQuick 2.15\n\nItem {\n    id: root\n\n    "
+                      "Loader{\n        id: loader\n        source: "
+                      "\"qrc:/common/themes/\"+themeManager.theme+\"/Colors.qml\"\n    }\n\n");
+static const QString colorThemeManagerLine =
+    QString::fromUtf8("\treadonly property color %1: loader.item.%2\n");
 static const QString colorThemeManagerFooter = QString::fromUtf8("}\n");
 
 bool QMLColorThemeManagerTarget::registered = ConcreteDesignTargetFactory<QMLColorThemeManagerTarget>::Register("qmlColorThemeManager");
@@ -31,7 +36,8 @@ void QMLColorThemeManagerTarget::deploy(const DesignAssets& designAssets) const
         return;
     }
 
-    QFile data(qmlColorThemeManagerTargetPath.arg(QDir::currentPath()));
+    QString targetFilePath = PathProvider::getUIPath() + COLOR_THEME_QML_PATH;
+    QFile data(targetFilePath);
     if (data.open(QFile::WriteOnly | QFile::Truncate))
     {
         QTextStream stream(&data);
