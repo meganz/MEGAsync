@@ -9719,7 +9719,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Upgrade your account to get more storage quota.</source>
         <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Upgrade your account to get more storage quota.</translation>
     </message>
 </context>
 <context>
