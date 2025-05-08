@@ -57,7 +57,7 @@ pipeline {
                                 sh """
                                     curl -X POST -H 'Content-type: application/json' --data '{
                                         "text": "${windowsMessage}"
-                                    }' ${SLACK_WEBHOOK_AST_REPORT}
+                                    }' \${SLACK_WEBHOOK_AST_REPORT}
                                 """
                             }
                         }
@@ -78,7 +78,7 @@ pipeline {
                                 sh """
                                     curl -X POST -H 'Content-type: application/json' --data '{
                                         "text": "${macOSMessage}"
-                                    }' ${SLACK_WEBHOOK_AST_REPORT}
+                                    }' \${SLACK_WEBHOOK_AST_REPORT}
                                 """
                             }
                         }
@@ -99,7 +99,7 @@ pipeline {
                     sh """
                         curl -X POST -H 'Content-type: application/json' --data '{
                             "text": "'"${env.FAILURE_MESSAGE}"'"
-                            }' ${SLACK_WEBHOOK_AST_REPORT}
+                            }' \${SLACK_WEBHOOK_AST_REPORT}
                     """
                 }
             }
