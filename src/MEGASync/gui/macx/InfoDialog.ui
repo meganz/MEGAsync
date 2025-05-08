@@ -68,7 +68,7 @@ padding-left: 12px;
 
 #bUpgrade
 {
-font-family: Inter;
+font-family: Lato;
 font-size: 12px;
 line-height: 18px;
 border: 1px solid rgba(0, 0, 0, 10%);
@@ -97,7 +97,7 @@ background-color: rgba(0, 191, 165, 30%);
 
 #bCreateSync
 {
-font-family: Inter;
+font-family: Lato;
 font-size: 12px;
 line-height: 18px;
 border: 1px solid #CDCDCD;
