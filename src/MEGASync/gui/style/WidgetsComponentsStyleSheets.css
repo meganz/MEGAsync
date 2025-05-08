@@ -1,7 +1,10 @@
 *
 {
-font-family: "Inter Regular";
+font-family: Inter;
+font-weight: 400;
 font-size: 12px;
+line-height: 18px;
+letter-spacing: 0%;
 }
 
 QWidget
