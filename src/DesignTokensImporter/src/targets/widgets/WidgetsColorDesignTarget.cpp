@@ -75,12 +75,12 @@ QString WidgetsColorDesignTarget::adjustColorValue(const QString& colorValue) co
 
 void WidgetsColorDesignTarget::writeThemesToFile(const QJsonObject& jsonThemes) const
 {
-    const QString directoryThemePath = QDir::currentPath() % PathProvider::RELATIVE_COLOR_DIR_PATH;
+    const QString directoryThemePath = PathProvider::getColorDirPath();
 
     if (Utilities::createDirectory(directoryThemePath))
     {
         const QString widgetsColorFilePath =
-            directoryThemePath % "/" % PathProvider::COLOR_THEMED_TOKENS_FILE_NAME;
+            directoryThemePath % "/" % PathProvider::getColorThemedTokensFileName();
 
         if (Utilities::writeJSONToFile(QJsonDocument(jsonThemes), widgetsColorFilePath))
         {

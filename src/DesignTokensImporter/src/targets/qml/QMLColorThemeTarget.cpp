@@ -1,18 +1,19 @@
 #include "QMLColorThemeTarget.h"
 
-#include "Utilities.h"
-#include "QMLTargetUtils.h"
 #include "DesignTargetFactory.h"
+#include "PathProvider.h"
+#include "QMLTargetUtils.h"
+#include "Utilities.h"
 
-#include <QDir>
 #include <QDebug>
+#include <QDir>
 #include <QFileInfo>
 #include <QTextStream>
 
 using namespace DTI;
 
-static const QString qmlColorThemeTargetPath = "%1/gui/qml/common/themes/%2";
-static const QString qmlColorThemeFileName = "%1/Colors.qml";
+static const QString THEME_BASE_PATH = "/qml/common/themes/";
+static const QString COLORS_QML_FILENAME = "Colors.qml";
 static const QString colorThemeHeader = QString::fromUtf8("import QtQuick 2.15\n\nQtObject {\n\n");
 static const QString colorThemeLine = QString::fromUtf8("\treadonly property color %1: \"%2\"\n");
 static const QString colorThemeFooter = QString::fromUtf8("}\n");
@@ -35,17 +36,17 @@ void QMLColorThemeTarget::deploy(const DesignAssets& designAssets) const
         auto themeName = themeIt.key().toLower();
         if (!themeName.isEmpty() && !colourMap.isEmpty())
         {
-            auto qmlColorStyleFilePath = qmlColorThemeTargetPath.arg(QDir::currentPath(), themeName);
+            QString themeDirPath = PathProvider::getUIPath() + THEME_BASE_PATH + themeName;
 
-            QDir dir(qmlColorStyleFilePath);
-            if (!dir.exists() && !dir.mkpath(qmlColorStyleFilePath))
+            QDir dir(themeDirPath);
+            if (!dir.exists() && !dir.mkpath("."))
             {
-                qWarning() << "couldn't create directory " << qmlColorStyleFilePath;
-
+                qWarning() << "couldn't create directory " << themeDirPath;
                 return;
             }
 
-            QFile data(qmlColorThemeFileName.arg(qmlColorStyleFilePath));
+            QString colorFilePath = themeDirPath + "/" + COLORS_QML_FILENAME;
+            QFile data(colorFilePath);
             if (data.open(QFile::WriteOnly | QFile::Truncate))
             {
                 QTextStream stream(&data);

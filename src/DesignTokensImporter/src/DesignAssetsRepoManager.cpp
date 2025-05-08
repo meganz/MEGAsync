@@ -42,9 +42,8 @@ std::optional<DesignAssets> DesignAssetsRepoManager::getDesignAssets()
 std::optional<ThemedColorData> DesignAssetsRepoManager::getColorData()
 {
     // look for tokens.json file
-    QString pathToDesignTokensFile =
-        Utilities::resolvePath(QDir::currentPath(), PathProvider::RELATIVE_DESIGN_TOKENS_FILE_PATH);
-    QFile designTokensFile(pathToDesignTokensFile);
+    const QString pathToDesignTokensFile = PathProvider::getDesignTokensFilePath();
+    QFile designTokensFile(PathProvider::getDesignTokensFilePath());
     if (!designTokensFile.exists())
     {
         qCritical() << __func__ << " Error : No tokens.json file found in "
