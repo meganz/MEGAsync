@@ -100,7 +100,7 @@ FocusScope {
                     PlanCard {
                         id: card
 
-                        Layout.preferredHeight: rowLayout.implicitHeight
+                        Layout.preferredHeight: rowLayout.height
                         Layout.minimumHeight: height
                         Layout.preferredWidth: width
 
