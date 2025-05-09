@@ -13,33 +13,22 @@ import UpsellPlans 1.0
 FocusScope {
     id: root
 
-    readonly property real planDefaultWidth: 160
-    readonly property real minimumWidth: 496
     readonly property real itemsSpacing: 22
     readonly property real chipSpacing: 12
     readonly property real plansRowSpacing: 8
 
-    property real totalPlansRowSpacing: root.plansRowSpacing * (upsellPlansAccess.plansCount - 1)
-    property real plansWidth: root.planDefaultWidth * upsellPlansAccess.plansCount + root.totalPlansRowSpacing
-    property real contentWidth: Math.max(topRow.width, root.plansWidth)
-
     height: columnItem.height
-    width: Math.max(root.minimumWidth, root.contentWidth)
+    width: columnItem.width
 
     Column {
         id: columnItem
 
-        width: parent.width
-        height: topRow.height + root.itemsSpacing + plansRepeater.maxCardHeight
-                + (footerText.visible ? footerText.height + root.itemsSpacing : 0)
         spacing: root.itemsSpacing
 
         Row {
             id: topRow
 
             spacing: root.chipSpacing
-            height: Math.max(comboBoxRow.height, billedChip.height)
-            width: comboBoxRow.width + root.chipSpacing + billedChip.width
 
             Row {
                 id: comboBoxRow
@@ -55,7 +44,6 @@ FocusScope {
 
                     onUserChecked: {
                         upsellComponentAccess.billedRadioButtonClicked(true);
-                        plansRepeater.recalculateCardHeight();
                     }
                 }
 
@@ -70,7 +58,6 @@ FocusScope {
                     onUserChecked: {
                         if (billedYearlyRadioButton.enabled) {
                             upsellComponentAccess.billedRadioButtonClicked(false);
-                            plansRepeater.recalculateCardHeight();
                         }
                     }
                 }
@@ -90,7 +77,7 @@ FocusScope {
                 visible: upsellPlansAccess.currentDiscount > 0 && !upsellPlansAccess.onlyProFlexiAvailable
             }
 
-        } // Row: topRow
+        }
 
         Item {
             id: plansItem
