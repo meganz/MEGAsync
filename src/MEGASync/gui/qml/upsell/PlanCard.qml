@@ -210,6 +210,12 @@ Rectangle {
                     }
                 }
 
+                // spacer item
+                Item {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                }
+
                 SecondaryText {
                     id: tryProFlexiText
 
@@ -237,7 +243,7 @@ Rectangle {
                 }
             }
 
-/*
+        /*
         ColumnLayout {
             id: buyButtonContainer
 
