@@ -83,8 +83,8 @@ Rectangle {
         }
     }
 
-    width: root.planDefaultWidth
-    height: contentColumn.implicitHeight
+    width: contentColumn.implicitWidth + root.contentMargin // @jsubi use the max between implicitWidth & root.planDefaultWidth
+    height: contentColumn.implicitHeight + root.contentMargin
 
     border {
         width: root.recommended ? root.borderWidthRecommended : root.borderWidthDefault
@@ -96,32 +96,12 @@ Rectangle {
     ColumnLayout {
         id: contentColumn
 
-        anchors {
-            left: parent.left
-            right: parent.right
-
-            leftMargin: root.contentMargin
-            rightMargin: root.contentMargin
-            topMargin: root.contentMargin
-            bottomMargin: root.contentMargin //+ Constants.focusAdjustment
-        }
-
         spacing: root.contentSpacing
-
-/*
-        Rectangle
-        {
-            color: "green"
-
-            width: 50
-            height: 50
-        }
-        */
+        anchors.centerIn: parent
 
         Text {
             id: titleText
 
-            //width: parent.width
             font {
                 family: FontStyles.poppinsFontFamily
                 pixelSize: Text.Size.LARGE
@@ -132,17 +112,6 @@ Rectangle {
             text: root.name
             enabled: root.enabled && !root.showOnlyProFlexi
         }
-
-        /*
-        Rectangle
-        {
-            color: "blue"
-
-            width: 50
-            height: 50
-        }
-        */
-
 
         Chips.Chip {
             id: recommendedChip
