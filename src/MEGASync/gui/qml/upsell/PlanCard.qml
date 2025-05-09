@@ -83,8 +83,8 @@ Rectangle {
         }
     }
 
-    width: contentColumn.implicitWidth + root.contentMargin // @jsubi use the max between implicitWidth & root.planDefaultWidth
-    height: contentColumn.implicitHeight + root.contentMargin
+    width: Math.max(contentColumn.implicitWidth, root.planDefaultWidth) + (2 * root.contentMargin)
+    height: contentColumn.implicitHeight + (2 * root.contentMargin)
 
     border {
         width: root.recommended ? root.borderWidthRecommended : root.borderWidthDefault
@@ -97,7 +97,9 @@ Rectangle {
         id: contentColumn
 
         spacing: root.contentSpacing
-        anchors.centerIn: parent
+
+        anchors.margins: root.contentMargin
+        anchors.fill: parent
 
         Text {
             id: titleText
@@ -127,5 +129,153 @@ Rectangle {
             }
         }
 
+        ColumnLayout {
+            id: priceColumn
+
+            spacing: root.priceSpacing
+
+            SecondaryText {
+                id: priceTextWithDiscount
+
+                lineHeight: root.discountLineHeight
+                lineHeightMode: Text.FixedHeight
+                font.strikeout: true
+                text: root.totalPriceWithoutDiscount
+                visible: !root.monthly
+                enabled: root.enabled && !root.showOnlyProFlexi
+            }
+
+            Text {
+                id: priceText
+
+                font {
+                    family: FontStyles.poppinsFontFamily
+                    pixelSize: Text.Size.EXTRA_LARGE
+                    weight: Font.Bold
+                }
+                lineHeight: root.priceLineHeight
+                lineHeightMode: Text.FixedHeight
+                text: root.price
+                visible: root.enabled && !root.showOnlyProFlexi
+            }
+
+            SecondaryText {
+                id: billedPeriodInfoText
+
+                lineHeight: root.pricePeriodLineHeight
+                lineHeightMode: Text.FixedHeight
+                visible: root.enabled && !root.showOnlyProFlexi
+                text: root.billedText
+            }
+
+            SecondaryText {
+                id: pricePerMonthText
+
+                lineHeight: root.pricePeriodLineHeight
+                lineHeightMode: Text.FixedHeight
+                text: UpsellStrings.pricePerMonth.arg(root.monthlyPriceWithDiscount)
+                visible: !root.monthly
+                enabled: root.enabled && !root.showOnlyProFlexi
+            }
+        }
+
+        ColumnLayout {
+                id: bottomTextsColumn
+
+                spacing: root.showProFlexiMessage ? root.bottomTextsSpacing : 0
+
+                ColumnLayout {
+                    id: storageTransferTextColumn
+
+                    enabled: root.enabled && !root.showOnlyProFlexi
+                    spacing: root.bottomSpacing
+
+                    Text {
+                        id: storageText
+
+                        font.weight: Font.DemiBold
+                        text: UpsellStrings.storage.arg(gbStorage)
+                        onTextChanged: {
+                            // When the component is disabled, the text is not being updated.
+                            // Force to update the text when the component is disabled.
+                            Qt.callLater(updateBilledPeriodText);
+                        }
+                    }
+
+                    Text {
+                        id: transferText
+
+                        font.weight: Font.DemiBold
+                        text: UpsellStrings.transfer.arg(gbTransfer)
+                    }
+                }
+
+                SecondaryText {
+                    id: tryProFlexiText
+
+                    lineHeight: root.tryProFlexiLineHeight
+                    lineHeightMode: Text.FixedHeight
+                    font {
+                        pixelSize: Text.Size.SMALL
+                        bold: root.showOnlyProFlexi
+                    }
+                    color: {
+                        if (root.showOnlyProFlexi) {
+                            return ColorTheme.textPrimary;
+                        }
+                        else {
+                            return enabled ? ColorTheme.textSecondary : ColorTheme.textDisabled;
+                        }
+                    }
+                    underlineLink: true
+                    manageClick: true
+                    rawText: UpsellStrings.tryProFlexi
+                    visible: root.showProFlexiMessage
+                    onLinkClicked: {
+                        upsellComponentAccess.linkTryProFlexiClicked();
+                    }
+                }
+            }
+
+/*
+        ColumnLayout {
+            id: buyButtonContainer
+
+            Layout.preferredWidth: contentColumn.implicitWidth
+
+            PrimaryButton {
+                id: buyButton
+
+                sizes {
+                    fillWidth: false
+                    textFontSize: Text.Size.NORMAL
+                }
+
+                Layout.fillWidth: true
+                height: root.buttonHeight + 2 * Constants.focusBorderWidth
+                text: UpsellStrings.buyPlan.arg(root.buttonName)
+                onClicked: {
+                    root.buyButtonClicked();
+                }
+                visible: root.recommended && parent.enabled
+            }
+
+            OutlineButton {
+                sizes {
+                    fillWidth: false
+                    textFontSize: Text.Size.NORMAL
+                }
+
+                Layout.fillWidth: true
+                height: root.buttonHeight + 2 * Constants.focusBorderWidth
+                text: UpsellStrings.buyPlan.arg(root.buttonName)
+                onClicked: {
+                    root.buyButtonClicked();
+                }
+                visible: !buyButton.visible
+                enabled: root.enabled && !root.showOnlyProFlexi
+            }
+        }
+        */
     }
 }
