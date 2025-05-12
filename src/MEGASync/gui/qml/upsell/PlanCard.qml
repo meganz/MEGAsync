@@ -129,10 +129,11 @@ Rectangle {
             }
         }
 
-        ColumnLayout {
+        Column {
             id: priceColumn
 
             spacing: root.priceSpacing
+            width: parent.width
 
             SecondaryText {
                 id: priceTextWithDiscount
@@ -141,8 +142,8 @@ Rectangle {
                 lineHeightMode: Text.FixedHeight
                 font.strikeout: true
                 text: root.totalPriceWithoutDiscount
-                visible: !root.monthly
-                enabled: root.enabled && !root.showOnlyProFlexi
+                visible: !root.monthly && root.enabled && !root.showOnlyProFlexi
+                width: parent.width
             }
 
             Text {
@@ -157,6 +158,7 @@ Rectangle {
                 lineHeightMode: Text.FixedHeight
                 text: root.price
                 visible: root.enabled && !root.showOnlyProFlexi
+                width: parent.width
             }
 
             SecondaryText {
@@ -166,6 +168,7 @@ Rectangle {
                 lineHeightMode: Text.FixedHeight
                 visible: root.enabled && !root.showOnlyProFlexi
                 text: root.billedText
+                width: parent.width
             }
 
             SecondaryText {
@@ -174,9 +177,15 @@ Rectangle {
                 lineHeight: root.pricePeriodLineHeight
                 lineHeightMode: Text.FixedHeight
                 text: UpsellStrings.pricePerMonth.arg(root.monthlyPriceWithDiscount)
-                visible: !root.monthly
-                enabled: root.enabled && !root.showOnlyProFlexi
+                visible: !root.monthly && root.enabled && !root.showOnlyProFlexi
+                width: parent.width
             }
+        }
+
+        // spacer item
+        Item {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
         }
 
         ColumnLayout {
@@ -210,12 +219,6 @@ Rectangle {
                     }
                 }
 
-                // spacer item
-                Item {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                }
-
                 SecondaryText {
                     id: tryProFlexiText
 
@@ -243,7 +246,12 @@ Rectangle {
                 }
             }
 
-        /*
+        // spacer item
+        Item {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+        }
+
         ColumnLayout {
             id: buyButtonContainer
 
@@ -282,6 +290,5 @@ Rectangle {
                 enabled: root.enabled && !root.showOnlyProFlexi
             }
         }
-        */
     }
 }
