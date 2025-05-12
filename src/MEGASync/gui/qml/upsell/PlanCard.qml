@@ -195,14 +195,16 @@ Rectangle {
             Layout.fillHeight: true
         }
 
-        ColumnLayout {
+        Column {
                 id: bottomTextsColumn
 
+                Layout.fillWidth: true
                 spacing: root.showProFlexiMessage ? root.bottomTextsSpacing : 0
 
-                ColumnLayout {
+                Column {
                     id: storageTransferTextColumn
 
+                    width: bottomTextsColumn.width
                     enabled: root.enabled && !root.showOnlyProFlexi
                     spacing: root.bottomSpacing
 
@@ -229,6 +231,7 @@ Rectangle {
                 SecondaryText {
                     id: tryProFlexiText
 
+                    width: bottomTextsColumn.width
                     lineHeight: root.tryProFlexiLineHeight
                     lineHeightMode: Text.FixedHeight
                     font {
