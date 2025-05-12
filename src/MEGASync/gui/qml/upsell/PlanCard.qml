@@ -101,31 +101,38 @@ Rectangle {
         anchors.margins: root.contentMargin
         anchors.fill: parent
 
-        Text {
-            id: titleText
+        Column {
+            id: nameColumn
 
-            font {
-                family: FontStyles.poppinsFontFamily
-                pixelSize: Text.Size.LARGE
-                weight: Font.DemiBold
+            spacing: root.contentSpacing
+            width: parent.width
+
+            Text {
+                id: titleText
+
+                font {
+                    family: FontStyles.poppinsFontFamily
+                    pixelSize: Text.Size.LARGE
+                    weight: Font.DemiBold
+                }
+                lineHeight: root.titleLineHeight
+                lineHeightMode: Text.FixedHeight
+                text: root.name
+                enabled: root.enabled && !root.showOnlyProFlexi
             }
-            lineHeight: root.titleLineHeight
-            lineHeightMode: Text.FixedHeight
-            text: root.name
-            enabled: root.enabled && !root.showOnlyProFlexi
-        }
 
-        Chips.Chip {
-            id: recommendedChip
+            Chips.Chip {
+                id: recommendedChip
 
-            sizes: Chips.SmallSizes {}
-            text: root.currentPlan ? UpsellStrings.currentPlan : UpsellStrings.recommended
-            visible: true
-            opacity: (root.recommended || root.currentPlan) ? 1.0 : 0.0
-            colors {
-                background: getChipBackgroundColor()
-                border: getChipBackgroundColor()
-                text: getChipTextColor()
+                sizes: Chips.SmallSizes {}
+                text: root.currentPlan ? UpsellStrings.currentPlan : UpsellStrings.recommended
+                visible: true
+                opacity: (root.recommended || root.currentPlan) ? 1.0 : 0.0
+                colors {
+                    background: getChipBackgroundColor()
+                    border: getChipBackgroundColor()
+                    text: getChipTextColor()
+                }
             }
         }
 
@@ -252,42 +259,48 @@ Rectangle {
             Layout.fillHeight: true
         }
 
-        ColumnLayout {
+        Column {
             id: buyButtonContainer
 
-            Layout.preferredWidth: contentColumn.implicitWidth
+            Layout.fillWidth: true
 
-            PrimaryButton {
-                id: buyButton
+            RowLayout {
+                id: buyButtonRowLayout
 
-                sizes {
-                    fillWidth: false
-                    textFontSize: Text.Size.NORMAL
+                width: buyButtonContainer.width
+
+                PrimaryButton {
+                    id: buyButton
+
+                    sizes {
+                        fillWidth: false
+                        textFontSize: Text.Size.NORMAL
+                    }
+
+                    Layout.fillWidth: true
+                    height: root.buttonHeight + 2 * Constants.focusBorderWidth
+                    text: UpsellStrings.buyPlan.arg(root.buttonName)
+                    onClicked: {
+                        root.buyButtonClicked();
+                    }
+                    visible: root.recommended && parent.enabled
                 }
 
-                Layout.fillWidth: true
-                height: root.buttonHeight + 2 * Constants.focusBorderWidth
-                text: UpsellStrings.buyPlan.arg(root.buttonName)
-                onClicked: {
-                    root.buyButtonClicked();
-                }
-                visible: root.recommended && parent.enabled
-            }
+                OutlineButton {
+                    sizes {
+                        fillWidth: false
+                        textFontSize: Text.Size.NORMAL
+                    }
 
-            OutlineButton {
-                sizes {
-                    fillWidth: false
-                    textFontSize: Text.Size.NORMAL
+                    Layout.fillWidth: true
+                    height: root.buttonHeight + 2 * Constants.focusBorderWidth
+                    text: UpsellStrings.buyPlan.arg(root.buttonName)
+                    onClicked: {
+                        root.buyButtonClicked();
+                    }
+                    visible: !buyButton.visible
+                    enabled: root.enabled && !root.showOnlyProFlexi
                 }
-
-                Layout.fillWidth: true
-                height: root.buttonHeight + 2 * Constants.focusBorderWidth
-                text: UpsellStrings.buyPlan.arg(root.buttonName)
-                onClicked: {
-                    root.buyButtonClicked();
-                }
-                visible: !buyButton.visible
-                enabled: root.enabled && !root.showOnlyProFlexi
             }
         }
     }
