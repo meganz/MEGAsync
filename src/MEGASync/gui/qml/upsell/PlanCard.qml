@@ -276,7 +276,7 @@ Rectangle {
                     id: buyButton
 
                     sizes {
-                        fillWidth: false
+                        fillWidth: true
                         textFontSize: Text.Size.NORMAL
                     }
 
@@ -291,7 +291,7 @@ Rectangle {
 
                 OutlineButton {
                     sizes {
-                        fillWidth: false
+                        fillWidth: true
                         textFontSize: Text.Size.NORMAL
                     }
 
