@@ -1419,8 +1419,6 @@ if (!preferences->lastExecutionTime())
                 mSyncReminderNotificationManager,
                 &SyncReminderNotificationManager::onSyncsDialogClosed);
     }
-
-    showUpsellDialog(UpsellPlans::ViewMode::STORAGE_FULL);
 }
 
 void MegaApplication::onLoginFinished()
