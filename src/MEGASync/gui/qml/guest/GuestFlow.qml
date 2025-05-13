@@ -38,35 +38,34 @@ Item {
     property double progressValue: 0.0
 
     function getState() {
-        if (appStateAccess.appState === AppState.FATAL_ERROR) {
-            return root.stateFatalError;
-        }
-        else if(accountStatusControllerAccess.blockedState) {
+        if (accountStatusControllerAccess.blockedState) {
             return root.stateBlocked;
         }
-        else {
-            switch(loginControllerAccess.state) {
-                case LoginController.LOGGING_IN:
-                    return root.stateInProgressLoggingIn;
-                case LoginController.LOGGING_IN_2FA_REQUIRED:
-                case LoginController.LOGGING_IN_2FA_VALIDATING:
-                case LoginController.LOGGING_IN_2FA_FAILED:
-                    return root.stateInProgress2FA;
-                case LoginController.CREATING_ACCOUNT:
-                    return root.stateInProgressCreatingAccount;
-                case LoginController.WAITING_EMAIL_CONFIRMATION:
-                case LoginController.CHANGING_REGISTER_EMAIL:
-                    return root.stateInProgressWaitingEmailConfirm;
-                case LoginController.FETCHING_NODES:
-                case LoginController.FETCHING_NODES_2FA:
-                    return root.stateInProgressFetchNodes;
-                case LoginController.FETCH_NODES_FINISHED:
-                    return root.stateFetchNodesFinished;
-                case LoginController.FETCH_NODES_FINISHED_ONBOARDING:
-                    return root.stateInOnboarding;
-                default:
-                    return root.stateLoggedOut;
-            }
+        else if (appStateAccess.appState === AppState.FATAL_ERROR) {
+            return root.stateFatalError;
+        }
+
+        switch(loginControllerAccess.state) {
+            case LoginController.LOGGING_IN:
+                return root.stateInProgressLoggingIn;
+            case LoginController.LOGGING_IN_2FA_REQUIRED:
+            case LoginController.LOGGING_IN_2FA_VALIDATING:
+            case LoginController.LOGGING_IN_2FA_FAILED:
+                return root.stateInProgress2FA;
+            case LoginController.CREATING_ACCOUNT:
+                return root.stateInProgressCreatingAccount;
+            case LoginController.WAITING_EMAIL_CONFIRMATION:
+            case LoginController.CHANGING_REGISTER_EMAIL:
+                return root.stateInProgressWaitingEmailConfirm;
+            case LoginController.FETCHING_NODES:
+            case LoginController.FETCHING_NODES_2FA:
+                return root.stateInProgressFetchNodes;
+            case LoginController.FETCH_NODES_FINISHED:
+                return root.stateFetchNodesFinished;
+            case LoginController.FETCH_NODES_FINISHED_ONBOARDING:
+                return root.stateInOnboarding;
+            default:
+                return root.stateLoggedOut;
         }
     }
 
@@ -412,7 +411,7 @@ Item {
             description: fatalEventHandlerAccess.getErrorReason()
             descriptionUrl: getUrl(descriptionUrl)
             descriptionFontSize: Texts.Text.Size.NORMAL
-            descriptionColor: colorStyle.textPrimary
+            descriptionColor: ColorTheme.textPrimary
             descriptionLineHeight: 18
 
             leftButton {

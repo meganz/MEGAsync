@@ -419,12 +419,6 @@ void MegaApplication::initialize()
     paused = false;
     mIndexing = false;
 
-#ifdef Q_OS_LINUX
-    isLinux = true;
-#else
-    isLinux = false;
-#endif
-
     // Register own url schemes
     QDesktopServices::setUrlHandler(SCHEME_MEGA_URL, this, "handleMEGAurl");
     QDesktopServices::setUrlHandler(SCHEME_LOCAL_URL, this, "handleLocalPath");
@@ -2322,10 +2316,12 @@ void MegaApplication::showInfoDialog()
         return;
     }
 
-    if (isLinux && showStatusAction && megaApi)
+#ifdef Q_OS_LINUX
+    if (showStatusAction && megaApi)
     {
         megaApi->retryPendingConnections();
     }
+#endif
 
 #ifdef WIN32
 
@@ -5455,20 +5451,30 @@ void MegaApplication::createTrayIconMenus()
     initialTrayMenu->addAction(guestSettingsAction);
     initialTrayMenu->addAction(initialExitAction);
 
-    // On Linux, add a "Show Status" action, which opens the Info Dialog.
-    if (isLinux && infoDialog)
-    {
-        showStatusAction = new QAction(tr("Show status"), this);
-        showStatusAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/tray/linux/status.svg")));
+#ifdef Q_OS_LINUX
+    showStatusAction = new QAction(tr("Show status"), this);
+    showStatusAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/tray/linux/status.svg")));
+    connect(showStatusAction,
+            &QAction::triggered,
+            this,
+            [this]()
+            {
+                DialogOpener::raiseAllDialogs();
+                QmlDialogManager::instance()->raiseOnboardingDialog();
 
-        connect(showStatusAction, &QAction::triggered, this, [this](){
-            DialogOpener::raiseAllDialogs();
-            QmlDialogManager::instance()->raiseOnboardingDialog();
-            infoDialogTimer->start(200);
-        });
+                if (infoDialog)
+                {
+                    infoDialogTimer->start(200);
+                }
 
-        initialTrayMenu->insertAction(guestSettingsAction, showStatusAction);
-    }
+                if (Preferences::instance()->logged())
+                {
+                    QmlDialogManager::instance()->raiseGuestDialog();
+                }
+            });
+
+    initialTrayMenu->insertAction(guestSettingsAction, showStatusAction);
+#endif
 }
 
 void MegaApplication::createInfoDialogMenus()
