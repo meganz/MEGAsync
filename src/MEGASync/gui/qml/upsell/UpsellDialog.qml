@@ -35,6 +35,8 @@ UpsellQmlDialog {
     Column {
         id: columnItem
 
+        height: implicitHeight
+
         anchors {
             left: parent.left
             top: parent.top
@@ -52,6 +54,7 @@ UpsellQmlDialog {
         ContentItem {
             id: content
         }
+
     }
 
 }

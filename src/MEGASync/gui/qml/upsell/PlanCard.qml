@@ -84,7 +84,7 @@ Rectangle {
     }
 
     width: Math.max(contentColumn.implicitWidth, root.planDefaultWidth) + (2 * root.contentMargin)
-    height: contentColumn.implicitHeight + (2 * root.contentMargin)
+    height: root.monthly, contentColumn.implicitHeight + (2 * root.contentMargin)
 
     border {
         width: root.recommended ? root.borderWidthRecommended : root.borderWidthDefault
@@ -100,12 +100,14 @@ Rectangle {
 
         anchors.margins: root.contentMargin
         anchors.fill: parent
+        height: implicitHeight
 
         Column {
             id: nameColumn
 
             spacing: root.contentSpacing
             width: parent.width
+            height: implicitHeight
 
             Text {
                 id: titleText
@@ -141,6 +143,7 @@ Rectangle {
 
             spacing: root.priceSpacing
             width: parent.width
+            height: implicitHeight
 
             SecondaryText {
                 id: priceTextWithDiscount
@@ -191,8 +194,8 @@ Rectangle {
 
         // spacer item
         Item {
-            Layout.fillWidth: true
             Layout.fillHeight: true
+            Layout.preferredHeight: 0
         }
 
         Column {
@@ -200,6 +203,7 @@ Rectangle {
 
                 Layout.fillWidth: true
                 spacing: root.showProFlexiMessage ? root.bottomTextsSpacing : 0
+                height: implicitHeight
 
                 Column {
                     id: storageTransferTextColumn
@@ -207,6 +211,7 @@ Rectangle {
                     width: bottomTextsColumn.width
                     enabled: root.enabled && !root.showOnlyProFlexi
                     spacing: root.bottomSpacing
+                    height: implicitHeight
 
                     Text {
                         id: storageText
@@ -258,19 +263,21 @@ Rectangle {
 
         // spacer item
         Item {
-            Layout.fillWidth: true
             Layout.fillHeight: true
+            Layout.preferredHeight: 0
         }
 
         Column {
             id: buyButtonContainer
 
             Layout.fillWidth: true
+            height: implicitHeight
 
             RowLayout {
                 id: buyButtonRowLayout
 
                 width: buyButtonContainer.width
+                height: implicitHeight
 
                 PrimaryButton {
                     id: buyButton

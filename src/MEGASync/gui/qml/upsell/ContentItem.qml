@@ -24,6 +24,7 @@ FocusScope {
         id: columnItem
 
         spacing: root.itemsSpacing
+        height: implicitHeight
 
         Row {
             id: topRow
@@ -83,14 +84,15 @@ FocusScope {
             id: plansItem
 
             anchors.horizontalCenter: parent.horizontalCenter
-            width: rowLayout.implicitWidth
-            height: rowLayout.implicitHeight
+            width: rowLayout.width
+            height: rowLayout.height
 
             RowLayout {
                 id: rowLayout
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 spacing: root.plansRowSpacing
+                height: implicitHeight
 
                 Repeater {
                     id: plansRepeater
@@ -100,9 +102,9 @@ FocusScope {
                     PlanCard {
                         id: card
 
-                        Layout.preferredHeight: rowLayout.height
-                        Layout.minimumHeight: height
                         Layout.preferredWidth: width
+                        Layout.preferredHeight: height
+                        Layout.fillHeight: true
 
                         name: model.name
                         buttonName: model.buttonName
@@ -126,7 +128,6 @@ FocusScope {
                         }
                     }
                 }
-
             }
         }
 
