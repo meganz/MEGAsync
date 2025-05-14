@@ -83,8 +83,7 @@ public:
     virtual void removeAllSyncsFromLeftPane();
     virtual bool makePubliclyReadable(const QString& fileName);
 
-    virtual void addFileManagerExtensionToSystem() {};
-    virtual void reloadFileManagerExtension() {};
+    virtual void addFileManagerExtensionToSystem(){};
     virtual void enableFileManagerExtension(bool) {};
     virtual bool validateSystemTrayIntegration();
 

@@ -438,8 +438,6 @@ bool UpdateTask::performUpdate()
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("File installed: %1").arg(file).toUtf8().constData());
     }
 
-    Platform::getInstance()->runPostAutoUpdateStep();
-
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Update successfully installed");
     return true;
 }
