@@ -104,6 +104,9 @@ QtObject {
     readonly property string selectiveSyncDescription: qsTr("Sync selected folders in your MEGA Cloud drive with your local device.")
     readonly property string selectiveSync: qsTr("Selective sync")
     readonly property string sync: qsTr("Sync")
+    readonly property string confirmSyncsWindowTitle: qsTr("Confirm folders to sync")
+    readonly property string confirmSyncsWindowDescription: qsTr("Selected folders will automatically back up to the cloud when the desktop app is running.")
+
 
     // Two Factor Authentication
     // Not moved to avoid change of context and generate new strings in the ts file
