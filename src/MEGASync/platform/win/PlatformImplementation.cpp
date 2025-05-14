@@ -1794,6 +1794,44 @@ DriveSpaceData PlatformImplementation::getDriveData(const QString &path)
     return data;
 }
 
+void PlatformImplementation::runPostAutoUpdateStep()
+{
+    const QLatin1String SHELL_EXT_64("ShellExtX64.dll");
+    const QLatin1String SHELL_EXT_32("ShellExtX32.dll");
+
+    QSettings clsidKey(QLatin1String("HKEY_CLASSES_ROOT\\CLSID"), QSettings::NativeFormat);
+
+    foreach(const QString& subKey, clsidKey.childGroups())
+    {
+        QString inprocPath = QLatin1String("HKEY_CLASSES_ROOT\\CLSID\\") + subKey +
+                             QLatin1String("\\InProcServer32");
+        QSettings inprocKey(inprocPath, QSettings::NativeFormat);
+        QString dllPath = inprocKey.value(QLatin1String(".")).toString();
+
+        if (!dllPath.isEmpty())
+        {
+            QString baseName = QFileInfo(dllPath).fileName();
+            if (baseName == SHELL_EXT_64 || baseName == SHELL_EXT_32)
+            {
+                LPCWSTR lpcwstr = reinterpret_cast<LPCWSTR>(dllPath.utf16());
+
+                typedef HRESULT(STDAPICALLTYPE * DllRegisterServerFunc)();
+                HMODULE hModule = LoadLibrary(lpcwstr);
+                FARPROC proc = GetProcAddress(hModule, "installSparsePackage");
+                if (proc)
+                {
+                    DllRegisterServerFunc registerFunc =
+                        reinterpret_cast<DllRegisterServerFunc>(reinterpret_cast<void*>(proc));
+                    registerFunc();
+                    FreeLibrary(hModule);
+                }
+
+                break;
+            }
+        }
+    }
+}
+
 #if defined(ENABLE_SDK_ISOLATED_GFX)
 QString PlatformImplementation::getGfxProviderPath()
 {

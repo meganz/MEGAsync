@@ -60,6 +60,9 @@ public:
     void processSymLinks() override;
     DriveSpaceData getDriveData(const QString &path) override;
 
+    // AutoUpdate tasks
+    void runPostAutoUpdateStep() override;
+
 #if defined(ENABLE_SDK_ISOLATED_GFX)
     QString getGfxProviderPath() override;
 #endif

@@ -95,6 +95,9 @@ public:
     std::shared_ptr<AbstractShellNotifier> getShellNotifier();
     virtual DriveSpaceData getDriveData(const QString& path) = 0;
 
+    // AutoUpdate tasks
+    virtual void runPostAutoUpdateStep(){};
+
 #if defined(ENABLE_SDK_ISOLATED_GFX)
     virtual QString getGfxProviderPath() = 0;
 #endif
