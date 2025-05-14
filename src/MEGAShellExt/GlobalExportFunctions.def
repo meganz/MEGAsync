@@ -4,4 +4,4 @@ EXPORTS
     DllCanUnloadNow      PRIVATE
     DllRegisterServer    PRIVATE
     DllUnregisterServer  PRIVATE
-	installSparsePackage PRIVATE
+    installSparsePackage PRIVATE
