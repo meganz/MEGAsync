@@ -34,6 +34,47 @@ UpdateTask::~UpdateTask()
     delete timeoutTimer;
 }
 
+// This method looks into the registered dlls to find if the user has registered a 32 or 64 bits
+// ShellExt dll
+// Once we find the registered dll, we install the msix package
+void UpdateTask::installShellExtSparsePackage()
+{
+    const QLatin1String SHELL_EXT_64("ShellExtX64.dll");
+    const QLatin1String SHELL_EXT_32("ShellExtX32.dll");
+
+    QSettings clsidKey(QLatin1String("HKEY_CLASSES_ROOT\\CLSID"), QSettings::NativeFormat);
+
+    foreach(const QString& subKey, clsidKey.childGroups())
+    {
+        QString inprocPath = QLatin1String("HKEY_CLASSES_ROOT\\CLSID\\") + subKey +
+                             QLatin1String("\\InProcServer32");
+        QSettings inprocKey(inprocPath, QSettings::NativeFormat);
+        QString dllPath = inprocKey.value(QLatin1String(".")).toString();
+
+        if (!dllPath.isEmpty())
+        {
+            QString baseName = QFileInfo(dllPath).fileName();
+            if (baseName == SHELL_EXT_64 || baseName == SHELL_EXT_32)
+            {
+                LPCWSTR lpcwstr = reinterpret_cast<LPCWSTR>(dllPath.utf16());
+
+                typedef HRESULT(STDAPICALLTYPE * DllRegisterServerFunc)();
+                HMODULE hModule = LoadLibrary(lpcwstr);
+                FARPROC proc = GetProcAddress(hModule, "installSparsePackage");
+                if (proc)
+                {
+                    DllRegisterServerFunc registerFunc =
+                        reinterpret_cast<DllRegisterServerFunc>(reinterpret_cast<void*>(proc));
+                    registerFunc();
+                    FreeLibrary(hModule);
+                }
+
+                break;
+            }
+        }
+    }
+}
+
 void UpdateTask::installUpdate()
 {
     forceInstall = true;
@@ -439,6 +480,9 @@ bool UpdateTask::performUpdate()
 
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("File installed: %1").arg(file).toUtf8().constData());
     }
+
+    // Install the new msix package
+    installShellExtSparsePackage();
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Update successfully installed");
     return true;

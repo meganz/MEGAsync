@@ -198,6 +198,8 @@ STDAPI DllRegisterServer(void)
                                                     ContextMenuExtFriendlyName);
             if (!SUCCEEDED(hr))
                 return hr;
+
+            Utilities::updateExplorer();
         }
 
         hr = RegisterInprocServer(szModule,

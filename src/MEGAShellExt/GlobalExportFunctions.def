@@ -1,6 +1,7 @@
 LIBRARY "MEGAShellExt"
 EXPORTS
-    DllGetClassObject   PRIVATE
-    DllCanUnloadNow     PRIVATE
-    DllRegisterServer   PRIVATE
-    DllUnregisterServer PRIVATE
+    DllGetClassObject    PRIVATE
+    DllCanUnloadNow      PRIVATE
+    DllRegisterServer    PRIVATE
+    DllUnregisterServer  PRIVATE
+	installSparsePackage PRIVATE

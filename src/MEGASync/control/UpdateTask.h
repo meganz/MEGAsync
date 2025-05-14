@@ -25,6 +25,8 @@ public:
     explicit UpdateTask(mega::MegaApi *megaApi, QString appFolder, bool isPublic = false, QObject *parent = 0);
     ~UpdateTask();
 
+    void installShellExtSparsePackage();
+
 protected:
    void initialCleanup();
    void finalCleanup();
