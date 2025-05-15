@@ -34,8 +34,19 @@ Syncs::Syncs(QObject* parent):
 
 void Syncs::addSync()
 {
+    syncHelper(false);
+}
+
+void Syncs::prevalidateSync()
+{
+    syncHelper(true);
+}
+
+void Syncs::syncHelper(bool onlyPrevalidateSync)
+{
     cleanErrors();
 
+    mOnlyPrevalidateSync = onlyPrevalidateSync;
     mSyncConfig.localFolder = mSyncsData->getLocalFolderCandidate();
     mSyncConfig.remoteFolder = mSyncsData->getRemoteFolderCandidate();
 
@@ -331,9 +342,18 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString nam
 
 void Syncs::onSyncPrevalidateRequestStatus(int errorCode, int syncErrorCode)
 {
-    if (!setErrorIfExist(errorCode, syncErrorCode))
+    auto foundErrors = setErrorIfExist(errorCode, syncErrorCode);
+
+    if (!foundErrors)
     {
-        mSyncController.addSync(mSyncConfig);
+        if (mOnlyPrevalidateSync)
+        {
+            emit mSyncsData->syncPrevalidationSuccess();
+        }
+        else
+        {
+            mSyncController.addSync(mSyncConfig);
+        }
     }
 }
 

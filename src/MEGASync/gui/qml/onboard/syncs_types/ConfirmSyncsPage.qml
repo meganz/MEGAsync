@@ -9,6 +9,11 @@ ConfirmSyncsPageForm {
     signal selectiveSyncMoveToSuccess
     signal fullSyncMoveToSuccess
 
+    function enableScreen() {
+        root.enabled = true;
+        footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
+    }
+
     footerButtons {
         rightPrimary.onClicked: {
             root.enabled = false;
@@ -18,20 +23,6 @@ ConfirmSyncsPageForm {
 
         rightSecondary.visible: false;
         leftPrimary.visible: false;
-    }
-
-    footerButtons {
-        leftSecondary.onClicked: {
-            syncsComponentAccess.exclusionsButtonClicked();
-        }
-
-        rightSecondary.onClicked: {
-            root.moveBack();
-        }
-
-        rightPrimary.onClicked: {
-            root.moveNext();
-        }
     }
 
     Connections {

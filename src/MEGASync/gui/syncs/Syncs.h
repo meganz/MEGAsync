@@ -22,6 +22,7 @@ public:
     Syncs(QObject* parent = nullptr);
     virtual ~Syncs() = default;
     void addSync();
+    void prevalidateSync();
     void clearRemoteError();
     void clearLocalError();
     SyncsData* getSyncsData() const;
@@ -71,6 +72,7 @@ private:
     std::unique_ptr<SyncsData> mSyncsData;
 
     bool mCreatingFolder = false;
+    bool mOnlyPrevalidateSync = false;
     SyncController::SyncConfig mSyncConfig;
 
     // vars with de command error data, used to generate error messages.
@@ -91,6 +93,7 @@ private:
     bool checkLocalSync(const QString& path);
     bool checkRemoteSync(const QString& path);
     bool setErrorIfExist(int errorCode, int syncErrorCode);
+    void syncHelper(bool onlyPrevalidate);
 };
 
 #endif // SYNCS_H

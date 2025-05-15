@@ -51,12 +51,20 @@ AddSyncPageForm {
         }
 
         rightPrimary.onClicked: {
-            root.moveNext();
+            root.enabled = false;
+            footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
+            syncsComponentAccess.preSyncValidationButtonClicked();
         }
     }
 
     Connections {
         target: syncsDataAccess
+
+        function onSyncPrevalidationSuccess() {
+            enableScreen();
+
+            root.moveNext();
+        }
 
         function onLocalErrorChanged() {
             enableScreen();

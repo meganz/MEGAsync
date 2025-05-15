@@ -119,3 +119,8 @@ void SyncsComponent::syncButtonClicked()
 {
     mSyncs->addSync();
 }
+
+void SyncsComponent::preSyncValidationButtonClicked()
+{
+    mSyncs->prevalidateSync();
+}
