@@ -10,6 +10,7 @@ QtObject {
     property bool fullSyncDone: false
     property bool selectiveSyncDone: false
     property bool syncDone: fullSyncDone || selectiveSyncDone
+    property bool errorOnSyncs: false;
 
 }
 

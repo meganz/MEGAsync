@@ -18,6 +18,7 @@ SyncsFlow {
     confirmSyncsPageComponent: confirmSyncsPageComponentItem
 
     signal syncsFlowMoveToFinal(int syncType)
+    signal syncsFlowMoveToFinalError()
     signal syncsFlowMoveToBack()
 
     onStateChanged: {
@@ -69,12 +70,17 @@ SyncsFlow {
         ConfirmSyncsPage {
             id: confirmSyncsPage
 
-            onSelectiveSyncMoveToSuccess: {
-                root.syncsFlowMoveToFinal(Constants.SyncType.SELECTIVE_SYNC);
+            onSyncSetupSucceed: (isFullSync) => {
+                if (isFullSync) {
+                    root.syncsFlowMoveToFinal(Constants.SyncType.FULL_SYNC);
+                }
+                else {
+                    root.syncsFlowMoveToFinal(Constants.SyncType.SELECTIVE_SYNC);
+                }
             }
 
-            onFullSyncMoveToSuccess: {
-                root.syncsFlowMoveToFinal(Constants.SyncType.FULL_SYNC);
+            onSyncSetupFailed: {
+                root.syncsFlowMoveToFinalError();
             }
         }
     }

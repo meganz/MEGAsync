@@ -233,6 +233,13 @@ Rectangle {
                     root.state = root.resume;
                 }
 
+                onSyncsFlowMoveToFinalError: {
+                    root.navInfo.fullSyncDone = false;
+                    root.navInfo.selectiveSyncDone = false;
+                    root.navInfo.errorOnSyncs = true;
+                    root.state = root.resume;
+                }
+
                 onSyncsFlowMoveToBack: (fromSelectType) => {
                     if(root.navInfo.comesFromResumePage) {
                         root.navInfo.typeSelected = root.navInfo.previousTypeSelected;

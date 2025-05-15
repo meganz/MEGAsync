@@ -6,8 +6,8 @@ import SyncInfo 1.0
 ConfirmSyncsPageForm {
     id: root
 
-    signal selectiveSyncMoveToSuccess
-    signal fullSyncMoveToSuccess
+    signal syncSetupFailed
+    signal syncSetupSucceed(bool isFullSync)
 
     function enableScreen() {
         root.enabled = true;
@@ -31,12 +31,13 @@ ConfirmSyncsPageForm {
         function onSyncSetupSuccess(isFullSync) {
             enableScreen();
 
-            if (isFullSync) {
-                root.fullSyncMoveToSuccess();
-            }
-            else {
-                root.selectiveSyncMoveToSuccess();
-            }
+            root.syncSetupSucceed(isFullSync);
+        }
+
+        function onSyncSetupFailed() {
+            enableScreen();
+
+            root.syncSetupFailed();
         }
     }
 }

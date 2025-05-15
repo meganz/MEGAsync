@@ -338,6 +338,10 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString nam
 
         emit mSyncsData->syncSetupSuccess(mSyncConfig.remoteFolder == FULL_SYNC_PATH);
     }
+    else
+    {
+        emit mSyncsData->syncSetupFailed();
+    }
 }
 
 void Syncs::onSyncPrevalidateRequestStatus(int errorCode, int syncErrorCode)

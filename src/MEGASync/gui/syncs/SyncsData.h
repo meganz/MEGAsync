@@ -35,6 +35,7 @@ signals:
     void localErrorChanged();
     void remoteErrorChanged();
     void syncSetupSuccess(bool isFullSync);
+    void syncSetupFailed();
     void syncPrevalidationSuccess();
     void syncRemoved();
     void syncOriginChanged();
