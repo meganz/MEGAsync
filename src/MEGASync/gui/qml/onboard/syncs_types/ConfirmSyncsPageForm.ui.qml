@@ -11,12 +11,14 @@ import SyncInfo 1.0
 
 import onboard 1.0
 
+import syncs 1.0 as Syncs
+
 FooterButtonsPage {
     id: root
 
     footerButtons {
         rightPrimary {
-            text: SyncsStrings.sync
+            text: Syncs.SyncsStrings.sync
             icons.source: Images.syncIcon
         }
     }
@@ -36,8 +38,8 @@ FooterButtonsPage {
             id: header
 
             Layout.preferredWidth: parent.width
-            title: OnboardingStrings.selectiveSyncTitle
-            description: OnboardingStrings.selectiveSyncDescription
+            title: OnboardingStrings.confirmSyncsWindowTitle
+            description: OnboardingStrings.confirmSyncsWindowDescription
         }
 
         InfoAccount {

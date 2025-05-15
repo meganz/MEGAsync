@@ -20,38 +20,22 @@ SyncsFlow {
     signal syncsFlowMoveToFinal(int syncType)
     signal syncsFlowMoveToBack()
 
-    Item {
-        id: stepPanelStateWrapper
-
-        readonly property string addSyncPage: "addSyncPage"
-
-        states: [
-            State {
-                name: stepPanelStateWrapper.addSyncPage
-                PropertyChanges {
-                    target: root.stepPanelRef;
-                    state: root.stepPanelRef.step4;
-                    step3Text: Syncs.SyncsStrings.selectFolders;
-                    step4Text: Syncs.SyncsStrings.confirm;
-                }
-            }
-        ]
-    }
-
     onStateChanged: {
         switch(root.state) {
             case root.addSync:
-                //navInfoRef.typeSelected = Constants.SyncType.SELECTIVE_SYNC;
-                stepPanelStateWrapper.state = stepPanelStateWrapper.addSyncPage;
+                navInfoRef.typeSelected = Constants.SyncType.SYNC;
+
+                root.stepPanelRef.state = root.stepPanelRef.step4;
+                root.stepPanelRef.step3Text = Syncs.SyncsStrings.selectFolders;
+                root.stepPanelRef.step4Text = Syncs.SyncsStrings.confirm;
                 break;
 
             case root.confirmSyncs:
-                //navInfoRef.typeSelected = Constants.SyncType.SELECTIVE_SYNC;
-                stepPanelStateWrapper.state = stepPanelStateWrapper.confirmSyncPage;
+                root.stepPanelRef.state = root.stepPanelRef.step4;
                 break;
 
             default:
-                console.warn("BackupsPage: state does not exist -> " + root.state);
+                console.warn("SyncsPage: state " + root.state + " is not being handled.");
                 break;
         }
     }

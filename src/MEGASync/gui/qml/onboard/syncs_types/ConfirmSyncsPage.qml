@@ -15,6 +15,23 @@ ConfirmSyncsPageForm {
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
             syncsComponentAccess.syncButtonClicked();
         }
+
+        rightSecondary.visible: false;
+        leftPrimary.visible: false;
+    }
+
+    footerButtons {
+        leftSecondary.onClicked: {
+            syncsComponentAccess.exclusionsButtonClicked();
+        }
+
+        rightSecondary.onClicked: {
+            root.moveBack();
+        }
+
+        rightPrimary.onClicked: {
+            root.moveNext();
+        }
     }
 
     Connections {
