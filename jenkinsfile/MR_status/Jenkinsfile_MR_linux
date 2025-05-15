@@ -19,7 +19,7 @@ pipeline {
                     steps {
                         script{
                             BUILD_OPTIONS = ' '
-                            env.ARCHITECTURE = sh(script: 'echo "$gitlabTriggerPhrase" | grep ARCHITECTURE | awk -F "ARCHITECTURE="  \'{print \$2}\' | cut -d"\\"" -f2 || :', returnStdout: true).trim()
+                            env.ARCHITECTURE = sh(script: 'echo "$gitlabTriggerPhrase" | grep ARCHITECTURE | awk -F "ARCHITECTURE="  \'{print \$2}\' | cut -d\\" -f2', returnStdout: true).trim()
                             if (env.ARCHITECTURE == "")
                                 { env.ARCHITECTURE = "amd64" }
                             env.BUILD_OPTIONS = sh(script: 'echo "$gitlabTriggerPhrase" | grep BUILD_OPTIONS | awk -F "BUILD_OPTIONS="  \'{print \$2}\' | cut -d"\\"" -f2 || :', returnStdout: true).trim()
@@ -173,6 +173,7 @@ pipeline {
                     steps {
                         dir(linux_sources_workspace){
                             script{
+                                def ARCH_REGEX = (ARCHITECTURE == 'amd64') ? 'x86_64|amd64' : ARCHITECTURE
                                 withCredentials([string(credentialsId: 'MEGASYNC_ARTIFACTORY_TOKEN', variable: 'MEGASYNC_ARTIFACTORY_TOKEN')]) {
                                     sh """
                                         jf rt del \
@@ -185,7 +186,7 @@ pipeline {
                                             jf rt upload \
                                                 --url ${REPO_URL} \
                                                 --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
-                                                --regexp '(megasync.*deb\$|megasync.*rpm\$|megasync.*\\.pkg\\.tar\\.zst\$|megasync.*\\.pkg\\.tar\\.xz\$)' \
+                                                --regexp '(($ARCH_REGEX)/megasync.*deb\$|($ARCH_REGEX)/megasync.*rpm\$|($ARCH_REGEX)/megasync.*\\.pkg\\.tar\\.zst\$|($ARCH_REGEX)/megasync.*\\.pkg\\.tar\\.xz\$)' \
                                                 MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/linux/$DISTRIBUTION/
                                         """
                                     }
