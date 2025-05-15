@@ -231,6 +231,7 @@ Rectangle {
                         root.navInfo.selectiveSyncDone = true;
                     }
                     root.state = root.resume;
+                    // root.navInfo.errorOnSyncs = true; // @jsubi to test error on resume page.
                 }
 
                 onSyncsFlowMoveToFinalError: {
@@ -285,6 +286,7 @@ Rectangle {
                 id: resumePageItem
 
                 stepPanelRef: stepPanel
+                navInfoRef: root.navInfo
 
                 onResumePageMoveToSyncs: {
                     root.navInfo.previousTypeSelected = root.navInfo.typeSelected;

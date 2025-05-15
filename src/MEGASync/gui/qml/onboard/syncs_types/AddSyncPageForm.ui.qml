@@ -19,8 +19,8 @@ FooterButtonsPage {
 
     footerButtons {
         rightPrimary {
-            text: SyncsStrings.sync
-            icons.source: Images.syncIcon
+            text: Strings.next
+            icons.source: Images.arrowRight
         }
 
         rightSecondary {

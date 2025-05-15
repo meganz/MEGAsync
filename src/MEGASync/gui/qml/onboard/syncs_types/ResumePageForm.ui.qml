@@ -18,6 +18,7 @@ FooterButtonsPage {
     id: root
 
     required property StepPanel stepPanelRef
+    required property NavigationInfo navInfoRef
 
     readonly property string stateFullSync: "stateFullSync"
     readonly property string stateSelectiveSync: "stateSelectiveSync"
@@ -43,8 +44,9 @@ FooterButtonsPage {
     states: [
         State {
             name: root.stateFullSync
-            PropertyChanges { target: titleItem; text: SyncsStrings.finalStepSyncTitle; }
-            PropertyChanges { target: descriptionItem; text: SyncsStrings.finalStepSync; }
+            PropertyChanges { target: titleItem; text: navInfoRef.errorOnSyncs ? OnboardingStrings.finalStepSyncTitleError : SyncsStrings.finalStepSyncTitle; }
+            PropertyChanges { target: descriptionItem; visible: !navInfoRef.errorOnSyncs; }
+            PropertyChanges { target: errorItem; visible: navInfoRef.errorOnSyncs; }
             PropertyChanges { target: descriptionItem2; visible: false; }
             PropertyChanges { target: syncButtonItem; visible: false; }
             PropertyChanges {
@@ -119,6 +121,21 @@ FooterButtonsPage {
             Layout.topMargin: 8
             font.pixelSize: Texts.Text.Size.MEDIUM
             wrapMode: Text.Wrap
+            text: SyncsStrings.finalStepSync
+        }
+
+        Texts.BannerText {
+            id: errorItem
+
+            showBorder: false
+            type: Constants.MessageType.ERROR
+            text: OnboardingStrings.finalStepSyncError
+            visible: false
+            backgroundColor: ColorTheme.notificationError
+            icon: Images.xCircle
+            Layout.preferredWidth: parent.width
+            Layout.topMargin: 8
+            Layout.bottomMargin: 15
         }
 
         Texts.SecondaryText {

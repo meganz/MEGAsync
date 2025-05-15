@@ -106,6 +106,8 @@ QtObject {
     readonly property string sync: qsTr("Sync")
     readonly property string confirmSyncsWindowTitle: qsTr("Confirm folders to sync")
     readonly property string confirmSyncsWindowDescription: qsTr("Selected folders will automatically back up to the cloud when the desktop app is running.")
+    readonly property string finalStepSyncError: qsTr("One or more syncs were created with issues. You can review and fix them in settings.")
+    readonly property string finalStepSyncTitleError: qsTr("Sync wasn’t fully set up")
 
 
     // Two Factor Authentication
