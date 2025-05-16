@@ -38,7 +38,7 @@ Rectangle {
         id: listView
 
         anchors.fill: parent
-        model: 2
+        model: 1
         headerPositioning: ListView.OverlayHeader
         focus: true
         clip: true
@@ -83,7 +83,7 @@ Rectangle {
                     SvgImage {
                         id: localImage
 
-                        source: Images.monitor
+                        source: Images.localFolderHeader
                         color: ColorTheme.iconPrimary
                         sourceSize: Qt.size(16, 16)
                     }
@@ -107,7 +107,7 @@ Rectangle {
                     SvgImage {
                         id: remoteImage
 
-                        source: Images.megaOutline
+                        source: Images.remoteMegaHeader
                         color: ColorTheme.iconPrimary
                         sourceSize: Qt.size(16, 16)
                     }
@@ -204,7 +204,7 @@ Rectangle {
                     SvgImage {
                         id: syncImage
 
-                        source: Images.sync
+                        source: Images.syncsConfirm
                         //color: ColorTheme.iconPrimary
                         sourceSize: Qt.size(16, 16)
                     }
@@ -225,7 +225,7 @@ Rectangle {
                         SvgImage {
                             id: remoteFolderImage
 
-                            source: Images.folderOpen
+                            source: Images.remoteSyncFolder
                             //color: ColorTheme.iconPrimary
                             sourceSize: Qt.size(16, 16)
                         }
@@ -242,7 +242,7 @@ Rectangle {
                     SvgImage {
                         id: menuImage
 
-                        source: Images.threeDots
+                        source: Images.menuSync
                         //color: ColorTheme.iconPrimary
                         sourceSize: Qt.size(16, 16)
                     }

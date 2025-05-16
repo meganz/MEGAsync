@@ -129,5 +129,11 @@
         <file>images/qml/onboarding/backup@2x.png</file>
         <file>images/qml/onboarding/backup.png</file>
         <file>images/qml/onboarding/sync.png</file>
+        <file>images/qml/onboarding/local_folder.svg</file>
+        <file>images/qml/onboarding/mega.svg</file>
+        <file>images/qml/onboarding/monitor.svg</file>
+        <file>images/qml/onboarding/remote_folder.svg</file>
+        <file>images/qml/onboarding/syncs.svg</file>
+        <file>images/qml/onboarding/more_horizontal.svg</file>
     </qresource>
 </RCC>
