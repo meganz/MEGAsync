@@ -9538,28 +9538,8 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>UnknownDownloadIssueHeader</name>
     <message>
-        <source>Retry</source>
-        <translatorcomment>Stalled Issue combobox solve option that retries the download ;CON-1094</translatorcomment>
-        <translation type="unfinished">Retry</translation>
-    </message>
-    <message>
         <source>Report issue</source>
         <translatorcomment>Stalled Issue combobox solve option that sends a report to helpdesk;CON-1094</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Try to sync this file again?</source>
-        <translatorcomment>Messagebox string to confirma that the user wants to retry the file download;CON-1094</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Try to sync this folder again?</source>
-        <translatorcomment>Messagebox string to confirma that the user wants to retry the folder download;CON-1094</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>If your transfers have been paused, the sync will not retry until they have been resumed.</source>
-        <translatorcomment>Messagebox string to confirma that the user wants to retry the download;CON-1094</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>

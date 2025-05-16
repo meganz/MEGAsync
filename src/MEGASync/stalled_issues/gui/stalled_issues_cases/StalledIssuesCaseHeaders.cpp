@@ -306,12 +306,9 @@ void UnknownDownloadIssueHeader::refreshCaseActions(StalledIssueHeader* header)
     }
 
     auto downloadIssue(header->getData().convert<UnknownDownloadIssue>());
-    if (downloadIssue)
+    if (downloadIssue && !downloadIssue->isSendingFeedback())
     {
-        if (downloadIssue->canBeRetried())
-        {
-            header->showAction(StalledIssueHeader::ActionInfo(tr("Retry")));
-        }
+        header->showAction(StalledIssueHeader::ActionInfo(tr("Report issue")));
     }
 }
 
