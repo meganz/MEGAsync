@@ -18,9 +18,11 @@ const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
 const QString Preferences::USER_AGENT = QString::fromUtf8("%1/%2").arg(QString::fromUtf8(VER_FILEDESCRIPTION_STR),
                                                                        QString::fromUtf8(VER_PRODUCTVERSION_STR));
 const int Preferences::VERSION_CODE = VER_FILEVERSION_CODE;
+const int Preferences::VERSION_RC = VER_RC;
 const int Preferences::BUILD_ID = VER_BUILD_ID;
-// VER_PRODUCTVERSION_STR is "W.X.Y.Z". Drop the last number to keep "W.X.Y"
-const QString Preferences::VERSION_STRING = QString::fromUtf8(VER_PRODUCTVERSION_STR).left(QString::fromUtf8(VER_PRODUCTVERSION_STR).lastIndexOf(QLatin1Char('.')));
+// Format: "VER_MAJOR.VER_MINOR.VER_MICRO"
+const QString Preferences::VERSION_STRING =
+    QString::fromLatin1("%1.%2.%3").arg(VER_MAJOR).arg(VER_MINOR).arg(VER_MICRO);
 QString Preferences::SDK_ID = QString::fromUtf8(VER_SDK_ID);
 const QString Preferences::CHANGELOG = QString::fromUtf8(VER_CHANGES_NOTES);
 

@@ -551,6 +551,7 @@ public:
     static const char CLIENT_KEY[];
     static const QString USER_AGENT;
     static const int VERSION_CODE;
+    static const int VERSION_RC;
     static const int BUILD_ID;
     static const QString VERSION_STRING;
     static QString SDK_ID;

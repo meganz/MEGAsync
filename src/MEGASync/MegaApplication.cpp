@@ -554,8 +554,16 @@ void MegaApplication::initialize()
     }
     trayIcon->show();
 
-    megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("MEGA Desktop App is starting. Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
-             .arg(Preferences::VERSION_CODE).arg(Preferences::BUILD_ID).arg(QString::fromUtf8(megaApi->getUserAgent())).toUtf8().constData());
+    megaApi->log(MegaApi::LOG_LEVEL_INFO,
+                 QString::fromUtf8("MEGA Desktop App is starting. Version string: %1   Version "
+                                   "code: %2.%3-%4   User-Agent: %5")
+                     .arg(Preferences::VERSION_STRING)
+                     .arg(Preferences::VERSION_CODE)
+                     .arg(Preferences::VERSION_RC)
+                     .arg(Preferences::BUILD_ID)
+                     .arg(QString::fromUtf8(megaApi->getUserAgent()))
+                     .toUtf8()
+                     .constData());
 
     megaApi->setLanguage(currentLanguageCode.toUtf8().constData());
     megaApiFolders->setLanguage(currentLanguageCode.toUtf8().constData());
