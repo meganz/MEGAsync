@@ -33,4 +33,8 @@ private:
                                                  const AddPackageOptions& options);
 };
 
+// Exported function called from MEGA Desktop App
+// in order to install the sparse package after auto-updating the app
+STDAPI installSparsePackage();
+
 #endif

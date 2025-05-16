@@ -184,4 +184,10 @@ bool isDarkModeActive()
 
     return isColorLight(foreground);
 }
+
+void updateExplorer()
+{
+    SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0);
+}
+
 }

@@ -11,6 +11,8 @@ std::wstring getRegisterKeyStringValue(HKEY hKey,
                                        const std::wstring& subKey = L"",
                                        const std::wstring& valueName = L"");
 
+void updateExplorer();
+
 bool haveModernContextMenu();
 
 // Security and Identity
