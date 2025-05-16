@@ -6536,10 +6536,16 @@ void MegaApplication::startCrashReportingDialog()
 #ifdef USE_BREAKPAD
     if (preferences->isCrashed())
     {
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Crash detected, loading crash reports");
         preferences->setCrashed(false);
         QStringList reports = CrashHandler::instance()->getPendingCrashReports();
         if (reports.size())
         {
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                         QString::fromUtf8("Crash reports found: %1")
+                             .arg(reports.size())
+                             .toUtf8()
+                             .constData());
             QPointer<CrashReportDialog> crashDialog = new CrashReportDialog();
             crashDialog->setAttribute(Qt::WA_DeleteOnClose);
             TokenParserWidgetManager::instance()->applyCurrentTheme(crashDialog);
@@ -6550,6 +6556,8 @@ void MegaApplication::startCrashReportingDialog()
                     {
                         if (crashDialog->result() != QDialog::Accepted)
                         {
+                            MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                                         "Crash dialog cancelled, deleting crash report");
                             CrashHandler::instance()->deletePendingCrashReports(reports);
                             return;
                         }
@@ -6560,6 +6568,10 @@ void MegaApplication::startCrashReportingDialog()
                             shouldSendLogs);
                     });
             crashDialog->exec();
+        }
+        else
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "No crash reports found.");
         }
     }
 #endif
