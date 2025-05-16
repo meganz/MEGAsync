@@ -78,14 +78,20 @@ pipeline {
                     script{
                         if ( params.IS_RELEASE_CANDIDATE == true) {
                             def MEGASYNC_VERSION = getVersionFromHeader("src/MEGASync/control/Version.h")
+                            def ARCH_REGEX = (params.ARCH_TO_BUILD == 'amd64') ? 'x86_64|amd64' : params.ARCH_TO_BUILD
                             dir ("${env.INTERNAL_REPO_PATH}/repo/private/$DISTRO_TO_BUILD") {
                                 withCredentials([string(credentialsId: 'MEGASYNC_ARTIFACTORY_TOKEN', variable: 'MEGASYNC_ARTIFACTORY_TOKEN')]) {
                                     sh """
-                                      jf rt upload \
-                                          --url ${REPO_URL} \
-                                          --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
-                                          --regexp '((x86_64|amd64|i386|armhf|arm64)/megasync.*deb\$|(x86_64|amd64|i386|armhf|arm64)/megasync.*rpm\$|(x86_64|amd64|i386|armhf|arm64)/megasync.*\\.pkg\\.tar\\.zst\$|(x86_64|amd64|i386|armhf|arm64)/megasync.*\\.pkg\\.tar\\.xz\$)' \
-                                          MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO_TO_BUILD/
+                                    jf rt del \
+                                        --url ${REPO_URL} \
+                                        --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
+                                        --quiet \
+                                        MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO_TO_BUILD/${params.ARCH_TO_BUILD}/*
+                                    jf rt upload \
+                                        --url ${REPO_URL} \
+                                        --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
+                                        --regexp '(($ARCH_REGEX)/megasync.*deb\$|($ARCH_REGEX)/megasync.*rpm\$|($ARCH_REGEX)/megasync.*\\.pkg\\.tar\\.zst\$|($ARCH_REGEX)/megasync.*\\.pkg\\.tar\\.xz\$)' \
+                                        MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO_TO_BUILD/
                                     """
                                 }
                             }
@@ -162,6 +168,7 @@ pipeline {
                         steps {
                             dir(linux_sources_workspace) {
                                 script{
+                                    def ARCH_REGEX = (ARCHITECTURE == 'amd64') ? 'x86_64|amd64' : ARCHITECTURE
                                     def MEGASYNC_VERSION = getVersionFromHeader("src/MEGASync/control/Version.h")
                                     withCredentials([string(credentialsId: 'MEGASYNC_ARTIFACTORY_TOKEN', variable: 'MEGASYNC_ARTIFACTORY_TOKEN')]) {
                                         sh """
@@ -175,7 +182,7 @@ pipeline {
                                                 jf rt upload \
                                                     --url ${REPO_URL} \
                                                     --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
-                                                    --regexp '((x86_64|amd64|i386|armhf)/megasync.*deb\$|(x86_64|amd64|i386|armhf)/megasync.*rpm\$|(x86_64|amd64|i386|armhf)/megasync.*\\.pkg\\.tar\\.zst\$|(x86_64|amd64|i386|armhf)/megasync.*\\.pkg\\.tar\\.xz\$)' \
+                                                    --regexp '(($ARCH_REGEX)/megasync.*deb\$|($ARCH_REGEX)/megasync.*rpm\$|($ARCH_REGEX)/megasync.*\\.pkg\\.tar\\.zst\$|($ARCH_REGEX)/megasync.*\\.pkg\\.tar\\.xz\$)' \
                                                     MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/
                                             """
                                         }
