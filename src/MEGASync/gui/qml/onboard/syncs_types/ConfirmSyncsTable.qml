@@ -64,18 +64,18 @@ Rectangle {
             radius: root.radius
             z: 3
 
-            RowLayout {
+            Row {
                 id: headerLayout
 
                 anchors.verticalCenter: parent.verticalCenter
                 width: parent.width
                 spacing: 0
 
-                RowLayout {
+                Row {
                     id: localImageTextLayout
 
-                    Layout.leftMargin: root.headerMargin
-                    Layout.fillWidth: true
+                    leftPadding: root.headerMargin
+                    width: parent.width / 2
                     spacing: root.headerMargin / 2
 
                     SvgImage {
@@ -95,12 +95,11 @@ Rectangle {
                     }
                 }
 
-                RowLayout {
+                Row {
                     id: remoteImageTextLayout
 
-                    Layout.leftMargin: root.headerMargin
-                    Layout.fillWidth: true
-
+                    leftPadding: root.headerMargin
+                    width: parent.width / 2
                     spacing: root.headerMargin / 2
 
                     SvgImage {
@@ -161,18 +160,18 @@ Rectangle {
             radius: root.radius
             z: 3
 
-            RowLayout {
+            Row {
                 id: syncRowLayout
 
                 anchors.verticalCenter: parent.verticalCenter
                 width: parent.width
                 spacing: 0
 
-                RowLayout {
+                Row {
                     id: localFolderImageTextLayout
 
-                    Layout.leftMargin: root.headerMargin
-                    Layout.fillWidth: true
+                    leftPadding: root.headerMargin
+                    width: parent.width / 2
                     spacing: root.headerMargin / 2
 
                     SvgImage {
@@ -192,11 +191,11 @@ Rectangle {
                     }
                 }
 
-                RowLayout {
+                Row {
                     id: remoteFolderImageTextLayout
 
-                    Layout.leftMargin: root.headerMargin
-                    Layout.fillWidth: true
+                    leftPadding: root.headerMargin
+                    width: parent.width / 2
                     spacing: root.headerMargin / 2
 
                     SvgImage {
