@@ -12,13 +12,13 @@ Rectangle {
     id: root
 
     readonly property int headerMargin: 24
-    readonly property int headerHeight: 40
+    readonly property int headerHeight: 42
     readonly property int tableRadius: 8
 
     Layout.preferredWidth: width
     Layout.preferredHeight: height
-    width: 400
-    height: 184
+    width: 420
+    height: 232
     radius: tableRadius
     color: ColorTheme.pageBackground
 
@@ -38,13 +38,14 @@ Rectangle {
         id: listView
 
         anchors.fill: parent
-        model: 1
+        model: 2
         headerPositioning: ListView.OverlayHeader
         focus: true
         clip: true
         delegate: delegateComponent
         header: headerComponent
         ScrollBar.vertical: ScrollBar {}
+        spacing: 5
     }
 
     Component {
@@ -56,6 +57,7 @@ Rectangle {
             anchors {
                 left: parent.left
                 right: parent.right
+                margins: 7
             }
 
             height: root.headerHeight
@@ -127,6 +129,7 @@ Rectangle {
                     bottom: parent.bottom
                     left: parent.left
                     right: parent.right
+                    margins: 5
                 }
                 height: borderRectangle.border.width
                 color: ColorTheme.borderSubtle
@@ -152,12 +155,13 @@ Rectangle {
             anchors {
                 left: parent.left
                 right: parent.right
+                margins: 7
             }
 
-            height: root.headerHeight
-            color: ColorTheme.pageBackground
+            height: 24
+            color: ColorTheme.surface1
 
-            radius: root.radius
+            radius: 4
             z: 3
 
             Row {
@@ -171,23 +175,38 @@ Rectangle {
                     id: localFolderImageTextLayout
 
                     leftPadding: root.headerMargin
+                    rightPadding: root.headerMargin
                     width: parent.width / 2
-                    spacing: root.headerMargin / 2
 
-                    SvgImage {
-                        id: localFolderImage
+                    Row {
+                        id: localFolderImageText
 
-                        source: Images.folderOpen
-                        //color: ColorTheme.iconPrimary
-                        sourceSize: Qt.size(16, 16)
+                        width: parent.width * (4/5)
+                        spacing: root.headerMargin / 2
+
+                        SvgImage {
+                            id: localFolderImage
+
+                            source: Images.folderOpen
+                            //color: ColorTheme.iconPrimary
+                            sourceSize: Qt.size(16, 16)
+                        }
+
+                        Texts.Text {
+                            id: localFolderText
+
+                            text: "Documents/MEGA"
+                            font.weight: Font.DemiBold
+                            color: ColorTheme.textPrimary
+                        }
                     }
 
-                    Texts.Text {
-                        id: localFolderText
+                    SvgImage {
+                        id: syncImage
 
-                        text: "Documents/MEGA"
-                        font.weight: Font.DemiBold
-                        color: ColorTheme.textPrimary
+                        source: Images.sync
+                        //color: ColorTheme.iconPrimary
+                        sourceSize: Qt.size(16, 16)
                     }
                 }
 
@@ -196,26 +215,41 @@ Rectangle {
 
                     leftPadding: root.headerMargin
                     width: parent.width / 2
-                    spacing: root.headerMargin / 2
 
-                    SvgImage {
-                        id: remoteFolderImage
+                    Row {
+                        id: remoteFolderImageText
 
-                        source: Images.folderOpen
-                        //color: ColorTheme.iconPrimary
-                        sourceSize: Qt.size(16, 16)
+                        width: parent.width * (5/7)
+                        spacing: root.headerMargin / 2
+
+                        SvgImage {
+                            id: remoteFolderImage
+
+                            source: Images.folderOpen
+                            //color: ColorTheme.iconPrimary
+                            sourceSize: Qt.size(16, 16)
+                        }
+
+                        Texts.Text {
+                            id: remoteFolderText
+
+                            text: "/MEGA"
+                            font.weight: Font.DemiBold
+                            color: ColorTheme.textPrimary
+                        }
                     }
 
-                    Texts.Text {
-                        id: remoteFolderText
+                    SvgImage {
+                        id: menuImage
 
-                        text: "/MEGA"
-                        font.weight: Font.DemiBold
-                        color: ColorTheme.textPrimary
+                        source: Images.threeDots
+                        //color: ColorTheme.iconPrimary
+                        sourceSize: Qt.size(16, 16)
                     }
                 }
             }
 
+            /*
             Rectangle {
                 id: lineRectangle
 
@@ -227,6 +261,7 @@ Rectangle {
                 height: borderRectangle.border.width
                 color: ColorTheme.borderSubtle
             }
+            */
 
             MouseArea {
                 id: headerMouseArea

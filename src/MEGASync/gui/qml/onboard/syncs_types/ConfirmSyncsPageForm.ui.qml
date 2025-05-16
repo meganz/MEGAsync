@@ -42,17 +42,23 @@ FooterButtonsPage {
             description: OnboardingStrings.confirmSyncsWindowDescription
         }
 
-        InfoAccount {
-            id: accountData
+        Column {
+            id: syncData
 
-            Layout.preferredWidth: parent.width
-            Layout.topMargin: 8
-        }
+            spacing: 7
 
-        ConfirmSyncsTable {
-            id: contentItem
+            InfoAccount {
+                id: accountData
 
-            Layout.preferredWidth: parent.width
+                Layout.preferredWidth: parent.width
+                Layout.topMargin: 8
+            }
+
+            ConfirmSyncsTable {
+                id: contentItem
+
+                Layout.preferredWidth: parent.width
+            }
         }
 
     }
