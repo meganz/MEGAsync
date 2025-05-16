@@ -38,11 +38,11 @@ Rectangle {
         id: listView
 
         anchors.fill: parent
-        //model: 1
+        model: 1
         headerPositioning: ListView.OverlayHeader
         focus: true
         clip: true
-        //delegate: folderComponent
+        delegate: delegateComponent
         header: headerComponent
         ScrollBar.vertical: ScrollBar {}
     }
@@ -100,6 +100,7 @@ Rectangle {
 
                     Layout.leftMargin: root.headerMargin
                     Layout.fillWidth: true
+
                     spacing: root.headerMargin / 2
 
                     SvgImage {
@@ -118,8 +119,6 @@ Rectangle {
                         color: ColorTheme.textPrimary
                     }
                 }
-
-
             }
 
             Rectangle {
@@ -132,7 +131,6 @@ Rectangle {
                 }
                 height: borderRectangle.border.width
                 color: ColorTheme.borderSubtle
-
             }
 
             MouseArea {
@@ -146,13 +144,99 @@ Rectangle {
 
     } // Component: headerComponent
 
-    /*
     Component {
-        id: folderComponent
+        id: delegateComponent
 
-        SyncsRow {
-            id: folderRow
-        }
-    }
-    */
+        Rectangle {
+            id: syncRow
+
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
+
+            height: root.headerHeight
+            color: ColorTheme.pageBackground
+
+            radius: root.radius
+            z: 3
+
+            RowLayout {
+                id: syncRowLayout
+
+                anchors.verticalCenter: parent.verticalCenter
+                width: parent.width
+                spacing: 0
+
+                RowLayout {
+                    id: localFolderImageTextLayout
+
+                    Layout.leftMargin: root.headerMargin
+                    Layout.fillWidth: true
+                    spacing: root.headerMargin / 2
+
+                    SvgImage {
+                        id: localFolderImage
+
+                        source: Images.folderOpen
+                        //color: ColorTheme.iconPrimary
+                        sourceSize: Qt.size(16, 16)
+                    }
+
+                    Texts.Text {
+                        id: localFolderText
+
+                        text: "Documents/MEGA"
+                        font.weight: Font.DemiBold
+                        color: ColorTheme.textPrimary
+                    }
+                }
+
+                RowLayout {
+                    id: remoteFolderImageTextLayout
+
+                    Layout.leftMargin: root.headerMargin
+                    Layout.fillWidth: true
+                    spacing: root.headerMargin / 2
+
+                    SvgImage {
+                        id: remoteFolderImage
+
+                        source: Images.folderOpen
+                        //color: ColorTheme.iconPrimary
+                        sourceSize: Qt.size(16, 16)
+                    }
+
+                    Texts.Text {
+                        id: remoteFolderText
+
+                        text: "/MEGA"
+                        font.weight: Font.DemiBold
+                        color: ColorTheme.textPrimary
+                    }
+                }
+            }
+
+            Rectangle {
+                id: lineRectangle
+
+                anchors {
+                    bottom: parent.bottom
+                    left: parent.left
+                    right: parent.right
+                }
+                height: borderRectangle.border.width
+                color: ColorTheme.borderSubtle
+            }
+
+            MouseArea {
+                id: headerMouseArea
+
+                anchors.fill: parent
+                hoverEnabled: true
+            }
+
+        } // Rectangle: syncRow
+
+    } // Component: delegateComponent
 }
