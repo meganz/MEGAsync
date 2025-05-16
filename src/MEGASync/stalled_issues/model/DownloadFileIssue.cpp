@@ -84,24 +84,6 @@ bool UnknownDownloadIssue::checkForExternalChanges()
     return !canBeRetried();
 }
 
-void UnknownDownloadIssue::solveIssueByRetry()
-{
-    auto pathHandle(consultCloudData()->getPathHandle());
-
-    if (!mTrack)
-    {
-        mTrack = MegaSyncApp->getTransfersModel()->addTrackToTransfer(
-            QString::number(getOriginalStall()->getHash()),
-            TransferData::TRANSFER_DOWNLOAD);
-        connectTrack();
-    }
-
-    mTrack->addTransferToTrack(QVariant::fromValue<uint64_t>(pathHandle));
-
-    MegaSyncApp->getTransfersModel()->retrySyncFailedTransfers(QList<mega::MegaHandle>()
-                                                               << pathHandle);
-}
-
 void UnknownDownloadIssue::sendFeedback()
 {
     mReportController = std::make_shared<BugReportController>(MegaSyncApp->getLogger());

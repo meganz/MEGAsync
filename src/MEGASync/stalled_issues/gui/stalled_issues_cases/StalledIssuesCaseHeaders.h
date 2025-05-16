@@ -182,7 +182,7 @@ public:
 
 protected slots:
     void refreshCaseActions(StalledIssueHeader* header) override;
-    void onMultipleActionButtonOptionSelected(StalledIssueHeader* header, uint index) override;
+    void onMultipleActionButtonOptionSelected(StalledIssueHeader* header, uint) override;
 };
 
 //Create folder failed

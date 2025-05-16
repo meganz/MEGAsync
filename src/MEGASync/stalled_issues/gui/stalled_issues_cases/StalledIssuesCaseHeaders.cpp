@@ -305,104 +305,46 @@ void UnknownDownloadIssueHeader::refreshCaseActions(StalledIssueHeader* header)
         return;
     }
 
-    QList<StalledIssueHeader::ActionInfo> actions;
-
     auto downloadIssue(header->getData().convert<UnknownDownloadIssue>());
     if (downloadIssue)
     {
         if (downloadIssue->canBeRetried())
         {
-            actions << StalledIssueHeader::ActionInfo(tr("Retry"), UnknownDownloadIssue::RETRY);
-        }
-
-        if (!downloadIssue->isSendingFeedback())
-        {
-            actions << StalledIssueHeader::ActionInfo(tr("Report issue"),
-                                                      UnknownDownloadIssue::SEND_FEEDBACK);
+            header->showAction(StalledIssueHeader::ActionInfo(tr("Retry")));
         }
     }
-
-    header->showActions(SOLVE_OPTIONS_BUTTON_STRING, actions);
 }
 
 void UnknownDownloadIssueHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header,
-                                                                      uint index)
+                                                                      uint)
 {
-    if (index == UnknownDownloadIssue::RETRY)
-    {
-        auto selectionInfo(getSelectionInfo(
-            header,
-            [index](const std::shared_ptr<const StalledIssue> issue)
-            {
-                auto downloadIssue(StalledIssue::convert<UnknownDownloadIssue>(issue));
-                return downloadIssue && (index == UnknownDownloadIssue::SEND_FEEDBACK ||
-                                         downloadIssue->canBeRetried());
-            }));
+    // We don´t detect any similar issues
+    auto selectionInfo(getSelectionInfo(header,
+                                        [](const std::shared_ptr<const StalledIssue>)
+                                        {
+                                            return false;
+                                        }));
 
-        if (selectionInfo.hasBeenExternallyChanged)
+    if (selectionInfo.hasBeenExternallyChanged)
+    {
+        return;
+    }
+
+    selectionInfo.msgInfo.text = tr("Report issue");
+    selectionInfo.msgInfo.informativeText =
+        tr("This will send your logs to our Support team for diagnostics.");
+    selectionInfo.msgInfo.buttonsText.insert(QMessageBox::Ok, tr("Send"));
+
+    selectionInfo.msgInfo.finishFunc = [header](QMessageBox* msgBox)
+    {
+        if (msgBox->result() == QDialogButtonBox::Ok)
         {
-            return;
-        }
-        // We don´t show the retry option when there are no retryable sync failed transfers, but
-        // just in case
-        else if (selectionInfo.selection.isEmpty() && selectionInfo.similarToSelected.isEmpty())
-        {
-            MegaSyncApp->getStalledIssuesModel()->checkForExternalChanges(
+            MegaSyncApp->getStalledIssuesModel()->sendReportForUnknownDownloadIssue(
                 header->getCurrentIndex());
-            return;
         }
+    };
 
-        header->getData().consultData()->isFile() ?
-            selectionInfo.msgInfo.text = tr("Try to sync this file again?") :
-            selectionInfo.msgInfo.text = tr("Try to sync this folder again?");
-        selectionInfo.msgInfo.informativeText =
-            tr("If your transfers have been paused, the sync will not "
-               "retry until they have been resumed.");
-        selectionInfo.msgInfo.buttonsText.insert(QMessageBox::Ok, tr("Retry"));
-
-        selectionInfo.msgInfo.finishFunc = [selectionInfo](QMessageBox* msgBox)
-        {
-            if (msgBox->result() == QDialogButtonBox::Ok)
-            {
-                MegaSyncApp->getStalledIssuesModel()->fixUnknownDownloadIssueByRetry(
-                    (msgBox->checkBox() && msgBox->checkBox()->isChecked()) ?
-                        selectionInfo.similarToSelected :
-                        selectionInfo.selection);
-            }
-        };
-
-        QMegaMessageBox::warning(selectionInfo.msgInfo);
-    }
-    else if (index == UnknownDownloadIssue::SEND_FEEDBACK)
-    {
-        // We don´t detect any similar issues
-        auto selectionInfo(getSelectionInfo(header,
-                                            [](const std::shared_ptr<const StalledIssue>)
-                                            {
-                                                return false;
-                                            }));
-
-        if (selectionInfo.hasBeenExternallyChanged)
-        {
-            return;
-        }
-
-        selectionInfo.msgInfo.text = tr("Report issue");
-        selectionInfo.msgInfo.informativeText =
-            tr("This will send your logs to our Support team for diagnostics.");
-        selectionInfo.msgInfo.buttonsText.insert(QMessageBox::Ok, tr("Send"));
-
-        selectionInfo.msgInfo.finishFunc = [header](QMessageBox* msgBox)
-        {
-            if (msgBox->result() == QDialogButtonBox::Ok)
-            {
-                MegaSyncApp->getStalledIssuesModel()->sendReportForUnknownDownloadIssue(
-                    header->getCurrentIndex());
-            }
-        };
-
-        QMegaMessageBox::warning(selectionInfo.msgInfo);
-    }
+    QMegaMessageBox::warning(selectionInfo.msgInfo);
 }
 
 //Create folder failed

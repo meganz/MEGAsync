@@ -40,20 +40,12 @@ class BugReportController;
 class UnknownDownloadIssue: public DownloadIssue
 {
 public:
-    enum SolveOptionSelected
-    {
-        RETRY,
-        SEND_FEEDBACK
-    };
-
     UnknownDownloadIssue(const mega::MegaSyncStall* stall);
     ~UnknownDownloadIssue() = default;
 
     void fillIssue(const mega::MegaSyncStall* stall) override;
     bool canBeRetried() const;
     bool checkForExternalChanges() override;
-
-    void solveIssueByRetry();
 
     void sendFeedback();
     bool isSendingFeedback() const;

@@ -212,7 +212,6 @@ public:
     void fixFingerprint(const QModelIndexList& list);
 
     // UnknownDownloadIssue
-    void fixUnknownDownloadIssueByRetry(const QModelIndexList& list);
     void sendReportForUnknownDownloadIssue(const QModelIndex& index);
 
     //FolderMatchedAgainstFile

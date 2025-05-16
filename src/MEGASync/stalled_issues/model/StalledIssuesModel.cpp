@@ -1618,31 +1618,6 @@ void StalledIssuesModel::fixFingerprint(const QModelIndexList& list)
     solveListOfIssues(info);
 }
 
-void StalledIssuesModel::fixUnknownDownloadIssueByRetry(const QModelIndexList& list)
-{
-    auto resolveIssue = [this](int row) -> bool
-    {
-        auto item(getStalledIssueByRow(row));
-        if (auto unknownIssue = item.convert<UnknownDownloadIssue>())
-        {
-            unknownIssue->solveIssueByRetry();
-
-            MegaSyncApp->getStatsEventHandler()->sendEvent(
-                AppStatsEvents::EventType::SI_UNKNOWN_DOWNLOAD_ISSUE_SOLVED_BY_RETRY);
-
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    };
-
-    SolveListInfo info(list, resolveIssue);
-    info.async = true;
-    solveListOfIssues(info);
-}
-
 void StalledIssuesModel::sendReportForUnknownDownloadIssue(const QModelIndex& index)
 {
     auto resolveIssue = [this](int row) -> bool
