@@ -462,7 +462,6 @@ protected:
     long long lastExit;
     bool appfinished;
     bool updateAvailable;
-    bool isLinux;
     bool mIsFirstFileTwoWaySynced;
     bool mIsFirstFileBackedUp;
     bool networkConnectivity;
