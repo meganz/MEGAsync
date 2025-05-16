@@ -307,6 +307,9 @@ public:
     {
         return QMap<uint, QPushButton*>();
     }
+
+    virtual void updateCustomBottomButtonsText(NodeSelectorTreeViewWidget*) {}
+
     virtual NodeSelectorModelItemSearch::Types allowedTypes() = 0;
 
 protected:
@@ -368,11 +371,14 @@ public:
     void okCancelButtonsVisibility(NodeSelectorTreeViewWidget* wdg) override;
     void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg) override;
     QMap<uint, QPushButton*> addCustomBottomButtons(NodeSelectorTreeViewWidget* wdg) override;
+    void updateCustomBottomButtonsText(NodeSelectorTreeViewWidget* wdg) override;
 
     bool okButtonEnabled(NodeSelectorTreeViewWidget*, const QModelIndexList &selected) override;
     NodeSelectorModelItemSearch::Types allowedTypes() override;
 
 private:
+    QString getCustomBottomButtonText(uint buttonId) const;
+
     QMap<QWidget*, QMap<uint, QPushButton*>> mCustomBottomButtons;
 };
  

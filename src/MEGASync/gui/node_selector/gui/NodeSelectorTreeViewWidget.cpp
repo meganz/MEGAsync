@@ -79,6 +79,11 @@ void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
             ui->lFolderName->setText(getRootText());
         }
         ui->retranslateUi(this);
+
+        if (mSelectType)
+        {
+            mSelectType->updateCustomBottomButtonsText(this);
+        }
     }
     QWidget::changeEvent(event);
 }
@@ -1813,20 +1818,63 @@ void CloudDriveType::newFolderButtonVisibility(NodeSelectorTreeViewWidget *wdg)
 QMap<uint, QPushButton*> CloudDriveType::addCustomBottomButtons(NodeSelectorTreeViewWidget* wdg)
 {
     auto& buttons = mCustomBottomButtons[wdg];
-    if(buttons.isEmpty())
+    if (buttons.isEmpty())
     {
-        auto uploadButton(new QPushButton(QIcon(QString::fromUtf8("://images/transfer_manager/toolbar/upload_toolbar_ico_default.png")), MegaApplication::tr("Upload")));
+        auto uploadButton(new QPushButton(
+            QIcon(QString::fromUtf8(
+                "://images/transfer_manager/toolbar/upload_toolbar_ico_default.png")),
+            getCustomBottomButtonText(ButtonId::Upload)));
         buttons.insert(ButtonId::Upload, uploadButton);
 
-        auto downloadButton(new QPushButton(QIcon(QString::fromUtf8("://images/transfer_manager/toolbar/download_toolbar_ico_default.png")), MegaApplication::tr("Download")));
+        auto downloadButton(new QPushButton(
+            QIcon(QString::fromUtf8(
+                "://images/transfer_manager/toolbar/download_toolbar_ico_default.png")),
+            getCustomBottomButtonText(ButtonId::Download)));
         buttons.insert(ButtonId::Download, downloadButton);
 
-        auto clearRubbishButton(new QPushButton(QIcon(QString::fromUtf8("://images/transfer_manager/sidebar/cancel_all_ico_hover.png")), NodeSelectorTreeViewWidget::tr("Empty Rubbish bin")));
+        auto clearRubbishButton(new QPushButton(
+            QIcon(QString::fromUtf8("://images/transfer_manager/sidebar/cancel_all_ico_hover.png")),
+            getCustomBottomButtonText(ButtonId::ClearRubbish)));
         buttons.insert(ButtonId::ClearRubbish, clearRubbishButton);
         clearRubbishButton->hide();
     }
 
     return buttons;
+}
+
+void CloudDriveType::updateCustomBottomButtonsText(NodeSelectorTreeViewWidget* wdg)
+{
+    auto& buttons = mCustomBottomButtons[wdg];
+    if (!buttons.isEmpty())
+    {
+        for (auto it = buttons.keyValueBegin(); it != buttons.keyValueEnd(); ++it)
+        {
+            it->second->setText(getCustomBottomButtonText(it->first));
+        }
+    }
+}
+
+QString CloudDriveType::getCustomBottomButtonText(uint buttonId) const
+{
+    switch (buttonId)
+    {
+        case ButtonId::Upload:
+        {
+            return MegaApplication::tr("Upload");
+        }
+        case ButtonId::Download:
+        {
+            return MegaApplication::tr("Download");
+        }
+        case ButtonId::ClearRubbish:
+        {
+            return NodeSelectorTreeViewWidget::tr("Empty Rubbish bin");
+        }
+        default:
+        {
+            return QString();
+        }
+    }
 }
 
 void CloudDriveType::selectionHasChanged(NodeSelectorTreeViewWidget* wdg)

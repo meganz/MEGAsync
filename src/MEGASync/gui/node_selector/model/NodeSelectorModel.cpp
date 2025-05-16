@@ -2314,6 +2314,12 @@ QVariant NodeSelectorModel::getText(const QModelIndex &index, NodeSelectorModelI
             {
                 return MegaNodeNames::getRootNodeName(item->getNode().get());
             }
+            // SDK returns "Rubbish Bin" and we use "Rubbish bin", so we cannot directly translate
+            // the node name (we don´t have "Rubbish Bin" in our translation files)
+            else if (item->isRubbishBin())
+            {
+                return MegaNodeNames::getRubbishName();
+            }
             else
             {
                 return MegaNodeNames::getNodeName(item->getNode().get());
