@@ -1109,7 +1109,7 @@ void MegaApplication::start()
         {
             preferences->setInstallationTime(-1);
         }
-        Platform::getInstance()->reloadFileManagerExtension();
+        Platform::getInstance()->runPostAutoUpdateStep();
     }
 
     applyProxySettings();

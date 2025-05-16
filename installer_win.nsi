@@ -329,8 +329,19 @@ RunElevated:
 done:
 !macroend
 
+#Do not restart explorer from Windows 11 version (build 22000)
+!define WINDOWS_11_BUILD 22000
+
 Function RunExplorer
-  ExecDos::exec /ASYNC /DETAILED /DISABLEFSR "explorer.exe"
+  ${IfNot} ${AtLeastBuild} WINDOWS_11_BUILD
+     ExecDos::exec /ASYNC /DETAILED /DISABLEFSR "explorer.exe"
+  ${EndIf}
+FunctionEnd
+
+Function KillExplorer
+  ${IfNot} ${AtLeastBuild} WINDOWS_11_BUILD
+     ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM explorer.exe"
+  ${EndIf}
 FunctionEnd
 
 Var BITMAP_WELCOME
@@ -539,7 +550,7 @@ modeselected:
 
   SetOutPath "$INSTDIR"
 
-  ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM explorer.exe"
+  Call KillExplorer
 
   !insertmacro DEBUG_MSG "Registering DLLs"
 
@@ -559,8 +570,8 @@ modeselected:
   !ifndef BUILD_X64_VERSION
         !define LIBRARY_COM
         !define LIBRARY_SHELL_EXTENSION
+        !insertmacro InstallLib DLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.msix" "$INSTDIR\ShellExtX32.msix" "$INSTDIR"          
         !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
-        !insertmacro InstallLib DLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.msix" "$INSTDIR\ShellExtX32.msix" "$INSTDIR"
         !undef LIBRARY_COM
         !undef LIBRARY_SHELL_EXTENSION
 
@@ -586,8 +597,8 @@ modeselected:
         !define LIBRARY_X64
         !define LIBRARY_COM
         !define LIBRARY_SHELL_EXTENSION
-        !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.dll" "$INSTDIR\ShellExtX64.dll" "$INSTDIR"
         !insertmacro InstallLib DLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.msix" "$INSTDIR\ShellExtX64.msix" "$INSTDIR"
+        !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.dll" "$INSTDIR\ShellExtX64.dll" "$INSTDIR"
         !undef LIBRARY_X64
         !undef LIBRARY_COM
         !undef LIBRARY_SHELL_EXTENSION

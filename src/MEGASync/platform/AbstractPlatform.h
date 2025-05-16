@@ -83,8 +83,7 @@ public:
     virtual void removeAllSyncsFromLeftPane();
     virtual bool makePubliclyReadable(const QString& fileName);
 
-    virtual void addFileManagerExtensionToSystem() {};
-    virtual void reloadFileManagerExtension() {};
+    virtual void addFileManagerExtensionToSystem(){};
     virtual void enableFileManagerExtension(bool) {};
     virtual bool validateSystemTrayIntegration();
 
@@ -94,6 +93,9 @@ public:
 
     std::shared_ptr<AbstractShellNotifier> getShellNotifier();
     virtual DriveSpaceData getDriveData(const QString& path) = 0;
+
+    // AutoUpdate tasks
+    virtual void runPostAutoUpdateStep(){};
 
 #if defined(ENABLE_SDK_ISOLATED_GFX)
     virtual QString getGfxProviderPath() = 0;
