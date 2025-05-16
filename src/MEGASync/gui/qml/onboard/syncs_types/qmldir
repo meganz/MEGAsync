@@ -16,4 +16,4 @@ AddSyncPage 1.0 AddSyncPage.qml
 AddSyncPageForm 1.0 AddSyncPageForm.ui.qml
 ConfirmSyncsPage 1.0 ConfirmSyncsPage.qml
 ConfirmSyncsPageForm 1.0 ConfirmSyncsPageForm.ui.qml
-ConfirmSyncsTable 1.0 ConfirmSyncsTable.ui.qml
+ConfirmSyncsTable 1.0 ConfirmSyncsTable.qml

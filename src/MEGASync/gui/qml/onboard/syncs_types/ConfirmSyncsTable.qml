@@ -38,11 +38,11 @@ Rectangle {
         id: listView
 
         anchors.fill: parent
-        model: 1
+        //model: 1
         headerPositioning: ListView.OverlayHeader
         focus: true
         clip: true
-        delegate: folderComponent
+        //delegate: folderComponent
         header: headerComponent
         ScrollBar.vertical: ScrollBar {}
     }
@@ -72,7 +72,7 @@ Rectangle {
                 spacing: 0
 
                 RowLayout {
-                    id: imageTextLayout
+                    id: localImageTextLayout
 
                     Layout.leftMargin: root.headerMargin
                     Layout.fillWidth: true
@@ -93,11 +93,19 @@ Rectangle {
                         font.weight: Font.DemiBold
                         color: ColorTheme.textPrimary
                     }
+                }
+
+                RowLayout {
+                    id: remoteImageTextLayout
+
+                    Layout.leftMargin: root.headerMargin
+                    Layout.fillWidth: true
+                    spacing: root.headerMargin / 2
 
                     SvgImage {
                         id: remoteImage
 
-                        source: Images.mega
+                        source: Images.megaOutline
                         color: ColorTheme.iconPrimary
                         sourceSize: Qt.size(16, 16)
                     }
@@ -110,6 +118,8 @@ Rectangle {
                         color: ColorTheme.textPrimary
                     }
                 }
+
+
             }
 
             Rectangle {
@@ -136,13 +146,13 @@ Rectangle {
 
     } // Component: headerComponent
 
+    /*
     Component {
         id: folderComponent
 
-        /*
-        FolderRow {
+        SyncsRow {
             id: folderRow
         }
-        */
     }
+    */
 }

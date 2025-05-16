@@ -48,6 +48,13 @@ FooterButtonsPage {
             Layout.preferredWidth: parent.width
             Layout.topMargin: 8
         }
+
+        ConfirmSyncsTable {
+            id: contentItem
+
+            Layout.preferredWidth: parent.width
+        }
+
     }
 
 }
