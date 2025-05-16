@@ -165,7 +165,6 @@ BuildRequires: hicolor-icon-theme, zip, unzip, nasm, cmake, perl
 %setup -q
 
 mega_build_id=`echo %{release} | sed "s/\.[^.]*$//" | sed "s/[^.]*\.//" | sed "s/[^0-9]//g"`
-sed -i -E "s/VER_PRODUCTVERSION_STR([[:space:]]+)\"(([0-9][0-9]*\.){3})(.*)\"/VER_PRODUCTVERSION_STR\1\"\2${mega_build_id}\"/g" src/MEGASync/control/Version.h
 sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1${mega_build_id}/g" src/MEGASync/control/Version.h
 
 %if ( 0%{?fedora_version} && 0%{?fedora_version}<=39 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?centos_version} == 800 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150600 )
