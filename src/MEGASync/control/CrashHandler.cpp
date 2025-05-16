@@ -199,10 +199,11 @@ void CrashHandler::sendPendingCrashReports(QString userMessage, bool shouldSendL
     parameters["sentry[level]"] = "fatal";
     parameters["sentry[platform]"] = "native";
     std::string UID = Preferences::instance()->crashedUserID().toStdString();
-    parameters["sentry[tags][uid]"] = UID.empty() ? "invalid_user" : UID;
+    parameters["sentry[user][id]"] =
+        UID.empty() ? "invalid_user" : UID; // Used to properly increase affected users count
+    // Sentry Context section (these are not searchable)
     parameters["sentry[contexts][app][app_name]"] =
         QCoreApplication::applicationName().toStdString();
-    parameters["sentry[contexts][app][sdk_version]"] = Preferences::SDK_ID.toStdString();
     parameters["sentry[contexts][app][logs_uploaded]"] = shouldSendLogs ? "Yes" : "No";
     parameters["sentry[contexts][app][build_type]"] =
 #ifdef QT_DEBUG
@@ -210,11 +211,19 @@ void CrashHandler::sendPendingCrashReports(QString userMessage, bool shouldSendL
 #else
         "release";
 #endif
-    // User feedback if provided
     if (!userMessage.isEmpty())
     {
         parameters["sentry[contexts][user][feedback]"] = userMessage.toStdString();
     }
+    // Sentry standard tags
+    parameters["sentry[tags][os]"] = QSysInfo::prettyProductName().toStdString();
+    parameters["sentry[contexts][os][kernel_version]"] = QSysInfo::kernelVersion().toStdString();
+
+    // Custome tags (Use tags for indexing and searching the info in sentry)
+    parameters["sentry[tags][mega_sdk]"] = Preferences::SDK_ID.toStdString();
+    parameters["sentry[tags][auto_update]"] =
+        Preferences::instance()->updateAutomatically() ? "True" : "False";
+
     QtConcurrent::run(
         [=]()
         {
