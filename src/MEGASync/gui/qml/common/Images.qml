@@ -78,7 +78,7 @@ QtObject {
     readonly property url sync: imagesOnboardingPath + "sync.png"
     readonly property url syncIcon: imagesOnboardingPath + "syncb.svg"
 
-    readonly property url localSyncFolder: imagesOnboardingPath + "folder.svg"
+    readonly property url localSyncFolder: imagesOnboardingPath + "local_folder.png"
     readonly property url remoteSyncFolder: imagesOnboardingPath + "remote_folder.svg"
     readonly property url localFolderHeader: imagesOnboardingPath + "monitor.svg"
     readonly property url menuSync: imagesOnboardingPath + "more_horizontal.svg"

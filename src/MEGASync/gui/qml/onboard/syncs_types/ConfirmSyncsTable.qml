@@ -140,7 +140,7 @@ Rectangle {
                 height: borderRectangle.border.width
                 color: ColorTheme.borderSubtle
             }
-        } // Rectangle: headerRectangle
+        }
 
     } // Component: headerComponent
 
@@ -185,8 +185,7 @@ Rectangle {
                         SvgImage {
                             id: localFolderImage
 
-                            source: Images.folderOpen
-                            //color: ColorTheme.iconPrimary
+                            source: Images.localSyncFolder
                             sourceSize: Qt.size(16, 16)
                         }
 
@@ -206,8 +205,8 @@ Rectangle {
                         id: syncImage
 
                         source: Images.syncsConfirm
-                        //color: ColorTheme.iconPrimary
-                        sourceSize: Qt.size(16, 16)
+                        sourceSize: Qt.size(12, 12)
+                        anchors.verticalCenter: parent.verticalCenter
                     }
                 }
 
@@ -220,14 +219,13 @@ Rectangle {
                     Row {
                         id: remoteFolderImageText
 
-                        width: parent.width - menuImage.width - parent.leftPadding - root.headerMargin / 2
+                        width: parent.width - syncMenuButton.width - parent.leftPadding - root.headerMargin / 2
                         spacing: root.headerMargin / 2
 
                         SvgImage {
                             id: remoteFolderImage
 
                             source: Images.remoteSyncFolder
-                            //color: ColorTheme.iconPrimary
                             sourceSize: Qt.size(16, 16)
                         }
 
@@ -244,11 +242,19 @@ Rectangle {
                     }
 
                     SvgImage {
-                        id: menuImage
+                        id: syncMenuButton
 
                         source: Images.menuSync
-                        //color: ColorTheme.iconPrimary
                         sourceSize: Qt.size(16, 16)
+                        color: ColorTheme.iconSecondary
+
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                console.log("open menu dialog area")
+                            }
+                        }
                     }
                 }
             }
