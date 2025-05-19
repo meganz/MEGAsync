@@ -1,13 +1,19 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-#define VER_FILEVERSION 5, 12, 0, 0
-#define VER_FILEVERSION_CODE 51200
-#define VER_PRODUCTVERSION 5, 12, 0, 0
-// Update scripts relying on this value if you move it
+#define VER_MAJOR 5
+#define VER_MINOR 12
+#define VER_MICRO 0
+#define VER_RC 0
+// Format: "VER_MAJOR.VER_MINOR.VER_MICRO.VER_RC\0"
 #define VER_PRODUCTVERSION_STR "5.12.0.0\0"
+#define VER_PRODUCTVERSION VER_MAJOR, VER_MINOR, VER_MICRO, VER_RC
+#define VER_FILEVERSION VER_MAJOR, VER_MINOR, VER_MICRO, VER_RC
+#define VER_FILEVERSION_CODE (VER_MAJOR * 10000 + VER_MINOR * 100 + VER_MICRO)
 
+#ifndef VER_BUILD_ID
 #define VER_BUILD_ID 0
+#endif
 
 #define VER_COMPANYNAME_STR         "Mega Limited\0"
 #define VER_FILEDESCRIPTION_STR     "MEGAsync\0"
