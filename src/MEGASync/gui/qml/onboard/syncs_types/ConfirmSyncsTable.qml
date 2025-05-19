@@ -175,7 +175,6 @@ Rectangle {
                     id: localFolderImageTextLayout
 
                     leftPadding: root.headerMargin
-                    rightPadding: root.headerMargin
                     width: parent.width / 2
 
                     Row {
@@ -195,9 +194,12 @@ Rectangle {
                         Texts.Text {
                             id: localFolderText
 
-                            text: "Documents/MEGA"
+                            text: syncsDataAccess.localFolderCandidate
                             font.weight: Font.DemiBold
                             color: ColorTheme.textPrimary
+                            elide: Text.ElideRight
+                            wrapMode: Text.NoWrap
+                            width: parent.width - localFolderImage.width - parent.spacing
                         }
                     }
 
@@ -233,9 +235,12 @@ Rectangle {
                         Texts.Text {
                             id: remoteFolderText
 
-                            text: "/MEGA"
+                            text: syncsDataAccess.remoteFolderCandidate
                             font.weight: Font.DemiBold
                             color: ColorTheme.textPrimary
+                            elide: Text.ElideRight
+                            wrapMode: Text.NoWrap
+                            width: parent.width - remoteFolderImage.width - parent.spacing
                         }
                     }
 
