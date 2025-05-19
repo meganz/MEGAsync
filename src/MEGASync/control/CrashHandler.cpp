@@ -219,7 +219,8 @@ void CrashHandler::sendPendingCrashReports(QString userMessage, bool shouldSendL
     parameters["sentry[tags][os]"] = QSysInfo::prettyProductName().toStdString();
     parameters["sentry[contexts][os][kernel_version]"] = QSysInfo::kernelVersion().toStdString();
 
-    // Custome tags (Use tags for indexing and searching the info in sentry)
+    // Custom tags (Use tags for indexing and searching the info in sentry)
+    parameters["sentry[tags][build_id]"] = std::to_string(VER_BUILD_ID);
     parameters["sentry[tags][mega_sdk]"] = Preferences::SDK_ID.toStdString();
     parameters["sentry[tags][auto_update]"] =
         Preferences::instance()->updateAutomatically() ? "True" : "False";
