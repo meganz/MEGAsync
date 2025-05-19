@@ -707,7 +707,7 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Privacy- en gegevensbeleid</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Terms of Service</source>
@@ -5979,14 +5979,15 @@ Voer een andere naam in.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
-- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
-- Other bugs have been fixed and numerous improvements made.
+        <source>- We’ve improved how crash reports are handled, so we can fix issues faster.
+- New icons are now available in the Windows 11 context menu.
+- We’ve fixed bugs and made performance improvements behind the scenes.
 </source>
-        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
-        <translation>- Verfijningen toegevoegd aan de Windows 11 Explorer-contextmenu, voor een meer gestroomlijnde en gepolijste gebruikerservaring.
-- Probleem opgelost waarbij onjuiste standaard toestemmingsinstellingen werden toegepast op bestanden en mappen die tijdens de synchronisatie zijn gemaakt.
-- Andere bugs zijn opgelost en er zijn talloze verbeteringen aangebracht.</translation>
+        <translatorcomment>Change log for version 5.12.0. CON-1358</translatorcomment>
+        <translation>- We hebben de manier waarop crashmeldingen worden verwerkt verbeterd, zodat we problemen sneller kunnen oplossen.
+- Nieuwe pictogrammen zijn nu beschikbaar in het contextmenu van Windows 11.
+- We hebben bugs opgelost en de prestaties achter de schermen verbeterd.
+</translation>
     </message>
 </context>
 <context>
@@ -9423,11 +9424,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Overdracht tegoed overschreden</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.</source>
-        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Uw account upgraden om meer opslagruimte toe te voegen.</translation>
-    </message>
-    <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
         <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
         <translation>U kunt niet doorgaan met downloaden omdat u al het beschikbare overdrachtstegoed hebt gebruikt.[BR][BR]Als u meer tegoed wilt krijgen, moet u een ander betaald abonnement kopen.[BR][BR][B][A]Meer informatie over overdrachtstegoed.[/A][/B]</translation>
@@ -9451,6 +9447,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>per maand</translation>
+    </message>
+    <message>
+        <source>Upgrade your account to get more storage quota.</source>
+        <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
+        <translation>Uw account upgraden om meer opslagruimte te krijgen</translation>
     </message>
 </context>
 <context>

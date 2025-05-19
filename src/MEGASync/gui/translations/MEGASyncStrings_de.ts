@@ -706,7 +706,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Datenschutzrichtlinien</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Terms of Service</source>
@@ -5978,14 +5978,15 @@ Bitte geben Sie einen anderen Namen ein.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
-- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
-- Other bugs have been fixed and numerous improvements made.
+        <source>- We’ve improved how crash reports are handled, so we can fix issues faster.
+- New icons are now available in the Windows 11 context menu.
+- We’ve fixed bugs and made performance improvements behind the scenes.
 </source>
-        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
-        <translation>- Das Explorer-Kontextmenü unter Windows 11 wurde verbessert und bietet nun eine optimierte Benutzererfahrung.
-- Es wurde ein Problem behoben, das bei Dateien und Ordnern, die bei der Synchronisierung erstellt wurden, zu falschen Standard-Berechtigungseinstellungen führte.
-- Es wurden weitere Fehlerkorrekturen und zahlreiche Verbesserungen vorgenommen.</translation>
+        <translatorcomment>Change log for version 5.12.0. CON-1358</translatorcomment>
+        <translation>- Wir haben die Handhabung von Absturzberichten verbessert und können Probleme jetzt schneller beheben.
+- Im Windows-11-Kontextmenü sind neue Symbole verfügbar.
+- Wir haben Fehler behoben und die Leistung unter der Haube verbessert.
+</translation>
     </message>
 </context>
 <context>
@@ -9422,11 +9423,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Transfervolumen verbraucht</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.</source>
-        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Upgraden Sie Ihren Account, um mehr Speicherplatz zu erhalten.</translation>
-    </message>
-    <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
         <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
         <translation>Sie können den Download nicht fortsetzen, da Ihr Transfervolumen verbraucht ist.[BR][BR]Um mehr Volumen zu erhalten, kaufen Sie ein weiteres kostenpflichtigen Paket.[BR][BR][B][A]Erfahren Sie mehr über Transferkontingente.[/A][/B]</translation>
@@ -9450,6 +9446,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>pro Monat</translation>
+    </message>
+    <message>
+        <source>Upgrade your account to get more storage quota.</source>
+        <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
+        <translation>Upgraden Sie Ihren Account, um mehr Speicherplatz zu erhalten</translation>
     </message>
 </context>
 <context>
