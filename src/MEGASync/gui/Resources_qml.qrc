@@ -137,5 +137,6 @@
         <file>images/qml/onboarding/local_folder.png</file>
         <file>images/qml/onboarding/local_folder@2x.png</file>
         <file>images/qml/onboarding/local_folder@3x.png</file>
+        <file>images/qml/onboarding/minus-circle.svg</file>
     </qresource>
 </RCC>

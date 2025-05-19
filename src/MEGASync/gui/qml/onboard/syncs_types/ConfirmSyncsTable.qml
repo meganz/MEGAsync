@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
+import QtQuick.Controls 2.12 as QmlControlsv212
 
 import common 1.0
 
@@ -8,6 +9,8 @@ import components.texts 1.0 as Texts
 import components.images 1.0
 import components.busyIndicator 1.0
 import components.buttons 1.0
+import components.menus 1.0
+
 
 Rectangle {
     id: root
@@ -251,8 +254,74 @@ Rectangle {
                         MouseArea {
                             anchors.fill: parent
                             cursorShape: Qt.PointingHandCursor
+
                             onClicked: {
-                                console.log("open menu dialog area")
+                                let buttonX = syncMenuButton.mapToItem(null, 0, 0).x;
+                                let buttonY = syncMenuButton.mapToItem(null, 0, 0).y;
+                                let menuHeight = menu.height;
+                                let menuWidth = menu.width;
+                                let xOffset = syncMenuButton.width/2;
+                                let yOffset = syncMenuButton.height/2;
+                                if (buttonX + menuWidth > window.width) {
+                                    xOffset = xOffset - menuWidth; // Open left if close to right edge
+                                }
+                                if (buttonY + yOffset + menuHeight > window.height) {
+                                    yOffset =  yOffset - menuHeight; // Open upwards if close to bottom edge
+                                }
+                                menu.popup(xOffset, yOffset);
+                            }
+                        }
+
+                        ContextMenu {
+                            id: menu
+                            width: 200
+
+                            onFocusChanged: {
+                                if(menu.activeFocus === false){
+                                    menu.close();
+                                }
+                            }
+
+                            ContextMenuItem {
+                                id: editLocalFolder
+
+                                text: qsTr("Edit local folder")
+                                icon.source: Images.localFolderHeader
+                                onTriggered: {
+                                    console.log("edit local folder")
+                                }
+                            }
+
+                            ContextMenuItem {
+                                id: editRemoveFolder
+
+                                text: qsTr("Edit MEGA folder")
+                                icon.source: Images.remoteMegaHeader
+                                onTriggered: {
+                                    console.log("edit MEGA folder")
+                                }
+                            }
+
+                            QmlControlsv212.MenuSeparator {
+                                padding: 0
+                                topPadding: 4
+                                bottomPadding: 4
+
+                                contentItem: Rectangle {
+                                    implicitWidth: parent.width
+                                    implicitHeight: 1
+                                    color: ColorTheme.surface2
+                                }
+                            }
+
+                            ContextMenuItem {
+                                id: removeSync
+
+                                text: qsTr("Remove sync")
+                                icon.source: Images.removeSync
+                                onTriggered: {
+                                    console.log("edit MEGA folder")
+                                }
                             }
                         }
                     }
