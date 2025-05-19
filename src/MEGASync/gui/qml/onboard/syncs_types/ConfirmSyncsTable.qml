@@ -7,6 +7,7 @@ import common 1.0
 import components.texts 1.0 as Texts
 import components.images 1.0
 import components.busyIndicator 1.0
+import components.buttons 1.0
 
 Rectangle {
     id: root
@@ -14,6 +15,8 @@ Rectangle {
     readonly property int headerMargin: 24
     readonly property int headerHeight: 42
     readonly property int tableRadius: 8
+    readonly property int verticalMargin: 8
+    readonly property int horitzontalMargin: 7
 
     Layout.preferredWidth: width
     Layout.preferredHeight: height
@@ -45,7 +48,9 @@ Rectangle {
         delegate: delegateComponent
         header: headerComponent
         ScrollBar.vertical: ScrollBar {}
-        spacing: 5
+        spacing: root.verticalMargin
+        footer: footerComponent
+        footerPositioning: ListView.OverlayFooter
     }
 
     Component {
@@ -57,10 +62,11 @@ Rectangle {
             anchors {
                 left: parent.left
                 right: parent.right
-                margins: 7
+                leftMargin: root.horitzontalMargin
+                rightMargin: root.horitzontalMargin
             }
 
-            height: root.headerHeight
+            height: root.headerHeight + root.verticalMargin
             color: ColorTheme.pageBackground
 
             radius: root.radius
@@ -129,19 +135,11 @@ Rectangle {
                     bottom: parent.bottom
                     left: parent.left
                     right: parent.right
-                    margins: 5
+                    bottomMargin: root.verticalMargin
                 }
                 height: borderRectangle.border.width
                 color: ColorTheme.borderSubtle
             }
-
-            MouseArea {
-                id: headerMouseArea
-
-                anchors.fill: parent
-                hoverEnabled: true
-            }
-
         } // Rectangle: headerRectangle
 
     } // Component: headerComponent
@@ -155,7 +153,8 @@ Rectangle {
             anchors {
                 left: parent.left
                 right: parent.right
-                margins: 7
+                leftMargin: root.horitzontalMargin
+                rightMargin: root.horitzontalMargin
             }
 
             height: 24
@@ -180,7 +179,7 @@ Rectangle {
                     Row {
                         id: localFolderImageText
 
-                        width: parent.width * (4/5)
+                        width: parent.width - syncImage.width - parent.leftPadding
                         spacing: root.headerMargin / 2
 
                         SvgImage {
@@ -221,7 +220,7 @@ Rectangle {
                     Row {
                         id: remoteFolderImageText
 
-                        width: parent.width * (5/7)
+                        width: parent.width - menuImage.width - parent.leftPadding - root.headerMargin / 2
                         spacing: root.headerMargin / 2
 
                         SvgImage {
@@ -253,29 +252,70 @@ Rectangle {
                     }
                 }
             }
+        }
 
-            /*
+    } // Component: delegateComponent
+
+    Component {
+        id: footerComponent
+
+        Rectangle {
+            id: footerItem
+
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
+
+            height: root.headerHeight
+            color: ColorTheme.pageBackground
+
+            radius: root.radius
+            z: 3
+
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: false
+                cursorShape: Qt.ArrowCursor
+                onClicked: {
+                    mouse.accepted = false;
+                }
+            }
+
+            TextButton {
+                id: addSyncButton
+
+                anchors {
+                    left: parent.left
+                    verticalCenter: parent.verticalCenter
+                    leftMargin: 20
+                }
+                text: qsTr("Add more syncs")
+                sizes: SmallSizes { borderLess: true }
+                icons {
+                    source: Images.plus
+                    position: Icon.Position.LEFT
+                }
+
+                onClicked: {
+                    console.log("open add new sync dialog...")
+                }
+            }
+
             Rectangle {
                 id: lineRectangle
 
                 anchors {
-                    bottom: parent.bottom
+                    top: parent.top
                     left: parent.left
                     right: parent.right
+                    leftMargin: root.horitzontalMargin
+                    rightMargin: root.horitzontalMargin
                 }
                 height: borderRectangle.border.width
                 color: ColorTheme.borderSubtle
             }
-            */
-
-            MouseArea {
-                id: headerMouseArea
-
-                anchors.fill: parent
-                hoverEnabled: true
-            }
-
-        } // Rectangle: syncRow
-
-    } // Component: delegateComponent
+        }
+    } // Component: footerComponent
 }
+
