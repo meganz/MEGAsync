@@ -198,9 +198,11 @@ void CrashHandler::sendPendingCrashReports(QString userMessage, bool shouldSendL
     parameters["sentry[logger]"] = "breakpad";
     parameters["sentry[level]"] = "fatal";
     parameters["sentry[platform]"] = "native";
-    std::string UID = Preferences::instance()->crashedUserID().toStdString();
-    parameters["sentry[user][id]"] =
-        UID.empty() ? "invalid_user" : UID; // Used to properly increase affected users count
+    std::string deviceID = dynamic_cast<MegaApplication*>(qApp)->getMegaApi()->getDeviceId();
+    parameters["sentry[user][id]"] = deviceID.empty() ?
+                                         "invalid_user" :
+                                         deviceID; // Used to properly increase affected users count
+                                                   // for each installation (device ID is used).
     // Sentry Context section (these are not searchable)
     parameters["sentry[contexts][app][app_name]"] =
         QCoreApplication::applicationName().toStdString();
@@ -224,6 +226,8 @@ void CrashHandler::sendPendingCrashReports(QString userMessage, bool shouldSendL
     parameters["sentry[tags][mega_sdk]"] = Preferences::SDK_ID.toStdString();
     parameters["sentry[tags][auto_update]"] =
         Preferences::instance()->updateAutomatically() ? "True" : "False";
+    std::string UID = Preferences::instance()->crashedUserID().toStdString();
+    parameters["sentry[tags][user-handle]"] = UID.empty() ? "invalid_user" : UID;
 
     QtConcurrent::run(
         [=]()
