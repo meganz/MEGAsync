@@ -721,7 +721,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Privacy and Data Policy</translation>
+        <translation>Privacy Policy</translation>
     </message>
     <message>
         <source>Terms of Service</source>
@@ -6115,7 +6115,10 @@ Enter a different name.</translation>
 - We’ve fixed bugs and made performance improvements behind the scenes.
 </source>
         <translatorcomment>Change log for version 5.12.0. CON-1358</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- We’ve improved how crash reports are handled, so we can fix issues faster.
+- New icons are now available in the Windows 11 context menu.
+- We’ve fixed bugs and made performance improvements behind the scenes.
+</translation>
     </message>
 </context>
 <context>
@@ -9675,7 +9678,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Upgrade your account to get more storage quota.</source>
         <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Upgrade your account to get more storage quota</translation>
     </message>
 </context>
 <context>

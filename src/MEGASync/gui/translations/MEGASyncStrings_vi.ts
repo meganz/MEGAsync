@@ -706,7 +706,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Chính Sách Dữ Liệu và Riêng Tư</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Terms of Service</source>
@@ -5976,14 +5976,15 @@ Nhập một tên khác.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
-- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
-- Other bugs have been fixed and numerous improvements made.
+        <source>- We’ve improved how crash reports are handled, so we can fix issues faster.
+- New icons are now available in the Windows 11 context menu.
+- We’ve fixed bugs and made performance improvements behind the scenes.
 </source>
-        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
-        <translation>- Thêm tinh chỉnh cho menu ngữ cảnh Explorer của Windows 11, mang lại trải nghiệm người dùng được hợp lý và tinh tế hơn.
-- Giải quyết vấn đề với các thiết đặt quyền mặc định không chính xác áp dụng đối với các tệp tin và thư mục được tạo trong quá trình đồng bộ hóa.
-- Các lỗi khác đã được sửa và nhiều cải tiến đã được thực hiện.</translation>
+        <translatorcomment>Change log for version 5.12.0. CON-1358</translatorcomment>
+        <translation>- Chúng tôi đã cải thiện cách để báo cáo lỗi, để giúp việc khắc phục sự cố được nhanh hơn.
+- Các biểu tượng mới hiện có sẵn trong menu ngữ cảnh Windows 11.
+- Sửa lỗi và cải thiện hiệu suất bên trong ứng dụng.
+</translation>
     </message>
 </context>
 <context>
@@ -6884,7 +6885,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Help</source>
         <translatorcomment>Button label for Help in the lower left section of the dialog.</translatorcomment>
-        <translation>Thắc mắc cần trợ giúp</translation>
+        <translation>Cần trợ giúp</translation>
     </message>
     <message>
         <source>Install Update</source>
@@ -7527,7 +7528,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Help</source>
         <translatorcomment>Button label for Help in the lower left section of the dialog with link. to sync stall help page.SAT-199</translatorcomment>
-        <translation>Thắc mắc cần trợ giúp</translation>
+        <translation>Cần trợ giúp</translation>
     </message>
     <message>
         <source>No issues</source>
@@ -7883,7 +7884,7 @@ Làm mới danh sách.</translation>
     <message>
         <source>You’re helping to improve MEGA for you and everyone who uses it</source>
         <translatorcomment>Description text of the final view after sending the survey responses. CON-942</translatorcomment>
-        <translation>Lời của bạn sẽ đóng góp cải thiện MEGA cho bạn và tất cả những người sử dụng khác</translation>
+        <translation>Ý kiến của bạn sẽ đóng góp cải thiện MEGA cho bạn và tất cả những người sử dụng khác</translation>
     </message>
 </context>
 <context>
@@ -9352,7 +9353,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 billed yearly</source>
         <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
-        <translation>%1 mua hằng năm</translation>
+        <translation>%1 thu hằng năm</translation>
     </message>
     <message>
         <source>%1 per month</source>
@@ -9420,11 +9421,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Vượt mức băng thông truyền tải</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.</source>
-        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Nâng cấp tài khoản của bạn để nhận thêm mức dung lượng .</translation>
-    </message>
-    <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
         <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
         <translation>Bạn không thể tiếp tục tải xuống vì bạn đã sử dụng hết lượng băng thông truyền tải được cung cấp cho bạn.[BR][BR]Để có thêm băng thông, hãy mua một gói khác.[BR][BR][B][A]Tìm hiểu thêm về băng thông truyền tải.[/A][/B]</translation>
@@ -9448,6 +9444,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>mỗi tháng</translation>
+    </message>
+    <message>
+        <source>Upgrade your account to get more storage quota.</source>
+        <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
+        <translation>Nâng cấp tài khoản ngay để có thêm hạn mức lưu trữ</translation>
     </message>
 </context>
 <context>

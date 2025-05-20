@@ -721,7 +721,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Política de privacidad y de datos</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Terms of Service</source>
@@ -6110,14 +6110,15 @@ Introduzca un nombre diferente.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
-- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
-- Other bugs have been fixed and numerous improvements made.
+        <source>- We’ve improved how crash reports are handled, so we can fix issues faster.
+- New icons are now available in the Windows 11 context menu.
+- We’ve fixed bugs and made performance improvements behind the scenes.
 </source>
-        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
-        <translation>- Se han añadido mejoras en el menú contextual del explorador de Windows 11, para una experiencia de usuario más optimizada y refinada.
-- Se ha resuelto el problema por el que se aplicaban ajustes de permisos predeterminados incorrectos a los archivos y carpetas creados durante la sincronización.
-- Se han corregido otros errores y se han realizado numerosas mejoras.</translation>
+        <translatorcomment>Change log for version 5.12.0. CON-1358</translatorcomment>
+        <translation>- Hemos mejorado la forma en que se gestionan los informes de fallos para poder solucionar los problemas más rápido.
+- Ya están disponibles nuevos iconos en el menú contextual de Windows 11.
+- Hemos corregido errores y realizado mejoras de rendimiento entre bastidores.
+</translation>
     </message>
 </context>
 <context>
@@ -9651,8 +9652,8 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
     <message>
         <source>Upgrade your account to get more storage quota.</source>
-        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Amplía tu cuenta para obtener más cuota de almacenamiento.</translation>
+        <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
+        <translation>Amplía tu cuenta para obtener más cuota de almacenamiento</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
