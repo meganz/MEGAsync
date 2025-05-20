@@ -706,7 +706,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>개인정보 및 데이터 처리 방침</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Terms of Service</source>
@@ -5979,14 +5979,15 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
-- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
-- Other bugs have been fixed and numerous improvements made.
+        <source>- We’ve improved how crash reports are handled, so we can fix issues faster.
+- New icons are now available in the Windows 11 context menu.
+- We’ve fixed bugs and made performance improvements behind the scenes.
 </source>
-        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
-        <translation>- Windows 11 탐색기 컨텍스트 메뉴를 개선하여, 더욱 부드럽고 깔끔한 이용자 경험을 전달하게 되었습니다.
-- 동기화 중 파일과 폴더에 대한 잘못된 기본 권한 설정 문제를 해결하였습니다.
-- 다른 버그가 수정되었고 다양한 개선을 하였습니다.</translation>
+        <translatorcomment>Change log for version 5.12.0. CON-1358</translatorcomment>
+        <translation>- 문제를 더 빨리 처리할 수 있도록 충돌 보고서를 처리하는 방법을 향상하였습니다,
+- Windows 11 컨텍스트 메뉴에서 새 아이콘을 이용할 수 있습니다.
+- 눈에 띄지 않게 버그를 수정하고 성능을 향상하였습니다.
+</translation>
     </message>
 </context>
 <context>
@@ -9423,11 +9424,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>전송 할당량 초과</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.</source>
-        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>더 많은 저장소 할당량을 받으려면 계정을 업그레이드하세요.</translation>
-    </message>
-    <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
         <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
         <translation>이용 가능한 할당된 모든 전송 할당량을 이용하였기 때문에 다운로드를 계속할 수 없습니다.[BR][BR]더 많은 할당량을 받으려면, 다른 유료 요금제를 결제하세요.[BR][BR][B][A]전송 할당량에 대해 더 알아보세요.[/A][/B]</translation>
@@ -9451,6 +9447,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>월</translation>
+    </message>
+    <message>
+        <source>Upgrade your account to get more storage quota.</source>
+        <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
+        <translation>더 많은 저장소 할당량을 받으려면 업그레이드 하세요.</translation>
     </message>
 </context>
 <context>

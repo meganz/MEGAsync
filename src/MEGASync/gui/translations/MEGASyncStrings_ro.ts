@@ -706,7 +706,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Politica privind confidențialitatea și datele</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Terms of Service</source>
@@ -5979,14 +5979,15 @@ Introdu un alt nume.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
-- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
-- Other bugs have been fixed and numerous improvements made.
+        <source>- We’ve improved how crash reports are handled, so we can fix issues faster.
+- New icons are now available in the Windows 11 context menu.
+- We’ve fixed bugs and made performance improvements behind the scenes.
 </source>
-        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
-        <translation>- Adăugat rafinamente la Windows 11 Meniul contextual Explorer, oferind o experiență de utilizare mai simplificată și mai rafinată.
-- Problema rezolvată cu setările de permisiune implicite incorecte aplicate fișierelor și folderelor create în timpul sincronizării.
-- Alte erori au fost remediate și s-au făcut numeroase îmbunătățiri.</translation>
+        <translatorcomment>Change log for version 5.12.0. CON-1358</translatorcomment>
+        <translation>- Am îmbunătățit modul în care sunt gestionate rapoartele de avarie, astfel încât să putem remedia problemele mai repede.
+- Pictograme noi sunt acum disponibile în meniul contextual Windows 11.
+- Am remediat erorile și am făcut îmbunătățiri ale performanței în spatele scenei.
+</translation>
     </message>
 </context>
 <context>
@@ -9423,11 +9424,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Cotă de transfer depășită</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.</source>
-        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Actualizează-ți contul pentru a obține mai multă cotă de stocare.</translation>
-    </message>
-    <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
         <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
         <translation>Nu puteți continua descărcarea, deoarece ați utilizat toată cota de transfer disponibilă.[BR][BR]Pentru a obține mai multă cotă, achiziționați un alt abonament plătit.[BR][BR][B][A]Aflați mai multe despre cota de transfer.[/A][/B]</translation>
@@ -9451,6 +9447,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>pe lună</translation>
+    </message>
+    <message>
+        <source>Upgrade your account to get more storage quota.</source>
+        <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
+        <translation>Actualizează-ți contul pentru a obține mai multă cotă de stocare</translation>
     </message>
 </context>
 <context>
