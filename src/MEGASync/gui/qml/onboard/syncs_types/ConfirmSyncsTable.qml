@@ -10,7 +10,7 @@ import components.images 1.0
 import components.busyIndicator 1.0
 import components.buttons 1.0
 import components.menus 1.0
-
+import components.dialogs 1.0
 
 Rectangle {
     id: root
@@ -274,6 +274,7 @@ Rectangle {
 
                         ContextMenu {
                             id: menu
+
                             width: 200
 
                             onFocusChanged: {
@@ -372,8 +373,14 @@ Rectangle {
                     position: Icon.Position.LEFT
                 }
 
+                AddSyncDialog {
+                    id: addSyncDialog
+
+                    visible: false
+                }
+
                 onClicked: {
-                    console.log("open add new sync dialog...")
+                    addSyncDialog.visible = true;
                 }
             }
 

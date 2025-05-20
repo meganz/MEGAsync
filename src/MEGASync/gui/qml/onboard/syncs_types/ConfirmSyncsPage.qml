@@ -25,6 +25,7 @@ ConfirmSyncsPageForm {
         leftPrimary.visible: false;
     }
 
+
     Connections {
         target: syncsDataAccess
 
