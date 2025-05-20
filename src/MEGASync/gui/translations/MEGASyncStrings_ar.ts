@@ -706,7 +706,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>سياسة الخصوصية والبيانات</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Terms of Service</source>
@@ -5982,14 +5982,15 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
-- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
-- Other bugs have been fixed and numerous improvements made.
+        <source>- We’ve improved how crash reports are handled, so we can fix issues faster.
+- New icons are now available in the Windows 11 context menu.
+- We’ve fixed bugs and made performance improvements behind the scenes.
 </source>
-        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
-        <translation>- تمت إضافة تحسينات إلى قائمة سياق مستكشف ويندوز Windows 11 مما يوفر تجربة مستخدم أكثر انسيابية وصقلًا.
-- تم حل المشكلة مع إعدادات الأذونات الافتراضية غير الصحيحة المطبقة على الملفات والمجلدات التي تم إنشاؤها أثناء المزامنة.
-- تم إصلاح الأخطاء الأخرى وإجراء العديد من التحسينات.</translation>
+        <translatorcomment>Change log for version 5.12.0. CON-1358</translatorcomment>
+        <translation>- لقد قمنا بتحسين كيفية التعامل مع تقارير الأعطال، حتى نتمكن من إصلاح المشاكل بشكل أسرع.
+- الرموز الجديدة متاحة الآن في قائمة سياق ويندوز Windows 11.
+- لقد أصلحنا الأخطاء وأجرينا تحسينات على الأداء خلف الكواليس.
+</translation>
     </message>
 </context>
 <context>
@@ -9426,11 +9427,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>تم تجاوز حجم التراسل المتاح</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.</source>
-        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>قم بترقية حسابك للحصول على المزيد من مساحة التخزين.</translation>
-    </message>
-    <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
         <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
         <translation>لا يمكنك متابعة التنزيل لأنك استخدمت كل حجم تراسل المعطيات المتاح لك.[BR][BR]للحصول على المزيد من الحجم، قم بشراء باقة مدفوعة أخرى.[BR][BR][B][A]اعرف المزيد حول حجم تراسل المعطيات.[/A][/B]</translation>
@@ -9454,6 +9450,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>في الشهر</translation>
+    </message>
+    <message>
+        <source>Upgrade your account to get more storage quota.</source>
+        <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
+        <translation>قم بترقية حسابك للحصول على المزيد من مساحة التخزين</translation>
     </message>
 </context>
 <context>
