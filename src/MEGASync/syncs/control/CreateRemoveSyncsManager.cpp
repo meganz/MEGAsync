@@ -8,10 +8,11 @@
 #include "SyncSettings.h"
 
 const CreateRemoveSyncsManager* CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin origin,
-                                                                  mega::MegaHandle handle)
+                                                                  mega::MegaHandle handle,
+                                                                  const QString& localPath)
 {
     auto syncManager(new CreateRemoveSyncsManager());
-    syncManager->performAddSync(origin, handle);
+    syncManager->performAddSync(origin, handle, localPath);
     return syncManager;
 }
 
@@ -28,7 +29,9 @@ bool CreateRemoveSyncsManager::removeSync(std::shared_ptr<SyncSettings> syncSett
     return syncManager->performRemoveSync(syncSettings, parent);
 }
 
-void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin, mega::MegaHandle handle)
+void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin,
+                                              mega::MegaHandle handle,
+                                              const QString& localPath)
 {
     QString remoteFolder;
 
@@ -39,7 +42,7 @@ void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin, mega:
     }
 
     auto overQuotaDialog = MegaSyncApp->showSyncOverquotaDialog();
-    auto addSyncLambda = [overQuotaDialog, origin, remoteFolder, this]()
+    auto addSyncLambda = [overQuotaDialog, origin, remoteFolder, localPath, this]()
     {
         if (!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
@@ -54,6 +57,7 @@ void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin, mega:
             }
             syncsDialog->wrapper()->setSyncOrigin(origin);
             syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
+            syncsDialog->wrapper()->setLocalFolder(localPath);
             DialogOpener::showDialog(syncsDialog, [this]() {
                 deleteLater();
             });

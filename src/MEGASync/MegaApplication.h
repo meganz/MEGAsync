@@ -250,8 +250,8 @@ public slots:
     void processUploads();
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
-    void shellViewOnMega(QByteArray localPath, bool versions);
-    void shellViewOnMega(mega::MegaHandle handle, bool versions);
+    void shellViewOnMega(const QString& localPath, bool versions);
+    void shellViewOnMegaByHandle(mega::MegaHandle handle, bool versions);
     void exportNodes(QList<mega::MegaHandle> exportList, QStringList extraLinks = QStringList());
     void uploadFilesToNode(const QList<QUrl>& files, mega::MegaHandle targetNode, QWidget* caller);
     void externalDownload(QQueue<WrappedNode> newDownloadQueue);

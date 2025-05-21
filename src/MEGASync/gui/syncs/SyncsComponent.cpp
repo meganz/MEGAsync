@@ -87,6 +87,11 @@ void SyncsComponent::setRemoteFolder(const QString& remoteFolder)
     mSyncs->setRemoteFolder(remoteFolder);
 }
 
+void SyncsComponent::setLocalFolder(const QString& localFolder)
+{
+    mSyncs->setLocalFolderCandidate(localFolder);
+}
+
 void SyncsComponent::openExclusionsDialog(const QString& folder) const
 {
     if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())

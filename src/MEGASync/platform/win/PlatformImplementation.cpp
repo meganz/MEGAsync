@@ -4,6 +4,7 @@
 #include "RecursiveShellNotifier.h"
 #include "ThreadedQueueShellNotifier.h"
 #include "WinAPIShell.h"
+#include "WinShellDispatcherTask.h"
 #include "WinTrayReceiver.h"
 #include <AccCtrl.h>
 #include <Aclapi.h>

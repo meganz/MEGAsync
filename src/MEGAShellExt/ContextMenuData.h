@@ -1,10 +1,14 @@
 #ifndef CONTEXTMENUDATA_H
 #define CONTEXTMENUDATA_H
 
+#include "MEGAinterface.h"
+
 #include <shobjidl_core.h>
 #include <string>
 #include <vector>
 #include <windows.h>
+
+const size_t MAX_LONG_PATH = 32768;
 
 class ContextMenuData
 {
@@ -17,6 +21,7 @@ public:
     bool canRemoveFromLeftPane() const;
     bool canViewOnMEGA() const;
     bool canViewVersions() const;
+    bool canSync(MegaInterface::SyncType type) const;
     bool isMEGASyncOpen() const;
 
     void requestUpload();
@@ -24,11 +29,14 @@ public:
     void removeFromLeftPane();
     void viewOnMEGA();
     void viewVersions();
+    void requestSync(MegaInterface::SyncType type);
 
     int getUnsyncedFolders() const;
     int getUnsyncedFiles() const;
     int getSyncedFolders() const;
     int getSyncedFiles() const;
+
+    bool hasAnyOptionAvailable() const;
 
 protected:
     bool isSynced(int type, int state);
@@ -45,6 +53,12 @@ protected:
     int mUnsyncedFolders;
     int mUnsyncedFiles;
     int mUnsyncedUnknowns;
+
+    bool mCanSync;
+
+private:
+    bool isThereAnyUnsyncedItem() const;
+    bool isThereAnySyncedItem() const;
 };
 
 #endif

@@ -2,6 +2,7 @@
 
 #include "MEGAinterface.h"
 #include "RegUtils.h"
+#include "Utilities.h"
 
 void ContextMenuData::initialize(IShellItemArray* psiItemArray)
 {
@@ -45,9 +46,20 @@ void ContextMenuData::initialize(IShellItemArray* psiItemArray)
 
 void ContextMenuData::processPath(const std::wstring& path)
 {
+    WCHAR longPath[MAX_LONG_PATH];
+
+    std::wstring prefixedPath = L"\\\\?\\" + path;
+
+    DWORD result = GetLongPathNameW(prefixedPath.c_str(), longPath, MAX_LONG_PATH);
+
+    if (result <= 0 || result >= MAX_LONG_PATH)
+    {
+        return;
+    }
+
     WIN32_FILE_ATTRIBUTE_DATA fad;
     int type = MegaInterface::TYPE_UNKNOWN;
-    if (GetFileAttributesExW(path.data(), GetFileExInfoStandard, (LPVOID)&fad))
+    if (GetFileAttributesExW(longPath, GetFileExInfoStandard, (LPVOID)&fad))
     {
         type = (fad.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ? MegaInterface::TYPE_FOLDER :
                                                                    MegaInterface::TYPE_FILE;
@@ -61,8 +73,8 @@ void ContextMenuData::processPath(const std::wstring& path)
         }
     }
 
-    int state = MegaInterface::getPathState(path.data(), false);
-    mSelectedPaths.push_back(path);
+    int state = MegaInterface::getPathState(longPath, false);
+    mSelectedPaths.push_back(longPath);
     mPathStates.push_back(state);
     mPathTypes.push_back(type);
 
@@ -100,10 +112,21 @@ void ContextMenuData::processPath(const std::wstring& path)
     if ((type == MegaInterface::TYPE_FOLDER || type == MegaInterface::TYPE_NOTFOUND) &&
         !mInLeftPane.size())
     {
-        if (CheckLeftPaneIcon(const_cast<wchar_t*>(path.data()), false))
+        if (CheckLeftPaneIcon(const_cast<wchar_t*>(longPath), false))
         {
             mInLeftPane = path;
         }
+    }
+
+    // Check if we can still sync with the new path
+    //  If there is at least one non-syncable path, all of them are non-syncable
+    if (type != MegaInterface::TYPE_FOLDER)
+    {
+        mCanSync = false;
+    }
+    else
+    {
+        mCanSync &= state == MegaInterface::FILE_NOTFOUND_SYNCABLE;
     }
 }
 
@@ -120,11 +143,14 @@ void ContextMenuData::reset()
     mUnsyncedFolders = 0;
     mUnsyncedFiles = 0;
     mUnsyncedUnknowns = 0;
+
+    mCanSync = true;
 }
 
+// Only if all items are not synced
 bool ContextMenuData::canRequestUpload() const
 {
-    if (mUnsyncedFolders || mUnsyncedFiles)
+    if (!isThereAnySyncedItem() && isThereAnyUnsyncedItem())
     {
         return true;
     }
@@ -132,9 +158,10 @@ bool ContextMenuData::canRequestUpload() const
     return false;
 }
 
+// Only if all items are synced
 bool ContextMenuData::canRequestGetLinks() const
 {
-    if (mSyncedFolders || mSyncedFiles)
+    if (isThereAnySyncedItem() && !isThereAnyUnsyncedItem())
     {
         return true;
     }
@@ -142,9 +169,10 @@ bool ContextMenuData::canRequestGetLinks() const
     return false;
 }
 
+// Only if all items are in the left pane
 bool ContextMenuData::canRemoveFromLeftPane() const
 {
-    if (mInLeftPane.size())
+    if (mInLeftPane.size() == mSelectedPaths.size())
     {
         return true;
     }
@@ -152,10 +180,10 @@ bool ContextMenuData::canRemoveFromLeftPane() const
     return false;
 }
 
+// Only for synced folders
 bool ContextMenuData::canViewOnMEGA() const
 {
-    if (!mUnsyncedFiles && !mUnsyncedFolders && !mUnsyncedUnknowns && !mSyncedUnknowns &&
-        mSelectedPaths.size() == 1 && (mSyncedFiles + mSyncedFolders) == 1 && mSyncedFolders)
+    if (mSelectedPaths.size() == 1 && mSyncedFolders)
     {
         return true;
     }
@@ -163,15 +191,37 @@ bool ContextMenuData::canViewOnMEGA() const
     return false;
 }
 
+// Only for synced files
 bool ContextMenuData::canViewVersions() const
 {
-    if (!mUnsyncedFiles && !mUnsyncedFolders && !mUnsyncedUnknowns && !mSyncedUnknowns &&
-        mSelectedPaths.size() == 1 && (mSyncedFiles + mSyncedFolders) == 1 && !mSyncedFolders)
+    if (mSelectedPaths.size() == 1 && mSyncedFiles)
     {
         return true;
     }
 
     return false;
+}
+
+// Only if all items are syncable
+bool ContextMenuData::canSync(MegaInterface::SyncType type) const
+{
+    // We only allow syncing a single folder (for the moment)
+    if (type == MegaInterface::SyncType::TYPE_TWOWAY && mSelectedPaths.size() > 1)
+    {
+        return false;
+    }
+
+    return mCanSync;
+}
+
+bool ContextMenuData::isThereAnyUnsyncedItem() const
+{
+    return mUnsyncedFiles || mUnsyncedFolders || mUnsyncedUnknowns || mSyncedUnknowns;
+}
+
+bool ContextMenuData::isThereAnySyncedItem() const
+{
+    return mSyncedFiles || mSyncedFolders;
 }
 
 bool ContextMenuData::isSynced(int type, int state)
@@ -182,7 +232,8 @@ bool ContextMenuData::isSynced(int type, int state)
 
 bool ContextMenuData::isUnsynced(int state)
 {
-    return (state == MegaInterface::FILE_NOTFOUND);
+    return (state == MegaInterface::FILE_NOTFOUND_NON_SYNCABLE ||
+            state == MegaInterface::FILE_NOTFOUND_SYNCABLE);
 }
 
 bool ContextMenuData::isMEGASyncOpen() const
@@ -243,6 +294,16 @@ void ContextMenuData::viewVersions()
     }
 }
 
+void ContextMenuData::requestSync(MegaInterface::SyncType type)
+{
+    if (mSelectedPaths.size() > 0)
+    {
+        MegaInterface::sync(mSelectedPaths, type);
+
+        MegaInterface::endRequest();
+    }
+}
+
 int ContextMenuData::getUnsyncedFolders() const
 {
     return mUnsyncedFolders;
@@ -261,4 +322,12 @@ int ContextMenuData::getSyncedFolders() const
 int ContextMenuData::getSyncedFiles() const
 {
     return mSyncedFiles;
+}
+
+bool ContextMenuData::hasAnyOptionAvailable() const
+{
+    return (canRequestGetLinks() || canRemoveFromLeftPane() ||
+            canSync(MegaInterface::SyncType::TYPE_TWOWAY) ||
+            canSync(MegaInterface::SyncType::TYPE_BACKUP) || canRequestUpload() ||
+            canViewOnMEGA() || canViewVersions());
 }

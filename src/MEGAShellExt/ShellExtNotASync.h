@@ -11,7 +11,7 @@ public:
     STDMETHOD(GetOverlayInfo)(LPWSTR pwszIconFile, int cchMax, int *pIndex, DWORD* pdwFlags) override;
     STDMETHOD(IsMemberOf)(LPCWSTR pwszPath,DWORD dwAttrib) override;
 
-    ShellExtNotASync(int id);
+    ShellExtNotASync();
 };
 
 #endif

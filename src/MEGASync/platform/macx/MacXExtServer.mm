@@ -33,7 +33,11 @@ MacXExtServer::MacXExtServer(MegaApplication *app)
 
     connect(this, &MacXExtServer::newUploadQueue, app, &MegaApplication::shellUpload,Qt::QueuedConnection);
     connect(this, &MacXExtServer::newExportQueue, app, &MegaApplication::shellExport,Qt::QueuedConnection);
-    connect(this, SIGNAL(viewOnMega(QByteArray, bool)), app, SLOT(shellViewOnMega(QByteArray, bool)),Qt::QueuedConnection);
+    connect(this,
+            &MacXExtServer::viewOnMega,
+            receiver,
+            &MegaApplication::shellViewOnMega,
+            Qt::QueuedConnection);
 }
 
 MacXExtServer::~MacXExtServer()
@@ -271,7 +275,7 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
             QFileInfo file(QString::fromUtf8(content));
             if (file.exists())
             {
-                emit viewOnMega(file.filePath().toUtf8(), false);
+                emit viewOnMega(file.filePath(), false);
             }
             return false;
         }
@@ -280,7 +284,7 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
             QFileInfo file(QString::fromUtf8(content));
             if (file.exists())
             {
-                emit viewOnMega(file.filePath().toUtf8(), true);
+                emit viewOnMega(file.filePath(), true);
             }
             return false;
         }

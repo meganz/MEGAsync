@@ -8,6 +8,18 @@ ContextMenuCommandBase::ContextMenuCommandBase(const std::wstring& id):
     mId(id)
 {}
 
+void ContextMenuCommandBase::SetTitle(MegaInterface::StringID id, LPWSTR* ppszName)
+{
+    std::wstring title;
+    auto menuText = MegaInterface::getString(id);
+    if (menuText)
+    {
+        title = menuText.get();
+    }
+
+    SHStrDup(title.data(), ppszName);
+}
+
 IFACEMETHODIMP ContextMenuCommandBase::GetCanonicalName(GUID* pguidCommandName)
 {
     *pguidCommandName = GUID_NULL;

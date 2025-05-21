@@ -45,6 +45,8 @@ extern long g_cDllRef;
 #define IDM_REMOVEFROMLEFTPANE 2
 #define IDM_VIEWONMEGA 3
 #define IDM_VIEWVERSIONS 4
+#define IDM_SYNC 5
+#define IDM_BACKUP 6
 
 ContextMenuExt::ContextMenuExt(void):
     m_cRef(1),
@@ -80,7 +82,19 @@ ContextMenuExt::ContextMenuExt(void):
     m_pszViewVersionsVerbCanonicalName("ViewVersions"),
     m_pwszViewVersionsVerbCanonicalName(L"ViewVersions"),
     m_pszViewVersionsVerbHelpText("View previous versions"),
-    m_pwszViewVersionsVerbHelpText(L"View previous versions")
+    m_pwszViewVersionsVerbHelpText(L"View previous versions"),
+    m_pszSyncVerb("Sync"),
+    m_pwszSyncVerb(L"Sync"),
+    m_pszSyncVerbCanonicalName("Sync"),
+    m_pwszSyncVerbCanonicalName(L"Sync"),
+    m_pszSyncVerbHelpText("Sync"),
+    m_pwszSyncVerbHelpText(L"Sync"),
+    m_pszBackupVerb("Backup"),
+    m_pwszBackupVerb(L"Backup"),
+    m_pszBackupVerbCanonicalName("Backup"),
+    m_pwszBackupVerbCanonicalName(L"Backup"),
+    m_pszBackupVerbHelpText("Backup"),
+    m_pwszBackupVerbHelpText(L"Backup")
 {
     hIcon = NULL;
     m_hMenuBmp = NULL;
@@ -418,71 +432,61 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(HMENU hMenu,
         int lastItem = 0;
         if (mUnsyncedFolders || mUnsyncedFiles)
         {
-            LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_UPLOAD,
-                                                       mUnsyncedFiles,
-                                                       mUnsyncedFolders);
-            if (menuText)
+            if (createAndAddMenuItem(MegaInterface::STRING_UPLOAD,
+                                     IDM_UPLOAD,
+                                     hMenu,
+                                     indexMenu,
+                                     idCmdFirst))
             {
-                MENUITEMINFO mii = {sizeof(mii)};
-                mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
-                mii.wID = idCmdFirst + IDM_UPLOAD;
-                mii.fType = MFT_STRING;
-                mii.dwTypeData = menuText;
-                mii.fState = MFS_ENABLED;
-                mii.hbmpItem = (legacyIcon || !m_hMenuBmp) ? HBMMENU_CALLBACK : m_hMenuBmp;
-                if (!InsertMenuItem(hMenu, indexMenu++, TRUE, &mii))
-                {
-                    delete menuText;
-                    return HRESULT_FROM_WIN32(GetLastError());
-                }
-                delete menuText;
                 lastItem = IDM_UPLOAD;
+            }
+
+            if (canSync(MegaInterface::SyncType::TYPE_TWOWAY))
+            {
+                if (createAndAddMenuItem(MegaInterface::STRING_SYNC,
+                                         IDM_SYNC,
+                                         hMenu,
+                                         indexMenu,
+                                         idCmdFirst))
+                {
+                    lastItem = IDM_SYNC;
+                }
+            }
+
+            if (canSync(MegaInterface::SyncType::TYPE_BACKUP))
+            {
+                // Users will be able to create as many backups as possible
+                if (createAndAddMenuItem(MegaInterface::STRING_BACKUP,
+                                         IDM_BACKUP,
+                                         hMenu,
+                                         indexMenu,
+                                         idCmdFirst))
+                {
+                    lastItem = IDM_BACKUP;
+                }
             }
         }
 
         if (mSyncedFolders || mSyncedFiles)
         {
-            LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_GETLINK,
-                                                       mSyncedFiles,
-                                                       mSyncedFolders);
-            if (menuText)
+            if (createAndAddMenuItem(MegaInterface::STRING_GETLINK,
+                                     IDM_GETLINK,
+                                     hMenu,
+                                     indexMenu,
+                                     idCmdFirst))
             {
-                MENUITEMINFO mii = {sizeof(mii)};
-                mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
-                mii.wID = idCmdFirst + IDM_GETLINK;
-                mii.fType = MFT_STRING;
-                mii.dwTypeData = menuText;
-                mii.fState = MFS_ENABLED;
-                mii.hbmpItem = (legacyIcon || !m_hMenuBmp) ? HBMMENU_CALLBACK : m_hMenuBmp;
-                if (!InsertMenuItem(hMenu, indexMenu++, TRUE, &mii))
-                {
-                    delete menuText;
-                    return HRESULT_FROM_WIN32(GetLastError());
-                }
-                delete menuText;
                 lastItem = IDM_GETLINK;
             }
         }
 
         if (mInLeftPane.size())
         {
-            LPWSTR menuText =
-                MegaInterface::getString(MegaInterface::STRING_REMOVE_FROM_LEFT_PANE, 0, 0);
-            if (menuText)
+            if (createAndAddMenuItem(MegaInterface::STRING_REMOVE_FROM_LEFT_PANE,
+                                     IDM_REMOVEFROMLEFTPANE,
+                                     hMenu,
+                                     indexMenu,
+                                     idCmdFirst))
             {
-                MENUITEMINFO mii = {sizeof(mii)};
-                mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
-                mii.wID = idCmdFirst + IDM_REMOVEFROMLEFTPANE;
-                mii.fType = MFT_STRING;
-                mii.dwTypeData = menuText;
-                mii.fState = MFS_ENABLED;
-                mii.hbmpItem = (legacyIcon || !m_hMenuBmp) ? HBMMENU_CALLBACK : m_hMenuBmp;
-                if (!InsertMenuItem(hMenu, indexMenu++, TRUE, &mii))
-                {
-                    delete menuText;
-                    return HRESULT_FROM_WIN32(GetLastError());
-                }
-                delete menuText;
                 lastItem = IDM_REMOVEFROMLEFTPANE;
             }
         }
@@ -493,47 +497,23 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(HMENU hMenu,
             // One synced file or folder selected
             if (mSyncedFolders)
             {
-                LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_VIEW_ON_MEGA,
-                                                           mSyncedFiles,
-                                                           mSyncedFolders);
-                if (menuText)
+                if (createAndAddMenuItem(MegaInterface::STRING_VIEW_ON_MEGA,
+                                         IDM_VIEWONMEGA,
+                                         hMenu,
+                                         indexMenu,
+                                         idCmdFirst))
                 {
-                    MENUITEMINFO mii = {sizeof(mii)};
-                    mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
-                    mii.wID = idCmdFirst + IDM_VIEWONMEGA;
-                    mii.fType = MFT_STRING;
-                    mii.dwTypeData = menuText;
-                    mii.fState = MFS_ENABLED;
-                    mii.hbmpItem = (legacyIcon || !m_hMenuBmp) ? HBMMENU_CALLBACK : m_hMenuBmp;
-                    if (!InsertMenuItem(hMenu, indexMenu++, TRUE, &mii))
-                    {
-                        delete menuText;
-                        return HRESULT_FROM_WIN32(GetLastError());
-                    }
-                    delete menuText;
                     lastItem = IDM_VIEWONMEGA;
                 }
             }
             else
             {
-                LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_VIEW_VERSIONS,
-                                                           mSyncedFiles,
-                                                           mSyncedFolders);
-                if (menuText)
+                if (createAndAddMenuItem(MegaInterface::STRING_VIEW_VERSIONS,
+                                         IDM_VIEWVERSIONS,
+                                         hMenu,
+                                         indexMenu,
+                                         idCmdFirst))
                 {
-                    MENUITEMINFO mii = {sizeof(mii)};
-                    mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
-                    mii.wID = idCmdFirst + IDM_VIEWVERSIONS;
-                    mii.fType = MFT_STRING;
-                    mii.dwTypeData = menuText;
-                    mii.fState = MFS_ENABLED;
-                    mii.hbmpItem = (legacyIcon || !m_hMenuBmp) ? HBMMENU_CALLBACK : m_hMenuBmp;
-                    if (!InsertMenuItem(hMenu, indexMenu++, TRUE, &mii))
-                    {
-                        delete menuText;
-                        return HRESULT_FROM_WIN32(GetLastError());
-                    }
-                    delete menuText;
                     lastItem = IDM_VIEWVERSIONS;
                 }
             }
@@ -556,6 +536,39 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(HMENU hMenu,
     __except (EXCEPTION_EXECUTE_HANDLER)
     {}
     return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(0));
+}
+
+//
+//   FUNCTION: ContextMenuExt::createAndAddMenuItem
+//
+//   PURPOSE: Creates and insert an item inside the context menu
+//            It only needs the string id and the type id
+//            points to a structure that contains the needed information.
+//
+bool ContextMenuExt::createAndAddMenuItem(MegaInterface::StringID request,
+                                          UINT IDM,
+                                          HMENU hMenu,
+                                          UINT indexMenu,
+                                          UINT idCmdFirst)
+{
+    auto menuText = MegaInterface::getString(request);
+    if (menuText)
+    {
+        MENUITEMINFO mii = {sizeof(mii)};
+        mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
+        mii.wID = idCmdFirst + IDM;
+        mii.fType = MFT_STRING;
+        mii.dwTypeData = menuText.get();
+        mii.fState = MFS_ENABLED;
+        mii.hbmpItem = (legacyIcon || !m_hMenuBmp) ? HBMMENU_CALLBACK : m_hMenuBmp;
+        if (!InsertMenuItem(hMenu, indexMenu++, TRUE, &mii))
+        {
+            return HRESULT_FROM_WIN32(GetLastError());
+        }
+        return true;
+    }
+
+    return false;
 }
 
 //
@@ -624,6 +637,14 @@ IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
             else if (!StrCmpIA(pici->lpVerb, m_pszViewVersionsVerb))
             {
                 viewVersions();
+            }
+            else if (!StrCmpIA(pici->lpVerb, m_pszSyncVerb))
+            {
+                requestSync(MegaInterface::SyncType::TYPE_TWOWAY);
+            }
+            else if (!StrCmpIA(pici->lpVerb, m_pszBackupVerb))
+            {
+                requestSync(MegaInterface::SyncType::TYPE_BACKUP);
             }
             else
             {
@@ -694,6 +715,14 @@ IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
             else if (LOWORD(pici->lpVerb) == IDM_VIEWVERSIONS)
             {
                 viewVersions();
+            }
+            else if (LOWORD(pici->lpVerb) == IDM_SYNC)
+            {
+                requestSync(MegaInterface::SyncType::TYPE_TWOWAY);
+            }
+            else if (LOWORD(pici->lpVerb) == IDM_BACKUP)
+            {
+                requestSync(MegaInterface::SyncType::TYPE_BACKUP);
             }
             else
             {
@@ -854,6 +883,56 @@ IFACEMETHODIMP ContextMenuExt::GetCommandString(UINT_PTR idCommand,
                     hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName),
                                        cchMax,
                                        m_pwszViewVersionsVerbCanonicalName);
+                    break;
+
+                default:
+                    hr = S_OK;
+            }
+        }
+        else if (idCommand == IDM_SYNC)
+        {
+            switch (uFlags)
+            {
+                case GCS_HELPTEXTW:
+                    // Only useful for pre-Vista versions of Windows that have a
+                    // Status bar.
+                    hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName),
+                                       cchMax,
+                                       m_pwszSyncVerbHelpText);
+                    break;
+
+                case GCS_VERBW:
+                    // GCS_VERBW is an optional feature that enables a caller to
+                    // discover the canonical name for the verb passed in through
+                    // idCommand.
+                    hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName),
+                                       cchMax,
+                                       m_pwszSyncVerbCanonicalName);
+                    break;
+
+                default:
+                    hr = S_OK;
+            }
+        }
+        else if (idCommand == IDM_BACKUP)
+        {
+            switch (uFlags)
+            {
+                case GCS_HELPTEXTW:
+                    // Only useful for pre-Vista versions of Windows that have a
+                    // Status bar.
+                    hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName),
+                                       cchMax,
+                                       m_pwszBackupVerbHelpText);
+                    break;
+
+                case GCS_VERBW:
+                    // GCS_VERBW is an optional feature that enables a caller to
+                    // discover the canonical name for the verb passed in through
+                    // idCommand.
+                    hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName),
+                                       cchMax,
+                                       m_pwszBackupVerbCanonicalName);
                     break;
 
                 default:

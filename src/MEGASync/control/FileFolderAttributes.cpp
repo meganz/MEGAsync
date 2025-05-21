@@ -125,9 +125,10 @@ QObject *FileFolderAttributes::requestReady(int type, QObject *caller)
 
 
 //LOCAL
-LocalFileFolderAttributes::LocalFileFolderAttributes(const QString &path, QObject *parent)
-    : FileFolderAttributes(parent),
-      mPath(path)
+LocalFileFolderAttributes::LocalFileFolderAttributes(const QString& path, QObject* parent):
+    FileFolderAttributes(parent),
+    mPath(path),
+    mDirectoryIsEmpty(true)
 {
     connect(&mModifiedTimeWatcher, &QFutureWatcher<QDateTime>::finished,
             this, &LocalFileFolderAttributes::onModifiedTimeCalculated);
@@ -135,8 +136,13 @@ LocalFileFolderAttributes::LocalFileFolderAttributes(const QString &path, QObjec
     connect(&mFolderSizeFuture, &QFutureWatcher<qint64>::finished,
             this, &LocalFileFolderAttributes::onSizeCalculated);
 
-    QDirIterator filesIt(mPath, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks, QDirIterator::Subdirectories);
-    mDirectoryIsEmpty = !filesIt.hasNext();
+    if (!mPath.isEmpty())
+    {
+        QDirIterator filesIt(mPath,
+                             QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
+                             QDirIterator::Subdirectories);
+        mDirectoryIsEmpty = !filesIt.hasNext();
+    }
 }
 
 void LocalFileFolderAttributes::requestSize(QObject* caller, std::function<void(qint64)> func)

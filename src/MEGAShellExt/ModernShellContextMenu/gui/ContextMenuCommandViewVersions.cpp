@@ -11,18 +11,7 @@ ContextMenuCommandViewVersions::ContextMenuCommandViewVersions():
 IFACEMETHODIMP ContextMenuCommandViewVersions::GetTitle(IShellItemArray* psiItemArray,
                                                         LPWSTR* ppszName)
 {
-    std::wstring title;
-    int syncedFolders = mContextMenuData.getSyncedFolders();
-    int syncedFiles = mContextMenuData.getSyncedFiles();
-    LPWSTR menuText =
-        MegaInterface::getString(MegaInterface::STRING_VIEW_VERSIONS, syncedFiles, syncedFolders);
-    if (menuText)
-    {
-        title = menuText;
-        delete menuText;
-    }
-
-    SHStrDup(title.data(), ppszName);
+    SetTitle(MegaInterface::STRING_VIEW_VERSIONS, ppszName);
 
     return S_OK;
 }

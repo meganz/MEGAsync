@@ -6,7 +6,7 @@
 #include "ContextMenuCommand.h"
 #include "ContextMenuCommandGetLink.h"
 #include "ContextMenuCommandRemoveFromLeftPane.h"
-#include "ContextMenuCommandSeparator.h"
+#include "ContextMenuCommandSyncBackup.h"
 #include "ContextMenuCommandUpload.h"
 #include "ContextMenuCommandView.h"
 #include "ContextMenuCommandViewVersions.h"

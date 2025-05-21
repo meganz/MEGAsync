@@ -2,7 +2,6 @@
 #define WINDOWSPLATFORM_H
 
 #include "AbstractPlatform.h"
-#include "platform/win/WinShellDispatcherTask.h"
 
 #include <QApplication>
 #include <QDir>
@@ -13,6 +12,8 @@
 #include <QProcess>
 #include <QString>
 #include <QThread>
+
+class WinShellDispatcherTask;
 
 class PlatformImplementation : public AbstractPlatform
 {

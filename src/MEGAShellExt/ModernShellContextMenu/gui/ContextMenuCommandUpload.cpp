@@ -8,21 +8,9 @@ ContextMenuCommandUpload::ContextMenuCommandUpload():
     ContextMenuCommandBase(L"ContextMenuCommandUpload")
 {}
 
-IFACEMETHODIMP ContextMenuCommandUpload::GetTitle(IShellItemArray* psiItemArray, LPWSTR* ppszName)
+IFACEMETHODIMP ContextMenuCommandUpload::GetTitle(IShellItemArray*, LPWSTR* ppszName)
 {
-    std::wstring title;
-
-    int unsyncedFolders = mContextMenuData.getUnsyncedFolders();
-    int unsyncedFiles = mContextMenuData.getUnsyncedFiles();
-    LPWSTR menuText =
-        MegaInterface::getString(MegaInterface::STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
-    if (menuText)
-    {
-        title = menuText;
-        delete menuText;
-    }
-
-    SHStrDup(title.data(), ppszName);
+    SetTitle(MegaInterface::STRING_UPLOAD, ppszName);
 
     return S_OK;
 }

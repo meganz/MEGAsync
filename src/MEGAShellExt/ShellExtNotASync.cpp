@@ -12,12 +12,13 @@
 extern HINSTANCE g_hInst;
 extern long g_cDllRef;
 
-ShellExtNotASync::ShellExtNotASync(int id) : ShellExt(id)
+ShellExtNotASync::ShellExtNotASync():
+    ShellExt(0)
 {
 
 }
 
-HRESULT ShellExtNotASync::GetOverlayInfo(PWSTR pwszIconFile, int cchMax, int *pIndex, DWORD *pdwFlags)
+HRESULT ShellExtNotASync::GetOverlayInfo(PWSTR, int, int*, DWORD*)
 {
     return S_OK;
 }
@@ -30,7 +31,7 @@ HRESULT ShellExtNotASync::IsMemberOf(PCWSTR pwszPath, DWORD dwAttrib)
 
         MegaInterface::FileState state = MegaInterface::getPathState(pwszPath);
 
-        if (state == MegaInterface::FILE_NOTFOUND || state == MegaInterface::FILE_IGNORED)
+        if (state >= MegaInterface::FILE_NOTFOUND_NON_SYNCABLE)
         {
             SHFILEINFOW sfi = {0};
             DWORD_PTR hr = SHGetFileInfo(pwszPath,

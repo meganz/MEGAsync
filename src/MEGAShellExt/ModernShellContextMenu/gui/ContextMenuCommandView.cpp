@@ -8,20 +8,9 @@ ContextMenuCommandView::ContextMenuCommandView():
     ContextMenuCommandBase(L"ContextMenuCommandView")
 {}
 
-IFACEMETHODIMP ContextMenuCommandView::GetTitle(IShellItemArray* psiItemArray, LPWSTR* ppszName)
+IFACEMETHODIMP ContextMenuCommandView::GetTitle(IShellItemArray*, LPWSTR* ppszName)
 {
-    std::wstring title;
-    int syncedFolders = mContextMenuData.getSyncedFolders();
-    int syncedFiles = mContextMenuData.getSyncedFiles();
-    LPWSTR menuText =
-        MegaInterface::getString(MegaInterface::STRING_VIEW_ON_MEGA, syncedFiles, syncedFolders);
-    if (menuText)
-    {
-        title = menuText;
-        delete menuText;
-    }
-
-    SHStrDup(title.data(), ppszName);
+    SetTitle(MegaInterface::STRING_VIEW_ON_MEGA, ppszName);
 
     return S_OK;
 }
