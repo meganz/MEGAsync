@@ -17,23 +17,22 @@ Window {
     readonly property int dialogMargin: 24
     readonly property int dialogWidth: 453
     readonly property int dialogHeight: 344
+    readonly property int buttonsSpacing: 12
+    readonly property int dialogRadius: 10
+    readonly property int defaultSpacing: 32
+    readonly property int defaultTopMargin: 16
 
     width: root.dialogWidth
     height: root.dialogHeight
-    minimumWidth: root.dialogWidth
-    minimumHeight: root.dialogHeight
-    maximumWidth: root.dialogWidth
-    maximumHeight: root.dialogHeight
     flags: Qt.Dialog | Qt.FramelessWindowHint
     modality: Qt.WindowModal
-
     color: "transparent"
 
     Rectangle {
         id: mainArea
 
         color: ColorTheme.surface1
-        radius: 10
+        radius: dialogRadius
 
         anchors {
             fill: parent
@@ -51,7 +50,6 @@ Window {
 
             lineHeightMode: Text.FixedHeight
             lineHeight: 24
-            wrapMode: Text.Wrap
             font {
                 pixelSize: Texts.Text.Size.MEDIUM_LARGE
                 weight: Font.DemiBold
@@ -76,9 +74,8 @@ Window {
                 title: SyncsStrings.selectLocalFolder
                 leftIconSource: Images.pc
                 chosenPath: syncsDataAccess.defaultLocalFolder
-                Layout.preferredWidth: parent.width + 8
-                Layout.leftMargin: -4
-                Layout.topMargin: 16
+                Layout.preferredWidth: parent.width
+                Layout.topMargin: root.defaultTopMargin
             }
 
             ChooseSyncFolder {
@@ -87,42 +84,39 @@ Window {
                 title: SyncsStrings.selectMEGAFolder
                 leftIconSource: Images.megaOutline
                 chosenPath: syncsDataAccess.defaultRemoteFolder
-                Layout.preferredWidth: parent.width + 8
-                Layout.leftMargin: -4
+                Layout.preferredWidth: parent.width
+            }
+
+            Row {
+                id: buttonRow
+
+                Layout.topMargin: root.defaultTopMargin
+                Layout.alignment: Qt.AlignRight
+                layoutDirection: Qt.RightToLeft
+                spacing: root.buttonsSpacing
+
+                PrimaryButton {
+                    id: acceptButton
+
+                    text: qsTr("Add")
+                    onClicked: {
+                        accepted();
+                        root.close();
+                    }
+                }
+
+                OutlineButton {
+                    id: cancelButton
+
+                    text: qsTr("Cancel")
+                    visible: true
+                    onClicked: {
+                        rejected();
+                        root.close();
+                    }
+                }
             }
         }
 
-        PrimaryButton {
-            id: acceptButton
-
-            text: qsTr("Add")
-            anchors{
-                right: parent.right
-                bottom: parent.bottom
-                margins: dialogMargin
-            }
-
-            onClicked: {
-                accepted();
-                root.close();
-            }
-        }
-
-        OutlineButton {
-            id: cancelButton
-
-            text: qsTr("Cancel")
-            visible: true
-            anchors{
-                right: acceptButton.left
-                rightMargin: 4 + Constants.focusAdjustment
-                verticalCenter: acceptButton.verticalCenter
-            }
-
-            onClicked: {
-                rejected();
-                root.close();
-            }
-        }
-    } // Column: mainColumn
+    }
 }
