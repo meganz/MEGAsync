@@ -348,16 +348,20 @@ void Syncs::onSyncPrevalidateRequestStatus(int errorCode, int syncErrorCode)
 {
     auto foundErrors = setErrorIfExist(errorCode, syncErrorCode);
 
-    if (!foundErrors)
+    if (mOnlyPrevalidateSync)
     {
-        if (mOnlyPrevalidateSync)
+        if (!foundErrors)
         {
             emit mSyncsData->syncPrevalidationSuccess();
         }
         else
         {
-            mSyncController.addSync(mSyncConfig);
+            emit mSyncsData->syncPrevalidationFailed();
         }
+    }
+    else if (!foundErrors)
+    {
+        mSyncController.addSync(mSyncConfig);
     }
 }
 

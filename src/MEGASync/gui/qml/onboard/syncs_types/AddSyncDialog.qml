@@ -10,154 +10,85 @@ import components.checkBoxes 1.0
 import components.pages 1.0
 
 import syncs 1.0
+import SyncsComponents 1.0
+import SyncInfo 1.0
 
 Window {
     id: root
 
-    readonly property int dialogMargin: 24
-    readonly property int dialogWidth: 453
-    readonly property int dialogHeight: 344
-    readonly property int buttonsSpacing: 12
-    readonly property int dialogRadius: 10
-    readonly property int defaultSpacing: 32
-    readonly property int defaultTopMargin: 16
+    property alias enabled : addSyncForm.enabled
 
-    property alias enabled : mainArea.enabled
-
-    width: root.dialogWidth
-    height: mainArea.height
+    width: addSyncForm.width
+    height: addSyncForm.height
     flags: Qt.Dialog | Qt.FramelessWindowHint
     modality: Qt.WindowModal
     color: "transparent"
 
-    function enableScreen() {
-        root.enabled = true;
-        acceptButton.icons.busyIndicatorVisible = false;
-    }
+    AddSyncDialogForm {
+        id: addSyncForm
 
-    Rectangle {
-        id: mainArea
-
-        color: ColorTheme.surface1
-        radius: dialogRadius
-        width: parent.width
-        height: column.implicitHeight + 2 * dialogMargin
-
-        ColumnLayout {
-            id: column
-
-            anchors {
-                top: parent.top
-                left: parent.left
-                right: parent.right
-                margins: dialogMargin
+        localFolderChooser.folderField {
+            hint {
+                text: syncsDataAccess.localError
+                visible: syncsDataAccess.localError.length !== 0
             }
-
-            spacing: Constants.defaultComponentSpacing
-
-            Texts.RichText {
-                id: title
-
-                lineHeightMode: Text.FixedHeight
-                lineHeight: 24
-                font {
-                    pixelSize: Texts.Text.Size.MEDIUM_LARGE
-                    weight: Font.DemiBold
-                }
-                text: qsTr("Select folders to sync")
-            }
-
-            ChooseSyncFolder {
-                id: localFolder
-
-                title: SyncsStrings.selectLocalFolder
-                leftIconSource: Images.pc
-                chosenPath: syncsDataAccess.defaultLocalFolder
-                Layout.preferredWidth: parent.width
-                Layout.topMargin: root.defaultTopMargin
-
-                onButtonClicked: {
-                    syncsComponentAccess.chooseLocalFolderButtonClicked();
-                }
-
-                folderField {
-                    hint {
-                        text: syncsDataAccess.localError
-                        visible: syncsDataAccess.localError.length !== 0
-                    }
-                    error: syncsDataAccess.localError.length !== 0
-                    text: syncsDataAccess.localFolderCandidate
-                }
-            }
-
-            ChooseSyncFolder {
-                id: remoteFolder
-
-                title: SyncsStrings.selectMEGAFolder
-                leftIconSource: Images.megaOutline
-                chosenPath: syncsDataAccess.defaultRemoteFolder
-                Layout.preferredWidth: parent.width
-
-                onButtonClicked: {
-                    syncsComponentAccess.chooseRemoteFolderButtonClicked();
-                }
-
-                folderField {
-                    hint {
-                        text: syncsDataAccess.remoteError
-                        visible: syncsDataAccess.remoteError.length !== 0
-                    }
-                    error: syncsDataAccess.remoteError.length !== 0
-                    text: syncsDataAccess.remoteFolderCandidate
-                }
-            }
-
-            Row {
-                id: buttonRow
-
-                Layout.topMargin: root.defaultTopMargin
-                Layout.alignment: Qt.AlignRight
-                layoutDirection: Qt.RightToLeft
-                spacing: root.buttonsSpacing
-
-                PrimaryButton {
-                    id: acceptButton
-
-                    text: qsTr("Add")
-                    onClicked: {
-                        root.enabled = false;
-                        acceptButton.icons.busyIndicatorVisible = true;
-                        syncsComponentAccess.preSyncValidationButtonClicked();
-                    }
-                }
-
-                OutlineButton {
-                    id: cancelButton
-
-                    text: qsTr("Cancel")
-                    visible: true
-                    onClicked: {
-                        root.close();
-                    }
-                }
-            }
+            error: syncsDataAccess.localError.length !== 0
+            text: syncsDataAccess.localFolderCandidate
         }
-    }
 
-    Connections {
-        target: syncsDataAccess
+        remoteFolderChooser.folderField {
+            hint {
+                text: syncsDataAccess.remoteError
+                visible: syncsDataAccess.remoteError.length !== 0
+            }
+            error: syncsDataAccess.remoteError.length !== 0
+            text: syncsDataAccess.remoteFolderCandidate
+        }
 
-        function onSyncPrevalidationSuccess() {
-            enableScreen();
+        localFolderChooser.onButtonClicked: {
+            syncsComponentAccess.chooseLocalFolderButtonClicked();
+        }
+
+        remoteFolderChooser.onButtonClicked: {
+            syncsComponentAccess.chooseRemoteFolderButtonClicked();
+        }
+
+        rightPrimaryButton.onClicked: {
+            root.enabled = false;
+            rightPrimaryButton.icons.busyIndicatorVisible = true;
+            syncsComponentAccess.preSyncValidationButtonClicked();
+        }
+
+        rightSecondaryButton.onClicked: {
+            addSyncForm.enableScreen();
+            syncsComponentAccess.closeDialogButtonClicked();
             root.close();
         }
 
-        function onLocalErrorChanged() {
-            enableScreen();
+        function enableScreen() {
+            root.enabled = true;
+            rightPrimaryButton.icons.busyIndicatorVisible = false;
         }
 
-        function onRemoteErrorChanged() {
-            enableScreen();
+        Connections {
+            target: syncsDataAccess
+
+            function onSyncPrevalidationSuccess() {
+                addSyncForm.enableScreen();
+                root.close();
+            }
+
+            function onSyncPrevalidationFailed() {
+                addSyncForm.enableScreen();
+            }
+
+            function onLocalErrorChanged() {
+                addSyncForm.enableScreen();
+            }
+
+            function onRemoteErrorChanged() {
+                addSyncForm.enableScreen();
+            }
         }
     }
 }

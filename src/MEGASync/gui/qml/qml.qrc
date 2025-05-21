@@ -139,6 +139,7 @@
         <file>onboard/syncs_types/AddSyncPage.qml</file>
         <file>onboard/syncs_types/AddSyncPageForm.ui.qml</file>
         <file>onboard/syncs_types/AddSyncDialog.qml</file>
+        <file>onboard/syncs_types/AddSyncDialogForm.ui.qml</file>
         <file>onboard/syncs_types/SyncsFlow.qml</file>
         <file>onboard/syncs_types/backups/qmldir</file>
         <file>onboard/syncs_types/ConfirmSyncsPage.qml</file>

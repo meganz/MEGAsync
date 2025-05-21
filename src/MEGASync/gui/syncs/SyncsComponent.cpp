@@ -124,3 +124,9 @@ void SyncsComponent::preSyncValidationButtonClicked()
 {
     mSyncs->prevalidateSync();
 }
+
+void SyncsComponent::closeDialogButtonClicked()
+{
+    mSyncs->clearRemoteError();
+    mSyncs->clearLocalError();
+}

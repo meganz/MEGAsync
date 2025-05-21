@@ -37,6 +37,7 @@ signals:
     void syncSetupSuccess(bool isFullSync);
     void syncSetupFailed();
     void syncPrevalidationSuccess();
+    void syncPrevalidationFailed();
     void syncRemoved();
     void syncOriginChanged();
     void defaultLocalFolderChanged(QString localPath);
