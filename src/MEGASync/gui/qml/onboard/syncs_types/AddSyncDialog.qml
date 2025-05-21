@@ -40,40 +40,32 @@ Window {
 
         color: ColorTheme.surface1
         radius: dialogRadius
-
-        anchors {
-            fill: parent
-        }
-
-        Texts.RichText {
-            id: title
-
-            anchors {
-                left: parent.left
-                right: parent.right
-                top: parent.top
-                margins: dialogMargin
-            }
-
-            lineHeightMode: Text.FixedHeight
-            lineHeight: 24
-            font {
-                pixelSize: Texts.Text.Size.MEDIUM_LARGE
-                weight: Font.DemiBold
-            }
-            text: qsTr("Select folders to sync")
-        }
+        width: parent.width
+        height: column.implicitHeight + 2 * dialogMargin
 
         ColumnLayout {
             id: column
 
             anchors {
-                top: title.bottom
+                top: parent.top
                 left: parent.left
                 right: parent.right
                 margins: dialogMargin
             }
+
             spacing: Constants.defaultComponentSpacing
+
+            Texts.RichText {
+                id: title
+
+                lineHeightMode: Text.FixedHeight
+                lineHeight: 24
+                font {
+                    pixelSize: Texts.Text.Size.MEDIUM_LARGE
+                    weight: Font.DemiBold
+                }
+                text: qsTr("Select folders to sync")
+            }
 
             ChooseSyncFolder {
                 id: localFolder
