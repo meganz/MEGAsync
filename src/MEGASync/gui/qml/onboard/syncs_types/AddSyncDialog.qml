@@ -81,14 +81,6 @@ Window {
             function onSyncPrevalidationFailed() {
                 addSyncForm.enableScreen();
             }
-
-            function onLocalErrorChanged() {
-                addSyncForm.enableScreen();
-            }
-
-            function onRemoteErrorChanged() {
-                addSyncForm.enableScreen();
-            }
         }
     }
 }

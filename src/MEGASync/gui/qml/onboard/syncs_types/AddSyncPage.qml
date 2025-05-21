@@ -62,16 +62,11 @@ AddSyncPageForm {
 
         function onSyncPrevalidationSuccess() {
             enableScreen();
-
             root.moveNext();
         }
 
-        function onLocalErrorChanged() {
-            enableScreen();
-        }
-
-        function onRemoteErrorChanged() {
-            enableScreen();
+        function onSyncPrevalidationFailed() {
+            addSyncForm.enableScreen();
         }
     }
 
