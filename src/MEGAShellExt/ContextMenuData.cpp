@@ -48,9 +48,19 @@ void ContextMenuData::processPath(const std::wstring& path)
 {
     WCHAR longPath[MAX_LONG_PATH];
 
-    std::wstring prefixedPath = L"\\\\?\\" + path;
+    const WCHAR* longPrefix = L"\\\\?\\";
+    const int longPrefixSize = 4;
+
+    std::wstring prefixedPath = longPrefix + path;
 
     DWORD result = GetLongPathNameW(prefixedPath.c_str(), longPath, MAX_LONG_PATH);
+
+    size_t length = wcslen(longPath);
+    if ((wcslen(longPath) - wcslen(longPrefix)) < MAX_PATH)
+    {
+        //+1 to count \0 character
+        wmemmove(longPath, longPath + longPrefixSize, length - longPrefixSize + 1);
+    }
 
     if (result <= 0 || result >= MAX_LONG_PATH)
     {
@@ -119,7 +129,7 @@ void ContextMenuData::processPath(const std::wstring& path)
     }
 
     // Check if we can still sync with the new path
-    //  If there is at least one non-syncable path, all of them are non-syncable
+    // If there is at least one non-syncable path, all of them are non-syncable
     if (type != MegaInterface::TYPE_FOLDER)
     {
         mCanSync = false;
@@ -172,7 +182,7 @@ bool ContextMenuData::canRequestGetLinks() const
 // Only if all items are in the left pane
 bool ContextMenuData::canRemoveFromLeftPane() const
 {
-    if (mInLeftPane.size() == mSelectedPaths.size())
+    if (mInLeftPane.size() && mSelectedPaths.size() == 1)
     {
         return true;
     }
