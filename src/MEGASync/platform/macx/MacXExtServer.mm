@@ -35,7 +35,7 @@ MacXExtServer::MacXExtServer(MegaApplication *app)
     connect(this, &MacXExtServer::newExportQueue, app, &MegaApplication::shellExport,Qt::QueuedConnection);
     connect(this,
             &MacXExtServer::viewOnMega,
-            receiver,
+            app,
             &MegaApplication::shellViewOnMega,
             Qt::QueuedConnection);
 }
