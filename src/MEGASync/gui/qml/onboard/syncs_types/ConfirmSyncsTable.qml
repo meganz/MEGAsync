@@ -310,20 +310,18 @@ Rectangle {
                             ContextMenuItem {
                                 id: editLocalFolder
 
-                                text: qsTr("Edit local folder")
+                                text: qsTr("Edit sync")
                                 icon.source: Images.localFolderHeader
                                 onTriggered: {
-                                    console.log("edit local folder")
+                                    console.log("edit sync : " + index)
+
+                                    editSyncDialog.visible = true;
                                 }
-                            }
 
-                            ContextMenuItem {
-                                id: editRemoveFolder
+                                AddSyncDialog {
+                                    id: editSyncDialog
 
-                                text: qsTr("Edit MEGA folder")
-                                icon.source: Images.remoteMegaHeader
-                                onTriggered: {
-                                    console.log("edit MEGA folder")
+                                    visible: false
                                 }
                             }
 
@@ -345,7 +343,21 @@ Rectangle {
                                 text: qsTr("Remove sync")
                                 icon.source: Images.removeSync
                                 onTriggered: {
-                                    console.log("edit MEGA folder")
+                                    console.log("remove sync : "+ index);
+                                    removeSyncDialog.visible = true;
+                                }
+
+                                ConfirmCloseDialog {
+                                    id: removeSyncDialog
+
+                                    titleText: qsTr("Remove sync")
+                                    bodyText: qsTr("Are you sure you want to remove the selected sync?")
+                                    cancelButtonText: qsTr("Cancel")
+                                    acceptButtonText: qsTr("Remove")
+                                    visible: false
+                                    onAccepted: {
+                                        console.log("sync : "+index+" removed!!")
+                                    }
                                 }
                             }
                         }
