@@ -5,9 +5,6 @@
 #include "TextDecorator.h"
 #include "ui_VerifyLockMessage.h"
 #include "Utilities.h"
-#ifdef __APPLE__
-#include "platform/macx/LockedPopOver.h"
-#endif
 
 #include <QDebug>
 #include <QStyle>
@@ -41,11 +38,6 @@ void VerifyLockMessage::mousePressEvent(QMouseEvent *event)
     if (m_lockStatus == MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL &&
             m_ui->lWhySeenThis->rect().contains(m_ui->lWhySeenThis->mapFrom(this, event->pos())))
     {
-#ifdef __APPLE__
-
-        mPopOver.show(this, new LockedPopOver(), event->localPos(), NativeMacPopover::PopOverColor::WHITE, NativeMacPopover::PopOverEdge::EdgeMinY);
-#else
-
         QPoint pos = event->globalPos();
 
         mLockedPopOver->show();
@@ -57,18 +49,22 @@ void VerifyLockMessage::mousePressEvent(QMouseEvent *event)
         auto initialHeight = mLockedPopOver->height();
 
         // size might be incorrect the first time it's shown. This works around that and repositions at the expected position afterwards
-        QTimer::singleShot(1, this, [this, pos, initialWidth, initialHeight] () {
-            mLockedPopOver->update();
-            mLockedPopOver->ensurePolished();
+        QTimer::singleShot(1,
+                           this,
+                           [this, pos, initialWidth, initialHeight]()
+                           {
+                               mLockedPopOver->update();
+                               mLockedPopOver->ensurePolished();
 
-            if (initialWidth != mLockedPopOver->width() || initialHeight != mLockedPopOver->height())
-            {
-                mLockedPopOver->move(pos - QPoint(mLockedPopOver->width()/2, mLockedPopOver->height()));
-                Utilities::adjustToScreenFunc(pos, mLockedPopOver.get());
-                mLockedPopOver->update();
-            }
-        });
-#endif
+                               if (initialWidth != mLockedPopOver->width() ||
+                                   initialHeight != mLockedPopOver->height())
+                               {
+                                   mLockedPopOver->move(pos - QPoint(mLockedPopOver->width() / 2,
+                                                                     mLockedPopOver->height()));
+                                   Utilities::adjustToScreenFunc(pos, mLockedPopOver.get());
+                                   mLockedPopOver->update();
+                               }
+                           });
     }
 }
 

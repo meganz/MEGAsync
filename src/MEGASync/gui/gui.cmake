@@ -289,6 +289,20 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/win/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/VerifyLockMessage.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/MegaInfoMessage.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/OverQuotaDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/ScanningWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/CancelConfirmWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/NodeNameSetterDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/LowDiskSpaceDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/ViewLoadingScene.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/ViewLoadingMessage.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/NotificationItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/win/AccountTypeWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelectorTreeViewWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelectorLoadingDelegate.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelector.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/SearchLineEdit.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
@@ -297,6 +311,22 @@ target_sources_conditional(${ExecutableTarget}
    PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/macx/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/VerifyLockMessage.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/AlertItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/FilterAlertWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/AlertFilterType.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/MegaInfoMessage.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/OverQuotaDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/ScanningWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/CancelConfirmWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/NodeNameSetterDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/LowDiskSpaceDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/ViewLoadingScene.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/ViewLoadingMessage.ui
+    ${CMAKE_CURRENT_LIST_DIR}/macx/NotificationItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelector.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/SearchLineEdit.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/LockedPopOver.ui
 )
 
@@ -307,6 +337,20 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/linux/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/VerifyLockMessage.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/OverQuotaDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/MegaInfoMessage.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/CancelConfirmWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/ScanningWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/NodeNameSetterDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/LowDiskSpaceDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/ViewLoadingScene.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/ViewLoadingMessage.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/NotificationItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/linux/AccountTypeWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelector.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/SearchLineEdit.ui
 )
 
 # Resources and platform-specific additions
@@ -495,6 +539,8 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ui/ViewLoadingMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/NodeNameSetterDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/AccountTypeWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/SyncAccountFullMessage.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/VerifyLockMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/MegaProgressCustomDialog.ui
 )
 

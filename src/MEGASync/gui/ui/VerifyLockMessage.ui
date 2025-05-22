@@ -26,10 +26,46 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget
+   <string notr="true">
+QWidget
 {
 font-size: 11px;
-}</string>
+}
+
+#bWarning
+{
+border: none;
+}
+
+#lVerifyEmailTitle
+{
+color: rgba(0,0,0,0.85);
+font-size: 13px;
+font-weight: bold;
+}
+
+#lVerifyEmailDesc
+{
+color: rgba(0,0,0,0.85);
+font-size: 12px;
+line-height: 14px;
+}
+
+#lWhySeenThis
+{
+border: none;
+color: #F0373A;
+font-size: 12px;
+line-height: 20px;
+}
+
+#lEmailSent
+{
+color: #666666;
+font-size: 11px;
+line-height: 13px;
+}
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
@@ -87,12 +123,6 @@ font-size: 11px;
             <height>60</height>
            </size>
           </property>
-          <property name="styleSheet">
-           <string notr="true">#bWarning
-{
-border: none;
-}</string>
-          </property>
           <property name="text">
            <string/>
           </property>
@@ -137,14 +167,6 @@ border: none;
         </property>
         <item>
          <widget class="QLabel" name="lVerifyEmailTitle">
-          <property name="styleSheet">
-           <string notr="true">#lVerifyEmailTitle
-{
-	color: rgba(0,0,0,0.85);
-	font-size: 13px;
-	font-weight: bold;
-}</string>
-          </property>
           <property name="text">
            <string/>
           </property>
@@ -155,14 +177,6 @@ border: none;
         </item>
         <item>
          <widget class="QLabel" name="lVerifyEmailDesc">
-          <property name="styleSheet">
-           <string notr="true">#lVerifyEmailDesc
-{
-	color: rgba(0,0,0,0.85);
-	font-size: 12px;
-	line-height: 14px;
-}</string>
-          </property>
           <property name="text">
            <string/>
           </property>
@@ -190,15 +204,6 @@ border: none;
             <widget class="QLabel" name="lWhySeenThis">
              <property name="cursor">
               <cursorShape>PointingHandCursor</cursorShape>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">#lWhySeenThis
-{
-    border: none;
-	color: #F0373A;
-	font-size: 12px;
-	line-height: 20px;
-}</string>
              </property>
              <property name="text">
               <string>Why am I seeing this?</string>
@@ -253,14 +258,6 @@ border: none;
       </item>
       <item>
        <widget class="QLabel" name="lEmailSent">
-        <property name="styleSheet">
-         <string notr="true">#lEmailSent
-{
-	color: #666666;
-	font-size: 11px;
-	line-height: 13px;
-}</string>
-        </property>
         <property name="text">
          <string/>
         </property>
