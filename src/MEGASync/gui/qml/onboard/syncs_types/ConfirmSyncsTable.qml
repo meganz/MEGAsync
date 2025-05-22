@@ -198,9 +198,21 @@ Rectangle {
                             text: syncsDataAccess.localFolderCandidate
                             font.weight: Font.DemiBold
                             color: ColorTheme.textPrimary
-                            elide: Text.ElideRight
+                            elide: Text.ElideMiddle
                             wrapMode: Text.NoWrap
                             width: parent.width - localFolderImage.width - parent.spacing
+
+                            MouseArea {
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                onEntered: {
+                                    ToolTip.show(localFolderText.text);
+                                }
+
+                                onExited: {
+                                    ToolTip.hide();
+                                }
+                            }
                         }
                     }
 
@@ -238,9 +250,21 @@ Rectangle {
                             text: syncsDataAccess.remoteFolderCandidate
                             font.weight: Font.DemiBold
                             color: ColorTheme.textPrimary
-                            elide: Text.ElideRight
+                            elide: Text.ElideMiddle
                             wrapMode: Text.NoWrap
                             width: parent.width - remoteFolderImage.width - parent.spacing
+
+                            MouseArea {
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                onEntered: {
+                                    ToolTip.show(remoteFolderText.text);
+                                }
+
+                                onExited: {
+                                    ToolTip.hide();
+                                }
+                            }
                         }
                     }
 
