@@ -26,27 +26,19 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-QWidget
-{
-font-size: 11px;
-}
-
-#bWarning
+   <string notr="true">#bWarning
 {
 border: none;
 }
 
 #lVerifyEmailTitle
 {
-color: rgba(0,0,0,0.85);
 font-size: 13px;
 font-weight: bold;
 }
 
 #lVerifyEmailDesc
 {
-color: rgba(0,0,0,0.85);
 font-size: 12px;
 line-height: 14px;
 }
@@ -54,14 +46,13 @@ line-height: 14px;
 #lWhySeenThis
 {
 border: none;
-color: #F0373A;
 font-size: 12px;
 line-height: 20px;
+color: #ff2C5BEB; /*colorToken.link-primary*/
 }
 
 #lEmailSent
 {
-color: #666666;
 font-size: 11px;
 line-height: 13px;
 }
@@ -173,6 +164,9 @@ line-height: 13px;
           <property name="wordWrap">
            <bool>true</bool>
           </property>
+          <property name="type" stdset="0">
+           <string notr="true">title</string>
+          </property>
          </widget>
         </item>
         <item>
@@ -281,6 +275,12 @@ line-height: 13px;
         <property name="text">
          <string>Log out</string>
         </property>
+        <property name="type" stdset="0">
+         <string notr="true">outline</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string notr="true">small</string>
+        </property>
        </widget>
       </item>
       <item>
@@ -290,6 +290,12 @@ line-height: 13px;
         </property>
         <property name="default">
          <bool>true</bool>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">primary</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string notr="true">small</string>
         </property>
        </widget>
       </item>
