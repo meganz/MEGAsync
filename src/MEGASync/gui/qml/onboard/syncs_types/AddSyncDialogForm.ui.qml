@@ -60,7 +60,6 @@ Rectangle {
 
             title: SyncsStrings.selectLocalFolder
             leftIconSource: Images.pc
-            chosenPath: syncsDataAccess.defaultLocalFolder
             Layout.preferredWidth: parent.width
             Layout.topMargin: root.defaultTopMargin
         }
@@ -70,7 +69,6 @@ Rectangle {
 
             title: SyncsStrings.selectMEGAFolder
             leftIconSource: Images.megaOutline
-            chosenPath: syncsDataAccess.defaultRemoteFolder
             Layout.preferredWidth: parent.width
         }
 

@@ -45,15 +45,19 @@ Rectangle {
 
         anchors.fill: parent
         model: syncsCandidatesModel
-        headerPositioning: ListView.OverlayHeader
         focus: true
         clip: true
         delegate: delegateComponent
         header: headerComponent
-        ScrollBar.vertical: ScrollBar {}
+        headerPositioning: ListView.OverlayHeader
         spacing: root.verticalMargin
         footer: footerComponent
         footerPositioning: ListView.OverlayFooter
+
+        ScrollBar.vertical: ScrollBar {
+                    policy: ScrollBar.AsNeeded
+                    z: 1
+                }
     }
 
     Component {
@@ -73,7 +77,7 @@ Rectangle {
             color: ColorTheme.pageBackground
 
             radius: root.radius
-            z: 3
+            z: 10
 
             Row {
                 id: headerLayout
@@ -164,7 +168,7 @@ Rectangle {
             color: ColorTheme.surface1
 
             radius: 4
-            z: 3
+            z: 5
 
             Row {
                 id: syncRowLayout
@@ -383,7 +387,7 @@ Rectangle {
             color: ColorTheme.pageBackground
 
             radius: root.radius
-            z: 3
+            z: 10
 
             MouseArea {
                 anchors.fill: parent
