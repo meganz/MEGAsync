@@ -44,7 +44,7 @@ Rectangle {
         id: listView
 
         anchors.fill: parent
-        model: 1
+        model: syncsCandidatesModel
         headerPositioning: ListView.OverlayHeader
         focus: true
         clip: true
@@ -195,7 +195,7 @@ Rectangle {
                         Texts.Text {
                             id: localFolderText
 
-                            text: syncsDataAccess.localFolderCandidate
+                            text: model.localFolder
                             font.weight: Font.DemiBold
                             color: ColorTheme.textPrimary
                             elide: Text.ElideMiddle
@@ -247,7 +247,7 @@ Rectangle {
                         Texts.Text {
                             id: remoteFolderText
 
-                            text: syncsDataAccess.remoteFolderCandidate
+                            text: model.megaFolder
                             font.weight: Font.DemiBold
                             color: ColorTheme.textPrimary
                             elide: Text.ElideMiddle

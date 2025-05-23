@@ -53,7 +53,7 @@ AddSyncPageForm {
         rightPrimary.onClicked: {
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            syncsComponentAccess.preSyncValidationButtonClicked();
+            syncsComponentAccess.addSyncCandidadeButtonClicked();
         }
     }
 

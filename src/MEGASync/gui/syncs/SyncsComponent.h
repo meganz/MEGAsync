@@ -21,7 +21,7 @@ public:
     Q_INVOKABLE void chooseRemoteFolderButtonClicked();
     Q_INVOKABLE void chooseLocalFolderButtonClicked();
     Q_INVOKABLE void syncButtonClicked();
-    Q_INVOKABLE void preSyncValidationButtonClicked();
+    Q_INVOKABLE void addSyncCandidadeButtonClicked();
     Q_INVOKABLE void closeDialogButtonClicked();
     Q_INVOKABLE void viewSyncsInSettingsButtonClicked();
     Q_INVOKABLE void exclusionsButtonClicked();

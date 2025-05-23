@@ -20,6 +20,9 @@ SyncsComponent::SyncsComponent(QObject* parent):
     QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsDataAccess"),
                                                    mSyncs->getSyncsData());
 
+    QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsCandidatesModel"),
+                                                   mSyncs->getSyncsCandidadtesModel());
+
     connect(&mRemoteFolderChooser,
             &ChooseRemoteFolder::folderChosen,
             this,
@@ -120,9 +123,9 @@ void SyncsComponent::syncButtonClicked()
     mSyncs->addSync();
 }
 
-void SyncsComponent::preSyncValidationButtonClicked()
+void SyncsComponent::addSyncCandidadeButtonClicked()
 {
-    mSyncs->prevalidateSync();
+    mSyncs->addSyncCandidate();
 }
 
 void SyncsComponent::closeDialogButtonClicked()

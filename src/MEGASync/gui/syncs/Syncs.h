@@ -2,6 +2,7 @@
 #define SYNCS_H
 
 #include "SyncController.h"
+#include "SyncsCandidatesModel.h"
 
 #include <QObject>
 
@@ -22,11 +23,13 @@ public:
     Syncs(QObject* parent = nullptr);
     virtual ~Syncs() = default;
     void addSync();
-    void prevalidateSync();
+    void addSyncCandidate();
     void clearRemoteError();
     void clearLocalError();
     SyncsData* getSyncsData() const;
+    SyncsCandidatesModel* getSyncsCandidadtesModel() const;
     void setSyncOrigin(SyncInfo::SyncOrigin origin);
+
     void setRemoteFolder(const QString& remoteFolder);
     void setRemoteFolderCandidate(const QString& remoteFolderCandidate);
     void setLocalFolderCandidate(const QString& localFolderCandidate);
@@ -70,6 +73,7 @@ private:
     mega::MegaApi* mMegaApi = nullptr;
     SyncController& mSyncController;
     std::unique_ptr<SyncsData> mSyncsData;
+    std::unique_ptr<SyncsCandidatesModel> mSyncsCandidatesModel;
 
     bool mCreatingFolder = false;
     bool mOnlyPrevalidateSync = false;

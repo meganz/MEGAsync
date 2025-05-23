@@ -19,7 +19,8 @@ Syncs::Syncs(QObject* parent):
     QObject(parent),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mSyncController(SyncController::instance()),
-    mSyncsData(std::make_unique<SyncsData>())
+    mSyncsData(std::make_unique<SyncsData>()),
+    mSyncsCandidatesModel(std::make_unique<SyncsCandidatesModel>())
 {
     connect(&mSyncController, &SyncController::syncAddStatus, this, &Syncs::onSyncAddRequestStatus);
     connect(&mSyncController,
@@ -37,7 +38,7 @@ void Syncs::addSync()
     syncHelper(false);
 }
 
-void Syncs::prevalidateSync()
+void Syncs::addSyncCandidate()
 {
     syncHelper(true);
 }
@@ -352,6 +353,9 @@ void Syncs::onSyncPrevalidateRequestStatus(int errorCode, int syncErrorCode)
     {
         if (!foundErrors)
         {
+            mSyncsCandidatesModel->add(mSyncsData->getLocalFolderCandidate(),
+                                       mSyncsData->getRemoteFolderCandidate());
+
             emit mSyncsData->syncPrevalidationSuccess();
         }
         else
@@ -488,6 +492,11 @@ void Syncs::clearLocalError()
 SyncsData* Syncs::getSyncsData() const
 {
     return mSyncsData.get();
+}
+
+SyncsCandidatesModel* Syncs::getSyncsCandidadtesModel() const
+{
+    return mSyncsCandidatesModel.get();
 }
 
 void Syncs::onLanguageChanged()

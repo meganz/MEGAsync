@@ -56,7 +56,7 @@ Window {
         rightPrimaryButton.onClicked: {
             root.enabled = false;
             rightPrimaryButton.icons.busyIndicatorVisible = true;
-            syncsComponentAccess.preSyncValidationButtonClicked();
+            syncsComponentAccess.addSyncCandidadeButtonClicked();
         }
 
         rightSecondaryButton.onClicked: {
