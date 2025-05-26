@@ -84,6 +84,7 @@ QtObject {
     readonly property url menuSync: imagesOnboardingPath + "more_horizontal.svg"
     readonly property url remoteMegaHeader: imagesOnboardingPath + "mega.svg"
     readonly property url syncsConfirm: imagesOnboardingPath + "syncs.svg"
+    readonly property url syncsRemoveConfirm: imagesOnboardingPath + "sync_plus.svg"
     readonly property url removeSync: imagesOnboardingPath + "minus-circle.svg"
 
     readonly property url exit: imagesGuestPath + "exit.svg"

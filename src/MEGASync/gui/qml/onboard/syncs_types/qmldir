@@ -18,3 +18,4 @@ ConfirmSyncsPage 1.0 ConfirmSyncsPage.qml
 ConfirmSyncsPageForm 1.0 ConfirmSyncsPageForm.ui.qml
 ConfirmSyncsTable 1.0 ConfirmSyncsTable.qml
 AddSyncDialog 1.0 AddSyncDialog.qml
+RemoveSyncCandidateConfirmationDialog 1.0 RemoveSyncCandidateConfirmationDialog.qml

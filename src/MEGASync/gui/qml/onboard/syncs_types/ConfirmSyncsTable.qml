@@ -340,7 +340,7 @@ Rectangle {
                                         removeSyncDialog.visible = true;
                                     }
 
-                                    ConfirmCloseDialog {
+                                    RemoveSyncCandidateConfirmationDialog {
                                         id: removeSyncDialog
 
                                         titleText: qsTr("Remove sync")
