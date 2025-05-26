@@ -245,19 +245,27 @@ void NodeSelectorTreeView::onPasteShortcutActivated()
     QModelIndex pasteIndex =
         proxyModel->getMegaModel()->rootIndex(proxyModel->mapToSource(rootIndex()));
 
-    proxyModel->getMegaModel()->pasteNodes(mCopiedHandles, pasteIndex);
+    if (proxyModel->getMegaModel()->canPasteNodes(mCopiedHandles, pasteIndex))
+    {
+        proxyModel->getMegaModel()->pasteNodes(mCopiedHandles, pasteIndex);
+    }
 }
 
-void NodeSelectorTreeView::onPasteClicked()
+void NodeSelectorTreeView::onPasteClicked(const QModelIndex& selectedIndex)
 {
     auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
+    QModelIndex targetIndex(selectedIndex);
 
-    QModelIndexList rows = selectedRows();
+    if (!targetIndex.isValid())
+    {
+        targetIndex = rootIndex();
+    }
 
-    if (rows.size() == 1)
+    // Double check in case the scenario has changed
+    if (proxyModel->getMegaModel()->canPasteNodes(mCopiedHandles, targetIndex))
     {
         proxyModel->getMegaModel()->pasteNodes(mCopiedHandles,
-                                               proxyModel->mapToSource(rows.first()));
+                                               proxyModel->mapToSource(targetIndex));
     }
 }
 
@@ -279,25 +287,24 @@ void NodeSelectorTreeView::addShareLinkMenuAction(QMap<int, QAction*>& actions,
     }
 }
 
-void NodeSelectorTreeView::addPasteMenuAction(QMap<int, QAction*>& actions)
+void NodeSelectorTreeView::addPasteMenuAction(QMap<int, QAction*>& actions,
+                                              const QModelIndexList& selectedIndexes)
 {
     auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
 
-    QModelIndexList rows = selectedRows();
-
-    if (rows.size() == 1)
+    if (selectedIndexes.size() == 1)
     {
-        if (!mCopiedHandles.isEmpty() &&
-            proxyModel->getMegaModel()->canPasteNodes(mCopiedHandles,
-                                                      proxyModel->mapToSource(rows.first())))
+        if (!mCopiedHandles.isEmpty() && proxyModel->getMegaModel()->canPasteNodes(
+                                             mCopiedHandles,
+                                             proxyModel->mapToSource(selectedIndexes.first())))
         {
             auto pasteAction(new QAction(tr("Paste")));
             connect(pasteAction,
                     &QAction::triggered,
                     this,
-                    [this]()
+                    [this, selectedIndexes]()
                     {
-                        onPasteClicked();
+                        onPasteClicked(selectedIndexes.first());
                     });
             actions.insert(ActionsOrder::PASTE, pasteAction);
         }
@@ -505,23 +512,25 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
     auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
 
     QList<mega::MegaHandle> selectionHandles;
-    QModelIndexList selectedIndexes;
+    mega::MegaHandle clickedHandle;
 
     auto indexClicked = indexAt(event->pos());
     if (indexClicked.isValid())
     {
-        selectedIndexes = selectedRows();
-        auto currentSelectionHandles(getMultiSelectionNodeHandle(selectedIndexes));
-        auto indexClickedHandle(proxyModel->getHandle(indexClicked));
-        if (currentSelectionHandles.contains(indexClickedHandle))
-        {
-            selectionHandles = currentSelectionHandles;
-        }
-        else if (indexClickedHandle != mega::INVALID_HANDLE)
-        {
-            selectedIndexes = QModelIndexList() << indexClicked;
-            selectionHandles.append(indexClickedHandle);
-        }
+        clickedHandle = proxyModel->getHandle(indexClicked);
+    }
+
+    QModelIndexList selectedIndexes = selectedRows();
+    auto currentSelectionHandles(getMultiSelectionNodeHandle(selectedIndexes));
+
+    if (currentSelectionHandles.contains(clickedHandle))
+    {
+        selectionHandles = currentSelectionHandles;
+    }
+    else
+    {
+        selectedIndexes = QModelIndexList() << indexClicked;
+        selectionHandles.append(clickedHandle);
     }
 
     if (!proxyModel->hasContextMenuOptions(selectedIndexes))
@@ -543,17 +552,18 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
         actions.insert(ActionsOrder::COPY, copyAction);
     }
 
+    addPasteMenuAction(actions, selectedIndexes);
+
     if (!selectedIndexes.isEmpty())
     {
-        if (selectedIndexes.size() <= 1)
+        if (selectedIndexes.size() == 1)
         {
-            addPasteMenuAction(actions);
+            auto selectedIndex = proxyModel->mapToSource(selectedIndexes.first());
 
-            if (selectedIndexes.size() == 1)
+            addRenameMenuAction(actions, selectedIndex);
+
+            if (!selectionHandles.isEmpty())
             {
-                auto selectedIndex = proxyModel->mapToSource(selectedIndexes.first());
-
-                addRenameMenuAction(actions, selectedIndex);
                 addSyncMenuActions(actions, selectedIndex, selectionHandles.first());
             }
         }
@@ -791,6 +801,11 @@ bool NodeSelectorTreeView::areAllEligibleForRestore(const QModelIndexList& selec
 {
     for (const auto& index: selectedIndexes)
     {
+        if (!index.isValid())
+        {
+            return false;
+        }
+
         auto item = proxyModel()->getMegaModel()->getItemByIndex(index);
         if (item)
         {

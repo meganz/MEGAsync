@@ -78,7 +78,7 @@ private slots:
     void onNavigateReady(const QModelIndex& index);
     void onCopyShortcutActivated();
     void onPasteShortcutActivated();
-    void onPasteClicked();
+    void onPasteClicked(const QModelIndex& selectedIndex);
 
 private:
     friend class NodeSelectorDelegate;
@@ -106,7 +106,7 @@ private:
     void addShareLinkMenuAction(QMap<int, QAction*>& actions,
                                 const QModelIndexList& selectedIndexes,
                                 const QList<MegaHandle>& selectionHandles);
-    void addPasteMenuAction(QMap<int, QAction*>& actions);
+    void addPasteMenuAction(QMap<int, QAction*>& actions, const QModelIndexList& selectedIndexes);
     void addRestoreMenuAction(QMap<int, QAction*>& actions,
                               const QModelIndexList& selectedIndexes,
                               const QList<mega::MegaHandle>& selectionHandles);

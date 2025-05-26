@@ -811,16 +811,6 @@ bool NodeSelectorModel::canDropMimeData(const QMimeData* data,
     {
         if (parent.isValid())
         {
-            auto item = getItemByIndex(parent);
-            if (item)
-            {
-                auto node = item->getNode();
-                if (node && !node->isFolder())
-                {
-                    return false;
-                }
-            }
-
             if (action == Qt::CopyAction)
             {
                 return true;
@@ -1441,15 +1431,24 @@ bool NodeSelectorModel::isMovingNodes() const
 }
 
 bool NodeSelectorModel::pasteNodes(const QList<mega::MegaHandle>& nodesToCopy,
-                                   const QModelIndex& indexToPaste)
+                                   const QModelIndex& targetIndex)
 {
     auto data(mimeData(nodesToCopy));
-    if (canDropMimeData(data, Qt::CopyAction, -1, -1, indexToPaste))
+    QModelIndex finalTargetIndex(targetIndex);
+
+    auto item = getItemByIndex(targetIndex);
+    if (item)
     {
-        if (startProcessingNodes(data, indexToPaste, MoveActionType::COPY))
+        auto node = item->getNode();
+        if (node && !node->isFolder())
         {
-            return true;
+            finalTargetIndex = targetIndex.parent();
         }
+    }
+
+    if (startProcessingNodes(data, finalTargetIndex, MoveActionType::COPY))
+    {
+        return true;
     }
 
     return false;

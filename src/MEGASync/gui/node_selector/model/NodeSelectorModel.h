@@ -265,7 +265,7 @@ public:
     }
 
     // Copy logic
-    bool pasteNodes(const QList<mega::MegaHandle>& nodesToCopy, const QModelIndex& indexToPaste);
+    bool pasteNodes(const QList<mega::MegaHandle>& nodesToCopy, const QModelIndex& targetIndex);
     bool canPasteNodes(const QList<mega::MegaHandle>& nodesToCopy, const QModelIndex& indexToPaste);
     virtual bool canCopyNodes() const;
 
