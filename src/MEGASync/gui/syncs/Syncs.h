@@ -24,6 +24,7 @@ public:
     virtual ~Syncs() = default;
     void addSync(const QString& localFolder, const QString& megaFolder);
     void addSyncCandidate(const QString& localFolder, const QString& megaFolder);
+    void removeSyncCandidate(const QString& localFolder, const QString& megaFolder);
     void clearRemoteError();
     void clearLocalError();
     SyncsData* getSyncsData() const;

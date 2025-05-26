@@ -2,6 +2,8 @@
 
 #include <QQmlContext>
 
+#include <vector>
+
 SyncsCandidatesModel::SyncsCandidatesModel(QObject* parent) {}
 
 QHash<int, QByteArray> SyncsCandidatesModel::roleNames() const
@@ -84,7 +86,11 @@ int SyncsCandidatesModel::rowCount(const QModelIndex& parent) const
 void SyncsCandidatesModel::add(const QString& localSyncFolder, const QString& megaSyncFolder)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    mSyncCandidates.emplace_back(localSyncFolder.toStdString(), megaSyncFolder.toStdString());
+    auto foundItem = exist(localSyncFolder, megaSyncFolder);
+    if (!foundItem.has_value())
+    {
+        mSyncCandidates.emplace_back(localSyncFolder.toStdString(), megaSyncFolder.toStdString());
+    }
     endInsertRows();
 }
 
@@ -97,6 +103,21 @@ void SyncsCandidatesModel::reset()
 
 void SyncsCandidatesModel::remove(const QString& localSyncFolder, const QString& megaSyncFolder)
 {
+    auto foundItem = exist(localSyncFolder, megaSyncFolder);
+
+    if (foundItem.has_value())
+    {
+        auto indexToRemove =
+            static_cast<int>(std::distance(mSyncCandidates.begin(), foundItem.value()));
+        beginRemoveRows(QModelIndex(), indexToRemove, indexToRemove);
+        mSyncCandidates.erase(foundItem.value());
+        endRemoveRows();
+    }
+}
+
+std::optional<std::vector<SyncsCandidatesModel::SyncCandidate>::iterator>
+    SyncsCandidatesModel::exist(const QString& localSyncFolder, const QString& megaSyncFolder)
+{
     auto itSyncFound =
         std::find_if(mSyncCandidates.begin(),
                      mSyncCandidates.end(),
@@ -108,9 +129,8 @@ void SyncsCandidatesModel::remove(const QString& localSyncFolder, const QString&
 
     if (itSyncFound != mSyncCandidates.end())
     {
-        auto indexToRemove = static_cast<int>(std::distance(mSyncCandidates.begin(), itSyncFound));
-        beginRemoveRows(QModelIndex(), indexToRemove, indexToRemove);
-        mSyncCandidates.erase(itSyncFound);
-        endRemoveRows();
+        return itSyncFound;
     }
+
+    return std::nullopt;
 }

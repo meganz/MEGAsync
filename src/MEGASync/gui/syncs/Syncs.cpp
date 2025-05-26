@@ -43,6 +43,11 @@ void Syncs::addSyncCandidate(const QString& localFolder, const QString& megaFold
     syncHelper(true, localFolder, megaFolder);
 }
 
+void Syncs::removeSyncCandidate(const QString& localFolder, const QString& megaFolder)
+{
+    mSyncsCandidatesModel->remove(localFolder, megaFolder);
+}
+
 void Syncs::syncHelper(bool onlyPrevalidateSync,
                        const QString& localFolder,
                        const QString& megaFolder)

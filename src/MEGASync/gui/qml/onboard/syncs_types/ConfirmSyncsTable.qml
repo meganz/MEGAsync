@@ -66,13 +66,7 @@ Rectangle {
         Rectangle {
             id: headerRectangle
 
-            anchors {
-                left: parent.left
-                right: parent.right
-                leftMargin: root.horitzontalMargin
-                rightMargin: root.horitzontalMargin
-            }
-
+            width: listView.width
             height: root.headerHeight + root.verticalMargin
             color: ColorTheme.pageBackground
 
@@ -155,212 +149,208 @@ Rectangle {
         id: delegateComponent
 
         Rectangle {
-            id: syncRow
-
-            anchors {
-                left: parent.left
-                right: parent.right
-                leftMargin: root.horitzontalMargin
-                rightMargin: root.horitzontalMargin
-            }
+            id: groundDelegate
 
             height: 24
-            color: ColorTheme.surface1
+            width: listView.width
 
-            radius: 4
-            z: 5
+            Rectangle {
+                id: syncRow
 
-            Row {
-                id: syncRowLayout
+                anchors {
+                    left: parent.left
+                    right: parent.right
 
-                anchors.verticalCenter: parent.verticalCenter
-                width: parent.width
-                spacing: 0
-
-                Row {
-                    id: localFolderImageTextLayout
-
-                    leftPadding: root.headerMargin
-                    width: parent.width / 2
-
-                    Row {
-                        id: localFolderImageText
-
-                        width: parent.width - syncImage.width - parent.leftPadding
-                        spacing: root.headerMargin / 2
-
-                        SvgImage {
-                            id: localFolderImage
-
-                            source: Images.localSyncFolder
-                            sourceSize: Qt.size(16, 16)
-                        }
-
-                        Texts.Text {
-                            id: localFolderText
-
-                            text: model.localFolder
-                            font.weight: Font.DemiBold
-                            color: ColorTheme.textPrimary
-                            elide: Text.ElideMiddle
-                            wrapMode: Text.NoWrap
-                            width: parent.width - localFolderImage.width - parent.spacing
-
-                            MouseArea {
-                                anchors.fill: parent
-                                hoverEnabled: true
-                                onEntered: {
-                                    ToolTip.show(localFolderText.text);
-                                }
-
-                                onExited: {
-                                    ToolTip.hide();
-                                }
-                            }
-                        }
-                    }
-
-                    SvgImage {
-                        id: syncImage
-
-                        source: Images.syncsConfirm
-                        sourceSize: Qt.size(12, 12)
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
+                    leftMargin: root.horitzontalMargin
+                    rightMargin: root.horitzontalMargin
                 }
 
-                Row {
-                    id: remoteFolderImageTextLayout
+                height: parent.height
+                color: ColorTheme.surface1
+                radius: 4
+                z: 5
 
-                    leftPadding: root.headerMargin
-                    width: parent.width / 2
+                Row {
+                    id: syncRowLayout
+
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: parent.width
+                    spacing: 0
 
                     Row {
-                        id: remoteFolderImageText
+                        id: localFolderImageTextLayout
 
-                        width: parent.width - syncMenuButton.width - parent.leftPadding - root.headerMargin / 2
+                        width: parent.width / 2
                         spacing: root.headerMargin / 2
 
-                        SvgImage {
-                            id: remoteFolderImage
+                        Row {
+                            id: localFolderImageText
 
-                            source: Images.remoteSyncFolder
-                            sourceSize: Qt.size(16, 16)
-                        }
+                            width: parent.width - syncImage.width
+                            spacing: root.headerMargin / 2
+                            leftPadding: root.headerMargin - root.horitzontalMargin
 
-                        Texts.Text {
-                            id: remoteFolderText
+                            SvgImage {
+                                id: localFolderImage
 
-                            text: model.megaFolder
-                            font.weight: Font.DemiBold
-                            color: ColorTheme.textPrimary
-                            elide: Text.ElideMiddle
-                            wrapMode: Text.NoWrap
-                            width: parent.width - remoteFolderImage.width - parent.spacing
+                                source: Images.localSyncFolder
+                                sourceSize: Qt.size(16, 16)
+                            }
 
-                            MouseArea {
-                                anchors.fill: parent
-                                hoverEnabled: true
-                                onEntered: {
-                                    ToolTip.show(remoteFolderText.text);
-                                }
+                            Texts.Text {
+                                id: localFolderText
 
-                                onExited: {
-                                    ToolTip.hide();
+                                text: model.localFolder
+                                font.weight: Font.DemiBold
+                                color: ColorTheme.textPrimary
+                                elide: Text.ElideMiddle
+                                wrapMode: Text.NoWrap
+                                width: parent.width - localFolderImage.width - parent.spacing - parent.leftPadding
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    onEntered: {
+                                        ToolTip.show(localFolderText.text);
+                                    }
+
+                                    onExited: {
+                                        ToolTip.hide();
+                                    }
                                 }
                             }
+                        }
+
+                        SvgImage {
+                            id: syncImage
+
+                            source: Images.syncsConfirm
+                            sourceSize: Qt.size(12, 12)
+                            anchors.verticalCenter: parent.verticalCenter
                         }
                     }
 
-                    SvgImage {
-                        id: syncMenuButton
+                    Row {
+                        id: remoteFolderImageTextLayout
 
-                        source: Images.menuSync
-                        sourceSize: Qt.size(16, 16)
-                        color: ColorTheme.iconSecondary
+                        leftPadding: root.headerMargin
+                        width: parent.width / 2
 
-                        MouseArea {
-                            anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
+                        Row {
+                            id: remoteFolderImageText
 
-                            onClicked: {
-                                let buttonX = syncMenuButton.mapToItem(null, 0, 0).x;
-                                let buttonY = syncMenuButton.mapToItem(null, 0, 0).y;
-                                let menuHeight = menu.height;
-                                let menuWidth = menu.width;
-                                let xOffset = syncMenuButton.width/2;
-                                let yOffset = syncMenuButton.height/2;
-                                if (buttonX + menuWidth > window.width) {
-                                    xOffset = xOffset - menuWidth; // Open left if close to right edge
+                            width: parent.width - syncMenuButton.width - parent.leftPadding - root.headerMargin / 2
+                            spacing: root.headerMargin / 2
+
+                            SvgImage {
+                                id: remoteFolderImage
+
+                                source: Images.remoteSyncFolder
+                                sourceSize: Qt.size(16, 16)
+                            }
+
+                            Texts.Text {
+                                id: remoteFolderText
+
+                                text: model.megaFolder
+                                font.weight: Font.DemiBold
+                                color: ColorTheme.textPrimary
+                                elide: Text.ElideMiddle
+                                wrapMode: Text.NoWrap
+                                width: parent.width - remoteFolderImage.width - parent.spacing
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    onEntered: {
+                                        ToolTip.show(remoteFolderText.text);
+                                    }
+
+                                    onExited: {
+                                        ToolTip.hide();
+                                    }
                                 }
-                                if (buttonY + yOffset + menuHeight > window.height) {
-                                    yOffset =  yOffset - menuHeight; // Open upwards if close to bottom edge
-                                }
-                                menu.popup(xOffset, yOffset);
                             }
                         }
 
-                        ContextMenu {
-                            id: menu
+                        SvgImage {
+                            id: syncMenuButton
 
-                            width: 200
+                            source: Images.menuSync
+                            sourceSize: Qt.size(16, 16)
+                            color: ColorTheme.iconSecondary
 
-                            onFocusChanged: {
-                                if(menu.activeFocus === false){
-                                    menu.close();
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+
+                                onClicked: {
+                                    menu.popup(mouseX, mouseY);
                                 }
                             }
 
-                            ContextMenuItem {
-                                id: editLocalFolder
+                            ContextMenu {
+                                id: menu
 
-                                text: qsTr("Edit sync")
-                                icon.source: Images.localFolderHeader
-                                onTriggered: {
-                                    console.log("edit sync : " + index)
+                                width: 200
 
-                                    editSyncDialog.visible = true;
+                                onFocusChanged: {
+                                    if(menu.activeFocus === false){
+                                        menu.close();
+                                    }
                                 }
 
-                                AddSyncDialog {
-                                    id: editSyncDialog
+                                ContextMenuItem {
+                                    id: editLocalFolder
 
-                                    visible: false
-                                }
-                            }
+                                    text: qsTr("Edit sync")
+                                    icon.source: Images.localFolderHeader
+                                    onTriggered: {
+                                        console.log("edit sync : " + index)
 
-                            QmlControlsv212.MenuSeparator {
-                                padding: 0
-                                topPadding: 4
-                                bottomPadding: 4
+                                        editSyncDialog.visible = true;
+                                    }
 
-                                contentItem: Rectangle {
-                                    implicitWidth: parent.width
-                                    implicitHeight: 1
-                                    color: ColorTheme.surface2
-                                }
-                            }
+                                    AddSyncDialog {
+                                        id: editSyncDialog
 
-                            ContextMenuItem {
-                                id: removeSync
-
-                                text: qsTr("Remove sync")
-                                icon.source: Images.removeSync
-                                onTriggered: {
-                                    console.log("remove sync : "+ index);
-                                    removeSyncDialog.visible = true;
+                                        visible: false
+                                    }
                                 }
 
-                                ConfirmCloseDialog {
-                                    id: removeSyncDialog
+                                QmlControlsv212.MenuSeparator {
+                                    padding: 0
+                                    topPadding: 4
+                                    bottomPadding: 4
 
-                                    titleText: qsTr("Remove sync")
-                                    bodyText: qsTr("Are you sure you want to remove the selected sync?")
-                                    cancelButtonText: qsTr("Cancel")
-                                    acceptButtonText: qsTr("Remove")
-                                    visible: false
-                                    onAccepted: {
-                                        console.log("sync : "+index+" removed!!")
+                                    contentItem: Rectangle {
+                                        implicitWidth: parent.width
+                                        implicitHeight: 1
+                                        color: ColorTheme.surface2
+                                    }
+                                }
+
+                                ContextMenuItem {
+                                    id: removeSync
+
+                                    text: qsTr("Remove sync")
+                                    icon.source: Images.removeSync
+                                    onTriggered: {
+                                        console.log("remove sync : "+ index);
+                                        removeSyncDialog.visible = true;
+                                    }
+
+                                    ConfirmCloseDialog {
+                                        id: removeSyncDialog
+
+                                        titleText: qsTr("Remove sync")
+                                        bodyText: qsTr("Are you sure you want to remove the selected sync?")
+                                        cancelButtonText: qsTr("Cancel")
+                                        acceptButtonText: qsTr("Remove")
+                                        visible: false
+                                        onAccepted: {
+                                            syncsComponentAccess.removeSyncCandidadeButtonClicked(model.localFolder, model.megaFolder);
+                                        }
                                     }
                                 }
                             }
@@ -378,11 +368,7 @@ Rectangle {
         Rectangle {
             id: footerItem
 
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-
+            width: listView.width
             height: root.headerHeight
             color: ColorTheme.pageBackground
 

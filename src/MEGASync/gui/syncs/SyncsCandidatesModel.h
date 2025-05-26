@@ -3,6 +3,8 @@
 
 #include <QAbstractItemModel>
 
+#include <optional>
+
 class SyncsCandidatesModel: public QAbstractItemModel
 {
     Q_OBJECT
@@ -33,6 +35,8 @@ public:
 
 private:
     using SyncCandidate = std::pair<std::string, std::string>;
+    std::optional<std::vector<SyncCandidate>::iterator> exist(const QString& localSyncFolder,
+                                                              const QString& megaSyncFolder);
     std::vector<SyncCandidate> mSyncCandidates;
 };
 

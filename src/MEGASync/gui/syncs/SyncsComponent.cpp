@@ -106,16 +106,14 @@ void SyncsComponent::openExclusionsDialog(const QString& folder) const
     }
 }
 
-void SyncsComponent::chooseRemoteFolderButtonClicked()
+void SyncsComponent::clearRemoteFolderHint()
 {
     mSyncs->clearRemoteError();
-    mRemoteFolderChooser.openFolderSelector();
 }
 
-void SyncsComponent::chooseLocalFolderButtonClicked()
+void SyncsComponent::clearLocalFolderHint()
 {
     mSyncs->clearLocalError();
-    mLocalFolderChooser.openFolderSelector();
 }
 
 void SyncsComponent::syncButtonClicked(const QString& localFolder, const QString& megaFolder)
@@ -127,6 +125,12 @@ void SyncsComponent::addSyncCandidadeButtonClicked(const QString& localFolder,
                                                    const QString& megaFolder)
 {
     mSyncs->addSyncCandidate(localFolder, megaFolder);
+}
+
+void SyncsComponent::removeSyncCandidadeButtonClicked(const QString& localFolder,
+                                                      const QString& megaFolder)
+{
+    mSyncs->removeSyncCandidate(localFolder, megaFolder);
 }
 
 void SyncsComponent::closeDialogButtonClicked()

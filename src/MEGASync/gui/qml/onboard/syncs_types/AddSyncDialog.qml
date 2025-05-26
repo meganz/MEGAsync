@@ -52,10 +52,12 @@ Window {
         }
 
         localFolderChooser.onButtonClicked: {
+            syncsComponentAccess.clearLocalFolderHint();
             localFolderSelector.openFolderSelector(localFolderChooser.chosenPath);
         }
 
         remoteFolderChooser.onButtonClicked: {
+            syncsComponentAccess.clearRemoteFolderHint();
             remoteFolderSelector.openFolderSelector();
         }
 
