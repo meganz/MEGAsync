@@ -168,9 +168,7 @@ bool StalledIssueBaseDelegateWidget::checkSelection(const QList<mega::MegaSyncSt
     info.msgInfo.textFormat = Qt::RichText;
     info.msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
 
-    info.msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
     QMap<QMessageBox::Button, QString> textsByButton;
-
     //In order to keep the same context as before
     textsByButton.insert(QMessageBox::No, QCoreApplication::translate("LocalAndRemoteDifferentWidget", "Cancel"));
     textsByButton.insert(QMessageBox::Ok, QCoreApplication::translate("LocalAndRemoteDifferentWidget", "Apply"));
