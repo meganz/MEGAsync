@@ -33,26 +33,33 @@ Syncs::Syncs(QObject* parent):
     onSyncRemoved(nullptr);
 }
 
-void Syncs::addSync()
+void Syncs::addSync(const QString& localFolder, const QString& megaFolder)
 {
-    syncHelper(false);
+    syncHelper(false, localFolder, megaFolder);
 }
 
-void Syncs::addSyncCandidate()
+void Syncs::addSyncCandidate(const QString& localFolder, const QString& megaFolder)
 {
-    syncHelper(true);
+    syncHelper(true, localFolder, megaFolder);
 }
 
-void Syncs::syncHelper(bool onlyPrevalidateSync)
+void Syncs::syncHelper(bool onlyPrevalidateSync,
+                       const QString& localFolder,
+                       const QString& megaFolder)
 {
     cleanErrors();
 
     mOnlyPrevalidateSync = onlyPrevalidateSync;
-    mSyncConfig.localFolder = mSyncsData->getLocalFolderCandidate();
-    mSyncConfig.remoteFolder = mSyncsData->getRemoteFolderCandidate();
+    mSyncConfig.localFolder = localFolder;
+    mSyncConfig.remoteFolder = megaFolder;
+
+    setLocalFolderCandidate(localFolder);
+    setRemoteFolderCandidate(megaFolder);
 
     if (checkErrorsOnSyncPaths(mSyncConfig.localFolder, mSyncConfig.remoteFolder))
     {
+        emit mSyncsData->syncPrevalidationFailed();
+
         return;
     }
 

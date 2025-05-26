@@ -18,7 +18,8 @@ ConfirmSyncsPageForm {
         rightPrimary.onClicked: {
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            syncsComponentAccess.syncButtonClicked();
+            // syncsComponentAccess.syncButtonClicked();
+            // need to add bulk sync confirmation creation.
         }
 
         rightSecondary.visible: false;

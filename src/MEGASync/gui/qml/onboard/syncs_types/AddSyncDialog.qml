@@ -13,6 +13,9 @@ import syncs 1.0
 import SyncsComponents 1.0
 import SyncInfo 1.0
 
+import ChooseLocalFolder 1.0
+import ChooseRemoteFolder 1.0
+
 Window {
     id: root
 
@@ -23,6 +26,11 @@ Window {
     flags: Qt.Dialog | Qt.FramelessWindowHint
     modality: Qt.WindowModal
     color: "transparent"
+
+    onVisibleChanged: {
+        addSyncForm.localFolderChooser.chosenPath = ""
+        addSyncForm.remoteFolderChooser.chosenPath = ""
+    }
 
     AddSyncDialogForm {
         id: addSyncForm
@@ -44,23 +52,53 @@ Window {
         }
 
         localFolderChooser.onButtonClicked: {
-            syncsComponentAccess.chooseLocalFolderButtonClicked();
+            localFolderSelector.openFolderSelector(localFolderChooser.chosenPath);
         }
 
         remoteFolderChooser.onButtonClicked: {
-            syncsComponentAccess.chooseRemoteFolderButtonClicked();
+            remoteFolderSelector.openFolderSelector();
         }
 
         rightPrimaryButton.onClicked: {
             root.enabled = false;
             rightPrimaryButton.icons.busyIndicatorVisible = true;
-            syncsComponentAccess.addSyncCandidadeButtonClicked();
+            syncsComponentAccess.addSyncCandidadeButtonClicked(addSyncForm.localFolderChooser.chosenPath, addSyncForm.remoteFolderChooser.chosenPath);
         }
 
         rightSecondaryButton.onClicked: {
             addSyncForm.enableScreen();
             syncsComponentAccess.closeDialogButtonClicked();
             root.close();
+        }
+
+        ChooseLocalFolder {
+            id: localFolderSelector
+        }
+
+        ChooseRemoteFolder {
+            id: remoteFolderSelector
+        }
+
+        Connections {
+            id: remoteFolderChooserConnection
+
+            target: remoteFolderSelector
+            enabled: root.enabled
+
+            function onFolderChosen(remoteFolderPath) {
+                addSyncForm.remoteFolderChooser.chosenPath = remoteFolderPath;
+            }
+        }
+
+        Connections {
+            id: localFolderChooserConnection
+
+            target: localFolderSelector
+            enabled: root.enabled
+
+            function onFolderChosen(localFolderPath) {
+                addSyncForm.localFolderChooser.chosenPath = localFolderPath;
+            }
         }
 
         function enableScreen() {

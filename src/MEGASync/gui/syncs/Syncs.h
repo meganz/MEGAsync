@@ -22,8 +22,8 @@ class Syncs: public QObject
 public:
     Syncs(QObject* parent = nullptr);
     virtual ~Syncs() = default;
-    void addSync();
-    void addSyncCandidate();
+    void addSync(const QString& localFolder, const QString& megaFolder);
+    void addSyncCandidate(const QString& localFolder, const QString& megaFolder);
     void clearRemoteError();
     void clearLocalError();
     SyncsData* getSyncsData() const;
@@ -97,7 +97,7 @@ private:
     bool checkLocalSync(const QString& path);
     bool checkRemoteSync(const QString& path);
     bool setErrorIfExist(int errorCode, int syncErrorCode);
-    void syncHelper(bool onlyPrevalidate);
+    void syncHelper(bool onlyPrevalidate, const QString& localFolder, const QString& megaFolder);
 };
 
 #endif // SYNCS_H

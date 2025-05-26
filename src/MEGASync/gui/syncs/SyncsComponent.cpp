@@ -118,14 +118,15 @@ void SyncsComponent::chooseLocalFolderButtonClicked()
     mLocalFolderChooser.openFolderSelector();
 }
 
-void SyncsComponent::syncButtonClicked()
+void SyncsComponent::syncButtonClicked(const QString& localFolder, const QString& megaFolder)
 {
-    mSyncs->addSync();
+    mSyncs->addSync(localFolder, megaFolder);
 }
 
-void SyncsComponent::addSyncCandidadeButtonClicked()
+void SyncsComponent::addSyncCandidadeButtonClicked(const QString& localFolder,
+                                                   const QString& megaFolder)
 {
-    mSyncs->addSyncCandidate();
+    mSyncs->addSyncCandidate(localFolder, megaFolder);
 }
 
 void SyncsComponent::closeDialogButtonClicked()
