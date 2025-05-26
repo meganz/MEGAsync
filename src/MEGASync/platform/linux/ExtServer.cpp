@@ -27,7 +27,7 @@ ExtServer::ExtServer(MegaApplication *app): QObject(),
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), app, SLOT(shellUpload(QQueue<QString>)),Qt::QueuedConnection);
     connect(this, SIGNAL(newExportQueue(QQueue<QString>)), app, SLOT(shellExport(QQueue<QString>)),Qt::QueuedConnection);
     connect(this,
-            &ExtServer::viewOnMega,
+            &ExtServer::newViewOnMega,
             app,
             &MegaApplication::shellViewOnMega,
             Qt::QueuedConnection);
@@ -356,6 +356,6 @@ void ExtServer::viewOnMega(const char *content)
     const QFileInfo file(filePath);
     if (file.exists())
     {
-        emit viewOnMega(filePath, false);
+        emit newViewOnMega(filePath, false);
     }
 }
