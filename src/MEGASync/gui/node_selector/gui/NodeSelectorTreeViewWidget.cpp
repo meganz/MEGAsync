@@ -176,7 +176,10 @@ void NodeSelectorTreeViewWidget::init()
             &NodeSelectorModel::blockUi,
             this,
             &NodeSelectorTreeViewWidget::setLoadingSceneVisible);
-    connect(mModel.get(), &NodeSelectorModel::dataChanged, this, &NodeSelectorTreeViewWidget::onModelDataChanged);
+    connect(mModel.get(),
+            &NodeSelectorModel::modelModified,
+            this,
+            &NodeSelectorTreeViewWidget::onModelModified);
     connect(mModel.get(),
             &NodeSelectorModel::itemsMoved,
             this,
@@ -677,14 +680,9 @@ void NodeSelectorTreeViewWidget::onSelectionChanged(const QItemSelection& select
     }
 }
 
-void NodeSelectorTreeViewWidget::onModelDataChanged(const QModelIndex &first, const QModelIndex &last, const QVector<int> &roles)
+void NodeSelectorTreeViewWidget::onModelModified()
 {
-    auto selectedRows(ui->tMegaFolders->selectedRows());
-    if (selectedRows.contains(mProxyModel->mapFromSource(first)))
-    {
-        // Update the buttons visibility/enable dependant on the selection
-        selectionHasChanged(selectedRows);
-    }
+    mSelectType->selectionHasChanged(this);
 }
 
 void NodeSelectorTreeViewWidget::selectionHasChanged(const QModelIndexList &selected)
@@ -1462,7 +1460,8 @@ MegaHandle NodeSelectorTreeViewWidget::getSelectedNodeHandle()
 
 QList<MegaHandle> NodeSelectorTreeViewWidget::getMultiSelectionNodeHandle()
 {
-    return ui->tMegaFolders->getMultiSelectionNodeHandle();
+    auto selectedRows(ui->tMegaFolders->selectedRows());
+    return ui->tMegaFolders->getMultiSelectionNodeHandle(selectedRows);
 }
 
 QModelIndexList NodeSelectorTreeViewWidget::getSelectedIndexes() const

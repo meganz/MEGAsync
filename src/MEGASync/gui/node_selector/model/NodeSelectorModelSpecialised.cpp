@@ -698,10 +698,6 @@ void NodeSelectorModelRubbish::firstLoad()
             &NodeSelectorModelRubbish::requestRubbishRootCreation,
             mNodeRequesterWorker,
             &NodeRequester::createRubbishRootItems);
-    connect(this, &NodeSelectorModelRubbish::deleteRubbishRoot, this, [this](std::shared_ptr<mega::MegaNode> node)
-            {
-                mNodeRequesterWorker->removeRootItem(node);
-            });
     connect(mNodeRequesterWorker, &NodeRequester::megaRubbishRootItemsCreated, this, &NodeSelectorModelRubbish::onRootItemsCreated, Qt::QueuedConnection);
 
     addRootItems();

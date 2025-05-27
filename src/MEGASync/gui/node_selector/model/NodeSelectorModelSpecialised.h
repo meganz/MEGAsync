@@ -190,7 +190,6 @@ public slots:
 signals:
     void requestRubbishRootCreation();
     void addRubbishRoot(std::shared_ptr<mega::MegaNode> node);
-    void deleteRubbishRoot(std::shared_ptr<mega::MegaNode> node);
 
 private slots:
     void onRootItemsCreated();
