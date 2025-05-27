@@ -82,6 +82,10 @@ SyncsFlow {
             onSyncSetupFailed: {
                 root.syncsFlowMoveToFinalError();
             }
+
+            onMoveBack: {
+                root.state = root.addSync;
+            }
         }
     }
 

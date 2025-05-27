@@ -8,6 +8,7 @@ ConfirmSyncsPageForm {
 
     signal syncSetupFailed
     signal syncSetupSucceed(bool isFullSync)
+    signal moveBack
 
     function enableScreen() {
         root.enabled = true;
@@ -26,6 +27,9 @@ ConfirmSyncsPageForm {
         leftPrimary.visible: false;
     }
 
+    confirmTable.onMoveBack: {
+        root.moveBack()
+    }
 
     Connections {
         target: syncsDataAccess

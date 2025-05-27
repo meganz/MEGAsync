@@ -22,6 +22,7 @@ Window {
     property alias bodyText: body.text
     property alias cancelButtonText: cancelButton.text
     property alias acceptButtonText: acceptButton.text
+    property int modelCount: 0
 
     signal accepted
 
@@ -120,6 +121,7 @@ Window {
                         right: parent.right
                         verticalCenter: parent.verticalCenter
                     }
+
                     onClicked: {
                         root.accepted();
                     }

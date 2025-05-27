@@ -21,6 +21,8 @@ Rectangle {
     readonly property int verticalMargin: 8
     readonly property int horitzontalMargin: 7
 
+    signal moveBack
+
     Layout.preferredWidth: width
     Layout.preferredHeight: height
     width: 420
@@ -338,7 +340,7 @@ Rectangle {
                                     text: qsTr("Remove sync")
                                     icon.source: Images.removeSync
                                     onTriggered: {
-                                        console.log("remove sync : "+ index);
+                                        removeSyncDialog.modelCount = listView.count;
                                         removeSyncDialog.visible = true;
                                     }
 
@@ -346,12 +348,17 @@ Rectangle {
                                         id: removeSyncDialog
 
                                         titleText: qsTr("Remove sync")
-                                        bodyText: qsTr("Are you sure you want to remove the selected sync?")
+                                        bodyText: modelCount === 1 ? qsTr("Removing this sync will take you back to the start of setup.") : qsTr("Are you sure you want to remove the selected sync?")
                                         cancelButtonText: qsTr("Cancel")
                                         acceptButtonText: qsTr("Remove")
                                         visible: false
+
                                         onAccepted: {
                                             syncsComponentAccess.removeSyncCandidadeButtonClicked(model.localFolder, model.megaFolder);
+
+                                            if (modelCount === 1) {
+                                                root.moveBack();
+                                            }
                                         }
                                     }
                                 }

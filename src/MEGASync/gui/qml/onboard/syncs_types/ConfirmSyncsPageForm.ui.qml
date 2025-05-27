@@ -16,6 +16,8 @@ import syncs 1.0 as Syncs
 FooterButtonsPage {
     id: root
 
+    property alias confirmTable : contentItem
+
     footerButtons {
         rightPrimary {
             text: Syncs.SyncsStrings.sync
@@ -60,7 +62,6 @@ FooterButtonsPage {
                 Layout.preferredWidth: parent.width
             }
         }
-
     }
 
 }
