@@ -127,6 +127,14 @@ void SyncsComponent::addSyncCandidadeButtonClicked(const QString& localFolder,
     mSyncs->addSyncCandidate(localFolder, megaFolder);
 }
 
+void SyncsComponent::editSyncCandidadeButtonClicked(const QString& localFolder,
+                                                    const QString& megaFolder,
+                                                    const QString& originalLocalFolder,
+                                                    const QString& originalMegaFolder)
+{
+    mSyncs->editSyncCandidate(localFolder, megaFolder, originalLocalFolder, originalMegaFolder);
+}
+
 void SyncsComponent::removeSyncCandidadeButtonClicked(const QString& localFolder,
                                                       const QString& megaFolder)
 {

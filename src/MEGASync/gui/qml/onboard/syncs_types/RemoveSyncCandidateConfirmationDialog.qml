@@ -10,7 +10,7 @@ import components.buttons 1.0
 Window {
     id: root
 
-    readonly property int dialogWidth: 560
+    readonly property int dialogWidth: 500
     readonly property int dialogHeight: 188
     readonly property int dialogRadius: 10
     readonly property int dialogTopMargin: 24
@@ -47,7 +47,6 @@ Window {
                 leftMargin: dialogHorizontalMargin
                 rightMargin: dialogHorizontalMargin
             }
-            //spacing: dialogMargin / 2 + Constants.focusAdjustment
 
             RowLayout {
                 id: rowLayout
@@ -122,18 +121,11 @@ Window {
                         verticalCenter: parent.verticalCenter
                     }
                     onClicked: {
-                        if (enableBusyIndicator)
-                        {
-                            icons.busyIndicatorVisible = true;
-                        }
                         root.accepted();
                     }
                 }
             }
-
-        } // Column: mainColumn
+        }
     }
-
-
 
 }

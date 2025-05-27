@@ -32,6 +32,10 @@ public:
     void reset();
     void add(const QString& localSyncFolder, const QString& megaSyncFolder);
     void remove(const QString& localSyncFolder, const QString& megaSyncFolder);
+    void edit(const QString& originalLocalSyncFolder,
+              const QString& originalMegaSyncFolder,
+              const QString& localSyncFolder,
+              const QString& megaSyncFolder);
 
 private:
     using SyncCandidate = std::pair<std::string, std::string>;

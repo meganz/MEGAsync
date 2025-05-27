@@ -25,6 +25,10 @@ public:
     void addSync(const QString& localFolder, const QString& megaFolder);
     void addSyncCandidate(const QString& localFolder, const QString& megaFolder);
     void removeSyncCandidate(const QString& localFolder, const QString& megaFolder);
+    void editSyncCandidate(const QString& localFolder,
+                           const QString& megaFolder,
+                           const QString& originalLocalFolder,
+                           const QString& originalMegaFolder);
     void clearRemoteError();
     void clearLocalError();
     SyncsData* getSyncsData() const;
@@ -78,6 +82,9 @@ private:
 
     bool mCreatingFolder = false;
     bool mOnlyPrevalidateSync = false;
+    bool mEditSyncCandidate = false;
+    QString mEditOriginalLocalFolder;
+    QString mEditOriginalMegaFolder;
     SyncController::SyncConfig mSyncConfig;
 
     // vars with de command error data, used to generate error messages.

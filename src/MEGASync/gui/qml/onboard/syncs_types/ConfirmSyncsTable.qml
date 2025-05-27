@@ -306,14 +306,16 @@ Rectangle {
                                     text: qsTr("Edit sync")
                                     icon.source: Images.localFolderHeader
                                     onTriggered: {
-                                        console.log("edit sync : " + index)
-
                                         editSyncDialog.visible = true;
                                     }
 
                                     AddSyncDialog {
                                         id: editSyncDialog
 
+                                        title: qsTr("Edit sync")
+                                        rightPrimaryButton.text: qsTr("Edit")
+                                        editLocalPath: model.localFolder
+                                        editRemotePath: model.megaFolder
                                         visible: false
                                     }
                                 }

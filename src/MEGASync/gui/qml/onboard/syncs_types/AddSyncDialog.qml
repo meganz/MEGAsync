@@ -19,7 +19,11 @@ import ChooseRemoteFolder 1.0
 Window {
     id: root
 
-    property alias enabled : addSyncForm.enabled
+    property alias enabled: addSyncForm.enabled
+    property alias rightPrimaryButton: addSyncForm.rightPrimaryButton
+    property alias title: addSyncForm.dialogTitle
+    property string editLocalPath
+    property string editRemotePath
 
     width: addSyncForm.width
     height: addSyncForm.height
@@ -30,6 +34,14 @@ Window {
     onVisibleChanged: {
         addSyncForm.localFolderChooser.chosenPath = ""
         addSyncForm.remoteFolderChooser.chosenPath = ""
+
+        if (editLocalPath !== "") {
+            addSyncForm.localFolderChooser.chosenPath = editLocalPath
+        }
+
+        if (editRemotePath !== "") {
+            addSyncForm.remoteFolderChooser.chosenPath = editRemotePath
+        }
     }
 
     AddSyncDialogForm {
@@ -64,7 +76,15 @@ Window {
         rightPrimaryButton.onClicked: {
             root.enabled = false;
             rightPrimaryButton.icons.busyIndicatorVisible = true;
-            syncsComponentAccess.addSyncCandidadeButtonClicked(addSyncForm.localFolderChooser.chosenPath, addSyncForm.remoteFolderChooser.chosenPath);
+
+            if (editLocalPath !== "" && editRemotePath !== "")
+            {
+                syncsComponentAccess.editSyncCandidadeButtonClicked(addSyncForm.localFolderChooser.chosenPath, addSyncForm.remoteFolderChooser.chosenPath, editLocalPath, editRemotePath);
+            }
+            else
+            {
+                syncsComponentAccess.addSyncCandidadeButtonClicked(addSyncForm.localFolderChooser.chosenPath, addSyncForm.remoteFolderChooser.chosenPath);
+            }
         }
 
         rightSecondaryButton.onClicked: {

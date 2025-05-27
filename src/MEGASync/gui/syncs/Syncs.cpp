@@ -40,6 +40,19 @@ void Syncs::addSync(const QString& localFolder, const QString& megaFolder)
 
 void Syncs::addSyncCandidate(const QString& localFolder, const QString& megaFolder)
 {
+    mEditSyncCandidate = false;
+    syncHelper(true, localFolder, megaFolder);
+}
+
+void Syncs::editSyncCandidate(const QString& localFolder,
+                              const QString& megaFolder,
+                              const QString& originalLocalFolder,
+                              const QString& originalMegaFolder)
+{
+    mEditSyncCandidate = true;
+    mEditOriginalLocalFolder = originalLocalFolder;
+    mEditOriginalMegaFolder = originalMegaFolder;
+
     syncHelper(true, localFolder, megaFolder);
 }
 
@@ -365,8 +378,18 @@ void Syncs::onSyncPrevalidateRequestStatus(int errorCode, int syncErrorCode)
     {
         if (!foundErrors)
         {
-            mSyncsCandidatesModel->add(mSyncsData->getLocalFolderCandidate(),
-                                       mSyncsData->getRemoteFolderCandidate());
+            if (mEditSyncCandidate)
+            {
+                mSyncsCandidatesModel->edit(mEditOriginalLocalFolder,
+                                            mEditOriginalMegaFolder,
+                                            mSyncsData->getLocalFolderCandidate(),
+                                            mSyncsData->getRemoteFolderCandidate());
+            }
+            else
+            {
+                mSyncsCandidatesModel->add(mSyncsData->getLocalFolderCandidate(),
+                                           mSyncsData->getRemoteFolderCandidate());
+            }
 
             emit mSyncsData->syncPrevalidationSuccess();
         }

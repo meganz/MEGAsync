@@ -115,6 +115,26 @@ void SyncsCandidatesModel::remove(const QString& localSyncFolder, const QString&
     }
 }
 
+void SyncsCandidatesModel::edit(const QString& originalLocalSyncFolder,
+                                const QString& originalMegaSyncFolder,
+                                const QString& localSyncFolder,
+                                const QString& megaSyncFolder)
+{
+    auto foundItem = exist(localSyncFolder, megaSyncFolder);
+    if (!foundItem.has_value())
+    {
+        auto foundOriginalItem = exist(originalLocalSyncFolder, originalMegaSyncFolder);
+        if (foundOriginalItem.has_value())
+        {
+            beginResetModel();
+            auto& syncCandidate = foundOriginalItem.value();
+            syncCandidate->first = localSyncFolder.toStdString();
+            syncCandidate->second = megaSyncFolder.toStdString();
+            endResetModel();
+        }
+    }
+}
+
 std::optional<std::vector<SyncsCandidatesModel::SyncCandidate>::iterator>
     SyncsCandidatesModel::exist(const QString& localSyncFolder, const QString& megaSyncFolder)
 {

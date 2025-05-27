@@ -25,6 +25,7 @@ Rectangle {
     property alias remoteFolderChooser: remoteFolder
     property alias rightPrimaryButton : acceptButton
     property alias rightSecondaryButton : cancelButton
+    property alias dialogTitle: title.text
 
     color: ColorTheme.surface1
     radius: dialogRadius

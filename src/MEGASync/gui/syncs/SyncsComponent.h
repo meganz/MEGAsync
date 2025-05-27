@@ -23,6 +23,10 @@ public:
     Q_INVOKABLE void syncButtonClicked(const QString& localFolder, const QString& megaFolder);
     Q_INVOKABLE void addSyncCandidadeButtonClicked(const QString& localFolder,
                                                    const QString& megaFolder);
+    Q_INVOKABLE void editSyncCandidadeButtonClicked(const QString& localFolder,
+                                                    const QString& megaFolder,
+                                                    const QString& originalLocalFolder,
+                                                    const QString& originalMegaFolder);
     Q_INVOKABLE void removeSyncCandidadeButtonClicked(const QString& localFolder,
                                                       const QString& megaFolder);
     Q_INVOKABLE void closeDialogButtonClicked();
