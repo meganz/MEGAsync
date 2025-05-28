@@ -7344,14 +7344,14 @@ Do you want to delete it anyway?</translation>
         <translation>View previous versions</translation>
     </message>
     <message>
-        <source>Sync</source>
+        <source>Add sync</source>
         <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
-        <translation type="unfinished">Sync</translation>
+        <translation type="unfinished">Add sync</translation>
     </message>
     <message>
-        <source>Backup</source>
+        <source>Add backup</source>
         <translatorcomment>Context menu option to backup a folder. CON-1364.</translatorcomment>
-        <translation type="unfinished">Backup</translation>
+        <translation type="unfinished">Add backup</translation>
     </message>
 </context>
 <context>

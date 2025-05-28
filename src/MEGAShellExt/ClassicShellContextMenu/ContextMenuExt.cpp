@@ -83,18 +83,18 @@ ContextMenuExt::ContextMenuExt(void):
     m_pwszViewVersionsVerbCanonicalName(L"ViewVersions"),
     m_pszViewVersionsVerbHelpText("View previous versions"),
     m_pwszViewVersionsVerbHelpText(L"View previous versions"),
-    m_pszSyncVerb("Sync"),
-    m_pwszSyncVerb(L"Sync"),
-    m_pszSyncVerbCanonicalName("Sync"),
-    m_pwszSyncVerbCanonicalName(L"Sync"),
-    m_pszSyncVerbHelpText("Sync"),
-    m_pwszSyncVerbHelpText(L"Sync"),
-    m_pszBackupVerb("Backup"),
-    m_pwszBackupVerb(L"Backup"),
-    m_pszBackupVerbCanonicalName("Backup"),
-    m_pwszBackupVerbCanonicalName(L"Backup"),
-    m_pszBackupVerbHelpText("Backup"),
-    m_pwszBackupVerbHelpText(L"Backup")
+    m_pszSyncVerb("AddSync"),
+    m_pwszSyncVerb(L"AddSync"),
+    m_pszSyncVerbCanonicalName("AddSync"),
+    m_pwszSyncVerbCanonicalName(L"AddSync"),
+    m_pszSyncVerbHelpText("Add sync"),
+    m_pwszSyncVerbHelpText(L"Add sync"),
+    m_pszBackupVerb("AddBackup"),
+    m_pwszBackupVerb(L"AddBackup"),
+    m_pszBackupVerbCanonicalName("AddBackup"),
+    m_pwszBackupVerbCanonicalName(L"AddBackup"),
+    m_pszBackupVerbHelpText("Add backup"),
+    m_pwszBackupVerbHelpText(L"Add backup")
 {
     hIcon = NULL;
     m_hMenuBmp = NULL;

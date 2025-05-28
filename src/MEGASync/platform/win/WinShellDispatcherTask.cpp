@@ -420,10 +420,10 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                     actionString = QCoreApplication::translate("ShellExtension", "View previous versions");
                     break;
                 case STRING_SYNC:
-                    actionString = QCoreApplication::translate("ShellExtension", "Sync");
+                    actionString = QCoreApplication::translate("ShellExtension", "Add sync");
                     break;
                 case STRING_BACKUP:
-                    actionString = QCoreApplication::translate("ShellExtension", "Backup");
+                    actionString = QCoreApplication::translate("ShellExtension", "Add backup");
                     break;
             }
 
