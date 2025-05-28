@@ -61,6 +61,8 @@ void Syncs::removeSyncCandidate(const QString& localFolder, const QString& megaF
     mSyncsCandidatesModel->remove(localFolder, megaFolder);
 }
 
+void Syncs::confirmSyncCandidates() {}
+
 void Syncs::syncHelper(bool onlyPrevalidateSync,
                        const QString& localFolder,
                        const QString& megaFolder)

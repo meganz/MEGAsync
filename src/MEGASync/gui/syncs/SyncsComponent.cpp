@@ -44,6 +44,11 @@ SyncsComponent::SyncsComponent(QObject* parent):
             &SyncsComponent::onRemoteFolderChosen);
 }
 
+void SyncsComponent::confirmSyncCandidateButtonClicked()
+{
+    mSyncs->confirmSyncCandidates();
+}
+
 void SyncsComponent::onRemoteFolderChosen(QString remotePath)
 {
     mSyncs->setRemoteFolderCandidate(remotePath);

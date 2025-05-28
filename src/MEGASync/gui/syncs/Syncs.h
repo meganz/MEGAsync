@@ -33,6 +33,7 @@ public:
     void clearLocalError();
     SyncsData* getSyncsData() const;
     SyncsCandidatesModel* getSyncsCandidadtesModel() const;
+    void confirmSyncCandidates();
     void setSyncOrigin(SyncInfo::SyncOrigin origin);
 
     void setRemoteFolder(const QString& remoteFolder);

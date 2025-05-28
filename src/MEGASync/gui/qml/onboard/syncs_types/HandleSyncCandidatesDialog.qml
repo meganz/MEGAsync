@@ -19,33 +19,33 @@ import ChooseRemoteFolder 1.0
 Window {
     id: root
 
-    property alias enabled: addSyncForm.enabled
-    property alias rightPrimaryButton: addSyncForm.rightPrimaryButton
-    property alias title: addSyncForm.dialogTitle
+    property alias enabled: handleSyncCandidateForm.enabled
+    property alias rightPrimaryButton: handleSyncCandidateForm.rightPrimaryButton
+    property alias title: handleSyncCandidateForm.dialogTitle
     property string editLocalPath
     property string editRemotePath
 
-    width: addSyncForm.width
-    height: addSyncForm.height
+    width: handleSyncCandidateForm.width
+    height: handleSyncCandidateForm.height
     flags: Qt.Dialog | Qt.FramelessWindowHint
     modality: Qt.WindowModal
     color: "transparent"
 
     onVisibleChanged: {
-        addSyncForm.localFolderChooser.chosenPath = ""
-        addSyncForm.remoteFolderChooser.chosenPath = ""
+        handleSyncCandidateForm.localFolderChooser.chosenPath = ""
+        handleSyncCandidateForm.remoteFolderChooser.chosenPath = ""
 
         if (editLocalPath !== "") {
-            addSyncForm.localFolderChooser.chosenPath = editLocalPath
+            handleSyncCandidateForm.localFolderChooser.chosenPath = editLocalPath
         }
 
         if (editRemotePath !== "") {
-            addSyncForm.remoteFolderChooser.chosenPath = editRemotePath
+            handleSyncCandidateForm.remoteFolderChooser.chosenPath = editRemotePath
         }
     }
 
-    AddSyncDialogForm {
-        id: addSyncForm
+    HandleSyncCandidatesDialogForm {
+        id: handleSyncCandidateForm
 
         localFolderChooser.folderField {
             hint {
@@ -79,16 +79,16 @@ Window {
 
             if (editLocalPath !== "" && editRemotePath !== "")
             {
-                syncsComponentAccess.editSyncCandidadeButtonClicked(addSyncForm.localFolderChooser.chosenPath, addSyncForm.remoteFolderChooser.chosenPath, editLocalPath, editRemotePath);
+                syncsComponentAccess.editSyncCandidadeButtonClicked(handleSyncCandidateForm.localFolderChooser.chosenPath, handleSyncCandidateForm.remoteFolderChooser.chosenPath, editLocalPath, editRemotePath);
             }
             else
             {
-                syncsComponentAccess.addSyncCandidadeButtonClicked(addSyncForm.localFolderChooser.chosenPath, addSyncForm.remoteFolderChooser.chosenPath);
+                syncsComponentAccess.addSyncCandidadeButtonClicked(handleSyncCandidateForm.localFolderChooser.chosenPath, handleSyncCandidateForm.remoteFolderChooser.chosenPath);
             }
         }
 
         rightSecondaryButton.onClicked: {
-            addSyncForm.enableScreen();
+            handleSyncCandidateForm.enableScreen();
             syncsComponentAccess.closeDialogButtonClicked();
             root.close();
         }
@@ -108,7 +108,7 @@ Window {
             enabled: root.enabled
 
             function onFolderChosen(remoteFolderPath) {
-                addSyncForm.remoteFolderChooser.chosenPath = remoteFolderPath;
+                handleSyncCandidateForm.remoteFolderChooser.chosenPath = remoteFolderPath;
             }
         }
 
@@ -119,7 +119,7 @@ Window {
             enabled: root.enabled
 
             function onFolderChosen(localFolderPath) {
-                addSyncForm.localFolderChooser.chosenPath = localFolderPath;
+                handleSyncCandidateForm.localFolderChooser.chosenPath = localFolderPath;
             }
         }
 
@@ -132,12 +132,12 @@ Window {
             target: syncsDataAccess
 
             function onSyncPrevalidationSuccess() {
-                addSyncForm.enableScreen();
+                handleSyncCandidateForm.enableScreen();
                 root.close();
             }
 
             function onSyncPrevalidationFailed() {
-                addSyncForm.enableScreen();
+                handleSyncCandidateForm.enableScreen();
             }
         }
     }

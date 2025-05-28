@@ -308,11 +308,11 @@ Rectangle {
                                     text: qsTr("Edit sync")
                                     icon.source: Images.localFolderHeader
                                     onTriggered: {
-                                        editSyncDialog.visible = true;
+                                        editSyncCandidateDialog.visible = true;
                                     }
 
-                                    AddSyncDialog {
-                                        id: editSyncDialog
+                                    HandleSyncCandidatesDialog {
+                                        id: editSyncCandidateDialog
 
                                         title: qsTr("Edit sync")
                                         rightPrimaryButton.text: qsTr("Edit")
@@ -408,14 +408,14 @@ Rectangle {
                     position: Icon.Position.LEFT
                 }
 
-                AddSyncDialog {
-                    id: addSyncDialog
+                HandleSyncCandidatesDialog {
+                    id: handleSyncCandidate
 
                     visible: false
                 }
 
                 onClicked: {
-                    addSyncDialog.visible = true;
+                    handleSyncCandidate.visible = true;
                 }
             }
 

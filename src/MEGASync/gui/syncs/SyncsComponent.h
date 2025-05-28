@@ -21,6 +21,7 @@ public:
     Q_INVOKABLE void clearRemoteFolderHint();
     Q_INVOKABLE void clearLocalFolderHint();
     Q_INVOKABLE void syncButtonClicked(const QString& localFolder, const QString& megaFolder);
+    Q_INVOKABLE void confirmSyncCandidateButtonClicked();
     Q_INVOKABLE void addSyncCandidadeButtonClicked(const QString& localFolder,
                                                    const QString& megaFolder);
     Q_INVOKABLE void editSyncCandidadeButtonClicked(const QString& localFolder,
