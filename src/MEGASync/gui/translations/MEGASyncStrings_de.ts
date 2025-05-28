@@ -706,7 +706,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Datenschutzrichtlinien</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Terms of Service</source>
@@ -936,12 +936,39 @@
     </message>
 </context>
 <context>
+    <name>CrashHandler</name>
+    <message>
+        <source>Contact support</source>
+        <translatorcomment>Button label for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>Support kontaktieren</translation>
+    </message>
+    <message>
+        <source>Error report sent</source>
+        <translatorcomment>Title for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
+        <translation>Fehlerbericht gesendet</translation>
+    </message>
+    <message>
+        <source>Failed to send error report</source>
+        <translatorcomment>Title for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>Fehlerbericht konnte nicht gesendet werden</translation>
+    </message>
+    <message>
+        <source>Unable to send the error report. Please contact support for assistance.</source>
+        <translatorcomment>Body for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>Der Fehlerbericht konnte nicht gesendet werden. Bitte wenden Sie sich für Unterstützung an den Support.</translation>
+    </message>
+    <message>
+        <source>Your error report was successfully submitted. Thank you for your feedback!</source>
+        <translatorcomment>Body for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
+        <translation>Ihr Fehlerbericht wurde erfolgreich übermittelt. Vielen Dank für Ihr Feedback!</translation>
+    </message>
+</context>
+<context>
     <name>CrashReportDialog</name>
     <message>
-        <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
-        <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation>Bitte Diagnoseprotokolle zur Debug-Unterstützung beifügen.
-(Diese können Details zu Ihren Daten enthalten, z. B. Datei- und Ordnernamen.)</translation>
+        <source>Attach diagnostic log files to assist with debugging</source>
+        <translatorcomment>Label for a check box to attach user logs with in the crash report. Con-1280</translatorcomment>
+        <translation>Diagnoseprotokolle zur Debug-Unterstützung beifügen</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -949,14 +976,24 @@
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <source>Error report</source>
-        <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
-        <translation>Fehlerbericht</translation>
+        <source>Describe the issue</source>
+        <translatorcomment>Title for the input field in the crash reporting dialog. Con-1280</translatorcomment>
+        <translation>Fehlerbeschreibung</translation>
     </message>
     <message>
-        <source>MEGAsync has detected a problem. These are the details:</source>
-        <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>Die MEGA-App hat ein Problem festgestellt. Dies sind die Details:</translation>
+        <source>Logs may contain personal information, such as file or folder names. These logs are not shared with MEGA unless you choose to send them to the Helpdesk for debugging.</source>
+        <translatorcomment>Info label shown in the crash report dialog, informing user about logs contents. Con-1280</translatorcomment>
+        <translation>Protokolle können personenbezogene Informationen enthalten, z. B. Datei- oder Ordnernamen. Diese Protokolle werden nicht an MEGA übermittelt, es sei denn, Sie selbst senden sie zur Unterstützung der Fehlersuche an den Helpdesk.</translation>
+    </message>
+    <message>
+        <source>Please describe the issue or attach diagnostic log files to send the error report.</source>
+        <translatorcomment>Error label shown when the user tries to send the report without both logs and issue description. Con-1280</translatorcomment>
+        <translation>Bitte beschreiben Sie das Problem oder hängen Sie Diagnoseprotokolldateien an, um den Fehlerbericht versenden zu können</translation>
+    </message>
+    <message>
+        <source>Send crash report</source>
+        <translatorcomment>Title for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
+        <translation>Absturzbericht senden</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -964,9 +1001,9 @@
         <translation>Bericht absenden</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
-        <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Sie können uns helfen, die MEGA-App zu verbessern, indem Sie diesen Fehlerbericht absenden. Er enthält keine personenbezogenen Informationen. Wenn Sie uns weitere Details mitteilen möchten, geben Sie sie bitte unten ein:</translation>
+        <source>You can help us to improve MEGA by sending this error report to the Helpdesk.</source>
+        <translatorcomment>Body for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
+        <translation>Sie können uns helfen, MEGA zu verbessern, indem Sie diesen Fehlerbericht an unseren Helpdesk senden</translation>
     </message>
 </context>
 <context>
@@ -3371,11 +3408,6 @@ Warten Sie, bis der Upload abgeschlossen ist.</translation>
         <source>Syncing</source>
         <translatorcomment>Label of tray icon to indicate that the app is in a syncing state.</translatorcomment>
         <translation>Synchronisierung</translation>
-    </message>
-    <message>
-        <source>Thank you for your collaboration</source>
-        <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
-        <translation>Vielen Dank für Ihre Mithilfe!</translation>
     </message>
     <message>
         <source>The folder %1 can&apos;t be downloaded. Check the download destination folder.</source>
@@ -5901,79 +5933,6 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     </message>
 </context>
 <context>
-    <name>PlanWidget</name>
-    <message>
-        <source>%1 per user</source>
-        <translatorcomment>Label to indicate the price per user of business plan. %1 will be replaced with specific price.</translatorcomment>
-        <translation>%1 je Benutzer</translation>
-    </message>
-    <message>
-        <source>Additional storage charged at %1 per %2TB.</source>
-        <translatorcomment>Tooltip to inform users that additional storage quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of storage quota.</translatorcomment>
-        <translation>Zusätzlicher Speicherplatz wird mit %1 pro %2 TB berechnet.</translation>
-    </message>
-    <message>
-        <source>Additional transfer quota charged at %1 per %2TB.</source>
-        <translatorcomment>Tooltip to inform users that additional transfer quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of transfer quota.</translatorcomment>
-        <translation>Zusätzliches Transfervolumen wird mit %1 pro %2 TB berechnet.</translation>
-    </message>
-    <message>
-        <source>Current plan</source>
-        <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
-        <translation>Aktiv</translation>
-    </message>
-    <message>
-        <source>Get started with secure file storage.</source>
-        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro Lite plan.</translatorcomment>
-        <translation>Ihr Einstieg in die sichere Datenhaltung.</translation>
-    </message>
-    <message>
-        <source>Great Value</source>
-        <translatorcomment>Label to inform about the great value plan, recommended one.</translatorcomment>
-        <translation>Sonderangebot</translation>
-    </message>
-    <message>
-        <source>Great value for secure cloud storage, sharing and communication.</source>
-        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro I plan.</translatorcomment>
-        <translation>Perfekt für sichere Datenspeicherung, Sharing und Kommunikation.</translation>
-    </message>
-    <message>
-        <source>Rest easy knowing you have plenty of secure cloud storage.</source>
-        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro II plan.</translatorcomment>
-        <translation>Für Nutzer mit höherem Speicherbedarf.</translation>
-    </message>
-    <message>
-        <source>Store even more with our premium secure cloud storage offering.</source>
-        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro III plan.</translatorcomment>
-        <translation>Noch mehr Speicher mit unserem Premiumangebot für höchste Ansprüche.</translation>
-    </message>
-    <message>
-        <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
-        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation>Mit unserer Zero-Knowledge-Verschlüsselung können Ihre Teams sicherer denn je zusammenarbeiten.</translation>
-    </message>
-    <message>
-        <source>[A] storage</source>
-        <translatorcomment>Label to indicate the specific storage of a pro plan. [A] is a placeholder for the value of the storage, it must be kept in the translated strings.</translatorcomment>
-        <translation>[A] Speicherplatz</translation>
-    </message>
-    <message>
-        <source>[A] transfer</source>
-        <translatorcomment>Label to indicate the specific transfer quota of a pro plan. [A] is a placeholder for the value of the transfer quota, it must be kept in the translated strings.</translatorcomment>
-        <translation>[A] Transfervolumen</translation>
-    </message>
-    <message numerus="yes">
-        <source>minimum %n user</source>
-        <translatorcomment>Label to inform about the minimum number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation><numerusform>mind. %n Benutzer</numerusform><numerusform>mind. %n Benutzer</numerusform></translation>
-    </message>
-    <message>
-        <source>month</source>
-        <translatorcomment>Label displaying the period for which the pricing refers to</translatorcomment>
-        <translation>Monat</translation>
-    </message>
-</context>
-<context>
     <name>PlatformStrings</name>
     <message>
         <source>Exit</source>
@@ -6019,14 +5978,15 @@ Bitte geben Sie einen anderen Namen ein.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
-- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
-- Other bugs have been fixed and numerous improvements made.
+        <source>- We’ve improved how crash reports are handled, so we can fix issues faster.
+- New icons are now available in the Windows 11 context menu.
+- We’ve fixed bugs and made performance improvements behind the scenes.
 </source>
-        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
-        <translation>- Das Explorer-Kontextmenü unter Windows 11 wurde verbessert und bietet nun eine optimierte Benutzererfahrung.
-- Es wurde ein Problem behoben, das bei Dateien und Ordnern, die bei der Synchronisierung erstellt wurden, zu falschen Standard-Berechtigungseinstellungen führte.
-- Es wurden weitere Fehlerkorrekturen und zahlreiche Verbesserungen vorgenommen.</translation>
+        <translatorcomment>Change log for version 5.12.0. CON-1358</translatorcomment>
+        <translation>- Wir haben die Handhabung von Absturzberichten verbessert und können Probleme jetzt schneller beheben.
+- Im Windows-11-Kontextmenü sind neue Symbole verfügbar.
+- Wir haben Fehler behoben und die Leistung unter der Haube verbessert.
+</translation>
     </message>
 </context>
 <context>
@@ -9463,11 +9423,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Transfervolumen verbraucht</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.</source>
-        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Upgraden Sie Ihren Account, um mehr Speicherplatz zu erhalten.</translation>
-    </message>
-    <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
         <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
         <translation>Sie können den Download nicht fortsetzen, da Ihr Transfervolumen verbraucht ist.[BR][BR]Um mehr Volumen zu erhalten, kaufen Sie ein weiteres kostenpflichtigen Paket.[BR][BR][B][A]Erfahren Sie mehr über Transferkontingente.[/A][/B]</translation>
@@ -9491,6 +9446,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>pro Monat</translation>
+    </message>
+    <message>
+        <source>Upgrade your account to get more storage quota.</source>
+        <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
+        <translation>Upgraden Sie Ihren Account, um mehr Speicherplatz zu erhalten</translation>
     </message>
 </context>
 <context>

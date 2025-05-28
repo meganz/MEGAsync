@@ -329,8 +329,19 @@ RunElevated:
 done:
 !macroend
 
+#Do not restart explorer from Windows 11 version (build 22000)
+!define WINDOWS_11_BUILD 22000
+
 Function RunExplorer
-  ExecDos::exec /ASYNC /DETAILED /DISABLEFSR "explorer.exe"
+  ${IfNot} ${AtLeastBuild} WINDOWS_11_BUILD
+     ExecDos::exec /ASYNC /DETAILED /DISABLEFSR "explorer.exe"
+  ${EndIf}
+FunctionEnd
+
+Function KillExplorer
+  ${IfNot} ${AtLeastBuild} WINDOWS_11_BUILD
+     ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM explorer.exe"
+  ${EndIf}
 FunctionEnd
 
 Var BITMAP_WELCOME
@@ -539,7 +550,7 @@ modeselected:
 
   SetOutPath "$INSTDIR"
 
-  ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM explorer.exe"
+  Call KillExplorer
 
   !insertmacro DEBUG_MSG "Registering DLLs"
 
@@ -559,8 +570,8 @@ modeselected:
   !ifndef BUILD_X64_VERSION
         !define LIBRARY_COM
         !define LIBRARY_SHELL_EXTENSION
+        !insertmacro InstallLib DLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.msix" "$INSTDIR\ShellExtX32.msix" "$INSTDIR"          
         !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
-        !insertmacro InstallLib DLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.msix" "$INSTDIR\ShellExtX32.msix" "$INSTDIR"
         !undef LIBRARY_COM
         !undef LIBRARY_SHELL_EXTENSION
 
@@ -586,8 +597,8 @@ modeselected:
         !define LIBRARY_X64
         !define LIBRARY_COM
         !define LIBRARY_SHELL_EXTENSION
-        !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.dll" "$INSTDIR\ShellExtX64.dll" "$INSTDIR"
         !insertmacro InstallLib DLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.msix" "$INSTDIR\ShellExtX64.msix" "$INSTDIR"
+        !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.dll" "$INSTDIR\ShellExtX64.dll" "$INSTDIR"
         !undef LIBRARY_X64
         !undef LIBRARY_COM
         !undef LIBRARY_SHELL_EXTENSION
@@ -735,25 +746,25 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\qt.conf" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\qt.conf" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\avcodec-59.dll"
-  AccessControl::SetFileOwner "$INSTDIR\avcodec-59.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\avcodec-59.dll" "$USERNAME" "GenericRead + GenericWrite"
+  File "${SRCDIR_MEGASYNC}\avcodec-61.dll"
+  AccessControl::SetFileOwner "$INSTDIR\avcodec-61.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\avcodec-61.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\avformat-59.dll"
-  AccessControl::SetFileOwner "$INSTDIR\avformat-59.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\avformat-59.dll" "$USERNAME" "GenericRead + GenericWrite"
+  File "${SRCDIR_MEGASYNC}\avformat-61.dll"
+  AccessControl::SetFileOwner "$INSTDIR\avformat-61.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\avformat-61.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\avutil-57.dll"
-  AccessControl::SetFileOwner "$INSTDIR\avutil-57.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\avutil-57.dll" "$USERNAME" "GenericRead + GenericWrite"
+  File "${SRCDIR_MEGASYNC}\avutil-59.dll"
+  AccessControl::SetFileOwner "$INSTDIR\avutil-59.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\avutil-59.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\swscale-6.dll"
-  AccessControl::SetFileOwner "$INSTDIR\swscale-6.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\swscale-6.dll" "$USERNAME" "GenericRead + GenericWrite"
+  File "${SRCDIR_MEGASYNC}\swscale-8.dll"
+  AccessControl::SetFileOwner "$INSTDIR\swscale-8.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\swscale-8.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\swresample-4.dll"
-  AccessControl::SetFileOwner "$INSTDIR\swresample-4.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\swresample-4.dll" "$USERNAME" "GenericRead + GenericWrite"
+  File "${SRCDIR_MEGASYNC}\swresample-5.dll"
+  AccessControl::SetFileOwner "$INSTDIR\swresample-5.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\swresample-5.dll" "$USERNAME" "GenericRead + GenericWrite"
   
   ;remove old DLLs that we no longer use (some became static; some have later version number)
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avcodec-57.dll"
@@ -768,6 +779,11 @@ modeselected:
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avutil-56.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\swscale-5.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\swresample-3.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avcodec-59.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avformat-59.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avutil-57.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\swscale-6.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\swresample-4.dll"
 
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\libcrypto-1_1-x64.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\libssl-1_1-x64.dll"

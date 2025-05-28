@@ -706,7 +706,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>นโยบายความเป็นส่วนตัวและข้อมูล</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Terms of Service</source>
@@ -936,12 +936,39 @@
     </message>
 </context>
 <context>
+    <name>CrashHandler</name>
+    <message>
+        <source>Contact support</source>
+        <translatorcomment>Button label for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>ติดต่อฝ่ายสนับสนุน</translation>
+    </message>
+    <message>
+        <source>Error report sent</source>
+        <translatorcomment>Title for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
+        <translation>ส่งรายงานข้อผิดพลาดเรียบร้อยแล้ว</translation>
+    </message>
+    <message>
+        <source>Failed to send error report</source>
+        <translatorcomment>Title for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>ไม่สามารถส่งรายงานข้อผิดพลาดได้</translation>
+    </message>
+    <message>
+        <source>Unable to send the error report. Please contact support for assistance.</source>
+        <translatorcomment>Body for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>ไม่สามารถส่งรายงานข้อผิดพลาดได้ กรุณาติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือ</translation>
+    </message>
+    <message>
+        <source>Your error report was successfully submitted. Thank you for your feedback!</source>
+        <translatorcomment>Body for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
+        <translation>ส่งรายงานข้อผิดพลาดเรียบร้อยแล้ว ขอบคุณสำหรับคำติชม</translation>
+    </message>
+</context>
+<context>
     <name>CrashReportDialog</name>
     <message>
-        <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
-        <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation>แนบไฟล์บันทึกการวินิจฉัยเพื่อช่วยในการดีบัก
-ในบางกรณีอาจมีรายละเอียดเกี่ยวกับข้อมูลของคุณ เช่น ชื่อไฟล์หรือโฟลเดอร์</translation>
+        <source>Attach diagnostic log files to assist with debugging</source>
+        <translatorcomment>Label for a check box to attach user logs with in the crash report. Con-1280</translatorcomment>
+        <translation>แนบไฟล์บันทึกการวินิจฉัยเพื่อช่วยในการแก้ไขข้อบกพร่อง</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -949,14 +976,24 @@
         <translation>ยกเลิก</translation>
     </message>
     <message>
-        <source>Error report</source>
-        <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
-        <translation>รายงานข้อผิดพลาด</translation>
+        <source>Describe the issue</source>
+        <translatorcomment>Title for the input field in the crash reporting dialog. Con-1280</translatorcomment>
+        <translation>อธิบายปัญหาที่พบ</translation>
     </message>
     <message>
-        <source>MEGAsync has detected a problem. These are the details:</source>
-        <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>แอป MEGA ตรวจพบปัญหา นี่คือรายละเอียดที่ตรวจเจอ:</translation>
+        <source>Logs may contain personal information, such as file or folder names. These logs are not shared with MEGA unless you choose to send them to the Helpdesk for debugging.</source>
+        <translatorcomment>Info label shown in the crash report dialog, informing user about logs contents. Con-1280</translatorcomment>
+        <translation>ไฟล์บันทึกอาจมีข้อมูลส่วนบุคคล เช่น ชื่อไฟล์หรือโฟลเดอร์ ไฟล์บันทึกเหล่านี้จะไม่ถูกแชร์กับ MEGA เว้นแต่คุณจะเลือกส่งไปยังฝ่ายช่วยเหลือเพื่อแก้ไขข้อบกพร่อง</translation>
+    </message>
+    <message>
+        <source>Please describe the issue or attach diagnostic log files to send the error report.</source>
+        <translatorcomment>Error label shown when the user tries to send the report without both logs and issue description. Con-1280</translatorcomment>
+        <translation>กรุณาอธิบายปัญหาหรือแนบไฟล์บันทึก เพื่อส่งรายงานข้อผิดพลาด</translation>
+    </message>
+    <message>
+        <source>Send crash report</source>
+        <translatorcomment>Title for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
+        <translation>ส่งรายงานข้อผิดพลาด</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -964,9 +1001,9 @@
         <translation>ส่งรายงาน</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
-        <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>คุณสามารถช่วยปรับปรุงแอป MEGA ได้โดยส่งรายงานข้อผิดพลาดนี้ จะไม่มีการแนบข้อมูลส่วนบุคคลใด ๆ หากคุณต้องการให้รายละเอียดเพิ่มเติม กรุณาเขียนไว้ด้านล่างนี้:</translation>
+        <source>You can help us to improve MEGA by sending this error report to the Helpdesk.</source>
+        <translatorcomment>Body for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
+        <translation>คุณสามารถช่วยเราปรับปรุง MEGA ได้โดยส่งรายงานข้อผิดพลาดนี้ให้เจ้าหน้าที่ให้ความช่วยเหลือ</translation>
     </message>
 </context>
 <context>
@@ -3370,11 +3407,6 @@ Please wait for the upload to complete.</source>
         <source>Syncing</source>
         <translatorcomment>Label of tray icon to indicate that the app is in a syncing state.</translatorcomment>
         <translation>กำลังซิงค์</translation>
-    </message>
-    <message>
-        <source>Thank you for your collaboration</source>
-        <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
-        <translation>ขอบคุณสำหรับความร่วมมือของคุณ</translation>
     </message>
     <message>
         <source>The folder %1 can&apos;t be downloaded. Check the download destination folder.</source>
@@ -5897,79 +5929,6 @@ Enter a different name</source>
     </message>
 </context>
 <context>
-    <name>PlanWidget</name>
-    <message>
-        <source>%1 per user</source>
-        <translatorcomment>Label to indicate the price per user of business plan. %1 will be replaced with specific price.</translatorcomment>
-        <translation>%1 ต่อผู้ใช้</translation>
-    </message>
-    <message>
-        <source>Additional storage charged at %1 per %2TB.</source>
-        <translatorcomment>Tooltip to inform users that additional storage quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of storage quota.</translatorcomment>
-        <translation>พื้นที่จัดเก็บเพิ่มเติม คิดค่าบริการอยู่ที่ %1 ต่อ %2 TB</translation>
-    </message>
-    <message>
-        <source>Additional transfer quota charged at %1 per %2TB.</source>
-        <translatorcomment>Tooltip to inform users that additional transfer quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of transfer quota.</translatorcomment>
-        <translation>โควต้าการถ่ายโอนข้อมูลเพิ่มเติม คิดค่าบริการอยู่ที่ %1 ต่อ %2 TB</translation>
-    </message>
-    <message>
-        <source>Current plan</source>
-        <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
-        <translation>แผนปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>Get started with secure file storage.</source>
-        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro Lite plan.</translatorcomment>
-        <translation>เริ่มต้นด้วยการจัดเก็บไฟล์อย่างปลอดภัย</translation>
-    </message>
-    <message>
-        <source>Great Value</source>
-        <translatorcomment>Label to inform about the great value plan, recommended one.</translatorcomment>
-        <translation>คุ้มค่า</translation>
-    </message>
-    <message>
-        <source>Great value for secure cloud storage, sharing and communication.</source>
-        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro I plan.</translatorcomment>
-        <translation>คุ้มค่าสูงสุดในการจัดเก็บ การแชร์และการสื่อสารบนคลาวด์ที่ปลอดภัย</translation>
-    </message>
-    <message>
-        <source>Rest easy knowing you have plenty of secure cloud storage.</source>
-        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro II plan.</translatorcomment>
-        <translation>สบายใจได้เพราะคุณมีที่เก็บข้อมูลบนคลาวด์ที่ปลอดภัยมากมาย</translation>
-    </message>
-    <message>
-        <source>Store even more with our premium secure cloud storage offering.</source>
-        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro III plan.</translatorcomment>
-        <translation>จัดเก็บได้มากขึ้นด้วยข้อเสนอสุดพิเศษพื้นที่จัดเก็บบนคลาวด์ที่ปลอดภัยระดับพรีเมียมของเรา</translation>
-    </message>
-    <message>
-        <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
-        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation>ด้วยการเข้ารหัสด้วยวิธีซีโร่-นอว์เลจ การทำงานในทีมของคุณจะปลอดภัยและเป็นส่วนตัวอย่างที่ไม่เคยมีมาก่อน</translation>
-    </message>
-    <message>
-        <source>[A] storage</source>
-        <translatorcomment>Label to indicate the specific storage of a pro plan. [A] is a placeholder for the value of the storage, it must be kept in the translated strings.</translatorcomment>
-        <translation>พื้นที่เก็บข้อมูล [A]</translation>
-    </message>
-    <message>
-        <source>[A] transfer</source>
-        <translatorcomment>Label to indicate the specific transfer quota of a pro plan. [A] is a placeholder for the value of the transfer quota, it must be kept in the translated strings.</translatorcomment>
-        <translation>การถ่ายโอน [A]</translation>
-    </message>
-    <message numerus="yes">
-        <source>minimum %n user</source>
-        <translatorcomment>Label to inform about the minimum number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation><numerusform>ผู้ใช้ขั้นต่ำ %n ราย</numerusform></translation>
-    </message>
-    <message>
-        <source>month</source>
-        <translatorcomment>Label displaying the period for which the pricing refers to</translatorcomment>
-        <translation>เดือน</translation>
-    </message>
-</context>
-<context>
     <name>PlatformStrings</name>
     <message>
         <source>Exit</source>
@@ -6015,14 +5974,12 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
-- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
-- Other bugs have been fixed and numerous improvements made.
+        <source>- We’ve improved how crash reports are handled, so we can fix issues faster.
+- New icons are now available in the Windows 11 context menu.
+- We’ve fixed bugs and made performance improvements behind the scenes.
 </source>
-        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
-        <translation>- ปรับปรุงเมนูคลิกขวาของ Explorer ใน Windows 11 ให้ใช้งานได้คล่องตัวและสวยงามยิ่งขึ้น เพื่อประสบการณ์การใช้งานที่ดียิ่งขึ้น
-- แก้ไขปัญหาการตั้งค่าสิทธิ์เริ่มต้นที่ไม่ถูกต้องสำหรับไฟล์และโฟลเดอร์ที่สร้างขึ้นระหว่างการซิงค์ข้อมูล
-- แก้ไขข้อผิดพลาดอื่น ๆ และปรับปรุงประสิทธิภาพการทำงานหลายส่วน</translation>
+        <translatorcomment>Change log for version 5.12.0. CON-1358</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9459,11 +9416,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>เกินโควต้าการถ่ายโอนแล้ว</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.</source>
-        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>พื้นที่เก็บข้อมูลของคุณใกล้เต็มแล้ว</translation>
-    </message>
-    <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
         <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
         <translation>คุณไม่สามารถดาวน์โหลดต่อได้อีก เนื่องจากคุณใช้โควต้าการถ่ายโอนข้อมูลทั้งหมดของคุณแล้ว [BR][BR]หากต้องการโควต้าเพิ่ม กรุณาซื้อแผนบริการแบบชำระเงินเพิ่มเติม [BR][BR][B][A]เรียนรู้เพิ่มเติมเกี่ยวกับโควต้าการถ่ายโอนข้อมูล[/A][/B]</translation>
@@ -9487,6 +9439,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>ทุกเดือน</translation>
+    </message>
+    <message>
+        <source>Upgrade your account to get more storage quota.</source>
+        <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

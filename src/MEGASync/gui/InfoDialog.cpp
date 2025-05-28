@@ -836,7 +836,7 @@ void InfoDialog::onAddSync(mega::MegaSync::SyncType type)
         case mega::MegaSync::TYPE_TWOWAY:
         {
             MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::MENU_ADD_SYNC_CLICKED, true);
-            addSync(SyncInfo::SyncOrigin::MAIN_APP_ORIGIN);
+            addSync(SyncInfo::SyncOrigin::CONTEXT_MENU_ORIGIN);
             break;
         }
         case mega::MegaSync::TYPE_BACKUP:
@@ -1130,7 +1130,9 @@ void InfoDialog::on_bTransferManager_clicked()
 {
     emit userActivity();
     app->transferManagerActionClicked();
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::OPEN_TRANSFER_MANAGER_CLICKED, true);
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::OPEN_TRANSFER_MANAGER_CLICKED,
+        true);
 }
 
 void InfoDialog::onAddSyncClicked()
@@ -1139,12 +1141,6 @@ void InfoDialog::onAddSyncClicked()
         AppStatsEvents::EventType::INFO_DIALOG_ADD_SYNC_CLICKED,
         true);
     addSync(SyncInfo::SyncOrigin::INFODIALOG_BUTTON_ORIGIN);
-}
-
-void InfoDialog::on_bUpload_clicked()
-{
-    app->uploadActionClicked();
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::UPLOAD_CLICKED, true);
 }
 
 void InfoDialog::clearUserAttributes()

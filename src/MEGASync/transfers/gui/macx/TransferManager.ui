@@ -453,7 +453,7 @@ QToolButton
 
 #bUpgrade
 {
-	font-family: Inter;
+        font-family: Lato;
 	font-size: 12px;
 	line-height: 16px;
 	border: 1px solid #0000001A;
@@ -465,7 +465,7 @@ QToolButton
 
 #lStorage
 {
-	font-family: Inter;
+        font-family: Lato;
 	font-size: 12px;
 	line-height: 18px;
 	color: #303233;
@@ -541,7 +541,7 @@ QToolButton
 
 #bAccountType
 {
-	font-family: Inter;
+        font-family: Lato;
 	font-size: 10px;
     line-height: 14px;
 	font-weight: 600;

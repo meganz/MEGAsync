@@ -112,7 +112,7 @@ bool PlatformImplementation::isFileManagerExtensionEnabled()
     return true;
 }
 
-void PlatformImplementation::reloadFileManagerExtension()
+void PlatformImplementation::runPostAutoUpdateStep()
 {
     bool finderExtEnabled = PlatformImplementation::isFileManagerExtensionEnabled();
     if (!finderExtEnabled) // No need to reload, extension is currenctly disabled and next time user enable it, it will launch updated version

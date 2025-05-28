@@ -258,8 +258,6 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     mStatusController = nullptr;
     mStatsEventHandler = nullptr;
 
-    context = new QObject(this);
-
 #ifdef _WIN32
     windowsMenu = nullptr;
     windowsExitAction = nullptr;
@@ -556,8 +554,16 @@ void MegaApplication::initialize()
     }
     trayIcon->show();
 
-    megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("MEGA Desktop App is starting. Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
-             .arg(Preferences::VERSION_CODE).arg(Preferences::BUILD_ID).arg(QString::fromUtf8(megaApi->getUserAgent())).toUtf8().constData());
+    megaApi->log(MegaApi::LOG_LEVEL_INFO,
+                 QString::fromUtf8("MEGA Desktop App is starting. Version string: %1   Version "
+                                   "code: %2.%3-%4   User-Agent: %5")
+                     .arg(Preferences::VERSION_STRING)
+                     .arg(Preferences::VERSION_CODE)
+                     .arg(Preferences::VERSION_RC)
+                     .arg(Preferences::BUILD_ID)
+                     .arg(QString::fromUtf8(megaApi->getUserAgent()))
+                     .toUtf8()
+                     .constData());
 
     megaApi->setLanguage(currentLanguageCode.toUtf8().constData());
     megaApiFolders->setLanguage(currentLanguageCode.toUtf8().constData());
@@ -606,71 +612,7 @@ void MegaApplication::initialize()
             preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_REGISTER_UPDATE_TASK, true);
         }
     }
-
-    if (preferences->isCrashed())
-    {
-        preferences->setCrashed(false);
-        QStringList reports = CrashHandler::instance()->getPendingCrashReports();
-        if (reports.size())
-        {
-            QPointer<CrashReportDialog> crashDialog = new CrashReportDialog(
-                reports.join(QString::fromUtf8("------------------------------\n")));
-            if (crashDialog->exec() == QDialog::Accepted)
-            {
-                applyProxySettings();
-                CrashHandler::instance()->sendPendingCrashReports(crashDialog->getUserMessage());
-                if (crashDialog->sendLogs())
-                {
-                    auto timestampString =
-                        reports[0].mid(reports[0].indexOf(QString::fromUtf8("Timestamp: ")) + 11,
-                                       20);
-                    timestampString =
-                        timestampString.left(timestampString.indexOf(QString::fromUtf8("\n")));
-                    QDateTime crashTimestamp =
-                        QDateTime::fromMSecsSinceEpoch(timestampString.toLongLong());
-
-                    if (crashTimestamp != QDateTime::fromMSecsSinceEpoch(0))
-                    {
-                        // to gather some logging before the crash
-                        crashTimestamp = crashTimestamp.addSecs(-300);
-                    }
-
-                    connect(logger.get(),
-                            &MegaSyncLogger::logReadyForReporting,
-                            context,
-                            [this, crashTimestamp]()
-                            {
-                                crashReportFilePath = Utilities::joinLogZipFiles(
-                                    megaApi,
-                                    &crashTimestamp,
-                                    CrashHandler::instance()->getLastCrashHash());
-                                if (!crashReportFilePath.isNull() && megaApi &&
-                                    megaApi->isLoggedIn())
-                                {
-                                    megaApi->startUploadForSupport(
-                                        QDir::toNativeSeparators(crashReportFilePath)
-                                            .toUtf8()
-                                            .constData(),
-                                        false);
-                                    crashReportFilePath.clear();
-                                }
-                                context->deleteLater();
-                            });
-
-                    logger->prepareForReporting();
-                }
-
-#ifndef __APPLE__
-                QMegaMessageBox::MessageBoxInfo msgInfo;
-                msgInfo.title = MegaSyncApp->getMEGAString();
-                msgInfo.text = tr("Thank you for your collaboration");
-                msgInfo.enqueue = true;
-                QMegaMessageBox::information(msgInfo);
-#endif
-            }
-        }
-    }
-
+    startCrashReportingDialog();
     mTransferQuota = std::make_shared<TransferQuota>(mOsNotifications);
     connect(mTransferQuota.get(), &TransferQuota::waitTimeIsOver, this, &MegaApplication::updateStatesAfterTransferOverQuotaTimeHasExpired);
 
@@ -1175,7 +1117,7 @@ void MegaApplication::start()
         {
             preferences->setInstallationTime(-1);
         }
-        Platform::getInstance()->reloadFileManagerExtension();
+        Platform::getInstance()->runPostAutoUpdateStep();
     }
 
     applyProxySettings();
@@ -1283,15 +1225,6 @@ void MegaApplication::onboardingFinished(bool fastLogin)
     if (appfinished)
     {
         return;
-    }
-
-    //Send pending crash report log if neccessary
-    if (!crashReportFilePath.isNull() && megaApi)
-    {
-        QFileInfo crashReportFile{crashReportFilePath};
-        megaApi->startUploadForSupport(QDir::toNativeSeparators(crashReportFilePath).toUtf8().constData(),
-                                       false);
-        crashReportFilePath.clear();
     }
 
     registerUserActivity();
@@ -2223,10 +2156,6 @@ void MegaApplication::cleanAll()
     appfinished = true;
 
     emit requestAppState(AppState::FINISHED);
-
-#ifndef DEBUG
-    CrashHandler::instance()->Disable();
-#endif
 
     qInstallMessageHandler(0);
 
@@ -5497,11 +5426,38 @@ void MegaApplication::createTrayIconMenus()
 
     guestSettingsAction = new QAction(tr("Settings"), this);
 
+#ifdef __APPLE__
+    guestSettingsAction->setIcon(
+        QIcon(QString::fromUtf8(":/images/icons/tray/macos/settings.svg")));
+#endif
+
+#ifdef Q_OS_LINUX
+    guestSettingsAction->setIcon(
+        QIcon(QString::fromUtf8(":/images/icons/tray/linux/settings.svg")));
+#endif
+
+#ifdef _WIN32
+    guestSettingsAction->setIcon(
+        QIcon(QString::fromUtf8(":/images/icons/tray/windows/settings.svg")));
+#endif
+
     // When triggered, open "Settings" window. As the user is not logged in, it
     // will only show proxy settings.
     connect(guestSettingsAction, &QAction::triggered, this, &MegaApplication::openSettings);
 
     initialExitAction = new QAction(PlatformStrings::exit(), this);
+
+#ifdef __APPLE__
+    initialExitAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/tray/macos/exit.svg")));
+#endif
+
+#ifdef Q_OS_LINUX
+    initialExitAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/tray/linux/exit.svg")));
+#endif
+
+#ifdef _WIN32
+    initialExitAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/tray/windows/exit.svg")));
+#endif
     connect(initialExitAction, &QAction::triggered, this, &MegaApplication::tryExitApplication);
 
     initialTrayMenu->addAction(guestSettingsAction);
@@ -5511,6 +5467,8 @@ void MegaApplication::createTrayIconMenus()
     if (isLinux && infoDialog)
     {
         showStatusAction = new QAction(tr("Show status"), this);
+        showStatusAction->setIcon(QIcon(QString::fromUtf8(":/images/icons/tray/linux/status.svg")));
+
         connect(showStatusAction, &QAction::triggered, this, [this](){
             DialogOpener::raiseAllDialogs();
             QmlDialogManager::instance()->raiseOnboardingDialog();
@@ -5540,15 +5498,46 @@ void MegaApplication::createInfoDialogMenus()
         clearMenu(windowsMenu);
     }
 
-    recreateAction(&windowsExitAction, windowsMenu, PlatformStrings::exit(), &MegaApplication::tryExitApplication);
-    recreateAction(&windowsSettingsAction, windowsMenu, tr("Settings"), &MegaApplication::openSettings);
-    recreateAction(&windowsImportLinksAction, windowsMenu, tr("Open links"), &MegaApplication::importLinks);
-    recreateAction(&windowsFilesAction, windowsMenu, tr("Files"), &MegaApplication::goToFiles);
-    recreateAction(&windowsUploadAction, windowsMenu, tr("Upload"), &MegaApplication::uploadActionClicked);
-    recreateAction(&windowsDownloadAction, windowsMenu, tr("Download"), &MegaApplication::downloadActionClicked);
-    recreateAction(&windowsStreamAction, windowsMenu, tr("Stream"), &MegaApplication::streamActionClicked);
-    recreateAction(&windowsTransferManagerAction, windowsMenu, tr("Transfer manager"),
-                   &MegaApplication::transferManagerActionClicked);
+    recreateAction(&windowsExitAction,
+                   windowsMenu,
+                   PlatformStrings::exit(),
+                   &MegaApplication::tryExitApplication,
+                   QString::fromLatin1(":/images/icons/tray/windows/exit.svg"));
+    recreateAction(&windowsSettingsAction,
+                   windowsMenu,
+                   tr("Settings"),
+                   &MegaApplication::openSettings,
+                   QString::fromLatin1(":/images/icons/tray/windows/settings.svg"));
+    recreateAction(&windowsImportLinksAction,
+                   windowsMenu,
+                   tr("Open links"),
+                   &MegaApplication::importLinks,
+                   QString::fromLatin1(":/images/icons/tray/windows/open_links.svg"));
+    recreateAction(&windowsFilesAction,
+                   windowsMenu,
+                   tr("Files"),
+                   &MegaApplication::goToFiles,
+                   QString::fromLatin1(":/images/icons/tray/windows/drive.svg"));
+    recreateAction(&windowsUploadAction,
+                   windowsMenu,
+                   tr("Upload"),
+                   &MegaApplication::uploadActionClicked,
+                   QString::fromLatin1(":/images/icons/tray/windows/upload.svg"));
+    recreateAction(&windowsDownloadAction,
+                   windowsMenu,
+                   tr("Download"),
+                   &MegaApplication::downloadActionClicked,
+                   QString::fromLatin1(":/images/icons/tray/windows/download.svg"));
+    recreateAction(&windowsStreamAction,
+                   windowsMenu,
+                   tr("Stream"),
+                   &MegaApplication::streamActionClicked,
+                   QString::fromLatin1(":/images/icons/tray/windows/stream.svg"));
+    recreateAction(&windowsTransferManagerAction,
+                   windowsMenu,
+                   tr("Transfer manager"),
+                   &MegaApplication::transferManagerActionClicked,
+                   QString::fromLatin1(":/images/icons/tray/windows/transfer_manager.svg"));
 
     bool windowsUpdateActionEnabled = true;
     if (windowsUpdateAction)
@@ -5576,6 +5565,8 @@ void MegaApplication::createInfoDialogMenus()
     else
     {
         windowsAboutAction = new QAction(tr("About"), this);
+        windowsAboutAction->setIcon(
+            QIcon(QString::fromUtf8(":/images/icons/tray/windows/about.svg")));
 
         windowsMenu->addAction(windowsAboutAction);
         connect(windowsAboutAction, &QAction::triggered, this, &MegaApplication::onAboutClicked);
@@ -6540,4 +6531,50 @@ bool MegaApplication::mightBeCaseSensitivityIssue(const QString& folderPath)
 {
     QFileInfo info(folderPath);
     return info.exists();
+}
+
+void MegaApplication::startCrashReportingDialog()
+{
+#ifdef USE_BREAKPAD
+    if (preferences->isCrashed())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Crash detected, loading crash reports");
+        preferences->setCrashed(false);
+        QStringList reports = CrashHandler::instance()->getPendingCrashReports();
+        if (reports.size())
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                         QString::fromUtf8("Crash reports found: %1")
+                             .arg(reports.size())
+                             .toUtf8()
+                             .constData());
+            QPointer<CrashReportDialog> crashDialog = new CrashReportDialog();
+            crashDialog->setAttribute(Qt::WA_DeleteOnClose);
+            TokenParserWidgetManager::instance()->applyCurrentTheme(crashDialog);
+            connect(crashDialog,
+                    &CrashReportDialog::finished,
+                    this,
+                    [crashDialog, reports, this]()
+                    {
+                        if (crashDialog->result() != QDialog::Accepted)
+                        {
+                            MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                                         "Crash dialog cancelled, deleting crash report");
+                            CrashHandler::instance()->deletePendingCrashReports(reports);
+                            return;
+                        }
+                        applyProxySettings();
+                        const bool shouldSendLogs = crashDialog->sendLogs();
+                        CrashHandler::instance()->sendPendingCrashReports(
+                            crashDialog->getUserMessage(),
+                            shouldSendLogs);
+                    });
+            crashDialog->exec();
+        }
+        else
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "No crash reports found.");
+        }
+    }
+#endif
 }

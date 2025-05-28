@@ -34,7 +34,7 @@
   <property name="styleSheet">
    <string notr="true">#bAccountType
 {
-	font-family: Inter;
+        font-family: Lato;
 	font-size: 10px;
     line-height: 14px;
 	font-weight: 600;

@@ -174,7 +174,6 @@ public:
 
     TransfersToProcess processTransfers();
     void clear();
-    void clearTransfersCount();
 
 public slots:
     void onTransferStart(mega::MegaApi*, mega::MegaTransfer* transfer);

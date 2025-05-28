@@ -706,7 +706,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Chính Sách Dữ Liệu và Riêng Tư</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Terms of Service</source>
@@ -936,12 +936,39 @@
     </message>
 </context>
 <context>
+    <name>CrashHandler</name>
+    <message>
+        <source>Contact support</source>
+        <translatorcomment>Button label for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>Liên hệ hỗ trợ</translation>
+    </message>
+    <message>
+        <source>Error report sent</source>
+        <translatorcomment>Title for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
+        <translation>Báo cáo lỗi đã được gửi</translation>
+    </message>
+    <message>
+        <source>Failed to send error report</source>
+        <translatorcomment>Title for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>Gửi báo cáo lỗi bị thất bại</translation>
+    </message>
+    <message>
+        <source>Unable to send the error report. Please contact support for assistance.</source>
+        <translatorcomment>Body for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>Không thể gửi báo cáo lỗi. Vui lòng liên hệ hỗ trợ để được trợ giúp</translation>
+    </message>
+    <message>
+        <source>Your error report was successfully submitted. Thank you for your feedback!</source>
+        <translatorcomment>Body for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
+        <translation>Báo cáo lỗi của bạn đã được gửi đi thành công. Cảm ơn phản hồi của bạn!</translation>
+    </message>
+</context>
+<context>
     <name>CrashReportDialog</name>
     <message>
-        <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
-        <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation>Đính kèm tệp ghi nhật ký chẩn đoán để hỗ trợ gỡ lỗi.
-Trong một số trường hợp, log có thể chứa thông tin chi tiết về dữ liệu của bạn, chẳng hạn như tên của tệp hoặc thư mục.</translation>
+        <source>Attach diagnostic log files to assist with debugging</source>
+        <translatorcomment>Label for a check box to attach user logs with in the crash report. Con-1280</translatorcomment>
+        <translation>Đính kèm tệp ghi log nhật ký chẩn đoán để hỗ trợ việc gỡ lỗi</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -949,14 +976,24 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
         <translation>Hủy</translation>
     </message>
     <message>
-        <source>Error report</source>
-        <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
-        <translation>Gửi báo lỗi</translation>
+        <source>Describe the issue</source>
+        <translatorcomment>Title for the input field in the crash reporting dialog. Con-1280</translatorcomment>
+        <translation>Mô tả vấn đề</translation>
     </message>
     <message>
-        <source>MEGAsync has detected a problem. These are the details:</source>
-        <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>App MEGA đã phát hiện ra vấn đề. Dưới đây là chi tiết:</translation>
+        <source>Logs may contain personal information, such as file or folder names. These logs are not shared with MEGA unless you choose to send them to the Helpdesk for debugging.</source>
+        <translatorcomment>Info label shown in the crash report dialog, informing user about logs contents. Con-1280</translatorcomment>
+        <translation>Tệp nhật ký có thể chứa thông tin cá nhân, chẳng hạn như tên của tệp tin hoặc thư mục. Những tệp nhật ký này không được chia sẻ với MEGA trừ khi bạn chỉ định gửi chúng đến Bộ Trợ Giúp để gỡ lỗi.</translation>
+    </message>
+    <message>
+        <source>Please describe the issue or attach diagnostic log files to send the error report.</source>
+        <translatorcomment>Error label shown when the user tries to send the report without both logs and issue description. Con-1280</translatorcomment>
+        <translation>Vui lòng mô tả vấn đề hoặc đính kèm các tệp nhật ký chẩn đoán để gửi báo cáo lỗi.</translation>
+    </message>
+    <message>
+        <source>Send crash report</source>
+        <translatorcomment>Title for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
+        <translation>Gửi báo cáo sự cố</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -964,9 +1001,9 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
         <translation>Gửi báo cáo</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
-        <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Hãy giúp chúng tôi cải thiện Ứng dụng MEGA bằng cách gửi báo cáo lỗi này. Bản báo cáo này không có chứa đựng bất kỳ thông tin cá nhân nào. Nếu bạn muốn cung cấp thêm chi tiết, xin viết ở dưới đây:</translation>
+        <source>You can help us to improve MEGA by sending this error report to the Helpdesk.</source>
+        <translatorcomment>Body for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
+        <translation>Bạn có thể giúp chúng tôi cải thiện MEGA bằng cách gửi báo cáo lỗi này đến Bộ Trợ Giúp.</translation>
     </message>
 </context>
 <context>
@@ -3371,11 +3408,6 @@ Hãy chờ cho phiên tải lên được hoàn tất.</translation>
         <source>Syncing</source>
         <translatorcomment>Label of tray icon to indicate that the app is in a syncing state.</translatorcomment>
         <translation>Đang đồng bộ</translation>
-    </message>
-    <message>
-        <source>Thank you for your collaboration</source>
-        <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
-        <translation>Cảm ơn sự hợp tác của bạn</translation>
     </message>
     <message>
         <source>The folder %1 can&apos;t be downloaded. Check the download destination folder.</source>
@@ -5899,79 +5931,6 @@ Nhập một tên khác.</translation>
     </message>
 </context>
 <context>
-    <name>PlanWidget</name>
-    <message>
-        <source>%1 per user</source>
-        <translatorcomment>Label to indicate the price per user of business plan. %1 will be replaced with specific price.</translatorcomment>
-        <translation>%1 mỗi nhân viên</translation>
-    </message>
-    <message>
-        <source>Additional storage charged at %1 per %2TB.</source>
-        <translatorcomment>Tooltip to inform users that additional storage quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of storage quota.</translatorcomment>
-        <translation>Mức lưu trữ tăng cường sẽ tính với giá %1 mỗi %2 TB.</translation>
-    </message>
-    <message>
-        <source>Additional transfer quota charged at %1 per %2TB.</source>
-        <translatorcomment>Tooltip to inform users that additional transfer quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of transfer quota.</translatorcomment>
-        <translation>Lượng băng thông truyền tải tăng cường sẽ tính với giá %1 mỗi %2 TB.</translation>
-    </message>
-    <message>
-        <source>Current plan</source>
-        <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
-        <translation>Gói hiện tại</translation>
-    </message>
-    <message>
-        <source>Get started with secure file storage.</source>
-        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro Lite plan.</translatorcomment>
-        <translation>Khởi đầu với kho lưu trữ dữ liệu an toàn.</translation>
-    </message>
-    <message>
-        <source>Great Value</source>
-        <translatorcomment>Label to inform about the great value plan, recommended one.</translatorcomment>
-        <translation>Giá tốt</translation>
-    </message>
-    <message>
-        <source>Great value for secure cloud storage, sharing and communication.</source>
-        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro I plan.</translatorcomment>
-        <translation>Giá tốt cho lưu trữ điện toán đám mây, chia sẻ và giao tiếp an toàn.</translation>
-    </message>
-    <message>
-        <source>Rest easy knowing you have plenty of secure cloud storage.</source>
-        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro II plan.</translatorcomment>
-        <translation>Tận hưởng mức giá thấp hơn tính theo tỷ lệ dung lượng so với các gói lưu trữ khác.</translation>
-    </message>
-    <message>
-        <source>Store even more with our premium secure cloud storage offering.</source>
-        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro III plan.</translatorcomment>
-        <translation>Lưu trữ nhiều hơn nữa với mức giá ưu đãi để sử dụng dịch vụ.</translation>
-    </message>
-    <message>
-        <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
-        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation>Với mô hình mã hóa vô kiến thức, đội ngũ của bạn sẽ được trải nghiệm cách làm việc vô cùng an ninh và bảo mật chưa từng có.</translation>
-    </message>
-    <message>
-        <source>[A] storage</source>
-        <translatorcomment>Label to indicate the specific storage of a pro plan. [A] is a placeholder for the value of the storage, it must be kept in the translated strings.</translatorcomment>
-        <translation>[A] không gian</translation>
-    </message>
-    <message>
-        <source>[A] transfer</source>
-        <translatorcomment>Label to indicate the specific transfer quota of a pro plan. [A] is a placeholder for the value of the transfer quota, it must be kept in the translated strings.</translatorcomment>
-        <translation>[A] truyền tải</translation>
-    </message>
-    <message numerus="yes">
-        <source>minimum %n user</source>
-        <translatorcomment>Label to inform about the minimum number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation><numerusform>tối thiểu %n nhân viên</numerusform></translation>
-    </message>
-    <message>
-        <source>month</source>
-        <translatorcomment>Label displaying the period for which the pricing refers to</translatorcomment>
-        <translation>tháng</translation>
-    </message>
-</context>
-<context>
     <name>PlatformStrings</name>
     <message>
         <source>Exit</source>
@@ -6017,14 +5976,15 @@ Nhập một tên khác.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
-- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
-- Other bugs have been fixed and numerous improvements made.
+        <source>- We’ve improved how crash reports are handled, so we can fix issues faster.
+- New icons are now available in the Windows 11 context menu.
+- We’ve fixed bugs and made performance improvements behind the scenes.
 </source>
-        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
-        <translation>- Thêm tinh chỉnh cho menu ngữ cảnh Explorer của Windows 11, mang lại trải nghiệm người dùng được hợp lý và tinh tế hơn.
-- Giải quyết vấn đề với các thiết đặt quyền mặc định không chính xác áp dụng đối với các tệp tin và thư mục được tạo trong quá trình đồng bộ hóa.
-- Các lỗi khác đã được sửa và nhiều cải tiến đã được thực hiện.</translation>
+        <translatorcomment>Change log for version 5.12.0. CON-1358</translatorcomment>
+        <translation>- Chúng tôi đã cải thiện cách để báo cáo lỗi, để giúp việc khắc phục sự cố được nhanh hơn.
+- Các biểu tượng mới hiện có sẵn trong menu ngữ cảnh Windows 11.
+- Sửa lỗi và cải thiện hiệu suất bên trong ứng dụng.
+</translation>
     </message>
 </context>
 <context>
@@ -6925,7 +6885,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Help</source>
         <translatorcomment>Button label for Help in the lower left section of the dialog.</translatorcomment>
-        <translation>Thắc mắc cần trợ giúp</translation>
+        <translation>Cần trợ giúp</translation>
     </message>
     <message>
         <source>Install Update</source>
@@ -7568,7 +7528,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Help</source>
         <translatorcomment>Button label for Help in the lower left section of the dialog with link. to sync stall help page.SAT-199</translatorcomment>
-        <translation>Thắc mắc cần trợ giúp</translation>
+        <translation>Cần trợ giúp</translation>
     </message>
     <message>
         <source>No issues</source>
@@ -7924,7 +7884,7 @@ Làm mới danh sách.</translation>
     <message>
         <source>You’re helping to improve MEGA for you and everyone who uses it</source>
         <translatorcomment>Description text of the final view after sending the survey responses. CON-942</translatorcomment>
-        <translation>Lời của bạn sẽ đóng góp cải thiện MEGA cho bạn và tất cả những người sử dụng khác</translation>
+        <translation>Ý kiến của bạn sẽ đóng góp cải thiện MEGA cho bạn và tất cả những người sử dụng khác</translation>
     </message>
 </context>
 <context>
@@ -9393,7 +9353,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 billed yearly</source>
         <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
-        <translation>%1 mua hằng năm</translation>
+        <translation>%1 thu hằng năm</translation>
     </message>
     <message>
         <source>%1 per month</source>
@@ -9461,11 +9421,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Vượt mức băng thông truyền tải</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.</source>
-        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Nâng cấp tài khoản của bạn để nhận thêm mức dung lượng .</translation>
-    </message>
-    <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
         <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
         <translation>Bạn không thể tiếp tục tải xuống vì bạn đã sử dụng hết lượng băng thông truyền tải được cung cấp cho bạn.[BR][BR]Để có thêm băng thông, hãy mua một gói khác.[BR][BR][B][A]Tìm hiểu thêm về băng thông truyền tải.[/A][/B]</translation>
@@ -9489,6 +9444,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>mỗi tháng</translation>
+    </message>
+    <message>
+        <source>Upgrade your account to get more storage quota.</source>
+        <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
+        <translation>Nâng cấp tài khoản ngay để có thêm hạn mức lưu trữ</translation>
     </message>
 </context>
 <context>

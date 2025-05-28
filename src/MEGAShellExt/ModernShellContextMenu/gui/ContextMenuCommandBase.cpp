@@ -1,12 +1,12 @@
 #include "ContextMenuCommandBase.h"
 
+#include "Utilities.h"
+
 ContextMenuData ContextMenuCommandBase::mContextMenuData;
 
 ContextMenuCommandBase::ContextMenuCommandBase(const std::wstring& id):
     mId(id)
-{
-    mContextMenuData.reset();
-}
+{}
 
 IFACEMETHODIMP ContextMenuCommandBase::GetCanonicalName(GUID* pguidCommandName)
 {
@@ -26,8 +26,9 @@ IFACEMETHODIMP ContextMenuCommandBase::GetIcon(IShellItemArray* psiItemArray, LP
 
     auto package = winrt::Windows::ApplicationModel::Package::Current();
     auto appFolder = package.InstalledPath();
+    auto theme = Utilities::isDarkModeActive() ? L"dark" : L"light";
 
-    std::wstring icon(appFolder + L"\\assets\\" + GetIcon());
+    std::wstring icon(appFolder + L"\\assets\\" + theme + L"\\" + GetIcon());
 
     SHStrDup(icon.data(), ppszIcon);
 

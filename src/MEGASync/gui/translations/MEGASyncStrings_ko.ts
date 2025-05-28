@@ -706,7 +706,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>개인정보 및 데이터 처리 방침</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Terms of Service</source>
@@ -936,12 +936,39 @@
     </message>
 </context>
 <context>
+    <name>CrashHandler</name>
+    <message>
+        <source>Contact support</source>
+        <translatorcomment>Button label for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>지원 부서에 연락</translation>
+    </message>
+    <message>
+        <source>Error report sent</source>
+        <translatorcomment>Title for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
+        <translation>오류 보고 보냄</translation>
+    </message>
+    <message>
+        <source>Failed to send error report</source>
+        <translatorcomment>Title for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>오류 보고 발송 실패</translation>
+    </message>
+    <message>
+        <source>Unable to send the error report. Please contact support for assistance.</source>
+        <translatorcomment>Body for system notification sent when sending crash report fails.CON-1280</translatorcomment>
+        <translation>오류 보고를 보낼 수 없었습니다. 도움을 받으려면 지원에 연락하세요.</translation>
+    </message>
+    <message>
+        <source>Your error report was successfully submitted. Thank you for your feedback!</source>
+        <translatorcomment>Body for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
+        <translation>오류 보고가 성공적으로 제출되었습니다. 의견을 주셔서 고맙습니다!</translation>
+    </message>
+</context>
+<context>
     <name>CrashReportDialog</name>
     <message>
-        <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
-        <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation>디버깅을 도우려면 진단 로그 파일을 첨부하세요.
-일부의 경우 파일 또는 폴더 이름 같은 당신의 데이터 상세정보가 포함될 수 있습니다.</translation>
+        <source>Attach diagnostic log files to assist with debugging</source>
+        <translatorcomment>Label for a check box to attach user logs with in the crash report. Con-1280</translatorcomment>
+        <translation>디버깅에 도움을 주기 위해 진단 기록 파일 첨부</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -949,14 +976,24 @@
         <translation>취소</translation>
     </message>
     <message>
-        <source>Error report</source>
-        <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
-        <translation>오류 신고</translation>
+        <source>Describe the issue</source>
+        <translatorcomment>Title for the input field in the crash reporting dialog. Con-1280</translatorcomment>
+        <translation>문제 설명</translation>
     </message>
     <message>
-        <source>MEGAsync has detected a problem. These are the details:</source>
-        <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>MEGA 앱이 문제를 감지하였습니다. 자세한 정보는 여기 있습니다:</translation>
+        <source>Logs may contain personal information, such as file or folder names. These logs are not shared with MEGA unless you choose to send them to the Helpdesk for debugging.</source>
+        <translatorcomment>Info label shown in the crash report dialog, informing user about logs contents. Con-1280</translatorcomment>
+        <translation>기록은 파일 또는 폴더 이름과 같은 개인 정보를 포함하고 있을 수 있습니다. 이러한 기록은 당신이 고객 센터에 디버깅을 위해 전송하도록 선택하지 않으면 MEGA와 공유되지 않습니다.</translation>
+    </message>
+    <message>
+        <source>Please describe the issue or attach diagnostic log files to send the error report.</source>
+        <translatorcomment>Error label shown when the user tries to send the report without both logs and issue description. Con-1280</translatorcomment>
+        <translation>오류 보고를 보내려면 문제를 설명하거나 진단 기록 파일을 첨부하세요</translation>
+    </message>
+    <message>
+        <source>Send crash report</source>
+        <translatorcomment>Title for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
+        <translation>충돌 보고 발송</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -964,9 +1001,9 @@
         <translation>보고서 발송</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
-        <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>이 오류 보고를 보냄으로써 MEGA 앱을 향상시키는 것을 도와주실 수 있습니다. 이것에는 어떠한 개인정보도 포함하고 있지 않습니다. 만약 더 자세한 내용을 알려주고 싶으시다면, 아래에 적어주세요:</translation>
+        <source>You can help us to improve MEGA by sending this error report to the Helpdesk.</source>
+        <translatorcomment>Body for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
+        <translation>이 오류 보고를 고객 센터에 보내서 MEGA를 향상하는 것을 도울 수 있습니다.</translation>
     </message>
 </context>
 <context>
@@ -3371,11 +3408,6 @@ Please wait for the upload to complete.</source>
         <source>Syncing</source>
         <translatorcomment>Label of tray icon to indicate that the app is in a syncing state.</translatorcomment>
         <translation>동기화중</translation>
-    </message>
-    <message>
-        <source>Thank you for your collaboration</source>
-        <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
-        <translation>협조에 감사드립니다</translation>
     </message>
     <message>
         <source>The folder %1 can&apos;t be downloaded. Check the download destination folder.</source>
@@ -5902,79 +5934,6 @@ Enter a different name</source>
     </message>
 </context>
 <context>
-    <name>PlanWidget</name>
-    <message>
-        <source>%1 per user</source>
-        <translatorcomment>Label to indicate the price per user of business plan. %1 will be replaced with specific price.</translatorcomment>
-        <translation>이용자당 %1</translation>
-    </message>
-    <message>
-        <source>Additional storage charged at %1 per %2TB.</source>
-        <translatorcomment>Tooltip to inform users that additional storage quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of storage quota.</translatorcomment>
-        <translation>추가 저장소는 %2TB당 %1(으)로 청구됩니다.</translation>
-    </message>
-    <message>
-        <source>Additional transfer quota charged at %1 per %2TB.</source>
-        <translatorcomment>Tooltip to inform users that additional transfer quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of transfer quota.</translatorcomment>
-        <translation>추가 전송 할당량은 %2TB당 %1(으)로 청구됩니다.</translation>
-    </message>
-    <message>
-        <source>Current plan</source>
-        <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
-        <translation>현재 요금제</translation>
-    </message>
-    <message>
-        <source>Get started with secure file storage.</source>
-        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro Lite plan.</translatorcomment>
-        <translation>안전한 파일 저장소로 시작하세요.</translation>
-    </message>
-    <message>
-        <source>Great Value</source>
-        <translatorcomment>Label to inform about the great value plan, recommended one.</translatorcomment>
-        <translation>뛰어난 가성비</translation>
-    </message>
-    <message>
-        <source>Great value for secure cloud storage, sharing and communication.</source>
-        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro I plan.</translatorcomment>
-        <translation>안전한 클라우드 저장소, 공유 그리고 소통에 있어 뛰어난 가성비.</translation>
-    </message>
-    <message>
-        <source>Rest easy knowing you have plenty of secure cloud storage.</source>
-        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro II plan.</translatorcomment>
-        <translation>안전한 클라우드 저장소가 충분하여 안심할 수 있습니다.</translation>
-    </message>
-    <message>
-        <source>Store even more with our premium secure cloud storage offering.</source>
-        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro III plan.</translatorcomment>
-        <translation>우리의 안전한 프리미엄 클라우드 저장소 제안으로 더 많이 저장하세요.</translation>
-    </message>
-    <message>
-        <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
-        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation>우리의 영지식 암호화 덕분에, 팀이 일하는 방식이 더 이상 안전하고 비공개적일 수 없습니다.</translation>
-    </message>
-    <message>
-        <source>[A] storage</source>
-        <translatorcomment>Label to indicate the specific storage of a pro plan. [A] is a placeholder for the value of the storage, it must be kept in the translated strings.</translatorcomment>
-        <translation>[A] 저장소</translation>
-    </message>
-    <message>
-        <source>[A] transfer</source>
-        <translatorcomment>Label to indicate the specific transfer quota of a pro plan. [A] is a placeholder for the value of the transfer quota, it must be kept in the translated strings.</translatorcomment>
-        <translation>[A] 전송량</translation>
-    </message>
-    <message numerus="yes">
-        <source>minimum %n user</source>
-        <translatorcomment>Label to inform about the minimum number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation><numerusform>최소 이용자 %n명</numerusform></translation>
-    </message>
-    <message>
-        <source>month</source>
-        <translatorcomment>Label displaying the period for which the pricing refers to</translatorcomment>
-        <translation>월</translation>
-    </message>
-</context>
-<context>
     <name>PlatformStrings</name>
     <message>
         <source>Exit</source>
@@ -6020,14 +5979,15 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Added refinements to the Windows&amp;#x202f;11 Explorer context menu, delivering a more streamlined and polished user experience.
-- Resolved issue with incorrect default permission settings applied to files and folders created during synchronization.
-- Other bugs have been fixed and numerous improvements made.
+        <source>- We’ve improved how crash reports are handled, so we can fix issues faster.
+- New icons are now available in the Windows 11 context menu.
+- We’ve fixed bugs and made performance improvements behind the scenes.
 </source>
-        <translatorcomment>Change log for version 5.11.0. CON-1326</translatorcomment>
-        <translation>- Windows 11 탐색기 컨텍스트 메뉴를 개선하여, 더욱 부드럽고 깔끔한 이용자 경험을 전달하게 되었습니다.
-- 동기화 중 파일과 폴더에 대한 잘못된 기본 권한 설정 문제를 해결하였습니다.
-- 다른 버그가 수정되었고 다양한 개선을 하였습니다.</translation>
+        <translatorcomment>Change log for version 5.12.0. CON-1358</translatorcomment>
+        <translation>- 문제를 더 빨리 처리할 수 있도록 충돌 보고서를 처리하는 방법을 향상하였습니다,
+- Windows 11 컨텍스트 메뉴에서 새 아이콘을 이용할 수 있습니다.
+- 눈에 띄지 않게 버그를 수정하고 성능을 향상하였습니다.
+</translation>
     </message>
 </context>
 <context>
@@ -9464,11 +9424,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>전송 할당량 초과</translation>
     </message>
     <message>
-        <source>Upgrade your account to get more storage quota.</source>
-        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>더 많은 저장소 할당량을 받으려면 계정을 업그레이드하세요.</translation>
-    </message>
-    <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
         <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
         <translation>이용 가능한 할당된 모든 전송 할당량을 이용하였기 때문에 다운로드를 계속할 수 없습니다.[BR][BR]더 많은 할당량을 받으려면, 다른 유료 요금제를 결제하세요.[BR][BR][B][A]전송 할당량에 대해 더 알아보세요.[/A][/B]</translation>
@@ -9492,6 +9447,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>월</translation>
+    </message>
+    <message>
+        <source>Upgrade your account to get more storage quota.</source>
+        <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
+        <translation>더 많은 저장소 할당량을 받으려면 업그레이드 하세요.</translation>
     </message>
 </context>
 <context>

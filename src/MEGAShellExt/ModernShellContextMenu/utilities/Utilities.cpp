@@ -2,11 +2,14 @@
 #include "Utilities.h"
 
 #include "framework.h"
+#include <winrt/Windows.UI.ViewManagement.h>
 
 #include <filesystem>
 #include <string>
 #include <iostream>
 #include <sstream>
+
+using namespace winrt::Windows::UI::ViewManagement;
 
 extern HMODULE g_hInst;
 
@@ -60,7 +63,14 @@ constexpr int WINDOWS11_FIRST_BUILD_NUMBER = 22000;
 
 bool haveModernContextMenu()
 {
-    return false;
+    std::wstring buildNumberStr(
+        getRegisterKeyStringValue(HKEY_LOCAL_MACHINE,
+                                  L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion",
+                                  L"CurrentBuildNumber"));
+
+    const int buildNumber = std::stoi(buildNumberStr);
+
+    return buildNumber >= WINDOWS11_FIRST_BUILD_NUMBER;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -157,4 +167,27 @@ void log(const std::wstring& file, const std::wstring& message)
 
     CloseHandle(hFile);
 }
+
+/*
+ * These functions have been copied from microsoft samples.
+ * https://learn.microsoft.com/en-us/windows/apps/desktop/modernize/ui/apply-windows-themes
+ */
+inline bool isColorLight(winrt::Windows::UI::Color& clr)
+{
+    return (((5 * clr.G) + (2 * clr.R) + clr.B) > (8 * 128));
+}
+
+bool isDarkModeActive()
+{
+    auto settings = UISettings();
+    auto foreground = settings.GetColorValue(UIColorType::Foreground);
+
+    return isColorLight(foreground);
+}
+
+void updateExplorer()
+{
+    SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0);
+}
+
 }

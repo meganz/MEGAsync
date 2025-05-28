@@ -1,8 +1,8 @@
 #include "AllMegaIncludes.h"
 
 #define CATCH_CONFIG_RUNNER
-#include "catch/catch.hpp"
 #include "trompeloeil.hpp"
+#include <catch.hpp>
 
 /******************************
  *

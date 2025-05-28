@@ -389,6 +389,7 @@ public:
                 info->setDialogClass(classType);
                 mOpenedDialogs.append(info);
                 initDialog(dialog);
+                removeWhenClose(dialog);
             }
             ret = info;
         }

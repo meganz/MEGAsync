@@ -1,6 +1,7 @@
 #ifndef SYNC_CONTROLLER_H
 #define SYNC_CONTROLLER_H
 
+#include "AppStatsEvents.h"
 #include "megaapi.h"
 #include "SyncInfo.h"
 #include "SyncSettings.h"
@@ -119,6 +120,9 @@ private:
     static QString getSyncTypeString(const mega::MegaSync::SyncType& syncType);
 
     static QString getDescription(SyncInfo::SyncOrigin origin);
+
+    static std::optional<AppStatsEvents::EventType>
+        getSyncAddedEventType(const SyncInfo::SyncOrigin origin);
 
     QMap<QString, QString> mPendingBackups;
 

@@ -18,9 +18,11 @@ const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
 const QString Preferences::USER_AGENT = QString::fromUtf8("%1/%2").arg(QString::fromUtf8(VER_FILEDESCRIPTION_STR),
                                                                        QString::fromUtf8(VER_PRODUCTVERSION_STR));
 const int Preferences::VERSION_CODE = VER_FILEVERSION_CODE;
+const int Preferences::VERSION_RC = VER_RC;
 const int Preferences::BUILD_ID = VER_BUILD_ID;
-// VER_PRODUCTVERSION_STR is "W.X.Y.Z". Drop the last number to keep "W.X.Y"
-const QString Preferences::VERSION_STRING = QString::fromUtf8(VER_PRODUCTVERSION_STR).left(QString::fromUtf8(VER_PRODUCTVERSION_STR).lastIndexOf(QLatin1Char('.')));
+// Format: "VER_MAJOR.VER_MINOR.VER_MICRO"
+const QString Preferences::VERSION_STRING =
+    QString::fromLatin1("%1.%2.%3").arg(VER_MAJOR).arg(VER_MINOR).arg(VER_MICRO);
 QString Preferences::SDK_ID = QString::fromUtf8(VER_SDK_ID);
 const QString Preferences::CHANGELOG = QString::fromUtf8(VER_CHANGES_NOTES);
 
@@ -63,6 +65,8 @@ unsigned int Preferences::MAX_COMPLETED_ITEMS                 = 1000;
 unsigned int Preferences::MUTEX_STEALER_MS                    = 0;
 unsigned int Preferences::MUTEX_STEALER_PERIOD_MS             = 0;
 unsigned int Preferences::MUTEX_STEALER_PERIOD_ONLY_ONCE      = 0;
+
+int Preferences::CRASH_REPORT_TIMEOUT_MS = 30000;
 
 #if defined(ENABLE_SDK_ISOLATED_GFX)
 unsigned int Preferences::GFXWORKER_KEEPALIVE_S = 60u;
@@ -168,7 +172,7 @@ const QString Preferences::stalledIssuesEventDateKey = QString::fromLatin1("stal
 
 const QString Preferences::accountTypeKey           = QString::fromLatin1("accountType");
 const QString Preferences::proExpirityTimeKey       = QString::fromLatin1("proExpirityTime");
-const QString Preferences::startOnStartupKey        = QString::fromLatin1("startOnStartup");
+const QString Preferences::startOnStartupKey = QString::fromLatin1("startOnStartup");
 const QString Preferences::languageKey              = QString::fromLatin1("language");
 const QString Preferences::updateAutomaticallyKey   = QString::fromLatin1("updateAutomatically");
 const QString Preferences::uploadLimitKBKey         = QString::fromLatin1("uploadLimitKB");
@@ -215,6 +219,7 @@ const QString Preferences::hasDefaultUploadFolderKey    = QString::fromLatin1("h
 const QString Preferences::hasDefaultDownloadFolderKey  = QString::fromLatin1("hasDefaultDownloadFolder");
 const QString Preferences::localFingerprintKey      = QString::fromLatin1("localFingerprint");
 const QString Preferences::isCrashedKey             = QString::fromLatin1("isCrashed");
+const QString Preferences::crashedUserIDKey = QString::fromLatin1("crashedUserID");
 const QString Preferences::wasPausedKey             = QString::fromLatin1("wasPaused");
 const QString Preferences::wasUploadsPausedKey      = QString::fromLatin1("wasUploadsPaused");
 const QString Preferences::wasDownloadsPausedKey    = QString::fromLatin1("wasDownloadsPaused");
@@ -273,7 +278,7 @@ const QString Preferences::gfxWorkerEndpointKey = QString::fromLatin1("gfxWorker
 const QString Preferences::awakeIfActiveKey = QString::fromLatin1("sleepIfInactiveEnabledKey");
 const bool Preferences::defaultAwakeIfActive = false;
 
-const bool Preferences::defaultStartOnStartup       = true;
+const bool Preferences::defaultStartOnStartup = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
 const bool Preferences::defaultUpperSizeLimit       = false;
 const bool Preferences::defaultLowerSizeLimit       = false;
@@ -2432,6 +2437,17 @@ bool Preferences::isCrashed()
 void Preferences::setCrashed(bool value)
 {
     setValueConcurrently(isCrashedKey, value);
+    sync();
+}
+
+QString Preferences::crashedUserID()
+{
+    return getValueConcurrent<QString>(crashedUserIDKey, {});
+}
+
+void Preferences::setCrashedUserID(const QString& value)
+{
+    setValueConcurrently(crashedUserIDKey, value);
     sync();
 }
 

@@ -101,6 +101,8 @@ HRESULT SparsePackageManager::RegisterSparsePackage()
         return errorCode.get();
     }
 
+    Utilities::updateExplorer();
+
     return S_OK;
 }
 
@@ -145,7 +147,7 @@ HRESULT SparsePackageManager::modifySparsePackage(MODIFY_TYPE type)
             // To register the sparse package, we need to do it on another thread due to WinRT
             // requirements.
             std::thread reRegisterThread(&SparsePackageManager::ReRegisterSparsePackage);
-            reRegisterThread.detach();
+            reRegisterThread.join();
         }
         else
         {
@@ -153,9 +155,6 @@ HRESULT SparsePackageManager::modifySparsePackage(MODIFY_TYPE type)
             result = UnregisterSparsePackage();
         }
     }
-
-    // Finally we notify the shell that we have made changes, so it refreshes the context menus.
-    SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0);
 
     return result;
 }
@@ -169,13 +168,9 @@ void SparsePackageManager::EnsureRegistrationOnCurrentUserWorker()
 
     if (mSparsePackage == NULL)
     {
-        // The package is not installed for the current user - but we know that Notepad++ is.
+        // The package is not installed for the current user - but we know that the app is.
         // If it wasn't, this code wouldn't be running, so it is safe to just register the package.
         RegisterSparsePackage();
-
-        // Finally we notify the shell that we have made changes, so it reloads the right click menu
-        // items.
-        SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0);
     }
 }
 
@@ -198,4 +193,9 @@ void SparsePackageManager::EnsureRegistrationOnCurrentUser()
             ensureRegistrationThread.detach();
         }
     }
+}
+
+STDAPI installSparsePackage()
+{
+    return SparsePackageManager::modifySparsePackage(SparsePackageManager::MODIFY_TYPE::INSTALL);
 }

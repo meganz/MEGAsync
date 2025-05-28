@@ -41,12 +41,14 @@ public:
     void closeFileFolderSelectors(QWidget* parent) override;
 
     void addFileManagerExtensionToSystem() override;
-    void reloadFileManagerExtension() override;
     void enableFileManagerExtension(bool value) override;
 
     void calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy) override;
     void streamWithApp(const QString& app, const QString& url) override;
     DriveSpaceData getDriveData(const QString& path) override;
+
+    // AutoUpdate tasks
+    void runPostAutoUpdateStep() override;
 
 #if defined(ENABLE_SDK_ISOLATED_GFX)
     QString getGfxProviderPath() override;

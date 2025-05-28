@@ -27,7 +27,6 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/ChangeLogDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/StreamingFromMegaDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/MegaProgressCustomDialog.h
-    ${CMAKE_CURRENT_LIST_DIR}/PlanWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/QMegaMessageBox.h
     ${CMAKE_CURRENT_LIST_DIR}/AvatarWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/MenuItemAction.h
@@ -170,7 +169,6 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/ChangeLogDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/StreamingFromMegaDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/MegaProgressCustomDialog.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/PlanWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/QMegaMessageBox.cpp
     ${CMAKE_CURRENT_LIST_DIR}/AvatarWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/MenuItemAction.cpp
@@ -289,11 +287,9 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/win/PasteMegaLinksDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/ImportMegaLinksDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/ImportListWidgetItem.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/CrashReportDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/ChangeLogDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/StreamingFromMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/MegaProgressCustomDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/PlanWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/StatusInfo.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/PSAwidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/Login2FA.ui
@@ -327,11 +323,9 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/macx/PasteMegaLinksDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/ImportMegaLinksDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/ImportListWidgetItem.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/CrashReportDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/ChangeLogDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/StreamingFromMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/MegaProgressCustomDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/PlanWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/StatusInfo.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/PSAwidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/Login2FA.ui
@@ -365,11 +359,9 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/linux/PasteMegaLinksDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/ImportMegaLinksDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/ImportListWidgetItem.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/CrashReportDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/ChangeLogDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/StreamingFromMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/MegaProgressCustomDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/PlanWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/StatusInfo.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/PSAwidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/Login2FA.ui
@@ -517,6 +509,8 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/PermissionsWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/ProxySettings.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/SettingsDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/CrashReportDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/CrashReportDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/NotificationsSettings.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/OpenBackupsFolder.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/ProgressIndicatorDialog.ui
@@ -529,6 +523,7 @@ set (DESKTOP_APP_GUI_UI_FILES
 
 set (DESKTOP_APP_GUI_UI_FILES_ROOT
     ${CMAKE_CURRENT_LIST_DIR}/ui/SettingsDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/CrashReportDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/AccountDetailsDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveBackupDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveSyncConfirmationDialog.ui

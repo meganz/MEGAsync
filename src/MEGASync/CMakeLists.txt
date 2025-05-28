@@ -83,12 +83,7 @@ qt5_create_translation(QM_OUTPUT ${CMAKE_CURRENT_SOURCE_DIR} gui/translations/tr
 add_custom_target(generate_ts DEPENDS ${QM_OUTPUT})
 add_dependencies(MEGAsync generate_ts)
 
-target_include_directories(MEGAsync PRIVATE ${CMAKE_CURRENT_LIST_DIR}
-    ${CMAKE_CURRENT_LIST_DIR}/google_breakpad
-)
-
-# Include modules in subdirectories with sources for Desktop App
-add_subdirectory(google_breakpad)
+target_include_directories(MEGAsync PRIVATE ${CMAKE_CURRENT_LIST_DIR})
 
 set(ExecutableTarget MEGAsync)
 
@@ -108,9 +103,27 @@ target_compile_definitions(MEGAsync
     $<$<CONFIG:Debug>:LOG_TO_STDOUT LOG_TO_LOGGER CREATE_COMPATIBLE_MINIDUMPS>
     $<$<BOOL:${WIN32}>:PUBLIC NOMINMAX WIN32_LEAN_AND_MEAN UNICODE>
     $<$<BOOL:${ENABLE_ISOLATED_GFX}>:ENABLE_SDK_ISOLATED_GFX>
+    $<$<BOOL:${USE_BREAKPAD}>:USE_BREAKPAD>
 )
 
 # Load and link needed libraries for the Desktop App target
+if(USE_BREAKPAD)
+    find_package(unofficial-breakpad CONFIG REQUIRED)
+
+    if(NOT DEFINED CACHE{CRASH_BACKEND_URL})
+        set(CRASH_BACKEND_URL "" CACHE STRING "Crash backend URL")
+    endif()
+    if(DEFINED ENV{MEGA_CRASH_BACKEND_URL} AND NOT "$ENV{MEGA_CRASH_BACKEND_URL}" STREQUAL "")
+        set(CRASH_BACKEND_URL "$ENV{MEGA_CRASH_BACKEND_URL}" CACHE STRING "Crash backend URL" FORCE)
+    endif()
+    if("${CRASH_BACKEND_URL}" STREQUAL "")
+        message(WARNING "CRASH_BACKEND_URL is empty. Crash reporting may not function correctly.")
+    endif()
+    target_compile_definitions(MEGAsync PRIVATE CRASH_BACKEND_URL="${CRASH_BACKEND_URL}")
+
+    message(STATUS "Breakpad added")
+endif()
+
 if (WIN32)
     find_package(Qt5 REQUIRED COMPONENTS WinExtras)
 elseif (APPLE)
@@ -129,6 +142,8 @@ target_link_libraries(MEGAsync
     $<$<BOOL:${WIN32}>:Qt5::WinExtras>
     $<$<BOOL:${APPLE}>:Qt5::MacExtras>
     $<$<BOOL:${UNIX}>:Qt5::Svg>
+    $<$<BOOL:${USE_BREAKPAD}>:unofficial::breakpad::libbreakpad>
+    $<$<BOOL:${USE_BREAKPAD}>:unofficial::breakpad::libbreakpad_client>
     Qt5::Widgets
     Qt5::Core
     Qt5::Gui
@@ -136,7 +151,6 @@ target_link_libraries(MEGAsync
     Qt5::Qml
     Qt5::Quick
     Qt5::QuickWidgets
-    MEGA::google_breakpad
 )
 
 ## Adjust compilation flags for warnings and errors ##
@@ -148,7 +162,7 @@ target_platform_compile_options(
             /wd4100 # unreferenced formal parameter
             /wd4456 # declaration hides previous local declaration
             /we4800 # Implicit conversion from 'type' to bool. Possible information loss
-    UNIX $<$<CONFIG:Debug>:-ggdb3> -Wall -Wextra -Wconversion -Wno-unused-parameter
+    UNIX $<$<CONFIG:Debug>:-ggdb3> -Wall -Wextra -Wconversion -Wno-unused-parameter -D__STDC_FORMAT_MACROS
 )
 
 if (ENABLE_DESKTOP_APP_WERROR)
@@ -205,3 +219,4 @@ if(TARGET gfxworker)
         COMMENT "Copying gfxworker for MEGAsync."
     )
 endif()
+

@@ -2,7 +2,7 @@
 
 #include "MEGAinterface.h"
 
-static const std::wstring ICON = L"cmd4.ico";
+static const std::wstring ICON = L"view.ico";
 
 ContextMenuCommandView::ContextMenuCommandView():
     ContextMenuCommandBase(L"ContextMenuCommandView")

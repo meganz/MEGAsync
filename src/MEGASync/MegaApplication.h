@@ -399,9 +399,7 @@ protected:
     std::shared_ptr<Preferences> preferences;
     SyncInfo *model;
     mega::MegaApi *megaApi;
-    mega::MegaApi *megaApiFolders;
-    QObject *context;
-    QString crashReportFilePath;
+    mega::MegaApi* megaApiFolders;
 
     HTTPServer *httpServer;
     mega::MegaHandle fileUploadTarget;
@@ -586,8 +584,12 @@ private:
         (*action)->setEnabled(previousEnabledState);
     }
 
-    template <class Func>
-    void recreateAction(QAction** action, QMenu* menu, const QString& actionName, Func slotFunc)
+    template<class Func>
+    void recreateAction(QAction** action,
+                        QMenu* menu,
+                        const QString& actionName,
+                        Func slotFunc,
+                        const QString& iconPath = QString())
     {
         bool previousEnabledState = true;
         if (*action)
@@ -600,6 +602,11 @@ private:
         *action = new QAction(actionName, menu);
         connect(*action, &QAction::triggered, this, slotFunc);
         (*action)->setEnabled(previousEnabledState);
+
+        if (!iconPath.isEmpty())
+        {
+            (*action)->setIcon(QIcon(iconPath));
+        }
     }
 
     void processUpgradeSecurityEvent();
@@ -614,6 +621,7 @@ private:
     void closeUpsellStorageDialog();
 
     void createGfxProvider(const QString& basePath);
+    void startCrashReportingDialog();
 
     void removeSyncsAndBackupsMenus();
 

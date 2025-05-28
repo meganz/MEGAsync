@@ -196,6 +196,7 @@ void ProxySettings::on_bUpdate_clicked()
 #endif
 
     mProgressDialog = new MegaProgressCustomDialog(this);
+    mProgressDialog->setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
     DialogOpener::showDialog(mProgressDialog);
 
     mConnectivityChecker->setProxy(proxy);

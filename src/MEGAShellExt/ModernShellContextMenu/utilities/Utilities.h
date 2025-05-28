@@ -11,6 +11,8 @@ std::wstring getRegisterKeyStringValue(HKEY hKey,
                                        const std::wstring& subKey = L"",
                                        const std::wstring& valueName = L"");
 
+void updateExplorer();
+
 bool haveModernContextMenu();
 
 // Security and Identity
@@ -21,6 +23,8 @@ const std::wstring GetMEGADesktopAppPath();
 const std::wstring GetContextMenuPath();
 const std::wstring GetExecutingModuleName();
 void log(const std::wstring& file, const std::wstring& message);
+
+bool isDarkModeActive();
 }
 
 #endif // UTILITIES_H

@@ -1,13 +1,26 @@
 *
 {
-font-family: "Inter Regular";
+font-family: Lato;
+font-weight: 400;
 font-size: 12px;
+line-height: 18px;
+letter-spacing: 0%;
 }
 
 QWidget
 {
 background-color: #FFFFFFFF; /*colorToken.page-background*/
 color: #ff303233; /*colorToken.text-primary*/
+}
+
+QWidget[type="notification"]
+{
+background-color: #ffdff4fe;/*colorToken.notification-info*/
+}
+
+QWidget[type="notification"][error="true"]
+{
+background-color: #ffffe4e8;/*colorToken.notification-error*/
 }
 
 /*
@@ -339,6 +352,11 @@ min-height: 16px;
 max-height: 16px;
 }
 
+QCheckBox[type="mega"][error="true"]
+{
+color: #ffe31b57; /*colorToken.text-error*/
+}
+
 QCheckBox:disabled[type="mega"]
 {
 color: #ff797c80; /*colorToken.icon-disabled*/
@@ -391,6 +409,46 @@ QCheckBox::indicator:unchecked:disabled[type="mega"]
 image: url(:/images/themed/light/checkbox_off_disabled.svg); /*replaceThemeToken*/
 }
 
+QCheckBox::indicator:checked[type="mega"][error="true"]
+{
+image: url(:/images/themed/light/checkbox_on_error.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:checked:hover[type="mega"][error="true"]
+{
+image: url(:/images/themed/light/checkbox_on_error.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:checked:pressed[type="mega"][error="true"]
+{
+image: url(:/images/themed/light/checkbox_on_error.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:checked:disabled[type="mega"][error="true"]
+{
+image: url(:/images/themed/light/checkbox_on_disabled.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:unchecked[type="mega"][error="true"]
+{
+image: url(:/images/themed/light/checkbox_off_error.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:unchecked:hover[type="mega"][error="true"]
+{
+image: url(:/images/themed/light/checkbox_off_error.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:unchecked:pressed[type="mega"][error="true"]
+{
+image: url(:/images/themed/light/checkbox_off_error.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:unchecked:disabled[type="mega"][error="true"]
+{
+image: url(:/images/themed/light/checkbox_off_disabled.svg); /*replaceThemeToken*/
+}
+
 /*
     QLabel
 */
@@ -419,6 +477,23 @@ QLabel[type="secondary"]
 font-size: 12px;
 font-weight: 400;
 color: #ff616366; /*colorToken.text-secondary*/
+}
+
+QLabel[semibold]
+{
+font-weight: 600;
+}
+
+QLabel[type="notification"]
+{
+background-color: #ffdff4fe;/*colorToken.notification-info*/
+color: #ff0078a4; /*colorToken.text-info*/
+}
+
+QLabel[type="notification"][error="true"]
+{
+background-color: #ffffe4e8;/*colorToken.notification-error*/
+color: #ffe31b57; /*colorToken.text-error*/
 }
 
 QLabel:disabled
@@ -641,6 +716,11 @@ QLineEdit:disabled[type="mega"], QTextEdit:disabled[type="mega"]
 {
 color: #ff797c80; /*colorToken.text-disabled*/
 border-color: #ff797c80; /*colorToken.border-disabled*/
+}
+
+QLineEdit[type="mega"][error="true"], QTextEdit[type="mega"][error="true"]
+{
+border-color: #ffe31b57; /*colorToken.text-error*/
 }
 
 /*

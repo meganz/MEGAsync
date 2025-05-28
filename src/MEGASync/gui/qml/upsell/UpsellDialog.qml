@@ -29,19 +29,20 @@ UpsellQmlDialog {
     minimumHeight: window.totalHeight
 
     onTotalHeightChanged: {
-        // Force to change height depending on the billed period selected.
+        // Force to change height depending on the billed period selected
+        // and translations.
         // Maintain this order to resize the window.
         window.minimumHeight = window.totalHeight;
         window.maximumHeight = window.totalHeight;
         window.height = window.totalHeight;
     }
 
-    onHeightChanged: {
-        // Force to change height depending on the billed period selected.
+    onTotalWidthChanged: {
+        // Force to change width depending on the translations.
         // Maintain this order to resize the window.
-        if (window.height < window.totalHeight) {
-            window.height = window.totalHeight;
-        }
+        window.minimumWidth = window.totalWidth;
+        window.maximumWidth = window.totalWidth;
+        window.width = window.totalWidth;
     }
 
     Component.onCompleted: {

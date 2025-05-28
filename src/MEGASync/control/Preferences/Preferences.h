@@ -389,6 +389,8 @@ public:
 
     bool isCrashed();
     void setCrashed(bool value);
+    QString crashedUserID();
+    void setCrashedUserID(const QString& value);
     bool getGlobalPaused();
     void setGlobalPaused(bool value);
     bool getUploadsPaused();
@@ -532,6 +534,7 @@ public:
     static unsigned int MUTEX_STEALER_MS; //to create a task that steals the sdk mutex for a while (how long)
     static unsigned int MUTEX_STEALER_PERIOD_MS; //periodicity (how often)
     static unsigned int MUTEX_STEALER_PERIOD_ONLY_ONCE; //if only done once
+    static int CRASH_REPORT_TIMEOUT_MS;
 
 #if defined(ENABLE_SDK_ISOLATED_GFX)
     static unsigned int GFXWORKER_KEEPALIVE_S;
@@ -548,6 +551,7 @@ public:
     static const char CLIENT_KEY[];
     static const QString USER_AGENT;
     static const int VERSION_CODE;
+    static const int VERSION_RC;
     static const int BUILD_ID;
     static const QString VERSION_STRING;
     static QString SDK_ID;
@@ -728,6 +732,7 @@ protected:
     static const QString excludedSyncPathsKey;
     static const QString lastVersionKey;
     static const QString isCrashedKey;
+    static const QString crashedUserIDKey;
     static const QString lastStatsRequestKey;
     static const QString wasUploadsPausedKey;
     static const QString wasDownloadsPausedKey;

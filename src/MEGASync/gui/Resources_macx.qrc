@@ -1213,6 +1213,8 @@
         <file>images/settings-shield.svg</file>
         <file>images/settings-sync.svg</file>
         <file>images/settings-sync-warn.svg</file>
+        <file>images/minus.svg</file>
+        <file>images/plus.svg</file>
         <file>images/StalledIssues/rotate-ccw.png</file>
         <file>images/StalledIssues/rotate-ccw@2x.png</file>
         <file>images/StalledIssues/rotate-ccw@3x.png</file>
