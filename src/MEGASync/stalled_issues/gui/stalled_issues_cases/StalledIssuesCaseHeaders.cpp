@@ -49,7 +49,9 @@ StalledIssueHeaderCase::SelectionInfo StalledIssueHeaderCase::getSelectionInfo(
     info.msgInfo.title = MegaSyncApp->getMEGAString();
     info.msgInfo.textFormat = Qt::RichText;
     info.msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-    info.msgInfo.buttonsText.insert(QMessageBox::No, QApplication::translate("CloudFingerprintMissingHeader", "Cancel"));
+    info.msgInfo.buttonsText.insert(
+        QMessageBox::Cancel,
+        QApplication::translate("CloudFingerprintMissingHeader", "Cancel"));
     info.msgInfo.buttonsText.insert(QMessageBox::Ok, QApplication::translate("CloudFingerprintMissingHeader", "Apply"));
 
     if (info.selection.size() != info.similarToSelected.size())
@@ -598,10 +600,6 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
                 MegaSyncApp->getStalledIssuesModel()->semiAutoSolveNameConflictIssues((msgBox->checkBox() && msgBox->checkBox()->isChecked())? selectionInfo.similarToSelected : selectionInfo.selection, index);
-            }
-            else if(msgBox->result() == QDialogButtonBox::Yes)
-            {
-                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveNameConflictIssues(selectionInfo.similarToSelected, index);
             }
         };
 
