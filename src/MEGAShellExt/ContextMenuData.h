@@ -8,8 +8,6 @@
 #include <vector>
 #include <windows.h>
 
-const size_t MAX_LONG_PATH = 32768;
-
 class ContextMenuData
 {
 public:
@@ -53,7 +51,6 @@ protected:
     int mUnsyncedFolders;
     int mUnsyncedFiles;
     int mUnsyncedUnknowns;
-
     bool mCanSync;
 
 private:

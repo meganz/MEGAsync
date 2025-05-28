@@ -46,25 +46,25 @@ void ContextMenuData::initialize(IShellItemArray* psiItemArray)
 
 void ContextMenuData::processPath(const std::wstring& path)
 {
-    WCHAR longPath[MAX_LONG_PATH];
+    WCHAR longPath[Utilities::MAX_LONG_PATH];
 
     const WCHAR* longPrefix = L"\\\\?\\";
     const int longPrefixSize = 4;
 
     std::wstring prefixedPath = longPrefix + path;
 
-    DWORD result = GetLongPathNameW(prefixedPath.c_str(), longPath, MAX_LONG_PATH);
+    DWORD result = GetLongPathNameW(prefixedPath.c_str(), longPath, Utilities::MAX_LONG_PATH);
+    if (result <= 0 || result >= Utilities::MAX_LONG_PATH)
+    {
+        return;
+    }
 
+    // Remove the longPrefix in case the paths is shorter than MAX_PATH
     size_t length = wcslen(longPath);
     if ((wcslen(longPath) - wcslen(longPrefix)) < MAX_PATH)
     {
         //+1 to count \0 character
         wmemmove(longPath, longPath + longPrefixSize, length - longPrefixSize + 1);
-    }
-
-    if (result <= 0 || result >= MAX_LONG_PATH)
-    {
-        return;
     }
 
     WIN32_FILE_ATTRIBUTE_DATA fad;
@@ -160,56 +160,31 @@ void ContextMenuData::reset()
 // Only if all items are not synced
 bool ContextMenuData::canRequestUpload() const
 {
-    if (!isThereAnySyncedItem() && isThereAnyUnsyncedItem())
-    {
-        return true;
-    }
-
-    return false;
+    return !isThereAnySyncedItem() && isThereAnyUnsyncedItem();
 }
 
 // Only if all items are synced
 bool ContextMenuData::canRequestGetLinks() const
 {
-    if (isThereAnySyncedItem() && !isThereAnyUnsyncedItem())
-    {
-        return true;
-    }
-
-    return false;
+    return isThereAnySyncedItem() && !isThereAnyUnsyncedItem();
 }
 
-// Only if all items are in the left pane
+// Only if the item are in the left pane
 bool ContextMenuData::canRemoveFromLeftPane() const
 {
-    if (mInLeftPane.size() && mSelectedPaths.size() == 1)
-    {
-        return true;
-    }
-
-    return false;
+    return mInLeftPane.size() && mSelectedPaths.size() == 1;
 }
 
 // Only for synced folders
 bool ContextMenuData::canViewOnMEGA() const
 {
-    if (mSelectedPaths.size() == 1 && mSyncedFolders)
-    {
-        return true;
-    }
-
-    return false;
+    return mSelectedPaths.size() == 1 && mSyncedFolders;
 }
 
 // Only for synced files
 bool ContextMenuData::canViewVersions() const
 {
-    if (mSelectedPaths.size() == 1 && mSyncedFiles)
-    {
-        return true;
-    }
-
-    return false;
+    return mSelectedPaths.size() == 1 && mSyncedFiles;
 }
 
 // Only if all items are syncable

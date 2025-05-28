@@ -171,21 +171,23 @@ bool MegaInterface::viewVersions(PCWSTR path)
 
 bool MegaInterface::sync(const std::vector<std::wstring>& paths, SyncType type)
 {
-    auto intSize(sizeof(int));
+    std::wstring result;
 
-    // n times MAX_LONG_PATH plus the separators + the type (int)
-    size_t requestSize(paths.size() * MAX_LONG_PATH + paths.size() * sizeof(WCHAR) + intSize);
-    std::unique_ptr<WCHAR[]> request(new WCHAR[requestSize]());
-
-    for (const std::wstring& path: paths)
+    // Append all the requested paths, separated by "|"
+    for (const auto& path: paths)
     {
-        wcscat_s(request.get(), requestSize, path.c_str());
-        wcscat_s(request.get(), requestSize, L"|");
+        result += path + L"|";
     }
 
-    std::unique_ptr<WCHAR[]> typeChar(new WCHAR[intSize]());
+    // Append the type: Sync or Backup
+    auto intSize(sizeof(int));
+    std::unique_ptr<WCHAR[]> typeChar(new WCHAR[intSize]);
     swprintf_s(typeChar.get(), intSize, L"%d", type);
-    wcscat_s(request.get(), requestSize, typeChar.get());
+    result += typeChar.get();
+
+    // Allocate the final WCHAR buffer with the perfect size
+    std::unique_ptr<WCHAR[]> request(new WCHAR[result.size() + 1]);
+    wcscpy_s(request.get(), result.size() + 1, result.c_str());
 
     WCHAR chReadBuf[2];
     int cbRead =

@@ -110,8 +110,6 @@ bool DeleteRegValue(HKEY key, LPTSTR subkey, LPTSTR value, REGSAM samDesired)
 
 bool CheckLeftPaneIcon(wchar_t *path, bool remove)
 {
-    const size_t MAX_LONG_PATH = 32768;
-
     HKEY hKey = NULL;
     LONG result = RegOpenKeyEx(HKEY_CURRENT_USER,
                                L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace",
@@ -122,7 +120,7 @@ bool CheckLeftPaneIcon(wchar_t *path, bool remove)
     }
 
     DWORD retCode = ERROR_SUCCESS;
-    WCHAR uuid[MAX_LONG_PATH];
+    WCHAR uuid[Utilities::MAX_LONG_PATH];
     DWORD uuidlen = sizeof(uuid);
 
     for (int i = 0; retCode == ERROR_SUCCESS; i++)
@@ -133,10 +131,10 @@ bool CheckLeftPaneIcon(wchar_t *path, bool remove)
         if (retCode == ERROR_SUCCESS)
         {
             HKEY hSubKey;
-            TCHAR subKeyPath[MAX_LONG_PATH];
+            TCHAR subKeyPath[Utilities::MAX_LONG_PATH];
             swprintf_s(
                 subKeyPath,
-                MAX_LONG_PATH,
+                Utilities::MAX_LONG_PATH,
                 L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\%s",
                 uuid);
             result = RegOpenKeyEx(HKEY_CURRENT_USER, subKeyPath, 0, KEY_READ, &hSubKey);
@@ -146,7 +144,7 @@ bool CheckLeftPaneIcon(wchar_t *path, bool remove)
             }
 
             DWORD type;
-            TCHAR value[MAX_LONG_PATH];
+            TCHAR value[Utilities::MAX_LONG_PATH];
             DWORD valuelen = sizeof(value);
             result = RegQueryValueEx(hSubKey, L"", NULL, &type, (LPBYTE)value, &valuelen);
             RegCloseKey(hSubKey);
@@ -160,7 +158,7 @@ bool CheckLeftPaneIcon(wchar_t *path, bool remove)
                 bool found = false;
 
                 swprintf_s(subKeyPath,
-                           MAX_LONG_PATH,
+                           Utilities::MAX_LONG_PATH,
                            L"Software\\Classes\\CLSID\\%s\\Instance\\InitPropertyBag",
                            uuid);
                 result = RegOpenKeyEx(HKEY_CURRENT_USER, subKeyPath, 0, KEY_READ, &hSubKey);
@@ -178,7 +176,7 @@ bool CheckLeftPaneIcon(wchar_t *path, bool remove)
                 if (!found)
                 {
                     swprintf_s(subKeyPath,
-                               MAX_LONG_PATH,
+                               Utilities::MAX_LONG_PATH,
                                L"Software\\Classes\\CLSID\\%s\\Instance\\InitPropertyBag",
                                uuid);
                     result = RegOpenKeyEx(HKEY_CURRENT_USER, subKeyPath, 0, KEY_WOW64_64KEY | KEY_READ, &hSubKey);
@@ -202,8 +200,8 @@ bool CheckLeftPaneIcon(wchar_t *path, bool remove)
 
             if (remove)
             {
-                wchar_t buffer[MAX_LONG_PATH];
-                swprintf_s(buffer, MAX_LONG_PATH, L"Software\\Classes\\CLSID\\%s", uuid);
+                wchar_t buffer[Utilities::MAX_LONG_PATH];
+                swprintf_s(buffer, Utilities::MAX_LONG_PATH, L"Software\\Classes\\CLSID\\%s", uuid);
 
                 if (IsWow64())
                 {
@@ -215,7 +213,7 @@ bool CheckLeftPaneIcon(wchar_t *path, bool remove)
                                (LPTSTR)L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel",
                                uuid, 0);
                 swprintf_s(buffer,
-                           MAX_LONG_PATH,
+                           Utilities::MAX_LONG_PATH,
                            L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameS"
                            L"pace\\%s",
                            uuid);
