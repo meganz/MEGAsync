@@ -3,6 +3,7 @@
 #include "MegaApplication.h"
 #include "RequestListenerManager.h"
 #include "TextDecorator.h"
+#include "TokenParserWidgetManager.h"
 #include "ui_VerifyLockMessage.h"
 #include "Utilities.h"
 
@@ -17,6 +18,7 @@ VerifyLockMessage::VerifyLockMessage(int lockStatus, bool isMainDialogAvailable,
     m_haveMainDialog(isMainDialogAvailable)
 {
     m_ui->setupUi(this);
+    TokenParserWidgetManager::instance()->registerWidgetForTheming(mLockedPopOver.get());
 
     m_ui->lEmailSent->setVisible(false);
 
@@ -39,7 +41,6 @@ void VerifyLockMessage::mousePressEvent(QMouseEvent *event)
             m_ui->lWhySeenThis->rect().contains(m_ui->lWhySeenThis->mapFrom(this, event->pos())))
     {
         QPoint pos = event->globalPos();
-
         mLockedPopOver->show();
         mLockedPopOver->ensurePolished();
         mLockedPopOver->move(pos - QPoint(mLockedPopOver->width()/2, mLockedPopOver->height() + 10));

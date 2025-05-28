@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>480</width>
-    <height>170</height>
+    <height>200</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>480</width>
-    <height>170</height>
+    <height>200</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>480</width>
-    <height>170</height>
+    <height>200</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -171,6 +171,12 @@ line-height: 13px;
         </item>
         <item>
          <widget class="QLabel" name="lVerifyEmailDesc">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>70</height>
+           </size>
+          </property>
           <property name="text">
            <string/>
           </property>

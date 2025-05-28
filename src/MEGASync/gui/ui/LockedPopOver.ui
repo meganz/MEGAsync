@@ -26,9 +26,9 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#LockedPopOver {
-background: #FFFFFF;
-border: 1px solid rgba(0,0,0,0.05);
+   <string notr="true">#bLockedIcon
+{
+	border: none;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -102,10 +102,7 @@ border: 1px solid rgba(0,0,0,0.05);
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">#bLockedIcon
-{
-	border: none;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string/>
@@ -172,19 +169,16 @@ border: 1px solid rgba(0,0,0,0.05);
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">#lTitleLocked
-{
-	color: #111111;
-	font-family: &quot;Lato&quot;;
-	font-size: 15px;
-	font-weight: 600;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>Locked Accounts</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">title</string>
         </property>
        </widget>
       </item>
@@ -212,12 +206,7 @@ border: 1px solid rgba(0,0,0,0.05);
       <item>
        <widget class="QLabel" name="lDescLock">
         <property name="styleSheet">
-         <string notr="true">#lDescLock
-{
-	color: #333333;
-	font-family: &quot;Lato&quot;;
-	font-size: 13px;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</string>
@@ -228,17 +217,15 @@ border: 1px solid rgba(0,0,0,0.05);
         <property name="wordWrap">
          <bool>true</bool>
         </property>
+        <property name="type" stdset="0">
+         <string notr="true">secondary</string>
+        </property>
        </widget>
       </item>
       <item>
        <widget class="QLabel" name="lPassLeaked">
         <property name="styleSheet">
-         <string notr="true">#lPassLeaked
-{
-	color: #333333;
-	font-family: &quot;Lato&quot;;
-	font-size: 13px;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</string>
@@ -248,6 +235,9 @@ border: 1px solid rgba(0,0,0,0.05);
         </property>
         <property name="wordWrap">
          <bool>true</bool>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">secondary</string>
         </property>
        </widget>
       </item>

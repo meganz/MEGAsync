@@ -14,8 +14,8 @@ public:
     static std::shared_ptr<TokenParserWidgetManager> instance();
 
     void applyCurrentTheme();
-    void applyCurrentTheme(QWidget* dialog);
     void registerWidgetForTheming(QWidget* dialog);
+    void applyCurrentTheme(QWidget* dialog);
     void polish(QWidget* widget);
     QColor getColor(const QString& colorToken);
     QColor getColor(const QString& colorToken, const QString& currentColorSchema);
