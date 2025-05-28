@@ -158,11 +158,21 @@ QUrl MessageDialogData::getImageUrl() const
 
 MessageDialogTextInfo MessageDialogData::getTitleTextInfo() const
 {
+    if (mInfo.titleText.isEmpty() && !mInfo.descriptionText.isEmpty())
+    {
+        return MessageDialogTextInfo(mInfo.descriptionText, getTextFormat());
+    }
+
     return MessageDialogTextInfo(mInfo.titleText, getTextFormat());
 }
 
 MessageDialogTextInfo MessageDialogData::getDescriptionTextInfo() const
 {
+    if (mInfo.titleText.isEmpty() && !mInfo.descriptionText.isEmpty())
+    {
+        return MessageDialogTextInfo(QString(), getTextFormat());
+    }
+
     return MessageDialogTextInfo(mInfo.descriptionText, getTextFormat());
 }
 
@@ -251,10 +261,18 @@ void MessageDialogData::buildButtons()
         return;
     }
 
-    processButtonInfo(mInfo.buttons, QMessageBox::StandardButton::Ok, tr("OK"));
-    processButtonInfo(mInfo.buttons, QMessageBox::StandardButton::Yes, tr("Yes"));
-    processButtonInfo(mInfo.buttons, QMessageBox::StandardButton::No, tr("No"));
-    processButtonInfo(mInfo.buttons, QMessageBox::StandardButton::Cancel, tr("Cancel"));
+    processButtonInfo(mInfo.buttons,
+                      QMessageBox::StandardButton::Ok,
+                      QCoreApplication::translate("QDialogButtonBox", "&OK"));
+    processButtonInfo(mInfo.buttons,
+                      QMessageBox::StandardButton::Yes,
+                      QApplication::translate("QDialogButtonBox", "&Yes"));
+    processButtonInfo(mInfo.buttons,
+                      QMessageBox::StandardButton::No,
+                      QApplication::translate("QDialogButtonBox", "&No"));
+    processButtonInfo(mInfo.buttons,
+                      QMessageBox::StandardButton::Cancel,
+                      QApplication::translate("QDialogButtonBox", "&Cancel"));
 
     if (mButtons.contains(mInfo.defaultButton))
     {
@@ -274,12 +292,21 @@ void MessageDialogData::buildButtons()
 
 void MessageDialogData::processButtonInfo(QMessageBox::StandardButtons buttons,
                                           QMessageBox::StandardButton type,
-                                          const QString& defaultText)
+                                          QString defaultText)
 {
     if (buttons.testFlag(type))
     {
+        // QML's Button does not interpret & as a mnemonic (shortcut) the way QWidgets
+        // So to avoid changing the .ts file (and also because it is still in use by other classes)
+        // we continue translating using the & but we remove it later
+        if (defaultText.startsWith(QLatin1Char('&')))
+        {
+            defaultText.remove(0, 1);
+        }
+
         QString buttonText(mInfo.buttonsText.contains(type) ? mInfo.buttonsText[type] :
                                                               defaultText);
+
         mButtons.insert(type, MessageDialogButtonInfo(buttonText, type));
     }
 }

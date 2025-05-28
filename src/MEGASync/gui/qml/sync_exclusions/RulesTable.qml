@@ -10,7 +10,7 @@ import components.checkBoxes 1.0
 import components.texts 1.0 as Texts
 import components.images 1.0
 import components.buttons 1.0 as Buttons
-import components.dialogs 1.0
+
 import WildCardEnum 1.0
 import ExclusionRulesModel 1.0
 

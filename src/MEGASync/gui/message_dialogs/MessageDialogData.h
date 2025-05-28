@@ -187,7 +187,7 @@ private:
     void buildButtons();
     void processButtonInfo(QMessageBox::StandardButtons buttons,
                            QMessageBox::StandardButton type,
-                           const QString& defaultText);
+                           QString defaultText = QString());
     void updateButtonsByDefault(QMessageBox::StandardButtons buttons,
                                 QMessageBox::StandardButton defaultButton = QMessageBox::Ok);
     void updateWidgetsByType();

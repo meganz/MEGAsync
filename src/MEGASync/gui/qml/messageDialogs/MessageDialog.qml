@@ -92,7 +92,7 @@ QmlDialog {
 
                     CheckBox {
                         id: checkBoxItem
-
+                        leftPadding: 0
                         anchors {
                             left: parent.left
                             right: parent.right

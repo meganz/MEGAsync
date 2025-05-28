@@ -12,6 +12,7 @@ Loader {
     required property real textLineHeight
     required property real textPixelSize
     required property real textWeight
+    property real textLeftPadding : 0
 
     anchors {
         left: parent.left
@@ -45,6 +46,7 @@ Loader {
                 weight: root.textWeight
             }
             text: root.textInfo ? root.textInfo.text : ""
+            leftPadding: textLeftPadding
         }
     }
 
@@ -68,6 +70,8 @@ Loader {
                     focus = true;
                 }
             }
+
+            leftPadding: textLeftPadding
         }
     }
 

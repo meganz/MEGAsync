@@ -2635,11 +2635,6 @@
         <translation>Do not show again</translation>
     </message>
     <message>
-        <source>Error installing components</source>
-        <translatorcomment>This is the title of an error message that appears when there&apos;s an issue during the installation of Notification Area Icon Support. SNC-2270</translatorcomment>
-        <translation>Error installing components</translation>
-    </message>
-    <message>
         <source>Failed to install the necessary components.</source>
         <translatorcomment>This is the text of an error message displayed when there&apos;s a problem installing Notification Area Icon Support. The message indicates that the required components for the feature couldn&apos;t be installed. SNC-2270</translatorcomment>
         <translation>Failed to install the necessary components.</translation>
@@ -3198,11 +3193,6 @@ Wait for the upload to complete.</translation>
         <translation>Account deactivated</translation>
     </message>
     <message>
-        <source>Alert</source>
-        <translatorcomment>Title of the warning dialog shown when the SDK reports a fatal error - CON-844</translatorcomment>
-        <translation>Alert</translation>
-    </message>
-    <message>
         <source>An update will be applied during the next application restart</source>
         <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
         <translation>An update will be applied during the next application restart</translation>
@@ -3236,11 +3226,6 @@ Wait for the upload to complete.</translation>
         <source>Download</source>
         <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
         <translation>Download</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title for dialogs with error messages. SNC-3299</translatorcomment>
-        <translation>Error</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -3578,11 +3563,6 @@ https://mega.co.nz/#sync</source>
         <source>Waiting</source>
         <translatorcomment>Label of tray icon to indicate that the app is in a waiting state.</translatorcomment>
         <translation>Waiting</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
-        <translation>Warning</translation>
     </message>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
@@ -8026,6 +8006,11 @@ Refresh the list.</translation>
         <source>Try again</source>
         <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
         <translation>Try again</translation>
+    </message>
+    <message>
+        <source>Continue</source>
+         <translatorcomment>Label for Continue button. CON-1036.</translatorcomment>
+        <translation type="unfinished">Continue</translation>
     </message>
 </context>
 <context>
