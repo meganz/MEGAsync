@@ -199,7 +199,6 @@ public:
     //**** Cloud Drive dialog stats ****/
 
     qint64 cloudDriveDialogLastDateTimeOpened();
-    void resetCloudDriveDialogLastDateTimeOpened();
     void cloudDriveDialogOpened();
 
     qint64 cloudDriveDialogLastDateTimeStatSent();

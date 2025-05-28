@@ -1331,20 +1331,9 @@ qint64 Preferences::cloudDriveDialogLastDateTimeOpened()
         .toSecsSinceEpoch();
 }
 
-void Preferences::resetCloudDriveDialogLastDateTimeOpened()
-{
-    setValueConcurrently(cloudDriveDialogLastDateTimeOpenedKey, QDateTime());
-}
-
 void Preferences::cloudDriveDialogOpened()
 {
-    // If the cloud drive dialog was already opened and stats were sent during the current hour,
-    // don´t register again the last opened time
-    if (Utilities::hourHasChanged(cloudDriveDialogLastDateTimeStatSent(),
-                                  QDateTime::currentDateTime().toSecsSinceEpoch()))
-    {
-        setValueConcurrently(cloudDriveDialogLastDateTimeOpenedKey, QDateTime::currentDateTime());
-    }
+    setValueConcurrently(cloudDriveDialogLastDateTimeOpenedKey, QDateTime::currentDateTime());
 }
 
 qint64 Preferences::cloudDriveDialogLastDateTimeStatSent()
@@ -1356,7 +1345,6 @@ qint64 Preferences::cloudDriveDialogLastDateTimeStatSent()
 void Preferences::updateCloudDriveDialogLastDateTimeStatSent()
 {
     setValueConcurrently(cloudDriveDialogLastDateTimeStatSentKey, QDateTime::currentDateTime());
-    resetCloudDriveDialogLastDateTimeOpened();
 }
 
 /************ END OF NOTIFICATIONS GETTERS/SETTERS ************/

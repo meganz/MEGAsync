@@ -256,8 +256,11 @@ CloudDriveNodeSelector::CloudDriveNodeSelector(QWidget* parent):
 #endif
 #endif
 
-    // Last time opened
+    // Update last time opened
     Preferences::instance()->cloudDriveDialogOpened();
+
+    // Send stats in case we didn´t send them in the current hour
+    sendStats();
 }
 
 void CloudDriveNodeSelector::createSpecialisedWidgets()
@@ -284,24 +287,40 @@ void CloudDriveNodeSelector::sendStats()
     auto cloudDriveLastDateTimeOpened(
         Preferences::instance()->cloudDriveDialogLastDateTimeOpened());
 
-    // Not send any stat if the last time you send it was in the current hour
+    // No event sent during the current hour
     if (Utilities::hourHasChanged(cloudDriveLastDateTimeStatSent,
                                   QDateTime::currentDateTime().toSecsSinceEpoch()))
     {
-        // If the CloudDrive is currently open and we sent the stats in the last hour, send it again
-        //  or If the CloudDrive is not currently open but it was opened during the  this hour, send
-        //  the event
-        auto cloudDriveDialog(DialogOpener::findDialog<NodeSelector>());
-        if ((cloudDriveDialog &&
-             dynamic_cast<CloudDriveNodeSelector*>(cloudDriveDialog->getDialog().data())) ||
-            (cloudDriveLastDateTimeOpened > 0 &&
-             Utilities::hourHasChanged(cloudDriveLastDateTimeStatSent,
-                                       cloudDriveLastDateTimeOpened)))
+        auto sendEvent = []()
         {
             MegaSyncApp->getStatsEventHandler()->sendEvent(
                 AppStatsEvents::EventType::CLOUD_DRIVE_HOURLY_ACTIVE_USERS);
 
             Preferences::instance()->updateCloudDriveDialogLastDateTimeStatSent();
+        };
+
+        // If the CloudDrive is currently open, send the event
+        // If the CloudDrive is not currently open but it was opened during the current hour, send
+        // the event
+        auto cloudDriveDialog(DialogOpener::findDialog<NodeSelector>());
+        auto isCurrentlyOpen(cloudDriveDialog && dynamic_cast<CloudDriveNodeSelector*>(
+                                                     cloudDriveDialog->getDialog().data()));
+
+        if (isCurrentlyOpen)
+        {
+            sendEvent();
+        }
+        else
+        {
+            // If the hour between now and the last date time opened has changed, it is not the
+            // current hour
+            auto openedDuringCurrentHour(
+                !(Utilities::hourHasChanged(QDateTime::currentDateTime().toSecsSinceEpoch(),
+                                            cloudDriveLastDateTimeOpened)));
+            if (openedDuringCurrentHour)
+            {
+                sendEvent();
+            }
         }
     }
 }
