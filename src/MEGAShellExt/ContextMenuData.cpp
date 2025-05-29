@@ -49,7 +49,7 @@ void ContextMenuData::processPath(const std::wstring& path)
     WCHAR longPath[Utilities::MAX_LONG_PATH];
 
     const WCHAR* longPrefix = L"\\\\?\\";
-    const int longPrefixSize = 4;
+    const int longPrefixSize = wcslen(longPrefix);
 
     std::wstring prefixedPath = longPrefix + path;
 
@@ -61,7 +61,7 @@ void ContextMenuData::processPath(const std::wstring& path)
 
     // Remove the longPrefix in case the paths is shorter than MAX_PATH
     size_t length = wcslen(longPath);
-    if ((wcslen(longPath) - wcslen(longPrefix)) < MAX_PATH)
+    if ((length - longPrefixSize) < MAX_PATH)
     {
         //+1 to count \0 character
         wmemmove(longPath, longPath + longPrefixSize, length - longPrefixSize + 1);
@@ -284,7 +284,6 @@ void ContextMenuData::requestSync(MegaInterface::SyncType type)
     if (mSelectedPaths.size() > 0)
     {
         MegaInterface::sync(mSelectedPaths, type);
-
         MegaInterface::endRequest();
     }
 }

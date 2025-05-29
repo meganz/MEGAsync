@@ -5,6 +5,7 @@
 #include <windows.h>
 #include <strsafe.h>
 #include <ostream>
+#include <memory>
 #include <vector>
 
 class MegaInterface
