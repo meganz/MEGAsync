@@ -265,7 +265,7 @@ void ContextMenuData::viewOnMEGA()
 {
     if (mSelectedPaths.size())
     {
-        MegaInterface::viewOnMEGA(mSelectedPaths.cbegin()->data());
+        MegaInterface::viewOnMEGA(mSelectedPaths[0].data());
         MegaInterface::endRequest();
     }
 }
@@ -274,7 +274,7 @@ void ContextMenuData::viewVersions()
 {
     if (mSelectedPaths.size())
     {
-        MegaInterface::viewVersions(mSelectedPaths.cbegin()->data());
+        MegaInterface::viewVersions(mSelectedPaths[0].data());
         MegaInterface::endRequest();
     }
 }

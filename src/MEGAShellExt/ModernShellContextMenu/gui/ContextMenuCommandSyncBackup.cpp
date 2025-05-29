@@ -2,8 +2,8 @@
 
 #include "MEGAinterface.h"
 
-static const std::wstring ICON_SYNC = L"Create sync.ico";
-static const std::wstring ICON_BACKUP = L"Create backup.ico";
+static const std::wstring ICON_SYNC = L"addSync.ico";
+static const std::wstring ICON_BACKUP = L"addBackup.ico";
 
 ContextMenuCommandSyncBackup::ContextMenuCommandSyncBackup(MegaInterface::SyncType type):
     mType(type),
