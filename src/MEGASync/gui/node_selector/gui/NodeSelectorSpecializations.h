@@ -70,6 +70,8 @@ public:
 
     void enableDragAndDrop(bool enable);
 
+    static void sendStats();
+
 protected:
     void createSpecialisedWidgets() override;
 

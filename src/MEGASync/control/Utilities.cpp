@@ -1657,6 +1657,18 @@ Utilities::HandlesTypes Utilities::getHandlesType(const QList<MegaHandle>& handl
     return type;
 }
 
+bool Utilities::hourHasChanged(qint64 date1, qint64 date2)
+{
+    QDateTime dateTime1 = QDateTime::fromSecsSinceEpoch(date1);
+    QDateTime dateTime2 = QDateTime::fromSecsSinceEpoch(date2);
+    if (dateTime1.date() != dateTime2.date())
+    {
+        return true;
+    }
+
+    return dateTime1.time().hour() != dateTime2.time().hour();
+}
+
 bool Utilities::dayHasChangedSince(qint64 msecs)
 {
     QDate currentDate = QDateTime::currentDateTime().date();

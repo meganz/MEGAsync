@@ -170,6 +170,14 @@ const QString Preferences::stalledIssuesModeKey   = QString::fromLatin1("stalled
 const QString Preferences::stalledIssuesEventDateKey = QString::fromLatin1("stalledIssuesEventDate");
 //End of Stalled Issues
 
+// Cloud Drive dialog
+const QString Preferences::cloudDriveDialogLastDateTimeOpenedKey =
+    QString::fromLatin1("cloudDriveDialogLastDateTimeOpened");
+
+const QString Preferences::cloudDriveDialogLastDateTimeStatSentKey =
+    QString::fromLatin1("cloudDriveDialogLastDateTimeStatSent");
+// End of Cloud Drive dialog
+
 const QString Preferences::accountTypeKey           = QString::fromLatin1("accountType");
 const QString Preferences::proExpirityTimeKey       = QString::fromLatin1("proExpirityTime");
 const QString Preferences::startOnStartupKey = QString::fromLatin1("startOnStartup");
@@ -1311,6 +1319,32 @@ QDate Preferences::stalledIssuesEventLastDate()
 void Preferences::updateStalledIssuesEventLastDate()
 {
     setValueConcurrently(stalledIssuesEventDateKey, QDate::currentDate());
+}
+
+/************ END OF STALLED ISSUES GETTERS/SETTERS ************/
+
+/************ STALLED ISSUES **********************************/
+
+qint64 Preferences::cloudDriveDialogLastDateTimeOpened()
+{
+    return getValueConcurrent<QDateTime>(cloudDriveDialogLastDateTimeOpenedKey, QDateTime())
+        .toSecsSinceEpoch();
+}
+
+void Preferences::cloudDriveDialogOpened()
+{
+    setValueConcurrently(cloudDriveDialogLastDateTimeOpenedKey, QDateTime::currentDateTime());
+}
+
+qint64 Preferences::cloudDriveDialogLastDateTimeStatSent()
+{
+    return getValueConcurrent<QDateTime>(cloudDriveDialogLastDateTimeStatSentKey, QDateTime())
+        .toSecsSinceEpoch();
+}
+
+void Preferences::updateCloudDriveDialogLastDateTimeStatSent()
+{
+    setValueConcurrently(cloudDriveDialogLastDateTimeStatSentKey, QDateTime::currentDateTime());
 }
 
 /************ END OF NOTIFICATIONS GETTERS/SETTERS ************/
