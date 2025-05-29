@@ -8009,7 +8009,7 @@ Refresh the list.</translation>
     </message>
     <message>
         <source>Continue</source>
-         <translatorcomment>Label for Continue button. CON-1036.</translatorcomment>
+        <translatorcomment>Label for Continue button. CON-1036.</translatorcomment>
         <translation type="unfinished">Continue</translation>
     </message>
 </context>

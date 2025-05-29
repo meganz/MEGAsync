@@ -1165,6 +1165,7 @@ void SettingsDialog::on_bLogout_clicked()
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
         msgInfo.defaultButton = QMessageBox::Yes;
         msgInfo.parent = this;
+        msgInfo.ignoreCloseAll = true;
         msgInfo.finishFunc = [unlink](QPointer<MessageDialogResult> msg)
         {
             if (msg->result() == QMessageBox::Yes)

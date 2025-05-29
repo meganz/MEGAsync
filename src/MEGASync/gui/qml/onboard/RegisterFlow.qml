@@ -3,7 +3,6 @@ import QtQuick.Controls 2.15
 
 import common 1.0
 
-import components.dialogs 1.0
 import components.views 1.0
 
 import LoginController 1.0
