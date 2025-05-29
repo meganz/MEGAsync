@@ -7343,6 +7343,16 @@ Do you want to delete it anyway?</translation>
         <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
         <translation>View previous versions</translation>
     </message>
+    <message>
+        <source>Add sync</source>
+        <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
+        <translation type="unfinished">Add sync</translation>
+    </message>
+    <message>
+        <source>Add backup</source>
+        <translatorcomment>Context menu option to backup a folder. CON-1364.</translatorcomment>
+        <translation type="unfinished">Add backup</translation>
+    </message>
 </context>
 <context>
     <name>Sizes</name>

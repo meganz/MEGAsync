@@ -110,6 +110,21 @@ void BackupCandidatesComponent::insertFolder(const QString& path)
     emit insertFolderAdded(row);
 }
 
+void BackupCandidatesComponent::insertFolders(const QStringList& folders)
+{
+    int row(-1);
+
+    for (auto& folder: folders)
+    {
+        row = mBackupCandidatesController->insert(folder);
+    }
+
+    if (row >= 0)
+    {
+        emit insertFolderAdded(row);
+    }
+}
+
 int BackupCandidatesComponent::rename(const QString& folder, const QString& newName)
 {
     return mBackupCandidatesController->rename(folder, newName);

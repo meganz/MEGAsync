@@ -8,20 +8,9 @@ ContextMenuCommandGetLink::ContextMenuCommandGetLink():
     ContextMenuCommandBase(L"ContextMenuCommandGetLink")
 {}
 
-IFACEMETHODIMP ContextMenuCommandGetLink::GetTitle(IShellItemArray* psiItemArray, LPWSTR* ppszName)
+IFACEMETHODIMP ContextMenuCommandGetLink::GetTitle(IShellItemArray*, LPWSTR* ppszName)
 {
-    std::wstring title;
-    int syncedFolders = mContextMenuData.getSyncedFolders();
-    int syncedFiles = mContextMenuData.getSyncedFiles();
-    LPWSTR menuText =
-        MegaInterface::getString(MegaInterface::STRING_GETLINK, syncedFiles, syncedFolders);
-    if (menuText)
-    {
-        title = menuText;
-        delete menuText;
-    }
-
-    SHStrDup(title.data(), ppszName);
+    SetTitle(MegaInterface::STRING_GETLINK, ppszName);
 
     return S_OK;
 }

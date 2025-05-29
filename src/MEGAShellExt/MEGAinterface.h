@@ -4,6 +4,9 @@
 
 #include <windows.h>
 #include <strsafe.h>
+#include <ostream>
+#include <memory>
+#include <vector>
 
 class MegaInterface
 {
@@ -16,7 +19,8 @@ public:
            FILE_SYNCING = 2,
            FILE_IGNORED = 3,
            FILE_PAUSED = 4, // used for paused & suspendend syncs.
-           FILE_NOTFOUND = 9,
+           FILE_NOTFOUND_NON_SYNCABLE = 8,
+           FILE_NOTFOUND_SYNCABLE = 9,
            FILE_ERROR = 10
     } FileState;
 
@@ -34,11 +38,18 @@ public:
            STRING_SEND = 3,
            STRING_REMOVE_FROM_LEFT_PANE = 4,
            STRING_VIEW_ON_MEGA = 5,
-           STRING_VIEW_VERSIONS = 6
+           STRING_VIEW_VERSIONS = 6,
+           STRING_SYNC = 7,
+           STRING_BACKUP = 8
     } StringID;
 
+    typedef enum {
+        TYPE_TWOWAY = 3, // Two-way sync
+        TYPE_BACKUP
+    } SyncType;
+
     static FileState getPathState(PCWSTR filePath, bool overlayIcons = true);
-    static LPWSTR getString(StringID stringID, int numFiles, int numFolders);
+    static std::unique_ptr<WCHAR[]> getString(StringID stringID);
     static bool upload(PCWSTR path);
     static bool send(PCWSTR path);
     static bool pasteLink(PCWSTR path);
@@ -46,6 +57,7 @@ public:
     static bool hasVersions(PCWSTR path);
     static bool viewOnMEGA(PCWSTR path);
     static bool viewVersions(PCWSTR path);
+    static bool sync(const std::vector<std::wstring>& paths, SyncType type);
     static bool removeFromLeftPane(PCWSTR path);
     static bool startRequest();
     static bool endRequest();
@@ -64,6 +76,7 @@ private:
     static WCHAR OP_VIEW;
     static WCHAR OP_VERSIONS;
     static WCHAR OP_HASVERSIONS;
+    static WCHAR OP_SYNCBACKUP;
     static WCHAR OP_REMOVE_FROM_LEFT_PANE;
     static int sendRequest(WCHAR type, PCWSTR content, PCWSTR response, int responseLen);
 };

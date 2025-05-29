@@ -26,8 +26,11 @@ ExtServer::ExtServer(MegaApplication *app): QObject(),
 {
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), app, SLOT(shellUpload(QQueue<QString>)),Qt::QueuedConnection);
     connect(this, SIGNAL(newExportQueue(QQueue<QString>)), app, SLOT(shellExport(QQueue<QString>)),Qt::QueuedConnection);
-    connect(this, SIGNAL(viewOnMega(QByteArray, bool)), app, SLOT(shellViewOnMega(QByteArray, bool)), Qt::QueuedConnection);
-
+    connect(this,
+            &ExtServer::newViewOnMega,
+            app,
+            &MegaApplication::shellViewOnMega,
+            Qt::QueuedConnection);
 
     // construct local socket path
     sockPath = MegaApplication::applicationDataPath() + QDir::separator() + QString::fromLatin1("mega.socket");
@@ -353,6 +356,6 @@ void ExtServer::viewOnMega(const char *content)
     const QFileInfo file(filePath);
     if (file.exists())
     {
-        emit viewOnMega(filePath.toUtf8(), false);
+        emit newViewOnMega(filePath, false);
     }
 }

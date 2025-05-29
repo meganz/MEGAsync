@@ -1362,7 +1362,7 @@ void MegaTransferView::showInMegaClicked()
 
             if (d->mParentHandle != mega::INVALID_HANDLE)
             {
-                qobject_cast<MegaApplication*>(qApp)->shellViewOnMega(d->mParentHandle, false);
+                MegaSyncApp->shellViewOnMegaByHandle(d->mParentHandle, false);
             }
         }
     }

@@ -74,7 +74,8 @@ public:
         EXTERNAL_ORIGIN,
         OS_NOTIFICATION_ORIGIN,
         SETTINGS_ORIGIN,
-        CONTEXT_MENU_ORIGIN
+        CONTEXT_MENU_ORIGIN,
+        SHELL_EXT_ORIGIN
     };
     Q_ENUM(SyncOrigin)
 

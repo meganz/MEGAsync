@@ -1,7 +1,10 @@
 #include "WinShellDispatcherTask.h"
 
+#include "CreateRemoveBackupsManager.h"
+#include "CreateRemoveSyncsManager.h"
 #include "megaapi.h"
 #include "Platform.h"
+#include "SyncController.h"
 
 PIPEINST Pipe[INSTANCES];
 HANDLE hEvents[INSTANCES+1];
@@ -19,7 +22,9 @@ typedef enum {
        STRING_SEND = 3,
        STRING_REMOVE_FROM_LEFT_PANE = 4,
        STRING_VIEW_ON_MEGA = 5,
-       STRING_VIEW_VERSIONS = 6
+       STRING_VIEW_VERSIONS = 6,
+       STRING_SYNC = 7,
+       STRING_BACKUP = 8
 } StringID;
 
 WinShellDispatcherTask::WinShellDispatcherTask(MegaApplication *receiver) : QThread()
@@ -37,7 +42,11 @@ void WinShellDispatcherTask::run()
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Shell dispatcher starting...");
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), receiver, SLOT(shellUpload(QQueue<QString>)), Qt::QueuedConnection);
     connect(this, SIGNAL(newExportQueue(QQueue<QString>)), receiver, SLOT(shellExport(QQueue<QString>)), Qt::QueuedConnection);
-    connect(this, SIGNAL(viewOnMega(QByteArray, bool)), receiver, SLOT(shellViewOnMega(QByteArray, bool)), Qt::QueuedConnection);
+    connect(this,
+            &WinShellDispatcherTask::viewOnMega,
+            receiver,
+            &MegaApplication::shellViewOnMega,
+            Qt::QueuedConnection);
     dispatchPipe();
 }
 
@@ -337,40 +346,44 @@ BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo)
    return fPendingIO;
 }
 
-#define RESPONSE_SYNCED     L"0"
-#define RESPONSE_PENDING    L"1"
-#define RESPONSE_SYNCING    L"2"
-#define RESPONSE_IGNORED    L"3"
-#define RESPONSE_PAUSED     L"4"
-#define RESPONSE_DEFAULT    L"9"
-#define RESPONSE_ERROR      L"10"
+// clang-format off
+#define RESPONSE_SYNCED                 L"0"
+#define RESPONSE_PENDING                L"1"
+#define RESPONSE_SYNCING                L"2"
+#define RESPONSE_IGNORED                L"3"
+#define RESPONSE_PAUSED                 L"4"
+#define RESPONSE_DEFAULT_NON_SYNCABLE   L"8"
+#define RESPONSE_DEFAULT_SYNCABLE       L"9"
+#define RESPONSE_ERROR                  L"10"
 
+// clang-format on
 
 VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 {
-    //wprintf( TEXT("[%d] %s\n"), pipe->hPipeInst, pipe->chRequest);
-    wcscpy_s(pipe->chReply, BUFSIZE, RESPONSE_DEFAULT);
+    wcscpy_s(pipe->chReply, BUFSIZE, RESPONSE_DEFAULT_NON_SYNCABLE);
+    // chRequest format: %c:%s -> chRequest[0] == %c (request type), chRequest+2 is the pointer to
+    // the first parameter
     wchar_t c = pipe->chRequest[0];
     wchar_t *content =  pipe->chRequest+2;
+
     switch(c)
     {
         case L'T':
         {
-            if (lstrlen(pipe->chRequest) < 3)
+            // Separator ':' is used in old versions, the new version only sends the type of string
+            auto parameters(extractParameters(content, QChar::fromLatin1(':')));
+
+            if (parameters.isEmpty())
             {
+                sendErrorToPipe(pipe);
                 break;
             }
 
             bool ok;
-            QStringList parameters = QString::fromWCharArray(content).split(QChar::fromLatin1(':'));
-            if (parameters.size() < 1)
-            {
-                break;
-            }
-
-            int stringId = parameters[0].toInt(&ok);
+            int stringId = parameters.first().toInt(&ok);
             if (!ok)
             {
+                sendErrorToPipe(pipe);
                 break;
             }
 
@@ -383,7 +396,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                 case STRING_GETLINK:
                 {
                     //Only for non incoming share syncs
-                    string tmpPath((const char*)lastPath.utf16(), lastPath.size()*sizeof(wchar_t));
+                    string tmpPath(lastPath.toStdString());
                     std::unique_ptr<MegaNode> node(MegaSyncApp->getMegaApi()->getSyncedNode(&tmpPath));
                     if(!Utilities::isIncommingShare(node.get()))
                     {
@@ -406,6 +419,12 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                 case STRING_VIEW_VERSIONS:
                     actionString = QCoreApplication::translate("ShellExtension", "View previous versions");
                     break;
+                case STRING_SYNC:
+                    actionString = QCoreApplication::translate("ShellExtension", "Add sync");
+                    break;
+                case STRING_BACKUP:
+                    actionString = QCoreApplication::translate("ShellExtension", "Add backup");
+                    break;
             }
 
             if(!actionString.isEmpty())
@@ -417,56 +436,59 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
         }
         case L'F':
         {
-            if (lstrlen(pipe->chRequest) < 3)
+            auto parameters(extractParameters(content));
+            if (!parameters.isEmpty())
             {
-                break;
+                auto path(parameters.first());
+                if (!path.isEmpty())
+                {
+                    MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                                 QString::fromUtf8("Adding file to upload queue: %1")
+                                     .arg(path)
+                                     .toUtf8()
+                                     .constData());
+                    uploadQueue.enqueue(path);
+                    break;
+                }
             }
-            QString filePath = QString::fromWCharArray(content);
-            if (filePath.startsWith(QString::fromLatin1("\\\\?\\")))
-            {
-                filePath = filePath.mid(4);
-            }
-
-            QFileInfo file(filePath);
-            if (file.exists())
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding file to upload queue: %1").arg(filePath).toUtf8().constData());
-                uploadQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
-            }
+            sendErrorToPipe(pipe);
             break;
         }
         case L'L':
         {
-            if (lstrlen(pipe->chRequest) < 3)
+            auto parameters(extractParameters(content));
+            if (!parameters.isEmpty())
             {
-                break;
+                auto path(parameters.first());
+                if (!path.isEmpty())
+                {
+                    MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                                 QString::fromUtf8("Adding file to export queue: %1")
+                                     .arg(path)
+                                     .toUtf8()
+                                     .constData());
+                    exportQueue.enqueue(path);
+                    break;
+                }
             }
-
-            QString filePath = QString::fromWCharArray(content);
-            if (filePath.startsWith(QString::fromLatin1("\\\\?\\")))
-            {
-                filePath = filePath.mid(4);
-            }
-
-            QFileInfo file(filePath);
-            if (file.exists())
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding file to export queue: %1")
-                             .arg(filePath).toUtf8().constData());
-                exportQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
-            }
+            sendErrorToPipe(pipe);
             break;
         }
         case L'P':
         {
-            if (lstrlen(pipe->chRequest) < 3)
+            // Parameter 0 -> path
+            // Parameter 1 -> overlayicons state
+            // Separator '|'
+            auto parametersWChar(extractParametersWChar(content, QChar::fromLatin1('|')));
+            auto parameters(extractParameters(content, QChar::fromLatin1('|')));
+
+            if (parametersWChar.size() == 0)
             {
-                wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_ERROR );
+                sendErrorToPipe(pipe);
                 break;
             }
 
             bool overlayIcons = true;
-            QStringList parameters = QString::fromWCharArray(content).split(QChar::fromLatin1('|'));
             if (parameters.size() > 1)
             {
                 bool ok;
@@ -477,27 +499,24 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                 }
             }
 
-            int state;
-            QString temp = parameters[0];
-            if (temp.startsWith(QString::fromLatin1("\\\\?\\")))
-            {
-                temp = temp.mid(4);
-            }
+            int state(MegaApi::STATE_NONE);
+            auto wcharTemp(parametersWChar.first());
 
-            if ((temp == lastPath) && (numHits < 3))
+            if ((wcharTemp == lastPath) && (numHits < 3))
             {
                 state = lastState;
                 numHits++;
             }
             else
             {
-                MegaApplication *app = (MegaApplication *)qApp;
-                MegaApi *megaApi = app->getMegaApi();
-                string tmpPath((const char*)temp.utf16(), temp.size()*sizeof(wchar_t));
-                state = megaApi->syncPathState(&tmpPath);
-                lastState = state;
-                lastPath = temp;
-                numHits = 1;
+                string tmpPath(wcharTemp.toStdString());
+                if (!tmpPath.empty())
+                {
+                    state = MegaSyncApp->getMegaApi()->syncPathState(&tmpPath);
+                    lastState = state;
+                    lastPath = wcharTemp;
+                    numHits = 1;
+                }
             }
 
             wstring syncStatus;
@@ -514,9 +533,11 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                     break;
                 case MegaApi::STATE_IGNORED:
                 {
+                    QString path(parameters.first());
+
                     int runState = MegaSync::SyncRunningState::RUNSTATE_DISABLED;
                     auto megaSync =
-                        MegaSyncApp->getMegaApi()->getSyncByPath(temp.toUtf8().constData());
+                        MegaSyncApp->getMegaApi()->getSyncByPath(path.toStdString().c_str());
                     if (megaSync != nullptr)
                     {
                         runState = megaSync->getRunState();
@@ -529,26 +550,35 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                     }
                     else
                     {
-                        syncStatus = RESPONSE_DEFAULT;
+                        auto syncability(SyncController::instance().isLocalFolderSyncable(
+                            path,
+                            MegaSync::SyncType::TYPE_TWOWAY));
+
+                        syncStatus = syncability == SyncController::Syncability::CAN_SYNC ?
+                                         RESPONSE_DEFAULT_SYNCABLE :
+                                         RESPONSE_DEFAULT_NON_SYNCABLE;
                     }
                     break;
                 }
                 case MegaApi::STATE_NONE:
                 default:
                 {
-                    syncStatus = RESPONSE_DEFAULT;
+                    syncStatus = RESPONSE_DEFAULT_NON_SYNCABLE;
                 }
             }
 
-            if ((parameters[0].size() < 3) || (overlayIcons && Preferences::instance()->overlayIconsDisabled()))
+            // If parameters[0].size is lower than 3, the path is malformed
+            if ((parameters[0].size() < 3) ||
+                (overlayIcons && Preferences::instance()->overlayIconsDisabled()))
             {
-                if (syncStatus != RESPONSE_DEFAULT)
+                if (syncStatus != RESPONSE_DEFAULT_NON_SYNCABLE ||
+                    syncStatus != RESPONSE_DEFAULT_SYNCABLE)
                 {
                     syncStatus = RESPONSE_ERROR;
                 }
             }
 
-            wcscpy_s( pipe->chReply, BUFSIZE, syncStatus.c_str() );
+            wcscpy_s(pipe->chReply, BUFSIZE, syncStatus.c_str());
 
             break;
         }
@@ -569,42 +599,13 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
         }
         case L'V': //View on MEGA
         {
-            if (lstrlen(pipe->chRequest) < 3)
-            {
-                break;
-            }
-
-            QByteArray filePath = QByteArray((const char *)content, lstrlen(content) * 2 + 2);
-            if (filePath.startsWith(QByteArray((const char *)L"\\\\?\\", 8)))
-            {
-                filePath = filePath.mid(8);
-            }
-
-            QFileInfo file(QString::fromWCharArray((const wchar_t *)filePath.constData()));
-            if (file.exists())
-            {
-                emit viewOnMega(filePath, false);
-            }
-            break;
+            auto parameters(extractParametersWChar(content));
+            sendViewOnMegaSignal(parameters, false, pipe);
         }
         case L'R': //Open pRevious versions
         {
-            if (lstrlen(pipe->chRequest) < 3)
-            {
-                break;
-            }
-
-            QByteArray filePath = QByteArray((const char *)content, lstrlen(content) * 2 + 2);
-            if (filePath.startsWith(QByteArray((const char *)L"\\\\?\\", 8)))
-            {
-                filePath = filePath.mid(8);
-            }
-
-            QFileInfo file(QString::fromWCharArray((const wchar_t *)filePath.constData()));
-            if (file.exists())
-            {
-                emit viewOnMega(filePath, true);
-            }
+            auto parameters(extractParametersWChar(content));
+            sendViewOnMegaSignal(parameters, true, pipe);
             break;
         }
         case L'H': //Has previous versions? (still unsupported)
@@ -616,27 +617,118 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
         {
             break;
         }
-        case L'J':
+        case L'K': // Sync or Backup folder
         {
-            if (lstrlen(pipe->chRequest) < 3)
+            // First n parameters -> paths separated by '|'
+            // Last parameters -> Sync type -> 0 for TYPE_TWO_WAY and 1 for TYPE_BACKUP
+            // At least we must have 2 parameters: one path and the sync type
+            auto parameters(extractParameters(content, QChar::fromLatin1('|')));
+            if (parameters.size() >= 2)
             {
-                break;
+                auto syncType(parameters.takeLast().toUInt());
+                if (syncType == MegaSync::SyncType::TYPE_TWOWAY)
+                {
+                    auto path(parameters.first());
+                    Utilities::queueFunctionInAppThread(
+                        [path]()
+                        {
+                            CreateRemoveSyncsManager::addSync(
+                                SyncInfo::SyncOrigin::SHELL_EXT_ORIGIN,
+                                INVALID_HANDLE,
+                                path);
+                        });
+                }
+                else
+                {
+                    if (!parameters.isEmpty())
+                    {
+                        Utilities::queueFunctionInAppThread(
+                            [parameters]()
+                            {
+                                CreateRemoveBackupsManager::addBackup(false, parameters);
+                            });
+                    }
+                }
             }
-
-            QByteArray filePath = QByteArray((const char*)content, lstrlen(content) * 2 + 2);
-            if (filePath.startsWith(QByteArray((const char*)L"\\\\?\\", 8)))
-            {
-                filePath = filePath.mid(8);
-            }
-
-            QString path = QString::fromWCharArray((const wchar_t*)filePath.constData());
-
-            Platform::getInstance()->removeSyncFromLeftPane(path);
-
             break;
         }
+        case L'J':
+        {
+            auto parameters(extractParameters(content));
+            if (parameters.size() == 1)
+            {
+                auto filePath(parameters.first());
+                if (!filePath.isEmpty())
+                {
+                    Platform::getInstance()->removeSyncFromLeftPane(filePath);
+                    break;
+                }
+            }
 
-        default:;
+            sendErrorToPipe(pipe);
+            break;
+        }
+        default:
+        {
+            break;
+        }
     }
-    pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(WCHAR);
+    pipe->cbToWrite = (lstrlen(pipe->chReply) + 1) * sizeof(WCHAR);
+}
+
+QStringList WinShellDispatcherTask::extractParameters(wchar_t* content, const QChar& separator)
+{
+    return QString::fromWCharArray(content).split(separator);
+}
+
+QStringList WinShellDispatcherTask::extractParametersWChar(wchar_t* content, const QChar& separator)
+{
+    QByteArray filePath = QByteArray((const char*)content, lstrlen(content) * 2 + 2);
+    string tmpPath((const char*)filePath.constData(), filePath.size() - 2);
+    QString fileStr(QString::fromStdString(tmpPath));
+    if (separator != QChar())
+    {
+        return fileStr.split(separator);
+    }
+    else
+    {
+        return QStringList() << fileStr;
+    }
+}
+
+int WinShellDispatcherTask::toIntFromWChar(const QString& str, bool& ok)
+{
+    ok = false;
+    QString cleaned;
+    for (QChar c: str)
+    {
+        if (!c.isNull())
+        {
+            cleaned.append(c);
+        }
+    }
+
+    return cleaned.toInt(&ok);
+}
+
+void WinShellDispatcherTask::sendViewOnMegaSignal(const QStringList& parameters,
+                                                  bool versions,
+                                                  LPPIPEINST pipe)
+{
+    if (parameters.size() == 1)
+    {
+        auto filePath(parameters.first());
+        if (!filePath.isEmpty())
+        {
+            emit viewOnMega(filePath, versions);
+            return;
+        }
+    }
+
+    sendErrorToPipe(pipe);
+}
+
+void WinShellDispatcherTask::sendErrorToPipe(LPPIPEINST pipe)
+{
+    wcscpy_s(pipe->chReply, BUFSIZE, RESPONSE_ERROR);
 }

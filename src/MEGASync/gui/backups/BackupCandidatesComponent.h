@@ -29,6 +29,7 @@ public:
     Q_INVOKABLE void confirmFoldersMoveToSelect();
     Q_INVOKABLE void selectFolderMoveToConfirm();
     Q_INVOKABLE void insertFolder(const QString& path);
+    void insertFolders(const QStringList& folders);
 
     Q_INVOKABLE int rename(const QString& folder, const QString& newName);
 

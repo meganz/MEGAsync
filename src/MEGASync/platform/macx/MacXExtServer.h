@@ -77,7 +77,7 @@ private:
 signals:
    void newUploadQueue(QQueue<QString> uploadQueue);
    void newExportQueue(QQueue<QString> exportQueue);
-   void viewOnMega(QByteArray localPath, bool versions);
+   void viewOnMega(const QString& filePath, bool versions);
 };
 
 Q_DECLARE_METATYPE(QPointer<MacXLocalSocket>);

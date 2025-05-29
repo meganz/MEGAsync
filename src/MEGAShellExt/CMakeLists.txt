@@ -14,10 +14,10 @@ set(MEGAShellExt_HEADERS
     ModernShellContextMenu/gui/ContextMenuCommandBase.h
     ModernShellContextMenu/gui/ContextMenuCommandGetLink.h
     ModernShellContextMenu/gui/ContextMenuCommandRemoveFromLeftPane.h
-    ModernShellContextMenu/gui/ContextMenuCommandSeparator.h
     ModernShellContextMenu/gui/ContextMenuCommandUpload.h
     ModernShellContextMenu/gui/ContextMenuCommandView.h
     ModernShellContextMenu/gui/ContextMenuCommandViewVersions.h
+    ModernShellContextMenu/gui/ContextMenuCommandSyncBackup.h
     ModernShellContextMenu/gui/SubCommandEnumerator.h
     ModernShellContextMenu/utilities/framework.h
     ModernShellContextMenu/utilities/SparsePackageManager.h
@@ -43,10 +43,10 @@ set(MEGAShellExt_SOURCES
     ModernShellContextMenu/gui/ContextMenuCommand.cpp
     ModernShellContextMenu/gui/ContextMenuCommandGetLink.cpp
     ModernShellContextMenu/gui/ContextMenuCommandRemoveFromLeftPane.cpp
-    ModernShellContextMenu/gui/ContextMenuCommandSeparator.cpp
     ModernShellContextMenu/gui/ContextMenuCommandUpload.cpp
     ModernShellContextMenu/gui/ContextMenuCommandView.cpp
     ModernShellContextMenu/gui/ContextMenuCommandViewVersions.cpp
+    ModernShellContextMenu/gui/ContextMenuCommandSyncBackup.cpp
     ModernShellContextMenu/utilities/SparsePackageManager.cpp
     ModernShellContextMenu/utilities/Utilities.cpp
     ClassicShellContextMenu/ContextMenuExt.cpp

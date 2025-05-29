@@ -4779,27 +4779,18 @@ void MegaApplication::shellExport(QQueue<QString> newExportQueue)
     exportOps++;
 }
 
-void MegaApplication::shellViewOnMega(QByteArray localPath, bool versions)
+void MegaApplication::shellViewOnMega(const QString& path, bool versions)
 {
-#ifdef WIN32
-    if (!localPath.startsWith(QByteArray((const char *)(void*)L"\\\\", 4)))
-    {
-        localPath.insert(0, QByteArray((const char *)(void*)L"\\\\?\\", 8));
-    }
-
-    string tmpPath((const char*)localPath.constData(), localPath.size() - 2);
-#else
-    string tmpPath((const char*)localPath.constData());
-#endif
+    string tmpPath(path.toStdString());
 
     std::unique_ptr<MegaNode> node(megaApi->getSyncedNode(&tmpPath));
     if (node)
     {
-        shellViewOnMega(node->getHandle(), versions);
+        shellViewOnMegaByHandle(node->getHandle(), versions);
     }
 }
 
-void MegaApplication::shellViewOnMega(MegaHandle handle, bool versions)
+void MegaApplication::shellViewOnMegaByHandle(MegaHandle handle, bool versions)
 {
     const char* handleBase64Pointer{MegaApi::handleToBase64(handle)};
     const QString handleArgument{QString::fromUtf8(handleBase64Pointer)};

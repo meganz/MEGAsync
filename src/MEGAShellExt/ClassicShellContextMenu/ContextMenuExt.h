@@ -87,6 +87,12 @@ private:
     HBITMAP getBitmapLegacy(HICON hIcon);
     bool legacyIcon;
 
+    bool createAndAddMenuItem(MegaInterface::StringID request,
+                              UINT IDM,
+                              HMENU hMenu,
+                              UINT indexMenu,
+                              UINT idCmdFirst);
+
     pGetBufferedPaintBits GetBufferedPaintBits;
     pBeginBufferedPaint BeginBufferedPaint;
     pEndBufferedPaint EndBufferedPaint;
@@ -133,6 +139,22 @@ private:
     PCWSTR m_pwszViewVersionsVerbCanonicalName;
     PCSTR m_pszViewVersionsVerbHelpText;
     PCWSTR m_pwszViewVersionsVerbHelpText;
+
+    PCWSTR m_pszSyncMenuText;
+    PCSTR m_pszSyncVerb;
+    PCWSTR m_pwszSyncVerb;
+    PCSTR m_pszSyncVerbCanonicalName;
+    PCWSTR m_pwszSyncVerbCanonicalName;
+    PCSTR m_pszSyncVerbHelpText;
+    PCWSTR m_pwszSyncVerbHelpText;
+
+    PCWSTR m_pszBackupMenuText;
+    PCSTR m_pszBackupVerb;
+    PCWSTR m_pwszBackupVerb;
+    PCSTR m_pszBackupVerbCanonicalName;
+    PCWSTR m_pwszBackupVerbCanonicalName;
+    PCSTR m_pszBackupVerbHelpText;
+    PCWSTR m_pwszBackupVerbHelpText;
 };
 
 #endif
