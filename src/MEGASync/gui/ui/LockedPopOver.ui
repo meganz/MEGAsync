@@ -26,9 +26,13 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#bLockedIcon
+   <string notr="true">#LockedPopOver
 {
-	border: none;
+border-color: #ff494a4d; /*colorToken.border-disabled*/
+}
+#bLockedIcon
+{
+border: none;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
