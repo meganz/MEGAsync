@@ -80,6 +80,9 @@ private:
     SyncController& mSyncController;
     std::unique_ptr<SyncsData> mSyncsData;
     std::unique_ptr<SyncsCandidatesModel> mSyncsCandidatesModel;
+    int mCurrentModelConfirmationIndex;
+    bool mCurrentModelConfirmationWithError;
+    bool mCurrentModelConfirmationFull;
 
     bool mCreatingFolder = false;
     bool mOnlyPrevalidateSync = false;

@@ -10,6 +10,7 @@ class SyncsCandidatesModel: public QAbstractItemModel
     Q_OBJECT
 
 public:
+    using SyncCandidate = std::pair<std::string, std::string>;
     enum SyncsCandidadteModelRole
     {
         LOCAL_FOLDER = Qt::UserRole + 1,
@@ -36,12 +37,12 @@ public:
               const QString& originalMegaSyncFolder,
               const QString& localSyncFolder,
               const QString& megaSyncFolder);
+    std::vector<SyncCandidate> getModel() const;
 
 private:
-    using SyncCandidate = std::pair<std::string, std::string>;
-    std::optional<std::vector<SyncCandidate>::iterator> exist(const QString& localSyncFolder,
-                                                              const QString& megaSyncFolder);
-    std::vector<SyncCandidate> mSyncCandidates;
+    std::optional<std::vector<SyncsCandidatesModel::SyncCandidate>::iterator>
+        exist(const QString& localSyncFolder, const QString& megaSyncFolder);
+    std::vector<SyncsCandidatesModel::SyncCandidate> mSyncCandidates;
 };
 
 #endif

@@ -231,7 +231,7 @@ Rectangle {
                         root.navInfo.selectiveSyncDone = true;
                     }
                     root.state = root.resume;
-                    root.navInfo.errorOnSyncs = true; // @jsubi to test error on resume page.
+                    //root.navInfo.errorOnSyncs = true; // @jsubi to test error on resume page.
                 }
 
                 onSyncsFlowMoveToFinalError: {

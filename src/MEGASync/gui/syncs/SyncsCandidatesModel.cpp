@@ -135,6 +135,11 @@ void SyncsCandidatesModel::edit(const QString& originalLocalSyncFolder,
     }
 }
 
+std::vector<SyncsCandidatesModel::SyncCandidate> SyncsCandidatesModel::getModel() const
+{
+    return mSyncCandidates;
+}
+
 std::optional<std::vector<SyncsCandidatesModel::SyncCandidate>::iterator>
     SyncsCandidatesModel::exist(const QString& localSyncFolder, const QString& megaSyncFolder)
 {

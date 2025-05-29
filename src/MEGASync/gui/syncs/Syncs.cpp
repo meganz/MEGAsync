@@ -20,7 +20,8 @@ Syncs::Syncs(QObject* parent):
     mMegaApi(MegaSyncApp->getMegaApi()),
     mSyncController(SyncController::instance()),
     mSyncsData(std::make_unique<SyncsData>()),
-    mSyncsCandidatesModel(std::make_unique<SyncsCandidatesModel>())
+    mSyncsCandidatesModel(std::make_unique<SyncsCandidatesModel>()),
+    mCurrentModelConfirmationIndex(-1)
 {
     connect(&mSyncController, &SyncController::syncAddStatus, this, &Syncs::onSyncAddRequestStatus);
     connect(&mSyncController,
@@ -61,7 +62,27 @@ void Syncs::removeSyncCandidate(const QString& localFolder, const QString& megaF
     mSyncsCandidatesModel->remove(localFolder, megaFolder);
 }
 
-void Syncs::confirmSyncCandidates() {}
+void Syncs::confirmSyncCandidates()
+{
+    mCurrentModelConfirmationIndex = -1;
+    auto syncCandidates = mSyncsCandidatesModel->rowCount();
+    if (syncCandidates != 0)
+    {
+        mCurrentModelConfirmationIndex = 0;
+        mCurrentModelConfirmationWithError = false;
+        mCurrentModelConfirmationFull = false;
+
+        auto localPath = mSyncsCandidatesModel->data(
+            mSyncsCandidatesModel->index(mCurrentModelConfirmationIndex, 0),
+            SyncsCandidatesModel::SyncsCandidadteModelRole::LOCAL_FOLDER);
+
+        auto megaPath = mSyncsCandidatesModel->data(
+            mSyncsCandidatesModel->index(mCurrentModelConfirmationIndex, 0),
+            SyncsCandidatesModel::SyncsCandidadteModelRole::MEGA_FOLDER);
+
+        addSync(localPath.toString(), megaPath.toString());
+    }
+}
 
 void Syncs::syncHelper(bool onlyPrevalidateSync,
                        const QString& localFolder,
@@ -359,7 +380,42 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString nam
 {
     Q_UNUSED(name)
 
-    if (!setErrorIfExist(errorCode, syncErrorCode))
+    if (mCurrentModelConfirmationIndex != -1)
+    {
+        mCurrentModelConfirmationWithError &= (errorCode != mega::MegaError::API_OK);
+
+        // have we succesfully synced a fullpath?
+        if (!mCurrentModelConfirmationWithError)
+        {
+            mCurrentModelConfirmationFull &= (mSyncConfig.remoteFolder == FULL_SYNC_PATH);
+        }
+
+        ++mCurrentModelConfirmationIndex;
+        if (mCurrentModelConfirmationIndex < mSyncsCandidatesModel->rowCount())
+        {
+            auto localPath = mSyncsCandidatesModel->data(
+                mSyncsCandidatesModel->index(mCurrentModelConfirmationIndex, 0),
+                SyncsCandidatesModel::SyncsCandidadteModelRole::LOCAL_FOLDER);
+
+            auto megaPath = mSyncsCandidatesModel->data(
+                mSyncsCandidatesModel->index(mCurrentModelConfirmationIndex, 0),
+                SyncsCandidatesModel::SyncsCandidadteModelRole::MEGA_FOLDER);
+
+            addSync(localPath.toString(), megaPath.toString());
+        }
+        else
+        {
+            if (mCurrentModelConfirmationWithError)
+            {
+                emit mSyncsData->syncSetupFailed();
+            }
+            else
+            {
+                emit mSyncsData->syncSetupSuccess(mCurrentModelConfirmationFull);
+            }
+        }
+    }
+    else if (!setErrorIfExist(errorCode, syncErrorCode))
     {
         setDefaultLocalFolder();
         setDefaultRemoteFolder();
