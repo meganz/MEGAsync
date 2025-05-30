@@ -103,15 +103,11 @@ bool MessageDialogResult::isChecked() const
 MessageDialogInfo::MessageDialogInfo():
     finishFunc(nullptr),
     parent(nullptr),
-    titleText(),
-    descriptionText(),
     buttons(QMessageBox::NoButton),
     defaultButton(QMessageBox::NoButton),
     textFormat(Qt::PlainText),
-    imageUrl(),
     enqueue(false),
     hideCloseButton(false),
-    checkboxText(),
     checkboxChecked(false),
     dialogTitle(MegaSyncApp->getMEGAString()),
     ignoreCloseAll(true)
