@@ -13,13 +13,17 @@ AddSyncPageForm {
     signal moveBack
     signal moveNext
 
+    onVisibleChanged: {
+        syncsComponentAccess.clearLocalFolderHint();
+        syncsComponentAccess.clearRemoteFolderHint();
+    }
+
     localFolderChooser.folderField {
         hint {
             text: syncsDataAccess.localError
             visible: syncsDataAccess.localError.length !== 0
         }
         error: syncsDataAccess.localError.length !== 0
-        text: syncsDataAccess.localFolderCandidate
     }
 
     remoteFolderChooser.folderField {
@@ -28,7 +32,6 @@ AddSyncPageForm {
             visible: syncsDataAccess.remoteError.length !== 0
         }
         error: syncsDataAccess.remoteError.length !== 0
-        text: syncsDataAccess.remoteFolderCandidate
     }
 
     localFolderChooser.onButtonClicked: {
@@ -101,7 +104,7 @@ AddSyncPageForm {
         }
 
         function onSyncPrevalidationFailed() {
-            addSyncForm.enableScreen();
+            enableScreen();
         }
     }
 
