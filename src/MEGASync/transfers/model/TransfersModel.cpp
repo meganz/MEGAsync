@@ -2146,7 +2146,9 @@ void TransfersModel::pauseTransfers(const QModelIndexList& indexes, bool pauseSt
     }
 }
 
-int TransfersModel::performPauseResumeVisibleTransfers(const QModelIndexList& indexes, bool pauseState, bool useEventUpdater)
+void TransfersModel::performPauseResumeVisibleTransfers(const QModelIndexList& indexes,
+                                                        bool pauseState,
+                                                        bool useEventUpdater)
 {
     EventUpdater updater(indexes.size(), 1000);
     auto tagsUpdated(0);
@@ -2156,21 +2158,22 @@ int TransfersModel::performPauseResumeVisibleTransfers(const QModelIndexList& in
     for (auto index : indexes)
     {
         auto d = getTransfer(index.row());
-        if((pauseState && d->getState() & TransferData::PAUSABLE_STATES_MASK)
-                || (!pauseState && d->getState() & TransferData::TRANSFER_PAUSED))
+        // In some cases, when we pause/resume in another thread, some indexes may be outdated
+        if (d)
         {
-            pauseResumeTransferByTag(d->mTag, pauseState);
+            if ((pauseState && d->getState() & TransferData::PAUSABLE_STATES_MASK) ||
+                (!pauseState && d->getState() & TransferData::TRANSFER_PAUSED))
+            {
+                pauseResumeTransferByTag(d->mTag, pauseState);
+            }
         }
-
-        tagsUpdated++;
 
         if(useEventUpdater)
         {
+            tagsUpdated++;
             updater.update(tagsUpdated);
         }
     }
-
-    return tagsUpdated;
 }
 
 void TransfersModel::blockModelSignals(bool state)

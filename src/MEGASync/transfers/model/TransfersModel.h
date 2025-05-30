@@ -408,7 +408,9 @@ private:
     void mostPriorityTransferMayChanged(bool state);
 
     int performPauseResumeAllTransfers(int activeTransfers, bool useEventUpdater);
-    int performPauseResumeVisibleTransfers(const QModelIndexList& indexes, bool pauseState, bool useEventUpdater);
+    void performPauseResumeVisibleTransfers(const QModelIndexList& indexes,
+                                            bool pauseState,
+                                            bool useEventUpdater);
 
     void openFolder(const QFileInfo& info);
 
