@@ -103,18 +103,18 @@ bool MessageDialogResult::isChecked() const
 MessageDialogInfo::MessageDialogInfo():
     finishFunc(nullptr),
     parent(nullptr),
-    titleText(QString()),
-    descriptionText(QString()),
+    titleText(),
+    descriptionText(),
     buttons(QMessageBox::NoButton),
     defaultButton(QMessageBox::NoButton),
     textFormat(Qt::PlainText),
-    imageUrl(QUrl()),
+    imageUrl(),
     enqueue(false),
-    ignoreCloseAll(false),
     hideCloseButton(false),
-    checkboxText(QString()),
+    checkboxText(),
     checkboxChecked(false),
-    dialogTitle(MegaSyncApp->getMEGAString())
+    dialogTitle(MegaSyncApp->getMEGAString()),
+    ignoreCloseAll(true)
 {}
 
 QString MessageDialogInfo::getDialogTitle() const

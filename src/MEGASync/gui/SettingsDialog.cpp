@@ -1147,14 +1147,9 @@ void SettingsDialog::on_bLogout_clicked()
         text = tr("Synchronizations will stop working.");
     }
 
-    auto unlink = [this]()
-    {
-        mApp->unlink();
-    };
-
     if (text.isEmpty())
     {
-        unlink();
+        mApp->unlink();
     }
     else
     {
@@ -1164,8 +1159,7 @@ void SettingsDialog::on_bLogout_clicked()
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
         msgInfo.defaultButton = QMessageBox::Yes;
         msgInfo.parent = this;
-        msgInfo.ignoreCloseAll = true;
-        msgInfo.finishFunc = [unlink](QPointer<MessageDialogResult> msg)
+        msgInfo.finishFunc = [](QPointer<MessageDialogResult> msg)
         {
             if (msg->result() == QMessageBox::Yes)
             {
