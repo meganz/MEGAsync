@@ -9,9 +9,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_compile_definitions(
     $<$<CONFIG:Debug>:DEBUG>
     $<$<CONFIG:Debug>:_DEBUG>
-    $<$<BOOL:${WIN32}>:NTDDI_VERSION=NTDDI_WIN7> # Supported windows versions: 7 and beyond
-    $<$<BOOL:${WIN32}>:_WIN32_WINNT=0x0601>      # 0x0601 == Windows 7
-    $<$<BOOL:${WIN32}>:PSAPI_VERSION=1>          # PS API version used in Windows 7
+    $<$<BOOL:${WIN32}>:NTDDI_VERSION=NTDDI_WIN8> # Supported windows versions: 8 and beyond
+    $<$<BOOL:${WIN32}>:_WIN32_WINNT=0x0602>      # 0x0602 == Windows 8
+    $<$<BOOL:${WIN32}>:PSAPI_VERSION=2>          # PS API version used in Windows 8
 )
 
 if (MSVC)
