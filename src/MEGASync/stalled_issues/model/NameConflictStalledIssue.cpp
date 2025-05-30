@@ -129,38 +129,36 @@ bool NameConflictedStalledIssue::shouldBeIgnored() const
 
 void NameConflictedStalledIssue::showRemoteRenameHasFailedMessageBox(const mega::MegaError& error, bool isFile)
 {
-    QMegaMessageBox::MessageBoxInfo failedInfo;
-    failedInfo.title = MegaSyncApp->getMEGAString();
+    MessageDialogInfo failedInfo;
     failedInfo.textFormat = Qt::RichText;
-    failedInfo.buttons = QMessageBox::Yes;
+    failedInfo.buttons = QMessageBox::Ok;
     if(isFile)
     {
-        failedInfo.text = StalledIssuesStrings::RemoveFileFailedTitle();
+        failedInfo.titleText = StalledIssuesStrings::RemoveFileFailedTitle();
     }
     else
     {
-        failedInfo.text = StalledIssuesStrings::RemoveFolderFailedTitle();
+        failedInfo.titleText = StalledIssuesStrings::RemoveFolderFailedTitle();
     }
-    failedInfo.informativeText = StalledIssuesStrings::RemoveRemoteFailedDescription(&error);
+    failedInfo.descriptionText = StalledIssuesStrings::RemoveRemoteFailedDescription(&error);
 
     StalledIssuesModel::runMessageBox(failedInfo);
 }
 
 void NameConflictedStalledIssue::showLocalRenameHasFailedMessageBox(bool isFile)
 {
-    QMegaMessageBox::MessageBoxInfo failedInfo;
-    failedInfo.title = MegaSyncApp->getMEGAString();
+    MessageDialogInfo failedInfo;
     failedInfo.textFormat = Qt::RichText;
-    failedInfo.buttons = QMessageBox::Yes;
+    failedInfo.buttons = QMessageBox::Ok;
     if(isFile)
     {
-        failedInfo.text = StalledIssuesStrings::RemoveFileFailedTitle();
-        failedInfo.informativeText = StalledIssuesStrings::RemoveLocalFileFailedDescription();
+        failedInfo.titleText = StalledIssuesStrings::RemoveFileFailedTitle();
+        failedInfo.descriptionText = StalledIssuesStrings::RemoveLocalFileFailedDescription();
     }
     else
     {
-        failedInfo.text = StalledIssuesStrings::RemoveFolderFailedTitle();
-        failedInfo.informativeText = StalledIssuesStrings::RemoveLocalFolderFailedDescription();
+        failedInfo.titleText = StalledIssuesStrings::RemoveFolderFailedTitle();
+        failedInfo.descriptionText = StalledIssuesStrings::RemoveLocalFolderFailedDescription();
     }
 
     StalledIssuesModel::runMessageBox(failedInfo);

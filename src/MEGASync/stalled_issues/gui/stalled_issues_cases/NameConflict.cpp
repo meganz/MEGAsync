@@ -4,7 +4,7 @@
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
-#include "QMegaMessageBox.h"
+#include "MessageDialogOpener.h"
 #include "RenameNodeDialog.h"
 #include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
@@ -411,13 +411,12 @@ void NameConflict::onActionClicked(int actionId)
                 }
                 else
                 {
-                    QMegaMessageBox::MessageBoxInfo msgInfo;
+                    MessageDialogInfo msgInfo;
                     msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-                    msgInfo.title = MegaSyncApp->getMEGAString();
                     msgInfo.textFormat = Qt::RichText;
-                    msgInfo.buttons = QMessageBox::Ok;
-                    msgInfo.text = tr("%1 no longer exists.\nPlease refresh the view").arg(info.fileName());
-                    QMegaMessageBox::warning(msgInfo);
+                    msgInfo.descriptionText =
+                        tr("%1 no longer exists.\nPlease refresh the view").arg(info.fileName());
+                    MessageDialogOpener::warning(msgInfo);
                     return;
                 }
             }
@@ -490,54 +489,65 @@ void NameConflict::onActionClicked(int actionId)
                 }
                 else
                 {
-                    QMegaMessageBox::MessageBoxInfo msgInfo;
+                    MessageDialogInfo msgInfo;
                     msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-                    msgInfo.title = MegaSyncApp->getMEGAString();
                     msgInfo.textFormat = Qt::RichText;
-                    msgInfo.buttons = QMessageBox::Ok;
-                    msgInfo.text = tr("%1 no longer exists.\nPlease refresh the view").arg(info.fileName());
-                    QMegaMessageBox::warning(msgInfo);
+                    msgInfo.descriptionText =
+                        tr("%1 no longer exists.\nPlease refresh the view").arg(info.fileName());
+                    MessageDialogOpener::warning(msgInfo);
                     return;
                 }
             }
 
-            QMegaMessageBox::MessageBoxInfo msgInfo;
+            MessageDialogInfo msgInfo;
             msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-            msgInfo.title = MegaSyncApp->getMEGAString();
             msgInfo.textFormat = Qt::RichText;
             msgInfo.buttons = QMessageBox::Yes | QMessageBox::Cancel;
+            msgInfo.defaultButton = QMessageBox::Yes;
 
             if(isCloud())
             {
                 if(isFile)
                 {
-                    msgInfo.text = tr("Are you sure you want to remove the remote file %1?").arg(fileName);
-                    msgInfo.informativeText = tr("It will be moved to the SyncDebris folder on the MEGA Rubbish Bin along with its versions.[BR]You will be able to retrieve the file and its versions from there.[/BR]");
+                    msgInfo.titleText =
+                        tr("Are you sure you want to remove the remote file %1?").arg(fileName);
+                    msgInfo.descriptionText =
+                        tr("It will be moved to the SyncDebris folder on the MEGA Rubbish Bin "
+                           "along with its versions.[BR]You will be able to retrieve the file and "
+                           "its versions from there.[/BR]");
                 }
                 else
                 {
-                    msgInfo.text = tr("Are you sure you want to remove the remote folder %1?").arg(fileName);
-                    msgInfo.informativeText = tr("It will be moved to the SyncDebris folder on the MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]");
+                    msgInfo.titleText =
+                        tr("Are you sure you want to remove the remote folder %1?").arg(fileName);
+                    msgInfo.descriptionText =
+                        tr("It will be moved to the SyncDebris folder on the MEGA Rubbish "
+                           "Bin.[BR]You will be able to retrieve the folder from there.[/BR]");
                 }
             }
             else
             {
                 if(isFile)
                 {
-                    msgInfo.text = tr("Are you sure you want to remove the local file %1?").arg(fileName);
-                    msgInfo.informativeText = tr("It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the file from there.[/BR]");
+                    msgInfo.titleText =
+                        tr("Are you sure you want to remove the local file %1?").arg(fileName);
+                    msgInfo.descriptionText =
+                        tr("It will be moved to the sync rubbish folder.[BR]You will be able to "
+                           "retrieve the file from there.[/BR]");
                 }
                 else
                 {
-                    msgInfo.text = tr("Are you sure you want to remove the local folder %1?").arg(fileName);
-                    msgInfo.informativeText = tr("It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the folder from there.[/BR]");
+                    msgInfo.titleText =
+                        tr("Are you sure you want to remove the local folder %1?").arg(fileName);
+                    msgInfo.descriptionText =
+                        tr("It will be moved to the sync rubbish folder.[BR]You will be able to "
+                           "retrieve the folder from there.[/BR]");
                 }
             }
 
-            msgInfo.finishFunc = [=](
-                                     QMessageBox* msgBox)
+            msgInfo.finishFunc = [=](QPointer<MessageDialogResult> msgBox)
             {
-                if (msgBox->result() == QDialogButtonBox::Yes)
+                if (msgBox->result() == QMessageBox::Yes)
                 {
                     bool areAllSolved(false);
 
@@ -597,10 +607,7 @@ void NameConflict::onActionClicked(int actionId)
                     }
                 }
             };
-            StalledIssuesBoldTextDecorator::boldTextDecorator.process(msgInfo.informativeText);
-            StalledIssuesBoldTextDecorator::boldTextDecorator.process(msgInfo.text);
-            StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(msgInfo.informativeText);
-            QMegaMessageBox::warning(msgInfo);
+            MessageDialogOpener::warning(msgInfo);
         }
     }
 }

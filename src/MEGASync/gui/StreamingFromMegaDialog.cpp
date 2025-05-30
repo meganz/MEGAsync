@@ -2,9 +2,9 @@
 
 #include "DialogOpener.h"
 #include "MegaNodeNames.h"
+#include "MessageDialogOpener.h"
 #include "NodeSelectorSpecializations.h"
 #include "Platform.h"
-#include "QMegaMessageBox.h"
 #include "QTMegaApiManager.h"
 #include "ui_StreamingFromMegaDialog.h"
 #include "Utilities.h"
@@ -85,21 +85,18 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
 
     event->ignore();
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.title = tr("Stream from MEGA");
-    msgInfo.text = tr("Are you sure that you want to stop the streaming?");
-    msgInfo.buttons = QMessageBox::Yes|QMessageBox::No;
-    msgInfo.defaultButton = QMessageBox::No;
+    MessageDialogInfo msgInfo;
+    msgInfo.titleText = tr("Stream from MEGA");
+    msgInfo.descriptionText = tr("Are you sure that you want to stop the streaming?");
     msgInfo.parent = this;
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         if(msg->result() == QMessageBox::Yes)
         {
             accept();
         }
     };
-
-    QMegaMessageBox::question(msgInfo);
+    MessageDialogOpener::question(msgInfo);
 }
 
 void StreamingFromMegaDialog::on_bFromCloud_clicked()
@@ -165,13 +162,10 @@ bool StreamingFromMegaDialog::isFolderLink(const QString& link) const
 
 void StreamingFromMegaDialog::showErrorMessage(const QString& message)
 {
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.title = QMegaMessageBox::errorTitle();
-    msgInfo.text = message;
-    msgInfo.buttons = QMessageBox::Ok;
+    MessageDialogInfo msgInfo;
+    msgInfo.descriptionText = message;
     msgInfo.parent = this;
-
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }
 
 //Connected only to onLinkImportFinish as only one link makes sense on streaming and it is always the first one
@@ -197,20 +191,17 @@ void StreamingFromMegaDialog::onLinkInfoAvailable()
     }
     else
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageDialogInfo msgInfo;
         msgInfo.parent = this;
-        msgInfo.title = QMegaMessageBox::errorTitle();
-        msgInfo.text = tr("Error getting link information");
-        msgInfo.defaultButton = QMessageBox::Ok;
-        msgInfo.finishFunc = [this](QPointer<QMessageBox>)
+        msgInfo.descriptionText = tr("Error getting link information");
+        msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
         {
             //This deletes the LinkProcess
             ui->sFileInfo->setCurrentWidget(ui->pNothingSelected);
             streamURL.clear();
             ui->bCopyLink->setDisabled(true);
         };
-
-        QMegaMessageBox::warning(msgInfo);
+        MessageDialogOpener::warning(msgInfo);
     }
 }
 
@@ -231,21 +222,18 @@ void StreamingFromMegaDialog::on_bClose_clicked()
         return;
     }
 
-
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.title = tr("Stream from MEGA");
-    msgInfo.text = tr("Are you sure that you want to stop the streaming?");
-    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
-    msgInfo.defaultButton = QMessageBox::No;
+    MessageDialogInfo msgInfo;
+    msgInfo.titleText = tr("Stream from MEGA");
+    msgInfo.descriptionText = tr("Are you sure that you want to stop the streaming?");
     msgInfo.parent = this;
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
+    {
         if(msg->result() == QMessageBox::Yes)
         {
             done(QDialog::Accepted);
         }
     };
-
-    QMegaMessageBox::question(msgInfo);
+    MessageDialogOpener::question(msgInfo);
 }
 
 void StreamingFromMegaDialog::on_bOpenDefault_clicked()
@@ -370,13 +358,10 @@ void StreamingFromMegaDialog::updateFileInfoFromNode(MegaNode *node)
 {
     if (!node)
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageDialogInfo msgInfo;
         msgInfo.parent = this;
-        msgInfo.title = QMegaMessageBox::errorTitle();
-        msgInfo.text = tr("File not found");
-        msgInfo.defaultButton = QMessageBox::Ok;
-
-        QMegaMessageBox::warning(msgInfo);
+        msgInfo.descriptionText = tr("File not found");
+        MessageDialogOpener::warning(msgInfo);
     }
     else
     {

@@ -1,8 +1,8 @@
 #include "MegaTransferView.h"
 
 #include "MegaApplication.h"
+#include "MessageDialogOpener.h"
 #include "Platform.h"
-#include "QMegaMessageBox.h"
 #include "TransfersWidget.h"
 #include "Utilities.h"
 
@@ -394,15 +394,14 @@ void MegaTransferView::onCancelVisibleTransfers()
 
     if(!info.areAllSync)
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.title = MegaSyncApp->getMEGAString();
-        msgInfo.text = info.actionText;
+        MessageDialogInfo msgInfo;
+        msgInfo.descriptionText = info.actionText;
         msgInfo.parent = this;
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
         msgInfo.defaultButton = QMessageBox::No;
         msgInfo.buttonsText = info.buttonsText;
 
-        msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+        msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
         {
             if(msg->result() == QMessageBox::Yes)
             {
@@ -413,8 +412,7 @@ void MegaTransferView::onCancelVisibleTransfers()
             }
         };
 
-
-        QMegaMessageBox::warning(msgInfo);
+        MessageDialogOpener::warning(msgInfo);
     }
 }
 
@@ -422,15 +420,14 @@ void MegaTransferView::onCancelSelectedTransfers()
 {
     auto info = getSelectedCancelOrClearInfo();
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.title = MegaSyncApp->getMEGAString();
-    msgInfo.text = info.actionText;
+    MessageDialogInfo msgInfo;
+    msgInfo.descriptionText = info.actionText;
     msgInfo.parent = this;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
     msgInfo.buttonsText = info.buttonsText;
 
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         if(msg->result() == QMessageBox::Yes)
         {
@@ -443,7 +440,7 @@ void MegaTransferView::onCancelSelectedTransfers()
         }
     };
 
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }
 
 void MegaTransferView::onCancelAllTransfers()
@@ -452,15 +449,15 @@ void MegaTransferView::onCancelAllTransfers()
 
     if (proxy)
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.title = MegaSyncApp->getMEGAString();
-        msgInfo.text = proxy->isAnySync() ?  cancelWithSyncAskActionText() : cancelAllAskActionText();
+        MessageDialogInfo msgInfo;
+        msgInfo.descriptionText =
+            proxy->isAnySync() ? cancelWithSyncAskActionText() : cancelAllAskActionText();
         msgInfo.parent = this;
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
         msgInfo.defaultButton = QMessageBox::No;
         msgInfo.buttonsText = getCancelDialogButtons();
 
-        msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+        msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
         {
             if(msg->result() == QMessageBox::Yes)
             {
@@ -469,21 +466,20 @@ void MegaTransferView::onCancelAllTransfers()
             }
         };
 
-        QMegaMessageBox::warning(msgInfo);
+        MessageDialogOpener::warning(msgInfo);
     }
 }
 
 void MegaTransferView::onClearAllTransfers()
 {
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.title = MegaSyncApp->getMEGAString();
-    msgInfo.text = clearAllCompletedAskActionText();
+    MessageDialogInfo msgInfo;
+    msgInfo.titleText = clearAllCompletedAskActionText();
     msgInfo.parent = this;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
     msgInfo.buttonsText = getClearDialogButtons();
 
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         if(msg->result() == QMessageBox::Yes)
         {
@@ -491,22 +487,21 @@ void MegaTransferView::onClearAllTransfers()
         }
     };
 
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }
 
 void MegaTransferView::onCancelAndClearVisibleTransfers()
 {
     auto info = getVisibleCancelOrClearInfo();
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.title = MegaSyncApp->getMEGAString();
-    msgInfo.text = info.actionText;
+    MessageDialogInfo msgInfo;
+    msgInfo.titleText = info.actionText;
     msgInfo.parent = this;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
     msgInfo.buttonsText = info.buttonsText;
 
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         if(msg->result() == QMessageBox::Yes)
         {
@@ -521,20 +516,19 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
         }
     };
 
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }
 
 void MegaTransferView::onClearVisibleTransfers()
 {
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.title = MegaSyncApp->getMEGAString();
-    msgInfo.text = clearCompletedAskActionText();
+    MessageDialogInfo msgInfo;
+    msgInfo.descriptionText = clearCompletedAskActionText();
     msgInfo.parent = this;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
     msgInfo.buttonsText = getClearDialogButtons();
 
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         if(msg->result() == QMessageBox::Yes)
         {
@@ -545,7 +539,7 @@ void MegaTransferView::onClearVisibleTransfers()
         }
     };
 
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }
 
 void MegaTransferView::clearAllTransfers()
@@ -1410,9 +1404,8 @@ void MegaTransferView::onOpenUrlFinished()
 
 void MegaTransferView::showOpeningFileError()
 {
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.title =  QMegaMessageBox::errorTitle();
-    msgInfo.text =   errorOpeningFileText();
-    QMegaMessageBox::warning(msgInfo);
+    msgInfo.descriptionText = errorOpeningFileText();
+    MessageDialogOpener::warning(msgInfo);
 }

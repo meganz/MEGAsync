@@ -433,21 +433,20 @@ void DeviceCentre::learnMore() const
 
 void DeviceCentre::applyPreviousExclusionRules() const
 {
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.text = /*tr*/ QString::fromUtf8("[B]Apply previous exclusion rules?[/B]");
+    MessageDialogInfo msgInfo;
+    msgInfo.titleText = /*tr*/ QString::fromUtf8("Apply previous exclusion rules?");
     Text::Bold boldDecorator;
-    boldDecorator.process(msgInfo.text);
-    msgInfo.informativeText =
+    boldDecorator.process(msgInfo.titleText);
+    msgInfo.descriptionText =
         /*tr*/ QString::fromUtf8(
             "The exclusion rules you set up in a previous version of the app will be applied to "
             "all "
             "of your syncs and backups. Any rules created since then will be overwritten.");
-    msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
     QMap<QMessageBox::Button, QString> textsByButton;
     textsByButton.insert(QMessageBox::Ok, /*tr*/ QString::fromUtf8("Apply"));
     msgInfo.buttonsText = textsByButton;
-    msgInfo.finishFunc = [](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [](QPointer<MessageDialogResult> msg)
     {
         if (msg->result() == QMessageBox::Ok)
         {
@@ -480,7 +479,7 @@ void DeviceCentre::applyPreviousExclusionRules() const
             }
         }
     };
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }
 
 void DeviceCentre::onSmartModeSelected() const
@@ -498,6 +497,38 @@ void DeviceCentre::onAdvancedModeSelected() const
 bool DeviceCentre::isSmartModeSelected() const
 {
     return Preferences::instance()->isStalledIssueSmartModeActivated();
+}
+
+void DeviceCentre::showWarningMessageDialog(const QString& descriptionText) const
+{
+    MessageDialogInfo msgInfo;
+    msgInfo.textFormat = Qt::TextFormat::RichText;
+    msgInfo.descriptionText = descriptionText;
+    MessageDialogOpener::warning(msgInfo);
+}
+
+void DeviceCentre::showRebootWarningDialog(const QString& titleText,
+                                           const QString& descriptionText,
+                                           int row) const
+{
+    MessageDialogInfo msgInfo;
+    msgInfo.textFormat = Qt::TextFormat::RichText;
+    msgInfo.titleText = titleText;
+    msgInfo.descriptionText = descriptionText;
+    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+    QMap<QMessageBox::Button, QString> textsByButton;
+    textsByButton.insert(QMessageBox::Ok, QCoreApplication::translate("Strings", "Continue"));
+    textsByButton.insert(QMessageBox::Cancel, QCoreApplication::translate("Strings", "Cancel"));
+    msgInfo.buttonsText = textsByButton;
+    msgInfo.defaultButton = QMessageBox::Ok;
+    msgInfo.finishFunc = [this, row](QPointer<MessageDialogResult> msg)
+    {
+        if (msg->result() == QMessageBox::Ok)
+        {
+            rebootSync(row);
+        }
+    };
+    MessageDialogOpener::warning(msgInfo);
 }
 
 int DeviceCentre::getRowCount() const

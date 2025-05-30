@@ -1,8 +1,8 @@
 #include "DownloadFromMegaDialog.h"
 
 #include "CommonMessages.h"
+#include "MessageDialogOpener.h"
 #include "Platform.h"
-#include "QMegaMessageBox.h"
 #include "ui_DownloadFromMegaDialog.h"
 #include "Utilities.h"
 
@@ -84,12 +84,10 @@ void DownloadFromMegaDialog::onPathChanged(const QString& path)
     QTemporaryFile test(path + QDir::separator());
     if (!test.open())
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageDialogInfo msgInfo;
         msgInfo.parent = this;
-        msgInfo.title = QMegaMessageBox::errorTitle();
-        msgInfo.text = tr("You don't have write permissions in this local folder.");
-
-        QMegaMessageBox::critical(msgInfo);
+        msgInfo.descriptionText = tr("You don't have write permissions in this local folder.");
+        MessageDialogOpener::critical(msgInfo);
     }
     else
     {
@@ -132,10 +130,9 @@ void DownloadFromMegaDialog::on_bOK_clicked()
         QTemporaryFile test(qFilePath + QDir::separator());
         if (!test.open())
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = QMegaMessageBox::errorTitle();
-            msgInfo.text = tr("You don't have write permissions in this local folder.");
-            QMegaMessageBox::critical(msgInfo);
+            MessageDialogInfo msgInfo;
+            msgInfo.descriptionText = tr("You don't have write permissions in this local folder.");
+            MessageDialogOpener::critical(msgInfo);
         }
         else
         {

@@ -43,7 +43,9 @@ public:
     void setSizeExclusionStatus(SizeExclusionStatus);
     QString getFolderName() const { return mFolderName; }
     void setFolder(const QString& folderName);
+
     Q_INVOKABLE void restoreDefaults();
+    Q_INVOKABLE void showRemoveRuleConfirmationMessageDialog(const QString& descriptionText);
 
     bool isAskOnExclusionRemove()  const;
     void setAskOnExclusionRemove(bool);
@@ -64,6 +66,7 @@ signals:
     void sizeExclusionStatusChanged(SizeExclusionStatus);
     void folderNameChanged(QString);
     void askOnExclusionRemoveChanged(bool);
+    void acceptedClicked();
 
 private:
     double mMinimumAllowedSize;

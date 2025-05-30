@@ -4,12 +4,12 @@
 #include "EventUpdater.h"
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
+#include "MessageDialogOpener.h"
 #include "NewFolderDialog.h"
 #include "NodeSelectorDelegates.h"
 #include "NodeSelectorModel.h"
 #include "NodeSelectorProxyModel.h"
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
-#include "QMegaMessageBox.h"
 #include "RenameNodeDialog.h"
 #include "RequestListenerManager.h"
 #include "ui_NodeSelectorTreeViewWidget.h"
@@ -726,12 +726,11 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
         return node;
     };
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.parent = ui->tMegaFolders;
-    msgInfo.title = MegaSyncApp->getMEGAString();
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::Yes;
-    msgInfo.finishFunc = [this, handles, permanently](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this, handles, permanently](QPointer<MessageDialogResult> msg)
     {
         if (msg->result() == QMessageBox::Yes)
         {
@@ -741,11 +740,11 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
 
     if (permanently)
     {
-        msgInfo.informativeText = tr("You cannot undo this action");
+        msgInfo.descriptionText = tr("You cannot undo this action");
     }
     else
     {
-        msgInfo.informativeText =
+        msgInfo.descriptionText =
             tr("Any shared files or folders will no longer be accessible to the people you shared "
                "them with. You can still access these items in the Rubbish bin, restore, and share "
                "them.");
@@ -760,21 +759,21 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
 
         if (type == Utilities::HandlesType::FILES)
         {
-            msgInfo.text =
+            msgInfo.titleText =
                 tr("You are about to permanently delete %n file. Would you like to proceed?",
                    "",
                    handles.size());
         }
         else if (type == Utilities::HandlesType::FOLDERS)
         {
-            msgInfo.text =
+            msgInfo.titleText =
                 tr("You are about to permanently delete %n folder. Would you like to proceed?",
                    "",
                    handles.size());
         }
         else
         {
-            msgInfo.text =
+            msgInfo.titleText =
                 tr("You are about to permanently delete %n items. Would you like to proceed?",
                    "",
                    handles.size());
@@ -788,16 +787,16 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
         auto node = getNode(handles.first());
         if (handles.size() == 1 && node)
         {
-            msgInfo.text =
+            msgInfo.titleText =
                 tr("Move %1 to Rubbish bin?").arg(MegaNodeNames::getNodeName(node.get()));
         }
         else
         {
-            msgInfo.text = tr("Move %n items to Rubbish bin?", "", handles.size());
+            msgInfo.titleText = tr("Move %n items to Rubbish bin?", "", handles.size());
         }
     }
 
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }
 
 void NodeSelectorTreeViewWidget::onLeaveShareClicked(const QList<mega::MegaHandle>& handles)
@@ -807,26 +806,23 @@ void NodeSelectorTreeViewWidget::onLeaveShareClicked(const QList<mega::MegaHandl
         return;
     }
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.parent = ui->tMegaFolders;
-    msgInfo.title = MegaSyncApp->getMEGAString();
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::Yes;
     msgInfo.buttonsText.insert(QMessageBox::Yes, tr("Leave"));
     msgInfo.buttonsText.insert(QMessageBox::No, tr("Don’t leave"));
-
-    msgInfo.text = tr("Leave this shared folder?", "", handles.size());
-    msgInfo.informativeText =
+    msgInfo.titleText = tr("Leave this shared folder?", "", handles.size());
+    msgInfo.descriptionText =
         tr("If you leave the folder, you will not be able to see it again.", "", handles.size());
-
-    msgInfo.finishFunc = [this, handles](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this, handles](QPointer<MessageDialogResult> msg)
     {
         if (msg->result() == QMessageBox::Yes)
         {
             mModel->deleteNodes(handles, true);
         }
     };
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }
 
 NodeSelectorTreeViewWidget::NodeState

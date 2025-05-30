@@ -6,9 +6,9 @@
 #include "LocalOrRemoteUserMustChooseStalledIssue.h"
 #include "MegaApplication.h"
 #include "MegaIgnoreManager.h"
+#include "MessageDialogOpener.h"
 #include "MoveOrRenameCannotOccurIssue.h"
 #include "NameConflictStalledIssue.h"
-#include "QMegaMessageBox.h"
 #include "QSortFilterProxyModel"
 #include "StalledIssuesDelegateWidgetsCache.h"
 #include "StalledIssuesDialog.h"
@@ -486,12 +486,12 @@ void StalledIssuesModel::onSendEvent()
     }
 }
 
-void StalledIssuesModel::runMessageBox(QMegaMessageBox::MessageBoxInfo info)
+void StalledIssuesModel::runMessageBox(MessageDialogInfo info)
 {
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
     info.parent = dialog ? dialog->getDialog() : nullptr;
 
-    QMegaMessageBox::warning(info);
+    MessageDialogOpener::warning(info);
 }
 
 void StalledIssuesModel::languageChanged()
@@ -1148,15 +1148,16 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
 
 void StalledIssuesModel::showIssueExternallyChangedMessageBox()
 {
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.title = MegaSyncApp->getMEGAString();
+    MessageDialogInfo msgInfo;
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok;
     QMap<QMessageBox::StandardButton, QString> buttonsText;
     buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
     msgInfo.buttonsText = buttonsText;
-    msgInfo.text = tr("The issue may have been solved externally.\nPlease, refresh the list.");
-    msgInfo.finishFunc = [this](QPointer<QMessageBox>) {
+    msgInfo.descriptionText =
+        tr("The issue may have been solved externally.\nPlease, refresh the list.");
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
+    {
         updateActiveStalledIssues();
     };
 
@@ -1582,12 +1583,14 @@ void StalledIssuesModel::ignoreSymLinks()
 
 void StalledIssuesModel::showIgnoreItemsError(bool allFailed)
 {
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.title = MegaSyncApp->getMEGAString();
+    MessageDialogInfo msgInfo;
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok;
-    msgInfo.text = allFailed ? tr("Some issues can't be fixed.\nVerify the permissions of the .megaignore file on your local sync folder locations.")
-                             : tr("Issues can't be fixed.\nVerify the permissions of the .megaignore on file your local sync folder locations.");
+    msgInfo.descriptionText = allFailed ?
+                                  tr("Some issues can't be fixed.\nVerify the permissions of the "
+                                     ".megaignore file on your local sync folder locations.") :
+                                  tr("Issues can't be fixed.\nVerify the permissions of the "
+                                     ".megaignore on file your local sync folder locations.");
 
     runMessageBox(std::move(msgInfo));
 }

@@ -1,6 +1,6 @@
 #include "GuiUtilities.h"
 
-#include "QMegaMessageBox.h"
+#include "MessageDialogOpener.h"
 #include "Utilities.h"
 
 #include <QApplication>
@@ -39,23 +39,16 @@ void GuiUtilities::showPayOrDismiss(const QString &title, const QString &message
 {
     const QString dismissLabel = QCoreApplication::translate("GuiUtilities", "Dismiss");
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.parent = nullptr;
-#ifdef Q_OS_MAC
-    msgInfo.text = title;
-    msgInfo.informativeText = message;
-#else
-    msgInfo.title = title;
-    msgInfo.text = message;
-#endif
-
+    msgInfo.titleText = title;
+    msgInfo.descriptionText = message;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.buttonsText.insert(QMessageBox::Yes, payButtonLabel);
     msgInfo.buttonsText.insert(QMessageBox::No, dismissLabel);
     msgInfo.defaultButton = QMessageBox::Yes;
     msgInfo.textFormat = Qt::TextFormat::RichText;
-
-    msgInfo.finishFunc = [](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [](QPointer<MessageDialogResult> msg)
     {
         if(msg->result() == QMessageBox::Yes)
         {
@@ -65,5 +58,5 @@ void GuiUtilities::showPayOrDismiss(const QString &title, const QString &message
         }
     };
 
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }

@@ -39,7 +39,7 @@ RowLayout {
     //   YES      NO     |      NO      YES     YES
     //
     // Default onClicked:
-    //   YES      NO     |      YES      NO     NO
+    //   NO       NO     |      YES      NO     NO
 
     RowLayout {
         id: leftButtonsLayout

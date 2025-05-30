@@ -164,20 +164,20 @@ bool StalledIssueBaseDelegateWidget::checkSelection(const QList<mega::MegaSyncSt
     }
 
     info.msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-    info.msgInfo.title = MegaSyncApp->getMEGAString();
     info.msgInfo.textFormat = Qt::RichText;
     info.msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
 
     QMap<QMessageBox::Button, QString> textsByButton;
     //In order to keep the same context as before
-    textsByButton.insert(QMessageBox::No, QCoreApplication::translate("LocalAndRemoteDifferentWidget", "Cancel"));
+    textsByButton.insert(QMessageBox::Cancel,
+                         QCoreApplication::translate("LocalAndRemoteDifferentWidget", "Cancel"));
     textsByButton.insert(QMessageBox::Ok, QCoreApplication::translate("LocalAndRemoteDifferentWidget", "Apply"));
 
     info.similarSelection = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
     if(info.similarSelection.size() != info.selection.size())
     {
-        auto checkBox = new QCheckBox(QCoreApplication::translate("LocalAndRemoteDifferentWidget", "Apply to all"));
-        info.msgInfo.checkBox = checkBox;
+        info.msgInfo.checkboxText =
+            QCoreApplication::translate("LocalAndRemoteDifferentWidget", "Apply to all");
     }
     info.msgInfo.buttonsText = textsByButton;
 

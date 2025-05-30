@@ -1,12 +1,13 @@
 #include "BugReportDialog.h"
 
 #include "DialogOpener.h"
+#include "TextDecorator.h"
 #include "ui_BugReportDialog.h"
 #include <BugReportController.h>
+#include <MessageDialogOpener.h>
 #include <TransfersModel.h>
 
 #include <QCloseEvent>
-#include <QMegaMessageBox.h>
 #include <QRegExp>
 
 using namespace mega;
@@ -149,30 +150,22 @@ void BugReportDialog::onReportFinished()
 {
     closeProgressDialog();
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.parent = this->parentWidget();
-    msgInfo.title = tr("Bug report");
-    msgInfo.text = tr("Bug report success!");
-    msgInfo.informativeText = tr("Your bug report has been submitted, a confirmation email "
+    msgInfo.titleText = tr("Bug report success!");
+    msgInfo.descriptionText = tr("Your bug report has been submitted, a confirmation email "
                                  "will sent to you accordingly.");
-    msgInfo.textFormat = Qt::RichText;
-    msgInfo.buttons = QMessageBox::Ok;
-    msgInfo.iconPixmap = QPixmap(Utilities::getDevicePixelRatio() < 2 ?
-                                     QString::fromUtf8(":/images/bug_report_success.png") :
-                                     QString::fromUtf8(":/images/bug_report_success@2x.png"));
-
     accept();
-    QMegaMessageBox::information(msgInfo);
+    MessageDialogOpener::information(msgInfo);
 }
 
 void BugReportDialog::onReportFailed()
 {
     closeProgressDialog();
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.title = tr("Bug report");
-    msgInfo.text = tr("Error on submitting bug report");
+    msgInfo.titleText = tr("Error on submitting bug report");
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok;
 
@@ -181,35 +174,32 @@ void BugReportDialog::onReportFailed()
     if (data.getStatus() == BugReportData::STATUS::LOG_UPLOAD_FAILED &&
         data.getTransferError() == MegaError::API_EEXIST)
     {
-        msgInfo.informativeText = tr("There is an ongoing report being uploaded.") +
+        msgInfo.descriptionText = tr("There is an ongoing report being uploaded.") +
                                   QString::fromUtf8("<br>") +
                                   tr("Please wait until the current upload is completed.");
-        QMegaMessageBox::information(msgInfo);
+        MessageDialogOpener::information(msgInfo);
     }
     else if (data.getStatus() == BugReportData::STATUS::REPORT_SUBMIT_FAILED &&
              data.getRequestError() == MegaError::API_ETOOMANY)
     {
-        msgInfo.text = tr("You must wait 10 minutes before submitting another issue");
-        msgInfo.informativeText =
+        msgInfo.titleText = tr("You must wait 10 minutes before submitting another issue");
+        Text::Link link(QString::fromLatin1("mailto:support@mega.nz"));
+        QString text =
             tr("Please try again later or contact our support team via [A]support@mega.co.nz[/A] "
-               "if the problem persists.")
-                .replace(
-                    QString::fromUtf8("[A]"),
-                    QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
-                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"));
-        QMegaMessageBox::warning(msgInfo);
+               "if the problem persists.");
+        link.process(text);
+        msgInfo.descriptionText = text;
+        MessageDialogOpener::warning(msgInfo);
     }
     else
     {
-        msgInfo.informativeText =
+        Text::Link link(QString::fromLatin1("mailto:support@mega.nz"));
+        QString text =
             tr("Bug report can't be submitted due to some error. Please try again or contact our "
-               "support team via [A]support@mega.co.nz[/A]")
-                .replace(
-                    QString::fromUtf8("[A]"),
-                    QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
-                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) +
-            QString::fromLatin1("\n");
-        QMegaMessageBox::warning(msgInfo);
+               "support team via [A]support@mega.co.nz[/A]");
+        link.process(text);
+        msgInfo.descriptionText = text;
+        MessageDialogOpener::warning(msgInfo);
     }
 }
 
@@ -228,20 +218,19 @@ void BugReportDialog::cancelSendReport()
     mController->prepareForCancellation();
     closeProgressDialog();
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.title = tr("Bug report");
-    msgInfo.text = tr("Are you sure you want to exit uploading?");
-    msgInfo.informativeText = tr("The bug report will not be submitted if you exit uploading.");
-    msgInfo.textFormat = Qt::RichText;
-    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+    msgInfo.titleText = tr("Are you sure you want to exit uploading?");
+    msgInfo.descriptionText = tr("The bug report will not be submitted if you exit uploading.");
 
     QMap<QMessageBox::Button, QString> textsByButton;
     textsByButton.insert(QMessageBox::No, tr("Continue"));
     textsByButton.insert(QMessageBox::Yes, tr("Yes"));
-    msgInfo.defaultButton = QMegaMessageBox::Yes;
+    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.buttonsText = textsByButton;
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    msgInfo.defaultButton = QMessageBox::Yes;
+
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         if (msg->result() == QMessageBox::Yes)
         {
@@ -253,7 +242,7 @@ void BugReportDialog::cancelSendReport()
         }
     };
 
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }
 
 void BugReportDialog::onDescriptionChanged()

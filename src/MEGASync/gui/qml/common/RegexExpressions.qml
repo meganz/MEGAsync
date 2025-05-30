@@ -14,4 +14,6 @@ QtObject {
     readonly property var allowedFolderChars: /^(?!\s)[^*><?"\/\\\|:]{1,255}$/
     readonly property var allow3DigitsOnly: /^(\d{0,3}(?:\.\d{0,2})?)?$/
     readonly property var deviceNameSpecialCharacters: /["*/:<>?\\|]/
+    readonly property var linkWithHrefWithoutStyle: /<a\s+([^>]*?href="[^"]+")((?!style=)[^>]*)>/g
+
 }

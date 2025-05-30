@@ -4,16 +4,16 @@
 #include "mega/types.h"
 #include "MegaApplication.h"
 #include "MegaTransferView.h"
+#include "MessageDialogOpener.h"
 #include "Platform.h"
 #include "PowerOptions.h"
-#include "QMegaMessageBox.h"
 #include "SettingsDialog.h"
 #include "StatsEventHandler.h"
 #include "TransferItem.h"
 #include "TransferMetaData.h"
 #include "Utilities.h"
+#include <MessageDialogOpener.h>
 
-#include <QMegaMessageBox.h>
 #include <QSharedData>
 
 #include <algorithm>
@@ -1513,10 +1513,9 @@ void TransfersModel::openFolder(const QFileInfo& info)
     }
     else
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.title = MegaSyncApp->getMEGAString();
-        msgInfo.text = MegaTransferView::errorOpeningFileText();
-        QMegaMessageBox::warning(msgInfo);
+        MessageDialogInfo msgInfo;
+        msgInfo.descriptionText = MegaTransferView::errorOpeningFileText();
+        MessageDialogOpener::warning(msgInfo);
     }
 }
 
@@ -1910,17 +1909,17 @@ void TransfersModel::showSyncCancelledWarning()
 {
     if(syncsInRowsToCancel())
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.title = MegaSyncApp->getMEGAString();
-        msgInfo.text = tr("Sync transfers cannot be cancelled individually.\n"
-                          "Please delete the folder sync from settings to cancel them.");
+        MessageDialogInfo msgInfo;
+        msgInfo.descriptionText = tr("Sync transfers cannot be cancelled individually.\n"
+                                     "Please delete the folder sync from settings to cancel them.");
         msgInfo.parent = mCancelledFrom;
         msgInfo.buttons = QMessageBox::Yes|QMessageBox::No;
         QMap<QMessageBox::Button, QString> textsByButton;
         textsByButton.insert(QMessageBox::Yes, tr("Open settings"));
         textsByButton.insert(QMessageBox::No, tr("Dismiss"));
         msgInfo.buttonsText = textsByButton;
-        msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+        msgInfo.defaultButton = QMessageBox::Yes;
+        msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
         {
             if(msg->result() == QMessageBox::Yes)
             {
@@ -1934,7 +1933,7 @@ void TransfersModel::showSyncCancelledWarning()
 
             resetSyncInRowsToCancel();
         };
-        QMegaMessageBox::warning(msgInfo);
+        MessageDialogOpener::warning(msgInfo);
     }
 }
 

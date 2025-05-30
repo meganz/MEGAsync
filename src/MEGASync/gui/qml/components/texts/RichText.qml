@@ -33,10 +33,12 @@ Text {
     }
 
     function hasLink() {
-        return root.rawText.search("[A]") != -1;
+        return root.rawText.search("[A]") != -1 || root.rawText.search("<a") != -1;
     }
 
     function placeFocusBorder() {
+        let hasslink = hasLink();
+        let act = root.activeFocus;
         if (root.activeFocus && hasLink()) {
 
             // we are scanning the pixels of the link to look for coordinates with hyperlink.
@@ -147,20 +149,25 @@ Text {
                              + ";\" href=\"" + url + "\">"
             },
             { pattern: /\[\/A\]/g, replacement: "</a>" },
-            { pattern: /\[BR\]/g, replacement: "<br>" }
+            { pattern: /\[BR\]/g, replacement: "<br>" },
+            { pattern: /\[\/BR\]/g, replacement: "" }
         ];
 
         replacements.forEach(replacement => {
             copyText = copyText.replace(replacement.pattern, replacement.replacement);
         });
 
+        copyText = copyText.replace(RegexExpressions.linkWithHrefWithoutStyle,
+                                    "<a $1$2 style=\"text-decoration:" + decoration
+                                    + "; color:" + urlColor + ";\">");
+
         root.text = copyText;
     }
 
-    onLinkActivated: {
-        if(url != defaultUrl || manageClick) {
+    onLinkActivated: (clickedUrl) => {
+        if((clickedUrl !== "" && clickedUrl !== root.defaultUrl) || manageClick) {
             if(!manageClick) {
-                Qt.openUrlExternally(url);
+                Qt.openUrlExternally(clickedUrl);
             }
             else {
                 linkClicked();

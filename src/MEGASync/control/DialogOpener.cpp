@@ -1,5 +1,9 @@
 #include "DialogOpener.h"
 
+#include "MessageDialogComponent.h"
+#include "MessageDialogData.h"
+#include "QmlDialogWrapper.h"
+
 #include <QApplication>
 #include <QOperatingSystemVersion>
 
@@ -41,6 +45,71 @@ DialogBlocker::DialogBlocker(QWidget *parent)
 DialogBlocker::~DialogBlocker()
 {
     close();
+}
+
+void DialogOpener::showMessageDialog(QPointer<QmlMessageDialogWrapper> wrapper,
+                                     QPointer<MessageDialogData> msgInfo)
+{
+    if (wrapper)
+    {
+        DialogBlocker* blocker(nullptr);
+
+#ifdef Q_OS_MACOS
+        // If the message dialog is not WindowModal, the parent is not greyed out.
+        // So, we use a dummy dialog WindowModal
+        if (msgInfo->parent())
+        {
+            blocker = new DialogBlocker(wrapper->parentWidget());
+            qApp->setActiveWindow(wrapper);
+        }
+#endif
+
+        wrapper->setWindowModality(Qt::ApplicationModal);
+        wrapper->connect(wrapper.data(),
+                         &QmlDialogWrapperBase::finished,
+                         [msgInfo, wrapper, blocker]()
+                         {
+                             if (blocker)
+                             {
+                                 blocker->deleteLater();
+                             }
+
+                             if (msgInfo->getFinishFunction())
+                             {
+                                 msgInfo->getFinishFunction()(msgInfo->result());
+                             }
+
+                             removeDialog(wrapper);
+                             if (!mDialogsQueue.isEmpty())
+                             {
+                                 auto queueMsgBox =
+                                     std::dynamic_pointer_cast<DialogInfo<QmlMessageDialogWrapper>>(
+                                         mDialogsQueue.dequeue());
+                                 if (queueMsgBox)
+                                 {
+                                     auto dialog =
+                                         showDialogImpl(queueMsgBox->getDialog(), false, false);
+                                     dialog->setIgnoreCloseAllAction(msgInfo->ignoreCloseAll());
+                                 }
+                             }
+                         });
+
+        QString classType = className<QmlMessageDialogWrapper>();
+        auto siblingDialogInfo = findSiblingDialogInfo<QmlMessageDialogWrapper>(classType);
+        if (siblingDialogInfo && msgInfo->enqueue())
+        {
+            auto info = std::make_shared<DialogInfo<QmlMessageDialogWrapper>>();
+            info->setDialog(wrapper);
+            info->setDialogClass(classType);
+            mDialogsQueue.enqueue(info);
+            info->raise();
+        }
+        else
+        {
+            auto dialog = showDialogImpl(wrapper, false, false);
+            dialog->setIgnoreCloseAllAction(msgInfo->ignoreCloseAll());
+        }
+    }
 }
 
 QList<QPointer<QWidget>> DialogOpener::getAllOpenedDialogs()

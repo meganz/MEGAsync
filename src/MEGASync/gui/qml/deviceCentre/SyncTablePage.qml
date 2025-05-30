@@ -13,7 +13,6 @@ import components.texts 1.0 as Texts
 import components.images 1.0
 import components.menus 1.0
 import components.buttons 1.0 as Buttons
-import components.dialogs 1.0
 import components.toolTips 1.0
 
 import SyncStatus 1.0
@@ -35,13 +34,6 @@ Item {
     property var locale: Qt.locale()
 
     property int oldWidth: width
-
-    ErrorDialog {
-        id: errorDialog
-
-        acceptButtonText: Strings.ok
-        visible: false
-    }
 
     function getStatusText(model) {
         var result = "";
@@ -171,8 +163,8 @@ Item {
     }
 
     function getRebootActionWarningBody(currentType) {
-        return (currentType === QmlSyncType.SYNC) ? DeviceCentreStrings.rebootDialogBodySync.replace("[Br]","<br><br>")
-                                                  : DeviceCentreStrings.rebootDialogBodyBackup.replace("[Br]","<br><br>");
+        return (currentType === QmlSyncType.SYNC) ? DeviceCentreStrings.rebootDialogBodySync
+                                                  : DeviceCentreStrings.rebootDialogBodyBackup;
     }
     anchors.fill: parent
 
@@ -387,9 +379,7 @@ Item {
                     anchors.fill: viewText
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        errorDialog.titleText = model.errorMessage;
-                        errorDialog.visible = true;
-                        return;
+                        deviceCentreAccess.showWarningMessageDialog(model.errorMessage);
                     }
                 }
             }
@@ -628,22 +618,12 @@ Item {
                         ContextMenuItem {
                             id: rebootAction
 
-                            TitleBodyDialog {
-                                id: rebootConfirmationDialog
-
-                                acceptButtonText: Strings.continueText
-                                cancelButtonText: Strings.cancel
-                                titleText: model? root.getRebootActionWarningTitle(model.type) : ""
-                                bodyText:  model? root.getRebootActionWarningBody(model.type) : ""
-                                visible: false
-                                onAccepted: {
-                                    deviceCentreAccess.rebootSync(model.index)
-                                }
-                            }
                             text:  model? root.getRebootActionText(model.type) : ""
                             icon.source: Images.power
                             onTriggered: {
-                                rebootConfirmationDialog.visible = true;
+                                let titleText = model ? root.getRebootActionWarningTitle(model.type) : "";
+                                let descriptionText = model ? root.getRebootActionWarningBody(model.type) : "";
+                                deviceCentreAccess.showRebootWarningDialog(titleText, descriptionText, model.index);
                             }
                         }
                         QmlControlsv212.MenuSeparator {

@@ -2,8 +2,8 @@
 
 #include "LocalOrRemoteUserMustChooseStalledIssue.h"
 #include "MegaApplication.h"
+#include "MessageDialogOpener.h"
 #include "Preferences.h"
-#include "QMegaMessageBox.h"
 #include "StalledIssueChooseWidget.h"
 #include "StalledIssueHeader.h"
 #include "StalledIssuesModel.h"
@@ -242,8 +242,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
     stringInfo.isFile = localInfo.isFile();
     stringInfo.itemName = ui->chooseLocalCopy->data()->getFileName();
     stringInfo.numberOfIssues = info.selection.size();
-    info.msgInfo.text = keepLocalSideString(stringInfo);
-    StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.text);
+    info.msgInfo.titleText = keepLocalSideString(stringInfo);
 
     if(node->isFile())
     {
@@ -251,19 +250,19 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
         {
             if(info.selection.size() == 1)
             {
-                info.msgInfo.informativeText =
+                info.msgInfo.descriptionText =
                     tr("The [B]local file[/B] %1 will be uploaded to MEGA and replace the "
-                        "current file, which will be moved to the SyncDebris folder in your MEGA "
-                        "Rubbish bin.")
-                            .arg(localInfo.fileName()) +
+                       "current file, which will be moved to the SyncDebris folder in your MEGA "
+                       "Rubbish bin.")
+                        .arg(localInfo.fileName()) +
                     QString::fromUtf8("[BR]");
             }
             else
             {
-                info.msgInfo.informativeText =
+                info.msgInfo.descriptionText =
                     tr("The [B]local files[/B] will be uploaded to MEGA and replace the "
-                        "current files, which will be moved to the SyncDebris folder in your MEGA "
-                        "Rubbish bin.") +
+                       "current files, which will be moved to the SyncDebris folder in your MEGA "
+                       "Rubbish bin.") +
                     QString::fromUtf8("[BR]");
             }
         }
@@ -271,46 +270,51 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
         {
             if (info.selection.size() > 1)
             {
-
-                info.msgInfo.informativeText =
+                info.msgInfo.descriptionText =
                     (tr("The [B]local files[/B] will be uploaded to MEGA and added as a version to "
                         "the "
                         "remote files.\nPlease wait for the upload to complete.")
-                            .arg(localInfo.fileName())) +
+                         .arg(localInfo.fileName())) +
                     QString::fromUtf8("[BR]");
             }
             else
             {
-                info.msgInfo.informativeText =
+                info.msgInfo.descriptionText =
                     (tr("The [B]local file[/B] %1 will be uploaded to MEGA and added as a version "
                         "to "
                         "the remote file.\nPlease wait for the upload to complete.")
-                            .arg(localInfo.fileName())) +
+                         .arg(localInfo.fileName())) +
                     QString::fromUtf8("[BR]");
             }
         }
     }
     else
     {
-        info.msgInfo.informativeText = tr("The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]").arg(localInfo.fileName());
+        info.msgInfo.descriptionText =
+            tr("The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able "
+               "to retrieve the folder from there.[/BR]")
+                .arg(localInfo.fileName());
         if(info.selection.size() > 1)
         {
-            info.msgInfo.informativeText = tr("The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]");
+            info.msgInfo.descriptionText =
+                tr("The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be "
+                   "able to retrieve the folders from there.[/BR]");
         }
     }
 
     if(MegaSyncApp->getTransfersModel()->areAllPaused())
     {
-        info.msgInfo.informativeText.append(QString::fromUtf8("[BR]") + tr("[B]Please, resume your transfers to fix the issue[/B]", "", info.selection.size()) + QString::fromUtf8("[BR]"));
+        info.msgInfo.descriptionText.append(
+            QString::fromUtf8("[BR]") +
+            tr("[B]Please, resume your transfers to fix the issue[/B]", "", info.selection.size()) +
+            QString::fromUtf8("[BR]"));
     }
-    StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.informativeText);
-    StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(info.msgInfo.informativeText);
 
-    info.msgInfo.finishFunc = [info](QMessageBox* msgBox)
+    info.msgInfo.finishFunc = [info](QPointer<MessageDialogResult> msgBox)
     {
-        if(msgBox->result() == QDialogButtonBox::Ok)
+        if (msgBox->result() == QMessageBox::Ok)
         {
-            if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+            if (msgBox->isChecked())
             {
                 MegaSyncApp->getStalledIssuesModel()->chooseSideManually(false, info.similarSelection);
             }
@@ -321,7 +325,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
         }
     };
 
-    QMegaMessageBox::warning(info.msgInfo);
+    MessageDialogOpener::warning(info.msgInfo);
 }
 
 void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
@@ -346,34 +350,40 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
         stringInfo.isFile = node->isFile();
         stringInfo.itemName = ui->chooseRemoteCopy->data()->getFileName();
         stringInfo.numberOfIssues = info.selection.size();
-        info.msgInfo.text = keepRemoteSideString(stringInfo);
+        info.msgInfo.titleText = keepRemoteSideString(stringInfo);
     }
     else
     {
-        info.msgInfo.text = tr("Are you sure you want to keep the [B]remote item[/B] %1?").arg(ui->chooseRemoteCopy->data()->getFileName());
+        info.msgInfo.titleText = tr("Are you sure you want to keep the [B]remote item[/B] %1?")
+                                     .arg(ui->chooseRemoteCopy->data()->getFileName());
         if (info.selection.size() > 1)
         {
-            info.msgInfo.text = tr("Keep the [B]remote items[/B]?");
+            info.msgInfo.titleText = tr("Keep the [B]remote items[/B]?");
         }
     }
-    StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.text);
     //For the moment, TYPE_TWOWAY or TYPE_UNKNOWN
     if(getData().consultData()->getSyncType() != mega::MegaSync::SyncType::TYPE_BACKUP)
     {
         if(localInfo.isFile())
         {
-            info.msgInfo.informativeText = tr("The [B]local file[/B] %1 will be moved to the sync debris folder").arg(localInfo.fileName());
+            info.msgInfo.descriptionText =
+                tr("The [B]local file[/B] %1 will be moved to the sync debris folder")
+                    .arg(localInfo.fileName());
             if (info.selection.size() > 1)
             {
-                info.msgInfo.informativeText = tr("The [B]local files[/B] will be moved to the sync debris folder");
+                info.msgInfo.descriptionText =
+                    tr("The [B]local files[/B] will be moved to the sync debris folder");
             }
         }
         else
         {
-            info.msgInfo.informativeText = tr("The [B]local folder[/B] %1 will be moved to the sync debris folder").arg(localInfo.fileName());
+            info.msgInfo.descriptionText =
+                tr("The [B]local folder[/B] %1 will be moved to the sync debris folder")
+                    .arg(localInfo.fileName());
             if (info.selection.size() > 1)
             {
-                info.msgInfo.informativeText = tr("The [B]local folders[/B] will be moved to the sync debris folder");
+                info.msgInfo.descriptionText =
+                    tr("The [B]local folders[/B] will be moved to the sync debris folder");
             }
         }
     }
@@ -381,30 +391,35 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
     {
         if(localInfo.isFile())
         {
-            info.msgInfo.informativeText = tr("The backup will be disabled in order to protect the local file %1").arg(localInfo.fileName());
+            info.msgInfo.descriptionText =
+                tr("The backup will be disabled in order to protect the local file %1")
+                    .arg(localInfo.fileName());
             if (info.selection.size() > 1)
             {
-                info.msgInfo.informativeText = tr("The backup will be disabled in order to protect the local files");
+                info.msgInfo.descriptionText =
+                    tr("The backup will be disabled in order to protect the local files");
             }
         }
         else
         {
-            info.msgInfo.informativeText = tr("The backup will be disabled in order to protect the local folder %1").arg(localInfo.fileName());
+            info.msgInfo.descriptionText =
+                tr("The backup will be disabled in order to protect the local folder %1")
+                    .arg(localInfo.fileName());
             if (info.selection.size() > 1)
             {
-                info.msgInfo.informativeText = tr("The backup will be disabled in order to protect the local folders");
+                info.msgInfo.descriptionText =
+                    tr("The backup will be disabled in order to protect the local folders");
             }
         }
     }
-    StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.informativeText);
 
-    info.msgInfo.finishFunc = [this, info](QMessageBox* msgBox)
+    info.msgInfo.finishFunc = [this, info](QPointer<MessageDialogResult> msgBox)
     {
         if(getData().consultData()->getSyncType() == mega::MegaSync::SyncType::TYPE_TWOWAY)
         {
-            if(msgBox->result() == QDialogButtonBox::Ok)
+            if (msgBox->result() == QMessageBox::Ok)
             {
-                if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+                if (msgBox->isChecked())
                 {
                     MegaSyncApp->getStalledIssuesModel()->chooseSideManually(true, info.similarSelection);
                 }
@@ -416,9 +431,9 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
         }
         else
         {
-            if(msgBox->result() == QDialogButtonBox::Ok)
+            if (msgBox->result() == QMessageBox::Ok)
             {
-                if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+                if (msgBox->isChecked())
                 {
                     MegaSyncApp->getStalledIssuesModel()->chooseRemoteForBackups(info.similarSelection);
                 }
@@ -430,7 +445,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
         }
     };
 
-    QMegaMessageBox::warning(info.msgInfo);
+    MessageDialogOpener::warning(info.msgInfo);
 }
 
 void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
@@ -451,18 +466,18 @@ void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
         if(localInfo.isFile())
     {
-        info.msgInfo.text = tr("Keep both files?");
+        info.msgInfo.titleText = tr("Keep both files?");
         if(info.selection.size())
         {
-            info.msgInfo.text = tr("Keep all files?");
+            info.msgInfo.titleText = tr("Keep all files?");
         }
     }
     else
     {
-        info.msgInfo.text = tr("Keep both folders");
+        info.msgInfo.titleText = tr("Keep both folders");
         if(info.selection.size())
         {
-            info.msgInfo.text = tr("Keep all folders");
+            info.msgInfo.titleText = tr("Keep all folders");
         }
     }
 
@@ -473,19 +488,24 @@ void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
 
         if(node->isFile())
         {
-            info.msgInfo.informativeText = tr("The [B]remote file[/B] will have a suffix like (1) added", "", info.selection.size());
+            info.msgInfo.descriptionText =
+                tr("The [B]remote file[/B] will have a suffix like (1) added",
+                   "",
+                   info.selection.size());
         }
         else
         {
-            info.msgInfo.informativeText = tr("The [B]remote folder[/B] will have a suffix like (1) added", "", info.selection.size());
+            info.msgInfo.descriptionText =
+                tr("The [B]remote folder[/B] will have a suffix like (1) added",
+                   "",
+                   info.selection.size());
         }
-        StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.informativeText);
 
-        info.msgInfo.finishFunc = [info](QMessageBox* msgBox)
+        info.msgInfo.finishFunc = [info](QPointer<MessageDialogResult> msgBox)
         {
-            if(msgBox->result() == QDialogButtonBox::Ok)
+            if (msgBox->result() == QMessageBox::Ok)
             {
-                if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+                if (msgBox->isChecked())
                 {
                     MegaSyncApp->getStalledIssuesModel()->chooseBothSides(info.similarSelection);
                 }
@@ -496,7 +516,7 @@ void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
             }
         };
 
-        QMegaMessageBox::warning(info.msgInfo);
+        MessageDialogOpener::warning(info.msgInfo);
     }
 }
 
@@ -510,21 +530,21 @@ void LocalAndRemoteDifferentWidget::onKeepLastModifiedTimeButtonClicked(int)
         return;
     }
 
-    info.msgInfo.text = tr("Are you sure you want to choose the latest modified side?");
+    info.msgInfo.titleText = tr("Are you sure you want to choose the latest modified side?");
     if(issue->lastModifiedSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LOCAL)
     {
-        info.msgInfo.informativeText = tr("This action will choose the local side");
+        info.msgInfo.descriptionText = tr("This action will choose the local side");
     }
     else
     {
-        info.msgInfo.informativeText = tr("This action will choose the remote side");
+        info.msgInfo.descriptionText = tr("This action will choose the remote side");
     }
 
-    info.msgInfo.finishFunc = [info](QMessageBox* msgBox)
+    info.msgInfo.finishFunc = [info](QPointer<MessageDialogResult> msgBox)
     {
-        if(msgBox->result() == QDialogButtonBox::Ok)
+        if (msgBox->result() == QMessageBox::Ok)
         {
-            if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+            if (msgBox->isChecked())
             {
                 MegaSyncApp->getStalledIssuesModel()->chooseLastModifiedLocalRemoteIssues(
                     info.similarSelection);
@@ -537,7 +557,7 @@ void LocalAndRemoteDifferentWidget::onKeepLastModifiedTimeButtonClicked(int)
         }
     };
 
-    QMegaMessageBox::warning(info.msgInfo);
+    MessageDialogOpener::warning(info.msgInfo);
 }
 
 void LocalAndRemoteDifferentWidget::unSetFailedChooseWidget()

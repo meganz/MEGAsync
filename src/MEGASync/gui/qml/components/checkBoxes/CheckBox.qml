@@ -49,6 +49,9 @@ Qml.CheckBox {
 
     spacing: (text.length === 0) ? 0 : sizes.spacing
     padding: 0
+    //By default, the focus rect starts on x:0 and the checkbox indicator on x:sizes.focusBorderWidth (4)
+    //If the leftPadding is 0 -> focus rect starts on x:-focusBorderWidh(4) and the checkbox indicator on x:0
+    leftPadding: sizes.focusBorderWidth
     activeFocusOnTab: true
 
     contentItem: Texts.RichText {
@@ -76,6 +79,8 @@ Qml.CheckBox {
     indicator: Rectangle {
         id: focusRect
 
+        anchors.left: parent.left
+        anchors.leftMargin: root.leftPadding - sizes.focusBorderWidth;
         width: sizes.indicatorWidth + 2 * sizes.focusBorderWidth
         height: focusRect.width
         color: "transparent"
@@ -121,7 +126,9 @@ Qml.CheckBox {
                 }
             }
 
-            anchors.centerIn: focusRect
+            anchors.left: parent.left
+            anchors.leftMargin: sizes.focusBorderWidth
+            anchors.verticalCenter: parent.verticalCenter
             width: sizes.indicatorWidth
             height: sizes.indicatorWidth
             radius: sizes.indicatorRadius

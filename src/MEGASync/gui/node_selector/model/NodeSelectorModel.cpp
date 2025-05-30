@@ -2049,9 +2049,8 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
         {
             if (!mRequestFailedByHandle.isEmpty())
             {
-                QMegaMessageBox::MessageBoxInfo msgInfo;
+                MessageDialogInfo msgInfo;
                 msgInfo.buttonsText.insert(QMessageBox::StandardButton::Ok, tr("Close"));
-                msgInfo.title = MegaSyncApp->getMEGAString();
 
                 auto multipleRequest(mRequestFailedByHandle.size() > 1);
 
@@ -2062,20 +2061,20 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
                         if (mMovedItemsType.testFlag(MovedItemsType::NONE) ||
                             mMovedItemsType.testFlag(MovedItemsType::BOTH))
                         {
-                            msgInfo.text = tr("Error moving items");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error moving items");
+                            msgInfo.descriptionText =
                                 tr("The items couldn’t be moved. Try again later");
                         }
                         else if (mMovedItemsType.testFlag(MovedItemsType::FILES))
                         {
-                            msgInfo.text = tr("Error moving files");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error moving files");
+                            msgInfo.descriptionText =
                                 tr("The files couldn’t be moved. Try again later");
                         }
                         else if (mMovedItemsType.testFlag(MovedItemsType::FOLDERS))
                         {
-                            msgInfo.text = tr("Error moving folders");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error moving folders");
+                            msgInfo.descriptionText =
                                 tr("The folders couldn’t be moved. Try again later");
                         }
                     }
@@ -2087,15 +2086,15 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
 
                         if (node->isFile())
                         {
-                            msgInfo.text = tr("Error moving file");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error moving file");
+                            msgInfo.descriptionText =
                                 tr("The file %1 couldn’t be moved. Try again later")
                                     .arg(MegaNodeNames::getNodeName(node.get()));
                         }
                         else
                         {
-                            msgInfo.text = tr("Error moving folder");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error moving folder");
+                            msgInfo.descriptionText =
                                 tr("The folder %1 couldn’t be moved. Try again later")
                                     .arg(MegaNodeNames::getNodeName(node.get()));
                         }
@@ -2108,20 +2107,20 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
                         if (mMovedItemsType.testFlag(MovedItemsType::NONE) ||
                             mMovedItemsType.testFlag(MovedItemsType::BOTH))
                         {
-                            msgInfo.text = tr("Error copying items");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error copying items");
+                            msgInfo.descriptionText =
                                 tr("The items couldn’t be copied. Try again later");
                         }
                         else if (mMovedItemsType.testFlag(MovedItemsType::FILES))
                         {
-                            msgInfo.text = tr("Error copying files");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error copying files");
+                            msgInfo.descriptionText =
                                 tr("The files couldn’t be copied. Try again later");
                         }
                         else if (mMovedItemsType.testFlag(MovedItemsType::FOLDERS))
                         {
-                            msgInfo.text = tr("Error copying folders");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error copying folders");
+                            msgInfo.descriptionText =
                                 tr("The folders couldn’t be copied. Try again later");
                         }
                     }
@@ -2133,15 +2132,15 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
 
                         if (node->isFile())
                         {
-                            msgInfo.text = tr("Error copying file");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error copying file");
+                            msgInfo.descriptionText =
                                 tr("The file %1 couldn’t be copied. Try again later")
                                     .arg(MegaNodeNames::getNodeName(node.get()));
                         }
                         else
                         {
-                            msgInfo.text = tr("Error copying folder");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error copying folder");
+                            msgInfo.descriptionText =
                                 tr("The folder %1 couldn’t be copied. Try again later")
                                     .arg(MegaNodeNames::getNodeName(node.get()));
                         }
@@ -2154,20 +2153,20 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
                         if (mMovedItemsType.testFlag(MovedItemsType::NONE) ||
                             mMovedItemsType.testFlag(MovedItemsType::BOTH))
                         {
-                            msgInfo.text = tr("Error restoring items");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error restoring items");
+                            msgInfo.descriptionText =
                                 tr("The items couldn’t be restored. Try again later");
                         }
                         else if (mMovedItemsType.testFlag(MovedItemsType::FILES))
                         {
-                            msgInfo.text = tr("Error restoring files");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error restoring files");
+                            msgInfo.descriptionText =
                                 tr("The files couldn’t be restored. Try again later");
                         }
                         else if (mMovedItemsType.testFlag(MovedItemsType::FOLDERS))
                         {
-                            msgInfo.text = tr("Error restoring folders");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error restoring folders");
+                            msgInfo.descriptionText =
                                 tr("The folders couldn’t be restored. Try again later");
                         }
                     }
@@ -2179,15 +2178,15 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
 
                         if (node->isFile())
                         {
-                            msgInfo.text = tr("Error restoring file");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error restoring file");
+                            msgInfo.descriptionText =
                                 tr("The file %1 couldn’t be restored. Try again later")
                                     .arg(MegaNodeNames::getNodeName(node.get()));
                         }
                         else
                         {
-                            msgInfo.text = tr("Error restoring folder");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error restoring folder");
+                            msgInfo.descriptionText =
                                 tr("The folder %1 couldn’t be restored. Try again later")
                                     .arg(MegaNodeNames::getNodeName(node.get()));
                         }
@@ -2200,20 +2199,20 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
                         if (mMovedItemsType.testFlag(MovedItemsType::NONE) ||
                             mMovedItemsType.testFlag(MovedItemsType::BOTH))
                         {
-                            msgInfo.text = tr("Error deleting items");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error deleting items");
+                            msgInfo.descriptionText =
                                 tr("The items couldn’t be deleted. Try again later");
                         }
                         else if (mMovedItemsType.testFlag(MovedItemsType::FILES))
                         {
-                            msgInfo.text = tr("Error deleting files");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error deleting files");
+                            msgInfo.descriptionText =
                                 tr("The files couldn’t be deleted. Try again later");
                         }
                         else if (mMovedItemsType.testFlag(MovedItemsType::FOLDERS))
                         {
-                            msgInfo.text = tr("Error deleting folders");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error deleting folders");
+                            msgInfo.descriptionText =
                                 tr("The folders couldn’t be deleted. Try again later");
                         }
                     }
@@ -2225,15 +2224,15 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
 
                         if (node->isFile())
                         {
-                            msgInfo.text = tr("Error deleting file");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error deleting file");
+                            msgInfo.descriptionText =
                                 tr("The file %1 couldn’t be deleted. Try again later")
                                     .arg(MegaNodeNames::getNodeName(node.get()));
                         }
                         else
                         {
-                            msgInfo.text = tr("Error deleting folder");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error deleting folder");
+                            msgInfo.descriptionText =
                                 tr("The folder %1 couldn’t be deleted. Try again later")
                                     .arg(MegaNodeNames::getNodeName(node.get()));
                         }

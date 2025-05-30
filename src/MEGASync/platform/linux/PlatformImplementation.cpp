@@ -1,8 +1,8 @@
 #include "PlatformImplementation.h"
 
 #include "DolphinFileManager.h"
+#include "MessageDialogOpener.h"
 #include "NautilusFileManager.h"
-#include "QMegaMessageBox.h"
 
 #include <QHostInfo>
 #include <QProgressBar>
@@ -641,16 +641,22 @@ bool PlatformImplementation::isFedoraWithGnome()
 
 void PlatformImplementation::promptFedoraGnomeUser()
 {
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.title = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Install notification area icon");
-    msgInfo.text = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "For a better experience on Fedora with GNOME, we recommend you enable the notification area icon.\n"
-                                                                                    "Would you like to install the necessary components now?");
+    MessageDialogInfo msgInfo;
+    msgInfo.titleText = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon",
+                                                    "Install notification area icon");
+    msgInfo.descriptionText =
+        QCoreApplication::translate("LinuxPlatformNotificationAreaIcon",
+                                    "For a better experience on Fedora with GNOME, we recommend "
+                                    "you enable the notification area icon.\n"
+                                    "Would you like to install the necessary components now?");
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::Yes;
-    msgInfo.checkboxText = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Do not show again");
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    msgInfo.checkboxText =
+        QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Do not show again");
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
-        if (!msg) return;
+        if (!msg)
+            return;
 
         bool isInstallationAttempted = (msg->result() == QMessageBox::Yes);
         bool isInstallationSuccessful = false;
@@ -661,13 +667,14 @@ void PlatformImplementation::promptFedoraGnomeUser()
             isInstallationSuccessful = installAppIndicatorForFedoraGnome();
         }
 
-        if (msg->checkBox() && msg->checkBox()->isChecked())
+        if (msg->isChecked())
         {
             Preferences::instance()->setSystemTrayPromptSuppressed(true);
         }
         else
         {
-            Preferences::instance()->setSystemTrayLastPromptTimestamp(QDateTime::currentSecsSinceEpoch());
+            Preferences::instance()->setSystemTrayLastPromptTimestamp(
+                QDateTime::currentSecsSinceEpoch());
         }
 
         // Set the one-time action done if the user clicked "No" or if the installation was successful.
@@ -677,7 +684,7 @@ void PlatformImplementation::promptFedoraGnomeUser()
         }
     };
 
-    QMegaMessageBox::question(msgInfo);
+    MessageDialogOpener::question(msgInfo);
 }
 
 bool PlatformImplementation::installAppIndicatorForFedoraGnome()
@@ -720,10 +727,13 @@ bool PlatformImplementation::installAppIndicatorForFedoraGnome()
             installProcess.waitForFinished();
             progressDialog.close();
 
-            QMegaMessageBox::MessageBoxInfo msgWarnInfo;
-            msgWarnInfo.title = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Installation Cancelled");
-            msgWarnInfo.text = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "The notification area icon installation was cancelled.");
-            QMegaMessageBox::warning(msgWarnInfo);
+            MessageDialogInfo msgWarnInfo;
+            msgWarnInfo.titleText = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon",
+                                                                "Installation Cancelled");
+            msgWarnInfo.descriptionText = QCoreApplication::translate(
+                "LinuxPlatformNotificationAreaIcon",
+                "The notification area icon installation was cancelled.");
+            MessageDialogOpener::warning(msgWarnInfo);
 
             loop.exit(1);
         }
@@ -746,14 +756,17 @@ bool PlatformImplementation::installAppIndicatorForFedoraGnome()
             loop.exit(0);
         } else
         {
-            QMegaMessageBox::MessageBoxInfo errorInfo;
-            errorInfo.title = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Error installing components");
-            errorInfo.text = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Failed to install the necessary components.");
-            errorInfo.informativeText = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "To install manually, please run the following commands:\n\n"
-                                                       "sudo dnf install gnome-shell-extensions\n"
-                                                       "sudo dnf install gnome-shell-extension-appindicator\n"
-                                                       "gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com");
-            QMegaMessageBox::critical(errorInfo);
+            MessageDialogInfo errorInfo;
+            errorInfo.titleText =
+                QCoreApplication::translate("LinuxPlatformNotificationAreaIcon",
+                                            "Failed to install the necessary components.");
+            errorInfo.descriptionText = QCoreApplication::translate(
+                "LinuxPlatformNotificationAreaIcon",
+                "To install manually, please run the following commands:\n\n"
+                "sudo dnf install gnome-shell-extensions\n"
+                "sudo dnf install gnome-shell-extension-appindicator\n"
+                "gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com");
+            MessageDialogOpener::critical(errorInfo);
             loop.exit(1);
         }
     });
@@ -771,11 +784,14 @@ bool PlatformImplementation::installAppIndicatorForFedoraGnome()
     enableProcess.start(QString::fromUtf8(GNOME_EXTENSIONS_CMD), { QStringLiteral("enable"), QString::fromUtf8(APP_INDICATOR_EXTENSION_ID) });
     enableProcess.waitForFinished(PROCESS_TIMEOUT_MS);
 
-    QMegaMessageBox::MessageBoxInfo successInfo;
-    successInfo.title = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Install complete");
-    successInfo.text = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "The notification area icon was installed successfully.\n"
-                                                                                        "Please log out of your computer to complete the installation.");
-    QMegaMessageBox::information(successInfo);
+    MessageDialogInfo successInfo;
+    successInfo.titleText =
+        QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Install complete");
+    successInfo.descriptionText = QCoreApplication::translate(
+        "LinuxPlatformNotificationAreaIcon",
+        "The notification area icon was installed successfully.\n"
+        "Please log out of your computer to complete the installation.");
+    MessageDialogOpener::information(successInfo);
 
     return true;
 }

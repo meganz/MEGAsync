@@ -4,8 +4,8 @@
 #include "MegaApiSynchronizedRequest.h"
 #include "MegaApplication.h"
 #include "MegaDownloader.h"
+#include "MessageDialogOpener.h"
 #include "MoveToMEGABin.h"
-#include "QMegaMessageBox.h"
 #include "StalledIssuesDialog.h"
 
 #include <QDir>
@@ -94,11 +94,10 @@ void StalledIssuesUtilities::openLink(bool isCloud, const QString& path)
         }
         else
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
+            MessageDialogInfo msgInfo;
             msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-            msgInfo.title = QMegaMessageBox::warningTitle();
-            msgInfo.text = QString::fromUtf8("Node %1 does not exist.").arg(path);
-            QMegaMessageBox::warning(msgInfo);
+            msgInfo.descriptionText = QString::fromUtf8("Node %1 does not exist.").arg(path);
+            MessageDialogOpener::warning(msgInfo);
         }
     }
     else
@@ -113,11 +112,10 @@ void StalledIssuesUtilities::openLink(bool isCloud, const QString& path)
         }
         else
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
+            MessageDialogInfo msgInfo;
             msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-            msgInfo.title = QMegaMessageBox::warningTitle();
-            msgInfo.text =  QString::fromUtf8("Path %1 does not exist.").arg(path);
-            QMegaMessageBox::warning(msgInfo);
+            msgInfo.descriptionText = QString::fromUtf8("Path %1 does not exist.").arg(path);
+            MessageDialogOpener::warning(msgInfo);
         }
     }
 }

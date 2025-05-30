@@ -53,6 +53,10 @@ public:
     Q_INVOKABLE void onSmartModeSelected() const;
     Q_INVOKABLE void onAdvancedModeSelected() const;
     Q_INVOKABLE bool isSmartModeSelected() const;
+    Q_INVOKABLE void showWarningMessageDialog(const QString& descriptionText) const;
+    Q_INVOKABLE void showRebootWarningDialog(const QString& titleText,
+                                             const QString& descriptionText,
+                                             int row) const;
 
 signals:
     void deviceNameReceived(QString deviceName);

@@ -1,7 +1,7 @@
 #include "TransfersWidget.h"
 
 #include "MegaApplication.h"
-#include "QMegaMessageBox.h"
+#include "MessageDialogOpener.h"
 #include "TransferWidgetColumnsManager.h"
 #include "ui_TransfersWidget.h"
 
@@ -573,20 +573,20 @@ void TransfersWidget::onCancelClearButtonPressedOnDelegate()
 
     auto info = ui->tvTransfers->getSelectedCancelOrClearInfo();
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.title = MegaSyncApp->getMEGAString();
-    msgInfo.text = info.actionText;
+    msgInfo.descriptionText = info.actionText;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
     msgInfo.buttonsText = info.buttonsText;
-    msgInfo.finishFunc = [this, sourceSelectionIndexes](QPointer<QMessageBox> msg){
+    msgInfo.finishFunc = [this, sourceSelectionIndexes](QPointer<MessageDialogResult> msg)
+    {
         if(msg->result() == QMessageBox::Yes)
         {
             getModel()->cancelAndClearTransfers(sourceSelectionIndexes, this);
         }
     };
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }
 
 void TransfersWidget::onRetryButtonPressedOnDelegate()

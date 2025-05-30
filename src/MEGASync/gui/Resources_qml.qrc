@@ -116,6 +116,9 @@
         <file>images/icons/rotate_ccw.svg</file>
         <file>images/icons/log-out-01.svg</file>
         <file>images/qml/sync_exclusions/folder-file.svg</file>
+        <file>images/qml/question.png</file>
+        <file>images/qml/question@2x.png</file>
+        <file>images/qml/question@3x.png</file>
         <file>images/icon_plus.svg</file>
         <file>images/qml/onboarding/multidevices@3x.png</file>
         <file>images/qml/onboarding/multidevices@2x.png</file>

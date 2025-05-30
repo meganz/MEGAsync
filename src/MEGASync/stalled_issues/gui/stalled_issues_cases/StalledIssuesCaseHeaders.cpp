@@ -3,9 +3,9 @@
 #include "DialogOpener.h"
 #include "IgnoredStalledIssue.h"
 #include "MegaApplication.h"
+#include "MessageDialogOpener.h"
 #include "MoveOrRenameCannotOccurIssue.h"
 #include "NameConflictStalledIssue.h"
-#include "QMegaMessageBox.h"
 #include "StalledIssue.h"
 #include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
@@ -46,7 +46,6 @@ StalledIssueHeaderCase::SelectionInfo StalledIssueHeaderCase::getSelectionInfo(
     info.hasBeenExternallyChanged = header->checkForExternalChanges(info.selection.size() == 1);
 
     info.msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-    info.msgInfo.title = MegaSyncApp->getMEGAString();
     info.msgInfo.textFormat = Qt::RichText;
     info.msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
     info.msgInfo.buttonsText.insert(
@@ -56,8 +55,8 @@ StalledIssueHeaderCase::SelectionInfo StalledIssueHeaderCase::getSelectionInfo(
 
     if (info.selection.size() != info.similarToSelected.size())
     {
-        auto checkBox = new QCheckBox(QApplication::translate("CloudFingerprintMissingHeader", "Apply to all"));
-        info.msgInfo.checkBox = checkBox;
+        info.msgInfo.checkboxText =
+            QApplication::translate("CloudFingerprintMissingHeader", "Apply to all");
     }
 
     return info;
@@ -132,25 +131,29 @@ void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(Stalled
     }
 
     auto pluralNumber(1);
-    selectionInfo.msgInfo.text = areYouSure(pluralNumber);
-    selectionInfo.msgInfo.informativeText = tr("This action will download the file to a temp location, fix the issue and finally remove it.", "", pluralNumber);
+    selectionInfo.msgInfo.titleText = areYouSure(pluralNumber);
+    selectionInfo.msgInfo.descriptionText = tr("This action will download the file to a temp "
+                                               "location, fix the issue and finally remove it.",
+                                               "",
+                                               pluralNumber);
     if(MegaSyncApp->getTransfersModel()->areAllPaused())
     {
-        QString informativeMessage = QString::fromUtf8("[BR]") + tr("[B]Please, resume your transfers to fix the issue[/B]", "", pluralNumber);
-        StalledIssuesBoldTextDecorator::boldTextDecorator.process(informativeMessage);
-        StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(informativeMessage);
-        selectionInfo.msgInfo.informativeText.append(informativeMessage);
+        QString informativeMessage =
+            QString::fromUtf8("[BR]") +
+            tr("[B]Please, resume your transfers to fix the issue[/B]", "", pluralNumber);
+        selectionInfo.msgInfo.descriptionText.append(informativeMessage);
     }
 
-    selectionInfo.msgInfo.finishFunc = [selectionInfo](QMessageBox* msgBox)
+    selectionInfo.msgInfo.finishFunc = [selectionInfo](QPointer<MessageDialogResult> msgBox)
     {
-        if(msgBox->result() == QDialogButtonBox::Ok)
+        if (msgBox->result() == QMessageBox::Ok)
         {
-            MegaSyncApp->getStalledIssuesModel()->fixFingerprint((msgBox->checkBox() && msgBox->checkBox()->isChecked())? selectionInfo.similarToSelected: selectionInfo.selection);
+            MegaSyncApp->getStalledIssuesModel()->fixFingerprint(
+                (msgBox->isChecked()) ? selectionInfo.similarToSelected : selectionInfo.selection);
         }
     };
 
-    QMegaMessageBox::warning(selectionInfo.msgInfo);
+    MessageDialogOpener::warning(selectionInfo.msgInfo);
 }
 
 void CloudFingerprintMissingHeader::refreshCaseTitles(StalledIssueHeader* header)
@@ -376,18 +379,19 @@ void FolderMatchedAgainstFileHeader::onMultipleActionButtonOptionSelected(
     }
 
     auto pluralNumber(1);
-    selectionInfo.msgInfo.text = areYouSure(pluralNumber);
-    selectionInfo.msgInfo.informativeText = RENAMING_CONFLICTED_ITEMS_STRING;
+    selectionInfo.msgInfo.titleText = areYouSure(pluralNumber);
+    selectionInfo.msgInfo.descriptionText = RENAMING_CONFLICTED_ITEMS_STRING;
 
-    selectionInfo.msgInfo.finishFunc = [selectionInfo](QMessageBox* msgBox)
+    selectionInfo.msgInfo.finishFunc = [selectionInfo](QPointer<MessageDialogResult> msgBox)
     {
-        if(msgBox->result() == QDialogButtonBox::Ok)
+        if (msgBox->result() == QMessageBox::Ok)
         {
-            MegaSyncApp->getStalledIssuesModel()->fixFolderMatchedAgainstFile((msgBox->checkBox() && msgBox->checkBox()->isChecked())? selectionInfo.similarToSelected: selectionInfo.selection);
+            MegaSyncApp->getStalledIssuesModel()->fixFolderMatchedAgainstFile(
+                (msgBox->isChecked()) ? selectionInfo.similarToSelected : selectionInfo.selection);
         }
     };
 
-    QMegaMessageBox::warning(selectionInfo.msgInfo);
+    MessageDialogOpener::warning(selectionInfo.msgInfo);
 }
 
 ////////////////////
@@ -562,47 +566,62 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
             return;
         }
 
-        selectionInfo.msgInfo.text = tr("Are you sure you want to solve the issue?");
+        selectionInfo.msgInfo.titleText = tr("Are you sure you want to solve the issue?");
 
         if(index == NameConflictedStalledIssue::Rename)
         {
-            selectionInfo.msgInfo.informativeText = RENAMING_CONFLICTED_ITEMS_STRING;
+            selectionInfo.msgInfo.descriptionText = RENAMING_CONFLICTED_ITEMS_STRING;
         }
         else if(index == NameConflictedStalledIssue::MergeFolders)
         {
-            selectionInfo.msgInfo.informativeText = tr("This action will merge all folders into a single one. We will skip duplicated files\nand rename the files with the same name but different content (adding a suffix like (1))");
+            selectionInfo.msgInfo.descriptionText =
+                tr("This action will merge all folders into a single one. We will skip duplicated "
+                   "files\nand rename the files with the same name but different content (adding a "
+                   "suffix like (1))");
         }
         else
         {
             if(index == NameConflictedStalledIssue::RemoveDuplicated)
             {
-               selectionInfo.msgInfo.informativeText = tr("This action will delete the duplicate files.");
+                selectionInfo.msgInfo.descriptionText =
+                    tr("This action will delete the duplicate files.");
             }
             else if(index & NameConflictedStalledIssue::KeepMostRecentlyModifiedNode)
             {
                 auto mostRecentlyModifiedFile(nameConflict->getNameConflictCloudData()
                                                   .findMostRecentlyModifiedNode()
                                                   .mostRecentlyModified->getConflictedName());
-                selectionInfo.msgInfo.informativeText = tr("This action will replace the older files with the same name with the most recently modified file (%1).").arg(mostRecentlyModifiedFile);
+                selectionInfo.msgInfo.descriptionText =
+                    tr("This action will replace the older files with the same name with the most "
+                       "recently modified file (%1).")
+                        .arg(mostRecentlyModifiedFile);
             }
             else if(!(index & NameConflictedStalledIssue::MergeFolders))
             {
-                selectionInfo.msgInfo.informativeText = tr("This action will delete the duplicate files and rename the remaining items in case of name conflict (adding a suffix like (1)).");
+                selectionInfo.msgInfo.descriptionText =
+                    tr("This action will delete the duplicate files and rename the remaining items "
+                       "in case of name conflict (adding a suffix like (1)).");
             }
             else
             {
-                 selectionInfo.msgInfo.informativeText = tr("This action will delete the duplicate files, merge all folders into a single one and rename the remaining items in case of name conflict (adding a suffix like (1)).");
+                selectionInfo.msgInfo.descriptionText =
+                    tr("This action will delete the duplicate files, merge all folders into a "
+                       "single one and rename the remaining items in case of name conflict (adding "
+                       "a suffix like (1)).");
             }
         }
 
-        selectionInfo.msgInfo.finishFunc = [index, selectionInfo, nameConflict](QMessageBox* msgBox)
+        selectionInfo.msgInfo.finishFunc =
+            [index, selectionInfo, nameConflict](QPointer<MessageDialogResult> msgBox)
         {
-            if(msgBox->result() == QDialogButtonBox::Ok)
+            if (msgBox->result() == QMessageBox::Ok)
             {
-                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveNameConflictIssues((msgBox->checkBox() && msgBox->checkBox()->isChecked())? selectionInfo.similarToSelected : selectionInfo.selection, index);
+                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveNameConflictIssues(
+                    msgBox->isChecked() ? selectionInfo.similarToSelected : selectionInfo.selection,
+                    index);
             }
         };
 
-        QMegaMessageBox::warning(selectionInfo.msgInfo);
+        MessageDialogOpener::warning(selectionInfo.msgInfo);
     }
 }

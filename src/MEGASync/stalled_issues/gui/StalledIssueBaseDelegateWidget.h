@@ -1,7 +1,7 @@
 #ifndef STALLEDISSUEBASEDELEGATEWIDGET_H
 #define STALLEDISSUEBASEDELEGATEWIDGET_H
 
-#include "QMegaMessageBox.h"
+#include "MessageDialogOpener.h"
 #include "StalledIssue.h"
 #include "StalledIssuesUtilities.h"
 
@@ -48,7 +48,7 @@ protected:
     {
         QModelIndexList selection;
         QModelIndexList similarSelection;
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageDialogInfo msgInfo;
     };
     bool checkSelection(const QList<mega::MegaSyncStall::SyncStallReason>& reasons, SelectionInfo& info);
 
