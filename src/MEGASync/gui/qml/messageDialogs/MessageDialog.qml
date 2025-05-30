@@ -24,8 +24,10 @@ QmlDialog {
     width: window.totalWidth
     height: window.totalHeight
     flags: OS.isWindows() ? Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint | Qt.WindowTitleHint | Qt.WindowCloseButtonHint : Qt.Dialog;
-    maximumWidth: OS.isWindows() ? Number.MAX_SAFE_INTEGER : window.totalWidth
-    maximumHeight: OS.isWindows() ? Number.MAX_SAFE_INTEGER : window.totalHeight
+    //On Windows we don´t set a maximum width/height, so we set a non-reachable max size of the double of the required size (as a hack)
+    //If we set a fixed size and the scale is not 100%, we found that the dialog is resized automatically by a few pixels.
+    maximumWidth: OS.isWindows() ? window.totalWidth*2 : window.totalWidth
+    maximumHeight: OS.isWindows() ? window.totalHeight*2 : window.totalHeight
     minimumWidth: OS.isWindows() ? 0 : window.totalWidth
     minimumHeight: OS.isWindows() ? 0 : window.totalHeight
     modality: Qt.WindowModal

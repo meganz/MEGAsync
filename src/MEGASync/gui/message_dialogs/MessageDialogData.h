@@ -129,7 +129,7 @@ private:
     QString dialogTitle;
 
     // All messageboxes are closed when clicked a button
-    bool ignoreCloseAll = true;
+    bool ignoreCloseAll;
 };
 
 class MessageDialogData: public QObject
