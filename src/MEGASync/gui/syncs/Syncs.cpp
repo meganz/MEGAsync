@@ -32,7 +32,7 @@ Syncs::Syncs(QObject* parent):
     connect(SyncInfo::instance(), &SyncInfo::syncRemoved, this, &Syncs::onSyncRemoved);
     connect(MegaSyncApp, &MegaApplication::languageChanged, this, &Syncs::onLanguageChanged);
 
-    onSyncRemoved(nullptr);
+    updateDefaultFolders();
 }
 
 void Syncs::addSync(const QString& localFolder, const QString& megaFolder)
@@ -124,6 +124,8 @@ void Syncs::moveNextCandidateSyncModel(bool errorOnCurrent)
         mCurrentModelConfirmationIndex = -1;
         mCurrentModelConfirmationWithError = false;
         mCurrentModelConfirmationFull = false;
+
+        updateDefaultFolders();
     }
 }
 
@@ -404,10 +406,15 @@ void Syncs::onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings)
 {
     Q_UNUSED(syncSettings)
 
-    setDefaultLocalFolder();
-    setDefaultRemoteFolder();
+    updateDefaultFolders();
 
     emit mSyncsData->syncRemoved();
+}
+
+void Syncs::updateDefaultFolders()
+{
+    setDefaultLocalFolder();
+    setDefaultRemoteFolder();
 }
 
 bool Syncs::setErrorIfExist(int errorCode, int syncErrorCode)

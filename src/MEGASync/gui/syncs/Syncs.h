@@ -111,6 +111,7 @@ private:
     bool setErrorIfExist(int errorCode, int syncErrorCode);
     void syncHelper(bool onlyPrevalidate, const QString& localFolder, const QString& megaFolder);
     void moveNextCandidateSyncModel(bool errorOnCurrent);
+    void updateDefaultFolders();
 };
 
 #endif // SYNCS_H
