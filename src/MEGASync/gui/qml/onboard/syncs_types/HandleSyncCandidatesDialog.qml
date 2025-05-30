@@ -64,12 +64,12 @@ Window {
         }
 
         localFolderChooser.onButtonClicked: {
-            syncsComponentAccess.clearLocalFolderHint();
+            syncsComponentAccess.clearLocalFolderErrorHint();
             localFolderSelector.openFolderSelector(localFolderChooser.chosenPath);
         }
 
         remoteFolderChooser.onButtonClicked: {
-            syncsComponentAccess.clearRemoteFolderHint();
+            syncsComponentAccess.clearRemoteFolderErrorHint();
             remoteFolderSelector.openFolderSelector();
         }
 

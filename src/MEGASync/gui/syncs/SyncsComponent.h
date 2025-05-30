@@ -18,8 +18,8 @@ public:
     static void registerQmlModules();
 
     Q_INVOKABLE void openExclusionsDialog(const QString& folder) const;
-    Q_INVOKABLE void clearRemoteFolderHint();
-    Q_INVOKABLE void clearLocalFolderHint();
+    Q_INVOKABLE void clearRemoteFolderErrorHint();
+    Q_INVOKABLE void clearLocalFolderErrorHint();
     Q_INVOKABLE void syncButtonClicked(const QString& localFolder, const QString& megaFolder);
     Q_INVOKABLE void confirmSyncCandidateButtonClicked();
     Q_INVOKABLE void addSyncCandidadeButtonClicked(const QString& localFolder,

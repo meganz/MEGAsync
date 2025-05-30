@@ -111,12 +111,12 @@ void SyncsComponent::openExclusionsDialog(const QString& folder) const
     }
 }
 
-void SyncsComponent::clearRemoteFolderHint()
+void SyncsComponent::clearRemoteFolderErrorHint()
 {
     mSyncs->clearRemoteError();
 }
 
-void SyncsComponent::clearLocalFolderHint()
+void SyncsComponent::clearLocalFolderErrorHint()
 {
     mSyncs->clearLocalError();
 }

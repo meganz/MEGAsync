@@ -110,6 +110,7 @@ private:
     bool checkRemoteSync(const QString& path);
     bool setErrorIfExist(int errorCode, int syncErrorCode);
     void syncHelper(bool onlyPrevalidate, const QString& localFolder, const QString& megaFolder);
+    void moveNextCandidateSyncModel(bool errorOnCurrent);
 };
 
 #endif // SYNCS_H

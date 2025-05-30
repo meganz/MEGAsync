@@ -13,9 +13,9 @@ AddSyncPageForm {
     signal moveBack
     signal moveNext
 
-    onVisibleChanged: {
-        syncsComponentAccess.clearLocalFolderHint();
-        syncsComponentAccess.clearRemoteFolderHint();
+    Component.onCompleted: {
+        syncsComponentAccess.clearLocalFolderErrorHint();
+        syncsComponentAccess.clearRemoteFolderErrorHint();
     }
 
     localFolderChooser.folderField {
@@ -35,12 +35,12 @@ AddSyncPageForm {
     }
 
     localFolderChooser.onButtonClicked: {
-        syncsComponentAccess.clearLocalFolderHint();
+        syncsComponentAccess.clearLocalFolderErrorHint();
         localFolderSelector.openFolderSelector(localFolderChooser.chosenPath);
     }
 
     remoteFolderChooser.onButtonClicked: {
-        syncsComponentAccess.clearRemoteFolderHint();
+        syncsComponentAccess.clearRemoteFolderErrorHint();
         remoteFolderSelector.openFolderSelector();
     }
 
