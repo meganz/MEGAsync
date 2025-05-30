@@ -118,7 +118,6 @@ LoginPageForm {
             extend: stateLoggedOut
             StateChangeScript {
                 script: {
-                    cancelLogin.close();
                     window.forceClose();
                 }
             }
@@ -204,7 +203,6 @@ LoginPageForm {
 
         function onBlockedStateChanged(blockState) {
             if(blockState >= ApiEnums.ACCOUNT_BLOCKED_VERIFICATION_EMAIL) {
-                cancelLogin.close();
                 window.forceClose();
             }
         }
@@ -215,7 +213,6 @@ LoginPageForm {
 
         function onLogout() {
             password.text = "";
-            cancelLogin.close();
             window.forceClose();
         }
     }

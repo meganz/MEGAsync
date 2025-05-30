@@ -122,6 +122,11 @@ QString MessageDialogInfo::getDialogTitle() const
     return dialogTitle;
 }
 
+bool MessageDialogInfo::getIgnoreCloseAll() const
+{
+    return ignoreCloseAll;
+}
+
 // =================================================================================================
 // MessageDialogData
 // =================================================================================================
@@ -183,7 +188,7 @@ bool MessageDialogData::enqueue() const
 
 bool MessageDialogData::ignoreCloseAll() const
 {
-    return mInfo.ignoreCloseAll;
+    return mInfo.getIgnoreCloseAll();
 }
 
 MessageDialogCheckboxInfo MessageDialogData::getCheckbox() const

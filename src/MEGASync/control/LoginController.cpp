@@ -1064,7 +1064,6 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
             MessageDialogInfo msgInfo;
             msgInfo.descriptionText =
                 tr("You have been logged out on this computer from another location");
-            msgInfo.ignoreCloseAll = true;
 
             MessageDialogOpener::information(msgInfo);
         }
@@ -1078,7 +1077,6 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
                    "disable it and try again.") +
                 QString::fromUtf8(" (Issuer: %1)")
                     .arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown"));
-            msgInfo.ignoreCloseAll = true;
 
             MessageDialogOpener::critical(msgInfo);
             mMegaApi->localLogout();
@@ -1100,7 +1098,6 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
                 msgInfo.descriptionText = text;
                 msgInfo.textFormat = Qt::RichText;
             }
-            msgInfo.ignoreCloseAll = true;
 
             MessageDialogOpener::information(msgInfo);
         }

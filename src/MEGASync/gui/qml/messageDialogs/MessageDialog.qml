@@ -21,14 +21,9 @@ QmlDialog {
                                        contentColum.width + sizes.numberOfMargins * sizes.contentMargin)
     property real totalHeight: Math.max(sizes.defaultMinimumHeight,
                                         contentColum.height + sizes.numberOfMargins * sizes.contentMargin + Constants.focusAdjustment)
-
     width: window.totalWidth
     height: window.totalHeight
-    maximumWidth: window.totalWidth
-    maximumHeight: window.totalHeight
-    minimumWidth: window.totalWidth
-    minimumHeight: window.totalHeight
-    flags: Qt.Dialog
+    flags: Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint | Qt.WindowTitleHint | Qt.WindowCloseButtonHint
     modality: Qt.WindowModal
     color: ColorTheme.surface1
     title: messageDialogDataAccess ? messageDialogDataAccess.title : ""

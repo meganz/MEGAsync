@@ -1149,7 +1149,6 @@ void SettingsDialog::on_bLogout_clicked()
 
     auto unlink = [this]()
     {
-        close();
         mApp->unlink();
     };
 
@@ -1170,7 +1169,11 @@ void SettingsDialog::on_bLogout_clicked()
         {
             if (msg->result() == QMessageBox::Yes)
             {
-                unlink();
+                Utilities::queueFunctionInAppThread(
+                    []()
+                    {
+                        MegaSyncApp->unlink();
+                    });
             }
         };
         MessageDialogOpener::question(msgInfo);

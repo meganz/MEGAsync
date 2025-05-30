@@ -116,17 +116,20 @@ struct MessageDialogInfo
     Qt::TextFormat textFormat;
     QUrl imageUrl;
     bool enqueue;
-    bool ignoreCloseAll;
     bool hideCloseButton;
     QString checkboxText;
     bool checkboxChecked;
 
     QString getDialogTitle() const;
+    bool getIgnoreCloseAll() const;
 
 private:
     // Dialog title must always be the same for all message dialogs, in order to avoid unexpexted
     // changes in the dialog title this member is maintained as private.
     QString dialogTitle;
+
+    // All messageboxes are closed when clicked a button
+    bool ignoreCloseAll = true;
 };
 
 class MessageDialogData: public QObject

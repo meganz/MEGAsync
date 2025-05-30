@@ -53,7 +53,6 @@ void AccountStatusController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
                 msgInfo.descriptionText =
                     tr("Your account has been disabled by your administrator. Please contact your "
                        "business account administrator for further details.");
-                msgInfo.ignoreCloseAll = true;
                 MessageDialogOpener::warning(msgInfo);
                 break;
             }
@@ -62,7 +61,6 @@ void AccountStatusController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
                 MessageDialogInfo msgInfo;
                 msgInfo.descriptionText =
                     QCoreApplication::translate("MegaError", event->getText());
-                msgInfo.ignoreCloseAll = true;
                 MessageDialogOpener::critical(msgInfo);
                 break;
             }
