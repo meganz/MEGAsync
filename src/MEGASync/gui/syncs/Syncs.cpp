@@ -43,6 +43,7 @@ void Syncs::addSync(const QString& localFolder, const QString& megaFolder)
 void Syncs::addSyncCandidate(const QString& localFolder, const QString& megaFolder)
 {
     mEditSyncCandidate = false;
+
     syncHelper(true, localFolder, megaFolder);
 }
 
@@ -312,11 +313,23 @@ void Syncs::helperCheckLocalSync(const QString& path)
         }
     }
 
+    if (mOnlyPrevalidateSync && !localError.has_value() &&
+        checkExistInModel(path, SyncsCandidatesModel::SyncsCandidadteModelRole::LOCAL_FOLDER))
+    {
+        localError = LocalErrors::ALREADY_SYNC_CANDIDATE;
+    }
+
     if (mLocalError != localError)
     {
         mLocalError.swap(localError);
         mSyncsData->setLocalError(getLocalError());
     }
+}
+
+bool Syncs::checkExistInModel(const QString& path,
+                              SyncsCandidatesModel::SyncsCandidadteModelRole pathRole)
+{
+    return mSyncsCandidatesModel->exist(path, pathRole);
 }
 
 void Syncs::helperCheckRemoteSync(const QString& path)
@@ -344,6 +357,12 @@ void Syncs::helperCheckRemoteSync(const QString& path)
         {
             remoteError = RemoteErrors::CANT_SYNC;
         }
+    }
+
+    if (mOnlyPrevalidateSync && !remoteError.has_value() &&
+        checkExistInModel(path, SyncsCandidatesModel::SyncsCandidadteModelRole::MEGA_FOLDER))
+    {
+        remoteError = RemoteErrors::ALREADY_SYNC_CANDIDATE;
     }
 
     if (mRemoteError != remoteError)
@@ -502,6 +521,11 @@ QString Syncs::getLocalError() const
             return tr("Select a local folder to sync.");
         }
 
+        case LocalErrors::ALREADY_SYNC_CANDIDATE:
+        {
+            return tr("Folder can't be synced as it's already a candidate.");
+        }
+
         case LocalErrors::NO_ACCESS_PERMISSIONS_CANT_CREATE:
         {
             return QCoreApplication::translate(
@@ -540,6 +564,11 @@ QString Syncs::getRemoteError() const
         case RemoteErrors::EMPTY_PATH:
         {
             return tr("Select a MEGA folder to sync.");
+        }
+
+        case RemoteErrors::ALREADY_SYNC_CANDIDATE:
+        {
+            return tr("Folder can't be synced as it's already a candidate.");
         }
 
         case RemoteErrors::CANT_SYNC:

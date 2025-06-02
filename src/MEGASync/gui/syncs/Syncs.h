@@ -58,7 +58,8 @@ private:
         EMPTY_PATH,
         NO_ACCESS_PERMISSIONS_NO_EXIST,
         NO_ACCESS_PERMISSIONS_CANT_CREATE,
-        CANT_SYNC
+        CANT_SYNC,
+        ALREADY_SYNC_CANDIDATE
     };
 
     enum class RemoteErrors
@@ -67,7 +68,8 @@ private:
         CANT_SYNC,
         CANT_CREATE_REMOTE_FOLDER,
         CANT_CREATE_REMOTE_FOLDER_MSG,
-        CANT_ADD_SYNC
+        CANT_ADD_SYNC,
+        ALREADY_SYNC_CANDIDATE
     };
 
     struct MegaRemoteCodeError
@@ -112,6 +114,8 @@ private:
     void syncHelper(bool onlyPrevalidate, const QString& localFolder, const QString& megaFolder);
     void moveNextCandidateSyncModel(bool errorOnCurrent);
     void updateDefaultFolders();
+    bool checkExistInModel(const QString& path,
+                           SyncsCandidatesModel::SyncsCandidadteModelRole pathRole);
 };
 
 #endif // SYNCS_H

@@ -135,6 +135,23 @@ void SyncsCandidatesModel::edit(const QString& originalLocalSyncFolder,
     }
 }
 
+bool SyncsCandidatesModel::exist(const QString& path,
+                                 SyncsCandidatesModel::SyncsCandidadteModelRole syncsCandidateRole)
+{
+    auto itSyncFound =
+        std::find_if(mSyncCandidates.begin(),
+                     mSyncCandidates.end(),
+                     [path, syncsCandidateRole](const auto& syncCandidate)
+                     {
+                         return (syncsCandidateRole == SyncsCandidadteModelRole::LOCAL_FOLDER &&
+                                 syncCandidate.first == path.toStdString()) ||
+                                (syncsCandidateRole == SyncsCandidadteModelRole::MEGA_FOLDER &&
+                                 syncCandidate.second == path.toStdString());
+                     });
+
+    return (itSyncFound != mSyncCandidates.end());
+}
+
 std::vector<SyncsCandidatesModel::SyncCandidate> SyncsCandidatesModel::getModel() const
 {
     return mSyncCandidates;

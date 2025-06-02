@@ -32,18 +32,18 @@ Window {
     color: "transparent"
 
     onVisibleChanged: {
-
-        if (!root.visible) {
-            handleSyncCandidateForm.localFolderChooser.chosenPath = ""
-            handleSyncCandidateForm.remoteFolderChooser.chosenPath = ""
-        }
-
         if (editLocalPath !== "") {
             handleSyncCandidateForm.localFolderChooser.chosenPath = editLocalPath
+        }
+        else {
+            handleSyncCandidateForm.localFolderChooser.chosenPath = syncsDataAccess.defaultLocalFolder
         }
 
         if (editRemotePath !== "") {
             handleSyncCandidateForm.remoteFolderChooser.chosenPath = editRemotePath
+        }
+        else {
+            handleSyncCandidateForm.remoteFolderChooser.chosenPath = syncsDataAccess.defaultRemoteFolder
         }
     }
 
