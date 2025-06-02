@@ -51,12 +51,15 @@ line-height: 20px;
 color: #ff2C5BEB; /*colorToken.link-primary*/
 }
 
-#lEmailSent
+#lEmailSent[state=&quot;success&quot;]
 {
-font-size: 11px;
-line-height: 13px;
+color: #ff0078a4; /*colorToken.text-info*/
 }
-</string>
+
+#lEmailSent[state=&quot;fail&quot;]
+{
+color: #ff0078a4; /*colorToken.text-error*/
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
@@ -233,16 +236,7 @@ line-height: 13px;
    </item>
    <item>
     <widget class="QWidget" name="wButtons" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <property name="spacing">
-       <number>8</number>
-      </property>
-      <property name="leftMargin">
-       <number>18</number>
-      </property>
-      <property name="rightMargin">
-       <number>18</number>
-      </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <spacer name="horizontalSpacer_3">
         <property name="orientation">
@@ -258,8 +252,14 @@ line-height: 13px;
       </item>
       <item>
        <widget class="QLabel" name="lEmailSent">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="text">
          <string/>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">notification</string>
         </property>
        </widget>
       </item>

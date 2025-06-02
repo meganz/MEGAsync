@@ -18,7 +18,6 @@ VerifyLockMessage::VerifyLockMessage(int lockStatus, bool isMainDialogAvailable,
     m_haveMainDialog(isMainDialogAvailable)
 {
     m_ui->setupUi(this);
-    TokenParserWidgetManager::instance()->registerWidgetForTheming(mLockedPopOver.get());
 
     m_ui->lEmailSent->setVisible(false);
 
@@ -41,6 +40,16 @@ void VerifyLockMessage::mousePressEvent(QMouseEvent *event)
             m_ui->lWhySeenThis->rect().contains(m_ui->lWhySeenThis->mapFrom(this, event->pos())))
     {
         QPoint pos = event->globalPos();
+        static std::once_flag applyThemeOnce;
+        std::call_once(applyThemeOnce,
+                       [this]()
+                       {
+                           TokenParserWidgetManager::instance()->applyCurrentTheme(
+                               mLockedPopOver.get());
+                           TokenParserWidgetManager::instance()->registerWidgetForTheming(
+                               mLockedPopOver.get());
+                       });
+
         mLockedPopOver->show();
         mLockedPopOver->ensurePolished();
         mLockedPopOver->move(pos - QPoint(mLockedPopOver->width()/2, mLockedPopOver->height() + 10));
@@ -107,7 +116,6 @@ void VerifyLockMessage::regenerateUI(int currentStatus, bool force)
             m_ui->lVerifyEmailDesc->setText(msg);
             m_ui->lWhySeenThis->setVisible(true);
             m_ui->lEmailSent->setText(tr(m_ui->lEmailSent->text().toUtf8().constData()));
-            m_ui->lEmailSent->setVisible(true);
             m_ui->bResendEmail->setText(tr("Resend email"));
 
             break;
@@ -123,13 +131,12 @@ void VerifyLockMessage::onRequestFinish(MegaRequest* request, MegaError* e)
     {
         if (error == MegaError::API_OK)
         {
-            m_ui->lEmailSent->setStyleSheet(QString::fromUtf8("#lEmailSent {color: #666666;}"));
             m_ui->lEmailSent->setText(tr("Email sent"));
+            m_ui->lEmailSent->setProperty("state", QLatin1String("success"));
         }
         else
         {
-            m_ui->lEmailSent->setStyleSheet(QString::fromUtf8("#lEmailSent {color: #F0373A;}"));
-
+            m_ui->lEmailSent->setProperty("state", QLatin1String("fail"));
             if(error == MegaError::API_ETEMPUNAVAIL)
             {
                 m_ui->lEmailSent->setText(QString::fromUtf8("Email already sent"));
@@ -139,8 +146,10 @@ void VerifyLockMessage::onRequestFinish(MegaRequest* request, MegaError* e)
                 m_ui->lEmailSent->setText(QString::fromUtf8("%1").arg(QCoreApplication::translate("MegaError", e->getErrorString())));
             }
         }
-
         m_ui->lEmailSent->setVisible(true);
+        style()->unpolish(m_ui->lEmailSent);
+        style()->polish(m_ui->lEmailSent);
+        update();
 
         Utilities::animateProperty(m_ui->lEmailSent, 400, "opacity", m_ui->lEmailSent->property("opacity"), 1.0);
 
