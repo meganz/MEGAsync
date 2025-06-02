@@ -15,8 +15,8 @@ https://mega.io/syncing
 
 # Supported Platforms
 
-The minimum version of Windows required at the moment is Windows 7.
-The minimum version of Windows Server required at the moment is Windows Server 2008 R2.
+The minimum version of Windows required at the moment is Windows 8.
+The minimum version of Windows Server required at the moment is Windows Server 2012.
 The minimum version of macOS required at the moment is macOS Sierra 10.12. 
 
 We officially support a handful of Linux flavors based on Debian and RedHat, such as:
