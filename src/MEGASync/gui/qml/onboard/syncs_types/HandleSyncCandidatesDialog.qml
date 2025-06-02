@@ -32,8 +32,11 @@ Window {
     color: "transparent"
 
     onVisibleChanged: {
-        handleSyncCandidateForm.localFolderChooser.chosenPath = ""
-        handleSyncCandidateForm.remoteFolderChooser.chosenPath = ""
+
+        if (!root.visible) {
+            handleSyncCandidateForm.localFolderChooser.chosenPath = ""
+            handleSyncCandidateForm.remoteFolderChooser.chosenPath = ""
+        }
 
         if (editLocalPath !== "") {
             handleSyncCandidateForm.localFolderChooser.chosenPath = editLocalPath
