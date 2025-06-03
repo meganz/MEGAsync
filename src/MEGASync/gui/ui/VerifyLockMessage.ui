@@ -258,9 +258,6 @@ color: #ff0078a4; /*colorToken.text-error*/
         <property name="text">
          <string/>
         </property>
-        <property name="type" stdset="0">
-         <string notr="true">notification</string>
-        </property>
        </widget>
       </item>
       <item>
