@@ -706,7 +706,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Политика конфиденциальности</translation>
     </message>
     <message>
         <source>Terms of Service</source>

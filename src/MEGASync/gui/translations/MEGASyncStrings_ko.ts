@@ -6,7 +6,7 @@
     <message>
         <source>Account usage details</source>
         <translatorcomment>Title of the dialog that displays account usage details for the actual logged user.</translatorcomment>
-        <translation>계정 사용 내역</translation>
+        <translation>계정 이용 상세 정보</translation>
     </message>
     <message>
         <source>Available storage</source>
@@ -54,7 +54,7 @@
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him. SNC-4122</translatorcomment>
-        <translation>당신의 계정은 관리자에 의해 정지되었습니다. 자세한 사항은 비즈니스 계정 관리자에게 연락하세요.</translation>
+        <translation>당신의 계정은 관리자에 의해 비활성화 되었습니다. 자세한 사항은 비즈니스 계정 관리자에게 연락하세요.</translation>
     </message>
 </context>
 <context>
@@ -115,12 +115,12 @@
     <message>
         <source>Contact Established</source>
         <translatorcomment>Notification label that indicates the user has established a new contact relationship</translatorcomment>
-        <translation>양방향 연락처로 등록되었습니다</translation>
+        <translation>연락처 관계가 수립되었습니다</translation>
     </message>
     <message>
         <source>Contact Updated</source>
         <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
-        <translation>연락처 요청 업데이트됨</translation>
+        <translation>연락처 요청 수정됨</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -706,7 +706,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>개인정보 처리 방침</translation>
     </message>
     <message>
         <source>Terms of Service</source>
@@ -940,7 +940,7 @@
     <message>
         <source>Contact support</source>
         <translatorcomment>Button label for system notification sent when sending crash report fails.CON-1280</translatorcomment>
-        <translation>지원 부서에 연락</translation>
+        <translation>지원에 연락</translation>
     </message>
     <message>
         <source>Error report sent</source>
@@ -983,7 +983,7 @@
     <message>
         <source>Logs may contain personal information, such as file or folder names. These logs are not shared with MEGA unless you choose to send them to the Helpdesk for debugging.</source>
         <translatorcomment>Info label shown in the crash report dialog, informing user about logs contents. Con-1280</translatorcomment>
-        <translation>기록은 파일 또는 폴더 이름과 같은 개인 정보를 포함하고 있을 수 있습니다. 이러한 기록은 당신이 고객 센터에 디버깅을 위해 전송하도록 선택하지 않으면 MEGA와 공유되지 않습니다.</translation>
+        <translation>기록은 파일 또는 폴더 이름과 같은 개인 정보를 포함하고 있을 수 있습니다. 이러한 기록은 당신이 고객센터에 디버깅을 위해 전송하도록 선택하지 않으면 MEGA와 공유되지 않습니다.</translation>
     </message>
     <message>
         <source>Please describe the issue or attach diagnostic log files to send the error report.</source>
@@ -1003,7 +1003,7 @@
     <message>
         <source>You can help us to improve MEGA by sending this error report to the Helpdesk.</source>
         <translatorcomment>Body for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
-        <translation>이 오류 보고를 고객 센터에 보내서 MEGA를 향상하는 것을 도울 수 있습니다.</translation>
+        <translation>이 오류 보고를 고객센터에 보내서 MEGA를 개선하는 것을 도울 수 있습니다.</translation>
     </message>
 </context>
 <context>

@@ -706,7 +706,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Chính Sách Quyền Riêng Tư</translation>
     </message>
     <message>
         <source>Terms of Service</source>
@@ -2223,7 +2223,7 @@
     <message>
         <source>Business</source>
         <translatorcomment>Label to refer Business tier CON-467</translatorcomment>
-        <translation>Doanh nghiệp</translation>
+        <translation>Doanh Nghiệp</translation>
     </message>
     <message>
         <source>Free</source>

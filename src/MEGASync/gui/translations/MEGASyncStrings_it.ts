@@ -6113,7 +6113,10 @@ Inserisci un nome differente.</translation>
 - We’ve fixed bugs and made performance improvements behind the scenes.
 </source>
         <translatorcomment>Change log for version 5.12.0. CON-1358</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Abbiamo migliorato il modo in cui vengono gestite le segnalazioni di arresti anomali, in modo da poter risolvere i problemi più rapidamente.
+- Le nuove icone sono ora disponibili nel menu contestuale di Windows 11.
+- Abbiamo corretto bug e apportato miglioramenti alle prestazioni dietro le quinte.
+</translation>
     </message>
 </context>
 <context>
@@ -9648,7 +9651,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Upgrade your account to get more storage quota.</source>
         <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Aggiorna il tuo account per ottenere una maggiore quota di spazio di archiviazione</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>

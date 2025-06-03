@@ -2,11 +2,11 @@
 #define VERSION_H
 
 #define VER_MAJOR 5
-#define VER_MINOR 12
+#define VER_MINOR 13
 #define VER_MICRO 0
 #define VER_RC 0
 // Format: "VER_MAJOR.VER_MINOR.VER_MICRO.VER_RC\0"
-#define VER_PRODUCTVERSION_STR "5.12.0.0\0"
+#define VER_PRODUCTVERSION_STR "5.13.0.0\0"
 #define VER_PRODUCTVERSION VER_MAJOR, VER_MINOR, VER_MICRO, VER_RC
 #define VER_FILEVERSION VER_MAJOR, VER_MINOR, VER_MICRO, VER_RC
 #define VER_FILEVERSION_CODE (VER_MAJOR * 10000 + VER_MINOR * 100 + VER_MICRO)
@@ -24,7 +24,7 @@
 #define VER_PRODUCTNAME_STR         "MEGAsync\0"
 
 /* SDK commit hash, 7 chars */
-#define VER_SDK_ID "e77b973"
+#define VER_SDK_ID "d465e9d"
 
 /* Update scrips relying on this value if you move it
 Format: 1 item by line, starting from line following the #define
@@ -35,10 +35,11 @@ Format: 1 item by line, starting from line following the #define
 "- item n\n"
 )*/
 #define VER_CHANGES_NOTES \
-    QT_TRANSLATE_NOOP( \
-        "Preferences", \
-        "- We’ve improved how crash reports are handled, so we can fix issues faster.\n" \
-        "- New icons are now available in the Windows 11 context menu.\n" \
-        "- We’ve fixed bugs and made performance improvements behind the scenes.\n")
+    QT_TRANSLATE_NOOP("Preferences", \
+                      "- Ended support for Windows 7 and Server 2008 R2.\n" \
+                      "- Added more actions to the Windows Explorer extension.\n" \
+                      "- Updated some UI elements.\n" \
+                      "- Added Turkish language support.\n" \
+                      "- We’ve fixed bugs and made performance improvements behind the scenes.\n")
 
 #endif // VERSION_H
