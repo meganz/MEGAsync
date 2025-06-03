@@ -707,7 +707,7 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Privacybeleid</translation>
     </message>
     <message>
         <source>Terms of Service</source>

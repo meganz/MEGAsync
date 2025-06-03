@@ -21,17 +21,17 @@
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Label for Cloud drive space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation>Bulut sürücüsü</translation>
+        <translation>Bulut depolama</translation>
     </message>
     <message>
         <source>Loading...</source>
         <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
-        <translation>Yükleniyor...</translation>
+        <translation>Yükleniyor…</translation>
     </message>
     <message>
         <source>Of that, size taken up by file versions:</source>
         <translatorcomment>Label to indicate the amount of size occupied by file versions.</translatorcomment>
-        <translation>Dosya sürümleri tarafından alınan boyut</translation>
+        <translation>Dosya sürümleri tarafından kaplanan boyut</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
@@ -46,7 +46,7 @@
     <message>
         <source>Transfer</source>
         <translatorcomment>Label to indicate the section of transfer used of the current account.</translatorcomment>
-        <translation>Aktarma</translation>
+        <translation>Aktarım</translation>
     </message>
 </context>
 <context>
@@ -54,7 +54,7 @@
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him. SNC-4122</translatorcomment>
-        <translation>Hesabınız yöneticiniz tarafından devre dışı bırakıldı. Daha fazla ayrıntı için lütfen İşletme hesabı yöneticinizle iletişime geçin.</translation>
+        <translation>Hesabınız yöneticiniz tarafından devre dışı bırakıldı. Daha fazla bilgi için lütfen İşletme hesabı yöneticinizle iletişime geçin.</translation>
     </message>
 </context>
 <context>
@@ -67,12 +67,12 @@
     <message>
         <source>Contacts</source>
         <translatorcomment>Label to indicate that the application is showing only contact notifications</translatorcomment>
-        <translation>İletişim</translation>
+        <translation>Kişiler</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate that the application is showing only incoming share notifications</translatorcomment>
-        <translation>Gelen hisseler</translation>
+        <translation>Gelen paylaşımlar</translation>
     </message>
     <message>
         <source>Payment</source>
@@ -90,47 +90,47 @@
     <message>
         <source>Access to shared folder was removed by [A]</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
-        <translation>Paylaşılan bir klasöre erişim tarafından kaldırıldı [A]</translation>
+        <translation>[A] tarafından paylaşılan klasöre erişim kaldırıldı</translation>
     </message>
     <message>
         <source>Contact Accepted</source>
         <translatorcomment>Notification label that indicates that the user has accepted a contact request</translatorcomment>
-        <translation>İletişim talebi kabul edildi</translation>
+        <translation>Kişi isteği kabul edildi</translation>
     </message>
     <message>
         <source>Contact Blocked</source>
         <translatorcomment>Notification label that indicates the user has blocked a contact</translatorcomment>
-        <translation>İletişim engellendi</translation>
+        <translation>Kişi engellendi</translation>
     </message>
     <message>
         <source>Contact Deleted</source>
         <translatorcomment>Notification label that indicates the user has removed a contact</translatorcomment>
-        <translation>İletişim silindi</translation>
+        <translation>Kişi silindi</translation>
     </message>
     <message>
         <source>Contact Denied</source>
         <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
-        <translation>İletişim talebi reddedildi</translation>
+        <translation>Kişi isteği reddedildi</translation>
     </message>
     <message>
         <source>Contact Established</source>
         <translatorcomment>Notification label that indicates the user has established a new contact relationship</translatorcomment>
-        <translation>İletişim ilişkisi kuruldu</translation>
+        <translation>Kişi ilişkisi kuruldu</translation>
     </message>
     <message>
         <source>Contact Updated</source>
         <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
-        <translation>İletişim isteği güncellendi</translation>
+        <translation>Kişi isteği güncellendi</translation>
     </message>
     <message>
         <source>Contacts</source>
         <translatorcomment>Label title for Contacts category of a notification</translatorcomment>
-        <translation>İletişim</translation>
+        <translation>Kişiler</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label title for Incoming shares category of a notification</translatorcomment>
-        <translation>Gelen hisseler</translation>
+        <translation>Gelen paylaşımlar</translation>
     </message>
     <message>
         <source>NEW</source>
@@ -140,12 +140,12 @@
     <message>
         <source>New Contact Request</source>
         <translatorcomment>Notification label that indicates the user has a new contact request </translatorcomment>
-        <translation>Yeni iletişim isteği</translation>
+        <translation>Yeni kişi isteği</translation>
     </message>
     <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation>Yeni paylaşılan klasör [A]</translation>
+        <translation>[A] kişisinden yeni paylaşılan klasör</translation>
     </message>
     <message>
         <source>Notification</source>
@@ -165,7 +165,7 @@
     <message>
         <source>Reminder: You have a contact request</source>
         <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
-        <translation>Hatırlatma: Bir iletişim isteğiniz var</translation>
+        <translation>Hatırlatma: Kişilerinize eklenme isteği var</translation>
     </message>
     <message>
         <source>Shared Folder Activity</source>
@@ -190,92 +190,92 @@
     <message>
         <source>You accepted a contact request</source>
         <translatorcomment>Label to indicate that the user has accepted a contact request.</translatorcomment>
-        <translation>Bir iletişim isteğini kabul ettiniz</translation>
+        <translation>Bir kişi isteğini kabul ettiniz</translation>
     </message>
     <message>
         <source>You denied a contact request</source>
         <translatorcomment>Label to indicate that the user has denied a contact request.</translatorcomment>
-        <translation>Bir iletişim isteğini reddettiniz</translation>
+        <translation>Bir kişi isteğini reddettiniz</translation>
     </message>
     <message>
         <source>You ignored a contact request</source>
         <translatorcomment>Label to indicate that the user has ignored a contact request.</translatorcomment>
-        <translation>Bir iletişim isteğini yok saydınız</translation>
+        <translation>Bir kişi isteğini yok saydınız</translation>
     </message>
     <message>
         <source>Your payment for the [A] plan was received</source>
         <translatorcomment>Label to indicate that the user has paid for a [A] PRO plan. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Ödemeniz [A] Plan Alındı</translation>
+        <translation>[A] planı için ödemeniz alındı</translation>
     </message>
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Ödemenizi almadık [A] plan.</translation>
+        <translation>[A] planı için ödemenizi almadık.</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation>Herkese açık olarak paylaşılan dosyanız ([A]) eski haline getirildi</translation>
+        <translation>Herkese açık olarak paylaştığınız dosyanız ([A]) eski haline getirildi</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation>Herkese açık olarak paylaşılan dosyanız ([A]) kaldırıldı</translation>
+        <translation>Herkese açık olarak paylaştığınız dosyanız ([A]) kaldırıldı</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>Herkese açık olarak paylaşılan klasörünüz ([A]) eski haline getirildi</translation>
+        <translation>Herkese açık olarak paylaştığınız klasörünüz ([A]) eski haline getirildi</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>Herkese açık olarak paylaşılan klasörünüz ([A]) kaldırıldı</translation>
+        <translation>Herkese açık olarak paylaştığınız klasörünüz ([A]) kaldırıldı</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
         <translatorcomment>Label to indicate that your public shared has been taken down.</translatorcomment>
-        <translation>Halka açık payınız kaldırıldı.</translation>
+        <translation>Herkese açık paylaşımınız kaldırıldı.</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
         <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
-        <translation>Herkese açık payınız eski haline getirildi.</translation>
+        <translation>Herkese açık paylaşımınız eski haline getirildi.</translation>
     </message>
     <message>
         <source>[A] accepted your contact request</source>
         <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request. (SNC-3341)</translatorcomment>
-        <translation>[A] iletişim isteğinizi kabul etti</translation>
+        <translation>[A], kişilerinize eklenme isteğinizi kabul etti</translation>
     </message>
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] ilave edildi %n öğe</numerusform><numerusform>[A] ilave edildi %n öğeleri</numerusform></translation>
+        <translation><numerusform>[A] ilave edildi %n öğe</numerusform><numerusform>[A], %n öğe ekledi</numerusform></translation>
     </message>
     <message>
         <source>[A] blocked you as contact</source>
         <translatorcomment>Label to indicate that [A] has blocked you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation>[A] sizi iletişim olarak engelledi</translation>
+        <translation>[A] sizi kişilerinden engelledi</translation>
     </message>
     <message>
         <source>[A] cancelled their contact request</source>
         <translatorcomment>Label to indicate that [A] cancelled a contact request. Placeholder will be replaced by email of user that cancelled the request.</translatorcomment>
-        <translation>[A] iletişim isteğini iptal etti</translation>
+        <translation>[A], kişilerinize eklenme isteğini iptal etti</translation>
     </message>
     <message>
         <source>[A] deleted you as a contact</source>
         <translatorcomment>Label to indicate that [A] deleted you as a contact. Placeholder will be replaced by email of user that deleted the contact.</translatorcomment>
-        <translation>[A] sizi bir kişi olarak sildi</translation>
+        <translation>[A] sizi kişilerinden sildi</translation>
     </message>
     <message>
         <source>[A] denied your contact request</source>
         <translatorcomment>Label to indicate that [A] denied your contact request. Placeholder will be replaced by email of user that denied the request.</translatorcomment>
-        <translation>[A] iletişim isteğinizi reddetti</translation>
+        <translation>[A], kişilerinize eklenme isteğinizi reddetti</translation>
     </message>
     <message>
         <source>[A] has been deleted/deactivated</source>
         <translatorcomment>Label to indicate that [A] has been deleted from your contacts. Placeholder will be replaced by email of user deleted</translatorcomment>
-        <translation>[A] silindi veya devre dışı bırakıldı</translation>
+        <translation>[A] kişilerinizden silindi veya devre dışı bırakıldı</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -285,17 +285,17 @@
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A] kaldırılır %n öğe</numerusform><numerusform>[A] kaldırılır %n öğeleri</numerusform></translation>
+        <translation><numerusform>[A] kaldırılır %n öğe</numerusform><numerusform>[A], %n öğeyi kaldırdı</numerusform></translation>
     </message>
     <message>
         <source>[A] sent you a contact request</source>
         <translatorcomment>Label to indicate that [A] sent you a contact request. Placeholder will be replaced by email of user that sent the request.</translatorcomment>
-        <translation>[A] size bir iletişim isteği gönderdi</translation>
+        <translation>[A] kişilerinize eklenmek için size istek gönderdi</translation>
     </message>
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>[A] güncelleştirilmiş %n öğe</numerusform><numerusform>[A] güncelleştirilmiş %n öğeleri</numerusform></translation>
+        <translation><numerusform>[A] güncelleştirilmiş %n öğe</numerusform><numerusform>[A], %n öğeyi güncelledi</numerusform></translation>
     </message>
 </context>
 <context>
@@ -303,7 +303,7 @@
     <message>
         <source>Backup is disabled</source>
         <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled).SNC-4208</translatorcomment>
-        <translation>Yedekleme devre dışı</translation>
+        <translation>Yedekleme devre dışı bırakıldı</translation>
     </message>
     <message>
         <source>Backup is enabled</source>
@@ -341,42 +341,42 @@
     <message>
         <source>Error adding sync</source>
         <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-4208</translatorcomment>
-        <translation>Senkronizasyon ekleme hatası</translation>
+        <translation>Senkronizasyon eklenirken hata oluştu</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
         <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>MEGA yedekleme klasörünü taşırken veya silerken hata oluştu</translation>
+        <translation>MEGA yedek klasörü taşınırken veya silinirken bir hata oluştu</translation>
     </message>
     <message>
         <source>Error removing backup</source>
         <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
-        <translation>Yedeklemeyi durdururken hata oluştu</translation>
+        <translation>Yedekleme durdurulurken hata</translation>
     </message>
     <message>
         <source>Failed to move or remove the remote backup folder. Reason: %1</source>
         <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>MEGA yedekleme klasörü taşınamıyor veya silinemiyor. Sebep: %1</translation>
+        <translation>MEGA yedek klasörü taşınamadı veya silinemedi. Nedeni: %1</translation>
     </message>
     <message>
         <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
         <translatorcomment>text for error dialog shown when a  sync fails, folder path and reason are given during runtime in the placeholders.SNC-2565</translatorcomment>
-        <translation>Klasörünüz”%1” senkronize edilemiyor. Sebep: %2</translation>
+        <translation>“%1” klasörünüz senkronize edilemiyor. Nedeni: %2</translation>
     </message>
     <message>
         <source>Some folders haven&apos;t been backed up. For more information, hover over the red icon.</source>
         <translatorcomment>Warning message displayed inside settings dialog indicating that there is a problem with a backup.SNC-2565</translatorcomment>
-        <translation>Bazı klasörler yedeklenmedi. Daha fazla bilgi için kırmızı simgenin üzerine gelin.</translation>
+        <translation>Bazı klasörler yedeklenmedi. Daha fazlasını öğrenmek için kırmızı simgenin üzerine gelin.</translation>
     </message>
     <message>
         <source>Sync operation failed</source>
         <translatorcomment>Title for error dialog shown when a  sync fails.SNC-2565</translatorcomment>
-        <translation>Senkronize edilemiyor</translation>
+        <translation>Senkronizasyon yapılamadı</translation>
     </message>
     <message>
         <source>Your sync can&apos;t be removed. Reason: %1</source>
         <translatorcomment>Warning message title indicating that an error happened removing a sync. the reason is given at runtime in place of the placeholder.SNC-4208</translatorcomment>
-        <translation>Senkronizasyonunuz kaldırılamaz. Sebep: %1</translation>
+        <translation>Senkronizasyonunuz kaldırılamadı. Nedeni: %1</translation>
     </message>
 </context>
 <context>
@@ -405,27 +405,27 @@
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
-        <translation><numerusform>Yedeklemelerinizde aynı ada sahip bir klasör zaten var. Yedeklemeye devam etmek için yeni klasörü yeniden adlandırın. Klasör adı bilgisayarınızda değişmez.</numerusform><numerusform>Aynı ada sahip bazı klasörler Yedeklemelerinizde zaten var. Yedeklemeye devam etmek için yeni klasörleri yeniden adlandırın. Klasör adları bilgisayarınızda değişmez.</numerusform></translation>
+        <translation><numerusform>Yedeklemelerinizde aynı ada sahip bir klasör zaten var. Yedeklemeye devam etmek için yeni klasörü yeniden adlandırın. Klasör adı bilgisayarınızda değişmez.</numerusform><numerusform>Aynı adı taşıyan bazı klasörler zaten yedeklerinizde mevcut. Yeni klasörleri yedeklemeye devam etmek için isimlerini değiştirin. Klasör adları bilgisayarınızda değişmeyecektir.</numerusform></translation>
     </message>
     <message>
         <source>Backup folders can&apos;t contain or be contained by other backup folder</source>
         <translatorcomment>Warning message stating that a backup can´t contain another backup CON-468</translatorcomment>
-        <translation>Yedekleme klasörleri diğer yedekleme klasörleri içeremez veya içeremez.</translation>
+        <translation>Yedeklenen klasörler, başka yedeklenen klasörleri içeremez veya onların içinde olamaz.</translation>
     </message>
     <message>
         <source>Folder can&apos;t be backed up as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
         <translatorcomment>Warning message stating that the selected folder can´t be reached. CON-468</translatorcomment>
-        <translation>Klasör bulunamadığı için yedeklenemez. Taşınmış veya silinmiş olabilir veya erişiminiz olmayabilir.</translation>
+        <translation>Klasör yedeklenemiyor çünkü bulunamıyor. Taşınmış veya silinmiş olabilir ya da erişiminiz olmayabilir.</translation>
     </message>
     <message numerus="yes">
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
-        <translation><numerusform>Klasör yedeklenmedi. Tekrar dene.</numerusform><numerusform>Bu klasörler yedeklenmedi. Tekrar dene.</numerusform></translation>
+        <translation><numerusform>Klasör yedeklenmedi. Tekrar dene.</numerusform><numerusform>Bu klasörler yedeklenmedi. Tekrar deneyin.</numerusform></translation>
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
         <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
-        <translation>Aynı ada sahip klasörleri yedekleyemezsiniz. Yedeklemeye devam etmek için yeniden adlandırın. Klasör adları bilgisayarınızda değişmez.</translation>
+        <translation>Aynı adı taşıyan klasörleri yedekleyemezsiniz. Yedeklemeye devam etmek için isimlerini değiştirin. Klasör adları bilgisayarınızda değişmeyecektir.</translation>
     </message>
 </context>
 <context>
@@ -451,7 +451,7 @@
     <message>
         <source>(Max. 90% of available bandwidth)</source>
         <translatorcomment>Label to indicate that auto rate option will take a maximum of 90% of the available bandwidth.</translatorcomment>
-        <translation>(Maks. Kullanılabilir bant genişliğinin %90&apos;ı)</translation>
+        <translation>(Mevcut bant genişliğinin en fazla %90&apos;ı)</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -461,7 +461,7 @@
     <message>
         <source>Auto</source>
         <translatorcomment>Radio button text to indicate automatic rate limit.</translatorcomment>
-        <translation>Oto</translation>
+        <translation>Otomatik</translation>
     </message>
     <message>
         <source>Bandwidth</source>
@@ -476,17 +476,17 @@
     <message>
         <source>Download rate limit</source>
         <translatorcomment>Section title for download rate limit details.</translatorcomment>
-        <translation>İndirme oranı sınırı</translation>
+        <translation>İndirme hızı sınırı</translation>
     </message>
     <message>
         <source>Downloads:</source>
         <translatorcomment>Label to indicate the limit of download connections per transfer.</translatorcomment>
-        <translation>Yüklemeler:</translation>
+        <translation>İndirmeler:</translation>
     </message>
     <message>
         <source>KB/s</source>
         <translatorcomment>Rate unit of Kilo bytes per second.</translatorcomment>
-        <translation>Kb/sn</translation>
+        <translation>KB/s</translation>
     </message>
     <message>
         <source>Limit to:</source>
@@ -501,17 +501,17 @@
     <message>
         <source>Number of connections per transfer</source>
         <translatorcomment>Section title for number of connections per transfer details.</translatorcomment>
-        <translation>Aktarım başına bağlantı sayısı</translation>
+        <translation>Her aktarım için bağlantı sayısı</translation>
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
         <translatorcomment>Description label about the option Use HTTPS for transfers that don't start checkbox.</translatorcomment>
-        <translation>Bu seçeneği yalnızca aktarımlar başlamazsa etkinleştirin. Diğer tüm koşullar altında, MEGA zaten tüm verileri şifrelediğinden HTTP kullanmak tatmin edicidir.</translation>
+        <translation>Bu seçeneği yalnızca aktarımlar başlamadığında etkinleştirin. Diğer tüm durumlarda, HTTP kullanımı yeterlidir çünkü MEGA tüm verileri zaten şifreler.</translation>
     </message>
     <message>
         <source>Upload rate limit</source>
         <translatorcomment>Section title for upload rate limit details.</translatorcomment>
-        <translation>Yükleme oranı sınırı</translation>
+        <translation>Yükleme hızı sınırı</translation>
     </message>
     <message>
         <source>Uploads:</source>
@@ -521,7 +521,7 @@
     <message>
         <source>Use HTTPS for transfers that don&apos;t start</source>
         <translatorcomment>Checkbox label to set the option to use https for transfer connections.</translatorcomment>
-        <translation>Başlamayan aktarımlar için HTTPS kullanın</translation>
+        <translation>Başlamayan aktarımlar için HTTPS kullan</translation>
     </message>
 </context>
 <context>
@@ -529,22 +529,22 @@
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>Bildirilen sorununuzu yüklemeyi iptal etmek ister misiniz?</translation>
+        <translation>Bildirdiğiniz sorunu yüklemeyi iptal etmek istiyor musunuz?</translation>
     </message>
     <message>
         <source>Attach diagnostic log files to assist with debugging</source>
         <translatorcomment>Check box to confirm the attachment and upload of log files generated by MEGAsync to our support team.</translatorcomment>
-        <translation>Hata ayıklamaya yardımcı olmak için tanılama günlük dosyaları ekleyin</translation>
+        <translation>Hata ayıklamaya yardımcı olmak için tanılama günlük dosyalarını ekleyin</translation>
     </message>
     <message>
         <source>Bug report</source>
         <translatorcomment>Title of the dialog used to send bug reports to support team.</translatorcomment>
-        <translation>Sorunu bildir</translation>
+        <translation>Sorun bildir</translation>
     </message>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Sorununuz bir hata nedeniyle yüklenemedi. Daha sonra tekrar deneyin veya destek ekibimizle iletişime geçin [A]support@mega.nz[/A] sorun devam ederse.</translation>
+        <translation>Sorununuz bir hata nedeniyle yüklenemedi. Daha sonra tekrar deneyin veya sorun devam ederse [A]support@mega.nz[/A] adresinden destek ekibimizle iletişime geçin.</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
@@ -564,7 +564,7 @@
     <message>
         <source>Continue</source>
         <translatorcomment>Button label to continue the upload of bug report.</translatorcomment>
-        <translation>Devamı</translation>
+        <translation>Devam et</translation>
     </message>
     <message>
         <source>Describe the problem</source>
@@ -579,22 +579,22 @@
     <message>
         <source>Optional</source>
         <translatorcomment>Label to indicate that title field of bug report form is not mandatory.</translatorcomment>
-        <translation>İsteğe Bağlı</translation>
+        <translation>İsteğe bağlı</translation>
     </message>
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
         <translatorcomment>Label to indicate the user that needs to describe the issue through the text edit field of bug report form.</translatorcomment>
-        <translation>Karşılaştığınız sorunu açıkça tanımlayın. Ne kadar fazla ayrıntı verirseniz, çözmemiz o kadar kolay olacaktır. Gönderiniz geliştirme ekibimiz tarafından incelenecektir.</translation>
+        <translation>Karşılaştığınız sorunu açıkça tanımlayın. Ne kadar fazla detay verirseniz, sorunun çözülmesi o kadar kolay olur. Sorununuz geliştirme ekibimiz tarafından incelenecektir.</translation>
     </message>
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation>Lütfen daha sonra tekrar deneyin veya destek ekibimizle iletişime geçin [A]support@mega.nz[/A] sorun devam ederse.</translation>
+        <translation>Lütfen daha sonra tekrar deneyin veya sorun devam ederse [A]support@mega.nz[/A] adresinden destek ekibimizle iletişime geçin.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
-        <translation>Geçerli yükleme tamamlanana kadar bekleyin.</translation>
+        <translation>Mevcut yükleme tamamlanana kadar bekleyin.</translation>
     </message>
     <message>
         <source>Submit</source>
@@ -609,7 +609,7 @@
     <message>
         <source>There is an ongoing report being uploaded.</source>
         <translatorcomment>Informative message shown when user is trying to upload a bug report while there is an ongoing upload.</translatorcomment>
-        <translation>Şu anda yüklenmekte olan bildirilen başka bir sorun var.</translation>
+        <translation>Şu anda başka bir bildirilen sorun yükleniyor.</translation>
     </message>
     <message>
         <source>Title</source>
@@ -642,12 +642,12 @@
     <message>
         <source>Cancel transfers?</source>
         <translatorcomment>Dialog main text</translatorcomment>
-        <translation>Transferleri iptal etmek mi?</translation>
+        <translation>Aktarımlar iptal edilsin mi?</translation>
     </message>
     <message>
         <source>Cancelling…</source>
         <translatorcomment>Message displayed while transfers cancelling is in progress</translatorcomment>
-        <translation>İptal ediliyor...</translation>
+        <translation>İptal ediliyor…</translation>
     </message>
     <message>
         <source>No, continue</source>
@@ -665,12 +665,12 @@
     <message>
         <source>Cannot create [B]%1[/B]</source>
         <translatorcomment>itle for the header widget sync stall that occurs when a folder cannot be created in the local drive, will be followed with the folder path, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Oluşturulamıyor [B]%1[/B]</translation>
+        <translation>[B]%1[/B] oluşturulamıyor</translation>
     </message>
     <message>
         <source>Filesystem error preventing folder access.</source>
         <translatorcomment>Subtitle for the header widget  sync stall that occurs when a folder cannot be created in the local drive.SNC-2565</translatorcomment>
-        <translation>Yerel bir hata klasör erişimini engeller</translation>
+        <translation>Yerel bir hata, klasöre erişimi engelliyor</translation>
     </message>
 </context>
 <context>
@@ -678,12 +678,12 @@
     <message>
         <source>Cannot perform deletion [B]%1[/B]</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when a local file system element(file, folder) cannot be moved to local debris(local debris is a designated trash folder for each sync), [B] is for Bold.SNC-2565</translatorcomment>
-        <translation>Silinemiyor [B]%1[/B]</translation>
+        <translation>[B]%1[/B] silinemiyor</translation>
     </message>
     <message>
         <source>Filesystem error preventing folder access.</source>
         <translatorcomment>Subtitle for the header widget  sync stall that occurs when a local file system element(file, folder) cannot be moved to local debris(local debris is a designated trash folder for each sync).SNC-2565</translatorcomment>
-        <translation>Yerel bir hata klasör erişimini engeller</translation>
+        <translation>Yerel bir hata, klasöre erişimi engelliyor</translation>
     </message>
 </context>
 <context>
@@ -696,17 +696,17 @@
     <message>
         <source>Credits</source>
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
-        <translation>Krediler</translation>
+        <translation>Kullanılanlar</translation>
     </message>
     <message>
         <source>New in this version:</source>
         <translatorcomment>Label for indicate new features/fixes of current MEGAsync version. Keep colon.</translatorcomment>
-        <translation>Bu sürümde yeni:</translation>
+        <translation>Bu sürümdeki yenilikler:</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Gizlilik Politikası</translation>
     </message>
     <message>
         <source>Terms of Service</source>
@@ -716,7 +716,7 @@
     <message>
         <source>[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3[/A]</source>
         <translatorcomment>QT copyright notice shown at changelog dialog. [A][/A] placeholders used to provide ui style and [C] placeholder will be replaced by copyright symbol.</translatorcomment>
-        <translation>[A]Bu yazılım Qt kullanır ([C] 2018 The Qt Company Ltd), GNU Lesser Genel Kamu Lisansı Sürüm 3 kapsamında[/A]</translation>
+        <translation>[A]Bu yazılım, GNU Lesser General Public License Version 3 ile lisanslanan Qt&apos;yi kullanmaktadır ([C] 2018 The Qt Company Ltd)[/A]</translation>
     </message>
 </context>
 <context>
@@ -729,7 +729,7 @@
     <message>
         <source>Change password</source>
         <translatorcomment>Windows title of the Change password dialog</translatorcomment>
-        <translation>Şifreyi değiştir</translation>
+        <translation>Şifre değiştir</translation>
     </message>
     <message>
         <source>Confirm new password</source>
@@ -764,17 +764,17 @@
     <message>
         <source>The entered passwords don&apos;t match</source>
         <translatorcomment>Error message displayed when the new password and its confirmation are not the same</translatorcomment>
-        <translation>Girilen şifreler eşleşmiyor</translation>
+        <translation>Yazılan şifreler eşleşmiyor</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
         <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</translatorcomment>
-        <translation>Çok fazla istek. Lütfen bekle.</translation>
+        <translation>Çok fazla istek gönderildi. Lütfen bekleyin.</translation>
     </message>
     <message>
         <source>You have entered your current password, please enter a new password.</source>
         <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
-        <translation>Geçerli şifrenizi girdiniz, yeni bir şifre girin.</translation>
+        <translation>Mevcut şifrenizi girdiniz, lütfen yeni bir şifre girin.</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
@@ -787,7 +787,7 @@
     <message>
         <source>Select local folder</source>
         <translatorcomment>Label indicating the user that he has to select a local folder. CON-467</translatorcomment>
-        <translation>Yerel klasörü seçin</translation>
+        <translation>Yerel klasör seçin</translation>
     </message>
 </context>
 <context>
@@ -795,7 +795,7 @@
     <message>
         <source>[A]%</source>
         <translatorcomment>Percent sign style. Form and spacing between digit and sign is different in each language.</translatorcomment>
-        <translation>[A]%</translation>
+        <translation>%[A]</translation>
     </message>
 </context>
 <context>
@@ -803,7 +803,7 @@
     <message>
         <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
         <translatorcomment>Messagebox secondary string to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation>Tüm öğeler kalıcı olarak silinecektir. Bu eylem olabilir [B]değil[/B] geri alınsın.</translation>
+        <translation>Tüm öğeler kalıcı olarak silinecek. Bu işlem geri [B]alınamaz[/B].</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -813,12 +813,12 @@
     <message>
         <source>Empty</source>
         <translatorcomment>Messagebox accept button string to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation>Boş</translation>
+        <translation>Boşalt</translation>
     </message>
     <message>
         <source>Empty Rubbish bin?</source>
         <translatorcomment>Messagebox main string to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation>Boş çöp kutusu?</translation>
+        <translation>Çöp Kutusu boşaltılsın mı?</translation>
     </message>
 </context>
 <context>
@@ -831,12 +831,12 @@
     <message>
         <source>Apply to all</source>
         <translatorcomment>Check box to allow user to apply a fix to all similar stall issues.FM-1615</translatorcomment>
-        <translation>Herkese uygula</translation>
+        <translation>Hepsine uygula</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to solve the issue?</source>
         <translatorcomment>Warning text to confirm the user's choice in resolving a stalled issue.SNC-2565</translatorcomment>
-        <translation><numerusform>Sorunu çözmek mi?</numerusform><numerusform>Sorunları çözmek mi?</numerusform></translation>
+        <translation><numerusform>Sorunu çözmek mi?</numerusform><numerusform>Sorunları çözmek istiyor musunuz?</numerusform></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -846,7 +846,7 @@
     <message>
         <source>Can´t download [B]%1[/B] to the selected location</source>
         <translatorcomment>Title for the header widget sync stall that occurs when a file cannot be downloaded for not having a fingerprint,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>İndirilemiyor [B]%1[/B] Seçilen konuma</translation>
+        <translation>[B]%1[/B] seçilen konuma indirilemiyor</translation>
     </message>
     <message>
         <source>File fingerprint missing</source>
@@ -856,17 +856,17 @@
     <message>
         <source>Solve</source>
         <translatorcomment>User options for the header widget of a stalled issue shown when there's a missing file fingerprint.SNC-2565</translatorcomment>
-        <translation>Çözmek</translation>
+        <translation>Çöz</translation>
     </message>
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation><numerusform>Bu işlem dosyayı geçici bir konuma indirir, sorunu düzeltir ve ardından geçici dosyayı siler.</numerusform><numerusform>Bu işlem dosyaları geçici bir konuma indirir, sorunları giderir ve ardından geçici dosyaları siler.</numerusform></translation>
+        <translation><numerusform>Bu işlem dosyayı geçici bir konuma indirir, sorunu düzeltir ve ardından geçici dosyayı siler.</numerusform><numerusform>Bu işlem, dosyaları geçici bir konuma indirecek, sorunları çözecek ve ardından geçici dosyaları silecektir.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers,[B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Sorunu düzeltmek için transferlerinize devam edin.</numerusform><numerusform>Sorunları düzeltmek için transferlerinize devam edin.</numerusform></translation>
+        <translation><numerusform>Sorunu düzeltmek için transferlerinize devam edin.</numerusform><numerusform>Sorunları çözmek için aktarımlarınızı yeniden başlatın.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -874,7 +874,7 @@
     <message>
         <source>The file %1 is unavailable because it was reported to contain content in breach of [A]MEGA’s Terms of Service[/A].</source>
         <translatorcomment>Title for the header widget sync stall that occurs when a file is blocked by ToS infringement. %1 is the file name. [A] is for links.SAT-1209</translatorcomment>
-        <translation>Dosya %1 ihlal eden içerik içerdiği bildirildiği için kullanılamıyor [A]MEGA Hizmet Şartları[/A].</translation>
+        <translation>%1 dosyasının, [A]MEGA&apos;nın Hizmet Şartları[/A]&apos;nı ihlal ettiği bildirildiği için kullanılamaz.</translation>
     </message>
 </context>
 <context>
@@ -882,7 +882,7 @@
     <message>
         <source>Moved to MEGA Bin</source>
         <translatorcomment>Title of the solved issue showing what happened to the files when the user had to choose between a local and a remote versions of a file.SNC-2565</translatorcomment>
-        <translation>Çöp kutusuna taşındı</translation>
+        <translation>Çöp Kutusuna taşındı</translation>
     </message>
     <message>
         <source>Remote Copy</source>
@@ -895,17 +895,17 @@
     <message>
         <source>MEGA Downloads</source>
         <translatorcomment>Default folder for downloads to the local drive. SNC-4139</translatorcomment>
-        <translation>MEGA indirmeler</translation>
+        <translation>MEGA indirilenler</translation>
     </message>
     <message>
         <source>MEGA Imports</source>
         <translatorcomment>Default folder for imports from MEGA links to the cloud drive. SNC-4139</translatorcomment>
-        <translation>MEGA ithalat</translation>
+        <translation>MEGA içe aktarmaları</translation>
     </message>
     <message>
         <source>MEGA Uploads</source>
         <translatorcomment>Default folder for uploads to the cloud drive. SNC-4139</translatorcomment>
-        <translation>MEGA yüklemeleri</translation>
+        <translation>MEGA yüklenenler</translation>
     </message>
     <message>
         <source>Pro membership plan expiring soon</source>
@@ -2233,7 +2233,7 @@
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Label to refer Pro Flexi tier CON-467</translatorcomment>
-        <translation>Profesyonel esnek çalışma saati</translation>
+        <translation>Pro Flexi</translation>
     </message>
     <message>
         <source>Storage space:</source>
@@ -6386,12 +6386,12 @@ Yine de silmek ister misin?</translation>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 BÜYÜK BRİTANYA</translation>
+        <translation>%1 GB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 KİLO BAR</translation>
+        <translation>%1 KB</translation>
     </message>
     <message>
         <source>%1 MB</source>
@@ -7204,12 +7204,12 @@ Yine de silmek ister misin?</translation>
     <message>
         <source>GB</source>
         <translatorcomment>Giga Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.SNC-4208</translatorcomment>
-        <translation>BÜYÜK BRİTANYA</translation>
+        <translation>GB</translation>
     </message>
     <message>
         <source>KB</source>
         <translatorcomment>Kilo Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane..SNC-4208</translatorcomment>
-        <translation>KİLO BAR</translation>
+        <translation>KB</translation>
     </message>
     <message>
         <source>MB</source>
@@ -9566,12 +9566,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>GB</source>
         <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
-        <translation>BÜYÜK BRİTANYA</translation>
+        <translation>GB</translation>
     </message>
     <message>
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
-        <translation>KİLO BAR</translation>
+        <translation>KB</translation>
     </message>
     <message>
         <source>MB</source>
