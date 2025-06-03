@@ -3348,11 +3348,6 @@ Wait for the upload to complete.</translation>
         <translation>The app will continue to work, however you may not receive new updates.</translation>
     </message>
     <message>
-        <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
-        <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>The app will continue to work, however, updates will no longer be supported for versions prior to Windows 7.</translation>
-    </message>
-    <message>
         <source>No Internet connection</source>
         <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
         <translation>No internet connection</translation>

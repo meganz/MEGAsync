@@ -3540,43 +3540,21 @@ void MegaApplication::clearUserAttributes()
 
 void MegaApplication::checkOperatingSystem()
 {
+#ifdef MEGASYNC_DEPRECATED_OS
     if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_OS_TOO_OLD))
     {
-        bool isOSdeprecated = false;
-#ifdef MEGASYNC_DEPRECATED_OS
-        isOSdeprecated = true;
-#endif
-
-#ifdef WIN32
-#pragma warning(push)
-#pragma warning(disable: 4996) // declared deprecated
-        DWORD dwVersion = GetVersion();
-#pragma warning(pop)
-        DWORD dwMajorVersion = (DWORD)(LOBYTE(LOWORD(dwVersion)));
-        DWORD dwMinorVersion = (DWORD) (HIBYTE(LOWORD(dwVersion)));
-        isOSdeprecated = (dwMajorVersion < 6) || ((dwMajorVersion == 6) && (dwMinorVersion == 0));
-#endif
-
-        if (isOSdeprecated)
+        MessageDialogInfo msgInfo;
+        QString message =
+            tr("Please consider updating your operating system.") + QString::fromUtf8("\n") +
+            tr("MEGAsync will continue to work, however you might not receive new updates.");
+        msgInfo.descriptionText = message;
+        msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
         {
-            MessageDialogInfo msgInfo;
-            QString message =
-                tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
-#ifdef WIN32
-                + tr("MEGAsync will continue to work, however, updates will no longer be supported "
-                     "for Windows Vista and older operating systems soon.");
-#else
-                + tr("MEGAsync will continue to work, however you might not receive new updates.");
-#endif
-
-            msgInfo.descriptionText = message;
-            msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
-            {
-                preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_OS_TOO_OLD, true);
-            };
-            MessageDialogOpener::warning(msgInfo);
-        }
+            preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_OS_TOO_OLD, true);
+        };
+        MessageDialogOpener::warning(msgInfo);
     }
+#endif
 }
 
 void MegaApplication::notifyChangeToAllFolders()
