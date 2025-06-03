@@ -564,6 +564,7 @@ void FatalEventHandler::showFatalErrorMessage()
     msgInfo.textFormat = Qt::RichText;
     msgInfo.titleText = getErrorTitle();
     msgInfo.descriptionText = getErrorReason();
+    msgInfo.setIgnoreCloseAll(false);
 
     auto url(getErrorReasonUrl());
     if (!url.isEmpty())

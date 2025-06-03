@@ -123,6 +123,11 @@ bool MessageDialogInfo::getIgnoreCloseAll() const
     return ignoreCloseAll;
 }
 
+void MessageDialogInfo::setIgnoreCloseAll(bool value)
+{
+    ignoreCloseAll = value;
+}
+
 // =================================================================================================
 // MessageDialogData
 // =================================================================================================
