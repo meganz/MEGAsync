@@ -67,10 +67,10 @@ if %errorlevel% neq 0 (
 
 echo.
 :: Sign the MSIX file
-signtool sign /sha1 "%MEGA_DESKTOP_APP_CERTIFICATE_THUMBPRINT%" /td SHA256 /fd SHA256 %MSIX_PATH%
+"C:\Program Files (x86)\Windows Kits\10\bin\%MEGA_WIN_KITVER%\x64\signtool.exe" sign /sha1 "%MEGA_DESKTOP_APP_CERTIFICATE_THUMBPRINT%" /td SHA256 /fd SHA256 %MSIX_PATH%
 
 :: Verify signature
-signtool verify /pa "%MSIX_PATH%"
+"C:\Program Files (x86)\Windows Kits\10\bin\%MEGA_WIN_KITVER%\x64\signtool.exe" verify /pa "%MSIX_PATH%"
 if %errorlevel% neq 0 (
     echo Error: DMSIX signing has failed.
     exit /b %errorlevel%
