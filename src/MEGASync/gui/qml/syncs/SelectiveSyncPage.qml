@@ -4,6 +4,9 @@ import syncs 1.0
 import SyncsComponents 1.0
 import SyncInfo 1.0
 
+import ChooseLocalFolder 1.0
+import ChooseRemoteFolder 1.0
+
 SelectiveSyncPageForm {
     id: root
 
@@ -30,11 +33,13 @@ SelectiveSyncPageForm {
     }
 
     localFolderChooser.onButtonClicked: {
-        syncsComponentAccess.chooseLocalFolderButtonClicked();
+        syncsComponentAccess.clearLocalFolderErrorHint();
+        localFolderSelector.openFolderSelector(localFolderChooser.chosenPath);
     }
 
     remoteFolderChooser.onButtonClicked: {
-        syncsComponentAccess.chooseRemoteFolderButtonClicked();
+        syncsComponentAccess.clearRemoteFolderErrorHint();
+        remoteFolderSelector.openFolderSelector();
     }
 
     function enableScreen() {
@@ -55,6 +60,36 @@ SelectiveSyncPageForm {
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
             syncsComponentAccess.syncButtonClicked(localFolderChooser.chosenPath, remoteFolderChooser.chosenPath);
+        }
+    }
+
+    ChooseLocalFolder {
+        id: localFolderSelector
+    }
+
+    ChooseRemoteFolder {
+        id: remoteFolderSelector
+    }
+
+    Connections {
+        id: remoteFolderChooserConnection
+
+        target: remoteFolderSelector
+        enabled: root.enabled
+
+        function onFolderChosen(remoteFolderPath) {
+            remoteFolderChooser.chosenPath = remoteFolderPath;
+        }
+    }
+
+    Connections {
+        id: localFolderChooserConnection
+
+        target: localFolderSelector
+        enabled: root.enabled
+
+        function onFolderChosen(localFolderPath) {
+            localFolderChooser.chosenPath = localFolderPath;
         }
     }
 
