@@ -11,6 +11,7 @@ import components.busyIndicator 1.0
 import components.buttons 1.0
 import components.menus 1.0
 import components.dialogs 1.0
+import components.toolTips 1.0
 
 Rectangle {
     id: root
@@ -57,9 +58,9 @@ Rectangle {
         footerPositioning: ListView.OverlayFooter
 
         ScrollBar.vertical: ScrollBar {
-                    policy: ScrollBar.AsNeeded
-                    z: 1
-                }
+                policy: ScrollBar.AsNeeded
+                z: 1
+            }
     }
 
     Component {
@@ -71,7 +72,6 @@ Rectangle {
             width: listView.width
             height: root.headerHeight + root.verticalMargin
             color: ColorTheme.pageBackground
-
             radius: root.radius
             z: 10
 
@@ -209,15 +209,20 @@ Rectangle {
                                 wrapMode: Text.NoWrap
                                 width: parent.width - localFolderImage.width - parent.spacing - parent.leftPadding
 
+                                SmallToolTip {
+                                    id: localTooltip
+                                }
+
                                 MouseArea {
                                     anchors.fill: parent
                                     hoverEnabled: true
                                     onEntered: {
-                                        ToolTip.show(localFolderText.text);
+                                        localTooltip.text = localFolderText.text;
+                                        localTooltip.open();
                                     }
 
                                     onExited: {
-                                        ToolTip.hide();
+                                        localTooltip.close();
                                     }
                                 }
                             }
@@ -261,15 +266,20 @@ Rectangle {
                                 wrapMode: Text.NoWrap
                                 width: parent.width - remoteFolderImage.width - parent.spacing
 
+                                SmallToolTip {
+                                    id: remoteTooltip
+                                }
+
                                 MouseArea {
                                     anchors.fill: parent
                                     hoverEnabled: true
                                     onEntered: {
-                                        ToolTip.show(remoteFolderText.text);
+                                        remoteTooltip.text = remoteFolderText.text;
+                                        remoteTooltip.open();
                                     }
 
                                     onExited: {
-                                        ToolTip.hide();
+                                        remoteTooltip.close();
                                     }
                                 }
                             }

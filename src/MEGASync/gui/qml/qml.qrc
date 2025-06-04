@@ -92,6 +92,7 @@
         <file>components/texts/BannerText.qml</file>
         <file>components/toolTips/qmldir</file>
         <file>components/toolTips/ToolTip.qml</file>
+        <file>components/toolTips/SmallToolTip.qml</file>
         <file>components/views/qmldir</file>
         <file>components/views/GroupBox.qml</file>
         <file>components/views/ScrollPanel.qml</file>
