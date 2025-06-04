@@ -8001,11 +8001,6 @@ Refresh the list.</translation>
         <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
         <translation>Try again</translation>
     </message>
-    <message>
-        <source>Continue</source>
-        <translatorcomment>Label for Continue button. CON-1036.</translatorcomment>
-        <translation type="unfinished">Continue</translation>
-    </message>
 </context>
 <context>
     <name>SurveyStrings</name>
