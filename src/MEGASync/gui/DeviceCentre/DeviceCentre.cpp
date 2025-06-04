@@ -517,8 +517,10 @@ void DeviceCentre::showRebootWarningDialog(const QString& titleText,
     msgInfo.descriptionText = descriptionText;
     msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
     QMap<QMessageBox::Button, QString> textsByButton;
-    textsByButton.insert(QMessageBox::Ok, QCoreApplication::translate("Strings", "Continue"));
-    textsByButton.insert(QMessageBox::Cancel, QCoreApplication::translate("Strings", "Cancel"));
+    textsByButton.insert(QMessageBox::Ok,
+                         /*QCoreApplication::translate ("Strings",*/ QString::fromUtf8("Continue"));
+    textsByButton.insert(QMessageBox::Cancel,
+                         /*QCoreApplication::translate ("Strings",*/ QString::fromUtf8("Cancel"));
     msgInfo.buttonsText = textsByButton;
     msgInfo.defaultButton = QMessageBox::Ok;
     msgInfo.finishFunc = [this, row](QPointer<MessageDialogResult> msg)
