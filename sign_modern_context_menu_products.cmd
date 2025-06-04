@@ -56,10 +56,10 @@ if not exist "%MSIX_PATH%" (
 
 echo.
 :: Sign the DLL file
-signtool sign /sha1 "%MEGA_DESKTOP_APP_CERTIFICATE_THUMBPRINT%" /td SHA256 /fd SHA256 %DLL_PATH%
+"C:\Program Files (x86)\Windows Kits\10\bin\%MEGA_WIN_KITVER%\x64\signtool.exe" sign /sha1 "%MEGA_DESKTOP_APP_CERTIFICATE_THUMBPRINT%" /td SHA256 /fd SHA256 %DLL_PATH%
 
 :: Verify signature
-signtool verify /pa "%DLL_PATH%"
+"C:\Program Files (x86)\Windows Kits\10\bin\%MEGA_WIN_KITVER%\x64\signtool.exe" verify /pa "%DLL_PATH%"
 if %errorlevel% neq 0 (
     echo Error: DLL signing has failed.
     exit /b %errorlevel%
