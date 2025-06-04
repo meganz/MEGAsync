@@ -162,7 +162,26 @@ public:
         QQmlEngine* engine = QmlManager::instance()->getEngine();
         QQmlComponent qmlComponent(engine);
         qmlComponent.loadUrl(mWrapper->getQmlUrl());
+        QEventLoop eventLoop;
 
+        QMetaObject::Connection connection = QObject::connect(
+            &qmlComponent,
+            &QQmlComponent::statusChanged,
+            [&](QQmlComponent::Status status)
+            {
+                if (status == QQmlComponent::Ready || status == QQmlComponent::Error)
+                {
+                    eventLoop.quit();
+                }
+            });
+        qmlComponent.loadUrl(mWrapper->getQmlUrl());
+
+        if (qmlComponent.isLoading())
+        {
+            eventLoop.exec();
+        }
+
+        QObject::disconnect(connection);
         if (qmlComponent.isReady())
         {
             QQmlContext* context = new QQmlContext(engine->rootContext(), this);
