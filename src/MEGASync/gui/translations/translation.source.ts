@@ -6072,11 +6072,11 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Ended support for Windows 7 and Server 2008 R2.
-- Added more actions to the Windows Explorer extension.
-- Updated some UI elements.
-- Added Turkish language support.
-- We’ve fixed bugs and made performance improvements behind the scenes.
+        <source>- Support has ended for Windows 7 and Server 2008 R2.
+- New actions are now available in the File Explorer context menu.
+- Refined parts of the interface to improve your experience.
+- Turkish language is now supported.
+- We’ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 5.13.0. CON-1380</translatorcomment>
         <translation type="unfinished"></translation>
