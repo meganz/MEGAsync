@@ -9,7 +9,6 @@ import components.images 1.0
 import components.buttons 1.0
 import components.pages 1.0
 
-import backups 1.0
 import syncs 1.0
 
 import onboard 1.0
@@ -17,20 +16,15 @@ import onboard 1.0
 FooterButtonsPage {
     id: root
 
-    required property StepPanel stepPanelRef
-    required property NavigationInfo navInfoRef
-
-    readonly property string stateFullSync: "stateFullSync"
-    readonly property string stateSelectiveSync: "stateSelectiveSync"
-    readonly property string stateBackup: "stateBackup"
     readonly property int maxSizeDescription: 80
     readonly property int buttonQuestionMargin: 24
 
     property alias buttonGroup: buttonGroupItem
     property alias syncButton: syncButtonItem
-
-    property bool fullSyncDone
-    property bool selectiveSyncDone
+    property alias titleItem: titleItem
+    property alias descriptionItem: descriptionItem
+    property alias errorItem: errorItem
+    property alias descriptionItem2: descriptionItem2
 
     footerButtons {
         leftPrimary.visible: false
@@ -40,59 +34,6 @@ FooterButtonsPage {
             icons: Icon {}
         }
     }
-
-    states: [
-        State {
-            name: root.stateFullSync
-            PropertyChanges { target: titleItem; text: navInfoRef.errorOnSyncs ? OnboardingStrings.finalStepSyncTitleError : SyncsStrings.finalStepSyncTitle; }
-            PropertyChanges { target: descriptionItem; visible: !navInfoRef.errorOnSyncs; }
-            PropertyChanges { target: errorItem; visible: navInfoRef.errorOnSyncs; }
-            PropertyChanges { target: descriptionItem2; visible: false; }
-            PropertyChanges { target: syncButtonItem; visible: false; }
-            PropertyChanges {
-                target: stepPanelRef;
-                state: stepPanelRef.stepAllDone;
-                step3Text: SyncsStrings.selectFolders;
-                step4Text: OnboardingStrings.syncSetUp;
-            }
-        },
-        State {
-            name: root.stateSelectiveSync
-            extend: root.stateFullSync
-            PropertyChanges {
-                target: syncButtonItem;
-                type: Constants.SyncType.SELECTIVE_SYNC;
-                visible: true;
-            }
-        },
-        State {
-            name: root.stateBackup
-            PropertyChanges { target: titleItem; text: BackupsStrings.finalStepBackupTitle; }
-            PropertyChanges { target: descriptionItem; text: BackupsStrings.finalStepBackup; }
-            PropertyChanges {
-                target: descriptionItem2;
-                text: BackupsStrings.finalStepBackup2;
-                visible: true;
-            }
-            PropertyChanges {
-                target: syncButtonItem;
-                type: !fullSyncDone && !selectiveSyncDone
-                      ? Constants.SyncType.SYNC
-                      : Constants.SyncType.SELECTIVE_SYNC;
-                visible: !fullSyncDone;
-                title: SyncsStrings.sync
-                description: !fullSyncDone && !selectiveSyncDone
-                             ? OnboardingStrings.finalPageButtonSync
-                             : OnboardingStrings.finalPageButtonSelectiveSync;
-            }
-            PropertyChanges {
-                target: stepPanelRef;
-                state: stepPanelRef.stepAllDone;
-                step3Text: OnboardingStrings.backupSelectFolders;
-                step4Text: OnboardingStrings.backupConfirm;
-            }
-        }
-    ]
 
     ColumnLayout {
         id: mainLayout
@@ -203,11 +144,8 @@ FooterButtonsPage {
                     useMaxSiblingHeight: syncButtonItem.visible
                     ButtonGroup.group: buttonGroupItem
                 }
-
-            } // RowLayout: buttonsLayout
-
-        } // Item: buttons
-
-    } // ColumnLayout: mainLayout
+            }
+        }
+    }
 
 }

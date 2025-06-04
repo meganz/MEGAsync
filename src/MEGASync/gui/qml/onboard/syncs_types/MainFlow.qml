@@ -230,11 +230,13 @@ Rectangle {
                     else {
                         root.navInfo.selectiveSyncDone = true;
                     }
+                    root.navInfo.typeSelected = Constants.SyncType.SYNC;
+                    root.navInfo.errorOnSyncs = false;
                     root.state = root.resume;
-                    //root.navInfo.errorOnSyncs = true; // @jsubi to test error on resume page.
                 }
 
                 onSyncsFlowMoveToFinalError: {
+                    root.navInfo.typeSelected = Constants.SyncType.SYNC;
                     root.navInfo.fullSyncDone = false;
                     root.navInfo.selectiveSyncDone = false;
                     root.navInfo.errorOnSyncs = true;
