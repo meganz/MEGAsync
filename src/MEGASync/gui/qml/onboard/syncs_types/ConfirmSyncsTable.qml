@@ -215,8 +215,8 @@ Rectangle {
                                 TextMetrics {
                                     id: localTextMetrics
 
-                                    font: remoteFolderText.font
-                                    text: remoteFolderText.text
+                                    font: localFolderText.font
+                                    text: localFolderText.text
                                 }
 
                                 MouseArea {
