@@ -340,7 +340,7 @@ Rectangle {
                                         id: editSyncCandidateDialog
 
                                         title: qsTr("Edit sync")
-                                        rightPrimaryButton.text: qsTr("Edit")
+                                        rightPrimaryButton.text: qsTr("Save")
                                         editLocalPath: model.localFolder
                                         editRemotePath: model.megaFolder
                                         visible: false

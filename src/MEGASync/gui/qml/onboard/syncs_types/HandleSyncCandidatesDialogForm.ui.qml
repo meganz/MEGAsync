@@ -79,7 +79,6 @@ Rectangle {
             Layout.topMargin: root.defaultTopMargin
             Layout.alignment: Qt.AlignRight
             layoutDirection: Qt.RightToLeft
-            spacing: root.buttonsSpacing
 
             PrimaryButton {
                 id: acceptButton
