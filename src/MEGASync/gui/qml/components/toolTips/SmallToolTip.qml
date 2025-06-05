@@ -26,6 +26,22 @@ Popup {
     background: Rectangle {
         color: ColorTheme.buttonPrimary
         radius: tooltip.radius
+
+        Rectangle {
+            id: underArrow
+
+            color: ColorTheme.buttonPrimary
+            width: 12
+            height: width
+            radius: 2
+            x: parent.width/2 - width/2
+            y: parent.height - 8
+            rotation: 45
+            transform: Scale {
+                yScale: 1.8
+                origin.y: parent.height / 2
+            }
+        }
     }
 
     contentItem: Text {
