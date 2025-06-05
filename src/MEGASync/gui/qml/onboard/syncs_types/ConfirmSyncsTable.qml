@@ -144,8 +144,7 @@ Rectangle {
                 color: ColorTheme.borderSubtle
             }
         }
-
-    } // Component: headerComponent
+    }
 
     Component {
         id: delegateComponent
@@ -213,7 +212,15 @@ Rectangle {
                                     id: localTooltip
                                 }
 
+                                TextMetrics {
+                                    id: localTextMetrics
+
+                                    font: remoteFolderText.font
+                                    text: remoteFolderText.text
+                                }
+
                                 MouseArea {
+                                    enabled: localTextMetrics.width > localFolderText.width
                                     anchors.fill: parent
                                     hoverEnabled: true
                                     onEntered: {
@@ -266,11 +273,19 @@ Rectangle {
                                 wrapMode: Text.NoWrap
                                 width: parent.width - remoteFolderImage.width - parent.spacing
 
+                                TextMetrics {
+                                    id: remoteTextMetrics
+
+                                    font: remoteFolderText.font
+                                    text: remoteFolderText.text
+                                }
+
                                 SmallToolTip {
                                     id: remoteTooltip
                                 }
 
                                 MouseArea {
+                                    enabled: remoteTextMetrics.width > remoteFolderText.width
                                     anchors.fill: parent
                                     hoverEnabled: true
                                     onEntered: {
@@ -378,8 +393,7 @@ Rectangle {
                 }
             }
         }
-
-    } // Component: delegateComponent
+    }
 
     Component {
         id: footerComponent
@@ -443,6 +457,6 @@ Rectangle {
                 color: ColorTheme.borderSubtle
             }
         }
-    } // Component: footerComponent
+    }
 }
 
