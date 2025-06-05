@@ -10,7 +10,8 @@ QtObject {
     readonly property string menuSettings: qsTr("Settings")
     readonly property string logInOrSignUp: qsTr("Log in or sign up to MEGA")
     readonly property string accountTempLocked: qsTr("Account temporarily locked")
-    readonly property string accountTempLockedEmail: qsTr("Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we've sent you.")
+    readonly property string accountTempLockedEmail: qsTr("Your account has been locked for your protection after detecting a malicious login, so we require you to reset your password.<br>
+Check your email inbox for instructions on unlocking your account and tips on how to prevent this from happening again.")
     readonly property string resendEmail: qsTr("Resend email")
     readonly property string logOut: qsTr("Log out")
     readonly property string loggedInOnboarding: qsTr("Setting up your account…")
