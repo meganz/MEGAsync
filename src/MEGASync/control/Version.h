@@ -36,10 +36,10 @@ Format: 1 item by line, starting from line following the #define
 )*/
 #define VER_CHANGES_NOTES \
     QT_TRANSLATE_NOOP("Preferences", \
-                      "- Ended support for Windows 7 and Server 2008 R2.\n" \
-                      "- Added more actions to the Windows Explorer extension.\n" \
-                      "- Updated some UI elements.\n" \
-                      "- Added Turkish language support.\n" \
-                      "- We’ve fixed bugs and made performance improvements behind the scenes.\n")
+                      "- Support has ended for Windows 7 and Server 2008 R2.\n" \
+                      "- New actions are now available in the File Explorer context menu.\n" \
+                      "- Refined parts of the interface to improve your experience.\n" \
+                      "- Turkish language is now supported.\n" \
+                      "- We’ve fixed bugs and made the app more reliable.\n")
 
 #endif // VERSION_H
