@@ -26,7 +26,7 @@ SyncsFlow {
             case root.addSync:
                 navInfoRef.typeSelected = Constants.SyncType.SYNC;
 
-                root.stepPanelRef.state = root.stepPanelRef.step4;
+                root.stepPanelRef.state = root.stepPanelRef.step3;
                 root.stepPanelRef.step3Text = Syncs.SyncsStrings.selectFolders;
                 root.stepPanelRef.step4Text = Syncs.SyncsStrings.confirm;
                 break;
