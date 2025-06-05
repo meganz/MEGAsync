@@ -314,6 +314,7 @@ void Syncs::helperCheckLocalSync(const QString& path)
     }
 
     if (mOnlyPrevalidateSync && !localError.has_value() &&
+        (mEditOriginalLocalFolder.isEmpty() || path != mEditOriginalLocalFolder) &&
         checkExistInModel(path, SyncsCandidatesModel::SyncsCandidadteModelRole::LOCAL_FOLDER))
     {
         localError = LocalErrors::ALREADY_SYNC_CANDIDATE;
@@ -360,6 +361,7 @@ void Syncs::helperCheckRemoteSync(const QString& path)
     }
 
     if (mOnlyPrevalidateSync && !remoteError.has_value() &&
+        (mEditOriginalMegaFolder.isEmpty() || path != mEditOriginalMegaFolder) &&
         checkExistInModel(path, SyncsCandidatesModel::SyncsCandidadteModelRole::MEGA_FOLDER))
     {
         remoteError = RemoteErrors::ALREADY_SYNC_CANDIDATE;
@@ -505,6 +507,9 @@ void Syncs::onSyncPrevalidateRequestStatus(int errorCode, int syncErrorCode)
     {
         mSyncController.addSync(mSyncConfig);
     }
+
+    mEditOriginalLocalFolder.clear();
+    mEditOriginalMegaFolder.clear();
 }
 
 QString Syncs::getLocalError() const
