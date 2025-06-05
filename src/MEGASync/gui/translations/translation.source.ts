@@ -2145,9 +2145,10 @@
         <translation>Waiting for email confirmation…</translation>
     </message>
     <message>
-        <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
-        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
-        <translation>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we’ve sent you.</translation>
+        <source>Your account has been locked for your protection after detecting a malicious login, so we require you to reset your password.[BR]
+Check your email inbox for instructions on unlocking your account and tips on how to prevent this from happening again.</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465, updated literal SNC-5585.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
