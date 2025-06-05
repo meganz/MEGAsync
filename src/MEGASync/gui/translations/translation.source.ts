@@ -2145,7 +2145,7 @@
         <translation>Waiting for email confirmation…</translation>
     </message>
     <message>
-        <source>Your account has been locked for your protection after detecting a malicious login, so we require you to reset your password.&lt;br&gt;
+        <source>Your account has been locked for your protection after detecting a malicious login, so we require you to reset your password.[BR]
 Check your email inbox for instructions on unlocking your account and tips on how to prevent this from happening again.</source>
         <translatorcomment>Label that indicates to the user that the account has been blocked CON-465, updated literal SNC-5585.</translatorcomment>
         <translation type="unfinished"></translation>
