@@ -43,31 +43,11 @@ Rectangle {
         z: 5
     }
 
-    ListView {
-        id: listView
-
+    Column {
         anchors.fill: parent
-        model: syncsCandidatesModel
-        focus: true
-        clip: true
-        delegate: delegateComponent
-        header: headerComponent
-        headerPositioning: ListView.OverlayHeader
-        spacing: root.verticalMargin
-        footer: footerComponent
-        footerPositioning: ListView.OverlayFooter
-
-        ScrollBar.vertical: ScrollBar {
-                policy: ScrollBar.AsNeeded
-                z: 1
-            }
-    }
-
-    Component {
-        id: headerComponent
 
         Rectangle {
-            id: headerRectangle
+            id: header
 
             width: listView.width
             height: root.headerHeight + root.verticalMargin
@@ -100,7 +80,7 @@ Rectangle {
                     Texts.Text {
                         id: localText
 
-                        text: "Local folders"
+                        text: qsTr("Local folders")
                         font.weight: Font.DemiBold
                         color: ColorTheme.textPrimary
                     }
@@ -124,7 +104,7 @@ Rectangle {
                     Texts.Text {
                         id: remoteText
 
-                        text: "MEGA folders"
+                        text: qsTr("MEGA folders")
                         font.weight: Font.DemiBold
                         color: ColorTheme.textPrimary
                     }
@@ -139,6 +119,86 @@ Rectangle {
                     left: parent.left
                     right: parent.right
                     bottomMargin: root.verticalMargin
+                    leftMargin: root.horitzontalMargin
+                    rightMargin: root.horitzontalMargin
+                }
+                height: borderRectangle.border.width
+                color: ColorTheme.borderSubtle
+            }
+        }
+
+        ListView {
+            id: listView
+
+            anchors.right: parent.right
+            anchors.left: parent.left
+            height: parent.height - header.height - footer.height
+
+            model: syncsCandidatesModel
+            focus: true
+            clip: true
+            delegate: delegateComponent
+            headerPositioning: ListView.OverlayHeader
+            spacing: root.verticalMargin
+
+            ScrollBar.vertical: ScrollBar {
+                    policy: ScrollBar.AsNeeded
+                    z: 1
+                }
+        }
+
+        Rectangle {
+            id: footer
+
+            width: listView.width
+            height: root.headerHeight
+            color: ColorTheme.pageBackground
+
+            radius: root.radius
+            z: 10
+
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: false
+                cursorShape: Qt.ArrowCursor
+                onClicked: {
+                    mouse.accepted = false;
+                }
+            }
+
+            TextButton {
+                id: addSyncButton
+
+                anchors {
+                    left: parent.left
+                    verticalCenter: parent.verticalCenter
+                    leftMargin: 20
+                }
+                text: qsTr("Add more syncs")
+                sizes: SmallSizes { borderLess: true }
+                icons {
+                    source: Images.plus
+                    position: Icon.Position.LEFT
+                }
+
+                HandleSyncCandidatesDialog {
+                    id: handleSyncCandidate
+
+                    visible: false
+                }
+
+                onClicked: {
+                    handleSyncCandidate.visible = true;
+                }
+            }
+
+            Rectangle {
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: root.horitzontalMargin
+                    rightMargin: root.horitzontalMargin
                 }
                 height: borderRectangle.border.width
                 color: ColorTheme.borderSubtle
@@ -395,68 +455,5 @@ Rectangle {
         }
     }
 
-    Component {
-        id: footerComponent
-
-        Rectangle {
-            id: footerItem
-
-            width: listView.width
-            height: root.headerHeight
-            color: ColorTheme.pageBackground
-
-            radius: root.radius
-            z: 10
-
-            MouseArea {
-                anchors.fill: parent
-                hoverEnabled: false
-                cursorShape: Qt.ArrowCursor
-                onClicked: {
-                    mouse.accepted = false;
-                }
-            }
-
-            TextButton {
-                id: addSyncButton
-
-                anchors {
-                    left: parent.left
-                    verticalCenter: parent.verticalCenter
-                    leftMargin: 20
-                }
-                text: qsTr("Add more syncs")
-                sizes: SmallSizes { borderLess: true }
-                icons {
-                    source: Images.plus
-                    position: Icon.Position.LEFT
-                }
-
-                HandleSyncCandidatesDialog {
-                    id: handleSyncCandidate
-
-                    visible: false
-                }
-
-                onClicked: {
-                    handleSyncCandidate.visible = true;
-                }
-            }
-
-            Rectangle {
-                id: lineRectangle
-
-                anchors {
-                    top: parent.top
-                    left: parent.left
-                    right: parent.right
-                    leftMargin: root.horitzontalMargin
-                    rightMargin: root.horitzontalMargin
-                }
-                height: borderRectangle.border.width
-                color: ColorTheme.borderSubtle
-            }
-        }
-    }
 }
 
