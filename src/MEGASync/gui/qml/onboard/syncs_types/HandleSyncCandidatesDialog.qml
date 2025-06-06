@@ -36,14 +36,14 @@ Window {
             handleSyncCandidateForm.localFolderChooser.chosenPath = editLocalPath
         }
         else {
-            handleSyncCandidateForm.localFolderChooser.chosenPath = syncsDataAccess.defaultLocalFolder
+            handleSyncCandidateForm.localFolderChooser.chosenPath = ""
         }
 
         if (editRemotePath !== "") {
             handleSyncCandidateForm.remoteFolderChooser.chosenPath = editRemotePath
         }
         else {
-            handleSyncCandidateForm.remoteFolderChooser.chosenPath = syncsDataAccess.defaultRemoteFolder
+            handleSyncCandidateForm.remoteFolderChooser.chosenPath = ""
         }
     }
 
