@@ -5,6 +5,7 @@
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "RequestListenerManager.h"
+#include "StatsEventHandler.h"
 #include "SyncsData.h"
 #include "TextDecorator.h"
 
@@ -71,8 +72,21 @@ void Syncs::confirmSyncCandidates()
     mCurrentModelConfirmationFull = false;
 
     auto syncCandidates = mSyncsCandidatesModel->rowCount();
-    if (syncCandidates != 0)
+
+    if (syncCandidates > 0)
     {
+        // we want to know when we create more than 1 syncs at once.
+        if (syncCandidates > 1)
+        {
+            MegaSyncApp->getStatsEventHandler()->sendEvent(
+                AppStatsEvents::EventType::SYNC_CANDIDATE_PACK_CONFIRMED);
+        }
+        else
+        {
+            MegaSyncApp->getStatsEventHandler()->sendEvent(
+                AppStatsEvents::EventType::SYNC_CANDIDATE_ONE_CONFIRMED);
+        }
+
         mCurrentModelConfirmationIndex = 0;
 
         auto localPath = mSyncsCandidatesModel->data(
