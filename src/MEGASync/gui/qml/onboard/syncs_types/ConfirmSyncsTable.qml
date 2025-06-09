@@ -10,7 +10,6 @@ import components.images 1.0
 import components.busyIndicator 1.0
 import components.buttons 1.0
 import components.menus 1.0
-import components.dialogs 1.0
 import components.toolTips 1.0
 
 Rectangle {
