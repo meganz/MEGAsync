@@ -91,6 +91,10 @@
         "cryptopp",
         "libsodium",
         "curl",
+        {
+          "name": "curl",
+          "features": [ "zstd" ]
+        },
         "icu",
         "sqlite3"
     ],
