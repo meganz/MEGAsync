@@ -466,6 +466,15 @@ QString FatalEventHandler::getActionIcon(FatalEventHandler::FatalErrorCorrective
     return {};
 }
 
+bool FatalEventHandler::closeAllAllowed() const
+{
+    static std::vector<FatalErrorCode> closeAllAllowedErrors{FatalErrorCode::ERR_NO_JSCD};
+
+    return std::find(closeAllAllowedErrors.cbegin(),
+                     closeAllAllowedErrors.cend(),
+                     getErrorCode()) != closeAllAllowedErrors.cend();
+}
+
 void FatalEventHandler::triggerAction(FatalEventHandler::FatalErrorCorrectiveAction action)
 {
     switch (action)
@@ -564,7 +573,7 @@ void FatalEventHandler::showFatalErrorMessage()
     msgInfo.textFormat = Qt::RichText;
     msgInfo.titleText = getErrorTitle();
     msgInfo.descriptionText = getErrorReason();
-    msgInfo.setIgnoreCloseAll(false);
+    msgInfo.setIgnoreCloseAll(!closeAllAllowed());
 
     auto url(getErrorReasonUrl());
     if (!url.isEmpty())
