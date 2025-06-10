@@ -1,8 +1,6 @@
 #include "StalledIssue.h"
 
 #include "MegaApplication.h"
-#include "MegaNodeNames.h"
-#include "StalledIssuesUtilities.h"
 #include "TransfersModel.h"
 
 StalledIssueData::StalledIssueData()
