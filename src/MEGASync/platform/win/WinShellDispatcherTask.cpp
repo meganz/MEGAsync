@@ -601,6 +601,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
         {
             auto parameters(extractParametersWChar(content));
             sendViewOnMegaSignal(parameters, false, pipe);
+            break;
         }
         case L'R': //Open pRevious versions
         {
