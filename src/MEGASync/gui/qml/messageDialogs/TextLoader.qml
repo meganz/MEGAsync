@@ -66,7 +66,6 @@ Loader {
             Component.onCompleted: {
                 if (hasLink()) {
                     root.activeFocusOnTab = true;
-                    root.focus = true;
                     focus = true;
                 }
             }
