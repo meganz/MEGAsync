@@ -68,7 +68,7 @@ pipeline {
             environment{
                 MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\vcpkg"
                 //QT path is automatically changed to x86 with nsis when needed
-                MEGA_QTPATH = "C:\\Qt\\Qt5.15.16\\5.15.16\\x64"
+                MEGA_QTPATH = "C:\\Qt\\Qt5.15.17\\5.15.17\\x64"
                 LAF_TOKEN = credentials('MEGASYNC_LAF_TOKEN')
                 MEGA_CRASH_BACKEND_URL = credentials('MEGA_CRASH_URL')
             }
