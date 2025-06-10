@@ -17,6 +17,8 @@ FooterButtonsPage {
     property alias localFolderChooser: localFolder
     property alias remoteFolderChooser: remoteFolder
 
+    readonly property int columSpacing: 32
+
     footerButtons {
         rightPrimary {
             text: Strings.next
@@ -35,9 +37,8 @@ FooterButtonsPage {
             top: parent.top
             left: parent.left
             right: parent.right
-            margins: 0
         }
-        spacing: Constants.defaultComponentSpacing
+        spacing: columSpacing
 
         HeaderTexts {
             id: header
@@ -51,28 +52,29 @@ FooterButtonsPage {
             id: accountData
 
             Layout.preferredWidth: parent.width
-            Layout.topMargin: 8
         }
 
-        ChooseSyncFolder {
-            id: localFolder
+        ColumnLayout {
+            id: foldersColumn
 
-            title: SyncsStrings.selectLocalFolder
-            leftIconSource: Images.pc
-            chosenPath: syncsDataAccess.defaultLocalFolder
-            Layout.preferredWidth: parent.width + 8
-            Layout.leftMargin: -4
-            Layout.topMargin: 16
-        }
+            spacing: Constants.defaultComponentSpacing
+            Layout.preferredWidth: parent.width
 
-        ChooseSyncFolder {
-            id: remoteFolder
+            ChooseSyncFolder {
+                id: localFolder
 
-            title: SyncsStrings.selectMEGAFolder
-            leftIconSource: Images.megaOutline
-            chosenPath: syncsDataAccess.defaultRemoteFolder
-            Layout.preferredWidth: parent.width + 8
-            Layout.leftMargin: -4
+                title: SyncsStrings.selectLocalFolder
+                leftIconSource: Images.pc
+                chosenPath: syncsDataAccess.defaultLocalFolder
+            }
+
+            ChooseSyncFolder {
+                id: remoteFolder
+
+                title: SyncsStrings.selectMEGAFolder
+                leftIconSource: Images.megaOutline
+                chosenPath: syncsDataAccess.defaultRemoteFolder
+            }
         }
     }
 
