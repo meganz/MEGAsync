@@ -90,7 +90,6 @@
     "dependencies": [
         "cryptopp",
         "libsodium",
-        "curl",
         {
           "name": "curl",
           "features": [ "zstd" ]
