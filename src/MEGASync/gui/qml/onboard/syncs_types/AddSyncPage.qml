@@ -13,6 +13,11 @@ AddSyncPageForm {
     signal moveBack
     signal moveNext
 
+    function enableScreen() {
+        root.enabled = true;
+        footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
+    }
+
     Component.onCompleted: {
         syncsComponentAccess.clearLocalFolderErrorHint();
         syncsComponentAccess.clearRemoteFolderErrorHint();
@@ -42,11 +47,6 @@ AddSyncPageForm {
     remoteFolderChooser.onButtonClicked: {
         syncsComponentAccess.clearRemoteFolderErrorHint();
         remoteFolderSelector.openFolderSelector();
-    }
-
-    function enableScreen() {
-        root.enabled = true;
-        footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
     }
 
     footerButtons {

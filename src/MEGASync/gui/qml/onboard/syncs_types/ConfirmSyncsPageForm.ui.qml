@@ -17,6 +17,7 @@ FooterButtonsPage {
     id: root
 
     property alias confirmTable : contentItem
+    readonly property int spacingConfirmSyncsTable: 7
 
     footerButtons {
         rightPrimary {
@@ -32,7 +33,6 @@ FooterButtonsPage {
             top: parent.top
             left: parent.left
             right: parent.right
-            margins: 0
         }
         spacing: Constants.defaultComponentSpacing
 
@@ -47,19 +47,14 @@ FooterButtonsPage {
         Column {
             id: syncData
 
-            spacing: 7
+            spacing: spacingConfirmSyncsTable
 
             InfoAccount {
                 id: accountData
-
-                Layout.preferredWidth: parent.width
-                Layout.topMargin: 8
             }
 
             ConfirmSyncsTable {
                 id: contentItem
-
-                Layout.preferredWidth: parent.width
             }
         }
     }
