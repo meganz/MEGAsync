@@ -16,7 +16,14 @@ Rectangle {
     id: root
 
     readonly property int headerMargin: 24
-    readonly property int headerHeight: 42
+    readonly property int headerHeight: 40
+    readonly property int headerRadius: 8
+
+    readonly property int footerHeight: 40
+    readonly property int footerRadius: 8
+
+    readonly property int separatorHeight: 1
+
     readonly property int verticalMargin: 8
     readonly property int horitzontalMargin: 7
     readonly property int confirmTableHeight: 232
@@ -46,10 +53,10 @@ Rectangle {
         Rectangle {
             id: header
 
-            width: listView.width
-            height: root.headerHeight + root.verticalMargin
+            width: parent.width
+            height: headerHeight
             color: ColorTheme.pageBackground
-            radius: root.radius
+            radius: headerRadius
 
             Row {
                 id: headerLayout
@@ -106,21 +113,21 @@ Rectangle {
                     }
                 }
             }
+        }
 
-            Rectangle {
-                id: lineRectangle
+        Rectangle {
+            id: underHeaderLine
 
-                anchors {
-                    bottom: parent.bottom
-                    left: parent.left
-                    right: parent.right
-                    bottomMargin: root.verticalMargin
-                    leftMargin: root.horitzontalMargin
-                    rightMargin: root.horitzontalMargin
-                }
-                height: borderRectangle.border.width
-                color: ColorTheme.borderSubtle
-            }
+            height: separatorHeight
+            color: ColorTheme.borderSubtle
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.margins: horitzontalMargin
+        }
+
+        Rectangle {
+            width: parent.width
+            height: verticalMargin
         }
 
         ListView {
@@ -128,14 +135,13 @@ Rectangle {
 
             anchors.right: parent.right
             anchors.left: parent.left
-            height: parent.height - header.height - footer.height
+            height: parent.height - header.height - footer.height - underHeaderLine.height * 2 - verticalMargin * 2
 
             model: syncsCandidatesModel
             focus: true
             clip: true
             delegate: delegateComponent
-            headerPositioning: ListView.OverlayHeader
-            spacing: root.verticalMargin
+            spacing: verticalMargin
 
             ScrollBar.vertical: ScrollBar {
                     policy: ScrollBar.AsNeeded
@@ -143,13 +149,28 @@ Rectangle {
         }
 
         Rectangle {
+            width: parent.width
+            height: verticalMargin
+        }
+
+        Rectangle {
+            id: overFooterLine
+
+            height: separatorHeight
+            color: ColorTheme.borderSubtle
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.margins: horitzontalMargin
+        }
+
+        Rectangle {
             id: footer
 
-            width: listView.width
-            height: root.headerHeight
+            width: parent.width
+            height: footerHeight
             color: ColorTheme.pageBackground
 
-            radius: root.radius
+            radius: footerRadius
 
             MouseArea {
                 anchors.fill: parent
@@ -184,18 +205,6 @@ Rectangle {
                 onClicked: {
                     handleSyncCandidate.visible = true;
                 }
-            }
-
-            Rectangle {
-                anchors {
-                    top: parent.top
-                    left: parent.left
-                    right: parent.right
-                    leftMargin: root.horitzontalMargin
-                    rightMargin: root.horitzontalMargin
-                }
-                height: borderRectangle.border.width
-                color: ColorTheme.borderSubtle
             }
         }
     }
