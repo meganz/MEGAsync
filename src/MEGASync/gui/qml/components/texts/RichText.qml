@@ -37,7 +37,6 @@ Text {
     }
 
     function placeFocusBorder() {
-        let hasslink = hasLink();
         let act = root.activeFocus;
         if (root.activeFocus && hasLink()) {
 
