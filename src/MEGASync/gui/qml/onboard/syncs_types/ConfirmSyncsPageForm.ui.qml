@@ -48,6 +48,7 @@ FooterButtonsPage {
             id: syncData
 
             spacing: spacingConfirmSyncsTable
+            Layout.preferredWidth: parent.width
 
             InfoAccount {
                 id: accountData

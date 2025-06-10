@@ -17,29 +17,27 @@ Rectangle {
 
     readonly property int headerMargin: 24
     readonly property int headerHeight: 42
-    readonly property int tableRadius: 8
     readonly property int verticalMargin: 8
     readonly property int horitzontalMargin: 7
+    readonly property int confirmTableHeight: 232
+    readonly property int confirmTableRadius: 8
+    readonly property int mainBorderZ: 1
 
     signal moveBack
 
-    Layout.preferredWidth: width
-    Layout.preferredHeight: height
-    width: 420
-    height: 232
-    radius: tableRadius
+    width: parent.width
+    height: confirmTableHeight
+    radius: confirmTableRadius
     color: ColorTheme.pageBackground
 
     Rectangle {
         id: borderRectangle
 
-        width: root.width
-        height: root.height
+        anchors.fill: parent
         color: "transparent"
         border.color: ColorTheme.borderStrong
-        border.width: 1
-        radius: 8
-        z: 5
+        radius: confirmTableRadius
+        z: mainBorderZ
     }
 
     Column {
@@ -52,7 +50,6 @@ Rectangle {
             height: root.headerHeight + root.verticalMargin
             color: ColorTheme.pageBackground
             radius: root.radius
-            z: 10
 
             Row {
                 id: headerLayout
@@ -142,7 +139,6 @@ Rectangle {
 
             ScrollBar.vertical: ScrollBar {
                     policy: ScrollBar.AsNeeded
-                    z: 1
                 }
         }
 
@@ -154,7 +150,6 @@ Rectangle {
             color: ColorTheme.pageBackground
 
             radius: root.radius
-            z: 10
 
             MouseArea {
                 anchors.fill: parent
@@ -228,7 +223,6 @@ Rectangle {
                 height: parent.height
                 color: ColorTheme.surface1
                 radius: 4
-                z: 5
 
                 Row {
                     id: syncRowLayout
