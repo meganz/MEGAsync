@@ -49,6 +49,7 @@ void AccountStatusController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
             }
             case mega::MegaApi::ACCOUNT_BLOCKED_SUBUSER_DISABLED:
             {
+                DialogOpener::closeAllDialogs();
                 MessageDialogInfo msgInfo;
                 msgInfo.descriptionText =
                     tr("Your account has been disabled by your administrator. Please contact your "
@@ -58,6 +59,7 @@ void AccountStatusController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
             }
             default:
             {
+                DialogOpener::closeAllDialogs();
                 MessageDialogInfo msgInfo;
                 msgInfo.descriptionText =
                     QCoreApplication::translate("MegaError", event->getText());
