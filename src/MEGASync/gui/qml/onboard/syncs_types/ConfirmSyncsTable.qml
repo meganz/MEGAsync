@@ -245,22 +245,26 @@ Rectangle {
 
                         height: parent.height
                         width: parent.width / 2
-                        spacing: headerMargin / 2
+                        spacing: 0
 
-                        Row {
+                        Rectangle {
+                            color: ColorTheme.surface1
+                            width: headerMargin - horitzontalMargin
+                            height: parent.height
+                        }
+
+                        RowLayout {
                             id: localFolderImageText
 
                             height: parent.height
                             width: parent.width - syncImage.width
                             spacing: headerMargin / 2
-                            leftPadding: headerMargin - horitzontalMargin
 
                             SvgImage {
                                 id: localFolderImage
 
                                 source: Images.localSyncFolder
                                 sourceSize: Qt.size(16, 16)
-                                anchors.verticalCenter: parent.verticalCenter
                             }
 
                             Texts.Text {
@@ -271,8 +275,7 @@ Rectangle {
                                 color: ColorTheme.textPrimary
                                 elide: Text.ElideMiddle
                                 wrapMode: Text.NoWrap
-                                width: parent.width - localFolderImage.width - parent.spacing - parent.leftPadding
-                                anchors.verticalCenter: parent.verticalCenter
+                                Layout.fillWidth: true
 
                                 SmallToolTip {
                                     id: localTooltip
@@ -463,7 +466,6 @@ Rectangle {
                     }
                 }
             }
-
         }
     }
 
