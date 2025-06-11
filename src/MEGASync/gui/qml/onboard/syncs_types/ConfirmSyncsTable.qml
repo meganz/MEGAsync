@@ -21,6 +21,7 @@ Rectangle {
     readonly property int footerHeight: 40
     readonly property int footerRadius: 8
     readonly property int syncCandidateHeight: 24
+    readonly property int syncCandidateRadius: 4
     readonly property int separatorHeight: 1
     readonly property int verticalMargin: 8
     readonly property int horitzontalMargin: 7
@@ -225,39 +226,41 @@ Rectangle {
                     left: parent.left
                     right: parent.right
 
-                    leftMargin: root.horitzontalMargin
-                    rightMargin: root.horitzontalMargin
+                    leftMargin: horitzontalMargin
+                    rightMargin: horitzontalMargin
                 }
 
                 height: parent.height
                 color: ColorTheme.surface1
-                radius: 4
+                radius: syncCandidateRadius
 
                 Row {
                     id: syncRowLayout
 
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: parent.width
+                    anchors.fill: parent
                     spacing: 0
 
                     Row {
                         id: localFolderImageTextLayout
 
+                        height: parent.height
                         width: parent.width / 2
-                        spacing: root.headerMargin / 2
+                        spacing: headerMargin / 2
 
                         Row {
                             id: localFolderImageText
 
+                            height: parent.height
                             width: parent.width - syncImage.width
-                            spacing: root.headerMargin / 2
-                            leftPadding: root.headerMargin - root.horitzontalMargin
+                            spacing: headerMargin / 2
+                            leftPadding: headerMargin - horitzontalMargin
 
                             SvgImage {
                                 id: localFolderImage
 
                                 source: Images.localSyncFolder
                                 sourceSize: Qt.size(16, 16)
+                                anchors.verticalCenter: parent.verticalCenter
                             }
 
                             Texts.Text {
@@ -269,6 +272,7 @@ Rectangle {
                                 elide: Text.ElideMiddle
                                 wrapMode: Text.NoWrap
                                 width: parent.width - localFolderImage.width - parent.spacing - parent.leftPadding
+                                anchors.verticalCenter: parent.verticalCenter
 
                                 SmallToolTip {
                                     id: localTooltip
@@ -309,12 +313,14 @@ Rectangle {
                     Row {
                         id: remoteFolderImageTextLayout
 
-                        leftPadding: root.headerMargin
+                        height: parent.height
                         width: parent.width / 2
+                        leftPadding: root.headerMargin
 
                         Row {
                             id: remoteFolderImageText
 
+                            height: parent.height
                             width: parent.width - syncMenuButton.width - parent.leftPadding - root.headerMargin / 2
                             spacing: root.headerMargin / 2
 
@@ -323,6 +329,7 @@ Rectangle {
 
                                 source: Images.remoteSyncFolder
                                 sourceSize: Qt.size(16, 16)
+                                anchors.verticalCenter: parent.verticalCenter
                             }
 
                             Texts.Text {
@@ -334,6 +341,7 @@ Rectangle {
                                 elide: Text.ElideMiddle
                                 wrapMode: Text.NoWrap
                                 width: parent.width - remoteFolderImage.width - parent.spacing
+                                anchors.verticalCenter: parent.verticalCenter
 
                                 TextMetrics {
                                     id: remoteTextMetrics
@@ -368,6 +376,7 @@ Rectangle {
                             source: Images.menuSync
                             sourceSize: Qt.size(16, 16)
                             color: ColorTheme.iconSecondary
+                            anchors.verticalCenter: parent.verticalCenter
 
                             MouseArea {
                                 anchors.fill: parent
@@ -454,6 +463,7 @@ Rectangle {
                     }
                 }
             }
+
         }
     }
 
