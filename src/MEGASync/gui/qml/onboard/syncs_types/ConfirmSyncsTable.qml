@@ -18,12 +18,9 @@ Rectangle {
     readonly property int headerMargin: 24
     readonly property int headerHeight: 40
     readonly property int headerRadius: 8
-
     readonly property int footerHeight: 40
     readonly property int footerRadius: 8
-
     readonly property int separatorHeight: 1
-
     readonly property int verticalMargin: 8
     readonly property int horitzontalMargin: 7
     readonly property int confirmTableHeight: 232
@@ -47,13 +44,15 @@ Rectangle {
         z: mainBorderZ
     }
 
-    Column {
+    ColumnLayout {
         anchors.fill: parent
+        spacing: 0
 
         Rectangle {
             id: header
 
-            width: parent.width
+            anchors.right: parent.right
+            anchors.left: parent.left
             height: headerHeight
             color: ColorTheme.pageBackground
             radius: headerRadius
@@ -68,9 +67,9 @@ Rectangle {
                 Row {
                     id: localImageTextLayout
 
-                    leftPadding: root.headerMargin
+                    leftPadding: headerMargin
                     width: parent.width / 2
-                    spacing: root.headerMargin / 2
+                    spacing: headerMargin / 2
 
                     SvgImage {
                         id: localImage
@@ -92,9 +91,9 @@ Rectangle {
                 Row {
                     id: remoteImageTextLayout
 
-                    leftPadding: root.headerMargin
+                    leftPadding: headerMargin
                     width: parent.width / 2
-                    spacing: root.headerMargin / 2
+                    spacing: headerMargin / 2
 
                     SvgImage {
                         id: remoteImage
@@ -126,7 +125,8 @@ Rectangle {
         }
 
         Rectangle {
-            width: parent.width
+            id: overListVerticalSpacer
+
             height: verticalMargin
         }
 
@@ -135,8 +135,7 @@ Rectangle {
 
             anchors.right: parent.right
             anchors.left: parent.left
-            height: parent.height - header.height - footer.height - underHeaderLine.height * 2 - verticalMargin * 2
-
+            Layout.fillHeight: true
             model: syncsCandidatesModel
             focus: true
             clip: true
@@ -149,7 +148,8 @@ Rectangle {
         }
 
         Rectangle {
-            width: parent.width
+            id: underListVerticalSpacer
+
             height: verticalMargin
         }
 
