@@ -1,5 +1,6 @@
 #include "NotifyServer.h"
 
+#include <QLatin1String>
 #include <sys/types.h>
 
 #include <pwd.h>
@@ -8,115 +9,122 @@
 using namespace mega;
 using namespace std;
 
-NotifyServer::NotifyServer(): QObject(),
-    m_localServer(0)
+NotifyServer::NotifyServer():
+    QObject(),
+    mLocalServer(0)
 {
     // construct local socket path
-    sockPath = MegaApplication::applicationDataPath() + QDir::separator() + QString::fromLatin1("notify.socket");
+    mSockPath = MegaApplication::applicationDataPath() + QDir::separator() +
+                QString::fromLatin1("notify.socket");
 
-    //LOG_info << "Starting Notify server";
+    // LOG_info << "Starting Notify server";
 
     // make sure previous socket file is removed
-    QLocalServer::removeServer(sockPath);
+    QLocalServer::removeServer(mSockPath);
 
-    m_localServer = new QLocalServer(this);
+    mLocalServer = new QLocalServer(this);
 
     // start listening for new connections
-    if (!m_localServer->listen(sockPath)) {
+    if (!mLocalServer->listen(mSockPath))
+    {
         // XXX: failed to open local socket, retry ?
-        //LOG_err << "Failed to listen()";
+        // LOG_err << "Failed to listen()";
         return;
     }
 
-    connect(this, SIGNAL(sendToAll(const char *, QByteArray)), this, SLOT(doSendToAll(const char *, QByteArray)));
-    connect(m_localServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
+    connect(mLocalServer, &QLocalServer::newConnection, this, &NotifyServer::acceptConnection);
+    connect(this, &NotifyServer::sendToAll, this, &NotifyServer::doSendToAll);
 }
 
 NotifyServer::~NotifyServer()
 {
-    qDeleteAll(m_clients);
-    QLocalServer::removeServer(sockPath);
-    m_localServer->close();
-    delete m_localServer;
+    QLocalServer::removeServer(mSockPath);
+    mLocalServer->close();
 }
 
 // a new connection is available
 void NotifyServer::acceptConnection()
 {
-    while (m_localServer->hasPendingConnections()) {
-        QLocalSocket *client = m_localServer->nextPendingConnection();
+    while (mLocalServer->hasPendingConnections())
+    {
+        QLocalSocket* client = mLocalServer->nextPendingConnection();
 
-        //LOG_debug << "Incoming connection";
+        // LOG_debug << "Incoming connection";
         if (!client)
         {
             return;
         }
 
-        connect(client, SIGNAL(disconnected()), this, SLOT(onClientDisconnected()));
+        connect(client, &QLocalSocket::disconnected, this, &NotifyServer::onClientDisconnected);
 
         // send the list of current synced folders to the new client
         int localFolders = 0;
-        SyncInfo *model = SyncInfo::instance();
-        for (auto syncSetting : model->getAllSyncSettings())
+        SyncInfo* model = SyncInfo::instance();
+        for (auto syncSetting: model->getAllSyncSettings())
         {
-            QString c = QDir::toNativeSeparators(QDir(syncSetting->getLocalFolder()).canonicalPath());
+            QString c =
+                QDir::toNativeSeparators(QDir(syncSetting->getLocalFolder()).canonicalPath());
             if (!c.isEmpty() && syncSetting->isActive())
             {
                 localFolders++;
-                client->write("A");
-                client->write(c.toUtf8().constData());
-                client->write("\n");
+                client->write(createPayload(NotifyType::SyncAdded, c.toUtf8().constData()));
             }
         }
 
         if (!localFolders)
         {
             // send an empty sync
-            client->write("A");
-            client->write(".");
-            client->write("\n");
+            client->write(createPayload(NotifyType::SyncAdded, QLatin1String(".").latin1()));
         }
 
-        m_clients.append(client);
+        mClients.append(client);
     }
 }
 
 // client disconnected
 void NotifyServer::onClientDisconnected()
 {
-    QLocalSocket *client = qobject_cast<QLocalSocket *>(sender());
+    QLocalSocket* client = qobject_cast<QLocalSocket*>(sender());
     if (!client)
         return;
-    m_clients.removeAll(client);
+    mClients.removeAll(client);
     client->deleteLater();
 
-    //LOG_debug << "Client disconnected";
+    // LOG_debug << "Client disconnected";
 }
 
 // send string to all connected clients
-void NotifyServer::doSendToAll(const char *type, QByteArray str)
+void NotifyServer::doSendToAll(const QByteArray& payload)
 {
-    foreach(QLocalSocket *socket, m_clients)
+    foreach(QLocalSocket* socket, mClients)
+    {
         if (socket && socket->state() == QLocalSocket::ConnectedState) {
-            socket->write(type);
-            socket->write(str.constData(), str.size());
-            socket->write("\n");
+            socket->write(payload);
             socket->flush();
         }
+    }
 }
 
-void NotifyServer::notifyItemChange(string *localPath)
+QByteArray NotifyServer::createPayload(NotifyType type, const QByteArray& data)
 {
-    emit sendToAll("P", QByteArray(localPath->data(), static_cast<int>(localPath->size())));
+    QByteArray payload;
+    payload.append(static_cast<char>(type));
+    payload.append(data);
+    payload.append(static_cast<char>(NotifyType::EndLine));
+    return payload;
+}
+
+void NotifyServer::notifyItemChange(const std::string& localPath)
+{
+    emit sendToAll(createPayload(NotifyType::ItemChanged, QByteArray::fromStdString(localPath)));
 }
 
 void NotifyServer::notifySyncAdd(QString path)
 {
-    emit sendToAll("A", path.toUtf8());
+    emit sendToAll(createPayload(NotifyType::SyncAdded, path.toUtf8()));
 }
 
 void NotifyServer::notifySyncDel(QString path)
 {
-    emit sendToAll("D", path.toUtf8());
+    emit sendToAll(createPayload(NotifyType::SyncDeleted, path.toUtf8()));
 }
-
