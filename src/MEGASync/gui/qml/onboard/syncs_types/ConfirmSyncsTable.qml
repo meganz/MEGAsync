@@ -20,12 +20,14 @@ Rectangle {
     readonly property int headerRadius: 8
     readonly property int footerHeight: 40
     readonly property int footerRadius: 8
+    readonly property int syncCandidateHeight: 24
     readonly property int separatorHeight: 1
     readonly property int verticalMargin: 8
     readonly property int horitzontalMargin: 7
     readonly property int confirmTableHeight: 232
     readonly property int confirmTableRadius: 8
     readonly property int mainBorderZ: 1
+    readonly property int leftMarginAddSync: 16
 
     signal moveBack
 
@@ -51,8 +53,7 @@ Rectangle {
         Rectangle {
             id: header
 
-            anchors.right: parent.right
-            anchors.left: parent.left
+            Layout.fillWidth: true
             height: headerHeight
             color: ColorTheme.pageBackground
             radius: headerRadius
@@ -119,9 +120,9 @@ Rectangle {
 
             height: separatorHeight
             color: ColorTheme.borderSubtle
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.margins: horitzontalMargin
+            Layout.fillWidth: true
+            Layout.leftMargin: horitzontalMargin
+            Layout.rightMargin: horitzontalMargin
         }
 
         Rectangle {
@@ -133,9 +134,8 @@ Rectangle {
         ListView {
             id: listView
 
-            anchors.right: parent.right
-            anchors.left: parent.left
             Layout.fillHeight: true
+            Layout.fillWidth: true
             model: syncsCandidatesModel
             focus: true
             clip: true
@@ -158,9 +158,9 @@ Rectangle {
 
             height: separatorHeight
             color: ColorTheme.borderSubtle
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.margins: horitzontalMargin
+            Layout.fillWidth: true
+            Layout.leftMargin: horitzontalMargin
+            Layout.rightMargin: horitzontalMargin
         }
 
         Rectangle {
@@ -187,7 +187,7 @@ Rectangle {
                 anchors {
                     left: parent.left
                     verticalCenter: parent.verticalCenter
-                    leftMargin: 20
+                    leftMargin: leftMarginAddSync
                 }
                 text: qsTr("Add more syncs")
                 sizes: SmallSizes { borderLess: true }
@@ -215,8 +215,8 @@ Rectangle {
         Rectangle {
             id: groundDelegate
 
-            height: 24
             width: listView.width
+            height: syncCandidateHeight
 
             Rectangle {
                 id: syncRow
