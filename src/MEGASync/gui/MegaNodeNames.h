@@ -35,6 +35,16 @@ public:
         return tr("Rubbish bin");
     }
 
+    static QString getUndecryptedFileName()
+    {
+        return tr("Undecrypted file");
+    }
+
+    static QString getUndecryptedFolderName()
+    {
+        return tr("Undecrypted folder");
+    }
+
     static QString getRootNodeName(mega::MegaNode* node)
     {
         if(node)
@@ -55,16 +65,15 @@ public:
             }
             else
             {
-                return getUndecryptedName();
+                if (node->isFile())
+                {
+                    return getUndecryptedFileName();
+                }
+                return getUndecryptedFolderName();
             }
         }
 
         return QString();
-    }
-
-    static QString getUndecryptedName()
-    {
-        return QCoreApplication::translate("MegaError", "Decryption error");
     }
 };
 

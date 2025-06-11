@@ -398,7 +398,11 @@ public:
             {
                 if(isKeyUndecryped(info))
                 {
-                    return MegaNodeNames::getUndecryptedName();
+                    if (info->mIsFile)
+                    {
+                        return MegaNodeNames::getUndecryptedFileName();
+                    }
+                    return MegaNodeNames::getUndecryptedFolderName();
                 }
 
                 return info->getConflictedName();
@@ -415,9 +419,12 @@ public:
 
                 if(isKeyUndecryped(firstConflictedNameInfo))
                 {
-                    return MegaNodeNames::getUndecryptedName();
+                    if (firstConflictedNameInfo->mIsFile)
+                    {
+                        return MegaNodeNames::getUndecryptedFileName();
+                    }
+                    return MegaNodeNames::getUndecryptedFolderName();
                 }
-
                 return firstConflictedNameInfo->getConflictedName();
             }
 
