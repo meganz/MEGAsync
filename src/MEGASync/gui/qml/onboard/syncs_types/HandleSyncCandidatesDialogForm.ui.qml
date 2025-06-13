@@ -14,12 +14,14 @@ import syncs 1.0
 Rectangle {
     id: root
 
-    readonly property int dialogMargin: 24
+    readonly property int dialogMargin: 32
     readonly property int dialogWidth: 453
     readonly property int dialogHeight: 344
     readonly property int buttonsSpacing: 12
     readonly property int dialogRadius: 10
-    readonly property int defaultTopMargin: 16
+    readonly property int underTitleMargin: 24
+    readonly property int titleLineHeight: 24
+    readonly property int minButtonsSize: 80
 
     property alias localFolderChooser: localFolder
     property alias remoteFolderChooser: remoteFolder
@@ -29,40 +31,42 @@ Rectangle {
 
     color: ColorTheme.surface1
     radius: dialogRadius
-    width: root.dialogWidth
-    height: column.implicitHeight + 2 * dialogMargin
+    width: dialogWidth
+    height: dialogHeight
 
-    ColumnLayout {
+    Texts.RichText {
+        id: title
+
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.margins: dialogMargin
+        anchors.leftMargin: dialogMargin + Constants.focusBorderWidth
+
+        lineHeightMode: Text.FixedHeight
+        lineHeight: titleLineHeight
+        font {
+            pixelSize: Texts.Text.Size.MEDIUM_LARGE
+            weight: Font.DemiBold
+        }
+        text: qsTr("Select folders to sync")
+    }
+
+    Column {
         id: column
 
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-            margins: dialogMargin
-        }
-
-        spacing: Constants.defaultComponentSpacing
-
-        Texts.RichText {
-            id: title
-
-            lineHeightMode: Text.FixedHeight
-            lineHeight: 24
-            font {
-                pixelSize: Texts.Text.Size.MEDIUM_LARGE
-                weight: Font.DemiBold
-            }
-            text: qsTr("Select folders to sync")
-        }
+        anchors.top: title.bottom
+        anchors.topMargin: underTitleMargin
+        anchors.right: parent.right
+        anchors.left: parent.left
+        anchors.margins: dialogMargin
+        spacing: dialogMargin
 
         ChooseSyncFolder {
             id: localFolder
 
             title: SyncsStrings.selectLocalFolder
-            leftIconSource: Images.pc
-            Layout.preferredWidth: parent.width
-            Layout.topMargin: root.defaultTopMargin
+            leftIconSource: Images.pcwidth
         }
 
         ChooseSyncFolder {
@@ -70,28 +74,32 @@ Rectangle {
 
             title: SyncsStrings.selectMEGAFolder
             leftIconSource: Images.megaOutline
-            Layout.preferredWidth: parent.width
+        }
+    }
+
+    RowLayout {
+        id: buttonRow
+
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        anchors.margins: dialogMargin
+        layoutDirection: Qt.RightToLeft
+
+        PrimaryButton {
+            id: acceptButton
+
+            sizes.fillWidth: true
+            text: qsTr("Add")
+            Layout.minimumWidth: minButtonsSize
         }
 
-        Row {
-            id: buttonRow
+        OutlineButton {
+            id: cancelButton
 
-            Layout.topMargin: root.defaultTopMargin
-            Layout.alignment: Qt.AlignRight
-            layoutDirection: Qt.RightToLeft
-
-            PrimaryButton {
-                id: acceptButton
-
-                text: qsTr("Add")
-            }
-
-            OutlineButton {
-                id: cancelButton
-
-                text: qsTr("Cancel")
-                visible: true
-            }
+            text: qsTr("Cancel")
+            sizes.fillWidth: true
+            visible: true
+            Layout.minimumWidth: minButtonsSize
         }
     }
 }
