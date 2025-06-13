@@ -10,25 +10,25 @@ class NotifyServer: public QObject
 public:
     NotifyServer();
     virtual ~NotifyServer();
-    void notifyItemChange(const std::string& localPath);
-    void notifySyncAdd(QString path);
-    void notifySyncDel(QString path);
+    void notifyItemChange(const QString& localPath);
+    void notifySyncAdd(const QString& path);
+    void notifySyncDel(const QString& path);
 
- protected:
-     QLocalServer* mLocalServer;
+protected:
+    QLocalServer* mLocalServer;
 
- public Q_SLOTS:
-     void acceptConnection();
-     void onClientDisconnected();
-     void doSendToAll(const QByteArray& payload);
+public Q_SLOTS:
+    void acceptConnection();
+    void onClientDisconnected();
+    void doSendToAll(const QByteArray& payload);
 
- private:
-     enum class NotifyType : char
-     {
-         SyncAdded = 'A',
-         SyncDeleted = 'D',
-         ItemChanged = 'P',
-         EndLine = '\n'
+private:
+    enum class NotifyType : char
+    {
+        SyncAdded = 'A',
+        SyncDeleted = 'D',
+        ItemChanged = 'P',
+        EndLine = '\n'
      };
 
      MegaApplication* app;

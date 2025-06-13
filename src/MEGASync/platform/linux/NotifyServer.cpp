@@ -60,7 +60,7 @@ void NotifyServer::acceptConnection()
         // send the list of current synced folders to the new client
         int localFolders = 0;
         SyncInfo* model = SyncInfo::instance();
-        for (auto syncSetting: model->getAllSyncSettings())
+        for (auto& syncSetting: model->getAllSyncSettings())
         {
             QString c =
                 QDir::toNativeSeparators(QDir(syncSetting->getLocalFolder()).canonicalPath());
@@ -114,17 +114,17 @@ QByteArray NotifyServer::createPayload(NotifyType type, const QByteArray& data)
     return payload;
 }
 
-void NotifyServer::notifyItemChange(const std::string& localPath)
+void NotifyServer::notifyItemChange(const QString& localPath)
 {
-    emit sendToAll(createPayload(NotifyType::ItemChanged, QByteArray::fromStdString(localPath)));
+    emit sendToAll(createPayload(NotifyType::ItemChanged, localPath.toUtf8()));
 }
 
-void NotifyServer::notifySyncAdd(QString path)
+void NotifyServer::notifySyncAdd(const QString& path)
 {
     emit sendToAll(createPayload(NotifyType::SyncAdded, path.toUtf8()));
 }
 
-void NotifyServer::notifySyncDel(QString path)
+void NotifyServer::notifySyncDel(const QString& path)
 {
     emit sendToAll(createPayload(NotifyType::SyncDeleted, path.toUtf8()));
 }
