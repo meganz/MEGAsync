@@ -18,10 +18,12 @@ Rectangle {
     readonly property int headerMargin: 24
     readonly property int headerHeight: 40
     readonly property int headerRadius: 8
+    readonly property int headerSpacing: 8
     readonly property int footerHeight: 40
     readonly property int footerRadius: 8
     readonly property int syncCandidateHeight: 24
     readonly property int syncCandidateRadius: 4
+    readonly property int syncCandidateSpacing: 8
     readonly property int separatorHeight: 1
     readonly property int verticalMargin: 8
     readonly property int horitzontalMargin: 7
@@ -29,6 +31,9 @@ Rectangle {
     readonly property int confirmTableRadius: 8
     readonly property int mainBorderZ: 1
     readonly property int leftMarginAddSync: 16
+    readonly property int menuLeftMargin: 8
+    readonly property int separatorMargins: 4
+    readonly property int menuWidth: 179
 
     signal moveBack
 
@@ -71,7 +76,7 @@ Rectangle {
 
                     leftPadding: headerMargin
                     width: parent.width / 2
-                    spacing: headerMargin / 2
+                    spacing: headerSpacing
 
                     SvgImage {
                         id: localImage
@@ -95,7 +100,7 @@ Rectangle {
 
                     leftPadding: headerMargin
                     width: parent.width / 2
-                    spacing: headerMargin / 2
+                    spacing: headerSpacing
 
                     SvgImage {
                         id: remoteImage
@@ -240,7 +245,7 @@ Rectangle {
                     anchors.fill: parent
                     spacing: 0
 
-                    Row {
+                    RowLayout {
                         id: localFolderImageTextLayout
 
                         height: parent.height
@@ -257,8 +262,8 @@ Rectangle {
                             id: localFolderImageText
 
                             height: parent.height
-                            width: parent.width - syncImage.width
-                            spacing: headerMargin / 2
+                            Layout.fillWidth: true
+                            spacing: syncCandidateSpacing
 
                             SvgImage {
                                 id: localFolderImage
@@ -304,35 +309,45 @@ Rectangle {
                             }
                         }
 
+                        Rectangle {
+                            color: ColorTheme.surface1
+                            width: syncCandidateSpacing
+                            height: parent.height
+                        }
+
                         SvgImage {
                             id: syncImage
 
                             source: Images.syncsConfirm
                             sourceSize: Qt.size(12, 12)
-                            anchors.verticalCenter: parent.verticalCenter
                         }
                     }
 
-                    Row {
+                    RowLayout {
                         id: remoteFolderImageTextLayout
 
                         height: parent.height
                         width: parent.width / 2
-                        leftPadding: root.headerMargin
+                        spacing: 0
 
-                        Row {
+                        Rectangle {
+                            color: ColorTheme.surface1
+                            width: headerMargin
+                            height: parent.height
+                        }
+
+                        RowLayout {
                             id: remoteFolderImageText
 
                             height: parent.height
-                            width: parent.width - syncMenuButton.width - parent.leftPadding - root.headerMargin / 2
-                            spacing: root.headerMargin / 2
+                            Layout.fillWidth: true
+                            spacing: syncCandidateSpacing
 
                             SvgImage {
                                 id: remoteFolderImage
 
                                 source: Images.remoteSyncFolder
                                 sourceSize: Qt.size(16, 16)
-                                anchors.verticalCenter: parent.verticalCenter
                             }
 
                             Texts.Text {
@@ -343,8 +358,7 @@ Rectangle {
                                 color: ColorTheme.textPrimary
                                 elide: Text.ElideMiddle
                                 wrapMode: Text.NoWrap
-                                width: parent.width - remoteFolderImage.width - parent.spacing
-                                anchors.verticalCenter: parent.verticalCenter
+                                Layout.fillWidth: true
 
                                 TextMetrics {
                                     id: remoteTextMetrics
@@ -373,13 +387,18 @@ Rectangle {
                             }
                         }
 
+                        Rectangle {
+                            color: ColorTheme.surface1
+                            width: syncCandidateSpacing
+                            height: parent.height
+                        }
+
                         SvgImage {
                             id: syncMenuButton
 
                             source: Images.menuSync
                             sourceSize: Qt.size(16, 16)
                             color: ColorTheme.iconSecondary
-                            anchors.verticalCenter: parent.verticalCenter
 
                             MouseArea {
                                 anchors.fill: parent
@@ -393,10 +412,10 @@ Rectangle {
                             ContextMenu {
                                 id: menu
 
-                                width: 200
+                                width: menuWidth
 
                                 onFocusChanged: {
-                                    if(menu.activeFocus === false){
+                                    if (menu.activeFocus === false){
                                         menu.close();
                                     }
                                 }
@@ -423,8 +442,8 @@ Rectangle {
 
                                 QmlControlsv212.MenuSeparator {
                                     padding: 0
-                                    topPadding: 4
-                                    bottomPadding: 4
+                                    topPadding: separatorMargins
+                                    bottomPadding: separatorMargins
 
                                     contentItem: Rectangle {
                                         implicitWidth: parent.width
@@ -462,6 +481,12 @@ Rectangle {
                                     }
                                 }
                             }
+                        }
+
+                        Rectangle {
+                            color: ColorTheme.surface1
+                            width: menuLeftMargin
+                            height: parent.height
                         }
                     }
                 }
