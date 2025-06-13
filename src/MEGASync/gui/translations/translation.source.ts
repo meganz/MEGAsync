@@ -6164,9 +6164,14 @@ Enter a different name.</translation>
         <translation>Username:</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
-        <translatorcomment>Message shown when there is an error testing the proxy settings.</translatorcomment>
-        <translation>Your proxy settings are invalid or the proxy doesn’t respond</translation>
+        <source>We couldn’t connect using your proxy settings. Check your proxy details or try a different network.</source>
+        <translatorcomment>Error banner shown when there is an error testing the proxy settings. SNC-5411</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
+        <translatorcomment>Error banner shown when proxy settings is not found in the environment, [B] is for bold . SNC-5411</translatorcomment>
+        <translation></translation>
     </message>
 </context>
 <context>
