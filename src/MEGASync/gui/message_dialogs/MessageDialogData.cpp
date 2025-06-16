@@ -71,7 +71,8 @@ MessageDialogTextInfo::TextFormat MessageDialogTextInfo::getFormat() const
 // MessageDialogResult
 // =================================================================================================
 
-MessageDialogResult::MessageDialogResult():
+MessageDialogResult::MessageDialogResult(QObject* parent):
+    QObject(parent),
     mButton(QMessageBox::StandardButton::NoButton),
     mChecked(false)
 {}
@@ -131,7 +132,7 @@ MessageDialogData::MessageDialogData(Type type, MessageDialogInfo info, QObject*
     QObject(parent),
     mType(type),
     mInfo(info),
-    mResult(new MessageDialogResult)
+    mResult(new MessageDialogResult(this))
 {
     updateWidgetsByType();
     buildButtons();
@@ -224,6 +225,7 @@ void MessageDialogData::buttonClicked(QMessageBox::StandardButton type)
         return;
     }
 
+    mResult->setChecked(mInfo.checkboxChecked);
     mResult->setButton(type);
 }
 
@@ -251,7 +253,6 @@ void MessageDialogData::setCheckboxChecked(bool checked)
     }
 
     mInfo.checkboxChecked = checked;
-    mResult->setChecked(checked);
     emit checkboxChanged();
 }
 
