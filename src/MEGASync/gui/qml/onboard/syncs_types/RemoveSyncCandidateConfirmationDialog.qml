@@ -17,6 +17,9 @@ Window {
     readonly property int dialogHorizontalMargin: 16
     readonly property int dialogContentHeight: 96
     readonly property int dialogContentSpacing: 8
+    readonly property int titleLineHeight: 30
+    readonly property int descriptionLineHeight: 24
+    readonly property int minButtonsSize: 80
 
     property alias titleText: title.text
     property alias bodyText: body.text
@@ -45,6 +48,7 @@ Window {
             anchors {
                 fill: parent
                 topMargin: dialogTopMargin
+                bottomMargin: dialogTopMargin
                 leftMargin: dialogHorizontalMargin
                 rightMargin: dialogHorizontalMargin
             }
@@ -52,7 +56,7 @@ Window {
             RowLayout {
                 id: rowLayout
 
-                width: mainColumn.width
+                width: parent.width
                 height: dialogContentHeight
                 spacing: dialogHorizontalMargin
 
@@ -66,15 +70,17 @@ Window {
                 ColumnLayout {
                     id: contentLayout
 
+                    Layout.fillWidth: true
                     spacing: dialogContentSpacing
 
                     Texts.Text {
                         id: title
 
+                        Layout.fillWidth: true
                         lineHeightMode: Text.FixedHeight
-                        lineHeight: 24
+                        lineHeight: titleLineHeight
                         font {
-                            pixelSize: Texts.Text.Size.MEDIUM_LARGE
+                            pixelSize: Texts.Text.Size.LARGE
                             weight: Font.DemiBold
                         }
                     }
@@ -82,48 +88,44 @@ Window {
                     Texts.Text {
                         id: body
 
-                        Layout.preferredWidth: 416
+                        Layout.fillWidth: true
                         lineHeightMode: Text.FixedHeight
-                        lineHeight: 18
-                        font.pixelSize: Texts.Text.Size.NORMAL
+                        lineHeight: descriptionLineHeight
+                        font.pixelSize: Texts.Text.Size.MEDIUM_LARGE
                     }
                 }
 
             }
 
-            Item {
-                id: buttonsLayout
+            RowLayout {
+                id: buttonRow
 
                 anchors {
                     right: mainColumn.right
                     rightMargin: Constants.focusAdjustment
-                    left: mainColumn.left
                 }
-                height: acceptButton.height + 2 * acceptButton.sizes.focusBorderWidth
-
-                OutlineButton {
-                    id: cancelButton
-
-                    anchors{
-                        right: acceptButton.left
-                        verticalCenter: parent.verticalCenter
-                    }
-                    implicitWidth: 16
-                    onClicked: {
-                        root.close();
-                    }
-                }
+                layoutDirection: Qt.RightToLeft
 
                 PrimaryButton {
                     id: acceptButton
 
-                    anchors{
-                        right: parent.right
-                        verticalCenter: parent.verticalCenter
-                    }
+                    sizes.fillWidth: true
+                    Layout.minimumWidth: minButtonsSize
 
                     onClicked: {
                         root.accepted();
+                    }
+                }
+
+                OutlineButton {
+                    id: cancelButton
+
+                    sizes.fillWidth: true
+                    visible: true
+                    Layout.minimumWidth: minButtonsSize
+
+                    onClicked: {
+                        root.close();
                     }
                 }
             }

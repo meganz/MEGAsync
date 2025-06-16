@@ -66,7 +66,7 @@ Rectangle {
             id: localFolder
 
             title: SyncsStrings.selectLocalFolder
-            leftIconSource: Images.pcwidth
+            leftIconSource: Images.pc
         }
 
         ChooseSyncFolder {

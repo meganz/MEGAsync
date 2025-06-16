@@ -465,7 +465,7 @@ Rectangle {
                                     RemoveSyncCandidateConfirmationDialog {
                                         id: removeSyncDialog
 
-                                        titleText: qsTr("Remove sync")
+                                        titleText: qsTr("Remove sync?")
                                         bodyText: modelCount === 1 ? qsTr("Removing this sync will take you back to the start of setup.") : qsTr("Are you sure you want to remove the selected sync?")
                                         cancelButtonText: qsTr("Cancel")
                                         acceptButtonText: qsTr("Remove")
