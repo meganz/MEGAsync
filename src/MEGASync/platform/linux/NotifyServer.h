@@ -7,30 +7,37 @@ class NotifyServer: public QObject
 {
     Q_OBJECT
 
- public:
+public:
     NotifyServer();
     virtual ~NotifyServer();
-    void notifyItemChange(std::string *localPath);
-    void notifySyncAdd(QString path);
-    void notifySyncDel(QString path);
+    void notifyItemChange(const QString& localPath);
+    void notifySyncAdd(const QString& path);
+    void notifySyncDel(const QString& path);
 
- protected:
-    QLocalServer *m_localServer;
+protected:
+    QLocalServer* mLocalServer;
 
- public Q_SLOTS:
+public Q_SLOTS:
     void acceptConnection();
     void onClientDisconnected();
-    void doSendToAll(const char *type, QByteArray str);
+    void doSendToAll(const QByteArray& payload);
 
- private:
-    MegaApplication *app;
-    QString sockPath;
-    QList<QLocalSocket *> m_clients;
+private:
+    enum class NotifyType : char
+    {
+        SyncAdded = 'A',
+        SyncDeleted = 'D',
+        ItemChanged = 'P',
+        EndLine = '\n'
+     };
 
-signals:
-    void sendToAll(const char *type, QByteArray str);
+     MegaApplication* app;
+     QString mSockPath;
+     QList<QLocalSocket*> mClients;
+     QByteArray createPayload(NotifyType type, const QByteArray& data);
 
+ signals:
+     void sendToAll(const QByteArray& str);
 };
 
 #endif
-
