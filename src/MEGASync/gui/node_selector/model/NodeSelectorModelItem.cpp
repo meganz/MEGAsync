@@ -286,7 +286,7 @@ NodeSelectorModelItem::Status NodeSelectorModelItem::getStatus() const
 
 bool NodeSelectorModelItem::isSyncable()
 {
-    return mStatus != Status::SYNC && mStatus != Status::SYNC_PARENT &&
+    return !isInRubbishBin() && mStatus != Status::SYNC && mStatus != Status::SYNC_PARENT &&
            mStatus != Status::SYNC_CHILD && mStatus != Status::BACKUP &&
            getNodeAccess() >= mega::MegaShare::ACCESS_FULL;
 }

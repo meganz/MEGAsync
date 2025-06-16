@@ -977,6 +977,18 @@ bool NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
                     mUpdatedButInvisibleNodes.append(UpdateNodesInfo(node, index));
                 }
             }
+            else if (node->getChanges() & MegaNode::CHANGE_TYPE_ATTRIBUTES)
+            {
+                if (existenceType == NodeState::EXISTS)
+                {
+                    mUpdatedNodes.append(UpdateNodesInfo(node, index));
+                }
+                else if (existenceType == NodeState::ADD)
+                {
+                    mUpdatedNodesBeforeAdded.insert(node->getHandle(),
+                                                    UpdateNodesInfo(node, index));
+                }
+            }
         }
     }
 
@@ -1351,7 +1363,16 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
 
                 for (const auto& info: infos)
                 {
-                    addedNodes.append(info.node);
+                    auto handle(info.handle);
+
+                    if (mUpdatedNodesBeforeAdded.contains(handle))
+                    {
+                        addedNodes.append(mUpdatedNodesBeforeAdded.take(handle).node);
+                    }
+                    else
+                    {
+                        addedNodes.append(info.node);
+                    }
                 }
 
                 if (!mModel->addNodes(addedNodes, parentIndex))
