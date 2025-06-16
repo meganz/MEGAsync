@@ -2518,6 +2518,8 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
 void MegaApplication::createInfoDialog()
 {
     infoDialog = new InfoDialog(this);
+    TokenParserWidgetManager::instance()->applyCurrentTheme(infoDialog);
+    TokenParserWidgetManager::instance()->registerWidgetForTheming(infoDialog);
     connect(infoDialog.data(), &InfoDialog::dismissStorageOverquota,
             this, &MegaApplication::onDismissStorageOverquota);
     connect(infoDialog.data(), &InfoDialog::transferOverquotaMsgVisibilityChange,

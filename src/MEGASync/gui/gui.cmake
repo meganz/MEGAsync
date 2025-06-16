@@ -299,10 +299,8 @@ target_sources_conditional(${ExecutableTarget}
     FLAG WIN32
     QT_AWARE
     PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/win/InfoDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/UploadToMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/MegaProgressCustomDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/StatusInfo.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/PSAwidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/AlertItem.ui
@@ -327,10 +325,8 @@ target_sources_conditional(${ExecutableTarget}
    FLAG APPLE
    QT_AWARE
    PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/macx/InfoDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/UploadToMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/MegaProgressCustomDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/StatusInfo.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/PSAwidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/AlertItem.ui
@@ -355,10 +351,8 @@ target_sources_conditional(${ExecutableTarget}
     FLAG UNIX AND NOT APPLE
     QT_AWARE
     PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/linux/InfoDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/UploadToMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/MegaProgressCustomDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/StatusInfo.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/PSAwidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/AlertItem.ui
@@ -548,10 +542,11 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/ImportListWidgetItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/ImportMegaLinksDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/PasteMegaLinksDialog.ui
-
-
-    ${CMAKE_CURRENT_LIST_DIR}/ui/TabSelector.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/SearchLineEdit.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/TabSelector.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/SyncAccountFullMessage.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/InfoDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/StatusInfo.ui
 )
 
 target_sources_conditional(${ExecutableTarget}

@@ -240,7 +240,6 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
 
     mState = StatusInfo::TRANSFERS_STATES::STATE_STARTING;
     ui->wStatus->setState(mState);
-
     megaApi = app->getMegaApi();
 
     actualAccountType = -1;

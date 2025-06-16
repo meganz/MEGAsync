@@ -79,7 +79,6 @@ target_sources_conditional(${ExecutableTarget}
    ${CMAKE_CURRENT_LIST_DIR}/gui/win/InfoDialogTransferDelegateWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/win/InfoDialogTransferLoadingItem.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransfersStatusWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransfersSummaryWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/win/SomeIssuesOccurredMessage.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransfersAccountInfoWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/win/MediaTypeFilterWidget.ui
@@ -99,7 +98,6 @@ target_sources_conditional(${ExecutableTarget}
    ${CMAKE_CURRENT_LIST_DIR}/gui/macx/InfoDialogTransferDelegateWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/macx/InfoDialogTransferLoadingItem.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransfersStatusWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransfersSummaryWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/macx/SomeIssuesOccurredMessage.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransfersAccountInfoWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/macx/MediaTypeFilterWidget.ui
@@ -119,7 +117,6 @@ target_sources_conditional(${ExecutableTarget}
    ${CMAKE_CURRENT_LIST_DIR}/gui/linux/InfoDialogTransferDelegateWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/linux/InfoDialogTransferLoadingItem.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransfersStatusWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransfersSummaryWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/linux/SomeIssuesOccurredMessage.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransfersAccountInfoWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/linux/MediaTypeFilterWidget.ui

@@ -6,6 +6,7 @@
 #include <QGraphicsOpacityEffect>
 #include <QPainter>
 #include <QPainterPath>
+#include <QStyle>
 #include <QTimer>
 #include <QtMath>
 
@@ -67,14 +68,12 @@ void TransfersSummaryWidget::setPaused(bool value)
     if (value != paused)
     {
         paused = value;
-        const char* iconFile = (paused) ? ":/images/resume.png" : ":/images/pause.png";
+        QString iconProperty = QLatin1String(paused ? "pause" : "resume");
         const int iconSize(getIconSize());
-
-        QIcon icon(QString::fromLatin1(iconFile));
-
-        ui->bpause->setIcon(icon);
+        ui->bpause->setProperty("state", iconProperty);
         ui->bpause->setIconSize(QSize(iconSize, iconSize));
     }
+    ui->bpause->style()->polish(ui->bpause);
 }
 
 void TransfersSummaryWidget::setPauseEnabled(bool value)

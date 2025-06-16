@@ -35,23 +35,47 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#lStatusDesc
-{
-color: #666666;
-font-family: &quot;Lato&quot;;
-font-size: 13px;
-}
-#bIconState
+   <string notr="true">#bIconState
 {
 border: none;
+margin-top: 4px;
+qproperty-iconSize: 16px 16px;
+}
+#bIconState[state=&quot;paused&quot;]
+{
+qproperty-icon: url(:/images/themed/light/pause.svg); /*replaceThemeToken*/
+qproperty-iconSize: 16px 16px;
+}
+#bIconState[state=&quot;over_quota&quot;]
+{
+qproperty-icon: url(:/images/themed/light/alert-circle.svg); /*replaceThemeToken*/
+qproperty-iconSize: 16px 16px;
+}
+#bIconState[state=&quot;updated&quot;]
+{
+qproperty-icon:  url(:/images/themed/light/check-circle.svg); /*replaceThemeToken*/
+qproperty-iconSize: 16px 16px;
+}
+#bIconState[state=&quot;failed&quot;]
+{
+qproperty-icon: url(:/images/themed/light/x-circle.svg); /*replaceThemeToken*/
+qproperty-iconSize: 16px 16px;
+}
+#bIconState[state=&quot;syncing&quot;],
+#bIconState[state=&quot;waiting&quot;], 
+#bIconState[state=&quot;indexing&quot;],
+#bIconState[state=&quot;transferring&quot;]
+{
+    qproperty-icon: none;
+    qproperty-iconSize: 24px 24px;
 }</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
+  <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
    <property name="spacing">
-    <number>6</number>
+    <number>4</number>
    </property>
    <property name="leftMargin">
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="topMargin">
     <number>0</number>
@@ -72,8 +96,8 @@ border: none;
      </property>
      <property name="minimumSize">
       <size>
-       <width>31</width>
-       <height>31</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="maximumSize">
@@ -85,11 +109,6 @@ border: none;
      <property name="mouseTracking">
       <bool>true</bool>
      </property>
-     <property name="styleSheet">
-      <string notr="true">#bIconState {
-margin-top: 4px;
-}</string>
-     </property>
      <property name="text">
       <string/>
      </property>
@@ -100,8 +119,8 @@ margin-top: 4px;
      </property>
      <property name="iconSize">
       <size>
-       <width>24</width>
-       <height>24</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
     </widget>
