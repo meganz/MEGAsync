@@ -20,6 +20,7 @@ Window {
     readonly property int titleLineHeight: 30
     readonly property int descriptionLineHeight: 24
     readonly property int minButtonsSize: 80
+    readonly property int mainColSpacing: 13
 
     property alias titleText: title.text
     property alias bodyText: body.text
@@ -52,6 +53,8 @@ Window {
                 leftMargin: dialogHorizontalMargin
                 rightMargin: dialogHorizontalMargin
             }
+
+            spacing: mainColSpacing
 
             RowLayout {
                 id: rowLayout
@@ -94,23 +97,20 @@ Window {
                         font.pixelSize: Texts.Text.Size.MEDIUM_LARGE
                     }
                 }
-
             }
 
-            RowLayout {
+            Row {
                 id: buttonRow
 
-                anchors {
-                    right: mainColumn.right
-                    rightMargin: Constants.focusAdjustment
-                }
+                anchors.right: mainColumn.right
+                anchors.rightMargin: Constants.focusAdjustment
                 layoutDirection: Qt.RightToLeft
 
                 PrimaryButton {
                     id: acceptButton
 
-                    sizes.fillWidth: true
-                    Layout.minimumWidth: minButtonsSize
+                    icons.source: Images.cross
+                    icons.position: Icon.Position.LEFT
 
                     onClicked: {
                         root.accepted();
@@ -120,9 +120,7 @@ Window {
                 OutlineButton {
                     id: cancelButton
 
-                    sizes.fillWidth: true
                     visible: true
-                    Layout.minimumWidth: minButtonsSize
 
                     onClicked: {
                         root.close();
