@@ -16,8 +16,10 @@ import onboard 1.0
 FooterButtonsPage {
     id: root
 
-    readonly property int maxSizeDescription: 80
     readonly property int buttonQuestionMargin: 24
+    readonly property int topMargin: 8
+    readonly property int topMainQuestionMarging: 32
+    readonly property int topButtonGroupMargin: 16
 
     property alias buttonGroup: buttonGroupItem
     property alias syncButton: syncButtonItem
@@ -43,6 +45,7 @@ FooterButtonsPage {
             left: parent.left
             right: parent.right
         }
+        spacing: 0
 
         Texts.Text {
             id: titleItem
@@ -59,7 +62,7 @@ FooterButtonsPage {
             id: descriptionItem
 
             Layout.preferredWidth: parent.width
-            Layout.topMargin: 8
+            Layout.topMargin: topMargin
             font.pixelSize: Texts.Text.Size.MEDIUM
             wrapMode: Text.Wrap
             text: SyncsStrings.finalStepSync
@@ -75,13 +78,13 @@ FooterButtonsPage {
             backgroundColor: ColorTheme.notificationError
             icon: Images.xCircle
             Layout.preferredWidth: parent.width
-            Layout.topMargin: 8
-            Layout.bottomMargin: 15
+            Layout.topMargin: topMargin
         }
 
         Texts.SecondaryText {
             id: descriptionItem2
 
+            Layout.topMargin: topMargin
             Layout.preferredWidth: parent.width
             font.pixelSize: Texts.Text.Size.MEDIUM
             wrapMode: Text.Wrap
@@ -91,7 +94,7 @@ FooterButtonsPage {
             id: finalStepQuestionText
 
             Layout.preferredWidth: parent.width
-            Layout.topMargin: (descriptionItem.height > maxSizeDescription) ? (buttonQuestionMargin * 0.5) : buttonQuestionMargin
+            Layout.topMargin: topMainQuestionMarging
             text: OnboardingStrings.finalStepQuestion
             font {
                 pixelSize: Texts.Text.Size.MEDIUM_LARGE
@@ -102,8 +105,8 @@ FooterButtonsPage {
         Item {
             id: buttons
 
-            Layout.preferredWidth: parent.width + 8
-            Layout.topMargin: (descriptionItem.height > maxSizeDescription) ? (buttonQuestionMargin * 0.5) : buttonQuestionMargin
+            Layout.preferredWidth: parent.width + (2 * Constants.focusBorderWidth)
+            Layout.topMargin: topButtonGroupMargin
 
             ButtonGroup {
                 id: buttonGroupItem
@@ -114,15 +117,15 @@ FooterButtonsPage {
 
                 anchors {
                     fill: parent
-                    leftMargin: -syncButtonItem.focusBorderWidth
-                    rightMargin: backupsButton.focusBorderWidth
+                    leftMargin: -Constants.focusBorderWidth
+                    rightMargin: Constants.focusBorderWidth
                 }
                 spacing: 12
 
                 SyncsVerticalButton {
                     id: syncButtonItem
 
-                    width: (parent.width - parent.spacing) / 2
+                    Layout.fillWidth: true
                     title: SyncsStrings.sync
                     description: OnboardingStrings.finalPageButtonSelectiveSync
                     imageSource: Images.sync
@@ -134,9 +137,7 @@ FooterButtonsPage {
                 SyncsVerticalButton {
                     id: backupsButton
 
-                    width: !syncButtonItem.visible
-                           ? parent.width
-                           : (parent.width - parent.spacing) / 2
+                    Layout.fillWidth: true
                     title: OnboardingStrings.backup
                     description: OnboardingStrings.finalPageButtonBackup
                     imageSource: Images.installationTypeBackups
