@@ -213,7 +213,7 @@ void Syncs::setDefaultLocalFolder()
     QString defaultFolder = localFolderChooser.getDefaultFolder(getDefaultMegaFolder());
 
     if (mSyncsData->mSyncOrigin != SyncInfo::SyncOrigin::ONBOARDING_ORIGIN &&
-        !mRemoteFolder.isEmpty())
+        !mSyncsData->getRemoteFolderCandidate().isEmpty())
     {
         defaultFolder.clear();
     }
@@ -233,9 +233,9 @@ void Syncs::setDefaultRemoteFolder()
     QString defaultFolder = getDefaultMegaPath();
 
     if (mSyncsData->mSyncOrigin != SyncInfo::SyncOrigin::ONBOARDING_ORIGIN &&
-        !mRemoteFolder.isEmpty())
+        !mSyncsData->getRemoteFolderCandidate().isEmpty())
     {
-        defaultFolder = mRemoteFolder;
+        defaultFolder = mSyncsData->getRemoteFolderCandidate();
     }
 
     if (!checkRemoteSync(defaultFolder))
@@ -254,19 +254,10 @@ void Syncs::setSyncOrigin(SyncInfo::SyncOrigin origin)
     {
         mSyncsData->mSyncOrigin = origin;
 
-        setDefaultLocalFolder();
-        setDefaultRemoteFolder();
+        updateDefaultFolders();
 
         emit mSyncsData->syncOriginChanged();
     }
-}
-
-void Syncs::setRemoteFolder(const QString& remoteFolder)
-{
-    mRemoteFolder = remoteFolder;
-
-    setDefaultLocalFolder();
-    setDefaultRemoteFolder();
 }
 
 bool Syncs::checkErrorsOnSyncPaths(const QString& localPath, const QString& remotePath)
@@ -674,10 +665,14 @@ void Syncs::onLanguageChanged()
 
 void Syncs::setRemoteFolderCandidate(const QString& remoteFolderCandidate)
 {
+    updateDefaultFolders();
+
     mSyncsData->setRemoteFolderCandidate(remoteFolderCandidate);
 }
 
 void Syncs::setLocalFolderCandidate(const QString& localFolderCandidate)
 {
+    updateDefaultFolders();
+
     mSyncsData->setLocalFolderCandidate(localFolderCandidate);
 }

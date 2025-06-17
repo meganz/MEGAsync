@@ -67,7 +67,7 @@ void SyncsComponent::setSyncOrigin(SyncInfo::SyncOrigin origin)
 
 void SyncsComponent::setRemoteFolder(const QString& remoteFolder)
 {
-    mSyncs->setRemoteFolder(remoteFolder);
+    mSyncs->setRemoteFolderCandidate(remoteFolder);
 }
 
 void SyncsComponent::setLocalFolder(const QString& localFolder)

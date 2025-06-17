@@ -36,7 +36,6 @@ public:
     void confirmSyncCandidates();
     void setSyncOrigin(SyncInfo::SyncOrigin origin);
 
-    void setRemoteFolder(const QString& remoteFolder);
     void setRemoteFolderCandidate(const QString& remoteFolderCandidate);
     void setLocalFolderCandidate(const QString& localFolderCandidate);
     void updateDefaultFolders();
@@ -99,7 +98,6 @@ private:
     std::optional<LocalErrors> mLocalError;
     std::optional<RemoteErrors> mRemoteError;
     QString mRemoteStringMessage;
-    QString mRemoteFolder;
 
     bool checkErrorsOnSyncPaths(const QString& localPath, const QString& remotePath);
     void helperCheckLocalSync(const QString& path);
