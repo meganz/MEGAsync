@@ -1,7 +1,6 @@
 #include "SyncsComponent.h"
 
 #include "AddExclusionRule.h"
-#include "ChooseFolder.h"
 #include "DialogOpener.h"
 #include "Syncs.h"
 #include "SyncsData.h"
@@ -17,31 +16,12 @@ SyncsComponent::SyncsComponent(QObject* parent):
 
     QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsComponentAccess"),
                                                    this);
+
     QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsDataAccess"),
                                                    mSyncs->getSyncsData());
 
     QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsCandidatesModel"),
                                                    mSyncs->getSyncsCandidadtesModel());
-
-    connect(&mRemoteFolderChooser,
-            &ChooseRemoteFolder::folderChosen,
-            this,
-            &SyncsComponent::onRemoteFolderChosen);
-
-    connect(&mLocalFolderChooser,
-            &ChooseLocalFolder::folderChosen,
-            this,
-            &SyncsComponent::onLocalFolderChosen);
-
-    connect(mSyncs->getSyncsData(),
-            &SyncsData::defaultLocalFolderChanged,
-            this,
-            &SyncsComponent::onLocalFolderChosen);
-
-    connect(mSyncs->getSyncsData(),
-            &SyncsData::defaultRemoteFolderChanged,
-            this,
-            &SyncsComponent::onRemoteFolderChosen);
 }
 
 void SyncsComponent::confirmSyncCandidateButtonClicked()
@@ -49,19 +29,14 @@ void SyncsComponent::confirmSyncCandidateButtonClicked()
     mSyncs->confirmSyncCandidates();
 }
 
-void SyncsComponent::onRemoteFolderChosen(QString remotePath)
-{
-    mSyncs->setRemoteFolderCandidate(remotePath);
-}
-
-void SyncsComponent::onLocalFolderChosen(QString localPath)
-{
-    mSyncs->setLocalFolderCandidate(localPath);
-}
-
 void SyncsComponent::exclusionsButtonClicked()
 {
     openExclusionsDialog(mSyncs->getSyncsData()->getLocalFolderCandidate());
+}
+
+void SyncsComponent::updateDefaultFolders()
+{
+    mSyncs->updateDefaultFolders();
 }
 
 QUrl SyncsComponent::getQmlUrl()

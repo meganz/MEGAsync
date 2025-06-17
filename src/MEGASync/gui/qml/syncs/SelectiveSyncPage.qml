@@ -20,7 +20,6 @@ SelectiveSyncPageForm {
             visible: syncsDataAccess.localError.length !== 0
         }
         error: syncsDataAccess.localError.length !== 0
-        text: syncsDataAccess.localFolderCandidate
     }
 
     remoteFolderChooser.folderField {
@@ -29,7 +28,6 @@ SelectiveSyncPageForm {
             visible: syncsDataAccess.remoteError.length !== 0
         }
         error: syncsDataAccess.remoteError.length !== 0
-        text: syncsDataAccess.remoteFolderCandidate
     }
 
     localFolderChooser.onButtonClicked: {

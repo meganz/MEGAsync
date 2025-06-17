@@ -49,7 +49,7 @@ Rectangle {
             pixelSize: Texts.Text.Size.MEDIUM_LARGE
             weight: Font.DemiBold
         }
-        text: qsTr("Select folders to sync")
+        text: SyncsStrings.selectiveSyncTitle
     }
 
     Column {

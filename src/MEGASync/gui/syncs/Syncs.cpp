@@ -225,7 +225,7 @@ void Syncs::setDefaultLocalFolder()
     }
 
     mSyncsData->mDefaultLocalFolder = defaultFolder;
-    emit mSyncsData->defaultLocalFolderChanged(defaultFolder);
+    emit mSyncsData->defaultLocalFolderChanged();
 }
 
 void Syncs::setDefaultRemoteFolder()
@@ -245,7 +245,7 @@ void Syncs::setDefaultRemoteFolder()
     }
 
     mSyncsData->mDefaultRemoteFolder = defaultFolder;
-    emit mSyncsData->defaultRemoteFolderChanged(defaultFolder);
+    emit mSyncsData->defaultRemoteFolderChanged();
 }
 
 void Syncs::setSyncOrigin(SyncInfo::SyncOrigin origin)

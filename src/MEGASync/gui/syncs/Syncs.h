@@ -39,6 +39,7 @@ public:
     void setRemoteFolder(const QString& remoteFolder);
     void setRemoteFolderCandidate(const QString& remoteFolderCandidate);
     void setLocalFolderCandidate(const QString& localFolderCandidate);
+    void updateDefaultFolders();
 
     static QString getDefaultMegaFolder();
     static QString getDefaultMegaPath();
@@ -113,7 +114,6 @@ private:
     bool setErrorIfExist(int errorCode, int syncErrorCode);
     void syncHelper(bool onlyPrevalidate, const QString& localFolder, const QString& megaFolder);
     void moveNextCandidateSyncModel(bool errorOnCurrent);
-    void updateDefaultFolders();
     bool checkExistInModel(const QString& path,
                            SyncsCandidatesModel::SyncsCandidadteModelRole pathRole);
 };

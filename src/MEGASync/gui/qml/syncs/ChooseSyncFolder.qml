@@ -67,8 +67,7 @@ FocusScope {
         target: syncsDataAccess
 
         function onSyncRemoved() {
-            // Check if MEGA is available again when removed
-            folderItem.text = syncsComponentAccess.getInitialLocalFolder()
+            syncsComponentAccess.updateDefaultFolders();
         }
     }
 }

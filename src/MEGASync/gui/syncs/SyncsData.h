@@ -40,8 +40,8 @@ signals:
     void syncPrevalidationFailed();
     void syncRemoved();
     void syncOriginChanged();
-    void defaultLocalFolderChanged(QString localPath);
-    void defaultRemoteFolderChanged(QString remotePath);
+    void defaultLocalFolderChanged();
+    void defaultRemoteFolderChanged();
     void remoteFolderCandidateChanged();
     void localFolderCandidateChanged();
 
