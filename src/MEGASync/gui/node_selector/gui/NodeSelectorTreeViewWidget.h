@@ -244,6 +244,8 @@ private:
             index(index)
         {}
 
+        UpdateNodesInfo() {}
+
         mega::MegaHandle parentHandle = mega::INVALID_HANDLE;
         mega::MegaHandle handle = mega::INVALID_HANDLE;
         std::shared_ptr<mega::MegaNode> node;
@@ -255,6 +257,7 @@ private:
     QList<UpdateNodesInfo> mRenamedNodesByHandle;
     QList<UpdateNodesInfo> mUpdatedNodes;
     QMultiMap<mega::MegaHandle, UpdateNodesInfo> mAddedNodesByParentHandle;
+    QMap<mega::MegaHandle, UpdateNodesInfo> mUpdatedNodesBeforeAdded;
     QList<UpdateNodesInfo> mRemovedNodes;
     QList<UpdateNodesInfo> mRemoveMovedNodes;
     QList<UpdateNodesInfo> mUpdatedButInvisibleNodes;
