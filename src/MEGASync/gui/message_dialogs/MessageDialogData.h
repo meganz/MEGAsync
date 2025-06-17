@@ -87,7 +87,8 @@ class MessageDialogResult: public QObject
     Q_OBJECT
 
 public:
-    MessageDialogResult();
+    MessageDialogResult(QObject* parent);
+
     virtual ~MessageDialogResult() = default;
 
     void setButton(QMessageBox::StandardButton button);
