@@ -48,19 +48,18 @@ QVariant SyncsCandidatesModel::data(const QModelIndex& index, int role) const
     {
         case SyncsCandidadteModelRole::LOCAL_FOLDER:
         {
-            returnValue = QString::fromLatin1(syncCandidate.first.c_str());
-            return returnValue;
+            returnValue = QString::fromUtf8(syncCandidate.first.c_str());
+            break;
         }
 
         case SyncsCandidadteModelRole::MEGA_FOLDER:
         {
-            returnValue = QString::fromLatin1(syncCandidate.second.c_str());
-            return returnValue;
+            returnValue = QString::fromUtf8(syncCandidate.second.c_str());
+            break;
         }
-
-        default:
-            return returnValue;
     }
+
+    return returnValue;
 }
 
 QModelIndex SyncsCandidatesModel::index(int row, int column, const QModelIndex& modelIndex) const
