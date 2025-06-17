@@ -925,6 +925,11 @@ bool NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
                         {
                             if (!node->isFile() || mModel->showFiles())
                             {
+                                if (mUpdatedNodesBeforeAdded.contains(node->getHandle()))
+                                {
+                                    mUpdatedNodesBeforeAdded.remove(node->getHandle());
+                                }
+
                                 mAddedNodesByParentHandle.insert(node->getParentHandle(),
                                                                  UpdateNodesInfo(node, index));
                             }
@@ -1389,6 +1394,7 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
             }
 
             mAddedNodesByParentHandle.clear();
+            mUpdatedNodesBeforeAdded.clear();
         }
 
         mModel->moveProcessedByNumber(moveProcessedCounter);
