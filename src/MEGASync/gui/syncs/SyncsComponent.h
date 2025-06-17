@@ -32,7 +32,6 @@ public:
     Q_INVOKABLE void closeDialogButtonClicked();
     Q_INVOKABLE void viewSyncsInSettingsButtonClicked();
     Q_INVOKABLE void exclusionsButtonClicked();
-    Q_INVOKABLE void updateDefaultFolders();
 
     void setSyncOrigin(SyncInfo::SyncOrigin origin);
     void setRemoteFolder(const QString& remoteFolder);
@@ -40,6 +39,8 @@ public:
 
 private:
     std::unique_ptr<Syncs> mSyncs;
+
+    void updateDefaultFolders();
 };
 
 #endif // SYNCS_COMPONENT_H

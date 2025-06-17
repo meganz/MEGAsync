@@ -99,12 +99,16 @@ void SyncsComponent::clearLocalFolderErrorHint()
 void SyncsComponent::syncButtonClicked(const QString& localFolder, const QString& megaFolder)
 {
     mSyncs->addSync(localFolder, megaFolder);
+
+    updateDefaultFolders();
 }
 
 void SyncsComponent::addSyncCandidadeButtonClicked(const QString& localFolder,
                                                    const QString& megaFolder)
 {
     mSyncs->addSyncCandidate(localFolder, megaFolder);
+
+    updateDefaultFolders();
 }
 
 void SyncsComponent::editSyncCandidadeButtonClicked(const QString& localFolder,
@@ -113,6 +117,8 @@ void SyncsComponent::editSyncCandidadeButtonClicked(const QString& localFolder,
                                                     const QString& originalMegaFolder)
 {
     mSyncs->editSyncCandidate(localFolder, megaFolder, originalLocalFolder, originalMegaFolder);
+
+    updateDefaultFolders();
 }
 
 void SyncsComponent::removeSyncCandidadeButtonClicked(const QString& localFolder,

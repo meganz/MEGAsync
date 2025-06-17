@@ -665,14 +665,10 @@ void Syncs::onLanguageChanged()
 
 void Syncs::setRemoteFolderCandidate(const QString& remoteFolderCandidate)
 {
-    updateDefaultFolders();
-
     mSyncsData->setRemoteFolderCandidate(remoteFolderCandidate);
 }
 
 void Syncs::setLocalFolderCandidate(const QString& localFolderCandidate)
 {
-    updateDefaultFolders();
-
     mSyncsData->setLocalFolderCandidate(localFolderCandidate);
 }
