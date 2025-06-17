@@ -119,6 +119,8 @@ void SyncsComponent::removeSyncCandidadeButtonClicked(const QString& localFolder
                                                       const QString& megaFolder)
 {
     mSyncs->removeSyncCandidate(localFolder, megaFolder);
+
+    updateDefaultFolders();
 }
 
 void SyncsComponent::closeDialogButtonClicked()
