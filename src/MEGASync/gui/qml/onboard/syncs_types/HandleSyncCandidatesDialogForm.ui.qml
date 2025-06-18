@@ -16,7 +16,7 @@ Rectangle {
 
     readonly property int dialogMargin: 32
     readonly property int dialogWidth: 453
-    readonly property int dialogHeight: 344
+    readonly property int dialogHeight: 360 // need to add more room from design to handle errors.
     readonly property int buttonsSpacing: 12
     readonly property int dialogRadius: 10
     readonly property int underTitleMargin: 24
