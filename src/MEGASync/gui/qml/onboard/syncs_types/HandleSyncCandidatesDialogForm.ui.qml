@@ -15,8 +15,9 @@ Rectangle {
     id: root
 
     readonly property int dialogMargin: 32
+    readonly property int dialogWithErrorMargin: 10
     readonly property int dialogWidth: 453
-    readonly property int dialogHeight: 360 // need to add more room from design to handle errors.
+    readonly property int dialogHeight: 344
     readonly property int buttonsSpacing: 12
     readonly property int dialogRadius: 10
     readonly property int underTitleMargin: 24
@@ -60,7 +61,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.left: parent.left
         anchors.margins: dialogMargin
-        spacing: dialogMargin
+        spacing: (localFolder.folderField.hint.visible && remoteFolder.folderField.hint.visible) ? dialogWithErrorMargin : dialogMargin
 
         ChooseSyncFolder {
             id: localFolder
