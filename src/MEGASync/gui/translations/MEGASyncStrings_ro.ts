@@ -2085,9 +2085,11 @@
         <translation>În așteptarea confirmării prin e-mail…</translation>
     </message>
     <message>
-        <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
-        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
-        <translation>Contul dvs. a fost blocat temporar pentru siguranța dvs. Acest lucru se datorează unei potențiale încălcări a datelor. Pentru a vă debloca contul, urmați pașii din e-mailul pe care vi l-am trimis.</translation>
+        <source>Your account has been locked for your protection after detecting a malicious login, so we require you to reset your password.[BR]
+Check your email inbox for instructions on unlocking your account and tips on how to prevent this from happening again.</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465, updated literal SNC-5585.</translatorcomment>
+        <translation>Contul dvs. a fost blocat pentru protecția dvs. după detectarea unei autentificări rău intenționate, așa că vă solicităm să vă resetați parola.[BR]
+Verificați căsuța de e-mail pentru instrucțiuni despre deblocarea contului și sfaturi despre cum să preveniți acest lucru să se întâmple din nou.</translation>
     </message>
 </context>
 <context>
@@ -2564,11 +2566,6 @@
         <source>Do not show again</source>
         <translatorcomment>This is a label for a checkbox. When checked by the user, it ensures that the Enable Notification Area Icon notification will not be displayed to them in the future. SNC-2270</translatorcomment>
         <translation>Nu afișa din nou</translation>
-    </message>
-    <message>
-        <source>Error installing components</source>
-        <translatorcomment>This is the title of an error message that appears when there's an issue during the installation of Notification Area Icon Support. SNC-2270</translatorcomment>
-        <translation>Eroare la instalarea componentelor</translation>
     </message>
     <message>
         <source>Failed to install the necessary components.</source>
@@ -3120,11 +3117,6 @@ Așteptați finalizarea încărcării.</translation>
         <translation>Cont dezactivat</translation>
     </message>
     <message>
-        <source>Alert</source>
-        <translatorcomment>Title of the warning dialog shown when the SDK reports a fatal error - CON-844</translatorcomment>
-        <translation>Alertă</translation>
-    </message>
-    <message>
         <source>An update will be applied during the next application restart</source>
         <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
         <translation>Se va aplica o actualizare în timpul următoarei reporniri a aplicației</translation>
@@ -3158,11 +3150,6 @@ Așteptați finalizarea încărcării.</translation>
         <source>Download</source>
         <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
         <translation>Descarcă</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title for dialogs with error messages. SNC-3299</translatorcomment>
-        <translation>Eroare</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -3283,11 +3270,6 @@ Așteptați finalizarea încărcării.</translation>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
         <translation>Aplicația va continua să funcționeze, însă este posibil să nu primești noi actualizări.</translation>
-    </message>
-    <message>
-        <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
-        <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>Aplicația va continua să funcționeze, însă, actualizările nu vor mai fi suportate pentru versiunile anterioare Windows 7.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -3498,11 +3480,6 @@ https://mega.co.nz/#sync</source>
         <source>Waiting</source>
         <translatorcomment>Label of tray icon to indicate that the app is in a waiting state.</translatorcomment>
         <translation>Se așteaptă</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
-        <translation>Avertisment</translation>
     </message>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
@@ -3829,19 +3806,6 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
         <source>Your sync and backup settings were corrupted and have been reset. If you had any, please set them up again.</source>
         <translatorcomment>Body of the warning dialog shown when the syncs configuration file has been re-generated by the sdk - CON-1311</translatorcomment>
         <translation>Setările de sincronizare și backup au fost corupte și au fost resetate. Va trebui să configurați din nou toate sincronizările și backup-urile pe care le-ați avut.</translation>
-    </message>
-</context>
-<context>
-    <name>MegaInfoMessage</name>
-    <message>
-        <source>Close</source>
-        <translatorcomment>Button label to close current message box</translatorcomment>
-        <translation>Închide</translation>
-    </message>
-    <message>
-        <source>Why am I seeing this?</source>
-        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation>De ce văd asta?</translation>
     </message>
 </context>
 <context>
@@ -5979,14 +5943,18 @@ Introdu un alt nume.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We’ve improved how crash reports are handled, so we can fix issues faster.
-- New icons are now available in the Windows 11 context menu.
-- We’ve fixed bugs and made performance improvements behind the scenes.
+        <source>- Support has ended for Windows 7 and Server 2008 R2.
+- New actions are now available in the File Explorer context menu.
+- Refined parts of the interface to improve your experience.
+- Turkish language is now supported.
+- We’ve fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 5.12.0. CON-1358</translatorcomment>
-        <translation>- Am îmbunătățit modul în care sunt gestionate rapoartele de avarie, astfel încât să putem remedia problemele mai repede.
-- Pictograme noi sunt acum disponibile în meniul contextual Windows 11.
-- Am remediat erorile și am făcut îmbunătățiri ale performanței în spatele scenei.
+        <translatorcomment>Change log for version 5.13.0. CON-1380</translatorcomment>
+        <translation>- Suportul s-a încheiat pentru Windows 7 și Server 2008 R2.
+- Acțiuni noi sunt acum disponibile în meniul contextual File Explorer.
+- Părți rafinate ale interfeței pentru a vă îmbunătăți experiența.
+- Limba turcă este acum acceptată.
+- Am remediat erorile și am făcut aplicația mai fiabilă.
 </translation>
     </message>
 </context>
@@ -7193,6 +7161,16 @@ Vrei să îl ștergi oricum?</translation>
         <source>View previous versions</source>
         <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
         <translation>Vezi versiunile anterioare</translation>
+    </message>
+    <message>
+        <source>Add sync</source>
+        <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
+        <translation>Adăugați sincronizare</translation>
+    </message>
+    <message>
+        <source>Add backup</source>
+        <translatorcomment>Context menu option to backup a folder. CON-1364.</translatorcomment>
+        <translation>Adaugă backup</translation>
     </message>
 </context>
 <context>
@@ -9677,12 +9655,7 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
         <translation>De ce văd asta?</translation>
     </message>
-    <message>
-        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
-        <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>Contul dvs. a fost blocat pentru protecția dvs. după detectarea unei autentificări rău intenționate, așa că vă solicităm să vă resetați parola. 
-Verificați căsuța de e-mail pentru instrucțiuni despre deblocarea contului și sfaturi despre cum să preveniți acest lucru să se întâmple din nou.</translation>
-    </message>
+
 </context>
 <context>
     <name>WhatsNewStrings</name>
