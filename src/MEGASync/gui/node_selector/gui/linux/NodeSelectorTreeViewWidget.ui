@@ -909,7 +909,7 @@ font-size:16px;
                    <string notr="true">*{
 color:#3D3D3D;
 font-size:16px;
-font-weigth:400;
+font-weight:400;
 }</string>
                   </property>
                   <property name="text">
