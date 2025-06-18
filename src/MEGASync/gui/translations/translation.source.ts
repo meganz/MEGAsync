@@ -2148,7 +2148,8 @@
         <source>Your account has been locked for your protection after detecting a malicious login, so we require you to reset your password.[BR]
 Check your email inbox for instructions on unlocking your account and tips on how to prevent this from happening again.</source>
         <translatorcomment>Label that indicates to the user that the account has been blocked CON-465, updated literal SNC-5585.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your account has been locked for your protection after detecting a malicious login, so we require you to reset your password.[BR]
+Check your email inbox for instructions on unlocking your account and tips on how to prevent this from happening again.</translation>
     </message>
 </context>
 <context>
@@ -6080,7 +6081,12 @@ Enter a different name.</translation>
 - We’ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 5.13.0. CON-1380</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Support has ended for Windows 7 and Server 2008 R2.
+- New actions are now available in the File Explorer context menu.
+- Refined parts of the interface to improve your experience.
+- Turkish language is now supported.
+- We’ve fixed bugs and made the app more reliable.
+</translation>
     </message>
 </context>
 <context>
@@ -7308,12 +7314,12 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Add sync</source>
         <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
-        <translation type="unfinished">Add sync</translation>
+        <translation>Add sync</translation>
     </message>
     <message>
         <source>Add backup</source>
         <translatorcomment>Context menu option to backup a folder. CON-1364.</translatorcomment>
-        <translation type="unfinished">Add backup</translation>
+        <translation>Add backup</translation>
     </message>
 </context>
 <context>
@@ -9900,12 +9906,7 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
         <translation>Why am I seeing this?</translation>
     </message>
-    <message>
-        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
-        <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>Your account has been locked for your protection after detecting a malicious login, so we require you to reset your password. 
-Check your email inbox for instructions on unlocking your account and tips on how to prevent this from happening again.</translation>
-    </message>
+
 </context>
 <context>
     <name>WhatsNewStrings</name>

@@ -2084,9 +2084,11 @@
         <translation>メールの確認を待っています…</translation>
     </message>
     <message>
-        <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
-        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
-        <translation>あなたのアカウントは安全のため一時的にロックされています。これは、データ侵害の可能性があるためです。アカウントのロックを解除するには、お送りしたメールの手順に従ってください。</translation>
+        <source>Your account has been locked for your protection after detecting a malicious login, so we require you to reset your password.[BR]
+Check your email inbox for instructions on unlocking your account and tips on how to prevent this from happening again.</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465, updated literal SNC-5585.</translatorcomment>
+        <translation>悪意のあるログインを検出したため、お客様のアカウントは保護のため一時的にロックされました。[BR]
+アカウントのロックを解除する方法と、このような事態の再発防止策については、メール受信箱を確認してください。</translation>
     </message>
 </context>
 <context>
@@ -2563,11 +2565,6 @@
         <source>Do not show again</source>
         <translatorcomment>This is a label for a checkbox. When checked by the user, it ensures that the Enable Notification Area Icon notification will not be displayed to them in the future. SNC-2270</translatorcomment>
         <translation>次回から表示しない</translation>
-    </message>
-    <message>
-        <source>Error installing components</source>
-        <translatorcomment>This is the title of an error message that appears when there's an issue during the installation of Notification Area Icon Support. SNC-2270</translatorcomment>
-        <translation>コンポーネントインストール中のエラー</translation>
     </message>
     <message>
         <source>Failed to install the necessary components.</source>
@@ -3119,11 +3116,6 @@ Please wait for the upload to complete.</source>
         <translation>アカウントが無効化されました</translation>
     </message>
     <message>
-        <source>Alert</source>
-        <translatorcomment>Title of the warning dialog shown when the SDK reports a fatal error - CON-844</translatorcomment>
-        <translation>警告</translation>
-    </message>
-    <message>
         <source>An update will be applied during the next application restart</source>
         <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
         <translation>最新版は、次回のアプリケーションの再起動時に適用されます</translation>
@@ -3157,11 +3149,6 @@ Please wait for the upload to complete.</source>
         <source>Download</source>
         <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
         <translation>ダウンロード</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title for dialogs with error messages. SNC-3299</translatorcomment>
-        <translation>エラー</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -3282,11 +3269,6 @@ Please wait for the upload to complete.</source>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
         <translation>アプリは引き続き動作しますが、新しいアップデートを受け取れない場合があります。</translation>
-    </message>
-    <message>
-        <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
-        <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>アプリは引き続き動作しますが、Windows 7より前のバージョンの更新はサポートされなくなります。</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -3495,11 +3477,6 @@ https://mega.co.nz/#sync</source>
         <source>Waiting</source>
         <translatorcomment>Label of tray icon to indicate that the app is in a waiting state.</translatorcomment>
         <translation>待機中</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
-        <translation>警告</translation>
     </message>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
@@ -3826,19 +3803,6 @@ https://mega.co.nz/#sync</source>
         <source>Your sync and backup settings were corrupted and have been reset. If you had any, please set them up again.</source>
         <translatorcomment>Body of the warning dialog shown when the syncs configuration file has been re-generated by the sdk - CON-1311</translatorcomment>
         <translation>同期とバックアップの構成が破損し、リセットされました。実行された同期とバックアップの設定をやり直してください。</translation>
-    </message>
-</context>
-<context>
-    <name>MegaInfoMessage</name>
-    <message>
-        <source>Close</source>
-        <translatorcomment>Button label to close current message box</translatorcomment>
-        <translation>閉じる</translation>
-    </message>
-    <message>
-        <source>Why am I seeing this?</source>
-        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation>これが表示されている理由は？</translation>
     </message>
 </context>
 <context>
@@ -5975,14 +5939,19 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We’ve improved how crash reports are handled, so we can fix issues faster.
-- New icons are now available in the Windows 11 context menu.
-- We’ve fixed bugs and made performance improvements behind the scenes.
+        <source>- Support has ended for Windows 7 and Server 2008 R2.
+- New actions are now available in the File Explorer context menu.
+- Refined parts of the interface to improve your experience.
+- Turkish language is now supported.
+- We’ve fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 5.12.0. CON-1358</translatorcomment>
-        <translation>－クラッシュレポートの処理方法を改善し、より迅速に問題を修正できるようになりました。
-－Windows 11のコンテキストメニューに新しいアイコンが追加されました。
-－バグを修正し、パフォーマンスを改善しました。</translation>
+        <translatorcomment>Change log for version 5.13.0. CON-1380</translatorcomment>
+        <translation>ーWindows 7およびServer 2008 R2のサポートは終了しました。
+ーファイルエクスプローラーのコンテキストメニューに新しい操作が追加されました。
+ーインターフェースの一部を改良し、ユーザー体験を向上させました。
+ートルコ語に対応しました。
+ーバグを修正し、アプリの信頼性を向上させました。
+</translation>
     </message>
 </context>
 <context>
@@ -7188,6 +7157,16 @@ Do you want to delete it anyway?</source>
         <source>View previous versions</source>
         <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
         <translation>以前のバージョンを表示</translation>
+    </message>
+    <message>
+        <source>Add sync</source>
+        <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
+        <translation>同期を追加</translation>
+    </message>
+    <message>
+        <source>Add backup</source>
+        <translatorcomment>Context menu option to backup a folder. CON-1364.</translatorcomment>
+        <translation>バックアップを追加</translation>
     </message>
 </context>
 <context>
@@ -9672,12 +9651,7 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
         <translation>これが表示されている理由は？</translation>
     </message>
-    <message>
-        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
-        <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>悪意のあるログインが検出されたため、あなたのアカウントは保護のためにロックされました。そのため、パスワードをリセットする必要があります。
-メール受信箱をチェックして、アカウントのロックを解除する手順と、この問題が再発しないようにするためのヒントを確認してください。</translation>
-    </message>
+
 </context>
 <context>
     <name>WhatsNewStrings</name>
