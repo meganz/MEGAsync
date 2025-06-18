@@ -185,11 +185,18 @@ NodeSelectorModelItem *NodeRequester::createSearchItem(mega::MegaNode *node, Nod
         mSearchedTypes |= type;
         auto nodeUptr = std::unique_ptr<mega::MegaNode>(node->copy());
         auto item = new NodeSelectorModelItemSearch(std::move(nodeUptr), type);
-        connect(item,
-                &NodeSelectorModelItemSearch::typeChanged,
-                this,
-                &NodeRequester::onSearchItemTypeChanged);
-        return item;
+        if (item->isValid())
+        {
+            connect(item,
+                    &NodeSelectorModelItemSearch::typeChanged,
+                    this,
+                    &NodeRequester::onSearchItemTypeChanged);
+            return item;
+        }
+        else
+        {
+            item->deleteLater();
+        }
     }
 
     return nullptr;
@@ -198,11 +205,20 @@ NodeSelectorModelItem *NodeRequester::createSearchItem(mega::MegaNode *node, Nod
 void NodeRequester::createCloudDriveRootItem()
 {
     auto root = std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getRootNode());
-
-    if(!isAborted())
+    if (!isAborted())
     {
         auto item = new NodeSelectorModelItemCloudDrive(std::move(root), mShowFiles);
-        mRootItems.append(item);
+        if (item->isValid())
+        {
+            mRootItems.append(item);
+        }
+        else
+        {
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
+                               "Root Cloud Drive node unavailable.");
+            item->deleteLater();
+        }
+
         emit megaCloudDriveRootItemCreated();
     }
 }
@@ -249,14 +265,24 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
         auto user = std::unique_ptr<mega::MegaUser>(megaApi->getUserFromInShare(node.get()));
         NodeSelectorModelItem* item = new NodeSelectorModelItemIncomingShare(std::move(node), mShowFiles);
 
-        items.append(item);
-
-        auto incomingSharesModel = dynamic_cast<NodeSelectorModelIncomingShares*>(mModel);
-        if(incomingSharesModel)
+        if (item->isValid())
         {
-            item->setProperty(INDEX_PROPERTY, incomingSharesModel->index(i,0));
-            connect(item, &NodeSelectorModelItem::infoUpdated, incomingSharesModel, &NodeSelectorModelIncomingShares::onItemInfoUpdated);
-            item->setOwner(std::move(user));
+            items.append(item);
+
+            auto incomingSharesModel = dynamic_cast<NodeSelectorModelIncomingShares*>(mModel);
+            if (incomingSharesModel)
+            {
+                item->setProperty(INDEX_PROPERTY, incomingSharesModel->index(i, 0));
+                connect(item,
+                        &NodeSelectorModelItem::infoUpdated,
+                        incomingSharesModel,
+                        &NodeSelectorModelIncomingShares::onItemInfoUpdated);
+                item->setOwner(std::move(user));
+            }
+        }
+        else
+        {
+            item->deleteLater();
         }
     }
 
@@ -285,24 +311,37 @@ void NodeRequester::addIncomingSharesRootItem(std::shared_ptr<mega::MegaNode> no
 
     mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
     auto user = std::unique_ptr<mega::MegaUser>(megaApi->getUserFromInShare(node.get()));
-    NodeSelectorModelItem* item = new NodeSelectorModelItemIncomingShare(std::unique_ptr<mega::MegaNode>(node->copy()), mShowFiles);
+    auto item =
+        new NodeSelectorModelItemIncomingShare(std::unique_ptr<mega::MegaNode>(node->copy()),
+                                               mShowFiles);
 
-    auto incomingSharesModel = dynamic_cast<NodeSelectorModelIncomingShares*>(mModel);
-    if(incomingSharesModel)
+    if (item->isValid())
     {
-        item->setProperty(INDEX_PROPERTY, incomingSharesModel->index(incomingSharesModel->rowCount(),0));
-        connect(item, &NodeSelectorModelItem::infoUpdated, incomingSharesModel, &NodeSelectorModelIncomingShares::onItemInfoUpdated);
-        item->setOwner(std::move(user));
-    }
+        auto incomingSharesModel = dynamic_cast<NodeSelectorModelIncomingShares*>(mModel);
+        if (incomingSharesModel)
+        {
+            item->setProperty(INDEX_PROPERTY,
+                              incomingSharesModel->index(incomingSharesModel->rowCount(), 0));
+            connect(item,
+                    &NodeSelectorModelItem::infoUpdated,
+                    incomingSharesModel,
+                    &NodeSelectorModelIncomingShares::onItemInfoUpdated);
+            item->setOwner(std::move(user));
+        }
 
-    if(isAborted())
-    {
-        item->deleteLater();
+        if (isAborted())
+        {
+            item->deleteLater();
+        }
+        else
+        {
+            mRootItems.append(item);
+            emit rootItemsAdded();
+        }
     }
     else
     {
-        mRootItems.append(item);
-        emit rootItemsAdded();
+        item->deleteLater();
     }
 }
 
@@ -313,8 +352,15 @@ void NodeRequester::createRubbishRootItems()
         auto item = new NodeSelectorModelItemRubbish(
             std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getRubbishNode()),
             mShowFiles);
-        mRootItems.append(item);
-        emit megaRubbishRootItemsCreated();
+        if (item->isValid())
+        {
+            mRootItems.append(item);
+            emit megaRubbishRootItemsCreated();
+        }
+        else
+        {
+            item->deleteLater();
+        }
     }
 }
 

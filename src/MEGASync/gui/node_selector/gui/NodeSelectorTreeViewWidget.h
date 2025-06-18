@@ -82,6 +82,7 @@ public:
     NodeSelectorModelItem* rootItem();
     NodeSelectorProxyModel* getProxyModel();
     bool isInRootView() const;
+    bool isEmpty() const;
 
     bool onNodesUpdate(mega::MegaApi*, mega::MegaNodeList* nodes);
     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
@@ -212,6 +213,8 @@ private:
         return true;
     }
 
+    void setNewFolderButtonVisibility(bool state);
+
     virtual bool isSelectionReadOnly(const QModelIndexList&)
     {
         return false;
@@ -279,6 +282,7 @@ private:
     friend class UploadType;
     friend class StreamType;
     friend class CloudDriveType;
+    friend class SelectType;
 };
 
 class SelectType
@@ -293,10 +297,7 @@ public:
 
     virtual void selectionHasChanged(NodeSelectorTreeViewWidget*) {}
 
-    virtual void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg)
-    {
-        Q_UNUSED(wdg)
-    }
+    void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg);
 
     virtual void okCancelButtonsVisibility(NodeSelectorTreeViewWidget* wdg)
     {
@@ -331,7 +332,6 @@ public:
     explicit SyncType() = default;
     bool isAllowedToNavigateInside(const QModelIndex& index) override;
     void init(NodeSelectorTreeViewWidget* wdg) override;
-    void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg) override;
     bool okButtonEnabled(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) override;
     NodeSelectorModelItemSearch::Types allowedTypes() override;
 };
@@ -350,7 +350,6 @@ class UploadType : public SelectType
 public:
     explicit UploadType() = default;
     void init(NodeSelectorTreeViewWidget* wdg) override;
-    void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg) override;
     bool okButtonEnabled(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) override;
     NodeSelectorModelItemSearch::Types allowedTypes() override;
 };
@@ -369,7 +368,6 @@ public:
     void init(NodeSelectorTreeViewWidget* wdg) override;
     void selectionHasChanged(NodeSelectorTreeViewWidget* wdg) override;
     void okCancelButtonsVisibility(NodeSelectorTreeViewWidget* wdg) override;
-    void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg) override;
     QMap<uint, QPushButton*> addCustomBottomButtons(NodeSelectorTreeViewWidget* wdg) override;
     void updateCustomBottomButtonsText(NodeSelectorTreeViewWidget* wdg) override;
 
