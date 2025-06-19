@@ -1138,7 +1138,7 @@
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Profesyonel Flexi hesabı devre dışı bırakıldı</translation>
+        <translation>Pro Flexi hesabı devre dışı bırakıldı</translation>
     </message>
     <message>
         <source>Reject</source>
@@ -1473,7 +1473,7 @@
     <message>
         <source>Rename</source>
         <translatorcomment>Action title and button text for the Rename action for folders/files</translatorcomment>
-        <translation>Yeniden Adlandır</translation>
+        <translation>Yeniden adlandır</translation>
     </message>
     <message>
         <source>Replace</source>
@@ -1955,7 +1955,7 @@
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate that only Incoming Shares notifications will be shown.</translatorcomment>
-        <translation>Gelen hisseler</translation>
+        <translation>Gelen paylaşımlar</translation>
     </message>
     <message>
         <source>Payment</source>
@@ -2085,9 +2085,11 @@
         <translation>E-posta onayı bekliyorum...</translation>
     </message>
     <message>
-        <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
-        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
-        <translation>Hesabınız güvenliğiniz için geçici olarak kilitlendi. Bunun nedeni potansiyel bir veri ihlalidir. Hesabınızın kilidini açmak için size gönderdiğimiz e-postadaki adımları izleyin.</translation>
+        <source>Your account has been locked for your protection after detecting a malicious login, so we require you to reset your password.[BR]
+Check your email inbox for instructions on unlocking your account and tips on how to prevent this from happening again.</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465, updated literal SNC-5585.</translatorcomment>
+        <translation>Hesabınız kötü niyetli bir giriş tespit edildiği için güvenliğiniz amacıyla kilitlenmiştir, bu nedenle şifrenizi sıfırlamanız gerekmektedir.[BR]
+Hesabınızın kilidini açma ve bunun tekrar olmasını önleme ipuçları için e-posta gelen kutunuzu kontrol edin.</translation>
     </message>
 </context>
 <context>
@@ -2564,11 +2566,6 @@
         <source>Do not show again</source>
         <translatorcomment>This is a label for a checkbox. When checked by the user, it ensures that the Enable Notification Area Icon notification will not be displayed to them in the future. SNC-2270</translatorcomment>
         <translation>Tekrar gösterme</translation>
-    </message>
-    <message>
-        <source>Error installing components</source>
-        <translatorcomment>This is the title of an error message that appears when there's an issue during the installation of Notification Area Icon Support. SNC-2270</translatorcomment>
-        <translation>Bileşenler yüklenirken hata oluştu</translation>
     </message>
     <message>
         <source>Failed to install the necessary components.</source>
@@ -3120,11 +3117,6 @@ Yükleme işleminin tamamlanmasını bekleyin.</translation>
         <translation>Hesap devre dışı bırakıldı</translation>
     </message>
     <message>
-        <source>Alert</source>
-        <translatorcomment>Title of the warning dialog shown when the SDK reports a fatal error - CON-844</translatorcomment>
-        <translation>Alarm</translation>
-    </message>
-    <message>
         <source>An update will be applied during the next application restart</source>
         <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
         <translation>Bir sonraki uygulama yeniden başlatma sırasında bir güncelleme uygulanacaktır</translation>
@@ -3158,11 +3150,6 @@ Yükleme işleminin tamamlanmasını bekleyin.</translation>
         <source>Download</source>
         <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
         <translation>İndir</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title for dialogs with error messages. SNC-3299</translatorcomment>
-        <translation>Hata</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -3285,11 +3272,6 @@ Yükleme işleminin tamamlanmasını bekleyin.</translation>
         <translation>Uygulama çalışmaya devam edecek, ancak yeni güncellemeler alamayabilirsiniz.</translation>
     </message>
     <message>
-        <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
-        <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>Uygulama çalışmaya devam edecek, ancak Windows 7&apos;den önceki sürümler için güncellemeler artık desteklenmeyecek.</translation>
-    </message>
-    <message>
         <source>No Internet connection</source>
         <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
         <translation>İnternet bağlantısı yok</translation>
@@ -3347,7 +3329,7 @@ Yükleme işleminin tamamlanmasını bekleyin.</translation>
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Profesyonel Flexi hesabı devre dışı bırakıldı</translation>
+        <translation>Pro Flexi hesabı devre dışı bırakıldı</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -3497,11 +3479,6 @@ https://mega.co.nz/#sync</source>
         <source>Waiting</source>
         <translatorcomment>Label of tray icon to indicate that the app is in a waiting state.</translatorcomment>
         <translation>Bekliyor</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
-        <translation>Uyarı</translation>
     </message>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
@@ -3831,19 +3808,6 @@ Saklanan verilerinize yeniden erişemeyecek veya yeni bir MEGA hesabına kaydolm
     </message>
 </context>
 <context>
-    <name>MegaInfoMessage</name>
-    <message>
-        <source>Close</source>
-        <translatorcomment>Button label to close current message box</translatorcomment>
-        <translation>Kapat</translation>
-    </message>
-    <message>
-        <source>Why am I seeing this?</source>
-        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation>Bunu neden görüyorum?</translation>
-    </message>
-</context>
-<context>
     <name>MegaNodeNames</name>
     <message>
         <source>Backups</source>
@@ -3853,12 +3817,12 @@ Saklanan verilerinize yeniden erişemeyecek veya yeni bir MEGA hesabına kaydolm
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
-        <translation>Bulut sürücüsü</translation>
+        <translation>Bulut depolama</translation>
     </message>
     <message>
         <source>Incoming shares</source>
         <translatorcomment>Title of the Incoming shares root node</translatorcomment>
-        <translation>Gelen hisseler</translation>
+        <translation>Gelen paylaşımlar</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
@@ -4285,7 +4249,7 @@ Tamamlanan tüm transferleriniz silinecektir.</translation>
     <message>
         <source>Open</source>
         <translatorcomment>Label of context menu option to open selected completed transfer</translatorcomment>
-        <translation>Açık</translation>
+        <translation>Aç</translation>
     </message>
     <message>
         <source>Open in MEGA</source>
@@ -4448,7 +4412,7 @@ Görünümü yenileyin.</translation>
     <message>
         <source>Rename</source>
         <translatorcomment>Solve option for name conflict sync stall.SNC-2565</translatorcomment>
-        <translation>Yeniden Adlandır</translation>
+        <translation>Yeniden adlandır</translation>
     </message>
     <message>
         <source>Renamed to &quot;%1&quot;</source>
@@ -4621,12 +4585,12 @@ Farklı bir ad girin.</translation>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Button text to navigate to cloud drive section</translatorcomment>
-        <translation>Bulut sürücüsü</translation>
+        <translation>Bulut depolama</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Button text to navigate to incoming shares section</translatorcomment>
-        <translation>Gelen hisseler</translation>
+        <translation>Gelen paylaşımlar</translation>
     </message>
     <message>
         <source>Search</source>
@@ -4932,7 +4896,7 @@ Farklı bir ad girin.</translation>
     <message>
         <source>Rename</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It renames the node (file or folder).</translatorcomment>
-        <translation>Yeniden Adlandır</translation>
+        <translation>Yeniden adlandır</translation>
     </message>
     <message>
         <source>Restore</source>
@@ -4980,7 +4944,7 @@ Farklı bir ad girin.</translation>
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Button to filter search results from cloud drive</translatorcomment>
-        <translation>Bulut sürücüsü</translation>
+        <translation>Bulut depolama</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -5000,7 +4964,7 @@ Farklı bir ad girin.</translation>
     <message>
         <source>Empty Rubbish bin</source>
         <translatorcomment>Button text to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation>Boş Çöp Kovası</translation>
+        <translation>Çöp kutusunu boşalt</translation>
     </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
@@ -5010,7 +4974,7 @@ Farklı bir ad girin.</translation>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Button to filter search results from incoming shares</translatorcomment>
-        <translation>Gelen hisseler</translation>
+        <translation>Gelen paylaşımlar</translation>
     </message>
     <message>
         <source>Leave</source>
@@ -5347,7 +5311,7 @@ Farklı bir ad girin.</translation>
     <message>
         <source>Don’t cancel</source>
         <translatorcomment>Dialog cancel button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
-        <translation>İptal etmeyin</translation>
+        <translation>İptal etme</translation>
     </message>
     <message>
         <source>Don’t stop</source>
@@ -5412,7 +5376,7 @@ Farklı bir ad girin.</translation>
     <message>
         <source>Forgot password?</source>
         <translatorcomment>Button text that user have to click in case he forgot the password. Button has no borders and it looks like a label CON-465</translatorcomment>
-        <translation>Şifremi unuttunuz?</translation>
+        <translation>Şifrenizi mi unuttunuz?</translation>
     </message>
     <message>
         <source>I agree with MEGA&apos;s [B][A]Terms of service[/A][/B]</source>
@@ -5512,7 +5476,7 @@ Farklı bir ad girin.</translation>
     <message>
         <source>Rename</source>
         <translatorcomment>Button to rename a backup CON-468</translatorcomment>
-        <translation>Yeniden Adlandır</translation>
+        <translation>Yeniden adlandır</translation>
     </message>
     <message>
         <source>Resend</source>
@@ -5978,14 +5942,18 @@ Farklı bir ad girin.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We’ve improved how crash reports are handled, so we can fix issues faster.
-- New icons are now available in the Windows 11 context menu.
-- We’ve fixed bugs and made performance improvements behind the scenes.
+        <source>- Support has ended for Windows 7 and Server 2008 R2.
+- New actions are now available in the File Explorer context menu.
+- Refined parts of the interface to improve your experience.
+- Turkish language is now supported.
+- We’ve fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 5.12.0. CON-1358</translatorcomment>
-        <translation>- Sorunları daha hızlı çözebilmemiz için kilitlenme raporlarının işlenme şeklini geliştirdik.
-- Yeni simgeler artık Windows 11 içerik menüsünde mevcut.
-- Hataları giderdik ve perde arkasında performans iyileştirmeleri yaptık.
+        <translatorcomment>Change log for version 5.13.0. CON-1380</translatorcomment>
+        <translation>- Windows 7 ve Server 2008 R2 desteği sona erdi.
+- Dosya Gezgini bağlam menüsünde yeni eylemler mevcut.
+- Deneyiminizi iyileştirmek için arayüzün bazı kısımları geliştirildi.
+- Türkçe dil desteği eklendi.
+- Hataları düzelttik ve uygulamayı daha güvenilir hale getirdik.
 </translation>
     </message>
 </context>
@@ -6146,7 +6114,7 @@ Değiştirmek ister misin?</translation>
     <message>
         <source>&amp;Rename</source>
         <translatorcomment>Contextual menu action for renaming a folder or a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Delete, Show &amp;hidden files, &amp;New Folder).</translatorcomment>
-        <translation>&amp;Yeniden Adlandır</translation>
+        <translation>&amp;Yeniden adlandır</translation>
     </message>
     <message>
         <source>&amp;Save</source>
@@ -6333,7 +6301,7 @@ Yine de silmek ister misin?</translation>
     <message>
         <source>Open</source>
         <translatorcomment>Window title when opening a file</translatorcomment>
-        <translation>Açık</translation>
+        <translation>Aç</translation>
     </message>
     <message>
         <source>Parent Directory</source>
@@ -6832,7 +6800,7 @@ Yine de silmek ister misin?</translation>
     <message>
         <source>Enable file versioning</source>
         <translatorcomment>Label for checkbox to enable / disable file versioning.</translatorcomment>
-        <translation>Dosya sürümü oluşturmayı etkinleştir</translation>
+        <translation>Dosya sürümlemeyi etkinleştir</translation>
     </message>
     <message>
         <source>Enable sync status icons</source>
@@ -7117,7 +7085,7 @@ Yine de silmek ister misin?</translation>
     <message numerus="yes">
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation><numerusform>gün</numerusform><numerusform>günler</numerusform></translation>
+        <translation><numerusform>gün</numerusform><numerusform>gün</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7192,6 +7160,16 @@ Yine de silmek ister misin?</translation>
         <source>View previous versions</source>
         <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
         <translation>Önceki sürümleri görüntüleyin</translation>
+    </message>
+    <message>
+        <source>Add sync</source>
+        <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
+        <translation>Senkronizasyon ekle</translation>
+    </message>
+    <message>
+        <source>Add backup</source>
+        <translatorcomment>Context menu option to backup a folder. CON-1364.</translatorcomment>
+        <translation>Yedekleme ekle</translation>
     </message>
 </context>
 <context>
@@ -7695,7 +7673,7 @@ Listeyi yenileyin.</translation>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
-        <translation>Bulut sürücüsü</translation>
+        <translation>Bulut depolama</translation>
     </message>
     <message>
         <source>Default application</source>
@@ -8596,7 +8574,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>All</source>
         <translatorcomment>Title for all searched transfers by text</translatorcomment>
-        <translation>Hepsi</translation>
+        <translation>Tümü</translation>
     </message>
     <message>
         <source>All transfers</source>
@@ -8656,7 +8634,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>No completed transfers</source>
         <translatorcomment>Empty window message for completed category</translatorcomment>
-        <translation>Tamamlanmış transfer yok</translation>
+        <translation>Tamamlanmış aktarım yok</translation>
     </message>
     <message>
         <source>No downloads</source>
@@ -8671,7 +8649,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>No transfers</source>
         <translatorcomment>Empty window message for generic categories</translatorcomment>
-        <translation>Transfer yok</translation>
+        <translation>Aktarım yok</translation>
     </message>
     <message>
         <source>No uploads</source>
@@ -8874,7 +8852,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Open</source>
         <translatorcomment>Notification button to open the file. CON-223</translatorcomment>
-        <translation>Açık</translation>
+        <translation>Aç</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -9060,7 +9038,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel all transfers</source>
         <translatorcomment>Tooltip for cancel button when the user is in the all transfers category</translatorcomment>
-        <translation>Tüm transferleri iptal et</translation>
+        <translation>Tüm aktarımları iptal et</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
@@ -9521,7 +9499,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>Added %n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transfer tamamlandı %n ay önce</numerusform><numerusform>Transfer tamamlandı %n aylar önce</numerusform></translation>
+        <translation><numerusform>Aktarım, %n ay önce tamamlandı</numerusform><numerusform>Aktarım, %n ay önce tamamlandı</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n second ago</source>
@@ -9601,22 +9579,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Profesyonel BEN</translation>
+        <translation>Pro I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Profesyonel İİ</translation>
+        <translation>Pro II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Profesyonel İİİ</translation>
+        <translation>Pro III</translation>
     </message>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Profesyonel Hafif</translation>
+        <translation>Pro Lite</translation>
     </message>
     <message>
         <source>Starter</source>
@@ -9676,12 +9654,7 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
         <translation>Bunu neden görüyorum?</translation>
     </message>
-    <message>
-        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
-        <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>Kötü amaçlı bir oturum açma tespit edildikten sonra hesabınız korunmanız için kilitlendi, bu nedenle şifrenizi sıfırlamanızı istiyoruz. 
-Hesabınızın kilidini açma talimatları ve bunun tekrar olmasını nasıl önleyeceğinize dair ipuçları için e-posta gelen kutunuzu kontrol edin.</translation>
-    </message>
+
 </context>
 <context>
     <name>WhatsNewStrings</name>
