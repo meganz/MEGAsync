@@ -10,9 +10,9 @@
 
 Syncs::Syncs(QObject* parent):
     QObject(parent),
+    mSyncsData(std::make_unique<SyncsData>()),
     mMegaApi(MegaSyncApp->getMegaApi()),
-    mSyncController(SyncController::instance()),
-    mSyncsData(std::make_unique<SyncsData>())
+    mSyncController(SyncController::instance())
 {
     connect(&mSyncController, &SyncController::syncAddStatus, this, &Syncs::onSyncAddRequestStatus);
     connect(SyncInfo::instance(), &SyncInfo::syncRemoved, this, &Syncs::onSyncRemoved);

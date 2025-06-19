@@ -70,33 +70,32 @@ protected:
         int syncError;
     };
 
-    mega::MegaApi* mMegaApi = nullptr;
-    SyncController& mSyncController;
     std::unique_ptr<SyncsData> mSyncsData;
-
-    bool mCreatingFolder = false;
     SyncController::SyncConfig mSyncConfig;
-
-    // vars with de command error data, used to generate error messages.
-    MegaRemoteCodeError mRemoteMegaError;
+    mega::MegaApi* mMegaApi = nullptr;
+    bool mCreatingFolder = false;
     std::optional<LocalErrors> mLocalError;
     std::optional<RemoteErrors> mRemoteError;
+
+    void cleanErrors();
+    bool checkErrorsOnSyncPaths(const QString& localPath, const QString& remotePath);
+    QString getLocalError() const;
+    QString getRemoteError() const;
+    bool setErrorIfExist(int errorCode, int syncErrorCode);
+
+private:
+    SyncController& mSyncController;
+    MegaRemoteCodeError mRemoteMegaError;
     QString mRemoteStringMessage;
     QString mRemoteFolder;
 
-    bool checkErrorsOnSyncPaths(const QString& localPath, const QString& remotePath);
     std::optional<LocalErrors> helperCheckLocalSync(const QString& path);
     std::optional<RemoteErrors> helperCheckRemoteSync(const QString& path);
     virtual void directoryCreatedNextTask();
-
-    void cleanErrors();
-    QString getLocalError() const;
-    QString getRemoteError() const;
     void setDefaultLocalFolder();
     void setDefaultRemoteFolder();
     bool checkLocalSync(const QString& path);
     bool checkRemoteSync(const QString& path);
-    bool setErrorIfExist(int errorCode, int syncErrorCode);
 };
 
 #endif // SYNCS_H

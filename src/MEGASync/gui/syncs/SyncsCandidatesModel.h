@@ -30,6 +30,12 @@ public:
     virtual int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     QHash<int, QByteArray> roleNames() const override;
 
+    friend class SyncsCandidates;
+
+private:
+    std::optional<std::vector<SyncCandidate>::iterator> exist(const QString& localSyncFolder,
+                                                              const QString& megaSyncFolder);
+
     void reset();
     void add(const QString& localSyncFolder, const QString& megaSyncFolder);
     void remove(const QString& localSyncFolder, const QString& megaSyncFolder);
@@ -38,12 +44,8 @@ public:
               const QString& localSyncFolder,
               const QString& megaSyncFolder);
     bool exist(const QString& path, SyncsCandidadteModelRole syncsCandidateRole);
-    std::vector<SyncCandidate> getModel() const;
 
-private:
-    std::optional<std::vector<SyncsCandidatesModel::SyncCandidate>::iterator>
-        exist(const QString& localSyncFolder, const QString& megaSyncFolder);
-    std::vector<SyncsCandidatesModel::SyncCandidate> mSyncCandidates;
+    std::vector<SyncCandidate> mSyncCandidates;
 };
 
 #endif
