@@ -6,17 +6,12 @@
 #include "StatsEventHandler.h"
 #include "SyncsData.h"
 
-extern const QString FULL_SYNC_PATH;
-extern const QString DEFAULT_MEGA_FOLDER;
-extern const QString DEFAULT_MEGA_PATH;
-
 SyncsCandidates::SyncsCandidates(QObject* parent):
     Syncs(parent),
-    mSyncController(SyncController::instance()),
     mSyncsCandidatesModel(std::make_unique<SyncsCandidatesModel>()),
     mCurrentModelConfirmationIndex(-1)
 {
-    connect(&mSyncController,
+    connect(&SyncController::instance(),
             &SyncController::syncPrevalidateStatus,
             this,
             &SyncsCandidates::onSyncPrevalidateRequestStatus);
@@ -194,7 +189,7 @@ void SyncsCandidates::candidatePrevalidateHelper(const QString& localFolder,
     }
     else
     {
-        mSyncController.prevalidateSync(mSyncConfig);
+        SyncController::instance().prevalidateSync(mSyncConfig);
     }
 }
 
@@ -275,7 +270,7 @@ SyncsCandidatesModel* SyncsCandidates::getSyncsCandidadtesModel() const
 
 void SyncsCandidates::directoryCreatedNextTask()
 {
-    mSyncController.prevalidateSync(mSyncConfig);
+    SyncController::instance().prevalidateSync(mSyncConfig);
 }
 
 void SyncsCandidates::setRemoteFolderCandidate(const QString& remoteFolderCandidate)

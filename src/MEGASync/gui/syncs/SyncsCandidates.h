@@ -1,7 +1,6 @@
 #ifndef SYNCS_CANDIDATES_H
 #define SYNCS_CANDIDATES_H
 
-#include "SyncController.h"
 #include "Syncs.h"
 #include "SyncsCandidatesModel.h"
 
@@ -35,7 +34,6 @@ private slots:
     void onSyncSetupFailed();
 
 private:
-    SyncController& mSyncController;
     std::unique_ptr<SyncsCandidatesModel> mSyncsCandidatesModel;
     int mCurrentModelConfirmationIndex;
     bool mCurrentModelConfirmationWithError;
@@ -44,10 +42,8 @@ private:
     QString mEditOriginalLocalFolder;
     QString mEditOriginalMegaFolder;
 
-    bool checkCandidateAlreadyInModel(const QString& localPath, const QString& remotePath);
     void directoryCreatedNextTask() override;
-    void setDefaultLocalFolder();
-    void setDefaultRemoteFolder();
+    bool checkCandidateAlreadyInModel(const QString& localPath, const QString& remotePath);
     void candidatePrevalidateHelper(const QString& localFolder, const QString& megaFolder);
     void moveNextCandidateSyncModel(bool errorOnCurrent);
     bool checkExistInModel(const QString& path,

@@ -9,10 +9,6 @@
 #include <memory>
 #include <optional>
 
-const QString FULL_SYNC_PATH = QString::fromLatin1(R"(/)");
-const QString DEFAULT_MEGA_FOLDER = QString::fromLatin1("MEGA");
-const QString DEFAULT_MEGA_PATH = FULL_SYNC_PATH + DEFAULT_MEGA_FOLDER;
-
 namespace mega
 {
 class MegaApi;
@@ -35,6 +31,10 @@ public:
 
     static QString getDefaultMegaFolder();
     static QString getDefaultMegaPath();
+
+    const static inline QString FULL_SYNC_PATH = QString::fromLatin1(R"(/)");
+    const static inline QString DEFAULT_MEGA_FOLDER = QString::fromLatin1("MEGA");
+    const static inline QString DEFAULT_MEGA_PATH = FULL_SYNC_PATH + DEFAULT_MEGA_FOLDER;
 
 public slots:
     void onRequestFinish(mega::MegaRequest* request, mega::MegaError* error);
