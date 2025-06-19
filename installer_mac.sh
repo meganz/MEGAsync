@@ -165,7 +165,11 @@ if [ ${build_cmake} -eq 1 ]; then
     find ${MSYNC_PREFIX}MEGAsync.app/Contents -type f -name "*.prl" -exec rm -f {} +
 
     # Generate symlinks file to recreate after update
-    MEGASYNC_VERSION_CODE=`grep -o -E '#define VER_FILEVERSION_CODE\s+(.*)' ../src/MEGASync/control/Version.h | grep -oE '\d+'`
+    VER_MAJOR=$(grep -o -E '#define VER_MAJOR\s+(.*)' ../src/MEGASync/control/Version.h | grep -oE '\d+')
+    VER_MINOR=$(grep -o -E '#define VER_MINOR\s+(.*)' ../src/MEGASync/control/Version.h | grep -oE '\d+')
+    VER_MICRO=$(grep -o -E '#define VER_MICRO\s+(.*)' ../src/MEGASync/control/Version.h | grep -oE '\d+')
+    MEGASYNC_VERSION_CODE=$((VER_MAJOR * 10000 + VER_MINOR * 100 + VER_MICRO))
+
     echo  ${MEGASYNC_VERSION_CODE} > ${MSYNC_PREFIX}MEGAsync.app/Contents/Resources/mega.links
 
     pushd .

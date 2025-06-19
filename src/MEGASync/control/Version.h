@@ -1,6 +1,8 @@
 #ifndef VERSION_H
 #define VERSION_H
 
+// These numbers are used in different build project scripts. Keep this in
+// mind if you want to change the format.
 #define VER_MAJOR 5
 #define VER_MINOR 13
 #define VER_MICRO 0
