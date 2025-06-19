@@ -33,13 +33,13 @@ ConfirmSyncsPageForm {
     Connections {
         target: syncsDataAccess
 
-        function onSyncSetupSuccess(isFullSync) {
+        function onSyncCandidatesSetupSuccess(isFullSync) {
             enableScreen();
 
             root.syncSetupSucceed(isFullSync);
         }
 
-        function onSyncSetupFailed() {
+        function onSyncCandidatesSetupFailed() {
             enableScreen();
 
             root.syncSetupFailed();

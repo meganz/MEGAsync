@@ -2,19 +2,22 @@
 #define SYNCS_H
 
 #include "SyncController.h"
-#include "SyncsCandidatesModel.h"
+#include "SyncsData.h"
 
 #include <QObject>
 
 #include <memory>
 #include <optional>
 
+const QString FULL_SYNC_PATH = QString::fromLatin1(R"(/)");
+const QString DEFAULT_MEGA_FOLDER = QString::fromLatin1("MEGA");
+const QString DEFAULT_MEGA_PATH = FULL_SYNC_PATH + DEFAULT_MEGA_FOLDER;
+
 namespace mega
 {
 class MegaApi;
 }
 
-class SyncsData;
 class Syncs: public QObject
 {
     Q_OBJECT
@@ -23,21 +26,11 @@ public:
     Syncs(QObject* parent = nullptr);
     virtual ~Syncs() = default;
     void addSync(const QString& localFolder, const QString& megaFolder);
-    void addSyncCandidate(const QString& localFolder, const QString& megaFolder);
-    void removeSyncCandidate(const QString& localFolder, const QString& megaFolder);
-    void editSyncCandidate(const QString& localFolder,
-                           const QString& megaFolder,
-                           const QString& originalLocalFolder,
-                           const QString& originalMegaFolder);
     void clearRemoteError();
     void clearLocalError();
     SyncsData* getSyncsData() const;
-    SyncsCandidatesModel* getSyncsCandidadtesModel() const;
-    void confirmSyncCandidates();
     void setSyncOrigin(SyncInfo::SyncOrigin origin);
-
-    void setRemoteFolderCandidate(const QString& remoteFolderCandidate);
-    void setLocalFolderCandidate(const QString& localFolderCandidate);
+    void setRemoteFolder(const QString& remoteFolder);
     void updateDefaultFolders();
 
     static QString getDefaultMegaFolder();
@@ -48,11 +41,10 @@ public slots:
 
 private slots:
     void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name);
-    void onSyncPrevalidateRequestStatus(int errorCode, int syncErrorCode);
     void onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings);
     void onLanguageChanged();
 
-private:
+protected:
     enum class LocalErrors
     {
         EMPTY_PATH,
@@ -81,16 +73,8 @@ private:
     mega::MegaApi* mMegaApi = nullptr;
     SyncController& mSyncController;
     std::unique_ptr<SyncsData> mSyncsData;
-    std::unique_ptr<SyncsCandidatesModel> mSyncsCandidatesModel;
-    int mCurrentModelConfirmationIndex;
-    bool mCurrentModelConfirmationWithError;
-    bool mCurrentModelConfirmationFull;
 
     bool mCreatingFolder = false;
-    bool mOnlyPrevalidateSync = false;
-    bool mEditSyncCandidate = false;
-    QString mEditOriginalLocalFolder;
-    QString mEditOriginalMegaFolder;
     SyncController::SyncConfig mSyncConfig;
 
     // vars with de command error data, used to generate error messages.
@@ -98,10 +82,13 @@ private:
     std::optional<LocalErrors> mLocalError;
     std::optional<RemoteErrors> mRemoteError;
     QString mRemoteStringMessage;
+    QString mRemoteFolder;
 
     bool checkErrorsOnSyncPaths(const QString& localPath, const QString& remotePath);
-    void helperCheckLocalSync(const QString& path);
-    void helperCheckRemoteSync(const QString& path);
+    std::optional<LocalErrors> helperCheckLocalSync(const QString& path);
+    std::optional<RemoteErrors> helperCheckRemoteSync(const QString& path);
+    virtual void directoryCreatedNextTask();
+
     void cleanErrors();
     QString getLocalError() const;
     QString getRemoteError() const;
@@ -110,10 +97,6 @@ private:
     bool checkLocalSync(const QString& path);
     bool checkRemoteSync(const QString& path);
     bool setErrorIfExist(int errorCode, int syncErrorCode);
-    void syncHelper(bool onlyPrevalidate, const QString& localFolder, const QString& megaFolder);
-    void moveNextCandidateSyncModel(bool errorOnCurrent);
-    bool checkExistInModel(const QString& path,
-                           SyncsCandidatesModel::SyncsCandidadteModelRole pathRole);
 };
 
 #endif // SYNCS_H

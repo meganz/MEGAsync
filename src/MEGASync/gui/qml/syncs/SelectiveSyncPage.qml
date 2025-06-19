@@ -105,11 +105,7 @@ SelectiveSyncPageForm {
             }
         }
 
-        function onLocalErrorChanged() {
-            enableScreen();
-        }
-
-        function onRemoteErrorChanged() {
+        function onSyncSetupFailed() {
             enableScreen();
         }
     }

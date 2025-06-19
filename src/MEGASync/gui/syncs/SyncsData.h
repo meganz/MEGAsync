@@ -23,6 +23,7 @@ class SyncsData: public QObject
                    localFolderCandidateChanged)
 
     friend class Syncs;
+    friend class SyncsCandidates;
 
 public:
     explicit SyncsData(QObject* parent = nullptr);
@@ -44,6 +45,8 @@ signals:
     void defaultRemoteFolderChanged();
     void remoteFolderCandidateChanged();
     void localFolderCandidateChanged();
+    void syncCandidatesSetupSuccess(bool isFullSync);
+    void syncCandidatesSetupFailed();
 
 private:
     QString getLocalError() const;

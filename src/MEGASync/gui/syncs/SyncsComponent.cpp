@@ -2,7 +2,7 @@
 
 #include "AddExclusionRule.h"
 #include "DialogOpener.h"
-#include "Syncs.h"
+#include "SyncsCandidates.h"
 #include "SyncsData.h"
 #include "SyncsQmlDialog.h"
 
@@ -10,7 +10,7 @@ static bool qmlRegistrationDone = false;
 
 SyncsComponent::SyncsComponent(QObject* parent):
     QMLComponent(parent),
-    mSyncs(std::make_unique<Syncs>())
+    mSyncsCandidates(std::make_unique<SyncsCandidates>())
 {
     registerQmlModules();
 
@@ -18,25 +18,25 @@ SyncsComponent::SyncsComponent(QObject* parent):
                                                    this);
 
     QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsDataAccess"),
-                                                   mSyncs->getSyncsData());
+                                                   mSyncsCandidates->getSyncsData());
 
     QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsCandidatesModel"),
-                                                   mSyncs->getSyncsCandidadtesModel());
+                                                   mSyncsCandidates->getSyncsCandidadtesModel());
 }
 
 void SyncsComponent::confirmSyncCandidateButtonClicked()
 {
-    mSyncs->confirmSyncCandidates();
+    mSyncsCandidates->confirmSyncCandidates();
 }
 
 void SyncsComponent::exclusionsButtonClicked()
 {
-    openExclusionsDialog(mSyncs->getSyncsData()->getLocalFolderCandidate());
+    openExclusionsDialog(mSyncsCandidates->getSyncsData()->getLocalFolderCandidate());
 }
 
 void SyncsComponent::updateDefaultFolders()
 {
-    mSyncs->updateDefaultFolders();
+    mSyncsCandidates->updateDefaultFolders();
 }
 
 QUrl SyncsComponent::getQmlUrl()
@@ -62,17 +62,17 @@ void SyncsComponent::viewSyncsInSettingsButtonClicked()
 
 void SyncsComponent::setSyncOrigin(SyncInfo::SyncOrigin origin)
 {
-    mSyncs->setSyncOrigin(origin);
+    mSyncsCandidates->setSyncOrigin(origin);
 }
 
 void SyncsComponent::setRemoteFolder(const QString& remoteFolder)
 {
-    mSyncs->setRemoteFolderCandidate(remoteFolder);
+    mSyncsCandidates->setRemoteFolderCandidate(remoteFolder);
 }
 
 void SyncsComponent::setLocalFolder(const QString& localFolder)
 {
-    mSyncs->setLocalFolderCandidate(localFolder);
+    mSyncsCandidates->setLocalFolderCandidate(localFolder);
 }
 
 void SyncsComponent::openExclusionsDialog(const QString& folder) const
@@ -88,23 +88,23 @@ void SyncsComponent::openExclusionsDialog(const QString& folder) const
 
 void SyncsComponent::clearRemoteFolderErrorHint()
 {
-    mSyncs->clearRemoteError();
+    mSyncsCandidates->clearRemoteError();
 }
 
 void SyncsComponent::clearLocalFolderErrorHint()
 {
-    mSyncs->clearLocalError();
+    mSyncsCandidates->clearLocalError();
 }
 
 void SyncsComponent::syncButtonClicked(const QString& localFolder, const QString& megaFolder)
 {
-    mSyncs->addSync(localFolder, megaFolder);
+    mSyncsCandidates->addSync(localFolder, megaFolder);
 }
 
 void SyncsComponent::addSyncCandidadeButtonClicked(const QString& localFolder,
                                                    const QString& megaFolder)
 {
-    mSyncs->addSyncCandidate(localFolder, megaFolder);
+    mSyncsCandidates->addSyncCandidate(localFolder, megaFolder);
 }
 
 void SyncsComponent::editSyncCandidadeButtonClicked(const QString& localFolder,
@@ -112,19 +112,22 @@ void SyncsComponent::editSyncCandidadeButtonClicked(const QString& localFolder,
                                                     const QString& originalLocalFolder,
                                                     const QString& originalMegaFolder)
 {
-    mSyncs->editSyncCandidate(localFolder, megaFolder, originalLocalFolder, originalMegaFolder);
+    mSyncsCandidates->editSyncCandidate(localFolder,
+                                        megaFolder,
+                                        originalLocalFolder,
+                                        originalMegaFolder);
 }
 
 void SyncsComponent::removeSyncCandidadeButtonClicked(const QString& localFolder,
                                                       const QString& megaFolder)
 {
-    mSyncs->removeSyncCandidate(localFolder, megaFolder);
+    mSyncsCandidates->removeSyncCandidate(localFolder, megaFolder);
 
     updateDefaultFolders();
 }
 
 void SyncsComponent::closeDialogButtonClicked()
 {
-    mSyncs->clearRemoteError();
-    mSyncs->clearLocalError();
+    mSyncsCandidates->clearRemoteError();
+    mSyncsCandidates->clearLocalError();
 }
