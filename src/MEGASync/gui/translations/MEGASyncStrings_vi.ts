@@ -2085,9 +2085,11 @@
         <translation>Đang chờ xác nhận email…</translation>
     </message>
     <message>
-        <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
-        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
-        <translation>Tài khoản của bạn đã bị khóa tạm thời vì sự an toàn của bạn. Điều này có thể là do xâm phạm dữ liệu tiềm ẩn. Để mở khóa tài khoản, hãy làm theo các bước trong email mà chúng tôi đã gửi cho bạn.</translation>
+        <source>Your account has been locked for your protection after detecting a malicious login, so we require you to reset your password.[BR]
+Check your email inbox for instructions on unlocking your account and tips on how to prevent this from happening again.</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465, updated literal SNC-5585.</translatorcomment>
+        <translation>Tài khoản đã bị khóa để bảo vệ cho bạn do đã phát hiện phiên đăng nhập đáng nghi ngờ, vì vậy chúng tôi yêu cầu bạn đặt lại mật khẩu của mình.[BR]
+Kiểm tra hộp thư email của bạn để xem hướng dẫn mở khóa tài khoản và mẹo về cách ngăn chặn điều này lặp lại.</translation>
     </message>
 </context>
 <context>
@@ -2564,11 +2566,6 @@
         <source>Do not show again</source>
         <translatorcomment>This is a label for a checkbox. When checked by the user, it ensures that the Enable Notification Area Icon notification will not be displayed to them in the future. SNC-2270</translatorcomment>
         <translation>Đừng hiện lại nữa</translation>
-    </message>
-    <message>
-        <source>Error installing components</source>
-        <translatorcomment>This is the title of an error message that appears when there's an issue during the installation of Notification Area Icon Support. SNC-2270</translatorcomment>
-        <translation>Lỗi xảy ra khi cài đặt các thành phần</translation>
     </message>
     <message>
         <source>Failed to install the necessary components.</source>
@@ -3120,11 +3117,6 @@ Hãy chờ cho phiên tải lên được hoàn tất.</translation>
         <translation>Tài khoản đã bị vô hiệu hóa</translation>
     </message>
     <message>
-        <source>Alert</source>
-        <translatorcomment>Title of the warning dialog shown when the SDK reports a fatal error - CON-844</translatorcomment>
-        <translation>Cảnh báo</translation>
-    </message>
-    <message>
         <source>An update will be applied during the next application restart</source>
         <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
         <translation>Bản cập nhật sẽ được áp dụng vào lần khởi động tiếp theo</translation>
@@ -3158,11 +3150,6 @@ Hãy chờ cho phiên tải lên được hoàn tất.</translation>
         <source>Download</source>
         <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
         <translation>Tải xuống</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title for dialogs with error messages. SNC-3299</translatorcomment>
-        <translation>Lỗi</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -3283,11 +3270,6 @@ Hãy chờ cho phiên tải lên được hoàn tất.</translation>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
         <translation>Ứng dụng sẽ vẫn tiếp tục hoạt động nhưng bạn có thể sẽ không nhận được bản vá và cập nhật mới.</translation>
-    </message>
-    <message>
-        <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
-        <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>Ứng dụng sẽ vẫn tiếp tục hoạt động nhưng các bản cập nhật mới sẽ sớm không hỗ trợ các phiên bản đời trước Windows 7.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -3496,11 +3478,6 @@ https://mega.co.nz/#sync</source>
         <source>Waiting</source>
         <translatorcomment>Label of tray icon to indicate that the app is in a waiting state.</translatorcomment>
         <translation>Đang chờ</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
-        <translation>Chú Ý</translation>
     </message>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
@@ -3827,19 +3804,6 @@ Bạn sẽ không thể lấy lại quyền truy cập vào dữ liệu đã �
         <source>Your sync and backup settings were corrupted and have been reset. If you had any, please set them up again.</source>
         <translatorcomment>Body of the warning dialog shown when the syncs configuration file has been re-generated by the sdk - CON-1311</translatorcomment>
         <translation>Các thiết đặt của đồng bộ và sao lưu đã bị hỏng và đã được đặt lại từ đầu. Bạn sẽ cần phải thiết lập lại bất kỳ đồng bộ hóa và sao lưu nào bạn đã có trước đây một lần nữa.</translation>
-    </message>
-</context>
-<context>
-    <name>MegaInfoMessage</name>
-    <message>
-        <source>Close</source>
-        <translatorcomment>Button label to close current message box</translatorcomment>
-        <translation>Đóng</translation>
-    </message>
-    <message>
-        <source>Why am I seeing this?</source>
-        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation>Tại sao tôi đang thấy cái này?</translation>
     </message>
 </context>
 <context>
@@ -5976,14 +5940,18 @@ Nhập một tên khác.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We’ve improved how crash reports are handled, so we can fix issues faster.
-- New icons are now available in the Windows 11 context menu.
-- We’ve fixed bugs and made performance improvements behind the scenes.
+        <source>- Support has ended for Windows 7 and Server 2008 R2.
+- New actions are now available in the File Explorer context menu.
+- Refined parts of the interface to improve your experience.
+- Turkish language is now supported.
+- We’ve fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 5.12.0. CON-1358</translatorcomment>
-        <translation>- Chúng tôi đã cải thiện cách để báo cáo lỗi, để giúp việc khắc phục sự cố được nhanh hơn.
-- Các biểu tượng mới hiện có sẵn trong menu ngữ cảnh Windows 11.
-- Sửa lỗi và cải thiện hiệu suất bên trong ứng dụng.
+        <translatorcomment>Change log for version 5.13.0. CON-1380</translatorcomment>
+        <translation>- Kết thúc hỗ trợ cho Windows 7 và Server 2008 R2.
+- Các hành động mới trong menu ngữ cảnh của File Explorer.
+- Tinh chỉnh các phần của giao diện để cải thiện trải nghiệm cho bạn.
+- Tiếng Thổ Nhĩ Kỳ hiện được hỗ trợ.
+- Chúng tôi đã sửa lỗi và làm cho ứng dụng vận hành đáng tin cậy hơn.
 </translation>
     </message>
 </context>
@@ -7190,6 +7158,16 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
         <source>View previous versions</source>
         <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
         <translation>Xem phiên bản trước đây</translation>
+    </message>
+    <message>
+        <source>Add sync</source>
+        <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
+        <translation>Thêm đồng bộ</translation>
+    </message>
+    <message>
+        <source>Add backup</source>
+        <translatorcomment>Context menu option to backup a folder. CON-1364.</translatorcomment>
+        <translation>Thêm sao lưu</translation>
     </message>
 </context>
 <context>
@@ -9674,12 +9652,7 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
         <translation>Tại sao tôi đang thấy cái này?</translation>
     </message>
-    <message>
-        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
-        <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>Tài khoản của bạn đã bị khóa để bảo vệ bạn sau khi phát hiện phiên đăng nhập đáng nghi ngờ, vì vậy chúng tôi yêu cầu bạn đặt lại mật khẩu của mình. 
-Kiểm tra hộp thư email của bạn để biết hướng dẫn mở khóa tài khoản của mình và mẹo về cách ngăn chặn điều này tái diễn.</translation>
-    </message>
+
 </context>
 <context>
     <name>WhatsNewStrings</name>
