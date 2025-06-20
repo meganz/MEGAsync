@@ -966,6 +966,64 @@
     </message>
 </context>
 <context>
+    <name>ConfirmSyncsTable</name>
+    <message>
+        <source>Local folders</source>
+        <translatorcomment>SubTitle for the local part on a sync inside a Sync candidate table. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MEGA folders</source>
+        <translatorcomment>SubTitle for the remote part on a sync inside a Sync candidate table. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add more syncs</source>
+        <translatorcomment>Label for a button to add more sync candidates. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit sync</source>
+        <translatorcomment>Action label for a menu button to edit  a sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translatorcomment>Button label to save the changes on the paths of a sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove sync</source>
+        <translatorcomment>Action label for a menu button to remove a sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove sync?</source>
+        <translatorcomment>Title for a pop-up dialog that request user confirmation to remove a sync candidate. CON-1386.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Removing this sync will take you back to the start of setup.</source>
+        <translatorcomment>Description on the consequences of removing the last sync candidate left on the table. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the selected sync?</source>
+        <translatorcomment>Description on removing an sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button label on cancel current sync candidate removal process. CON-1386</translatorcomment>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translatorcomment>Button label on confirmation on sync candidate removal process. CON-1386</translatorcomment>
+        <translation type="unfinished">Remove</translation>
+    </message>
+</context>
+<context>
     <name>CrashHandler</name>
     <message>
         <source>Contact support</source>
@@ -2176,6 +2234,19 @@ Check your email inbox for instructions on unlocking your account and tips on ho
         <source>Your download has started</source>
         <translatorcomment>Notification shown when a web download is started.</translatorcomment>
         <translation>Your download has started</translation>
+    </message>
+</context>
+<context>
+    <name>HandleSyncCandidatesDialogForm.ui</name>
+    <message>
+        <source>Add</source>
+        <translatorcomment>Button label to add a new sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished">Add</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button label to cancel the current process of adding a new sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished">Cancel</translation>
     </message>
 </context>
 <context>
@@ -5782,6 +5853,21 @@ Enter a different name.</translation>
         <translatorcomment>Backups table checkbox text to select all lines in the table CON-466</translatorcomment>
         <translation>[B]Select all[/B]</translation>
     </message>
+    <message>
+        <source>Confirm folders to sync</source>
+        <translatorcomment>Page title for sync candidate table page. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>One or more syncs were unable to be set up. Check the folders and try again.</source>
+        <translatorcomment>Error banner description on resume page for sync candidates confirmation, we have at least one error. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync wasn’t fully set up</source>
+        <translatorcomment>Error banner title on resume page for sync candidates confirmation, we have at least one error. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OpenBackupsFolder</name>
@@ -8648,6 +8734,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Select a local folder to sync.</source>
         <translatorcomment>Error message indicating that the user should choose a local folder in order to create a sync. CON-467</translatorcomment>
         <translation>Select a local folder to sync</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s already a candidate.</source>
+        <translatorcomment>Error message indicating the user we have a sync candidate with the same folder already in the sync candidates table. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
