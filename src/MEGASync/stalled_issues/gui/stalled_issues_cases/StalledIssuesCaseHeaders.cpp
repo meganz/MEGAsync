@@ -327,21 +327,21 @@ void UnknownDownloadIssueHeader::onMultipleActionButtonOptionSelected(StalledIss
         return;
     }
 
-    selectionInfo.msgInfo.text = tr("Report issue");
-    selectionInfo.msgInfo.informativeText =
+    selectionInfo.msgInfo.titleText = tr("Report issue");
+    selectionInfo.msgInfo.descriptionText =
         tr("This will send your logs to our Support team for diagnostics.");
     selectionInfo.msgInfo.buttonsText.insert(QMessageBox::Ok, tr("Send"));
 
-    selectionInfo.msgInfo.finishFunc = [header](QMessageBox* msgBox)
+    selectionInfo.msgInfo.finishFunc = [header](QPointer<MessageDialogResult> msg)
     {
-        if (msgBox->result() == QDialogButtonBox::Ok)
+        if (msg->result() == QMessageBox::Ok)
         {
             MegaSyncApp->getStalledIssuesModel()->sendReportForUnknownDownloadIssue(
                 header->getCurrentIndex());
         }
     };
 
-    QMegaMessageBox::warning(selectionInfo.msgInfo);
+    MessageDialogOpener::information(selectionInfo.msgInfo);
 }
 
 //Create folder failed
