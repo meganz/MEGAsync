@@ -35,6 +35,16 @@
 using namespace std;
 using namespace mega;
 
+namespace
+{
+enum class StartupApprovedState : BYTE
+{
+    ENABLED_BY_DEFAULT = 0x00,
+    ENABLED_BY_USER = 0x02,
+    DISABLED_BY_USER = 0x03,
+    ENABLED_BY_SYSTEM = 0x06,
+};
+}
 bool WindowsPlatform_exiting = false;
 static const QString NotAllowedDefaultFactoryBiosName = QString::fromUtf8("To be filled by O.E.M.");
 
@@ -698,37 +708,51 @@ bool PlatformImplementation::startOnStartup(bool value)
     {
         return false;
     }
-
     QString startupPath = QString::fromWCharArray(path);
-    startupPath += QString::fromLatin1("\\MEGAsync.lnk");
+    QString shortcutPath = startupPath + QString::fromLatin1("\\MEGAsync.lnk");
+
+    HKEY folderKey;
+    if (RegOpenKeyExW(HKEY_CURRENT_USER,
+                      L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\StartupApproved\\St"
+                      L"artupFolder",
+                      0,
+                      KEY_WRITE,
+                      &folderKey) == ERROR_SUCCESS)
+    {
+        QString shortcutName = QFileInfo(shortcutPath).fileName();
+        BYTE data[12] = {0};
+        if (value)
+        {
+            data[0] = static_cast<BYTE>(StartupApprovedState::ENABLED_BY_USER);
+        }
+        else
+        {
+            data[0] = static_cast<BYTE>(StartupApprovedState::DISABLED_BY_USER);
+        }
+        RegSetValueExW(folderKey, (LPCWSTR)shortcutName.utf16(), 0, REG_BINARY, data, sizeof(data));
+        RegCloseKey(folderKey);
+    }
 
     if (value)
     {
-        if (QFile(startupPath).exists())
+        if (QFile(shortcutPath).exists())
         {
             return true;
         }
 
-        WCHAR wDescription[]=L"Start MEGAsync";
-        WCHAR *wStartupPath = (WCHAR *)startupPath.utf16();
-
+        WCHAR wDescription[] = L"Start MEGAsync";
+        WCHAR* wStartupPath = (WCHAR*)shortcutPath.utf16();
         QString exec = MegaApplication::applicationFilePath();
         exec = QDir::toNativeSeparators(exec);
-        WCHAR *wExecPath = (WCHAR *)exec.utf16();
-
+        WCHAR* wExecPath = (WCHAR*)exec.utf16();
         res = CreateLink(wExecPath, wStartupPath, wDescription);
 
         if (res != S_OK)
         {
             return false;
         }
-        return true;
     }
-    else
-    {
-        QFile::remove(startupPath);
-        return true;
-    }
+    return true;
 }
 
 bool PlatformImplementation::isStartOnStartupActive()
@@ -739,14 +763,42 @@ bool PlatformImplementation::isStartOnStartupActive()
     {
         return false;
     }
-
     QString startupPath = QString::fromWCharArray(path);
-    startupPath += QString::fromLatin1("\\MEGAsync.lnk");
-    if (QFileInfo(startupPath).isSymLink())
+    QString shortcutPath = startupPath + QString::fromLatin1("\\MEGAsync.lnk");
+    // First check if shortcut exists
+    if (!QFileInfo(shortcutPath).exists())
     {
-        return true;
+        return false;
     }
-    return false;
+    // Then check registry status
+    bool isEnabled = true;
+    HKEY folderKey;
+    if (RegOpenKeyExW(HKEY_CURRENT_USER,
+                      L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\StartupApproved\\St"
+                      L"artupFolder",
+                      0,
+                      KEY_READ,
+                      &folderKey) == ERROR_SUCCESS)
+    {
+        BYTE data[12] = {0};
+        DWORD dataSize = sizeof(data);
+        QString shortcutName = QFileInfo(shortcutPath).fileName();
+
+        if (RegQueryValueExW(folderKey,
+                             (LPCWSTR)shortcutName.utf16(),
+                             NULL,
+                             NULL,
+                             data,
+                             &dataSize) == ERROR_SUCCESS)
+        {
+            StartupApprovedState currentState = static_cast<StartupApprovedState>(data[0]);
+            isEnabled = (currentState == StartupApprovedState::ENABLED_BY_USER ||
+                         currentState == StartupApprovedState::ENABLED_BY_SYSTEM ||
+                         currentState == StartupApprovedState::ENABLED_BY_DEFAULT);
+        }
+        RegCloseKey(folderKey);
+    }
+    return isEnabled;
 }
 
 bool PlatformImplementation::showInFolder(QString pathIn)
