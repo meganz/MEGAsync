@@ -57,21 +57,31 @@ void Syncs::addSync()
 
     if (remoteHandle == mega::INVALID_HANDLE)
     {
-        mCreatingFolder = true;
-
-        /*
-         *  need to remove the first / from the remote path,
-         *  we already state in createFolder the origin point.
-         */
-        if (mSyncConfig.remoteFolder.indexOf(QLatin1Char('/')) == 0)
+        if (auto rootNode = MegaSyncApp->getRootNode())
         {
-            mSyncConfig.remoteFolder.remove(0, 1);
-        }
+            mCreatingFolder = true;
 
-        auto listener = RequestListenerManager::instance().registerAndGetFinishListener(this, true);
-        mMegaApi->createFolder(mSyncConfig.remoteFolder.toUtf8().constData(),
-                               MegaSyncApp->getRootNode().get(),
-                               listener.get());
+            /*
+             *  need to remove the first / from the remote path,
+             *  we already state in createFolder the origin point.
+             */
+            if (mSyncConfig.remoteFolder.indexOf(QLatin1Char('/')) == 0)
+            {
+                mSyncConfig.remoteFolder.remove(0, 1);
+            }
+
+            auto listener =
+                RequestListenerManager::instance().registerAndGetFinishListener(this, true);
+            mMegaApi->createFolder(mSyncConfig.remoteFolder.toUtf8().constData(),
+                                   rootNode.get(),
+                                   listener.get());
+        }
+        else
+        {
+            mega::MegaApi::log(
+                mega::MegaApi::LOG_LEVEL_ERROR,
+                QString::fromUtf8("Sync creation failed: Root node invalid.").toUtf8().constData());
+        }
     }
     else
     {

@@ -963,7 +963,8 @@ QString UploadTransferMetaData::getDestinationNodePathByData(const std::shared_p
     {
         QString path;
 
-        if(destinationNode->getHandle() == MegaSyncApp->getMegaApi()->getRootNode()->getHandle())
+        if (MegaSyncApp->getRootNode() &&
+            destinationNode->getHandle() == MegaSyncApp->getRootNode()->getHandle())
         {
             path = MegaNodeNames::getRootNodeName(destinationNode.get());
         }

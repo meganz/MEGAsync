@@ -2759,13 +2759,13 @@ QIcon NodeSelectorModel::getFolderIcon(NodeSelectorModelItem *item) const
                     icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing-disabled.png"), QSize(), QIcon::Disabled);
                     return icon;
                 }
-                else if(node->getHandle() == MegaSyncApp->getRootNode()->getHandle())
+                else if (item->isCloudDrive())
                 {
                     QIcon icon;
                     icon.addFile(QLatin1String("://images/ico-cloud-drive.png"), QSize(16, 16));
                     return icon;
                 }
-                else if(node->getHandle() == MegaSyncApp->getRubbishNode()->getHandle())
+                else if (item->isRubbishBin())
                 {
                     QIcon icon;
                     icon.addFile(QLatin1String("://images/node_selector/view/trash.png"),
