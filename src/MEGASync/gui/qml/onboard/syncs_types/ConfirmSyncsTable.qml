@@ -34,6 +34,7 @@ Rectangle {
     readonly property int menuLeftMargin: 8
     readonly property int separatorMargins: 4
     readonly property int menuWidth: 179
+    readonly property int leftPaddingRemoteSyncCandidateRow: headerMargin - horitzontalMargin
 
     signal moveBack
 
@@ -98,7 +99,7 @@ Rectangle {
                 Row {
                     id: remoteImageTextLayout
 
-                    leftPadding: headerMargin
+                    leftPadding: leftPaddingRemoteSyncCandidateRow
                     width: parent.width / 2
                     spacing: headerSpacing
 
@@ -332,7 +333,7 @@ Rectangle {
 
                         Rectangle {
                             color: ColorTheme.surface1
-                            width: headerMargin
+                            width: leftPaddingRemoteSyncCandidateRow
                             height: parent.height
                         }
 

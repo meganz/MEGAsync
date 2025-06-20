@@ -78,7 +78,6 @@ Window {
 
         rightPrimaryButton.onClicked: {
             root.enabled = false;
-            rightPrimaryButton.icons.busyIndicatorVisible = true;
 
             if (editLocalPath !== "" && editRemotePath !== "")
             {
@@ -128,7 +127,6 @@ Window {
 
         function enableScreen() {
             root.enabled = true;
-            rightPrimaryButton.icons.busyIndicatorVisible = false;
         }
 
         Connections {
