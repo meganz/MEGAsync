@@ -3882,8 +3882,7 @@ void MegaApplication::goToMyCloud()
     // If the root node fails, open, at least, the official web
     else
     {
-        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
-                           "Opening User cloud failed. Root node invalid.");
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Opening User cloud failed. Root node invalid.");
         officialWeb();
     }
 }
