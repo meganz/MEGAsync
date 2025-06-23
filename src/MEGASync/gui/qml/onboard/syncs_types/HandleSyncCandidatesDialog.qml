@@ -25,11 +25,20 @@ Window {
     property string editLocalPath
     property string editRemotePath
 
-    width: handleSyncCandidateForm.width
-    height: handleSyncCandidateForm.height
-    flags: Qt.Dialog | Qt.FramelessWindowHint
+    readonly property int dialogWidth: 453
+    readonly property int dialogHeight: 344
+
+    width: dialogWidth
+    minimumWidth: dialogWidth
+    maximumWidth: dialogWidth
+
+    minimumHeight: dialogHeight
+    height: dialogHeight
+    maximumHeight: dialogHeight
+
+    flags: Qt.Dialog | Qt.CustomizeWindowHint
     modality: Qt.WindowModal
-    color: "transparent"
+    color: ColorTheme.surface1
 
     onVisibleChanged: {
         if (editLocalPath !== "") {

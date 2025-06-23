@@ -31,8 +31,12 @@ Window {
     signal accepted
 
     width: dialogWidth
+    minimumWidth: dialogWidth
+    maximumWidth: dialogWidth
     height: dialogHeight
-    flags: Qt.Dialog | Qt.FramelessWindowHint
+    minimumHeight: dialogHeight
+    maximumHeight: dialogHeight
+    flags: Qt.Dialog | Qt.CustomizeWindowHint
     modality: Qt.WindowModal
     color: "transparent"
 
