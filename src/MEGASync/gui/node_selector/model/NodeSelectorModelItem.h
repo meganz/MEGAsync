@@ -33,6 +33,8 @@ public:
     explicit NodeSelectorModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0);
     ~NodeSelectorModelItem();
 
+    bool isValid() const;
+
     std::shared_ptr<mega::MegaNode> getNode() const;
     bool isSpecialNode() const;
     bool canBeRenamed() const;
