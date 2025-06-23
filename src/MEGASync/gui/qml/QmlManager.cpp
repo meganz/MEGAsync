@@ -85,6 +85,11 @@ void QmlManager::registerCommonQmlElements()
     qmlRegisterType<ChooseLocalFile>("ChooseLocalFile", 1, 0, "ChooseLocalFile");
 
     setRootContextProperty(QString::fromUtf8("themeManager"), new QmlTheme(mEngine));
+    bool isWindows = false;
+#ifdef Q_OS_WINDOWS
+    isWindows = true;
+#endif
+    setRootContextProperty(QString::fromUtf8("isWindows"), isWindows);
 }
 
 QString QmlManager::getObjectRootContextName(QObject* value)

@@ -36,9 +36,9 @@ Window {
     height: dialogHeight
     minimumHeight: dialogHeight
     maximumHeight: dialogHeight
-    flags: Qt.Dialog | Qt.CustomizeWindowHint
+    flags: Qt.Dialog | (isWindows ? Qt.CustomizeWindowHint : Qt.FramelessWindowHint)
     modality: Qt.WindowModal
-    color: "transparent"
+    color: isWindows ? ColorTheme.surface1 : "transparent"
 
     Rectangle {
         id: background

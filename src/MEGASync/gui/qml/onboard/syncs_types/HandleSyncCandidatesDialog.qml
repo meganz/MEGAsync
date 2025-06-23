@@ -36,9 +36,9 @@ Window {
     height: dialogHeight
     maximumHeight: dialogHeight
 
-    flags: Qt.Dialog | Qt.CustomizeWindowHint
+    flags: Qt.Dialog | (isWindows ? Qt.CustomizeWindowHint : Qt.FramelessWindowHint)
     modality: Qt.WindowModal
-    color: ColorTheme.surface1
+    color: isWindows ? ColorTheme.surface1 : "transparent"
 
     onVisibleChanged: {
         if (editLocalPath !== "") {
