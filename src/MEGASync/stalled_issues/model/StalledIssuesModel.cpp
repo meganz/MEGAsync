@@ -1,6 +1,7 @@
 #include "StalledIssuesModel.h"
 
 #include "DialogOpener.h"
+#include "DownloadFileIssue.h"
 #include "FolderMatchedAgainstFileIssue.h"
 #include "IgnoredStalledIssue.h"
 #include "LocalOrRemoteUserMustChooseStalledIssue.h"
@@ -439,21 +440,18 @@ void StalledIssuesModel::appendCachedIssuesToModel(
                 mCountByFilterCriterion[static_cast<int>(
                     StalledIssue::getCriterionByReason((*it).consultData()->getReason()))]++;
 
-                if (!(*it).consultData()->isBeingSolved())
-                {
-                    // Connect issue signals
-                    connect(issue.getData().get(),
-                            &StalledIssue::asyncIssueSolvingFinished,
-                            this,
-                            &StalledIssuesModel::onAsyncIssueSolvingFinished,
-                            Qt::UniqueConnection);
+                // Connect issue signals
+                connect(issue.getData().get(),
+                        &StalledIssue::asyncIssueSolvingFinished,
+                        this,
+                        &StalledIssuesModel::onAsyncIssueSolvingFinished,
+                        Qt::UniqueConnection);
 
-                    connect(issue.getData().get(),
-                            &StalledIssue::dataUpdated,
-                            this,
-                            &StalledIssuesModel::onStalledIssueUpdated,
-                            Qt::UniqueConnection);
-                }
+                connect(issue.getData().get(),
+                        &StalledIssue::dataUpdated,
+                        this,
+                        &StalledIssuesModel::onStalledIssueUpdated,
+                        Qt::UniqueConnection);
             }
             else
             {
@@ -1139,6 +1137,10 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
             showIssueExternallyChangedMessageBox();
             finishSolvingIssues(count, false);
         }
+        else if (info.async && info.finishFunc)
+        {
+            info.finishFunc(-1, false);
+        }
 
         // Update counters and filters
         emit stalledIssuesCountChanged();
@@ -1597,24 +1599,47 @@ void StalledIssuesModel::showIgnoreItemsError(bool allFailed)
 
 void StalledIssuesModel::fixFingerprint(const QModelIndexList& list)
 {
-    mFingerprintIssuesToFix.clear();
-
-    auto finishIssue = [this](int, bool)
+    auto finishIssue = [](int, bool)
     {
-        mFingerprintIssuesSolver.solveIssues(mFingerprintIssuesToFix);
+        InvalidFingerprintDownloadIssue::solveIssues();
     };
 
-    auto resolveIssue = [this](int row) -> bool
+    auto joinFingerprintIssues = [this](int row) -> bool
     {
         auto item(getStalledIssueByRow(row));
-        mFingerprintIssuesToFix.append(item);
+        InvalidFingerprintDownloadIssue::addIssueToSolve(item);
 
         MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_FINGERPRINT_MISSING_SOLVED_MANUALLY);
         return true;
     };
 
-    SolveListInfo info(list, resolveIssue);
+    SolveListInfo info(list, joinFingerprintIssues);
     info.finishFunc = finishIssue;
+    solveListOfIssues(info);
+}
+
+void StalledIssuesModel::sendReportForUnknownDownloadIssue(const QModelIndex& index)
+{
+    auto resolveIssue = [this](int row) -> bool
+    {
+        auto item(getStalledIssueByRow(row));
+        if (auto unknownIssue = item.convert<UnknownDownloadIssue>())
+        {
+            unknownIssue->sendFeedback();
+
+            MegaSyncApp->getStatsEventHandler()->sendEvent(
+                AppStatsEvents::EventType::SI_UNKNOWN_DOWNLOAD_ISSUE_SOLVED_BY_FEEDBACK);
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    };
+
+    SolveListInfo info(QModelIndexList() << index, resolveIssue);
+    info.async = true;
     solveListOfIssues(info);
 }
 

@@ -39,7 +39,7 @@ public:
 
     struct ActionInfo
     {
-        ActionInfo(const QString& text, uint id):
+        ActionInfo(const QString& text, uint id = 0):
             actionText(text),
             id(id)
         {}

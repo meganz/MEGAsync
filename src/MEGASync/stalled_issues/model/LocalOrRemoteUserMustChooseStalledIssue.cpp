@@ -162,6 +162,7 @@ void LocalOrRemoteUserMustChooseStalledIssue::fillIssue(const mega::MegaSyncStal
     StalledIssue::fillIssue(stall);
 
     std::shared_ptr<UploadTransferInfo> info(new UploadTransferInfo());
+    info->state = TransferData::ACTIVE_STATES_MASK;
     //Check if transfer already exists
     if (isBeingSolvedByUpload(info, true))
     {
@@ -195,6 +196,7 @@ bool LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
     if(getCloudData())
     {
         std::shared_ptr<UploadTransferInfo> info(new UploadTransferInfo());
+        info->state = TransferData::ACTIVE_STATES_MASK;
         //Check if transfer already exists
         if (!isBeingSolvedByUpload(info, true))
         {

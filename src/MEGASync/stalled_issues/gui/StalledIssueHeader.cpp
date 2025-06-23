@@ -233,7 +233,21 @@ void StalledIssueHeader::showMessage(const QString &message, const QPixmap& pixm
 
 void StalledIssueHeader::updateIssueState()
 {
-    auto type(getData().consultData()->getIsSolved());
+    StalledIssue::SolveType type(StalledIssue::SolveType::UNSOLVED);
+    QIcon icon;
+    QString message;
+
+    if (getData().consultData()->hasCustomMessage())
+    {
+        auto customMessage(getData().consultData()->getCustomMessage());
+
+        type = customMessage.customType;
+        message = customMessage.customMessage;
+    }
+    else
+    {
+        type = getData().consultData()->getIsSolved();
+    }
 
     if(type == StalledIssue::SolveType::BEING_SOLVED)
     {
@@ -244,15 +258,15 @@ void StalledIssueHeader::updateIssueState()
         ui->actionWaitingSpinner->stop();
     }
 
-    QIcon icon;
-    QString message;
-
     switch(type)
     {
         case StalledIssue::SolveType::BEING_SOLVED:
         {
             ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("being solved"));
-            message = tr("Being solved");
+            if (message.isEmpty())
+            {
+                message = tr("Being solved");
+            }
             break;
         }
         case StalledIssue::SolveType::SOLVED:
@@ -261,19 +275,28 @@ void StalledIssueHeader::updateIssueState()
             if(getData().convert<IgnoredStalledIssue>())
             {
                 icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/solved_state.png"));
-                message = tr("Ignored");
+                if (message.isEmpty())
+                {
+                    message = tr("Ignored");
+                }
             }
             else
             {
                 if(getData().consultData()->wasAutoResolutionApplied())
                 {
                     icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/auto_solved_state.png"));
-                    message = tr("Auto-solved");
+                    if (message.isEmpty())
+                    {
+                        message = tr("Auto-solved");
+                    }
                 }
                 else
                 {
                     icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/solved_state.png"));
-                    message = tr("Solved");
+                    if (message.isEmpty())
+                    {
+                        message = tr("Solved");
+                    }
                 }
             }
 
@@ -283,7 +306,10 @@ void StalledIssueHeader::updateIssueState()
         {
             ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("failed"));
             icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/failed_state.png"));
-            message = tr("Failed");
+            if (message.isEmpty())
+            {
+                message = tr("Failed");
+            }
 
             break;
         }

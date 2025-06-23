@@ -460,6 +460,11 @@ void StalledIssue::setIsSolved(SolveType type)
 {
     if(mIsSolved != type)
     {
+        if (hasCustomMessage())
+        {
+            resetCustomMessage();
+        }
+
         mIsSolved = type;
         // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
         MegaSyncApp->getMegaApi()->clearStalledPath(originalStall.get());
@@ -518,7 +523,7 @@ bool StalledIssue::isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo>
     if(node)
     {
         info->nodeHandle = consultCloudData()->getPathHandle();
-        auto transfer = MegaSyncApp->getTransfersModel()->activeDownloadTransferFound(info.get());
+        auto transfer = MegaSyncApp->getTransfersModel()->downloadTransferFound(info.get());
 
         result =  transfer != nullptr;
     }
@@ -530,6 +535,28 @@ void StalledIssue::performFinishAsyncIssueSolving(bool hasFailed)
 {
     hasFailed ? setIsSolved(StalledIssue::SolveType::FAILED) : setIsSolved(StalledIssue::SolveType::SOLVED);
     emit asyncIssueSolvingFinished(this);
+}
+
+const StalledIssue::CustomMessage& StalledIssue::getCustomMessage() const
+{
+    return mCustomMessage;
+}
+
+bool StalledIssue::hasCustomMessage() const
+{
+    return !mCustomMessage.customMessage.isEmpty();
+}
+
+void StalledIssue::resetCustomMessage()
+{
+    mCustomMessage.customMessage.clear();
+    mCustomMessage.customType = SolveType::UNSOLVED;
+}
+
+void StalledIssue::setCustomMessage(const QString& newCustomMessage, SolveType type)
+{
+    mCustomMessage.customMessage = newCustomMessage;
+    mCustomMessage.customType = type;
 }
 
 bool StalledIssue::detectedCloudSide() const

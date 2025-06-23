@@ -22,6 +22,7 @@ set(DESKTOP_APP_STALLED_ISSUES_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/LocalAndRemoteChooseWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/MoveOrRenameCannotOccurChooseWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/model/IgnoredStalledIssue.h
+    ${CMAKE_CURRENT_LIST_DIR}/model/DownloadFileIssue.h
     ${CMAKE_CURRENT_LIST_DIR}/model/LocalOrRemoteUserMustChooseStalledIssue.h
     ${CMAKE_CURRENT_LIST_DIR}/model/MoveOrRenameCannotOccurIssue.h
     ${CMAKE_CURRENT_LIST_DIR}/model/NameConflictStalledIssue.h
@@ -57,6 +58,7 @@ set(DESKTOP_APP_STALLED_ISSUES_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/LocalAndRemoteChooseWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/MoveOrRenameCannotOccurChooseWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/model/IgnoredStalledIssue.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/model/DownloadFileIssue.cpp
     ${CMAKE_CURRENT_LIST_DIR}/model/LocalOrRemoteUserMustChooseStalledIssue.cpp
     ${CMAKE_CURRENT_LIST_DIR}/model/MoveOrRenameCannotOccurIssue.cpp
     ${CMAKE_CURRENT_LIST_DIR}/model/NameConflictStalledIssue.cpp
