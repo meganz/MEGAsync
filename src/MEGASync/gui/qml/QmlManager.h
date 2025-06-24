@@ -34,6 +34,7 @@ private:
     QmlManager();
     void registerCommonQmlElements();
     QString getObjectRootContextName(QObject* value);
+    void createPlatformSelectorsFlags();
 };
 
 #endif // QML_MANAGER_H

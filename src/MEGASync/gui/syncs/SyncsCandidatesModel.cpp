@@ -95,9 +95,9 @@ void SyncsCandidatesModel::add(const QString& localSyncFolder, const QString& me
 
 void SyncsCandidatesModel::reset()
 {
-    beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
+    beginResetModel();
     mSyncCandidates.clear();
-    endRemoveRows();
+    endResetModel();
 }
 
 void SyncsCandidatesModel::remove(const QString& localSyncFolder, const QString& megaSyncFolder)
