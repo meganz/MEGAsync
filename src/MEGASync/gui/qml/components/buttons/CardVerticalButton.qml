@@ -76,6 +76,7 @@ CardButton {
                 }
                 text: title
                 wrapMode: Text.Wrap
+                textMouseArea.cursorShape: Qt.PointingHandCursor
             }
 
             Texts.Text {
@@ -93,6 +94,7 @@ CardButton {
                 lineHeightMode: Text.FixedHeight
                 text: description
                 wrapMode: Text.Wrap
+                textMouseArea.cursorShape: Qt.PointingHandCursor
             }
         }
 
