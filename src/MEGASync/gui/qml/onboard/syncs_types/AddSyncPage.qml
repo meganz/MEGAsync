@@ -50,10 +50,6 @@ AddSyncPageForm {
     }
 
     footerButtons {
-        leftSecondary.onClicked: {
-            syncsComponentAccess.exclusionsButtonClicked();
-        }
-
         rightSecondary.onClicked: {
             root.moveBack();
         }
