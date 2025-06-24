@@ -35,6 +35,8 @@ Rectangle {
     readonly property int separatorMargins: 4
     readonly property int menuWidth: 179
     readonly property int leftPaddingRemoteSyncCandidateRow: headerMargin - horitzontalMargin
+    readonly property int iconWidth: 16
+    readonly property int iconHeight: 16
 
     signal moveBack
 
@@ -84,7 +86,7 @@ Rectangle {
 
                         source: Images.localFolderHeader
                         color: ColorTheme.iconPrimary
-                        sourceSize: Qt.size(16, 16)
+                        sourceSize: Qt.size(iconWidth, iconHeight)
                     }
 
                     Texts.Text {
@@ -108,7 +110,7 @@ Rectangle {
 
                         source: Images.remoteMegaHeader
                         color: ColorTheme.iconPrimary
-                        sourceSize: Qt.size(16, 16)
+                        sourceSize: Qt.size(iconWidth, iconHeight)
                     }
 
                     Texts.Text {
@@ -270,7 +272,7 @@ Rectangle {
                                 id: localFolderImage
 
                                 source: Images.localSyncFolder
-                                sourceSize: Qt.size(16, 16)
+                                sourceSize: Qt.size(iconWidth, iconHeight)
                             }
 
                             Texts.Text {
@@ -348,7 +350,7 @@ Rectangle {
                                 id: remoteFolderImage
 
                                 source: Images.remoteSyncFolder
-                                sourceSize: Qt.size(16, 16)
+                                sourceSize: Qt.size(iconWidth, iconHeight)
                             }
 
                             Texts.Text {
@@ -398,7 +400,7 @@ Rectangle {
                             id: syncMenuButton
 
                             source: Images.menuSync
-                            sourceSize: Qt.size(16, 16)
+                            sourceSize: Qt.size(iconWidth, iconHeight)
                             color: ColorTheme.iconSecondary
 
                             MouseArea {
