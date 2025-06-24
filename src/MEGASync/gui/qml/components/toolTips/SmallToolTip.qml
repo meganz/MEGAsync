@@ -16,6 +16,7 @@ Popup {
     readonly property int underArrowRadius: 2
     readonly property int underArrowVerticalOffset: 8
     readonly property int underArrowRotation: 45
+    readonly property double underArrowYScale: 1.8
 
     width: implicitWidth
     height: implicitHeight
@@ -43,7 +44,7 @@ Popup {
             y: parent.height - underArrowVerticalOffset
             rotation: underArrowRotation
             transform: Scale {
-                yScale: 1.8
+                yScale: underArrowYScale
                 origin.y: parent.height / 2
             }
         }
