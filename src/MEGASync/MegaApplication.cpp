@@ -485,14 +485,16 @@ void MegaApplication::initialize()
                                     Preferences::CLIENT_KEY,
                                     mGfxProvider.get(),
                                     basePath.toUtf8().constData(),
-                                    Preferences::USER_AGENT.toUtf8().constData());
+                                    Preferences::USER_AGENT.toUtf8().constData(),
+                                    !preferences->SSLcertificateException());
     megaApi->disableGfxFeatures(mDisableGfx);
 
     QTMegaApiManager::createMegaApi(megaApiFolders,
                                     Preferences::CLIENT_KEY,
                                     nullptr,
                                     basePath.toUtf8().constData(),
-                                    Preferences::USER_AGENT.toUtf8().constData());
+                                    Preferences::USER_AGENT.toUtf8().constData(),
+                                    !preferences->SSLcertificateException());
     megaApiFolders->disableGfxFeatures(true);
 
     model = SyncInfo::instance();
@@ -567,7 +569,6 @@ void MegaApplication::initialize()
     megaApi->setDefaultFilePermissions(preferences->filePermissionsValue());
     megaApi->setDefaultFolderPermissions(preferences->folderPermissionsValue());
     megaApi->retrySSLerrors(true);
-    megaApi->setPublicKeyPinning(!preferences->SSLcertificateException());
 
     mStatusController = new AccountStatusController(this);
     QmlManager::instance()->setRootContextProperty(mStatusController);
