@@ -1,7 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
-import QtQuick.Controls 2.12 as QmlControlsv212
 
 import common 1.0
 
@@ -445,7 +444,7 @@ Rectangle {
                                     }
                                 }
 
-                                QmlControlsv212.MenuSeparator {
+                                MenuSeparator {
                                     padding: 0
                                     topPadding: separatorMargins
                                     bottomPadding: separatorMargins
