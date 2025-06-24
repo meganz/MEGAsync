@@ -3,7 +3,7 @@
 
 #include "QmlDialogWrapper.h"
 
-class SyncsCandidates;
+class SyncsCandidatesController;
 class SyncsComponent : public QMLComponent
 {
     Q_OBJECT
@@ -39,7 +39,7 @@ public:
     void setLocalFolder(const QString& localFolder);
 
 private:
-    std::unique_ptr<SyncsCandidates> mSyncsCandidates;
+    std::unique_ptr<SyncsCandidatesController> mSyncsCandidates;
     bool mEnteredOnSyncCreation = false;
 
     void updateDefaultFolders();

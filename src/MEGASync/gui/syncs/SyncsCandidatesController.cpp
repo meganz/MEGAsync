@@ -1,4 +1,4 @@
-#include "SyncsCandidates.h"
+#include "SyncsCandidatesController.h"
 
 #include "megaapi.h"
 #include "MegaApplication.h"
@@ -6,7 +6,7 @@
 #include "StatsEventHandler.h"
 #include "SyncsData.h"
 
-SyncsCandidates::SyncsCandidates(QObject* parent):
+SyncsCandidatesController::SyncsCandidatesController(QObject* parent):
     Syncs(parent),
     mSyncsCandidatesModel(std::make_unique<SyncsCandidatesModel>()),
     mCurrentModelConfirmationIndex(-1)
@@ -14,39 +14,43 @@ SyncsCandidates::SyncsCandidates(QObject* parent):
     connect(&SyncController::instance(),
             &SyncController::syncPrevalidateStatus,
             this,
-            &SyncsCandidates::onSyncPrevalidateRequestStatus);
+            &SyncsCandidatesController::onSyncPrevalidateRequestStatus);
 
     connect(getSyncsData(),
             &SyncsData::syncSetupSuccess,
             this,
-            &SyncsCandidates::onSyncSetupSuccess);
+            &SyncsCandidatesController::onSyncSetupSuccess);
 
-    connect(getSyncsData(), &SyncsData::syncSetupFailed, this, &SyncsCandidates::onSyncSetupFailed);
+    connect(getSyncsData(),
+            &SyncsData::syncSetupFailed,
+            this,
+            &SyncsCandidatesController::onSyncSetupFailed);
 
     updateDefaultFolders();
 }
 
-void SyncsCandidates::onSyncSetupSuccess()
+void SyncsCandidatesController::onSyncSetupSuccess()
 {
     moveNextCandidateSyncModel(false);
 }
 
-void SyncsCandidates::onSyncSetupFailed()
+void SyncsCandidatesController::onSyncSetupFailed()
 {
     moveNextCandidateSyncModel(true);
 }
 
-void SyncsCandidates::addSyncCandidate(const QString& localFolder, const QString& megaFolder)
+void SyncsCandidatesController::addSyncCandidate(const QString& localFolder,
+                                                 const QString& megaFolder)
 {
     mEditSyncCandidate = false;
 
     candidatePrevalidateHelper(localFolder, megaFolder);
 }
 
-void SyncsCandidates::editSyncCandidate(const QString& localFolder,
-                                        const QString& megaFolder,
-                                        const QString& originalLocalFolder,
-                                        const QString& originalMegaFolder)
+void SyncsCandidatesController::editSyncCandidate(const QString& localFolder,
+                                                  const QString& megaFolder,
+                                                  const QString& originalLocalFolder,
+                                                  const QString& originalMegaFolder)
 {
     mEditSyncCandidate = true;
     mEditOriginalLocalFolder = originalLocalFolder;
@@ -55,12 +59,13 @@ void SyncsCandidates::editSyncCandidate(const QString& localFolder,
     candidatePrevalidateHelper(localFolder, megaFolder);
 }
 
-void SyncsCandidates::removeSyncCandidate(const QString& localFolder, const QString& megaFolder)
+void SyncsCandidatesController::removeSyncCandidate(const QString& localFolder,
+                                                    const QString& megaFolder)
 {
     mSyncsCandidatesModel->remove(localFolder, megaFolder);
 }
 
-void SyncsCandidates::confirmSyncCandidates()
+void SyncsCandidatesController::confirmSyncCandidates()
 {
     mCurrentModelConfirmationIndex = -1;
     mCurrentModelConfirmationWithError = false;
@@ -91,7 +96,7 @@ void SyncsCandidates::confirmSyncCandidates()
     }
 }
 
-void SyncsCandidates::moveNextCandidateSyncModel(bool errorOnCurrent)
+void SyncsCandidatesController::moveNextCandidateSyncModel(bool errorOnCurrent)
 {
     mCurrentModelConfirmationWithError |= errorOnCurrent;
 
@@ -134,8 +139,8 @@ void SyncsCandidates::moveNextCandidateSyncModel(bool errorOnCurrent)
     }
 }
 
-void SyncsCandidates::candidatePrevalidateHelper(const QString& localFolder,
-                                                 const QString& megaFolder)
+void SyncsCandidatesController::candidatePrevalidateHelper(const QString& localFolder,
+                                                           const QString& megaFolder)
 {
     cleanErrors();
 
@@ -188,8 +193,8 @@ void SyncsCandidates::candidatePrevalidateHelper(const QString& localFolder,
     }
 }
 
-bool SyncsCandidates::checkCandidateAlreadyInModel(const QString& localPath,
-                                                   const QString& remotePath)
+bool SyncsCandidatesController::checkCandidateAlreadyInModel(const QString& localPath,
+                                                             const QString& remotePath)
 {
     std::optional<LocalErrors> localError = mLocalError;
     if (!localError.has_value() &&
@@ -222,13 +227,14 @@ bool SyncsCandidates::checkCandidateAlreadyInModel(const QString& localPath,
     return mLocalError.has_value() || mRemoteError.has_value();
 }
 
-bool SyncsCandidates::checkExistInModel(const QString& path,
-                                        SyncsCandidatesModel::SyncsCandidadteModelRole pathRole)
+bool SyncsCandidatesController::checkExistInModel(
+    const QString& path,
+    SyncsCandidatesModel::SyncsCandidadteModelRole pathRole)
 {
     return mSyncsCandidatesModel->exist(path, pathRole);
 }
 
-void SyncsCandidates::onSyncPrevalidateRequestStatus(int errorCode, int syncErrorCode)
+void SyncsCandidatesController::onSyncPrevalidateRequestStatus(int errorCode, int syncErrorCode)
 {
     auto foundErrors = setErrorIfExist(errorCode, syncErrorCode);
 
@@ -258,22 +264,22 @@ void SyncsCandidates::onSyncPrevalidateRequestStatus(int errorCode, int syncErro
     mEditOriginalMegaFolder.clear();
 }
 
-SyncsCandidatesModel* SyncsCandidates::getSyncsCandidadtesModel() const
+SyncsCandidatesModel* SyncsCandidatesController::getSyncsCandidadtesModel() const
 {
     return mSyncsCandidatesModel.get();
 }
 
-void SyncsCandidates::directoryCreatedNextTask()
+void SyncsCandidatesController::directoryCreatedNextTask()
 {
     SyncController::instance().prevalidateSync(mSyncConfig);
 }
 
-void SyncsCandidates::setRemoteFolderCandidate(const QString& remoteFolderCandidate)
+void SyncsCandidatesController::setRemoteFolderCandidate(const QString& remoteFolderCandidate)
 {
     mSyncsData->setRemoteFolderCandidate(remoteFolderCandidate);
 }
 
-void SyncsCandidates::setLocalFolderCandidate(const QString& localFolderCandidate)
+void SyncsCandidatesController::setLocalFolderCandidate(const QString& localFolderCandidate)
 {
     mSyncsData->setLocalFolderCandidate(localFolderCandidate);
 }

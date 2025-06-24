@@ -1,5 +1,5 @@
-#ifndef SYNCS_CANDIDATES_H
-#define SYNCS_CANDIDATES_H
+#ifndef SYNCS_CANDIDATES_CONTROLLER_H
+#define SYNCS_CANDIDATES_CONTROLLER_H
 
 #include "Syncs.h"
 #include "SyncsCandidatesModel.h"
@@ -8,13 +8,13 @@
 
 #include <memory>
 
-class SyncsCandidates: public Syncs
+class SyncsCandidatesController: public Syncs
 {
     Q_OBJECT
 
 public:
-    SyncsCandidates(QObject* parent = nullptr);
-    virtual ~SyncsCandidates() = default;
+    SyncsCandidatesController(QObject* parent = nullptr);
+    virtual ~SyncsCandidatesController() = default;
 
     void addSyncCandidate(const QString& localFolder, const QString& megaFolder);
     void removeSyncCandidate(const QString& localFolder, const QString& megaFolder);
@@ -49,4 +49,4 @@ private:
                            SyncsCandidatesModel::SyncsCandidadteModelRole pathRole);
 };
 
-#endif // SYNCS_CANDIDATES_H
+#endif // SYNCS_CANDIDATES_CONTROLLER_H

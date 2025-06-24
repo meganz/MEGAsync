@@ -30,7 +30,7 @@ public:
     virtual int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     QHash<int, QByteArray> roleNames() const override;
 
-    friend class SyncsCandidates;
+    friend class SyncsCandidatesController;
 
 private:
     std::optional<std::vector<SyncCandidate>::iterator> exist(const QString& localSyncFolder,

@@ -2,7 +2,7 @@
 
 #include "AddExclusionRule.h"
 #include "DialogOpener.h"
-#include "SyncsCandidates.h"
+#include "SyncsCandidatesController.h"
 #include "SyncsData.h"
 #include "SyncsQmlDialog.h"
 
@@ -10,7 +10,7 @@ static bool qmlRegistrationDone = false;
 
 SyncsComponent::SyncsComponent(QObject* parent):
     QMLComponent(parent),
-    mSyncsCandidates(std::make_unique<SyncsCandidates>())
+    mSyncsCandidates(std::make_unique<SyncsCandidatesController>())
 {
     registerQmlModules();
 

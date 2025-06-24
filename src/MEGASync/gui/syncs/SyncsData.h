@@ -23,7 +23,7 @@ class SyncsData: public QObject
                    localFolderCandidateChanged)
 
     friend class Syncs;
-    friend class SyncsCandidates;
+    friend class SyncsCandidatesController;
 
 public:
     explicit SyncsData(QObject* parent = nullptr);

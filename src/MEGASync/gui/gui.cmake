@@ -110,7 +110,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsQmlDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/syncs/Syncs.h
     ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsData.h
-    ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsCandidates.h
+    ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsCandidatesController.h
     ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsCandidatesModel.h
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyComponent.h
@@ -252,7 +252,7 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsQmlDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/syncs/Syncs.cpp
     ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsData.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsCandidates.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsCandidatesController.cpp
     ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsCandidatesModel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyComponent.cpp
