@@ -15,6 +15,8 @@ public:
 
     static void registerQmlModules();
 
+    Q_INVOKABLE void enteredOnSync();
+    Q_INVOKABLE void closingOnboardingDialog();
     Q_INVOKABLE void openExclusionsDialog(const QString& folder) const;
     Q_INVOKABLE void clearRemoteFolderErrorHint();
     Q_INVOKABLE void clearLocalFolderErrorHint();
@@ -38,6 +40,7 @@ public:
 
 private:
     std::unique_ptr<SyncsCandidates> mSyncsCandidates;
+    bool mEnteredOnSyncCreation = false;
 
     void updateDefaultFolders();
 };

@@ -24,6 +24,26 @@ SyncsComponent::SyncsComponent(QObject* parent):
                                                    mSyncsCandidates->getSyncsCandidadtesModel());
 }
 
+void SyncsComponent::closingOnboardingDialog()
+{
+    if (mEnteredOnSyncCreation)
+    {
+        mEnteredOnSyncCreation = false;
+
+        auto model = SyncInfo::instance();
+        if (model != nullptr && !model->hasSyncs())
+        {
+            MegaSyncApp->getStatsEventHandler()->sendEvent(
+                AppStatsEvents::EventType::USER_ABORTS_ONBOARDING_SYNC_CREATION);
+        }
+    }
+}
+
+void SyncsComponent::enteredOnSync()
+{
+    mEnteredOnSyncCreation = true;
+}
+
 void SyncsComponent::confirmSyncCandidateButtonClicked()
 {
     mSyncsCandidates->confirmSyncCandidates();

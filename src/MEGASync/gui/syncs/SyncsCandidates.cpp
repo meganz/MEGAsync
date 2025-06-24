@@ -76,11 +76,6 @@ void SyncsCandidates::confirmSyncCandidates()
             MegaSyncApp->getStatsEventHandler()->sendEvent(
                 AppStatsEvents::EventType::SYNC_CANDIDATE_PACK_CONFIRMED);
         }
-        else
-        {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(
-                AppStatsEvents::EventType::SYNC_CANDIDATE_ONE_CONFIRMED);
-        }
 
         mCurrentModelConfirmationIndex = 0;
 

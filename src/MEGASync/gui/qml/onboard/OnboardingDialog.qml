@@ -1,3 +1,5 @@
+import QtQuick 2.15
+
 import common 1.0
 
 import OnboardingQmlDialog 1.0
@@ -22,5 +24,13 @@ OnboardingQmlDialog {
         id: onboarding
 
         anchors.fill: parent
+    }
+
+    Connections {
+        target: window
+
+        function onClosing() {
+            syncsComponentAccess.closingOnboardingDialog();
+        }
     }
 }

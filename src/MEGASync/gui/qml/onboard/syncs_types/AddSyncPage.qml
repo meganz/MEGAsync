@@ -19,6 +19,7 @@ AddSyncPageForm {
     }
 
     Component.onCompleted: {
+        syncsComponentAccess.enteredOnSync();
         syncsComponentAccess.clearLocalFolderErrorHint();
         syncsComponentAccess.clearRemoteFolderErrorHint();
     }
