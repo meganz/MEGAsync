@@ -12,6 +12,8 @@ import components.buttons 1.0
 import components.menus 1.0
 import components.toolTips 1.0
 
+import onboard 1.0
+
 Rectangle {
     id: root
 
@@ -92,7 +94,7 @@ Rectangle {
                     Texts.Text {
                         id: localText
 
-                        text: qsTr("Local folders")
+                        text: OnboardingStrings.syncCandidatesHeaderLocalColumnTitle
                         font.weight: Font.DemiBold
                         color: ColorTheme.textPrimary
                     }
@@ -116,7 +118,7 @@ Rectangle {
                     Texts.Text {
                         id: remoteText
 
-                        text: qsTr("MEGA folders")
+                        text: OnboardingStrings.syncCandidatesHeaderRemoteColumnTitle
                         font.weight: Font.DemiBold
                         color: ColorTheme.textPrimary
                     }
@@ -198,7 +200,7 @@ Rectangle {
                     verticalCenter: parent.verticalCenter
                     leftMargin: leftMarginAddSync
                 }
-                text: qsTr("Add more syncs")
+                text: OnboardingStrings.syncCandidatesAddMoreSyncsButtonTitle
                 sizes: SmallSizes { borderLess: true }
                 icons {
                     source: Images.plus
@@ -426,7 +428,7 @@ Rectangle {
                                 ContextMenuItem {
                                     id: editLocalFolder
 
-                                    text: qsTr("Edit sync")
+                                    text: OnboardingStrings.syncCandidatesEditSyncs
                                     icon.source: Images.localFolderHeader
                                     onTriggered: {
                                         editSyncCandidateDialog.visible = true;
@@ -435,8 +437,8 @@ Rectangle {
                                     HandleSyncCandidatesDialog {
                                         id: editSyncCandidateDialog
 
-                                        title: qsTr("Edit sync")
-                                        rightPrimaryButton.text: qsTr("Save")
+                                        title: OnboardingStrings.syncCandidatesEditSyncs
+                                        rightPrimaryButton.text: OnboardingStrings.syncCandidatesSyncEditorSaveButtonTitle
                                         editLocalPath: model.localFolder
                                         editRemotePath: model.megaFolder
                                         visible: false
@@ -458,7 +460,7 @@ Rectangle {
                                 ContextMenuItem {
                                     id: removeSync
 
-                                    text: qsTr("Remove sync")
+                                    text: OnboardingStrings.syncCandidatesRemoveMenuItemTitle
                                     icon.source: Images.removeSync
                                     onTriggered: {
                                         removeSyncDialog.modelCount = listView.count;
@@ -468,10 +470,10 @@ Rectangle {
                                     RemoveSyncCandidateConfirmationDialog {
                                         id: removeSyncDialog
 
-                                        titleText: qsTr("Remove sync?")
-                                        bodyText: modelCount === 1 ? qsTr("Removing this sync will take you back to the start of setup.") : qsTr("Are you sure you want to remove the selected sync?")
-                                        cancelButtonText: qsTr("Cancel")
-                                        acceptButtonText: qsTr("Remove")
+                                        titleText: OnboardingStrings.syncCandidatesRemoveDialogTitle
+                                        bodyText: modelCount === 1 ? OnboardingStrings.syncCandidatesRemoveDialogDescriptionLastItem : OnboardingStrings.syncCandidatesRemoveDialogDescription
+                                        cancelButtonText: OnboardingStrings.syncCandidatesRemoveDialogCancelButtonTitle
+                                        acceptButtonText: OnboardingStrings.syncCandidatesRemoveDialogRemoveButtonTitle
                                         visible: false
 
                                         onAccepted: {

@@ -966,64 +966,6 @@
     </message>
 </context>
 <context>
-    <name>ConfirmSyncsTable</name>
-    <message>
-        <source>Local folders</source>
-        <translatorcomment>SubTitle for the local part on a sync inside a Sync candidate table. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MEGA folders</source>
-        <translatorcomment>SubTitle for the remote part on a sync inside a Sync candidate table. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add more syncs</source>
-        <translatorcomment>Label for a button to add more sync candidates. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit sync</source>
-        <translatorcomment>Action label for a menu button to edit  a sync candidate. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translatorcomment>Button label to save the changes on the paths of a sync candidate. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove sync</source>
-        <translatorcomment>Action label for a menu button to remove a sync candidate. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove sync?</source>
-        <translatorcomment>Title for a pop-up dialog that request user confirmation to remove a sync candidate. CON-1386.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Removing this sync will take you back to the start of setup.</source>
-        <translatorcomment>Description on the consequences of removing the last sync candidate left on the table. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove the selected sync?</source>
-        <translatorcomment>Description on removing an sync candidate. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label on cancel current sync candidate removal process. CON-1386</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translatorcomment>Button label on confirmation on sync candidate removal process. CON-1386</translatorcomment>
-        <translation type="unfinished">Remove</translation>
-    </message>
-</context>
-<context>
     <name>CrashHandler</name>
     <message>
         <source>Contact support</source>
@@ -5866,6 +5808,61 @@ Enter a different name.</translation>
     <message>
         <source>Sync wasn’t fully set up</source>
         <translatorcomment>Error banner title on resume page for sync candidates confirmation, we have at least one error. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local folders</source>
+        <translatorcomment>SubTitle for the local part on a sync inside a Sync candidate table. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MEGA folders</source>
+        <translatorcomment>SubTitle for the remote part on a sync inside a Sync candidate table. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add more syncs</source>
+        <translatorcomment>Label for a button to add more sync candidates. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit sync</source>
+        <translatorcomment>Action label for a menu button to edit  a sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translatorcomment>Button label to save the changes on the paths of a sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove sync</source>
+        <translatorcomment>Action label for a menu button to remove a sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove sync?</source>
+        <translatorcomment>Title for a pop-up dialog that request user confirmation to remove a sync candidate. CON-1386.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button label on cancel current sync candidate removal process. CON-1386</translatorcomment>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translatorcomment>Button label on confirmation on sync candidate removal process. CON-1386</translatorcomment>
+        <translation type="unfinished">Remove</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the selected sync?</source>
+        <translatorcomment>Description on removing an sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Removing this sync will take you back to the start of setup.</source>
+        <translatorcomment>Description off the consequences of removing the last sync candidate left on the table. CON-1386</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

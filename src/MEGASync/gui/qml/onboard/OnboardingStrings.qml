@@ -108,6 +108,18 @@ QtObject {
     readonly property string confirmSyncsWindowDescription: qsTr("Selected folders will automatically back up to the cloud when the desktop app is running.")
     readonly property string finalStepSyncError: qsTr("One or more syncs were unable to be set up. Check the folders and try again.")
     readonly property string finalStepSyncTitleError: qsTr("Sync wasn’t fully set up")
+    readonly property string syncCandidatesHeaderLocalColumnTitle: qsTr("Local folders")
+    readonly property string syncCandidatesHeaderRemoteColumnTitle: qsTr("MEGA folders")
+    readonly property string syncCandidatesAddMoreSyncsButtonTitle: qsTr("Add more syncs")
+    readonly property string syncCandidatesEditSyncs: qsTr("Edit sync")
+    readonly property string syncCandidatesSyncEditorSaveButtonTitle: qsTr("Save")
+
+    readonly property string syncCandidatesRemoveMenuItemTitle : qsTr("Remove sync")
+    readonly property string syncCandidatesRemoveDialogTitle : qsTr("Remove sync?")
+    readonly property string syncCandidatesRemoveDialogCancelButtonTitle : qsTr("Cancel")
+    readonly property string syncCandidatesRemoveDialogRemoveButtonTitle : qsTr("Remove")
+    readonly property string syncCandidatesRemoveDialogDescription : qsTr("Are you sure you want to remove the selected sync?")
+    readonly property string syncCandidatesRemoveDialogDescriptionLastItem : qsTr("Removing this sync will take you back to the start of setup.")
 
 
     // Two Factor Authentication
