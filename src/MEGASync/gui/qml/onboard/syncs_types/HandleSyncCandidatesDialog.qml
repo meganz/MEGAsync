@@ -76,12 +76,10 @@ Window {
         }
 
         localFolderChooser.onButtonClicked: {
-            syncsComponentAccess.clearLocalFolderErrorHint();
             localFolderSelector.openFolderSelector(localFolderChooser.chosenPath);
         }
 
         remoteFolderChooser.onButtonClicked: {
-            syncsComponentAccess.clearRemoteFolderErrorHint();
             remoteFolderSelector.openFolderSelector();
         }
 
@@ -119,6 +117,7 @@ Window {
             enabled: root.enabled
 
             function onFolderChosen(remoteFolderPath) {
+                syncsComponentAccess.clearRemoteFolderErrorHint();
                 handleSyncCandidateForm.remoteFolderChooser.chosenPath = remoteFolderPath;
             }
         }
@@ -130,6 +129,7 @@ Window {
             enabled: root.enabled
 
             function onFolderChosen(localFolderPath) {
+                syncsComponentAccess.clearLocalFolderErrorHint();
                 handleSyncCandidateForm.localFolderChooser.chosenPath = localFolderPath;
             }
         }

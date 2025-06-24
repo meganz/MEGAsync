@@ -41,12 +41,10 @@ AddSyncPageForm {
     }
 
     localFolderChooser.onButtonClicked: {
-        syncsComponentAccess.clearLocalFolderErrorHint();
         localFolderSelector.openFolderSelector(localFolderChooser.chosenPath);
     }
 
     remoteFolderChooser.onButtonClicked: {
-        syncsComponentAccess.clearRemoteFolderErrorHint();
         remoteFolderSelector.openFolderSelector();
     }
 
@@ -77,6 +75,7 @@ AddSyncPageForm {
         enabled: root.enabled
 
         function onFolderChosen(remoteFolderPath) {
+            syncsComponentAccess.clearRemoteFolderErrorHint();
             remoteFolderChooser.chosenPath = remoteFolderPath;
         }
     }
@@ -88,6 +87,7 @@ AddSyncPageForm {
         enabled: root.enabled
 
         function onFolderChosen(localFolderPath) {
+            syncsComponentAccess.clearLocalFolderErrorHint();
             localFolderChooser.chosenPath = localFolderPath;
         }
     }
