@@ -1725,7 +1725,6 @@ NodeSelectorModelItemSearch::Types DownloadType::allowedTypes()
 void SyncType::init(NodeSelectorTreeViewWidget *wdg)
 {
     wdg->mModel->setSyncSetupMode(true);
-    newFolderButtonVisibility(wdg);
     wdg->mModel->showFiles(false);
     wdg->mModel->showReadOnlyFolders(false);
 }
@@ -1784,7 +1783,6 @@ NodeSelectorModelItemSearch::Types StreamType::allowedTypes()
 
 void UploadType::init(NodeSelectorTreeViewWidget *wdg)
 {
-    newFolderButtonVisibility(wdg);
     wdg->mModel->showFiles(false);
     wdg->mModel->showReadOnlyFolders(false);
 }
