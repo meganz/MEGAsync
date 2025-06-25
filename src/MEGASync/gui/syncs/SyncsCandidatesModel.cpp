@@ -125,11 +125,15 @@ void SyncsCandidatesModel::edit(const QString& originalLocalSyncFolder,
         auto foundOriginalItem = exist(originalLocalSyncFolder, originalMegaSyncFolder);
         if (foundOriginalItem.has_value())
         {
-            beginResetModel();
+            QModelIndex editElementIndex = index(
+                static_cast<int>(std::distance(mSyncCandidates.begin(), foundOriginalItem.value())),
+                0);
+
             auto& syncCandidate = foundOriginalItem.value();
             syncCandidate->first = localSyncFolder.toStdString();
             syncCandidate->second = megaSyncFolder.toStdString();
-            endResetModel();
+
+            emit dataChanged(editElementIndex, editElementIndex);
         }
     }
 }
