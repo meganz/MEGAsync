@@ -1,7 +1,5 @@
 #include "SyncsData.h"
 
-#include "Syncs.h"
-
 SyncsData::SyncsData(QObject* parent):
     QObject(parent)
 {}
@@ -49,34 +47,4 @@ QString SyncsData::getDefaultLocalFolder() const
 QString SyncsData::getDefaultRemoteFolder() const
 {
     return mDefaultRemoteFolder;
-}
-
-QString SyncsData::getRemoteFolderCandidate() const
-{
-    return mRemoteFolderCandidate;
-}
-
-QString SyncsData::getLocalFolderCandidate() const
-{
-    return mLocalFolderCandidate;
-}
-
-void SyncsData::setRemoteFolderCandidate(const QString& remoteFolderCandidate)
-{
-    if (mRemoteFolderCandidate != remoteFolderCandidate)
-    {
-        mRemoteFolderCandidate = remoteFolderCandidate;
-
-        emit remoteFolderCandidateChanged();
-    }
-}
-
-void SyncsData::setLocalFolderCandidate(const QString& localFolderCandidate)
-{
-    if (mLocalFolderCandidate != localFolderCandidate)
-    {
-        mLocalFolderCandidate = localFolderCandidate;
-
-        emit localFolderCandidateChanged();
-    }
 }

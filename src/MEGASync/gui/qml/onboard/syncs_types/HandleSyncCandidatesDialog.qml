@@ -13,9 +13,6 @@ import syncs 1.0
 import SyncsComponents 1.0
 import SyncInfo 1.0
 
-import ChooseLocalFolder 1.0
-import ChooseRemoteFolder 1.0
-
 Window {
     id: root
 
@@ -76,11 +73,11 @@ Window {
         }
 
         localFolderChooser.onButtonClicked: {
-            localFolderSelector.openFolderSelector(localFolderChooser.chosenPath);
+            syncsComponentAccess.chooseLocalFolderButtonClicked(localFolderChooser.chosenPath);
         }
 
         remoteFolderChooser.onButtonClicked: {
-            remoteFolderSelector.openFolderSelector();
+            syncsComponentAccess.chooseRemoteFolderButtonClicked();
         }
 
         rightPrimaryButton.onClicked: {
@@ -102,40 +99,23 @@ Window {
             root.close();
         }
 
-        ChooseLocalFolder {
-            id: localFolderSelector
-        }
-
-        ChooseRemoteFolder {
-            id: remoteFolderSelector
-        }
-
-        Connections {
-            id: remoteFolderChooserConnection
-
-            target: remoteFolderSelector
-            enabled: root.enabled
-
-            function onFolderChosen(remoteFolderPath) {
-                syncsComponentAccess.clearRemoteFolderErrorHint();
-                handleSyncCandidateForm.remoteFolderChooser.chosenPath = remoteFolderPath;
-            }
-        }
-
-        Connections {
-            id: localFolderChooserConnection
-
-            target: localFolderSelector
-            enabled: root.enabled
-
-            function onFolderChosen(localFolderPath) {
-                syncsComponentAccess.clearLocalFolderErrorHint();
-                handleSyncCandidateForm.localFolderChooser.chosenPath = localFolderPath;
-            }
-        }
-
         function enableScreen() {
             root.enabled = true;
+        }
+
+        Connections {
+            id: syncsComponentAccessConnection
+
+            target: syncsComponentAccess
+            enabled: root.enabled
+
+            function onLocalFolderChosen(localFolderPath) {
+                handleSyncCandidateForm.localFolderChooser.chosenPath = localFolderPath;
+            }
+
+            function onRemoteFolderChosen(remoteFolderPath) {
+                handleSyncCandidateForm.remoteFolderChooser.chosenPath = remoteFolderPath;
+            }
         }
 
         Connections {

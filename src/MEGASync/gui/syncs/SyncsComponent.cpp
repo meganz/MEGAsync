@@ -3,7 +3,6 @@
 #include "AddExclusionRule.h"
 #include "DialogOpener.h"
 #include "SyncsCandidatesController.h"
-#include "SyncsData.h"
 #include "SyncsQmlDialog.h"
 
 static bool qmlRegistrationDone = false;
@@ -22,6 +21,16 @@ SyncsComponent::SyncsComponent(QObject* parent):
 
     QmlManager::instance()->setRootContextProperty(QString::fromLatin1("syncsCandidatesModel"),
                                                    mSyncsCandidates->getSyncsCandidadtesModel());
+
+    connect(&mRemoteFolderChooser,
+            &ChooseRemoteFolder::folderChosen,
+            this,
+            &SyncsComponent::onRemoteFolderChosen);
+
+    connect(&mLocalFolderChooser,
+            &ChooseLocalFolder::folderChosen,
+            this,
+            &SyncsComponent::onLocalFolderChosen);
 }
 
 void SyncsComponent::closingOnboardingDialog()
@@ -49,9 +58,19 @@ void SyncsComponent::confirmSyncCandidateButtonClicked()
     mSyncsCandidates->confirmSyncCandidates();
 }
 
-void SyncsComponent::exclusionsButtonClicked()
+void SyncsComponent::exclusionsButtonClicked(const QString& currentPath)
 {
-    openExclusionsDialog(mSyncsCandidates->getSyncsData()->getLocalFolderCandidate());
+    openExclusionsDialog(currentPath);
+}
+
+void SyncsComponent::chooseRemoteFolderButtonClicked()
+{
+    mRemoteFolderChooser.openFolderSelector();
+}
+
+void SyncsComponent::chooseLocalFolderButtonClicked(const QString& currentPath)
+{
+    mLocalFolderChooser.openFolderSelector();
 }
 
 void SyncsComponent::updateDefaultFolders()
@@ -87,12 +106,30 @@ void SyncsComponent::setSyncOrigin(SyncInfo::SyncOrigin origin)
 
 void SyncsComponent::setRemoteFolder(const QString& remoteFolder)
 {
-    mSyncsCandidates->setRemoteFolderCandidate(remoteFolder);
+    if (remoteFolder.isEmpty())
+        return;
+
+    emit remoteFolderChosen(remoteFolder);
 }
 
 void SyncsComponent::setLocalFolder(const QString& localFolder)
 {
-    mSyncsCandidates->setLocalFolderCandidate(localFolder);
+    if (localFolder.isEmpty())
+        return;
+
+    emit localFolderChosen(localFolder);
+}
+
+void SyncsComponent::onRemoteFolderChosen(QString remotePath)
+{
+    setRemoteFolder(remotePath);
+    clearRemoteFolderErrorHint();
+}
+
+void SyncsComponent::onLocalFolderChosen(QString localPath)
+{
+    setLocalFolder(localPath);
+    clearLocalFolderErrorHint();
 }
 
 void SyncsComponent::openExclusionsDialog(const QString& folder) const

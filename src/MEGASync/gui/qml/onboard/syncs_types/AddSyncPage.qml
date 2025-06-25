@@ -4,9 +4,6 @@ import syncs 1.0
 import SyncsComponents 1.0
 import SyncInfo 1.0
 
-import ChooseLocalFolder 1.0
-import ChooseRemoteFolder 1.0
-
 AddSyncPageForm {
     id: root
 
@@ -41,11 +38,11 @@ AddSyncPageForm {
     }
 
     localFolderChooser.onButtonClicked: {
-        localFolderSelector.openFolderSelector(localFolderChooser.chosenPath);
+        syncsComponentAccess.chooseLocalFolderButtonClicked(localFolderChooser.chosenPath);
     }
 
     remoteFolderChooser.onButtonClicked: {
-        remoteFolderSelector.openFolderSelector();
+        syncsComponentAccess.chooseRemoteFolderButtonClicked();
     }
 
     footerButtons {
@@ -60,35 +57,18 @@ AddSyncPageForm {
         }
     }
 
-    ChooseLocalFolder {
-        id: localFolderSelector
-    }
-
-    ChooseRemoteFolder {
-        id: remoteFolderSelector
-    }
-
     Connections {
-        id: remoteFolderChooserConnection
+        id: syncsComponentAccessConnection
 
-        target: remoteFolderSelector
+        target: syncsComponentAccess
         enabled: root.enabled
 
-        function onFolderChosen(remoteFolderPath) {
-            syncsComponentAccess.clearRemoteFolderErrorHint();
-            remoteFolderChooser.chosenPath = remoteFolderPath;
-        }
-    }
-
-    Connections {
-        id: localFolderChooserConnection
-
-        target: localFolderSelector
-        enabled: root.enabled
-
-        function onFolderChosen(localFolderPath) {
-            syncsComponentAccess.clearLocalFolderErrorHint();
+        function onLocalFolderChosen(localFolderPath) {
             localFolderChooser.chosenPath = localFolderPath;
+        }
+
+        function onRemoteFolderChosen(remoteFolderPath) {
+            remoteFolderChooser.chosenPath = remoteFolderPath;
         }
     }
 

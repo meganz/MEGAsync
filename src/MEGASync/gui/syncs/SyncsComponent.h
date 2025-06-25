@@ -1,6 +1,7 @@
 #ifndef SYNCS_COMPONENT_H
 #define SYNCS_COMPONENT_H
 
+#include "ChooseFolder.h"
 #include "QmlDialogWrapper.h"
 
 class SyncsCandidatesController;
@@ -32,16 +33,26 @@ public:
                                                       const QString& megaFolder);
     Q_INVOKABLE void closeDialogButtonClicked();
     Q_INVOKABLE void viewSyncsInSettingsButtonClicked();
-    Q_INVOKABLE void exclusionsButtonClicked();
+    Q_INVOKABLE void exclusionsButtonClicked(const QString& currentPath);
+    Q_INVOKABLE void chooseRemoteFolderButtonClicked();
+    Q_INVOKABLE void chooseLocalFolderButtonClicked(const QString& currentPath);
 
     void setSyncOrigin(SyncInfo::SyncOrigin origin);
     void setRemoteFolder(const QString& remoteFolder);
     void setLocalFolder(const QString& localFolder);
 
+signals:
+    void remoteFolderChosen(QString remotePath);
+    void localFolderChosen(QString folderPath);
+
 private:
+    ChooseRemoteFolder mRemoteFolderChooser;
+    ChooseLocalFolder mLocalFolderChooser;
     std::unique_ptr<SyncsCandidatesController> mSyncsCandidates;
     bool mEnteredOnSyncCreation = false;
 
+    void onRemoteFolderChosen(QString remotePath);
+    void onLocalFolderChosen(QString localPath);
     void updateDefaultFolders();
 };
 

@@ -24,8 +24,6 @@ public:
                            const QString& originalMegaFolder);
     SyncsCandidatesModel* getSyncsCandidadtesModel() const;
     void confirmSyncCandidates();
-    void setRemoteFolderCandidate(const QString& remoteFolderCandidate);
-    void setLocalFolderCandidate(const QString& localFolderCandidate);
 
 private slots:
     void onSyncPrevalidateRequestStatus(int errorCode, int syncErrorCode);

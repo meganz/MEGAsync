@@ -147,9 +147,6 @@ void SyncsCandidatesController::candidatePrevalidateHelper(const QString& localF
     mSyncConfig.localFolder = localFolder;
     mSyncConfig.remoteFolder = megaFolder;
 
-    setLocalFolderCandidate(localFolder);
-    setRemoteFolderCandidate(megaFolder);
-
     if (checkErrorsOnSyncPaths(mSyncConfig.localFolder, mSyncConfig.remoteFolder) ||
         checkCandidateAlreadyInModel(mSyncConfig.localFolder, mSyncConfig.remoteFolder))
     {
@@ -244,13 +241,12 @@ void SyncsCandidatesController::onSyncPrevalidateRequestStatus(int errorCode, in
         {
             mSyncsCandidatesModel->edit(mEditOriginalLocalFolder,
                                         mEditOriginalMegaFolder,
-                                        mSyncsData->getLocalFolderCandidate(),
-                                        mSyncsData->getRemoteFolderCandidate());
+                                        mSyncConfig.localFolder,
+                                        mSyncConfig.remoteFolder);
         }
         else
         {
-            mSyncsCandidatesModel->add(mSyncsData->getLocalFolderCandidate(),
-                                       mSyncsData->getRemoteFolderCandidate());
+            mSyncsCandidatesModel->add(mSyncConfig.localFolder, mSyncConfig.remoteFolder);
         }
 
         emit mSyncsData->syncPrevalidationSuccess();
@@ -272,14 +268,4 @@ SyncsCandidatesModel* SyncsCandidatesController::getSyncsCandidadtesModel() cons
 void SyncsCandidatesController::directoryCreatedNextTask()
 {
     SyncController::instance().prevalidateSync(mSyncConfig);
-}
-
-void SyncsCandidatesController::setRemoteFolderCandidate(const QString& remoteFolderCandidate)
-{
-    mSyncsData->setRemoteFolderCandidate(remoteFolderCandidate);
-}
-
-void SyncsCandidatesController::setLocalFolderCandidate(const QString& localFolderCandidate)
-{
-    mSyncsData->setLocalFolderCandidate(localFolderCandidate);
 }
