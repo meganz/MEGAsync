@@ -62,6 +62,7 @@ CardButton {
                     pixelSize: Texts.Text.Size.MEDIUM_LARGE
                     weight: Font.Bold
                 }
+                textMouseArea.cursorShape: buttonCursorShape
             }
 
             Texts.Text {
@@ -77,6 +78,7 @@ CardButton {
                 font.pixelSize: Texts.Text.Size.SMALL
                 lineHeightMode: Texts.Text.FixedHeight
                 lineHeight: descriptionLineHeight
+                textMouseArea.cursorShape: buttonCursorShape
             }
         }
 
