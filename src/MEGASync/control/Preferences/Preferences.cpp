@@ -301,8 +301,8 @@ const long long Preferences::defaultTimeStamp       = 0;
 
 //The default appDataId starts from 1, as 0 will be used for invalid appDataId
 const unsigned long long  Preferences::defaultTransferIdentifier            = 1;
-const int  Preferences::defaultParallelUploadConnections                    = 3;
-const int  Preferences::defaultParallelDownloadConnections                  = 4;
+const int Preferences::defaultParallelUploadConnections = 8;
+const int Preferences::defaultParallelDownloadConnections = 8;
 const unsigned long long  Preferences::defaultUpperSizeLimitValue           = 1; //Input UI range 1-9999. Use 1 as default value
 const unsigned long long  Preferences::defaultLowerSizeLimitValue           = 1; //Input UI range 1-9999. Use 1 as default value
 const int  Preferences::defaultCleanerDaysLimitValue                        = 30;
