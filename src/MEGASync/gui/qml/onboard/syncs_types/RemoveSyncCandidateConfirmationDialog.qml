@@ -118,6 +118,7 @@ Window {
 
                     onClicked: {
                         root.accepted();
+                        root.close();
                     }
                 }
 
