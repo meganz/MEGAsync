@@ -457,6 +457,18 @@ private:
             ExternalDialogOpener externalOpener;
 #endif
 
+            if (!dialog)
+            {
+                mega::MegaApi::log(
+                    mega::MegaApi::LOG_LEVEL_ERROR,
+                    QString::fromUtf8("DialogOpener: Dialog %1 removed while being opened.")
+                        .arg(classType)
+                        .toUtf8()
+                        .constData());
+
+                return nullptr;
+            }
+
             if(changeWindowModality)
             {
                 if(dialog->parent())
