@@ -210,6 +210,7 @@ void ProxySettings::on_bUpdate_clicked()
                 proxy.setPort(arguments[1].toUShort());
             }
         }
+#ifdef Q_OS_LINUX
         else
         {
             auto errorMessage =
@@ -220,6 +221,7 @@ void ProxySettings::on_bUpdate_clicked()
             mUi->wError->setVisible(true);
             return;
         }
+#endif
     }
 
     mProgressDialog = new MegaProgressCustomDialog(this);
