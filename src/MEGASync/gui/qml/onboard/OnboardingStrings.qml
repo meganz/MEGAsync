@@ -113,6 +113,8 @@ QtObject {
     readonly property string syncCandidatesAddMoreSyncsButtonTitle: qsTr("Add more syncs")
     readonly property string syncCandidatesEditSyncs: qsTr("Edit sync")
     readonly property string syncCandidatesSyncEditorSaveButtonTitle: qsTr("Save")
+    readonly property string syncCandidatesAddButtonTitle: qsTr("Add")
+    readonly property string syncCandidatesCancelButtonTitle: qsTr("Cancel")
 
     readonly property string syncCandidatesRemoveMenuItemTitle : qsTr("Remove sync")
     readonly property string syncCandidatesRemoveDialogTitle : qsTr("Remove sync?")

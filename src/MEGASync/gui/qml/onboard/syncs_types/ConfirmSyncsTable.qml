@@ -471,7 +471,7 @@ Rectangle {
 
                                         titleText: OnboardingStrings.syncCandidatesRemoveDialogTitle
                                         bodyText: modelCount === 1 ? OnboardingStrings.syncCandidatesRemoveDialogDescriptionLastItem : OnboardingStrings.syncCandidatesRemoveDialogDescription
-                                        cancelButtonText: OnboardingStrings.syncCandidatesRemoveDialogCancelButtonTitle
+                                        cancelButtonText: OnboardingStrings.syncCandidatesCancelButtonTitle
                                         acceptButtonText: OnboardingStrings.syncCandidatesRemoveDialogRemoveButtonTitle
                                         visible: false
 
