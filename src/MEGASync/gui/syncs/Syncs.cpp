@@ -78,9 +78,8 @@ void Syncs::addSync()
         }
         else
         {
-            mega::MegaApi::log(
-                mega::MegaApi::LOG_LEVEL_ERROR,
-                QString::fromUtf8("Sync creation failed: Root node invalid.").toUtf8().constData());
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
+                               "Sync creation failed: Root node invalid.");
         }
     }
     else
