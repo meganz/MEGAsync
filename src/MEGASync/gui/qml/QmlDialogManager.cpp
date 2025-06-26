@@ -56,7 +56,11 @@ bool QmlDialogManager::openOnboardingDialog(bool force)
     else
     {
         QPointer<QmlDialogWrapper<Onboarding>> onboarding = new QmlDialogWrapper<Onboarding>();
-        DialogOpener::showDialog(onboarding)->setIgnoreCloseAllAction(true);
+        auto onboardingInfo(DialogOpener::showDialog(onboarding));
+        if (onboardingInfo)
+        {
+            onboardingInfo->setIgnoreCloseAllAction(true);
+        }
     }
     return true;
 }
