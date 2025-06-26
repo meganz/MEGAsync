@@ -51,6 +51,11 @@ bool BackupsController::hasBackupsWithErrors() const
 
 void BackupsController::showErrorMessage() const
 {
+    if (mBackupsProcessedWithError >= mBackupsToDoSize)
+    {
+        return;
+    }
+
     auto completedItems(mBackupsToDoSize - mBackupsProcessedWithError);
     QString successItems(tr("%n folder was backed up", "", completedItems));
     QString message(tr("%1, but %n folder couldn’t be backed up", "", mBackupsProcessedWithError)
