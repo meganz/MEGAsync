@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 
 import common 1.0
 
@@ -27,10 +28,6 @@ Rectangle {
     readonly property int borderWidthDefault: 1
     readonly property int borderWidthRecommended: 2
 
-    property real localHeight: root.calculateContentHeight(root.calculateBottomTextsHeight())
-                                + 2 * root.contentMargin + Constants.focusAdjustment
-    property real externalMaxHeight: 0
-
     property bool recommended: false
     property bool currentPlan: false
     property bool monthly: false
@@ -55,8 +52,6 @@ Rectangle {
     }
 
     signal buyButtonClicked()
-    signal reportHeight(real height)
-    signal forceUpdate()
 
     function getChipBackgroundColor() {
         if (root.currentPlan) {
@@ -82,30 +77,14 @@ Rectangle {
         }
     }
 
-    function calculateBottomTextsHeight() {
-        let currentHeight = storageTransferTextColumn.height
-            + (root.showProFlexiMessage ? tryProFlexiText.height : 0)
-            + bottomTextsColumn.spacing;
-        return Math.max(76, currentHeight);
-    }
-
-    function calculateContentHeight(bottomHeight) {
-        return titleText.height
-                + recommendedChip.height
-                + priceColumn.height
-                + bottomHeight
-                + buyButtonContainer.height
-                + root.totalNumContentSpacing * root.contentSpacing;
-    }
-
     function updateBilledPeriodText() {
         if (!billedPeriodInfoText.enabled) {
             billedPeriodInfoText.text = root.billedText;
         }
     }
 
-    width: root.planDefaultWidth
-    height: root.localHeight
+    width: Math.max(contentColumn.implicitWidth, root.planDefaultWidth) + (2 * root.contentMargin)
+    height: root.monthly, contentColumn.implicitHeight + (2 * root.contentMargin)
 
     border {
         width: root.recommended ? root.borderWidthRecommended : root.borderWidthDefault
@@ -114,50 +93,48 @@ Rectangle {
     radius: root.cardRadius
     color: ColorTheme.pageBackground
 
-    Column {
+    ColumnLayout {
         id: contentColumn
 
-        anchors {
-            left: parent.left
-            right: parent.right
-            top: parent.top
-            leftMargin: root.contentMargin
-            rightMargin: root.contentMargin
-            topMargin: root.contentMargin
-            bottomMargin: root.contentMargin + Constants.focusAdjustment
-        }
-        height: root.calculateContentHeight(bottomTextsColumn.height)
         spacing: root.contentSpacing
 
-        Text {
-            id: titleText
+        anchors.margins: root.contentMargin
+        anchors.fill: parent
+        height: implicitHeight
 
-            anchors {
-                left: parent.left
-                right: parent.right
+        Column {
+            id: nameColumn
+
+            spacing: root.contentSpacing
+            width: parent.width
+            height: implicitHeight
+
+            Text {
+                id: titleText
+
+                font {
+                    family: FontStyles.poppinsFontFamily
+                    pixelSize: Text.Size.LARGE
+                    weight: Font.DemiBold
+                }
+                lineHeight: root.titleLineHeight
+                lineHeightMode: Text.FixedHeight
+                text: root.name
+                enabled: root.enabled && !root.showOnlyProFlexi
             }
-            font {
-                family: FontStyles.poppinsFontFamily
-                pixelSize: Text.Size.LARGE
-                weight: Font.DemiBold
-            }
-            lineHeight: root.titleLineHeight
-            lineHeightMode: Text.FixedHeight
-            text: root.name
-            enabled: root.enabled && !root.showOnlyProFlexi
-        }
 
-        Chips.Chip {
-            id: recommendedChip
+            Chips.Chip {
+                id: recommendedChip
 
-            sizes: Chips.SmallSizes {}
-            text: root.currentPlan ? UpsellStrings.currentPlan : UpsellStrings.recommended
-            visible: true
-            opacity: (root.recommended || root.currentPlan) ? 1.0 : 0.0
-            colors {
-                background: getChipBackgroundColor()
-                border: getChipBackgroundColor()
-                text: getChipTextColor()
+                sizes: Chips.SmallSizes {}
+                text: root.currentPlan ? UpsellStrings.currentPlan : UpsellStrings.recommended
+                visible: true
+                opacity: (root.recommended || root.currentPlan) ? 1.0 : 0.0
+                colors {
+                    background: getChipBackgroundColor()
+                    border: getChipBackgroundColor()
+                    text: getChipTextColor()
+                }
             }
         }
 
@@ -165,37 +142,23 @@ Rectangle {
             id: priceColumn
 
             spacing: root.priceSpacing
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            height: (root.monthly ? 0 : priceTextWithDiscount.height)
-                        + priceText.height
-                        + billedPeriodInfoText.height
-                        + (root.monthly ? 0 : pricePerMonthText.height)
+            width: parent.width
+            height: implicitHeight
 
             SecondaryText {
                 id: priceTextWithDiscount
 
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
                 lineHeight: root.discountLineHeight
                 lineHeightMode: Text.FixedHeight
                 font.strikeout: true
                 text: root.totalPriceWithoutDiscount
-                visible: !root.monthly
-                enabled: root.enabled && !root.showOnlyProFlexi
+                visible: !root.monthly && root.enabled && !root.showOnlyProFlexi
+                width: parent.width
             }
 
             Text {
                 id: priceText
 
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
                 font {
                     family: FontStyles.poppinsFontFamily
                     pixelSize: Text.Size.EXTRA_LARGE
@@ -204,91 +167,58 @@ Rectangle {
                 lineHeight: root.priceLineHeight
                 lineHeightMode: Text.FixedHeight
                 text: root.price
-                enabled: root.enabled && !root.showOnlyProFlexi
+                visible: root.enabled && !root.showOnlyProFlexi
+                width: parent.width
             }
 
             SecondaryText {
                 id: billedPeriodInfoText
 
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
                 lineHeight: root.pricePeriodLineHeight
                 lineHeightMode: Text.FixedHeight
-                enabled: root.enabled && !root.showOnlyProFlexi
-
-                Binding {
-                    target: billedPeriodInfoText
-                    property: "text"
-                    value: root.billedText
-                    when: true
-                }
+                visible: root.enabled && !root.showOnlyProFlexi
+                text: root.billedText
+                width: parent.width
             }
 
             SecondaryText {
                 id: pricePerMonthText
 
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
                 lineHeight: root.pricePeriodLineHeight
                 lineHeightMode: Text.FixedHeight
                 text: UpsellStrings.pricePerMonth.arg(root.monthlyPriceWithDiscount)
-                visible: !root.monthly
-                enabled: root.enabled && !root.showOnlyProFlexi
+                visible: !root.monthly && root.enabled && !root.showOnlyProFlexi
+                width: parent.width
             }
         }
 
+        // spacer item
+        Item {
+            Layout.fillHeight: true
+            Layout.preferredHeight: 0
+        }
+
         Column {
-            id: bottomTextsColumn
+                id: bottomTextsColumn
 
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            height: {
-                let diff = (root.externalMaxHeight > root.localHeight)
-                            ? root.externalMaxHeight - root.localHeight : 0;
-                return root.calculateBottomTextsHeight() + diff;
-            }
-            spacing: root.showProFlexiMessage ? root.bottomTextsSpacing : 0
-
-            Item {
-                id: storageTransferItem
-
-                width: parent.width
-                height: parent.height
-                            - bottomTextsColumn.spacing
-                            - (tryProFlexiText.visible ? tryProFlexiText.height : 0)
-                enabled: root.enabled && !root.showOnlyProFlexi
+                Layout.fillWidth: true
+                spacing: root.showProFlexiMessage ? root.bottomTextsSpacing : 0
+                height: implicitHeight
 
                 Column {
                     id: storageTransferTextColumn
 
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                        verticalCenter: parent.verticalCenter
-                    }
-                    height: storageText.height + transferText.height + root.bottomSpacing
+                    width: bottomTextsColumn.width
+                    enabled: root.enabled && !root.showOnlyProFlexi
                     spacing: root.bottomSpacing
-                    enabled: parent.enabled
+                    height: implicitHeight
 
                     Text {
                         id: storageText
 
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                        }
                         font.weight: Font.DemiBold
                         text: UpsellStrings.storage.arg(gbStorage)
                         onTextChanged: {
-                            // Force to update the height of the component when the text is changed
-                            forceUpdate();
-
                             // When the component is disabled, the text is not being updated.
                             // Force to update the text when the component is disabled.
                             Qt.callLater(updateBilledPeriodText);
@@ -298,102 +228,90 @@ Rectangle {
                     Text {
                         id: transferText
 
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                        }
                         font.weight: Font.DemiBold
                         text: UpsellStrings.transfer.arg(gbTransfer)
                     }
                 }
-            }
 
-            SecondaryText {
-                id: tryProFlexiText
+                SecondaryText {
+                    id: tryProFlexiText
 
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-                lineHeight: root.tryProFlexiLineHeight
-                lineHeightMode: Text.FixedHeight
-                font {
-                    pixelSize: Text.Size.SMALL
-                    bold: root.showOnlyProFlexi
-                }
-                color: {
-                    if (root.showOnlyProFlexi) {
-                        return ColorTheme.textPrimary;
+                    width: bottomTextsColumn.width
+                    lineHeight: root.tryProFlexiLineHeight
+                    lineHeightMode: Text.FixedHeight
+                    font {
+                        pixelSize: Text.Size.SMALL
+                        bold: root.showOnlyProFlexi
                     }
-                    else {
-                        return enabled ? ColorTheme.textSecondary : ColorTheme.textDisabled;
+                    color: {
+                        if (root.showOnlyProFlexi) {
+                            return ColorTheme.textPrimary;
+                        }
+                        else {
+                            return enabled ? ColorTheme.textSecondary : ColorTheme.textDisabled;
+                        }
                     }
-                }
-                underlineLink: true
-                manageClick: true
-                rawText: UpsellStrings.tryProFlexi
-                visible: root.showProFlexiMessage
-                onLinkClicked: {
-                    upsellComponentAccess.linkTryProFlexiClicked();
+                    underlineLink: true
+                    manageClick: true
+                    rawText: UpsellStrings.tryProFlexi
+                    visible: root.showProFlexiMessage
+                    onLinkClicked: {
+                        upsellComponentAccess.linkTryProFlexiClicked();
+                    }
                 }
             }
 
+        // spacer item
+        Item {
+            Layout.fillHeight: true
+            Layout.preferredHeight: 0
         }
 
         Column {
             id: buyButtonContainer
 
-            anchors {
-                left: parent.left
-                right: parent.right
+            Layout.fillWidth: true
+            height: implicitHeight
+
+            RowLayout {
+                id: buyButtonRowLayout
+
+                width: buyButtonContainer.width
+                height: implicitHeight
+
+                PrimaryButton {
+                    id: buyButton
+
+                    sizes {
+                        fillWidth: true
+                        textFontSize: Text.Size.NORMAL
+                    }
+
+                    Layout.fillWidth: true
+                    height: root.buttonHeight + 2 * Constants.focusBorderWidth
+                    text: UpsellStrings.buyPlan.arg(root.buttonName)
+                    onClicked: {
+                        root.buyButtonClicked();
+                    }
+                    visible: root.recommended && parent.enabled
+                }
+
+                OutlineButton {
+                    sizes {
+                        fillWidth: true
+                        textFontSize: Text.Size.NORMAL
+                    }
+
+                    Layout.fillWidth: true
+                    height: root.buttonHeight + 2 * Constants.focusBorderWidth
+                    text: UpsellStrings.buyPlan.arg(root.buttonName)
+                    onClicked: {
+                        root.buyButtonClicked();
+                    }
+                    visible: !buyButton.visible
+                    enabled: root.enabled && !root.showOnlyProFlexi
+                }
             }
-            height: buyButton.height
-
-            PrimaryButton {
-                id: buyButton
-
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    margins: Constants.focusAdjustment
-                }
-                sizes {
-                    fillWidth: true
-                    textFontSize: Text.Size.NORMAL
-                }
-                height: root.buttonHeight + 2 * Constants.focusBorderWidth
-                text: UpsellStrings.buyPlan.arg(root.buttonName)
-                onClicked: {
-                    root.buyButtonClicked();
-                }
-                visible: root.recommended && parent.enabled
-            }
-
-            OutlineButton {
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    margins: Constants.focusAdjustment
-                }
-                sizes {
-                    fillWidth: true
-                    textFontSize: Text.Size.NORMAL
-                }
-                height: root.buttonHeight + 2 * Constants.focusBorderWidth
-                text: UpsellStrings.buyPlan.arg(root.buttonName)
-                onClicked: {
-                    root.buyButtonClicked();
-                }
-                visible: !buyButton.visible
-                enabled: root.enabled && !root.showOnlyProFlexi
-            }
-
         }
-
     }
-
-    Component.onCompleted: {
-        reportHeight(root.height)
-    }
-
 }

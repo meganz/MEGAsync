@@ -706,7 +706,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Polityka prywatności</translation>
     </message>
     <message>
         <source>Terms of Service</source>
@@ -2085,9 +2085,11 @@
         <translation>Oczekiwanie na potwierdzenie e-maila…</translation>
     </message>
     <message>
-        <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
-        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
-        <translation>Twoje konto zostało tymczasowo zablokowane dla Twojego bezpieczeństwa. Jest to spowodowane potencjalnym naruszeniem danych. Aby odblokować konto, postępuj zgodnie z instrukcjami podanymi w wysłanej przez nas wiadomości e-mail.</translation>
+        <source>Your account has been locked for your protection after detecting a malicious login, so we require you to reset your password.[BR]
+Check your email inbox for instructions on unlocking your account and tips on how to prevent this from happening again.</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465, updated literal SNC-5585.</translatorcomment>
+        <translation>Twoje konto zostało zablokowane dla Twojego bezpieczeństwa po wykryciu złośliwego logowania, dlatego wymagamy zresetowania hasła.[BR]
+Sprawdź swoją skrzynkę odbiorczą, aby uzyskać instrukcje dotyczące odblokowania konta oraz wskazówki, jak zapobiec ponownemu wystąpieniu tego problemu.</translation>
     </message>
 </context>
 <context>
@@ -2564,11 +2566,6 @@
         <source>Do not show again</source>
         <translatorcomment>This is a label for a checkbox. When checked by the user, it ensures that the Enable Notification Area Icon notification will not be displayed to them in the future. SNC-2270</translatorcomment>
         <translation>Nie pokazuj więcej</translation>
-    </message>
-    <message>
-        <source>Error installing components</source>
-        <translatorcomment>This is the title of an error message that appears when there's an issue during the installation of Notification Area Icon Support. SNC-2270</translatorcomment>
-        <translation>Błąd instalacji komponentów</translation>
     </message>
     <message>
         <source>Failed to install the necessary components.</source>
@@ -3120,11 +3117,6 @@ Poczekaj na zakończenie przesyłania.</translation>
         <translation>Konto dezaktywowane</translation>
     </message>
     <message>
-        <source>Alert</source>
-        <translatorcomment>Title of the warning dialog shown when the SDK reports a fatal error - CON-844</translatorcomment>
-        <translation>Powiadomienie</translation>
-    </message>
-    <message>
         <source>An update will be applied during the next application restart</source>
         <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
         <translation>Aktualizacja będzie udostępniona przy kolejnym uruchomieniu aplikacji</translation>
@@ -3158,11 +3150,6 @@ Poczekaj na zakończenie przesyłania.</translation>
         <source>Download</source>
         <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
         <translation>Pobierz</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title for dialogs with error messages. SNC-3299</translatorcomment>
-        <translation>Błąd</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -3283,11 +3270,6 @@ Poczekaj na zakończenie przesyłania.</translation>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
         <translation>MEGAsync będzie nadal działać, jednak możesz nie otrzymywać nowych aktualizacji.</translation>
-    </message>
-    <message>
-        <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
-        <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>Aplikacja będzie nadal działać, jednak aktualizacje nie będą już wspierane dla wersji wcześniejszych niż Windows 7.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -3499,11 +3481,6 @@ https://mega.co.nz/#sync</source>
         <source>Waiting</source>
         <translatorcomment>Label of tray icon to indicate that the app is in a waiting state.</translatorcomment>
         <translation>Oczekiwanie</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
-        <translation>Ostrzeżenie</translation>
     </message>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
@@ -3830,19 +3807,6 @@ Nie będziesz w stanie odzyskać dostępu do przechowywanych danych ani uzyskać
         <source>Your sync and backup settings were corrupted and have been reset. If you had any, please set them up again.</source>
         <translatorcomment>Body of the warning dialog shown when the syncs configuration file has been re-generated by the sdk - CON-1311</translatorcomment>
         <translation>Ustawienia synchronizacji i kopii zapasowej zostały uszkodzone i zostały zresetowane. Będziesz musiał ponownie skonfigurować wszystkie synchronizacje i kopie zapasowe.</translation>
-    </message>
-</context>
-<context>
-    <name>MegaInfoMessage</name>
-    <message>
-        <source>Close</source>
-        <translatorcomment>Button label to close current message box</translatorcomment>
-        <translation>Zamknij</translation>
-    </message>
-    <message>
-        <source>Why am I seeing this?</source>
-        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation>Dlaczego to widzę?</translation>
     </message>
 </context>
 <context>
@@ -5980,14 +5944,18 @@ Wprowadź inną nazwę.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We’ve improved how crash reports are handled, so we can fix issues faster.
-- New icons are now available in the Windows 11 context menu.
-- We’ve fixed bugs and made performance improvements behind the scenes.
+        <source>- Support has ended for Windows 7 and Server 2008 R2.
+- New actions are now available in the File Explorer context menu.
+- Refined parts of the interface to improve your experience.
+- Turkish language is now supported.
+- We’ve fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 5.12.0. CON-1358</translatorcomment>
-        <translation>- Ulepszyliśmy sposób obsługi raportów o awariach, aby szybciej rozwiązywać problemy.
-- Nowe ikony są teraz dostępne w menu kontekstowym Windows 11.
-- Naprawiliśmy błędy i dokonaliśmy ulepszeń wydajności w tle</translation>
+        <translatorcomment>Change log for version 5.13.0. CON-1380</translatorcomment>
+        <translation>- Zakończono wsparcie dla Windows 7 i serwera 2008 R2.
+- Nowe akcje są teraz dostępne w menu kontekstowym Eksploratora plików.
+- Udoskonalono części interfejsu, aby poprawić Twoje doświadczenie.
+- Obsługiwany jest teraz język turecki.
+- Naprawiliśmy błędy i zwiększyliśmy niezawodność aplikacji</translation>
     </message>
 </context>
 <context>
@@ -7193,6 +7161,16 @@ Czy mimo to chcesz je usunąć?</translation>
         <source>View previous versions</source>
         <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
         <translation>Zobacz poprzednie wersje</translation>
+    </message>
+    <message>
+        <source>Add sync</source>
+        <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
+        <translation>Dodaj synchronizację</translation>
+    </message>
+    <message>
+        <source>Add backup</source>
+        <translatorcomment>Context menu option to backup a folder. CON-1364.</translatorcomment>
+        <translation>Dodaj kopię zapasową</translation>
     </message>
 </context>
 <context>
@@ -9677,12 +9655,7 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
         <translation>Dlaczego to widzę?</translation>
     </message>
-    <message>
-        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
-        <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>Twoje konto zostało zablokowane dla Twojej ochrony po wykryciu złośliwego loginu, dlatego wymagamy od Ciebie zresetowania hasło. 
-Sprawdź swoją skrzynkę odbiorczą email, aby uzyskać instrukcje dotyczące odblokowywania konto i wskazówki, jak zapobiec ponownemu wystąpieniu tego.</translation>
-    </message>
+
 </context>
 <context>
     <name>WhatsNewStrings</name>

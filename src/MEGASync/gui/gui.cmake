@@ -27,7 +27,6 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/ChangeLogDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/StreamingFromMegaDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/MegaProgressCustomDialog.h
-    ${CMAKE_CURRENT_LIST_DIR}/QMegaMessageBox.h
     ${CMAKE_CURRENT_LIST_DIR}/AvatarWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/MenuItemAction.h
     ${CMAKE_CURRENT_LIST_DIR}/StatusInfo.h
@@ -43,7 +42,6 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/VerifyLockMessage.h
     ${CMAKE_CURRENT_LIST_DIR}/ViewLoadingScene.h
     ${CMAKE_CURRENT_LIST_DIR}/ViewLoadingMessage.h
-    ${CMAKE_CURRENT_LIST_DIR}/MegaInfoMessage.h
     ${CMAKE_CURRENT_LIST_DIR}/WaitingSpinnerWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/ProxySettings.h
     ${CMAKE_CURRENT_LIST_DIR}/BandwidthSettings.h
@@ -116,6 +114,9 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyComponent.h
     ${CMAKE_CURRENT_LIST_DIR}/surveys/Surveys.h
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyController.h
+    ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/MessageDialogComponent.h
+    ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/MessageDialogData.h
+    ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/MessageDialogOpener.h
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellComponent.h
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellController.h
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellModel.h
@@ -169,7 +170,6 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/ChangeLogDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/StreamingFromMegaDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/MegaProgressCustomDialog.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/QMegaMessageBox.cpp
     ${CMAKE_CURRENT_LIST_DIR}/AvatarWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/MenuItemAction.cpp
     ${CMAKE_CURRENT_LIST_DIR}/StatusInfo.cpp
@@ -182,7 +182,6 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/BugReportDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ProgressIndicatorDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/VerifyLockMessage.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/MegaInfoMessage.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ViewLoadingScene.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ViewLoadingMessage.cpp
     ${CMAKE_CURRENT_LIST_DIR}/WaitingSpinnerWidget.cpp
@@ -255,6 +254,9 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/surveys/Surveys.cpp
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyController.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/MessageDialogComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/MessageDialogData.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/MessageDialogOpener.cpp
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellController.cpp
     ${CMAKE_CURRENT_LIST_DIR}/upsell/UpsellModel.cpp
@@ -298,7 +300,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/win/AlertFilterType.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/VerifyLockMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/MegaInfoMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/OverQuotaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/ScanningWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/CancelConfirmWidget.ui
@@ -333,7 +334,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/macx/FilterAlertWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/AlertFilterType.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/VerifyLockMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/MegaInfoMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/OverQuotaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/ScanningWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/CancelConfirmWidget.ui
@@ -370,7 +370,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/linux/AlertFilterType.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/VerifyLockMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/MegaInfoMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/OverQuotaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/CancelConfirmWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/ScanningWidget.ui
@@ -563,6 +562,7 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/backups
     ${CMAKE_CURRENT_LIST_DIR}/upsell
     ${CMAKE_CURRENT_LIST_DIR}/surveys
+    ${CMAKE_CURRENT_LIST_DIR}/message_dialogs
     ${CMAKE_CURRENT_LIST_DIR}/syncs
     ${CMAKE_CURRENT_LIST_DIR}/ui
     ${CMAKE_CURRENT_LIST_DIR}/user_messages

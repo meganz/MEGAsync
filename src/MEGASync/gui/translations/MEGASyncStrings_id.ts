@@ -706,7 +706,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kebijakan Privasi</translation>
     </message>
     <message>
         <source>Terms of Service</source>
@@ -2085,9 +2085,11 @@
         <translation>Menunggu konfirmasi email…</translation>
     </message>
     <message>
-        <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
-        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
-        <translation>Akun anda telah dikunci sementara demi keselamatan anda. Ini karena potensi pelanggaran data. Untuk membuka kunci akun anda, ikuti langkah-langkah dalam email yang kami kirimkan kepada anda.</translation>
+        <source>Your account has been locked for your protection after detecting a malicious login, so we require you to reset your password.[BR]
+Check your email inbox for instructions on unlocking your account and tips on how to prevent this from happening again.</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465, updated literal SNC-5585.</translatorcomment>
+        <translation>Akun anda telah dikunci untuk perlindungan anda setelah mendeteksi login berbahaya, jadi kami meminta anda untuk mengatur ulang kata sandi anda.[BR]
+Periksa kotak masuk email anda untuk petunjuk tentang membuka kunci akun anda dan tips tentang cara mencegah hal ini terjadi lagi.</translation>
     </message>
 </context>
 <context>
@@ -2564,11 +2566,6 @@
         <source>Do not show again</source>
         <translatorcomment>This is a label for a checkbox. When checked by the user, it ensures that the Enable Notification Area Icon notification will not be displayed to them in the future. SNC-2270</translatorcomment>
         <translation>Jangan tampilkan lagi</translation>
-    </message>
-    <message>
-        <source>Error installing components</source>
-        <translatorcomment>This is the title of an error message that appears when there's an issue during the installation of Notification Area Icon Support. SNC-2270</translatorcomment>
-        <translation>Kesalahan saat menginstal komponen</translation>
     </message>
     <message>
         <source>Failed to install the necessary components.</source>
@@ -3120,11 +3117,6 @@ Tunggu hingga unggahan selesai.</translation>
         <translation>Akun Bisnis anda telah kedaluwarsa</translation>
     </message>
     <message>
-        <source>Alert</source>
-        <translatorcomment>Title of the warning dialog shown when the SDK reports a fatal error - CON-844</translatorcomment>
-        <translation>Waspada</translation>
-    </message>
-    <message>
         <source>An update will be applied during the next application restart</source>
         <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
         <translation>Update akan diberlakukan pada saat anda memulai kembali aplikasi</translation>
@@ -3158,11 +3150,6 @@ Tunggu hingga unggahan selesai.</translation>
         <source>Download</source>
         <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
         <translation>Unduh</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title for dialogs with error messages. SNC-3299</translatorcomment>
-        <translation>Error</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -3283,11 +3270,6 @@ Tunggu hingga unggahan selesai.</translation>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
         <translation>Aplikasi akan terus berfungsi, namun anda mungkin tidak menerima pembaruan baru.</translation>
-    </message>
-    <message>
-        <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
-        <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>Aplikasi akan terus berfungsi, namun pembaruan tidak lagi didukung untuk versi Windows Vista dan versi sebelumnya.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -3496,11 +3478,6 @@ https://mega.co.nz/#sync</source>
         <source>Waiting</source>
         <translatorcomment>Label of tray icon to indicate that the app is in a waiting state.</translatorcomment>
         <translation>Menunggu</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
-        <translation>Peringatan</translation>
     </message>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
@@ -3827,19 +3804,6 @@ Anda tidak akan dapat memperoleh kembali akses ke data yang disimpan atau diberi
         <source>Your sync and backup settings were corrupted and have been reset. If you had any, please set them up again.</source>
         <translatorcomment>Body of the warning dialog shown when the syncs configuration file has been re-generated by the sdk - CON-1311</translatorcomment>
         <translation>Setelan sinkronisasi dan cadangan anda rusak dan telah diatur ulang. Anda perlu mengatur sinkronisasi dan cadangan apa pun yang anda miliki lagi.</translation>
-    </message>
-</context>
-<context>
-    <name>MegaInfoMessage</name>
-    <message>
-        <source>Close</source>
-        <translatorcomment>Button label to close current message box</translatorcomment>
-        <translation>Tutup</translation>
-    </message>
-    <message>
-        <source>Why am I seeing this?</source>
-        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation>Mengapa saya melihat ini?</translation>
     </message>
 </context>
 <context>
@@ -5977,14 +5941,18 @@ Masukkan nama yang berbeda.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We’ve improved how crash reports are handled, so we can fix issues faster.
-- New icons are now available in the Windows 11 context menu.
-- We’ve fixed bugs and made performance improvements behind the scenes.
+        <source>- Support has ended for Windows 7 and Server 2008 R2.
+- New actions are now available in the File Explorer context menu.
+- Refined parts of the interface to improve your experience.
+- Turkish language is now supported.
+- We’ve fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 5.12.0. CON-1358</translatorcomment>
-        <translation>- Kami telah meningkatkan cara penanganan laporan kerusakan, sehingga kami dapat memperbaiki masalah lebih cepat.
-- Ikon baru sekarang tersedia di menu konteks Windows 11.
-- Kami telah memperbaiki bug dan membuat peningkatan kinerja di belakang layar.
+        <translatorcomment>Change log for version 5.13.0. CON-1380</translatorcomment>
+        <translation>- Dukungan telah berakhir untuk Windows 7 dan Server 2008 R2.
+- Tindakan baru sekarang tersedia di menu konteks File Explorer.
+- Bagian antarmuka yang disempurnakan untuk meningkatkan pengalaman Anda.
+- Bahasa Turki sekarang didukung.
+- Kami telah memperbaiki bug dan membuat aplikasi lebih dapat diandalkan.
 </translation>
     </message>
 </context>
@@ -7191,6 +7159,16 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <source>View previous versions</source>
         <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
         <translation>Lihat versi sebelumnya</translation>
+    </message>
+    <message>
+        <source>Add sync</source>
+        <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
+        <translation>Tambah sync</translation>
+    </message>
+    <message>
+        <source>Add backup</source>
+        <translatorcomment>Context menu option to backup a folder. CON-1364.</translatorcomment>
+        <translation>Tambahkan cadangan</translation>
     </message>
 </context>
 <context>
@@ -9676,12 +9654,7 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
         <translation>Mengapa saya melihat ini?</translation>
     </message>
-    <message>
-        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
-        <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>Akun anda telah dikunci untuk perlindungan anda setelah mendeteksi login berbahaya, jadi kami meminta anda untuk mengatur ulang kata sandi anda. 
-Periksa kotak masuk email anda untuk petunjuk tentang membuka kunci akun anda dan kiat tentang cara mencegah hal ini terjadi lagi.</translation>
-    </message>
+
 </context>
 <context>
     <name>WhatsNewStrings</name>

@@ -420,6 +420,8 @@ public:
 
     static HandlesTypes getHandlesType(const QList<mega::MegaHandle>& handles);
 
+    static bool hourHasChanged(qint64 date1, qint64 date2);
+
     static bool dayHasChangedSince(qint64 msecs);
     static bool monthHasChangedSince(qint64 msecs);
 

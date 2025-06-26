@@ -181,6 +181,7 @@ Item {
                     top: parent.top
                     bottom: parent.bottom
                 }
+                width: implicitWidth
                 horizontalAlignment: Qt.AlignRight
                 verticalAlignment: Qt.AlignVCenter
                 text: size

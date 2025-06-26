@@ -3,9 +3,9 @@
 #include "ConnectivityChecker.h"
 #include "FatalEventHandler.h"
 #include "MegaApplication.h"
+#include "MessageDialogOpener.h"
 #include "Platform.h"
 #include "Preferences.h"
-#include "QMegaMessageBox.h"
 #include "QmlDialogManager.h"
 #include "RequestListenerManager.h"
 #include "StatsEventHandler.h"
@@ -992,11 +992,12 @@ void FastLoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e
         else if (errorCode != mega::MegaError::API_ESID && errorCode != mega::MegaError::API_ESSL)
         //Invalid session or public key, already managed in TYPE_LOGOUT
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = MegaSyncApp->getMEGAString();
-            msgInfo.text = tr("Login error: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString()));
+            MessageDialogInfo msgInfo;
+            msgInfo.descriptionText =
+                tr("Login error: %1")
+                    .arg(QCoreApplication::translate("MegaError", e->getErrorString()));
 
-            QMegaMessageBox::warning(msgInfo);
+            MessageDialogOpener::warning(msgInfo);
         }
 
         //Wrong login -> logout
@@ -1060,44 +1061,45 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
 
         if (paramType == mega::MegaError::API_ESID)
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = MegaSyncApp->getMEGAString();
-            msgInfo.text = tr("You have been logged out on this computer from another location");
-            msgInfo.ignoreCloseAll = true;
+            MessageDialogInfo msgInfo;
+            msgInfo.descriptionText =
+                tr("You have been logged out on this computer from another location");
 
-            QMegaMessageBox::information(msgInfo);
+            MessageDialogOpener::information(msgInfo);
         }
         else if (paramType == mega::MegaError::API_ESSL)
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = MegaSyncApp->getMEGAString();
-            msgInfo.text = tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software "
-                               "could be intercepting your communications and causing this problem. Please disable it and try again.")
-                           + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown"));
-            msgInfo.ignoreCloseAll = true;
+            MessageDialogInfo msgInfo;
+            msgInfo.descriptionText =
+                tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle "
+                   "attack or your antivirus software "
+                   "could be intercepting your communications and causing this problem. Please "
+                   "disable it and try again.") +
+                QString::fromUtf8(" (Issuer: %1)")
+                    .arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown"));
 
-            QMegaMessageBox::critical(msgInfo);
+            MessageDialogOpener::critical(msgInfo);
             mMegaApi->localLogout();
         }
         else if (paramType != mega::MegaError::API_EACCESS && paramType != mega::MegaError::API_EBLOCKED)
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = MegaSyncApp->getMEGAString();
+            MessageDialogInfo msgInfo;
             if(errorCode != mega::MegaError::API_OK)
             {
-                msgInfo.text =tr("You have been logged out because of this error: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString()));
+                msgInfo.descriptionText =
+                    tr("You have been logged out because of this error: %1")
+                        .arg(QCoreApplication::translate("MegaError", e->getErrorString()));
             }
             else
             {
                 Text::Link link(QString::fromLatin1("mailto:support@mega.nz"));
                 QString text = tr("You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.");
                 link.process(text);
-                msgInfo.text = text;
+                msgInfo.descriptionText = text;
                 msgInfo.textFormat = Qt::RichText;
             }
-            msgInfo.ignoreCloseAll = true;
 
-            QMegaMessageBox::information(msgInfo);
+            MessageDialogOpener::information(msgInfo);
         }
         MegaSyncApp->unlink();
     }

@@ -378,11 +378,11 @@ void CrashHandler::sendOSNotification(bool succeeded)
         notification.title = tr("Error report sent");
         notification.message =
             tr("Your error report was successfully submitted. Thank you for your feedback!");
-        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Failed to send error report-notification");
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Error report sent successfully");
     }
     else
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Failed to send error report-notification");
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Failed to send error report");
 
         notification.title = tr("Failed to send error report");
         notification.message =
@@ -403,6 +403,8 @@ void CrashHandler::deletePendingCrashReports(const QStringList& crashes)
 {
     for (const auto& crash: crashes)
     {
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                     QString::fromUtf8("Removing crash dump: %1").arg(crash).toUtf8().constData());
         QFile::remove(crash);
     }
 }

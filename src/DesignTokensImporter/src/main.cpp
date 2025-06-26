@@ -1,8 +1,8 @@
+#include "CommandLineHandler.h"
 #include "DesignTokensImporter.h"
-
-#include "PathProvider.h"
 #include "Utilities.h"
 
+#include <QCommandLineParser>
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
@@ -13,9 +13,18 @@ int main(int argc, char* argv[])
 {
     QCoreApplication a(argc, argv);
 
-    // Point to MEGASync as current working directory
-    QDir::setCurrent(PathProvider::RELATIVE_MEGASYNC_PATH);
+    CommandLineHandler::parseAndValidateCommandArgs();
 
+    const QString megaSyncPath = CommandLineHandler::getMEGASyncPath();
+    const QString tokensFilePath = CommandLineHandler::getTokenFilePath();
+
+    if (!DesignTokensImporter::initialize(megaSyncPath, tokensFilePath))
+    {
+        Utilities::logInfoMessage(
+            "Failed to initialize DesignTokensImporter. Please check the paths.");
+
+        return EXIT_FAILURE;
+    }
     DesignTokensImporter::run();
 
     Utilities::logInfoMessage("DesignTokensImporter has finished.");

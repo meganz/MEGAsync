@@ -14,6 +14,8 @@ public:
 
     Q_INVOKABLE void openPreferences(int tabIndex) const;
     Q_INVOKABLE bool deviceNameAlreadyExists(const QString& name) const;
+    Q_INVOKABLE void showClosingButLoggingInWarningDialog() const;
+    Q_INVOKABLE void showClosingButCreatingAccount() const;
 
 signals:
     void accountBlocked(int errorCode);

@@ -28,23 +28,6 @@ UpsellQmlDialog {
     minimumWidth: window.totalWidth
     minimumHeight: window.totalHeight
 
-    onTotalHeightChanged: {
-        // Force to change height depending on the billed period selected
-        // and translations.
-        // Maintain this order to resize the window.
-        window.minimumHeight = window.totalHeight;
-        window.maximumHeight = window.totalHeight;
-        window.height = window.totalHeight;
-    }
-
-    onTotalWidthChanged: {
-        // Force to change width depending on the translations.
-        // Maintain this order to resize the window.
-        window.minimumWidth = window.totalWidth;
-        window.maximumWidth = window.totalWidth;
-        window.width = window.totalWidth;
-    }
-
     Component.onCompleted: {
         header.forceActiveFocus();
     }
@@ -52,16 +35,14 @@ UpsellQmlDialog {
     Column {
         id: columnItem
 
+        height: implicitHeight
+
         anchors {
             left: parent.left
             top: parent.top
-            topMargin: window.contentMargin
-            leftMargin: window.contentMargin
-            rightMargin: window.contentMargin
-            bottomMargin: window.contentMargin
+            margins: window.contentMargin
         }
-        width: content.width
-        height: header.height + content.height + window.contentMargin
+
         spacing: window.contentMargin
 
         HeaderItem {
@@ -73,6 +54,7 @@ UpsellQmlDialog {
         ContentItem {
             id: content
         }
+
     }
 
 }

@@ -5,6 +5,7 @@
 #include <Shlobj.h>
 #include <Shobjidl.h>
 
+#include <QFileInfo>
 #include <QString>
 #include <QThread>
 
@@ -55,11 +56,21 @@ class WinShellDispatcherTask : public QThread
  signals:
     void newUploadQueue(QQueue<QString> uploadQueue);
     void newExportQueue(QQueue<QString> exportQueue);
-    void viewOnMega(QByteArray path, bool versions);
+    void viewOnMega(const QString& path, bool versions);
+    void syncFolderFromShellExt(const QString& path);
+    void backupFolderFromShellExt(const QString& path);
 
- protected:
-   virtual void run();
+protected:
+    virtual void run();
 
+private:
+    QStringList extractParameters(wchar_t* content, const QChar& separator = QChar());
+    QStringList extractParametersWChar(wchar_t* content, const QChar& separator = QChar());
+    int toIntFromWChar(const QString& str, bool& ok);
+
+    void sendViewOnMegaSignal(const QStringList& parameters, bool versions, LPPIPEINST pipe);
+
+    void sendErrorToPipe(LPPIPEINST pipe);
 };
 
 #endif

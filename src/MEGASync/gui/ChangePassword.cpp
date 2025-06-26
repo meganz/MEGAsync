@@ -3,7 +3,7 @@
 #include "DialogOpener.h"
 #include "Login2FA.h"
 #include "MegaApplication.h"
-#include "QMegaMessageBox.h"
+#include "MessageDialogOpener.h"
 #include "RequestListenerManager.h"
 #include "ui_ChangePassword.h"
 
@@ -50,11 +50,11 @@ void ChangePassword::onRequestFinish(mega::MegaRequest* req, mega::MegaError* e)
             }
             else
             {
-                QMegaMessageBox::MessageBoxInfo info;
-                info.title = QMegaMessageBox::errorTitle();
-                info.text = QCoreApplication::translate("MegaError", e->getErrorString());
+                MessageDialogInfo info;
+                info.descriptionText =
+                    QCoreApplication::translate("MegaError", e->getErrorString());
                 info.parent = this;
-                QMegaMessageBox::critical(info);
+                MessageDialogOpener::critical(info);
 
                 setEnabled(true);
             }
@@ -66,17 +66,18 @@ void ChangePassword::onRequestFinish(mega::MegaRequest* req, mega::MegaError* e)
             {
                 hide();
 
-                QMegaMessageBox::MessageBoxInfo msgInfo;
+                MessageDialogInfo msgInfo;
                 msgInfo.parent = parentWidget();
-                msgInfo.title =  tr("Password changed");
-                msgInfo.text =   tr("Your password has been changed.");
-                msgInfo.finishFunc = [this](QPointer<QMessageBox>){
+                msgInfo.titleText = tr("Password changed");
+                msgInfo.descriptionText = tr("Your password has been changed.");
+                msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
+                {
                     accept();
                 };
-                QMegaMessageBox::information(msgInfo);
+                MessageDialogOpener::information(msgInfo);
             }
-            else if (e->getErrorCode() == MegaError::API_EFAILED
-                     || e->getErrorCode() == MegaError::API_EEXPIRED)
+            else if (e->getErrorCode() == MegaError::API_EFAILED ||
+                     e->getErrorCode() == MegaError::API_EEXPIRED)
             {
                 show2FA(true);
             }
@@ -84,22 +85,21 @@ void ChangePassword::onRequestFinish(mega::MegaRequest* req, mega::MegaError* e)
             {
                 setEnabled(true);
 
-                QMegaMessageBox::MessageBoxInfo info;
-                info.title = QMegaMessageBox::errorTitle();
-                info.text = tr("Too many requests. Please wait.");
+                MessageDialogInfo info;
+                info.descriptionText = tr("Too many requests. Please wait.");
                 info.parent = this;
-                QMegaMessageBox::critical(info);
+                MessageDialogOpener::critical(info);
             }
             else
             {
                 setEnabled(true);
 
-                QMegaMessageBox::MessageBoxInfo info;
-                info.title = QMegaMessageBox::errorTitle();
-                info.text = QCoreApplication::translate("MegaError",e->getErrorString());
+                MessageDialogInfo info;
+                info.descriptionText =
+                    QCoreApplication::translate("MegaError", e->getErrorString());
                 info.parent = this;
 
-                QMegaMessageBox::critical(info);
+                MessageDialogOpener::critical(info);
             }
             break;
         }
@@ -143,30 +143,29 @@ void ChangePassword::on_bOk_clicked()
     const bool passwordIsWeak{mMegaApi->getPasswordStrength(newPassword().toUtf8().constData())
                 == MegaApi::PASSWORD_STRENGTH_VERYWEAK};
 
-    QMegaMessageBox::MessageBoxInfo info;
-    info.title = QMegaMessageBox::errorTitle();
+    MessageDialogInfo info;
     info.parent = this;
 
     if (fieldIsEmpty)
     {
-        info.text = tr("Please enter your password");
-        QMegaMessageBox::warning(info);
+        info.descriptionText = tr("Please enter your password");
+        MessageDialogOpener::warning(info);
     }
     else if (!passwordsAreEqual)
     {
-        info.text = tr("The entered passwords don't match");
-        QMegaMessageBox::warning(info);
+        info.descriptionText = tr("The entered passwords don't match");
+        MessageDialogOpener::warning(info);
     }
     else if (newAndOldPasswordsAreTheSame)
     {
-        info.text = tr("You have entered your current password,"
-                       " please enter a new password.");
-        QMegaMessageBox::warning(info);
+        info.descriptionText = tr("You have entered your current password,"
+                                  " please enter a new password.");
+        MessageDialogOpener::warning(info);
     }
     else if (passwordIsWeak)
     {
-        info.text = tr("Please, enter a stronger password");
-        QMegaMessageBox::warning(info);
+        info.descriptionText = tr("Please, enter a stronger password");
+        MessageDialogOpener::warning(info);
     }
     else
     {

@@ -11,6 +11,8 @@ class ContextMenuCommandBase: public winrt::implements<ContextMenuCommandBase, I
 public:
     ContextMenuCommandBase(const std::wstring& id);
 
+    void SetTitle(MegaInterface::StringID id, LPWSTR* ppszName);
+
     IFACEMETHODIMP GetCanonicalName(GUID* pguidCommandName) override;
     IFACEMETHODIMP GetFlags(EXPCMDFLAGS* flags) override;
     IFACEMETHODIMP GetIcon(IShellItemArray* psiItemArray, LPWSTR* ppszIcon) override;

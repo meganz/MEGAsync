@@ -273,8 +273,7 @@ bool NodeSelectorProxyModel::hasContextMenuOptions(const QModelIndexList& indexe
         auto indexItem(getMegaModel()->getItemByIndex(mapToSource(index)));
         if (indexItem && indexItem->getNode())
         {
-            if (indexItem->isCloudDrive() || indexItem->isRubbishBin() || indexItem->isVault() ||
-                indexItem->isVaultDevice())
+            if (indexItem->isRubbishBin() || indexItem->isVault() || indexItem->isVaultDevice())
             {
                 return false;
             }

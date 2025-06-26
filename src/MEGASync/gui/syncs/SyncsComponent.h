@@ -26,6 +26,7 @@ public:
 
     void setSyncOrigin(SyncInfo::SyncOrigin origin);
     void setRemoteFolder(const QString& remoteFolder);
+    void setLocalFolder(const QString& localFolder);
 
 private:
     std::unique_ptr<Syncs> mSyncs;

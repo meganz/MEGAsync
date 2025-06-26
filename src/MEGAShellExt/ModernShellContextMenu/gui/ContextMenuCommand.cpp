@@ -58,7 +58,10 @@ EXPCMDSTATE ContextMenuCommand::GetState(IShellItemArray* psiItemArray)
     {
         initializeContextMenuData(psiItemArray);
 
-        return ECS_ENABLED;
+        if (mContextMenuData.hasAnyOptionAvailable())
+        {
+            return ECS_ENABLED;
+        }
     }
 
     return ECS_HIDDEN;

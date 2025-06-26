@@ -3,7 +3,6 @@
 
 #include "HighDpiResize.h"
 #include "Platform.h"
-#include "QMegaMessageBox.h"
 #include "TokenParserWidgetManager.h"
 
 #include <QApplication>
@@ -15,6 +14,12 @@
 
 #include <functional>
 #include <memory>
+
+template<typename T>
+class QmlDialogWrapper;
+
+class MessageDialogComponent;
+class MessageDialogData;
 
 #ifdef Q_OS_WINDOWS
 class ExternalDialogOpener : public QWidget
@@ -163,67 +168,10 @@ public:
         }
     }
 
-    static void showMessageBox(QPointer<QMessageBox> msg, const QMegaMessageBox::MessageBoxInfo& msgInfo)
-    {
-        if(msg)
-        {
-            DialogBlocker* blocker(nullptr);
+    typedef QmlDialogWrapper<MessageDialogComponent> QmlMessageDialogWrapper;
+    static void showMessageDialog(QPointer<QmlMessageDialogWrapper> wrapper,
+                                  QPointer<MessageDialogData> msgInfo);
 
-#ifdef Q_OS_MACOS
-            //If the message box is not WindowModal, the parent is not greyed out.
-            //So, we use a dummy dialog WindowModal
-            if(msg->parent())
-            {
-                blocker = new DialogBlocker(msg->parentWidget());
-                qApp->setActiveWindow(msg);
-            }
-#endif
-
-            msg->setWindowModality(Qt::ApplicationModal);
-            msg->connect(msg.data(), &QMessageBox::finished, [msgInfo, msg, blocker]()
-            {
-                if(blocker)
-                {
-                    blocker->deleteLater();
-                }
-
-                if(msgInfo.finishFunc)
-                {
-                    msgInfo.finishFunc(msg);
-                }
-
-                removeDialog(msg);
-                if(!mDialogsQueue.isEmpty())
-                {
-                    auto queueMsgBox = std::dynamic_pointer_cast<DialogInfo<QMessageBox>>(mDialogsQueue.dequeue());
-                    if(queueMsgBox)
-                    {
-                        auto dialog = showDialogImpl(queueMsgBox->getDialog(), false, false);
-                        dialog->setIgnoreCloseAllAction(msgInfo.ignoreCloseAll);
-                    }
-                }
-            });
-
-            auto classType = QString::fromUtf8(QMessageBox::staticMetaObject.className());
-            auto siblingDialogInfo = findSiblingDialogInfo<QMessageBox>(classType);
-
-            if(siblingDialogInfo && msgInfo.enqueue)
-            {
-                std::shared_ptr<DialogInfo<QMessageBox>> info = std::make_shared<DialogInfo<QMessageBox>>();
-                info->setDialog(msg);
-                info->setDialogClass(classType);
-                mDialogsQueue.enqueue(info);
-
-                info->raise();
-            }
-            else
-            {
-                auto dialog = showDialogImpl(msg, false, false);
-                dialog->setIgnoreCloseAllAction(msgInfo.ignoreCloseAll);
-            }
-        }
-    }
-    
     template <class ParentType>
     static void closeDialogsByParentClass()
     {

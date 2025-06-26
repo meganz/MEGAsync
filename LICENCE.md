@@ -12,14 +12,18 @@ licence and those Terms of Service, these terms prevail.
 
 - "code" means the Mega code made available from time, in our sole
   discretion, for access under this licence at [GitHub](https://github.com/).
-  Reference to code in this licence means the code and any part of it and any
-  derivative of it.
+  Reference to the code includes any part of it, including permitted 
+  modifications and compilations.
 - “compilation” means to compile the code from ‘source code’ to ‘machine code’.
 - "defect" means a defect, bug, backdoor, security issue or other deficiency in the code.
 - “non-commercial distribution” means distribution of the code or any compilation
   of the code, or of any other application or program containing the code or any
   compilation of the code, where such distribution is not intended for or directed
   towards commercial advantage or monetary compensation.
+- "permitted modifications" means modifications made exclusively to achieve 
+  compatibility, platform portability, or to address defects, provided these modifications
+  do not materially alter Mega's intended functionality, integrate competing services, or
+  undermine Mega's business model.
 - "review" means to access, analyse, test and otherwise review the
   code as a reference, for the sole purpose of analysing it for defects.
 - "you" means the licensee of rights set out in this licence.
@@ -27,9 +31,9 @@ licence and those Terms of Service, these terms prevail.
 ## Section 2: Grant of Rights
 
 1. Subject to the terms of this licence, we grant you a non-transferable,
-   non-exclusive, worldwide, royalty-free licence to access and use the code
-   solely for the purposes of review, compilation and non-commercial
-   distribution.
+   non-exclusive, worldwide, royalty-free licence to access, review,
+   compile, modify (solely as permitted modifications), and distribute 
+   the code strictly for non-commercial purposes.
 2. You may provide the code to anyone else and publish excerpts of it for the
    purposes of review, compilation and non-commercial distribution, provided
    that when you do so you make any recipient of the code aware of the terms of
@@ -51,11 +55,14 @@ licence and those Terms of Service, these terms prevail.
 1. This licence does not grant you any rights to use Mega's name, logo, or
    trademarks and you must not in any way indicate you are authorised to speak
    on behalf of Mega.
-2. If you issue proceedings in any jurisdiction against Mega because you
+2. You must not:
+    - Use the code or modifications thereof for commercial purposes, including integration with competing cloud storage services, commercial sales, monetised services, or distribution intended for monetary compensation or commercial advantage;
+    - Modify the code to circumvent, undermine, or compromise Mega's security measures, authentication systems, or business model.
+3. If you issue proceedings in any jurisdiction against Mega because you
    consider Mega has infringed copyright or any patent right in respect of the
    code (including any joinder or counterclaim), your licence to the code is
    automatically terminated.
-3. THE CODE IS MADE AVAILABLE "AS-IS" AND WITHOUT ANY EXPRESS OF IMPLIED
+4. THE CODE IS MADE AVAILABLE "AS-IS" AND WITHOUT ANY EXPRESS OF IMPLIED
    GUARANTEES AS TO FITNESS, MERCHANTABILITY, NON-INFRINGEMENT OR OTHERWISE. IT
    IS NOT BEING PROVIDED IN TRADE BUT ON A VOLUNTARY BASIS ON OUR PART AND IS
    NOT MADE AVAILABLE FOR ANY USE OUTSIDE THE TERMS OF THIS LICENCE. ANYONE
@@ -83,5 +90,5 @@ licence and those Terms of Service, these terms prevail.
 2. Questions and comments regarding this licence are welcomed and should be
    addressed to support@mega.nz.
 
-Last updated 15 February 2022.
+Last updated 14 May 2025.
 

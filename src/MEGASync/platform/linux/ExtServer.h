@@ -44,7 +44,7 @@ class ExtServer: public QObject
  signals:
     void newUploadQueue(QQueue<QString> uploadQueue);
     void newExportQueue(QQueue<QString> exportQueue);
-    void viewOnMega(QByteArray path, bool versions);
+    void newViewOnMega(const QString& filePath, bool versions);
 };
 
 #endif

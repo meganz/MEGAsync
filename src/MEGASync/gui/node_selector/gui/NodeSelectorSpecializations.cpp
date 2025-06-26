@@ -4,11 +4,13 @@
 #include "DuplicatedNodeDialog.h"
 #include "megaapi.h"
 #include "MegaNodeNames.h"
+#include "MessageDialogOpener.h"
 #include "NodeSelectorModel.h"
 #include "NodeSelectorProxyModel.h"
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
-#include "QMegaMessageBox.h"
+#include "Preferences.h"
 #include "RequestListenerManager.h"
+#include "StatsEventHandler.h"
 #include "SyncInfo.h"
 #include "TextDecorator.h"
 #include "ui_NodeSelector.h"
@@ -38,14 +40,16 @@ void UploadNodeSelector::onOkButtonClicked()
         int access = Utilities::getNodeAccess(node->getHandle());
         if (access < mega::MegaShare::ACCESS_READWRITE)
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
+            MessageDialogInfo msgInfo;
             msgInfo.parent = this;
-            msgInfo.title = QMegaMessageBox::errorTitle();
-            msgInfo.text = tr("You need Read & Write or Full access rights to be able to upload to the selected folder.");
-            msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
+            msgInfo.descriptionText =
+                tr("You need Read & Write or Full access rights to be able to "
+                   "upload to the selected folder.");
+            msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
+            {
                 reject();
             };
-            QMegaMessageBox::warning(msgInfo);
+            MessageDialogOpener::warning(msgInfo);
         }
         else
         {
@@ -86,10 +90,10 @@ void DownloadNodeSelector::onOkButtonClicked()
         }
     }
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
+    MessageDialogInfo msgInfo;
     msgInfo.parent = this;
-    msgInfo.title = QMegaMessageBox::errorTitle();
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
+    {
         reject();
     };
 
@@ -97,20 +101,32 @@ void DownloadNodeSelector::onOkButtonClicked()
     {
         if(ui->stackedWidget->currentIndex() == CLOUD_DRIVE)
         {
-            msgInfo.text = tr("The item you selected has been removed. To reselect, close this window and try again.", "", wrongNodes);
-            QMegaMessageBox::warning(msgInfo);
+            msgInfo.descriptionText =
+                tr("The item you selected has been removed. To reselect, close "
+                   "this window and try again.",
+                   "",
+                   wrongNodes);
+            MessageDialogOpener::warning(msgInfo);
         }
         else
         {
-            msgInfo.text = tr("You no longer have access to this item. Ask the owner to share again.", "", wrongNodes);
-            QMegaMessageBox::warning(msgInfo);
+            msgInfo.descriptionText =
+                tr("You no longer have access to this item. Ask the owner to share again.",
+                   "",
+                   wrongNodes);
+            MessageDialogOpener::warning(msgInfo);
         }
     }
     else if(wrongNodes > 0)
     {
         QString warningMsg1 = tr("%1 item selected", "", nodes.size()).arg(nodes.size());
-        msgInfo.text = tr("%1. %2 has been removed. To reselect, close this window and try again.", "", wrongNodes).arg(warningMsg1).arg(wrongNodes);
-        QMegaMessageBox::warning(msgInfo);
+        msgInfo.descriptionText =
+            tr("%1. %2 has been removed. To reselect, close this window and try again.",
+               "",
+               wrongNodes)
+                .arg(warningMsg1)
+                .arg(wrongNodes);
+        MessageDialogOpener::warning(msgInfo);
     }
     else
     {
@@ -157,18 +173,19 @@ void SyncNodeSelector::onOkButtonClicked()
     auto node = getSelectedNode();
     if(node)
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageDialogInfo msgInfo;
         msgInfo.parent = this;
-        msgInfo.title = QMegaMessageBox::errorTitle();
-        msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
+        msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
+        {
             reject();
         };
 
         int access = Utilities::getNodeAccess(node->getHandle());
         if (access < mega::MegaShare::ACCESS_FULL)
         {
-            msgInfo.text = tr("You need Full access right to be able to sync the selected folder.");
-            QMegaMessageBox::warning(msgInfo);
+            msgInfo.descriptionText =
+                tr("You need Full access right to be able to sync the selected folder.");
+            MessageDialogOpener::warning(msgInfo);
         }
         else
         {
@@ -176,9 +193,11 @@ void SyncNodeSelector::onOkButtonClicked()
             auto check = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(path.get()));
             if (!check)
             {
-                msgInfo.text = tr("Invalid folder for synchronization.\n"
-                                  "Please, ensure that you don't use characters like '\\' '/' or ':' in your folder names.");
-                QMegaMessageBox::warning(msgInfo);
+                msgInfo.descriptionText =
+                    tr("Invalid folder for synchronization.\n"
+                       "Please, ensure that you don't use characters like '\\' '/' "
+                       "or ':' in your folder names.");
+                MessageDialogOpener::warning(msgInfo);
             }
             else
             {
@@ -211,15 +230,14 @@ void StreamNodeSelector::onOkButtonClicked()
     {
         if (node->isFolder())
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
+            MessageDialogInfo msgInfo;
             msgInfo.parent = this;
-            msgInfo.title = QMegaMessageBox::errorTitle();
-            msgInfo.text = tr("Only files can be used for streaming.");
-            msgInfo.finishFunc = [this](QPointer<QMessageBox>)
+            msgInfo.descriptionText = tr("Only files can be used for streaming.");
+            msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
             {
                 reject();
             };
-            QMegaMessageBox::warning(msgInfo);
+            MessageDialogOpener::warning(msgInfo);
         }
         else
         {
@@ -253,6 +271,12 @@ CloudDriveNodeSelector::CloudDriveNodeSelector(QWidget* parent):
     this->setWindowFlags(this->windowFlags());
 #endif
 #endif
+
+    // Update last time opened
+    Preferences::instance()->cloudDriveDialogOpened();
+
+    // Send stats in case we didn´t send them in the current hour
+    sendStats();
 }
 
 void CloudDriveNodeSelector::createSpecialisedWidgets()
@@ -270,6 +294,51 @@ void CloudDriveNodeSelector::enableDragAndDrop(bool enable)
     mCloudDriveWidget->enableDragAndDrop(enable);
     mRubbishWidget->enableDragAndDrop(true);
     mIncomingSharesWidget->enableDragAndDrop(true);
+}
+
+void CloudDriveNodeSelector::sendStats()
+{
+    auto lastDateTimeStatSent(Preferences::instance()->cloudDriveDialogLastDateTimeStatSent());
+    auto lastDateTimeOpened(Preferences::instance()->cloudDriveDialogLastDateTimeOpened());
+
+    // If event sent during the current hour, return
+    if (!Utilities::hourHasChanged(lastDateTimeStatSent,
+                                   QDateTime::currentDateTime().toSecsSinceEpoch()))
+    {
+        return;
+    }
+
+    auto sendEvent = []()
+    {
+        MegaSyncApp->getStatsEventHandler()->sendEvent(
+            AppStatsEvents::EventType::CLOUD_DRIVE_HOURLY_ACTIVE_USERS);
+
+        Preferences::instance()->updateCloudDriveDialogLastDateTimeStatSent();
+    };
+
+    // If the CloudDrive is currently open, send the event
+    // If the CloudDrive is not currently open but it was opened during the current hour, send
+    // the event
+    auto cloudDriveDialog(DialogOpener::findDialog<NodeSelector>());
+    auto isCurrentlyOpen(cloudDriveDialog && dynamic_cast<CloudDriveNodeSelector*>(
+                                                 cloudDriveDialog->getDialog().data()));
+
+    if (isCurrentlyOpen)
+    {
+        sendEvent();
+    }
+    else
+    {
+        // If the hour between now and the last date time opened has changed, it is not the
+        // current hour
+        auto openedDuringCurrentHour(
+            !(Utilities::hourHasChanged(QDateTime::currentDateTime().toSecsSinceEpoch(),
+                                        lastDateTimeOpened)));
+        if (openedDuringCurrentHour)
+        {
+            sendEvent();
+        }
+    }
 }
 
 void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint id)
@@ -292,20 +361,19 @@ void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint id)
     }
     else if(id == CloudDriveType::ClearRubbish)
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
+        MessageDialogInfo msgInfo;
         msgInfo.parent = this;
-        msgInfo.title = QMegaMessageBox::errorTitle();
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
         QMap<QMessageBox::Button, QString> textsByButton;
         textsByButton.insert(QMessageBox::Yes, tr("Empty"));
         textsByButton.insert(QMessageBox::No, tr("Cancel"));
         msgInfo.buttonsText = textsByButton;
-        msgInfo.text = tr("Empty Rubbish bin?");
-        Text::Bold bold;
-        Text::Decorator dec(&bold);
-        msgInfo.informativeText = tr("All items will be permanently deleted. This action can [B]not[/B] be undone");
-        dec.process(msgInfo.informativeText);
-        msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+        msgInfo.defaultButton = QMessageBox::No;
+        msgInfo.textFormat = Qt::RichText;
+        msgInfo.titleText = tr("Empty Rubbish bin?");
+        msgInfo.descriptionText =
+            tr("All items will be permanently deleted. This action can [B]not[/B] be undone");
+        msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
         {
             if (msg->result() == QMessageBox::Yes)
             {
@@ -313,7 +381,7 @@ void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint id)
                 MegaSyncApp->getMegaApi()->cleanRubbishBin();
             }
         };
-        QMegaMessageBox::warning(msgInfo);
+        MessageDialogOpener::warning(msgInfo);
     }
 }
 

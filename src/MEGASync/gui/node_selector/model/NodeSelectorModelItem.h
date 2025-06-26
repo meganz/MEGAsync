@@ -35,6 +35,7 @@ public:
 
     std::shared_ptr<mega::MegaNode> getNode() const;
     bool isSpecialNode() const;
+    bool canBeRenamed() const;
 
     void createChildItems(std::unique_ptr<mega::MegaNodeList> nodeList);
     bool areChildrenInitialized() const;
@@ -54,8 +55,11 @@ public:
     virtual bool isSyncable();
     virtual bool isVault() const;
     virtual bool isVaultDevice() const;
+    bool isInShare() const;
+    bool isInVault() const;
     bool isCloudDrive() const;
     bool isRubbishBin() const;
+    bool isInRubbishBin() const;
     QPointer<NodeSelectorModelItem> addNode(std::shared_ptr<mega::MegaNode> node);
     QList<QPointer<NodeSelectorModelItem>> addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes);
     QPointer<NodeSelectorModelItem> findChildNode(std::shared_ptr<mega::MegaNode> node);
@@ -70,6 +74,8 @@ public:
 
     void resetChildrenCounter();
 
+    int getNodeAccess() const;
+
 signals:
     void infoUpdated(int role);
     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
@@ -81,6 +87,8 @@ protected:
     int mChildrenCounter;
     bool mShowFiles;
     bool mChildrenAreInit;
+    mutable int mNodeAccess;
+    mutable qint64 mNodeAccessLastUpdate;
 
     mega::MegaApi* mMegaApi;
     std::shared_ptr<mega::MegaNode> mNode;

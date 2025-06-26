@@ -9,7 +9,7 @@ def sendSlackNotification(String initialMessage) {
         sh """
             curl -X POST -H 'Content-type: application/json' --data '{
                 "text": "'"${env.RESULT_MESSAGE}"'"
-                }' ${SLACK_WEBHOOK_AST_REPORT}
+                }' \${SLACK_WEBHOOK_AST_REPORT}
         """
     }
 }

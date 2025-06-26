@@ -8,18 +8,9 @@ ContextMenuCommandRemoveFromLeftPane::ContextMenuCommandRemoveFromLeftPane():
     ContextMenuCommandBase(L"ContextMenuCommandRemoveFromLeftPane")
 {}
 
-IFACEMETHODIMP ContextMenuCommandRemoveFromLeftPane::GetTitle(IShellItemArray* psiItemArray,
-                                                              LPWSTR* ppszName)
+IFACEMETHODIMP ContextMenuCommandRemoveFromLeftPane::GetTitle(IShellItemArray*, LPWSTR* ppszName)
 {
-    std::wstring title;
-    LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_REMOVE_FROM_LEFT_PANE, 0, 0);
-    if (menuText)
-    {
-        title = menuText;
-        delete menuText;
-    }
-
-    SHStrDup(title.data(), ppszName);
+    SetTitle(MegaInterface::STRING_REMOVE_FROM_LEFT_PANE, ppszName);
 
     return S_OK;
 }

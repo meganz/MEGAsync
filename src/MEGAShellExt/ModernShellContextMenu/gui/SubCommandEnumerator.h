@@ -3,6 +3,7 @@
 
 #include "ContextMenuCommandGetLink.h"
 #include "ContextMenuCommandRemoveFromLeftPane.h"
+#include "ContextMenuCommandSyncBackup.h"
 #include "ContextMenuCommandUpload.h"
 #include "ContextMenuCommandView.h"
 #include "ContextMenuCommandViewVersions.h"
@@ -25,6 +26,10 @@ public:
         mCommands.push_back(winrt::make_self<ContextMenuCommandGetLink>());
         mCommands.push_back(winrt::make_self<ContextMenuCommandView>());
         mCommands.push_back(winrt::make_self<ContextMenuCommandViewVersions>());
+        mCommands.push_back(
+            winrt::make_self<ContextMenuCommandSyncBackup>(MegaInterface::SyncType::TYPE_TWOWAY));
+        mCommands.push_back(
+            winrt::make_self<ContextMenuCommandSyncBackup>(MegaInterface::SyncType::TYPE_BACKUP));
         mCommands.push_back(winrt::make_self<ContextMenuCommandUpload>());
         mCommands.push_back(winrt::make_self<ContextMenuCommandRemoveFromLeftPane>());
 

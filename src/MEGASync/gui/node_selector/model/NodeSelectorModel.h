@@ -6,11 +6,11 @@
 #include "MegaApplication.h"
 #include "NodeSelectorModelItem.h"
 #include "Utilities.h"
+#include <MessageDialogOpener.h>
 
 #include <QAbstractItemModel>
 #include <QIcon>
 #include <QList>
-#include <QMegaMessageBox.h>
 #include <QPointer>
 #include <QQueue>
 #include <QReadWriteLock>
@@ -265,7 +265,7 @@ public:
     }
 
     // Copy logic
-    bool pasteNodes(const QList<mega::MegaHandle>& nodesToCopy, const QModelIndex& indexToPaste);
+    bool pasteNodes(const QList<mega::MegaHandle>& nodesToCopy, const QModelIndex& targetIndex);
     bool canPasteNodes(const QList<mega::MegaHandle>& nodesToCopy, const QModelIndex& indexToPaste);
     virtual bool canCopyNodes() const;
 
@@ -376,10 +376,11 @@ signals:
     void deleteWorker();
     void blockUi(bool state, QPrivateSignal);
     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
-    void showMessageBox(QMegaMessageBox::MessageBoxInfo info) const;
+    void showMessageBox(MessageDialogInfo info) const;
     void showDuplicatedNodeDialog(std::shared_ptr<ConflictTypes> conflicts, MoveActionType type);
     void allNodeRequestsFinished();
     void modelIsBeingModifiedChanged(bool status);
+    void modelModified();
     void itemsMoved();
     void itemsAboutToBeMoved(const QList<mega::MegaHandle> handles, int actionType);
     void itemsAboutToBeMovedFailed(const QList<mega::MegaHandle> handles, int actionType);

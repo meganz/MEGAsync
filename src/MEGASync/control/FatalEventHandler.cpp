@@ -1,7 +1,7 @@
 #include "FatalEventHandler.h"
 
 #include "DialogOpener.h"
-#include "QMegaMessageBox.h"
+#include "MessageDialogOpener.h"
 #include "QmlManager.h"
 #include "TextDecorator.h"
 #include "Utilities.h"
@@ -11,7 +11,7 @@
 #include <QVariant>
 
 const QMessageBox::StandardButton FatalEventHandler::DEFAULT_ACTION_BUTTON = QMessageBox::Ok;
-const QMessageBox::StandardButton FatalEventHandler::SECONDARY_ACTION_BUTTON = QMessageBox::Help;
+const QMessageBox::StandardButton FatalEventHandler::SECONDARY_ACTION_BUTTON = QMessageBox::Cancel;
 const QString FatalEventHandler::SCHEME_CONTACT_SUPPORT_URL = QLatin1String("support");
 const QString FatalEventHandler::CONTACT_SUPPORT_URL =
     SCHEME_CONTACT_SUPPORT_URL + QLatin1String("://open-bug-report-dialog");
@@ -559,19 +559,17 @@ bool FatalEventHandler::useContactSupportUrlHandler() const
 void FatalEventHandler::showFatalErrorMessage()
 {
     mRespawnWarningDialog = true;
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.textFormat = Qt::RichText;
-    msgInfo.title = QMegaMessageBox::fatalErrorTitle();
-    msgInfo.iconPixmap = QPixmap(QLatin1String(":images/alert-triangle-small.png"));
 
-    msgInfo.text = QLatin1String("<b>%1</b>").arg(getErrorTitle());
-    msgInfo.informativeText = getErrorReason();
+    MessageDialogInfo msgInfo;
+    msgInfo.textFormat = Qt::RichText;
+    msgInfo.titleText = getErrorTitle();
+    msgInfo.descriptionText = getErrorReason();
 
     auto url(getErrorReasonUrl());
     if (!url.isEmpty())
     {
         const Text::Link link(url);
-        link.process(msgInfo.informativeText);
+        link.process(msgInfo.descriptionText);
     }
 
     // Close button
@@ -583,7 +581,7 @@ void FatalEventHandler::showFatalErrorMessage()
     {
         msgInfo.buttons |= DEFAULT_ACTION_BUTTON;
         msgInfo.buttonsText.insert(DEFAULT_ACTION_BUTTON, getDefaultActionLabel());
-        msgInfo.buttonsIcons.insert(DEFAULT_ACTION_BUTTON, QIcon());
+        msgInfo.buttonsIcons.insert(DEFAULT_ACTION_BUTTON, QUrl());
         msgInfo.defaultButton = DEFAULT_ACTION_BUTTON;
     }
 
@@ -592,11 +590,11 @@ void FatalEventHandler::showFatalErrorMessage()
     {
         msgInfo.buttons |= SECONDARY_ACTION_BUTTON;
         msgInfo.buttonsText.insert(SECONDARY_ACTION_BUTTON, getSecondaryActionLabel());
-        msgInfo.buttonsIcons.insert(SECONDARY_ACTION_BUTTON, QIcon());
+        msgInfo.buttonsIcons.insert(SECONDARY_ACTION_BUTTON, QUrl());
     }
 
     // User choice handling
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         auto choice = msg->result();
         if (choice == DEFAULT_ACTION_BUTTON)
@@ -614,7 +612,7 @@ void FatalEventHandler::showFatalErrorMessage()
         }
     };
 
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogOpener::warning(msgInfo);
 }
 
 void FatalEventHandler::onAppStateChanged(AppState::AppStates oldAppState,

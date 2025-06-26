@@ -4,7 +4,7 @@
 #include "NotificatorBase.h"
 
 #include "MegaApplication.h"
-#include "QMegaMessageBox.h"
+#include "MessageDialogOpener.h"
 #include "Utilities.h"
 
 #include <QApplication>
@@ -212,15 +212,20 @@ void NotificatorBase::notify(Class cls, const QString &title, const QString &tex
             break;
         default:
         {
-            QMegaMessageBox::MessageBoxInfo info;
-            info.title = title;
-            info.text = text;
+            MessageDialogInfo info;
+            info.titleText = text;
 
             switch(cls) // Set icon based on class
             {
-                case Information: QMegaMessageBox::information(info); break;
-                case Warning: QMegaMessageBox::warning(info); break;
-                case Critical: QMegaMessageBox::critical(info); break;
+                case Information:
+                    MessageDialogOpener::information(info);
+                    break;
+                case Warning:
+                    MessageDialogOpener::warning(info);
+                    break;
+                case Critical:
+                    MessageDialogOpener::critical(info);
+                    break;
             }
 
             break;

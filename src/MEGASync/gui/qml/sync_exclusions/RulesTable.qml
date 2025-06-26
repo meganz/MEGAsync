@@ -10,7 +10,7 @@ import components.checkBoxes 1.0
 import components.texts 1.0 as Texts
 import components.images 1.0
 import components.buttons 1.0 as Buttons
-import components.dialogs 1.0
+
 import WildCardEnum 1.0
 import ExclusionRulesModel 1.0
 
@@ -73,31 +73,6 @@ Rectangle {
     width: parent.width
 
     color: ColorTheme.pageBackground
-
-
-    ConfirmCloseDialog {
-        id: removeRuleConfirmation
-
-        titleText: ExclusionsStrings.removeConfirmationTitle
-        cancelButtonText: ExclusionsStrings.cancel
-        acceptButtonText: ExclusionsStrings.removeButon
-        acceptButtonColors.background: ColorTheme.buttonError
-        acceptButtonColors.hover: ColorTheme.buttonErrorHover
-        acceptButtonColors.pressed: ColorTheme.buttonErrorPressed
-        dontAskAgainVisible: true
-        dontAskAgainText:  ExclusionsStrings.askAgainText
-        dontAskAgain: true
-        enableBusyIndicator: false
-        visible: false
-        onAccepted: {
-            if(removedIndex !== -1){
-                tableView.model.removeRow(removedIndex);
-                removeRuleConfirmation.close();
-                removedIndex = -1;
-            }
-            syncExclusionsAccess.askOnExclusionRemove = !dontAskAgain
-        }
-    }
 
     Rectangle {
         id: headerRect
@@ -415,23 +390,16 @@ Rectangle {
                                 return;
                             }
                             removedIndex = model.index;
-                            removeRuleConfirmation.bodyText = getConfirmationMessage(model.targetTypeIndex, model.wildcard, model.value)
-                            removeRuleConfirmation.visible = true;
+
+                            let descriptionText = getConfirmationMessage(model.targetTypeIndex, model.wildcard, model.value);
+                            syncExclusionsAccess.showRemoveRuleConfirmationMessageDialog(descriptionText);
                         }
                     }
                 }
             } // buttonsColumn
         } // tableView
     } // tableRect
-    Connections {
-        id: rulesModelConnection
 
-        target: syncExclusionsAccess.rulesModel
-
-        function onNewRuleAdded(addedRuleIndex) {
-            tableView.positionViewAtRow(addedRuleIndex, TableView.AlignCenter);
-        }
-    }
     Rectangle{
         id: footerRect
 
@@ -469,4 +437,29 @@ Rectangle {
             }
         }
     } // footerRect
+
+
+    Connections {
+        id: rulesModelConnection
+
+        target: syncExclusionsAccess.rulesModel
+
+        function onNewRuleAdded(addedRuleIndex) {
+            tableView.positionViewAtRow(addedRuleIndex, TableView.AlignCenter);
+        }
+    }
+
+
+    Connections {
+        id: syncExclusionsAccessConnection
+
+        target: syncExclusionsAccess
+
+        function onAcceptedClicked() {
+            if (removedIndex !== -1) {
+                tableView.model.removeRow(removedIndex);
+                removedIndex = -1;
+            }
+        }
+    }
 }

@@ -771,7 +771,7 @@ Qt::ItemFlags NodeSelectorModel::flags(const QModelIndex &index) const
             {
                 flags |= Qt::ItemIsDropEnabled;
 
-                if(!item->isSpecialNode())
+                if (!item->isSpecialNode() && !item->isInShare())
                 {
                     flags |= Qt::ItemIsDragEnabled;
                 }
@@ -811,16 +811,6 @@ bool NodeSelectorModel::canDropMimeData(const QMimeData* data,
     {
         if (parent.isValid())
         {
-            auto item = getItemByIndex(parent);
-            if (item)
-            {
-                auto node = item->getNode();
-                if (node && !node->isFolder())
-                {
-                    return false;
-                }
-            }
-
             if (action == Qt::CopyAction)
             {
                 return true;
@@ -1441,15 +1431,24 @@ bool NodeSelectorModel::isMovingNodes() const
 }
 
 bool NodeSelectorModel::pasteNodes(const QList<mega::MegaHandle>& nodesToCopy,
-                                   const QModelIndex& indexToPaste)
+                                   const QModelIndex& targetIndex)
 {
     auto data(mimeData(nodesToCopy));
-    if (canDropMimeData(data, Qt::CopyAction, -1, -1, indexToPaste))
+    QModelIndex finalTargetIndex(targetIndex);
+
+    auto item = getItemByIndex(targetIndex);
+    if (item)
     {
-        if (startProcessingNodes(data, indexToPaste, MoveActionType::COPY))
+        auto node = item->getNode();
+        if (node && !node->isFolder())
         {
-            return true;
+            finalTargetIndex = targetIndex.parent();
         }
+    }
+
+    if (startProcessingNodes(data, finalTargetIndex, MoveActionType::COPY))
+    {
+        return true;
     }
 
     return false;
@@ -1723,6 +1722,7 @@ void NodeSelectorModel::onNodesAdded(QList<QPointer<NodeSelectorModelItem>> chil
             emit dataChanged(index, index);
         }
 
+        emit modelModified();
         emit nodesAdded(childrenItem);
     }
 }
@@ -1914,6 +1914,8 @@ void NodeSelectorModel::deleteNodeFromModel(const QModelIndex& index)
                 emit removeRootItem(item);
                 endRemoveRows();
             }
+
+            emit modelModified();
         }
     }
 }
@@ -2047,9 +2049,8 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
         {
             if (!mRequestFailedByHandle.isEmpty())
             {
-                QMegaMessageBox::MessageBoxInfo msgInfo;
+                MessageDialogInfo msgInfo;
                 msgInfo.buttonsText.insert(QMessageBox::StandardButton::Ok, tr("Close"));
-                msgInfo.title = MegaSyncApp->getMEGAString();
 
                 auto multipleRequest(mRequestFailedByHandle.size() > 1);
 
@@ -2060,20 +2061,20 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
                         if (mMovedItemsType.testFlag(MovedItemsType::NONE) ||
                             mMovedItemsType.testFlag(MovedItemsType::BOTH))
                         {
-                            msgInfo.text = tr("Error moving items");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error moving items");
+                            msgInfo.descriptionText =
                                 tr("The items couldn’t be moved. Try again later");
                         }
                         else if (mMovedItemsType.testFlag(MovedItemsType::FILES))
                         {
-                            msgInfo.text = tr("Error moving files");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error moving files");
+                            msgInfo.descriptionText =
                                 tr("The files couldn’t be moved. Try again later");
                         }
                         else if (mMovedItemsType.testFlag(MovedItemsType::FOLDERS))
                         {
-                            msgInfo.text = tr("Error moving folders");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error moving folders");
+                            msgInfo.descriptionText =
                                 tr("The folders couldn’t be moved. Try again later");
                         }
                     }
@@ -2085,15 +2086,15 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
 
                         if (node->isFile())
                         {
-                            msgInfo.text = tr("Error moving file");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error moving file");
+                            msgInfo.descriptionText =
                                 tr("The file %1 couldn’t be moved. Try again later")
                                     .arg(MegaNodeNames::getNodeName(node.get()));
                         }
                         else
                         {
-                            msgInfo.text = tr("Error moving folder");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error moving folder");
+                            msgInfo.descriptionText =
                                 tr("The folder %1 couldn’t be moved. Try again later")
                                     .arg(MegaNodeNames::getNodeName(node.get()));
                         }
@@ -2106,20 +2107,20 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
                         if (mMovedItemsType.testFlag(MovedItemsType::NONE) ||
                             mMovedItemsType.testFlag(MovedItemsType::BOTH))
                         {
-                            msgInfo.text = tr("Error copying items");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error copying items");
+                            msgInfo.descriptionText =
                                 tr("The items couldn’t be copied. Try again later");
                         }
                         else if (mMovedItemsType.testFlag(MovedItemsType::FILES))
                         {
-                            msgInfo.text = tr("Error copying files");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error copying files");
+                            msgInfo.descriptionText =
                                 tr("The files couldn’t be copied. Try again later");
                         }
                         else if (mMovedItemsType.testFlag(MovedItemsType::FOLDERS))
                         {
-                            msgInfo.text = tr("Error copying folders");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error copying folders");
+                            msgInfo.descriptionText =
                                 tr("The folders couldn’t be copied. Try again later");
                         }
                     }
@@ -2131,15 +2132,15 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
 
                         if (node->isFile())
                         {
-                            msgInfo.text = tr("Error copying file");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error copying file");
+                            msgInfo.descriptionText =
                                 tr("The file %1 couldn’t be copied. Try again later")
                                     .arg(MegaNodeNames::getNodeName(node.get()));
                         }
                         else
                         {
-                            msgInfo.text = tr("Error copying folder");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error copying folder");
+                            msgInfo.descriptionText =
                                 tr("The folder %1 couldn’t be copied. Try again later")
                                     .arg(MegaNodeNames::getNodeName(node.get()));
                         }
@@ -2152,20 +2153,20 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
                         if (mMovedItemsType.testFlag(MovedItemsType::NONE) ||
                             mMovedItemsType.testFlag(MovedItemsType::BOTH))
                         {
-                            msgInfo.text = tr("Error restoring items");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error restoring items");
+                            msgInfo.descriptionText =
                                 tr("The items couldn’t be restored. Try again later");
                         }
                         else if (mMovedItemsType.testFlag(MovedItemsType::FILES))
                         {
-                            msgInfo.text = tr("Error restoring files");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error restoring files");
+                            msgInfo.descriptionText =
                                 tr("The files couldn’t be restored. Try again later");
                         }
                         else if (mMovedItemsType.testFlag(MovedItemsType::FOLDERS))
                         {
-                            msgInfo.text = tr("Error restoring folders");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error restoring folders");
+                            msgInfo.descriptionText =
                                 tr("The folders couldn’t be restored. Try again later");
                         }
                     }
@@ -2177,15 +2178,15 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
 
                         if (node->isFile())
                         {
-                            msgInfo.text = tr("Error restoring file");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error restoring file");
+                            msgInfo.descriptionText =
                                 tr("The file %1 couldn’t be restored. Try again later")
                                     .arg(MegaNodeNames::getNodeName(node.get()));
                         }
                         else
                         {
-                            msgInfo.text = tr("Error restoring folder");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error restoring folder");
+                            msgInfo.descriptionText =
                                 tr("The folder %1 couldn’t be restored. Try again later")
                                     .arg(MegaNodeNames::getNodeName(node.get()));
                         }
@@ -2198,20 +2199,20 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
                         if (mMovedItemsType.testFlag(MovedItemsType::NONE) ||
                             mMovedItemsType.testFlag(MovedItemsType::BOTH))
                         {
-                            msgInfo.text = tr("Error deleting items");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error deleting items");
+                            msgInfo.descriptionText =
                                 tr("The items couldn’t be deleted. Try again later");
                         }
                         else if (mMovedItemsType.testFlag(MovedItemsType::FILES))
                         {
-                            msgInfo.text = tr("Error deleting files");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error deleting files");
+                            msgInfo.descriptionText =
                                 tr("The files couldn’t be deleted. Try again later");
                         }
                         else if (mMovedItemsType.testFlag(MovedItemsType::FOLDERS))
                         {
-                            msgInfo.text = tr("Error deleting folders");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error deleting folders");
+                            msgInfo.descriptionText =
                                 tr("The folders couldn’t be deleted. Try again later");
                         }
                     }
@@ -2223,15 +2224,15 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
 
                         if (node->isFile())
                         {
-                            msgInfo.text = tr("Error deleting file");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error deleting file");
+                            msgInfo.descriptionText =
                                 tr("The file %1 couldn’t be deleted. Try again later")
                                     .arg(MegaNodeNames::getNodeName(node.get()));
                         }
                         else
                         {
-                            msgInfo.text = tr("Error deleting folder");
-                            msgInfo.informativeText =
+                            msgInfo.titleText = tr("Error deleting folder");
+                            msgInfo.descriptionText =
                                 tr("The folder %1 couldn’t be deleted. Try again later")
                                     .arg(MegaNodeNames::getNodeName(node.get()));
                         }
@@ -2313,6 +2314,12 @@ QVariant NodeSelectorModel::getText(const QModelIndex &index, NodeSelectorModelI
             if(item->isVault() || item->isCloudDrive())
             {
                 return MegaNodeNames::getRootNodeName(item->getNode().get());
+            }
+            // SDK returns "Rubbish Bin" and we use "Rubbish bin", so we cannot directly translate
+            // the node name (we don´t have "Rubbish Bin" in our translation files)
+            else if (item->isRubbishBin())
+            {
+                return MegaNodeNames::getRubbishName();
             }
             else
             {

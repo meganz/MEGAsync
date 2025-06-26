@@ -1,11 +1,13 @@
 
 #include "SyncInfo.h"
-#include "Platform.h"
-#include "QMegaMessageBox.h"
+
+#include "MessageDialogOpener.h"
 #include "MyBackupsHandle.h"
-#include <MegaNodeNames.h>
-#include <mega/types.h>
+#include "Platform.h"
 #include "StatsEventHandler.h"
+#include <MegaNodeNames.h>
+
+#include <mega/types.h>
 
 #include <assert.h>
 
@@ -176,38 +178,48 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
         break;
     }
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.title =  MegaSyncApp->getMEGAString();
+    MessageDialogInfo msgInfo;
+    msgInfo.textFormat = Qt::RichText;
 
-    // TODO: extract the QMegaMessageBoxes from the model, use signal to send message
+    // TODO: extract the MessageDialogOpeneres from the model, use signal to send message
 
     // TODO: this never would have worked, comparing an error code to a warning code.
     // maybe implement properly, not as warning but specifically is-on-fat or not, etc.
 
     if (!preferences->isFatWarningShown() && syncSetting->getWarning() == MegaSync::Warning::LOCAL_IS_FAT)
     {
-        msgInfo.text = tr("You are syncing a local folder formatted with a FAT filesystem. "
-                          "That filesystem has deficiencies managing big files and modification"
-                          " times that can cause synchronization problems (e.g. when daylight "
-                          "saving changes), so it's strongly recommended that you only sync "
-                          "folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).")
-                .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://help.mega.nz/megasync/syncing.html#can-i-sync-fat-fat32-partitions-under-windows\">"))
+        msgInfo.descriptionText =
+            tr("You are syncing a local folder formatted with a FAT filesystem. "
+               "That filesystem has deficiencies managing big files and modification"
+               " times that can cause synchronization problems (e.g. when daylight "
+               "saving changes), so it's strongly recommended that you only sync "
+               "folders formatted with more reliable filesystems like NTFS (more information "
+               "[A]here[/A]).")
+                .replace(QString::fromUtf8("[A]"),
+                         QString::fromUtf8(
+                             "<a "
+                             "href=\"https://help.mega.nz/megasync/"
+                             "syncing.html#can-i-sync-fat-fat32-partitions-under-windows\">"))
                 .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>"));
-        msgInfo.finishFunc = [this](QPointer<QMessageBox>)
+        msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
         {
             preferences->setFatWarningShown();
         };
 
-        QMegaMessageBox::warning(msgInfo);
+        MessageDialogOpener::warning(msgInfo);
     }
     else if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING) && syncSetting->getError() == MegaSync::Warning::LOCAL_IS_HGFS)
     {
-        msgInfo.text = tr("You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.");
-        msgInfo.finishFunc = [this](QPointer<QMessageBox>)
+        msgInfo.descriptionText =
+            tr("You are syncing a local folder shared with VMWare. Those folders do not support "
+               "filesystem notifications so MEGAsync will have to be continuously scanning to "
+               "detect changes in your files and folders. Please use a different folder if "
+               "possible to reduce the CPU usage.");
+        msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
         {
             preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING, true);
         };
-        QMegaMessageBox::warning(msgInfo);
+        MessageDialogOpener::warning(msgInfo);
     }
 }
 

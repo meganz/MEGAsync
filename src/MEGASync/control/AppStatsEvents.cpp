@@ -153,6 +153,7 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     {AppStatsEvents::EventType::SYNC_ADDED_ONBOARDING, 600045},
     {AppStatsEvents::EventType::SYNC_ADDED_OS_NOTIFICATION, 600046},
     {AppStatsEvents::EventType::SYNC_ADDED_MAIN_APP, 600047},
+    {AppStatsEvents::EventType::CLOUD_DRIVE_HOURLY_ACTIVE_USERS, 600048},
 };
 
 // Deprecated are not displayed
@@ -324,7 +325,9 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
     {AppStatsEvents::EventType::SYNC_ADDED_CONTEXT_MENU, "Sync added from the context menu"},
     {AppStatsEvents::EventType::SYNC_ADDED_ONBOARDING, "Sync added from the Onboarding"},
     {AppStatsEvents::EventType::SYNC_ADDED_OS_NOTIFICATION, "Sync added from an OS notification"},
-    {AppStatsEvents::EventType::SYNC_ADDED_MAIN_APP, "Sync added from main app"}};
+    {AppStatsEvents::EventType::SYNC_ADDED_MAIN_APP, "Sync added from main app"},
+    {AppStatsEvents::EventType::CLOUD_DRIVE_HOURLY_ACTIVE_USERS,
+     "Cloud Drive dialog hourly active users"}};
 
 QString AppStatsEvents::getEventMessage(EventType event,
                                          const QStringList& args)

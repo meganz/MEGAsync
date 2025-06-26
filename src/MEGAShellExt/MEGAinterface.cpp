@@ -1,19 +1,26 @@
 #include "MegaInterface.h"
 
+#include "ContextMenuData.h"
+#include "Utilities.h"
+
+// clang-format off
 LPCWSTR MegaInterface::MEGA_PIPE    = L"\\\\.\\pipe\\MEGAprivacyMEGAsync";
-WCHAR MegaInterface::OP_PATH_STATE  = L'P'; //Path state
-WCHAR MegaInterface::OP_INIT        = L'I'; //Init operation
-WCHAR MegaInterface::OP_END         = L'E'; //End operation
-WCHAR MegaInterface::OP_UPLOAD      = L'F'; //File-Folder upload
-WCHAR MegaInterface::OP_LINK        = L'L'; //paste Link
-WCHAR MegaInterface::OP_SHARE       = L'S'; //Share folder
-WCHAR MegaInterface::OP_SEND        = L'C'; //Copy to user
-WCHAR MegaInterface::OP_STRING      = L'T'; //Get Translated String
-WCHAR MegaInterface::OP_VIEW        = L'V'; //View on MEGA
-WCHAR MegaInterface::OP_VERSIONS    = L'R'; //View pRevious versions
-WCHAR MegaInterface::OP_HASVERSIONS = L'H'; //Has previous versions?
-WCHAR MegaInterface::OP_REMOVE_FROM_LEFT_PANE =
-    L'J'; // Remove a sync from left pane (navigation pane on shell)
+
+WCHAR MegaInterface::OP_PATH_STATE              = L'P'; //Path state
+WCHAR MegaInterface::OP_INIT                    = L'I'; //Init operation
+WCHAR MegaInterface::OP_END                     = L'E'; //End operation
+WCHAR MegaInterface::OP_UPLOAD                  = L'F'; //File-Folder upload
+WCHAR MegaInterface::OP_LINK                    = L'L'; //paste Link
+WCHAR MegaInterface::OP_SHARE                   = L'S'; //Share folder
+WCHAR MegaInterface::OP_SEND                    = L'C'; //Copy to user
+WCHAR MegaInterface::OP_STRING                  = L'T'; //Get Translated String
+WCHAR MegaInterface::OP_VIEW                    = L'V'; //View on MEGA
+WCHAR MegaInterface::OP_VERSIONS                = L'R'; //View pRevious versions
+WCHAR MegaInterface::OP_HASVERSIONS             = L'H'; //Has previous versions?
+WCHAR MegaInterface::OP_SYNCBACKUP              = L'K'; // Sync
+WCHAR MegaInterface::OP_REMOVE_FROM_LEFT_PANE   = L'J'; // Remove a sync from left pane (navigation pane on shell)
+
+// clang-format on
 
 int MegaInterface::sendRequest(WCHAR type, PCWSTR content, PCWSTR response, int responseLen)
 {
@@ -68,21 +75,21 @@ bool MegaInterface::removeFromLeftPane(PCWSTR path)
     return false;
 }
 
-LPWSTR MegaInterface::getString(StringID stringID, int numFiles, int numFolders)
+std::unique_ptr<WCHAR[]> MegaInterface::getString(StringID stringID)
 {
     WCHAR request[64];
-    StringCchPrintfW(request, sizeof(request), L"%d:%d:%d", stringID, numFiles, numFolders);
+    StringCchPrintfW(request, sizeof(request), L"%d", stringID);
 
-    LPWSTR chReadBuf = new WCHAR[128];
-    int cbRead = sendRequest(MegaInterface::OP_STRING, request, chReadBuf, 128*sizeof(WCHAR));
-    //L"9" is the default value, so no string has been set
-    if (cbRead > sizeof(WCHAR) && wcscmp(chReadBuf,L"9") != 0)
+    std::unique_ptr<WCHAR[]> chReadBuf(new WCHAR[128]);
+    int cbRead =
+        sendRequest(MegaInterface::OP_STRING, request, chReadBuf.get(), 128 * sizeof(WCHAR));
+    // L"9" is the default value, so no string has been set
+    if (cbRead > sizeof(WCHAR) && wcscmp(chReadBuf.get(), L"9") != 0)
     {
         return chReadBuf;
     }
 
-    delete[] chReadBuf;
-    return NULL;
+    return nullptr;
 }
 
 bool MegaInterface::upload(PCWSTR path)
@@ -160,6 +167,33 @@ bool MegaInterface::viewVersions(PCWSTR path)
         return true;
     }
     return false;
+}
+
+bool MegaInterface::sync(const std::vector<std::wstring>& paths, SyncType type)
+{
+    std::wstring result;
+
+    // Append all the requested paths, separated by "|"
+    for (const auto& path: paths)
+    {
+        result += path + L"|";
+    }
+
+    // Append the type: Sync or Backup
+    auto intSize(sizeof(int));
+    std::unique_ptr<WCHAR[]> typeChar(new WCHAR[intSize]);
+    swprintf_s(typeChar.get(), intSize, L"%d", type);
+    result += typeChar.get();
+
+    // Allocate the final WCHAR buffer with the perfect size
+    std::unique_ptr<WCHAR[]> request(new WCHAR[result.size() + 1]);
+    wcscpy_s(request.get(), result.size() + 1, result.c_str());
+
+    WCHAR chReadBuf[2];
+    int cbRead =
+        sendRequest(MegaInterface::OP_SYNCBACKUP, request.get(), chReadBuf, sizeof(chReadBuf));
+
+    return (cbRead > sizeof(WCHAR)) ? true : false;
 }
 
 bool MegaInterface::startRequest()

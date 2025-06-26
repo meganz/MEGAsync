@@ -196,6 +196,16 @@ public:
 
     //**** END OF Stalled Issues ****/
 
+    //**** Cloud Drive dialog stats ****/
+
+    qint64 cloudDriveDialogLastDateTimeOpened();
+    void cloudDriveDialogOpened();
+
+    qint64 cloudDriveDialogLastDateTimeStatSent();
+    void updateCloudDriveDialogLastDateTimeStatSent();
+
+    //**** END OF Cloud Drive dialog stats ****/
+
     void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
     void setTemporalBandwidth(long long value);
@@ -801,6 +811,10 @@ protected:
 
     //Stalled issues event date
     static const QString stalledIssuesEventDateKey;
+
+    // Cloud Drive stats
+    static const QString cloudDriveDialogLastDateTimeOpenedKey;
+    static const QString cloudDriveDialogLastDateTimeStatSentKey;
 
     static const bool defaultStartOnStartup;
     static const bool defaultUpdateAutomatically;

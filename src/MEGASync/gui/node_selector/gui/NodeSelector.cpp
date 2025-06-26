@@ -5,10 +5,10 @@
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
+#include "MessageDialogOpener.h"
 #include "NodeSelectorModel.h"
 #include "NodeSelectorProxyModel.h"
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
-#include "QMegaMessageBox.h"
 #include "ui_NodeSelector.h"
 #include "Utilities.h"
 #include "ViewLoadingScene.h"
@@ -485,10 +485,10 @@ std::shared_ptr<MegaNode> NodeSelector::getSelectedNode()
 
 void NodeSelector::showNotFoundNodeMessageBox()
 {
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.title = QMegaMessageBox::errorTitle();
-    msgInfo.text = tr("The item you selected has been removed. To reselect, close this window and try again.");
-    QMegaMessageBox::warning(msgInfo);
+    MessageDialogInfo msgInfo;
+    msgInfo.descriptionText =
+        tr("The item you selected has been removed. To reselect, close this window and try again.");
+    MessageDialogOpener::warning(msgInfo);
 }
 
 void NodeSelector::initSpecialisedWidgets()
@@ -560,10 +560,10 @@ void NodeSelector::initSpecialisedWidgets()
             connect(model,
                     &NodeSelectorModel::showMessageBox,
                     this,
-                    [this](QMegaMessageBox::MessageBoxInfo info)
+                    [this](MessageDialogInfo info)
                     {
                         info.parent = this;
-                        QMegaMessageBox::warning(info);
+                        MessageDialogOpener::warning(info);
                     });
 
             connect(model,

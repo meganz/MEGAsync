@@ -7,6 +7,8 @@
 
 namespace Utilities
 {
+static const size_t MAX_LONG_PATH = 32768;
+
 std::wstring getRegisterKeyStringValue(HKEY hKey,
                                        const std::wstring& subKey = L"",
                                        const std::wstring& valueName = L"");

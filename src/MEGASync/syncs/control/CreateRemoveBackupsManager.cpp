@@ -7,10 +7,11 @@
 #include "RemoveBackupDialog.h"
 #include "SyncSettings.h"
 
-const CreateRemoveBackupsManager *  CreateRemoveBackupsManager::addBackup(bool comesFromSettings)
+const CreateRemoveBackupsManager*
+    CreateRemoveBackupsManager::addBackup(bool comesFromSettings, const QStringList& localFolders)
 {
     auto backupManager(new CreateRemoveBackupsManager());
-    backupManager->performAddBackup(comesFromSettings);
+    backupManager->performAddBackup(localFolders, comesFromSettings);
     return backupManager;
 }
 
@@ -26,10 +27,12 @@ bool CreateRemoveBackupsManager::isBackupsDialogOpen() const
     return DialogOpener::findDialog<QmlDialogWrapper<BackupCandidatesComponent>>() != nullptr;
 }
 
-void CreateRemoveBackupsManager::performAddBackup(bool comesFromSettings)
+void CreateRemoveBackupsManager::performAddBackup(const QStringList& localFolders,
+                                                  bool comesFromSettings)
 {
     auto overQuotaDialog = MegaSyncApp->showSyncOverquotaDialog();
-    auto addBackupLambda = [overQuotaDialog, comesFromSettings, this]() {
+    auto addBackupLambda = [overQuotaDialog, comesFromSettings, localFolders, this]()
+    {
         if (!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
             QPointer<QmlDialogWrapper<BackupCandidatesComponent>> backupsDialog;
@@ -46,6 +49,7 @@ void CreateRemoveBackupsManager::performAddBackup(bool comesFromSettings)
                 deleteLater();
             });
             backupsDialog->wrapper()->setComesFromSettings(comesFromSettings);
+            backupsDialog->wrapper()->insertFolders(localFolders);
         }
         else
         {

@@ -165,7 +165,7 @@ private slots:
     void onbNewFolderClicked();
     void oncbAlwaysUploadToLocationChanged(bool value);
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
-    void onModelDataChanged(const QModelIndex& first, const QModelIndex& last, const QVector<int> &roles = QVector<int>());
+    void onModelModified();
     void onDeleteClicked(const QList<mega::MegaHandle>& handles, bool permanently);
     void onLeaveShareClicked(const QList<mega::MegaHandle>& handles);
     void onRenameClicked();
@@ -244,6 +244,8 @@ private:
             index(index)
         {}
 
+        UpdateNodesInfo() {}
+
         mega::MegaHandle parentHandle = mega::INVALID_HANDLE;
         mega::MegaHandle handle = mega::INVALID_HANDLE;
         std::shared_ptr<mega::MegaNode> node;
@@ -255,6 +257,7 @@ private:
     QList<UpdateNodesInfo> mRenamedNodesByHandle;
     QList<UpdateNodesInfo> mUpdatedNodes;
     QMultiMap<mega::MegaHandle, UpdateNodesInfo> mAddedNodesByParentHandle;
+    QMap<mega::MegaHandle, UpdateNodesInfo> mUpdatedNodesBeforeAdded;
     QList<UpdateNodesInfo> mRemovedNodes;
     QList<UpdateNodesInfo> mRemoveMovedNodes;
     QList<UpdateNodesInfo> mUpdatedButInvisibleNodes;
@@ -307,6 +310,9 @@ public:
     {
         return QMap<uint, QPushButton*>();
     }
+
+    virtual void updateCustomBottomButtonsText(NodeSelectorTreeViewWidget*) {}
+
     virtual NodeSelectorModelItemSearch::Types allowedTypes() = 0;
 
 protected:
@@ -368,11 +374,14 @@ public:
     void okCancelButtonsVisibility(NodeSelectorTreeViewWidget* wdg) override;
     void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg) override;
     QMap<uint, QPushButton*> addCustomBottomButtons(NodeSelectorTreeViewWidget* wdg) override;
+    void updateCustomBottomButtonsText(NodeSelectorTreeViewWidget* wdg) override;
 
     bool okButtonEnabled(NodeSelectorTreeViewWidget*, const QModelIndexList &selected) override;
     NodeSelectorModelItemSearch::Types allowedTypes() override;
 
 private:
+    QString getCustomBottomButtonText(uint buttonId) const;
+
     QMap<QWidget*, QMap<uint, QPushButton*>> mCustomBottomButtons;
 };
  

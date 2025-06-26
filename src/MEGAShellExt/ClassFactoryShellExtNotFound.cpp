@@ -22,7 +22,7 @@ IFACEMETHODIMP ClassFactoryShellExtNotFound::CreateInstance(IUnknown *pUnkOuter,
         hr = E_OUTOFMEMORY;
 
         // Create the COM component.
-        ShellExt* pExt = new (std::nothrow) ShellExtNotASync(MegaInterface::FILE_NOTFOUND);
+        ShellExt* pExt = new (std::nothrow) ShellExtNotASync();
 
         if (pExt)
         {

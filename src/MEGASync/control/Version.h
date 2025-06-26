@@ -1,12 +1,14 @@
 #ifndef VERSION_H
 #define VERSION_H
 
+// These numbers are used in different build project scripts. Keep this in
+// mind if you want to change the format.
 #define VER_MAJOR 5
-#define VER_MINOR 12
+#define VER_MINOR 13
 #define VER_MICRO 0
 #define VER_RC 1
 // Format: "VER_MAJOR.VER_MINOR.VER_MICRO.VER_RC\0"
-#define VER_PRODUCTVERSION_STR "5.12.0.1\0"
+#define VER_PRODUCTVERSION_STR "5.13.0.1\0"
 #define VER_PRODUCTVERSION VER_MAJOR, VER_MINOR, VER_MICRO, VER_RC
 #define VER_FILEVERSION VER_MAJOR, VER_MINOR, VER_MICRO, VER_RC
 #define VER_FILEVERSION_CODE (VER_MAJOR * 10000 + VER_MINOR * 100 + VER_MICRO)
@@ -24,7 +26,7 @@
 #define VER_PRODUCTNAME_STR         "MEGAsync\0"
 
 /* SDK commit hash, 7 chars */
-#define VER_SDK_ID "e77b973"
+#define VER_SDK_ID "e6691ac"
 
 /* Update scrips relying on this value if you move it
 Format: 1 item by line, starting from line following the #define
@@ -35,10 +37,11 @@ Format: 1 item by line, starting from line following the #define
 "- item n\n"
 )*/
 #define VER_CHANGES_NOTES \
-    QT_TRANSLATE_NOOP( \
-        "Preferences", \
-        "- We’ve improved how crash reports are handled, so we can fix issues faster.\n" \
-        "- New icons are now available in the Windows 11 context menu.\n" \
-        "- We’ve fixed bugs and made performance improvements behind the scenes.\n")
+    QT_TRANSLATE_NOOP("Preferences", \
+                      "- Support has ended for Windows 7 and Server 2008 R2.\n" \
+                      "- New actions are now available in the File Explorer context menu.\n" \
+                      "- Refined parts of the interface to improve your experience.\n" \
+                      "- Turkish language is now supported.\n" \
+                      "- We’ve fixed bugs and made the app more reliable.\n")
 
 #endif // VERSION_H

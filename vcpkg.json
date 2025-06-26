@@ -99,10 +99,6 @@
         {
             "name": "libuv",
             "version": "1.44.2"
-        },
-        {
-            "name": "openexr",
-            "version": "3.1.8"
         }
     ]
 }
