@@ -1691,15 +1691,8 @@ void SelectType::newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg)
 
 bool SelectType::cloudDriveIsCurrentRootIndex(NodeSelectorTreeViewWidget* wdg)
 {
-    auto result(false);
     auto rootItem = wdg->rootItem();
-    if(rootItem)
-    {
-        result = rootItem->getNode() &&
-                 (rootItem->getNode()->getHandle() == MegaSyncApp->getRootNode()->getHandle());
-    }
-
-    return result;
+    return rootItem && rootItem->isCloudDrive();
 }
 
 void DownloadType::init(NodeSelectorTreeViewWidget *wdg)

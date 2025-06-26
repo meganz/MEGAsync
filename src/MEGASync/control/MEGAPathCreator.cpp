@@ -44,8 +44,17 @@ std::shared_ptr<mega::MegaNode> MEGAPathCreator::mkDir(const QString& root,
         return targetNode;
     }
 
-    std::shared_ptr<mega::MegaNode> nodeCreated(root.isEmpty() ? MegaSyncApp->getMegaApi()->getRootNode() :
-                                           MegaSyncApp->getMegaApi()->getNodeByPath(root.toUtf8().constData()));
+    std::shared_ptr<mega::MegaNode> nodeCreated;
+    nodeCreated = root.isEmpty() ?
+                      MegaSyncApp->getRootNode() :
+                      std::shared_ptr<mega::MegaNode>(
+                          MegaSyncApp->getMegaApi()->getNodeByPath(root.toUtf8().constData()));
+
+    if (!nodeCreated)
+    {
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, "mkDir failed: root node not found.");
+        return nullptr;
+    }
 
     auto pathSplitted = path.split(QLatin1String("/"));
 

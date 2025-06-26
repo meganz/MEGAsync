@@ -3866,15 +3866,25 @@ void MegaApplication::officialWeb()
 
 void MegaApplication::goToMyCloud()
 {
-    std::unique_ptr<char[]> rootBase64Handle(getRootNode()->getBase64Handle());
-    const QString rootID(QString::fromUtf8(rootBase64Handle.get()));
-    const QString url(QString::fromUtf8("fm/%1").arg(rootID));
-    megaApi->getSessionTransferURL(url.toUtf8().constData());
+    auto rootNode(getRootNode());
+    if (rootNode)
+    {
+        std::unique_ptr<char[]> rootBase64Handle(rootNode->getBase64Handle());
+        const QString rootID(QString::fromUtf8(rootBase64Handle.get()));
+        const QString url(QString::fromUtf8("fm/%1").arg(rootID));
+        megaApi->getSessionTransferURL(url.toUtf8().constData());
 
-    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_CLOUD_DRIVE_CLICKED,
-                                         sender(),
-                                         MEGAWebAction,
-                                         true);
+        mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_CLOUD_DRIVE_CLICKED,
+                                             sender(),
+                                             MEGAWebAction,
+                                             true);
+    }
+    // If the root node fails, open, at least, the official web
+    else
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Opening User cloud failed. Root node invalid.");
+        officialWeb();
+    }
 }
 
 void MegaApplication::goToFiles()

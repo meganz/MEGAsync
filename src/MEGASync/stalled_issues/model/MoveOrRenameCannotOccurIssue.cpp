@@ -367,12 +367,23 @@ bool MoveOrRenameCannotOccurIssue::solveLocalGenericIssues(StalledIssueSPtr issu
         if (!newParent)
         {
             std::shared_ptr<mega::MegaError> error(nullptr);
-            MEGAPathCreator::mkDir(QString(), targetPath.path(), error);
+            auto createdNode = MEGAPathCreator::mkDir(QString(), targetPath.path(), error);
 
-            if (!error)
+            if (createdNode && !error)
             {
                 newParent.reset(MegaSyncApp->getMegaApi()->getNodeByPath(
                     targetPath.path().toUtf8().constData()));
+            }
+            else
+            {
+                mega::MegaApi::log(
+                    mega::MegaApi::LOG_LEVEL_ERROR,
+                    QString::fromUtf8("MoveOrRenameCannotOccur: Unable to create %1 folder.")
+                        .arg(targetPath.path())
+                        .toUtf8()
+                        .constData());
+
+                return false;
             }
         }
 

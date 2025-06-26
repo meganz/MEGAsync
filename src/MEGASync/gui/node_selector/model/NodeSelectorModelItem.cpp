@@ -426,7 +426,8 @@ void NodeSelectorModelItem::calculateSyncStatus()
 
 bool NodeSelectorModelItem::isCloudDrive() const
 {
-    return mNode->getHandle() == MegaSyncApp->getRootNode()->getHandle();
+    auto rootNode(MegaSyncApp->getRootNode());
+    return rootNode && mNode->getHandle() == rootNode->getHandle();
 }
 
 bool NodeSelectorModelItem::isRubbishBin() const
