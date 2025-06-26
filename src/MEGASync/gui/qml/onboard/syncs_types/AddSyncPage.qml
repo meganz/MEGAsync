@@ -4,12 +4,22 @@ import syncs 1.0
 import SyncsComponents 1.0
 import SyncInfo 1.0
 
-SelectiveSyncPageForm {
+AddSyncPageForm {
     id: root
 
-    signal selectiveSyncMoveToBack
-    signal selectiveSyncMoveToSuccess
-    signal fullSyncMoveToSuccess
+    signal moveBack
+    signal moveNext
+
+    function enableScreen() {
+        root.enabled = true;
+        footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
+    }
+
+    Component.onCompleted: {
+        syncsComponentAccess.enteredOnSync();
+        syncsComponentAccess.clearLocalFolderErrorHint();
+        syncsComponentAccess.clearRemoteFolderErrorHint();
+    }
 
     localFolderChooser.folderField {
         hint {
@@ -35,24 +45,15 @@ SelectiveSyncPageForm {
         syncsComponentAccess.chooseRemoteFolderButtonClicked();
     }
 
-    function enableScreen() {
-        root.enabled = true;
-        footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
-    }
-
     footerButtons {
-        leftSecondary.onClicked: {
-            syncsComponentAccess.exclusionsButtonClicked(localFolderChooser.chosenPath);
-        }
-
         rightSecondary.onClicked: {
-            root.selectiveSyncMoveToBack();
+            root.moveBack();
         }
 
         rightPrimary.onClicked: {
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            syncsComponentAccess.syncButtonClicked(localFolderChooser.chosenPath, remoteFolderChooser.chosenPath);
+            syncsComponentAccess.addSyncCandidadeButtonClicked(localFolderChooser.chosenPath, remoteFolderChooser.chosenPath);
         }
     }
 
@@ -74,18 +75,12 @@ SelectiveSyncPageForm {
     Connections {
         target: syncsDataAccess
 
-        function onSyncSetupSuccess(isFullSync) {
+        function onSyncPrevalidationSuccess() {
             enableScreen();
-
-            if (isFullSync) {
-                root.fullSyncMoveToSuccess();
-            }
-            else {
-                root.selectiveSyncMoveToSuccess();
-            }
+            root.moveNext();
         }
 
-        function onSyncSetupFailed() {
+        function onSyncPrevalidationFailed() {
             enableScreen();
         }
     }

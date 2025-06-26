@@ -81,9 +81,12 @@ void QmlManager::registerCommonQmlElements()
     qmlRegisterType<QmlItem>("QmlItem", 1, 0, "QmlItem");
     qmlRegisterType<QmlDeviceName>("QmlDeviceName", 1, 0, "QmlDeviceName");
     qmlRegisterType<ChooseLocalFolder>("ChooseLocalFolder", 1, 0, "ChooseLocalFolder");
+    qmlRegisterType<ChooseRemoteFolder>("ChooseRemoteFolder", 1, 0, "ChooseRemoteFolder");
     qmlRegisterType<ChooseLocalFile>("ChooseLocalFile", 1, 0, "ChooseLocalFile");
 
     setRootContextProperty(QString::fromUtf8("themeManager"), new QmlTheme(mEngine));
+
+    createPlatformSelectorsFlags();
 }
 
 QString QmlManager::getObjectRootContextName(QObject* value)
@@ -103,6 +106,34 @@ QString QmlManager::getObjectRootContextName(QObject* value)
     name.append(DEFAULT_QML_INSTANCES_SUFFIX);
 
     return name;
+}
+
+void QmlManager::createPlatformSelectorsFlags()
+{
+    QString platform;
+
+    bool isWindows = false;
+#ifdef Q_OS_WINDOWS
+    isWindows = true;
+    platform = QString::fromLatin1("windows");
+#endif
+    setRootContextProperty(QString::fromUtf8("isWindows"), isWindows);
+
+    bool isLinux = false;
+#ifdef Q_OS_LINUX
+    platform = QString::fromLatin1("linux");
+    isLinux = true;
+#endif
+    setRootContextProperty(QString::fromUtf8("isLinux"), isLinux);
+
+    bool isMACos = false;
+#ifdef Q_OS_MACOS
+    platform = QString::fromLatin1("macos");
+    isMACos = true;
+#endif
+    setRootContextProperty(QString::fromUtf8("isMACos"), isMACos);
+
+    setRootContextProperty(QString::fromUtf8("platform"), platform);
 }
 
 void QmlManager::setRootContextProperty(QObject* value)

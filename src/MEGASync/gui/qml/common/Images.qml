@@ -69,6 +69,7 @@ QtObject {
     readonly property url folder: imagesOnboardingPath + "folder.svg"
     readonly property url installationTypeBackups: imagesOnboardingPath + "backup.png"
     readonly property url key: imagesOnboardingPath + "key.svg"
+    readonly property url cross: imagesOnboardingPath + "cross.svg"
     readonly property url login: imagesOnboardingPath + "login.png"
     readonly property url pc: imagesOnboardingPath + "pc.svg"
     readonly property url pcMega: imagesOnboardingPath + "multidevices.png"
@@ -77,6 +78,15 @@ QtObject {
     readonly property url mail: imagesOnboardingPath + "mail.svg"
     readonly property url sync: imagesOnboardingPath + "sync.png"
     readonly property url syncIcon: imagesOnboardingPath + "syncb.svg"
+
+    readonly property url localSyncFolder: imagesOnboardingPath + "local_folder.png"
+    readonly property url remoteSyncFolder: imagesOnboardingPath + "remote_folder.svg"
+    readonly property url localFolderHeader: imagesOnboardingPath + "monitor.svg"
+    readonly property url menuSync: imagesOnboardingPath + "more_horizontal.svg"
+    readonly property url remoteMegaHeader: imagesOnboardingPath + "mega.svg"
+    readonly property url syncsConfirm: imagesOnboardingPath + "syncs.svg"
+    readonly property url syncsRemoveConfirm: imagesOnboardingPath + "sync_plus.svg"
+    readonly property url removeSync: imagesOnboardingPath + "minus-circle.svg"
 
     readonly property url exit: imagesGuestPath + "exit.svg"
     readonly property url guest: imagesGuestPath + "guest.png"

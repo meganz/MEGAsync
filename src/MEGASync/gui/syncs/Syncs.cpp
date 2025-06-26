@@ -8,39 +8,30 @@
 #include "SyncsData.h"
 #include "TextDecorator.h"
 
-namespace
-{
-const QString FULL_SYNC_PATH = QString::fromLatin1(R"(/)");
-const QString DEFAULT_MEGA_FOLDER = QString::fromLatin1("MEGA");
-const QString DEFAULT_MEGA_PATH = FULL_SYNC_PATH + DEFAULT_MEGA_FOLDER;
-}
-
 Syncs::Syncs(QObject* parent):
     QObject(parent),
+    mSyncsData(std::make_unique<SyncsData>()),
     mMegaApi(MegaSyncApp->getMegaApi()),
-    mSyncController(SyncController::instance()),
-    mSyncsData(std::make_unique<SyncsData>())
+    mSyncController(SyncController::instance())
 {
     connect(&mSyncController, &SyncController::syncAddStatus, this, &Syncs::onSyncAddRequestStatus);
-    connect(&mSyncController,
-            &SyncController::syncPrevalidateStatus,
-            this,
-            &Syncs::onSyncPrevalidateRequestStatus);
     connect(SyncInfo::instance(), &SyncInfo::syncRemoved, this, &Syncs::onSyncRemoved);
     connect(MegaSyncApp, &MegaApplication::languageChanged, this, &Syncs::onLanguageChanged);
 
-    onSyncRemoved(nullptr);
+    updateDefaultFolders();
 }
 
-void Syncs::addSync()
+void Syncs::addSync(const QString& localFolder, const QString& megaFolder)
 {
     cleanErrors();
 
-    mSyncConfig.localFolder = mSyncsData->getLocalFolderCandidate();
-    mSyncConfig.remoteFolder = mSyncsData->getRemoteFolderCandidate();
+    mSyncConfig.localFolder = localFolder;
+    mSyncConfig.remoteFolder = megaFolder;
 
     if (checkErrorsOnSyncPaths(mSyncConfig.localFolder, mSyncConfig.remoteFolder))
     {
+        emit mSyncsData->syncSetupFailed();
+
         return;
     }
 
@@ -75,7 +66,7 @@ void Syncs::addSync()
     }
     else
     {
-        mSyncController.prevalidateSync(mSyncConfig);
+        mSyncController.addSync(mSyncConfig);
     }
 }
 
@@ -91,14 +82,14 @@ void Syncs::setDefaultLocalFolder()
         defaultFolder.clear();
     }
 
-    if (!checkLocalSync(defaultFolder))
+    if (helperCheckLocalSync(defaultFolder))
     {
         defaultFolder.clear();
         clearLocalError();
     }
 
     mSyncsData->mDefaultLocalFolder = defaultFolder;
-    emit mSyncsData->defaultLocalFolderChanged(defaultFolder);
+    emit mSyncsData->defaultLocalFolderChanged();
 }
 
 void Syncs::setDefaultRemoteFolder()
@@ -111,14 +102,14 @@ void Syncs::setDefaultRemoteFolder()
         defaultFolder = mRemoteFolder;
     }
 
-    if (!checkRemoteSync(defaultFolder))
+    if (helperCheckRemoteSync(defaultFolder))
     {
         defaultFolder.clear();
         clearRemoteError();
     }
 
     mSyncsData->mDefaultRemoteFolder = defaultFolder;
-    emit mSyncsData->defaultRemoteFolderChanged(defaultFolder);
+    emit mSyncsData->defaultRemoteFolderChanged();
 }
 
 void Syncs::setSyncOrigin(SyncInfo::SyncOrigin origin)
@@ -127,8 +118,7 @@ void Syncs::setSyncOrigin(SyncInfo::SyncOrigin origin)
     {
         mSyncsData->mSyncOrigin = origin;
 
-        setDefaultLocalFolder();
-        setDefaultRemoteFolder();
+        updateDefaultFolders();
 
         emit mSyncsData->syncOriginChanged();
     }
@@ -138,14 +128,13 @@ void Syncs::setRemoteFolder(const QString& remoteFolder)
 {
     mRemoteFolder = remoteFolder;
 
-    setDefaultLocalFolder();
-    setDefaultRemoteFolder();
+    updateDefaultFolders();
 }
 
 bool Syncs::checkErrorsOnSyncPaths(const QString& localPath, const QString& remotePath)
 {
-    helperCheckLocalSync(localPath);
-    helperCheckRemoteSync(remotePath);
+    checkLocalSync(localPath);
+    checkRemoteSync(remotePath);
 
     return (mLocalError.has_value() || mRemoteError.has_value());
 }
@@ -160,7 +149,7 @@ QString Syncs::getDefaultMegaPath()
     return DEFAULT_MEGA_PATH;
 }
 
-void Syncs::helperCheckLocalSync(const QString& path)
+std::optional<Syncs::LocalErrors> Syncs::helperCheckLocalSync(const QString& path)
 {
     std::optional<LocalErrors> localError;
 
@@ -200,14 +189,10 @@ void Syncs::helperCheckLocalSync(const QString& path)
         }
     }
 
-    if (mLocalError != localError)
-    {
-        mLocalError.swap(localError);
-        mSyncsData->setLocalError(getLocalError());
-    }
+    return localError;
 }
 
-void Syncs::helperCheckRemoteSync(const QString& path)
+std::optional<Syncs::RemoteErrors> Syncs::helperCheckRemoteSync(const QString& path)
 {
     std::optional<RemoteErrors> remoteError;
 
@@ -234,22 +219,32 @@ void Syncs::helperCheckRemoteSync(const QString& path)
         }
     }
 
-    if (mRemoteError != remoteError)
-    {
-        mRemoteError.swap(remoteError);
-        mSyncsData->setRemoteError(getRemoteError());
-    }
+    return remoteError;
 }
 
 bool Syncs::checkLocalSync(const QString& path)
 {
-    helperCheckLocalSync(path);
+    auto localError = helperCheckLocalSync(path);
+
+    if (mLocalError != localError)
+    {
+        mLocalError.swap(localError);
+        mSyncsData->setLocalError(getLocalError());
+    }
+
     return (!mLocalError.has_value());
 }
 
 bool Syncs::checkRemoteSync(const QString& path)
 {
-    helperCheckRemoteSync(path);
+    auto remoteError = helperCheckRemoteSync(path);
+
+    if (mRemoteError != remoteError)
+    {
+        mRemoteError.swap(remoteError);
+        mSyncsData->setRemoteError(getRemoteError());
+    }
+
     return (!mRemoteError.has_value());
 }
 
@@ -268,7 +263,7 @@ void Syncs::onRequestFinish(mega::MegaRequest* request, mega::MegaError* error)
             if (megaNode != nullptr)
             {
                 mSyncConfig.remoteHandle = request->getNodeHandle();
-                mSyncController.prevalidateSync(mSyncConfig);
+                directoryCreatedNextTask();
             }
             else
             {
@@ -290,14 +285,24 @@ void Syncs::onRequestFinish(mega::MegaRequest* request, mega::MegaError* error)
     }
 }
 
+void Syncs::directoryCreatedNextTask()
+{
+    mSyncController.addSync(mSyncConfig);
+}
+
 void Syncs::onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings)
 {
     Q_UNUSED(syncSettings)
 
-    setDefaultLocalFolder();
-    setDefaultRemoteFolder();
+    updateDefaultFolders();
 
     emit mSyncsData->syncRemoved();
+}
+
+void Syncs::updateDefaultFolders()
+{
+    setDefaultLocalFolder();
+    setDefaultRemoteFolder();
 }
 
 bool Syncs::setErrorIfExist(int errorCode, int syncErrorCode)
@@ -322,18 +327,13 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString nam
 
     if (!setErrorIfExist(errorCode, syncErrorCode))
     {
-        setDefaultLocalFolder();
-        setDefaultRemoteFolder();
+        updateDefaultFolders();
 
         emit mSyncsData->syncSetupSuccess(mSyncConfig.remoteFolder == FULL_SYNC_PATH);
     }
-}
-
-void Syncs::onSyncPrevalidateRequestStatus(int errorCode, int syncErrorCode)
-{
-    if (!setErrorIfExist(errorCode, syncErrorCode))
+    else
     {
-        mSyncController.addSync(mSyncConfig);
+        emit mSyncsData->syncSetupFailed();
     }
 }
 
@@ -349,6 +349,11 @@ QString Syncs::getLocalError() const
         case LocalErrors::EMPTY_PATH:
         {
             return tr("Select a local folder to sync.");
+        }
+
+        case LocalErrors::ALREADY_SYNC_CANDIDATE:
+        {
+            return tr("Folder can't be synced as it's already a candidate.");
         }
 
         case LocalErrors::NO_ACCESS_PERMISSIONS_CANT_CREATE:
@@ -389,6 +394,11 @@ QString Syncs::getRemoteError() const
         case RemoteErrors::EMPTY_PATH:
         {
             return tr("Select a MEGA folder to sync.");
+        }
+
+        case RemoteErrors::ALREADY_SYNC_CANDIDATE:
+        {
+            return tr("Folder can't be synced as it's already a candidate.");
         }
 
         case RemoteErrors::CANT_SYNC:
@@ -466,14 +476,4 @@ void Syncs::onLanguageChanged()
 {
     mSyncsData->setLocalError(getLocalError());
     mSyncsData->setRemoteError(getRemoteError());
-}
-
-void Syncs::setRemoteFolderCandidate(const QString& remoteFolderCandidate)
-{
-    mSyncsData->setRemoteFolderCandidate(remoteFolderCandidate);
-}
-
-void Syncs::setLocalFolderCandidate(const QString& localFolderCandidate)
-{
-    mSyncsData->setLocalFolderCandidate(localFolderCandidate);
 }

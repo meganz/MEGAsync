@@ -60,15 +60,4 @@ FocusScope {
             root.buttonClicked();
         }
     }
-
-    Connections {
-        id: syncsConnection
-
-        target: syncsDataAccess
-
-        function onSyncRemoved() {
-            // Check if MEGA is available again when removed
-            folderItem.text = syncsComponentAccess.getInitialLocalFolder()
-        }
-    }
 }
