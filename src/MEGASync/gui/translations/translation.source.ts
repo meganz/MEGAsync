@@ -2179,19 +2179,6 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     </message>
 </context>
 <context>
-    <name>HandleSyncCandidatesDialogForm.ui</name>
-    <message>
-        <source>Add</source>
-        <translatorcomment>Button label to add a new sync candidate. CON-1386</translatorcomment>
-        <translation type="unfinished">Add</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to cancel the current process of adding a new sync candidate. CON-1386</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
-    </message>
-</context>
-<context>
     <name>HardSpecialLinkHeader</name>
     <message>
         <source>Detected hard link: [B]%1[/B]</source>
@@ -5847,7 +5834,7 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translatorcomment>Button label on cancel current sync candidate removal process. CON-1386</translatorcomment>
+        <translatorcomment>Button label on cancel the current dialog. CON-1386</translatorcomment>
         <translation type="unfinished">Cancel</translation>
     </message>
     <message>
@@ -5864,6 +5851,11 @@ Enter a different name.</translation>
         <source>Removing this sync will take you back to the start of setup.</source>
         <translatorcomment>Description off the consequences of removing the last sync candidate left on the table. CON-1386</translatorcomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translatorcomment>Button label to add a new sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished">Add</translation>
     </message>
 </context>
 <context>

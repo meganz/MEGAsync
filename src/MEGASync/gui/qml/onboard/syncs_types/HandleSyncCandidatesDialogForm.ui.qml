@@ -10,6 +10,7 @@ import components.checkBoxes 1.0
 import components.pages 1.0
 
 import syncs 1.0
+import onboard 1.0
 
 Rectangle {
     id: root
@@ -90,14 +91,14 @@ Rectangle {
             id: acceptButton
 
             sizes.fillWidth: true
-            text: qsTr("Add")
+            text: OnboardingStrings.syncCandidatesAddButtonTitle
             Layout.minimumWidth: minButtonsSize
         }
 
         OutlineButton {
             id: cancelButton
 
-            text: qsTr("Cancel")
+            text: OnboardingStrings.syncCandidatesCancelButtonTitle
             sizes.fillWidth: true
             visible: true
             Layout.minimumWidth: minButtonsSize
