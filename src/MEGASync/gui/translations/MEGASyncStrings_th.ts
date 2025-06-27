@@ -2119,6 +2119,19 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     </message>
 </context>
 <context>
+    <name>HandleSyncCandidatesDialogForm.ui</name>
+    <message>
+        <source>Add</source>
+        <translatorcomment>Button label to add a new sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button label to cancel the current process of adding a new sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>HardSpecialLinkHeader</name>
     <message>
         <source>Detected hard link: [B]%1[/B]</source>
@@ -3592,11 +3605,6 @@ https://mega.co.nz/#sync</source>
         <translation>ไม่สามารถเข้าถึงไฟล์ระบบที่จำเป็นสำหรับแอปนี้ได้ อาจเกิดจากสิทธิ์การเข้าถึงโฟลเดอร์ไม่ถูกต้อง กรุณาลองเริ่มการทำงานแอปและตรวจสอบสิทธิ์การเข้าถึงโฟลเดอร์ระบบ หากยังประสบปัญหาอยู่ กรุณา[A]ติดต่อฝ่ายสนับสนุน[/A]</translation>
     </message>
     <message>
-        <source>Decryption error</source>
-        <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
-        <translation>เกิดข้อผิดพลาดในการถอดรหัส</translation>
-    </message>
-    <message>
         <source>Destination storage is full.</source>
         <translatorcomment>Label to indicate that the remote shared storage is full. CON-561</translatorcomment>
         <translation>พื้นที่เก็บข้อมูลปลายทางเต็มแล้ว</translation>
@@ -3826,6 +3834,16 @@ https://mega.co.nz/#sync</source>
         <source>Rubbish bin</source>
         <translatorcomment>Title of the Rubbish section. SAT-426</translatorcomment>
         <translation>ถังขยะ</translation>
+    </message>
+    <message>
+        <source>Undecrypted file</source>
+        <translatorcomment>Text shown when a file is undecrypted and the name can´t be known. SNC-4420</translatorcomment>
+        <translation>ไฟล์ยังไม่ได้ถอดรหัส</translation>
+    </message>
+    <message>
+        <source>Undecrypted folder</source>
+        <translatorcomment>Text shown when a folder is undecrypted and the name can´t be known. SNC-4420</translatorcomment>
+        <translation>โฟลเดอร์ยังไม่ได้ถอดรหัส</translation>
     </message>
 </context>
 <context>
@@ -5180,9 +5198,19 @@ Enter a different name</source>
         <translation>เพิ่มโฟลเดอร์</translation>
     </message>
     <message>
+        <source>Add more syncs</source>
+        <translatorcomment>Label for a button to add more sync candidates. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Add the name of your device.</source>
         <translatorcomment>Device name window secondary title CON-467</translatorcomment>
         <translation>เพิ่มชื่ออุปกรณ์ของคุณ</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the selected sync?</source>
+        <translatorcomment>Description on removing an sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>At least one number or special character</source>
@@ -5223,6 +5251,11 @@ Enter a different name</source>
         <source>Backup: Select folders</source>
         <translatorcomment>Onboarding step text indicating the user that he is in the backup select folders step CON-468</translatorcomment>
         <translation>สำรองข้อมูล: การเลือกโฟลเดอร์</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button label on cancel current sync candidate removal process. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel account</source>
@@ -5270,6 +5303,11 @@ Enter a different name</source>
         <translation>ยืนยันโฟลเดอร์ที่จะสำรองข้อมูล</translation>
     </message>
     <message>
+        <source>Confirm folders to sync</source>
+        <translatorcomment>Page title for sync candidate table page. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Confirm password</source>
         <translatorcomment>Label indicating that the password should be confirmed CON-466</translatorcomment>
         <translation>ยืนยันรหัสผ่าน</translation>
@@ -5313,6 +5351,11 @@ Enter a different name</source>
         <source>Don’t stop</source>
         <translatorcomment>Cancel button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
         <translation>ไม่ต้องยกเลิก</translation>
+    </message>
+    <message>
+        <source>Edit sync</source>
+        <translatorcomment>Action label for a menu button to edit  a sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Email</source>
@@ -5410,6 +5453,11 @@ Enter a different name</source>
         <translation>เริ่มต้นใช้งานกันเลย</translation>
     </message>
     <message>
+        <source>Local folders</source>
+        <translatorcomment>SubTitle for the local part on a sync inside a Sync candidate table. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Log in</source>
         <translatorcomment>Log in button text CON-465</translatorcomment>
         <translation>เข้าสู่ระบบ</translation>
@@ -5425,6 +5473,11 @@ Enter a different name</source>
         <translation>กำลังเข้าสู่ระบบ…</translation>
     </message>
     <message>
+        <source>MEGA folders</source>
+        <translatorcomment>SubTitle for the remote part on a sync inside a Sync candidate table. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Names longer than 32 characters are not supported</source>
         <translatorcomment>Error shown in case the user types a name larger than 32 characters in the device name field CON-467</translatorcomment>
         <translation>ชื่อต้องมีความยาวไม่เกิน 32 ตัวอักษร</translation>
@@ -5433,6 +5486,11 @@ Enter a different name</source>
         <source>Once confirmed, your account will be activated.</source>
         <translatorcomment>Page secondary title for new accounts in login page CON-465</translatorcomment>
         <translation>เมื่อได้รับการยืนยันแล้ว บัญชีของคุณจะถูกเปิดใช้งาน</translation>
+    </message>
+    <message>
+        <source>One or more syncs were unable to be set up. Check the folders and try again.</source>
+        <translatorcomment>Error banner description on resume page for sync candidates confirmation, we have at least one error. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Password</source>
@@ -5470,6 +5528,26 @@ Enter a different name</source>
         <translation>พบปัญหากับการรับรองความถูกต้องด้วยสองปัจจัยหรือไม่</translation>
     </message>
     <message>
+        <source>Remove</source>
+        <translatorcomment>Button label on confirmation on sync candidate removal process. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove sync</source>
+        <translatorcomment>Action label for a menu button to remove a sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove sync?</source>
+        <translatorcomment>Title for a pop-up dialog that request user confirmation to remove a sync candidate. CON-1386.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Removing this sync will take you back to the start of setup.</source>
+        <translatorcomment>Description off the consequences of removing the last sync candidate left on the table. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Rename</source>
         <translatorcomment>Button to rename a backup CON-468</translatorcomment>
         <translation>เปลี่ยนชื่อ</translation>
@@ -5478,6 +5556,11 @@ Enter a different name</source>
         <source>Resend</source>
         <translatorcomment>Button text to resend the email for account confirmation CON-466</translatorcomment>
         <translation>ส่งใหม่</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translatorcomment>Button label to save the changes on the paths of a sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
@@ -5558,6 +5641,11 @@ Enter a different name</source>
         <source>Sync set up</source>
         <translatorcomment>Onboarding step text indicating the user that he is in the sync setup step CON-467</translatorcomment>
         <translation>ตั้งค่าการซิงค์</translation>
+    </message>
+    <message>
+        <source>Sync wasn’t fully set up</source>
+        <translatorcomment>Error banner title on resume page for sync candidates confirmation, we have at least one error. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
@@ -6028,9 +6116,14 @@ Enter a different name</source>
         <translation>ชื่อผู้ใช้:</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
-        <translatorcomment>Message shown when there is an error testing the proxy settings.</translatorcomment>
-        <translation>การตั้งค่าพร็อกซี่ของคุณไม่ถูกต้องหรือพร็อกซี่ไม่ตอบสนอง</translation>
+        <source>We couldn’t connect using your proxy settings. Check your proxy details or try a different network.</source>
+        <translatorcomment>Error banner shown when there is an error testing the proxy settings. SNC-5411</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
+        <translatorcomment>Error banner shown when proxy settings is not found in the environment, [B] is for bold . SNC-5411</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7122,6 +7215,16 @@ Do you want to delete it anyway?</source>
         <translation><numerusform>%n โฟลเดอร์    </numerusform></translation>
     </message>
     <message>
+        <source>Add backup</source>
+        <translatorcomment>Context menu option to backup a folder. CON-1364.</translatorcomment>
+        <translation>เพิ่มการสำรองข้อมูล</translation>
+    </message>
+    <message>
+        <source>Add sync</source>
+        <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
+        <translation>เพิ่มการซิงค์</translation>
+    </message>
+    <message>
         <source>Get MEGA link</source>
         <translatorcomment>Label displayed when a user is trying to get public link of a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
         <translation>รับลิงก์ MEGA</translation>
@@ -7155,16 +7258,6 @@ Do you want to delete it anyway?</source>
         <source>View previous versions</source>
         <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
         <translation>ดูเวอร์ชันก่อนหน้า</translation>
-    </message>
-    <message>
-        <source>Add sync</source>
-        <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
-        <translation>เพิ่มการซิงค์</translation>
-    </message>
-    <message>
-        <source>Add backup</source>
-        <translatorcomment>Context menu option to backup a folder. CON-1364.</translatorcomment>
-        <translation>เพิ่มการสำรองข้อมูล</translation>
     </message>
 </context>
 <context>
@@ -8445,6 +8538,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>ไม่สามารถซิงค์โฟลเดอร์นี้ได้ เนื่องจากไม่พบโฟลเดอร์ดังกล่าว เป็นไปได้ว่าโฟลเดอร์อาจถูกย้ายหรือลบไปแล้ว หรือคุณอาจไม่มีสิทธิ์เข้าถึง</translation>
     </message>
     <message>
+        <source>Folder can&apos;t be synced as it&apos;s already a candidate.</source>
+        <translatorcomment>Error message indicating the user we have a sync candidate with the same folder already in the sync candidates table. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Select a MEGA folder to sync.</source>
         <translatorcomment>Error message indicating that the user should choose a remote folder (cloud/mega) in order to create a sync. CON-467</translatorcomment>
         <translation>เลือกโฟลเดอร์ MEGA เพื่อทำการซิงค์</translation>
@@ -9265,6 +9363,52 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
 </context>
 <context>
+    <name>UnknownDownloadIssue</name>
+    <message>
+        <source>An unknown download issue has been detected during the sync operation. Error: UnknownDownloadIssue</source>
+        <translatorcomment>Default body for helpdesk report;CON-1100</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reporting failed</source>
+        <translatorcomment>Stalled Issue state when the report has been submitted to the SDK ;CON-1100</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reporting issue</source>
+        <translatorcomment>Stalled Issue state while the report is being submitted to the SDK ;CON-1100</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reporting successful</source>
+        <translatorcomment>Stalled Issue state when the report has been submitted to the SDK ;CON-1100</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown download issue detected</source>
+        <translatorcomment>Default title for helpdesk report;CON-1100</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UnknownDownloadIssueHeader</name>
+    <message>
+        <source>Report issue</source>
+        <translatorcomment>Stalled Issue combobox solve option that sends a report to helpdesk;CON-1094</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send</source>
+        <translatorcomment>Messagebox button string to confirma that the user wants to send a report to helpdesk;CON-1094</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will send your logs to our Support team for diagnostics.</source>
+        <translatorcomment>Messagebox string to confirma that the user wants to send a report to helpdesk;CON-1094</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>UploadIssueHeader</name>
     <message>
         <source>Cannot reach the destination folder.</source>
@@ -9396,6 +9540,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>เกินโควต้าการถ่ายโอนแล้ว</translation>
     </message>
     <message>
+        <source>Upgrade your account to get more storage quota.</source>
+        <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
+        <translation>อัปเกรดบัญชีของคุณเพื่อเพิ่มโควตาพื้นที่เก็บข้อมูล</translation>
+    </message>
+    <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
         <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
         <translation>คุณไม่สามารถดาวน์โหลดต่อได้อีก เนื่องจากคุณใช้โควต้าการถ่ายโอนข้อมูลทั้งหมดของคุณแล้ว [BR][BR]หากต้องการโควต้าเพิ่ม กรุณาซื้อแผนบริการแบบชำระเงินเพิ่มเติม [BR][BR][B][A]เรียนรู้เพิ่มเติมเกี่ยวกับโควต้าการถ่ายโอนข้อมูล[/A][/B]</translation>
@@ -9419,11 +9568,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>ทุกเดือน</translation>
-    </message>
-    <message>
-        <source>Upgrade your account to get more storage quota.</source>
-        <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
-        <translation>อัปเกรดบัญชีของคุณเพื่อเพิ่มโควตาพื้นที่เก็บข้อมูล</translation>
     </message>
 </context>
 <context>
@@ -9649,7 +9793,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
         <translation>ทำไมฉันเห็นสิ่งนี้</translation>
     </message>
-
+    <message>
+        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WhatsNewStrings</name>
