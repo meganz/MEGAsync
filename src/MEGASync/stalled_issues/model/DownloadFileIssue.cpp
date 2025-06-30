@@ -88,9 +88,10 @@ void UnknownDownloadIssue::sendFeedback()
 {
     mReportController = std::make_shared<BugReportController>(MegaSyncApp->getLogger());
     mReportController->attachLogToReport(true);
-    mReportController->setReportTitle(tr("Unknown download issue detected"));
-    mReportController->setReportDescription(tr("An unknown download issue has been detected during "
-                                               "the sync operation. Error: UnknownDownloadIssue"));
+    mReportController->setReportTitle(QString::fromUtf8("Unknown download issue detected"));
+    mReportController->setReportDescription(
+        QString::fromUtf8("An unknown download issue has been detected during "
+                          "the sync operation. Error: UnknownDownloadIssue"));
     connect(mReportController.get(),
             &BugReportController::reportStarted,
             this,
