@@ -66,7 +66,6 @@ target_sources_conditional(${ExecutableTarget}
    QT_AWARE
    PRIVATE
    ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransferWidgetHeaderItem.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransferManagerDelegateWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransfersWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransferManagerLoadingItem.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransferManagerDragBackDrop.ui
@@ -80,7 +79,6 @@ target_sources_conditional(${ExecutableTarget}
    QT_AWARE
    PRIVATE
    ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransferWidgetHeaderItem.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransferManagerDelegateWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransfersWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransferManagerLoadingItem.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransferManagerDragBackDrop.ui
@@ -94,7 +92,6 @@ target_sources_conditional(${ExecutableTarget}
    QT_AWARE
    PRIVATE
    ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransferWidgetHeaderItem.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransferManagerDelegateWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransfersWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransferManagerLoadingItem.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransferManagerDragBackDrop.ui

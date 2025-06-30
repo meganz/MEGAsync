@@ -1264,7 +1264,7 @@ QProgressBar::chunk
   </layout>
  </widget>
  <resources>
-  <include location="../../../gui/Resources_common.qrc"/>
+  <include location="../Resources.qrc"/>
  </resources>
  <connections/>
 </ui>
