@@ -9608,11 +9608,6 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>UnknownDownloadIssue</name>
     <message>
-        <source>An unknown download issue has been detected during the sync operation. Error: UnknownDownloadIssue</source>
-        <translatorcomment>Default body for helpdesk report;CON-1100</translatorcomment>
-        <translation>An unknown download issue has been detected during the sync operation. Error: UnknownDownloadIssue</translation>
-    </message>
-    <message>
         <source>Reporting failed</source>
         <translatorcomment>Stalled Issue state when the report has been submitted to the SDK ;CON-1100</translatorcomment>
         <translation>Reporting failed</translation>
@@ -9626,11 +9621,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Reporting successful</source>
         <translatorcomment>Stalled Issue state when the report has been submitted to the SDK ;CON-1100</translatorcomment>
         <translation>Reporting successful</translation>
-    </message>
-    <message>
-        <source>Unknown download issue detected</source>
-        <translatorcomment>Default title for helpdesk report;CON-1100</translatorcomment>
-        <translation>Unknown download issue detected</translation>
     </message>
 </context>
 <context>
