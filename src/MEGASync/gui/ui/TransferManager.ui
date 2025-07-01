@@ -27,54 +27,55 @@
     <normaloff>../../../../../../.designer/backup</normaloff>../../../../../../.designer/backup</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">#TransferManager
+   <string notr="true">#wLeftPane
+{
+    background-color: #fff7f7f7; /*colorToken.surface-1*/
+}
+
+#wLeftPane QFrame &gt; QLabel
+{
+    font-weight: 400;
+    color: #ff616366;
+    font-size: 10px;
+    text-align: right;
+}
+
+#wLeftPane QFrame[itsOn=true]
 {
     border-radius: 4px;
-    border: 1px solid black;
+    background-color: #FFFFFFFF; /*colorToken.page-background*/
 }
 
-*
+#wLeftPane QFrame[itsOn=false]
 {
-    font-family: Lato;
+    border-radius: none;
+    background-color: transparent;
 }
 
-#wLeftPane
+#wLeftPane QFrame[itsOn=false] QPushButton
 {
-    background-color: #FAFAFA;
-    border-right: 1px solid #EEEEEE;
+    font-weight: normal;
 }
 
-#wRightPane, #wTransfers
+QGroupBox
 {
-    background-color: white;
+    font-size: 12px;
+    border: none;
 }
 
-#wRightPaneHeader, #sCurrentContent
+QGroupBox::title
 {
-    background-color: white;
+    color: #666666;
+    padding-left: 10px;
 }
 
-#lTransfers, #lCurrentContent, #lSearch
+#lTransfers
 {
     color: #333333;
     font-size: 20px;
     font-weight: 600;
     padding-left: 12px;
     qproperty-alignment: 'AlignLeft | AlignVCenter';
-}
-
-#lTextSearch
-{
-    color: #666666;
-    font-size: 20px;
-    font-weight: 600;
-    padding-left: 12px;
-    qproperty-alignment: 'AlignLeft | AlignVCenter';
-}
-
-#lCurrentContent
-{
-  margin-right: 16px;
 }
 
 #wTransferring QFrame, #wSearch QFrame
@@ -88,27 +89,6 @@
     height: 34px;
 }
 
-#lTransferring, #lMediaType
-{
-    color: #666666;
-    font-size: 12px;
-    padding-left: 12px;
-    qproperty-alignment: 'AlignLeft | AlignVCenter';
-}
-
-QGroupBox
-{
-    font-size: 12px;
-    border: none;
-}
-
-QGroupBox::title
-{
-    font-family: Lato;
-   color: #666666;
-    padding-left: 10px;
-}
-
 #wTransferring QPushButton
 {
     font-size: 14px;
@@ -117,7 +97,7 @@ QGroupBox::title
     text-align: left;
     qProperty-iconSize: 24px;
     padding-left:0px;
-   padding-right:0px;
+    padding-right:0px;
 }
 
 #wSearch QPushButton
@@ -126,7 +106,7 @@ QGroupBox::title
     color: #15191F;
     border: none;
     text-align: left;
-   padding-left:-1px;
+    padding-left:-1px;
     padding-right: 0px;
     qProperty-iconSize: 24px;
 }
@@ -150,9 +130,9 @@ QGroupBox::title
 #leSearchField
 {
     background-color: transparent;
-  color: #333333;
-  font-size: 14px;
-  font-weight: 600;
+    color: #333333;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 #tSearchIcon
@@ -226,14 +206,6 @@ QGroupBox::title
     text-align: left;
 }
 
-#lTransferOverQuotaMoreAbout
-{
-  color: #333333;
-  font-size: 12px;
-  font-weight: 400;
-  padding-left: 2px;
-}
-
 #bScanning
 {
     height: 24px;
@@ -259,7 +231,68 @@ QGroupBox::title
     font-weight: bold;
     text-align: right;
 }
- 
+
+#wSeparator
+{
+    background-color: #EEEEEE;
+}
+
+
+
+
+
+
+/* right pane */
+
+#wRightPane, #wTransfers
+{
+    background-color: white;
+}
+
+#wRightPaneHeader, #sCurrentContent
+{
+    background-color: white;
+}
+
+#lCurrentContent, #lSearch
+{
+    color: #333333;
+    font-size: 20px;
+    font-weight: 600;
+    padding-left: 12px;
+    qproperty-alignment: 'AlignLeft | AlignVCenter';
+}
+
+#lTextSearch
+{
+    color: #666666;
+    font-size: 20px;
+    font-weight: 600;
+    padding-left: 12px;
+    qproperty-alignment: 'AlignLeft | AlignVCenter';
+}
+
+#lCurrentContent
+{
+  margin-right: 16px;
+}
+
+#lTransfering, #lMediaType
+{
+    color: #666666;
+    font-size: 12px;
+    padding-left: 12px;
+    qproperty-alignment: 'AlignLeft | AlignVCenter';
+}
+
+#lTransferOverQuotaMoreAbout
+{
+  color: #333333;
+  font-size: 12px;
+  font-weight: 400;
+  padding-left: 2px;
+}
+
 QToolButton
 {
   border: none;
@@ -383,11 +416,6 @@ QToolButton
 * TransfersAccountInfoWidget
 */
 
-#wSeparator
-{
-	background-color: #EEEEEE;
-}
-
 #TransferManagerAccountInfo
 {
 	background-color: #FAFAFA;
@@ -472,11 +500,6 @@ QToolButton
 	border-bottom-right-radius: 4px;
 }
 
-#TransferManagerAccountInfo
-{
-	background-color: #FAFAFA;
-}
-
 /* 
 * AccountTypeWidget
 */
@@ -503,46 +526,6 @@ QToolButton
     color: #E31B57; /*colorToken.text-error*/
 }
 
-#wLeftPane QFrame &gt; QLabel
-{
-    font-weight: bold;
-    color: #999999;
-    font-size: 10px;
-        text-align: right;
-    border-radius: 12px;
-}
-
-#wLeftPane QFrame[itsOn=true]
-{
-        border-radius: 4px;
-    background: solid white;
-}
-
-#wLeftPane QFrame[itsOn=true] &gt; QLabel
-{
-    border: 1px solid #F5F5F5;
-    background-color: #FAFAFA;
-    color: #333333;
-}
-
-#wLeftPane QFrame[itsOn=false]
-{
-        border-radius: none;
-    background-color: transparent;
-}
-
-#wLeftPane QFrame[itsOn=false]  QLabel
-{
-    border: 1px transparent #FAFAFA;
-    background: transparent;
-    color: #999999;
-}
-
-#wLeftPane QFrame[itsOn=false] QPushButton
-{
-    font-weight: normal;
-}
-
 #wAllResults, #wDlResults, #wUlResults
 {
    height: 24px;
@@ -567,8 +550,7 @@ QToolButton
 #wAllResults[selected = true] QLabel, #wDlResults[selected=true] QLabel, #wUlResults[selected=true] QLabel
 {
   color: #FFFFFF;
-}
-</string>
+}</string>
   </property>
   <layout class="QHBoxLayout" name="TransferManagerLayout">
    <property name="spacing">
@@ -607,8 +589,7 @@ QToolButton
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">
-</string>
+      <string notr="true"/>
      </property>
      <layout class="QVBoxLayout" name="wLeftPaneLayout">
       <property name="spacing">
@@ -856,7 +837,7 @@ QToolButton
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
            <property name="spacing">
-            <number>0</number>
+            <number>4</number>
            </property>
            <property name="leftMargin">
             <number>4</number>
@@ -2219,7 +2200,7 @@ QToolButton
              </sizepolicy>
             </property>
             <property name="styleSheet">
-             <string notr="true"></string>
+             <string notr="true"/>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_4">
              <property name="spacing">
@@ -2507,7 +2488,7 @@ QToolButton
       <item>
        <widget class="QStackedWidget" name="sTransfers">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="TransfersWidget" name="wTransfers">
          <property name="sizePolicy">
