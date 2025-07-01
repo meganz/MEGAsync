@@ -6178,8 +6178,8 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Number of parallel transfers increased.
-- Simplify the ability to add more syncs during the user onboarding.
+        <source>- Increased the number of parallel transfers.
+- It’s now easier to add syncs during setup.
 - Added support for proxy auto-detection in Linux.
 - We’ve fixed bugs and made the app more reliable.
 </source>
