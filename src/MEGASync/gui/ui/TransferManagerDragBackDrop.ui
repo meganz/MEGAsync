@@ -14,7 +14,17 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgba(255, 255, 255, 229);</string>
+   <string notr="true">background-color: rgba(255, 255, 255, 229);
+   #lUploadToMegaDesc
+   {
+   margin-top: 10px;
+   margin-left: 20px;
+   margin-right: 20px;
+   color: #666;
+   font-family: &quot;Lato&quot;;
+   font-size: 16px;
+   }
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -120,15 +130,7 @@
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">#lUploadToMegaDesc
-{
-margin-top: 10px;
-margin-left: 20px;
-margin-right: 20px;
-color: #666;
-font-family: &quot;Lato&quot;;
-font-size: 16px;
-}
+      <string notr="true">
 </string>
      </property>
      <property name="text">
