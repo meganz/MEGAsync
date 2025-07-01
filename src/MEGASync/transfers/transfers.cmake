@@ -60,65 +60,6 @@ set(DESKTOP_APP_TRANSFERS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/gui/TransferManagerStatusHeaderWidget.cpp
 )
 
-
-target_sources_conditional(${ExecutableTarget}
-   FLAG WIN32
-   QT_AWARE
-   PRIVATE
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransferWidgetHeaderItem.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransferManagerLoadingItem.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/InfoDialogTransferLoadingItem.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransfersAccountInfoWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/MediaTypeFilterWidget.ui
-)
-
-target_sources_conditional(${ExecutableTarget}
-   FLAG APPLE
-   QT_AWARE
-   PRIVATE
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransferWidgetHeaderItem.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransferManagerLoadingItem.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/InfoDialogTransferLoadingItem.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransfersAccountInfoWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/MediaTypeFilterWidget.ui
-)
-
-target_sources_conditional(${ExecutableTarget}
-   FLAG UNIX AND NOT APPLE
-   QT_AWARE
-   PRIVATE
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransferWidgetHeaderItem.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransferManagerLoadingItem.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/InfoDialogTransferLoadingItem.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransfersAccountInfoWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/MediaTypeFilterWidget.ui
-
-)
-
-
-if (WIN32)
-    set_property(TARGET ${ExecutableTarget}
-        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
-        ${CMAKE_CURRENT_LIST_DIR}/gui/win
-        ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/ui
-        ${CMAKE_CURRENT_LIST_DIR}/gui/ui
-    )
-elseif (APPLE)
-    set_property(TARGET ${ExecutableTarget}
-        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
-        ${CMAKE_CURRENT_LIST_DIR}/gui/macx
-        ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/ui
-        ${CMAKE_CURRENT_LIST_DIR}/gui/ui
-    )
-else()
-    set_property(TARGET ${ExecutableTarget}
-        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
-        ${CMAKE_CURRENT_LIST_DIR}/gui/linux
-        ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/ui
-        ${CMAKE_CURRENT_LIST_DIR}/gui/ui
-    )
-endif()
-
 set (DESKTOP_APP_TRANSFERS_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransferManagerStatusHeaderWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/ui/DuplicatedNodeDialog.ui
@@ -143,4 +84,3 @@ set (INCLUDE_DIRECTORIES
 )
 
 target_include_directories(${ExecutableTarget} PRIVATE ${INCLUDE_DIRECTORIES})
-

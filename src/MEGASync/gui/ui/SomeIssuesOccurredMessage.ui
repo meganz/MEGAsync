@@ -35,6 +35,7 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
+<<<<<<< HEAD
    <string notr="true">#issuesIcon
 {
    border:none;
@@ -52,6 +53,37 @@
    border-radius: 8px;
    background-color:#FFFFE4E8; /*colorToken.notification-error*/
 }</string>
+=======
+   <string notr="true">
+   background-color: transparent;
+   QPushButton
+   {
+      border:none;
+   }
+
+   #viewIssuesButton
+   {
+       font-size: 14px;
+       height:24px;
+       width: 71px;
+       background-color: #F0373A;
+       color: #FFFFFF;
+       border-radius:3px;
+   }
+
+   #issuesInfoLabel
+   {
+       color: #DA3135;
+       font-size: 13px;
+   }
+
+   #issueContainer
+   {
+      border-radius: 8px;
+      background-color: #FDEBEB;
+   }
+</string>
+>>>>>>> c775108dd (SNC-5644: Unified all transfers ui files.)
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
@@ -84,7 +116,11 @@
       </size>
      </property>
      <property name="styleSheet">
+<<<<<<< HEAD
       <string notr="true"/>
+=======
+      <string notr="true"></string>
+>>>>>>> c775108dd (SNC-5644: Unified all transfers ui files.)
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">

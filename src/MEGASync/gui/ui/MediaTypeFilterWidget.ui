@@ -130,7 +130,7 @@ QGroupBox
       <string notr="true"/>
      </property>
      <property name="icon">
-      <iconset resource="../../../gui/Resources.qrc">
+      <iconset resource="../Resources.qrc">
        <normaloff>:/images/themed/light/chevron-down_default.svg</normaloff>:/images/themed/light/chevron-down_default.svg</iconset>
      </property>
      <property name="checkable">
