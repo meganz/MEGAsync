@@ -38,8 +38,8 @@ Format: 1 item by line, starting from line following the #define
 )*/
 #define VER_CHANGES_NOTES \
     QT_TRANSLATE_NOOP("Preferences", \
-                      "- Number of parallel transfers increased.\n" \
-                      "- Simplify the ability to add more syncs during the user onboarding.\n" \
+                      "- Increased the number of parallel transfers.\n" \
+                      "- It’s now easier to add syncs during setup.\n" \
                       "- Added support for proxy auto-detection in Linux.\n" \
                       "- We’ve fixed bugs and made the app more reliable.\n")
 
