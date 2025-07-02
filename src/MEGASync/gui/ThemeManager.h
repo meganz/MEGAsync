@@ -21,6 +21,7 @@ public:
     QString getSelectedThemeString() const;
     QString getThemeString(Preferences::ThemeType theme) const;
     void setTheme(Preferences::ThemeType theme);
+    QString getThemedImage(const QString& imageName) const;
 
 signals:
     void themeChanged(Preferences::ThemeType theme);
