@@ -847,6 +847,7 @@ void InfoDialog::onAddBackup()
 void InfoDialog::updateDialogState()
 {
     updateState();
+    bool hasTransfers = false;
     const bool transferOverQuotaEnabled{(transferQuotaState == QuotaState::FULL || transferQuotaState == QuotaState::OVERQUOTA)
                 && transferOverquotaAlertEnabled};
 
@@ -1018,6 +1019,7 @@ void InfoDialog::updateDialogState()
             {
                 overlay->setVisible(false);
                 ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
+                hasTransfers = true;
                 ui->wPSA->showPSA();
             }
             else
@@ -1689,6 +1691,7 @@ void InfoDialog::initNotificationArea()
 
 void InfoDialog::applyNotificationFilter(MessageType opt)
 {
+    bool hasNotification = false;
     switch (opt)
     {
         case MessageType::ALERT_CONTACTS:
@@ -1698,6 +1701,7 @@ void InfoDialog::applyNotificationFilter(MessageType opt)
             if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_CONTACTS))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
+                hasNotification = true;
             }
             else
             {
@@ -1714,6 +1718,7 @@ void InfoDialog::applyNotificationFilter(MessageType opt)
             if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_SHARES))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
+                hasNotification = true;
             }
             else
             {
@@ -1730,6 +1735,7 @@ void InfoDialog::applyNotificationFilter(MessageType opt)
             if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_PAYMENTS))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
+                hasNotification = true;
             }
             else
             {
@@ -1747,6 +1753,7 @@ void InfoDialog::applyNotificationFilter(MessageType opt)
             if (app->getNotificationController()->hasNotifications())
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
+                hasNotification = true;
             }
             else
             {
