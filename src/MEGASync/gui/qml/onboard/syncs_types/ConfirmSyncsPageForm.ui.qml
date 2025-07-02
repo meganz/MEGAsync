@@ -41,7 +41,7 @@ FooterButtonsPage {
 
             Layout.preferredWidth: parent.width
             title: OnboardingStrings.confirmSyncsWindowTitle
-            description: OnboardingStrings.confirmSyncsWindowDescription
+            description: Syncs.SyncsStrings.confirmSyncsWindowDescription
         }
 
         Column {
