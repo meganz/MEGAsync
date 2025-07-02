@@ -1,4 +1,4 @@
-﻿#include "ProxySettings.h"
+#include "ProxySettings.h"
 
 #include "DialogOpener.h"
 #include "megaapi.h"

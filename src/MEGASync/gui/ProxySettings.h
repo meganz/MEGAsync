@@ -1,4 +1,4 @@
-﻿#ifndef PROXYSETTINGS_H
+#ifndef PROXYSETTINGS_H
 #define PROXYSETTINGS_H
 
 #include "ConnectivityChecker.h"

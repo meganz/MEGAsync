@@ -1,4 +1,4 @@
-﻿#ifndef MEGA_SYNC_LOGGER_H
+#ifndef MEGA_SYNC_LOGGER_H
 #define MEGA_SYNC_LOGGER_H
 
 #include "megaapi.h"
