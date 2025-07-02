@@ -59,11 +59,6 @@ border: none;
 	border: none;
 }
 
-#wSeparator, #wSeparatorStats, #wSeparatorNotificationsOpts
-{
-background-color:  rgb(231, 231, 231);
-}
-
 #lTotalUsedStorage,  #lTotalUsedQuota
 {
 font-family: &quot;Lato&quot;;
@@ -505,9 +500,13 @@ background-color: #FFFFFF;
  border-bottom-left-radius: 10px;
  background-clip: padding;
 }
-#wContainerBottom, #wContainerBottom *
+#wBottom[hasTransfers=&quot;true&quot;]
 {
- background-color: #F7F7F7; /*colorToken.surface-1*/
+background-color: #fffafafa; /*colorToken.surface-1*/
+}
+#wSeparator
+{
+background-color: #fffafafa; /*colorToken.border-subtle*/
 }</string>
   </property>
   <property name="sizeGripEnabled">
@@ -3623,24 +3622,28 @@ background-color: #FFFFFF;
                 </widget>
                </item>
                <item>
-                <widget class="TransfersSummaryWidget" name="bTransferManager" native="true">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
+                <spacer name="horizontalSpacer_17">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
                  </property>
-                 <property name="minimumSize">
+                 <property name="sizeHint" stdset="0">
                   <size>
-                   <width>182</width>
-                   <height>28</height>
+                   <width>40</width>
+                   <height>20</height>
                   </size>
                  </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="TransfersSummaryQuickWidget" name="bTransferManager" native="true">
                  <property name="maximumSize">
                   <size>
-                   <width>182</width>
-                   <height>28</height>
+                   <width>16777215</width>
+                   <height>32</height>
                   </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background:transparent;</string>
                  </property>
                 </widget>
                </item>
@@ -3690,12 +3693,6 @@ background-color: #FFFFFF;
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>TransfersSummaryWidget</class>
-   <extends>QWidget</extends>
-   <header location="global">TransfersSummaryWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>AlertFilterType</class>
    <extends>QWidget</extends>
    <header location="global">AlertFilterType.h</header>
@@ -3705,6 +3702,12 @@ background-color: #FFFFFF;
    <class>SomeIssuesOccurredMessage</class>
    <extends>QWidget</extends>
    <header>SomeIssuesOccurredMessage.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TransfersSummaryQuickWidget</class>
+   <extends>QWidget</extends>
+   <header>TransfersSummaryQuickWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

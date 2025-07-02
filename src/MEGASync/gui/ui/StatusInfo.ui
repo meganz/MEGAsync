@@ -35,11 +35,20 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#bIconState
+   <string notr="true">
+#bIconState
 {
 border: none;
 margin-top: 4px;
 qproperty-iconSize: 16px 16px;
+}
+#bIconState[hasTransfers=&quot;true&quot;]
+{
+ background-color: #fffafafa; /*colorToken.surface-1*/
+}
+#lStatusDesc[hasTransfers=&quot;true&quot;]
+{
+background-color: #fffafafa; /*colorToken.surface-1*/
 }
 #bIconState[state=&quot;paused&quot;]
 {
@@ -66,9 +75,11 @@ qproperty-iconSize: 16px 16px;
 #bIconState[state=&quot;indexing&quot;],
 #bIconState[state=&quot;transferring&quot;]
 {
-    qproperty-icon: none;
-    qproperty-iconSize: 24px 24px;
-}</string>
+qproperty-icon: none;
+qproperty-iconSize: 16px 16px;
+}
+
+</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
    <property name="spacing">

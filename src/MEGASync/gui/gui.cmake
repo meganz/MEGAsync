@@ -92,6 +92,8 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/qml/WhatsNewController.h
     ${CMAKE_CURRENT_LIST_DIR}/qml/UpdatesModel.h
     ${CMAKE_CURRENT_LIST_DIR}/qml/QmlUtils.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/MegaQuickWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/TransfersSummaryQuickWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/Onboarding.h
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/PasswordStrengthChecker.h
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/GuestQmlDialog.h
@@ -240,6 +242,8 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/qml/WhatsNewController.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qml/UpdatesModel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qml/QmlUtils.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/MegaQuickWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/TransfersSummaryQuickWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/Onboarding.cpp
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/PasswordStrengthChecker.cpp
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/GuestQmlDialog.cpp

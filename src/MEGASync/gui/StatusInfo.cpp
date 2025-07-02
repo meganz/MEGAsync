@@ -1,5 +1,6 @@
 #include "StatusInfo.h"
 
+#include "ThemeManager.h"
 #include "ui_StatusInfo.h"
 #include "Utilities.h"
 #include <MegaApplication.h>
@@ -163,16 +164,17 @@ void StatusInfo::setOverQuotaState(bool oq)
     setState(mState);
 }
 
-QIcon StatusInfo::scanningIcon(int& index)
+QIcon StatusInfo::scanningIcon(int index)
 {
-    index = index%12;
-    index++;
-    return Utilities::getCachedPixmap(
-                                QString::fromUtf8(":/images/ico_menu_scanning_%1.png").arg(index));
+    return Utilities::getCachedPixmap(ThemeManager::instance()->getThemedImage(
+        QString::fromUtf8("activity_indicator_%1.svg").arg(index)));
 }
 
 void StatusInfo::scanningAnimationStep()
 {
+    const auto scanningIconImages = 30;
+    mScanningAnimationIndex = mScanningAnimationIndex % scanningIconImages;
+    ++mScanningAnimationIndex;
     ui->bIconState->setIcon(scanningIcon(mScanningAnimationIndex));
 }
 
@@ -193,4 +195,21 @@ bool StatusInfo::event(QEvent* event)
         setState(mState);
     }
     return QWidget::event(event);
+}
+
+void StatusInfo::setRecursiveProperty(const char* name, const QVariant& value)
+{
+    setProperty(name, value);
+    auto children = this->children();
+    for (auto child: children)
+    {
+        if (auto widget = dynamic_cast<QWidget*>(child))
+        {
+            widget->setProperty(name, value);
+            widget->style()->unpolish(widget);
+            widget->style()->polish(widget);
+        }
+    }
+    style()->unpolish(this);
+    style()->polish(this);
 }

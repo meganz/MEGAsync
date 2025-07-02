@@ -52,16 +52,6 @@ void InfoDialog::generalAreaClicked()
     app->transferManagerActionClicked(TransfersWidget::ALL_TRANSFERS_TAB);
 }
 
-void InfoDialog::dlAreaClicked()
-{
-    app->transferManagerActionClicked(TransfersWidget::DOWNLOADS_TAB);
-}
-
-void InfoDialog::upAreaClicked()
-{
-    app->transferManagerActionClicked(TransfersWidget::UPLOADS_TAB);
-}
-
 void InfoDialog::pauseResumeHovered(QMouseEvent *event)
 {
     if (mPreferences->logged())
@@ -101,7 +91,6 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
     qtBugFixer(this)
 {
     ui->setupUi(this);
-
     connect(AppState::instance().get(),
             &AppState::appStateChanged,
             this,
@@ -117,8 +106,10 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
             });
 
     filterMenu = new FilterAlertWidget(this);
-    connect(filterMenu, SIGNAL(filterClicked(MessageType)),
-            this, SLOT(applyFilterOption(MessageType)));
+    connect(filterMenu,
+            SIGNAL(filterClicked(MessageType)),
+            this,
+            SLOT(applyFilterOption(MessageType)));
 
     setUnseenNotifications(0);
 
@@ -127,26 +118,28 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
     ui->bNumberUnseenNotifications->setSizePolicy(sp_retain);
 
     connect(ui->bTransferManager, SIGNAL(pauseResumeClicked()), this, SLOT(pauseResumeClicked()));
-    connect(ui->bTransferManager, SIGNAL(generalAreaClicked()), this, SLOT(generalAreaClicked()));
-    connect(ui->bTransferManager, SIGNAL(upAreaClicked()), this, SLOT(upAreaClicked()));
-    connect(ui->bTransferManager, SIGNAL(dlAreaClicked()), this, SLOT(dlAreaClicked()));
-
-    connect(ui->bTransferManager, SIGNAL(pauseResumeHovered(QMouseEvent *)), this, SLOT(pauseResumeHovered(QMouseEvent *)));
-    connect(ui->bTransferManager, SIGNAL(generalAreaHovered(QMouseEvent *)), this, SLOT(generalAreaHovered(QMouseEvent *)));
-    connect(ui->bTransferManager, SIGNAL(upAreaHovered(QMouseEvent *)), this, SLOT(upAreaHovered(QMouseEvent*)));
-    connect(ui->bTransferManager, SIGNAL(dlAreaHovered(QMouseEvent *)), this, SLOT(dlAreaHovered(QMouseEvent *)));
+    connect(ui->bTransferManager,
+            SIGNAL(transferManagerClicked()),
+            this,
+            SLOT(generalAreaClicked()));
 
     connect(ui->wSortNotifications, SIGNAL(clicked()), this, SLOT(onActualFilterClicked()));
 
-    connect(app->getTransfersModel(), &TransfersModel::transfersCountUpdated, this, &InfoDialog::updateTransfersCount);
-    connect(app->getTransfersModel(), &TransfersModel::transfersProcessChanged, this, &InfoDialog::onTransfersStateChanged);
+    connect(app->getTransfersModel(),
+            &TransfersModel::transfersCountUpdated,
+            this,
+            &InfoDialog::updateTransfersCount);
+    connect(app->getTransfersModel(),
+            &TransfersModel::transfersProcessChanged,
+            this,
+            &InfoDialog::onTransfersStateChanged);
 
     connect(mPreferences.get(),
             &Preferences::valueChanged,
             this,
             [this](const QString& key)
             {
-                if(key == Preferences::wasPausedKey)
+                if (key == Preferences::wasPausedKey)
                 {
                     ui->bTransferManager->setPaused(mPreferences->getGlobalPaused());
                 }
@@ -293,10 +286,6 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
     connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
             this, &InfoDialog::cancelScanning);
 
-    mResetTransferSummaryWidget.setInterval(2000);
-    mResetTransferSummaryWidget.setSingleShot(true);
-    connect(&mResetTransferSummaryWidget, &QTimer::timeout, this, &InfoDialog::onResetTransfersSummaryWidget);
-
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesChanged,
             this,  &InfoDialog::onStalledIssuesChanged);
     onStalledIssuesChanged();
@@ -337,10 +326,6 @@ PSA_info *InfoDialog::getPSAdata()
 void InfoDialog::showEvent(QShowEvent *event)
 {
     emit ui->sTabs->currentChanged(ui->sTabs->currentIndex());
-    if (ui->bTransferManager->alwaysAnimateOnShow || ui->bTransferManager->neverPainted )
-    {
-        ui->bTransferManager->showAnimated();
-    }
     isShown = true;
     mTransferScanCancelUi->update();
 
@@ -406,12 +391,7 @@ void InfoDialog::hideEvent(QHideEvent *event)
         }
     });
 
-
     isShown = false;
-    if (ui->bTransferManager->alwaysAnimateOnShow || ui->bTransferManager->neverPainted )
-    {
-        ui->bTransferManager->shrink();
-    }
     QDialog::hideEvent(event);
 
 #ifdef _WIN32
@@ -661,15 +641,17 @@ void InfoDialog::setUsage()
 
 void InfoDialog::updateTransfersCount()
 {
-    if(app->getTransfersModel())
+    if (auto transferModel = app->getTransfersModel())
     {
-        auto transfersCountUpdated = app->getTransfersModel()->getLastTransfersCount();
-
-        ui->bTransferManager->setDownloads(transfersCountUpdated.completedDownloads(), transfersCountUpdated.totalDownloads);
-        ui->bTransferManager->setUploads(transfersCountUpdated.completedUploads(), transfersCountUpdated.totalUploads);
-
-        ui->bTransferManager->setPercentUploads(transfersCountUpdated.completedUploadBytes, transfersCountUpdated.totalUploadBytes);
-        ui->bTransferManager->setPercentDownloads(transfersCountUpdated.completedDownloadBytes, transfersCountUpdated.totalDownloadBytes);
+        auto transfersCountUpdated = transferModel->getLastTransfersCount();
+        auto totalTransfers =
+            transfersCountUpdated.totalDownloads + transfersCountUpdated.totalUploads;
+        auto completedTransfers =
+            transfersCountUpdated.completedDownloads() + transfersCountUpdated.completedUploads();
+        ui->bTransferManager->setTransfersCount(completedTransfers, totalTransfers);
+        auto topTransferType = transferModel->getTopTransferType();
+        ui->bTransferManager->setTopTransferDirection(topTransferType ==
+                                                      TransferData::TransferType::TRANSFER_UPLOAD);
     }
 }
 
@@ -685,12 +667,6 @@ void InfoDialog::onTransfersStateChanged()
             {
                 updateDialogState();
             }
-
-            mResetTransferSummaryWidget.start();
-        }
-        else
-        {
-            mResetTransferSummaryWidget.stop();
         }
 
         ui->wStatus->update();
@@ -709,11 +685,6 @@ void InfoDialog::onStalledIssuesChanged()
     }
 
     updateState();
-}
-
-void InfoDialog::onResetTransfersSummaryWidget()
-{
-    ui->bTransferManager->reset();
 }
 
 void InfoDialog::setIndexing(bool indexing)
@@ -860,6 +831,7 @@ void InfoDialog::onAddBackup()
 void InfoDialog::updateDialogState()
 {
     updateState();
+    bool hasTransfers = false;
     const bool transferOverQuotaEnabled{(transferQuotaState == QuotaState::FULL || transferQuotaState == QuotaState::OVERQUOTA)
                 && transferOverquotaAlertEnabled};
 
@@ -1045,6 +1017,7 @@ void InfoDialog::updateDialogState()
             {
                 overlay->setVisible(false);
                 ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
+                hasTransfers = true;
                 ui->wPSA->showPSA();
             }
             else
@@ -1062,6 +1035,7 @@ void InfoDialog::updateDialogState()
             }
         }
     }
+    setFooterState(hasTransfers);
     updateBlockedState();
 }
 
@@ -1174,8 +1148,6 @@ void InfoDialog::reset()
     notificationsReady = false;
     ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
     ui->wSortNotifications->setActualFilter(MessageType::ALL);
-
-    ui->bTransferManager->reset();
 
     hideSomeIssues();
 
@@ -1690,6 +1662,7 @@ void InfoDialog::initNotificationArea()
 
 void InfoDialog::applyNotificationFilter(MessageType opt)
 {
+    bool hasNotification = false;
     switch (opt)
     {
         case MessageType::ALERT_CONTACTS:
@@ -1699,6 +1672,7 @@ void InfoDialog::applyNotificationFilter(MessageType opt)
             if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_CONTACTS))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
+                hasNotification = true;
             }
             else
             {
@@ -1715,6 +1689,7 @@ void InfoDialog::applyNotificationFilter(MessageType opt)
             if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_SHARES))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
+                hasNotification = true;
             }
             else
             {
@@ -1731,6 +1706,7 @@ void InfoDialog::applyNotificationFilter(MessageType opt)
             if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_PAYMENTS))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
+                hasNotification = true;
             }
             else
             {
@@ -1748,6 +1724,7 @@ void InfoDialog::applyNotificationFilter(MessageType opt)
             if (app->getNotificationController()->hasNotifications())
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
+                hasNotification = true;
             }
             else
             {
@@ -1757,6 +1734,16 @@ void InfoDialog::applyNotificationFilter(MessageType opt)
             break;
         }
     }
-
+    setFooterState(hasNotification);
     app->getNotificationController()->applyFilter(opt);
+}
+
+void InfoDialog::setFooterState(bool hasTransfers)
+{
+    ui->wBottom->setProperty("hasTransfers", hasTransfers);
+    ui->wBottom->style()->unpolish(ui->wBottom);
+    ui->wBottom->style()->polish(ui->wBottom);
+    ui->wBottom->update();
+    ui->wStatus->setRecursiveProperty("hasTransfers", hasTransfers);
+    ui->wSeparator->setVisible(hasTransfers);
 }

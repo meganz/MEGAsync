@@ -214,5 +214,7 @@
         <file>deviceCentre/RenameDeviceDialog.qml</file>
         <file>common/DeviceName.qml</file>
         <file>syncs/ChooseSyncFolder.qml</file>
+        <file>quick_widget/TransfersSummaryItem.qml</file>
+        <file>quick_widget/qmldir</file>
     </qresource>
 </RCC>
