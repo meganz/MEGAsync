@@ -105,7 +105,6 @@ QtObject {
     readonly property string selectiveSync: qsTr("Selective sync")
     readonly property string sync: qsTr("Sync")
     readonly property string confirmSyncsWindowTitle: qsTr("Confirm folders to sync")
-    readonly property string confirmSyncsWindowDescription: qsTr("Selected folders will automatically back up to the cloud when the desktop app is running.")
     readonly property string finalStepSyncError: qsTr("One or more syncs were unable to be set up. Check the folders and try again.")
     readonly property string finalStepSyncTitleError: qsTr("Sync wasn’t fully set up")
     readonly property string syncCandidatesHeaderLocalColumnTitle: qsTr("Local folders")
