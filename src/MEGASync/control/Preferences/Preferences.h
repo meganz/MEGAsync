@@ -596,7 +596,6 @@ protected:
     void login(QString account);
     void logout();
 
-
     // sync related:
     void readFolders(); //read sync stored configuration
 
@@ -821,8 +820,6 @@ protected:
     static const int  defaultUploadLimitKB;
     static const int  defaultDownloadLimitKB;
     static const unsigned long long defaultTransferIdentifier;
-    static const int  defaultParallelUploadConnections;
-    static const int  defaultParallelDownloadConnections;
     static const int  defaultProxyType;
     static const int  defaultProxyProtocol;
     static const long long defaultTimeStamp;
