@@ -34,16 +34,19 @@
 
 #wLeftPane QFrame &gt; QLabel
 {
-    font-weight: 400;
-    color: #ff616366;
-    font-size: 10px;
     text-align: right;
+}
+
+#wLeftPane QFrame &gt; QPushButton
+{
+    font-weight: 400;
+    font-size: 12px;
 }
 
 #wLeftPane QFrame[itsOn=true]
 {
     border-radius: 4px;
-    background-color: #FFFFFFFF; /*colorToken.page-background*/
+    background-color: #ffffffff; /*colorToken.page-background*/
 }
 
 #wLeftPane QFrame[itsOn=false]
@@ -52,9 +55,10 @@
     background-color: transparent;
 }
 
-#wLeftPane QFrame[itsOn=false] QPushButton
+#wLeftPane QFrame[itsOn=true] &gt; QPushButton
 {
-    font-weight: normal;
+    font-weight: 600;
+    font-size: 12px;
 }
 
 QGroupBox
@@ -236,11 +240,6 @@ QGroupBox::title
 {
     background-color: #EEEEEE;
 }
-
-
-
-
-
 
 /* right pane */
 
@@ -550,7 +549,9 @@ QToolButton
 #wAllResults[selected = true] QLabel, #wDlResults[selected=true] QLabel, #wUlResults[selected=true] QLabel
 {
   color: #FFFFFF;
-}</string>
+}
+
+</string>
   </property>
   <layout class="QHBoxLayout" name="TransferManagerLayout">
    <property name="spacing">
@@ -879,6 +880,9 @@ QToolButton
                 </property>
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>All transfers</string>
