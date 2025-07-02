@@ -511,8 +511,14 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
  border-bottom-left-radius: 10px;
  background-clip: padding;
 }
-
-</string>
+#wBottom[hasTransfers=&quot;true&quot;]
+{
+background-color: #fffafafa; /*colorToken.surface-1*/
+}
+#wSeparator
+{
+background-color: #fffafafa; /*colorToken.border-subtle*/
+}</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
