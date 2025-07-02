@@ -94,7 +94,6 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
     qtBugFixer(this)
 {
     ui->setupUi(this);
-    auto shet = ui->wSortNotifications->styleSheet();
     connect(AppState::instance().get(),
             &AppState::appStateChanged,
             this,
