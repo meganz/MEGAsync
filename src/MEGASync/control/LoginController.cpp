@@ -158,7 +158,7 @@ void LoginController::setState(State state)
         mState = state;
         emit stateChanged();
 
-        if (state == State::FETCH_NODES_FINISHED)
+        if (state == State::FETCH_NODES_FINISHED || state == State::FETCH_NODES_FINISHED_ONBOARDING)
         {
             onboardingFinished();
         }
