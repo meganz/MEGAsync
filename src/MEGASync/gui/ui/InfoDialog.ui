@@ -31,14 +31,53 @@
  background-color:  #F4F6F8;
  padding: 10px;
 }
+#wHeader
+{
+background-color: #fffafafa; /*colorToken.surface-1*/
+}
+#wContainerTabOptions, #wContainerTabOptions *
+{
+background-color: #fffafafa; /*colorToken.surface-1*/
+}
+#lTransfers[state=&quot;normal&quot;], #lRecents[state=&quot;normal&quot;]
+{
+background-color:&quot;transparent&quot;;
+}
+#lTransfers[state=&quot;selected&quot;], #lRecents[state=&quot;selected&quot;]
+{
+background-color:#ff04101E; /*colorToken.button-brand*/
+}
+/*********************************************/
 #tTransfers, #tNotifications
 {
-  font-family: &quot;Lato&quot;;
-  font-size: 15px;
-  color: rgba(0, 0, 0, 40%);
-  padding: 0px 8px 0px 8px;
-  border: none;
+ font-size: 14px;
+ color: #ff09bf5b; /*colorToken.button-primary*/
+ padding: 0px 8px 0px 8px;
+ border: none;
 }
+#tTransfers:hover, #tNotifications:hover
+{
+ color: #ff09bf5b; /*colorToken.button-primary-hover*/
+}
+#tTransfers:pressed, #tNotifications:pressed
+{
+ color: #ff09bf5b; /*colorToken.button-primary-pressed*/
+}
+#tTransfers.button-brand, #tNotifications.button-brand
+{
+ color: #ff09bf; /*colorToken.button-brand*/
+}
+/* Override hover for selected tabs */
+#tTransfers.button-brand:hover, #tNotifications.button-brand:hover
+{
+ color: #ff09bf;  /*colorToken.button-brand-hover*/
+}
+#tTransfers.button-brand:pressed, #tNotifications.button-brand:pressed
+{
+ color: #ff09bf;  /*colorToken.button-brand-pressed*/
+}
+/*********************************************/
+
 #wBottomFrame, #wBottomFrame *
 {
 border: none;
@@ -48,6 +87,10 @@ border: none;
  border-top-right-radius: 10px;
  border-top-left-radius: 10px;
  background-clip: padding;
+}
+#wHeader
+{
+background-color: #fffafafa; /*colorToken.surface-1*/
 }
 #tNotifications
 {
@@ -74,60 +117,16 @@ padding-right: 12px;
 padding-left: 12px;
 }
 
-#bUpgrade
-{
-font-family: Lato;
-font-size: 12px;
-line-height: 18px;
-border: 1px solid rgba(0, 0, 0, 10%);
-border-radius: 4px;
-color: #FFFFFF;
-padding: 4px 8px;
-background-color:  #00BFA5;
-image-position: left;
-text-align: right;
-}
-
-#bUpgrade::hover
-{
-background-color:  #00A787;
-}
-
-#bUpgrade::pressed
-{
-background-color: #00D7C2;
-}
-
-#bUpgrade::disabled
-{
-background-color: rgba(0, 191, 165, 30%);
-}
-
 #bCreateSync
 {
-font-family: Lato;
-font-size: 12px;
-line-height: 18px;
-border: 1px solid #CDCDCD;
-border-radius: 4px;
-padding: 4px 8px;
-image-position: right;
-text-align: left;
+image-position: left;
+text-align: right;
+qproperty-icon: url(:/images/themed/light/plus_icon_secondary.svg); /*replaceThemeToken*/
 }
-
-#bCreateSync::hover
+#bSettings
 {
-background-color: #FAFAFA;
-}
-
-#bCreateSync::pressed
-{
-background-color: #FFFFFF;
-}
-
-#bCreateSync::disabled
-{
-background-color: #FFFFFF;
+qproperty-icon: url(:/images/themed/light/menu.svg); /*replaceThemeToken*/
+background-color:&quot;transparent&quot;;
 }
 #wHeaderframe
 {
@@ -694,7 +693,7 @@ background-color: #fffafafa; /*colorToken.border-subtle*/
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
-                   <height>24</height>
+                   <height>26</height>
                   </size>
                  </property>
                  <property name="maximumSize">
@@ -715,6 +714,12 @@ background-color: #fffafafa; /*colorToken.border-subtle*/
                  <property name="flat">
                   <bool>true</bool>
                  </property>
+                 <property name="type" stdset="0">
+                  <string notr="true">primary</string>
+                 </property>
+                 <property name="dimension" stdset="0">
+                  <string notr="true">small</string>
+                 </property>
                 </widget>
                </item>
                <item>
@@ -722,7 +727,7 @@ background-color: #fffafafa; /*colorToken.border-subtle*/
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
-                   <height>24</height>
+                   <height>26</height>
                   </size>
                  </property>
                  <property name="maximumSize">
@@ -746,6 +751,12 @@ background-color: #fffafafa; /*colorToken.border-subtle*/
                  </property>
                  <property name="flat">
                   <bool>true</bool>
+                 </property>
+                 <property name="type" stdset="0">
+                  <string notr="true">secondary</string>
+                 </property>
+                 <property name="dimension" stdset="0">
+                  <string notr="true">small</string>
                  </property>
                 </widget>
                </item>

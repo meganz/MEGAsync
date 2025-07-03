@@ -1341,11 +1341,22 @@ void InfoDialog::resetLoggedInMode()
 
 void InfoDialog::on_tTransfers_clicked()
 {
-    ui->lTransfers->setStyleSheet(QString::fromUtf8("background-color: #3C434D;"));
-    ui->lRecents->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
+    ui->tTransfers->setProperty("class", QString::fromUtf8("button-brand"));
+    ui->tTransfers->style()->unpolish(ui->tTransfers);
+    ui->tTransfers->style()->polish(ui->tTransfers);
 
-    ui->tTransfers->setStyleSheet(QString::fromUtf8("color : #1D1D1D;"));
-    ui->tNotifications->setStyleSheet(QString::fromUtf8("color : #989899;"));
+    // Deselct the other tab
+    ui->tNotifications->setProperty("class", QString());
+    ui->tNotifications->style()->unpolish(ui->tNotifications);
+    ui->tNotifications->style()->polish(ui->tNotifications);
+
+    ui->lTransfers->setProperty("state", QString::fromUtf8("selected"));
+    ui->lTransfers->style()->unpolish(ui->lTransfers);
+    ui->lTransfers->style()->polish(ui->lTransfers);
+
+    ui->lRecents->setProperty("state", QString::fromUtf8("normal"));
+    ui->lRecents->style()->unpolish(ui->lRecents);
+    ui->lRecents->style()->polish(ui->lRecents);
 
     ui->sTabs->setCurrentWidget(ui->pTransfersTab);
 
@@ -1355,13 +1366,23 @@ void InfoDialog::on_tTransfers_clicked()
 
 void InfoDialog::on_tNotifications_clicked()
 {
+    ui->tNotifications->setProperty("class", QString::fromUtf8("button-brand"));
+    ui->tNotifications->style()->unpolish(ui->tNotifications);
+    ui->tNotifications->style()->polish(ui->tNotifications);
+
+    // Deselect the other tab
+    ui->tTransfers->setProperty("class", QString());
+    ui->tTransfers->style()->unpolish(ui->tTransfers);
+    ui->tTransfers->style()->polish(ui->tTransfers);
+
     app->getNotificationController()->requestNotifications();
+    ui->lRecents->setProperty("state", QString::fromUtf8("selected"));
+    ui->lRecents->style()->unpolish(ui->lRecents);
+    ui->lRecents->style()->polish(ui->lRecents);
+    ui->lTransfers->setProperty("state", QString::fromUtf8("normal"));
 
-    ui->lTransfers->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
-    ui->lRecents->setStyleSheet(QString::fromUtf8("background-color: #3C434D;"));
-
-    ui->tNotifications->setStyleSheet(QString::fromUtf8("color : #1D1D1D;"));
-    ui->tTransfers->setStyleSheet(QString::fromUtf8("color : #989899;"));
+    ui->lTransfers->style()->unpolish(ui->lTransfers);
+    ui->lTransfers->style()->polish(ui->lTransfers);
 
     ui->sTabs->setCurrentWidget(ui->pNotificationsTab);
 
