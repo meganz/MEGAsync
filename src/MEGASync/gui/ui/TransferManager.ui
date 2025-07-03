@@ -27,7 +27,20 @@
     <normaloff>../../../../../../.designer/backup</normaloff>../../../../../../.designer/backup</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">#wLeftPane
+   <string notr="true">QGroupBox
+{
+    border: none;
+}
+
+QGroupBox::title
+{
+    padding-left: 10px;
+    font-weight: 400;
+    color: #FF616366; /*colorToken.text-secondary*/
+    font-size: 10px;
+}
+
+#wLeftPane
 {
     background-color: #fff7f7f7; /*colorToken.surface-1*/
 }
@@ -51,6 +64,7 @@
 
 #wLeftPane QFrame[itsOn=true] &gt; QLabel
 {
+    font-weight: 600;
     color: #FF303233; /*colorToken.icon-primary*/
 }
 
@@ -62,6 +76,7 @@
 
 #wLeftPane QFrame[itsOn=false] &gt; QLabel
 {
+    font-weight: 400;
     color: #FF616366; /*colorToken.text-secondary*/
 }
 
@@ -69,13 +84,6 @@
 {
     font-weight: 400;
     color: #FF616366; /*colorToken.text-secondary*/
-}
-
-#wTransferring::title
-{
-    font-weight: 400;
-    color: #FF616366; /*colorToken.text-secondary*/
-    font-size: 10px;
 }
 
 #lTransfers
@@ -87,17 +95,67 @@
     qproperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
-QGroupBox
+QFrame[itsOn=false] &gt; #tAllTransfers
 {
-    font-size: 12px;
-    border: none;
+    qproperty-icon: url(:/images/themed/light/all_downloads.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
 }
 
-QGroupBox::title
+QFrame[itsOn=true] &gt; #tAllTransfers
 {
-    color: #666666;
-    padding-left: 10px;
+    qproperty-icon: url(:/images/themed/light/all_downloads_selected.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
 }
+
+QFrame[itsOn=false] &gt; #tDownloads
+{
+    qproperty-icon: url(:/images/themed/light/downloads.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+QFrame[itsOn=true] &gt; #tDownloads
+{
+    qproperty-icon: url(:/images/themed/light/downloads_selected.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+QFrame[itsOn=false] &gt; #tUploads
+{
+    qproperty-icon: url(:/images/themed/light/uploads.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+QFrame[itsOn=true] &gt; #tUploads
+{
+    qproperty-icon: url(:/images/themed/light/uploads_selected.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+QFrame[itsOn=false] &gt; #tCompleted
+{
+    qproperty-icon: url(:/images/themed/light/completed.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+QFrame[itsOn=true] &gt; #tCompleted
+{
+    qproperty-icon: url(:/images/themed/light/completed_selected.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+QFrame[itsOn=false] &gt; #tFailed
+{
+    qproperty-icon: url(:/images/themed/light/failed.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+QFrame[itsOn=true] &gt; #tFailed
+{
+    qproperty-icon: url(:/images/themed/light/failed_selected.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+/* tokenized to here */
 
 #wTransferring QFrame, #wSearch QFrame
 {
@@ -895,9 +953,11 @@ QToolButton
                 <property name="text">
                  <string>All transfers</string>
                 </property>
-                <property name="icon">
-                 <iconset resource="../Resources.qrc">
-                  <normaloff>:/images/transfer_manager/sidebar/all_transfers_ico_default.png</normaloff>:/images/transfer_manager/sidebar/all_transfers_ico_default.png</iconset>
+                <property name="iconSize">
+                 <size>
+                  <width>24</width>
+                  <height>24</height>
+                 </size>
                 </property>
                 <property name="checkable">
                  <bool>true</bool>
@@ -973,10 +1033,6 @@ QToolButton
                 <property name="text">
                  <string>Downloads</string>
                 </property>
-                <property name="icon">
-                 <iconset resource="../Resources.qrc">
-                  <normaloff>:/images/transfer_manager/sidebar/downloads_ico_default.png</normaloff>:/images/transfer_manager/sidebar/downloads_ico_default.png</iconset>
-                </property>
                 <property name="checkable">
                  <bool>true</bool>
                 </property>
@@ -1047,10 +1103,6 @@ QToolButton
                 </property>
                 <property name="text">
                  <string>Uploads</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../Resources.qrc">
-                  <normaloff>:/images/transfer_manager/sidebar/uploads_ico_default.png</normaloff>:/images/transfer_manager/sidebar/uploads_ico_default.png</iconset>
                 </property>
                 <property name="checkable">
                  <bool>true</bool>
@@ -1126,10 +1178,6 @@ QToolButton
                 <property name="text">
                  <string>Completed</string>
                 </property>
-                <property name="icon">
-                 <iconset resource="../Resources.qrc">
-                  <normaloff>:/images/transfer_manager/sidebar/finished_ico_default.png</normaloff>:/images/transfer_manager/sidebar/finished_ico_default.png</iconset>
-                </property>
                 <property name="checkable">
                  <bool>true</bool>
                 </property>
@@ -1203,10 +1251,6 @@ QToolButton
                 </property>
                 <property name="text">
                  <string>Failed</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../Resources.qrc">
-                  <normaloff>:/images/transfer_manager/sidebar/sidebar_failed_ico_default.png</normaloff>:/images/transfer_manager/sidebar/sidebar_failed_ico_default.png</iconset>
                 </property>
                 <property name="checkable">
                  <bool>true</bool>
