@@ -21,7 +21,6 @@
 
 #bUpgrade
 {
-        font-family: Lato;
 	font-size: 12px;
 	line-height: 16px;
 	border: 1px solid #0000001A;
@@ -58,13 +57,13 @@
 {
 	border-style: none;
 	border-radius: 4px;
-	background-color: #EDEDED; /*colorToken.indicator-background*/
+	background-color: #ffededed; /*colorToken.indicator-background*/
 	max-height: 8px;
 }
 
 #pbStorage::chunk[state=&quot;default&quot;]
 {
-	background-color: #09BF5B; /*colorToken.indicator-green*/
+	background-color: #ff09bf5b; /*colorToken.indicator-green*/
 	border-top-left-radius: 4px;
 	border-bottom-left-radius: 4px;
 	border-top-right-radius: 0px;
@@ -73,7 +72,7 @@
 
 #pbStorage::chunk[state=&quot;almost&quot;]
 {
-	background-color: #FB6514; /*colorToken.indicator-orange*/
+	background-color: #fffb6514; /*colorToken.indicator-orange*/
 	border-top-left-radius: 4px;
 	border-bottom-left-radius: 4px;
 	border-top-right-radius: 0px;
@@ -82,7 +81,7 @@
 
 #pbStorage::chunk[state=&quot;almostfull&quot;]
 {
-	background-color: #FB6514; /*colorToken.indicator-orange*/
+	background-color: #fffb6514; /*colorToken.indicator-orange*/
 	border-top-left-radius: 4px;
 	border-bottom-left-radius: 4px;
 	border-top-right-radius: 4px;
@@ -91,7 +90,7 @@
 
 #pbStorage::chunk[state=&quot;full&quot;]
 {
-	background-color: #F63D6B; /*colorToken.indicator-pink*/
+	background-color: #fff63d6b; /*colorToken.indicator-pink*/
 	border-top-left-radius: 4px;
 	border-bottom-left-radius: 4px;
 	border-top-right-radius: 4px;
