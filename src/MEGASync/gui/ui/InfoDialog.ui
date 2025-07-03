@@ -49,7 +49,6 @@ background-color:transparent;
 {
 background-color:#ff04101E; /*colorToken.button-brand*/
 }
-
 #tTransfers, #tNotifications
 {
  font-size: 14px;
@@ -82,6 +81,29 @@ background-color: #fffafafa; /*colorToken.surface-1*/
 {
 background-color: #fffafafa; /*colorToken.surface-1*/
 }
+#tTransfers:hover, #tNotifications:hover
+{
+ color: #ff09bf5b; /*colorToken.button-primary-hover*/
+}
+#tTransfers:pressed, #tNotifications:pressed
+{
+ color: #ff09bf5b; /*colorToken.button-primary-pressed*/
+}
+#tTransfers.button-brand, #tNotifications.button-brand
+{
+ color: #ff09bf; /*colorToken.button-brand*/
+}
+/* Override hover for selected tabs */
+#tTransfers.button-brand:hover, #tNotifications.button-brand:hover
+{
+ color: #ff09bf;  /*colorToken.button-brand-hover*/
+}
+#tTransfers.button-brand:pressed, #tNotifications.button-brand:pressed
+{
+ color: #ff09bf;  /*colorToken.button-brand-pressed*/
+}
+/*********************************************/
+
 #wBottomFrame, #wBottomFrame *
 {
 border: none;
