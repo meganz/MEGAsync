@@ -299,8 +299,7 @@ public:
 
     void retryTransferByIndex(const QModelIndex& index);
     void retryTransfers(QModelIndexList indexes, unsigned long long suggestedUploadAppData = 0, unsigned long long suggestedDownloadAppData = 0);
-    void retryTransfersByAppDataId(const std::shared_ptr<TransferMetaData> &data);
-    void retrySyncFailedTransfers(const QList<mega::MegaHandle>& handlesToRetry);
+    void retryTransfersByAppDataId(const std::shared_ptr<TransferMetaData>& data);
 
     void cancelAndClearTransfers(const QModelIndexList& indexes, QWidget *canceledFrom);
     void cancelAllTransfers(QWidget *canceledFrom);
@@ -456,8 +455,6 @@ private:
     QList<QExplicitlySharedDataPointer<TransferData>> mTransfers;
     QHash<int,QExplicitlySharedDataPointer<TransferData>> mFailedFoldersByTag;
     QHash<mega::MegaHandle,QPersistentModelIndex> mCompletedTransfersByTag;
-
-    QHash<mega::MegaHandle, QPersistentModelIndex> mRetryableSyncFailedTransfersByHandle;
 
     TransferThread::TransfersToProcess mTransfersToProcess;
     QFutureWatcher<void> mUpdateTransferWatcher;
