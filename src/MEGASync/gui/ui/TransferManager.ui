@@ -157,6 +157,32 @@ QFrame[itsOn=true] &gt; #tFailed
 
 /* tokenized to here */
 
+#bPause, #bSearch
+{
+    height: 32px;
+    width: 32px;
+    padding: 0px;
+    margin: 0px;
+    border-radius: 16px;
+    background-color: #ffefefff0; /*colorToken.surface-2*/
+}
+
+#bPause
+{
+    qproperty-iconSize: 16px;
+    qproperty-icon: url(:/images/themed/light/pause.svg); /*replaceThemeToken*/
+}
+
+#bSearch
+{
+    qproperty-iconSize: 16px;
+    qproperty-icon: url(:/images/themed/light/search.svg); /*replaceThemeToken*/
+}
+
+
+/* working on action buttons. */
+
+
 #wTransferring QFrame, #wSearch QFrame
 {
     padding-right: 6px;
@@ -195,15 +221,6 @@ QFrame[itsOn=true] &gt; #tFailed
      height: 34px;
      min-height: 34px;
      max-height: 34px;
-}
-
-#pSearch
-{
-    height: 34px;
-    min-height: 34px;
-    max-height: 34px;
-    border-radius: 17px;
-    background-color: #E9E9E9;
 }
 
 #leSearchField
@@ -249,20 +266,6 @@ QFrame[itsOn=true] &gt; #tFailed
     max-width: 24px;
     max-height: 24px;
     qProperty-iconSize: 16px;
-}
-
-#bPause, #bSearch
-{
-    height: 32px;
-    width: 32px;
-    min-height: 32px;
-    min-width: 32px;
-    max-height: 32px;
-    max-width: 32px;
-    qProperty-iconSize: 32px;
-    padding: 0px;
-    margin: 0px;
-    border: none;
 }
 
 #sStatus
@@ -749,14 +752,14 @@ QToolButton
              <widget class="QPushButton" name="bPause">
               <property name="minimumSize">
                <size>
-                <width>32</width>
-                <height>32</height>
+                <width>0</width>
+                <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>32</width>
-                <height>32</height>
+                <width>16777215</width>
+                <height>16777215</height>
                </size>
               </property>
               <property name="cursor">
@@ -765,17 +768,16 @@ QToolButton
               <property name="focusPolicy">
                <enum>Qt::StrongFocus</enum>
               </property>
-              <property name="icon">
-               <iconset resource="../Resources.qrc">
-                <normaloff>:/images/transfer_manager/sidebar/sidebar_pause_ico_default.png</normaloff>:/images/transfer_manager/sidebar/sidebar_pause_ico_default.png</iconset>
-              </property>
               <property name="iconSize">
                <size>
-                <width>32</width>
-                <height>32</height>
+                <width>16</width>
+                <height>16</height>
                </size>
               </property>
               <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="flat">
                <bool>true</bool>
               </property>
               <property name="hover_selected" stdset="0">
@@ -787,14 +789,14 @@ QToolButton
              <widget class="QPushButton" name="bSearch">
               <property name="minimumSize">
                <size>
-                <width>32</width>
-                <height>32</height>
+                <width>0</width>
+                <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>32</width>
-                <height>32</height>
+                <width>16777215</width>
+                <height>16777215</height>
                </size>
               </property>
               <property name="cursor">
@@ -803,15 +805,14 @@ QToolButton
               <property name="toolTip">
                <string>Search</string>
               </property>
-              <property name="icon">
-               <iconset resource="../Resources.qrc">
-                <normaloff>:/images/transfer_manager/sidebar/sidebar_search_ico_default.png</normaloff>:/images/transfer_manager/sidebar/sidebar_search_ico_default.png</iconset>
-              </property>
               <property name="iconSize">
                <size>
-                <width>32</width>
-                <height>32</height>
+                <width>16</width>
+                <height>16</height>
                </size>
+              </property>
+              <property name="flat">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -966,7 +967,7 @@ QToolButton
                  <bool>false</bool>
                 </property>
                 <property name="flat">
-                 <bool>false</bool>
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -1410,7 +1411,7 @@ QToolButton
            <string notr="true"/>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="pSpeedAndClear">
            <layout class="QHBoxLayout" name="pSpeedAndClearLayout" stretch="0,0,0,1">
@@ -1671,32 +1672,6 @@ QToolButton
             <property name="bottomMargin">
              <number>0</number>
             </property>
-            <item>
-             <widget class="QPushButton" name="bUpToDate">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Up to date</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../Resources.qrc">
-                <normaloff>:/images/transfer_manager/sidebar/up_to_date_ico.png</normaloff>:/images/transfer_manager/sidebar/up_to_date_ico.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>24</width>
-                <height>24</height>
-               </size>
-              </property>
-              <property name="ignore_button_manager" stdset="0">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
            </layout>
           </widget>
           <widget class="QWidget" name="pSomeIssues">
@@ -2886,7 +2861,6 @@ QToolButton
   <tabstop>fSearchString</tabstop>
   <tabstop>tClearSearchResult</tabstop>
   <tabstop>bScanning</tabstop>
-  <tabstop>bUpToDate</tabstop>
   <tabstop>tNoDownloads</tabstop>
   <tabstop>tNoTransfers</tabstop>
   <tabstop>tNoResults</tabstop>
