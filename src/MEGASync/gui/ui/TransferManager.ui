@@ -37,16 +37,10 @@
     text-align: right;
 }
 
-#wLeftPane QFrame &gt; QPushButton
-{
-    font-weight: 400;
-    font-size: 12px;
-}
-
 #wLeftPane QFrame[itsOn=true]
 {
     border-radius: 4px;
-    background-color: #ffffffff; /*colorToken.page-background*/
+    background-color: #FFFFFFFF; /*colorToken.page-background*/
 }
 
 #wLeftPane QFrame[itsOn=false]
@@ -55,10 +49,42 @@
     background-color: transparent;
 }
 
+#wLeftPane QFrame[itsOn=true] &gt; QLabel
+{
+    color: #FF303233; /*colorToken.icon-primary*/
+}
+
 #wLeftPane QFrame[itsOn=true] &gt; QPushButton
 {
     font-weight: 600;
-    font-size: 12px;
+    color: #FF303233; /*colorToken.icon-primary*/
+}
+
+#wLeftPane QFrame[itsOn=false] &gt; QLabel
+{
+    color: #FF616366; /*colorToken.text-secondary*/
+}
+
+#wLeftPane QFrame[itsOn=false] &gt; QPushButton
+{
+    font-weight: 400;
+    color: #FF616366; /*colorToken.text-secondary*/
+}
+
+#wTransferring::title
+{
+    font-weight: 400;
+    color: #FF616366; /*colorToken.text-secondary*/
+    font-size: 10px;
+}
+
+#lTransfers
+{
+    color: #FF303233; /*colorToken.text-primary*/
+    font-size: 20px;
+    font-weight: 400;
+    padding-left: 12px;
+    qproperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
 QGroupBox
@@ -71,15 +97,6 @@ QGroupBox::title
 {
     color: #666666;
     padding-left: 10px;
-}
-
-#lTransfers
-{
-    color: #333333;
-    font-size: 20px;
-    font-weight: 600;
-    padding-left: 12px;
-    qproperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
 #wTransferring QFrame, #wSearch QFrame
@@ -706,9 +723,6 @@ QToolButton
               <property name="hover_selected" stdset="0">
                <bool>true</bool>
               </property>
-              <property name="default_icon" stdset="0">
-               <string notr="true">qrc:/images/transfer_manager/sidebar/sidebar_pause_ico_default.png</string>
-              </property>
              </widget>
             </item>
             <item>
@@ -740,9 +754,6 @@ QToolButton
                 <width>32</width>
                 <height>32</height>
                </size>
-              </property>
-              <property name="default_icon" stdset="0">
-               <string notr="true">qrc:/images/transfer_manager/sidebar/sidebar_search_ico_default.png</string>
               </property>
              </widget>
             </item>
@@ -806,9 +817,6 @@ QToolButton
               <property name="icon">
                <iconset resource="../Resources.qrc">
                 <normaloff>:/images/transfer_manager/sidebar/delete_search_ico_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_ico_default.png</iconset>
-              </property>
-              <property name="default_icon" stdset="0">
-               <string notr="true">qrc:/images/transfer_manager/sidebar/delete_search_ico_default.png</string>
               </property>
              </widget>
             </item>
@@ -900,9 +908,6 @@ QToolButton
                 <property name="flat">
                  <bool>false</bool>
                 </property>
-                <property name="default_icon" stdset="0">
-                 <string notr="true">qrc:/images/transfer_manager/sidebar/all_transfers_ico_default.png</string>
-                </property>
                </widget>
               </item>
               <item alignment="Qt::AlignRight">
@@ -978,9 +983,6 @@ QToolButton
                 <property name="autoDefault">
                  <bool>false</bool>
                 </property>
-                <property name="default_icon" stdset="0">
-                 <string notr="true">qrc:/images/transfer_manager/sidebar/downloads_ico_default.png</string>
-                </property>
                </widget>
               </item>
               <item alignment="Qt::AlignRight">
@@ -1055,9 +1057,6 @@ QToolButton
                 </property>
                 <property name="autoDefault">
                  <bool>false</bool>
-                </property>
-                <property name="default_icon" stdset="0">
-                 <string notr="true">qrc:/images/transfer_manager/sidebar/uploads_ico_default.png</string>
                 </property>
                </widget>
               </item>
@@ -1137,9 +1136,6 @@ QToolButton
                 <property name="autoDefault">
                  <bool>false</bool>
                 </property>
-                <property name="default_icon" stdset="0">
-                 <string notr="true">qrc:/images/transfer_manager/sidebar/finished_ico_default.png</string>
-                </property>
                </widget>
               </item>
               <item alignment="Qt::AlignRight">
@@ -1217,9 +1213,6 @@ QToolButton
                 </property>
                 <property name="autoDefault">
                  <bool>false</bool>
-                </property>
-                <property name="default_icon" stdset="0">
-                 <string notr="true">qrc:/images/transfer_manager/sidebar/sidebar_failed_ico_default.png</string>
                 </property>
                </widget>
               </item>
@@ -1332,9 +1325,6 @@ QToolButton
                 <property name="autoDefault">
                  <bool>false</bool>
                 </property>
-                <property name="default_icon" stdset="0">
-                 <string notr="true">qrc:/images/transfer_manager/sidebar/search_result_default.png</string>
-                </property>
                </widget>
               </item>
               <item>
@@ -1348,9 +1338,6 @@ QToolButton
                 <property name="icon">
                  <iconset resource="../Resources.qrc">
                   <normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</iconset>
-                </property>
-                <property name="default_icon" stdset="0">
-                 <string notr="true">qrc:/images/transfer_manager/sidebar/delete_search_result_default.png</string>
                 </property>
                </widget>
               </item>
@@ -2085,9 +2072,6 @@ QToolButton
                <iconset resource="../Resources.qrc">
                 <normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</iconset>
               </property>
-              <property name="default_icon" stdset="0">
-               <string notr="true">qrc:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</string>
-              </property>
              </widget>
             </item>
             <item>
@@ -2101,9 +2085,6 @@ QToolButton
               <property name="icon">
                <iconset resource="../Resources.qrc">
                 <normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</iconset>
-              </property>
-              <property name="default_icon" stdset="0">
-               <string notr="true">qrc:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</string>
               </property>
              </widget>
             </item>
@@ -2119,9 +2100,6 @@ QToolButton
                <iconset resource="../Resources.qrc">
                 <normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</iconset>
               </property>
-              <property name="default_icon" stdset="0">
-               <string notr="true">qrc:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</string>
-              </property>
              </widget>
             </item>
             <item>
@@ -2132,9 +2110,6 @@ QToolButton
               <property name="icon">
                <iconset resource="../Resources.qrc">
                 <normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</iconset>
-              </property>
-              <property name="default_icon" stdset="0">
-               <string notr="true">qrc:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</string>
               </property>
              </widget>
             </item>
