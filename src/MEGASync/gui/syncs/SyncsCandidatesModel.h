@@ -43,7 +43,7 @@ private:
               const QString& originalMegaSyncFolder,
               const QString& localSyncFolder,
               const QString& megaSyncFolder);
-    bool exist(const QString& path, SyncsCandidadteModelRole syncsCandidateRole);
+    bool exist(const QString& pathToAdd, SyncsCandidadteModelRole syncsCandidateRole);
 
     std::vector<SyncCandidate> mSyncCandidates;
 };
