@@ -52,7 +52,8 @@ QGroupBox::title
 
 #wLeftPane QFrame[itsOn=true]
 {
-    border-radius: 4px;
+    border: none;
+    border-radius: 6px;
     background-color: #FFFFFFFF; /*colorToken.page-background*/
 }
 
@@ -155,8 +156,6 @@ QFrame[itsOn=true] &gt; #tFailed
     qproperty-iconSize: 16px;
 }
 
-/* tokenized to here */
-
 #bPause, #bSearch
 {
     height: 32px;
@@ -179,9 +178,7 @@ QFrame[itsOn=true] &gt; #tFailed
     qproperty-icon: url(:/images/themed/light/search.svg); /*replaceThemeToken*/
 }
 
-
-/* working on action buttons. */
-
+/* tokenized to here */
 
 #wTransferring QFrame, #wSearch QFrame
 {
@@ -921,6 +918,15 @@ QToolButton
            </property>
            <item>
             <widget class="QFrame" name="fAllTransfers">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Plain</enum>
+             </property>
+             <property name="lineWidth">
+              <number>0</number>
+             </property>
              <layout class="QHBoxLayout" name="horizontalLayout_10">
               <property name="spacing">
                <number>5</number>
