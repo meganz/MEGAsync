@@ -1320,27 +1320,27 @@ void TransfersModel::processUpdateTransfers()
         auto d  = getTransfer(row);
         if (d && !d->ignoreUpdate(itValue->getState()))
         {
-            if(!mCompletedTransfersByTag.contains(itValue->mNodeHandle))
-            {
-                itValue->setPreviousState(d->getState());
-                d = itValue;
+            itValue->setPreviousState(d->getState());
+            d = itValue;
 
-                updateTransfer(d, row);
-                sendDataChanged(row);
-                d->resetStateHasChanged();
-            }
-            else
+            updateTransfer(d, row);
+            sendDataChanged(row);
+            d->resetStateHasChanged();
+
+            if (mCompletedTransfersTagByHandle.contains(itValue->mNodeHandle) &&
+                mCompletedTransfersTagByHandle.value(itValue->mNodeHandle) == itValue->mTag)
             {
                 assert(false);
-                MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::DUP_FINISHED_TRSF,
-                                                               { QString::number(itValue->mTag) });
+                MegaSyncApp->getStatsEventHandler()->sendEvent(
+                    AppStatsEvents::EventType::DUP_FINISHED_TRSF,
+                    {QString::number(itValue->mTag)});
             }
 
             if (!d->isSyncTransfer() && d->isCompleted() &&
                 itValue->mNodeHandle != mega::INVALID_HANDLE &&
-                !mCompletedTransfersByTag.contains(itValue->mNodeHandle))
+                !mCompletedTransfersTagByHandle.contains(itValue->mNodeHandle))
             {
-                mCompletedTransfersByTag.insert(d->mNodeHandle, index(row, 0));
+                mCompletedTransfersTagByHandle.insert(d->mNodeHandle, itValue->mTag);
             }
         }
     }

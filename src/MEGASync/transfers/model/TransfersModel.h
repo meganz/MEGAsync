@@ -455,7 +455,7 @@ private:
 
     QList<QExplicitlySharedDataPointer<TransferData>> mTransfers;
     QHash<int,QExplicitlySharedDataPointer<TransferData>> mFailedFoldersByTag;
-    QHash<mega::MegaHandle,QPersistentModelIndex> mCompletedTransfersByTag;
+    QHash<mega::MegaHandle, int> mCompletedTransfersTagByHandle;
 
     QHash<mega::MegaHandle, QPersistentModelIndex> mRetryableSyncFailedTransfersByHandle;
 
