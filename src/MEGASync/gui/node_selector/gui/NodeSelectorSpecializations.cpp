@@ -137,13 +137,7 @@ void DownloadNodeSelector::onOkButtonClicked()
 /////////////////////////////////////////////////////////////
 SyncNodeSelector::SyncNodeSelector(QWidget* parent):
     NodeSelector(SelectTypeSPtr(new SyncType), parent)
-{
-    if (isFullSync())
-    {
-        ui->fCloudDrive->setVisible(false);
-        emit ui->bShowIncomingShares->clicked();
-    }
-}
+{}
 
 void SyncNodeSelector::createSpecialisedWidgets()
 {
