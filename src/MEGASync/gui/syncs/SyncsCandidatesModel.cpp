@@ -1,5 +1,7 @@
 #include "SyncsCandidatesModel.h"
 
+#include "Utilities.h"
+
 #include <QQmlContext>
 
 #include <vector>
@@ -138,18 +140,29 @@ void SyncsCandidatesModel::edit(const QString& originalLocalSyncFolder,
     }
 }
 
-bool SyncsCandidatesModel::exist(const QString& path,
+bool SyncsCandidatesModel::exist(const QString& pathToAdd,
                                  SyncsCandidatesModel::SyncsCandidadteModelRole syncsCandidateRole)
 {
     auto itSyncFound =
         std::find_if(mSyncCandidates.begin(),
                      mSyncCandidates.end(),
-                     [path, syncsCandidateRole](const auto& syncCandidate)
+                     [pathToAdd, syncsCandidateRole](const auto& syncCandidate)
                      {
-                         return (syncsCandidateRole == SyncsCandidadteModelRole::LOCAL_FOLDER &&
-                                 syncCandidate.first == path.toStdString()) ||
-                                (syncsCandidateRole == SyncsCandidadteModelRole::MEGA_FOLDER &&
-                                 syncCandidate.second == path.toStdString());
+                         QString commonPath;
+                         QString candidatePath;
+
+                         if (syncsCandidateRole == SyncsCandidadteModelRole::LOCAL_FOLDER)
+                         {
+                             candidatePath = QString::fromStdString(syncCandidate.first);
+                             commonPath = Utilities::getCommonPath(pathToAdd, candidatePath, false);
+                         }
+                         else
+                         {
+                             candidatePath = QString::fromStdString(syncCandidate.second);
+                             commonPath = Utilities::getCommonPath(pathToAdd, candidatePath, true);
+                         }
+
+                         return (commonPath == candidatePath) || (commonPath == pathToAdd);
                      });
 
     return (itSyncFound != mSyncCandidates.end());
