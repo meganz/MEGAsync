@@ -1432,7 +1432,7 @@ QToolButton
            <string notr="true"/>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>3</number>
           </property>
           <widget class="QWidget" name="pSpeedAndClear">
            <layout class="QHBoxLayout" name="pSpeedAndClearLayout" stretch="0,0,0,1">

@@ -17,15 +17,46 @@
    <enum>Qt::LeftToRight</enum>
   </property>
   <property name="styleSheet">
-   <string notr="true">*
-{
-    font-family: Lato;
-}
-
-QGroupBox
+   <string notr="true">QGroupBox
 {
     font-size: 12px;
     border: none;
+}
+
+#bArchives
+{
+    qproperty-icon: url(:/images/themed/light/archives.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+#bAudio
+{
+    qproperty-icon: url(:/images/themed/light/audio.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+#bDocuments
+{
+    qproperty-icon: url(:/images/themed/light/documents.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+#bImages
+{
+    qproperty-icon: url(:/images/themed/light/images.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+#bVideos
+{
+    qproperty-icon: url(:/images/themed/light/video.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+#bOther
+{
+    qproperty-icon: url(:/images/themed/light/other.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
 }
 
 #bTitle
@@ -107,13 +138,13 @@ QGroupBox
     <number>8</number>
    </property>
    <property name="leftMargin">
-    <number>0</number>
+    <number>12</number>
    </property>
    <property name="topMargin">
     <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>12</number>
    </property>
    <property name="bottomMargin">
     <number>0</number>
@@ -230,10 +261,6 @@ QGroupBox
            <property name="text">
             <string notr="true"/>
            </property>
-           <property name="icon">
-            <iconset theme="compressed" resource="../../../gui/Resources_common.qrc">
-             <normaloff>:/images/transfer_manager/sidebar/compressed_default.png</normaloff>:/images/transfer_manager/sidebar/compressed_default.png</iconset>
-           </property>
            <property name="checkable">
             <bool>true</bool>
            </property>
@@ -314,10 +341,6 @@ QGroupBox
            <property name="text">
             <string notr="true"/>
            </property>
-           <property name="icon">
-            <iconset theme="text" resource="../../../gui/Resources_common.qrc">
-             <normaloff>:/images/transfer_manager/sidebar/text_default.png</normaloff>:/images/transfer_manager/sidebar/text_default.png</iconset>
-           </property>
            <property name="checkable">
             <bool>true</bool>
            </property>
@@ -394,10 +417,6 @@ QGroupBox
            </property>
            <property name="text">
             <string notr="true"/>
-           </property>
-           <property name="icon">
-            <iconset theme="image" resource="../../../gui/Resources_common.qrc">
-             <normaloff>:/images/transfer_manager/sidebar/image_default.png</normaloff>:/images/transfer_manager/sidebar/image_default.png</iconset>
            </property>
            <property name="checkable">
             <bool>true</bool>
@@ -476,10 +495,6 @@ QGroupBox
            <property name="text">
             <string notr="true"/>
            </property>
-           <property name="icon">
-            <iconset theme="video" resource="../../../gui/Resources_common.qrc">
-             <normaloff>:/images/transfer_manager/sidebar/video_default.png</normaloff>:/images/transfer_manager/sidebar/video_default.png</iconset>
-           </property>
            <property name="checkable">
             <bool>true</bool>
            </property>
@@ -557,10 +572,6 @@ QGroupBox
            <property name="text">
             <string notr="true"/>
            </property>
-           <property name="icon">
-            <iconset theme="audio" resource="../../../gui/Resources_common.qrc">
-             <normaloff>:/images/transfer_manager/sidebar/audio_default.png</normaloff>:/images/transfer_manager/sidebar/audio_default.png</iconset>
-           </property>
            <property name="checkable">
             <bool>true</bool>
            </property>
@@ -637,10 +648,6 @@ QGroupBox
            </property>
            <property name="text">
             <string notr="true"/>
-           </property>
-           <property name="icon">
-            <iconset theme="generic" resource="../../../gui/Resources_common.qrc">
-             <normaloff>:/images/transfer_manager/sidebar/generic_default.png</normaloff>:/images/transfer_manager/sidebar/generic_default.png</iconset>
            </property>
            <property name="checkable">
             <bool>true</bool>
