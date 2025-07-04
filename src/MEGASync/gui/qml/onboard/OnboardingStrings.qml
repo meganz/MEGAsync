@@ -120,8 +120,7 @@ QtObject {
     readonly property string syncCandidatesRemoveDialogCancelButtonTitle : qsTr("Cancel")
     readonly property string syncCandidatesRemoveDialogRemoveButtonTitle : qsTr("Remove")
     readonly property string syncCandidatesRemoveDialogDescription : qsTr("Are you sure you want to remove the selected sync?")
-    readonly property string syncCandidatesRemoveDialogDescriptionLastItem : qsTr("Removing this sync will take you back to the start of setup.")
-
+    readonly property string syncCandidatesRemoveDialogDescriptionLastItem : qsTr("This will start the sync setup again.")
 
     // Two Factor Authentication
     // Not moved to avoid change of context and generate new strings in the ts file
