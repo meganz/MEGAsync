@@ -362,7 +362,7 @@ QString Syncs::getLocalError() const
 
         case LocalErrors::ALREADY_SYNC_CANDIDATE:
         {
-            return tr("Folder can't be synced as it's already a candidate.");
+            return tr("This folder is already in the list of pending syncs.");
         }
 
         case LocalErrors::NO_ACCESS_PERMISSIONS_CANT_CREATE:
@@ -407,7 +407,7 @@ QString Syncs::getRemoteError() const
 
         case RemoteErrors::ALREADY_SYNC_CANDIDATE:
         {
-            return tr("Folder can't be synced as it's already a candidate.");
+            return tr("This folder is already in the list of pending syncs.");
         }
 
         case RemoteErrors::CANT_SYNC:

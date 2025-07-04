@@ -5687,11 +5687,6 @@ Enter a different name.</translation>
         <translation>Remove sync?</translation>
     </message>
     <message>
-        <source>Removing this sync will take you back to the start of setup.</source>
-        <translatorcomment>Description off the consequences of removing the last sync candidate left on the table. CON-1386</translatorcomment>
-        <translation>Removing this sync will take you back to the start of setup.</translation>
-    </message>
-    <message>
         <source>Rename</source>
         <translatorcomment>Button to rename a backup CON-468</translatorcomment>
         <translation>Rename</translation>
@@ -5880,6 +5875,11 @@ Enter a different name.</translation>
         <source>Add</source>
         <translatorcomment>Button label to add a new sync candidate. CON-1386</translatorcomment>
         <translation type="unfinished">Add</translation>
+    </message>
+    <message>
+        <source>This will start the sync setup again.</source>
+        <translatorcomment>Description off the consequences of removing the last sync candidate left on the table. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8733,11 +8733,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Folder can’t be synced as it can’t be located. It may have been moved or deleted, or you might not have access.</translation>
     </message>
     <message>
-        <source>Folder can&apos;t be synced as it&apos;s already a candidate.</source>
-        <translatorcomment>Error message indicating the user we have a sync candidate with the same folder already in the sync candidates table. CON-1386</translatorcomment>
-        <translation>Folder can’t be synced as it’s already a candidate.</translation>
-    </message>
-    <message>
         <source>Select a MEGA folder to sync.</source>
         <translatorcomment>Error message indicating that the user should choose a remote folder (cloud/mega) in order to create a sync. CON-467</translatorcomment>
         <translation>Select a MEGA folder to sync</translation>
@@ -8746,6 +8741,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Select a local folder to sync.</source>
         <translatorcomment>Error message indicating that the user should choose a local folder in order to create a sync. CON-467</translatorcomment>
         <translation>Select a local folder to sync</translation>
+    </message>
+    <message>
+        <source>This folder is already in the list of pending syncs.</source>
+        <translatorcomment>Error message indicating the user we have a sync candidate with the same folder already in the sync candidates table. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
