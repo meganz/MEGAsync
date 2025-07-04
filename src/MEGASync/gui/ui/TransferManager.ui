@@ -166,10 +166,16 @@ QFrame[itsOn=true] &gt; #tFailed
     background-color: #ffefefff0; /*colorToken.surface-2*/
 }
 
-#bPause
+#bPause, #bPause.pause
 {
     qproperty-iconSize: 16px;
     qproperty-icon: url(:/images/themed/light/pause.svg); /*replaceThemeToken*/
+}
+
+#bPause.play
+{
+    qproperty-iconSize: 16px;
+    qproperty-icon: url(:/images/themed/light/play.svg); /*replaceThemeToken*/
 }
 
 #bSearch
@@ -775,9 +781,6 @@ QToolButton
                <bool>true</bool>
               </property>
               <property name="flat">
-               <bool>true</bool>
-              </property>
-              <property name="hover_selected" stdset="0">
                <bool>true</bool>
               </property>
              </widget>
@@ -1417,7 +1420,7 @@ QToolButton
            <string notr="true"/>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="pSpeedAndClear">
            <layout class="QHBoxLayout" name="pSpeedAndClearLayout" stretch="0,0,0,1">

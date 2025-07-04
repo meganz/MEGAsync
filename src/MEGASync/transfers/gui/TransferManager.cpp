@@ -152,13 +152,7 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
         }
     }
 
-    auto managedButtons = mUi->wLeftPane->findChildren<QAbstractButton*>();
-    foreach(auto& button, managedButtons)
-    {
-        mButtonIconManager.addButton(button);
-    }
-
-    managedButtons = mUi->wRightPaneHeader->findChildren<QAbstractButton*>();
+    auto managedButtons = mUi->wRightPaneHeader->findChildren<QAbstractButton*>();
     foreach(auto& button, managedButtons)
     {
         mButtonIconManager.addButton(button);
@@ -243,7 +237,6 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
     mUi->wAllResults->installEventFilter(this);
     mUi->wDlResults->installEventFilter(this);
     mUi->wUlResults->installEventFilter(this);
-    mUi->wLeftPane->installEventFilter(this);
 
     mUi->lTextSearch->installEventFilter(this);
     mUi->leSearchField->installEventFilter(this);
@@ -493,6 +486,8 @@ void TransferManager::onUpdatePauseState(bool isPaused)
             mUi->bPause->blockSignals(false);
         }
     }
+
+    updatePauseButtonClass();
 
     checkPauseButtonVisibilityIfPossible();
 }
@@ -892,6 +887,8 @@ void TransferManager::on_bPause_toggled()
     pauseResumeTransfers(newState);
 
     showQuotaStorageDialogs(newState);
+
+    updatePauseButtonClass();
 }
 
 void TransferManager::pauseResumeTransfers(bool isPaused)
@@ -1340,11 +1337,6 @@ bool TransferManager::eventFilter(QObject *obj, QEvent *event)
             }
         }
     }
-    else if(obj == mUi->wLeftPane && event->type() == QEvent::Polish)
-    {
-        //Set the style for the first time as you need to update it as it depends on properties
-        mUi->wLeftPane->setStyleSheet(mUi->wLeftPane->styleSheet());
-    }
 
     return QDialog::eventFilter(obj, event);
 }
@@ -1497,4 +1489,14 @@ void TransferManager::onRequestTaskbarPinningTimeout()
 {
     mTaskbarPinningRequestTimer->stop();
     Platform::getInstance()->pinOnTaskbar();
+}
+
+void TransferManager::updatePauseButtonClass()
+{
+    mUi->bPause->setProperty("class",
+                             mUi->bPause->isChecked() ? QString::fromLatin1("play") :
+                                                        QString::fromLatin1("pause"));
+
+    mUi->bPause->style()->unpolish(mUi->bPause);
+    mUi->bPause->style()->polish(mUi->bPause);
 }
