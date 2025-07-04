@@ -163,7 +163,7 @@ QFrame[itsOn=true] &gt; #tFailed
     padding: 0px;
     margin: 0px;
     border-radius: 16px;
-    background-color: #ffefefff0; /*colorToken.surface-2*/
+    background-color: #ffefeff0; /*colorToken.surface-2*/
 }
 
 #bPause, #bPause.pause
@@ -182,6 +182,37 @@ QFrame[itsOn=true] &gt; #tFailed
 {
     qproperty-iconSize: 16px;
     qproperty-icon: url(:/images/themed/light/search.svg); /*replaceThemeToken*/
+}
+
+#wDownSpeed, #wUpSpeed
+{
+    border-radius: 12px;
+    background-color: #FFE4E4E5; /*colorToken.surface-3*/
+}
+
+#wDownSpeed &gt; QLabel, #wUpSpeed &gt; QLabel
+{
+    color: #ff303233; /*colorToken.text-primary*/
+    font-size: 10px;
+    font-weight: 600;
+    text-align: right;
+}
+
+#wSeparator
+{
+    background-color: #FFD8D9DB; /*colorToken.border-strong*/
+}
+
+#lUpSpeedIcon
+{
+    qproperty-icon: url(:/images/themed/light/up_arrow.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+#lDownSpeedIcon
+{
+    qproperty-icon: url(:/images/themed/light/down_arrow.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
 }
 
 /* tokenized to here */
@@ -301,25 +332,6 @@ QFrame[itsOn=true] &gt; #tFailed
     font-size: 14px;
     qProperty-iconSize: 24px;
     text-align: left;
-}
-
-#wDownSpeed, #wUpSpeed
-{
-    border-radius: 12px;
-    background-color: #ECECEC;
-}
-
-#wDownSpeed QLabel, #wUpSpeed QLabel
-{
-    color: #333333;
-    font-size: 10px;
-    font-weight: bold;
-    text-align: right;
-}
-
-#wSeparator
-{
-    background-color: #EEEEEE;
 }
 
 /* right pane */
@@ -1501,11 +1513,6 @@ QToolButton
                  <property name="text">
                   <string notr="true"/>
                  </property>
-                 <property name="icon">
-                  <iconset>
-                   <normalon>:/images/transfer_manager/transfers_states/arrow_download_ico.png</normalon>
-                  </iconset>
-                 </property>
                  <property name="iconSize">
                   <size>
                    <width>16</width>
@@ -1613,11 +1620,6 @@ QToolButton
                  </property>
                  <property name="text">
                   <string notr="true"/>
-                 </property>
-                 <property name="icon">
-                  <iconset>
-                   <normalon>:/images/transfer_manager/transfers_states/arrow_upload_ico.png</normalon>
-                  </iconset>
                  </property>
                  <property name="iconSize">
                   <size>
