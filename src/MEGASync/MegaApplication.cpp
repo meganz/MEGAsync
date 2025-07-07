@@ -5394,26 +5394,31 @@ void MegaApplication::createTrayIconMenus()
         Platform::getInstance()->initMenu(initialTrayMenu, "TrayMenu", false);
     }
 
-    guestSettingsAction = new QAction(tr("Settings"), this);
+#ifdef USE_BREAKPAD
+    if (!preferences->isCrashed())
+#endif
+    {
+        guestSettingsAction = new QAction(tr("Settings"), this);
 
 #ifdef __APPLE__
-    guestSettingsAction->setIcon(
-        QIcon(QString::fromUtf8(":/images/icons/tray/macos/settings.svg")));
+        guestSettingsAction->setIcon(
+            QIcon(QString::fromUtf8(":/images/icons/tray/macos/settings.svg")));
 #endif
 
 #ifdef Q_OS_LINUX
-    guestSettingsAction->setIcon(
-        QIcon(QString::fromUtf8(":/images/icons/tray/linux/settings.svg")));
+        guestSettingsAction->setIcon(
+            QIcon(QString::fromUtf8(":/images/icons/tray/linux/settings.svg")));
 #endif
 
 #ifdef _WIN32
-    guestSettingsAction->setIcon(
-        QIcon(QString::fromUtf8(":/images/icons/tray/windows/settings.svg")));
+        guestSettingsAction->setIcon(
+            QIcon(QString::fromUtf8(":/images/icons/tray/windows/settings.svg")));
 #endif
 
-    // When triggered, open "Settings" window. As the user is not logged in, it
-    // will only show proxy settings.
-    connect(guestSettingsAction, &QAction::triggered, this, &MegaApplication::openSettings);
+        // When triggered, open "Settings" window. As the user is not logged in, it
+        // will only show proxy settings.
+        connect(guestSettingsAction, &QAction::triggered, this, &MegaApplication::openSettings);
+    }
 
     initialExitAction = new QAction(PlatformStrings::exit(), this);
 
