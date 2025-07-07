@@ -26,76 +26,25 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#sWidget
-{
-  background-color: transparent;
-}
-
-#lTitle
-{
-  font-family: &quot;Lato&quot;;
-  font-size: 14px;
-  color: #333333;
-}
-
+   <string notr="true">#wContainer,
+#wImage,
+#wMessage,
+#wButtons,
 #lDesc
 {
-  font-family: &quot;Lato&quot;;
-  font-size: 12px;
-  color: #666666;
+background-color: #fffafafa; /*colorToken.surface-1*/
 }
-
 #bImage
 {
 border: none;
 }
-
-#bMore
-{
-font-family: Lato;
-font-size: 14px;
-border: 1px solid rgba(0,191, 165, 30%);
-border-radius: 3px;
-color: #ffffff;
-padding: 7px 12px 7px 12px;
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-							stop: 0 rgba(0, 204, 176, 1), stop: 1 rgba(0, 172,149,1));
-}
-
-
-#bMore:hover
-{
-	border: 1px solid rgba(0,191, 165, 80%);
-}
-
-#bDismiss
-{
-font-family: Lato;
-font-size: 14px;
-border: 1px solid rgba(0, 0, 0, 5%);
-border-radius: 3px;
-color: #333333;
-padding: 7px 12px 7px 12px;
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-stop: 0 #ffffff, stop: 1 #fafafa);
-}
-
-#bDismiss::hover
-{
-border: 1px solid rgba(0, 0, 0, 10%);
-}
-
-#bDismiss::pressed
-{
-font-family: Lato;
-font-size: 14px;
-border: 1px solid rgba(0, 0, 0, 5%);
-border-radius: 3px;
-color: #333333;
-padding: 7px 12px 7px 12px;
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-stop: 0 #ffffff, stop: 1 #fafafa);
-}</string>
+</string>
+  </property>
+  <property name="type" stdset="0">
+   <string notr="true">secondary</string>
+  </property>
+  <property name="dimension" stdset="0">
+   <string notr="true">medium</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_4">
    <property name="leftMargin">
@@ -112,6 +61,9 @@ stop: 0 #ffffff, stop: 1 #fafafa);
    </property>
    <item>
     <widget class="QStackedWidget" name="sWidget">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <property name="lineWidth">
       <number>0</number>
      </property>
@@ -195,7 +147,7 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                 </size>
                </property>
                <property name="text">
-                <string/>
+                <string notr="true"/>
                </property>
               </widget>
              </item>
@@ -268,6 +220,9 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                <property name="text">
                 <string/>
                </property>
+               <property name="type" stdset="0">
+                <string notr="true">title</string>
+               </property>
               </widget>
              </item>
              <item>
@@ -293,6 +248,9 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                <property name="lineWidth">
                 <number>0</number>
                </property>
+               <property name="type" stdset="0">
+                <string notr="true">secondary</string>
+               </property>
               </widget>
              </item>
              <item>
@@ -306,7 +264,7 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>33</height>
+                 <height>16777215</height>
                 </size>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout">
@@ -342,6 +300,12 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                   <property name="text">
                    <string/>
                   </property>
+                  <property name="type" stdset="0">
+                   <string notr="true">primary</string>
+                  </property>
+                  <property name="dimension" stdset="0">
+                   <string notr="true">medium</string>
+                  </property>
                  </widget>
                 </item>
                 <item>
@@ -360,6 +324,12 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                   </property>
                   <property name="text">
                    <string>Dismiss</string>
+                  </property>
+                  <property name="type" stdset="0">
+                   <string notr="true">secondary</string>
+                  </property>
+                  <property name="dimension" stdset="0">
+                   <string notr="true">medium</string>
                   </property>
                  </widget>
                 </item>
@@ -387,7 +357,6 @@ stop: 0 #ffffff, stop: 1 #fafafa);
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page_2"/>
     </widget>
    </item>
   </layout>

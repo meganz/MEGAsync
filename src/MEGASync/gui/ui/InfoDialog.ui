@@ -21,7 +21,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">/*SubWidget;wStatus;widget;*/
-/*SubWidget;bTransferManager;widget;*/
+/*SubWidget;wPSA;widget;*/
 
 #wInfoDialogIn
 {
@@ -30,6 +30,11 @@
  border-color: #fffafafa; /*colorToken.border-strong*/
  background-color:  #F4F6F8;
  padding: 10px;
+}
+/* Override hover for selected tabs */
+#tTransfers.button-brand:hover, #tNotifications.button-brand:hover
+{
+ color: #FFFF09bf;  /*colorToken.button-brand-hover*/
 }
 #wHeader
 {
@@ -41,13 +46,13 @@ background-color: #fffafafa; /*colorToken.surface-1*/
 }
 #lTransfers[state=&quot;normal&quot;], #lRecents[state=&quot;normal&quot;]
 {
-background-color:&quot;transparent&quot;;
+background-color:transparent;
 }
 #lTransfers[state=&quot;selected&quot;], #lRecents[state=&quot;selected&quot;]
 {
 background-color:#ff04101E; /*colorToken.button-brand*/
 }
-/*********************************************/
+
 #tTransfers, #tNotifications
 {
  font-size: 14px;
@@ -65,19 +70,21 @@ background-color:#ff04101E; /*colorToken.button-brand*/
 }
 #tTransfers.button-brand, #tNotifications.button-brand
 {
- color: #ff09bf; /*colorToken.button-brand*/
+ color: #ffff09bf; /*colorToken.button-brand*/
 }
-/* Override hover for selected tabs */
-#tTransfers.button-brand:hover, #tNotifications.button-brand:hover
-{
- color: #ff09bf;  /*colorToken.button-brand-hover*/
-}
+
 #tTransfers.button-brand:pressed, #tNotifications.button-brand:pressed
 {
- color: #ff09bf;  /*colorToken.button-brand-pressed*/
+ color: #ffff09bf;  /*colorToken.button-brand-pressed*/
 }
-/*********************************************/
-
+#wBottom[hasTransfers=&quot;true&quot;]
+{
+background-color: #fffafafa; /*colorToken.surface-1*/
+}
+#wHeader
+{
+background-color: #fffafafa; /*colorToken.surface-1*/
+}
 #wBottomFrame, #wBottomFrame *
 {
 border: none;
@@ -88,15 +95,39 @@ border: none;
  border-top-left-radius: 10px;
  background-clip: padding;
 }
-#wHeader
+#bCreateSync
 {
-background-color: #fffafafa; /*colorToken.surface-1*/
+image-position: left;
+text-align: right;
+qproperty-icon: url(:/images/themed/light/plus_icon_secondary.svg); /*replaceThemeToken*/
 }
+#bSettings
+{
+qproperty-icon: url(:/images/themed/light/menu.svg); /*replaceThemeToken*/
+background-color:transparent;
+}
+
 #tNotifications
 {
   padding: 0px 4px 0px 16px;
 }
 
+#wSeparator
+{
+ background-color: #fffafafa; /*colorToken.border-subtle*/
+}
+#bNumberUnseenNotifications
+{
+background-color: #FFFF333A;/*colorToken.button-brand*/
+color: #FFFAFAFB;  /*colorToken.text-inverse-accent*/
+font-weight: 400;
+font-size: 11px;
+border-radius: 4px;
+padding-left: 4px;
+padding-right: 4px;
+margin-right: 4px;
+}
+#wContaine
 #bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon, #bBusinessQuota, #bBusinessStorage, #bSyncsDisabled, #bAddSync, #bAddBackup, #bSettings, #bBackupsDisabled, #bAllSyncsDisabled, #bCloudDrive
 {
 	border: none;
@@ -117,17 +148,6 @@ padding-right: 12px;
 padding-left: 12px;
 }
 
-#bCreateSync
-{
-image-position: left;
-text-align: right;
-qproperty-icon: url(:/images/themed/light/plus_icon_secondary.svg); /*replaceThemeToken*/
-}
-#bSettings
-{
-qproperty-icon: url(:/images/themed/light/menu.svg); /*replaceThemeToken*/
-background-color:&quot;transparent&quot;;
-}
 #wHeaderframe
 {
 border: none;
@@ -142,18 +162,8 @@ border: none;
 {
     border: none;
 }
-#bNumberUnseenNotifications
-{
-background-color: #FF333A;
-color: #FFFFFF;
-font-weight: bold;
-font-family: Lato;
-font-size: 11px;
-border-radius: 4px;
-padding-left: 4px;
-padding-right: 4px;
-margin-right: 4px;
-}
+
+
 #wUsageStats, #wUsageStats *
 {
     background-color: #FFFFFF;
@@ -499,14 +509,8 @@ background-color: #FFFFFF;
  border-bottom-left-radius: 10px;
  background-clip: padding;
 }
-#wBottom[hasTransfers=&quot;true&quot;]
-{
-background-color: #fffafafa; /*colorToken.surface-1*/
-}
-#wSeparator
-{
-background-color: #fffafafa; /*colorToken.border-subtle*/
-}</string>
+
+</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>

@@ -305,7 +305,6 @@ target_sources_conditional(${ExecutableTarget}
     PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/win/UploadToMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/MegaProgressCustomDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/PSAwidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/AlertItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/FilterAlertWidget.ui
@@ -331,7 +330,6 @@ target_sources_conditional(${ExecutableTarget}
    PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/macx/UploadToMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/MegaProgressCustomDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/PSAwidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/AlertItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/FilterAlertWidget.ui
@@ -357,7 +355,6 @@ target_sources_conditional(${ExecutableTarget}
     PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/linux/UploadToMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/MegaProgressCustomDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/PSAwidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/AlertItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/FilterAlertWidget.ui
@@ -551,6 +548,8 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/SyncAccountFullMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/InfoDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/StatusInfo.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/PSAwidget.ui
+
 )
 
 target_sources_conditional(${ExecutableTarget}
