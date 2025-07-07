@@ -1,4 +1,4 @@
-﻿#include "MegaSyncLogger.h"
+#include "MegaSyncLogger.h"
 
 #include "megaapi.h"
 
