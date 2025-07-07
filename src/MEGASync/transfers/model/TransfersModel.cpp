@@ -1326,22 +1326,6 @@ void TransfersModel::processUpdateTransfers()
             updateTransfer(d, row);
             sendDataChanged(row);
             d->resetStateHasChanged();
-
-            if (mCompletedTransfersTagByHandle.contains(itValue->mNodeHandle) &&
-                mCompletedTransfersTagByHandle.value(itValue->mNodeHandle) == itValue->mTag)
-            {
-                assert(false);
-                MegaSyncApp->getStatsEventHandler()->sendEvent(
-                    AppStatsEvents::EventType::DUP_FINISHED_TRSF,
-                    {QString::number(itValue->mTag)});
-            }
-
-            if (!d->isSyncTransfer() && d->isCompleted() &&
-                itValue->mNodeHandle != mega::INVALID_HANDLE &&
-                !mCompletedTransfersTagByHandle.contains(itValue->mNodeHandle))
-            {
-                mCompletedTransfersTagByHandle.insert(d->mNodeHandle, itValue->mTag);
-            }
         }
     }
 }

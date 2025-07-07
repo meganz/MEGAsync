@@ -454,8 +454,7 @@ private:
     LastTransfersCount mLastTransfersCount;
 
     QList<QExplicitlySharedDataPointer<TransferData>> mTransfers;
-    QHash<int,QExplicitlySharedDataPointer<TransferData>> mFailedFoldersByTag;
-    QHash<mega::MegaHandle, int> mCompletedTransfersTagByHandle;
+    QHash<int, QExplicitlySharedDataPointer<TransferData>> mFailedFoldersByTag;
 
     QHash<mega::MegaHandle, QPersistentModelIndex> mRetryableSyncFailedTransfersByHandle;
 
