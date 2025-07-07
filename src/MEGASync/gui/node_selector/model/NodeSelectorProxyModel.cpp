@@ -1,4 +1,4 @@
-﻿#include "NodeSelectorProxyModel.h"
+#include "NodeSelectorProxyModel.h"
 
 #include "megaapi.h"
 #include "MegaApplication.h"
