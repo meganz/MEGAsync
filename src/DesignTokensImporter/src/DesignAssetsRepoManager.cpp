@@ -10,6 +10,10 @@
 #include <QJsonDocument>
 #include <QStringBuilder>
 
+#include <iomanip>
+#include <sstream>
+#include <cmath>
+
 using namespace DTI;
 
 static const QString CoreMain = QString::fromLatin1("Core/Main");
@@ -21,7 +25,10 @@ static const QString RepoAttributeType = QString::fromLatin1("type");
 static const QString RepoAttributeColorId = QString::fromLatin1("color");
 static const QRegularExpression CORE_COLOR_TOKEN_REGULAR_EXPRESSION{
     QString("^#([a-f,A-F,0-9]{6}|[a-f,A-F,0-9]{8})$")};
-
+static QRegularExpression RGBA_TOKEN_FUNCTION(QLatin1String(R"(^rgba\( *(\S+) *, *(\S+) *\)$)"));
+static const int CORE_COLOR_GROUP_ID = 1;
+static const int ALPHA_COLOR_GROUP_ID = 2;
+static const int NON_ALPHA_CHANNEL_LENGTH = 6;
 static QMap<QString, QString> tokenIdNamingExceptions = {{"focus", "focus-color"}};
 
 std::optional<DesignAssets> DesignAssetsRepoManager::getDesignAssets()
@@ -331,20 +338,51 @@ void DesignAssetsRepoManager::processToken(const QString& categoryName, const QS
 //! \param coreData The core data mapping color IDs to color values.
 //! \param colorData The ColorData object to store the extracted color information.
 void DesignAssetsRepoManager::processColorToken(const QString& categoryName, const QString& token,
-                                                QString& value,
+                                                const QString& value,
                                                 const CoreData& coreData,
                                                 ColorData& colorData)
 {
-    value.remove("{").remove("}");
+    QString coreColorString = value;
+    coreColorString.remove("{").remove("}");
 
-    if (!coreData.contains(value))
+    QString alphaChannel;
+    auto match = RGBA_TOKEN_FUNCTION.match(coreColorString);
+    if (match.hasMatch())
+    {
+        coreColorString = match.captured(CORE_COLOR_GROUP_ID);
+        alphaChannel = match.captured(ALPHA_COLOR_GROUP_ID);
+    }
+
+    if(!coreData.contains(coreColorString))
     {
         qWarning() << __func__ << " Core map doesn't contain the color id " << value;
         return;
     }
 
-    QString coreColor = coreData[value];
-    QString color = "#" + coreColor;
+    auto coreColor = coreData[coreColorString];
+
+    if (!alphaChannel.isEmpty())
+    {
+        if (coreColor.length() > NON_ALPHA_CHANNEL_LENGTH)
+        {
+            qWarning() << __func__ << " Core color already have the alpha channel " << coreColorString << " color value " << coreColor;
+            return;
+        }
+
+        bool floatConversionOk = true;
+        auto floatValue = alphaChannel.toFloat(&floatConversionOk);
+        if (!floatConversionOk)
+        {
+            qWarning() << __func__ << " Couldn't convert alpha channel to int in the color id " << value;
+            return;
+        }
+
+        std::stringstream ss;
+        ss << std::hex <<  std::setw(2) << std::setfill('0') << static_cast<int>(std::round(floatValue * 255.0f));
+        alphaChannel = QString::fromStdString(ss.str());
+    }
+
+    QString color = "#" +alphaChannel + coreColor;
 
     // Strip "--color-" or "-color-" from the beginning of the token
     int indexPrefix = token.indexOf(ColorTokenStart);
