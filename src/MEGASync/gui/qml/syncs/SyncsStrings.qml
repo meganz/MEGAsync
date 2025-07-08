@@ -17,6 +17,5 @@ QtObject {
     readonly property string syncsWindowTitle: qsTr("Add sync")
     readonly property string confirm: qsTranslate("OnboardingStrings", "Confirm");
     readonly property string syncSetUp: qsTranslate("OnboardingStrings", "Sync set up");
-    readonly property string confirmSyncsWindowDescription: qsTr("Selected folders will automatically back up to the cloud when the desktop app is running.")
 
 }

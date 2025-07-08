@@ -8770,11 +8770,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Page title to add syncs. CON-1268</translatorcomment>
         <translation>Select folders to sync</translation>
     </message>
-    <message>
-        <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
-        <translatorcomment>Page description to add syncs candidates. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>TextArea</name>
