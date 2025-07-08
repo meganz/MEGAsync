@@ -29,12 +29,13 @@
   <property name="styleSheet">
    <string notr="true">QGroupBox
 {
+    font-size: 12px;
     border: none;
 }
 
 QGroupBox::title
 {
-    padding-left: 10px;
+    padding-left: 20px;
     font-weight: 400;
     color: #FF616366; /*colorToken.text-secondary*/
     font-size: 10px;
@@ -71,6 +72,7 @@ QGroupBox::title
 
 #wLeftPane QFrame[itsOn=true] &gt; QPushButton
 {
+    font-size: 12px;
     font-weight: 600;
     color: #FF303233; /*colorToken.icon-primary*/
 }
@@ -83,6 +85,7 @@ QGroupBox::title
 
 #wLeftPane QFrame[itsOn=false] &gt; QPushButton
 {
+    font-size: 12px;
     font-weight: 400;
     color: #FF616366; /*colorToken.text-secondary*/
 }
@@ -98,13 +101,13 @@ QGroupBox::title
 
 QFrame[itsOn=false] &gt; #tAllTransfers
 {
-    qproperty-icon: url(:/images/themed/light/all_downloads.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/images/themed/light/all_transfers.svg); /*replaceThemeToken*/
     qproperty-iconSize: 16px;
 }
 
 QFrame[itsOn=true] &gt; #tAllTransfers
 {
-    qproperty-icon: url(:/images/themed/light/all_downloads_selected.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/images/themed/light/all_transfers_selected.svg); /*replaceThemeToken*/
     qproperty-iconSize: 16px;
 }
 
