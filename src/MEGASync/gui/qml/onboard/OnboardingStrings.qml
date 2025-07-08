@@ -105,7 +105,6 @@ QtObject {
     readonly property string selectiveSync: qsTr("Selective sync")
     readonly property string sync: qsTr("Sync")
     readonly property string confirmSyncsWindowTitle: qsTr("Confirm folders to sync")
-    readonly property string confirmSyncsWindowDescription: qsTr("Selected folders will automatically back up to the cloud when the desktop app is running.")
     readonly property string finalStepSyncError: qsTr("One or more syncs were unable to be set up. Check the folders and try again.")
     readonly property string finalStepSyncTitleError: qsTr("Sync wasn’t fully set up")
     readonly property string syncCandidatesHeaderLocalColumnTitle: qsTr("Local folders")
@@ -121,8 +120,7 @@ QtObject {
     readonly property string syncCandidatesRemoveDialogCancelButtonTitle : qsTr("Cancel")
     readonly property string syncCandidatesRemoveDialogRemoveButtonTitle : qsTr("Remove")
     readonly property string syncCandidatesRemoveDialogDescription : qsTr("Are you sure you want to remove the selected sync?")
-    readonly property string syncCandidatesRemoveDialogDescriptionLastItem : qsTr("Removing this sync will take you back to the start of setup.")
-
+    readonly property string syncCandidatesRemoveDialogDescriptionLastItem : qsTr("This will start the sync setup again.")
 
     // Two Factor Authentication
     // Not moved to avoid change of context and generate new strings in the ts file
