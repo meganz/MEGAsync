@@ -96,6 +96,7 @@ private:
     void setDefaultRemoteFolder();
     bool checkLocalSync(const QString& path);
     bool checkRemoteSync(const QString& path);
+    QString getAlreadySyncCandidateError() const;
 };
 
 #endif // SYNCS_H
