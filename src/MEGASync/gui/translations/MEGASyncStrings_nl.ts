@@ -401,6 +401,24 @@
     </message>
 </context>
 <context>
+    <name>BackupsController</name>
+    <message numerus="yes">
+        <source>%1, but %n folder couldn’t be backed up</source>
+        <translatorcomment>Notification message to indicate that backups have been created (%1) but other %n backups have failed. Keep both %1 indicating a text with correctly created backups and %n to indicate the number of backups failed. SNC-5495</translatorcomment>
+        <translation><numerusform>%1, maar %n er kon geen back-up van de map worden gemaakt</numerusform><numerusform>%1, maar %n van mappen kon geen back-up worden gemaakt</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder was backed up</source>
+        <translatorcomment>Notification message to indicate that %n backups have been created. Keep %n to indicate the number of backups created. SNC-5495</translatorcomment>
+        <translation><numerusform>%n map was een back-up gemaakt</numerusform><numerusform>%n mappen waren een back-up van gemaakt </numerusform></translation>
+    </message>
+    <message>
+        <source>Not all folders were backed up</source>
+        <translatorcomment>Notification title to indicate that not all folders have been backed up successfully. SNC-5495</translatorcomment>
+        <translation>Er is niet van alle mappen een back-up gemaakt</translation>
+    </message>
+</context>
+<context>
     <name>BackupsModel</name>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
@@ -2117,19 +2135,6 @@ Controleer uw e-mailinbox voor instructies over het ontgrendelen van uw account 
         <source>Your download has started</source>
         <translatorcomment>Notification shown when a web download is started.</translatorcomment>
         <translation>Uw download is gestart</translation>
-    </message>
-</context>
-<context>
-    <name>HandleSyncCandidatesDialogForm.ui</name>
-    <message>
-        <source>Add</source>
-        <translatorcomment>Button label to add a new sync candidate. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to cancel the current process of adding a new sync candidate. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5198,6 +5203,11 @@ Voer een andere naam in.</translation>
         <translation>Aanmelding voltooien</translation>
     </message>
     <message>
+        <source>Add</source>
+        <translatorcomment>Button label to add a new sync candidate. CON-1386</translatorcomment>
+        <translation>Toevoegen</translation>
+    </message>
+    <message>
         <source>Add folder</source>
         <translatorcomment>Button text to add a new folder to the backups table CON-468</translatorcomment>
         <translation>Map toevoegen</translation>
@@ -5550,7 +5560,7 @@ Voer een andere naam in.</translation>
     <message>
         <source>Removing this sync will take you back to the start of setup.</source>
         <translatorcomment>Description off the consequences of removing the last sync candidate left on the table. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hiermee wordt de synchronisatie-instelling opnieuw gestart</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -6031,19 +6041,13 @@ Voer een andere naam in.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support has ended for Windows 7 and Server 2008 R2.
-- New actions are now available in the File Explorer context menu.
-- Refined parts of the interface to improve your experience.
-- Turkish language is now supported.
+        <source>- Increased the number of parallel transfers.
+- It’s now easier to add syncs during setup.
+- Added support for proxy auto-detection in Linux.
 - We’ve fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 5.13.0. CON-1380</translatorcomment>
-        <translation>- De ondersteuning voor Windows 7 en Server 2008 R2 is beëindigd.
-- Nieuwe acties zijn nu beschikbaar in het contextmenu van de bestandsverkenner.
-- Verfijnde delen van de interface om je ervaring te verbeteren.
-- De Turkse taal wordt nu ondersteund.
-- We hebben bugs opgelost en de applicatie betrouwbaarder gemaakt.
-</translation>
+        <translatorcomment>Change log for version 5.14.0. CON-1405</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6124,7 +6128,7 @@ Voer een andere naam in.</translation>
     <message>
         <source>We couldn’t connect using your proxy settings. Check your proxy details or try a different network.</source>
         <translatorcomment>Error banner shown when there is an error testing the proxy settings. SNC-5411</translatorcomment>
-        <translation>We konden geen verbinding maken via uw proxy-instellingen. Controleer uw proxygegevens of probeer een ander netwerk.</translation>
+        <translation>We konden geen verbinding maken via uw proxy-instellingen. Controleer de instellingen of probeer een ander netwerk.</translation>
     </message>
     <message>
         <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
@@ -8546,7 +8550,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Folder can&apos;t be synced as it&apos;s already a candidate.</source>
         <translatorcomment>Error message indicating the user we have a sync candidate with the same folder already in the sync candidates table. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Deze map staat al in de lijst met synchronisaties die in behandeling zijn</translation>
     </message>
     <message>
         <source>Select a MEGA folder to sync.</source>
@@ -9371,11 +9375,6 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>UnknownDownloadIssue</name>
     <message>
-        <source>An unknown download issue has been detected during the sync operation. Error: UnknownDownloadIssue</source>
-        <translatorcomment>Default body for helpdesk report;CON-1100</translatorcomment>
-        <translation>Tijdens het synchroniseren is een onbekend downloadprobleem ontdekt. Fout: UnknownDownloadIssue</translation>
-    </message>
-    <message>
         <source>Reporting failed</source>
         <translatorcomment>Stalled Issue state when the report has been submitted to the SDK ;CON-1100</translatorcomment>
         <translation>Melding is mislukt</translation>
@@ -9389,11 +9388,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Reporting successful</source>
         <translatorcomment>Stalled Issue state when the report has been submitted to the SDK ;CON-1100</translatorcomment>
         <translation>Melding is geslaagd</translation>
-    </message>
-    <message>
-        <source>Unknown download issue detected</source>
-        <translatorcomment>Default title for helpdesk report;CON-1100</translatorcomment>
-        <translation>Onbekend downloadprobleem gedetecteerd</translation>
     </message>
 </context>
 <context>
@@ -9411,7 +9405,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>This will send your logs to our Support team for diagnostics.</source>
         <translatorcomment>Messagebox string to confirma that the user wants to send a report to helpdesk;CON-1094</translatorcomment>
-        <translation>Uw logboeken worden dan naar ons ondersteuningsteam gestuurd voor diagnostiek.</translation>
+        <translation>Uw logboeken worden dan naar ons Ondersteuningsteam gestuurd voor diagnostiek.</translation>
     </message>
 </context>
 <context>

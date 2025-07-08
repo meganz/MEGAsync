@@ -401,6 +401,24 @@
     </message>
 </context>
 <context>
+    <name>BackupsController</name>
+    <message numerus="yes">
+        <source>%1, but %n folder couldn’t be backed up</source>
+        <translatorcomment>Notification message to indicate that backups have been created (%1) but other %n backups have failed. Keep both %1 indicating a text with correctly created backups and %n to indicate the number of backups failed. SNC-5495</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder was backed up</source>
+        <translatorcomment>Notification message to indicate that %n backups have been created. Keep %n to indicate the number of backups created. SNC-5495</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Not all folders were backed up</source>
+        <translatorcomment>Notification title to indicate that not all folders have been backed up successfully. SNC-5495</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>BackupsModel</name>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
@@ -2116,19 +2134,6 @@ Check your email inbox for instructions on unlocking your account and tips on ho
         <source>Your download has started</source>
         <translatorcomment>Notification shown when a web download is started.</translatorcomment>
         <translation>您的下载已开始</translation>
-    </message>
-</context>
-<context>
-    <name>HandleSyncCandidatesDialogForm.ui</name>
-    <message>
-        <source>Add</source>
-        <translatorcomment>Button label to add a new sync candidate. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to cancel the current process of adding a new sync candidate. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5196,6 +5201,11 @@ Enter a different name</source>
         <translation>完成注册</translation>
     </message>
     <message>
+        <source>Add</source>
+        <translatorcomment>Button label to add a new sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Add folder</source>
         <translatorcomment>Button text to add a new folder to the backups table CON-468</translatorcomment>
         <translation>添加文件夹</translation>
@@ -6029,19 +6039,13 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support has ended for Windows 7 and Server 2008 R2.
-- New actions are now available in the File Explorer context menu.
-- Refined parts of the interface to improve your experience.
-- Turkish language is now supported.
+        <source>- Increased the number of parallel transfers.
+- It’s now easier to add syncs during setup.
+- Added support for proxy auto-detection in Linux.
 - We’ve fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 5.13.0. CON-1380</translatorcomment>
-        <translation>- 对Windows 7和Server 2008 R2的支持已终止。
-- 文件资源管理器的快捷菜单中现在可以使用新操作。
-- 改进了部分界面以改善您的体验。
-- 现在支持土耳其语。
-- 我们修复了错误并提升了应用程序的可靠性。
-</translation>
+        <translatorcomment>Change log for version 5.14.0. CON-1405</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9369,11 +9373,6 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>UnknownDownloadIssue</name>
     <message>
-        <source>An unknown download issue has been detected during the sync operation. Error: UnknownDownloadIssue</source>
-        <translatorcomment>Default body for helpdesk report;CON-1100</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Reporting failed</source>
         <translatorcomment>Stalled Issue state when the report has been submitted to the SDK ;CON-1100</translatorcomment>
         <translation type="unfinished"></translation>
@@ -9386,11 +9385,6 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Reporting successful</source>
         <translatorcomment>Stalled Issue state when the report has been submitted to the SDK ;CON-1100</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown download issue detected</source>
-        <translatorcomment>Default title for helpdesk report;CON-1100</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
