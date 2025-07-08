@@ -362,7 +362,7 @@ QString Syncs::getLocalError() const
 
         case LocalErrors::ALREADY_SYNC_CANDIDATE:
         {
-            return tr("This folder is already in the list of pending syncs.");
+            return getAlreadySyncCandidateError();
         }
 
         case LocalErrors::NO_ACCESS_PERMISSIONS_CANT_CREATE:
@@ -391,6 +391,11 @@ QString Syncs::getLocalError() const
     return {};
 }
 
+QString Syncs::getAlreadySyncCandidateError() const
+{
+    return tr("This folder is already in the list of pending syncs.");
+}
+
 QString Syncs::getRemoteError() const
 {
     if (!mRemoteError.has_value())
@@ -407,7 +412,7 @@ QString Syncs::getRemoteError() const
 
         case RemoteErrors::ALREADY_SYNC_CANDIDATE:
         {
-            return tr("This folder is already in the list of pending syncs.");
+            return getAlreadySyncCandidateError();
         }
 
         case RemoteErrors::CANT_SYNC:
