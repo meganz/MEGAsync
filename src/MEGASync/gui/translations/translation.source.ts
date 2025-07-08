@@ -412,25 +412,25 @@
 <context>
     <name>BackupsController</name>
     <message numerus="yes">
-        <source>%n folder was backed up</source>
-        <translatorcomment>Notification message to indicate that %n backups have been created. Keep %n to indicate the number of backups created. SNC-5495</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>%n folder was backed up</numerusform>
-            <numerusform>%n folders were backed up</numerusform>
+        <source>%1, but %n folder couldn’t be backed up</source>
+        <translatorcomment>Notification message to indicate that backups have been created (%1) but other %n backups have failed. Keep both %1 indicating a text with correctly created backups and %n to indicate the number of backups failed. SNC-5495</translatorcomment>
+        <translation>
+            <numerusform>%1, but %n folder couldn’t be backed up</numerusform>
+            <numerusform>%1, but %n folders couldn’t be backed up</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <source>%1, but %n folder couldn’t be backed up</source>
-        <translatorcomment>Notification message to indicate that backups have been created (%1) but other %n backups have failed. Keep both %1 indicating a text with correctly created backups and %n to indicate the number of backups failed. SNC-5495</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>%1, but %n folder couldn’t be backed up</numerusform>
-            <numerusform>%1, but %n folders couldn’t be backed up</numerusform>
+        <source>%n folder was backed up</source>
+        <translatorcomment>Notification message to indicate that %n backups have been created. Keep %n to indicate the number of backups created. SNC-5495</translatorcomment>
+        <translation>
+            <numerusform>%n folder was backed up</numerusform>
+            <numerusform>%n folders were backed up</numerusform>
         </translation>
     </message>
     <message>
         <source>Not all folders were backed up</source>
         <translatorcomment>Notification title to indicate that not all folders have been backed up successfully. SNC-5495</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Not all folders were backed up</translation>
     </message>
 </context>
 <context>
@@ -5337,6 +5337,11 @@ Enter a different name.</translation>
         <translation>Complete signup</translation>
     </message>
     <message>
+        <source>Add</source>
+        <translatorcomment>Button label to add a new sync candidate. CON-1386</translatorcomment>
+        <translation>Add</translation>
+    </message>
+    <message>
         <source>Add folder</source>
         <translatorcomment>Button text to add a new folder to the backups table CON-468</translatorcomment>
         <translation>Add folder</translation>
@@ -5872,11 +5877,6 @@ Enter a different name.</translation>
         <translation>[B]Select all[/B]</translation>
     </message>
     <message>
-        <source>Add</source>
-        <translatorcomment>Button label to add a new sync candidate. CON-1386</translatorcomment>
-        <translation type="unfinished">Add</translation>
-    </message>
-    <message>
         <source>This will start the sync setup again.</source>
         <translatorcomment>Description off the consequences of removing the last sync candidate left on the table. CON-1386</translatorcomment>
         <translation type="unfinished"></translation>
@@ -6184,7 +6184,11 @@ Enter a different name.</translation>
 - We’ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 5.14.0. CON-1405</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Increased the number of parallel transfers.
+- It’s now easier to add syncs during setup.
+- Added support for proxy auto-detection in Linux.
+- We’ve fixed bugs and made the app more reliable.
+</translation>
     </message>
 </context>
 <context>
@@ -6265,7 +6269,7 @@ Enter a different name.</translation>
     <message>
         <source>We couldn’t connect using your proxy settings. Check your proxy details or try a different network.</source>
         <translatorcomment>Error banner shown when there is an error testing the proxy settings. SNC-5411</translatorcomment>
-        <translation>We couldn’t connect using your proxy settings. Check your proxy details or try a different network.</translation>
+        <translation>We couldn’t connect using your proxy settings. Check the settings or try a different network.</translation>
     </message>
     <message>
         <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
@@ -9638,7 +9642,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>This will send your logs to our Support team for diagnostics.</source>
         <translatorcomment>Messagebox string to confirma that the user wants to send a report to helpdesk;CON-1094</translatorcomment>
-        <translation>This will send your logs to our Support team for diagnostics.</translation>
+        <translation>This will send your logs to our Support team for diagnostics</translation>
     </message>
 </context>
 <context>

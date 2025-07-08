@@ -401,6 +401,24 @@
     </message>
 </context>
 <context>
+    <name>BackupsController</name>
+    <message numerus="yes">
+        <source>%1, but %n folder couldn’t be backed up</source>
+        <translatorcomment>Notification message to indicate that backups have been created (%1) but other %n backups have failed. Keep both %1 indicating a text with correctly created backups and %n to indicate the number of backups failed. SNC-5495</translatorcomment>
+        <translation><numerusform>%1, 그러나 폴더 %n개가 백업 되지 않았습니다</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder was backed up</source>
+        <translatorcomment>Notification message to indicate that %n backups have been created. Keep %n to indicate the number of backups created. SNC-5495</translatorcomment>
+        <translation><numerusform>폴더 %n개가 백업 되었습니다</numerusform></translation>
+    </message>
+    <message>
+        <source>Not all folders were backed up</source>
+        <translatorcomment>Notification title to indicate that not all folders have been backed up successfully. SNC-5495</translatorcomment>
+        <translation>일부 폴더가 백업되지 않았습니다</translation>
+    </message>
+</context>
+<context>
     <name>BackupsModel</name>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
@@ -2116,19 +2134,6 @@ Check your email inbox for instructions on unlocking your account and tips on ho
         <source>Your download has started</source>
         <translatorcomment>Notification shown when a web download is started.</translatorcomment>
         <translation>다운로드가 시작되었습니다</translation>
-    </message>
-</context>
-<context>
-    <name>HandleSyncCandidatesDialogForm.ui</name>
-    <message>
-        <source>Add</source>
-        <translatorcomment>Button label to add a new sync candidate. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to cancel the current process of adding a new sync candidate. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5198,6 +5203,11 @@ Enter a different name</source>
         <translation>가입 완료</translation>
     </message>
     <message>
+        <source>Add</source>
+        <translatorcomment>Button label to add a new sync candidate. CON-1386</translatorcomment>
+        <translation>추가</translation>
+    </message>
+    <message>
         <source>Add folder</source>
         <translatorcomment>Button text to add a new folder to the backups table CON-468</translatorcomment>
         <translation>폴더 추가</translation>
@@ -6031,19 +6041,13 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support has ended for Windows 7 and Server 2008 R2.
-- New actions are now available in the File Explorer context menu.
-- Refined parts of the interface to improve your experience.
-- Turkish language is now supported.
+        <source>- Increased the number of parallel transfers.
+- It’s now easier to add syncs during setup.
+- Added support for proxy auto-detection in Linux.
 - We’ve fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 5.13.0. CON-1380</translatorcomment>
-        <translation>- Windows 7과 Server 2008 R2에 대한 지원 종료
-- 파일 탐색기 컨텍스트 메뉴에서 새로운 행동이 이용 가능합니다.
-- 경험을 개선하기 위하 인터페이스의 일부를 수정하였습니다.
-- 튀르키예어가 지원됩니다.
-- 버그를 수정하여 앱을 안정적으로 하였습니다.
-</translation>
+        <translatorcomment>Change log for version 5.14.0. CON-1405</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6124,12 +6128,12 @@ Enter a different name</source>
     <message>
         <source>We couldn’t connect using your proxy settings. Check your proxy details or try a different network.</source>
         <translatorcomment>Error banner shown when there is an error testing the proxy settings. SNC-5411</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>당신의 프록시 설정을 이용하여 연결할 수 없었습니다. 설정을 다시 확인하거나 다른 네트워크에 연결하세요.</translation>
     </message>
     <message>
         <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
         <translatorcomment>Error banner shown when proxy settings is not found in the environment, [B] is for bold . SNC-5411</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>시스템이 설정된 프록시가 없습니다. 연결하려면 유효한 [B]http_proxy[/B] 또는 [B]https_proxy[/B] 값을 환경에 설정해야 합니다.</translation>
     </message>
 </context>
 <context>
@@ -9371,29 +9375,19 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>UnknownDownloadIssue</name>
     <message>
-        <source>An unknown download issue has been detected during the sync operation. Error: UnknownDownloadIssue</source>
-        <translatorcomment>Default body for helpdesk report;CON-1100</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Reporting failed</source>
         <translatorcomment>Stalled Issue state when the report has been submitted to the SDK ;CON-1100</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>보고 실패</translation>
     </message>
     <message>
         <source>Reporting issue</source>
         <translatorcomment>Stalled Issue state while the report is being submitted to the SDK ;CON-1100</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>문제 보고 중</translation>
     </message>
     <message>
         <source>Reporting successful</source>
         <translatorcomment>Stalled Issue state when the report has been submitted to the SDK ;CON-1100</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown download issue detected</source>
-        <translatorcomment>Default title for helpdesk report;CON-1100</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>보고 성공</translation>
     </message>
 </context>
 <context>
@@ -9401,17 +9395,17 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Report issue</source>
         <translatorcomment>Stalled Issue combobox solve option that sends a report to helpdesk;CON-1094</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>문제 보고</translation>
     </message>
     <message>
         <source>Send</source>
         <translatorcomment>Messagebox button string to confirma that the user wants to send a report to helpdesk;CON-1094</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>전송</translation>
     </message>
     <message>
         <source>This will send your logs to our Support team for diagnostics.</source>
         <translatorcomment>Messagebox string to confirma that the user wants to send a report to helpdesk;CON-1094</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>이것은 진단을 위해 기록을 지원 팀에 보낼 것입니다</translation>
     </message>
 </context>
 <context>
