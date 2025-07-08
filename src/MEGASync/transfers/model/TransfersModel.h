@@ -453,8 +453,7 @@ private:
     LastTransfersCount mLastTransfersCount;
 
     QList<QExplicitlySharedDataPointer<TransferData>> mTransfers;
-    QHash<int,QExplicitlySharedDataPointer<TransferData>> mFailedFoldersByTag;
-    QHash<mega::MegaHandle,QPersistentModelIndex> mCompletedTransfersByTag;
+    QHash<int, QExplicitlySharedDataPointer<TransferData>> mFailedFoldersByTag;
 
     TransferThread::TransfersToProcess mTransfersToProcess;
     QFutureWatcher<void> mUpdateTransferWatcher;
