@@ -401,6 +401,24 @@
     </message>
 </context>
 <context>
+    <name>BackupsController</name>
+    <message numerus="yes">
+        <source>%1, but %n folder couldn’t be backed up</source>
+        <translatorcomment>Notification message to indicate that backups have been created (%1) but other %n backups have failed. Keep both %1 indicating a text with correctly created backups and %n to indicate the number of backups failed. SNC-5495</translatorcomment>
+        <translation><numerusform>%1, ale %n katalogów nie udało się zsynchronizować</numerusform><numerusform>%1, ale %n katalogów nie udało się zsynchronizować</numerusform><numerusform>%1, ale %n katalogów nie udało się zsynchronizować</numerusform><numerusform>%1, ale %n katalogów nie udało się zsynchronizować</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder was backed up</source>
+        <translatorcomment>Notification message to indicate that %n backups have been created. Keep %n to indicate the number of backups created. SNC-5495</translatorcomment>
+        <translation><numerusform>%n katalog został zarchiwizowany</numerusform><numerusform>%n katalogów zostało zarchiwizowanych</numerusform><numerusform>%n katalogów zostało zarchiwizowanych</numerusform><numerusform>%n katalogów zostało zarchiwizowanych</numerusform></translation>
+    </message>
+    <message>
+        <source>Not all folders were backed up</source>
+        <translatorcomment>Notification title to indicate that not all folders have been backed up successfully. SNC-5495</translatorcomment>
+        <translation>Nie wszystkie katalogi zostały zarchiwizowane</translation>
+    </message>
+</context>
+<context>
     <name>BackupsModel</name>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
@@ -2116,19 +2134,6 @@ Sprawdź swoją skrzynkę odbiorczą, aby uzyskać instrukcje dotyczące odbloko
         <source>Your download has started</source>
         <translatorcomment>Notification shown when a web download is started.</translatorcomment>
         <translation>Pobieranie rozpoczęte</translation>
-    </message>
-</context>
-<context>
-    <name>HandleSyncCandidatesDialogForm.ui</name>
-    <message>
-        <source>Add</source>
-        <translatorcomment>Button label to add a new sync candidate. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to cancel the current process of adding a new sync candidate. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5199,6 +5204,11 @@ Wprowadź inną nazwę.</translation>
         <translation>Ukończ rejestrację</translation>
     </message>
     <message>
+        <source>Add</source>
+        <translatorcomment>Button label to add a new sync candidate. CON-1386</translatorcomment>
+        <translation>Dodaj</translation>
+    </message>
+    <message>
         <source>Add folder</source>
         <translatorcomment>Button text to add a new folder to the backups table CON-468</translatorcomment>
         <translation>Dodaj katalog</translation>
@@ -5551,7 +5561,7 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>Removing this sync will take you back to the start of setup.</source>
         <translatorcomment>Description off the consequences of removing the last sync candidate left on the table. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>To ponownie uruchomi konfigurację synchronizacji</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -6032,18 +6042,13 @@ Wprowadź inną nazwę.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support has ended for Windows 7 and Server 2008 R2.
-- New actions are now available in the File Explorer context menu.
-- Refined parts of the interface to improve your experience.
-- Turkish language is now supported.
+        <source>- Increased the number of parallel transfers.
+- It’s now easier to add syncs during setup.
+- Added support for proxy auto-detection in Linux.
 - We’ve fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 5.13.0. CON-1380</translatorcomment>
-        <translation>- Zakończono wsparcie dla Windows 7 i serwera 2008 R2.
-- Nowe akcje są teraz dostępne w menu kontekstowym Eksploratora plików.
-- Udoskonalono części interfejsu, aby poprawić Twoje doświadczenie.
-- Obsługiwany jest teraz język turecki.
-- Naprawiliśmy błędy i zwiększyliśmy niezawodność aplikacji</translation>
+        <translatorcomment>Change log for version 5.14.0. CON-1405</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6124,7 +6129,7 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>We couldn’t connect using your proxy settings. Check your proxy details or try a different network.</source>
         <translatorcomment>Error banner shown when there is an error testing the proxy settings. SNC-5411</translatorcomment>
-        <translation>Nie mogliśmy połączyć się, używając Twoich ustawień proxy. Sprawdź szczegóły proxy lub spróbuj innej sieci.</translation>
+        <translation>Nie mogliśmy połączyć się, używając Twoich ustawień proxy. Sprawdź ustawienia lub spróbuj innej sieci.</translation>
     </message>
     <message>
         <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
@@ -8546,7 +8551,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Folder can&apos;t be synced as it&apos;s already a candidate.</source>
         <translatorcomment>Error message indicating the user we have a sync candidate with the same folder already in the sync candidates table. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ten katalog jest już na liście oczekujących synchronizacji</translation>
     </message>
     <message>
         <source>Select a MEGA folder to sync.</source>
@@ -9371,11 +9376,6 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>UnknownDownloadIssue</name>
     <message>
-        <source>An unknown download issue has been detected during the sync operation. Error: UnknownDownloadIssue</source>
-        <translatorcomment>Default body for helpdesk report;CON-1100</translatorcomment>
-        <translation>Wykryto nieznany problem z pobieraniem podczas operacji synchronizacji. Błąd: UnknownDownloadIssue</translation>
-    </message>
-    <message>
         <source>Reporting failed</source>
         <translatorcomment>Stalled Issue state when the report has been submitted to the SDK ;CON-1100</translatorcomment>
         <translation>Zgłoszenie nie powiodło się</translation>
@@ -9389,11 +9389,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Reporting successful</source>
         <translatorcomment>Stalled Issue state when the report has been submitted to the SDK ;CON-1100</translatorcomment>
         <translation>Zgłoszenie zakończone pomyślnie</translation>
-    </message>
-    <message>
-        <source>Unknown download issue detected</source>
-        <translatorcomment>Default title for helpdesk report;CON-1100</translatorcomment>
-        <translation>Wykryto nieznany problem z pobieraniem</translation>
     </message>
 </context>
 <context>
@@ -9411,7 +9406,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>This will send your logs to our Support team for diagnostics.</source>
         <translatorcomment>Messagebox string to confirma that the user wants to send a report to helpdesk;CON-1094</translatorcomment>
-        <translation>To wyśle Twoje logi do naszego zespołu wsparcia w celu diagnostyki.</translation>
+        <translation>To wyśle Twoje logi do naszego zespołu wsparcia w celu diagnostyki</translation>
     </message>
 </context>
 <context>
