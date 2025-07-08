@@ -24,7 +24,6 @@ public:
         MEM_USAGE,
         UPDATE,
         UPDATE_OK,
-        DUP_FINISHED_TRSF,
         OVER_STORAGE_DIAL,
         OVER_STORAGE_NOTIF,
         OVER_STORAGE_MSG,
