@@ -15,6 +15,7 @@ public:
 
     void applyCurrentTheme();
     void applyCurrentTheme(QWidget* dialog);
+    void registerWidgetForTheming(QWidget* dialog);
     QColor getColor(const QString& colorToken, const QString& defaultValue);
 
 private:
@@ -25,7 +26,7 @@ private:
     void loadStandardStyleSheetComponents();
     void onThemeChanged(Preferences::ThemeType theme);
     void onUpdateRequested();
-    void applyTheme(QWidget* widget);
+    void applyTheme(QWidget* widget, bool isSubWidget = false);
     void replaceThemeTokens(QString& styleSheet, const QString& currentTheme);
     void replaceIconColorTokens(QWidget* widget,
                                 QString& styleSheet,
@@ -34,10 +35,12 @@ private:
     void removeFrameOnDialogCombos(QWidget* widget);
     bool isTokenized(QWidget* widget);
     bool isRoot(QWidget* widget);
+    void tokenizeChildStyleSheets(QWidget* widget, const QString& styleSheet);
 
     QMap<QString, ColorTokens> mColorThemedTokens;
     QMap<QString, QString> mThemedStandardComponentsStyleSheet;
     QMap<QString, QString> mWidgetsStyleSheets;
+    QSet<QWidget*> mRegisteredWidgets;
 };
 
 #endif // THEMEWIDGET_H
