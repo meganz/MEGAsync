@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>457</width>
+    <width>639</width>
     <height>397</height>
    </rect>
   </property>
@@ -207,6 +207,13 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="styleSheet">
+            <string notr="true">QToolTip
+{
+	color:#FAFAFA;
+	background-color:#333333
+}</string>
+           </property>
            <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
             <property name="spacing">
              <number>3</number>
@@ -277,7 +284,14 @@
                 <number>0</number>
                </property>
                <item>
-                <widget class="WordWrapLabel" name="fileNameTitle"/>
+                <widget class="WordWrapLabel" name="fileNameTitle">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>
@@ -292,6 +306,13 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QToolTip
+{
+	color:#FAFAFA;
+	background-color:#333333
+}</string>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0">
             <property name="spacing">
@@ -316,6 +337,9 @@
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>TEST</string>
               </property>
              </widget>
             </item>
@@ -380,7 +404,7 @@
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>7</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>

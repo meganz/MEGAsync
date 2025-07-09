@@ -71,88 +71,33 @@ set(DESKTOP_APP_STALLED_ISSUES_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/model/MultiStepIssueSolver.cpp
 )
 
-target_sources_conditional(${ExecutableTarget}
-   FLAG WIN32
-   QT_AWARE
-   PRIVATE
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/StalledIssueHeader.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/StalledIssueChooseWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/StalledIssuesDialog.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/StalledIssueFilePath.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/StalledIssueTab.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/StalledIssueLoadingItem.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/StalledIssueActionTitle.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/win/LocalAndRemoteDifferentWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/win/FolderMatchedAgainstFileWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/win/OtherSideMissingOrBlocked.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/win/NameConflict.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/win/LocalAndRemoteNameConflicts.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/win/MoveOrRenameCannotOccur.ui
+set(DESKTOP_APP_STALLED_ISSUES_UI_FILES
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/StalledIssueHeader.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/StalledIssueChooseWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/StalledIssuesDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/StalledIssueFilePath.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/StalledIssueTab.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/StalledIssueLoadingItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/StalledIssueActionTitle.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/ui/LocalAndRemoteDifferentWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/ui/FolderMatchedAgainstFileWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/ui/OtherSideMissingOrBlocked.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/ui/NameConflict.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/ui/LocalAndRemoteNameConflicts.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/ui/MoveOrRenameCannotOccur.ui
 )
 
-target_sources_conditional(${ExecutableTarget}
-   FLAG APPLE
-   QT_AWARE
-   PRIVATE
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/StalledIssueHeader.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/StalledIssueChooseWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/StalledIssuesDialog.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/StalledIssueFilePath.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/StalledIssueTab.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/StalledIssueLoadingItem.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/StalledIssueActionTitle.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/macx/LocalAndRemoteDifferentWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/macx/FolderMatchedAgainstFileWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/macx/OtherSideMissingOrBlocked.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/macx/NameConflict.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/macx/LocalAndRemoteNameConflicts.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/macx/MoveOrRenameCannotOccur.ui
+set_property(TARGET ${ExecutableTarget}
+    APPEND PROPERTY AUTOUIC_SEARCH_PATHS
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/ui
 )
-
-target_sources_conditional(${ExecutableTarget}
-   FLAG UNIX AND NOT APPLE
-   QT_AWARE
-   PRIVATE
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/StalledIssueHeader.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/StalledIssueChooseWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/StalledIssuesDialog.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/StalledIssueFilePath.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/StalledIssueTab.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/StalledIssueLoadingItem.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/StalledIssueActionTitle.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/linux/LocalAndRemoteDifferentWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/linux/FolderMatchedAgainstFileWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/linux/OtherSideMissingOrBlocked.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/linux/NameConflict.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/linux/LocalAndRemoteNameConflicts.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/linux/MoveOrRenameCannotOccur.ui
-)
-
-
-if (WIN32)
-    set_property(TARGET ${ExecutableTarget}
-        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
-        ${CMAKE_CURRENT_LIST_DIR}/gui/win
-        ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/win
-    )
-elseif (APPLE)
-    set_property(TARGET ${ExecutableTarget}
-        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
-        ${CMAKE_CURRENT_LIST_DIR}/gui/macx
-        ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/macx
-    )
-elseif (UNIX AND NOT APPLE)
-    set_property(TARGET ${ExecutableTarget}
-        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
-        ${CMAKE_CURRENT_LIST_DIR}/gui/linux
-        ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/linux
-    )
-endif()
 
 target_sources(${ExecutableTarget}
     PRIVATE
     ${DESKTOP_APP_STALLED_ISSUES_HEADERS}
     ${DESKTOP_APP_STALLED_ISSUES_SOURCES}
+    ${DESKTOP_APP_STALLED_ISSUES_UI_FILES}
 )
 
 set (INCLUDE_DIRECTORIES
