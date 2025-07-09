@@ -113,16 +113,22 @@ font-weight: 600;
        </item>
        <item>
         <widget class="QPushButton" name="bChange">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
-           <width>90</width>
-           <height>36</height>
+           <width>0</width>
+           <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
-           <height>36</height>
+           <width>16777212</width>
+           <height>16777215</height>
           </size>
          </property>
          <property name="cursor">

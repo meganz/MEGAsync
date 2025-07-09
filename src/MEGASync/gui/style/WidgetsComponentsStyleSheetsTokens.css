@@ -404,28 +404,24 @@ QPushButton[type="primary"]
 {
 background-color: #ff04101E; /*colorToken.button-primary*/
 color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
-border-color: #ff04101E; /*colorToken.button-primary*/
 }
 
 QPushButton:hover[type="primary"]
 {
 color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
 background-color: #ff39424E; /*colorToken.button-primary-hover*/
-border-color: #ff39424E; /*colorToken.button-primary-hover*/
 }
 
 QPushButton:pressed[type="primary"]
 {
 color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
 background-color: #ff535B65; /*colorToken.button-primary-pressed*/
-border-color: #ff535B65; /*colorToken.button-primary-pressed*/
 }
 
 QPushButton:disabled[type="primary"]
 {
 color: #ffC1C2C4; /*colorToken.text-disabled*/
 background-color: #ff797c80; /*colorToken.button-disabled*/
-border-color: transparent;
 }
 
 /*
