@@ -38,58 +38,6 @@
    background-color: transparent;
 }
 
-#footer
-{
-    background-color: #F7F8F9;
-}
-
-#footer QPushButton
-{
-    font-family: Lato;
-    font-size: 14px;
-    border-radius: 3px;
-    border: 1px solid rgba(0,0,0, 0.15);
-}
-
-#doneButton
-{
-    background-color: #FCFCFC;
-    color: #333333;
-}
-
-#updateButton
-{
-    padding-left: 6px;
-    padding-right: 10px;
-    color: #FFFFFF;
-    spacing: 5px;
-}
-
-#updateButton
-{
-min-height:32px;
-padding-left:12px;
-padding-right:12px;
-font-size:14px;
-font-weight: 400;
-border-radius:4px;
-background:#00BFA5;
-border: 1px solid rgba(0, 0, 0, 0.1);
-color:#FFFFFF;
-}
-
-#updateButton:disabled
-{
-background: rgba(0, 191, 165, 0.3);
-color:#FFFFFF;
-}
-
-#updateButton:hover
-{
-background: #00A787;
-color:#FFFFFF;
-}
-
 QStackedWidget
 {
     border-top: 1px solid rgba(0,0,0,0.08);
@@ -184,8 +132,24 @@ background-color: rgba(255, 255, 255,0);
 /**********  TreeView Container **********/
 
 /**********  Footer **********/
+#footer
+{
+    background-color: #F7F8F9;
+}
+
+#doneButton
+{
+    font-family: Lato;
+    font-size: 14px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0, 0.15);
+    background-color: #FCFCFC;
+    color: #333333;
+}
+
 #HelpButton {
 border: none;
+border-color: transparent;
 color: #0078D7;
 }
 
@@ -195,7 +159,6 @@ color: grey;
 /**********  Footer **********/
 
 /**********  Header **********/
-
 #header
 {
    background-color: #F7F8F9;
@@ -341,7 +304,7 @@ color: grey;
                <property name="minimumSize">
                 <size>
                  <width>24</width>
-                 <height>24</height>
+                 <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
@@ -384,6 +347,9 @@ color: grey;
                  <width>24</width>
                  <height>24</height>
                 </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="text">
                 <string/>
