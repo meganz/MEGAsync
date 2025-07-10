@@ -5877,9 +5877,9 @@ Enter a different name.</translation>
         <translation>[B]Select all[/B]</translation>
     </message>
     <message>
-        <source>This will start the sync setup again.</source>
+        <source>Removing this sync will take you back to the start of setup.</source>
         <translatorcomment>Description off the consequences of removing the last sync candidate left on the table. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Removing this sync will take you back to the start of setup.</translation>
     </message>
 </context>
 <context>
@@ -8747,9 +8747,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Select a local folder to sync</translation>
     </message>
     <message>
-        <source>This folder is already in the list of pending syncs.</source>
+        <source>Folder can&apos;t be synced as it&apos;s already a candidate.</source>
         <translatorcomment>Error message indicating the user we have a sync candidate with the same folder already in the sync candidates table. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder can’t be synced as it’s already a candidate.</translation>
     </message>
 </context>
 <context>

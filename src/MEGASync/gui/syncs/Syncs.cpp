@@ -393,7 +393,7 @@ QString Syncs::getLocalError() const
 
 QString Syncs::getAlreadySyncCandidateError() const
 {
-    return tr("This folder is already in the list of pending syncs.");
+    return tr("Folder can't be synced as it's already a candidate.");
 }
 
 QString Syncs::getRemoteError() const
