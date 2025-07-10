@@ -88,7 +88,135 @@ color:#FFFFFF;
 {
 background: #00A787;
 color:#FFFFFF;
-}</string>
+}
+
+QStackedWidget
+{
+    border-top: 1px solid rgba(0,0,0,0.08);
+    border-bottom: 1px solid rgba(0,0,0,0.08); 
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#EmptyViewContainerPage QToolButton
+{
+    border:none;
+}
+
+/**********  TreeView Container **********/
+QScrollBar:vertical
+{
+    background: #f6f6f6;
+    width: 15px;
+    border-left: 1px solid #E4E4E4;
+}
+
+QScrollBar::sub-line:vertical, QScrollBar::add-line:vertical
+{
+    border: none;
+    background: none;
+    width:0px;
+    height:0px;
+}
+
+QScrollBar::handle:vertical
+{
+    background: #c0c0c0;
+    min-height: 20px;
+    border-radius: 4px;
+    margin: 3px 4px 3px 2px;
+}
+
+QMenu
+{
+    border: 1px solid #B8B8B8;
+   border-radius: 8px;
+    background: #ffffff;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+QMenu::item
+{
+   font-size: 14px;
+   color: #333333;
+   background: transparent; 
+   margin-top: 3px;
+   margin-bottom: 3px;
+   padding-left: 16px;
+   padding-right: 16px;
+   margin-left: 16px;
+   margin-right: 16px;
+}
+
+QMenu::item:selected
+{
+    font-weight: bold;  
+}
+
+QMenu::separator
+{
+    height: 1px;
+	width: 164px;
+	min-width: 164px;
+	max-width: 164px;
+    background-color: #EEEEEE;
+    margin-top: 9px;
+    margin-bottom: 9px;
+}
+
+QMenu::item:disabled
+{
+    background-color: #ffffff;
+    color: rgba(119,119,119,0.3);
+}
+
+QMenu::item:default
+{
+    color: #F46265;
+}
+
+#stalledIssuesTree QWidget{
+background-color: rgba(255, 255, 255,0);
+}
+/**********  TreeView Container **********/
+
+/**********  Footer **********/
+#HelpButton {
+border: none;
+color: #0078D7;
+}
+
+#HelpButton QPushButton::!enabled {
+color: grey;
+}
+/**********  Footer **********/
+
+/**********  Header **********/
+
+#header
+{
+   background-color: #F7F8F9;
+}
+
+#title QLabel
+{
+  font-family: &quot;Poppins&quot;;
+  font-size:20px;
+  line-height: 30px;
+  font-weight: 600;
+  color: #333333;
+}
+
+#title QPushButton {
+    background-color: none;
+    outline: none;
+    border: none;
+}
+/**********  Header **********/
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -108,9 +236,6 @@ color:#FFFFFF;
    </property>
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -145,22 +270,6 @@ color:#FFFFFF;
            <height>88</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true">#header
-{
-   background-color: #F7F8F9;
-}
-
-
-#title QLabel
-{
-  font-family: &quot;Poppins&quot;;
-  font-size:20px;
-  line-height: 30px;
-  font-weight: 600;
-  color: #333333;
-}</string>
-         </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <property name="spacing">
            <number>10</number>
@@ -190,13 +299,6 @@ color:#FFFFFF;
               <width>16777215</width>
               <height>16777215</height>
              </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-    background-color: none;
-    outline: none;
-    border: none;
-}</string>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout">
              <property name="spacing">
@@ -287,7 +389,7 @@ color:#FFFFFF;
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../../../gui/Resources_macx.qrc">
+                <iconset>
                  <normaloff>:/images/StalledIssues/settings-stalled-issues.png</normaloff>:/images/StalledIssues/settings-stalled-issues.png</iconset>
                </property>
                <property name="iconSize">
@@ -317,9 +419,6 @@ color:#FFFFFF;
               <width>0</width>
               <height>0</height>
              </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_3">
              <property name="spacing">
@@ -472,16 +571,6 @@ color:#FFFFFF;
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="styleSheet">
-          <string notr="true">QStackedWidget
-{
-    border-top: 1px solid rgba(0,0,0,0.08);
-    border-bottom: 1px solid rgba(0,0,0,0.08); 
-    border-left: 0px;
-    border-right: 0px;
-}
-</string>
-         </property>
          <property name="frameShape">
           <enum>QFrame::Box</enum>
          </property>
@@ -492,81 +581,6 @@ color:#FFFFFF;
           <number>0</number>
          </property>
          <widget class="QWidget" name="TreeViewContainerPage">
-          <property name="styleSheet">
-           <string notr="true">QScrollBar:vertical
-{
-    background: #f6f6f6;
-    width: 15px;
-    border-left: 1px solid #E4E4E4;
-}
-
-QScrollBar::sub-line:vertical, QScrollBar::add-line:vertical
-{
-    border: none;
-    background: none;
-    width:0px;
-    height:0px;
-}
-
-QScrollBar::handle:vertical
-{
-    background: #c0c0c0;
-    min-height: 20px;
-    border-radius: 4px;
-    margin: 3px 4px 3px 2px;
-}
-
-QMenu
-{
-    border: 1px solid #B8B8B8;
-   border-radius: 8px;
-    background: #ffffff;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    padding-left: 8px;
-    padding-right: 8px;
-}
-
-QMenu::item
-{
-   font-size: 14px;
-   color: #333333;
-   background: transparent; 
-   margin-top: 3px;
-   margin-bottom: 3px;
-   padding-left: 16px;
-   padding-right: 16px;
-   margin-left: 16px;
-   margin-right: 16px;
-}
-
-QMenu::item:selected
-{
-    font-weight: bold;  
-}
-
-QMenu::separator
-{
-    height: 1px;
-	width: 164px;
-	min-width: 164px;
-	max-width: 164px;
-    background-color: #EEEEEE;
-    margin-top: 9px;
-    margin-bottom: 9px;
-}
-
-QMenu::item:disabled
-{
-    background-color: #ffffff;
-    color: rgba(119,119,119,0.3);
-}
-
-QMenu::item:default
-{
-    color: #F46265;
-}</string>
-          </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <property name="spacing">
             <number>0</number>
@@ -587,11 +601,6 @@ QMenu::item:default
             <widget class="StalledIssuesView" name="stalledIssuesTree">
              <property name="autoFillBackground">
               <bool>false</bool>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QWidget{
-background-color: rgba(255, 255, 255,0);
-}</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::NoFrame</enum>
@@ -664,17 +673,11 @@ background-color: rgba(255, 255, 255,0);
            </property>
            <item row="0" column="0">
             <widget class="QToolButton" name="toolButton">
-             <property name="styleSheet">
-              <string notr="true">QToolButton
-{
-    border:none;
-}</string>
-             </property>
              <property name="text">
               <string notr="true">...</string>
              </property>
              <property name="icon">
-              <iconset resource="../../../gui/Resources_macx.qrc">
+              <iconset>
                <normaloff>:/images/transfer_manager/empty_categories/no_transfers@2x.png</normaloff>:/images/transfer_manager/empty_categories/no_transfers@2x.png</iconset>
              </property>
              <property name="iconSize">
@@ -703,9 +706,6 @@ background-color: rgba(255, 255, 255,0);
            <height>60</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <property name="spacing">
            <number>0</number>
@@ -724,16 +724,6 @@ background-color: rgba(255, 255, 255,0);
           </property>
           <item>
            <widget class="QPushButton" name="HelpButton">
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-border: none;
-color: #0078D7;
-}
-
-QPushButton::!enabled {
-color: grey;
-}</string>
-            </property>
             <property name="text">
              <string>Help</string>
             </property>
@@ -809,8 +799,6 @@ color: grey;
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../../../gui/Resources_macx.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

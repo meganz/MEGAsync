@@ -13,6 +13,19 @@
   <property name="windowTitle">
    <string notr="true"/>
   </property>
+  <property name="styleSheet">
+   <string notr="true">*
+{
+background-color: transparent;
+}
+
+QLabel
+{
+background-color: rgb(240,240,240);
+border-radius: 4px;
+}
+</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
     <number>22</number>
@@ -52,10 +65,6 @@
        <height>12</height>
       </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(240,240,240);
-border-radius: 4px;</string>
-     </property>
      <property name="text">
       <string/>
      </property>
@@ -81,10 +90,6 @@ border-radius: 4px;</string>
        <height>36</height>
       </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(240,240,240);
-border-radius: 4px;</string>
-     </property>
      <property name="text">
       <string/>
      </property>
@@ -109,10 +114,6 @@ border-radius: 4px;</string>
        <width>410</width>
        <height>12</height>
       </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(240,240,240);
-border-radius: 4px;</string>
      </property>
      <property name="text">
       <string/>

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>339</width>
-    <height>223</height>
+    <height>275</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -115,6 +115,22 @@ QPushButton
 {
    min-width: 24px;
    max-width: 24px;
+}
+
+#LocalOrRemoteText
+{
+    font-family: Lato;
+    font-size: 12px;
+    line-height: 15px;
+    color: #666666;
+}
+
+#moveLabel
+{
+    font-family: Lato;
+    font-size: 12px;
+    line-height: 20px;
+    color: #999999;
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -194,15 +210,6 @@ QPushButton
        <height>24</height>
       </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true">#LocalOrRemoteText
-{
-    font-family: Lato;
-    font-size: 12px;
-    line-height: 15px;
-    color: #666666;
-}</string>
-     </property>
      <property name="text">
       <string/>
      </property>
@@ -215,9 +222,6 @@ QPushButton
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
       <property name="leftMargin">
@@ -412,7 +416,7 @@ QPushButton
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources_macx.qrc">
+               <iconset>
                 <normaloff>:/images/StalledIssues/alert_circle_small_default.png</normaloff>:/images/StalledIssues/alert_circle_small_default.png</iconset>
               </property>
               <property name="iconSize">
@@ -451,7 +455,7 @@ QPushButton
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../gui/Resources_macx.qrc">
+            <iconset>
              <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -550,15 +554,6 @@ QPushButton
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="styleSheet">
-      <string notr="true">#moveLabel
-{
-    font-family: Lato;
-    font-size: 12px;
-    line-height: 20px;
-    color: #999999;
-}</string>
-     </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <property name="leftMargin">
        <number>0</number>
@@ -648,9 +643,6 @@ QPushButton
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
         </property>
         <property name="itsHover" stdset="0">
          <bool>false</bool>
@@ -807,7 +799,7 @@ QPushButton
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources_macx.qrc">
+               <iconset>
                 <normaloff>:/images/StalledIssues/alert_circle_small_default.png</normaloff>:/images/StalledIssues/alert_circle_small_default.png</iconset>
               </property>
               <property name="iconSize">
@@ -930,8 +922,6 @@ QPushButton
    <header>WordWrapLabel.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../../../gui/Resources_macx.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

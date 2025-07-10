@@ -74,7 +74,63 @@
 #actionButton:pressed:enabled, #ignoreFileButton::pressed:enabled, #multipleActionButton::pressed:enabled
 {
     background-color: #C9C9C9;
-}</string>
+}
+
+QToolTip
+{
+	color:#FAFAFA;
+	background-color:#333333
+}
+
+/*********** actionContainer **********/
+#actionMessage
+{
+   font-size:12px;
+}
+
+#actionMessageContainer[STATE=&quot;being solved&quot;]
+{
+	background-color: #F3F4F4;
+	border-radius: 4px;
+}
+
+#actionMessageContainer[STATE=&quot;being solved&quot;] QLabel
+{
+    color: #616366;
+}
+
+#actionMessageContainer[STATE=&quot;solved&quot;]
+{
+	background-color: #CFFCDB;
+	border-radius: 4px;
+}
+
+#actionMessageContainer[STATE=&quot;solved&quot;] QLabel
+{
+    color: #007C3E;
+}
+
+#actionMessageContainer[STATE=&quot;failed&quot;]
+{
+	background-color: #FFE4E8;
+	border-radius: 4px;
+}
+
+#actionMessageContainer[STATE=&quot;failed&quot;] QLabel
+{
+	color: #E31B57;
+}
+/*********** actionContainer **********/
+
+/*********** errorContainer **********/
+#fileNameTitle
+{
+     color: #333333;
+     font-size: 13px;
+     line-height: 16px;
+     font-family: Lato Bold;
+}
+/*********** errorContainer **********/</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,0">
    <property name="leftMargin">
@@ -207,13 +263,6 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="styleSheet">
-            <string notr="true">QToolTip
-{
-	color:#FAFAFA;
-	background-color:#333333
-}</string>
-           </property>
            <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
             <property name="spacing">
              <number>3</number>
@@ -257,16 +306,6 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="styleSheet">
-               <string notr="true">#fileNameTitle
-{
-     color: #333333;
-     font-size: 13px;
-     line-height: 16px;
-     font-family: Lato Bold;
-}
-</string>
-              </property>
               <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0">
                <property name="spacing">
                 <number>3</number>
@@ -307,13 +346,6 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="styleSheet">
-            <string notr="true">QToolTip
-{
-	color:#FAFAFA;
-	background-color:#333333
-}</string>
-           </property>
            <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0">
             <property name="spacing">
              <number>3</number>
@@ -339,7 +371,7 @@
                </sizepolicy>
               </property>
               <property name="toolTip">
-               <string>TEST</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -354,45 +386,6 @@
    </item>
    <item>
     <widget class="QWidget" name="actionContainer" native="true">
-     <property name="styleSheet">
-      <string notr="true">#actionMessage
-{
-   font-size:12px;
-}
-
-#actionMessageContainer[STATE=&quot;being solved&quot;]
-{
-	background-color: #F3F4F4;
-	border-radius: 4px;
-}
-
-#actionMessageContainer[STATE=&quot;being solved&quot;] QLabel
-{
-    color: #616366;
-}
-
-#actionMessageContainer[STATE=&quot;solved&quot;]
-{
-	background-color: #CFFCDB;
-	border-radius: 4px;
-}
-
-#actionMessageContainer[STATE=&quot;solved&quot;] QLabel
-{
-    color: #007C3E;
-}
-
-#actionMessageContainer[STATE=&quot;failed&quot;]
-{
-	background-color: #FFE4E8;
-	border-radius: 4px;
-}
-
-#actionMessageContainer[STATE=&quot;failed&quot;] QLabel
-{
-	color: #E31B57;
-}</string>
-     </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <property name="spacing">
        <number>20</number>
