@@ -460,31 +460,63 @@ set (DESKTOP_APP_TS_FILES
 set_source_files_properties(${DESKTOP_APP_TS_FILES} PROPERTIES OUTPUT_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/gui/translations)
 
 if (NOT DontUseResources)
-    target_sources_conditional(${ExecutableTarget}
-        FLAG WIN32
-        QT_AWARE
-        PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/Resources_win.qrc
-    )
 
-    target_sources_conditional(${ExecutableTarget}
-       FLAG APPLE
-       QT_AWARE
-       PRIVATE
-       ${CMAKE_CURRENT_LIST_DIR}/Resources_macx.qrc
-    )
+    # Load functions to process qrcs and create aliases
+    include(desktopapp_resources_processing)
 
-    target_sources_conditional(${ExecutableTarget}
-        FLAG UNIX AND NOT APPLE
-        QT_AWARE
-        PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/Resources_linux.qrc
-    )
+    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_win.qrc")
+    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_macx.qrc")
+    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_linux.qrc")
+    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_qml.qrc")
+    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_light.qrc")
+    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_dark.qrc")
+    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/qml/qml.qrc")
+
+    qt5_add_binary_resources(Resources_win "${CMAKE_CURRENT_LIST_DIR}/Resources_win.qrc")
+    qt5_add_binary_resources(Resources_macx "${CMAKE_CURRENT_LIST_DIR}/Resources_macx.qrc")
+    qt5_add_binary_resources(Resources_linux "${CMAKE_CURRENT_LIST_DIR}/Resources_linux.qrc")
+    qt5_add_binary_resources(Resources_qml "${CMAKE_CURRENT_LIST_DIR}/Resources_qml.qrc")
+    qt5_add_binary_resources(Resources_light "${CMAKE_CURRENT_LIST_DIR}/Resources_light.qrc")
+    qt5_add_binary_resources(Resources_dark "${CMAKE_CURRENT_LIST_DIR}/Resources_dark.qrc")
+    qt5_add_binary_resources(qml "${CMAKE_CURRENT_LIST_DIR}/qml/qml.qrc")
+
+    add_dependencies(MEGAsync Resources_win)
+    add_dependencies(MEGAsync Resources_macx)
+    add_dependencies(MEGAsync Resources_linux)
+    add_dependencies(MEGAsync Resources_qml)
+    add_dependencies(MEGAsync Resources_light)
+    add_dependencies(MEGAsync Resources_dark)
+    add_dependencies(MEGAsync qml)
+
+    # target_sources_conditional(${ExecutableTarget}
+    #     FLAG WIN32
+    #     QT_AWARE
+    #     PRIVATE
+    #     ${CMAKE_CURRENT_LIST_DIR}/Resources_win.qrc
+    # )
+
+    # target_sources_conditional(${ExecutableTarget}
+    #    FLAG APPLE
+    #    QT_AWARE
+    #    PRIVATE
+    #    ${CMAKE_CURRENT_LIST_DIR}/Resources_macx.qrc
+    # )
+
+    # target_sources_conditional(${ExecutableTarget}
+    #     FLAG UNIX AND NOT APPLE
+    #     QT_AWARE
+    #     PRIVATE
+    #     ${CMAKE_CURRENT_LIST_DIR}/Resources_linux.qrc
+    # )
 
     qt5_add_translation(DESKTOP_APP_QM_FILES ${DESKTOP_APP_TS_FILES})
 endif()
 
+#Review to load only the resource file per platform and not all of them
 set(DESKTOP_APP_GUI_RESOURCES
+    ${CMAKE_CURRENT_LIST_DIR}/Resources_macx.qrc
+    ${CMAKE_CURRENT_LIST_DIR}/Resources_win.qrc
+    ${CMAKE_CURRENT_LIST_DIR}/Resources_linux.qrc
     ${CMAKE_CURRENT_LIST_DIR}/Resources.qrc
     ${CMAKE_CURRENT_LIST_DIR}/Resources_qml.qrc
     ${CMAKE_CURRENT_LIST_DIR}/qml/qml.qrc

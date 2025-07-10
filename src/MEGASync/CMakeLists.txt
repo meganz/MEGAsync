@@ -50,6 +50,13 @@ elseif (APPLE)
         ${CMAKE_CURRENT_SOURCE_DIR}/folder_yosemite.icns
         ${CMAKE_CURRENT_SOURCE_DIR}/folder_bigsur.icns
         ${CMAKE_CURRENT_SOURCE_DIR}/appicon32.tiff
+        ${CMAKE_CURRENT_BINARY_DIR}/Resources_macx.rcc
+        ${CMAKE_CURRENT_BINARY_DIR}/Resources_win.rcc
+        ${CMAKE_CURRENT_BINARY_DIR}/Resources_linux.rcc
+        ${CMAKE_CURRENT_BINARY_DIR}/Resources_qml.rcc
+        ${CMAKE_CURRENT_BINARY_DIR}/Resources_light.rcc
+        ${CMAKE_CURRENT_BINARY_DIR}/Resources_dark.rcc
+        ${CMAKE_CURRENT_BINARY_DIR}/qml.rcc
     )
 
     set_target_properties(MEGAsync PROPERTIES
@@ -71,11 +78,11 @@ set_target_properties(MEGAsync
     PROPERTIES
     AUTOUIC ON # Activates the User Interface Compiler generator for Qt.
     AUTOMOC ON # Activates the meta-object code generator for Qt.
-    AUTORCC ON # Activates the creation of rules over qrc files
+    AUTORCC OFF # Activates the creation of rules over qrc files
 )
 
 
-find_package(Qt5 REQUIRED COMPONENTS LinguistTools)
+find_package(Qt5 REQUIRED COMPONENTS Widgets Core Gui Network Qml Quick QuickWidgets LinguistTools)
 qt5_create_translation(QM_OUTPUT ${CMAKE_CURRENT_SOURCE_DIR} gui/translations/translation.source.ts
     OPTIONS -locations none -no-ui-lines -no-obsolete)
 
@@ -132,7 +139,6 @@ else()
     find_package(Qt5 REQUIRED COMPONENTS Svg)
 endif()
 
-find_package(Qt5 REQUIRED COMPONENTS Widgets Core Gui Network Qml Quick QuickWidgets)
 message(STATUS "Building the MEGA Desktop App with Qt v${Qt5_VERSION} from ${Qt5_DIR}")
 
 target_link_libraries(MEGAsync

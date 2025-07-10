@@ -420,6 +420,19 @@ void MegaApplication::initialize()
     paused = false;
     mIndexing = false;
 
+    QResource::registerResource(QCoreApplication::applicationDirPath() +
+                                QString::fromUtf8("/../Resources/Resources_macx.rcc"));
+    QResource::registerResource(QCoreApplication::applicationDirPath() +
+                                QString::fromUtf8("/../Resources/Resources_linux.rcc"));
+    QResource::registerResource(QCoreApplication::applicationDirPath() +
+                                QString::fromUtf8("/../Resources/Resources_win.rcc"));
+    QResource::registerResource(QCoreApplication::applicationDirPath() +
+                                QString::fromUtf8("/../Resources/Resources_qml.rcc"));
+    QResource::registerResource(QCoreApplication::applicationDirPath() +
+                                QString::fromUtf8("/../Resources/Resources_light.rcc"));
+    QResource::registerResource(QCoreApplication::applicationDirPath() +
+                                QString::fromUtf8("/../Resources/qml.rcc"));
+
     // Register own url schemes
     QDesktopServices::setUrlHandler(SCHEME_MEGA_URL, this, "handleMEGAurl");
     QDesktopServices::setUrlHandler(SCHEME_LOCAL_URL, this, "handleLocalPath");
