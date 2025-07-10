@@ -13,6 +13,15 @@
   <property name="windowTitle">
    <string notr="true"/>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#selectLabel
+{
+    font-family: Lato Bold;
+    font-size: 13px;
+    line-height: 16px;
+    color: #333333;
+}</string>
+  </property>
   <layout class="QVBoxLayout" name="layout">
    <property name="spacing">
     <number>7</number>
@@ -37,15 +46,6 @@
        <pointsize>-1</pointsize>
        <bold>true</bold>
       </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">#selectLabel
-{
-    font-family: Lato Bold;
-    font-size: 13px;
-    line-height: 16px;
-    color: #333333;
-}</string>
      </property>
      <property name="text">
       <string>Please select which version you want to keep</string>

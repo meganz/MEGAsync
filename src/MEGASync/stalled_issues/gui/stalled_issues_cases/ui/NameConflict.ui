@@ -16,6 +16,12 @@
     border-radius: 8px;
     border: 1px solid  #D6D6D6;
     background-color: #FFFFFF;
+}
+
+StalledIssueActionTitle
+{
+    min-height: 40 px;
+    background-color: #F5F5F5;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -60,13 +66,6 @@
       </property>
       <item>
        <widget class="QWidget" name="nameConflicts" native="true">
-        <property name="styleSheet">
-         <string notr="true">StalledIssueActionTitle
-{
-    min-height: 40 px;
-    background-color: #F5F5F5;
-}</string>
-        </property>
         <layout class="QVBoxLayout" name="nameConflictsLayout">
          <property name="spacing">
           <number>4</number>

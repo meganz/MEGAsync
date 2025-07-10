@@ -13,6 +13,15 @@
   <property name="windowTitle">
    <string/>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#selectLabel
+{
+    font-family: Lato Bold;
+    font-size: 13px;
+    line-height: 16px;
+    color: #333333;
+}</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
@@ -36,13 +45,7 @@
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">#selectLabel
-{
-    font-family: Lato Bold;
-    font-size: 13px;
-    line-height: 16px;
-    color: #333333;
-}</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string>Click Rename to resolve this issue, or click the folders below to make adjustments in the local filesystem or in MEGA</string>
