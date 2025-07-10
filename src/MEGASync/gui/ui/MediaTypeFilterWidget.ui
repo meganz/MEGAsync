@@ -123,25 +123,98 @@
     height: 34px;
 }
 
-#gbMediaType QPushButton[itsOn=true]
+#gbMediaType QFrame &gt; QPushButton
 {
-    font-weight: 600;
-    color: #FF303233; /*colorToken.icon-primary*/
     border: none;
     text-align: left;
     padding-left: -1px;
     padding-right: 0px;
 }
 
-#gbMediaType QPushButton
+#gbMediaType QFrame[itsOn=true] &gt; QPushButton
+{
+    font-weight: 600;
+    color: #FF303233; /*colorToken.icon-primary*/
+}
+
+#gbMediaType QFrame[itsOn=false] &gt; QPushButton
 {
     font-weight: 400;
     color: #FF616366; /*colorToken.text-secondary*/
-    border: none;
-    text-align: left;
-    padding-left: -1px;
-    padding-right: 0px;
-}</string>
+}
+
+#gbMediaType QFrame[itsOn=false] &gt; #bArchives
+{
+    qproperty-icon: url(:/images/themed/light/archives.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+#gbMediaType QFrame[itsOn=true] &gt; #bArchives
+{
+    qproperty-icon: url(:/images/themed/light/archives_selected.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+#gbMediaType QFrame[itsOn=false] &gt; #bAudio
+{
+    qproperty-icon: url(:/images/themed/light/audio.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+#gbMediaType QFrame[itsOn=true] &gt; #bAudio
+{
+    qproperty-icon: url(:/images/themed/light/audio_selected.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+#gbMediaType QFrame[itsOn=false] &gt; #bDocuments
+{
+    qproperty-icon: url(:/images/themed/light/documents.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+#gbMediaType QFrame[itsOn=true] &gt; #bDocuments
+{
+    qproperty-icon: url(:/images/themed/light/documents_selected.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+#gbMediaType QFrame[itsOn=false] &gt; #bImages
+{
+    qproperty-icon: url(:/images/themed/light/images.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+#gbMediaType QFrame[itsOn=true] &gt; #bImages
+{
+    qproperty-icon: url(:/images/themed/light/images_selected.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+#gbMediaType QFrame[itsOn=false] &gt; #bOther
+{
+    qproperty-icon: url(:/images/themed/light/other.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+#gbMediaType QFrame[itsOn=true] &gt; #bOther
+{
+    qproperty-icon: url(:/images/themed/light/other_selected.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+#gbMediaType QFrame[itsOn=false] &gt; #bVideos
+{
+    qproperty-icon: url(:/images/themed/light/video.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+
+#gbMediaType QFrame[itsOn=true] &gt; #bVideos
+{
+    qproperty-icon: url(:/images/themed/light/video_selected.svg); /*replaceThemeToken*/
+    qproperty-iconSize: 16px;
+}
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
