@@ -892,7 +892,7 @@ void InfoDialog::updateDialogState()
 
             int64_t remainDaysOut(0);
             int64_t remainHoursOut(0);
-            Utilities::getDaysAndHoursToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000,
+            Utilities::getDaysAndHoursToTimestamp(megaApi->getOverquotaDeadlineTs(),
                                                   remainDaysOut,
                                                   remainHoursOut);
             if (remainDaysOut > 0)
