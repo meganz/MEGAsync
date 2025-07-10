@@ -257,11 +257,14 @@ QString PlatformImplementation::getDefaultOpenApp(QString extension)
 
 QString PlatformImplementation::getDefaultOpenAppByMimeType(QString mimeType)
 {
-    QString getDefaultAppDesktopFileName = QString::fromUtf8("xdg-mime query default ") + mimeType;
+    QString exe = QLatin1String("xdg-mime");
+    QStringList args;
+    args << QLatin1String("query");
+    args << QLatin1String("default");
+    args << mimeType;
 
     QProcess process;
-    process.start(getDefaultAppDesktopFileName,
-                  QIODevice::ReadWrite | QIODevice::Text);
+    process.start(exe, args, QIODevice::ReadWrite | QIODevice::Text);
     if(!process.waitForFinished(5000))
     {
         return QString();
@@ -509,8 +512,7 @@ void PlatformImplementation::fileAndFolderSelector(const SelectorInfo& info)
 
 void PlatformImplementation::streamWithApp(const QString &app, const QString &url)
 {
-    QString command = QString::fromUtf8("%1 \"%2\"").arg(QDir::toNativeSeparators(app)).arg(url);
-    QProcess::startDetached(command);
+    QProcess::startDetached(QDir::toNativeSeparators(app), {url});
 }
 
 DriveSpaceData PlatformImplementation::getDriveData(const QString& path)
@@ -535,7 +537,11 @@ QString PlatformImplementation::getGfxProviderPath()
 QStringList PlatformImplementation::getListRunningProcesses()
 {
     QProcess p;
-    p.start(QString::fromUtf8("ps ax -o comm"));
+    QString exe = QLatin1String("ps");
+    QStringList args;
+    args << QLatin1String("ax");
+    args << QLatin1String("-o comm");
+    p.start(exe, args);
     p.waitForFinished(2000);
     QString output = QString::fromUtf8(p.readAllStandardOutput().constData());
     QString e = QString::fromUtf8(p.readAllStandardError().constData());
@@ -545,7 +551,10 @@ QStringList PlatformImplementation::getListRunningProcesses()
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
     }
 
-    p.start(QString::fromUtf8("/bin/bash -c \"readlink /proc/*/exe\""));
+    exe = QLatin1String("readlink");
+    args.clear();
+    args << QLatin1String("/proc/*/exe");
+    p.start(exe, args);
     p.waitForFinished(2000);
     QString output2 = QString::fromUtf8(p.readAllStandardOutput().constData());
     e = QString::fromUtf8(p.readAllStandardError().constData());
