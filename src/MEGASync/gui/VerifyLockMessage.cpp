@@ -2,6 +2,7 @@
 
 #include "MegaApplication.h"
 #include "RequestListenerManager.h"
+#include "TextDecorator.h"
 #include "ui_VerifyLockMessage.h"
 #include "Utilities.h"
 #ifdef __APPLE__
@@ -98,7 +99,15 @@ void VerifyLockMessage::regenerateUI(int currentStatus, bool force)
             QString title = m_haveMainDialog ? tr("Verify your email") : tr("Locked account");
             setWindowTitle(title);
             m_ui->lVerifyEmailTitle->setText(title);
-            m_ui->lVerifyEmailDesc->setText(tr("Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account."));
+            QString msg = QCoreApplication::translate(
+                "GuestStrings",
+                "Your account has been locked for your protection after detecting a malicious "
+                "login, so we require you to reset your password.[BR]\nCheck your email inbox for "
+                "instructions on unlocking your account and tips on how to prevent this from "
+                "happening again.");
+            Text::NewLine decorator;
+            decorator.process(msg);
+            m_ui->lVerifyEmailDesc->setText(msg);
             m_ui->lWhySeenThis->setVisible(true);
             m_ui->lEmailSent->setText(tr(m_ui->lEmailSent->text().toUtf8().constData()));
             m_ui->lEmailSent->setVisible(true);
