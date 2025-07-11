@@ -8699,7 +8699,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Documents</source>
         <translatorcomment>Categories for document type transfers</translatorcomment>
-        <translation>Tài liệu</translation>
+        <translation>Tài liệu</translation>
     </message>
     <message>
         <source>Download</source>
@@ -9789,11 +9789,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Why am I seeing this?</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
         <translation>Tại sao tôi đang thấy cái này?</translation>
-    </message>
-    <message>
-        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
-        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
-        <translation>Tài khoản đã tạm thời bị đình chỉ để đảm bảo an toàn. Xin xác thực địa chỉ email và làm theo hướng dẫn để mở khóa tài khoản.</translation>
     </message>
 </context>
 <context>

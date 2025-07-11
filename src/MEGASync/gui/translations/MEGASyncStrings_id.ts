@@ -9792,11 +9792,6 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
         <translation>Mengapa saya melihat ini?</translation>
     </message>
-    <message>
-        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
-        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>WhatsNewStrings</name>
