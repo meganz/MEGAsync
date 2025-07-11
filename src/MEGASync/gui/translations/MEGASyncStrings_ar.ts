@@ -405,17 +405,17 @@
     <message numerus="yes">
         <source>%1, but %n folder couldn’t be backed up</source>
         <translatorcomment>Notification message to indicate that backups have been created (%1) but other %n backups have failed. Keep both %1 indicating a text with correctly created backups and %n to indicate the number of backups failed. SNC-5495</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1، ولكن %n مجلد لا يمكن نسخه احتياطيًا</numerusform><numerusform>%1، ولكن %n مجلد لا يمكن نسخه احتياطيًا</numerusform><numerusform>%1، ولكن %n مجلدين لا يمكن نسخهما احتياطيًا</numerusform><numerusform>%1، ولكن %n مجلدات لا يمكن نسخهم احتياطيًا</numerusform><numerusform>%1، ولكن %n مجلد لا يمكن نسخهم احتياطيًا</numerusform><numerusform>%1، ولكن %n مجلد لا يمكن نسخهم احتياطيًا</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder was backed up</source>
         <translatorcomment>Notification message to indicate that %n backups have been created. Keep %n to indicate the number of backups created. SNC-5495</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n مجلد تم نسخه احتياطيًا</numerusform><numerusform>%n مجلد تم نسخه احتياطيًا</numerusform><numerusform>%n مجلدين تم نسخهما احتياطيًا</numerusform><numerusform>%n مجلدات تم نسخهم احتياطيًا</numerusform><numerusform>%n مجلد تم نسخهم احتياطيًا</numerusform><numerusform>%n مجلد تم نسخهم احتياطيًا</numerusform></translation>
     </message>
     <message>
         <source>Not all folders were backed up</source>
         <translatorcomment>Notification title to indicate that not all folders have been backed up successfully. SNC-5495</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لم يتم نسخ جميع المجلدات احتياطيًا</translation>
     </message>
 </context>
 <context>
@@ -5208,7 +5208,7 @@ Enter a different name</source>
     <message>
         <source>Add</source>
         <translatorcomment>Button label to add a new sync candidate. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>أضِف</translation>
     </message>
     <message>
         <source>Add folder</source>
@@ -5563,7 +5563,7 @@ Enter a different name</source>
     <message>
         <source>Removing this sync will take you back to the start of setup.</source>
         <translatorcomment>Description off the consequences of removing the last sync candidate left on the table. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>سيؤدي هذا إلى بدء إعداد المزامنة مرة أخرى</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -6131,7 +6131,7 @@ Enter a different name</source>
     <message>
         <source>We couldn’t connect using your proxy settings. Check your proxy details or try a different network.</source>
         <translatorcomment>Error banner shown when there is an error testing the proxy settings. SNC-5411</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لم نتمكن من الاتصال باستخدام إعدادات الوكيل الخاصة بك. تحقق من الإعدادات أو جرب شبكة مختلفة.</translation>
     </message>
     <message>
         <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
@@ -8553,7 +8553,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Folder can&apos;t be synced as it&apos;s already a candidate.</source>
         <translatorcomment>Error message indicating the user we have a sync candidate with the same folder already in the sync candidates table. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>هذا المجلد موجود بالفعل في قائمة عمليات المزامنة المعلقة</translation>
     </message>
     <message>
         <source>Select a MEGA folder to sync.</source>
@@ -9408,7 +9408,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>This will send your logs to our Support team for diagnostics.</source>
         <translatorcomment>Messagebox string to confirma that the user wants to send a report to helpdesk;CON-1094</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>سيؤدي ذلك إلى إرسال سجلاتك إلى فريق الدعم لدينا لإجراء التشخيصات</translation>
     </message>
 </context>
 <context>
@@ -9795,11 +9795,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Why am I seeing this?</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
         <translation>لماذا أرى هذا؟</translation>
-    </message>
-    <message>
-        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
-        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
-        <translation>تم تعليق حسابك مؤقتًا من أجل سلامتك. يرجى التحقق من بريدك الإلكتروني واتباع خطواته لفتح حسابك.</translation>
     </message>
 </context>
 <context>
