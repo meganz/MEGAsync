@@ -127,7 +127,7 @@
 {
     border: none;
     text-align: left;
-    padding-left: -1px;
+    padding-left: 13px;
     padding-right: 0px;
 }
 
@@ -221,13 +221,13 @@
     <number>8</number>
    </property>
    <property name="leftMargin">
-    <number>12</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>12</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>0</number>
