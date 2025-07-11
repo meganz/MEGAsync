@@ -405,17 +405,17 @@
     <message numerus="yes">
         <source>%1, but %n folder couldn’t be backed up</source>
         <translatorcomment>Notification message to indicate that backups have been created (%1) but other %n backups have failed. Keep both %1 indicating a text with correctly created backups and %n to indicate the number of backups failed. SNC-5495</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1, dar %n folderul nu a putut fi copiat de rezervă</numerusform><numerusform>%1, dar %n folderele nu au putut fi copiate de rezervă</numerusform><numerusform>%1, dar %n folderele nu au putut fi copiate de rezervă</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder was backed up</source>
         <translatorcomment>Notification message to indicate that %n backups have been created. Keep %n to indicate the number of backups created. SNC-5495</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n folderul a fost copiat de rezervă</numerusform><numerusform>%n folderele au fost copiate de rezervă</numerusform><numerusform>%n folderele au fost copiate de rezervă</numerusform></translation>
     </message>
     <message>
         <source>Not all folders were backed up</source>
         <translatorcomment>Notification title to indicate that not all folders have been backed up successfully. SNC-5495</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nu s-a făcut backup pentru toate folderele</translation>
     </message>
 </context>
 <context>
@@ -5205,7 +5205,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Add</source>
         <translatorcomment>Button label to add a new sync candidate. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Adaugă</translation>
     </message>
     <message>
         <source>Add folder</source>
@@ -5560,7 +5560,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Removing this sync will take you back to the start of setup.</source>
         <translatorcomment>Description off the consequences of removing the last sync candidate left on the table. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Aceasta va începe din nou configurarea sincronizării</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -6128,12 +6128,12 @@ Introdu un alt nume.</translation>
     <message>
         <source>We couldn’t connect using your proxy settings. Check your proxy details or try a different network.</source>
         <translatorcomment>Error banner shown when there is an error testing the proxy settings. SNC-5411</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nu ne-am putut conecta folosind setările proxy. Verificați setările sau încercați o altă rețea.</translation>
     </message>
     <message>
         <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
         <translatorcomment>Error banner shown when proxy settings is not found in the environment, [B] is for bold . SNC-5411</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sistemul dvs. nu are un proxy setat. Pentru a vă conecta, setați un valid [B]http_proxy[/B] sau [B]https_proxy[/B] valoare în mediul tău.</translation>
     </message>
 </context>
 <context>
@@ -8550,7 +8550,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Folder can&apos;t be synced as it&apos;s already a candidate.</source>
         <translatorcomment>Error message indicating the user we have a sync candidate with the same folder already in the sync candidates table. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Acest folder se află deja în lista de sincronizări în așteptare</translation>
     </message>
     <message>
         <source>Select a MEGA folder to sync.</source>
@@ -9377,17 +9377,17 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Reporting failed</source>
         <translatorcomment>Stalled Issue state when the report has been submitted to the SDK ;CON-1100</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Raportarea a eșuat</translation>
     </message>
     <message>
         <source>Reporting issue</source>
         <translatorcomment>Stalled Issue state while the report is being submitted to the SDK ;CON-1100</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Problema de raportare</translation>
     </message>
     <message>
         <source>Reporting successful</source>
         <translatorcomment>Stalled Issue state when the report has been submitted to the SDK ;CON-1100</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Raportarea reușită</translation>
     </message>
 </context>
 <context>
@@ -9395,17 +9395,17 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Report issue</source>
         <translatorcomment>Stalled Issue combobox solve option that sends a report to helpdesk;CON-1094</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Raportați problema</translation>
     </message>
     <message>
         <source>Send</source>
         <translatorcomment>Messagebox button string to confirma that the user wants to send a report to helpdesk;CON-1094</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Trimite</translation>
     </message>
     <message>
         <source>This will send your logs to our Support team for diagnostics.</source>
         <translatorcomment>Messagebox string to confirma that the user wants to send a report to helpdesk;CON-1094</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Aceasta va trimite jurnalele dvs. echipei noastre de asistență pentru diagnosticare</translation>
     </message>
 </context>
 <context>
@@ -9792,11 +9792,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Why am I seeing this?</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
         <translation>De ce văd asta?</translation>
-    </message>
-    <message>
-        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
-        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

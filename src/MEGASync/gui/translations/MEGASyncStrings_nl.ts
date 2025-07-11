@@ -9793,11 +9793,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
         <translation>Waarom zie ik dit?</translation>
     </message>
-    <message>
-        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
-        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
-        <translation>Uw account is tijdelijk opgeschort voor uw eigen veiligheid. Gelieve uw e-mail te verifiëren en de stappen te volgen om uw account te ontgrendelen.</translation>
-    </message>
 </context>
 <context>
     <name>WhatsNewStrings</name>
