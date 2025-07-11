@@ -72,6 +72,18 @@ QGroupBox::title
     color: #FF303233; /*colorToken.icon-primary*/
 }
 
+#wLeftPane QFrame &gt; QPushButton
+{
+    text-align: left;
+    padding-left:0px;
+    padding-right:0px;
+    border: none;
+    font-size: 12px;
+    font-weight: 400;
+    height: 32px;
+    color: #FF616366; /*colorToken.text-secondary*/
+}
+
 #wLeftPane QFrame[itsOn=true] &gt; QPushButton
 {
     font-size: 12px;
@@ -97,7 +109,6 @@ QGroupBox::title
     color: #FF303233; /*colorToken.text-primary*/
     font-size: 20px;
     font-weight: 400;
-    padding-left: 12px;
     qproperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
@@ -220,29 +231,53 @@ QFrame[itsOn=true] &gt; #tFailed
     qproperty-iconSize: 16px;
 }
 
-/* tokenized to here */
-
 #wTransferring QFrame, #wSearch QFrame
 {
     padding-right: 6px;
     padding-left: 6px;
 }
 
-#wTransferring QPushButton , #wSearch QPushButton
+#wSearch QPushButton
 {
-    height: 34px;
+    height: 32px;
 }
 
-#wTransferring QPushButton
+#pSearch
 {
-    font-size: 14px;
-    color: #15191F;
+    height: 32px;
     border: none;
-    text-align: left;
-    qProperty-iconSize: 24px;
-    padding-left:0px;
-    padding-right:0px;
+    border-radius: 16px;
+    background-color: #FFEFEFF0; /*colorToken.surface-2*/
 }
+
+#wTitleAndSearch
+{
+     height: 32px;
+}
+
+#leSearchField
+{
+    color: #FF616366; /*colorToken.text-secondary*/
+    font-size: 12px;
+    font-weight: 400;
+    background-color: transparent;
+}
+
+#tSearchIcon
+{
+    border: none;
+    qproperty-iconSize: 16px;
+    qproperty-icon: url(:/images/themed/light/search.svg); /*replaceThemeToken*/
+}
+
+#tSearchCancel
+{
+    border: none;
+    qproperty-iconSize: 16px;
+    qproperty-icon: url(:/images/themed/light/cancel.svg); /*replaceThemeToken*/
+}
+
+/* tokenized to here */
 
 #wSearch QPushButton
 {
@@ -253,47 +288,6 @@ QFrame[itsOn=true] &gt; #tFailed
     padding-left:-1px;
     padding-right: 0px;
     qProperty-iconSize: 24px;
-}
-
-#wTitleAndSearch
-{
-     height: 34px;
-     min-height: 34px;
-     max-height: 34px;
-}
-
-#leSearchField
-{
-    background-color: transparent;
-    color: #333333;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-#tSearchIcon
-{
-    height: 18px;
-    width: 18px;
-    min-height: 18px;
-    min-width: 18px;
-    max-height: 18px;
-    max-width: 18px;
-    qProperty-iconSize: 18px;
-    border: none;
-}
-
-#tSearchCancel
-{
-    width: 24px;
-    height: 24px;
-    min-width: 24px;
-    min-height: 24px;
-    max-height: 24px;
-    max-width: 24px;
-    qProperty-iconSize: 16px;
-    border: none;
-    padding: 0px;
-    margin: 0px;
 }
 
 #tClearSearchResult
@@ -721,184 +715,195 @@ QToolButton
          <number>6</number>
         </property>
         <item>
-         <widget class="QStackedWidget" name="wTitleAndSearch">
-          <property name="currentIndex">
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <property name="spacing">
            <number>0</number>
           </property>
-          <widget class="QWidget" name="pTransfers">
-           <layout class="QHBoxLayout" name="pTransfersLayout">
-            <property name="spacing">
-             <number>4</number>
+          <property name="leftMargin">
+           <number>20</number>
+          </property>
+          <property name="rightMargin">
+           <number>16</number>
+          </property>
+          <item>
+           <widget class="QStackedWidget" name="wTitleAndSearch">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="leftMargin">
-             <number>0</number>
+            <property name="currentIndex">
+             <number>1</number>
             </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>8</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="lTransfers">
-              <property name="toolTip">
-               <string>Transfers</string>
+            <widget class="QWidget" name="pTransfers">
+             <layout class="QHBoxLayout" name="pTransfersLayout">
+              <property name="spacing">
+               <number>4</number>
               </property>
-              <property name="text">
-               <string>Transfers</string>
-              </property>
-              <property name="indent">
+              <property name="leftMargin">
                <number>0</number>
               </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+              <property name="topMargin">
+               <number>0</number>
               </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
+              <property name="rightMargin">
+               <number>0</number>
               </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="bPause">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
+              <property name="bottomMargin">
+               <number>0</number>
               </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>16777215</height>
-               </size>
+              <item>
+               <widget class="QLabel" name="lTransfers">
+                <property name="toolTip">
+                 <string>Transfers</string>
+                </property>
+                <property name="text">
+                 <string>Transfers</string>
+                </property>
+                <property name="indent">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="bPause">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
+                <property name="focusPolicy">
+                 <enum>Qt::StrongFocus</enum>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>16</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+                <property name="flat">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="bSearch">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
+                <property name="toolTip">
+                 <string>Search</string>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>16</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="flat">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="pSearch">
+             <layout class="QHBoxLayout" name="pSearchLayout" stretch="0,0,0">
+              <property name="spacing">
+               <number>0</number>
               </property>
-              <property name="cursor">
-               <cursorShape>PointingHandCursor</cursorShape>
+              <property name="leftMargin">
+               <number>10</number>
               </property>
-              <property name="focusPolicy">
-               <enum>Qt::StrongFocus</enum>
+              <property name="topMargin">
+               <number>0</number>
               </property>
-              <property name="iconSize">
-               <size>
-                <width>16</width>
-                <height>16</height>
-               </size>
+              <property name="rightMargin">
+               <number>10</number>
               </property>
-              <property name="checkable">
-               <bool>true</bool>
+              <property name="bottomMargin">
+               <number>0</number>
               </property>
-              <property name="flat">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="bSearch">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="cursor">
-               <cursorShape>PointingHandCursor</cursorShape>
-              </property>
-              <property name="toolTip">
-               <string>Search</string>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>16</width>
-                <height>16</height>
-               </size>
-              </property>
-              <property name="flat">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="pSearch">
-           <layout class="QHBoxLayout" name="pSearchLayout" stretch="0,0,0">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <property name="leftMargin">
-             <number>8</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>8</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QToolButton" name="tSearchIcon">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normaloff>:/images/transfer_manager/sidebar/search_ico_default.png</normaloff>:/images/transfer_manager/sidebar/search_ico_default.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="leSearchField">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string notr="true"/>
-              </property>
-              <property name="frame">
-               <bool>false</bool>
-              </property>
-              <property name="placeholderText">
-               <string>Search</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="tSearchCancel">
-              <property name="cursor">
-               <cursorShape>PointingHandCursor</cursorShape>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normaloff>:/images/transfer_manager/sidebar/delete_search_ico_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_ico_default.png</iconset>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </widget>
+              <item>
+               <widget class="QToolButton" name="tSearchIcon">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="leSearchField">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string notr="true"/>
+                </property>
+                <property name="frame">
+                 <bool>false</bool>
+                </property>
+                <property name="placeholderText">
+                 <string>Search</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="tSearchCancel">
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
          <widget class="QGroupBox" name="wTransferring">
@@ -1387,7 +1392,7 @@ QToolButton
                  <string notr="true"/>
                 </property>
                 <property name="icon">
-                 <iconset>
+                 <iconset resource="../Resources.qrc">
                   <normaloff>:/images/transfer_manager/sidebar/search_result_default.png</normaloff>:/images/transfer_manager/sidebar/search_result_default.png</iconset>
                 </property>
                 <property name="checkable">
@@ -1407,7 +1412,7 @@ QToolButton
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset>
+                 <iconset resource="../Resources.qrc">
                   <normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</iconset>
                 </property>
                </widget>
@@ -1725,7 +1730,7 @@ QToolButton
                <string/>
               </property>
               <property name="icon">
-               <iconset>
+               <iconset resource="../Resources.qrc">
                 <normaloff>:/images/transfer_manager/sidebar/cancel_all_ico_default.png</normaloff>:/images/transfer_manager/sidebar/cancel_all_ico_default.png</iconset>
               </property>
               <property name="iconSize">
@@ -2104,7 +2109,7 @@ QToolButton
                <string>Open links</string>
               </property>
               <property name="icon">
-               <iconset>
+               <iconset resource="../Resources.qrc">
                 <normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</iconset>
               </property>
              </widget>
@@ -2118,7 +2123,7 @@ QToolButton
                <string>Upload</string>
               </property>
               <property name="icon">
-               <iconset>
+               <iconset resource="../Resources.qrc">
                 <normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</iconset>
               </property>
              </widget>
@@ -2132,7 +2137,7 @@ QToolButton
                <string>Download</string>
               </property>
               <property name="icon">
-               <iconset>
+               <iconset resource="../Resources.qrc">
                 <normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</iconset>
               </property>
              </widget>
@@ -2143,7 +2148,7 @@ QToolButton
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="icon">
-               <iconset>
+               <iconset resource="../Resources.qrc">
                 <normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</iconset>
               </property>
              </widget>
@@ -2529,7 +2534,7 @@ QToolButton
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../Resources.qrc">
               <normaloff>:/images/transfer_manager/empty_categories/no_uploads.png</normaloff>:/images/transfer_manager/empty_categories/no_uploads.png</iconset>
             </property>
            </widget>
@@ -2615,7 +2620,7 @@ QToolButton
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../Resources.qrc">
               <normaloff>:/images/transfer_manager/empty_categories/no_downloads.png</normaloff>:/images/transfer_manager/empty_categories/no_downloads.png</iconset>
             </property>
            </widget>
@@ -2662,7 +2667,7 @@ QToolButton
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../Resources.qrc">
               <normaloff>:/images/transfer_manager/empty_categories/no_transfers.png</normaloff>:/images/transfer_manager/empty_categories/no_transfers.png</iconset>
             </property>
            </widget>
@@ -2709,7 +2714,7 @@ QToolButton
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../Resources.qrc">
               <normaloff>:/images/transfer_manager/empty_categories/no_search_results.png</normaloff>:/images/transfer_manager/empty_categories/no_search_results.png</iconset>
             </property>
            </widget>
@@ -2782,7 +2787,7 @@ QToolButton
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../Resources.qrc">
               <normaloff>:/images/transfer_manager/empty_categories/Completed_transfers.png</normaloff>:/images/transfer_manager/empty_categories/Completed_transfers.png</iconset>
             </property>
            </widget>
@@ -2887,7 +2892,9 @@ QToolButton
   <tabstop>leSearchField</tabstop>
   <tabstop>tSearchCancel</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../Resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>bSearch</sender>

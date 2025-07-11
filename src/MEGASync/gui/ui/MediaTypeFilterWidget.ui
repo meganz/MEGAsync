@@ -118,7 +118,7 @@
 
 #gbMediaType QPushButton
 {
-    height: 34px;
+    height: 32px;
 }
 
 #gbMediaType QFrame &gt; QPushButton
