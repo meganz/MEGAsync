@@ -117,7 +117,6 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
                 if (mToolBarItem)
                 {
                     mToolBarItem->setIcon(QIcon(getFinishWarningIconString()));
-                    emit MegaSyncApp->updateUserInterface();
                 }
             }
             else
@@ -127,7 +126,6 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
                 if (mToolBarItem)
                 {
                     mToolBarItem->setIcon(QIcon(getFinishIconString()));
-                    emit MegaSyncApp->updateUserInterface();
                 }
             }
             break;
