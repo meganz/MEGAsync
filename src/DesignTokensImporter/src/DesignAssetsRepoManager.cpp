@@ -29,7 +29,7 @@ static QRegularExpression RGBA_TOKEN_FUNCTION(QLatin1String(R"(^rgba\( *(\S+) *,
 static const int CORE_COLOR_GROUP_ID = 1;
 static const int ALPHA_COLOR_GROUP_ID = 2;
 static const int NON_ALPHA_CHANNEL_LENGTH = 6;
-static QMap<QString, QString> tokenIdNamingExceptions = {{"focus", "focus-color"}};
+static QMap<QString, QString> tokenIdNamingExceptions = {{"focus", "focus-color"}, {"default", "default-color"}};
 
 std::optional<DesignAssets> DesignAssetsRepoManager::getDesignAssets()
 {
