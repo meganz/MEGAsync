@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LocalAndRemoteDifferentWidget</class>
- <widget class="QWidget" name="LocalAndRemoteDifferentWidget">
+ <class>FolderMatchedAgainstFileWidget</class>
+ <widget class="QWidget" name="FolderMatchedAgainstFileWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>345</width>
-    <height>172</height>
+    <width>336</width>
+    <height>124</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string notr="true"/>
-  </property>
-  <property name="styleSheet">
    <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -32,32 +29,6 @@
    <property name="bottomMargin">
     <number>11</number>
    </property>
-   <item alignment="Qt::AlignTop">
-    <widget class="QLabel" name="selectLabel">
-     <property name="font">
-      <font>
-       <family>Lato 13</family>
-       <pointsize>-1</pointsize>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">#selectLabel
-{
-    font-family: Lato Bold;
-    font-size: 13px;
-    line-height: 16px;
-    color: #333333;
-}</string>
-     </property>
-     <property name="text">
-      <string>Please select which version you want to keep</string>
-     </property>
-     <property name="indent">
-      <number>0</number>
-     </property>
-    </widget>
-   </item>
    <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
@@ -93,16 +64,10 @@
        <number>1</number>
       </property>
       <item>
-       <widget class="CloudStalledIssueChooseWidget" name="chooseRemoteCopy" native="true"/>
+       <widget class="CloudStalledIssueChooseWidget" name="remoteCopy" native="true"/>
       </item>
       <item>
-       <widget class="LocalStalledIssueChooseWidget" name="chooseLocalCopy" native="true"/>
-      </item>
-      <item>
-       <widget class="GenericChooseWidget" name="keepLastModifiedOption" native="true"/>
-      </item>
-      <item>
-       <widget class="GenericChooseWidget" name="keepBothOption" native="true"/>
+       <widget class="LocalStalledIssueChooseWidget" name="localCopy" native="true"/>
       </item>
      </layout>
     </widget>
@@ -120,12 +85,6 @@
    <class>LocalStalledIssueChooseWidget</class>
    <extends>QWidget</extends>
    <header>stalled_issues_cases/LocalAndRemoteChooseWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>GenericChooseWidget</class>
-   <extends>QWidget</extends>
-   <header>StalledIssueChooseWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

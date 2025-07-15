@@ -7783,11 +7783,6 @@ Do you want to delete it anyway?</translation>
         <translation>Help</translation>
     </message>
     <message>
-        <source>No issues</source>
-        <translatorcomment>Label shown when there are no stalls to show.DNS-1388</translatorcomment>
-        <translation>No issues</translation>
-    </message>
-    <message>
         <source>One of your synced folders has been renamed. Refresh the list of sync issues.</source>
         <translatorcomment>Messagebox text explaining that the user needs to update the list of issues due a change on a sync. CON-1104</translatorcomment>
         <translation>One of your synced folders has been renamed. Refresh the list of sync issues.</translation>

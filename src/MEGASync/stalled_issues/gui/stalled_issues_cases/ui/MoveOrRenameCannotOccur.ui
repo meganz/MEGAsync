@@ -1,27 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LocalAndRemoteNameConflicts</class>
- <widget class="QWidget" name="LocalAndRemoteNameConflicts">
+ <class>MoveOrRenameCannotOccur</class>
+ <widget class="QWidget" name="MoveOrRenameCannotOccur">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>538</width>
-    <height>97</height>
+    <width>400</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string/>
+   <string notr="true"/>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <property name="styleSheet">
+   <string notr="true">#selectLabel
+{
+    font-family: Lato Bold;
+    font-size: 13px;
+    line-height: 16px;
+    color: #333333;
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="layout">
    <property name="spacing">
-    <number>0</number>
+    <number>7</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
    <property name="topMargin">
     <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>11</number>
    </property>
    <property name="bottomMargin">
     <number>11</number>
@@ -35,23 +47,11 @@
        <bold>true</bold>
       </font>
      </property>
-     <property name="styleSheet">
-      <string notr="true">#selectLabel
-{
-    font-family: Lato Bold;
-    font-size: 13px;
-    line-height: 16px;
-    color: #333333;
-}</string>
-     </property>
      <property name="text">
-      <string>Click Rename to resolve this issue, or click the folders below to make adjustments in the local filesystem or in MEGA</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
+      <string>Please select which version you want to keep</string>
      </property>
      <property name="indent">
-      <number>11</number>
+      <number>0</number>
      </property>
     </widget>
    </item>
@@ -72,28 +72,28 @@
     </spacer>
    </item>
    <item>
-    <widget class="QWidget" name="namesContainer" native="true">
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+    <widget class="QWidget" name="chooseContainer" native="true">
+     <layout class="QVBoxLayout" name="chooseLayout">
       <property name="spacing">
-       <number>24</number>
+       <number>12</number>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>1</number>
       </property>
       <item>
-       <widget class="CloudNameConflict" name="cloudConflictNames" native="true"/>
+       <widget class="RemoteMoveOrRenameCannotOccurChooseWidget" name="chooseRemoteCopy" native="true"/>
       </item>
       <item>
-       <widget class="LocalNameConflict" name="localConflictNames" native="true"/>
+       <widget class="LocalMoveOrRenameCannotOccurChooseWidget" name="chooseLocalCopy" native="true"/>
       </item>
      </layout>
     </widget>
@@ -102,15 +102,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CloudNameConflict</class>
+   <class>LocalMoveOrRenameCannotOccurChooseWidget</class>
    <extends>QWidget</extends>
-   <header>stalled_issues_cases/NameConflict.h</header>
+   <header>stalled_issues_cases/MoveOrRenameCannotOccurChooseWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>LocalNameConflict</class>
+   <class>RemoteMoveOrRenameCannotOccurChooseWidget</class>
    <extends>QWidget</extends>
-   <header>stalled_issues_cases/NameConflict.h</header>
+   <header>stalled_issues_cases/MoveOrRenameCannotOccurChooseWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

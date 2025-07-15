@@ -13,6 +13,19 @@
   <property name="windowTitle">
    <string notr="true"/>
   </property>
+  <property name="styleSheet">
+   <string notr="true">*
+{
+background-color: transparent;
+}
+
+QLabel
+{
+background-color: rgb(240,240,240);
+border-radius: 4px;
+}
+</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
     <number>22</number>
@@ -32,35 +45,6 @@
    <property name="verticalSpacing">
     <number>8</number>
    </property>
-   <item row="1" column="3" colspan="2">
-    <widget class="QLabel" name="errorDescription">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>410</width>
-       <height>12</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>410</width>
-       <height>12</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(240,240,240);
-border-radius: 4px;</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="3">
     <widget class="QLabel" name="warningIcon">
      <property name="sizePolicy">
@@ -80,10 +64,6 @@ border-radius: 4px;</string>
        <width>16777215</width>
        <height>12</height>
       </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(240,240,240);
-border-radius: 4px;</string>
      </property>
      <property name="text">
       <string/>
@@ -110,9 +90,30 @@ border-radius: 4px;</string>
        <height>36</height>
       </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(240,240,240);
-border-radius: 4px;</string>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="3" colspan="2">
+    <widget class="QLabel" name="errorDescription">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>410</width>
+       <height>12</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>410</width>
+       <height>12</height>
+      </size>
      </property>
      <property name="text">
       <string/>

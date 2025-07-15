@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>815</width>
     <height>600</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>800</width>
+    <width>815</width>
     <height>600</height>
    </size>
   </property>
@@ -38,50 +38,147 @@
    background-color: transparent;
 }
 
+QStackedWidget
+{
+    border-top: 1px solid rgba(0,0,0,0.08);
+    border-bottom: 1px solid rgba(0,0,0,0.08); 
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#EmptyViewContainerPage QToolButton
+{
+    border:none;
+}
+
+/**********  TreeView Container **********/
+QScrollBar:vertical
+{
+    background: #f6f6f6;
+    width: 15px;
+    border-left: 1px solid #E4E4E4;
+}
+
+QScrollBar::sub-line:vertical, QScrollBar::add-line:vertical
+{
+    border: none;
+    background: none;
+    width:0px;
+    height:0px;
+}
+
+QScrollBar::handle:vertical
+{
+    background: #c0c0c0;
+    min-height: 20px;
+    border-radius: 4px;
+    margin: 3px 4px 3px 2px;
+}
+
+QMenu
+{
+    border: 1px solid #B8B8B8;
+   border-radius: 8px;
+    background: #ffffff;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+QMenu::item
+{
+   font-size: 14px;
+   color: #333333;
+   background: transparent; 
+   margin-top: 3px;
+   margin-bottom: 3px;
+   padding-left: 16px;
+   padding-right: 16px;
+   margin-left: 16px;
+   margin-right: 16px;
+}
+
+QMenu::item:selected
+{
+    font-weight: bold;  
+}
+
+QMenu::separator
+{
+    height: 1px;
+	width: 164px;
+	min-width: 164px;
+	max-width: 164px;
+    background-color: #EEEEEE;
+    margin-top: 9px;
+    margin-bottom: 9px;
+}
+
+QMenu::item:disabled
+{
+    background-color: #ffffff;
+    color: rgba(119,119,119,0.3);
+}
+
+QMenu::item:default
+{
+    color: #F46265;
+}
+
+#stalledIssuesTree QWidget{
+background-color: rgba(255, 255, 255,0);
+}
+/**********  TreeView Container **********/
+
+/**********  Footer **********/
 #footer
 {
     background-color: #F7F8F9;
 }
 
-#footer QPushButton
+#doneButton
 {
     font-family: Lato;
     font-size: 14px;
     border-radius: 3px;
     border: 1px solid rgba(0,0,0, 0.15);
-}
-
-#doneButton
-{
     background-color: #FCFCFC;
     color: #333333;
 }
 
-#updateButton
-{
-min-height:32px;
-padding-left:12px;
-padding-right:12px;
-font-size:14px;
-font-weight: 400;
-border-radius:4px;
-background:#00BFA5;
-border: 1px solid rgba(0, 0, 0, 0.1);
-color:#FFFFFF;
+#HelpButton {
+border: none;
+border-color: transparent;
+color: #0078D7;
 }
 
-#updateButton:disabled
+#HelpButton QPushButton::!enabled {
+color: grey;
+}
+/**********  Footer **********/
+
+/**********  Header **********/
+#header
 {
-background: rgba(0, 191, 165, 0.3);
-color:#FFFFFF;
+   background-color: #F7F8F9;
 }
 
-#updateButton:hover
+#title QLabel
 {
-background: #00A787;
-color:#FFFFFF;
+  font-family: &quot;Poppins&quot;;
+  font-size:20px;
+  line-height: 30px;
+  font-weight: 600;
+  color: #333333;
 }
 
+#title QPushButton {
+    background-color: none;
+    outline: none;
+    border: none;
+}
+/**********  Header **********/
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -102,12 +199,6 @@ color:#FFFFFF;
    </property>
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
-     <property name="styleSheet">
-      <string notr="true">#ModeSelector
-{
-background-color: #F3F4F4;
-}</string>
-     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -142,22 +233,6 @@ background-color: #F3F4F4;
            <height>88</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true">#header
-{
-   background-color: #F7F8F9;
-}
-
-
-#title QLabel
-{
-  font-family: &quot;Poppins&quot;;
-  font-size:20px;
-  line-height: 30px;
-  font-weight: 600;
-  color: #333333;
-}</string>
-         </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <property name="spacing">
            <number>10</number>
@@ -187,13 +262,6 @@ background-color: #F3F4F4;
               <width>16777215</width>
               <height>16777215</height>
              </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-    background-color: none;
-    outline: none;
-    border: none;
-}</string>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout">
              <property name="spacing">
@@ -236,7 +304,7 @@ background-color: #F3F4F4;
                <property name="minimumSize">
                 <size>
                  <width>24</width>
-                 <height>24</height>
+                 <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
@@ -287,7 +355,7 @@ background-color: #F3F4F4;
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../../../gui/Resources_linux.qrc">
+                <iconset>
                  <normaloff>:/images/StalledIssues/settings-stalled-issues.png</normaloff>:/images/StalledIssues/settings-stalled-issues.png</iconset>
                </property>
                <property name="iconSize">
@@ -317,9 +385,6 @@ background-color: #F3F4F4;
               <width>0</width>
               <height>0</height>
              </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_3">
              <property name="spacing">
@@ -472,16 +537,6 @@ background-color: #F3F4F4;
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="styleSheet">
-          <string notr="true">QStackedWidget
-{
-    border-top: 1px solid rgba(0,0,0,0.08);
-    border-bottom: 1px solid rgba(0,0,0,0.08); 
-    border-left: 0px;
-    border-right: 0px;
-}
-</string>
-         </property>
          <property name="frameShape">
           <enum>QFrame::Box</enum>
          </property>
@@ -489,84 +544,9 @@ background-color: #F3F4F4;
           <number>0</number>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="TreeViewContainerPage">
-          <property name="styleSheet">
-           <string notr="true">QScrollBar:vertical
-{
-    background: #f6f6f6;
-    width: 15px;
-    border-left: 1px solid #E4E4E4;
-}
-
-QScrollBar::sub-line:vertical, QScrollBar::add-line:vertical
-{
-    border: none;
-    background: none;
-    width:0px;
-    height:0px;
-}
-
-QScrollBar::handle:vertical
-{
-    background: #c0c0c0;
-    min-height: 20px;
-    border-radius: 4px;
-    margin: 3px 4px 3px 2px;
-}
-
-QMenu
-{
-    border: 1px solid #B8B8B8;
-   border-radius: 8px;
-    background: #ffffff;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    padding-left: 8px;
-    padding-right: 8px;
-}
-
-QMenu::item
-{
-   font-size: 14px;
-   color: #333333;
-   background: transparent; 
-   margin-top: 3px;
-   margin-bottom: 3px;
-   padding-left: 16px;
-   padding-right: 16px;
-   margin-left: 16px;
-   margin-right: 16px;
-}
-
-QMenu::item:selected
-{
-    font-weight: bold;  
-}
-
-QMenu::separator
-{
-    height: 1px;
-	width: 164px;
-	min-width: 164px;
-	max-width: 164px;
-    background-color: #EEEEEE;
-    margin-top: 9px;
-    margin-bottom: 9px;
-}
-
-QMenu::item:disabled
-{
-    background-color: #ffffff;
-    color: rgba(119,119,119,0.3);
-}
-
-QMenu::item:default
-{
-    color: #F46265;
-}</string>
-          </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <property name="spacing">
             <number>0</number>
@@ -587,11 +567,6 @@ QMenu::item:default
             <widget class="StalledIssuesView" name="stalledIssuesTree">
              <property name="autoFillBackground">
               <bool>false</bool>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QWidget{
-background-color: rgba(255, 255, 255,0);
-}</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::NoFrame</enum>
@@ -664,17 +639,11 @@ background-color: rgba(255, 255, 255,0);
            </property>
            <item row="0" column="0">
             <widget class="QToolButton" name="toolButton">
-             <property name="styleSheet">
-              <string notr="true">QToolButton
-{
-    border:none;
-}</string>
-             </property>
              <property name="text">
               <string notr="true">...</string>
              </property>
              <property name="icon">
-              <iconset resource="../../../gui/Resources_linux.qrc">
+              <iconset>
                <normaloff>:/images/transfer_manager/empty_categories/no_transfers@2x.png</normaloff>:/images/transfer_manager/empty_categories/no_transfers@2x.png</iconset>
              </property>
              <property name="iconSize">
@@ -703,9 +672,6 @@ background-color: rgba(255, 255, 255,0);
            <height>60</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <property name="spacing">
            <number>0</number>
@@ -724,16 +690,6 @@ background-color: rgba(255, 255, 255,0);
           </property>
           <item>
            <widget class="QPushButton" name="HelpButton">
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-border: none;
-color: #0078D7;
-}
-
-QPushButton::!enabled {
-color: grey;
-}</string>
-            </property>
             <property name="text">
              <string>Help</string>
             </property>
@@ -809,8 +765,6 @@ color: grey;
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../../../gui/Resources_linux.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
