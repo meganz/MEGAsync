@@ -545,6 +545,7 @@ int main(int argc, char *argv[])
     QFile file(QString::fromLatin1(":/style/WidgetsComponentsStyleSheetsSizes.css"));
     file.open(QIODevice::ReadOnly | QIODevice::Text);
     QString sourceStandardComponentsStyleSheet = QString::fromLatin1(file.readAll());
+    file.close();
     app.setStyleSheet(sourceStandardComponentsStyleSheet);
 
 #ifdef Q_OS_MACX
