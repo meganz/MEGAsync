@@ -217,6 +217,7 @@ image: url(:/images/themed/light/radio_checked_disabled.svg); /*replaceThemeToke
 QGroupBox[type="mega"]
 {
 border-color: #ffd8d9db; /*colorToken.border-strong*/
+background-color: transparent;
 }
 
 QGroupBox::title[type="mega"]
@@ -343,6 +344,7 @@ image: url(:/images/themed/light/checkbox_off_disabled.svg); /*replaceThemeToken
 QLabel
 {
 color: #ff303233; /*colorToken.text-primary*/
+background-color: transparent;
 }
 
 QLabel[type="secondary"]
@@ -526,6 +528,15 @@ background-color: transparent;
     SwitchButton
     In the constructor of the class we assign the object name switch
 */
+#switch
+{
+background-color: transparent;
+}
+
+#switch::indicator
+{
+background-color: transparent;
+}
 
 #switch::indicator:checked
 {

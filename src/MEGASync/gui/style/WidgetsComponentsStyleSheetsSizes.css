@@ -147,7 +147,6 @@ QGroupBox[type="mega"]
 {
 margin-top: 20px;
 font-weight: bold;
-background-color: transparent;
 border-width: 1px;
 border-style: solid;
 border-radius: 12px;
@@ -181,7 +180,6 @@ border-radius: 4px;
 */
 QCheckBox[type="mega"]
 {
-background-color: transparent;
 spacing: 8px;
 min-height: 16px;
 max-height: 16px;
@@ -201,7 +199,6 @@ QLabel
 {
 font-size: 12px;
 font-weight: 400;
-background-color: transparent;
 }
 
 QLabel[type="sub-title"]
@@ -393,13 +390,11 @@ padding-bottom: 4px;
 #switch
 {
 border-style: none;
-background-color: transparent;
 }
 
 #switch::indicator
 {
 border-style: none;
-background-color: transparent;
 width: 40px;
 height: 19px;
 }
