@@ -69,7 +69,8 @@ bool QmlDialogManager::raiseGuestDialog()
 {
     bool raisedGuestDialog = false;
     if (MegaSyncApp->getAccountStatusController()->isAccountBlocked() ||
-        MegaSyncApp->getLoginController()->getState() != LoginController::FETCH_NODES_FINISHED ||
+        (MegaSyncApp->getLoginController() &&
+         MegaSyncApp->getLoginController()->getState() != LoginController::FETCH_NODES_FINISHED) ||
         AppState::instance()->getAppState() != AppState::NOMINAL)
     {
         openGuestDialog();
