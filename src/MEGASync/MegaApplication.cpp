@@ -46,6 +46,7 @@
 #include "SyncController.h"
 #include "SyncReminderNotificationManager.h"
 #include "SyncsMenu.h"
+#include "ThemeManager.h"
 #include "TransferMetaData.h"
 #include "UploadToMegaDialog.h"
 #include "UpsellComponent.h"
@@ -420,19 +421,6 @@ void MegaApplication::initialize()
     paused = false;
     mIndexing = false;
 
-    QResource::registerResource(QCoreApplication::applicationDirPath() +
-                                QString::fromUtf8("/../Resources/Resources_macx.rcc"));
-    QResource::registerResource(QCoreApplication::applicationDirPath() +
-                                QString::fromUtf8("/../Resources/Resources_linux.rcc"));
-    QResource::registerResource(QCoreApplication::applicationDirPath() +
-                                QString::fromUtf8("/../Resources/Resources_win.rcc"));
-    QResource::registerResource(QCoreApplication::applicationDirPath() +
-                                QString::fromUtf8("/../Resources/Resources_qml.rcc"));
-    QResource::registerResource(QCoreApplication::applicationDirPath() +
-                                QString::fromUtf8("/../Resources/Resources_light.rcc"));
-    QResource::registerResource(QCoreApplication::applicationDirPath() +
-                                QString::fromUtf8("/../Resources/qml.rcc"));
-
     // Register own url schemes
     QDesktopServices::setUrlHandler(SCHEME_MEGA_URL, this, "handleMEGAurl");
     QDesktopServices::setUrlHandler(SCHEME_LOCAL_URL, this, "handleLocalPath");
@@ -457,6 +445,14 @@ void MegaApplication::initialize()
 
     preferences->setLastStatsRequest(0);
     lastExit = preferences->getLastExit();
+
+    // Apply specific rcc files depending on selected theme
+    if (!Platform::getInstance()->loadThemeResource(
+            ThemeManager::instance()->getSelectedThemeString()))
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                     QString::fromUtf8("Error loading resource files.").toUtf8().constData());
+    }
 
     installTranslator(&translator);
     QString language = preferences->language();

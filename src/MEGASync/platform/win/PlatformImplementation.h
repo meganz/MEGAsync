@@ -58,6 +58,8 @@ public:
 
     void streamWithApp(const QString& app, const QString& url) override;
     void processSymLinks() override;
+    bool loadThemeResource(const QString& theme) override;
+
     DriveSpaceData getDriveData(const QString &path) override;
 
     // AutoUpdate tasks

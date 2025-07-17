@@ -89,6 +89,7 @@ public:
     virtual void calculateInfoDialogCoordinates(const QRect& rect, int *posx, int *posy) = 0;
     virtual void streamWithApp(const QString& app, const QString& url) = 0;
     virtual void processSymLinks() = 0;
+    virtual bool loadThemeResource(const QString& theme) = 0;
 
     std::shared_ptr<AbstractShellNotifier> getShellNotifier();
     virtual DriveSpaceData getDriveData(const QString& path) = 0;

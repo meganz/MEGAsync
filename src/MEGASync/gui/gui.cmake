@@ -488,26 +488,57 @@ if (NOT DontUseResources)
     add_dependencies(MEGAsync Resources_dark)
     add_dependencies(MEGAsync qml)
 
-    # target_sources_conditional(${ExecutableTarget}
-    #     FLAG WIN32
-    #     QT_AWARE
-    #     PRIVATE
-    #     ${CMAKE_CURRENT_LIST_DIR}/Resources_win.qrc
-    # )
+if (NOT APPLE)
+    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_CURRENT_BINARY_DIR}/Resources_win.rcc
+                $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying Resources_win.rcc to target output directory"
+    )
 
-    # target_sources_conditional(${ExecutableTarget}
-    #    FLAG APPLE
-    #    QT_AWARE
-    #    PRIVATE
-    #    ${CMAKE_CURRENT_LIST_DIR}/Resources_macx.qrc
-    # )
+    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_CURRENT_BINARY_DIR}/Resources_macx.rcc
+                $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying Resources_macx.rcc to target output directory"
+    )
 
-    # target_sources_conditional(${ExecutableTarget}
-    #     FLAG UNIX AND NOT APPLE
-    #     QT_AWARE
-    #     PRIVATE
-    #     ${CMAKE_CURRENT_LIST_DIR}/Resources_linux.qrc
-    # )
+    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_CURRENT_BINARY_DIR}/Resources_linux.rcc
+                $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying Resources_linux.rcc to target output directory"
+    )
+
+    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_CURRENT_BINARY_DIR}/Resources_qml.rcc
+                $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying Resources_qml.rcc to target output directory"
+    )
+
+    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_CURRENT_BINARY_DIR}/Resources_light.rcc
+                $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying Resources_light.rcc to target output directory"
+    )
+
+
+    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_CURRENT_BINARY_DIR}/Resources_dark.rcc
+                $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying Resources_dark.rcc to target output directory"
+    )
+
+    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_CURRENT_BINARY_DIR}/qml.rcc
+                $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying qml.rcc to target output directory"
+    )
+endif()
 
     qt5_add_translation(DESKTOP_APP_QM_FILES ${DESKTOP_APP_TS_FILES})
 endif()

@@ -995,6 +995,46 @@ void PlatformImplementation::processSymLinks()
 
 }
 
+bool PlatformImplementation::loadThemeResource(const QString& theme)
+{
+    QStringList rccFiles =
+        QStringList() << QString::fromUtf8("/Resources_macx.rcc")
+                      << QString::fromUtf8("/Resources_win.rcc")
+                      << QString::fromUtf8("/Resources_linux.rcc")
+                      << QString::fromUtf8("/Resources_qml.rcc") << QString::fromUtf8("/qml.rcc")
+                      << QString::fromUtf8("/Resources_%1.rcc").arg(theme.toLower());
+
+    bool allLoaded = true;
+    for (const QString& file: rccFiles)
+    {
+        if (!QFile::exists(QCoreApplication::applicationDirPath() + file))
+        {
+            MegaApi::log(
+                MegaApi::LOG_LEVEL_DEBUG,
+                QString::fromUtf8("Missing resource file: %1").arg(file).toUtf8().constData());
+            allLoaded = false;
+            continue;
+        }
+
+        if (!QResource::registerResource(QCoreApplication::applicationDirPath() + file))
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG,
+                         QString::fromUtf8("Failed to register resource file: %1")
+                             .arg(file)
+                             .toUtf8()
+                             .constData());
+            allLoaded = false;
+        }
+        else
+        {
+            MegaApi::log(
+                MegaApi::LOG_LEVEL_DEBUG,
+                QString::fromUtf8("Registered resource file: %1").arg(file).toUtf8().constData());
+        }
+    }
+    return allLoaded;
+}
+
 QByteArray PlatformImplementation::encrypt(QByteArray data, QByteArray key)
 {
     DATA_BLOB dataIn;
