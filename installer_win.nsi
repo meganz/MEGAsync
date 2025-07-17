@@ -706,6 +706,34 @@ modeselected:
   File "installer\qt.conf"
   AccessControl::SetFileOwner "$INSTDIR\qt.conf" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\qt.conf" "$USERNAME" "GenericRead + GenericWrite"
+  
+  File "${SRCDIR_MEGASYNC}\Resources_macx.rcc"
+  AccessControl::SetFileOwner "$INSTDIR\Resources_macx.rcc" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\Resources_macx.rcc" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${SRCDIR_MEGASYNC}\Resources_linux.rcc"
+  AccessControl::SetFileOwner "$INSTDIR\Resources_linux.rcc" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\Resources_linux.rcc" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${SRCDIR_MEGASYNC}\Resources_win.rcc"
+  AccessControl::SetFileOwner "$INSTDIR\Resources_win.rcc" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\Resources_win.rcc" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${SRCDIR_MEGASYNC}\Resources_light.rcc"
+  AccessControl::SetFileOwner "$INSTDIR\Resources_light.rcc" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\Resources_light.rcc" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${SRCDIR_MEGASYNC}\Resources_dark.rcc"
+  AccessControl::SetFileOwner "$INSTDIR\Resources_dark.rcc" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\Resources_dark.rcc" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${SRCDIR_MEGASYNC}\Resources_qml.rcc"
+  AccessControl::SetFileOwner "$INSTDIR\Resources_qml.rcc" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\Resources_qml.rcc" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${SRCDIR_MEGASYNC}\qml.rcc"
+  AccessControl::SetFileOwner "$INSTDIR\qml.rcc" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\qml.rcc" "$USERNAME" "GenericRead + GenericWrite"
 
   File "${SRCDIR_MEGASYNC}\avcodec-61.dll"
   AccessControl::SetFileOwner "$INSTDIR\avcodec-61.dll" "$USERNAME"
@@ -1004,6 +1032,13 @@ Section Uninstall
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\cares.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\libuv.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\qt.conf"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\Resources_macx.rcc"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\Resources_linux.rcc"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\Resources_win.rcc"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\Resources_light.rcc"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\Resources_dark.rcc"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\Resources_qml.rcc"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\qml.rcc"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\NSIS.Library.RegTool*.exe"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\avcodec-59.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\avformat-59.dll"
