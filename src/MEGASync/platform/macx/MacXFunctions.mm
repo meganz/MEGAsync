@@ -452,57 +452,6 @@ bool registerUpdateDaemon()
     return p.exitCode() ? false : true;
 }
 
-// Check if it's needed to start the local HTTP server
-// for communications with the webclient
-bool runHttpServer()
-{
-    size_t nProcesses = static_cast<size_t>(proc_listpids(PROC_ALL_PIDS, 0, NULL, 0));
-    size_t pidBufSize = nProcesses * sizeof(pid_t);
-    pid_t *pids = new pid_t[nProcesses];
-    memset(pids, 0, pidBufSize);
-    proc_listpids(PROC_ALL_PIDS, 0, pids, static_cast<int>(pidBufSize));
-
-    for (size_t i = 0; i < nProcesses; ++i)
-    {
-        if (pids[i] == 0)
-        {
-            continue;
-        }
-
-        char processPath[PROC_PIDPATHINFO_MAXSIZE];
-        memset(processPath, 0, PROC_PIDPATHINFO_MAXSIZE);
-        if (proc_pidpath(pids[i], processPath, PROC_PIDPATHINFO_MAXSIZE) <= 0)
-        {
-            continue;
-        }
-
-        auto position = strlen(processPath);
-        if (position > 0)
-        {
-            while (position >= 0 && processPath[position] != '/')
-            {
-                position--;
-            }
-
-            // The MEGA webclient sends request to MEGAsync to improve the
-            // user experience. We check if web browsers are running because
-            // otherwise it isn't needed to run the local web server for this purpose.
-            // Here is the list or web browsers that allow HTTP communications
-            // with 127.0.0.1 inside HTTPS webs.
-            QString processName = QString::fromUtf8(processPath + position + 1);
-            if (!processName.compare(QString::fromUtf8("Google Chrome"), Qt::CaseInsensitive)
-                || !processName.compare(QString::fromUtf8("firefox"), Qt::CaseInsensitive))
-            {
-                delete [] pids;
-                return true;
-            }
-        }
-    }
-
-    delete [] pids;
-    return false;
-}
-
 bool userActive()
 {
     CFTimeInterval secondsSinceLastEvent = CGEventSourceSecondsSinceLastEventType(kCGEventSourceStateHIDSystemState, kCGAnyInputEventType);

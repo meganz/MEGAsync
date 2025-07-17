@@ -1421,40 +1421,6 @@ void PlatformImplementation::uninstall()
     }
 }
 
-// Check if it's needed to start the local HTTP server
-// for communications with the webclient
-bool PlatformImplementation::shouldRunHttpServer()
-{
-    bool result = false;
-    PROCESSENTRY32 entry = {0};
-    entry.dwSize = sizeof(PROCESSENTRY32);
-    HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
-    if (snapshot == INVALID_HANDLE_VALUE)
-    {
-        return false;
-    }
-
-    if (Process32First(snapshot, &entry))
-    {
-        while (Process32Next(snapshot, &entry))
-        {
-            // The MEGA webclient sends request to MEGAsync to improve the
-            // user experience. We check if web browsers are running because
-            // otherwise it isn't needed to run the local web server for this purpose.
-            // Here is the list or web browsers that allow HTTP communications
-            // with 127.0.0.1 inside HTTPS webs.
-            if (!_wcsicmp(entry.szExeFile, L"chrome.exe") // Chromium has the same process name on Windows
-                    || !_wcsicmp(entry.szExeFile, L"firefox.exe"))
-            {
-                result = true;
-                break;
-            }
-        }
-    }
-    CloseHandle(snapshot);
-    return result;
-}
-
 bool PlatformImplementation::isUserActive()
 {
     LASTINPUTINFO lii = {0};
