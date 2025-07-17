@@ -634,7 +634,7 @@ target_include_directories(${ExecutableTarget} PRIVATE ${INCLUDE_DIRECTORIES})
 
 if (UNIX AND NOT APPLE)
 
-    # Install tray icons for Linux
+    # Install tray icons and resources for Linux
 
     # color
     set(HICOLOR "share/icons/hicolor/scalable/status")
@@ -677,5 +677,35 @@ if (UNIX AND NOT APPLE)
     install(FILES gui/images/uptodate_clear.svg RENAME megauptodate.svg
         DESTINATION "${CMAKE_INSTALL_BINDIR}/../${MONOCOLOR}"
     )
+
+    # rcc files
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_win.rcc"
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
+    )
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_linux.rcc"
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
+    )
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_macx.rcc"
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
+    )
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_light.rcc"
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
+    )
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_dark.rcc"
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
+    )
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_qml.rcc"
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
+    )
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/qml.rcc"
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
+    )
+
 
 endif()

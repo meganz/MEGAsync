@@ -238,16 +238,18 @@ void PlatformImplementation::processSymLinks() {}
 bool PlatformImplementation::loadThemeResource(const QString& theme)
 {
     QStringList rccFiles =
-        QStringList() << QString::fromUtf8("/Resources_macx.rcc")
-                      << QString::fromUtf8("/Resources_win.rcc")
-                      << QString::fromUtf8("/Resources_linux.rcc")
-                      << QString::fromUtf8("/Resources_qml.rcc") << QString::fromUtf8("/qml.rcc")
-                      << QString::fromUtf8("/Resources_%1.rcc").arg(theme.toLower());
+        QStringList()
+        << QString::fromUtf8("/usr/share/megasync/resources/Resources_macx.rcc")
+        << QString::fromUtf8("/usr/share/megasync/resources/Resources_win.rcc")
+        << QString::fromUtf8("/usr/share/megasync/resources/Resources_linux.rcc")
+        << QString::fromUtf8("/usr/share/megasync/resources/Resources_qml.rcc")
+        << QString::fromUtf8("/usr/share/megasync/resources/qml.rcc")
+        << QString::fromUtf8("/usr/share/megasync/resources/Resources_%1.rcc").arg(theme.toLower());
 
     bool allLoaded = true;
     for (const QString& file: rccFiles)
     {
-        if (!QFile::exists(QCoreApplication::applicationDirPath() + file))
+        if (!QFile::exists(file))
         {
             MegaApi::log(
                 MegaApi::LOG_LEVEL_DEBUG,
@@ -256,7 +258,7 @@ bool PlatformImplementation::loadThemeResource(const QString& theme)
             continue;
         }
 
-        if (!QResource::registerResource(QCoreApplication::applicationDirPath() + file))
+        if (!QResource::registerResource(file))
         {
             MegaApi::log(MegaApi::LOG_LEVEL_DEBUG,
                          QString::fromUtf8("Failed to register resource file: %1")
