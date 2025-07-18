@@ -237,14 +237,17 @@ void PlatformImplementation::processSymLinks() {}
 
 bool PlatformImplementation::loadThemeResource(const QString& theme)
 {
+    QString exec = MegaApplication::applicationFilePath();
+
     QStringList rccFiles =
-        QStringList()
-        << QString::fromUtf8("/usr/share/megasync/resources/Resources_macx.rcc")
-        << QString::fromUtf8("/usr/share/megasync/resources/Resources_win.rcc")
-        << QString::fromUtf8("/usr/share/megasync/resources/Resources_linux.rcc")
-        << QString::fromUtf8("/usr/share/megasync/resources/Resources_qml.rcc")
-        << QString::fromUtf8("/usr/share/megasync/resources/qml.rcc")
-        << QString::fromUtf8("/usr/share/megasync/resources/Resources_%1.rcc").arg(theme.toLower());
+        QStringList() << exec + QString::fromUtf8("/../share/megasync/resources/Resources_macx.rcc")
+                      << exec + QString::fromUtf8("/../share/megasync/resources/Resources_win.rcc")
+                      << exec +
+                             QString::fromUtf8("/../share/megasync/resources/Resources_linux.rcc")
+                      << exec + QString::fromUtf8("/../share/megasync/resources/Resources_qml.rcc")
+                      << exec + QString::fromUtf8("/../share/megasync/resources/qml.rcc")
+                      << exec + QString::fromUtf8("/../share/megasync/resources/Resources_%1.rcc")
+                                    .arg(theme.toLower());
 
     bool allLoaded = true;
     for (const QString& file: rccFiles)
