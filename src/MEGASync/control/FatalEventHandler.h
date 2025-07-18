@@ -27,6 +27,7 @@ public:
         ERR_DB_INDEX_OVERFLOW = mega::MegaEvent::REASON_ERROR_DB_INDEX_OVERFLOW,
         ERR_NO_JSCD = mega::MegaEvent::REASON_ERROR_NO_JSCD,
         ERR_REGENERATE_JSCD = mega::MegaEvent::REASON_ERROR_REGENERATE_JSCD,
+        ERR_DB_CORRUPT = mega::MegaEvent::REASON_ERROR_DB_CORRUPT,
         // In case there is a new event the app does not support yet:
         // It will be processed as ERR_UNKNOWN (logs and report will show sdk code though)
         // Make sure this value is not used by any mega::MegaEvent::REASON_ERROR_* !!

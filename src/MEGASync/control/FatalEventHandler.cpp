@@ -53,6 +53,8 @@ QString FatalEventHandler::getErrorTitle() const
             return QCoreApplication::translate("MegaError", "Sync configuration error");
         }
         case FatalErrorCode::ERR_DB_INDEX_OVERFLOW:
+        // Fallthrough
+        case FatalErrorCode::ERR_DB_CORRUPT:
         {
             return QCoreApplication::translate("MegaError", "An error has been detected");
         }
@@ -112,6 +114,8 @@ QString FatalEventHandler::getErrorReason() const
                 "report the issue to our Support team.");
         }
         case FatalErrorCode::ERR_DB_INDEX_OVERFLOW:
+        // Fallthrough
+        case FatalErrorCode::ERR_DB_CORRUPT:
         {
             return QCoreApplication::translate(
                 "MegaError",
@@ -157,6 +161,8 @@ QString FatalEventHandler::getErrorReasonUrl() const
         case FatalErrorCode::ERR_NO_ERROR:
         // Fallthrough
         case FatalErrorCode::ERR_DB_INDEX_OVERFLOW:
+        // Fallthrough
+        case FatalErrorCode::ERR_DB_CORRUPT:
         // Fallthrough
         case FatalErrorCode::ERR_REGENERATE_JSCD:
         {
@@ -340,6 +346,8 @@ FatalEventHandler::FatalErrorCorrectiveAction FatalEventHandler::getDefaultActio
             return FatalErrorCorrectiveAction::LOGOUT;
         }
         case FatalErrorCode::ERR_DB_INDEX_OVERFLOW:
+        // Fallthrough
+        case FatalErrorCode::ERR_DB_CORRUPT:
         {
             return FatalErrorCorrectiveAction::RELOAD;
         }
@@ -366,6 +374,8 @@ FatalEventHandler::FatalErrorCorrectiveAction FatalEventHandler::getSecondaryAct
         case FatalErrorCode::ERR_NO_JSCD:
         // Fallthrough
         case FatalErrorCode::ERR_DB_INDEX_OVERFLOW:
+        // Fallthrough
+        case FatalErrorCode::ERR_DB_CORRUPT:
         {
             return FatalErrorCorrectiveAction::CONTACT_SUPPORT;
         }
