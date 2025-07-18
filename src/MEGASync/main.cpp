@@ -74,8 +74,7 @@ void msgHandler(QtMsgType type, const char *msg)
 }
 
 #ifdef Q_OS_LINUX
-MegaApplication *theapp = NULL;
-bool waitForRestartSignal = false;
+MegaApplication* theapp = NULL;
 std::mutex mtxcondvar;
 std::condition_variable condVarRestart;
 QString appExecPath;
@@ -91,16 +90,12 @@ void LinuxSignalHandler(int signum)
     }
     else if (signum == SIGUSR1)
     {
-        waitForRestartSignal = true;
-        if (waitForRestartSignal)
-        {
-            appArgs << waitForSignalArg;
-            bool success = QProcess::startDetached(appExecPath, appArgs);
-            cout << "Started detached MEGAsync to wait for restart signal: "
-                 << appExecPath.toUtf8().constData() << " "
-                 << appArgs.join(QLatin1Char(' ')).toUtf8().constData() << " "
-                 << (success ? "OK" : "FAILED!") << endl;
-        }
+        appArgs << waitForSignalArg;
+        bool success = QProcess::startDetached(appExecPath, appArgs);
+        cout << "Started detached MEGAsync to wait for restart signal: "
+             << appExecPath.toUtf8().constData() << " "
+             << appArgs.join(QLatin1Char(' ')).toUtf8().constData() << " "
+             << (success ? "OK" : "FAILED!") << endl;
 
         if (theapp)
         {
