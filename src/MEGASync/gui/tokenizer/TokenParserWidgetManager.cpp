@@ -141,7 +141,7 @@ void TokenParserWidgetManager::onUpdateRequested()
 }
 
 // performance mesurament code will be removed in latter stages of project.
-void TokenParserWidgetManager::applyCurrentTheme(QWidget* dialog)
+void TokenParserWidgetManager::applyCurrentTheme(QWidget* dialog, bool subWidget)
 {
     if (!dialog || !isTokenized(dialog))
     {
@@ -151,7 +151,7 @@ void TokenParserWidgetManager::applyCurrentTheme(QWidget* dialog)
 #if defined QT_DEBUG
     auto start = std::chrono::steady_clock::now();
 #endif
-    applyTheme(dialog);
+    applyTheme(dialog, subWidget);
 
 #if defined QT_DEBUG
     auto end = std::chrono::steady_clock::now();

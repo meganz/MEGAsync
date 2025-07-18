@@ -213,6 +213,7 @@ QWidget* UserMessageDelegate::getWidget(const QModelIndex& index) const
         {
             UserMessage* item = static_cast<UserMessage*>(filteredIndex.internalPointer());
             widget = mCacheManager->createOrGetWidget(index.row(), item, mView->viewport());
+            widget->applyTheme();
         }
     }
     return widget;
