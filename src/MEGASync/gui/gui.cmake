@@ -496,7 +496,6 @@ set(QML_IMPORT_PATH ${QML_IMPORT_PATH} CACHE STRING "Qt Creator extra qml import
 
 set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/AccountDetailsDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveBackupDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/BugReportDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/ChangePassword.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveSyncConfirmationDialog.ui
@@ -507,31 +506,11 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/ProxySettings.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/SettingsDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/CrashReportDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/CrashReportDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/NotificationsSettings.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/OpenBackupsFolder.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/ProgressIndicatorDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/SyncSettingsUIBase.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoteItemUi.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/SyncStallModeSelector.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/BannerWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/SyncAccountFullMessage.ui
 )
-
-set (DESKTOP_APP_GUI_UI_FILES_ROOT
-    ${CMAKE_CURRENT_LIST_DIR}/ui/SettingsDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/CrashReportDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/AccountDetailsDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveBackupDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveSyncConfirmationDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/DownloadFromMegaDialog.ui
-)
-
-list(JOIN DESKTOP_APP_GUI_UI_FILES "|" DESKTOP_APP_GUI_UI_FILES_TEMP )
-list(JOIN DESKTOP_APP_GUI_UI_FILES_ROOT "|" DESKTOP_APP_GUI_UI_FILES_ROOT_TEMP )
-
-target_compile_definitions(${ExecutableTarget} PRIVATE "DESKTOP_APP_GUI_UI_FILES=\"${DESKTOP_APP_GUI_UI_FILES_TEMP}\"")
-target_compile_definitions(${ExecutableTarget} PRIVATE "DESKTOP_APP_GUI_UI_FILES_ROOT=\"${DESKTOP_APP_GUI_UI_FILES_ROOT_TEMP}\"")
 
 target_sources_conditional(${ExecutableTarget}
    FLAG NOT DontUseResources

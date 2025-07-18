@@ -26,7 +26,7 @@ private:
     void loadStandardStyleSheetComponents();
     void onThemeChanged(Preferences::ThemeType theme);
     void onUpdateRequested();
-    void applyTheme(QWidget* widget, bool isSubWidget = false);
+    void applyTheme(QWidget* widget);
     void replaceThemeTokens(QString& styleSheet, const QString& currentTheme);
     void replaceIconColorTokens(QWidget* widget,
                                 QString& styleSheet,
@@ -34,7 +34,6 @@ private:
     void replaceColorTokens(QString& styleSheet, const ColorTokens& colorTokens);
     void removeFrameOnDialogCombos(QWidget* widget);
     bool isTokenized(QWidget* widget);
-    bool isRoot(QWidget* widget);
     void tokenizeChildStyleSheets(QWidget* widget, const QString& styleSheet);
 
     QMap<QString, ColorTokens> mColorThemedTokens;
