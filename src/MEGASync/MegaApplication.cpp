@@ -485,14 +485,16 @@ void MegaApplication::initialize()
                                     Preferences::CLIENT_KEY,
                                     mGfxProvider.get(),
                                     basePath.toUtf8().constData(),
-                                    Preferences::USER_AGENT.toUtf8().constData());
+                                    Preferences::USER_AGENT.toUtf8().constData(),
+                                    !preferences->SSLcertificateException());
     megaApi->disableGfxFeatures(mDisableGfx);
 
     QTMegaApiManager::createMegaApi(megaApiFolders,
                                     Preferences::CLIENT_KEY,
                                     nullptr,
                                     basePath.toUtf8().constData(),
-                                    Preferences::USER_AGENT.toUtf8().constData());
+                                    Preferences::USER_AGENT.toUtf8().constData(),
+                                    !preferences->SSLcertificateException());
     megaApiFolders->disableGfxFeatures(true);
 
     model = SyncInfo::instance();
@@ -567,7 +569,6 @@ void MegaApplication::initialize()
     megaApi->setDefaultFilePermissions(preferences->filePermissionsValue());
     megaApi->setDefaultFolderPermissions(preferences->folderPermissionsValue());
     megaApi->retrySSLerrors(true);
-    megaApi->setPublicKeyPinning(!preferences->SSLcertificateException());
 
     mStatusController = new AccountStatusController(this);
     QmlManager::instance()->setRootContextProperty(mStatusController);
@@ -3865,15 +3866,25 @@ void MegaApplication::officialWeb()
 
 void MegaApplication::goToMyCloud()
 {
-    std::unique_ptr<char[]> rootBase64Handle(getRootNode()->getBase64Handle());
-    const QString rootID(QString::fromUtf8(rootBase64Handle.get()));
-    const QString url(QString::fromUtf8("fm/%1").arg(rootID));
-    megaApi->getSessionTransferURL(url.toUtf8().constData());
+    auto rootNode(getRootNode());
+    if (rootNode)
+    {
+        std::unique_ptr<char[]> rootBase64Handle(rootNode->getBase64Handle());
+        const QString rootID(QString::fromUtf8(rootBase64Handle.get()));
+        const QString url(QString::fromUtf8("fm/%1").arg(rootID));
+        megaApi->getSessionTransferURL(url.toUtf8().constData());
 
-    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_CLOUD_DRIVE_CLICKED,
-                                         sender(),
-                                         MEGAWebAction,
-                                         true);
+        mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_CLOUD_DRIVE_CLICKED,
+                                             sender(),
+                                             MEGAWebAction,
+                                             true);
+    }
+    // If the root node fails, open, at least, the official web
+    else
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Opening User cloud failed. Root node invalid.");
+        officialWeb();
+    }
 }
 
 void MegaApplication::goToFiles()

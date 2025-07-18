@@ -10,12 +10,13 @@
 
 #include <QButtonGroup>
 
-RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSettings> backup, QWidget *parent) :
+RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSettings> backup, QWidget* parent):
     QDialog(parent),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mUi(new Ui::RemoveBackupDialog),
     mBackup(backup),
-    mTargetFolder(MegaSyncApp->getRootNode()->getHandle())
+    mTargetFolder(MegaSyncApp->getRootNode() ? MegaSyncApp->getRootNode()->getHandle() :
+                                               mega::INVALID_HANDLE)
 {
     mUi->setupUi(this);
     mUi->lTarget->setReadOnly(true);
@@ -26,8 +27,9 @@ RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSettings> backup, QWi
     connect(mUi->bChange, &QPushButton::clicked, this, &RemoveBackupDialog::OnChangeButtonClicked);
 
     mUi->moveToContainer->setEnabled(false);
-    mUi->lTarget->setText(MegaNodeNames::getRootNodeName(MegaSyncApp->getRootNode().get())
-                          .append(QLatin1Char('/')));
+    mUi->lTarget->setText(mTargetFolder != mega::INVALID_HANDLE ?
+                              MegaNodeNames::getRootNodeName(MegaSyncApp->getRootNode().get()) :
+                              QString());
     adjustSize();
 }
 

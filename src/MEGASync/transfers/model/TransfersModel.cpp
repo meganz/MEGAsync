@@ -283,6 +283,8 @@ void TransferThread::onTransferStart(MegaApi *, MegaTransfer *transfer)
                 {
                     data = createData(transfer, nullptr);
 
+                    trackTransfer(data);
+
                     if(transfer->isSyncTransfer())
                     {
                         mTransfersToProcess.startSyncTransfersByTag.insert(transfer->getTag(), data);
@@ -378,9 +380,13 @@ void TransferThread::onTransferFinish(MegaApi* megaApi, MegaTransfer *transfer, 
             {
                 {
                     QMutexLocker counterLock(&mCountersMutex);
-                    auto fileType = Utilities::getFileType(QString::fromStdString(transfer->getFileName()), QString());
-                    if(transfer->getState() == MegaTransfer::STATE_CANCELLED || (transfer->getState() == MegaTransfer::STATE_FAILED
-                                                                                 && transfer->isSyncTransfer()))
+                    auto fileType =
+                        Utilities::getFileType(QString::fromStdString(transfer->getFileName()),
+                                               QString());
+
+                    if (transfer->getState() == MegaTransfer::STATE_CANCELLED ||
+                        (transfer->getState() == MegaTransfer::STATE_FAILED &&
+                         transfer->isSyncTransfer()))
                     {
                         mTransfersCount.transfersByType[fileType]--;
 
@@ -428,7 +434,7 @@ void TransferThread::onTransferFinish(MegaApi* megaApi, MegaTransfer *transfer, 
                                 mLastTransfersCount.completedUploadBytes += transfer->getDeltaSize();
                             }
 
-                            if(transfer->getState() == MegaTransfer::STATE_FAILED && !transfer->isSyncTransfer())
+                            if (transfer->getState() == MegaTransfer::STATE_FAILED)
                             {
                                 mTransfersCount.failedUploads++;
                             }
@@ -446,7 +452,7 @@ void TransferThread::onTransferFinish(MegaApi* megaApi, MegaTransfer *transfer, 
                                 mLastTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
                             }
 
-                            if(transfer->getState() == MegaTransfer::STATE_FAILED && !transfer->isSyncTransfer())
+                            if (transfer->getState() == MegaTransfer::STATE_FAILED)
                             {
                                 mTransfersCount.failedDownloads++;
                             }
@@ -503,9 +509,9 @@ void TransferThread::onTransferFinish(MegaApi* megaApi, MegaTransfer *transfer, 
                         mTransfersToProcess.updateTransfersByTag.insert(transfer->getTag(), data);
                     }
                 }
-
-                data->mIsTempTransfer = isTemp;
             }
+
+            trackTransfer(data);
 
             data->mIsTempTransfer = isTemp;
         }
@@ -784,7 +790,7 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
             mTransfersCount.transfersByType[transfer->mFileType]--;
             mTransfersCount.transfersFinishedByType[transfer->mFileType]--;
 
-            if(transfer->isFailed() && !transfer->isSyncTransfer())
+            if (transfer->isFailed() && !transfer->isSyncTransfer())
             {
                 mTransfersCount.failedDownloads--;
             }
@@ -799,7 +805,7 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
             mLastTransfersCount.transfersByType[transfer->mFileType]--;
             mLastTransfersCount.transfersFinishedByType[transfer->mFileType]--;
 
-            if(transfer->isFailed() && !transfer->isSyncTransfer())
+            if (transfer->isFailed() && !transfer->isSyncTransfer())
             {
                 mLastTransfersCount.failedDownloads--;
             }
@@ -810,6 +816,54 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
 void TransferThread::setMaxTransfersToProcess(int max)
 {
     mMaxTransfersToProcess = max;
+}
+
+void TransferThread::trackTransfer(QExplicitlySharedDataPointer<TransferData> data)
+{
+    QMutexLocker lock(&mTrackTransferMutex);
+    foreach(auto track, mTrackToTransfers)
+    {
+        track->checkTransfer(data);
+
+        if (track->areAllTransfersFinished())
+        {
+            removeFinishedTracks(track->id());
+        }
+    }
+}
+
+std::shared_ptr<TransferTrack> TransferThread::addTrackToTransfer(const QString& id,
+                                                                  TransferData::TransferType type)
+{
+    QMutexLocker lock(&mTrackTransferMutex);
+
+    auto& track(mTrackToTransfers[id]);
+
+    if (!track)
+    {
+        track = std::make_shared<TransferTrack>(id, type);
+        mTrackToTransfers.insert(id, track);
+    }
+
+    return track;
+}
+
+std::shared_ptr<TransferTrack> TransferThread::getTrackToTransfer(const QString& id)
+{
+    QMutexLocker lock(&mTrackTransferMutex);
+    return mTrackToTransfers.value(id, nullptr);
+}
+
+void TransferThread::removeTrackToTransfer(const QString& id)
+{
+    QMutexLocker lock(&mTrackTransferMutex);
+    removeFinishedTracks(id);
+}
+
+void TransferThread::removeFinishedTracks(const QString& id)
+{
+    // No need of mutex as it is used from the caller
+    mTrackToTransfers.remove(id);
 }
 
 ///////////////// TRANSFERS MODEL //////////////////////////////////////////////
@@ -835,6 +889,7 @@ TransfersModel::TransfersModel():
     qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
     qRegisterMetaType<QVector<int>>("QVector<int>");
     qRegisterMetaType<QVector<int>>("QSet<int>");
+    qRegisterMetaType<TransferItem>("TransferItem");
 
     mAreAllPaused = mPreferences->getGlobalPaused();
     mMegaApi->pauseTransfers(mAreAllPaused);
@@ -864,6 +919,9 @@ TransfersModel::TransfersModel():
     connect(mTransferEventThread, &QThread::finished, mTransferEventWorker, &QObject::deleteLater, Qt::DirectConnection);
 
     connect(this, &TransfersModel::activeTransfersChanged, this, &TransfersModel::onKeepPCAwake);
+
+    // Use in signal, so we need to register it
+    qRegisterMetaType<TransferData::TransferState>("TransferData::TransferState");
 }
 
 TransfersModel::~TransfersModel()
@@ -898,7 +956,24 @@ bool TransfersModel::areAllPaused() const
     return mAreAllPaused;
 }
 
-const QExplicitlySharedDataPointer<const TransferData> TransfersModel::activeDownloadTransferFound(DownloadTransferInfo* info) const
+std::shared_ptr<TransferTrack> TransfersModel::addTrackToTransfer(const QString& id,
+                                                                  TransferData::TransferType type)
+{
+    return mTransferEventWorker->addTrackToTransfer(id, type);
+}
+
+std::shared_ptr<TransferTrack> TransfersModel::getTrackToTransfer(const QString& id)
+{
+    return mTransferEventWorker->getTrackToTransfer(id);
+}
+
+void TransfersModel::removeTrackToTransfer(const QString& id)
+{
+    mTransferEventWorker->removeTrackToTransfer(id);
+}
+
+const QExplicitlySharedDataPointer<const TransferData>
+    TransfersModel::downloadTransferFound(DownloadTransferInfo* info) const
 {
     QExplicitlySharedDataPointer<const TransferData> foundTransfer;
 
@@ -908,8 +983,7 @@ const QExplicitlySharedDataPointer<const TransferData> TransfersModel::activeDow
     {
         if(transfer && !transfer->isUpload())
         {
-            if(transfer->mNodeHandle == info->nodeHandle &&
-               transfer->isActiveOrPending())
+            if (transfer->mNodeHandle == info->nodeHandle && transfer->getState() & info->state)
             {
                 foundTransfer = transfer;
                 break;
@@ -930,10 +1004,9 @@ const QExplicitlySharedDataPointer<const TransferData> TransfersModel::activeUpl
     {
         if(transfer && transfer->isUpload())
         {
-            if(transfer->mFilename.compare(info->filename, Qt::CaseSensitive) == 0 &&
-               transfer->mParentHandle == info->parentHandle &&
-               transfer->path() == info->localPath &&
-               transfer->isActiveOrPending())
+            if (transfer->mFilename.compare(info->filename, Qt::CaseSensitive) == 0 &&
+                transfer->mParentHandle == info->parentHandle &&
+                transfer->path() == info->localPath && transfer->getState() & info->state)
             {
                 foundTransfer = transfer;
                 break;
@@ -1242,26 +1315,14 @@ void TransfersModel::processUpdateTransfers()
 
         auto row(getRowByTransferTag(itValue->mTag));
         auto d  = getTransfer(row);
-        if(d && !d->ignoreUpdate(itValue->getState()))
+        if (d && !d->ignoreUpdate(itValue->getState()))
         {
-            if(!mCompletedTransfersByTag.contains(itValue->mNodeHandle))
-            {
-                itValue->setPreviousState(d->getState());
-                updateTransfer(itValue, row);
-                sendDataChanged(row);
-                itValue->resetStateHasChanged();
+            itValue->setPreviousState(d->getState());
+            d = itValue;
 
-                if(d->isCompleted())
-                {
-                    mCompletedTransfersByTag.insert(itValue->mNodeHandle, index(row,0));
-                }
-            }
-            else
-            {
-                assert(false);
-                MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::DUP_FINISHED_TRSF,
-                                                               { QString::number(itValue->mTag) });
-            }
+            updateTransfer(d, row);
+            sendDataChanged(row);
+            d->resetStateHasChanged();
         }
     }
 }
@@ -1277,9 +1338,11 @@ void TransfersModel::processFailedTransfers()
         if(d)
         {
             (*it)->setPreviousState(d->getState());
-            updateTransfer((*it), row);
 
-            if(d->isSyncTransfer())
+            d = (*it);
+            updateTransfer(d, row);
+
+            if (d->isSyncTransfer())
             {
                 mFailedTransferToClear.append(tag);
             }
@@ -1288,7 +1351,7 @@ void TransfersModel::processFailedTransfers()
                 sendDataChanged(row);
             }
 
-            (*it)->resetStateHasChanged();
+            d->resetStateHasChanged();
         }
 
         mTransfersToProcess.failedTransfersByTag.erase(it++);

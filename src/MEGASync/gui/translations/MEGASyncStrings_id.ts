@@ -401,6 +401,24 @@
     </message>
 </context>
 <context>
+    <name>BackupsController</name>
+    <message numerus="yes">
+        <source>%1, but %n folder couldn’t be backed up</source>
+        <translatorcomment>Notification message to indicate that backups have been created (%1) but other %n backups have failed. Keep both %1 indicating a text with correctly created backups and %n to indicate the number of backups failed. SNC-5495</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder was backed up</source>
+        <translatorcomment>Notification message to indicate that %n backups have been created. Keep %n to indicate the number of backups created. SNC-5495</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Not all folders were backed up</source>
+        <translatorcomment>Notification title to indicate that not all folders have been backed up successfully. SNC-5495</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>BackupsModel</name>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
@@ -3593,11 +3611,6 @@ https://mega.co.nz/#sync</source>
         <translation>File sistem penting yang diperlukan oleh aplikasi ini tidak dapat dijangkau, mungkin karena izin folder. Coba mulai ulang aplikasi dan periksa izin folder sistem. Jika masalah berlanjut, silakan [A]Hubungi Bantuan[/A].</translation>
     </message>
     <message>
-        <source>Decryption error</source>
-        <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
-        <translation>Kesalahan dekripsi</translation>
-    </message>
-    <message>
         <source>Destination storage is full.</source>
         <translatorcomment>Label to indicate that the remote shared storage is full. CON-561</translatorcomment>
         <translation>Penyimpanan tujuan penuh</translation>
@@ -3827,6 +3840,16 @@ Anda tidak akan dapat memperoleh kembali akses ke data yang disimpan atau diberi
         <source>Rubbish bin</source>
         <translatorcomment>Title of the Rubbish section. SAT-426</translatorcomment>
         <translation>Tempat sampah</translation>
+    </message>
+    <message>
+        <source>Undecrypted file</source>
+        <translatorcomment>Text shown when a file is undecrypted and the name can´t be known. SNC-4420</translatorcomment>
+        <translation>File tidak terdekripsi</translation>
+    </message>
+    <message>
+        <source>Undecrypted folder</source>
+        <translatorcomment>Text shown when a folder is undecrypted and the name can´t be known. SNC-4420</translatorcomment>
+        <translation>Folder tidak terdekripsi</translation>
     </message>
 </context>
 <context>
@@ -5178,14 +5201,29 @@ Masukkan nama yang berbeda.</translation>
         <translation>Lengkapi pendaftaran</translation>
     </message>
     <message>
+        <source>Add</source>
+        <translatorcomment>Button label to add a new sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Add folder</source>
         <translatorcomment>Button text to add a new folder to the backups table CON-468</translatorcomment>
         <translation>Tambah folder</translation>
     </message>
     <message>
+        <source>Add more syncs</source>
+        <translatorcomment>Label for a button to add more sync candidates. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Add the name of your device.</source>
         <translatorcomment>Device name window secondary title CON-467</translatorcomment>
         <translation>Tambahkan nama perangkat anda.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the selected sync?</source>
+        <translatorcomment>Description on removing an sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>At least one number or special character</source>
@@ -5226,6 +5264,11 @@ Masukkan nama yang berbeda.</translation>
         <source>Backup: Select folders</source>
         <translatorcomment>Onboarding step text indicating the user that he is in the backup select folders step CON-468</translatorcomment>
         <translation>Cadangan: Pilih folder</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button label on cancel current sync candidate removal process. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel account</source>
@@ -5273,6 +5316,11 @@ Masukkan nama yang berbeda.</translation>
         <translation>Konfirmasikan folder untuk dicadangkan</translation>
     </message>
     <message>
+        <source>Confirm folders to sync</source>
+        <translatorcomment>Page title for sync candidate table page. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Confirm password</source>
         <translatorcomment>Label indicating that the password should be confirmed CON-466</translatorcomment>
         <translation>Konfirmasi password</translation>
@@ -5316,6 +5364,11 @@ Masukkan nama yang berbeda.</translation>
         <source>Don’t stop</source>
         <translatorcomment>Cancel button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
         <translation>Jangan berhenti</translation>
+    </message>
+    <message>
+        <source>Edit sync</source>
+        <translatorcomment>Action label for a menu button to edit  a sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Email</source>
@@ -5413,6 +5466,11 @@ Masukkan nama yang berbeda.</translation>
         <translation>Mari kita siapkan</translation>
     </message>
     <message>
+        <source>Local folders</source>
+        <translatorcomment>SubTitle for the local part on a sync inside a Sync candidate table. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Log in</source>
         <translatorcomment>Log in button text CON-465</translatorcomment>
         <translation>Masuk</translation>
@@ -5428,6 +5486,11 @@ Masukkan nama yang berbeda.</translation>
         <translation>Masuk…</translation>
     </message>
     <message>
+        <source>MEGA folders</source>
+        <translatorcomment>SubTitle for the remote part on a sync inside a Sync candidate table. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Names longer than 32 characters are not supported</source>
         <translatorcomment>Error shown in case the user types a name larger than 32 characters in the device name field CON-467</translatorcomment>
         <translation>Nama yang lebih panjang dari 32 karakter tidak didukung</translation>
@@ -5436,6 +5499,11 @@ Masukkan nama yang berbeda.</translation>
         <source>Once confirmed, your account will be activated.</source>
         <translatorcomment>Page secondary title for new accounts in login page CON-465</translatorcomment>
         <translation>Setelah dikonfirmasi, akun anda akan diaktifkan.</translation>
+    </message>
+    <message>
+        <source>One or more syncs were unable to be set up. Check the folders and try again.</source>
+        <translatorcomment>Error banner description on resume page for sync candidates confirmation, we have at least one error. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Password</source>
@@ -5473,6 +5541,26 @@ Masukkan nama yang berbeda.</translation>
         <translation>Masalah dengan otentikasi dua faktor?</translation>
     </message>
     <message>
+        <source>Remove</source>
+        <translatorcomment>Button label on confirmation on sync candidate removal process. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove sync</source>
+        <translatorcomment>Action label for a menu button to remove a sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove sync?</source>
+        <translatorcomment>Title for a pop-up dialog that request user confirmation to remove a sync candidate. CON-1386.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Removing this sync will take you back to the start of setup.</source>
+        <translatorcomment>Description off the consequences of removing the last sync candidate left on the table. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Rename</source>
         <translatorcomment>Button to rename a backup CON-468</translatorcomment>
         <translation>Ubah nama</translation>
@@ -5481,6 +5569,11 @@ Masukkan nama yang berbeda.</translation>
         <source>Resend</source>
         <translatorcomment>Button text to resend the email for account confirmation CON-466</translatorcomment>
         <translation>Kirim lagi</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translatorcomment>Button label to save the changes on the paths of a sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
@@ -5561,6 +5654,11 @@ Masukkan nama yang berbeda.</translation>
         <source>Sync set up</source>
         <translatorcomment>Onboarding step text indicating the user that he is in the sync setup step CON-467</translatorcomment>
         <translation>Pengaturan sinkronisasi</translation>
+    </message>
+    <message>
+        <source>Sync wasn’t fully set up</source>
+        <translatorcomment>Error banner title on resume page for sync candidates confirmation, we have at least one error. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
@@ -5941,19 +6039,13 @@ Masukkan nama yang berbeda.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support has ended for Windows 7 and Server 2008 R2.
-- New actions are now available in the File Explorer context menu.
-- Refined parts of the interface to improve your experience.
-- Turkish language is now supported.
+        <source>- Increased the number of parallel transfers.
+- It’s now easier to add syncs during setup.
+- Added support for proxy auto-detection in Linux.
 - We’ve fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 5.13.0. CON-1380</translatorcomment>
-        <translation>- Dukungan telah berakhir untuk Windows 7 dan Server 2008 R2.
-- Tindakan baru sekarang tersedia di menu konteks File Explorer.
-- Bagian antarmuka yang disempurnakan untuk meningkatkan pengalaman Anda.
-- Bahasa Turki sekarang didukung.
-- Kami telah memperbaiki bug dan membuat aplikasi lebih dapat diandalkan.
-</translation>
+        <translatorcomment>Change log for version 5.14.0. CON-1405</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6032,9 +6124,14 @@ Masukkan nama yang berbeda.</translation>
         <translation>Nama pengguna:</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
-        <translatorcomment>Message shown when there is an error testing the proxy settings.</translatorcomment>
-        <translation>Setelan proxy anda tidak valid atau proxy tidak merespons</translation>
+        <source>We couldn’t connect using your proxy settings. Check your proxy details or try a different network.</source>
+        <translatorcomment>Error banner shown when there is an error testing the proxy settings. SNC-5411</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
+        <translatorcomment>Error banner shown when proxy settings is not found in the environment, [B] is for bold . SNC-5411</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7126,6 +7223,16 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <translation><numerusform>%n folder</numerusform></translation>
     </message>
     <message>
+        <source>Add backup</source>
+        <translatorcomment>Context menu option to backup a folder. CON-1364.</translatorcomment>
+        <translation>Tambahkan cadangan</translation>
+    </message>
+    <message>
+        <source>Add sync</source>
+        <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
+        <translation>Tambah sync</translation>
+    </message>
+    <message>
         <source>Get MEGA link</source>
         <translatorcomment>Label displayed when a user is trying to get public link of a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
         <translation>Dapatkan link MEGA</translation>
@@ -7159,16 +7266,6 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <source>View previous versions</source>
         <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
         <translation>Lihat versi sebelumnya</translation>
-    </message>
-    <message>
-        <source>Add sync</source>
-        <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
-        <translation>Tambah sync</translation>
-    </message>
-    <message>
-        <source>Add backup</source>
-        <translatorcomment>Context menu option to backup a folder. CON-1364.</translatorcomment>
-        <translation>Tambahkan cadangan</translation>
     </message>
 </context>
 <context>
@@ -8449,6 +8546,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Folder tidak dapat disinkronkan karena tidak dapat ditemukan. Mungkin telah dipindahkan atau dihapus, atau anda mungkin tidak memiliki akses.</translation>
     </message>
     <message>
+        <source>Folder can&apos;t be synced as it&apos;s already a candidate.</source>
+        <translatorcomment>Error message indicating the user we have a sync candidate with the same folder already in the sync candidates table. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Select a MEGA folder to sync.</source>
         <translatorcomment>Error message indicating that the user should choose a remote folder (cloud/mega) in order to create a sync. CON-467</translatorcomment>
         <translation>Pilih folder MEGA untuk disinkronkan</translation>
@@ -9270,6 +9372,42 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     </message>
 </context>
 <context>
+    <name>UnknownDownloadIssue</name>
+    <message>
+        <source>Reporting failed</source>
+        <translatorcomment>Stalled Issue state when the report has been submitted to the SDK ;CON-1100</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reporting issue</source>
+        <translatorcomment>Stalled Issue state while the report is being submitted to the SDK ;CON-1100</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reporting successful</source>
+        <translatorcomment>Stalled Issue state when the report has been submitted to the SDK ;CON-1100</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UnknownDownloadIssueHeader</name>
+    <message>
+        <source>Report issue</source>
+        <translatorcomment>Stalled Issue combobox solve option that sends a report to helpdesk;CON-1094</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send</source>
+        <translatorcomment>Messagebox button string to confirma that the user wants to send a report to helpdesk;CON-1094</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will send your logs to our Support team for diagnostics.</source>
+        <translatorcomment>Messagebox string to confirma that the user wants to send a report to helpdesk;CON-1094</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>UploadIssueHeader</name>
     <message>
         <source>Cannot reach the destination folder.</source>
@@ -9401,6 +9539,11 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
         <translation>Kuota transfer telah terlewati</translation>
     </message>
     <message>
+        <source>Upgrade your account to get more storage quota.</source>
+        <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
+        <translation>Tingkatkan akun anda untuk mendapatkan lebih banyak kuota penyimpanan</translation>
+    </message>
+    <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
         <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
         <translation>Anda tidak dapat melanjutkan pengunduhan karena Anda telah menggunakan semua kuota transfer yang tersedia untuk Anda.[BR][BR]Untuk mendapatkan lebih banyak kuota, beli paket berbayar lain.[BR][BR][B][A]Pelajari lebih lanjut tentang kuota transfer.[/A][/B]</translation>
@@ -9424,11 +9567,6 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>per bulan</translation>
-    </message>
-    <message>
-        <source>Upgrade your account to get more storage quota.</source>
-        <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
-        <translation>Tingkatkan akun anda untuk mendapatkan lebih banyak kuota penyimpanan</translation>
     </message>
 </context>
 <context>
@@ -9654,7 +9792,6 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
         <translation>Mengapa saya melihat ini?</translation>
     </message>
-
 </context>
 <context>
     <name>WhatsNewStrings</name>

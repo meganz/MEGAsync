@@ -17,7 +17,6 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     {AppStatsEvents::EventType::MEM_USAGE, 99509},
     {AppStatsEvents::EventType::UPDATE, 99510},
     {AppStatsEvents::EventType::UPDATE_OK, 99511},
-    {AppStatsEvents::EventType::DUP_FINISHED_TRSF, 99512},
     //{ (Deprecated)                                                       , 99513 },
     //{ (Deprecated)                                                       , 99514 },
     //{ (Deprecated)                                                       , 99515 },
@@ -55,8 +54,7 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     {AppStatsEvents::EventType::SI_CHANGE_TO_ADVANCED_MODE, 99547},
     {AppStatsEvents::EventType::SI_FINGERPRINT_MISSING_SOLVED_MANUALLY, 99548},
     {AppStatsEvents::EventType::SI_MOVERENAME_CANNOT_OCCUR_SOLVED_MANUALLY, 99549},
-    //{ (Stalled issues reserved)                                          , 99550 },
-    //{ (Stalled issues reserved)                                          , 99551 },
+    {AppStatsEvents::EventType::SI_UNKNOWN_DOWNLOAD_ISSUE_SOLVED_BY_FEEDBACK, 99550},
     //{ (Stalled issues reserved)                                          , 99552 },
     //{ (Stalled issues reserved)                                          , 99553 },
     //{ (Stalled issues reserved)                                          , 99554 },
@@ -154,6 +152,8 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     {AppStatsEvents::EventType::SYNC_ADDED_OS_NOTIFICATION, 600046},
     {AppStatsEvents::EventType::SYNC_ADDED_MAIN_APP, 600047},
     {AppStatsEvents::EventType::CLOUD_DRIVE_HOURLY_ACTIVE_USERS, 600048},
+    {AppStatsEvents::EventType::USER_ABORTS_ONBOARDING_SYNC_CREATION, 600049},
+    {AppStatsEvents::EventType::SYNC_CANDIDATE_PACK_CONFIRMED, 600050},
 };
 
 // Deprecated are not displayed
@@ -168,7 +168,6 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
     {AppStatsEvents::EventType::MEM_USAGE, "%1 %2 %3"},
     {AppStatsEvents::EventType::UPDATE, "MEGAsync update"},
     {AppStatsEvents::EventType::UPDATE_OK, "MEGAsync updated OK"},
-    {AppStatsEvents::EventType::DUP_FINISHED_TRSF, "Duplicated finished transfer: %1"},
     {AppStatsEvents::EventType::OVER_STORAGE_DIAL, "Overstorage dialog shown"},
     {AppStatsEvents::EventType::OVER_STORAGE_NOTIF, "Overstorage notification shown"},
     {AppStatsEvents::EventType::OVER_STORAGE_MSG, "Overstorage warning shown"},
@@ -212,6 +211,10 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
     {AppStatsEvents::EventType::SI_CHANGE_TO_ADVANCED_MODE, "Advanced mode selected"},
     {AppStatsEvents::EventType::SI_FINGERPRINT_MISSING_SOLVED_MANUALLY,
      "Cloud fingerprint missing solved manually"},
+    {AppStatsEvents::EventType::SI_MOVERENAME_CANNOT_OCCUR_SOLVED_MANUALLY,
+     "Move or Rename Cannot Occur solved manually"},
+    {AppStatsEvents::EventType::SI_UNKNOWN_DOWNLOAD_ISSUE_SOLVED_BY_FEEDBACK,
+     "Unknown download issue solved manually by sending feedback"},
     {AppStatsEvents::EventType::DAILY_ACTIVE_USER, "Daily Active Users (DAU) - acctype: %1"},
     {AppStatsEvents::EventType::MONTHLY_ACTIVE_USER, "Monthly Active Users (MAU) - acctype: %1"},
     {AppStatsEvents::EventType::LOGIN_CLICKED, "Log in clicked"},
@@ -327,7 +330,13 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
     {AppStatsEvents::EventType::SYNC_ADDED_OS_NOTIFICATION, "Sync added from an OS notification"},
     {AppStatsEvents::EventType::SYNC_ADDED_MAIN_APP, "Sync added from main app"},
     {AppStatsEvents::EventType::CLOUD_DRIVE_HOURLY_ACTIVE_USERS,
-     "Cloud Drive dialog hourly active users"}};
+     "Cloud Drive dialog hourly active users"},
+    {AppStatsEvents::EventType::USER_ABORTS_ONBOARDING_SYNC_CREATION,
+     "In the onboarding the user entered in the sync creation pages but it exited the process "
+     "without any sync "
+     "created."},
+    {AppStatsEvents::EventType::SYNC_CANDIDATE_PACK_CONFIRMED,
+     "A pack of sync candidates has been confirmed"}};
 
 QString AppStatsEvents::getEventMessage(EventType event,
                                          const QStringList& args)

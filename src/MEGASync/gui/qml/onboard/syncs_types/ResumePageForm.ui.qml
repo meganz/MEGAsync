@@ -9,7 +9,6 @@ import components.images 1.0
 import components.buttons 1.0
 import components.pages 1.0
 
-import backups 1.0
 import syncs 1.0
 
 import onboard 1.0
@@ -17,19 +16,17 @@ import onboard 1.0
 FooterButtonsPage {
     id: root
 
-    required property StepPanel stepPanelRef
-
-    readonly property string stateFullSync: "stateFullSync"
-    readonly property string stateSelectiveSync: "stateSelectiveSync"
-    readonly property string stateBackup: "stateBackup"
-    readonly property int maxSizeDescription: 80
     readonly property int buttonQuestionMargin: 24
+    readonly property int topMargin: 8
+    readonly property int topMainQuestionMarging: 32
+    readonly property int topButtonGroupMargin: 16
 
     property alias buttonGroup: buttonGroupItem
     property alias syncButton: syncButtonItem
-
-    property bool fullSyncDone
-    property bool selectiveSyncDone
+    property alias titleItem: titleItem
+    property alias descriptionItem: descriptionItem
+    property alias errorItem: errorItem
+    property alias descriptionItem2: descriptionItem2
 
     footerButtons {
         leftPrimary.visible: false
@@ -40,58 +37,6 @@ FooterButtonsPage {
         }
     }
 
-    states: [
-        State {
-            name: root.stateFullSync
-            PropertyChanges { target: titleItem; text: SyncsStrings.finalStepSyncTitle; }
-            PropertyChanges { target: descriptionItem; text: SyncsStrings.finalStepSync; }
-            PropertyChanges { target: descriptionItem2; visible: false; }
-            PropertyChanges { target: syncButtonItem; visible: false; }
-            PropertyChanges {
-                target: stepPanelRef;
-                state: stepPanelRef.stepAllDone;
-                step3Text: SyncsStrings.selectFolders;
-                step4Text: OnboardingStrings.syncSetUp;
-            }
-        },
-        State {
-            name: root.stateSelectiveSync
-            extend: root.stateFullSync
-            PropertyChanges {
-                target: syncButtonItem;
-                type: Constants.SyncType.SELECTIVE_SYNC;
-                visible: true;
-            }
-        },
-        State {
-            name: root.stateBackup
-            PropertyChanges { target: titleItem; text: BackupsStrings.finalStepBackupTitle; }
-            PropertyChanges { target: descriptionItem; text: BackupsStrings.finalStepBackup; }
-            PropertyChanges {
-                target: descriptionItem2;
-                text: BackupsStrings.finalStepBackup2;
-                visible: true;
-            }
-            PropertyChanges {
-                target: syncButtonItem;
-                type: !fullSyncDone && !selectiveSyncDone
-                      ? Constants.SyncType.SYNC
-                      : Constants.SyncType.SELECTIVE_SYNC;
-                visible: !fullSyncDone;
-                title: SyncsStrings.sync
-                description: !fullSyncDone && !selectiveSyncDone
-                             ? OnboardingStrings.finalPageButtonSync
-                             : OnboardingStrings.finalPageButtonSelectiveSync;
-            }
-            PropertyChanges {
-                target: stepPanelRef;
-                state: stepPanelRef.stepAllDone;
-                step3Text: OnboardingStrings.backupSelectFolders;
-                step4Text: OnboardingStrings.backupConfirm;
-            }
-        }
-    ]
-
     ColumnLayout {
         id: mainLayout
 
@@ -100,6 +45,7 @@ FooterButtonsPage {
             left: parent.left
             right: parent.right
         }
+        spacing: 0
 
         Texts.Text {
             id: titleItem
@@ -116,14 +62,29 @@ FooterButtonsPage {
             id: descriptionItem
 
             Layout.preferredWidth: parent.width
-            Layout.topMargin: 8
+            Layout.topMargin: topMargin
             font.pixelSize: Texts.Text.Size.MEDIUM
             wrapMode: Text.Wrap
+            text: SyncsStrings.finalStepSync
+        }
+
+        Texts.BannerText {
+            id: errorItem
+
+            showBorder: false
+            type: Constants.MessageType.ERROR
+            text: OnboardingStrings.finalStepSyncError
+            visible: false
+            backgroundColor: ColorTheme.notificationError
+            icon: Images.xCircle
+            Layout.preferredWidth: parent.width
+            Layout.topMargin: topMargin
         }
 
         Texts.SecondaryText {
             id: descriptionItem2
 
+            Layout.topMargin: topMargin
             Layout.preferredWidth: parent.width
             font.pixelSize: Texts.Text.Size.MEDIUM
             wrapMode: Text.Wrap
@@ -133,7 +94,7 @@ FooterButtonsPage {
             id: finalStepQuestionText
 
             Layout.preferredWidth: parent.width
-            Layout.topMargin: (descriptionItem.height > maxSizeDescription) ? (buttonQuestionMargin * 0.5) : buttonQuestionMargin
+            Layout.topMargin: topMainQuestionMarging
             text: OnboardingStrings.finalStepQuestion
             font {
                 pixelSize: Texts.Text.Size.MEDIUM_LARGE
@@ -144,8 +105,8 @@ FooterButtonsPage {
         Item {
             id: buttons
 
-            Layout.preferredWidth: parent.width + 8
-            Layout.topMargin: (descriptionItem.height > maxSizeDescription) ? (buttonQuestionMargin * 0.5) : buttonQuestionMargin
+            Layout.preferredWidth: parent.width + (2 * Constants.focusBorderWidth)
+            Layout.topMargin: topButtonGroupMargin
 
             ButtonGroup {
                 id: buttonGroupItem
@@ -156,15 +117,15 @@ FooterButtonsPage {
 
                 anchors {
                     fill: parent
-                    leftMargin: -syncButtonItem.focusBorderWidth
-                    rightMargin: backupsButton.focusBorderWidth
+                    leftMargin: -Constants.focusBorderWidth
+                    rightMargin: Constants.focusBorderWidth
                 }
                 spacing: 12
 
                 SyncsVerticalButton {
                     id: syncButtonItem
 
-                    width: (parent.width - parent.spacing) / 2
+                    Layout.fillWidth: true
                     title: SyncsStrings.sync
                     description: OnboardingStrings.finalPageButtonSelectiveSync
                     imageSource: Images.sync
@@ -176,9 +137,7 @@ FooterButtonsPage {
                 SyncsVerticalButton {
                     id: backupsButton
 
-                    width: !syncButtonItem.visible
-                           ? parent.width
-                           : (parent.width - parent.spacing) / 2
+                    Layout.fillWidth: true
                     title: OnboardingStrings.backup
                     description: OnboardingStrings.finalPageButtonBackup
                     imageSource: Images.installationTypeBackups
@@ -186,11 +145,8 @@ FooterButtonsPage {
                     useMaxSiblingHeight: syncButtonItem.visible
                     ButtonGroup.group: buttonGroupItem
                 }
-
-            } // RowLayout: buttonsLayout
-
-        } // Item: buttons
-
-    } // ColumnLayout: mainLayout
+            }
+        }
+    }
 
 }

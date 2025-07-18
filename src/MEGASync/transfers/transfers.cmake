@@ -11,6 +11,7 @@ set(DESKTOP_APP_TRANSFERS_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/model/TransfersSortFilterProxyBaseModel.h
     ${CMAKE_CURRENT_LIST_DIR}/model/TransfersModel.h
     ${CMAKE_CURRENT_LIST_DIR}/model/TransferMetaData.h
+    ${CMAKE_CURRENT_LIST_DIR}/model/TransferTrack.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/SomeIssuesOccurredMessage.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/InfoDialogTransferDelegateWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/InfoDialogTransfersWidget.h
@@ -43,6 +44,7 @@ set(DESKTOP_APP_TRANSFERS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/model/TransfersManagerSortFilterProxyModel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/SomeIssuesOccurredMessage.cpp
     ${CMAKE_CURRENT_LIST_DIR}/model/TransferMetaData.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/model/TransferTrack.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/InfoDialogTransferDelegateWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/InfoDialogTransfersWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/MegaTransferDelegate.cpp

@@ -19,6 +19,8 @@ Qml.RoundButton {
     property Icon icons: Icon {}
     property Sizes sizes: Sizes {}
 
+    property int buttonCursorShape: Qt.PointingHandCursor
+
     function getBorderColor() {
         if(root.pressed || root.checked) {
             return colors.borderPressed;
@@ -217,7 +219,7 @@ Qml.RoundButton {
 
         anchors.fill: parent
         onPressed: { mouse.accepted = false; }
-        cursorShape: Qt.PointingHandCursor
+        cursorShape: buttonCursorShape
     }
 
 }

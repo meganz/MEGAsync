@@ -25,6 +25,12 @@ NodeSelectorModelItem::NodeSelectorModelItem(std::unique_ptr<MegaNode> node,
     mNode(std::move(node)),
     mOwner(nullptr)
 {
+    // In case we don´t have a valid node (which is an error), just use a goofy node
+    if (!mNode)
+    {
+        mNode = std::make_shared<mega::MegaNode>();
+    }
+
     resetChildrenCounter();
 
     if(mNode->isFile() || mNode->isInShare())
@@ -37,6 +43,11 @@ NodeSelectorModelItem::~NodeSelectorModelItem()
 {
     qDeleteAll(mChildItems);
     mChildItems.clear();
+}
+
+bool NodeSelectorModelItem::isValid() const
+{
+    return mNode && mNode->getHandle() != mega::INVALID_HANDLE;
 }
 
 std::shared_ptr<mega::MegaNode> NodeSelectorModelItem::getNode() const
@@ -79,11 +90,18 @@ void NodeSelectorModelItem::createChildItems(std::unique_ptr<mega::MegaNodeList>
 
             auto node = std::unique_ptr<MegaNode>(nodeList->get(i)->copy());
             auto child = createModelItem(std::move(node), mShowFiles, this);
-            connect(child,
-                    &NodeSelectorModelItem::destroyed,
-                    this,
-                    &NodeSelectorModelItem::onChildDestroyed);
-            mChildItems.append(child);
+            if (child->isValid())
+            {
+                connect(child,
+                        &NodeSelectorModelItem::destroyed,
+                        this,
+                        &NodeSelectorModelItem::onChildDestroyed);
+                mChildItems.append(child);
+            }
+            else
+            {
+                child->deleteLater();
+            }
         }
 
         mRequestingChildren = false;
@@ -297,13 +315,20 @@ QList<QPointer<NodeSelectorModelItem>> NodeSelectorModelItem::addNodes(QList<std
     foreach(auto& node, nodes)
     {
         auto child = createModelItem(std::unique_ptr<MegaNode>(node->copy()), mShowFiles, this);
-        items.append(child);
-        connect(child,
-                &NodeSelectorModelItem::destroyed,
-                this,
-                &NodeSelectorModelItem::onChildDestroyed);
-        mChildItems.append(child);
-        mChildrenCounter++;
+        if (child->isValid())
+        {
+            items.append(child);
+            connect(child,
+                    &NodeSelectorModelItem::destroyed,
+                    this,
+                    &NodeSelectorModelItem::onChildDestroyed);
+            mChildItems.append(child);
+            mChildrenCounter++;
+        }
+        else
+        {
+            child->deleteLater();
+        }
     }
     return items;
 }
@@ -401,7 +426,8 @@ void NodeSelectorModelItem::calculateSyncStatus()
 
 bool NodeSelectorModelItem::isCloudDrive() const
 {
-    return mNode->getHandle() == MegaSyncApp->getRootNode()->getHandle();
+    auto rootNode(MegaSyncApp->getRootNode());
+    return rootNode && mNode->getHandle() == rootNode->getHandle();
 }
 
 bool NodeSelectorModelItem::isRubbishBin() const

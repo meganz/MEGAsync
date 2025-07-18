@@ -1,6 +1,7 @@
 #include "Preferences.h"
 
 #include "FullName.h"
+#include "ParallelConnectionsValues.h"
 #include "StatsEventHandler.h"
 #include "Version.h"
 
@@ -300,9 +301,7 @@ const int  Preferences::defaultDownloadLimitKB      = 0;
 const long long Preferences::defaultTimeStamp       = 0;
 
 //The default appDataId starts from 1, as 0 will be used for invalid appDataId
-const unsigned long long  Preferences::defaultTransferIdentifier            = 1;
-const int  Preferences::defaultParallelUploadConnections                    = 3;
-const int  Preferences::defaultParallelDownloadConnections                  = 4;
+const unsigned long long Preferences::defaultTransferIdentifier = 1;
 const unsigned long long  Preferences::defaultUpperSizeLimitValue           = 1; //Input UI range 1-9999. Use 1 as default value
 const unsigned long long  Preferences::defaultLowerSizeLimitValue           = 1; //Input UI range 1-9999. Use 1 as default value
 const int  Preferences::defaultCleanerDaysLimitValue                        = 30;
@@ -1568,20 +1567,22 @@ int Preferences::downloadLimitKB()
 
 int Preferences::parallelUploadConnections()
 {
-    return getValueConcurrent<int>(parallelUploadConnectionsKey, defaultParallelUploadConnections);
+    return getValueConcurrent<int>(parallelUploadConnectionsKey,
+                                   ParallelConnectionsValues::getDefaultValue());
 }
 
 int Preferences::parallelDownloadConnections()
 {
-    return getValueConcurrent<int>(parallelDownloadConnectionsKey, defaultParallelDownloadConnections);
+    return getValueConcurrent<int>(parallelDownloadConnectionsKey,
+                                   ParallelConnectionsValues::getDefaultValue());
 }
 
 void Preferences::setParallelUploadConnections(int value)
 {
     assert(logged());
-    if (value < 1 || value > 6)
+    if (!ParallelConnectionsValues::contains(value))
     {
-       value = 3;
+        value = ParallelConnectionsValues::getDefaultValue();
     }
     setValueConcurrently(parallelUploadConnectionsKey, value);
 }
@@ -1589,9 +1590,9 @@ void Preferences::setParallelUploadConnections(int value)
 void Preferences::setParallelDownloadConnections(int value)
 {
     assert(logged());
-    if (value < 1 || value > 6)
+    if (!ParallelConnectionsValues::contains(value))
     {
-       value = 4;
+        value = ParallelConnectionsValues::getDefaultValue();
     }
     setValueConcurrently(parallelDownloadConnectionsKey, value);
 }

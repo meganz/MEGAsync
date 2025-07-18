@@ -8,9 +8,8 @@
 #include "OnboardingQmlDialog.h"
 #include "PasswordStrengthChecker.h"
 #include "SettingsDialog.h"
-#include "Syncs.h"
+#include "SyncsCandidatesController.h"
 #include "SyncsComponent.h"
-#include "SyncsData.h"
 
 #include <QQmlEngine>
 

@@ -25,6 +25,7 @@ REM Overwrite C and CXX flags. We want debug info, with O2 and Ob2 level optimiz
 cmake ^
 	-G "Visual Studio 17 2022" ^
 	-A x64 ^
+	-DCMAKE_SYSTEM_VERSION=%MEGA_WIN_KITVER% ^
 	-DCMAKE_VERBOSE_MAKEFILE="ON" ^
 	-DENABLE_DESIGN_TOKENS_IMPORTER="OFF" ^
 	-DENABLE_DESKTOP_APP_TESTS="OFF" ^
@@ -60,6 +61,7 @@ REM Overwrite C and CXX flags. We want debug info, with O2 and Ob2 level optimiz
 cmake ^
 	-G "Visual Studio 17 2022" ^
 	-A Win32 ^
+	-DCMAKE_SYSTEM_VERSION=%MEGA_WIN_KITVER% ^
 	-DCMAKE_VERBOSE_MAKEFILE="ON" ^
 	-DENABLE_DESIGN_TOKENS_IMPORTER="OFF" ^
 	-DENABLE_DESKTOP_APP_TESTS="OFF" ^

@@ -401,6 +401,24 @@
     </message>
 </context>
 <context>
+    <name>BackupsController</name>
+    <message numerus="yes">
+        <source>%1, but %n folder couldn’t be backed up</source>
+        <translatorcomment>Notification message to indicate that backups have been created (%1) but other %n backups have failed. Keep both %1 indicating a text with correctly created backups and %n to indicate the number of backups failed. SNC-5495</translatorcomment>
+        <translation><numerusform>%1, aber %n Ordner konnte nicht gesichert werden</numerusform><numerusform>%1, aber %n Ordner konnten nicht gesichert werden</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder was backed up</source>
+        <translatorcomment>Notification message to indicate that %n backups have been created. Keep %n to indicate the number of backups created. SNC-5495</translatorcomment>
+        <translation><numerusform>%n Ordner wurde gesichert</numerusform><numerusform>%n Ordner wurden gesichert</numerusform></translation>
+    </message>
+    <message>
+        <source>Not all folders were backed up</source>
+        <translatorcomment>Notification title to indicate that not all folders have been backed up successfully. SNC-5495</translatorcomment>
+        <translation>Nicht alle Ordner wurden gesichert</translation>
+    </message>
+</context>
+<context>
     <name>BackupsModel</name>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
@@ -3594,11 +3612,6 @@ https://mega.co.nz/#sync</source>
         <translation>Auf kritische Systemdateien, die von dieser App benötigt werden, kann nicht zugegriffen werden, möglicherweise aufgrund von fehlenden Ordnerberechtigungen. Starten Sie die Anwendung neu und überprüfen Sie die Berechtigungen für den Systemordner. Wenn das Problem weiterhin besteht, [A]wenden Sie sich bitte an den Support[/A].</translation>
     </message>
     <message>
-        <source>Decryption error</source>
-        <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
-        <translation>Fehler bei der Entschlüsselung</translation>
-    </message>
-    <message>
         <source>Destination storage is full.</source>
         <translatorcomment>Label to indicate that the remote shared storage is full. CON-561</translatorcomment>
         <translation>Der Zielspeicher ist voll</translation>
@@ -3828,6 +3841,16 @@ Sie können nicht mehr auf Ihre gespeicherten Daten zugreifen und sind nicht ber
         <source>Rubbish bin</source>
         <translatorcomment>Title of the Rubbish section. SAT-426</translatorcomment>
         <translation>Papierkorb</translation>
+    </message>
+    <message>
+        <source>Undecrypted file</source>
+        <translatorcomment>Text shown when a file is undecrypted and the name can´t be known. SNC-4420</translatorcomment>
+        <translation>Nicht entschlüsselte Datei</translation>
+    </message>
+    <message>
+        <source>Undecrypted folder</source>
+        <translatorcomment>Text shown when a folder is undecrypted and the name can´t be known. SNC-4420</translatorcomment>
+        <translation>Nicht entschlüsselter Ordner</translation>
     </message>
 </context>
 <context>
@@ -5179,14 +5202,29 @@ Bitte geben Sie einen anderen Namen ein.</translation>
         <translation>Registrierung abschließen</translation>
     </message>
     <message>
+        <source>Add</source>
+        <translatorcomment>Button label to add a new sync candidate. CON-1386</translatorcomment>
+        <translation>Hinzufügen</translation>
+    </message>
+    <message>
         <source>Add folder</source>
         <translatorcomment>Button text to add a new folder to the backups table CON-468</translatorcomment>
         <translation>Ordner hinzufügen</translation>
     </message>
     <message>
+        <source>Add more syncs</source>
+        <translatorcomment>Label for a button to add more sync candidates. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Add the name of your device.</source>
         <translatorcomment>Device name window secondary title CON-467</translatorcomment>
         <translation>Geben Sie den Namen Ihres Geräts ein.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the selected sync?</source>
+        <translatorcomment>Description on removing an sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>At least one number or special character</source>
@@ -5227,6 +5265,11 @@ Bitte geben Sie einen anderen Namen ein.</translation>
         <source>Backup: Select folders</source>
         <translatorcomment>Onboarding step text indicating the user that he is in the backup select folders step CON-468</translatorcomment>
         <translation>Backup: Ordner auswählen</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button label on cancel current sync candidate removal process. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel account</source>
@@ -5274,6 +5317,11 @@ Bitte geben Sie einen anderen Namen ein.</translation>
         <translation>Backup-Ordner bestätigen</translation>
     </message>
     <message>
+        <source>Confirm folders to sync</source>
+        <translatorcomment>Page title for sync candidate table page. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Confirm password</source>
         <translatorcomment>Label indicating that the password should be confirmed CON-466</translatorcomment>
         <translation>Passwort bestätigen</translation>
@@ -5317,6 +5365,11 @@ Bitte geben Sie einen anderen Namen ein.</translation>
         <source>Don’t stop</source>
         <translatorcomment>Cancel button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
         <translation>Nicht abbrechen</translation>
+    </message>
+    <message>
+        <source>Edit sync</source>
+        <translatorcomment>Action label for a menu button to edit  a sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Email</source>
@@ -5414,6 +5467,11 @@ Bitte geben Sie einen anderen Namen ein.</translation>
         <translation>Wir helfen Ihnen bei der Einrichtung</translation>
     </message>
     <message>
+        <source>Local folders</source>
+        <translatorcomment>SubTitle for the local part on a sync inside a Sync candidate table. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Log in</source>
         <translatorcomment>Log in button text CON-465</translatorcomment>
         <translation>Anmelden</translation>
@@ -5429,6 +5487,11 @@ Bitte geben Sie einen anderen Namen ein.</translation>
         <translation>Anmeldung erfolgt…</translation>
     </message>
     <message>
+        <source>MEGA folders</source>
+        <translatorcomment>SubTitle for the remote part on a sync inside a Sync candidate table. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Names longer than 32 characters are not supported</source>
         <translatorcomment>Error shown in case the user types a name larger than 32 characters in the device name field CON-467</translatorcomment>
         <translation>Namen mit mehr als 32 Zeichen werden nicht unterstützt</translation>
@@ -5437,6 +5500,11 @@ Bitte geben Sie einen anderen Namen ein.</translation>
         <source>Once confirmed, your account will be activated.</source>
         <translatorcomment>Page secondary title for new accounts in login page CON-465</translatorcomment>
         <translation>Nach der Bestätigung wird Ihr Account aktiviert.</translation>
+    </message>
+    <message>
+        <source>One or more syncs were unable to be set up. Check the folders and try again.</source>
+        <translatorcomment>Error banner description on resume page for sync candidates confirmation, we have at least one error. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Password</source>
@@ -5474,6 +5542,26 @@ Bitte geben Sie einen anderen Namen ein.</translation>
         <translation>Gibt es ein Problem mit der Zwei-Faktor-Authentifizierung?</translation>
     </message>
     <message>
+        <source>Remove</source>
+        <translatorcomment>Button label on confirmation on sync candidate removal process. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove sync</source>
+        <translatorcomment>Action label for a menu button to remove a sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove sync?</source>
+        <translatorcomment>Title for a pop-up dialog that request user confirmation to remove a sync candidate. CON-1386.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Removing this sync will take you back to the start of setup.</source>
+        <translatorcomment>Description off the consequences of removing the last sync candidate left on the table. CON-1386</translatorcomment>
+        <translation>Dadurch wird die Einrichtung der Synchronisierung neu gestartet</translation>
+    </message>
+    <message>
         <source>Rename</source>
         <translatorcomment>Button to rename a backup CON-468</translatorcomment>
         <translation>Umbenennen</translation>
@@ -5482,6 +5570,11 @@ Bitte geben Sie einen anderen Namen ein.</translation>
         <source>Resend</source>
         <translatorcomment>Button text to resend the email for account confirmation CON-466</translatorcomment>
         <translation>Erneut senden</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translatorcomment>Button label to save the changes on the paths of a sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
@@ -5562,6 +5655,11 @@ Bitte geben Sie einen anderen Namen ein.</translation>
         <source>Sync set up</source>
         <translatorcomment>Onboarding step text indicating the user that he is in the sync setup step CON-467</translatorcomment>
         <translation>Synchronisierung einrichten</translation>
+    </message>
+    <message>
+        <source>Sync wasn’t fully set up</source>
+        <translatorcomment>Error banner title on resume page for sync candidates confirmation, we have at least one error. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
@@ -5942,19 +6040,13 @@ Bitte geben Sie einen anderen Namen ein.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support has ended for Windows 7 and Server 2008 R2.
-- New actions are now available in the File Explorer context menu.
-- Refined parts of the interface to improve your experience.
-- Turkish language is now supported.
+        <source>- Increased the number of parallel transfers.
+- It’s now easier to add syncs during setup.
+- Added support for proxy auto-detection in Linux.
 - We’ve fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 5.13.0. CON-1380</translatorcomment>
-        <translation>- Die Unterstützung für Windows 7 und Server 2008 R2 wurde eingestellt.
-- Im Kontextmenü des Datei-Explorers sind jetzt neue Aktionen verfügbar.
-- Wir haben Teile der Bedienoberfläche überarbeitet, um Ihre Nutzungserfahrung zu verbessern.
-- Die türkische Sprache wird jetzt unterstützt.
-- Wir haben Bugs behoben und die Zuverlässigkeit der App verbessert.
-</translation>
+        <translatorcomment>Change log for version 5.14.0. CON-1405</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6033,9 +6125,14 @@ Bitte geben Sie einen anderen Namen ein.</translation>
         <translation>Benutzername:</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
-        <translatorcomment>Message shown when there is an error testing the proxy settings.</translatorcomment>
-        <translation>Ihre Proxy-Einstellungen sind ungültig oder Ihr Proxy antwortet nicht</translation>
+        <source>We couldn’t connect using your proxy settings. Check your proxy details or try a different network.</source>
+        <translatorcomment>Error banner shown when there is an error testing the proxy settings. SNC-5411</translatorcomment>
+        <translation>Wir konnten mit Ihren Proxy-Einstellungen keine Verbindung herstellen. Überprüfen Sie die Einstellungen oder verwenden Sie ein anderes Netzwerk.</translation>
+    </message>
+    <message>
+        <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
+        <translatorcomment>Error banner shown when proxy settings is not found in the environment, [B] is for bold . SNC-5411</translatorcomment>
+        <translation>Für Ihr System ist kein Proxy festgelegt. Um eine Verbindung herzustellen, legen Sie einen gültigen [B]http_proxy[/B]- oder [B]https_proxy[/B]-Wert für Ihre Umgebung fest.</translation>
     </message>
 </context>
 <context>
@@ -7127,6 +7224,16 @@ Trotzdem löschen?</translation>
         <translation><numerusform>%n Ordner</numerusform><numerusform>%n Ordner</numerusform></translation>
     </message>
     <message>
+        <source>Add backup</source>
+        <translatorcomment>Context menu option to backup a folder. CON-1364.</translatorcomment>
+        <translation>Backup hinzufügen</translation>
+    </message>
+    <message>
+        <source>Add sync</source>
+        <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
+        <translation>Synchronisierung hinzufügen</translation>
+    </message>
+    <message>
         <source>Get MEGA link</source>
         <translatorcomment>Label displayed when a user is trying to get public link of a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
         <translation>MEGA-Link exportieren</translation>
@@ -7160,16 +7267,6 @@ Trotzdem löschen?</translation>
         <source>View previous versions</source>
         <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
         <translation>Ältere Versionen</translation>
-    </message>
-    <message>
-        <source>Add sync</source>
-        <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
-        <translation>Synchronisierung hinzufügen</translation>
-    </message>
-    <message>
-        <source>Add backup</source>
-        <translatorcomment>Context menu option to backup a folder. CON-1364.</translatorcomment>
-        <translation>Backup hinzufügen</translation>
     </message>
 </context>
 <context>
@@ -8450,6 +8547,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Der Ordner kann nicht synchronisiert werden, da er nicht gefunden werden kann. Vielleicht wurde er verschoben oder gelöscht, oder Sie haben keinen Zugriff darauf.</translation>
     </message>
     <message>
+        <source>Folder can&apos;t be synced as it&apos;s already a candidate.</source>
+        <translatorcomment>Error message indicating the user we have a sync candidate with the same folder already in the sync candidates table. CON-1386</translatorcomment>
+        <translation>Dieser Ordner befindet sich bereits in der Liste der anstehenden Synchronisierungen</translation>
+    </message>
+    <message>
         <source>Select a MEGA folder to sync.</source>
         <translatorcomment>Error message indicating that the user should choose a remote folder (cloud/mega) in order to create a sync. CON-467</translatorcomment>
         <translation>Wählen Sie den MEGA-Ordner aus, der synchronisiert werden soll</translation>
@@ -9270,6 +9372,42 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
 </context>
 <context>
+    <name>UnknownDownloadIssue</name>
+    <message>
+        <source>Reporting failed</source>
+        <translatorcomment>Stalled Issue state when the report has been submitted to the SDK ;CON-1100</translatorcomment>
+        <translation>Meldung fehlgeschlagen</translation>
+    </message>
+    <message>
+        <source>Reporting issue</source>
+        <translatorcomment>Stalled Issue state while the report is being submitted to the SDK ;CON-1100</translatorcomment>
+        <translation>Problem wird gemeldet</translation>
+    </message>
+    <message>
+        <source>Reporting successful</source>
+        <translatorcomment>Stalled Issue state when the report has been submitted to the SDK ;CON-1100</translatorcomment>
+        <translation>Meldung erfolgreich</translation>
+    </message>
+</context>
+<context>
+    <name>UnknownDownloadIssueHeader</name>
+    <message>
+        <source>Report issue</source>
+        <translatorcomment>Stalled Issue combobox solve option that sends a report to helpdesk;CON-1094</translatorcomment>
+        <translation>Problem melden</translation>
+    </message>
+    <message>
+        <source>Send</source>
+        <translatorcomment>Messagebox button string to confirma that the user wants to send a report to helpdesk;CON-1094</translatorcomment>
+        <translation>Absenden</translation>
+    </message>
+    <message>
+        <source>This will send your logs to our Support team for diagnostics.</source>
+        <translatorcomment>Messagebox string to confirma that the user wants to send a report to helpdesk;CON-1094</translatorcomment>
+        <translation>Dadurch werden Ihre Protokolle zu Diagnosezwecken an unser Supportteam gesendet</translation>
+    </message>
+</context>
+<context>
     <name>UploadIssueHeader</name>
     <message>
         <source>Cannot reach the destination folder.</source>
@@ -9401,6 +9539,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Transfervolumen verbraucht</translation>
     </message>
     <message>
+        <source>Upgrade your account to get more storage quota.</source>
+        <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
+        <translation>Upgraden Sie Ihren Account, um mehr Speicherplatz zu erhalten</translation>
+    </message>
+    <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
         <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
         <translation>Sie können den Download nicht fortsetzen, da Ihr Transfervolumen verbraucht ist.[BR][BR]Um mehr Volumen zu erhalten, kaufen Sie ein weiteres kostenpflichtigen Paket.[BR][BR][B][A]Erfahren Sie mehr über Transferkontingente.[/A][/B]</translation>
@@ -9424,11 +9567,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>pro Monat</translation>
-    </message>
-    <message>
-        <source>Upgrade your account to get more storage quota.</source>
-        <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
-        <translation>Upgraden Sie Ihren Account, um mehr Speicherplatz zu erhalten</translation>
     </message>
 </context>
 <context>
@@ -9654,7 +9792,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
         <translation>Warum wird mir das angezeigt?</translation>
     </message>
-
 </context>
 <context>
     <name>WhatsNewStrings</name>

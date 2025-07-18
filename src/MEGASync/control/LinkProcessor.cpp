@@ -265,7 +265,10 @@ void LinkProcessor::onRequestFinish(MegaRequest* request, MegaError* e)
 
     case MegaRequest::TYPE_FETCH_NODES:
     {
-        if (!isValidIndex(mLinkObjects, mCurrentIndex)) { return; }
+        if (!isValidIndex(mLinkObjects, mCurrentIndex))
+        {
+            break;
+        }
 
         if (error == MegaError::API_OK)
         {
@@ -301,6 +304,11 @@ void LinkProcessor::onRequestFinish(MegaRequest* request, MegaError* e)
                 QStringList linkparts = currentStr.split(splitSeparator, Qt::KeepEmptyParts);
                 MegaHandle handle = MegaApi::base64ToHandle(linkparts.last().toUtf8().constData());
                 rootNode.reset(mMegaApiFolders->getNodeByHandle(handle));
+            }
+
+            if (!rootNode)
+            {
+                break;
             }
 
             Preferences::instance()->setLastPublicHandle(request->getNodeHandle(), MegaApi::AFFILIATE_TYPE_FILE_FOLDER);

@@ -32,54 +32,19 @@
 #pragma warning(disable: 4996)
 #endif
 
-#if _WIN32_WINNT < 0x0601
-// Windows headers don't define this for WinXP despite the documentation says that they should
-// and it indeed works
-#ifndef SHFOLDERCUSTOMSETTINGS
-#include <pshpack8.h>
-
-// Used by SHGetSetFolderCustomSettings
-typedef struct
-{
-    DWORD           dwSize;
-    DWORD           dwMask;                 // IN/OUT  Which Attributes to Get/Set
-    SHELLVIEWID*    pvid;                   // OUT - if dwReadWrite is FCS_READ, IN - otherwise
-    // The folder's WebView template path
-    LPWSTR          pszWebViewTemplate;     // OUT - if dwReadWrite is FCS_READ, IN - otherwise
-    DWORD           cchWebViewTemplate;     // IN - Specifies the size of the buffer pointed to by pszWebViewTemplate
-                                            // Ignored if dwReadWrite is FCS_READ
-    LPWSTR           pszWebViewTemplateVersion;  // currently IN only
-    // Infotip for the folder
-    LPWSTR          pszInfoTip;             // OUT - if dwReadWrite is FCS_READ, IN - otherwise
-    DWORD           cchInfoTip;             // IN - Specifies the size of the buffer pointed to by pszInfoTip
-                                            // Ignored if dwReadWrite is FCS_READ
-    // CLSID that points to more info in the registry
-    CLSID*          pclsid;                 // OUT - if dwReadWrite is FCS_READ, IN - otherwise
-    // Other flags for the folder. Takes FCS_FLAG_* values
-    DWORD           dwFlags;                // OUT - if dwReadWrite is FCS_READ, IN - otherwise
-
-
-    LPWSTR           pszIconFile;           // OUT - if dwReadWrite is FCS_READ, IN - otherwise
-    DWORD            cchIconFile;           // IN - Specifies the size of the buffer pointed to by pszIconFile
-                                            // Ignored if dwReadWrite is FCS_READ
-
-    int              iIconIndex;            // OUT - if dwReadWrite is FCS_READ, IN - otherwise
-
-    LPWSTR           pszLogo;               // OUT - if dwReadWrite is FCS_READ, IN - otherwise
-    DWORD            cchLogo;               // IN - Specifies the size of the buffer pointed to by pszIconFile
-                                            // Ignored if dwReadWrite is FCS_READ
-} SHFOLDERCUSTOMSETTINGS, *LPSHFOLDERCUSTOMSETTINGS;
-
-#include <poppack.h>        /* Return to byte packing */
-
-// Gets/Sets the Folder Custom Settings for pszPath based on dwReadWrite. dwReadWrite can be FCS_READ/FCS_WRITE/FCS_FORCEWRITE
-SHSTDAPI SHGetSetFolderCustomSettings(_Inout_ LPSHFOLDERCUSTOMSETTINGS pfcs, _In_ PCWSTR pszPath, DWORD dwReadWrite);
-#endif
-#endif
-
 using namespace std;
 using namespace mega;
 
+namespace
+{
+enum class StartupApprovedState : BYTE
+{
+    ENABLED_BY_DEFAULT = 0x00,
+    ENABLED_BY_USER = 0x02,
+    DISABLED_BY_USER = 0x03,
+    ENABLED_BY_SYSTEM = 0x06,
+};
+}
 bool WindowsPlatform_exiting = false;
 static const QString NotAllowedDefaultFactoryBiosName = QString::fromUtf8("To be filled by O.E.M.");
 
@@ -743,37 +708,51 @@ bool PlatformImplementation::startOnStartup(bool value)
     {
         return false;
     }
-
     QString startupPath = QString::fromWCharArray(path);
-    startupPath += QString::fromLatin1("\\MEGAsync.lnk");
+    QString shortcutPath = startupPath + QString::fromLatin1("\\MEGAsync.lnk");
+
+    HKEY folderKey;
+    if (RegOpenKeyExW(HKEY_CURRENT_USER,
+                      L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\StartupApproved\\St"
+                      L"artupFolder",
+                      0,
+                      KEY_WRITE,
+                      &folderKey) == ERROR_SUCCESS)
+    {
+        QString shortcutName = QFileInfo(shortcutPath).fileName();
+        BYTE data[12] = {0};
+        if (value)
+        {
+            data[0] = static_cast<BYTE>(StartupApprovedState::ENABLED_BY_USER);
+        }
+        else
+        {
+            data[0] = static_cast<BYTE>(StartupApprovedState::DISABLED_BY_USER);
+        }
+        RegSetValueExW(folderKey, (LPCWSTR)shortcutName.utf16(), 0, REG_BINARY, data, sizeof(data));
+        RegCloseKey(folderKey);
+    }
 
     if (value)
     {
-        if (QFile(startupPath).exists())
+        if (QFile(shortcutPath).exists())
         {
             return true;
         }
 
-        WCHAR wDescription[]=L"Start MEGAsync";
-        WCHAR *wStartupPath = (WCHAR *)startupPath.utf16();
-
+        WCHAR wDescription[] = L"Start MEGAsync";
+        WCHAR* wStartupPath = (WCHAR*)shortcutPath.utf16();
         QString exec = MegaApplication::applicationFilePath();
         exec = QDir::toNativeSeparators(exec);
-        WCHAR *wExecPath = (WCHAR *)exec.utf16();
-
+        WCHAR* wExecPath = (WCHAR*)exec.utf16();
         res = CreateLink(wExecPath, wStartupPath, wDescription);
 
         if (res != S_OK)
         {
             return false;
         }
-        return true;
     }
-    else
-    {
-        QFile::remove(startupPath);
-        return true;
-    }
+    return true;
 }
 
 bool PlatformImplementation::isStartOnStartupActive()
@@ -784,14 +763,42 @@ bool PlatformImplementation::isStartOnStartupActive()
     {
         return false;
     }
-
     QString startupPath = QString::fromWCharArray(path);
-    startupPath += QString::fromLatin1("\\MEGAsync.lnk");
-    if (QFileInfo(startupPath).isSymLink())
+    QString shortcutPath = startupPath + QString::fromLatin1("\\MEGAsync.lnk");
+    // First check if shortcut exists
+    if (!QFileInfo(shortcutPath).exists())
     {
-        return true;
+        return false;
     }
-    return false;
+    // Then check registry status
+    bool isEnabled = true;
+    HKEY folderKey;
+    if (RegOpenKeyExW(HKEY_CURRENT_USER,
+                      L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\StartupApproved\\St"
+                      L"artupFolder",
+                      0,
+                      KEY_READ,
+                      &folderKey) == ERROR_SUCCESS)
+    {
+        BYTE data[12] = {0};
+        DWORD dataSize = sizeof(data);
+        QString shortcutName = QFileInfo(shortcutPath).fileName();
+
+        if (RegQueryValueExW(folderKey,
+                             (LPCWSTR)shortcutName.utf16(),
+                             NULL,
+                             NULL,
+                             data,
+                             &dataSize) == ERROR_SUCCESS)
+        {
+            StartupApprovedState currentState = static_cast<StartupApprovedState>(data[0]);
+            isEnabled = (currentState == StartupApprovedState::ENABLED_BY_USER ||
+                         currentState == StartupApprovedState::ENABLED_BY_SYSTEM ||
+                         currentState == StartupApprovedState::ENABLED_BY_DEFAULT);
+        }
+        RegCloseKey(folderKey);
+    }
+    return isEnabled;
 }
 
 bool PlatformImplementation::showInFolder(QString pathIn)

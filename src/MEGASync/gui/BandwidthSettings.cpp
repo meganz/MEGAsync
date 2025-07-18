@@ -1,5 +1,6 @@
 #include "BandwidthSettings.h"
 
+#include "ParallelConnectionsValues.h"
 #include "ui_BandwidthSettings.h"
 
 #include <QButtonGroup>
@@ -14,9 +15,6 @@ BandwidthSettings::BandwidthSettings(MegaApplication *app, QWidget *parent) :
 
     mUi->eUploadLimit->setValidator(new QIntValidator(0, 1000000000, this));
     mUi->eDownloadLimit->setValidator(new QIntValidator(0, 1000000000, this));
-
-    mUi->eMaxDownloadConnections->setRange(1, BandwidthSettings::MAX_NUM_CONNECTIONS);
-    mUi->eMaxUploadConnections->setRange(1, BandwidthSettings::MAX_NUM_CONNECTIONS);
 
     QButtonGroup* downloadButtonGroup = new QButtonGroup(this);
     downloadButtonGroup->addButton(mUi->rDownloadLimit);
@@ -53,6 +51,10 @@ void BandwidthSettings::initialize()
                                    : QString::number(downloadLimitKB));
     mUi->eDownloadLimit->setEnabled(mUi->rDownloadLimit->isChecked());
 
+    mUi->eMaxDownloadConnections->setRange(ParallelConnectionsValues::getMinValue(),
+                                           ParallelConnectionsValues::getMaxValue());
+    mUi->eMaxUploadConnections->setRange(ParallelConnectionsValues::getMinValue(),
+                                         ParallelConnectionsValues::getMaxValue());
     mUi->eMaxDownloadConnections->setValue(mPreferences->parallelDownloadConnections());
     mUi->eMaxUploadConnections->setValue(mPreferences->parallelUploadConnections());
 

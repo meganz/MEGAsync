@@ -1564,7 +1564,7 @@ QString Utilities::getCommonPath(const QString &path1, const QString &path2, boo
         }
     }
 
-    if(ret.endsWith(separator))
+    if (ret.endsWith(separator) && ret != separator)
     {
         ret = ret.remove(ret.length() - 1, 1);
     }

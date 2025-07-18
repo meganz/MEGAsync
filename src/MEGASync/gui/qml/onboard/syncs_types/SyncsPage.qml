@@ -2,10 +2,11 @@ import QtQuick 2.15
 
 import common 1.0
 
-import syncs 1.0
 import onboard 1.0
 
 import SyncsComponents 1.0
+
+import syncs 1.0 as Syncs
 
 SyncsFlow {
     id: root
@@ -13,45 +14,38 @@ SyncsFlow {
     required property StepPanel stepPanelRef
     required property NavigationInfo navInfoRef
 
-    selectiveSyncPageComponent: selectiveSyncPageComponentItem
+    addSyncPageComponent: addSyncPageComponentItem
+    confirmSyncsPageComponent: confirmSyncsPageComponentItem
 
-    state: root.selectiveSync
-
-    Item {
-        id: stepPanelStateWrapper
-
-        readonly property string selectiveSyncPage: "selectiveSyncPage"
-
-        states: [
-            State {
-                name: stepPanelStateWrapper.selectiveSyncPage
-                PropertyChanges {
-                    target: root.stepPanelRef;
-                    state: root.stepPanelRef.step4;
-                    step3Text: SyncsStrings.selectFolders;
-                    step4Text: OnboardingStrings.confirm;
-                }
-            }
-        ]
-    }
+    signal syncsFlowMoveToFinal(int syncType)
+    signal syncsFlowMoveToFinalError()
+    signal syncsFlowMoveToBack()
 
     onStateChanged: {
         switch(root.state) {
-            case root.selectiveSync:
-                navInfoRef.typeSelected = Constants.SyncType.SELECTIVE_SYNC;
-                stepPanelStateWrapper.state = stepPanelStateWrapper.selectiveSyncPage;
+            case root.addSync:
+                navInfoRef.typeSelected = Constants.SyncType.SYNC;
+
+                root.stepPanelRef.state = root.stepPanelRef.step3;
+                root.stepPanelRef.step3Text = Syncs.SyncsStrings.selectFolders;
+                root.stepPanelRef.step4Text = Syncs.SyncsStrings.confirm;
                 break;
+
+            case root.confirmSyncs:
+                root.stepPanelRef.state = root.stepPanelRef.step4;
+                break;
+
             default:
-                console.warn("BackupsPage: state does not exist -> " + root.state);
+                console.warn("SyncsPage: state " + root.state + " is not being handled.");
                 break;
         }
     }
 
     Component {
-        id: selectiveSyncPageComponentItem
+        id: addSyncPageComponentItem
 
-        SelectiveSyncPage {
-            id: selectiveSyncPage
+        AddSyncPage {
+            id: addSyncPage
 
             footerButtons.rightSecondary.visible: true
             footerButtons.leftSecondary.visible: false
@@ -60,16 +54,37 @@ SyncsFlow {
                 window.close();
             }
 
-            onSelectiveSyncMoveToBack: {
+            onMoveBack: {
                 root.syncsFlowMoveToBack(false);
             }
 
-            onSelectiveSyncMoveToSuccess: {
-                root.syncsFlowMoveToFinal(Constants.SyncType.SELECTIVE_SYNC);
+            onMoveNext: {
+                root.state = root.confirmSyncs
+            }
+        }
+    }
+
+    Component {
+        id: confirmSyncsPageComponentItem
+
+        ConfirmSyncsPage {
+            id: confirmSyncsPage
+
+            onSyncSetupSucceed: (isFullSync) => {
+                if (isFullSync) {
+                    root.syncsFlowMoveToFinal(Constants.SyncType.FULL_SYNC);
+                }
+                else {
+                    root.syncsFlowMoveToFinal(Constants.SyncType.SELECTIVE_SYNC);
+                }
             }
 
-            onFullSyncMoveToSuccess: {
-                root.syncsFlowMoveToFinal(Constants.SyncType.FULL_SYNC);
+            onSyncSetupFailed: {
+                root.syncsFlowMoveToFinalError();
+            }
+
+            onMoveBack: {
+                root.state = root.addSync;
             }
         }
     }

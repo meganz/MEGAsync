@@ -963,7 +963,8 @@ QString UploadTransferMetaData::getDestinationNodePathByData(const std::shared_p
     {
         QString path;
 
-        if(destinationNode->getHandle() == MegaSyncApp->getMegaApi()->getRootNode()->getHandle())
+        if (MegaSyncApp->getRootNode() &&
+            destinationNode->getHandle() == MegaSyncApp->getRootNode()->getHandle())
         {
             path = MegaNodeNames::getRootNodeName(destinationNode.get());
         }
@@ -974,7 +975,7 @@ QString UploadTransferMetaData::getDestinationNodePathByData(const std::shared_p
 
         return path;
     }
-    return QCoreApplication::translate("MegaError", "Decryption error");
+    return MegaNodeNames::getUndecryptedFolderName();
 }
 
 bool UploadTransferMetaData::finish(mega::MegaTransfer *transfer, mega::MegaError *e)

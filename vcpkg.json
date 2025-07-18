@@ -90,15 +90,12 @@
     "dependencies": [
         "cryptopp",
         "libsodium",
-        "curl",
+        {
+          "name": "curl",
+          "features": [ "zstd" ]
+        },
         "icu",
         "sqlite3"
     ],
-    "builtin-baseline": "d5ec528843d29e3a52d745a64b469f810b2cedbf",
-    "overrides": [
-        {
-            "name": "libuv",
-            "version": "1.44.2"
-        }
-    ]
+    "builtin-baseline": "d5ec528843d29e3a52d745a64b469f810b2cedbf"
 }

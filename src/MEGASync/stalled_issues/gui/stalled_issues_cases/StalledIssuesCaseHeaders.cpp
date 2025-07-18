@@ -1,6 +1,7 @@
 #include "StalledIssuesCaseHeaders.h"
 
 #include "DialogOpener.h"
+#include "DownloadFileIssue.h"
 #include "IgnoredStalledIssue.h"
 #include "MegaApplication.h"
 #include "MessageDialogOpener.h"
@@ -25,8 +26,19 @@
 
 //Convenient strings and method to avoid changing the translation context on Transifex
 const QString SOLVE_BUTTON_STRING = QApplication::translate("CloudFingerprintMissingHeader", "Solve");
-const QString RENAMING_CONFLICTED_ITEMS_STRING = QApplication::translate("NameConflictsHeader", "This action will rename the conflicted items (adding a suffix like (1)).");
-const QString areYouSure(int number){return QApplication::translate("CloudFingerprintMissingHeader", "Are you sure you want to solve the issue?", "", number);}
+const QString SOLVE_OPTIONS_BUTTON_STRING =
+    QApplication::translate("NameConflictsHeader", "Solve options");
+const QString RENAMING_CONFLICTED_ITEMS_STRING = QApplication::translate(
+    "NameConflictsHeader",
+    "This action will rename the conflicted items (adding a suffix like (1)).");
+
+const QString areYouSure()
+{
+    return QApplication::translate("CloudFingerprintMissingHeader",
+                                   "Are you sure you want to solve the issue?",
+                                   "",
+                                   1);
+}
 
 StalledIssueHeaderCase::StalledIssueHeaderCase(StalledIssueHeader *header)
     :QObject(header)
@@ -130,17 +142,16 @@ void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(Stalled
         return;
     }
 
-    auto pluralNumber(1);
-    selectionInfo.msgInfo.titleText = areYouSure(pluralNumber);
+    selectionInfo.msgInfo.titleText = areYouSure();
     selectionInfo.msgInfo.descriptionText = tr("This action will download the file to a temp "
                                                "location, fix the issue and finally remove it.",
                                                "",
-                                               pluralNumber);
+                                               1);
     if(MegaSyncApp->getTransfersModel()->areAllPaused())
     {
         QString informativeMessage =
             QString::fromUtf8("[BR]") +
-            tr("[B]Please, resume your transfers to fix the issue[/B]", "", pluralNumber);
+            tr("[B]Please, resume your transfers to fix the issue[/B]", "", 1);
         selectionInfo.msgInfo.descriptionText.append(informativeMessage);
     }
 
@@ -281,6 +292,58 @@ void DownloadIssueHeader::refreshCaseTitles(StalledIssueHeader* header)
     header->setTitleDescriptionText(tr("A failure occurred either downloading the file, or moving the downloaded temporary file to its final name and location."));
 }
 
+// Unknown download issue
+UnknownDownloadIssueHeader::UnknownDownloadIssueHeader(StalledIssueHeader* header):
+    DownloadIssueHeader(header)
+{}
+
+void UnknownDownloadIssueHeader::refreshCaseActions(StalledIssueHeader* header)
+{
+    if (header->getData().consultData()->isSolved() ||
+        header->getData().consultData()->isBeingSolved())
+    {
+        return;
+    }
+
+    auto downloadIssue(header->getData().convert<UnknownDownloadIssue>());
+    if (downloadIssue && !downloadIssue->isSendingFeedback())
+    {
+        header->showAction(StalledIssueHeader::ActionInfo(tr("Report issue")));
+    }
+}
+
+void UnknownDownloadIssueHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header,
+                                                                      uint)
+{
+    // We don´t detect any similar issues
+    auto selectionInfo(getSelectionInfo(header,
+                                        [](const std::shared_ptr<const StalledIssue>)
+                                        {
+                                            return false;
+                                        }));
+
+    if (selectionInfo.hasBeenExternallyChanged)
+    {
+        return;
+    }
+
+    selectionInfo.msgInfo.titleText = tr("Report issue");
+    selectionInfo.msgInfo.descriptionText =
+        tr("This will send your logs to our Support team for diagnostics.");
+    selectionInfo.msgInfo.buttonsText.insert(QMessageBox::Ok, tr("Send"));
+
+    selectionInfo.msgInfo.finishFunc = [header](QPointer<MessageDialogResult> msg)
+    {
+        if (msg->result() == QMessageBox::Ok)
+        {
+            MegaSyncApp->getStalledIssuesModel()->sendReportForUnknownDownloadIssue(
+                header->getCurrentIndex());
+        }
+    };
+
+    MessageDialogOpener::information(selectionInfo.msgInfo);
+}
+
 //Create folder failed
 CannotCreateFolderHeader::CannotCreateFolderHeader(StalledIssueHeader* header)
     : StalledIssueHeaderCase(header)
@@ -378,8 +441,7 @@ void FolderMatchedAgainstFileHeader::onMultipleActionButtonOptionSelected(
         return;
     }
 
-    auto pluralNumber(1);
-    selectionInfo.msgInfo.titleText = areYouSure(pluralNumber);
+    selectionInfo.msgInfo.titleText = areYouSure();
     selectionInfo.msgInfo.descriptionText = RENAMING_CONFLICTED_ITEMS_STRING;
 
     selectionInfo.msgInfo.finishFunc = [selectionInfo](QPointer<MessageDialogResult> msgBox)
@@ -486,7 +548,7 @@ void NameConflictsHeader::refreshCaseActions(StalledIssueHeader *header)
         }
     }
 
-    header->showActions(tr("Solve options"), actions);
+    header->showActions(SOLVE_OPTIONS_BUTTON_STRING, actions);
 }
 
 void NameConflictsHeader::refreshCaseTitles(StalledIssueHeader* header)

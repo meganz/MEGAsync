@@ -466,6 +466,18 @@ QString FatalEventHandler::getActionIcon(FatalEventHandler::FatalErrorCorrective
     return {};
 }
 
+/*
+ * This function should be removed, when de sdk stop sending by error the event err_no_jscd.
+ */
+bool FatalEventHandler::closeAllAllowed() const
+{
+    static std::vector<FatalErrorCode> closeAllAllowedErrors{FatalErrorCode::ERR_NO_JSCD};
+
+    return std::find(closeAllAllowedErrors.cbegin(),
+                     closeAllAllowedErrors.cend(),
+                     getErrorCode()) != closeAllAllowedErrors.cend();
+}
+
 void FatalEventHandler::triggerAction(FatalEventHandler::FatalErrorCorrectiveAction action)
 {
     switch (action)
@@ -564,6 +576,7 @@ void FatalEventHandler::showFatalErrorMessage()
     msgInfo.textFormat = Qt::RichText;
     msgInfo.titleText = getErrorTitle();
     msgInfo.descriptionText = getErrorReason();
+    msgInfo.setIgnoreCloseAll(!closeAllAllowed());
 
     auto url(getErrorReasonUrl());
     if (!url.isEmpty())

@@ -1,2 +1,3 @@
 module components.toolTips
 ToolTip 1.0 ToolTip.qml
+SmallToolTip 1.0 SmallToolTip.qml

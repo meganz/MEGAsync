@@ -1,14 +1,18 @@
-﻿#include "ProxySettings.h"
+#include "ProxySettings.h"
 
 #include "DialogOpener.h"
 #include "megaapi.h"
-#include "MessageDialogOpener.h"
+#include "TextDecorator.h"
 #include "ui_ProxySettings.h"
 
 #include <QNetworkProxy>
 
 using namespace mega;
 
+namespace
+{
+Text::Bold boldDecorator;
+}
 ProxySettings::ProxySettings(MegaApplication *app, QWidget *parent) :
     QDialog(parent),
     mUi(new Ui::ProxySettings),
@@ -21,12 +25,10 @@ ProxySettings::ProxySettings(MegaApplication *app, QWidget *parent) :
 
     mUi->eProxyPort->setValidator(new QIntValidator(0, std::numeric_limits<uint16_t>::max(), this));
 
-#ifndef Q_OS_LINUX
     mProxyAuto = new QRadioButton(this);
     mProxyAuto->setText(tr("Auto-detect"));
     mProxyAuto->setCursor(Qt::PointingHandCursor);
     mUi->verticalLayout->addWidget(mProxyAuto);
-#endif
 
     initialize();
 
@@ -35,16 +37,38 @@ ProxySettings::ProxySettings(MegaApplication *app, QWidget *parent) :
 
     connect(mUi->rProxyManual, &QRadioButton::clicked, this, [this]{setManualMode(true);});
     connect(mUi->cProxyRequiresPassword, &QCheckBox::toggled, this, [this]{setManualMode(true);});
-    connect(mUi->rNoProxy, &QRadioButton::clicked, this, [this]{setManualMode(false);});
-#ifndef Q_OS_LINUX
-    connect(mProxyAuto,
+    connect(mUi->rNoProxy,
             &QRadioButton::clicked,
             this,
             [this]
             {
                 setManualMode(false);
             });
+    connect(mProxyAuto,
+            &QRadioButton::clicked,
+            this,
+            [this]
+            {
+                setManualMode(false);
+#ifdef Q_OS_LINUX
+                std::unique_ptr<MegaProxy> proxySettings(
+                    mApp->getMegaApi()->getAutoProxySettings());
+                if (proxySettings->getProxyType() != MegaProxy::PROXY_CUSTOM)
+                {
+                    auto errorMessage =
+                        tr("Your system doesn’t have a proxy set. To connect, set a valid "
+                           "[B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.");
+                    boldDecorator.process(errorMessage);
+                    mUi->lErrorText->setText(errorMessage);
+                    mUi->wError->setVisible(true);
+                }
+                else
+                {
+                    mUi->lErrorText->setText(QString());
+                    mUi->wError->setVisible(false);
+                }
 #endif
+            });
 }
 
 ProxySettings::~ProxySettings()
@@ -56,9 +80,7 @@ ProxySettings::~ProxySettings()
 void ProxySettings::initialize()
 {
     mUi->rNoProxy->setChecked(mPreferences->proxyType() == Preferences::PROXY_TYPE_NONE);
-#ifndef Q_OS_LINUX
     mProxyAuto->setChecked(mPreferences->proxyType() == Preferences::PROXY_TYPE_AUTO);
-#endif
     mUi->rProxyManual->setChecked(mPreferences->proxyType() == Preferences::PROXY_TYPE_CUSTOM);
     mUi->cProxyType->setCurrentIndex(mPreferences->proxyProtocol());
     mUi->eProxyServer->setText(mPreferences->proxyServer());
@@ -77,6 +99,8 @@ void ProxySettings::setManualMode(bool enabled)
     mUi->eProxyServer->setEnabled(enabled);
     mUi->eProxyPort->setEnabled(enabled);
     mUi->cProxyRequiresPassword->setEnabled(enabled);
+    mUi->lErrorText->setText(QString());
+    mUi->wError->setVisible(false);
 
     if (mUi->cProxyRequiresPassword->isEnabled())
     {
@@ -100,12 +124,10 @@ void ProxySettings::onProxyTestFinished(bool success)
         {
             mPreferences->setProxyType(Preferences::PROXY_TYPE_NONE);
         }
-#ifndef Q_OS_LINUX
         else if (mProxyAuto->isChecked())
         {
             mPreferences->setProxyType(Preferences::PROXY_TYPE_AUTO);
         }
-#endif
         else if (mUi->rProxyManual->isChecked())
         {
             mPreferences->setProxyType(Preferences::PROXY_TYPE_CUSTOM);
@@ -132,11 +154,9 @@ void ProxySettings::onProxyTestFinished(bool success)
         {
             mProgressDialog->close();
         }
-        MessageDialogInfo msgInfo;
-        msgInfo.parent = this;
-        msgInfo.descriptionText =
-            tr("Your proxy settings are invalid or the proxy doesn't respond");
-        MessageDialogOpener::critical(msgInfo);
+        mUi->lErrorText->setText(tr("We couldn’t connect using your proxy settings. Check your "
+                                    "proxy details or try a different network."));
+        mUi->wError->setVisible(true);
     }
 }
 
@@ -165,10 +185,9 @@ void ProxySettings::on_bUpdate_clicked()
             proxy.setPassword(mUi->eProxyPassword->text());
         }
     }
-#ifndef Q_OS_LINUX
     else if (mProxyAuto->isChecked())
     {
-        MegaProxy* proxySettings = mApp->getMegaApi()->getAutoProxySettings();
+        std::unique_ptr<MegaProxy> proxySettings(mApp->getMegaApi()->getAutoProxySettings());
         if (proxySettings->getProxyType() == MegaProxy::PROXY_CUSTOM)
         {
             std::string sProxyURL = proxySettings->getProxyURL();
@@ -191,9 +210,19 @@ void ProxySettings::on_bUpdate_clicked()
                 proxy.setPort(arguments[1].toUShort());
             }
         }
-        delete proxySettings;
-    }
+#ifdef Q_OS_LINUX
+        else
+        {
+            auto errorMessage =
+                tr("Your system doesn’t have a proxy set. To connect, set a valid "
+                   "[B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.");
+            boldDecorator.process(errorMessage);
+            mUi->lErrorText->setText(errorMessage);
+            mUi->wError->setVisible(true);
+            return;
+        }
 #endif
+    }
 
     mProgressDialog = new MegaProgressCustomDialog(this);
     mProgressDialog->setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);

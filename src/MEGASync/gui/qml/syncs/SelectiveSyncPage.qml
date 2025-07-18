@@ -17,7 +17,6 @@ SelectiveSyncPageForm {
             visible: syncsDataAccess.localError.length !== 0
         }
         error: syncsDataAccess.localError.length !== 0
-        text: syncsDataAccess.localFolderCandidate
     }
 
     remoteFolderChooser.folderField {
@@ -26,11 +25,10 @@ SelectiveSyncPageForm {
             visible: syncsDataAccess.remoteError.length !== 0
         }
         error: syncsDataAccess.remoteError.length !== 0
-        text: syncsDataAccess.remoteFolderCandidate
     }
 
     localFolderChooser.onButtonClicked: {
-        syncsComponentAccess.chooseLocalFolderButtonClicked();
+        syncsComponentAccess.chooseLocalFolderButtonClicked(localFolderChooser.chosenPath);
     }
 
     remoteFolderChooser.onButtonClicked: {
@@ -44,7 +42,7 @@ SelectiveSyncPageForm {
 
     footerButtons {
         leftSecondary.onClicked: {
-            syncsComponentAccess.exclusionsButtonClicked();
+            syncsComponentAccess.exclusionsButtonClicked(localFolderChooser.chosenPath);
         }
 
         rightSecondary.onClicked: {
@@ -54,7 +52,22 @@ SelectiveSyncPageForm {
         rightPrimary.onClicked: {
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            syncsComponentAccess.syncButtonClicked();
+            syncsComponentAccess.syncButtonClicked(localFolderChooser.chosenPath, remoteFolderChooser.chosenPath);
+        }
+    }
+
+    Connections {
+        id: syncsComponentAccessConnection
+
+        target: syncsComponentAccess
+        enabled: root.enabled
+
+        function onLocalFolderChosen(localFolderPath) {
+            localFolderChooser.chosenPath = localFolderPath;
+        }
+
+        function onRemoteFolderChosen(remoteFolderPath) {
+            remoteFolderChooser.chosenPath = remoteFolderPath;
         }
     }
 
@@ -72,11 +85,7 @@ SelectiveSyncPageForm {
             }
         }
 
-        function onLocalErrorChanged() {
-            enableScreen();
-        }
-
-        function onRemoteErrorChanged() {
+        function onSyncSetupFailed() {
             enableScreen();
         }
     }

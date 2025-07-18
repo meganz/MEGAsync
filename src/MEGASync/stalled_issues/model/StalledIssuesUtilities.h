@@ -103,15 +103,4 @@ private:
     static QHash<const mega::MegaSyncStall*, QSet<mega::MegaHandle>> mSyncIdCacheByStall;
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////
-class MegaDownloader;
-
-class FingerprintMissingSolver : public QObject
-{
-public:
-    FingerprintMissingSolver();
-
-    void solveIssues(const QList<StalledIssueVariant>& pathsToSolve);
-};
-
 #endif // STALLEDISSUESUTILITIES_H

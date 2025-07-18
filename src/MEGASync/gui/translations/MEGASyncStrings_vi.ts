@@ -401,6 +401,24 @@
     </message>
 </context>
 <context>
+    <name>BackupsController</name>
+    <message numerus="yes">
+        <source>%1, but %n folder couldn’t be backed up</source>
+        <translatorcomment>Notification message to indicate that backups have been created (%1) but other %n backups have failed. Keep both %1 indicating a text with correctly created backups and %n to indicate the number of backups failed. SNC-5495</translatorcomment>
+        <translation><numerusform>%1, nhưng còn %n thư mục đã không thể sao lưu được</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder was backed up</source>
+        <translatorcomment>Notification message to indicate that %n backups have been created. Keep %n to indicate the number of backups created. SNC-5495</translatorcomment>
+        <translation><numerusform>%n thư mục đã được sao lưu</numerusform></translation>
+    </message>
+    <message>
+        <source>Not all folders were backed up</source>
+        <translatorcomment>Notification title to indicate that not all folders have been backed up successfully. SNC-5495</translatorcomment>
+        <translation>Các thư mục đã không được sao lưu hết hoàn bộ</translation>
+    </message>
+</context>
+<context>
     <name>BackupsModel</name>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
@@ -813,7 +831,7 @@
     <message>
         <source>Empty</source>
         <translatorcomment>Messagebox accept button string to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation>Dọn rác</translation>
+        <translation>Dọn</translation>
     </message>
     <message>
         <source>Empty Rubbish bin?</source>
@@ -2527,7 +2545,7 @@ Kiểm tra hộp thư email của bạn để xem hướng dẫn mở khóa t�
     <message>
         <source>Copyright violation</source>
         <translatorcomment>String for a link that cannot be loaded, because of copyright violation - Character limit: 23 characters - SNC-4807</translatorcomment>
-        <translation>Vi phạm bản quyền</translation>
+        <translation>Vi phạm bản quyền</translation>
     </message>
     <message>
         <source>Link owner terminated</source>
@@ -3194,7 +3212,7 @@ Hãy chờ cho phiên tải lên được hoàn tất.</translation>
     <message>
         <source>Folder download error</source>
         <translatorcomment>Title of the error message when there is an error downloading a MEGA link. SNC-2549.</translatorcomment>
-        <translation>Lỗi tải xuống thư mục</translation>
+        <translation>Lỗi khi tải xuống thư mục</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -3229,7 +3247,7 @@ Hãy chờ cho phiên tải lên được hoàn tất.</translation>
     <message>
         <source>Link import error</source>
         <translatorcomment>Title of the error message when there is an error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation>Lỗi chuyển nhập đường liên kết</translation>
+        <translation>Lỗi khi chuyển nhập đường liên kết</translation>
     </message>
     <message>
         <source>Locked account</source>
@@ -3593,11 +3611,6 @@ https://mega.co.nz/#sync</source>
         <translation>Không thể truy cập các tệp hệ thống quan trọng theo yêu cầu của ứng dụng này, có thể do thiếu quyền thư mục. Hãy thử khởi động lại ứng dụng và kiểm tra quyền truy cập thư mục hệ thống. Nếu vấn đề vẫn tiếp diễn, xin vui lòng [A]liên hệ Hỗ trợ[/A].</translation>
     </message>
     <message>
-        <source>Decryption error</source>
-        <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
-        <translation>Lỗi giải mã</translation>
-    </message>
-    <message>
         <source>Destination storage is full.</source>
         <translatorcomment>Label to indicate that the remote shared storage is full. CON-561</translatorcomment>
         <translation>Vị trí lưu trữ điểm đích đã đầy</translation>
@@ -3605,7 +3618,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Dismiss</source>
         <translatorcomment>Button to dismiss the warning message - CON-1311</translatorcomment>
-        <translation>Đã đọc</translation>
+        <translation>Bỏ qua</translation>
     </message>
     <message>
         <source>Error reading app system files</source>
@@ -3730,7 +3743,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Sync configuration error</source>
         <translatorcomment>Title of the warning dialog shown when the syncs configuration file has been re-generated by the sdk  - CON-1311</translatorcomment>
-        <translation>Lỗi cấu hình đồng bộ</translation>
+        <translation>Lỗi cấu hình đồng bộ</translation>
     </message>
     <message>
         <source>Temporarily not available</source>
@@ -3826,7 +3839,17 @@ Bạn sẽ không thể lấy lại quyền truy cập vào dữ liệu đã �
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Title of the Rubbish section. SAT-426</translatorcomment>
-        <translation>Thùng Rác</translation>
+        <translation>Thùng Rác</translation>
+    </message>
+    <message>
+        <source>Undecrypted file</source>
+        <translatorcomment>Text shown when a file is undecrypted and the name can´t be known. SNC-4420</translatorcomment>
+        <translation>Tệp tin chưa giải mã</translation>
+    </message>
+    <message>
+        <source>Undecrypted folder</source>
+        <translatorcomment>Text shown when a folder is undecrypted and the name can´t be known. SNC-4420</translatorcomment>
+        <translation>Thư mục chưa giải mã</translation>
     </message>
 </context>
 <context>
@@ -4621,22 +4644,22 @@ Nhập một tên khác.</translation>
     <message>
         <source>Error copying file</source>
         <translatorcomment>Main text of a messagebox when copying a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Lỗi khi sao chép tệp</translation>
+        <translation>Lỗi khi sao chép tệp tin</translation>
     </message>
     <message>
         <source>Error copying files</source>
         <translatorcomment>Main text of a messagebox when copying some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Lỗi khi sao chép các tệp tin</translation>
+        <translation>Lỗi khi sao chép các tệp tin</translation>
     </message>
     <message>
         <source>Error copying folder</source>
         <translatorcomment>Main text of a messagebox when copying a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Lỗi khi sao chép thư mục</translation>
+        <translation>Lỗi khi sao chép thư mục</translation>
     </message>
     <message>
         <source>Error copying folders</source>
         <translatorcomment>Main text of a messagebox when copying some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Lỗi khi sao chép các thư mục</translation>
+        <translation>Lỗi khi sao chép các thư mục</translation>
     </message>
     <message>
         <source>Error copying items</source>
@@ -4681,12 +4704,12 @@ Nhập một tên khác.</translation>
     <message>
         <source>Error moving folder</source>
         <translatorcomment>Main text of a messagebox when moving a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Lỗi khi di chuyển thư mục</translation>
+        <translation>Lỗi khi di chuyển thư mục</translation>
     </message>
     <message>
         <source>Error moving folders</source>
         <translatorcomment>Main text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Lỗi khi di chuyển các thư mục</translation>
+        <translation>Lỗi khi di chuyển các thư mục</translation>
     </message>
     <message>
         <source>Error moving items</source>
@@ -4696,12 +4719,12 @@ Nhập một tên khác.</translation>
     <message>
         <source>Error restoring file</source>
         <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Lỗi khi khôi phục tệp</translation>
+        <translation>Lỗi khi khôi phục tệp tin</translation>
     </message>
     <message>
         <source>Error restoring files</source>
         <translatorcomment>Main text of a messagebox when restoring some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Lỗi khi khôi phục các tệp tin</translation>
+        <translation>Lỗi khi khôi phục các tệp tin</translation>
     </message>
     <message>
         <source>Error restoring folder</source>
@@ -4869,7 +4892,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Copy</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It copy the selected nodes (files or folders), waiting for the paste action. SAT-426</translatorcomment>
-        <translation>Sao chép</translation>
+        <translation>Sao chép</translation>
     </message>
     <message>
         <source>Leave folder</source>
@@ -4879,7 +4902,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Move to Rubbish bin</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
-        <translation>Chuyển vào Thùng Rác</translation>
+        <translation>Chuyển vào Thùng Rác</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -4909,12 +4932,12 @@ Nhập một tên khác.</translation>
     <message>
         <source>Stop syncing</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It deletes the sync on the selected folder. SAT-426</translatorcomment>
-        <translation>Ngừng đồng bộ</translation>
+        <translation>Dừng đồng bộ</translation>
     </message>
     <message>
         <source>Sync</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It creates a sync in the selected folder. SAT-426</translatorcomment>
-        <translation>Đồng bộ</translation>
+        <translation>Đồng bộ</translation>
     </message>
 </context>
 <context>
@@ -4952,7 +4975,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Don’t leave</source>
         <translatorcomment>Button text to cancel the confirm messagebox when leaving a inshared folder</translatorcomment>
-        <translation>Không rời khỏi</translation>
+        <translation>Đừng rời khỏi</translation>
     </message>
     <message>
         <source>Don’t move</source>
@@ -4962,7 +4985,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Empty Rubbish bin</source>
         <translatorcomment>Button text to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation>Dọn Thùng Rác</translation>
+        <translation>Dọn Thùng Rác</translation>
     </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
@@ -5017,7 +5040,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Button to filter search results from rubbish bin</translatorcomment>
-        <translation>Thùng Rác</translation>
+        <translation>Thùng Rác</translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
@@ -5053,7 +5076,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>LIMITED TIME OFFER</source>
         <translatorcomment>Label title for limited time offer category of a notification. The translation should stay in upper case. CON-868</translatorcomment>
-        <translation>THỜI GIAN CÓ HẠN</translation>
+        <translation>THỜI GIAN CÓ HẠN</translation>
     </message>
     <message>
         <source>Offer expired</source>
@@ -5177,14 +5200,29 @@ Nhập một tên khác.</translation>
         <translation>Hoàn thành việc đăng ký</translation>
     </message>
     <message>
+        <source>Add</source>
+        <translatorcomment>Button label to add a new sync candidate. CON-1386</translatorcomment>
+        <translation>Thêm</translation>
+    </message>
+    <message>
         <source>Add folder</source>
         <translatorcomment>Button text to add a new folder to the backups table CON-468</translatorcomment>
         <translation>Thêm thư mục</translation>
     </message>
     <message>
+        <source>Add more syncs</source>
+        <translatorcomment>Label for a button to add more sync candidates. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Add the name of your device.</source>
         <translatorcomment>Device name window secondary title CON-467</translatorcomment>
         <translation>Thêm tên cho thiết bị của bạn.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the selected sync?</source>
+        <translatorcomment>Description on removing an sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>At least one number or special character</source>
@@ -5225,6 +5263,11 @@ Nhập một tên khác.</translation>
         <source>Backup: Select folders</source>
         <translatorcomment>Onboarding step text indicating the user that he is in the backup select folders step CON-468</translatorcomment>
         <translation>Sao lưu: Chọn thư mục</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button label on cancel current sync candidate removal process. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel account</source>
@@ -5272,6 +5315,11 @@ Nhập một tên khác.</translation>
         <translation>Xác nhận các thư mục để sao lưu</translation>
     </message>
     <message>
+        <source>Confirm folders to sync</source>
+        <translatorcomment>Page title for sync candidate table page. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Confirm password</source>
         <translatorcomment>Label indicating that the password should be confirmed CON-466</translatorcomment>
         <translation>Xác nhận mật khẩu</translation>
@@ -5315,6 +5363,11 @@ Nhập một tên khác.</translation>
         <source>Don’t stop</source>
         <translatorcomment>Cancel button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
         <translation>Không dừng</translation>
+    </message>
+    <message>
+        <source>Edit sync</source>
+        <translatorcomment>Action label for a menu button to edit  a sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Email</source>
@@ -5412,6 +5465,11 @@ Nhập một tên khác.</translation>
         <translation>Hãy cùng thiết lập cho bạn</translation>
     </message>
     <message>
+        <source>Local folders</source>
+        <translatorcomment>SubTitle for the local part on a sync inside a Sync candidate table. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Log in</source>
         <translatorcomment>Log in button text CON-465</translatorcomment>
         <translation>Đăng nhập</translation>
@@ -5427,6 +5485,11 @@ Nhập một tên khác.</translation>
         <translation>Đang đăng nhập…</translation>
     </message>
     <message>
+        <source>MEGA folders</source>
+        <translatorcomment>SubTitle for the remote part on a sync inside a Sync candidate table. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Names longer than 32 characters are not supported</source>
         <translatorcomment>Error shown in case the user types a name larger than 32 characters in the device name field CON-467</translatorcomment>
         <translation>Tên dài hơn 32 ký tự không được hỗ trợ</translation>
@@ -5435,6 +5498,11 @@ Nhập một tên khác.</translation>
         <source>Once confirmed, your account will be activated.</source>
         <translatorcomment>Page secondary title for new accounts in login page CON-465</translatorcomment>
         <translation>Sau khi xác nhận, tài khoản của bạn sẽ được kích hoạt.</translation>
+    </message>
+    <message>
+        <source>One or more syncs were unable to be set up. Check the folders and try again.</source>
+        <translatorcomment>Error banner description on resume page for sync candidates confirmation, we have at least one error. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Password</source>
@@ -5472,6 +5540,26 @@ Nhập một tên khác.</translation>
         <translation>Có vấn đề với xác thực hai yếu tố?</translation>
     </message>
     <message>
+        <source>Remove</source>
+        <translatorcomment>Button label on confirmation on sync candidate removal process. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove sync</source>
+        <translatorcomment>Action label for a menu button to remove a sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove sync?</source>
+        <translatorcomment>Title for a pop-up dialog that request user confirmation to remove a sync candidate. CON-1386.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Removing this sync will take you back to the start of setup.</source>
+        <translatorcomment>Description off the consequences of removing the last sync candidate left on the table. CON-1386</translatorcomment>
+        <translation>Thao tác này sẽ bắt đầu thiết lập đồng bộ lại từ đầu</translation>
+    </message>
+    <message>
         <source>Rename</source>
         <translatorcomment>Button to rename a backup CON-468</translatorcomment>
         <translation>Đổi tên</translation>
@@ -5480,6 +5568,11 @@ Nhập một tên khác.</translation>
         <source>Resend</source>
         <translatorcomment>Button text to resend the email for account confirmation CON-466</translatorcomment>
         <translation>Gửi lại</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translatorcomment>Button label to save the changes on the paths of a sync candidate. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
@@ -5560,6 +5653,11 @@ Nhập một tên khác.</translation>
         <source>Sync set up</source>
         <translatorcomment>Onboarding step text indicating the user that he is in the sync setup step CON-467</translatorcomment>
         <translation>Thiết lập đồng bộ hóa</translation>
+    </message>
+    <message>
+        <source>Sync wasn’t fully set up</source>
+        <translatorcomment>Error banner title on resume page for sync candidates confirmation, we have at least one error. CON-1386</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
@@ -5940,19 +6038,13 @@ Nhập một tên khác.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support has ended for Windows 7 and Server 2008 R2.
-- New actions are now available in the File Explorer context menu.
-- Refined parts of the interface to improve your experience.
-- Turkish language is now supported.
+        <source>- Increased the number of parallel transfers.
+- It’s now easier to add syncs during setup.
+- Added support for proxy auto-detection in Linux.
 - We’ve fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 5.13.0. CON-1380</translatorcomment>
-        <translation>- Kết thúc hỗ trợ cho Windows 7 và Server 2008 R2.
-- Các hành động mới trong menu ngữ cảnh của File Explorer.
-- Tinh chỉnh các phần của giao diện để cải thiện trải nghiệm cho bạn.
-- Tiếng Thổ Nhĩ Kỳ hiện được hỗ trợ.
-- Chúng tôi đã sửa lỗi và làm cho ứng dụng vận hành đáng tin cậy hơn.
-</translation>
+        <translatorcomment>Change log for version 5.14.0. CON-1405</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6031,9 +6123,14 @@ Nhập một tên khác.</translation>
         <translation>Tên đăng nhập:</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
-        <translatorcomment>Message shown when there is an error testing the proxy settings.</translatorcomment>
-        <translation>Thiết đặt proxy của bạn không hợp lệ hoặc proxy không phản hồi</translation>
+        <source>We couldn’t connect using your proxy settings. Check your proxy details or try a different network.</source>
+        <translatorcomment>Error banner shown when there is an error testing the proxy settings. SNC-5411</translatorcomment>
+        <translation>Chúng tôi đã không thể kết nối với proxy của bạn. Hãy kiểm tra proxy đã đặt hoặc thử một mạng khác.</translation>
+    </message>
+    <message>
+        <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
+        <translatorcomment>Error banner shown when proxy settings is not found in the environment, [B] is for bold . SNC-5411</translatorcomment>
+        <translation>Hệ thống của bạn chưa có đặt proxy nào. Để kết nối, hãy đặt giá trị hợp lệ cho [B]http_proxy[/B] hoặc [B]https_proxy[/B] trong môi trường của bạn.</translation>
     </message>
 </context>
 <context>
@@ -6958,7 +7055,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Remove files older than</source>
         <translatorcomment>Label for checkbox to remove local cache files older than a specified number of days.</translatorcomment>
-        <translation>Xóa các tệp tin đã có lâu hơn</translation>
+        <translation>Xóa các tệp tin tồn đọng lâu hơn</translation>
     </message>
     <message>
         <source>Report Issue</source>
@@ -7125,6 +7222,16 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
         <translation><numerusform>%n thư mục</numerusform></translation>
     </message>
     <message>
+        <source>Add backup</source>
+        <translatorcomment>Context menu option to backup a folder. CON-1364.</translatorcomment>
+        <translation>Thêm sao lưu</translation>
+    </message>
+    <message>
+        <source>Add sync</source>
+        <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
+        <translation>Thêm đồng bộ</translation>
+    </message>
+    <message>
         <source>Get MEGA link</source>
         <translatorcomment>Label displayed when a user is trying to get public link of a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
         <translation>Lấy đường liên kết MEGA</translation>
@@ -7158,16 +7265,6 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
         <source>View previous versions</source>
         <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
         <translation>Xem phiên bản trước đây</translation>
-    </message>
-    <message>
-        <source>Add sync</source>
-        <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
-        <translation>Thêm đồng bộ</translation>
-    </message>
-    <message>
-        <source>Add backup</source>
-        <translatorcomment>Context menu option to backup a folder. CON-1364.</translatorcomment>
-        <translation>Thêm sao lưu</translation>
     </message>
 </context>
 <context>
@@ -7779,7 +7876,7 @@ Làm mới danh sách.</translation>
     <message>
         <source>Dismiss</source>
         <translatorcomment>Button label to dismiss and hide the survey. CON-942</translatorcomment>
-        <translation>Đã đọc</translation>
+        <translation>Bỏ qua</translation>
     </message>
     <message>
         <source>Done</source>
@@ -7837,7 +7934,7 @@ Làm mới danh sách.</translation>
     <message>
         <source>OK, got it</source>
         <translatorcomment>Label for the button of the final view after the end of the survey. CON-942</translatorcomment>
-        <translation>Đóng</translation>
+        <translation>OK, hiểu rồi</translation>
     </message>
     <message>
         <source>Poor</source>
@@ -7891,7 +7988,7 @@ Làm mới danh sách.</translation>
     <message>
         <source>Purchase more storage</source>
         <translatorcomment>Button text inviting the user to buy more storage using MEGA online service. Opens the Web Browser. Keep text as short as possible.SNC-4208</translatorcomment>
-        <translation>Mua thêm dung lượng</translation>
+        <translation>Mua thêm không gian lưu trữ</translation>
     </message>
     <message>
         <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
@@ -8399,12 +8496,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Reboot backup</source>
         <translatorcomment>Context menu action for rebooting backup.CON-1036</translatorcomment>
-        <translation>Khởi động lại sao lưu</translation>
+        <translation>Khởi động lại phiên sao lưu</translation>
     </message>
     <message>
         <source>Reboot sync</source>
         <translatorcomment>Context menu action for rebooting sync.CON-1036</translatorcomment>
-        <translation>Khởi động lại đồng bộ này</translation>
+        <translation>Khởi động lại phiên đồng bộ</translation>
     </message>
     <message>
         <source>Remove synced folder</source>
@@ -8446,6 +8543,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Folder can&apos;t be synced as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
         <translatorcomment>Error message indicating that the selected folder is unreachable. CON-467</translatorcomment>
         <translation>Thư mục không thể đồng bộ được vì không tìm thấy vị trí của nó. Có thể do đã bị di chuyển hoặc bị xóa, cũng có thể là bạn không có quyền truy cập.</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s already a candidate.</source>
+        <translatorcomment>Error message indicating the user we have a sync candidate with the same folder already in the sync candidates table. CON-1386</translatorcomment>
+        <translation>Thư mục này hiện đang chờ để được đồng bộ </translation>
     </message>
     <message>
         <source>Select a MEGA folder to sync.</source>
@@ -8597,7 +8699,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Documents</source>
         <translatorcomment>Categories for document type transfers</translatorcomment>
-        <translation>Tài liệu</translation>
+        <translation>Tài liệu</translation>
     </message>
     <message>
         <source>Download</source>
@@ -8748,7 +8850,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Transfer quota exceeded.</source>
         <translatorcomment>Error text indicating that the transfer quota has been exceeded for pro users. CON-1061</translatorcomment>
-        <translation>Vượt mức băng thông truyền tải</translation>
+        <translation>Đã vượt hạn mức băng thông truyền tải</translation>
     </message>
     <message>
         <source>[B]Storage almost full[/B][BR][A]Upgrade now[/A] before your storage becomes full and your uploads, syncs and backups stop.</source>
@@ -9268,6 +9370,42 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
 </context>
 <context>
+    <name>UnknownDownloadIssue</name>
+    <message>
+        <source>Reporting failed</source>
+        <translatorcomment>Stalled Issue state when the report has been submitted to the SDK ;CON-1100</translatorcomment>
+        <translation>Gửi báo cáo bị thất bại</translation>
+    </message>
+    <message>
+        <source>Reporting issue</source>
+        <translatorcomment>Stalled Issue state while the report is being submitted to the SDK ;CON-1100</translatorcomment>
+        <translation>Gửi báo cáo bị trục trặc</translation>
+    </message>
+    <message>
+        <source>Reporting successful</source>
+        <translatorcomment>Stalled Issue state when the report has been submitted to the SDK ;CON-1100</translatorcomment>
+        <translation>Đã báo cáo thành công</translation>
+    </message>
+</context>
+<context>
+    <name>UnknownDownloadIssueHeader</name>
+    <message>
+        <source>Report issue</source>
+        <translatorcomment>Stalled Issue combobox solve option that sends a report to helpdesk;CON-1094</translatorcomment>
+        <translation>Báo cáo lỗi</translation>
+    </message>
+    <message>
+        <source>Send</source>
+        <translatorcomment>Messagebox button string to confirma that the user wants to send a report to helpdesk;CON-1094</translatorcomment>
+        <translation>Gửi</translation>
+    </message>
+    <message>
+        <source>This will send your logs to our Support team for diagnostics.</source>
+        <translatorcomment>Messagebox string to confirma that the user wants to send a report to helpdesk;CON-1094</translatorcomment>
+        <translation>Thao tác này sẽ gửi nhật ký hệ thống của bạn đến nhóm Hỗ trợ để giúp chẩn đoán</translation>
+    </message>
+</context>
+<context>
     <name>UploadIssueHeader</name>
     <message>
         <source>Cannot reach the destination folder.</source>
@@ -9341,12 +9479,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 storage</source>
         <translatorcomment>Text to show the total amount of space available for the plan. The placeholder %1 shall be replaced by the amount of storage including the units (e.g. 1TB storage). CON-945</translatorcomment>
-        <translation>%1 không gian lưu trữ</translation>
+        <translation>%1 mức lưu trữ</translation>
     </message>
     <message>
         <source>%1 transfer</source>
         <translatorcomment>Text to show the transfer amount for the plan. The placeholder %1 shall be replaced by the amount of transfer including the units (e.g. 1TB transfer). CON-945</translatorcomment>
-        <translation>%1 băng thông truyền tải</translation>
+        <translation>%1 mức truyền tải</translation>
     </message>
     <message>
         <source>(%1 per month)</source>
@@ -9376,7 +9514,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Current plan</source>
         <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
-        <translation>Hạng hiện tại</translation>
+        <translation>Gói hiện tại</translation>
     </message>
     <message>
         <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
@@ -9396,7 +9534,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Title of the window showing that the transfer quota has been exceeded. CON-945</translatorcomment>
-        <translation>Vượt mức băng thông truyền tải</translation>
+        <translation>Đã vượt hạn mức băng thông truyền tải</translation>
+    </message>
+    <message>
+        <source>Upgrade your account to get more storage quota.</source>
+        <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
+        <translation>Nâng cấp tài khoản ngay để có thêm hạn mức lưu trữ</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
@@ -9422,11 +9565,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>mỗi tháng</translation>
-    </message>
-    <message>
-        <source>Upgrade your account to get more storage quota.</source>
-        <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
-        <translation>Nâng cấp tài khoản ngay để có thêm hạn mức lưu trữ</translation>
     </message>
 </context>
 <context>
@@ -9652,7 +9790,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
         <translation>Tại sao tôi đang thấy cái này?</translation>
     </message>
-
 </context>
 <context>
     <name>WhatsNewStrings</name>

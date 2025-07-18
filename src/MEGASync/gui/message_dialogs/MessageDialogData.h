@@ -123,6 +123,7 @@ struct MessageDialogInfo
 
     QString getDialogTitle() const;
     bool getIgnoreCloseAll() const;
+    void setIgnoreCloseAll(bool value);
 
 private:
     // Dialog title must always be the same for all message dialogs, in order to avoid unexpexted

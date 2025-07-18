@@ -144,6 +144,8 @@ void LoginController::setState(State state)
         {
             QmlDialogManager::instance()->openOnboardingDialog(mForceOnboarding);
             state = State::FETCH_NODES_FINISHED_ONBOARDING;
+            mPreferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN,
+                                                   true);
         }
     }
     if (getState() != state)
@@ -475,7 +477,6 @@ void LoginController::onboardingFinished()
 {
     SyncInfo::instance()->rewriteSyncSettings(); // write sync settings into user's preferences
     MegaSyncApp->onboardingFinished(false);
-    mPreferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN, true);
 }
 
 void LoginController::onAccountCreation(mega::MegaRequest* request, mega::MegaError* e)

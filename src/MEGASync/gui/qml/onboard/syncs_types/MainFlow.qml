@@ -56,7 +56,7 @@ Rectangle {
             name: root.syncsFlow
             StateChangeScript {
                 script: {
-                    root.navInfo.typeSelected = Constants.SyncType.SELECTIVE_SYNC;
+                    root.navInfo.typeSelected = Constants.SyncType.SYNC;
                     rightPanel.replace(syncsFlowPage);
                 }
             }
@@ -89,11 +89,11 @@ Rectangle {
                     var resumePageState = "";
                     var toOpenTabIndex = 0;
                     switch(root.navInfo.typeSelected) {
-                        case Constants.SyncType.SELECTIVE_SYNC:
+                        case Constants.SyncType.SYNC:
                             if (root.navInfo.fullSyncDone) {
                                 resumePageState = "stateFullSync";
                             }
-                            else if (root.navInfo.selectiveSyncDone) {
+                            else {
                                 resumePageState = "stateSelectiveSync";
                             }
                             toOpenTabIndex = SettingsDialog.SYNCS_TAB;
@@ -121,8 +121,7 @@ Rectangle {
                 state: stepPanel.stepAllDone;
                 helpButtonLink: {
                     switch(root.navInfo.typeSelected) {
-                        case Constants.SyncType.SELECTIVE_SYNC:
-                        case Constants.SyncType.FULL_SYNC:
+                        case Constants.SyncType.SYNC:
                             return Links.setUpSyncs;
                         case Constants.SyncType.BACKUP:
                             return Links.createBackup;
@@ -225,12 +224,22 @@ Rectangle {
                 navInfoRef: root.navInfo
 
                 onSyncsFlowMoveToFinal: (syncType) => {
-                    if(syncType === Constants.SyncType.FULL_SYNC) {
+                    if (syncType === Constants.SyncType.FULL_SYNC) {
                         root.navInfo.fullSyncDone = true;
                     }
-                    else if(syncType === Constants.SyncType.SELECTIVE_SYNC) {
+                    else {
                         root.navInfo.selectiveSyncDone = true;
                     }
+                    root.navInfo.typeSelected = Constants.SyncType.SYNC;
+                    root.navInfo.errorOnSyncs = false;
+                    root.state = root.resume;
+                }
+
+                onSyncsFlowMoveToFinalError: {
+                    root.navInfo.typeSelected = Constants.SyncType.SYNC;
+                    root.navInfo.fullSyncDone = false;
+                    root.navInfo.selectiveSyncDone = false;
+                    root.navInfo.errorOnSyncs = true;
                     root.state = root.resume;
                 }
 
@@ -279,6 +288,7 @@ Rectangle {
                 id: resumePageItem
 
                 stepPanelRef: stepPanel
+                navInfoRef: root.navInfo
 
                 onResumePageMoveToSyncs: {
                     root.navInfo.previousTypeSelected = root.navInfo.typeSelected;

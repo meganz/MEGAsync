@@ -562,13 +562,13 @@
              <enum>QAbstractSpinBox::PlusMinus</enum>
             </property>
             <property name="minimum">
-             <number>1</number>
+             <number>0</number>
             </property>
             <property name="maximum">
-             <number>6</number>
+             <number>0</number>
             </property>
             <property name="value">
-             <number>4</number>
+             <number>0</number>
             </property>
            </widget>
           </item>
@@ -641,13 +641,13 @@
              <bool>false</bool>
             </property>
             <property name="minimum">
-             <number>1</number>
+             <number>0</number>
             </property>
             <property name="maximum">
-             <number>6</number>
+             <number>0</number>
             </property>
             <property name="value">
-             <number>3</number>
+             <number>0</number>
             </property>
            </widget>
           </item>

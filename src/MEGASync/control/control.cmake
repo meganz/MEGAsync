@@ -43,6 +43,7 @@ set(DESKTOP_APP_CONTROL_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/Preferences/EncryptedSettings.h
     ${CMAKE_CURRENT_LIST_DIR}/Preferences/EphemeralCredentials.h
     ${CMAKE_CURRENT_LIST_DIR}/Preferences/Preferences.h
+    ${CMAKE_CURRENT_LIST_DIR}/Preferences/ParallelConnectionsValues.h
     ${CMAKE_CURRENT_LIST_DIR}/AccountDetailsManager.h
     ${CMAKE_CURRENT_LIST_DIR}/UserMessageController.h
     ${CMAKE_CURRENT_LIST_DIR}/UserMessageTypes.h
