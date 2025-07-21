@@ -237,17 +237,22 @@ void PlatformImplementation::processSymLinks() {}
 
 bool PlatformImplementation::loadThemeResource(const QString& theme)
 {
-    QString exec = MegaApplication::applicationFilePath();
+    QString execPath = MegaApplication::applicationDirPath();
+    QString resourcePath = execPath + QString::fromUtf8("/../share/megasync/resources");
 
-    QStringList rccFiles =
-        QStringList() << exec + QString::fromUtf8("/../share/megasync/resources/Resources_macx.rcc")
-                      << exec + QString::fromUtf8("/../share/megasync/resources/Resources_win.rcc")
-                      << exec +
-                             QString::fromUtf8("/../share/megasync/resources/Resources_linux.rcc")
-                      << exec + QString::fromUtf8("/../share/megasync/resources/Resources_qml.rcc")
-                      << exec + QString::fromUtf8("/../share/megasync/resources/qml.rcc")
-                      << exec + QString::fromUtf8("/../share/megasync/resources/Resources_%1.rcc")
-                                    .arg(theme.toLower());
+    if (QDir(resourcePath).exists())
+    {
+        // Look for installed files, if not, use rcc files from same path as binary.
+        execPath = resourcePath;
+    }
+
+    QStringList rccFiles = QStringList()
+                           << execPath + QString::fromUtf8("Resources_macx.rcc")
+                           << execPath + QString::fromUtf8("Resources_win.rcc")
+                           << execPath + QString::fromUtf8("Resources_linux.rcc")
+                           << execPath + QString::fromUtf8("Resources_qml.rcc")
+                           << execPath + QString::fromUtf8("qml.rcc")
+                           << execPath + QString::fromUtf8("Resources_%1.rcc").arg(theme.toLower());
 
     bool allLoaded = true;
     for (const QString& file: rccFiles)
