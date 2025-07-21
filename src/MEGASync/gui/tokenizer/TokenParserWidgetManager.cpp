@@ -103,7 +103,6 @@ void TokenParserWidgetManager::loadStandardStyleSheetComponents()
         const auto& colorTokens = mColorThemedTokens.value(theme);
 
         replaceColorTokens(sourceStandardComponentsStyleSheet, colorTokens);
-        replaceThemeTokens(sourceStandardComponentsStyleSheet, theme);
         mThemedStandardComponentsStyleSheet[theme] = sourceStandardComponentsStyleSheet;
     }
 }
@@ -274,7 +273,6 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget, bool isSubWidget)
 
     replaceColorTokens(widgetStyleSheet, colorTokens);
     replaceIconColorTokens(widget, widgetStyleSheet, colorTokens);
-    replaceThemeTokens(widgetStyleSheet, currentTheme);
     tokenizeChildStyleSheets(widget, widgetStyleSheet);
 
     removeFrameOnDialogCombos(widget);
@@ -308,17 +306,27 @@ void TokenParserWidgetManager::replaceColorTokens(QString& styleSheet,
 {
     QRegularExpressionMatchIterator matchIterator =
         COLOR_TOKEN_REGULAR_EXPRESSION.globalMatch(styleSheet);
+
+    QVector<QRegularExpressionMatch> matches;
+
+    // Save in a container to do a reverse iteration later
     while (matchIterator.hasNext())
     {
         QRegularExpressionMatch match = matchIterator.next();
+        matches.append(match);
+    }
 
-        if (match.lastCapturedIndex() == COLOR_TOKEN_CAPTURE_INDEX::COLOR_DESIGN_TOKEN_NAME)
+    // If we do a reverse iterator, we don´t affect the previous match with our changes
+    for (auto match = matches.rbegin(); match != matches.rend(); ++match)
+    {
+        if (match->lastCapturedIndex() == COLOR_TOKEN_CAPTURE_INDEX::COLOR_DESIGN_TOKEN_NAME)
         {
             const QString& tokenValue = colorTokens.value(
-                match.captured(COLOR_TOKEN_CAPTURE_INDEX::COLOR_DESIGN_TOKEN_NAME));
+                match->captured(COLOR_TOKEN_CAPTURE_INDEX::COLOR_DESIGN_TOKEN_NAME));
 
-            auto startIndex = match.capturedStart(COLOR_TOKEN_CAPTURE_INDEX::COLOR_HEX_COLOR_VALUE);
-            auto endIndex = match.capturedEnd(COLOR_TOKEN_CAPTURE_INDEX::COLOR_HEX_COLOR_VALUE);
+            auto startIndex =
+                match->capturedStart(COLOR_TOKEN_CAPTURE_INDEX::COLOR_HEX_COLOR_VALUE);
+            auto endIndex = match->capturedEnd(COLOR_TOKEN_CAPTURE_INDEX::COLOR_HEX_COLOR_VALUE);
             styleSheet.replace(startIndex, endIndex - startIndex, tokenValue);
         }
     }
@@ -353,56 +361,6 @@ void TokenParserWidgetManager::replaceIconColorTokens(QWidget* widget,
                                    targetElementId,
                                    targetElementProperty,
                                    tokenId);
-        }
-    }
-}
-
-void TokenParserWidgetManager::replaceThemeTokens(QString& styleSheet, const QString& currentTheme)
-{
-    int adjustIndexOffset = 0;
-    auto toReplaceTheme = currentTheme.toLower();
-    auto toReplaceThemeLenght = toReplaceTheme.length();
-    const QChar fillChar = QLatin1Char(' ');
-
-    QRegularExpressionMatchIterator matchIterator =
-        REPLACE_THEME_TOKEN_REGULAR_EXPRESSION.globalMatch(styleSheet);
-    while (matchIterator.hasNext())
-    {
-        QRegularExpressionMatch match = matchIterator.next();
-
-        if (match.lastCapturedIndex() ==
-            REPLACE_THEME_TOKEN_CAPTURE_INDEX::REPLACE_THEME_TOKEN_THEME)
-        {
-            if (match.captured(REPLACE_THEME_TOKEN_CAPTURE_INDEX::REPLACE_THEME_TOKEN_THEME) ==
-                toReplaceTheme)
-            {
-                continue;
-            }
-
-            auto startIndex =
-                adjustIndexOffset +
-                match.capturedStart(REPLACE_THEME_TOKEN_CAPTURE_INDEX::REPLACE_THEME_TOKEN_THEME);
-            auto endIndex =
-                adjustIndexOffset +
-                match.capturedEnd(REPLACE_THEME_TOKEN_CAPTURE_INDEX::REPLACE_THEME_TOKEN_THEME);
-
-            auto capturedLength = endIndex - startIndex;
-            if (capturedLength > toReplaceThemeLenght)
-            {
-                // need to remove chars
-                auto diff = capturedLength - toReplaceThemeLenght;
-                styleSheet.remove(startIndex, diff);
-                adjustIndexOffset -= diff;
-            }
-            else if (capturedLength < toReplaceThemeLenght)
-            {
-                // need to add chars
-                auto diff = toReplaceThemeLenght - capturedLength;
-                styleSheet.insert(startIndex, &fillChar, diff);
-                adjustIndexOffset += diff;
-            }
-
-            styleSheet.replace(startIndex, toReplaceThemeLenght, toReplaceTheme);
         }
     }
 }
