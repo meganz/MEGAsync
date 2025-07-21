@@ -402,12 +402,6 @@ target_sources_conditional(${ExecutableTarget}
    FLAG APPLE
    QT_AWARE
    PRIVATE
-   ${CMAKE_CURRENT_LIST_DIR}/CocoaHelpButton.mm
-   ${CMAKE_CURRENT_LIST_DIR}/QMacSpinningProgressIndicator.mm
-   ${CMAKE_CURRENT_LIST_DIR}/QSegmentedControl.mm
-   ${CMAKE_CURRENT_LIST_DIR}/QMacSpinningProgressIndicator.h
-   ${CMAKE_CURRENT_LIST_DIR}/CocoaHelpButton.h
-   ${CMAKE_CURRENT_LIST_DIR}/QSegmentedControl.h
    ${CMAKE_CURRENT_LIST_DIR}/macx/LockedPopOver.ui
 )
 

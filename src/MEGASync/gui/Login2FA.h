@@ -18,10 +18,10 @@ public:
     void invalidCode(bool showWarning);
 
 private slots:
-    void on_bNext_clicked();
-    void on_bCancel_clicked();
+    void onNextClicked();
+    void onCancelClicked();
+    void onHelpClicked();
     void inputCodeChanged();
-    void on_bHelp_clicked();
 
 protected:
     void changeEvent(QEvent * event);

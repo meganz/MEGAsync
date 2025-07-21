@@ -512,18 +512,29 @@ background-color:  rgba(0, 0, 0, 10%);
        <number>18</number>
       </property>
       <item>
-       <widget class="CocoaHelpButton" name="wHelp" native="true">
-        <property name="minimumSize">
+       <widget class="QPushButton" name="wHelp">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border: none;
+         </string>
+        </property>
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_mac.qrc">
+          <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
+        </property>
+        <property name="iconSize">
          <size>
-          <width>21</width>
-          <height>0</height>
+          <width>24</width>
+          <height>24</height>
          </size>
         </property>
-        <property name="maximumSize">
-         <size>
-          <width>21</width>
-          <height>16777215</height>
-         </size>
+        <property name="flat">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -614,14 +625,6 @@ background-color:  rgba(0, 0, 0, 10%);
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>CocoaHelpButton</class>
-   <extends>QWidget</extends>
-   <header location="global">CocoaHelpButton.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>leCode</tabstop>
   <tabstop>bNext</tabstop>
