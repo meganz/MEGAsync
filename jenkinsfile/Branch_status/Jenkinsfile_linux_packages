@@ -105,6 +105,18 @@ pipeline {
                                     """
                                 }
                             }
+                            //upload sentry bundle directly from results
+                            dir ("${env.INTERNAL_REPO_PATH}/builder/results/$DISTRO_TO_BUILD/${params.ARCH_TO_BUILD}/megasync") {
+                                withCredentials([string(credentialsId: 'MEGASYNC_ARTIFACTORY_TOKEN', variable: 'MEGASYNC_ARTIFACTORY_TOKEN')]) {
+                                    sh """
+                                    jf rt upload \
+                                        --url ${REPO_URL} \
+                                        --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
+                                        --regexp '(megasync.*sentry.zip\$)' \
+                                        MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO_TO_BUILD/
+                                    """
+                                }
+                            }
                             echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO_TO_BUILD/]"
                         }
                     }
@@ -205,6 +217,18 @@ pipeline {
                                                     --regexp '(($ARCH_REGEX)/megasync.*deb\$|($ARCH_REGEX)/megasync.*rpm\$|($ARCH_REGEX)/megasync.*\\.pkg\\.tar\\.zst\$|($ARCH_REGEX)/megasync.*\\.pkg\\.tar\\.xz\$)' \
                                                     MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/
                                             """
+                                        }
+                                        //upload sentry bundle directly from results
+                                        dir ("${env.INTERNAL_REPO_PATH}/builder/results/$DISTRO/$ARCHITECTURE/megasync") {
+                                            withCredentials([string(credentialsId: 'MEGASYNC_ARTIFACTORY_TOKEN', variable: 'MEGASYNC_ARTIFACTORY_TOKEN')]) {
+                                                sh """
+                                                jf rt upload \
+                                                    --url ${REPO_URL} \
+                                                    --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
+                                                    --regexp '(megasync.*sentry.zip\$)' \
+                                                    MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/
+                                                """
+                                            }
                                         }
                                     }
                                     echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/]"
