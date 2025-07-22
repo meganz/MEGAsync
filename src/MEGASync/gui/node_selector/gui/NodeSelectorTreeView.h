@@ -51,6 +51,8 @@ public:
     };
     Q_ENUM(ActionsOrder)
 
+    void setAllowContextMenu(bool newAllowContextMenu);
+
 protected:
     void drawBranches(QPainter *painter,
                               const QRect &rect,
@@ -123,6 +125,8 @@ private:
     void addRemoveMenuActions(QMap<int, QAction*>& actions,
                               const QModelIndexList& selectedIndexes,
                               const QList<MegaHandle>& selectionHandles);
+
+    bool mAllowContextMenu;
 
     //Access
     QHash<mega::MegaHandle, int> getNodesAccess(const QList<mega::MegaHandle>& handles) const;

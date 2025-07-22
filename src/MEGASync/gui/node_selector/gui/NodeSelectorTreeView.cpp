@@ -389,6 +389,11 @@ void NodeSelectorTreeView::addSyncMenuActions(QMap<int, QAction*>& actions,
     }
 }
 
+void NodeSelectorTreeView::setAllowContextMenu(bool newAllowContextMenu)
+{
+    mAllowContextMenu = newAllowContextMenu;
+}
+
 void NodeSelectorTreeView::addDeleteMenuAction(QMap<int, QAction*>& actions,
                                                QList<MegaHandle> selectionHandles)
 {
@@ -501,6 +506,11 @@ QModelIndexList NodeSelectorTreeView::selectedRows() const
 
 void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
 {
+    if (!mAllowContextMenu)
+    {
+        return;
+    }
+
     QMenu customMenu;
     Platform::getInstance()->initMenu(&customMenu, "CustomMenu");
 
@@ -799,6 +809,11 @@ bool NodeSelectorTreeView::areAllEligibleForLinkShare(const QModelIndexList& sel
 
 bool NodeSelectorTreeView::areAllEligibleForRestore(const QModelIndexList& selectedIndexes) const
 {
+    if (selectedIndexes.isEmpty())
+    {
+        return false;
+    }
+
     for (const auto& index: selectedIndexes)
     {
         if (!index.isValid())
@@ -807,25 +822,28 @@ bool NodeSelectorTreeView::areAllEligibleForRestore(const QModelIndexList& selec
         }
 
         auto item = proxyModel()->getMegaModel()->getItemByIndex(index);
-        if (item)
+        if (!item)
         {
-            auto node(item->getNode());
-            if (node && item->isInRubbishBin())
-            {
-                std::unique_ptr<mega::MegaNode> parentNode(
-                    mMegaApi->getNodeByHandle(node->getParentHandle()));
-                auto previousParentNode =
-                    std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(node->getRestoreHandle()));
+            return false;
+        }
 
-                if (!previousParentNode || mMegaApi->isInRubbish(previousParentNode.get()))
-                {
-                    return false;
-                }
-            }
-            else
+        auto node(item->getNode());
+
+        if (node && item->isInRubbishBin())
+        {
+            std::unique_ptr<mega::MegaNode> parentNode(
+                mMegaApi->getNodeByHandle(node->getParentHandle()));
+            auto previousParentNode =
+                std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(node->getRestoreHandle()));
+
+            if (!previousParentNode || mMegaApi->isInRubbish(previousParentNode.get()))
             {
                 return false;
             }
+        }
+        else
+        {
+            return false;
         }
     }
 
