@@ -94,7 +94,6 @@ void Syncs::setDefaultLocalFolder()
     if (helperCheckLocalSync(defaultFolder))
     {
         defaultFolder.clear();
-        clearLocalError();
     }
 
     mSyncsData->mDefaultLocalFolder = defaultFolder;
@@ -114,7 +113,6 @@ void Syncs::setDefaultRemoteFolder()
     if (helperCheckRemoteSync(defaultFolder))
     {
         defaultFolder.clear();
-        clearRemoteError();
     }
 
     mSyncsData->mDefaultRemoteFolder = defaultFolder;
