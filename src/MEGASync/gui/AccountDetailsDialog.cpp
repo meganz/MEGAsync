@@ -2,6 +2,7 @@
 
 #include "AccountDetailsManager.h"
 #include "MegaApplication.h"
+#include "RefreshAppChangeEvent.h"
 #include "TransferQuota.h"
 #include "ui_AccountDetailsDialog.h"
 #include "Utilities.h"
@@ -349,9 +350,23 @@ void AccountDetailsDialog::updateStorageElements()
 
 void AccountDetailsDialog::changeEvent(QEvent *event)
 {
-    if(event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
-        mUi->retranslateUi(this);
+        qDebug() << "Refresh Event";
+        if (event->type() == QEvent::LanguageChange)
+        {
+            mUi->retranslateUi(this);
+        }
+        refresh();
+    }
+
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    {
+        qDebug() << "Refresh Event";
+        if (event->type() == QEvent::LanguageChange)
+        {
+            mUi->retranslateUi(this);
+        }
         refresh();
     }
 
