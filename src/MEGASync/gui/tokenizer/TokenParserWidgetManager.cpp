@@ -26,7 +26,7 @@ static QRegularExpression
 static const QString JSON_THEMED_COLOR_TOKEN_FILE =
     QLatin1String(":/colors/ColorThemedTokens.json");
 static const QString CSS_STANDARD_WIDGETS_COMPONENTS_FILE =
-    QLatin1String(":/style/WidgetsComponentsStyleSheets.css");
+    QLatin1String(":/style/WidgetsComponentsStyleSheetsTokens.css");
 
 enum COLOR_TOKEN_CAPTURE_INDEX
 {

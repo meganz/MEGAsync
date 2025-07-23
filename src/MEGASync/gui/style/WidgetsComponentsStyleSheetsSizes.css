@@ -1,0 +1,400 @@
+*
+{
+font-family: Lato;
+font-weight: 400;
+font-size: 12px;
+line-height: 18px;
+letter-spacing: 0%;
+}
+
+/*
+    QTableView
+*/
+QTableView
+{
+outline: 0;
+border-radius: 5px;
+}
+
+QTableView::item
+{
+border: none;
+padding-left: 4px;
+}
+
+QTableView::indicator
+{
+height: 16px;
+width: 16px;
+border-style: none;
+}
+
+/*
+    QScrollBar
+*/
+QScrollBar:vertical
+{
+width: 10px;
+}
+
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical, QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical
+{
+border-style: none;
+}
+
+QScrollBar::handle:vertical
+{
+border-style: none;
+border-radius: 5px;
+}
+
+/*
+    QHeaderView
+*/
+QHeaderView
+{
+padding-top: 2px;
+padding-right: 15px;
+}
+
+QHeaderView::section
+{
+border-top: 0px;
+border-bottom: 0px;
+border-left: 0px;
+border-right: 0px ;
+}
+
+QHeaderView::section:last
+{
+border-right: 0px;
+}
+
+QHeaderView::up-arrow
+{
+subcontrol-origin: padding;
+subcontrol-position: center right;
+padding-right: 5px;
+}
+
+QHeaderView::down-arrow
+{
+subcontrol-origin: padding;
+subcontrol-position: center right;
+padding-right: 5px;
+}
+
+
+/*
+    QComboBox
+*/
+QComboBox[type="mega"][dimension=small]
+{
+height: 18px;
+}
+
+QComboBox[type="mega"][dimension=medium]
+{
+height: 36px;
+}
+
+QComboBox[type="mega"]
+{
+border-width: 2px;
+border-style: solid;
+border-radius: 6px;
+padding: 4px 5px 4px 8px;
+}
+
+QComboBox::on[type="mega"]
+{
+padding: 1px 1px 1px 5px;
+}
+
+QComboBox::drop-down[type="mega"]
+{
+subcontrol-origin: padding;
+subcontrol-position: top right;
+padding-right: 8px;
+width: 15px;
+border-top-right-radius: 5px;
+border-bottom-right-radius: 5px;
+}
+
+QComboBox[type="mega"] QAbstractItemView
+{
+border-radius: 6px;
+padding: 5 5 5 5px;
+}
+
+/*
+    QRadioButton
+*/
+QRadioButton
+{
+spacing: 0;
+}
+
+QRadioButton::indicator
+{
+margin-right: 6px;
+}
+
+/*
+    QGroupBox
+*/
+QGroupBox[type="mega"]
+{
+margin-top: 20px;
+font-weight: bold;
+border-width: 1px;
+border-style: solid;
+border-radius: 12px;
+}
+
+QGroupBox::title[type="mega"]
+{
+subcontrol-origin: margin;
+subcontrol-position: top left;
+padding: 0 0 0 10px;
+}
+
+
+/*
+    QProgressBar
+*/
+QProgressBar
+{
+border-style: none;
+border-radius: 4px;
+max-height: 8px;
+}
+
+QProgressBar::chunk
+{
+border-radius: 4px;
+}
+
+/*
+    QCheckBox
+*/
+QCheckBox[type="mega"]
+{
+spacing: 8px;
+min-height: 16px;
+max-height: 16px;
+}
+
+QCheckBox::indicator[type="mega"]
+{
+height: 16px;
+width: 16px;
+border-style: none;
+}
+
+/*
+    QLabel
+*/
+QLabel
+{
+font-size: 12px;
+font-weight: 400;
+}
+
+QLabel[type="sub-title"]
+{
+font-size: 14px;
+font-weight: 600;
+}
+
+QLabel[type="title"]
+{
+font-size: 16px;
+font-weight: 600;
+}
+
+QLabel[type="secondary"]
+{
+font-size: 12px;
+font-weight: 400;
+}
+
+QLabel[semibold]
+{
+font-weight: 600;
+}
+/*
+    Outline button.
+*/
+QPushButton[type="outline"]
+{
+border-width: 2px;
+border-style: solid;
+font-weight: 600;
+}
+
+QPushButton[type="outline"][dimension=small]
+{
+border-radius: 6px;
+font-size: 12px;
+padding-left: 8px;
+padding-right: 8px;
+padding-top: 4px;
+padding-bottom: 4px;
+}
+
+QPushButton[type="outline"][dimension=medium]
+{
+border-radius: 6px;
+font-size: 14px;
+padding-left: 16px;
+padding-right: 16px;
+padding-top: 8px;
+padding-bottom: 8px;
+}
+
+QPushButton[type="outline"][dimension=large]
+{
+border-radius: 8px;
+font-size: 16px;
+padding-left: 24px;
+padding-right: 24px;
+padding-top: 12px;
+padding-bottom: 12px;
+}
+
+/*
+    Primary button.
+*/
+QPushButton[type="primary"]
+{
+border-width: 2px;
+border-style: solid;
+font-weight: 600;
+}
+
+QPushButton[type="primary"][dimension=small]
+{
+border-radius: 6px;
+font-size: 12px;
+padding-left: 8px;
+padding-right: 8px;
+padding-top: 4px;
+padding-bottom: 4px;
+}
+
+QPushButton[type="primary"][dimension=medium]
+{
+border-radius: 6px;
+font-size: 14px;
+padding-left: 16px;
+padding-right: 16px;
+padding-top: 8px;
+padding-bottom: 8px;
+}
+
+QPushButton[type="primary"][dimension=large]
+{
+border-radius: 8px;
+font-size: 16px;
+padding-left: 24px;
+padding-right: 24px;
+padding-top: 12px;
+padding-bottom: 12px;
+}
+
+/*
+    Secondary button.
+*/
+QPushButton[type="secondary"]
+{
+border-width: 2px;
+border-style: solid;
+font-weight: 600;
+}
+
+QPushButton[type="secondary"][dimension=small]
+{
+border-radius: 6px;
+font-size: 12px;
+padding-left: 8px;
+padding-right: 8px;
+padding-top: 4px;
+padding-bottom: 4px;
+}
+
+QPushButton[type="secondary"][dimension=medium]
+{
+border-radius: 6px;
+font-size: 14px;
+padding-left: 16px;
+padding-right: 16px;
+padding-top: 8px;
+padding-bottom: 8px;
+}
+
+QPushButton[type="secondary"][dimension=large]
+{
+border-radius: 8px;
+font-size: 16px;
+padding-left: 24px;
+padding-right: 24px;
+padding-top: 12px;
+padding-bottom: 12px;
+}
+
+/*
+    QLineEdit
+*/
+QLineEdit[type="mega"], QTextEdit[type="mega"]
+{
+padding-right: 10px;
+padding-left: 10px;
+border-radius: 8px;
+border-style: solid;
+border-width: 1px;
+height: 26px;
+}
+
+/*
+    QSpinBox
+*/
+QSpinBox
+{
+border-radius: 8px;
+border-style: solid;
+border-width: 1px;
+height: 25px;
+padding-left: 5px;
+}
+
+QSpinBox::up-arrow
+{
+subcontrol-origin: padding;
+subcontrol-position: top right;
+padding-right: 4px;
+padding-top: 4px;
+}
+
+QSpinBox::down-arrow
+{
+subcontrol-origin: padding;
+subcontrol-position: bottom right;
+padding-right: 4px;
+padding-bottom: 4px;
+}
+/*
+    SwitchButton
+    In the constructor of the class we assign the object name switch
+*/
+#switch
+{
+border-style: none;
+}
+
+#switch::indicator
+{
+border-style: none;
+width: 40px;
+height: 19px;
+}

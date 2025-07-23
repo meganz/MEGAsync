@@ -1,7 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>colors/ColorThemedTokens.json</file>
-        <file>style/WidgetsComponentsStyleSheets.css</file>
+        <file>style/WidgetsComponentsStyleSheetsTokens.css</file>
+		<file>style/WidgetsComponentsStyleSheetsSizes.css</file>
         <file>images/account_details/versions.svg</file>
         <file>images/account_details/trash.svg</file>
         <file>images/account_details/pie.svg</file>
