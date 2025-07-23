@@ -5,7 +5,7 @@ ManifestDPIAware true
 
 RequestExecutionLevel user
 Unicode true
-
+SetCompressor /SOLID /FINAL lzma
 
 #!define BUILD_UNINSTALLER
 #!define BUILD_X64_VERSION
