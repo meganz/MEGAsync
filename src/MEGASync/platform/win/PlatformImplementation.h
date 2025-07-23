@@ -48,7 +48,6 @@ public:
     void enableDialogBlur(QDialog *dialog) override;
     bool registerUpdateJob() override;
     void uninstall() override;
-    bool shouldRunHttpServer() override;
     bool isUserActive() override;
     QString getDeviceName() override;
 

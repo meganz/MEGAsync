@@ -27,7 +27,6 @@ public:
     void notifyAllSyncFoldersRemoved() override;
     QString getDefaultOpenApp(QString extension) override;
     bool registerUpdateJob() override;
-    bool shouldRunHttpServer() override;
     bool isUserActive() override;
     QString getDeviceName() override;
     void initMenu(QMenu* m, const char* objectName, const bool applyDefaultStyling = true) override;

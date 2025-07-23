@@ -35,7 +35,6 @@ public:
     std::string getValue(const char * const name, const std::string &default_value) override;
     QString getWindowManagerName() override;
     bool registerUpdateJob() override;
-    bool shouldRunHttpServer() override;
     bool isUserActive() override;
     QString getDeviceName() override;
     bool validateSystemTrayIntegration() override;
@@ -54,7 +53,6 @@ public:
 #endif
 
 private:
-    QStringList getListRunningProcesses();
     static xcb_atom_t getAtom(xcb_connection_t * const connection, const char *name);
     bool isFedoraWithGnome();
     void promptFedoraGnomeUser();

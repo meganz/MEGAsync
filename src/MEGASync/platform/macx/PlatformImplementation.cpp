@@ -345,11 +345,6 @@ bool PlatformImplementation::registerUpdateJob()
     return registerUpdateDaemon();
 }
 
-bool PlatformImplementation::shouldRunHttpServer()
-{
-    return runHttpServer();
-}
-
 bool PlatformImplementation::isUserActive()
 {
     return userActive();

@@ -17,6 +17,8 @@ public:
 
 class DownloadIssue: public StalledIssue
 {
+    Q_OBJECT
+
 public:
     enum IssueType
     {
@@ -39,6 +41,8 @@ class BugReportController;
 
 class UnknownDownloadIssue: public DownloadIssue
 {
+    Q_OBJECT
+
 public:
     UnknownDownloadIssue(const mega::MegaSyncStall* stall);
     ~UnknownDownloadIssue() = default;

@@ -181,7 +181,8 @@ MegaApplication::MegaApplication(int& argc, char** argv):
 
     if (args.contains(QLatin1String("--version")))
     {
-        QTextStream(stdout) << getMEGAString() << " v" << Preferences::VERSION_STRING << " (" << Preferences::SDK_ID << ")" << endl;
+        QTextStream(stdout) << getMEGAString() << " v" << Preferences::VERSION_STRING << " ("
+                            << Preferences::SDK_ID << ")" << Qt::endl;
         ::exit(0);
     }
 

@@ -24,7 +24,6 @@ void setFolderIcon(QString path);
 void unSetFolderIcon(QString path);
 QString defaultOpenApp(QString extension);
 bool registerUpdateDaemon();
-bool runHttpServer();
 bool userActive();
 double uptime();
 QString appBundlePath();
