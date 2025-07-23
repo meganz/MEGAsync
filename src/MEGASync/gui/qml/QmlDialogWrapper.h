@@ -183,15 +183,18 @@ public:
         }
 
         QObject::disconnect(connection);
+
+        const auto currTime = std::chrono::system_clock::now();
+        std::chrono::duration<float> elapsed = currTime - startTime;
+        QString message =
+            QString::fromUtf8("Time to load Qml file %1: %2ms Status: %3")
+                .arg(mWrapper->getQmlUrl().toString())
+                .arg(std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count())
+                .arg(qmlComponent.status());
+        ::mega::MegaApi::log(::mega::MegaApi::LOG_LEVEL_INFO, message.toUtf8().constData());
+
         if (qmlComponent.isReady())
         {
-            const auto currTime = std::chrono::system_clock::now();
-            std::chrono::duration<float> elapsed = currTime - startTime;
-            QString message =
-                QString::fromUtf8("Time to load Qml file %1: %2ms")
-                    .arg(mWrapper->getQmlUrl().toString())
-                    .arg(std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count());
-            ::mega::MegaApi::log(::mega::MegaApi::LOG_LEVEL_INFO, message.toUtf8().constData());
             QQmlContext* context = new QQmlContext(engine->rootContext(), this);
             QmlManager::instance()->setRootContextProperty(mWrapper);
             mWindow = dynamic_cast<QmlDialog*>(qmlComponent.create(context));
