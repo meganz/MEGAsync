@@ -49,12 +49,13 @@ protected slots:
     void updateVisibleIndexesSizeHint(int updateDelay, bool forceUpdate);
 
 private:
-    QColor getRowColor(const QModelIndex& index) const;
     QModelIndex getEditorCurrentIndex() const;
     QModelIndex getRelativeIndex(const QModelIndex &index) const;
     QModelIndex getHeaderIndex(const QModelIndex& index) const;
 
     StalledIssueBaseDelegateWidget *getStalledIssueItemWidget(const QModelIndex &proxyIndex, const StalledIssueVariant &data, const QSize& size = QSize()) const;
+
+    void updateColors() const;
 
     StalledIssuesView* mView;
     StalledIssuesProxyModel* mProxyModel;
@@ -72,6 +73,11 @@ private:
     mutable int mSizeHintRequested = 0;
     mutable bool mFreshStart = true;
     mutable QMap<int, QPair<int, QSize>> mAverageHeaderHeight;
+
+    // Colors
+    mutable QColor mActiveColor;
+    mutable QColor mSelectedColor;
+    mutable QColor mBottomBorderColor;
 };
 
 #endif // STALLEDISSUEDELEGATE_H

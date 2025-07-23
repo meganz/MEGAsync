@@ -7,6 +7,7 @@
 #include "StalledIssueHeader.h"
 #include "StalledIssuesDialog.h"
 #include "StalledIssuesView.h"
+#include "TokenParserWidgetManager.h"
 
 #include <QDebug>
 #include <QElapsedTimer>
@@ -14,21 +15,8 @@
 #include <QPainter>
 #include <QPainterPath>
 
-#ifdef Q_OS_MACOS
-const QColor HOVER_COLOR = QColor("#F7F7F7");
-#else
-const QColor HOVER_COLOR = QColor("#FAFAFA");
-#endif
-const QColor SELECTED_BORDER_COLOR = QColor("#E9E9E9");
-const float LEFT_MARGIN = 4.0;
-const float RIGHT_MARGIN = 6.0;
-const float RECT_BORDERS_MARGIN = 20.0;
-const float BOTTON_MARGIN = 6.0;
-const float TOP_MARGIN = 2.0;
-const float CORNER_RADIUS = 10.0;
 const int PEN_WIDTH = 2;
 const int UPDATE_SIZE_TIMER = 50;
-
 const QSize DEFAULT_SIZE = QSize(100,60);
 
 StalledIssueDelegate::StalledIssueDelegate(StalledIssuesProxyModel* proxyModel,  StalledIssuesView *view)
@@ -78,6 +66,8 @@ StalledIssueDelegate::StalledIssueDelegate(StalledIssuesProxyModel* proxyModel, 
     });
 
     mView->installEventFilter(this);
+
+    updateColors();
 }
 
 void StalledIssueDelegate::updateVisibleIndexesSizeHint(int updateDelay, bool forceUpdate)
@@ -250,13 +240,16 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
     if (index.isValid() && row < rowCount)
     {
+        // Temporary -> Connect this method to RefreshAppEvent
+        updateColors();
+
         auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
 
         bool isExpanded(mView->isExpanded(index) && stalledIssueItem.consultData()->isExpandable());
 
         auto pos (option.rect.topLeft());
         QRect geometry(option.rect);
-        QRectF realGeometry(option.rect);
+        QRectF realGeometry(geometry);
 
 #ifdef __APPLE__
         auto width = mView->size().width();
@@ -266,10 +259,8 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         {
             width -= mView->verticalScrollBar()->width();
         }
-        geometry.setWidth(std::min(width, option.rect.width()));
+        geometry.setWidth(std::min(width, geometry.width()));
 #endif
-
-        auto rowColor = Qt::white;
         auto backgroundRect = isExpanded ? geometry : option.rect.adjusted(0,0,0,-1);
 
         QStyle::State state = option.state;
@@ -299,46 +290,16 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
         if(state & (QStyle::State_MouseOver | QStyle::State_Selected))
         {
-            path.setFillRule( Qt::WindingFill );
-            path.addRoundedRect(QRectF(realGeometry.x() + LEFT_MARGIN,
-                                       realGeometry.y() + TOP_MARGIN,
-                                       realGeometry.width() - RIGHT_MARGIN,
-                                       realGeometry.height() - BOTTON_MARGIN), CORNER_RADIUS, CORNER_RADIUS);
+            path.setFillRule(Qt::WindingFill);
+            path.addRect(realGeometry);
 
-            if(index.parent().isValid())
+            if (state & (QStyle::State_MouseOver | QStyle::State_Selected))
             {
-                path.addRect(QRectF(realGeometry.x() + LEFT_MARGIN,
-                                    realGeometry.y(),
-                                    realGeometry.width() - RIGHT_MARGIN,
-                                    RECT_BORDERS_MARGIN)); // Bottom corners not rounded
-            }
-            else if(isExpanded)
-            {
-                path.addRect(QRectF(realGeometry.x() + LEFT_MARGIN,
-                                    realGeometry.y() + RECT_BORDERS_MARGIN,
-                                    realGeometry.width() - RIGHT_MARGIN,
-                                    realGeometry.height() - RECT_BORDERS_MARGIN)); // Bottom corners not rounded
-            }
-
-            if(state & QStyle::State_MouseOver && state & QStyle::State_Selected)
-            {
-                pen.setColor(SELECTED_BORDER_COLOR);
-                pen.setWidth(PEN_WIDTH);
-                fillColor = HOVER_COLOR;
+                fillColor = mSelectedColor;
             }
             else
             {
-                if(state & QStyle::State_MouseOver)
-                {
-                    pen.setColor(HOVER_COLOR);
-                    fillColor = HOVER_COLOR;
-                }
-                else if (state & QStyle::State_Selected)
-                {
-                    pen.setColor(SELECTED_BORDER_COLOR);
-                    pen.setWidth(PEN_WIDTH);
-                    fillColor = Qt::white;
-                }
+                fillColor = mActiveColor;
             }
 
             if(pen != QPen())
@@ -347,11 +308,10 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             }
         }
 
-        painter->fillRect(backgroundRect, rowColor);
+        painter->fillRect(backgroundRect, mActiveColor);
         if(!path.isEmpty())
         {
             painter->fillPath(path.simplified(), fillColor);
-            painter->drawPath(path.simplified());
         }
 
         //REMOVE SEPARATION LINE WHEN EXPANDED
@@ -361,17 +321,16 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
             if(index.parent().isValid())
             {
-                collision = QRectF(realGeometry.x() + LEFT_MARGIN + PEN_WIDTH/2 /* next pixel*/,
-                                   realGeometry.y() - PEN_WIDTH/2,
-                                   realGeometry.x() + realGeometry.width() - RIGHT_MARGIN - PEN_WIDTH,
+                collision = QRectF(realGeometry.x() + PEN_WIDTH / 2 /* next pixel*/,
+                                   realGeometry.y() - PEN_WIDTH / 2,
+                                   realGeometry.x() + realGeometry.width() - PEN_WIDTH,
                                    PEN_WIDTH);
-
             }
             else if(isExpanded)
             {
-                collision = QRectF(realGeometry.x() + LEFT_MARGIN + PEN_WIDTH/2 /* next pixel*/,
-                                   realGeometry.y() + realGeometry.height() - PEN_WIDTH/2,
-                                   realGeometry.x() + realGeometry.width() - RIGHT_MARGIN - PEN_WIDTH,
+                collision = QRectF(realGeometry.x() + PEN_WIDTH / 2 /* next pixel*/,
+                                   realGeometry.y() + realGeometry.height() - PEN_WIDTH / 2,
+                                   realGeometry.x() + realGeometry.width() - PEN_WIDTH,
                                    PEN_WIDTH);
             }
 
@@ -400,7 +359,7 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             w->setGeometry(geometry);
 
             auto pixmap = w->grab();
-            painter->drawPixmap(0,0,w->width(), w->height(),pixmap);
+            painter->drawPixmap(0, 0, w->width(), w->height(), pixmap);
 
             painter->restore();
         }
@@ -427,7 +386,7 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         if(drawBottomLine)
         {
             painter->setRenderHint(QPainter::Antialiasing, false);
-            painter->setPen(QPen(Qt::black, 1));
+            painter->setPen(QPen(mBottomBorderColor, 1));
             painter->setOpacity(0.2);
             painter->drawLine(QPoint(0 - geometry.x(), geometry.height()-1),QPoint(geometry.width(), geometry.height()-1));
         }
@@ -611,25 +570,6 @@ void StalledIssueDelegate::onHoverLeave(const QModelIndex& index)
     mView->update(index);
 }
 
-QColor StalledIssueDelegate::getRowColor(const QModelIndex &index) const
-{
-    QColor rowColor;
-
-    if(index.row()%2 == 0)
-    {
-        rowColor = Qt::white;
-    }
-    else
-    {
-        rowColor.setRed(0);
-        rowColor.setGreen(0);
-        rowColor.setBlue(0);
-        rowColor.setAlphaF(0.05);
-    }
-
-    return rowColor;
-}
-
 QModelIndex StalledIssueDelegate::getEditorCurrentIndex() const
 {
     if(mEditor)
@@ -682,4 +622,12 @@ StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(
     }
 
     return item;
+}
+
+void StalledIssueDelegate::updateColors() const
+{
+    mActiveColor = TokenParserWidgetManager::instance()->getColor(QLatin1String("page-background"));
+    mSelectedColor = TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-1"));
+    mBottomBorderColor =
+        TokenParserWidgetManager::instance()->getColor(QLatin1String("border-subtle"));
 }

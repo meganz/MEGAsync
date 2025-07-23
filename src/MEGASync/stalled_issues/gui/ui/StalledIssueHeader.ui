@@ -35,59 +35,12 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">*
+   <string notr="true">#StalledIssueHeader
 {
-   font-family: Lato;
-}
-
-#selectionText
-{
-  color: #333333;
-  font-size: 13px;
-  font-weight: bold;
-}
-
-#errorDescriptionText
-{
-  color: #666666;
-  line-height: 15px;
-  font-size: 12px;
-  font-weight: normal;
-}
-
-#actionButton, #ignoreFileButton, #multipleActionButton
-{
-   font-size:14px;
-   background-color: #FCFCFC;
-   color: #333333;
-   border-radius:3px;
-   border: 1px solid rgba(0,0,0,0.15);
-   padding-left: 16px;
-   padding-right: 16px;
-}
-
-#actionButton:hover:enabled, #ignoreFileButton::hover:enabled, #multipleActionButton::hover:enabled
-{
-    background-color: #E2E2E2;
-}
-
-#actionButton:pressed:enabled, #ignoreFileButton::pressed:enabled, #multipleActionButton::pressed:enabled
-{
-    background-color: #C9C9C9;
-}
-
-QToolTip
-{
-	color:#FAFAFA;
-	background-color:#333333
+	background-color: transparent;
 }
 
 /*********** actionContainer **********/
-#actionMessage
-{
-   font-size:12px;
-}
-
 #actionMessageContainer[STATE=&quot;being solved&quot;]
 {
 	background-color: #F3F4F4;
@@ -121,26 +74,20 @@ QToolTip
 	color: #E31B57;
 }
 /*********** actionContainer **********/
-
-/*********** errorContainer **********/
-#fileNameTitle
-{
-     color: #333333;
-     font-size: 13px;
-     line-height: 16px;
-     font-family: Lato Bold;
-}
-/*********** errorContainer **********/</string>
+</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,0">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
-    <number>6</number>
+    <number>20</number>
    </property>
    <property name="topMargin">
     <number>6</number>
    </property>
    <property name="rightMargin">
-    <number>20</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>6</number>
@@ -330,6 +277,9 @@ QToolTip
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
+                 <property name="type" stdset="0">
+                  <string notr="true">secondary</string>
+                 </property>
                 </widget>
                </item>
               </layout>
@@ -373,6 +323,12 @@ QToolTip
               <property name="toolTip">
                <string/>
               </property>
+              <property name="type" stdset="0">
+               <string notr="true">secondary</string>
+              </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">small</string>
+              </property>
              </widget>
             </item>
            </layout>
@@ -397,7 +353,7 @@ QToolTip
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>7</number>
+       <number>20</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -429,6 +385,12 @@ QToolTip
           <width>16</width>
           <height>16</height>
          </size>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">secondary</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string notr="true">medium</string>
         </property>
        </widget>
       </item>
@@ -514,15 +476,15 @@ QToolTip
  </widget>
  <customwidgets>
   <customwidget>
+   <class>WaitingSpinnerWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/WaitingSpinnerWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>WordWrapLabel</class>
    <extends>QTextEdit</extends>
    <header>WordWrapLabel.h</header>
-  </customwidget>
-  <customwidget>
-   <class>WaitingSpinnerWidget</class>
-   <extends>QWidget</extends>
-   <header>WaitingSpinnerWidget.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
