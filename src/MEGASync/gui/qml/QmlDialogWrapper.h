@@ -161,7 +161,7 @@ public:
         mWrapper = new Type(nullptr, std::forward<A>(args)...);
         QQmlEngine* engine = QmlManager::instance()->getEngine();
         QQmlComponent qmlComponent(engine);
-        const auto startTime = std::chrono::system_clock::now();
+        const auto startTime = QDateTime::currentMSecsSinceEpoch();
         qmlComponent.loadUrl(mWrapper->getQmlUrl());
         QEventLoop eventLoop;
 
@@ -184,13 +184,10 @@ public:
 
         QObject::disconnect(connection);
 
-        const auto currTime = std::chrono::system_clock::now();
-        std::chrono::duration<float> elapsed = currTime - startTime;
-        QString message =
-            QString::fromUtf8("Time to load Qml file %1: %2ms Status: %3")
-                .arg(mWrapper->getQmlUrl().toString())
-                .arg(std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count())
-                .arg(qmlComponent.status());
+        QString message = QString::fromUtf8("Time to load Qml file %1: %2ms Status: %3")
+                              .arg(mWrapper->getQmlUrl().toString())
+                              .arg(QDateTime::currentMSecsSinceEpoch() - startTime)
+                              .arg(qmlComponent.status());
         ::mega::MegaApi::log(::mega::MegaApi::LOG_LEVEL_INFO, message.toUtf8().constData());
 
         if (qmlComponent.isReady())
