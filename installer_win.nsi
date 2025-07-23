@@ -5,7 +5,7 @@ ManifestDPIAware true
 
 RequestExecutionLevel user
 Unicode true
-
+SetCompressor /SOLID /FINAL lzma
 
 #!define BUILD_UNINSTALLER
 #!define BUILD_X64_VERSION
@@ -134,6 +134,7 @@ var ALL_USERS_INSTDIR
 var SILENT_MULTIUSER
 
 ; Installer pages
+; !define MUI_FINISHPAGE_NOAUTOCLOSE
 !define MUI_PAGE_CUSTOMFUNCTION_SHOW showHiDpi
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE "installer\terms.txt"
@@ -329,21 +330,6 @@ RunElevated:
 done:
 !macroend
 
-#Do not restart explorer from Windows 11 version (build 22000)
-!define WINDOWS_11_BUILD 22000
-
-Function RunExplorer
-  ${IfNot} ${AtLeastBuild} WINDOWS_11_BUILD
-     ExecDos::exec /ASYNC /DETAILED /DISABLEFSR "explorer.exe"
-  ${EndIf}
-FunctionEnd
-
-Function KillExplorer
-  ${IfNot} ${AtLeastBuild} WINDOWS_11_BUILD
-     ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM explorer.exe"
-  ${EndIf}
-FunctionEnd
-
 Var BITMAP_WELCOME
 
 Var BANNER_PATH
@@ -390,7 +376,7 @@ Function .onInit
      ;Abort
      ;continue:
   ${EndIf}
-  
+
   !insertmacro MULTIUSER_INIT
   StrCpy $APP_NAME "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 
@@ -423,12 +409,12 @@ Function .onInit
   ${IfNot} ${Silent}
     !insertmacro CheckUserToRunElevated
   ${EndIf}
-  
+
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_LOCALAPPDATA}, i0)i.r0'
   strCpy $BANNER_PATH $1
   #${UAC.CallFunctionAsUser} GetPaths
   StrCpy $BANNER_PATH "$BANNER_PATH\MEGAsync"
-  
+
   strCpy $PREVIOUS_OUTPATH GetOutPath
   SetOutPath "$BANNER_PATH\leftbanner"
   File "installer\leftbanner\*"
@@ -475,14 +461,14 @@ FunctionEnd
   ; This is to avoid issues with shared dlls loaded in another process
   ; (moving the dll does not break anything, and we can copy our new dll without issue).
   IfFileExists ${target} 0 new_install_${target}
-	GetTempFileName $0
-	Delete $0
-	Rename ${target} $0
-	!insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED $0
+    GetTempFileName $0
+    Delete $0
+    Rename ${target} $0
+    !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED $0
   new_install_${target}:
-	  File "${source}"
-	  AccessControl::SetFileOwner ${target} "$USERNAME"
-	  AccessControl::GrantOnFile ${target} "$USERNAME" "GenericRead + GenericWrite"
+    File "${source}"
+    AccessControl::SetFileOwner ${target} "$USERNAME"
+    AccessControl::GrantOnFile ${target} "$USERNAME" "GenericRead + GenericWrite"
 !macroend
 
 
@@ -550,62 +536,37 @@ modeselected:
 
   SetOutPath "$INSTDIR"
 
-  Call KillExplorer
-
-  !insertmacro DEBUG_MSG "Registering DLLs"
-
 ; UnRegister shell extensions first
+  !define LIBRARY_COM
+  !define LIBRARY_SHELL_EXTENSION
+  !define LIBRARY_IGNORE_VERSION
+
   IfFileExists "$INSTDIR\ShellExtX32.dll" 0 new_installation_x32
-        !define LIBRARY_COM
-		!define LIBRARY_SHELL_EXTENSION
-		!insertmacro UnInstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\ShellExtX32.dll"
-		!undef LIBRARY_COM
-		!undef LIBRARY_SHELL_EXTENSION
-		GetTempFileName $0
-		Delete $0
-		Rename "$INSTDIR\ShellExtX32.dll" $0
-		Delete /REBOOTOK $0
-  
+  DetailPrint "Uninstall old ShellExt 32"
+  !insertmacro UnInstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\ShellExtX32.dll"
+  GetTempFileName $0
+  Delete $0
+  Rename "$INSTDIR\ShellExtX32.dll" $0
+  Delete /REBOOTOK $0
+
   new_installation_x32:
-  !ifndef BUILD_X64_VERSION
-        !define LIBRARY_COM
-        !define LIBRARY_SHELL_EXTENSION
-        !insertmacro InstallLib DLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.msix" "$INSTDIR\ShellExtX32.msix" "$INSTDIR"          
-        !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
-        !undef LIBRARY_COM
-        !undef LIBRARY_SHELL_EXTENSION
-
-        AccessControl::SetFileOwner "$INSTDIR\ShellExtX32.dll" "$USERNAME"
-        AccessControl::GrantOnFile "$INSTDIR\ShellExtX32.dll" "$USERNAME" "GenericRead + GenericWrite"
-  !endif
-
   ${If} ${RunningX64}
-        IfFileExists "$INSTDIR\ShellExtX64.dll" 0 new_installation_x64
-			!define LIBRARY_X64
-			!define LIBRARY_COM
-			!define LIBRARY_SHELL_EXTENSION
-			!insertmacro UnInstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\ShellExtX64.dll"
-			!undef LIBRARY_X64
-			!undef LIBRARY_COM
-			!undef LIBRARY_SHELL_EXTENSION
-			GetTempFileName $0
-			Delete $0
-			Rename "$INSTDIR\ShellExtX64.dll" $0
-			Delete /REBOOTOK $0
-        
-		new_installation_x64:
-        !define LIBRARY_X64
-        !define LIBRARY_COM
-        !define LIBRARY_SHELL_EXTENSION
-        !insertmacro InstallLib DLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.msix" "$INSTDIR\ShellExtX64.msix" "$INSTDIR"
-        !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.dll" "$INSTDIR\ShellExtX64.dll" "$INSTDIR"
-        !undef LIBRARY_X64
-        !undef LIBRARY_COM
-        !undef LIBRARY_SHELL_EXTENSION
+    IfFileExists "$INSTDIR\ShellExtX64.dll" 0 new_installation_x64
+    !define LIBRARY_X64
+    DetailPrint "Uninstall old ShellExt 64"
+    !insertmacro UnInstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\ShellExtX64.dll"
+    GetTempFileName $0
+    Delete $0
+    Rename "$INSTDIR\ShellExtX64.dll" $0
+    Delete /REBOOTOK $0
+    !undef LIBRARY_X64
 
-        AccessControl::SetFileOwner "$INSTDIR\ShellExtX64.dll" "$USERNAME"
-        AccessControl::GrantOnFile "$INSTDIR\ShellExtX64.dll" "$USERNAME" "GenericRead + GenericWrite"
+    new_installation_x64:
   ${EndIf}
+
+  !undef LIBRARY_COM
+  !undef LIBRARY_SHELL_EXTENSION
+  !undef LIBRARY_IGNORE_VERSION
 
   !ifdef BUILD_X64_VERSION
     !insertmacro Install3264DLL "${VcRedist64Path}\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
@@ -765,7 +726,7 @@ modeselected:
   File "${SRCDIR_MEGASYNC}\swresample-5.dll"
   AccessControl::SetFileOwner "$INSTDIR\swresample-5.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\swresample-5.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
+
   ;remove old DLLs that we no longer use (some became static; some have later version number)
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avcodec-57.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avformat-57.dll"
@@ -791,14 +752,40 @@ modeselected:
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\libcrypto-1_1.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\libssl-1_1.dll"
 
+  !insertmacro DEBUG_MSG "Registering DLLs"
+
+  !define LIBRARY_COM
+  !define LIBRARY_SHELL_EXTENSION
+  !define LIBRARY_IGNORE_VERSION
+
+  !ifndef BUILD_X64_VERSION
+  DetailPrint "Install ShellExt 64"
+  !insertmacro InstallLib DLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.msix" "$INSTDIR\ShellExtX32.msix" "$INSTDIR"
+  !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
+
+  AccessControl::SetFileOwner "$INSTDIR\ShellExtX32.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\ShellExtX32.dll" "$USERNAME" "GenericRead + GenericWrite"
+  !endif
+
+  ${If} ${RunningX64}
+    !define LIBRARY_X64
+    DetailPrint "Install ShellExt 64"
+    !insertmacro InstallLib DLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.msix" "$INSTDIR\ShellExtX64.msix" "$INSTDIR"
+    !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.dll" "$INSTDIR\ShellExtX64.dll" "$INSTDIR"
+    AccessControl::SetFileOwner "$INSTDIR\ShellExtX64.dll" "$USERNAME"
+    AccessControl::GrantOnFile "$INSTDIR\ShellExtX64.dll" "$USERNAME" "GenericRead + GenericWrite"
+    !undef LIBRARY_X64
+  ${EndIf}
+
+  !undef LIBRARY_COM
+  !undef LIBRARY_SHELL_EXTENSION
+  !undef LIBRARY_IGNORE_VERSION
 
 !ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
   File "${SRCDIR_MEGASYNC}\${UNINSTALLER_NAME}"
   AccessControl::SetFileOwner "$INSTDIR\${UNINSTALLER_NAME}" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\${UNINSTALLER_NAME}" "$USERNAME" "GenericRead + GenericWrite"
 !endif
-
-  ${UAC.CallFunctionAsUser} RunExplorer
 
 #  !insertmacro DEBUG_MSG "Adding firewall rule"
 #  liteFirewall::RemoveRule "$INSTDIR\MEGAsync.exe" "MEGAsync"
@@ -863,13 +850,13 @@ StrCpy $APP_NAME "${PRODUCT_NAME}"
 
 ReadIniStr $0 "$ExeDir\${MEGA_DATA}" UAC first
 ${IF} $0 <> 1
-	;SetSilent silent
-	InitPluginsDir
-	WriteIniStr "$PluginsDir\${MEGA_DATA}" UAC first 1
-	CopyFiles /SILENT "$EXEPATH" "$PluginsDir\${UNINSTALLER_NAME}"
-	ExecWait '"$PluginsDir\${UNINSTALLER_NAME}" _?=$INSTDIR' $0
-	SetErrorLevel $0
-	Quit
+  ;SetSilent silent
+  InitPluginsDir
+  WriteIniStr "$PluginsDir\${MEGA_DATA}" UAC first 1
+  CopyFiles /SILENT "$EXEPATH" "$PluginsDir\${UNINSTALLER_NAME}"
+  ExecWait '"$PluginsDir\${UNINSTALLER_NAME}" _?=$INSTDIR' $0
+  SetErrorLevel $0
+  Quit
 ${EndIf}
 !insertmacro CheckUserToRunElevated
 
@@ -895,18 +882,13 @@ Section Uninstall
   !define LIBRARY_COM
   !define LIBRARY_SHELL_EXTENSION
   !insertmacro UnInstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\ShellExtX32.dll"
+  ${If} ${RunningX64}
+    !define LIBRARY_X64
+    !insertmacro UnInstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\ShellExtX64.dll"
+    !undef LIBRARY_X64
+  ${EndIf}
   !undef LIBRARY_COM
   !undef LIBRARY_SHELL_EXTENSION
-
-  ${If} ${RunningX64}
-	!define LIBRARY_X64
-	!define LIBRARY_COM
-	!define LIBRARY_SHELL_EXTENSION
-	!insertmacro UnInstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\ShellExtX64.dll"
-	!undef LIBRARY_X64
-	!undef LIBRARY_COM
-	!undef LIBRARY_SHELL_EXTENSION
-  ${EndIf}
 
   ;QT4 files
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\QtNetwork4.dll"
