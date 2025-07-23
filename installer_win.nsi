@@ -536,6 +536,38 @@ modeselected:
 
   SetOutPath "$INSTDIR"
 
+; UnRegister shell extensions first
+  !define LIBRARY_COM
+  !define LIBRARY_SHELL_EXTENSION
+  !define LIBRARY_IGNORE_VERSION
+
+  IfFileExists "$INSTDIR\ShellExtX32.dll" 0 new_installation_x32
+  DetailPrint "Uninstall old ShellExt 32"
+  !insertmacro UnInstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\ShellExtX32.dll"
+  GetTempFileName $0
+  Delete $0
+  Rename "$INSTDIR\ShellExtX32.dll" $0
+  Delete /REBOOTOK $0
+
+  new_installation_x32:
+  ${If} ${RunningX64}
+    IfFileExists "$INSTDIR\ShellExtX64.dll" 0 new_installation_x64
+    !define LIBRARY_X64
+    DetailPrint "Uninstall old ShellExt 64"
+    !insertmacro UnInstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\ShellExtX64.dll"
+    GetTempFileName $0
+    Delete $0
+    Rename "$INSTDIR\ShellExtX64.dll" $0
+    Delete /REBOOTOK $0
+    !undef LIBRARY_X64
+
+    new_installation_x64:
+  ${EndIf}
+
+  !undef LIBRARY_COM
+  !undef LIBRARY_SHELL_EXTENSION
+  !undef LIBRARY_IGNORE_VERSION
+
   !ifdef BUILD_X64_VERSION
     !insertmacro Install3264DLL "${VcRedist64Path}\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
     !insertmacro Install3264DLL "${VcRedist64Path}\vcruntime140_1.dll" "$INSTDIR\vcruntime140_1.dll"
@@ -726,38 +758,17 @@ modeselected:
   !define LIBRARY_SHELL_EXTENSION
   !define LIBRARY_IGNORE_VERSION
 
-; UnRegister shell extensions first
-  IfFileExists "$INSTDIR\ShellExtX32.dll" 0 new_installation_x32
-
-  DetailPrint "Uninstall old ShellExt 32"
-  !insertmacro UnInstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\ShellExtX32.dll"
-  GetTempFileName $0
-  Delete $0
-  Rename "$INSTDIR\ShellExtX32.dll" $0
-  Delete /REBOOTOK $0
-
-  new_installation_x32:
   !ifndef BUILD_X64_VERSION
-    DetailPrint "Install ShellExt 64"
-    !insertmacro InstallLib DLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.msix" "$INSTDIR\ShellExtX32.msix" "$INSTDIR"
-    !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
+  DetailPrint "Install ShellExt 64"
+  !insertmacro InstallLib DLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.msix" "$INSTDIR\ShellExtX32.msix" "$INSTDIR"
+  !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
 
-    AccessControl::SetFileOwner "$INSTDIR\ShellExtX32.dll" "$USERNAME"
-    AccessControl::GrantOnFile "$INSTDIR\ShellExtX32.dll" "$USERNAME" "GenericRead + GenericWrite"
+  AccessControl::SetFileOwner "$INSTDIR\ShellExtX32.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\ShellExtX32.dll" "$USERNAME" "GenericRead + GenericWrite"
   !endif
 
   ${If} ${RunningX64}
     !define LIBRARY_X64
-    IfFileExists "$INSTDIR\ShellExtX64.dll" 0 new_installation_x64
-
-    DetailPrint "Uninstall old ShellExt 64"
-    !insertmacro UnInstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\ShellExtX64.dll"
-    GetTempFileName $0
-    Delete $0
-    Rename "$INSTDIR\ShellExtX64.dll" $0
-    Delete /REBOOTOK $0
-
-    new_installation_x64:
     DetailPrint "Install ShellExt 64"
     !insertmacro InstallLib DLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.msix" "$INSTDIR\ShellExtX64.msix" "$INSTDIR"
     !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.dll" "$INSTDIR\ShellExtX64.dll" "$INSTDIR"
