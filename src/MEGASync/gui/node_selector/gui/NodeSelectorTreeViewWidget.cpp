@@ -150,6 +150,7 @@ void NodeSelectorTreeViewWidget::init()
     mSelectType->init(this);
 
     ui->tMegaFolders->setSortingEnabled(true);
+    ui->tMegaFolders->setAllowContextMenu(mSelectType->isContextMenuAllowed());
     mProxyModel->setSourceModel(mModel.get());
 
     connect(mProxyModel.get(),
