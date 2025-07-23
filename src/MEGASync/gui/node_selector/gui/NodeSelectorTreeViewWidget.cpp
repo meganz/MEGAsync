@@ -10,6 +10,7 @@
 #include "NodeSelectorModel.h"
 #include "NodeSelectorProxyModel.h"
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
+#include "RefreshAppChangeEvent.h"
 #include "RenameNodeDialog.h"
 #include "RequestListenerManager.h"
 #include "ui_NodeSelectorTreeViewWidget.h"
@@ -70,9 +71,9 @@ NodeSelectorTreeViewWidget::~NodeSelectorTreeViewWidget()
     delete ui;
 }
 
-void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
+bool NodeSelectorTreeViewWidget::event(QEvent* event)
 {
-    if (event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         if(!ui->tMegaFolders->rootIndex().isValid())
         {
@@ -85,7 +86,7 @@ void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
             mSelectType->updateCustomBottomButtonsText(this);
         }
     }
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }
 
 bool NodeSelectorTreeViewWidget::eventFilter(QObject* watched, QEvent* event)

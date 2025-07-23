@@ -2,6 +2,7 @@
 
 #include "megaapi.h"
 #include "MegaApplication.h"
+#include "RefreshAppChangeEvent.h"
 #include "StatsEventHandler.h"
 #include "ui_NotificationItem.h"
 #include "UserNotification.h"
@@ -84,15 +85,15 @@ QSize NotificationItem::sizeHint() const
     return size;
 }
 
-void NotificationItem::changeEvent(QEvent* event)
+bool NotificationItem::event(QEvent* event)
 {
-    if (event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         mUi->retranslateUi(this);
         updateNotificationData();
     }
 
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }
 
 void NotificationItem::showEvent(QShowEvent* event)

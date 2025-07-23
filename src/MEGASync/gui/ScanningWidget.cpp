@@ -1,6 +1,7 @@
 #include "ScanningWidget.h"
 
 #include "BlurredShadowEffect.h"
+#include "RefreshAppChangeEvent.h"
 #include "TransferMetaData.h"
 #include "ui_ScanningWidget.h"
 #include "Utilities.h"
@@ -107,13 +108,13 @@ void ScanningWidget::onCancelClicked()
     emit cancel();
 }
 
-void ScanningWidget::changeEvent(QEvent* event)
+bool ScanningWidget::event(QEvent* event)
 {
-    if (event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         mUi->retranslateUi(this);
     }
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }
 
 void ScanningWidget::startAnimation()

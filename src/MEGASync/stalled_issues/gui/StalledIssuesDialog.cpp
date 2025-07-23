@@ -2,6 +2,7 @@
 
 #include "DialogOpener.h"
 #include "MegaApplication.h"
+#include "RefreshAppChangeEvent.h"
 #include "StalledIssue.h"
 #include "StalledIssueDelegate.h"
 #include "StalledIssuesModel.h"
@@ -341,14 +342,14 @@ void StalledIssuesDialog::onGlobalSyncStateChanged(bool)
     //For the future, detect if the stalled issues have been removed remotely to close the dialog
 }
 
-void StalledIssuesDialog::changeEvent(QEvent *event)
+bool StalledIssuesDialog::event(QEvent* event)
 {
-    if(event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         ui->retranslateUi(this);
         MegaSyncApp->getStalledIssuesModel()->languageChanged();
         ui->stalledIssuesTree->update();
     }
 
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }

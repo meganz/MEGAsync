@@ -3,6 +3,7 @@
 #include "MegaApplication.h"
 #include "MessageDialogOpener.h"
 #include "Platform.h"
+#include "RefreshAppChangeEvent.h"
 #include "TransfersWidget.h"
 #include "Utilities.h"
 
@@ -951,14 +952,14 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
     QTreeView::mouseMoveEvent(event);
 }
 
-void MegaTransferView::changeEvent(QEvent* event)
+bool MegaTransferView::event(QEvent* event)
 {
-    if(event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         viewport()->update();
     }
 
-    QTreeView::changeEvent(event);
+    return QTreeView::event(event);
 }
 
 void MegaTransferView::dropEvent(QDropEvent* event)

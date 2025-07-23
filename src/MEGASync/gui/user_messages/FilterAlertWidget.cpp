@@ -1,5 +1,6 @@
 #include "FilterAlertWidget.h"
 
+#include "RefreshAppChangeEvent.h"
 #include "ui_FilterAlertWidget.h"
 
 namespace
@@ -115,11 +116,11 @@ void FilterAlertWidget::on_bPayment_clicked()
     QApplication::postEvent(mUi->bPayment, new QEvent(QEvent::Leave));
 }
 
-void FilterAlertWidget::changeEvent(QEvent* event)
+bool FilterAlertWidget::event(QEvent* event)
 {
-    if (event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         mUi->retranslateUi(this);
     }
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }

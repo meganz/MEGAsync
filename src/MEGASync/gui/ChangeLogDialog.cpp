@@ -1,6 +1,7 @@
 #include "ChangeLogDialog.h"
 
 #include "Preferences.h"
+#include "RefreshAppChangeEvent.h"
 #include "ui_ChangeLogDialog.h"
 
 #include <QDesktopServices>
@@ -105,15 +106,16 @@ void ChangeLogDialog::on_bAck_clicked()
     Utilities::openUrl(QUrl(ackUrl));
 }
 
-void ChangeLogDialog::changeEvent(QEvent *event)
+bool ChangeLogDialog::event(QEvent* event)
 {
-    if (event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         ui->retranslateUi(this);
         tweakStrings();
         setChangeLogNotes(Preferences::CHANGELOG);
     }
-    QDialog::changeEvent(event);
+
+    return QDialog::event(event);
 }
 
 void ChangeLogDialog::tweakStrings()

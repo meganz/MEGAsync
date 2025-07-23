@@ -6,6 +6,7 @@
 #include "NodeSelectorSpecializations.h"
 #include "Platform.h"
 #include "QTMegaApiManager.h"
+#include "RefreshAppChangeEvent.h"
 #include "ui_StreamingFromMegaDialog.h"
 #include "Utilities.h"
 
@@ -64,14 +65,14 @@ StreamingFromMegaDialog::~StreamingFromMegaDialog()
     }
 }
 
-void StreamingFromMegaDialog::changeEvent(QEvent *event)
+bool StreamingFromMegaDialog::event(QEvent* event)
 {
-    if (event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         ui->retranslateUi(this);
     }
 
-    QDialog::changeEvent(event);
+    return QDialog::event(event);
 }
 
 void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)

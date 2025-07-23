@@ -63,7 +63,7 @@ signals:
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
     void closeEvent(QCloseEvent* event) override;
-    void changeEvent(QEvent *event) override;
+    bool event(QEvent* event) override;
     void dragEnterEvent(QDragEnterEvent* event) override;
     void dragLeaveEvent(QDragLeaveEvent* event) override;
     void dropEvent(QDropEvent *event) override;

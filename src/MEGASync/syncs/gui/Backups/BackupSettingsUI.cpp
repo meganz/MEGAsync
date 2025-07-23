@@ -9,6 +9,7 @@
 #include "MessageDialogOpener.h"
 #include "Onboarding.h"
 #include "QmlDialogWrapper.h"
+#include "RefreshAppChangeEvent.h"
 #include "ui_SyncSettingsUIBase.h"
 
 BackupSettingsUI::BackupSettingsUI(QWidget* parent):
@@ -59,16 +60,16 @@ void BackupSettingsUI::addButtonClicked(mega::MegaHandle)
     CreateRemoveBackupsManager::addBackup(true);
 }
 
-void BackupSettingsUI::changeEvent(QEvent* event)
+bool BackupSettingsUI::event(QEvent* event)
 {
-    if (event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         mElements.retranslateUI();
         ui->retranslateUi(this);
         setBackupsTitle();
     }
 
-    SyncSettingsUIBase::changeEvent(event);
+    return SyncSettingsUIBase::event(event);
 }
 
 void BackupSettingsUI::removeSync(std::shared_ptr<SyncSettings> backup)

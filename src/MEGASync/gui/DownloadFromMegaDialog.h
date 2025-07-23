@@ -23,7 +23,7 @@ private slots:
     void on_bOK_clicked();
 
 protected:
-    void changeEvent(QEvent * event);
+    bool event(QEvent* event) override;
 
 private:
     void onPathChanged(const QString& path);

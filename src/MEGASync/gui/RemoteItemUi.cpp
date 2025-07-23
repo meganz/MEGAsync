@@ -1,5 +1,6 @@
 #include "RemoteItemUi.h"
 
+#include "RefreshAppChangeEvent.h"
 #include "ui_RemoteItemUi.h"
 
 RemoteItemUi::RemoteItemUi(QWidget* parent):
@@ -63,14 +64,14 @@ QTableView* RemoteItemUi::getView()
     return ui->tableView;
 }
 
-void RemoteItemUi::changeEvent(QEvent* event)
+bool RemoteItemUi::event(QEvent* event)
 {
-    if (event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         ui->retranslateUi(this);
     }
 
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }
 
 void RemoteItemUi::setTableViewProperties(QTableView* view) const

@@ -67,7 +67,7 @@ protected:
     virtual void setFileNameAndType() = 0;
     virtual void setType() = 0;
 
-    void changeEvent(QEvent *) override;
+    bool event(QEvent* event) override;
 
     QString getState(TRANSFER_STATES state);
 

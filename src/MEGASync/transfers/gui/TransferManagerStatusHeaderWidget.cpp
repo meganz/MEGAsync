@@ -3,6 +3,7 @@
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "Preferences.h"
+#include "RefreshAppChangeEvent.h"
 #include "TextDecorator.h"
 #include "ui_TransferManagerStatusHeaderWidget.h"
 
@@ -166,12 +167,12 @@ void TransferManagerStatusHeaderWidget::setStorageQuotaState(int newStorageQuota
     mStorageQuotaState = newStorageQuotaState;
 }
 
-void TransferManagerStatusHeaderWidget::changeEvent(QEvent* event)
+bool TransferManagerStatusHeaderWidget::event(QEvent* event)
 {
-    if (event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         mUi->retranslateUi(this);
         updateStorageBannerText();
     }
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }

@@ -2,6 +2,7 @@
 
 #include "AccountDetailsManager.h"
 #include "Preferences.h"
+#include "RefreshAppChangeEvent.h"
 #include "ui_TransfersAccountInfoWidget.h"
 
 #include <QStyle>
@@ -54,15 +55,15 @@ void TransfersAccountInfoWidget::setTransferOverquota(const bool isOverquota)
     updateUpgradeButtonVisibility();
 }
 
-void TransfersAccountInfoWidget::changeEvent(QEvent* event)
+bool TransfersAccountInfoWidget::event(QEvent* event)
 {
-    if (event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         mUi->retranslateUi(this);
         updateUpgradeButtonText();
         updateStorageElements();
     }
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }
 
 void TransfersAccountInfoWidget::updateStorageText()

@@ -1,6 +1,7 @@
 #include "VerifyLockMessage.h"
 
 #include "MegaApplication.h"
+#include "RefreshAppChangeEvent.h"
 #include "RequestListenerManager.h"
 #include "TextDecorator.h"
 #include "ui_VerifyLockMessage.h"
@@ -72,15 +73,15 @@ void VerifyLockMessage::mousePressEvent(QMouseEvent *event)
     }
 }
 
-void VerifyLockMessage::changeEvent(QEvent *event)
+bool VerifyLockMessage::event(QEvent* event)
 {
-    if (event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         m_ui->retranslateUi(this);
         regenerateUI(m_lockStatus, true);
     }
 
-    QDialog::changeEvent(event);
+    return QDialog::event(event);
 }
 
 void VerifyLockMessage::regenerateUI(int currentStatus, bool force)

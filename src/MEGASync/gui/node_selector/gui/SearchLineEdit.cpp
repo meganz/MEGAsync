@@ -1,6 +1,7 @@
 #include "SearchLineEdit.h"
 
 #include "EventHelper.h"
+#include "RefreshAppChangeEvent.h"
 #include "ui_SearchLineEdit.h"
 
 #include <QDebug>
@@ -37,13 +38,13 @@ void SearchLineEdit::setText(const QString &text)
     ui->leSearchField->setText(text);
 }
 
-void SearchLineEdit::changeEvent(QEvent *event)
+bool SearchLineEdit::event(QEvent* event)
 {
-    if (event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         ui->retranslateUi(this);
     }
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }
 
 bool SearchLineEdit::eventFilter(QObject *obj, QEvent *evnt)

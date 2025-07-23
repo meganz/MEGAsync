@@ -4,6 +4,7 @@
 #include "FullName.h"
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
+#include "RefreshAppChangeEvent.h"
 #include "ui_AlertItem.h"
 #include "UserAlert.h"
 
@@ -750,9 +751,9 @@ void AlertItem::processPaymentClick()
     Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/account/plan")));
 }
 
-void AlertItem::changeEvent(QEvent *event)
+bool AlertItem::event(QEvent* event)
 {
-    if (event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         mUi->retranslateUi(this);
         updateAlertType();
@@ -763,7 +764,7 @@ void AlertItem::changeEvent(QEvent *event)
             setAlertTimeStamp(mAlertData->getTimestamp(0));
         }
     }
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }
 
 QString AlertItem::formatRichString(const QString& str)

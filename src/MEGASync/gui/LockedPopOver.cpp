@@ -1,5 +1,6 @@
 #include "LockedPopOver.h"
 
+#include "RefreshAppChangeEvent.h"
 #include "ui_LockedPopOver.h"
 
 #include <QMouseEvent>
@@ -14,15 +15,14 @@ LockedPopOver::LockedPopOver(QDialog *) :
     setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
 }
 
-
-void LockedPopOver::changeEvent(QEvent *event)
+bool LockedPopOver::event(QEvent* event)
 {
-    if (event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         ui->retranslateUi(this);
         tweakStrings();
     }
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }
 
 void LockedPopOver::tweakStrings()

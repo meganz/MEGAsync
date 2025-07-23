@@ -348,27 +348,13 @@ void AccountDetailsDialog::updateStorageElements()
     refresh();
 }
 
-void AccountDetailsDialog::changeEvent(QEvent *event)
+bool AccountDetailsDialog::event(QEvent* event)
 {
     if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
-        qDebug() << "Refresh Event";
-        if (event->type() == QEvent::LanguageChange)
-        {
-            mUi->retranslateUi(this);
-        }
+        mUi->retranslateUi(this);
         refresh();
     }
 
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
-    {
-        qDebug() << "Refresh Event";
-        if (event->type() == QEvent::LanguageChange)
-        {
-            mUi->retranslateUi(this);
-        }
-        refresh();
-    }
-
-    QDialog::changeEvent(event);
+    return QDialog::event(event);
 }

@@ -5,6 +5,7 @@
 #include "MegaApplication.h"
 #include "Onboarding.h"
 #include "QmlDialogWrapper.h"
+#include "RefreshAppChangeEvent.h"
 #include "SyncController.h"
 #include "SyncItemModel.h"
 #include "SyncsComponent.h"
@@ -107,15 +108,15 @@ void SyncSettingsUI::setSyncsTitle()
     setTitle(tr("Synced Folders"));
 }
 
-void SyncSettingsUI::changeEvent(QEvent* event)
+bool SyncSettingsUI::event(QEvent* event)
 {
-    if (event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         mSyncElement.retranslateUi();
         setSyncsTitle();
     }
 
-    SyncSettingsUIBase::changeEvent(event);
+    return SyncSettingsUIBase::event(event);
 }
 
 void SyncSettingsUI::storageStateChanged(int newStorageState)

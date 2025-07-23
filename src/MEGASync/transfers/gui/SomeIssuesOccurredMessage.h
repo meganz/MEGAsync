@@ -19,7 +19,7 @@ public:
     ~SomeIssuesOccurredMessage();
 
 protected:
-    void changeEvent(QEvent *) override;
+    bool event(QEvent* event) override;
 
 private slots:
     void on_viewIssuesButton_clicked();

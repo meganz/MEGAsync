@@ -1,6 +1,7 @@
 #include "Login2FA.h"
 
 #include "Preferences.h"
+#include "RefreshAppChangeEvent.h"
 #include "ui_Login2FA.h"
 #include "Utilities.h"
 
@@ -82,11 +83,11 @@ void Login2FA::inputCodeChanged()
     ui->lError->hide();
 }
 
-void Login2FA::changeEvent(QEvent *event)
+bool Login2FA::event(QEvent* event)
 {
-    if (event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         ui->retranslateUi(this);
     }
-    QDialog::changeEvent(event);
+    return QDialog::event(event);
 }

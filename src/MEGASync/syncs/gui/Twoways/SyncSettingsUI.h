@@ -35,7 +35,7 @@ protected:
     void removeSync(std::shared_ptr<SyncSettings> sync) override;
 
     void setSyncsTitle();
-    void changeEvent(QEvent*) override;
+    bool event(QEvent* event) override;
 
 private slots:
     void storageStateChanged(int newStorageState);

@@ -24,7 +24,7 @@ private slots:
     void inputCodeChanged();
 
 protected:
-    void changeEvent(QEvent * event);
+    bool event(QEvent* event) override;
 
 private:
     Ui::Login2FA *ui;

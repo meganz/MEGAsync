@@ -14,6 +14,7 @@
 #include "Platform.h"
 #include "PowerOptions.h"
 #include "ProxySettings.h"
+#include "RefreshAppChangeEvent.h"
 #include "RemoveBackupDialog.h"
 #include "StatsEventHandler.h"
 #include "ThemeManager.h"
@@ -505,9 +506,9 @@ void SettingsDialog::on_bHelp_clicked()
     Utilities::openUrl(QUrl(helpUrl));
 }
 
-void SettingsDialog::changeEvent(QEvent* event)
+bool SettingsDialog::event(QEvent* event)
 {
-    if (event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         mUi->retranslateUi(this);
 
@@ -528,7 +529,7 @@ void SettingsDialog::changeEvent(QEvent* event)
         updateDownloadFolder();
     }
 
-    QDialog::changeEvent(event);
+    return QDialog::event(event);
 }
 
 void SettingsDialog::on_bGeneral_clicked()

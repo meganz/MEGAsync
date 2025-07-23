@@ -28,7 +28,7 @@ public:
 
 protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
-    void changeEvent(QEvent *) override;
+    bool event(QEvent* event) override;
 
 private slots:
     void on_doneButton_clicked();

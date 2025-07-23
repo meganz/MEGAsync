@@ -8,6 +8,7 @@
 #include "DialogOpener.h"
 #include "MegaApplication.h"
 #include "Platform.h"
+#include "RefreshAppChangeEvent.h"
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
 #include "TransferManager.h"
@@ -1228,15 +1229,15 @@ void InfoDialog::updateUiOnFolderTransferUpdate(const FolderTransferUpdateEvent 
     mTransferScanCancelUi->onFolderTransferUpdate(event);
 }
 
-void InfoDialog::changeEvent(QEvent* event)
+bool InfoDialog::event(QEvent* event)
 {
-    if (event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         ui->retranslateUi(this);
         updateUpgradeButtonText();
         updateCreateSyncButtonText();
     }
-    QDialog::changeEvent(event);
+    return QDialog::event(event);
 }
 
 bool InfoDialog::eventFilter(QObject *obj, QEvent *e)

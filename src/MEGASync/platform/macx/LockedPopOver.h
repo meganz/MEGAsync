@@ -17,7 +17,7 @@ public:
     LockedPopOver();
 
 protected:
-    void changeEvent(QEvent *event);
+    bool event(QEvent* event) override;
     void tweakStrings();
 
 private:

@@ -9,6 +9,7 @@
 #include "NodeSelectorModel.h"
 #include "NodeSelectorProxyModel.h"
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
+#include "RefreshAppChangeEvent.h"
 #include "ui_NodeSelector.h"
 #include "Utilities.h"
 #include "ViewLoadingScene.h"
@@ -148,14 +149,14 @@ bool NodeSelector::getDefaultUploadOption()
     return mCloudDriveWidget->getDefaultUploadOption();
 }
 
-void NodeSelector::changeEvent(QEvent *event)
+bool NodeSelector::event(QEvent* event)
 {
-    if (event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         ui->retranslateUi(this);
         updateNodeSelectorTabs();
     }
-    QDialog::changeEvent(event);
+    return QDialog::event(event);
 }
 
 void NodeSelector::keyPressEvent(QKeyEvent *e)

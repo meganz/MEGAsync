@@ -2,6 +2,7 @@
 
 #include "MegaApplication.h"
 #include "MessageDialogOpener.h"
+#include "RefreshAppChangeEvent.h"
 #include "TransferWidgetColumnsManager.h"
 #include "ui_TransfersWidget.h"
 
@@ -416,15 +417,15 @@ void TransfersWidget::updateHeaderItems()
     ui->speedColumn->setTitle(mHeaderInfo.headerSpeed);
 }
 
-void TransfersWidget::changeEvent(QEvent *event)
+bool TransfersWidget::event(QEvent* event)
 {
-    if (event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         ui->retranslateUi(this);
         updateHeaderItems();
     }
 
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }
 
 bool TransfersWidget::eventFilter(QObject *watched, QEvent *event)

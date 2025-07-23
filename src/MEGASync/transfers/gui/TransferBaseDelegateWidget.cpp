@@ -1,6 +1,7 @@
 #include "TransferBaseDelegateWidget.h"
 
 #include "MegaApplication.h"
+#include "RefreshAppChangeEvent.h"
 
 #include <QLayout>
 #include <QPointer>
@@ -233,13 +234,13 @@ void TransferBaseDelegateWidget::reset()
     mLastActionTransferIconName.clear();
 }
 
-void TransferBaseDelegateWidget::changeEvent(QEvent* event)
+bool TransferBaseDelegateWidget::event(QEvent* event)
 {
-    if(event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         //Reset to allow the delegate to repaint all items
         mPreviousState = TransferData::TransferState::TRANSFER_NONE;
     }
 
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }

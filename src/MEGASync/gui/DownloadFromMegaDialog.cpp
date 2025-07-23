@@ -3,6 +3,7 @@
 #include "CommonMessages.h"
 #include "MessageDialogOpener.h"
 #include "Platform.h"
+#include "RefreshAppChangeEvent.h"
 #include "ui_DownloadFromMegaDialog.h"
 #include "Utilities.h"
 
@@ -106,14 +107,14 @@ void DownloadFromMegaDialog::updatePath()
     }
 }
 
-void DownloadFromMegaDialog::changeEvent(QEvent *event)
+bool DownloadFromMegaDialog::event(QEvent* event)
 {
-    if (event->type() == QEvent::LanguageChange)
+    if (RefreshAppChangeEvent::isRefreshEvent(event))
     {
         ui->retranslateUi(this);
         updatePath();
     }
-    QDialog::changeEvent(event);
+    return QDialog::event(event);
 }
 
 void DownloadFromMegaDialog::on_bOK_clicked()

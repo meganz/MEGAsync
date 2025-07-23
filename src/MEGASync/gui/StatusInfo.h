@@ -37,7 +37,7 @@ public:
     static QIcon scanningIcon(int &index);
 
 protected:
-    void changeEvent(QEvent * event);
+    bool event(QEvent* event) override;
 
 private slots:
     void scanningAnimationStep();

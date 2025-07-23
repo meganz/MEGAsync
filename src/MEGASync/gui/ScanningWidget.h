@@ -32,7 +32,7 @@ private slots:
     void onCancelClicked();
 
 protected:
-    void changeEvent(QEvent* event) override;
+    bool event(QEvent* event) override;
 
 private:
     void startAnimation();
