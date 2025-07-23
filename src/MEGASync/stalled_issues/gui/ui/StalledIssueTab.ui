@@ -31,23 +31,28 @@
   <property name="styleSheet">
    <string notr="true">QFrame[itsOn=true], QFrame[itsHover=true] 
 {
-	 border-radius: 12px;  
-    border: 1px solid rgba(0,0,0,0.1);
-    background: solid white;
+    border-radius: 16px; 
+    border: none;
+    background-color: #ff04101E; /*colorToken.selection-control*/
+}
+
+QFrame[itsOn=true] QLabel, QFrame[itsHover=true] QLabel
+{
+    color: #ff616366; /*colorToken.text-inverse-accent*/
 }
 
 QFrame[itsOn=false][itsHover=false]
 {
-	border-radius: 12px;
-   border: 1px solid #EAEBEC;
-	background-color: #EAEBEC;
+	border-radius: 16px;
+     border: none;
+	background-color: #ffE4E4E5; /*colorToken.surface-3*/
 }
 
-QLabel
+QFrame[itsHover=false][itsOn=false] QLabel
 {
-	color: #333333;
-   font-size: 13px;
-}</string>
+	color: #ff616366; /*colorToken.text-secondary*/
+}
+</string>
   </property>
   <property name="itsHover" stdset="0">
    <bool>false</bool>

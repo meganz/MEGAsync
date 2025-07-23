@@ -333,7 +333,6 @@ void StalledIssuesDialog::onLoadingSceneVisibilityChange(bool state)
 
 void StalledIssuesDialog::showView()
 {
-    ui->stackedWidget->setCurrentWidget(ui->View);
     on_refreshButton_clicked();
 }
 
