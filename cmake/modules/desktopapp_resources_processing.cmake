@@ -1,4 +1,4 @@
-# This function allows to create aliases based on leafname, overwritten the main input file
+# This function allows to create aliases based on leaf name, overwritting the main input file
 #
 
 

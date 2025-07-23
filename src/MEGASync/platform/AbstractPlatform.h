@@ -108,7 +108,7 @@ protected:
 
     void logInfoDialogCoordinates(const char *message, const QRect &screenGeometry, const QString &otherInformation);
     QString rectToString(const QRect &rect);
-
+    bool loadRccResources(const QStringList& rccFiles);
 };
 
 #endif // ABSTRACTPLATFORM_H

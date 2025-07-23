@@ -237,6 +237,13 @@ void PlatformImplementation::processSymLinks() {}
 
 bool PlatformImplementation::loadThemeResource(const QString& theme)
 {
+    static QString currentTheme = QString();
+
+    if (!currentTheme.isEmpty())
+    {
+        QResource::unregisterResource(currentTheme);
+    }
+
     QString execPath = MegaApplication::applicationDirPath();
     QString resourcePath = execPath + QString::fromUtf8("/../share/megasync/resources");
 
@@ -254,34 +261,14 @@ bool PlatformImplementation::loadThemeResource(const QString& theme)
                       << execPath + QString::fromUtf8("/qml.rcc")
                       << execPath + QString::fromUtf8("/Resources_%1.rcc").arg(theme.toLower());
 
-    bool allLoaded = true;
-    for (const QString& file: rccFiles)
-    {
-        if (!QFile::exists(file))
-        {
-            MegaApi::log(
-                MegaApi::LOG_LEVEL_DEBUG,
-                QString::fromUtf8("Missing resource file: %1").arg(file).toUtf8().constData());
-            allLoaded = false;
-            continue;
-        }
+    bool allLoaded = loadRccResources(rccFiles);
 
-        if (!QResource::registerResource(file))
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG,
-                         QString::fromUtf8("Failed to register resource file: %1")
-                             .arg(file)
-                             .toUtf8()
-                             .constData());
-            allLoaded = false;
-        }
-        else
-        {
-            MegaApi::log(
-                MegaApi::LOG_LEVEL_DEBUG,
-                QString::fromUtf8("Registered resource file: %1").arg(file).toUtf8().constData());
-        }
+    if (allLoaded)
+    {
+        currentTheme = QCoreApplication::applicationDirPath() +
+                       QString::fromUtf8("/../Resources/Resources_%1.rcc").arg(theme.toLower());
     }
+
     return allLoaded;
 }
 

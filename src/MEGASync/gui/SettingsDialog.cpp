@@ -861,6 +861,22 @@ void SettingsDialog::on_cbTheme_currentIndexChanged(int index)
     }
 
     ThemeManager::instance()->setTheme(static_cast<Preferences::ThemeType>(index));
+
+    if (!Platform::getInstance()->loadThemeResource(
+            ThemeManager::instance()->getSelectedThemeString()))
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                     QString::fromUtf8("Error loading resource files.").toUtf8().constData());
+        QMessageBox::warning(
+            nullptr,
+            QString(),
+            QCoreApplication::translate("MegaError",
+                                        "The app has detected an error loading resources and needs "
+                                        "to close. If you experience this issue "
+                                        "more than once, contact our Support team."),
+            QMessageBox::Ok);
+        ::exit(0);
+    }
 }
 
 void SettingsDialog::on_bUpdate_clicked()

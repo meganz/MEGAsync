@@ -231,42 +231,35 @@ void PlatformImplementation::processSymLinks()
 
 bool PlatformImplementation::loadThemeResource(const QString& theme)
 {
-    QStringList rccFiles =
-        QStringList() << QString::fromUtf8("/../Resources/Resources_macx.rcc")
-                      << QString::fromUtf8("/../Resources/Resources_win.rcc")
-                      << QString::fromUtf8("/../Resources/Resources_linux.rcc")
-                      << QString::fromUtf8("/../Resources/Resources_qml.rcc")
-                      << QString::fromUtf8("/../Resources/qml.rcc")
-                      << QString::fromUtf8("/../Resources/Resources_%1.rcc").arg(theme.toLower());
+    static QString currentTheme = QString();
 
-    bool allLoaded = true;
-    for (const QString& file: rccFiles)
+    if (!currentTheme.isEmpty())
     {
-        if (!QFile::exists(QCoreApplication::applicationDirPath() + file))
-        {
-            MegaApi::log(
-                MegaApi::LOG_LEVEL_DEBUG,
-                QString::fromUtf8("Missing resource file: %1").arg(file).toUtf8().constData());
-            allLoaded = false;
-            continue;
-        }
-
-        if (!QResource::registerResource(QCoreApplication::applicationDirPath() + file))
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG,
-                         QString::fromUtf8("Failed to register resource file: %1")
-                             .arg(file)
-                             .toUtf8()
-                             .constData());
-            allLoaded = false;
-        }
-        else
-        {
-            MegaApi::log(
-                MegaApi::LOG_LEVEL_DEBUG,
-                QString::fromUtf8("Registered resource file: %1").arg(file).toUtf8().constData());
-        }
+        QResource::unregisterResource(currentTheme);
     }
+
+    QStringList rccFiles =
+        QStringList()
+        << QCoreApplication::applicationDirPath() +
+               QString::fromUtf8("/../Resources/Resources_macx.rcc")
+        << QCoreApplication::applicationDirPath() +
+               QString::fromUtf8("/../Resources/Resources_win.rcc")
+        << QCoreApplication::applicationDirPath() +
+               QString::fromUtf8("/../Resources/Resources_linux.rcc")
+        << QCoreApplication::applicationDirPath() +
+               QString::fromUtf8("/../Resources/Resources_qml.rcc")
+        << QCoreApplication::applicationDirPath() + QString::fromUtf8("/../Resources/qml.rcc")
+        << QCoreApplication::applicationDirPath() +
+               QString::fromUtf8("/../Resources/Resources_%1.rcc").arg(theme.toLower());
+
+    bool allLoaded = loadRccResources(rccFiles);
+
+    if (allLoaded)
+    {
+        currentTheme = QCoreApplication::applicationDirPath() +
+                       QString::fromUtf8("/../Resources/Resources_%1.rcc").arg(theme.toLower());
+    }
+
     return allLoaded;
 }
 
