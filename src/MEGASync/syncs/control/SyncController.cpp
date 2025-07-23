@@ -670,8 +670,12 @@ SyncController::Syncability SyncController::isLocalFolderAllowedForSync(const QS
 SyncController::Syncability SyncController::isLocalFolderSyncable(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message)
 {
     // Check if the directory exists
-    QDir dir(path);
-    if (!dir.exists()) {
+    bool isLink = false;
+#ifdef Q_OS_WINDOWS
+    isLink = path.endsWith(QLatin1String(".lnk"));
+#endif
+    if (isLink || !QDir(path).exists())
+    {
         message = QCoreApplication::translate("MegaSyncError", "Local path not available");
         return Syncability::CANT_SYNC;
     }
