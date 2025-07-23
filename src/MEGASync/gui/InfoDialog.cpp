@@ -806,8 +806,8 @@ bool InfoDialog::checkFailedState()
 {
     auto isFailed(false);
 
-    if((app->getTransfersModel() && app->getTransfersModel()->failedTransfers()) 
-    || (app->getStalledIssuesModel() && !app->getStalledIssuesModel()->isEmpty()))
+    if ((app->getTransfersModel() && app->getTransfersModel()->failedTransfers()) ||
+        (app->getStalledIssuesModel() && !app->getStalledIssuesModel()->isEmpty()))
     {
         changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_FAILED);
         isFailed = true;
@@ -847,7 +847,6 @@ void InfoDialog::onAddBackup()
 void InfoDialog::updateDialogState()
 {
     updateState();
-    bool hasTransfers = false;
     const bool transferOverQuotaEnabled{(transferQuotaState == QuotaState::FULL || transferQuotaState == QuotaState::OVERQUOTA)
                 && transferOverquotaAlertEnabled};
 
@@ -867,15 +866,13 @@ void InfoDialog::updateDialogState()
                    static_cast<int>(numFiles));
 
             QString overDiskText =
-                QString::fromUtf8("<p style='line-height: 20px;'>") +
                 contactMessage.replace(QString::fromUtf8("[A]"), QString::fromUtf8(email))
                     .replace(QString::fromUtf8("[B]"),
                              Utilities::getReadableStringFromTs(tsWarnings))
                     .replace(QString::fromUtf8("[D]"),
                              Utilities::getSizeString(mPreferences->usedStorage()))
                     .replace(QString::fromUtf8("[E]"),
-                             mUpsellController->getMinProPlanNeeded(mPreferences->usedStorage())) +
-                QString::fromUtf8("</p>");
+                             mUpsellController->getMinProPlanNeeded(mPreferences->usedStorage()));
             ui->lOverDiskQuotaLabel->setText(overDiskText);
 
             int64_t remainDaysOut(0);
@@ -885,31 +882,19 @@ void InfoDialog::updateDialogState()
                                                   remainHoursOut);
             if (remainDaysOut > 0)
             {
-                QString descriptionDays = tr("You have [A]%n day[/A] left to upgrade. After that, "
+                QString descriptionDays = tr("You have %n day left to upgrade. After that, "
                                              "your data is subject to deletion.",
                                              "",
                                              static_cast<int>(remainDaysOut));
-                ui->lWarningOverDiskQuota->setText(
-                    QString::fromUtf8("<p style='line-height: 20px;'>") +
-                    descriptionDays
-                        .replace(QString::fromUtf8("[A]"),
-                                 QString::fromUtf8("<span style='color: #FF6F00;'>"))
-                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) +
-                    QString::fromUtf8("</p>"));
+                ui->lWarningOverDiskQuota->setText(descriptionDays);
             }
             else if (remainDaysOut == 0 && remainHoursOut > 0)
             {
-                QString descriptionHours = tr("You have [A]%n hour[/A] left to upgrade. After "
+                QString descriptionHours = tr("You have %n hour left to upgrade. After "
                                               "that, your data is subject to deletion.",
                                               "",
                                               static_cast<int>(remainHoursOut));
-                ui->lWarningOverDiskQuota->setText(
-                    QString::fromUtf8("<p style='line-height: 20px;'>") +
-                    descriptionHours
-                        .replace(QString::fromUtf8("[A]"),
-                                 QString::fromUtf8("<span style='color: #FF6F00;'>"))
-                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) +
-                    QString::fromUtf8("</p>"));
+                ui->lWarningOverDiskQuota->setText(descriptionHours);
             }
             else
             {
@@ -929,7 +914,7 @@ void InfoDialog::updateDialogState()
     {
         const bool transferIsOverQuota{transferQuotaState == QuotaState::FULL || transferQuotaState == QuotaState::OVERQUOTA};
         const bool userIsFree{mPreferences->accountType() == Preferences::Preferences::ACCOUNT_TYPE_FREE};
-        if(transferIsOverQuota && userIsFree)
+        if (transferIsOverQuota && userIsFree)
         {
             ui->bOQIcon->setIcon(QIcon(QString::fromLatin1("://images/storage_transfer_full_FREE.png")));
             ui->bOQIcon->setIconSize(QSize(96,96));
@@ -1033,7 +1018,6 @@ void InfoDialog::updateDialogState()
             {
                 overlay->setVisible(false);
                 ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
-                hasTransfers = true;
                 ui->wPSA->showPSA();
             }
             else
@@ -1051,7 +1035,7 @@ void InfoDialog::updateDialogState()
             }
         }
     }
-    setFooterState(hasTransfers);
+    setFooterState();
     updateBlockedState();
 }
 
@@ -1334,9 +1318,9 @@ void InfoDialog::animateStates(bool opt)
     }
     else //Disable animation
     {
-        ui->lUploadToMega->setIcon(Utilities::getCachedPixmap(QString::fromUtf8("://images/upload_to_mega.png")));
-        ui->lUploadToMega->setIconSize(QSize(352,234));
-        ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 18px;"));
+        ui->lUploadToMega->setIcon(
+            Utilities::getCachedPixmap(QString::fromUtf8(":/images/upload-to-mega.png")));
+        ui->lUploadToMega->setIconSize(QSize(128, 128));
         ui->lUploadToMegaDesc->setText(tr("Upload to MEGA now"));
 
         if (animation)
@@ -1379,6 +1363,7 @@ void InfoDialog::on_tTransfers_clicked()
     ui->lRecents->style()->polish(ui->lRecents);
 
     ui->sTabs->setCurrentWidget(ui->pTransfersTab);
+    setFooterState();
 
     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::TRANSFER_TAB_CLICKED,
                                                           sender(), ui->tTransfers, true);
@@ -1405,6 +1390,7 @@ void InfoDialog::on_tNotifications_clicked()
     ui->lTransfers->style()->polish(ui->lTransfers);
 
     ui->sTabs->setCurrentWidget(ui->pNotificationsTab);
+    setFooterState();
 
     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::NOTIFICATION_TAB_CLICKED, true);
 }
@@ -1703,7 +1689,6 @@ void InfoDialog::initNotificationArea()
 
 void InfoDialog::applyNotificationFilter(MessageType opt)
 {
-    bool hasNotification = false;
     switch (opt)
     {
         case MessageType::ALERT_CONTACTS:
@@ -1713,7 +1698,6 @@ void InfoDialog::applyNotificationFilter(MessageType opt)
             if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_CONTACTS))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
-                hasNotification = true;
             }
             else
             {
@@ -1730,7 +1714,6 @@ void InfoDialog::applyNotificationFilter(MessageType opt)
             if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_SHARES))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
-                hasNotification = true;
             }
             else
             {
@@ -1747,7 +1730,6 @@ void InfoDialog::applyNotificationFilter(MessageType opt)
             if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_PAYMENTS))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
-                hasNotification = true;
             }
             else
             {
@@ -1765,7 +1747,6 @@ void InfoDialog::applyNotificationFilter(MessageType opt)
             if (app->getNotificationController()->hasNotifications())
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
-                hasNotification = true;
             }
             else
             {
@@ -1775,12 +1756,22 @@ void InfoDialog::applyNotificationFilter(MessageType opt)
             break;
         }
     }
-    setFooterState(hasNotification);
+    setFooterState();
     app->getNotificationController()->applyFilter(opt);
 }
 
-void InfoDialog::setFooterState(bool hasTransfers)
+void InfoDialog::setFooterState()
 {
+    bool hasTransfers = false;
+    auto currentTab = ui->sTabs->currentWidget();
+    if (currentTab == ui->pNotificationsTab)
+    {
+        hasTransfers = ui->sNotifications->currentWidget() == ui->pNotifications;
+    }
+    else
+    {
+        hasTransfers = ui->sActiveTransfers->currentWidget() == ui->pTransfers;
+    }
     ui->wBottom->setProperty("hasTransfers", hasTransfers);
     ui->wBottom->style()->unpolish(ui->wBottom);
     ui->wBottom->style()->polish(ui->wBottom);

@@ -258,7 +258,7 @@ private:
     void repositionInfoDialog();
     void initNotificationArea();
     void applyNotificationFilter(MessageType opt);
-    void setFooterState(bool hasTransfers);
+    void setFooterState();
 
     TransferScanCancelUi* mTransferScanCancelUi = nullptr;
     QtPositioningBugFixer qtBugFixer;

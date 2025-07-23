@@ -179,17 +179,35 @@ qproperty-okStateTextColor: #ff303233; /*colorToken.text-primary*/
 {
      border: none;
 }
+QLabel.label-1
+{
+font-size: 14px;
+line-height: 20px;
+}
+QLabel.label-2
+{
+color: #FF616366;/*colorToken.text-secondary*/
+}
+#lUploadToMegaDesc
+{
+font-size: 18px;
+line-height: 28px;
+font-weight: 600;
+}
+QWidget.warning
+{
+background-color: #FFFEF4C6;/*colorToken.notification-warning*/
+border-radius: 8px;
+}
+QLabel.warning
+{
+color: #FFB55407; /*colorToken.text-warning*/
+}
 /***************************************************/
 #wContaine
-#bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon, #bBusinessQuota, #bBusinessStorage, #bSyncsDisabled, #bAddSync, #bAddBackup, #bSettings, #bBackupsDisabled, #bAllSyncsDisabled, #bCloudDrive
+#bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bBusinessQuota, #bBusinessStorage, #bAddSync, #bAddBackup, #bSettings, #bCloudDrive, #bAllSyncsDisabled, #bBackupsDisabled, #bSyncsDisabled, #lUploadToMega, #bOQIcon, #lWarningOverDiskQuotaIcon
 {
 	border: none;
-}
-
-QPushButton
-{
-padding-right: 12px;
-padding-left: 12px;
 }
 
 #wHeaderframe
@@ -217,292 +235,6 @@ margin-bottom: 12px;
 #sActiveTransfers
 {
 background-color: transparent;
-}
-#pUpdated
-{
-background-color: #FFFFFF;
-}
-#lUploadToMega
-{
-border: none;
-}
-#lUploadToMegaDesc
-{
-margin-top: 10px;
-margin-left: 20px;
-margin-right: 20px;
-color: #666;
-font-family: &quot;Lato&quot;;
-font-size: 16px;
-}
-#pOverquota, #pOverquota *
-{
-background-color: #F4F6F8;
-}
-#lOQTitle
-{
-	color: #333333;
-  font-family: &quot;Lato&quot;;
-	font-size: 16px;
-}
-#lOQDesc
-{
-	color: #666666;
-    font-family: &quot;Lato&quot;;
-	font-size: 14px;
-}
-#bDiscard
-{
-
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-stop: 0 #ffffff, stop: 1 #fafafa);
- border-radius: 3px;
- border: 1px solid rgba(0, 0, 0, 5%);
- font-family: &quot;Lato&quot;;
- font-size: 14px;
- color: #333333;
-}
-#bDiscard::hover
-{
-border: 1px solid rgba(0, 0, 0, 10%);
-}
-#bBuyQuota
-{
-font-family: Lato;
-font-size: 14px;
-border: 1px solid rgba(0,191, 165, 30%);
-border-radius: 3px;
-color: #ffffff;
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-							stop: 0 rgba(0, 204, 176, 1), stop: 1 rgba(0, 172,149,1));
-}
-#bBuyQuota:hover
-{
-	border: 1px solid rgba(0,191, 165, 80%);
-}
-#pOverDiskQuotaPaywall, #pOverDiskQuotaPaywall *
-{
-background-color: #F4F6F8;
-}
-#pUpdated, #pUpdated *
-{
-background-color: #FFFFFF;
-}
-#lOverDiskQuotaTitle
-{
-  color: #333333;
-  font-family: Lato;
-  font-size: 16px;
-  line-height: 24px;
-}
-#lOverDiskQuotaLabel
-{
-  color: #666666;
-  font-family: Lato;
-  font-size: 13px;
-}
-#wUpperSeparator
-{
-  background-color: rgba(0,0,0,0.1);
-}
-#lWarningOverDiskQuotaIcon
-{
-  border: none;
-}
-#lWarningOverDiskQuota
-{
-  color: #333333;
-  font-family: Lato;
-  font-size: 14px;
-  font-weight: bold;
-  line-height: 20px;
-}
-#wBottomSeparator
-{
-  background-color: rgba(0,0,0,0.1);
-}
-#bUpgradeOverDiskQuota
-{
-
-font-family: Lato;
-font-size: 14px;
-border: 1px solid rgba(0,191, 165, 30%);
-border-radius: 3px;
-color: #ffffff;
-padding: 7px 12px 7px 12px;
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-							stop: 0 rgba(0, 204, 176, 1), stop: 1 rgba(0, 172,149,1));
-}
-
-#bUpgradeOverDiskQuota:hover
-{
-	border: 1px solid rgba(0,191, 165, 80%);
-}
-
-#pAllSyncsDisabled, #pAllSyncsDisabled *
-{
-background-color: #F4F6F8;
-}
-
-#lAllSyncsDisabledTitle
-{
-        color: #333333;
-  font-family: &quot;Lato&quot;;
-        font-size: 16px;
-}
-
-#lAllSyncsDisabledDesc
-{
-        color: #666666;
-    font-family: &quot;Lato&quot;;
-        font-size: 14px;
-}
-
-#bDismissAllSyncsSettings
-{
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-stop: 0 #ffffff, stop: 1 #fafafa);
- border-radius: 3px;
- border: 1px solid rgba(0, 0, 0, 5%);
- font-family: &quot;Lato&quot;;
- font-size: 14px;
- color: #333333;
-}
-
-#bDismissAllSyncsSettings::hover
-{
-border: 1px solid rgba(0, 0, 0, 10%);
-}
-
-#bOpenAllSyncsSettings
-{
-font-family: Lato;
-font-size: 14px;
-border: 1px solid rgba(0,191, 165, 30%);
-border-radius: 3px;
-color: #ffffff;
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                                        stop: 0 rgba(0, 204, 176, 1), stop: 1 rgba(0, 172,149,1));
-}
-
-#bOpenAllSyncsSettings:hover
-{
-        border: 1px solid rgba(0,191, 165, 80%);
-}
-
-#pBackupsDisabled, #pBackupsDisabled *
-{
-background-color: #F4F6F8;
-}
-
-#lBackupsDisabledTitle
-{
-        color: #333333;
-  font-family: &quot;Lato&quot;;
-        font-size: 16px;
-}
-
-#lBackupsDisabledDesc
-{
-        color: #666666;
-    font-family: &quot;Lato&quot;;
-        font-size: 14px;
-}
-
-#bDismissBackupsSettings
-{
-
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-stop: 0 #ffffff, stop: 1 #fafafa);
- border-radius: 3px;
- border: 1px solid rgba(0, 0, 0, 5%);
- font-family: &quot;Lato&quot;;
- font-size: 14px;
- color: #333333;
-}
-
-#bDismissSyncSettings::hover
-{
-border: 1px solid rgba(0, 0, 0, 10%);
-}
-
-#bOpenBackupsSettings
-{
-font-family: Lato;
-font-size: 14px;
-border: 1px solid rgba(0,191, 165, 30%);
-border-radius: 3px;
-color: #ffffff;
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                                        stop: 0 rgba(0, 204, 176, 1), stop: 1 rgba(0, 172,149,1));
-}
-
-#bOpenSyncSettings:hover
-{
-        border: 1px solid rgba(0,191, 165, 80%);
-}
-
-#pSyncsDisabled, #pSyncsDisabled *
-{
-background-color: #F4F6F8;
-}
-
-#lSyncsDisabledTitle
-{
-	color: #333333;
-  font-family: &quot;Lato&quot;;
-	font-size: 16px;
-}
-
-#lSyncsDisabledDesc
-{
-	color: #666666;
-    font-family: &quot;Lato&quot;;
-	font-size: 14px;
-}
-
-#bDismissSyncSettings
-{
-
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-stop: 0 #ffffff, stop: 1 #fafafa);
- border-radius: 3px;
- border: 1px solid rgba(0, 0, 0, 5%);
- font-family: &quot;Lato&quot;;
- font-size: 14px;
- color: #333333;
-}
-
-#bDismissSyncSettings::hover
-{
-border: 1px solid rgba(0, 0, 0, 10%);
-}
-
-
-#bOpenSyncSettings
-{
-font-family: Lato;
-font-size: 14px;
-border: 1px solid rgba(0,191, 165, 30%);
-border-radius: 3px;
-color: #ffffff;
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-							stop: 0 rgba(0, 204, 176, 1), stop: 1 rgba(0, 172,149,1));
-}
-
-#bOpenSyncSettings:hover
-{
-	border: 1px solid rgba(0,191, 165, 80%);
-}
-
-#bNotificationsSettings
-{
-	color: #666666;
-	font-family: Lato;
-	font-size: 14px;
-	line-height: 22px;
-	text-align: center;
-    border: none;
 }
 
 #wContainerBottom, #wBottomFrame, #wBottom
@@ -1177,7 +909,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                   </size>
                  </property>
                  <property name="currentIndex">
-                  <number>1</number>
+                  <number>0</number>
                  </property>
                  <widget class="QWidget" name="pTransfersTab">
                   <property name="sizePolicy">
@@ -1729,14 +1461,11 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                               </property>
                               <property name="iconSize">
                                <size>
-                                <width>352</width>
-                                <height>234</height>
+                                <width>128</width>
+                                <height>128</height>
                                </size>
                               </property>
                               <property name="default">
-                               <bool>false</bool>
-                              </property>
-                              <property name="flat">
                                <bool>false</bool>
                               </property>
                              </widget>
@@ -1965,6 +1694,9 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                <property name="wordWrap">
                                 <bool>true</bool>
                                </property>
+                               <property name="class" stdset="0">
+                                <string notr="true">label-1</string>
+                               </property>
                               </widget>
                              </item>
                              <item>
@@ -1977,6 +1709,9 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                </property>
                                <property name="wordWrap">
                                 <bool>true</bool>
+                               </property>
+                               <property name="class" stdset="0">
+                                <string notr="true">label-2</string>
                                </property>
                               </widget>
                              </item>
@@ -2031,6 +1766,12 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                <property name="text">
                                 <string>Dismiss</string>
                                </property>
+                               <property name="type" stdset="0">
+                                <string notr="true">secondary</string>
+                               </property>
+                               <property name="dimension" stdset="0">
+                                <string notr="true">medium</string>
+                               </property>
                               </widget>
                              </item>
                              <item>
@@ -2049,6 +1790,12 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                </property>
                                <property name="text">
                                 <string>Buy more space</string>
+                               </property>
+                               <property name="type" stdset="0">
+                                <string notr="true">primary</string>
+                               </property>
+                               <property name="dimension" stdset="0">
+                                <string notr="true">medium</string>
                                </property>
                               </widget>
                              </item>
@@ -2166,7 +1913,26 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                <property name="wordWrap">
                                 <bool>true</bool>
                                </property>
+                               <property name="class" stdset="0">
+                                <string notr="true">label-1</string>
+                               </property>
                               </widget>
+                             </item>
+                             <item>
+                              <spacer name="verticalSpacer_7">
+                               <property name="orientation">
+                                <enum>Qt::Vertical</enum>
+                               </property>
+                               <property name="sizeType">
+                                <enum>QSizePolicy::Fixed</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>20</width>
+                                 <height>8</height>
+                                </size>
+                               </property>
+                              </spacer>
                              </item>
                             </layout>
                            </widget>
@@ -2187,13 +1953,13 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                               <number>0</number>
                              </property>
                              <property name="topMargin">
-                              <number>10</number>
+                              <number>0</number>
                              </property>
                              <property name="rightMargin">
                               <number>0</number>
                              </property>
                              <property name="bottomMargin">
-                              <number>10</number>
+                              <number>0</number>
                              </property>
                              <item>
                               <widget class="QLabel" name="lOverDiskQuotaLabel">
@@ -2212,7 +1978,29 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                <property name="wordWrap">
                                 <bool>true</bool>
                                </property>
+                               <property name="type" stdset="0">
+                                <string notr="true">secondary</string>
+                               </property>
+                               <property name="class" stdset="0">
+                                <string notr="true">label-2</string>
+                               </property>
                               </widget>
+                             </item>
+                             <item>
+                              <spacer name="verticalSpacer_8">
+                               <property name="orientation">
+                                <enum>Qt::Vertical</enum>
+                               </property>
+                               <property name="sizeType">
+                                <enum>QSizePolicy::Fixed</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>20</width>
+                                 <height>32</height>
+                                </size>
+                               </property>
+                              </spacer>
                              </item>
                             </layout>
                            </widget>
@@ -2227,7 +2015,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                             </property>
                             <layout class="QVBoxLayout" name="verticalLayout_26">
                              <property name="spacing">
-                              <number>10</number>
+                              <number>0</number>
                              </property>
                              <property name="leftMargin">
                               <number>0</number>
@@ -2239,30 +2027,8 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                               <number>0</number>
                              </property>
                              <property name="bottomMargin">
-                              <number>10</number>
+                              <number>0</number>
                              </property>
-                             <item>
-                              <widget class="QWidget" name="wUpperSeparator" native="true">
-                               <property name="sizePolicy">
-                                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                                 <horstretch>0</horstretch>
-                                 <verstretch>0</verstretch>
-                                </sizepolicy>
-                               </property>
-                               <property name="minimumSize">
-                                <size>
-                                 <width>0</width>
-                                 <height>1</height>
-                                </size>
-                               </property>
-                               <property name="maximumSize">
-                                <size>
-                                 <width>16777215</width>
-                                 <height>1</height>
-                                </size>
-                               </property>
-                              </widget>
-                             </item>
                              <item>
                               <widget class="QWidget" name="wWarningMessage" native="true">
                                <property name="sizePolicy">
@@ -2271,18 +2037,30 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                  <verstretch>0</verstretch>
                                 </sizepolicy>
                                </property>
+                               <property name="class" stdset="0">
+                                <string>warning</string>
+                               </property>
+                               <property name="type" stdset="0">
+                                <string notr="true">primary</string>
+                               </property>
+                               <property name="dimension" stdset="0">
+                                <string notr="true">medium</string>
+                               </property>
                                <layout class="QHBoxLayout" name="horizontalLayout_20">
+                                <property name="spacing">
+                                 <number>8</number>
+                                </property>
                                 <property name="leftMargin">
-                                 <number>0</number>
+                                 <number>12</number>
                                 </property>
                                 <property name="topMargin">
-                                 <number>0</number>
+                                 <number>12</number>
                                 </property>
                                 <property name="rightMargin">
-                                 <number>0</number>
+                                 <number>12</number>
                                 </property>
                                 <property name="bottomMargin">
-                                 <number>0</number>
+                                 <number>12</number>
                                 </property>
                                 <item>
                                  <widget class="QPushButton" name="lWarningOverDiskQuotaIcon">
@@ -2303,14 +2081,17 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                   </property>
                                   <property name="icon">
                                    <iconset>
-                                    <normalon>:/images/icon_paywall_warning.png</normalon>
+                                    <normalon>:/images/themed/dark/alert-triangle.svg</normalon>
                                    </iconset>
                                   </property>
                                   <property name="iconSize">
                                    <size>
-                                    <width>36</width>
-                                    <height>36</height>
+                                    <width>16</width>
+                                    <height>16</height>
                                    </size>
+                                  </property>
+                                  <property name="flat">
+                                   <bool>false</bool>
                                   </property>
                                  </widget>
                                 </item>
@@ -2328,35 +2109,32 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                   <property name="wordWrap">
                                    <bool>true</bool>
                                   </property>
+                                  <property name="class" stdset="0">
+                                   <string notr="true">warning</string>
+                                  </property>
                                  </widget>
                                 </item>
                                </layout>
                               </widget>
                              </item>
-                             <item>
-                              <widget class="QWidget" name="wBottomSeparator" native="true">
-                               <property name="sizePolicy">
-                                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                                 <horstretch>0</horstretch>
-                                 <verstretch>0</verstretch>
-                                </sizepolicy>
-                               </property>
-                               <property name="minimumSize">
-                                <size>
-                                 <width>0</width>
-                                 <height>1</height>
-                                </size>
-                               </property>
-                               <property name="maximumSize">
-                                <size>
-                                 <width>16777215</width>
-                                 <height>1</height>
-                                </size>
-                               </property>
-                              </widget>
-                             </item>
                             </layout>
                            </widget>
+                          </item>
+                          <item>
+                           <spacer name="verticalSpacer_9">
+                            <property name="orientation">
+                             <enum>Qt::Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                             <enum>QSizePolicy::Fixed</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>20</width>
+                              <height>32</height>
+                             </size>
+                            </property>
+                           </spacer>
                           </item>
                           <item>
                            <widget class="QWidget" name="wUpgradeOverDiskQuota" native="true">
@@ -2366,12 +2144,18 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                               <verstretch>0</verstretch>
                              </sizepolicy>
                             </property>
+                            <property name="type" stdset="0">
+                             <string notr="true">primary</string>
+                            </property>
+                            <property name="dimension" stdset="0">
+                             <string notr="true">medium</string>
+                            </property>
                             <layout class="QHBoxLayout" name="horizontalLayout_18">
                              <property name="leftMargin">
                               <number>0</number>
                              </property>
                              <property name="topMargin">
-                              <number>12</number>
+                              <number>0</number>
                              </property>
                              <property name="rightMargin">
                               <number>0</number>
@@ -2412,6 +2196,12 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                <property name="text">
                                 <string>Upgrade account</string>
                                </property>
+                               <property name="type" stdset="0">
+                                <string notr="true">primary</string>
+                               </property>
+                               <property name="dimension" stdset="0">
+                                <string notr="true">medium</string>
+                               </property>
                               </widget>
                              </item>
                              <item>
@@ -2448,20 +2238,33 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                         <widget class="QWidget" name="pAllSyncsDisabled">
                          <layout class="QVBoxLayout" name="verticalLayout_29">
                           <property name="spacing">
-                           <number>18</number>
+                           <number>0</number>
                           </property>
                           <property name="leftMargin">
                            <number>20</number>
                           </property>
                           <property name="topMargin">
-                           <number>32</number>
+                           <number>0</number>
                           </property>
                           <property name="rightMargin">
                            <number>20</number>
                           </property>
                           <property name="bottomMargin">
-                           <number>30</number>
+                           <number>0</number>
                           </property>
+                          <item>
+                           <spacer name="verticalSpacer_13">
+                            <property name="orientation">
+                             <enum>Qt::Vertical</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>20</width>
+                              <height>40</height>
+                             </size>
+                            </property>
+                           </spacer>
+                          </item>
                           <item>
                            <widget class="QWidget" name="wAllSyncsDisabledIcon" native="true">
                             <property name="minimumSize">
@@ -2490,13 +2293,13 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                               <number>0</number>
                              </property>
                              <property name="bottomMargin">
-                              <number>2</number>
+                              <number>0</number>
                              </property>
                              <item>
                               <widget class="QPushButton" name="bAllSyncsDisabled">
                                <property name="minimumSize">
                                 <size>
-                                 <width>128</width>
+                                 <width>96</width>
                                  <height>96</height>
                                 </size>
                                </property>
@@ -2511,19 +2314,35 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                </property>
                                <property name="icon">
                                 <iconset>
-                                 <normalon>:/images/icons/infodialog/warning-disabled-syncs-and-backups.png</normalon>
+                                 <normalon>:/images/themed/dark/sync-warning.svg</normalon>
                                 </iconset>
                                </property>
                                <property name="iconSize">
                                 <size>
-                                 <width>128</width>
-                                 <height>96</height>
+                                 <width>48</width>
+                                 <height>48</height>
                                 </size>
                                </property>
                               </widget>
                              </item>
                             </layout>
                            </widget>
+                          </item>
+                          <item>
+                           <spacer name="verticalSpacer_11">
+                            <property name="orientation">
+                             <enum>Qt::Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                             <enum>QSizePolicy::Maximum</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>20</width>
+                              <height>12</height>
+                             </size>
+                            </property>
+                           </spacer>
                           </item>
                           <item>
                            <widget class="QWidget" name="wAllSyncsDisabledLabels" native="true">
@@ -2541,7 +2360,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                             </property>
                             <layout class="QVBoxLayout" name="verticalLayout_282">
                              <property name="spacing">
-                              <number>10</number>
+                              <number>8</number>
                              </property>
                              <property name="leftMargin">
                               <number>6</number>
@@ -2578,6 +2397,9 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                <property name="wordWrap">
                                 <bool>true</bool>
                                </property>
+                               <property name="class" stdset="0">
+                                <string notr="true">label-1</string>
+                               </property>
                               </widget>
                              </item>
                              <item>
@@ -2591,16 +2413,35 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                <property name="wordWrap">
                                 <bool>true</bool>
                                </property>
+                               <property name="class" stdset="0">
+                                <string notr="true">label-2</string>
+                               </property>
                               </widget>
                              </item>
                             </layout>
                            </widget>
                           </item>
                           <item>
+                           <spacer name="verticalSpacer_10">
+                            <property name="orientation">
+                             <enum>Qt::Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                             <enum>QSizePolicy::Fixed</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>20</width>
+                              <height>32</height>
+                             </size>
+                            </property>
+                           </spacer>
+                          </item>
+                          <item>
                            <widget class="QWidget" name="wAllSyncsDisabledButtons" native="true">
                             <layout class="QHBoxLayout" name="horizontalLayout_222">
                              <property name="spacing">
-                              <number>10</number>
+                              <number>12</number>
                              </property>
                              <property name="leftMargin">
                               <number>0</number>
@@ -2644,6 +2485,12 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                <property name="text">
                                 <string>Dismiss</string>
                                </property>
+                               <property name="type" stdset="0">
+                                <string notr="true">secondary</string>
+                               </property>
+                               <property name="dimension" stdset="0">
+                                <string notr="true">medium</string>
+                               </property>
                               </widget>
                              </item>
                              <item>
@@ -2663,6 +2510,12 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                <property name="text">
                                 <string>Open Settings</string>
                                </property>
+                               <property name="type" stdset="0">
+                                <string notr="true">primary</string>
+                               </property>
+                               <property name="dimension" stdset="0">
+                                <string notr="true">medium</string>
+                               </property>
                               </widget>
                              </item>
                              <item>
@@ -2681,25 +2534,51 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                             </layout>
                            </widget>
                           </item>
+                          <item>
+                           <spacer name="verticalSpacer_12">
+                            <property name="orientation">
+                             <enum>Qt::Vertical</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>20</width>
+                              <height>40</height>
+                             </size>
+                            </property>
+                           </spacer>
+                          </item>
                          </layout>
                         </widget>
                         <widget class="QWidget" name="pBackupsDisabled">
                          <layout class="QVBoxLayout" name="verticalLayout_292">
                           <property name="spacing">
-                           <number>18</number>
+                           <number>2</number>
                           </property>
                           <property name="leftMargin">
                            <number>20</number>
                           </property>
                           <property name="topMargin">
-                           <number>32</number>
+                           <number>0</number>
                           </property>
                           <property name="rightMargin">
                            <number>20</number>
                           </property>
                           <property name="bottomMargin">
-                           <number>30</number>
+                           <number>0</number>
                           </property>
+                          <item>
+                           <spacer name="verticalSpacer_14">
+                            <property name="orientation">
+                             <enum>Qt::Vertical</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>20</width>
+                              <height>40</height>
+                             </size>
+                            </property>
+                           </spacer>
+                          </item>
                           <item>
                            <widget class="QWidget" name="wBackupsDisabledIcon" native="true">
                             <property name="minimumSize">
@@ -2728,7 +2607,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                               <number>0</number>
                              </property>
                              <property name="bottomMargin">
-                              <number>2</number>
+                              <number>0</number>
                              </property>
                              <item>
                               <widget class="QPushButton" name="bBackupsDisabled">
@@ -2753,14 +2632,30 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                </property>
                                <property name="iconSize">
                                 <size>
-                                 <width>96</width>
-                                 <height>96</height>
+                                 <width>48</width>
+                                 <height>48</height>
                                 </size>
                                </property>
                               </widget>
                              </item>
                             </layout>
                            </widget>
+                          </item>
+                          <item>
+                           <spacer name="verticalSpacer_16">
+                            <property name="orientation">
+                             <enum>Qt::Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                             <enum>QSizePolicy::Fixed</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>20</width>
+                              <height>12</height>
+                             </size>
+                            </property>
+                           </spacer>
                           </item>
                           <item>
                            <widget class="QWidget" name="wBackupsDisabledLabels" native="true">
@@ -2778,7 +2673,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                             </property>
                             <layout class="QVBoxLayout" name="verticalLayout_281">
                              <property name="spacing">
-                              <number>10</number>
+                              <number>8</number>
                              </property>
                              <property name="leftMargin">
                               <number>6</number>
@@ -2815,6 +2710,9 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                <property name="wordWrap">
                                 <bool>true</bool>
                                </property>
+                               <property name="class" stdset="0">
+                                <string notr="true">label-1</string>
+                               </property>
                               </widget>
                              </item>
                              <item>
@@ -2828,10 +2726,29 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                <property name="wordWrap">
                                 <bool>true</bool>
                                </property>
+                               <property name="class" stdset="0">
+                                <string notr="true">label-2</string>
+                               </property>
                               </widget>
                              </item>
                             </layout>
                            </widget>
+                          </item>
+                          <item>
+                           <spacer name="verticalSpacer_17">
+                            <property name="orientation">
+                             <enum>Qt::Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                             <enum>QSizePolicy::Fixed</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>20</width>
+                              <height>32</height>
+                             </size>
+                            </property>
+                           </spacer>
                           </item>
                           <item>
                            <widget class="QWidget" name="wBackupsDisabledButtons" native="true">
@@ -2881,6 +2798,12 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                <property name="text">
                                 <string>Dismiss</string>
                                </property>
+                               <property name="type" stdset="0">
+                                <string notr="true">secondary</string>
+                               </property>
+                               <property name="dimension" stdset="0">
+                                <string>medium</string>
+                               </property>
                               </widget>
                              </item>
                              <item>
@@ -2900,6 +2823,12 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                <property name="text">
                                 <string>Open Settings</string>
                                </property>
+                               <property name="type" stdset="0">
+                                <string notr="true">primary</string>
+                               </property>
+                               <property name="dimension" stdset="0">
+                                <string notr="true">medium</string>
+                               </property>
                               </widget>
                              </item>
                              <item>
@@ -2918,25 +2847,51 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                             </layout>
                            </widget>
                           </item>
+                          <item>
+                           <spacer name="verticalSpacer_15">
+                            <property name="orientation">
+                             <enum>Qt::Vertical</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>20</width>
+                              <height>40</height>
+                             </size>
+                            </property>
+                           </spacer>
+                          </item>
                          </layout>
                         </widget>
                         <widget class="QWidget" name="pSyncsDisabled">
                          <layout class="QVBoxLayout" name="verticalLayout_291">
                           <property name="spacing">
-                           <number>18</number>
+                           <number>0</number>
                           </property>
                           <property name="leftMargin">
                            <number>20</number>
                           </property>
                           <property name="topMargin">
-                           <number>32</number>
+                           <number>0</number>
                           </property>
                           <property name="rightMargin">
                            <number>20</number>
                           </property>
                           <property name="bottomMargin">
-                           <number>30</number>
+                           <number>0</number>
                           </property>
+                          <item>
+                           <spacer name="verticalSpacer_19">
+                            <property name="orientation">
+                             <enum>Qt::Vertical</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>20</width>
+                              <height>40</height>
+                             </size>
+                            </property>
+                           </spacer>
+                          </item>
                           <item>
                            <widget class="QWidget" name="wSyncsDisabledIcon" native="true">
                             <property name="minimumSize">
@@ -2986,13 +2941,13 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                </property>
                                <property name="icon">
                                 <iconset>
-                                 <normalon>:/images/icons/infodialog/warning-disabled-syncs.png</normalon>
+                                 <normalon>:/images/themed/dark/sync-warning.svg</normalon>
                                 </iconset>
                                </property>
                                <property name="iconSize">
                                 <size>
-                                 <width>96</width>
-                                 <height>96</height>
+                                 <width>48</width>
+                                 <height>48</height>
                                 </size>
                                </property>
                               </widget>
@@ -3016,7 +2971,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                             </property>
                             <layout class="QVBoxLayout" name="verticalLayout_28">
                              <property name="spacing">
-                              <number>10</number>
+                              <number>8</number>
                              </property>
                              <property name="leftMargin">
                               <number>6</number>
@@ -3030,6 +2985,22 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                              <property name="bottomMargin">
                               <number>0</number>
                              </property>
+                             <item>
+                              <spacer name="verticalSpacer_20">
+                               <property name="orientation">
+                                <enum>Qt::Vertical</enum>
+                               </property>
+                               <property name="sizeType">
+                                <enum>QSizePolicy::Fixed</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>20</width>
+                                 <height>12</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
                              <item>
                               <widget class="QLabel" name="lSyncsDisabledTitle">
                                <property name="minimumSize">
@@ -3053,6 +3024,9 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                <property name="wordWrap">
                                 <bool>true</bool>
                                </property>
+                               <property name="class" stdset="0">
+                                <string notr="true">label-1</string>
+                               </property>
                               </widget>
                              </item>
                              <item>
@@ -3066,10 +3040,29 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                <property name="wordWrap">
                                 <bool>true</bool>
                                </property>
+                               <property name="class" stdset="0">
+                                <string notr="true">label-2</string>
+                               </property>
                               </widget>
                              </item>
                             </layout>
                            </widget>
+                          </item>
+                          <item>
+                           <spacer name="verticalSpacer_21">
+                            <property name="orientation">
+                             <enum>Qt::Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                             <enum>QSizePolicy::Fixed</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>20</width>
+                              <height>32</height>
+                             </size>
+                            </property>
+                           </spacer>
                           </item>
                           <item>
                            <widget class="QWidget" name="wSyncsDisabledButtons" native="true">
@@ -3119,6 +3112,12 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                <property name="text">
                                 <string>Dismiss</string>
                                </property>
+                               <property name="type" stdset="0">
+                                <string notr="true">secondary</string>
+                               </property>
+                               <property name="dimension" stdset="0">
+                                <string notr="true">medium</string>
+                               </property>
                               </widget>
                              </item>
                              <item>
@@ -3138,6 +3137,12 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                <property name="text">
                                 <string>Open Settings</string>
                                </property>
+                               <property name="type" stdset="0">
+                                <string notr="true">primary</string>
+                               </property>
+                               <property name="dimension" stdset="0">
+                                <string notr="true">medium</string>
+                               </property>
                               </widget>
                              </item>
                              <item>
@@ -3155,6 +3160,19 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                              </item>
                             </layout>
                            </widget>
+                          </item>
+                          <item>
+                           <spacer name="verticalSpacer_18">
+                            <property name="orientation">
+                             <enum>Qt::Vertical</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>20</width>
+                              <height>40</height>
+                             </size>
+                            </property>
+                           </spacer>
                           </item>
                          </layout>
                         </widget>
