@@ -2954,6 +2954,11 @@ void MegaApplication::ConnectServerSignals(HTTPServer* server)
     connect(server, &HTTPServer::onExternalDownloadRequestFinished, this, &MegaApplication::processDownloads, Qt::QueuedConnection);
     connect(server, &HTTPServer::onExternalFileUploadRequested, this, &MegaApplication::externalFileUpload, Qt::QueuedConnection);
     connect(server, &HTTPServer::onExternalFolderUploadRequested, this, &MegaApplication::externalFolderUpload, Qt::QueuedConnection);
+    connect(server,
+            &HTTPServer::onExternalFileFolderUploadRequested,
+            this,
+            &MegaApplication::externalFileFolderUpload,
+            Qt::QueuedConnection);
     connect(server, &HTTPServer::onExternalFolderSyncRequested, this, &MegaApplication::externalFolderSync, Qt::QueuedConnection);
     connect(server, &HTTPServer::onExternalOpenTransferManagerRequested, this, &MegaApplication::externalOpenTransferManager, Qt::QueuedConnection);
     connect(server, &HTTPServer::onExternalShowInFolderRequested, this, &MegaApplication::openFolderPath, Qt::QueuedConnection);
@@ -2990,10 +2995,18 @@ MegaApplication::NodeCount MegaApplication::countFilesAndFolders(const QStringLi
     count.files = 0;
     count.folders = 0;
 
-    for (const auto& path : paths)
+    for (const auto& path: paths)
     {
+        QFileInfo fileInfo(path);
+        if (fileInfo.isFile())
+        {
+            count.files++;
+            continue;
+        }
         count.folders++;
-        QDirIterator it (path, QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+        QDirIterator it(path,
+                        QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot,
+                        QDirIterator::Subdirectories);
         while (it.hasNext())
         {
             it.next();
@@ -4989,6 +5002,59 @@ void MegaApplication::externalFolderUpload(MegaHandle targetFolder)
     info.parent = parent;
     info.func = processUpload;
     Platform::getInstance()->folderSelector(info);
+}
+
+void MegaApplication::externalFileFolderUpload(MegaHandle targetFolder)
+{
+    if (appfinished || QmlDialogManager::instance()->openOnboardingDialog())
+    {
+        return;
+    }
+
+    folderUploadTarget = targetFolder;
+
+    auto processUpload = [this](const QStringList& foldersSelected)
+    {
+        if (!foldersSelected.isEmpty())
+        {
+            QFuture<NodeCount> future;
+            QFutureWatcher<NodeCount>* watcher(new QFutureWatcher<NodeCount>());
+
+            connect(watcher,
+                    &QFutureWatcher<NodeCount>::finished,
+                    this,
+                    [this, foldersSelected, watcher]()
+                    {
+                        const NodeCount nodeCount = watcher->result();
+                        processUploads(foldersSelected);
+                        HTTPServer::onUploadSelectionAccepted(nodeCount.files, nodeCount.folders);
+                        watcher->deleteLater();
+                    });
+
+            future = QtConcurrent::run(countFilesAndFolders, foldersSelected);
+            watcher->setFuture(future);
+        }
+        else
+        {
+            HTTPServer::onUploadSelectionDiscarded();
+        }
+    };
+
+    QString defaultFolderPath = getDefaultUploadPath();
+
+    QWidget* parent(nullptr);
+
+#ifdef Q_OS_WIN
+    parent = infoDialog;
+#endif
+
+    SelectorInfo info;
+    info.title = QCoreApplication::translate("ShellExtension", "Upload to MEGA");
+    info.defaultDir = defaultFolderPath;
+    info.multiSelection = true;
+    info.parent = parent;
+    info.func = processUpload;
+    Platform::getInstance()->fileAndFolderSelector(info);
 }
 
 void MegaApplication::externalFolderSync(MegaHandle targetFolder)
