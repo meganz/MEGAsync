@@ -103,6 +103,7 @@ void TokenParserWidgetManager::loadStandardStyleSheetComponents()
         const auto& colorTokens = mColorThemedTokens.value(theme);
 
         replaceColorTokens(sourceStandardComponentsStyleSheet, colorTokens);
+        replaceThemeTokens(sourceStandardComponentsStyleSheet, theme);
         mThemedStandardComponentsStyleSheet[theme] = sourceStandardComponentsStyleSheet;
     }
 }
@@ -273,6 +274,7 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget, bool isSubWidget)
 
     replaceColorTokens(widgetStyleSheet, colorTokens);
     replaceIconColorTokens(widget, widgetStyleSheet, colorTokens);
+    replaceThemeTokens(widgetStyleSheet, currentTheme);
     tokenizeChildStyleSheets(widget, widgetStyleSheet);
 
     removeFrameOnDialogCombos(widget);
@@ -283,6 +285,56 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget, bool isSubWidget)
         widgetStyleSheet;
 
     widget->setStyleSheet(styleSheet);
+}
+
+void TokenParserWidgetManager::replaceThemeTokens(QString& styleSheet, const QString& currentTheme)
+{
+    int adjustIndexOffset = 0;
+    auto toReplaceTheme = currentTheme.toLower();
+    auto toReplaceThemeLenght = toReplaceTheme.length();
+    const QChar fillChar = QLatin1Char(' ');
+
+    QRegularExpressionMatchIterator matchIterator =
+        REPLACE_THEME_TOKEN_REGULAR_EXPRESSION.globalMatch(styleSheet);
+    while (matchIterator.hasNext())
+    {
+        QRegularExpressionMatch match = matchIterator.next();
+
+        if (match.lastCapturedIndex() ==
+            REPLACE_THEME_TOKEN_CAPTURE_INDEX::REPLACE_THEME_TOKEN_THEME)
+        {
+            if (match.captured(REPLACE_THEME_TOKEN_CAPTURE_INDEX::REPLACE_THEME_TOKEN_THEME) ==
+                toReplaceTheme)
+            {
+                continue;
+            }
+
+            auto startIndex =
+                adjustIndexOffset +
+                match.capturedStart(REPLACE_THEME_TOKEN_CAPTURE_INDEX::REPLACE_THEME_TOKEN_THEME);
+            auto endIndex =
+                adjustIndexOffset +
+                match.capturedEnd(REPLACE_THEME_TOKEN_CAPTURE_INDEX::REPLACE_THEME_TOKEN_THEME);
+
+            auto capturedLength = endIndex - startIndex;
+            if (capturedLength > toReplaceThemeLenght)
+            {
+                // need to remove chars
+                auto diff = capturedLength - toReplaceThemeLenght;
+                styleSheet.remove(startIndex, diff);
+                adjustIndexOffset -= diff;
+            }
+            else if (capturedLength < toReplaceThemeLenght)
+            {
+                // need to add chars
+                auto diff = toReplaceThemeLenght - capturedLength;
+                styleSheet.insert(startIndex, &fillChar, diff);
+                adjustIndexOffset += diff;
+            }
+
+            styleSheet.replace(startIndex, toReplaceThemeLenght, toReplaceTheme);
+        }
+    }
 }
 
 void TokenParserWidgetManager::removeFrameOnDialogCombos(QWidget* widget)
