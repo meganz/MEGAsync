@@ -287,76 +287,6 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget, bool isSubWidget)
     widget->setStyleSheet(styleSheet);
 }
 
-void TokenParserWidgetManager::removeFrameOnDialogCombos(QWidget* widget)
-{
-    auto comboBoxes = widget->findChildren<QComboBox*>();
-    if (comboBoxes.isEmpty())
-    {
-        return;
-    }
-
-    for (auto comboBox: comboBoxes)
-    {
-        comboBox->view()->window()->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint |
-                                                   Qt::NoDropShadowWindowHint);
-        comboBox->view()->window()->setAttribute(Qt::WA_TranslucentBackground);
-    }
-}
-
-void TokenParserWidgetManager::replaceColorTokens(QString& styleSheet,
-                                                  const ColorTokens& colorTokens)
-{
-    QRegularExpressionMatchIterator matchIterator =
-        COLOR_TOKEN_REGULAR_EXPRESSION.globalMatch(styleSheet);
-    while (matchIterator.hasNext())
-    {
-        QRegularExpressionMatch match = matchIterator.next();
-
-        if (match.lastCapturedIndex() == COLOR_TOKEN_CAPTURE_INDEX::COLOR_DESIGN_TOKEN_NAME)
-        {
-            const QString& tokenValue = colorTokens.value(
-                match.captured(COLOR_TOKEN_CAPTURE_INDEX::COLOR_DESIGN_TOKEN_NAME));
-
-            auto startIndex = match.capturedStart(COLOR_TOKEN_CAPTURE_INDEX::COLOR_HEX_COLOR_VALUE);
-            auto endIndex = match.capturedEnd(COLOR_TOKEN_CAPTURE_INDEX::COLOR_HEX_COLOR_VALUE);
-            styleSheet.replace(startIndex, endIndex - startIndex, tokenValue);
-        }
-    }
-}
-
-void TokenParserWidgetManager::replaceIconColorTokens(QWidget* widget,
-                                                      QString& styleSheet,
-                                                      const ColorTokens& colorTokens)
-{
-    QRegularExpressionMatchIterator matchIterator =
-        ICON_COLOR_TOKEN_REGULAR_EXPRESSION.globalMatch(styleSheet);
-    while (matchIterator.hasNext())
-    {
-        QRegularExpressionMatch match = matchIterator.next();
-
-        if (match.lastCapturedIndex() == ICON_TOKEN_CAPTURE_INDEX::ICON_TOKEN_DESIGN_TOKEN_NAME)
-        {
-            const QString& targetElementProperty =
-                match.captured(ICON_TOKEN_CAPTURE_INDEX::ICON_TOKEN_TARGET_PROPERTY);
-            const QString& targetElementId =
-                match.captured(ICON_TOKEN_CAPTURE_INDEX::ICON_TOKEN_TARGET_ELEMENT_ID);
-            const QString& mode = match.captured(ICON_TOKEN_CAPTURE_INDEX::ICON_TOKEN_TARGET_MODE);
-            const QString& state =
-                match.captured(ICON_TOKEN_CAPTURE_INDEX::ICON_TOKEN_TARGET_STATE);
-            const QString& tokenId =
-                match.captured(ICON_TOKEN_CAPTURE_INDEX::ICON_TOKEN_DESIGN_TOKEN_NAME);
-
-            IconTokenizer::process(widget,
-                                   mode,
-                                   state,
-                                   colorTokens,
-                                   targetElementId,
-                                   targetElementProperty,
-                                   tokenId);
-        }
-    }
-}
-
 void TokenParserWidgetManager::replaceThemeTokens(QString& styleSheet, const QString& currentTheme)
 {
     int adjustIndexOffset = 0;
@@ -403,6 +333,86 @@ void TokenParserWidgetManager::replaceThemeTokens(QString& styleSheet, const QSt
             }
 
             styleSheet.replace(startIndex, toReplaceThemeLenght, toReplaceTheme);
+        }
+    }
+}
+
+void TokenParserWidgetManager::removeFrameOnDialogCombos(QWidget* widget)
+{
+    auto comboBoxes = widget->findChildren<QComboBox*>();
+    if (comboBoxes.isEmpty())
+    {
+        return;
+    }
+
+    for (auto comboBox: comboBoxes)
+    {
+        comboBox->view()->window()->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint |
+                                                   Qt::NoDropShadowWindowHint);
+        comboBox->view()->window()->setAttribute(Qt::WA_TranslucentBackground);
+    }
+}
+
+void TokenParserWidgetManager::replaceColorTokens(QString& styleSheet,
+                                                  const ColorTokens& colorTokens)
+{
+    QRegularExpressionMatchIterator matchIterator =
+        COLOR_TOKEN_REGULAR_EXPRESSION.globalMatch(styleSheet);
+
+    QVector<QRegularExpressionMatch> matches;
+
+    // Save in a container to do a reverse iteration later
+    while (matchIterator.hasNext())
+    {
+        QRegularExpressionMatch match = matchIterator.next();
+        matches.append(match);
+    }
+
+    // If we do a reverse iterator, we don´t affect the previous match with our changes
+    for (auto match = matches.rbegin(); match != matches.rend(); ++match)
+    {
+        if (match->lastCapturedIndex() == COLOR_TOKEN_CAPTURE_INDEX::COLOR_DESIGN_TOKEN_NAME)
+        {
+            const QString& tokenValue = colorTokens.value(
+                match->captured(COLOR_TOKEN_CAPTURE_INDEX::COLOR_DESIGN_TOKEN_NAME));
+
+            auto startIndex =
+                match->capturedStart(COLOR_TOKEN_CAPTURE_INDEX::COLOR_HEX_COLOR_VALUE);
+            auto endIndex = match->capturedEnd(COLOR_TOKEN_CAPTURE_INDEX::COLOR_HEX_COLOR_VALUE);
+            styleSheet.replace(startIndex, endIndex - startIndex, tokenValue);
+        }
+    }
+}
+
+void TokenParserWidgetManager::replaceIconColorTokens(QWidget* widget,
+                                                      QString& styleSheet,
+                                                      const ColorTokens& colorTokens)
+{
+    QRegularExpressionMatchIterator matchIterator =
+        ICON_COLOR_TOKEN_REGULAR_EXPRESSION.globalMatch(styleSheet);
+    while (matchIterator.hasNext())
+    {
+        QRegularExpressionMatch match = matchIterator.next();
+
+        if (match.lastCapturedIndex() == ICON_TOKEN_CAPTURE_INDEX::ICON_TOKEN_DESIGN_TOKEN_NAME)
+        {
+            const QString& targetElementProperty =
+                match.captured(ICON_TOKEN_CAPTURE_INDEX::ICON_TOKEN_TARGET_PROPERTY);
+            const QString& targetElementId =
+                match.captured(ICON_TOKEN_CAPTURE_INDEX::ICON_TOKEN_TARGET_ELEMENT_ID);
+            const QString& mode = match.captured(ICON_TOKEN_CAPTURE_INDEX::ICON_TOKEN_TARGET_MODE);
+            const QString& state =
+                match.captured(ICON_TOKEN_CAPTURE_INDEX::ICON_TOKEN_TARGET_STATE);
+            const QString& tokenId =
+                match.captured(ICON_TOKEN_CAPTURE_INDEX::ICON_TOKEN_DESIGN_TOKEN_NAME);
+
+            IconTokenizer::process(widget,
+                                   mode,
+                                   state,
+                                   colorTokens,
+                                   targetElementId,
+                                   targetElementProperty,
+                                   tokenId);
         }
     }
 }
