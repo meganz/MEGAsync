@@ -1,10 +1,11 @@
 #include "AbstractPlatform.h"
 
-#include "MultiQFileDialog.h"
 #include "DialogOpener.h"
+#include "megaapi.h"
+#include "MultiQFileDialog.h"
 
-#include <QScreen>
 #include <QDesktopWidget>
+#include <QScreen>
 
 using namespace mega;
 
