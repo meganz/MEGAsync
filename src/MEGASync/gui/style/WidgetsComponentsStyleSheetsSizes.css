@@ -54,7 +54,7 @@ border-radius: 5px;
 QHeaderView
 {
 padding-top: 2px;
-padding-right: 15px;
+padding-right: 0px;
 }
 
 QHeaderView::section
@@ -62,7 +62,8 @@ QHeaderView::section
 border-top: 0px;
 border-bottom: 0px;
 border-left: 0px;
-border-right: 0px ;
+border-right: 0px;
+padding-left: 6px;
 }
 
 QHeaderView::section:last
@@ -74,14 +75,14 @@ QHeaderView::up-arrow
 {
 subcontrol-origin: padding;
 subcontrol-position: center right;
-padding-right: 5px;
+padding-right: 6px;
 }
 
 QHeaderView::down-arrow
 {
 subcontrol-origin: padding;
 subcontrol-position: center right;
-padding-right: 5px;
+padding-right: 6px;
 }
 
 
