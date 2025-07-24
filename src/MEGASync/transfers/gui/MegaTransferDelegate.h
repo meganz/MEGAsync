@@ -32,6 +32,7 @@ protected slots:
 
 private:
     TransferBaseDelegateWidget *getTransferItemWidget(const QModelIndex &index, const QSize &size) const;
+    bool isDataStillValid(const QModelIndex& index, TransferBaseDelegateWidget* item) const;
 
     TransfersSortFilterProxyBaseModel* mProxyModel;
     TransfersModel* mSourceModel;

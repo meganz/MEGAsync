@@ -144,6 +144,14 @@ TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QM
     return item;
 }
 
+bool MegaTransferDelegate::isDataStillValid(const QModelIndex& index,
+                                            TransferBaseDelegateWidget* item) const
+{
+    auto transferItem(qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
+    return transferItem.getTransferData() && item->getData() &&
+           transferItem.getTransferData() == item->getData();
+}
+
 bool MegaTransferDelegate::editorEvent(QEvent* event, QAbstractItemModel*,
                                         const QStyleOptionViewItem& option,
                                         const QModelIndex& index)
@@ -162,13 +170,21 @@ bool MegaTransferDelegate::editorEvent(QEvent* event, QAbstractItemModel*,
                 if( me->button() == Qt::LeftButton )
                 {
                     TransferBaseDelegateWidget* currentRow (getTransferItemWidget(index, option.rect.size()));
-                    auto w (currentRow->childAt(me->pos() - currentRow->pos()));
-                    if (w)
+                    if (currentRow)
                     {
-                        auto t (qobject_cast<QToolButton*>(w));
-                        if (t)
+                        if (!isDataStillValid(index, currentRow))
                         {
-                            t->click();
+                            return result;
+                        }
+
+                        auto w(currentRow->childAt(me->pos() - currentRow->pos()));
+                        if (w)
+                        {
+                            auto t(qobject_cast<QToolButton*>(w));
+                            if (t)
+                            {
+                                t->click();
+                            }
                         }
                     }
                 }
@@ -182,6 +198,11 @@ bool MegaTransferDelegate::editorEvent(QEvent* event, QAbstractItemModel*,
                     TransferBaseDelegateWidget* currentRow (getTransferItemWidget(index, option.rect.size()));
                     if (currentRow)
                     {
+                        if (!isDataStillValid(index, currentRow))
+                        {
+                            return result;
+                        }
+
                         QApplication::postEvent(currentRow, new QEvent(QEvent::MouseButtonDblClick));
                     }
                 }
