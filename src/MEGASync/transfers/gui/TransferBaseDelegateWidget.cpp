@@ -94,6 +94,13 @@ void TransferBaseDelegateWidget::onRetryTransfer()
     emit retryTransfer();
 }
 
+bool TransferBaseDelegateWidget::isDataStillValid()
+{
+    auto transferItem(qvariant_cast<TransferItem>(getCurrentIndex().data(Qt::DisplayRole)));
+    return transferItem.getTransferData() && getData() &&
+           transferItem.getTransferData() == getData();
+}
+
 QString TransferBaseDelegateWidget::getState(TRANSFER_STATES state)
 {
     switch(state)

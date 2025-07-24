@@ -144,14 +144,6 @@ TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QM
     return item;
 }
 
-bool MegaTransferDelegate::isDataStillValid(const QModelIndex& index,
-                                            TransferBaseDelegateWidget* item) const
-{
-    auto transferItem(qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
-    return transferItem.getTransferData() && item->getData() &&
-           transferItem.getTransferData() == item->getData();
-}
-
 bool MegaTransferDelegate::editorEvent(QEvent* event, QAbstractItemModel*,
                                         const QStyleOptionViewItem& option,
                                         const QModelIndex& index)
@@ -172,11 +164,6 @@ bool MegaTransferDelegate::editorEvent(QEvent* event, QAbstractItemModel*,
                     TransferBaseDelegateWidget* currentRow (getTransferItemWidget(index, option.rect.size()));
                     if (currentRow)
                     {
-                        if (!isDataStillValid(index, currentRow))
-                        {
-                            return result;
-                        }
-
                         auto w(currentRow->childAt(me->pos() - currentRow->pos()));
                         if (w)
                         {
@@ -198,11 +185,6 @@ bool MegaTransferDelegate::editorEvent(QEvent* event, QAbstractItemModel*,
                     TransferBaseDelegateWidget* currentRow (getTransferItemWidget(index, option.rect.size()));
                     if (currentRow)
                     {
-                        if (!isDataStillValid(index, currentRow))
-                        {
-                            return result;
-                        }
-
                         QApplication::postEvent(currentRow, new QEvent(QEvent::MouseButtonDblClick));
                     }
                 }

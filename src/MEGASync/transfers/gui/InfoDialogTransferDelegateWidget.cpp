@@ -431,23 +431,29 @@ void InfoDialogTransferDelegateWidget::reset()
 }
 
 void InfoDialogTransferDelegateWidget::on_lShowInFolder_clicked()
-{ 
-    emit openTransferFolder();
+{
+    if (isDataStillValid())
+    {
+        emit openTransferFolder();
+    }
 }
 
 void InfoDialogTransferDelegateWidget::on_lActionTransfer_clicked()
 {
-    if (getData()->mErrorCode < 0)
+    if (isDataStillValid())
     {
-        if (getData()->canBeRetried())
+        if (getData()->mErrorCode < 0)
         {
-            //Base implementation
-            onRetryTransfer();
+            if (getData()->canBeRetried())
+            {
+                // Base implementation
+                onRetryTransfer();
+            }
         }
-    }
-    else
-    {
-        emit copyTransferLink();
+        else
+        {
+            emit copyTransferLink();
+        }
     }
 }
 
