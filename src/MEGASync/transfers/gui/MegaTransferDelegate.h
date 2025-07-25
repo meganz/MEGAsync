@@ -31,7 +31,8 @@ protected slots:
     void onHoverMove(const QModelIndex& index, const QRect& rect, const QPoint& point);
 
 private:
-    TransferBaseDelegateWidget *getTransferItemWidget(const QModelIndex &index, const QSize &size) const;
+    TransferBaseDelegateWidget* getTransferItemWidget(const QModelIndex& index,
+                                                      const QSize& size) const;
 
     TransfersSortFilterProxyBaseModel* mProxyModel;
     TransfersModel* mSourceModel;

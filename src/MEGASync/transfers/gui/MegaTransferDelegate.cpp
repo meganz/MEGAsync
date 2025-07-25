@@ -162,13 +162,16 @@ bool MegaTransferDelegate::editorEvent(QEvent* event, QAbstractItemModel*,
                 if( me->button() == Qt::LeftButton )
                 {
                     TransferBaseDelegateWidget* currentRow (getTransferItemWidget(index, option.rect.size()));
-                    auto w (currentRow->childAt(me->pos() - currentRow->pos()));
-                    if (w)
+                    if (currentRow)
                     {
-                        auto t (qobject_cast<QToolButton*>(w));
-                        if (t)
+                        auto w(currentRow->childAt(me->pos() - currentRow->pos()));
+                        if (w)
                         {
-                            t->click();
+                            auto t(qobject_cast<QToolButton*>(w));
+                            if (t)
+                            {
+                                t->click();
+                            }
                         }
                     }
                 }
