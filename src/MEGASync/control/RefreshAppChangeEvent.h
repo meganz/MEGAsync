@@ -18,15 +18,11 @@ public:
 
     static void propagateRefreshEvent()
     {
-        auto event(new QEvent(ThemeChanged));
-
         const auto widgets = QApplication::allWidgets();
         for (QWidget* widget: widgets)
         {
-            QApplication::sendEvent(widget, event);
+            QApplication::sendEvent(widget, new QEvent(ThemeChanged));
         }
-
-        delete event;
     }
 
 private:

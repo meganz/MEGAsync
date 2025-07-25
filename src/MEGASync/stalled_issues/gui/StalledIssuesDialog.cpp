@@ -351,5 +351,5 @@ bool StalledIssuesDialog::event(QEvent* event)
         ui->stalledIssuesTree->update();
     }
 
-    return QWidget::event(event);
+    return QDialog::event(event);
 }

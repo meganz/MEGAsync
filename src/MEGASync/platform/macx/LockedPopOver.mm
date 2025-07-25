@@ -14,7 +14,7 @@ bool LockedPopOver::event(QEvent *event)
         m_ui.retranslateUi(this);
         tweakStrings();
     }
-    return QWidget::event(event);
+    return QMacNativeWidget::event(event);
 }
 
 void LockedPopOver::tweakStrings()

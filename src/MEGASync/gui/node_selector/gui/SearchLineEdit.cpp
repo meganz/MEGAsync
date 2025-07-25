@@ -44,7 +44,7 @@ bool SearchLineEdit::event(QEvent* event)
     {
         ui->retranslateUi(this);
     }
-    return QWidget::event(event);
+    return QFrame::event(event);
 }
 
 bool SearchLineEdit::eventFilter(QObject *obj, QEvent *evnt)

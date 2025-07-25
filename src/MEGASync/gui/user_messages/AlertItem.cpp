@@ -764,7 +764,7 @@ bool AlertItem::event(QEvent* event)
             setAlertTimeStamp(mAlertData->getTimestamp(0));
         }
     }
-    return QWidget::event(event);
+    return UserMessageWidget::event(event);
 }
 
 QString AlertItem::formatRichString(const QString& str)

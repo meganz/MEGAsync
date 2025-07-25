@@ -22,7 +22,7 @@ bool LockedPopOver::event(QEvent* event)
         ui->retranslateUi(this);
         tweakStrings();
     }
-    return QWidget::event(event);
+    return QDialog::event(event);
 }
 
 void LockedPopOver::tweakStrings()

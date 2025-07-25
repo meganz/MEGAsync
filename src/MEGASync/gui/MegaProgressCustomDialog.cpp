@@ -26,5 +26,5 @@ bool MegaProgressCustomDialog::event(QEvent* event)
     {
         ui->retranslateUi(this);
     }
-    return QWidget::event(event);
+    return QDialog::event(event);
 }

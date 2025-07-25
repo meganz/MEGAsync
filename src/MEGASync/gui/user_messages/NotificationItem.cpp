@@ -93,7 +93,7 @@ bool NotificationItem::event(QEvent* event)
         updateNotificationData();
     }
 
-    return QWidget::event(event);
+    return UserMessageWidget::event(event);
 }
 
 void NotificationItem::showEvent(QShowEvent* event)
@@ -108,7 +108,7 @@ void NotificationItem::showEvent(QShowEvent* event)
         mDisplayEventSent = true;
     }
 
-    QWidget::showEvent(event);
+    UserMessageWidget::showEvent(event);
 }
 
 void NotificationItem::mousePressEvent(QMouseEvent* event)
