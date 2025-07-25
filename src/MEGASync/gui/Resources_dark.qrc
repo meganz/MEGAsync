@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file alias="colors/ColorThemedTokens.json">colors/ColorThemedTokens.json</file>
-        <file alias="style/WidgetsComponentsStyleSheets.css">style/WidgetsComponentsStyleSheets.css</file>
         <file alias="images/account_details/versions.svg">images/account_details/versions.svg</file>
         <file alias="images/account_details/trash.svg">images/account_details/trash.svg</file>
         <file alias="images/account_details/pie.svg">images/account_details/pie.svg</file>

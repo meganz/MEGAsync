@@ -24,6 +24,7 @@
 #include "IntervalExecutioner.h"
 #include "LoginController.h"
 #include "mega/types.h"
+#include "MegaProxyStyle.h"
 #include "MessageDialogOpener.h"
 #include "MyBackupsHandle.h"
 #include "NodeSelector.h"
@@ -411,6 +412,41 @@ void MegaApplication::showInterface(QString)
 
 bool gCrashableForTesting = false;
 
+void MegaApplication::initStyleAndResources()
+{
+    if (!Platform::getInstance()->loadThemeResource(
+            ThemeManager::instance()->getSelectedThemeString()))
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                     QString::fromUtf8("Error loading resource files.").toUtf8().constData());
+        QMessageBox::warning(
+            nullptr,
+            QString(),
+            QCoreApplication::translate("MegaError",
+                                        "The app has detected an error loading resources and needs "
+                                        "to close. If you experience this issue "
+                                        "more than once, contact our Support team."),
+            QMessageBox::Ok);
+        ::exit(0);
+    }
+
+    setStyle(new MegaProxyStyle());
+    QFile file(QLatin1String(":/style/WidgetsComponentsStyleSheetsSizes.css"));
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QString sourceStandardComponentsStyleSheet = QString::fromLatin1(file.readAll());
+        file.close();
+        setStyleSheet(sourceStandardComponentsStyleSheet);
+    }
+    else
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                     QString::fromUtf8("Couldn´t open WidgetsComponentsStyleSheetsSizes.css")
+                         .toUtf8()
+                         .constData());
+    }
+}
+
 void MegaApplication::initialize()
 {
     if (megaApi)
@@ -447,21 +483,7 @@ void MegaApplication::initialize()
     lastExit = preferences->getLastExit();
 
     // Apply specific rcc files depending on selected theme
-    if (!Platform::getInstance()->loadThemeResource(
-            ThemeManager::instance()->getSelectedThemeString()))
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                     QString::fromUtf8("Error loading resource files.").toUtf8().constData());
-        QMessageBox::warning(
-            nullptr,
-            QString(),
-            QCoreApplication::translate("MegaError",
-                                        "The app has detected an error loading resources and needs "
-                                        "to close. If you experience this issue "
-                                        "more than once, contact our Support team."),
-            QMessageBox::Ok);
-        ::exit(0);
-    }
+    initStyleAndResources();
 
     installTranslator(&translator);
     QString language = preferences->language();

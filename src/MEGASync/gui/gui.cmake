@@ -548,8 +548,9 @@ set(DESKTOP_APP_GUI_RESOURCES
     ${CMAKE_CURRENT_LIST_DIR}/Resources_macx.qrc
     ${CMAKE_CURRENT_LIST_DIR}/Resources_win.qrc
     ${CMAKE_CURRENT_LIST_DIR}/Resources_linux.qrc
-    ${CMAKE_CURRENT_LIST_DIR}/Resources.qrc
     ${CMAKE_CURRENT_LIST_DIR}/Resources_qml.qrc
+    ${CMAKE_CURRENT_LIST_DIR}/Resources_light.qrc
+    ${CMAKE_CURRENT_LIST_DIR}/Resources_dark.qrc
     ${CMAKE_CURRENT_LIST_DIR}/qml/qml.qrc
 )
 

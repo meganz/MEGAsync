@@ -531,22 +531,6 @@ int main(int argc, char *argv[])
 
     qInstallMessageHandler(messageHandler);
 
-    app.setStyle(new MegaProxyStyle());
-    QFile file(QLatin1String(":/style/WidgetsComponentsStyleSheetsSizes.css"));
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        QString sourceStandardComponentsStyleSheet = QString::fromLatin1(file.readAll());
-        file.close();
-        app.setStyleSheet(sourceStandardComponentsStyleSheet);
-    }
-    else
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO,
-                     QString::fromUtf8("Couldn´t open WidgetsComponentsStyleSheetsSizes.css")
-                         .toUtf8()
-                         .constData());
-    }
-
 #ifdef Q_OS_MACX
 
     auto current = QOperatingSystemVersion::current();
@@ -663,7 +647,6 @@ int main(int argc, char *argv[])
     addFonts();
 
     app.setWindowIcon(QIcon(QString::fromUtf8(":/images/app_ico.ico")));
-
     app.initialize();
     app.start();
 

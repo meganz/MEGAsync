@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
+        <file alias="colors/ColorThemedTokens.json">colors/ColorThemedTokens.json</file>
+        <file alias="style/WidgetsComponentsStyleSheetsTokens.css">style/WidgetsComponentsStyleSheetsTokens.css</file>
+		<file alias="style/WidgetsComponentsStyleSheetsSizes.css">style/WidgetsComponentsStyleSheetsSizes.css</file>
         <file alias="fonts/Lato-Bold.ttf">fonts/Lato-Bold.ttf</file>
         <file alias="fonts/Lato-Light.ttf">fonts/Lato-Light.ttf</file>
         <file alias="fonts/Lato-Regular.ttf">fonts/Lato-Regular.ttf</file>
