@@ -177,7 +177,7 @@ void TokenParserWidgetManager::registerWidgetForTheming(QWidget* dialog)
 
 bool TokenParserWidgetManager::isTokenized(QWidget* widget)
 {
-    return widget->property("TOKENIZED").toBool() && !widget->styleSheet().isEmpty();
+    return widget->property("TOKENIZED").toBool();
 }
 
 void TokenParserWidgetManager::applyCurrentTheme()

@@ -38,7 +38,7 @@ font-weight: 600;
 }</string>
   </property>
   <property name="TOKENIZED" stdset="0">
-   <bool>false</bool>
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
