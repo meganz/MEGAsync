@@ -1959,7 +1959,7 @@ void Utilities::propagateCustomEvent(QEvent::Type type)
     const auto widgets = QApplication::allWidgets();
     for (QWidget* widget: widgets)
     {
-        QApplication::sendEvent(widget, new QEvent(type));
+        QApplication::postEvent(widget, new QEvent(type));
     }
 }
 
