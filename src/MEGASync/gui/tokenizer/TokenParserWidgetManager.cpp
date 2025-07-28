@@ -245,7 +245,7 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
     replaceColorTokens(widgetStyleSheet, colorTokens);
     replaceIconColorTokens(widget, widgetStyleSheet, colorTokens);
     replaceThemeTokens(widgetStyleSheet, currentTheme);
-    tokenizeChildStyleSheets(widget, widgetStyleSheet);
+    tokenizeChildStyleSheets(widget);
 
     removeFrameOnDialogCombos(widget);
 
@@ -399,7 +399,7 @@ void TokenParserWidgetManager::onThemeChanged(Preferences::ThemeType theme)
     applyCurrentTheme();
 }
 
-void TokenParserWidgetManager::tokenizeChildStyleSheets(QWidget* widget, const QString&)
+void TokenParserWidgetManager::tokenizeChildStyleSheets(QWidget* widget)
 {
     auto children = widget->findChildren<QWidget*>();
     for (const auto& child: qAsConst(children))
