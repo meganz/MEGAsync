@@ -20,8 +20,6 @@ static QRegularExpression ICON_COLOR_TOKEN_REGULAR_EXPRESSION(
     QLatin1String(" *\\/\\* *ColorTokenIcon;(.*);(.*);(.*);(.*);colorToken\\.(.*) *\\*\\/"));
 static QRegularExpression REPLACE_THEME_TOKEN_REGULAR_EXPRESSION(
     QLatin1String(".*\\/(light|dark)\\/.*; *\\/\\* *replaceThemeToken *\\*\\/"));
-static QRegularExpression
-    SUB_WIDGET_WITH_STYLE_SHEET(QLatin1String(" *\\/\\* *SubWidget;(.*);(.*); *\\*\\/"));
 
 static const QString JSON_THEMED_COLOR_TOKEN_FILE =
     QLatin1String(":/colors/ColorThemedTokens.json");
@@ -49,13 +47,6 @@ enum REPLACE_THEME_TOKEN_CAPTURE_INDEX
 {
     REPLACE_THEME_TOKEN_WHOLE_MATCH,
     REPLACE_THEME_TOKEN_THEME
-};
-
-enum SUB_WIDGET_INDEX_CAPTURE_INDEX
-{
-    SUB_WIDGET_INDEX_CAPTURE_WHOLE_MATCH,
-    SUB_WIDGET_INDEX_CAPTURE_ID,
-    SUB_WIDGET_INDEX_SUBWIDGET_TYPE
 };
 }
 
@@ -152,6 +143,11 @@ void TokenParserWidgetManager::onUpdateRequested()
 // performance mesurament code will be removed in latter stages of project.
 void TokenParserWidgetManager::applyCurrentTheme(QWidget* dialog)
 {
+    if (!dialog || !isTokenized(dialog))
+    {
+        return;
+    }
+
 #if defined QT_DEBUG
     auto start = std::chrono::steady_clock::now();
 #endif
@@ -181,40 +177,19 @@ void TokenParserWidgetManager::registerWidgetForTheming(QWidget* dialog)
 
 bool TokenParserWidgetManager::isTokenized(QWidget* widget)
 {
-    static QStringList tokenizedUiFiles =
-        QString::fromUtf8(DESKTOP_APP_GUI_UI_FILES).split(QLatin1Char('|'));
-
-    QString uiFileName = QLatin1String("ui/%0.ui").arg(widget->objectName());
-
-    return !tokenizedUiFiles.filter(uiFileName).empty();
-}
-
-bool TokenParserWidgetManager::isRoot(QWidget* widget)
-{
-    static QStringList tokenizedRootUiFiles =
-        QString::fromUtf8(DESKTOP_APP_GUI_UI_FILES_ROOT).split(QLatin1Char('|'));
-
-    QString uiFileName = QLatin1String("ui/%0.ui").arg(widget->objectName());
-
-    return !tokenizedRootUiFiles.filter(uiFileName).empty();
+    return widget->property("TOKENIZED").toBool();
 }
 
 void TokenParserWidgetManager::applyCurrentTheme()
 {
-    QStringList dialogsName;
     foreach(const auto& dialog, DialogOpener::getAllOpenedDialogs())
     {
-        if (!dialog.isNull())
-        {
-            applyTheme(dialog);
-
-            dialogsName << dialog->objectName();
-        }
+        applyCurrentTheme(dialog);
     }
 
     for (auto widget: mRegisteredWidgets)
     {
-        applyTheme(widget);
+        applyCurrentTheme(widget);
     }
 }
 
@@ -244,13 +219,8 @@ QColor TokenParserWidgetManager::getColor(const QString& colorToken, const QStri
     return color;
 }
 
-void TokenParserWidgetManager::applyTheme(QWidget* widget, bool isSubWidget)
+void TokenParserWidgetManager::applyTheme(QWidget* widget)
 {
-    if (!isSubWidget && !isTokenized(widget))
-    {
-        return;
-    }
-
     auto currentTheme = ThemeManager::instance()->getSelectedThemeString();
 
     QString widgetStyleSheet;
@@ -275,14 +245,13 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget, bool isSubWidget)
     replaceColorTokens(widgetStyleSheet, colorTokens);
     replaceIconColorTokens(widget, widgetStyleSheet, colorTokens);
     replaceThemeTokens(widgetStyleSheet, currentTheme);
-    tokenizeChildStyleSheets(widget, widgetStyleSheet);
+    tokenizeChildStyleSheets(widget);
 
     removeFrameOnDialogCombos(widget);
 
-    QString styleSheet =
-        (isRoot(widget) && !isSubWidget ? mThemedStandardComponentsStyleSheet[currentTheme] :
-                                          QLatin1String()) %
-        widgetStyleSheet;
+    QString styleSheet = (isTokenized(widget) ? mThemedStandardComponentsStyleSheet[currentTheme] :
+                                                QLatin1String()) %
+                         widgetStyleSheet;
 
     widget->setStyleSheet(styleSheet);
 }
@@ -430,51 +399,14 @@ void TokenParserWidgetManager::onThemeChanged(Preferences::ThemeType theme)
     applyCurrentTheme();
 }
 
-void TokenParserWidgetManager::tokenizeChildStyleSheets(QWidget* widget, const QString& styleSheet)
+void TokenParserWidgetManager::tokenizeChildStyleSheets(QWidget* widget)
 {
-    QRegularExpressionMatchIterator matchIterator =
-        SUB_WIDGET_WITH_STYLE_SHEET.globalMatch(styleSheet);
-    while (matchIterator.hasNext())
+    auto children = widget->findChildren<QWidget*>();
+    for (const auto& child: qAsConst(children))
     {
-        QRegularExpressionMatch match = matchIterator.next();
-
-        if (match.lastCapturedIndex() ==
-            SUB_WIDGET_INDEX_CAPTURE_INDEX::SUB_WIDGET_INDEX_SUBWIDGET_TYPE)
+        if (!child->styleSheet().isEmpty())
         {
-            const QString& subWidgetId =
-                match.captured(SUB_WIDGET_INDEX_CAPTURE_INDEX::SUB_WIDGET_INDEX_CAPTURE_ID);
-            const QString& subWidgetType =
-                match.captured(SUB_WIDGET_INDEX_CAPTURE_INDEX::SUB_WIDGET_INDEX_SUBWIDGET_TYPE);
-
-            if (subWidgetType == QLatin1String("stack"))
-            {
-                auto stackedWidgets = widget->findChildren<QStackedWidget*>(subWidgetId);
-                if (!stackedWidgets.empty())
-                {
-                    foreach(QStackedWidget* stackedWidget, stackedWidgets)
-                    {
-                        auto currentWidget = stackedWidget->currentWidget();
-                        if (currentWidget != nullptr)
-                        {
-                            applyTheme(currentWidget, true);
-                        }
-                    }
-                }
-            }
-            else if (subWidgetType == QLatin1String("widget"))
-            {
-                auto widgets = widget->findChildren<QWidget*>(subWidgetId);
-                if (!widgets.empty())
-                {
-                    foreach(QWidget* subWidget, widgets)
-                    {
-                        if (subWidget != nullptr)
-                        {
-                            applyTheme(subWidget, true);
-                        }
-                    }
-                }
-            }
+            applyTheme(child);
         }
     }
 }

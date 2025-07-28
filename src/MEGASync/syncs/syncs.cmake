@@ -53,30 +53,25 @@ set(DESKTOP_APP_SYNCS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/control/reminders/MultiSyncReminderAction.cpp
 )
 
-if (WIN32)
-    set_property(TARGET ${ExecutableTarget}
-        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
-        ${CMAKE_CURRENT_LIST_DIR}/gui/Twoways/win
-        ${CMAKE_CURRENT_LIST_DIR}/gui/Backups/win
-    )
-elseif (APPLE)
-    set_property(TARGET ${ExecutableTarget}
-        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
-        ${CMAKE_CURRENT_LIST_DIR}/gui/Twoways/macx
-        ${CMAKE_CURRENT_LIST_DIR}/gui/Backups/macx
-    )
-else()
-    set_property(TARGET ${ExecutableTarget}
-        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
-        ${CMAKE_CURRENT_LIST_DIR}/gui/Twoways/linux
-        ${CMAKE_CURRENT_LIST_DIR}/gui/Backups/linux
-    )
-endif()
+set (DESKTOP_APP_SYNCS_UI_FILES
+    ${CMAKE_CURRENT_LIST_DIR}/gui/Backups/ui/OpenBackupsFolder.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/Backups/ui/RemoveBackupDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/Twoways/ui/SyncStallModeSelector.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/Twoways/ui/SyncSettingsUIBase.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/Twoways/ui/SyncAccountFullMessage.ui
+)
+
+set_property(TARGET ${ExecutableTarget}
+    APPEND PROPERTY AUTOUIC_SEARCH_PATHS
+    ${CMAKE_CURRENT_LIST_DIR}/gui/Twoways/ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/Backups/ui
+)
 
 target_sources(${ExecutableTarget}
     PRIVATE
     ${DESKTOP_APP_SYNCS_HEADERS}
     ${DESKTOP_APP_SYNCS_SOURCES}
+    ${DESKTOP_APP_SYNCS_UI_FILES}
 )
 
 set (INCLUDE_DIRECTORIES
