@@ -7,6 +7,7 @@
 #include <QDesktopServices>
 #include <QDir>
 #include <QEasingCurve>
+#include <QEvent>
 #include <QEventLoop>
 #include <QFuture>
 #include <QHash>
@@ -503,6 +504,8 @@ public:
     static bool isNodeNameValid(const QString& name);
 
     static bool shouldDisplayUpgradeButton(const bool isTransferOverquota);
+
+    static void propagateCustomEvent(QEvent::Type event);
 };
 
 Q_DECLARE_METATYPE(Utilities::FileType)

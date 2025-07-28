@@ -1366,7 +1366,7 @@ void TransferManager::closeEvent(QCloseEvent *event)
     }
 }
 
-void TransferManager::changeEvent(QEvent *event)
+bool TransferManager::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
@@ -1375,7 +1375,7 @@ void TransferManager::changeEvent(QEvent *event)
         updateCurrentSearchText();
         onUpdatePauseState(mUi->wTransfers->getProxyModel()->getPausedTransfers());
     }
-    QDialog::changeEvent(event);
+    return QDialog::event(event);
 }
 
 void TransferManager::mouseReleaseEvent(QMouseEvent *event)

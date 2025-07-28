@@ -247,7 +247,7 @@ void ImportMegaLinksDialog::on_bOk_clicked()
     accept();
 }
 
-void ImportMegaLinksDialog::changeEvent(QEvent *event)
+bool ImportMegaLinksDialog::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
@@ -265,7 +265,7 @@ void ImportMegaLinksDialog::changeEvent(QEvent *event)
 //!            this->onLinkInfoAvailable(i);
 //!        }
     }
-    QDialog::changeEvent(event);
+    return QDialog::event(event);
 }
 
 void ImportMegaLinksDialog::initUiAsLogged()

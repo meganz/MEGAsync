@@ -1954,6 +1954,15 @@ bool Utilities::shouldDisplayUpgradeButton(const bool isTransferOverquota)
     return false;
 }
 
+void Utilities::propagateCustomEvent(QEvent::Type type)
+{
+    const auto widgets = QApplication::allWidgets();
+    for (QWidget* widget: widgets)
+    {
+        QApplication::postEvent(widget, new QEvent(type));
+    }
+}
+
 QString Utilities::getFileHash(const QString& filePath)
 {
     QFile file(filePath);

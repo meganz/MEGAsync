@@ -11,6 +11,9 @@ class ThemeManager : public QObject
     Q_OBJECT
 
 public:
+    inline static QEvent::Type ThemeChanged =
+        static_cast<QEvent::Type>(QEvent::registerEventType());
+
     static ThemeManager* instance();
     QStringList themesAvailable() const;
     Preferences::ThemeType getSelectedTheme() const;

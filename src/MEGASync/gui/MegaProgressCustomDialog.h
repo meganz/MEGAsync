@@ -16,7 +16,7 @@ public:
     ~MegaProgressCustomDialog();
 
 protected:
-    void changeEvent(QEvent * event);
+    bool event(QEvent* event) override;
 
 private:
     Ui::MegaProgressCustomDialog *ui;

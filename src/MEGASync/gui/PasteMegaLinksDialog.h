@@ -51,7 +51,7 @@ private slots:
     void on_bSubmit_clicked();
 
 protected:
-    void changeEvent(QEvent * event);
+    bool event(QEvent* event);
 
 private:
     Ui::PasteMegaLinksDialog *ui;

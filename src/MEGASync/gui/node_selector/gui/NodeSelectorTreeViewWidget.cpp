@@ -70,7 +70,7 @@ NodeSelectorTreeViewWidget::~NodeSelectorTreeViewWidget()
     delete ui;
 }
 
-void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
+bool NodeSelectorTreeViewWidget::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
@@ -85,7 +85,7 @@ void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
             mSelectType->updateCustomBottomButtonsText(this);
         }
     }
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }
 
 bool NodeSelectorTreeViewWidget::eventFilter(QObject* watched, QEvent* event)

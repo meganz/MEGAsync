@@ -45,7 +45,7 @@ public:
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;
-    void changeEvent(QEvent* event) override;
+    bool event(QEvent* event) override;
 
 private slots:
     void onAttributesReady();

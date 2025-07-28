@@ -1228,7 +1228,7 @@ void InfoDialog::updateUiOnFolderTransferUpdate(const FolderTransferUpdateEvent 
     mTransferScanCancelUi->onFolderTransferUpdate(event);
 }
 
-void InfoDialog::changeEvent(QEvent* event)
+bool InfoDialog::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
@@ -1236,7 +1236,7 @@ void InfoDialog::changeEvent(QEvent* event)
         updateUpgradeButtonText();
         updateCreateSyncButtonText();
     }
-    QDialog::changeEvent(event);
+    return QDialog::event(event);
 }
 
 bool InfoDialog::eventFilter(QObject *obj, QEvent *e)

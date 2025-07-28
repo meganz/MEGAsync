@@ -2,6 +2,7 @@
 
 #include "AccountDetailsManager.h"
 #include "MegaApplication.h"
+#include "ThemeManager.h"
 #include "TransferQuota.h"
 #include "ui_AccountDetailsDialog.h"
 #include "Utilities.h"
@@ -347,13 +348,16 @@ void AccountDetailsDialog::updateStorageElements()
     refresh();
 }
 
-void AccountDetailsDialog::changeEvent(QEvent *event)
+bool AccountDetailsDialog::event(QEvent* event)
 {
-    if(event->type() == QEvent::LanguageChange)
+    if (event->type() == QEvent::LanguageChange || event->type() == ThemeManager::ThemeChanged)
     {
-        mUi->retranslateUi(this);
+        if (event->type() == QEvent::LanguageChange)
+        {
+            mUi->retranslateUi(this);
+        }
         refresh();
     }
 
-    QDialog::changeEvent(event);
+    return QDialog::event(event);
 }

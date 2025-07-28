@@ -186,11 +186,11 @@ void ChangePassword::on_bOk_clicked()
     }
 }
 
-void ChangePassword::changeEvent(QEvent *event)
+bool ChangePassword::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
     }
-    QDialog::changeEvent(event);
+    return QDialog::event(event);
 }

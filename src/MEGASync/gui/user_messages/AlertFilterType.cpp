@@ -76,12 +76,12 @@ void AlertFilterType::mousePressEvent(QMouseEvent*)
     emit clicked();
 }
 
-void AlertFilterType::changeEvent(QEvent *event)
+bool AlertFilterType::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
         setActualFilter(mType);
     }
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }

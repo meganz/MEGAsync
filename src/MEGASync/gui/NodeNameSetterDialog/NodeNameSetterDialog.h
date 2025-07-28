@@ -27,7 +27,8 @@ public:
 
 protected:
     virtual void onDialogAccepted() = 0;
-    virtual void onRequestFinish(mega::MegaApi*, mega::MegaRequest*, mega::MegaError* ){}
+
+    virtual void onRequestFinish(mega::MegaApi*, mega::MegaRequest*, mega::MegaError*) override {}
     virtual QString dialogText() = 0;
     virtual void title() = 0;
     virtual QString lineEditText(){return QString();}
@@ -45,7 +46,7 @@ protected:
     bool checkAlreadyExistingNode(const QString& nodeName, std::shared_ptr<mega::MegaNode> parentNode);
     void showAlreadyExistingNodeError(bool isFile);
 
-    void changeEvent(QEvent* event);
+    bool event(QEvent* event) override;
 
     Ui::NodeNameSetterDialog* mUi;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;

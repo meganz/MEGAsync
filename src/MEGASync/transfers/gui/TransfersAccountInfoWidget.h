@@ -24,7 +24,7 @@ public:
     void setTransferOverquota(const bool isOverquota);
 
 protected:
-    void changeEvent(QEvent* event) override;
+    bool event(QEvent* event) override;
 
 private slots:
     void on_bUpgrade_clicked();

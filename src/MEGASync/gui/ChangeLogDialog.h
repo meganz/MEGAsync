@@ -21,7 +21,7 @@ private:
     void setChangeLogNotes(QString notes);
 
 protected:
-    void changeEvent(QEvent *event);
+    bool event(QEvent* event) override;
     void tweakStrings();
 
 private slots:

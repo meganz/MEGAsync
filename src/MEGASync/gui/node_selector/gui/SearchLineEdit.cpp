@@ -37,13 +37,13 @@ void SearchLineEdit::setText(const QString &text)
     ui->leSearchField->setText(text);
 }
 
-void SearchLineEdit::changeEvent(QEvent *event)
+bool SearchLineEdit::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
     }
-    QWidget::changeEvent(event);
+    return QFrame::event(event);
 }
 
 bool SearchLineEdit::eventFilter(QObject *obj, QEvent *evnt)

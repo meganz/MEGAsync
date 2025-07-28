@@ -82,11 +82,11 @@ void Login2FA::inputCodeChanged()
     ui->lError->hide();
 }
 
-void Login2FA::changeEvent(QEvent *event)
+bool Login2FA::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
     }
-    QDialog::changeEvent(event);
+    return QDialog::event(event);
 }

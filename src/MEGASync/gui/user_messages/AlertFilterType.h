@@ -25,8 +25,8 @@ signals:
     void clicked();
 
 protected:
-    void mousePressEvent(QMouseEvent* event);
-    void changeEvent(QEvent *event);
+    void mousePressEvent(QMouseEvent* event) override;
+    bool event(QEvent* event) override;
 
 private:
     Ui::AlertFilterType* ui;

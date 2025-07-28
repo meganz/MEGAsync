@@ -1,6 +1,7 @@
 #include "ThemeManager.h"
 
 #include "Preferences/Preferences.h"
+#include "Utilities.h"
 
 const QMap<Preferences::ThemeType, QString> ThemeManager::mThemesMap = {
     {Preferences::ThemeType::LIGHT_THEME,  QLatin1String("Light")},
@@ -44,6 +45,7 @@ void ThemeManager::setTheme(Preferences::ThemeType theme)
         Preferences::instance()->setThemeType(mCurrentTheme);
 
         emit themeChanged(theme);
+        Utilities::propagateCustomEvent(ThemeChanged);
     }
 }
 

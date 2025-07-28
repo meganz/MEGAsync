@@ -134,7 +134,7 @@ private slots:
     void on_bNotifications_clicked();
 
 protected:
-    void changeEvent(QEvent* event) override;
+    bool event(QEvent* event) override;
 
 private slots:
     void onShellNotificationsProcessed();

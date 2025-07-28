@@ -32,7 +32,7 @@ private slots:
     void on_bOK_clicked();
 
 protected:
-    void changeEvent(QEvent * event);
+    bool event(QEvent* event) override;
 
 private:
     std::unique_ptr<mega::MegaNode> getUploadFolder();

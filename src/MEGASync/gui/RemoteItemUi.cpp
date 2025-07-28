@@ -63,14 +63,14 @@ QTableView* RemoteItemUi::getView()
     return ui->tableView;
 }
 
-void RemoteItemUi::changeEvent(QEvent* event)
+bool RemoteItemUi::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
     }
 
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }
 
 void RemoteItemUi::setTableViewProperties(QTableView* view) const

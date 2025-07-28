@@ -118,7 +118,7 @@ protected:
     void showEvent(QShowEvent* ) override;
     void resizeEvent(QResizeEvent* ) override;
     void mousePressEvent(QMouseEvent* event) override;
-    void changeEvent(QEvent* event) override;
+    bool event(QEvent* event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
     void setTitle(const QString& title);
     void selectionChanged(const QModelIndexList &selected);

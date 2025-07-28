@@ -14,15 +14,14 @@ LockedPopOver::LockedPopOver(QDialog *) :
     setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
 }
 
-
-void LockedPopOver::changeEvent(QEvent *event)
+bool LockedPopOver::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
         tweakStrings();
     }
-    QWidget::changeEvent(event);
+    return QDialog::event(event);
 }
 
 void LockedPopOver::tweakStrings()

@@ -65,7 +65,7 @@ public slots:
     void onUpdateLoadingMessage(std::shared_ptr<MessageInfo> message);
 
 protected:
-    void changeEvent(QEvent * event) override;
+    bool event(QEvent* event) override;
     void keyPressEvent(QKeyEvent *e) override;
     void mousePressEvent(QMouseEvent *event) override;
     void showEvent(QShowEvent *) override;

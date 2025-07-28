@@ -19,11 +19,11 @@ MegaProgressCustomDialog::~MegaProgressCustomDialog() {
     delete ui;
 }
 
-void MegaProgressCustomDialog::changeEvent(QEvent *event)
+bool MegaProgressCustomDialog::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
     }
-    QWidget::changeEvent(event);
+    return QDialog::event(event);
 }

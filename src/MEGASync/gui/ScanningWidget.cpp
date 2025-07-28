@@ -107,13 +107,13 @@ void ScanningWidget::onCancelClicked()
     emit cancel();
 }
 
-void ScanningWidget::changeEvent(QEvent* event)
+bool ScanningWidget::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
     }
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }
 
 void ScanningWidget::startAnimation()

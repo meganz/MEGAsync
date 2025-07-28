@@ -102,14 +102,14 @@ void NodeNameSetterDialog::showAlreadyExistingNodeError(bool isFile)
            : showError(tr("A folder with this name already exists in this location.\nEnter a different name"));
 }
 
-void NodeNameSetterDialog::changeEvent(QEvent *event)
+bool NodeNameSetterDialog::event(QEvent* event)
 {
-    if(event->type() == QEvent::LanguageChange)
+    if (event->type() == QEvent::LanguageChange)
     {
          mUi->textLabel->setText(dialogText());
     }
 
-    QDialog::changeEvent(event);
+    return QDialog::event(event);
 }
 
 void NodeNameSetterDialog::dialogAccepted()
