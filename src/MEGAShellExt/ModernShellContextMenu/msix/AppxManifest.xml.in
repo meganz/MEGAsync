@@ -11,7 +11,7 @@
   xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10"
   xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
   IgnorableNamespaces="uap uap2 uap3 rescap desktop desktop4 desktop5 uap10 com">
-  <Identity Name="MEGASyncShellSparse" ProcessorArchitecture="neutral" Publisher="@MEGA_DESKTOP_APP_CERTIFICATE_PUBLISHER@" Version="5.14.0.2" />
+  <Identity Name="MEGASyncShellSparse" ProcessorArchitecture="neutral" Publisher="@MEGA_DESKTOP_APP_CERTIFICATE_PUBLISHER@" Version="5.15.0.0" />
   <Properties>
     <DisplayName>MEGAsync</DisplayName>
     <PublisherDisplayName>MEGAsync</PublisherDisplayName>
