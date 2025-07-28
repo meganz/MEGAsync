@@ -1,232 +1,232 @@
 <RCC>
     <qresource prefix="/">
-        <file alias="common/qmldir">common/qmldir</file>
-        <file alias="common/ColorTheme.qml">common/ColorTheme.qml</file>
-        <file alias="common/Constants.qml">common/Constants.qml</file>
-        <file alias="common/Images.qml">common/Images.qml</file>
-        <file alias="common/Links.qml">common/Links.qml</file>
-        <file alias="common/RegexExpressions.qml">common/RegexExpressions.qml</file>
-        <file alias="common/Strings.qml">common/Strings.qml</file>
-        <file alias="common/OS.qml">common/OS.qml</file>
-        <file alias="common/FontStyles.qml">common/FontStyles.qml</file>
-        <file alias="common/Utilities.qml">common/Utilities.qml</file>
-        <file alias="common/themes/light/Colors.qml">common/themes/light/Colors.qml</file>
-        <file alias="common/themes/dark/Colors.qml">common/themes/dark/Colors.qml</file>
-        <file alias="components/accountData/qmldir">components/accountData/qmldir</file>
-        <file alias="components/accountData/InfoAccount.qml">components/accountData/InfoAccount.qml</file>
-        <file alias="components/busyIndicator/qmldir">components/busyIndicator/qmldir</file>
-        <file alias="components/busyIndicator/BusyIndicator.qml">components/busyIndicator/BusyIndicator.qml</file>
-        <file alias="components/buttons/qmldir">components/buttons/qmldir</file>
-        <file alias="components/buttons/Button.qml">components/buttons/Button.qml</file>
-        <file alias="components/buttons/CardButton.qml">components/buttons/CardButton.qml</file>
-        <file alias="components/buttons/CardHorizontalButton.qml">components/buttons/CardHorizontalButton.qml</file>
-        <file alias="components/buttons/CardVerticalButton.qml">components/buttons/CardVerticalButton.qml</file>
-        <file alias="components/buttons/IconButton.qml">components/buttons/IconButton.qml</file>
-        <file alias="components/buttons/OutlineButton.qml">components/buttons/OutlineButton.qml</file>
-        <file alias="components/buttons/PrimaryButton.qml">components/buttons/PrimaryButton.qml</file>
-        <file alias="components/buttons/SecondaryButton.qml">components/buttons/SecondaryButton.qml</file>
-        <file alias="components/buttons/Colors.qml">components/buttons/Colors.qml</file>
-        <file alias="components/buttons/Icon.qml">components/buttons/Icon.qml</file>
-        <file alias="components/buttons/Progress.qml">components/buttons/Progress.qml</file>
-        <file alias="components/buttons/Sizes.qml">components/buttons/Sizes.qml</file>
-        <file alias="components/buttons/SmallSizes.qml">components/buttons/SmallSizes.qml</file>
-        <file alias="components/buttons/LargeSizes.qml">components/buttons/LargeSizes.qml</file>
-        <file alias="components/buttons/LinkButton.qml">components/buttons/LinkButton.qml</file>
-        <file alias="components/buttons/TextButton.qml">components/buttons/TextButton.qml</file>
-        <file alias="components/buttons/RadioButton.qml">components/buttons/RadioButton.qml</file>
-        <file alias="components/buttons/RadioButtonSizes.qml">components/buttons/RadioButtonSizes.qml</file>
-        <file alias="components/buttons/RadioButtonColors.qml">components/buttons/RadioButtonColors.qml</file>
-        <file alias="components/checkBoxes/qmldir">components/checkBoxes/qmldir</file>
-        <file alias="components/checkBoxes/CheckBox.qml">components/checkBoxes/CheckBox.qml</file>
-        <file alias="components/checkBoxes/Colors.qml">components/checkBoxes/Colors.qml</file>
-        <file alias="components/checkBoxes/Icons.qml">components/checkBoxes/Icons.qml</file>
-        <file alias="components/checkBoxes/Sizes.qml">components/checkBoxes/Sizes.qml</file>
-        <file alias="components/chips/qmldir">components/chips/qmldir</file>
-        <file alias="components/chips/Colors.qml">components/chips/Colors.qml</file>
-        <file alias="components/chips/MediumSizes.qml">components/chips/MediumSizes.qml</file>
-        <file alias="components/chips/LargeSizes.qml">components/chips/LargeSizes.qml</file>
-        <file alias="components/chips/SmallSizes.qml">components/chips/SmallSizes.qml</file>
-        <file alias="components/chips/Chip.qml">components/chips/Chip.qml</file>
-        <file alias="components/chips/OutlineChip.qml">components/chips/OutlineChip.qml</file>
-        <file alias="components/comboBoxes/qmldir">components/comboBoxes/qmldir</file>
-        <file alias="components/comboBoxes/ComboBox.qml">components/comboBoxes/ComboBox.qml</file>
-        <file alias="components/comboBoxes/Sizes.qml">components/comboBoxes/Sizes.qml</file>
-        <file alias="components/images/qmldir">components/images/qmldir</file>
-        <file alias="components/images/SvgImage.qml">components/images/SvgImage.qml</file>
-        <file alias="components/scrollBars/qmldir">components/scrollBars/qmldir</file>
-        <file alias="components/scrollBars/ScrollBar.qml">components/scrollBars/ScrollBar.qml</file>
-        <file alias="components/pages/qmldir">components/pages/qmldir</file>
-        <file alias="components/pages/FooterButtons.qml">components/pages/FooterButtons.qml</file>
-        <file alias="components/pages/HeaderTexts.qml">components/pages/HeaderTexts.qml</file>
-        <file alias="components/pages/FooterButtonsPage.qml">components/pages/FooterButtonsPage.qml</file>
-        <file alias="components/progressBars/qmldir">components/progressBars/qmldir</file>
-        <file alias="components/progressBars/HorizontalProgressBar.qml">components/progressBars/HorizontalProgressBar.qml</file>
-        <file alias="components/steps/qmldir">components/steps/qmldir</file>
-        <file alias="components/steps/Step.qml">components/steps/Step.qml</file>
-        <file alias="components/steps/SubStep.qml">components/steps/SubStep.qml</file>
-        <file alias="components/steps/StepPanel.qml">components/steps/StepPanel.qml</file>
-        <file alias="components/textAreas/qmldir">components/textAreas/qmldir</file>
-        <file alias="components/textAreas/TextArea.qml">components/textAreas/TextArea.qml</file>
-        <file alias="components/textAreas/MediumSizes.qml">components/textAreas/MediumSizes.qml</file>
-        <file alias="components/textAreas/Colors.qml">components/textAreas/Colors.qml</file>
-        <file alias="components/textFields/qmldir">components/textFields/qmldir</file>
-        <file alias="components/textFields/EmailTextField.qml">components/textFields/EmailTextField.qml</file>
-        <file alias="components/textFields/IconTextField.qml">components/textFields/IconTextField.qml</file>
-        <file alias="components/textFields/PasswordTextField.qml">components/textFields/PasswordTextField.qml</file>
-        <file alias="components/textFields/TextField.qml">components/textFields/TextField.qml</file>
-        <file alias="components/textFields/TwoFA.qml">components/textFields/TwoFA.qml</file>
-        <file alias="components/textFields/TwoFADigit.qml">components/textFields/TwoFADigit.qml</file>
-        <file alias="components/textFields/Sizes.qml">components/textFields/Sizes.qml</file>
-        <file alias="components/textFields/SmallSizes.qml">components/textFields/SmallSizes.qml</file>
-        <file alias="components/textFields/LargeSizes.qml">components/textFields/LargeSizes.qml</file>
-        <file alias="components/textFields/Colors.qml">components/textFields/Colors.qml</file>
-        <file alias="components/texts/qmldir">components/texts/qmldir</file>
-        <file alias="components/texts/HintText.qml">components/texts/HintText.qml</file>
-        <file alias="components/texts/NotificationText.qml">components/texts/NotificationText.qml</file>
-        <file alias="components/texts/RichText.qml">components/texts/RichText.qml</file>
-        <file alias="components/texts/SecondaryText.qml">components/texts/SecondaryText.qml</file>
-        <file alias="components/texts/Text.qml">components/texts/Text.qml</file>
-        <file alias="components/texts/ElidedText.qml">components/texts/ElidedText.qml</file>
-        <file alias="components/texts/HighlightedText.qml">components/texts/HighlightedText.qml</file>
-        <file alias="components/texts/Sizes.qml">components/texts/Sizes.qml</file>
-        <file alias="components/texts/BannerText.qml">components/texts/BannerText.qml</file>
-        <file alias="components/toolTips/qmldir">components/toolTips/qmldir</file>
-        <file alias="components/toolTips/ToolTip.qml">components/toolTips/ToolTip.qml</file>
-        <file alias="components/toolTips/SmallToolTip.qml">components/toolTips/SmallToolTip.qml</file>
-        <file alias="components/views/qmldir">components/views/qmldir</file>
-        <file alias="components/views/GroupBox.qml">components/views/GroupBox.qml</file>
-        <file alias="components/views/ScrollPanel.qml">components/views/ScrollPanel.qml</file>
-        <file alias="components/views/StackViewBase.qml">components/views/StackViewBase.qml</file>
-        <file alias="components/menus/MenuItem.qml">components/menus/MenuItem.qml</file>
-        <file alias="components/menus/qmldir">components/menus/qmldir</file>
-        <file alias="components/menus/ContextMenuItem.qml">components/menus/ContextMenuItem.qml</file>
-        <file alias="components/menus/ContextMenu.qml">components/menus/ContextMenu.qml</file>
-        <file alias="components/menus/Colors.qml">components/menus/Colors.qml</file>
-        <file alias="components/menus/Sizes.qml">components/menus/Sizes.qml</file>
-        <file alias="onboard/qmldir">onboard/qmldir</file>
-        <file alias="onboard/LoginPage.qml">onboard/LoginPage.qml</file>
-        <file alias="onboard/LoginPageForm.ui.qml">onboard/LoginPageForm.ui.qml</file>
-        <file alias="onboard/OnboardingDialog.qml">onboard/OnboardingDialog.qml</file>
-        <file alias="onboard/OnboardingFlow.qml">onboard/OnboardingFlow.qml</file>
-        <file alias="onboard/OnboardingStrings.qml">onboard/OnboardingStrings.qml</file>
-        <file alias="onboard/RegisterContent.qml">onboard/RegisterContent.qml</file>
-        <file alias="onboard/RegisterFlow.qml">onboard/RegisterFlow.qml</file>
-        <file alias="onboard/RegisterPage.qml">onboard/RegisterPage.qml</file>
-        <file alias="onboard/RegisterPageForm.ui.qml">onboard/RegisterPageForm.ui.qml</file>
-        <file alias="onboard/TwoFAPage.qml">onboard/TwoFAPage.qml</file>
-        <file alias="onboard/TwoFAPageForm.ui.qml">onboard/TwoFAPageForm.ui.qml</file>
-        <file alias="onboard/ConfirmEmailPage.qml">onboard/ConfirmEmailPage.qml</file>
-        <file alias="onboard/ConfirmEmailPageForm.ui.qml">onboard/ConfirmEmailPageForm.ui.qml</file>
-        <file alias="onboard/ChangeEmailPage.qml">onboard/ChangeEmailPage.qml</file>
-        <file alias="onboard/ChangeEmailPageForm.ui.qml">onboard/ChangeEmailPageForm.ui.qml</file>
-        <file alias="onboard/StackViewPage.qml">onboard/StackViewPage.qml</file>
-        <file alias="onboard/PasswordConditionItem.qml">onboard/PasswordConditionItem.qml</file>
-        <file alias="onboard/PasswordInfoContent.qml">onboard/PasswordInfoContent.qml</file>
-        <file alias="onboard/PasswordInfoContentForm.ui.qml">onboard/PasswordInfoContentForm.ui.qml</file>
-        <file alias="onboard/PasswordInfoPopUp.qml">onboard/PasswordInfoPopUp.qml</file>
-        <file alias="onboard/syncs_types/qmldir">onboard/syncs_types/qmldir</file>
-        <file alias="onboard/syncs_types/MainFlow.qml">onboard/syncs_types/MainFlow.qml</file>
-        <file alias="onboard/syncs_types/NavigationInfo.qml">onboard/syncs_types/NavigationInfo.qml</file>
-        <file alias="onboard/syncs_types/DeviceNamePage.qml">onboard/syncs_types/DeviceNamePage.qml</file>
-        <file alias="onboard/syncs_types/DeviceNamePageForm.ui.qml">onboard/syncs_types/DeviceNamePageForm.ui.qml</file>
-        <file alias="onboard/syncs_types/InstallationTypePage.qml">onboard/syncs_types/InstallationTypePage.qml</file>
-        <file alias="onboard/syncs_types/InstallationTypePageForm.ui.qml">onboard/syncs_types/InstallationTypePageForm.ui.qml</file>
-        <file alias="onboard/syncs_types/ResumePage.qml">onboard/syncs_types/ResumePage.qml</file>
-        <file alias="onboard/syncs_types/ResumePageForm.ui.qml">onboard/syncs_types/ResumePageForm.ui.qml</file>
-        <file alias="onboard/syncs_types/SyncsHorizontalButton.qml">onboard/syncs_types/SyncsHorizontalButton.qml</file>
-        <file alias="onboard/syncs_types/SyncsVerticalButton.qml">onboard/syncs_types/SyncsVerticalButton.qml</file>
-        <file alias="onboard/syncs_types/StepPanel.qml">onboard/syncs_types/StepPanel.qml</file>
-        <file alias="onboard/syncs_types/SyncsPage.qml">onboard/syncs_types/SyncsPage.qml</file>
-        <file alias="onboard/syncs_types/AddSyncPage.qml">onboard/syncs_types/AddSyncPage.qml</file>
-        <file alias="onboard/syncs_types/AddSyncPageForm.ui.qml">onboard/syncs_types/AddSyncPageForm.ui.qml</file>
-        <file alias="onboard/syncs_types/HandleSyncCandidatesDialog.qml">onboard/syncs_types/HandleSyncCandidatesDialog.qml</file>
-        <file alias="onboard/syncs_types/HandleSyncCandidatesDialogForm.ui.qml">onboard/syncs_types/HandleSyncCandidatesDialogForm.ui.qml</file>
-        <file alias="onboard/syncs_types/RemoveSyncCandidateConfirmationDialog.qml">onboard/syncs_types/RemoveSyncCandidateConfirmationDialog.qml</file>
-        <file alias="onboard/syncs_types/SyncsFlow.qml">onboard/syncs_types/SyncsFlow.qml</file>
-        <file alias="onboard/syncs_types/backups/qmldir">onboard/syncs_types/backups/qmldir</file>
-        <file alias="onboard/syncs_types/ConfirmSyncsPage.qml">onboard/syncs_types/ConfirmSyncsPage.qml</file>
-        <file alias="onboard/syncs_types/ConfirmSyncsPageForm.ui.qml">onboard/syncs_types/ConfirmSyncsPageForm.ui.qml</file>
-        <file alias="onboard/syncs_types/ConfirmSyncsTable.qml">onboard/syncs_types/ConfirmSyncsTable.qml</file>
-        <file alias="onboard/syncs_types/backups/BackupsPage.qml">onboard/syncs_types/backups/BackupsPage.qml</file>
-        <file alias="onboard/syncs_types/backups/ConfirmFoldersPage.qml">onboard/syncs_types/backups/ConfirmFoldersPage.qml</file>
-        <file alias="onboard/syncs_types/backups/ConfirmFoldersPageForm.ui.qml">onboard/syncs_types/backups/ConfirmFoldersPageForm.ui.qml</file>
-        <file alias="onboard/syncs_types/backups/SelectFoldersPage.qml">onboard/syncs_types/backups/SelectFoldersPage.qml</file>
-        <file alias="onboard/syncs_types/backups/SelectFoldersPageForm.ui.qml">onboard/syncs_types/backups/SelectFoldersPageForm.ui.qml</file>
-        <file alias="syncs/qmldir">syncs/qmldir</file>
-        <file alias="syncs/SyncsDialog.qml">syncs/SyncsDialog.qml</file>
-        <file alias="syncs/SyncsStrings.qml">syncs/SyncsStrings.qml</file>
-        <file alias="syncs/SelectiveSyncPage.qml">syncs/SelectiveSyncPage.qml</file>
-        <file alias="syncs/SelectiveSyncPageForm.ui.qml">syncs/SelectiveSyncPageForm.ui.qml</file>
-        <file alias="syncs/SyncsFlow.qml">syncs/SyncsFlow.qml</file>
-        <file alias="syncs/SyncsPage.qml">syncs/SyncsPage.qml</file>
-        <file alias="syncs/ResumeSyncsPageForm.ui.qml">syncs/ResumeSyncsPageForm.ui.qml</file>
-        <file alias="syncs/ResumeSyncsPage.qml">syncs/ResumeSyncsPage.qml</file>
-        <file alias="guest/qmldir">guest/qmldir</file>
-        <file alias="guest/BasePage.qml">guest/BasePage.qml</file>
-        <file alias="guest/GuestFlow.qml">guest/GuestFlow.qml</file>
-        <file alias="guest/GuestDialog.qml">guest/GuestDialog.qml</file>
-        <file alias="guest/GuestStrings.qml">guest/GuestStrings.qml</file>
-        <file alias="upsell/qmldir">upsell/qmldir</file>
-        <file alias="upsell/UpsellDialog.qml">upsell/UpsellDialog.qml</file>
-        <file alias="upsell/UpsellStrings.qml">upsell/UpsellStrings.qml</file>
-        <file alias="upsell/PlanCard.qml">upsell/PlanCard.qml</file>
-        <file alias="upsell/ContentItem.qml">upsell/ContentItem.qml</file>
-        <file alias="upsell/HeaderItem.qml">upsell/HeaderItem.qml</file>
-        <file alias="sync_exclusions/qmldir">sync_exclusions/qmldir</file>
-        <file alias="sync_exclusions/ExclusionsQmlDialog.qml">sync_exclusions/ExclusionsQmlDialog.qml</file>
-        <file alias="sync_exclusions/ExclusionsStrings.qml">sync_exclusions/ExclusionsStrings.qml</file>
-        <file alias="sync_exclusions/RulesTable.qml">sync_exclusions/RulesTable.qml</file>
-        <file alias="sync_exclusions/AddRuleDialog.qml">sync_exclusions/AddRuleDialog.qml</file>
-        <file alias="whatsNew/WhatsNewStrings.qml">whatsNew/WhatsNewStrings.qml</file>
-        <file alias="whatsNew/qmldir">whatsNew/qmldir</file>
-        <file alias="whatsNew/WhatsNewDialog.qml">whatsNew/WhatsNewDialog.qml</file>
-        <file alias="whatsNew/UpdatesElement.qml">whatsNew/UpdatesElement.qml</file>
-        <file alias="backups/qmldir">backups/qmldir</file>
-        <file alias="backups/BackupsDialog.qml">backups/BackupsDialog.qml</file>
-        <file alias="backups/BackupsFlow.qml">backups/BackupsFlow.qml</file>
-        <file alias="backups/BackupsStrings.qml">backups/BackupsStrings.qml</file>
-        <file alias="backups/ConfirmFoldersContent.qml">backups/ConfirmFoldersContent.qml</file>
-        <file alias="backups/ConfirmFoldersPage.qml">backups/ConfirmFoldersPage.qml</file>
-        <file alias="backups/ConfirmFoldersPageForm.ui.qml">backups/ConfirmFoldersPageForm.ui.qml</file>
-        <file alias="backups/ConfirmTable.qml">backups/ConfirmTable.qml</file>
-        <file alias="backups/FolderRow.qml">backups/FolderRow.qml</file>
-        <file alias="backups/SelectFoldersPage.qml">backups/SelectFoldersPage.qml</file>
-        <file alias="backups/SelectFoldersPageForm.ui.qml">backups/SelectFoldersPageForm.ui.qml</file>
-        <file alias="backups/SelectTable.qml">backups/SelectTable.qml</file>
-        <file alias="backups/ResumePageForm.ui.qml">backups/ResumePageForm.ui.qml</file>
-        <file alias="backups/ResumePage.qml">backups/ResumePage.qml</file>
-        <file alias="backups/BackupsPage.qml">backups/BackupsPage.qml</file>
-        <file alias="surveys/qmldir">surveys/qmldir</file>
-        <file alias="surveys/SurveyStrings.qml">surveys/SurveyStrings.qml</file>
-        <file alias="surveys/SurveyItem.qml">surveys/SurveyItem.qml</file>
-        <file alias="surveys/RateScaleItem.qml">surveys/RateScaleItem.qml</file>
-        <file alias="deviceCentre/DeviceCentreDialog.qml">deviceCentre/DeviceCentreDialog.qml</file>
-        <file alias="deviceCentre/DeviceCentreStrings.qml">deviceCentre/DeviceCentreStrings.qml</file>
-        <file alias="deviceCentre/qmldir">deviceCentre/qmldir</file>
-        <file alias="deviceCentre/LeftSidebar.qml">deviceCentre/LeftSidebar.qml</file>
-        <file alias="deviceCentre/Toolbar.qml">deviceCentre/Toolbar.qml</file>
-        <file alias="deviceCentre/ToolbarButton.qml">deviceCentre/ToolbarButton.qml</file>
-        <file alias="deviceCentre/DevicePage.qml">deviceCentre/DevicePage.qml</file>
-        <file alias="deviceCentre/DevicePageHeader.qml">deviceCentre/DevicePageHeader.qml</file>
-        <file alias="deviceCentre/DevicePageContent.qml">deviceCentre/DevicePageContent.qml</file>
-        <file alias="deviceCentre/NoInternetPage.qml">deviceCentre/NoInternetPage.qml</file>
-        <file alias="deviceCentre/NoConnectionsPage.qml">deviceCentre/NoConnectionsPage.qml</file>
-        <file alias="deviceCentre/SyncTablePage.qml">deviceCentre/SyncTablePage.qml</file>
-        <file alias="deviceCentre/DeviceWidgetProperty.qml">deviceCentre/DeviceWidgetProperty.qml</file>
-        <file alias="deviceCentre/TroubleshootDialog.qml">deviceCentre/TroubleshootDialog.qml</file>
-        <file alias="deviceCentre/IssueResolutionOption.qml">deviceCentre/IssueResolutionOption.qml</file>
-        <file alias="deviceCentre/TroubleshootButton.qml">deviceCentre/TroubleshootButton.qml</file>
-        <file alias="messageDialogs/MessageDialog.qml">messageDialogs/MessageDialog.qml</file>
-        <file alias="messageDialogs/MessageDialogMediumSizes.qml">messageDialogs/MessageDialogMediumSizes.qml</file>
-        <file alias="messageDialogs/TextLoader.qml">messageDialogs/TextLoader.qml</file>
-        <file alias="components/menus/MenuItem.qml">components/menus/MenuItem.qml</file>
-        <file alias="components/menus/qmldir">components/menus/qmldir</file>
-        <file alias="components/menus/ContextMenuItem.qml">components/menus/ContextMenuItem.qml</file>
-        <file alias="components/menus/ContextMenu.qml">components/menus/ContextMenu.qml</file>
-        <file alias="components/menus/Colors.qml">components/menus/Colors.qml</file>
-        <file alias="components/menus/Sizes.qml">components/menus/Sizes.qml</file>
-        <file alias="deviceCentre/RenameDeviceDialog.qml">deviceCentre/RenameDeviceDialog.qml</file>
-        <file alias="common/DeviceName.qml">common/DeviceName.qml</file>
-        <file alias="syncs/ChooseSyncFolder.qml">syncs/ChooseSyncFolder.qml</file>
+        <file>common/qmldir</file>
+        <file>common/ColorTheme.qml</file>
+        <file>common/Constants.qml</file>
+        <file>common/Images.qml</file>
+        <file>common/Links.qml</file>
+        <file>common/RegexExpressions.qml</file>
+        <file>common/Strings.qml</file>
+        <file>common/OS.qml</file>
+        <file>common/FontStyles.qml</file>
+        <file>common/Utilities.qml</file>
+        <file>common/themes/light/Colors.qml</file>
+        <file>common/themes/dark/Colors.qml</file>
+        <file>components/accountData/qmldir</file>
+        <file>components/accountData/InfoAccount.qml</file>
+        <file>components/busyIndicator/qmldir</file>
+        <file>components/busyIndicator/BusyIndicator.qml</file>
+        <file>components/buttons/qmldir</file>
+        <file>components/buttons/Button.qml</file>
+        <file>components/buttons/CardButton.qml</file>
+        <file>components/buttons/CardHorizontalButton.qml</file>
+        <file>components/buttons/CardVerticalButton.qml</file>
+        <file>components/buttons/IconButton.qml</file>
+        <file>components/buttons/OutlineButton.qml</file>
+        <file>components/buttons/PrimaryButton.qml</file>
+        <file>components/buttons/SecondaryButton.qml</file>
+        <file>components/buttons/Colors.qml</file>
+        <file>components/buttons/Icon.qml</file>
+        <file>components/buttons/Progress.qml</file>
+        <file>components/buttons/Sizes.qml</file>
+        <file>components/buttons/SmallSizes.qml</file>
+        <file>components/buttons/LargeSizes.qml</file>
+        <file>components/buttons/LinkButton.qml</file>
+        <file>components/buttons/TextButton.qml</file>
+        <file>components/buttons/RadioButton.qml</file>
+        <file>components/buttons/RadioButtonSizes.qml</file>
+        <file>components/buttons/RadioButtonColors.qml</file>
+        <file>components/checkBoxes/qmldir</file>
+        <file>components/checkBoxes/CheckBox.qml</file>
+        <file>components/checkBoxes/Colors.qml</file>
+        <file>components/checkBoxes/Icons.qml</file>
+        <file>components/checkBoxes/Sizes.qml</file>
+        <file>components/chips/qmldir</file>
+        <file>components/chips/Colors.qml</file>
+        <file>components/chips/MediumSizes.qml</file>
+        <file>components/chips/LargeSizes.qml</file>
+        <file>components/chips/SmallSizes.qml</file>
+        <file>components/chips/Chip.qml</file>
+        <file>components/chips/OutlineChip.qml</file>
+        <file>components/comboBoxes/qmldir</file>
+        <file>components/comboBoxes/ComboBox.qml</file>
+        <file>components/comboBoxes/Sizes.qml</file>
+        <file>components/images/qmldir</file>
+        <file>components/images/SvgImage.qml</file>
+        <file>components/scrollBars/qmldir</file>
+        <file>components/scrollBars/ScrollBar.qml</file>
+        <file>components/pages/qmldir</file>
+        <file>components/pages/FooterButtons.qml</file>
+        <file>components/pages/HeaderTexts.qml</file>
+        <file>components/pages/FooterButtonsPage.qml</file>
+        <file>components/progressBars/qmldir</file>
+        <file>components/progressBars/HorizontalProgressBar.qml</file>
+        <file>components/steps/qmldir</file>
+        <file>components/steps/Step.qml</file>
+        <file>components/steps/SubStep.qml</file>
+        <file>components/steps/StepPanel.qml</file>
+        <file>components/textAreas/qmldir</file>
+        <file>components/textAreas/TextArea.qml</file>
+        <file>components/textAreas/MediumSizes.qml</file>
+        <file>components/textAreas/Colors.qml</file>
+        <file>components/textFields/qmldir</file>
+        <file>components/textFields/EmailTextField.qml</file>
+        <file>components/textFields/IconTextField.qml</file>
+        <file>components/textFields/PasswordTextField.qml</file>
+        <file>components/textFields/TextField.qml</file>
+        <file>components/textFields/TwoFA.qml</file>
+        <file>components/textFields/TwoFADigit.qml</file>
+        <file>components/textFields/Sizes.qml</file>
+        <file>components/textFields/SmallSizes.qml</file>
+        <file>components/textFields/LargeSizes.qml</file>
+        <file>components/textFields/Colors.qml</file>
+        <file>components/texts/qmldir</file>
+        <file>components/texts/HintText.qml</file>
+        <file>components/texts/NotificationText.qml</file>
+        <file>components/texts/RichText.qml</file>
+        <file>components/texts/SecondaryText.qml</file>
+        <file>components/texts/Text.qml</file>
+        <file>components/texts/ElidedText.qml</file>
+        <file>components/texts/HighlightedText.qml</file>
+        <file>components/texts/Sizes.qml</file>
+        <file>components/texts/BannerText.qml</file>
+        <file>components/toolTips/qmldir</file>
+        <file>components/toolTips/ToolTip.qml</file>
+        <file>components/toolTips/SmallToolTip.qml</file>
+        <file>components/views/qmldir</file>
+        <file>components/views/GroupBox.qml</file>
+        <file>components/views/ScrollPanel.qml</file>
+        <file>components/views/StackViewBase.qml</file>
+        <file>components/menus/MenuItem.qml</file>
+        <file>components/menus/qmldir</file>
+        <file>components/menus/ContextMenuItem.qml</file>
+        <file>components/menus/ContextMenu.qml</file>
+        <file>components/menus/Colors.qml</file>
+        <file>components/menus/Sizes.qml</file>
+        <file>onboard/qmldir</file>
+        <file>onboard/LoginPage.qml</file>
+        <file>onboard/LoginPageForm.ui.qml</file>
+        <file>onboard/OnboardingDialog.qml</file>
+        <file>onboard/OnboardingFlow.qml</file>
+        <file>onboard/OnboardingStrings.qml</file>
+        <file>onboard/RegisterContent.qml</file>
+        <file>onboard/RegisterFlow.qml</file>
+        <file>onboard/RegisterPage.qml</file>
+        <file>onboard/RegisterPageForm.ui.qml</file>
+        <file>onboard/TwoFAPage.qml</file>
+        <file>onboard/TwoFAPageForm.ui.qml</file>
+        <file>onboard/ConfirmEmailPage.qml</file>
+        <file>onboard/ConfirmEmailPageForm.ui.qml</file>
+        <file>onboard/ChangeEmailPage.qml</file>
+        <file>onboard/ChangeEmailPageForm.ui.qml</file>
+        <file>onboard/StackViewPage.qml</file>
+        <file>onboard/PasswordConditionItem.qml</file>
+        <file>onboard/PasswordInfoContent.qml</file>
+        <file>onboard/PasswordInfoContentForm.ui.qml</file>
+        <file>onboard/PasswordInfoPopUp.qml</file>
+        <file>onboard/syncs_types/qmldir</file>
+        <file>onboard/syncs_types/MainFlow.qml</file>
+        <file>onboard/syncs_types/NavigationInfo.qml</file>
+        <file>onboard/syncs_types/DeviceNamePage.qml</file>
+        <file>onboard/syncs_types/DeviceNamePageForm.ui.qml</file>
+        <file>onboard/syncs_types/InstallationTypePage.qml</file>
+        <file>onboard/syncs_types/InstallationTypePageForm.ui.qml</file>
+        <file>onboard/syncs_types/ResumePage.qml</file>
+        <file>onboard/syncs_types/ResumePageForm.ui.qml</file>
+        <file>onboard/syncs_types/SyncsHorizontalButton.qml</file>
+        <file>onboard/syncs_types/SyncsVerticalButton.qml</file>
+        <file>onboard/syncs_types/StepPanel.qml</file>
+        <file>onboard/syncs_types/SyncsPage.qml</file>
+        <file>onboard/syncs_types/AddSyncPage.qml</file>
+        <file>onboard/syncs_types/AddSyncPageForm.ui.qml</file>
+        <file>onboard/syncs_types/HandleSyncCandidatesDialog.qml</file>
+        <file>onboard/syncs_types/HandleSyncCandidatesDialogForm.ui.qml</file>
+        <file>onboard/syncs_types/RemoveSyncCandidateConfirmationDialog.qml</file>
+        <file>onboard/syncs_types/SyncsFlow.qml</file>
+        <file>onboard/syncs_types/backups/qmldir</file>
+        <file>onboard/syncs_types/ConfirmSyncsPage.qml</file>
+        <file>onboard/syncs_types/ConfirmSyncsPageForm.ui.qml</file>
+        <file>onboard/syncs_types/ConfirmSyncsTable.qml</file>
+        <file>onboard/syncs_types/backups/BackupsPage.qml</file>
+        <file>onboard/syncs_types/backups/ConfirmFoldersPage.qml</file>
+        <file>onboard/syncs_types/backups/ConfirmFoldersPageForm.ui.qml</file>
+        <file>onboard/syncs_types/backups/SelectFoldersPage.qml</file>
+        <file>onboard/syncs_types/backups/SelectFoldersPageForm.ui.qml</file>
+        <file>syncs/qmldir</file>
+        <file>syncs/SyncsDialog.qml</file>
+        <file>syncs/SyncsStrings.qml</file>
+        <file>syncs/SelectiveSyncPage.qml</file>
+        <file>syncs/SelectiveSyncPageForm.ui.qml</file>
+        <file>syncs/SyncsFlow.qml</file>
+        <file>syncs/SyncsPage.qml</file>
+        <file>syncs/ResumeSyncsPageForm.ui.qml</file>
+        <file>syncs/ResumeSyncsPage.qml</file>
+        <file>guest/qmldir</file>
+        <file>guest/BasePage.qml</file>
+        <file>guest/GuestFlow.qml</file>
+        <file>guest/GuestDialog.qml</file>
+        <file>guest/GuestStrings.qml</file>
+        <file>upsell/qmldir</file>
+        <file>upsell/UpsellDialog.qml</file>
+        <file>upsell/UpsellStrings.qml</file>
+        <file>upsell/PlanCard.qml</file>
+        <file>upsell/ContentItem.qml</file>
+        <file>upsell/HeaderItem.qml</file>
+        <file>sync_exclusions/qmldir</file>
+        <file>sync_exclusions/ExclusionsQmlDialog.qml</file>
+        <file>sync_exclusions/ExclusionsStrings.qml</file>
+        <file>sync_exclusions/RulesTable.qml</file>
+        <file>sync_exclusions/AddRuleDialog.qml</file>
+        <file>whatsNew/WhatsNewStrings.qml</file>
+        <file>whatsNew/qmldir</file>
+        <file>whatsNew/WhatsNewDialog.qml</file>
+        <file>whatsNew/UpdatesElement.qml</file>
+        <file>backups/qmldir</file>
+        <file>backups/BackupsDialog.qml</file>
+        <file>backups/BackupsFlow.qml</file>
+        <file>backups/BackupsStrings.qml</file>
+        <file>backups/ConfirmFoldersContent.qml</file>
+        <file>backups/ConfirmFoldersPage.qml</file>
+        <file>backups/ConfirmFoldersPageForm.ui.qml</file>
+        <file>backups/ConfirmTable.qml</file>
+        <file>backups/FolderRow.qml</file>
+        <file>backups/SelectFoldersPage.qml</file>
+        <file>backups/SelectFoldersPageForm.ui.qml</file>
+        <file>backups/SelectTable.qml</file>
+        <file>backups/ResumePageForm.ui.qml</file>
+        <file>backups/ResumePage.qml</file>
+        <file>backups/BackupsPage.qml</file>
+        <file>surveys/qmldir</file>
+        <file>surveys/SurveyStrings.qml</file>
+        <file>surveys/SurveyItem.qml</file>
+        <file>surveys/RateScaleItem.qml</file>
+        <file>deviceCentre/DeviceCentreDialog.qml</file>
+        <file>deviceCentre/DeviceCentreStrings.qml</file>
+        <file>deviceCentre/qmldir</file>
+        <file>deviceCentre/LeftSidebar.qml</file>
+        <file>deviceCentre/Toolbar.qml</file>
+        <file>deviceCentre/ToolbarButton.qml</file>
+        <file>deviceCentre/DevicePage.qml</file>
+        <file>deviceCentre/DevicePageHeader.qml</file>
+        <file>deviceCentre/DevicePageContent.qml</file>
+        <file>deviceCentre/NoInternetPage.qml</file>
+        <file>deviceCentre/NoConnectionsPage.qml</file>
+        <file>deviceCentre/SyncTablePage.qml</file>
+        <file>deviceCentre/DeviceWidgetProperty.qml</file>
+        <file>deviceCentre/TroubleshootDialog.qml</file>
+        <file>deviceCentre/IssueResolutionOption.qml</file>
+        <file>deviceCentre/TroubleshootButton.qml</file>
+        <file>messageDialogs/MessageDialog.qml</file>
+        <file>messageDialogs/MessageDialogMediumSizes.qml</file>
+        <file>messageDialogs/TextLoader.qml</file>
+        <file>components/menus/MenuItem.qml</file>
+        <file>components/menus/qmldir</file>
+        <file>components/menus/ContextMenuItem.qml</file>
+        <file>components/menus/ContextMenu.qml</file>
+        <file>components/menus/Colors.qml</file>
+        <file>components/menus/Sizes.qml</file>
+        <file>deviceCentre/RenameDeviceDialog.qml</file>
+        <file>common/DeviceName.qml</file>
+        <file>syncs/ChooseSyncFolder.qml</file>
     </qresource>
 </RCC>

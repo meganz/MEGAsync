@@ -470,7 +470,6 @@ if (NOT DontUseResources)
     process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_qml.qrc")
     process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_light.qrc")
     process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_dark.qrc")
-    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/qml/qml.qrc")
 
     qt5_add_binary_resources(Resources_win "${CMAKE_CURRENT_LIST_DIR}/Resources_win.qrc")
     qt5_add_binary_resources(Resources_macx "${CMAKE_CURRENT_LIST_DIR}/Resources_macx.qrc")
