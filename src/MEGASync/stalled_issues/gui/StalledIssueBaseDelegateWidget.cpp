@@ -18,6 +18,8 @@ StalledIssueBaseDelegateWidget::StalledIssueBaseDelegateWidget(QWidget *parent)
     });
     mResizeNeedTimer.setInterval(50);
     mResizeNeedTimer.setSingleShot(true);
+
+    setProperty("TOKENIZED", true);
 }
 
 void StalledIssueBaseDelegateWidget::updateIndex()

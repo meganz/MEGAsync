@@ -9,6 +9,7 @@
 #include "OtherSideMissingOrBlocked.h"
 #include "StalledIssuesCaseHeaders.h"
 #include "StalledIssuesProxyModel.h"
+#include "TokenParserWidgetManager.h"
 #include "Utilities.h"
 
 const int StalledIssuesDelegateWidgetsCache::DELEGATEWIDGETS_CACHESIZE = 30;
@@ -123,6 +124,8 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
         item->hide();
         item->updateUi(sourceIndex, issue);
         item->setDelegate(mDelegate);
+
+        TokenParserWidgetManager::instance()->applyCurrentTheme(item);
 
         itemsByRowMap.insert(row, item);
     }

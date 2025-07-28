@@ -31,7 +31,11 @@ public:
 
     void setHyperLinkMode();
 
-    void addActionButton(const QIcon& icon, const QString& text, int id, bool mainButton);
+    void addActionButton(const QIcon& icon,
+                         const QString& text,
+                         int id,
+                         bool mainButton,
+                         const QString& type = QLatin1String("secondary"));
     void setActionButtonVisibility(int id, bool state);
 
     virtual void showIcon();

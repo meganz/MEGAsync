@@ -23,7 +23,7 @@ const char* TITLE_FILENAME = "TITLE_FILENAME";
 const char* TITLE_INDEX = "TITLE_INDEX";
 
 //NAME DUPLICATED
-void NameDuplicatedContainer::paintEvent(QPaintEvent*)
+void NameDuplicatedContainer::paintEvent(QPaintEvent* event)
 {
     QPainter painter(this);
 
@@ -48,6 +48,8 @@ void NameDuplicatedContainer::paintEvent(QPaintEvent*)
 
     QRect horRect2(0, height() - 7, 10, 2);
     painter.fillRect(horRect2, Qt::gray);
+
+    QWidget::paintEvent(event);
 }
 
 //NAME CONFLICT
@@ -254,7 +256,7 @@ void NameConflict::initActionButtons(StalledIssueActionTitle* title)
     QIcon renameIcon(QString::fromUtf8("://images/StalledIssues/rename_node_default.png"));
     QIcon removeIcon(QString::fromUtf8("://images/StalledIssues/remove_default.png"));
     title->addActionButton(renameIcon, tr("Rename"), RENAME_ID, false);
-    title->addActionButton(removeIcon, QString(), REMOVE_ID, false);
+    title->addActionButton(removeIcon, QString(), REMOVE_ID, false, QLatin1String("outline"));
 }
 
 void NameConflict::onRawInfoChecked()

@@ -34,80 +34,28 @@
   <property name="styleSheet">
    <string notr="true">#backgroundWidget
 {
-    border-radius: 4px;
+border-radius: 4px;
 }
 
-#backgroundWidget[discarded=false][disable_background=false][failed=false]
+/*ACTIVE*/
+#backgroundWidget[disable_background=false][failed=false]
 {
-	background-color: #F5F5F5;
+	background-color: #FFF5F5F5; /*colorToken.surface-1*/
 }
 
-#backgroundWidget[discarded=true][disable_background=false][failed=false]
+/*NO BACKGROUND*/
+#backgroundWidget[disable_background=true][failed=false]
 {
-	background-color: #4DF5F5F5;
+	background-color: transparent;
 }
 
-#backgroundWidget[discarded=false][failed=true]
+/*FAILED*/
+#backgroundWidget[disable_background=false][failed=true]
 {
-	background-color: #FDEBEB;
+	background-color: #FFFDEBEB; /*colorToken.support-error*/
 }
 
-#extraInfoContainer QLabel
-{
-	font-family: Lato;
-    font-size: 12px;
-    line-height: 16px;
-    color: #333333;
-}
-#titleContainer QTextEdit
-{
-    font-family: Lato;
-    font-size: 13px;
-    line-height: 16px;
-    color: #333333;
-}
-
-#rawInfoCheck
-{
-	font-family: Lato;
-    font-size: 12px;
-    line-height: 16px;
-    color: #333333;
-}
-
-QPushButton[onlyIcon=true]
-{
-   background-color: #FAFAFA;
-   border-radius:4px;
-   border: 1px solid rgba(0,0,0,0.1);
-   height: 32px;
-   padding-left: 0px;
-   padding-right: 0px;
-}
-
-QPushButton[onlyIcon=false]
-{
-   font-size:14px;
-   background-color: #FAFAFA;
-   color: #333333;
-   border-radius: 4px;
-   border: 1px solid rgba(0,0,0,0.1);
-   padding-left: 9px;
-   padding-right: 12px;
-   height: 32px;
-}
-
-QPushButton[main=true]
-{
-   background-color: #00BFA5;
-   color: #FFFFFF;
-}
-
-#actionContainer QLabel, #messageContainer QLabel
-{
-   font-size:14px;
-   color: #333333;
-}</string>
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -180,9 +128,6 @@ QPushButton[main=true]
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
-           </property>
-           <property name="styleSheet">
-            <string notr="true"/>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,0">
             <property name="spacing">
@@ -263,9 +208,11 @@ QPushButton[main=true]
                  <property name="font">
                   <font>
                    <family>Lato</family>
-                   <pointsize>-1</pointsize>
                    <bold>true</bold>
                   </font>
+                 </property>
+                 <property name="type" stdset="0">
+                  <string notr="true">secondary</string>
                  </property>
                 </widget>
                </item>
@@ -376,9 +323,6 @@ QPushButton[main=true]
       </item>
       <item>
        <widget class="QWidget" name="actionContainer" native="true">
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
         <layout class="QHBoxLayout" name="actionLayout">
          <property name="spacing">
           <number>20</number>

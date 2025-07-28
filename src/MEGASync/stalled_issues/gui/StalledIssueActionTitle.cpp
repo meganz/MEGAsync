@@ -44,6 +44,9 @@ StalledIssueActionTitle::StalledIssueActionTitle(QWidget* parent) :
     ui->backgroundWidget->setProperty(DISABLE_BACKGROUND, false);
     ui->backgroundWidget->setProperty(DISCARDED,false);
     ui->backgroundWidget->setProperty(FAILED_BACKGROUND, false);
+
+    setAttribute(Qt::WA_StyledBackground, true);
+    ui->backgroundWidget->setAttribute(Qt::WA_StyledBackground, true);
 }
 
 StalledIssueActionTitle::~StalledIssueActionTitle()
@@ -92,7 +95,11 @@ void StalledIssueActionTitle::setHyperLinkMode()
     ui->titleContainer->setMouseTracking(true);
 }
 
-void StalledIssueActionTitle::addActionButton(const QIcon& icon,const QString& text, int id, bool mainButton)
+void StalledIssueActionTitle::addActionButton(const QIcon& icon,
+                                              const QString& text,
+                                              int id,
+                                              bool mainButton,
+                                              const QString& type)
 {
     //Update existing buttons
     auto buttons = ui->actionContainer->findChildren<QPushButton*>();
@@ -111,7 +118,11 @@ void StalledIssueActionTitle::addActionButton(const QIcon& icon,const QString& t
     button->setProperty(BUTTON_ID, id);
     button->setProperty(ONLY_ICON, false);
     button->setProperty(MAIN_BUTTON,mainButton);
+    button->setProperty("type", type);
+    button->setProperty("dimension", QLatin1String("small"));
     button->setCursor(Qt::PointingHandCursor);
+    button->setFixedHeight(26);
+
     connect(button, &QPushButton::clicked, this, [this]()
     {
         QApplication::postEvent(this, new QMouseEvent(QEvent::MouseButtonPress, QPointF(), Qt::LeftButton, Qt::NoButton, Qt::KeyboardModifier::AltModifier));
@@ -131,7 +142,6 @@ void StalledIssueActionTitle::addActionButton(const QIcon& icon,const QString& t
         }
     }
 
-    ui->actionContainer->setStyleSheet(ui->actionContainer->styleSheet());
     ui->actionContainer->show();
 }
 
@@ -198,9 +208,14 @@ void StalledIssueActionTitle::addExtraInfo(AttributeType type, const QString& ti
     ui->extraInfoContainer->show();
 
     auto titleLabel = new QLabel(title, this);
+    titleLabel->setProperty("type", QLatin1String("secondary"));
+    titleLabel->setProperty("dimension", QLatin1String("small"));
+
     auto infoLabel = new QLabel(info, this);
     infoLabel->setProperty(MESSAGE_TEXT, info);
     infoLabel->setProperty(EXTRAINFO_INFO, true);
+    infoLabel->setProperty("type", QLatin1String("secondary"));
+    infoLabel->setProperty("dimension", QLatin1String("small"));
 
     mTitleLabels[type] = titleLabel;
     mUpdateLabels[type] = infoLabel;
@@ -231,38 +246,38 @@ void StalledIssueActionTitle::addExtraInfo(AttributeType type, const QString& ti
 
 void StalledIssueActionTitle::setFailed(bool state, const QString& errorTooltip)
 {
-    setToolTip(errorTooltip);
-    ui->backgroundWidget->setProperty(FAILED_BACKGROUND, state);
-    setStyleSheet(styleSheet());
+    // setToolTip(errorTooltip);
+    // ui->backgroundWidget->setProperty(FAILED_BACKGROUND, state);
+    // setStyleSheet(styleSheet());
 }
 
 void StalledIssueActionTitle::setDisable(bool state)
 {
     ui->backgroundWidget->setProperty(DISCARDED,state);
 
-    setStyleSheet(styleSheet());
+    // setStyleSheet(styleSheet());
 
-    if(state)
-    {
-        if(!ui->titleContainer->graphicsEffect())
-        {
-            auto titleEffect = new QGraphicsOpacityEffect(this);
-            titleEffect->setOpacity(0.3);
-            ui->titleContainer->setGraphicsEffect(titleEffect);
-        }
+    // if(state)
+    // {
+    //     if(!ui->titleContainer->graphicsEffect())
+    //     {
+    //         auto titleEffect = new QGraphicsOpacityEffect(this);
+    //         titleEffect->setOpacity(0.3);
+    //         ui->titleContainer->setGraphicsEffect(titleEffect);
+    //     }
 
-        if(!ui->extraInfoContainer->graphicsEffect())
-        {
-            auto extraInfoDisableEffect = new QGraphicsOpacityEffect(this);
-            extraInfoDisableEffect->setOpacity(0.3);
-            ui->extraInfoContainer->setGraphicsEffect(extraInfoDisableEffect);
-        }
-    }
-    else
-    {
-        ui->titleContainer->setGraphicsEffect(nullptr);
-        ui->extraInfoContainer->setGraphicsEffect(nullptr);
-    }
+    // if(!ui->extraInfoContainer->graphicsEffect())
+    // {
+    //     auto extraInfoDisableEffect = new QGraphicsOpacityEffect(this);
+    //     extraInfoDisableEffect->setOpacity(0.3);
+    //     ui->extraInfoContainer->setGraphicsEffect(extraInfoDisableEffect);
+    // }
+    // }
+    // else
+    // {
+    // ui->titleContainer->setGraphicsEffect(nullptr);
+    // ui->extraInfoContainer->setGraphicsEffect(nullptr);
+    // }
 }
 
 bool StalledIssueActionTitle::isSolved() const

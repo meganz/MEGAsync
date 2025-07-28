@@ -15,13 +15,7 @@
 {
     border-radius: 8px;
     border: 1px solid  #D6D6D6;
-    background-color: #FFFFFF;
-}
-
-StalledIssueActionTitle
-{
-    min-height: 40 px;
-    background-color: #F5F5F5;
+    background-color: #FFFFFFFF; /*colorToken.page-background*/
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">

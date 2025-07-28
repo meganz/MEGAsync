@@ -14,12 +14,9 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#selectLabel
+   <string notr="true">#LocalAndRemoteNameConflicts
 {
-    font-family: Lato Bold;
-    font-size: 13px;
-    line-height: 16px;
-    color: #333333;
+   background-color: transparent;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -40,7 +37,6 @@
      <property name="font">
       <font>
        <family>Lato 13</family>
-       <pointsize>-1</pointsize>
        <bold>true</bold>
       </font>
      </property>
@@ -55,6 +51,9 @@
      </property>
      <property name="indent">
       <number>11</number>
+     </property>
+     <property name="type" stdset="0">
+      <string notr="true">primary</string>
      </property>
     </widget>
    </item>
