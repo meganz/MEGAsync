@@ -53,7 +53,7 @@ private:
                       ColorData& colorData);
     void processColorToken(const QString& categoryName,
                            const QString& token,
-                           QString& value,
+                           const QString& value,
                            const CoreData& coreData,
                            ColorData& colorData);
 };
