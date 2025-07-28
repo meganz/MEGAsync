@@ -1,7 +1,7 @@
 #include "ChangeLogDialog.h"
 
 #include "Preferences.h"
-#include "RefreshAppChangeEvent.h"
+#include "ThemeManager.h"
 #include "ui_ChangeLogDialog.h"
 
 #include <QDesktopServices>
@@ -108,10 +108,13 @@ void ChangeLogDialog::on_bAck_clicked()
 
 bool ChangeLogDialog::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange || event->type() == ThemeManager::ThemeChanged)
     {
-        ui->retranslateUi(this);
-        tweakStrings();
+        if (event->type() == QEvent::LanguageChange)
+        {
+            ui->retranslateUi(this);
+            tweakStrings();
+        }
         setChangeLogNotes(Preferences::CHANGELOG);
     }
 

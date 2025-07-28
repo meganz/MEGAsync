@@ -4,7 +4,7 @@
 #include "FullName.h"
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
-#include "RefreshAppChangeEvent.h"
+#include "ThemeManager.h"
 #include "ui_AlertItem.h"
 #include "UserAlert.h"
 
@@ -753,7 +753,7 @@ void AlertItem::processPaymentClick()
 
 bool AlertItem::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
         updateAlertType();
@@ -762,6 +762,13 @@ bool AlertItem::event(QEvent* event)
             setAlertHeading(mAlertData);
             setAlertContent(mAlertData);
             setAlertTimeStamp(mAlertData->getTimestamp(0));
+        }
+    }
+    if (event->type() == ThemeManager::ThemeChanged)
+    {
+        if (mAlertData)
+        {
+            setAlertContent(mAlertData);
         }
     }
     return UserMessageWidget::event(event);

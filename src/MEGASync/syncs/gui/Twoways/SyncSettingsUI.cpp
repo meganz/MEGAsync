@@ -5,7 +5,6 @@
 #include "MegaApplication.h"
 #include "Onboarding.h"
 #include "QmlDialogWrapper.h"
-#include "RefreshAppChangeEvent.h"
 #include "SyncController.h"
 #include "SyncItemModel.h"
 #include "SyncsComponent.h"
@@ -110,7 +109,7 @@ void SyncSettingsUI::setSyncsTitle()
 
 bool SyncSettingsUI::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         mSyncElement.retranslateUi();
         setSyncsTitle();

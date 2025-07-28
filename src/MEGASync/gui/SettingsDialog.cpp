@@ -14,7 +14,6 @@
 #include "Platform.h"
 #include "PowerOptions.h"
 #include "ProxySettings.h"
-#include "RefreshAppChangeEvent.h"
 #include "RemoveBackupDialog.h"
 #include "StatsEventHandler.h"
 #include "ThemeManager.h"
@@ -508,7 +507,7 @@ void SettingsDialog::on_bHelp_clicked()
 
 bool SettingsDialog::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
 

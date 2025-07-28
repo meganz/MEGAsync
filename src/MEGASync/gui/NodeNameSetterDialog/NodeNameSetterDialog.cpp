@@ -2,7 +2,6 @@
 
 #include "CommonMessages.h"
 #include "MegaApplication.h"
-#include "RefreshAppChangeEvent.h"
 #include "ui_NodeNameSetterDialog.h"
 #include "Utilities.h"
 
@@ -105,7 +104,7 @@ void NodeNameSetterDialog::showAlreadyExistingNodeError(bool isFile)
 
 bool NodeNameSetterDialog::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
          mUi->textLabel->setText(dialogText());
     }

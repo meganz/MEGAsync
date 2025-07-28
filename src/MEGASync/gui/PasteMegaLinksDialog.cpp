@@ -1,7 +1,6 @@
 #include "PasteMegaLinksDialog.h"
 
 #include "MessageDialogOpener.h"
-#include "RefreshAppChangeEvent.h"
 #include "ui_PasteMegaLinksDialog.h"
 
 #include <QClipboard>
@@ -64,7 +63,7 @@ void PasteMegaLinksDialog::on_bSubmit_clicked()
 
 bool PasteMegaLinksDialog::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
     }

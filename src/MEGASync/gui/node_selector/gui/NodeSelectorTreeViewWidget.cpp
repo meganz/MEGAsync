@@ -10,7 +10,6 @@
 #include "NodeSelectorModel.h"
 #include "NodeSelectorProxyModel.h"
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
-#include "RefreshAppChangeEvent.h"
 #include "RenameNodeDialog.h"
 #include "RequestListenerManager.h"
 #include "ui_NodeSelectorTreeViewWidget.h"
@@ -73,7 +72,7 @@ NodeSelectorTreeViewWidget::~NodeSelectorTreeViewWidget()
 
 bool NodeSelectorTreeViewWidget::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         if(!ui->tMegaFolders->rootIndex().isValid())
         {

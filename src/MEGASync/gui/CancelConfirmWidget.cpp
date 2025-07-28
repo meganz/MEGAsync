@@ -1,7 +1,6 @@
 #include "CancelConfirmWidget.h"
 
 #include "BlurredShadowEffect.h"
-#include "RefreshAppChangeEvent.h"
 #include "ui_CancelConfirmWidget.h"
 #include "Utilities.h"
 
@@ -49,7 +48,7 @@ void CancelConfirmWidget::setInCancellingStage()
 
 bool CancelConfirmWidget::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
     }

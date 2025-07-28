@@ -8,7 +8,6 @@
 #include "DialogOpener.h"
 #include "MegaApplication.h"
 #include "Platform.h"
-#include "RefreshAppChangeEvent.h"
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
 #include "TransferManager.h"
@@ -1231,7 +1230,7 @@ void InfoDialog::updateUiOnFolderTransferUpdate(const FolderTransferUpdateEvent 
 
 bool InfoDialog::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
         updateUpgradeButtonText();

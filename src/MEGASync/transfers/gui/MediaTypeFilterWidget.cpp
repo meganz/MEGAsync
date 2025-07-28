@@ -1,6 +1,5 @@
 #include "MediaTypeFilterWidget.h"
 
-#include "RefreshAppChangeEvent.h"
 #include "ui_MediaTypeFilterWidget.h"
 
 MediaTypeFilterWidget::MediaTypeFilterWidget(QWidget* parent):
@@ -25,7 +24,7 @@ MediaTypeFilterWidget::~MediaTypeFilterWidget()
 
 bool MediaTypeFilterWidget::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
         updateStrings();

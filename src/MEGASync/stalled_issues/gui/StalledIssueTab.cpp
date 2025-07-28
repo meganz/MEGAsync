@@ -1,7 +1,6 @@
 #include "StalledIssueTab.h"
 
 #include "MegaApplication.h"
-#include "RefreshAppChangeEvent.h"
 #include "StalledIssuesModel.h"
 #include "ui_StalledIssueTab.h"
 #include "Utilities.h"
@@ -184,7 +183,7 @@ void StalledIssueTab::createTitle()
 
 bool StalledIssueTab::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         createTitle();
     }

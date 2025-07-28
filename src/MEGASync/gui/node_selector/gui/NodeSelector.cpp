@@ -9,7 +9,6 @@
 #include "NodeSelectorModel.h"
 #include "NodeSelectorProxyModel.h"
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
-#include "RefreshAppChangeEvent.h"
 #include "ui_NodeSelector.h"
 #include "Utilities.h"
 #include "ViewLoadingScene.h"
@@ -151,7 +150,7 @@ bool NodeSelector::getDefaultUploadOption()
 
 bool NodeSelector::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
         updateNodeSelectorTabs();

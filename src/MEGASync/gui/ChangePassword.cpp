@@ -4,7 +4,6 @@
 #include "Login2FA.h"
 #include "MegaApplication.h"
 #include "MessageDialogOpener.h"
-#include "RefreshAppChangeEvent.h"
 #include "RequestListenerManager.h"
 #include "ui_ChangePassword.h"
 
@@ -189,7 +188,7 @@ void ChangePassword::on_bOk_clicked()
 
 bool ChangePassword::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
     }

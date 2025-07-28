@@ -3,7 +3,6 @@
 #include "MegaApplication.h"
 #include "MegaTransferView.h"
 #include "Platform.h"
-#include "RefreshAppChangeEvent.h"
 #include "StalledIssuesModel.h"
 #include "ui_TransferManager.h"
 #include "ui_TransferManagerDragBackDrop.h"
@@ -1369,7 +1368,7 @@ void TransferManager::closeEvent(QCloseEvent *event)
 
 bool TransferManager::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
         updateCurrentCategoryTitle();

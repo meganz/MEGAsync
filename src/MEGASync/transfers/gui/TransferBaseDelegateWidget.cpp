@@ -1,7 +1,7 @@
 #include "TransferBaseDelegateWidget.h"
 
 #include "MegaApplication.h"
-#include "RefreshAppChangeEvent.h"
+#include "ThemeManager.h"
 
 #include <QLayout>
 #include <QPointer>
@@ -236,7 +236,7 @@ void TransferBaseDelegateWidget::reset()
 
 bool TransferBaseDelegateWidget::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange || event->type() == ThemeManager::ThemeChanged)
     {
         //Reset to allow the delegate to repaint all items
         mPreviousState = TransferData::TransferState::TRANSFER_NONE;

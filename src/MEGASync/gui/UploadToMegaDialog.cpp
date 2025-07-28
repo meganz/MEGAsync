@@ -4,7 +4,6 @@
 #include "DialogOpener.h"
 #include "MegaApplication.h"
 #include "NodeSelectorSpecializations.h"
-#include "RefreshAppChangeEvent.h"
 #include "RequestListenerManager.h"
 #include "ui_UploadToMegaDialog.h"
 
@@ -87,7 +86,7 @@ void UploadToMegaDialog::on_bChange_clicked()
 
 bool UploadToMegaDialog::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
         updatePath();

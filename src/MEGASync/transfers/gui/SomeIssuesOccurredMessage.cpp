@@ -1,7 +1,6 @@
 #include "SomeIssuesOccurredMessage.h"
 
 #include "DialogOpener.h"
-#include "RefreshAppChangeEvent.h"
 #include "StalledIssuesDialog.h"
 #include "ui_SomeIssuesOccurredMessage.h"
 
@@ -19,7 +18,7 @@ SomeIssuesOccurredMessage::~SomeIssuesOccurredMessage()
 
 bool SomeIssuesOccurredMessage::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
     }

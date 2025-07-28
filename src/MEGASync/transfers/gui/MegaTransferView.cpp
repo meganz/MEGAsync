@@ -3,7 +3,6 @@
 #include "MegaApplication.h"
 #include "MessageDialogOpener.h"
 #include "Platform.h"
-#include "RefreshAppChangeEvent.h"
 #include "TransfersWidget.h"
 #include "Utilities.h"
 
@@ -954,7 +953,7 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
 
 bool MegaTransferView::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         viewport()->update();
     }

@@ -2,7 +2,6 @@
 
 #include "DialogOpener.h"
 #include "MegaApplication.h"
-#include "RefreshAppChangeEvent.h"
 #include "StalledIssue.h"
 #include "StalledIssueDelegate.h"
 #include "StalledIssuesModel.h"
@@ -344,7 +343,7 @@ void StalledIssuesDialog::onGlobalSyncStateChanged(bool)
 
 bool StalledIssuesDialog::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
         MegaSyncApp->getStalledIssuesModel()->languageChanged();

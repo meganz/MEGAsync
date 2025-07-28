@@ -7,7 +7,6 @@
 #include "MessageDialogOpener.h"
 #include "NodeSelectorSpecializations.h"
 #include "Platform.h"
-#include "RefreshAppChangeEvent.h"
 #include "ui_ImportMegaLinksDialog.h"
 #include "Utilities.h"
 
@@ -250,7 +249,7 @@ void ImportMegaLinksDialog::on_bOk_clicked()
 
 bool ImportMegaLinksDialog::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
 

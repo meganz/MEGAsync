@@ -1,6 +1,5 @@
 #include "StatusInfo.h"
 
-#include "RefreshAppChangeEvent.h"
 #include "ui_StatusInfo.h"
 #include "Utilities.h"
 #include <MegaApplication.h>
@@ -189,7 +188,7 @@ void StatusInfo::setFailedText()
 
 bool StatusInfo::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
         setState(mState);

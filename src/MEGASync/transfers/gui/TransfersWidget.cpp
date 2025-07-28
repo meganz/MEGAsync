@@ -2,7 +2,6 @@
 
 #include "MegaApplication.h"
 #include "MessageDialogOpener.h"
-#include "RefreshAppChangeEvent.h"
 #include "TransferWidgetColumnsManager.h"
 #include "ui_TransfersWidget.h"
 
@@ -419,7 +418,7 @@ void TransfersWidget::updateHeaderItems()
 
 bool TransfersWidget::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
         updateHeaderItems();

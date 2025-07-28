@@ -9,7 +9,6 @@
 #include "MessageDialogOpener.h"
 #include "Onboarding.h"
 #include "QmlDialogWrapper.h"
-#include "RefreshAppChangeEvent.h"
 #include "ui_SyncSettingsUIBase.h"
 
 BackupSettingsUI::BackupSettingsUI(QWidget* parent):
@@ -62,7 +61,7 @@ void BackupSettingsUI::addButtonClicked(mega::MegaHandle)
 
 bool BackupSettingsUI::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         mElements.retranslateUI();
         ui->retranslateUi(this);

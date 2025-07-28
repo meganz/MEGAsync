@@ -2,7 +2,6 @@
 
 #include "AccountDetailsManager.h"
 #include "Preferences.h"
-#include "RefreshAppChangeEvent.h"
 #include "ui_AccountTypeWidget.h"
 
 namespace
@@ -35,7 +34,7 @@ void AccountTypeWidget::updateAccountElements()
 
 bool AccountTypeWidget::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         updateAccountText();
     }

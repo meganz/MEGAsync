@@ -1,6 +1,5 @@
 #include "AlertFilterType.h"
 
-#include "RefreshAppChangeEvent.h"
 #include "ui_AlertFilterType.h"
 
 AlertFilterType::AlertFilterType(QWidget* parent)
@@ -79,7 +78,7 @@ void AlertFilterType::mousePressEvent(QMouseEvent*)
 
 bool AlertFilterType::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
         setActualFilter(mType);

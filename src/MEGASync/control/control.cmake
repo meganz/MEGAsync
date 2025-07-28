@@ -36,7 +36,6 @@ set(DESKTOP_APP_CONTROL_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/Version.h
     ${CMAKE_CURRENT_LIST_DIR}/gzjoin.h
     ${CMAKE_CURRENT_LIST_DIR}/qrcodegen.h
-    ${CMAKE_CURRENT_LIST_DIR}/RefreshAppChangeEvent.h
     ${CMAKE_CURRENT_LIST_DIR}/MegaApiSynchronizedRequest.h
     ${CMAKE_CURRENT_LIST_DIR}/MergeMEGAFolders.h
     ${CMAKE_CURRENT_LIST_DIR}/MEGAPathCreator.h

@@ -1,6 +1,5 @@
 #include "MegaProgressCustomDialog.h"
 
-#include "RefreshAppChangeEvent.h"
 #include "ui_MegaProgressCustomDialog.h"
 
 #include <QEvent>
@@ -22,7 +21,7 @@ MegaProgressCustomDialog::~MegaProgressCustomDialog() {
 
 bool MegaProgressCustomDialog::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
     }

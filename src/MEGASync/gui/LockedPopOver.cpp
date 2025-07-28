@@ -1,6 +1,5 @@
 #include "LockedPopOver.h"
 
-#include "RefreshAppChangeEvent.h"
 #include "ui_LockedPopOver.h"
 
 #include <QMouseEvent>
@@ -17,7 +16,7 @@ LockedPopOver::LockedPopOver(QDialog *) :
 
 bool LockedPopOver::event(QEvent* event)
 {
-    if (RefreshAppChangeEvent::isRefreshEvent(event))
+    if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
         tweakStrings();
