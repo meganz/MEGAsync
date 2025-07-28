@@ -1,16 +1,16 @@
+// clang-format off
 #include "Utilities.h"
 
 #include <QByteArray>
 #include <QCryptographicHash>
-#include <QDir>
-#include <QColor>
 #include <QDebug>
+#include <QDir>
 #include <QFile>
 #include <QFileInfo>
 #include <QJsonDocument>
 #include <QStringList>
-#include <QTextStream>
 #include <QTemporaryFile>
+#include <QTextStream>
 
 static const qint64 FILE_READ_BUFFER_SIZE = 8192;
 
