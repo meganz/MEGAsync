@@ -27,7 +27,17 @@
     <normaloff>../../../../../../.designer/backup</normaloff>../../../../../../.designer/backup</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">QGroupBox
+   <string notr="true">QWidget
+{
+    background-color: #fff7f7f7; /*colorToken.surface-1*/
+}
+
+QPushButton, QLabel, QLineEdit, QToolButton
+{
+background-color: &quot;transparent&quot;;
+}
+
+QGroupBox
 {
     font-size: 12px;
     border: none;
@@ -1394,7 +1404,7 @@ QToolButton
                  <string notr="true"/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../../../gui/Resources.qrc">
+                 <iconset>
                   <normaloff>:/images/transfer_manager/sidebar/search_result_default.png</normaloff>:/images/transfer_manager/sidebar/search_result_default.png</iconset>
                 </property>
                 <property name="checkable">
@@ -1414,7 +1424,7 @@ QToolButton
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../../../gui/Resources.qrc">
+                 <iconset>
                   <normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</iconset>
                 </property>
                </widget>
@@ -1444,7 +1454,7 @@ QToolButton
            <string notr="true"/>
           </property>
           <property name="currentIndex">
-           <number>3</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="pSpeedAndClear">
            <layout class="QHBoxLayout" name="pSpeedAndClearLayout" stretch="0,0,0,1">
@@ -1732,7 +1742,7 @@ QToolButton
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources.qrc">
+               <iconset>
                 <normaloff>:/images/transfer_manager/sidebar/cancel_all_ico_default.png</normaloff>:/images/transfer_manager/sidebar/cancel_all_ico_default.png</iconset>
               </property>
               <property name="iconSize">
@@ -2111,7 +2121,7 @@ QToolButton
                <string>Open links</string>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources.qrc">
+               <iconset>
                 <normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</iconset>
               </property>
              </widget>
@@ -2125,7 +2135,7 @@ QToolButton
                <string>Upload</string>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources.qrc">
+               <iconset>
                 <normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</iconset>
               </property>
              </widget>
@@ -2139,7 +2149,7 @@ QToolButton
                <string>Download</string>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources.qrc">
+               <iconset>
                 <normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</iconset>
               </property>
              </widget>
@@ -2150,7 +2160,7 @@ QToolButton
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources.qrc">
+               <iconset>
                 <normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</iconset>
               </property>
              </widget>
@@ -2536,7 +2546,7 @@ QToolButton
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../gui/Resources.qrc">
+             <iconset>
               <normaloff>:/images/transfer_manager/empty_categories/no_uploads.png</normaloff>:/images/transfer_manager/empty_categories/no_uploads.png</iconset>
             </property>
            </widget>
@@ -2622,7 +2632,7 @@ QToolButton
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../gui/Resources.qrc">
+             <iconset>
               <normaloff>:/images/transfer_manager/empty_categories/no_downloads.png</normaloff>:/images/transfer_manager/empty_categories/no_downloads.png</iconset>
             </property>
            </widget>
@@ -2669,7 +2679,7 @@ QToolButton
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../gui/Resources.qrc">
+             <iconset>
               <normaloff>:/images/transfer_manager/empty_categories/no_transfers.png</normaloff>:/images/transfer_manager/empty_categories/no_transfers.png</iconset>
             </property>
            </widget>
@@ -2716,7 +2726,7 @@ QToolButton
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../gui/Resources.qrc">
+             <iconset>
               <normaloff>:/images/transfer_manager/empty_categories/no_search_results.png</normaloff>:/images/transfer_manager/empty_categories/no_search_results.png</iconset>
             </property>
            </widget>
@@ -2789,7 +2799,7 @@ QToolButton
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../gui/Resources.qrc">
+             <iconset>
               <normaloff>:/images/transfer_manager/empty_categories/Completed_transfers.png</normaloff>:/images/transfer_manager/empty_categories/Completed_transfers.png</iconset>
             </property>
            </widget>
@@ -2894,9 +2904,7 @@ QToolButton
   <tabstop>leSearchField</tabstop>
   <tabstop>tSearchCancel</tabstop>
  </tabstops>
- <resources>
-  <include location="../../../gui/Resources.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>bSearch</sender>

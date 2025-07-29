@@ -17,7 +17,17 @@
    <enum>Qt::LeftToRight</enum>
   </property>
   <property name="styleSheet">
-   <string notr="true">QGroupBox
+   <string notr="true">QWidget
+{
+    background-color: #fff7f7f7; /*colorToken.surface-1*/
+}
+
+QPushButton, QLabel
+{
+background-color: &quot;transparent&quot;;
+}
+
+QGroupBox
 {
     font-size: 12px;
     border: none;
@@ -132,6 +142,19 @@
 #gbMediaType QFrame &gt; QLabel
 {
     padding-right: 18px;
+}
+
+#gbMediaType QFrame[itsOn=true]
+{
+    border: none;
+    border-radius: 6px;
+    background-color: #FFFFFFFF; /*colorToken.page-background*/
+}
+
+#gbMediaType QFrame[itsOn=false]
+{
+    border-radius: none;
+    background-color: transparent;
 }
 
 #gbMediaType QFrame[itsOn=true] &gt; QPushButton
@@ -258,7 +281,7 @@
         <string notr="true"/>
        </property>
        <property name="icon">
-        <iconset resource="../../../gui/Resources.qrc">
+        <iconset>
          <normaloff>:/images/themed/light/chevron-down_default.svg</normaloff>:/images/themed/light/chevron-down_default.svg</iconset>
        </property>
        <property name="checkable">
@@ -792,8 +815,6 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../../../gui/Resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
