@@ -6183,17 +6183,11 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Increased the number of parallel transfers.
-- It’s now easier to add syncs during setup.
-- Added support for proxy auto-detection in Linux.
+        <source>- We’ve improved error handling.
 - We’ve fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 5.14.0. CON-1405</translatorcomment>
-        <translation>- Increased the number of parallel transfers.
-- It’s now easier to add syncs during setup.
-- Added support for proxy auto-detection in Linux.
-- We’ve fixed bugs and made the app more reliable.
-</translation>
+        <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
