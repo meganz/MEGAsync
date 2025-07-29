@@ -14,89 +14,49 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#TransferManagerAccountInfo
+   <string notr="true">QWidget
 {
-	background-color: #FAFAFA;
-}
-
-#bUpgrade
-{
-	font-size: 12px;
-	line-height: 16px;
-	border: 1px solid #0000001A;
-	border-radius: 4px;
-	color: #FFFFFF;
-	padding: 0px 8px;
-	background-color:  #00BFA5;
+    background-color: #fff7f7f7; /*colorToken.surface-1*/
 }
 
 #lStorage
 {
-        font-family: Lato;
-	font-size: 12px;
 	line-height: 18px;
-	color: #303233;
-}
-
-#bUpgrade::hover
-{
-	background-color:  #00A787;
-}
-
-#bUpgrade::pressed
-{
-	background-color: #00D7C2;
-}
-
-#bUpgrade::disabled
-{
-	background-color: #00BFA54D;
+   color: #ff333333; /*colorToken.text-primary*/
 }
 
 #pbStorage
 {
-	border-style: none;
-	border-radius: 4px;
-	background-color: #ffededed; /*colorToken.indicator-background*/
-	max-height: 8px;
+   height: 2px;
+   min-height: 2px;
+   max-height: 2px;
+	border-radius: 1px;
+	background-color: #ff616366; /*colorToken.border-strong*/
 }
 
 #pbStorage::chunk[state=&quot;default&quot;]
 {
 	background-color: #ff09bf5b; /*colorToken.indicator-green*/
-	border-top-left-radius: 4px;
-	border-bottom-left-radius: 4px;
-	border-top-right-radius: 0px;
-	border-bottom-right-radius: 0px;
 }
 
 #pbStorage::chunk[state=&quot;almost&quot;]
 {
 	background-color: #fffb6514; /*colorToken.indicator-orange*/
-	border-top-left-radius: 4px;
-	border-bottom-left-radius: 4px;
-	border-top-right-radius: 0px;
-	border-bottom-right-radius: 0px;
 }
 
 #pbStorage::chunk[state=&quot;almostfull&quot;]
 {
 	background-color: #fffb6514; /*colorToken.indicator-orange*/
-	border-top-left-radius: 4px;
-	border-bottom-left-radius: 4px;
-	border-top-right-radius: 4px;
-	border-bottom-right-radius: 4px;
 }
 
 #pbStorage::chunk[state=&quot;full&quot;]
 {
 	background-color: #fff63d6b; /*colorToken.indicator-pink*/
-	border-top-left-radius: 4px;
-	border-bottom-left-radius: 4px;
-	border-top-right-radius: 4px;
-	border-bottom-right-radius: 4px;
 }
 </string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -231,6 +191,9 @@
           <property name="text">
            <string/>
           </property>
+          <property name="type" stdset="0">
+           <string notr="true">primary</string>
+          </property>
          </widget>
         </item>
        </layout>
@@ -277,13 +240,13 @@
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>8</height>
+            <height>2</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>8</height>
+            <height>2</height>
            </size>
           </property>
           <property name="value">
