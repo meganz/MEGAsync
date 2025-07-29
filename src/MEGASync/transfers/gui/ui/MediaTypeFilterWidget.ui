@@ -219,6 +219,9 @@
 }
 </string>
   </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>8</number>
@@ -255,7 +258,7 @@
         <string notr="true"/>
        </property>
        <property name="icon">
-        <iconset resource="../Resources.qrc">
+        <iconset resource="../../../gui/Resources.qrc">
          <normaloff>:/images/themed/light/chevron-down_default.svg</normaloff>:/images/themed/light/chevron-down_default.svg</iconset>
        </property>
        <property name="checkable">
@@ -790,7 +793,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../Resources.qrc"/>
+  <include location="../../../gui/Resources.qrc"/>
  </resources>
  <connections/>
 </ui>

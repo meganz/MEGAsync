@@ -27,12 +27,11 @@
     <normaloff>../../../../../../.designer/backup</normaloff>../../../../../../.designer/backup</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">/*SubWidget;wMediaType;widget;*/
-
-QGroupBox
+   <string notr="true">QGroupBox
 {
     font-size: 12px;
     border: none;
+    background-color: #fff7f7f7; /*colorToken.surface-1*/
 }
 
 QGroupBox::title
@@ -45,7 +44,7 @@ QGroupBox::title
 
 #wLeftPane
 {
-    background-color: #fff7f7f7; /*colorToken.surface-1*/
+background-color: #fff7f7f7; /*colorToken.surface-1*/
 }
 
 #wLeftPane QFrame &gt; QLabel
@@ -644,6 +643,9 @@ QToolButton
 }
 
 </string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
   </property>
   <layout class="QHBoxLayout" name="TransferManagerLayout">
    <property name="spacing">

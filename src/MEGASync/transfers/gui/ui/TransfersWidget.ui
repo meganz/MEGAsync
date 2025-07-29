@@ -211,7 +211,7 @@ QMenu::item:default
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true"></string>
+       <string notr="true"/>
       </property>
       <layout class="QVBoxLayout" name="pTransfersLayout">
        <property name="spacing">
@@ -491,7 +491,7 @@ QMenu::item:default
                 <string notr="true"/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources.qrc">
+                <iconset resource="../../../gui/Resources.qrc">
                  <normaloff>:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</iconset>
                </property>
                <property name="iconSize">
@@ -580,7 +580,7 @@ QMenu::item:default
                 <string notr="true"/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources.qrc">
+                <iconset resource="../../../gui/Resources.qrc">
                  <normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</iconset>
                </property>
                <property name="iconSize">
@@ -718,7 +718,7 @@ QMenu::item:default
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources.qrc"/>
+  <include location="../../../gui/Resources.qrc"/>
  </resources>
  <connections/>
 </ui>

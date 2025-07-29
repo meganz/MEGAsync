@@ -60,13 +60,8 @@ set(DESKTOP_APP_TRANSFERS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/gui/TransferManagerStatusHeaderWidget.cpp
 )
 
-set_property(TARGET ${ExecutableTarget}
-        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
-        ${CMAKE_CURRENT_LIST_DIR}/gui/ui
-        ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/ui
-    )
-
-set (DESKTOP_APP_TRANSFERS_UI_FILES
+target_sources(${ExecutableTarget}
+    PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransferManagerStatusHeaderWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransferWidgetHeaderItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransferManagerDelegateWidget.ui
@@ -86,18 +81,22 @@ set (DESKTOP_APP_TRANSFERS_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/ui/DuplicatedNodeItem.ui
 )
 
+set_property(TARGET ${ExecutableTarget}
+        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
+        ${CMAKE_CURRENT_LIST_DIR}/gui/ui
+        ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/ui
+)
+
 target_sources(${ExecutableTarget}
     PRIVATE
     ${DESKTOP_APP_TRANSFERS_HEADERS}
     ${DESKTOP_APP_TRANSFERS_SOURCES}
-    ${DESKTOP_APP_TRANSFERS_UI_FILES}
 )
 
 set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}
     ${CMAKE_CURRENT_LIST_DIR}/model
     ${CMAKE_CURRENT_LIST_DIR}/gui
-    ${CMAKE_CURRENT_LIST_DIR}/gui/ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs
 )
 
