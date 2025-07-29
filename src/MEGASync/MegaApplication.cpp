@@ -565,6 +565,13 @@ void MegaApplication::initialize()
     megaApi->setLanguage(currentLanguageCode.toUtf8().constData());
     megaApiFolders->setLanguage(currentLanguageCode.toUtf8().constData());
 
+    // In case the user has logout and closed the app, we set the default values
+    setMaxConnections(MegaTransfer::TYPE_UPLOAD, preferences->parallelUploadConnections());
+    setMaxConnections(MegaTransfer::TYPE_DOWNLOAD, preferences->parallelDownloadConnections());
+    setUseHttpsOnly(preferences->usingHttpsOnly());
+    megaApi->setDefaultFilePermissions(preferences->filePermissionsValue());
+    megaApi->setDefaultFolderPermissions(preferences->folderPermissionsValue());
+
     megaApi->retrySSLerrors(true);
 
     mStatusController = new AccountStatusController(this);
