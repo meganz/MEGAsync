@@ -54,6 +54,7 @@ public:
 #endif
 
     void processSymLinks() override;
+    bool loadThemeResource(const QString& theme) override;
 
 private:
     void disableSignalHandler();

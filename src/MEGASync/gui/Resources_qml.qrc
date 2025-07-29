@@ -1,144 +1,144 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/qml/alert_circle.svg</file>
-        <file>images/qml/alert_triangle.svg</file>
-        <file>images/qml/arrow_right.svg</file>
-        <file>images/qml/check.svg</file>
-        <file>images/qml/help_circle.svg</file>
-        <file>images/qml/indeterminate.svg</file>
-        <file>images/qml/loader.svg</file>
-        <file>images/qml/lock.svg</file>
-        <file>images/qml/trash.svg</file>
-        <file>images/qml/x_circle.svg</file>
-        <file>images/qml/tip.svg</file>
-        <file>images/qml/small_circle.svg</file>
-        <file>images/qml/onboarding/database.svg</file>
-        <file>images/qml/onboarding/edit.svg</file>
-        <file>images/qml/onboarding/folder.svg</file>
-        <file>images/qml/onboarding/key.svg</file>
-        <file>images/qml/onboarding/login.png</file>
-        <file>images/qml/onboarding/login@2x.png</file>
-        <file>images/qml/onboarding/login@3x.png</file>
-        <file>images/qml/onboarding/pc.svg</file>
-        <file>images/qml/onboarding/person.svg</file>
-        <file>images/qml/onboarding/resume.svg</file>
-        <file>images/qml/onboarding/twofa.png</file>
-        <file>images/qml/onboarding/mail.svg</file>
-        <file>images/qml/device_center/addbackup.svg</file>
-        <file>images/qml/device_center/addsync.svg</file>
-        <file>images/qml/device_center/pc-windows.svg</file>
-        <file>images/qml/device_center/pc-mac.svg</file>
-        <file>images/qml/device_center/pc-linux.svg</file>
-        <file>images/qml/device_center/status-paused.svg</file>
-        <file>images/qml/device_center/status-stopped.svg</file>
-        <file>images/qml/device_center/status-updating.svg</file>
-        <file>images/qml/device_center/status-uptodate.svg</file>
-        <file>images/qml/ok.png</file>
-        <file>images/qml/ok@2x.png</file>
-        <file>images/qml/ok@3x.png</file>
-        <file>images/qml/mega.svg</file>
-        <file>images/qml/mega_outline.svg</file>
-        <file>images/qml/guest/exit.svg</file>
-        <file>images/qml/guest/guest.png</file>
-        <file>images/qml/guest/guest@2x.png</file>
-        <file>images/qml/guest/guest@3x.png</file>
-        <file>images/qml/guest/menu.svg</file>
-        <file>images/qml/guest/settings.svg</file>
-        <file>images/qml/small_check.svg</file>
-        <file>images/qml/check_circle.svg</file>
-        <file>images/qml/error.png</file>
-        <file>images/qml/error@2x.png</file>
-        <file>images/qml/error@3x.png</file>
-        <file>images/qml/lock.png</file>
-        <file>images/qml/lock@2x.png</file>
-        <file>images/qml/lock@3x.png</file>
-        <file>images/qml/warning.png</file>
-        <file>images/qml/warning@2x.png</file>
-        <file>images/qml/warning@3x.png</file>
-        <file>images/qml/guest/warning.png</file>
-        <file>images/qml/guest/warning@2x.png</file>
-        <file>images/qml/guest/warning@3x.png</file>
-        <file>images/qml/onboarding/syncb.svg</file>
-        <file>images/qml/guest/setting_up.png</file>
-        <file>images/qml/guest/setting_up@2x.png</file>
-        <file>images/qml/guest/setting_up@3x.png</file>
-        <file>images/qml/surveys/star_empty.svg</file>
-        <file>images/qml/surveys/star_filled.svg</file>
-        <file>images/qml/eye.svg</file>
-        <file>images/qml/eye-off.svg</file>
-        <file>images/qml/sync_exclusions/x-square.svg</file>
-        <file>images/qml/sync_exclusions/edit.svg</file>
-        <file>images/qml/sync_exclusions/refresh.svg</file>
-        <file>images/qml/sync_exclusions/folder.svg</file>
-        <file>images/qml/sync_exclusions/file.svg</file>
-        <file>images/qml/sync_exclusions/extension.svg</file>
-        <file>images/qml/sync_exclusions/chevron-down.svg</file>
-        <file>images/qml/sync_exclusions/info.svg</file>
-        <file>images/qml/rocket.png</file>
-        <file>images/qml/rocket@2x.png</file>
-        <file>images/qml/rocket@3x.png</file>
-        <file>images/qml/controls.png</file>
-        <file>images/qml/controls@2x.png</file>
-        <file>images/qml/controls@3x.png</file>
-        <file>images/qml/mega-cloud.png</file>
-        <file>images/qml/mega-cloud@2x.png</file>
-        <file>images/qml/mega-cloud@3x.png</file>
-        <file>images/qml/alert_circle_filled.svg</file>
-        <file>images/qml/check_circle_filled.svg</file>
-        <file>images/qml/device_center/backup_folder.svg</file>
-        <file>images/qml/device_center/sync_folder.svg</file>
-        <file>images/qml/three_dots.svg</file>
-        <file>images/qml/device_center/devices.svg</file>
-        <file>images/qml/monitor.svg</file>
-        <file>images/qml/folder-open.svg</file>
-        <file>images/qml/slash-circle.svg</file>
-        <file>images/qml/search-large.svg</file>
-        <file>images/qml/search.svg</file>
-        <file>images/qml/pause-circle.svg</file>
-        <file>images/qml/minus-circle.svg</file>
-        <file>images/qml/play-circle.svg</file>
-        <file>images/qml/alert-triangle.png</file>
-        <file>images/qml/alert-triangle@2x.png</file>
-        <file>images/qml/alert-triangle@3x.png</file>
-        <file>images/qml/device-centre-update.png</file>
-        <file>images/qml/device-centre-update@2x.png</file>
-        <file>images/qml/device-centre-update@3x.png</file>
-        <file>images/qml/device_center/tool.svg</file>
-        <file>images/qml/multidevices.png</file>
-        <file>images/qml/multidevices@2x.png</file>
-        <file>images/qml/multidevices@3x.png</file>
-        <file>images/qml/power.svg</file>
-        <file>images/qml/guest/alert-triangle.png</file>
-        <file>images/qml/guest/alert-triangle@2x.png</file>
-        <file>images/qml/guest/alert-triangle@3x.png</file>
-        <file>images/icons/headset.svg</file>
-        <file>images/icons/file_edit.svg</file>
-        <file>images/icons/rotate_ccw.svg</file>
-        <file>images/icons/log-out-01.svg</file>
-        <file>images/qml/sync_exclusions/folder-file.svg</file>
-        <file>images/qml/question.png</file>
-        <file>images/qml/question@2x.png</file>
-        <file>images/qml/question@3x.png</file>
-        <file>images/icon_plus.svg</file>
-        <file>images/qml/onboarding/multidevices@3x.png</file>
-        <file>images/qml/onboarding/multidevices@2x.png</file>
-        <file>images/qml/onboarding/multidevices.png</file>
-        <file>images/qml/onboarding/sync@3x.png</file>
-        <file>images/qml/onboarding/sync@2x.png</file>
-        <file>images/qml/onboarding/backup@3x.png</file>
-        <file>images/qml/onboarding/backup@2x.png</file>
-        <file>images/qml/onboarding/backup.png</file>
-        <file>images/qml/onboarding/sync.png</file>
-        <file>images/qml/onboarding/mega.svg</file>
-        <file>images/qml/onboarding/monitor.svg</file>
-        <file>images/qml/onboarding/remote_folder.svg</file>
-        <file>images/qml/onboarding/syncs.svg</file>
-        <file>images/qml/onboarding/sync_plus.svg</file>
-        <file>images/qml/onboarding/more_horizontal.svg</file>
-        <file>images/qml/onboarding/local_folder.png</file>
-        <file>images/qml/onboarding/local_folder@2x.png</file>
-        <file>images/qml/onboarding/local_folder@3x.png</file>
-        <file>images/qml/onboarding/minus-circle.svg</file>
-        <file>images/qml/onboarding/cross.svg</file>
+        <file alias="images/qml/alert_circle.svg">images/qml/alert_circle.svg</file>
+        <file alias="images/qml/alert_triangle.svg">images/qml/alert_triangle.svg</file>
+        <file alias="images/qml/arrow_right.svg">images/qml/arrow_right.svg</file>
+        <file alias="images/qml/check.svg">images/qml/check.svg</file>
+        <file alias="images/qml/help_circle.svg">images/qml/help_circle.svg</file>
+        <file alias="images/qml/indeterminate.svg">images/qml/indeterminate.svg</file>
+        <file alias="images/qml/loader.svg">images/qml/loader.svg</file>
+        <file alias="images/qml/lock.svg">images/qml/lock.svg</file>
+        <file alias="images/qml/trash.svg">images/qml/trash.svg</file>
+        <file alias="images/qml/x_circle.svg">images/qml/x_circle.svg</file>
+        <file alias="images/qml/tip.svg">images/qml/tip.svg</file>
+        <file alias="images/qml/small_circle.svg">images/qml/small_circle.svg</file>
+        <file alias="images/qml/onboarding/database.svg">images/qml/onboarding/database.svg</file>
+        <file alias="images/qml/onboarding/edit.svg">images/qml/onboarding/edit.svg</file>
+        <file alias="images/qml/onboarding/folder.svg">images/qml/onboarding/folder.svg</file>
+        <file alias="images/qml/onboarding/key.svg">images/qml/onboarding/key.svg</file>
+        <file alias="images/qml/onboarding/login.png">images/qml/onboarding/login.png</file>
+        <file alias="images/qml/onboarding/login@2x.png">images/qml/onboarding/login@2x.png</file>
+        <file alias="images/qml/onboarding/login@3x.png">images/qml/onboarding/login@3x.png</file>
+        <file alias="images/qml/onboarding/pc.svg">images/qml/onboarding/pc.svg</file>
+        <file alias="images/qml/onboarding/person.svg">images/qml/onboarding/person.svg</file>
+        <file alias="images/qml/onboarding/resume.svg">images/qml/onboarding/resume.svg</file>
+        <file alias="images/qml/onboarding/twofa.png">images/qml/onboarding/twofa.png</file>
+        <file alias="images/qml/onboarding/mail.svg">images/qml/onboarding/mail.svg</file>
+        <file alias="images/qml/device_center/addbackup.svg">images/qml/device_center/addbackup.svg</file>
+        <file alias="images/qml/device_center/addsync.svg">images/qml/device_center/addsync.svg</file>
+        <file alias="images/qml/device_center/pc-windows.svg">images/qml/device_center/pc-windows.svg</file>
+        <file alias="images/qml/device_center/pc-mac.svg">images/qml/device_center/pc-mac.svg</file>
+        <file alias="images/qml/device_center/pc-linux.svg">images/qml/device_center/pc-linux.svg</file>
+        <file alias="images/qml/device_center/status-paused.svg">images/qml/device_center/status-paused.svg</file>
+        <file alias="images/qml/device_center/status-stopped.svg">images/qml/device_center/status-stopped.svg</file>
+        <file alias="images/qml/device_center/status-updating.svg">images/qml/device_center/status-updating.svg</file>
+        <file alias="images/qml/device_center/status-uptodate.svg">images/qml/device_center/status-uptodate.svg</file>
+        <file alias="images/qml/ok.png">images/qml/ok.png</file>
+        <file alias="images/qml/ok@2x.png">images/qml/ok@2x.png</file>
+        <file alias="images/qml/ok@3x.png">images/qml/ok@3x.png</file>
+        <file alias="images/qml/mega.svg">images/qml/mega.svg</file>
+        <file alias="images/qml/mega_outline.svg">images/qml/mega_outline.svg</file>
+        <file alias="images/qml/guest/exit.svg">images/qml/guest/exit.svg</file>
+        <file alias="images/qml/guest/guest.png">images/qml/guest/guest.png</file>
+        <file alias="images/qml/guest/guest@2x.png">images/qml/guest/guest@2x.png</file>
+        <file alias="images/qml/guest/guest@3x.png">images/qml/guest/guest@3x.png</file>
+        <file alias="images/qml/guest/menu.svg">images/qml/guest/menu.svg</file>
+        <file alias="images/qml/guest/settings.svg">images/qml/guest/settings.svg</file>
+        <file alias="images/qml/small_check.svg">images/qml/small_check.svg</file>
+        <file alias="images/qml/check_circle.svg">images/qml/check_circle.svg</file>
+        <file alias="images/qml/error.png">images/qml/error.png</file>
+        <file alias="images/qml/error@2x.png">images/qml/error@2x.png</file>
+        <file alias="images/qml/error@3x.png">images/qml/error@3x.png</file>
+        <file alias="images/qml/lock.png">images/qml/lock.png</file>
+        <file alias="images/qml/lock@2x.png">images/qml/lock@2x.png</file>
+        <file alias="images/qml/lock@3x.png">images/qml/lock@3x.png</file>
+        <file alias="images/qml/warning.png">images/qml/warning.png</file>
+        <file alias="images/qml/warning@2x.png">images/qml/warning@2x.png</file>
+        <file alias="images/qml/warning@3x.png">images/qml/warning@3x.png</file>
+        <file alias="images/qml/guest/warning.png">images/qml/guest/warning.png</file>
+        <file alias="images/qml/guest/warning@2x.png">images/qml/guest/warning@2x.png</file>
+        <file alias="images/qml/guest/warning@3x.png">images/qml/guest/warning@3x.png</file>
+        <file alias="images/qml/onboarding/syncb.svg">images/qml/onboarding/syncb.svg</file>
+        <file alias="images/qml/guest/setting_up.png">images/qml/guest/setting_up.png</file>
+        <file alias="images/qml/guest/setting_up@2x.png">images/qml/guest/setting_up@2x.png</file>
+        <file alias="images/qml/guest/setting_up@3x.png">images/qml/guest/setting_up@3x.png</file>
+        <file alias="images/qml/surveys/star_empty.svg">images/qml/surveys/star_empty.svg</file>
+        <file alias="images/qml/surveys/star_filled.svg">images/qml/surveys/star_filled.svg</file>
+        <file alias="images/qml/eye.svg">images/qml/eye.svg</file>
+        <file alias="images/qml/eye-off.svg">images/qml/eye-off.svg</file>
+        <file alias="images/qml/sync_exclusions/x-square.svg">images/qml/sync_exclusions/x-square.svg</file>
+        <file alias="images/qml/sync_exclusions/edit.svg">images/qml/sync_exclusions/edit.svg</file>
+        <file alias="images/qml/sync_exclusions/refresh.svg">images/qml/sync_exclusions/refresh.svg</file>
+        <file alias="images/qml/sync_exclusions/folder.svg">images/qml/sync_exclusions/folder.svg</file>
+        <file alias="images/qml/sync_exclusions/file.svg">images/qml/sync_exclusions/file.svg</file>
+        <file alias="images/qml/sync_exclusions/extension.svg">images/qml/sync_exclusions/extension.svg</file>
+        <file alias="images/qml/sync_exclusions/chevron-down.svg">images/qml/sync_exclusions/chevron-down.svg</file>
+        <file alias="images/qml/sync_exclusions/info.svg">images/qml/sync_exclusions/info.svg</file>
+        <file alias="images/qml/rocket.png">images/qml/rocket.png</file>
+        <file alias="images/qml/rocket@2x.png">images/qml/rocket@2x.png</file>
+        <file alias="images/qml/rocket@3x.png">images/qml/rocket@3x.png</file>
+        <file alias="images/qml/controls.png">images/qml/controls.png</file>
+        <file alias="images/qml/controls@2x.png">images/qml/controls@2x.png</file>
+        <file alias="images/qml/controls@3x.png">images/qml/controls@3x.png</file>
+        <file alias="images/qml/mega-cloud.png">images/qml/mega-cloud.png</file>
+        <file alias="images/qml/mega-cloud@2x.png">images/qml/mega-cloud@2x.png</file>
+        <file alias="images/qml/mega-cloud@3x.png">images/qml/mega-cloud@3x.png</file>
+        <file alias="images/qml/alert_circle_filled.svg">images/qml/alert_circle_filled.svg</file>
+        <file alias="images/qml/check_circle_filled.svg">images/qml/check_circle_filled.svg</file>
+        <file alias="images/qml/device_center/backup_folder.svg">images/qml/device_center/backup_folder.svg</file>
+        <file alias="images/qml/device_center/sync_folder.svg">images/qml/device_center/sync_folder.svg</file>
+        <file alias="images/qml/three_dots.svg">images/qml/three_dots.svg</file>
+        <file alias="images/qml/device_center/devices.svg">images/qml/device_center/devices.svg</file>
+        <file alias="images/qml/monitor.svg">images/qml/monitor.svg</file>
+        <file alias="images/qml/folder-open.svg">images/qml/folder-open.svg</file>
+        <file alias="images/qml/slash-circle.svg">images/qml/slash-circle.svg</file>
+        <file alias="images/qml/search-large.svg">images/qml/search-large.svg</file>
+        <file alias="images/qml/search.svg">images/qml/search.svg</file>
+        <file alias="images/qml/pause-circle.svg">images/qml/pause-circle.svg</file>
+        <file alias="images/qml/minus-circle.svg">images/qml/minus-circle.svg</file>
+        <file alias="images/qml/play-circle.svg">images/qml/play-circle.svg</file>
+        <file alias="images/qml/alert-triangle.png">images/qml/alert-triangle.png</file>
+        <file alias="images/qml/alert-triangle@2x.png">images/qml/alert-triangle@2x.png</file>
+        <file alias="images/qml/alert-triangle@3x.png">images/qml/alert-triangle@3x.png</file>
+        <file alias="images/qml/device-centre-update.png">images/qml/device-centre-update.png</file>
+        <file alias="images/qml/device-centre-update@2x.png">images/qml/device-centre-update@2x.png</file>
+        <file alias="images/qml/device-centre-update@3x.png">images/qml/device-centre-update@3x.png</file>
+        <file alias="images/qml/device_center/tool.svg">images/qml/device_center/tool.svg</file>
+        <file alias="images/qml/multidevices.png">images/qml/multidevices.png</file>
+        <file alias="images/qml/multidevices@2x.png">images/qml/multidevices@2x.png</file>
+        <file alias="images/qml/multidevices@3x.png">images/qml/multidevices@3x.png</file>
+        <file alias="images/qml/power.svg">images/qml/power.svg</file>
+        <file alias="images/qml/guest/alert-triangle.png">images/qml/guest/alert-triangle.png</file>
+        <file alias="images/qml/guest/alert-triangle@2x.png">images/qml/guest/alert-triangle@2x.png</file>
+        <file alias="images/qml/guest/alert-triangle@3x.png">images/qml/guest/alert-triangle@3x.png</file>
+        <file alias="images/icons/headset.svg">images/icons/headset.svg</file>
+        <file alias="images/icons/file_edit.svg">images/icons/file_edit.svg</file>
+        <file alias="images/icons/rotate_ccw.svg">images/icons/rotate_ccw.svg</file>
+        <file alias="images/icons/log-out-01.svg">images/icons/log-out-01.svg</file>
+        <file alias="images/qml/sync_exclusions/folder-file.svg">images/qml/sync_exclusions/folder-file.svg</file>
+        <file alias="images/qml/question.png">images/qml/question.png</file>
+        <file alias="images/qml/question@2x.png">images/qml/question@2x.png</file>
+        <file alias="images/qml/question@3x.png">images/qml/question@3x.png</file>
+        <file alias="images/icon_plus.svg">images/icon_plus.svg</file>
+        <file alias="images/qml/onboarding/multidevices@3x.png">images/qml/onboarding/multidevices@3x.png</file>
+        <file alias="images/qml/onboarding/multidevices@2x.png">images/qml/onboarding/multidevices@2x.png</file>
+        <file alias="images/qml/onboarding/multidevices.png">images/qml/onboarding/multidevices.png</file>
+        <file alias="images/qml/onboarding/sync@3x.png">images/qml/onboarding/sync@3x.png</file>
+        <file alias="images/qml/onboarding/sync@2x.png">images/qml/onboarding/sync@2x.png</file>
+        <file alias="images/qml/onboarding/backup@3x.png">images/qml/onboarding/backup@3x.png</file>
+        <file alias="images/qml/onboarding/backup@2x.png">images/qml/onboarding/backup@2x.png</file>
+        <file alias="images/qml/onboarding/backup.png">images/qml/onboarding/backup.png</file>
+        <file alias="images/qml/onboarding/sync.png">images/qml/onboarding/sync.png</file>
+        <file alias="images/qml/onboarding/mega.svg">images/qml/onboarding/mega.svg</file>
+        <file alias="images/qml/onboarding/monitor.svg">images/qml/onboarding/monitor.svg</file>
+        <file alias="images/qml/onboarding/remote_folder.svg">images/qml/onboarding/remote_folder.svg</file>
+        <file alias="images/qml/onboarding/syncs.svg">images/qml/onboarding/syncs.svg</file>
+        <file alias="images/qml/onboarding/sync_plus.svg">images/qml/onboarding/sync_plus.svg</file>
+        <file alias="images/qml/onboarding/more_horizontal.svg">images/qml/onboarding/more_horizontal.svg</file>
+        <file alias="images/qml/onboarding/local_folder.png">images/qml/onboarding/local_folder.png</file>
+        <file alias="images/qml/onboarding/local_folder@2x.png">images/qml/onboarding/local_folder@2x.png</file>
+        <file alias="images/qml/onboarding/local_folder@3x.png">images/qml/onboarding/local_folder@3x.png</file>
+        <file alias="images/qml/onboarding/minus-circle.svg">images/qml/onboarding/minus-circle.svg</file>
+        <file alias="images/qml/onboarding/cross.svg">images/qml/onboarding/cross.svg</file>
     </qresource>
 </RCC>

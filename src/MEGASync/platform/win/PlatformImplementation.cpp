@@ -995,6 +995,36 @@ void PlatformImplementation::processSymLinks()
 
 }
 
+bool PlatformImplementation::loadThemeResource(const QString& theme)
+{
+    static QString currentTheme = QString();
+
+    if (!currentTheme.isEmpty())
+    {
+        QResource::unregisterResource(currentTheme);
+    }
+
+    QStringList rccFiles =
+        QStringList()
+        << QCoreApplication::applicationDirPath() + QString::fromUtf8("/Resources_macx.rcc")
+        << QCoreApplication::applicationDirPath() + QString::fromUtf8("/Resources_win.rcc")
+        << QCoreApplication::applicationDirPath() + QString::fromUtf8("/Resources_linux.rcc")
+        << QCoreApplication::applicationDirPath() + QString::fromUtf8("/Resources_qml.rcc")
+        << QCoreApplication::applicationDirPath() + QString::fromUtf8("/qml.rcc")
+        << QCoreApplication::applicationDirPath() +
+               QString::fromUtf8("/Resources_%1.rcc").arg(theme.toLower());
+
+    bool allLoaded = loadRccResources(rccFiles);
+
+    if (allLoaded)
+    {
+        currentTheme = QCoreApplication::applicationDirPath() +
+                       QString::fromUtf8("/../Resources/Resources_%1.rcc").arg(theme.toLower());
+    }
+
+    return allLoaded;
+}
+
 QByteArray PlatformImplementation::encrypt(QByteArray data, QByteArray key)
 {
     DATA_BLOB dataIn;

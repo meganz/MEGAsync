@@ -233,9 +233,43 @@ QString PlatformImplementation::preparePathForSync(const QString& path)
     return QDir::toNativeSeparators(QDir::cleanPath(path));
 }
 
-void PlatformImplementation::processSymLinks()
-{
+void PlatformImplementation::processSymLinks() {}
 
+bool PlatformImplementation::loadThemeResource(const QString& theme)
+{
+    static QString currentTheme = QString();
+
+    if (!currentTheme.isEmpty())
+    {
+        QResource::unregisterResource(currentTheme);
+    }
+
+    QString execPath = MegaApplication::applicationDirPath();
+    QString resourcePath = execPath + QString::fromUtf8("/../share/megasync/resources");
+
+    if (QDir(resourcePath).exists())
+    {
+        // Look for installed files, if not, use rcc files from same path as binary.
+        execPath = resourcePath;
+    }
+
+    QStringList rccFiles =
+        QStringList() << execPath + QString::fromUtf8("/Resources_macx.rcc")
+                      << execPath + QString::fromUtf8("/Resources_win.rcc")
+                      << execPath + QString::fromUtf8("/Resources_linux.rcc")
+                      << execPath + QString::fromUtf8("/Resources_qml.rcc")
+                      << execPath + QString::fromUtf8("/qml.rcc")
+                      << execPath + QString::fromUtf8("/Resources_%1.rcc").arg(theme.toLower());
+
+    bool allLoaded = loadRccResources(rccFiles);
+
+    if (allLoaded)
+    {
+        currentTheme = QCoreApplication::applicationDirPath() +
+                       QString::fromUtf8("/../Resources/Resources_%1.rcc").arg(theme.toLower());
+    }
+
+    return allLoaded;
 }
 
 QString PlatformImplementation::getDefaultFileBrowserApp()

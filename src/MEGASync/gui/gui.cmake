@@ -460,33 +460,96 @@ set (DESKTOP_APP_TS_FILES
 set_source_files_properties(${DESKTOP_APP_TS_FILES} PROPERTIES OUTPUT_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/gui/translations)
 
 if (NOT DontUseResources)
-    target_sources_conditional(${ExecutableTarget}
-        FLAG WIN32
-        QT_AWARE
-        PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/Resources_win.qrc
+
+    # Load functions to process qrcs and create aliases
+    include(desktopapp_resources_processing)
+
+    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_win.qrc")
+    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_macx.qrc")
+    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_linux.qrc")
+    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_qml.qrc")
+    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_light.qrc")
+    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_dark.qrc")
+
+    qt5_add_binary_resources(Resources_win "${CMAKE_CURRENT_LIST_DIR}/Resources_win.qrc")
+    qt5_add_binary_resources(Resources_macx "${CMAKE_CURRENT_LIST_DIR}/Resources_macx.qrc")
+    qt5_add_binary_resources(Resources_linux "${CMAKE_CURRENT_LIST_DIR}/Resources_linux.qrc")
+    qt5_add_binary_resources(Resources_qml "${CMAKE_CURRENT_LIST_DIR}/Resources_qml.qrc")
+    qt5_add_binary_resources(Resources_light "${CMAKE_CURRENT_LIST_DIR}/Resources_light.qrc")
+    qt5_add_binary_resources(Resources_dark "${CMAKE_CURRENT_LIST_DIR}/Resources_dark.qrc")
+    qt5_add_binary_resources(qml "${CMAKE_CURRENT_LIST_DIR}/qml/qml.qrc")
+
+    add_dependencies(MEGAsync Resources_win)
+    add_dependencies(MEGAsync Resources_macx)
+    add_dependencies(MEGAsync Resources_linux)
+    add_dependencies(MEGAsync Resources_qml)
+    add_dependencies(MEGAsync Resources_light)
+    add_dependencies(MEGAsync Resources_dark)
+    add_dependencies(MEGAsync qml)
+
+if (NOT APPLE)
+    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_CURRENT_BINARY_DIR}/Resources_win.rcc
+                $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying Resources_win.rcc to target output directory"
     )
 
-    target_sources_conditional(${ExecutableTarget}
-       FLAG APPLE
-       QT_AWARE
-       PRIVATE
-       ${CMAKE_CURRENT_LIST_DIR}/Resources_macx.qrc
+    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_CURRENT_BINARY_DIR}/Resources_macx.rcc
+                $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying Resources_macx.rcc to target output directory"
     )
 
-    target_sources_conditional(${ExecutableTarget}
-        FLAG UNIX AND NOT APPLE
-        QT_AWARE
-        PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/Resources_linux.qrc
+    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_CURRENT_BINARY_DIR}/Resources_linux.rcc
+                $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying Resources_linux.rcc to target output directory"
     )
+
+    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_CURRENT_BINARY_DIR}/Resources_qml.rcc
+                $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying Resources_qml.rcc to target output directory"
+    )
+
+    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_CURRENT_BINARY_DIR}/Resources_light.rcc
+                $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying Resources_light.rcc to target output directory"
+    )
+
+
+    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_CURRENT_BINARY_DIR}/Resources_dark.rcc
+                $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying Resources_dark.rcc to target output directory"
+    )
+
+    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_CURRENT_BINARY_DIR}/qml.rcc
+                $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying qml.rcc to target output directory"
+    )
+endif()
 
     qt5_add_translation(DESKTOP_APP_QM_FILES ${DESKTOP_APP_TS_FILES})
 endif()
 
+#Review to load only the resource file per platform and not all of them
 set(DESKTOP_APP_GUI_RESOURCES
-    ${CMAKE_CURRENT_LIST_DIR}/Resources.qrc
+    ${CMAKE_CURRENT_LIST_DIR}/Resources_macx.qrc
+    ${CMAKE_CURRENT_LIST_DIR}/Resources_win.qrc
+    ${CMAKE_CURRENT_LIST_DIR}/Resources_linux.qrc
     ${CMAKE_CURRENT_LIST_DIR}/Resources_qml.qrc
+    ${CMAKE_CURRENT_LIST_DIR}/Resources_light.qrc
+    ${CMAKE_CURRENT_LIST_DIR}/Resources_dark.qrc
     ${CMAKE_CURRENT_LIST_DIR}/qml/qml.qrc
 )
 
@@ -550,7 +613,7 @@ target_include_directories(${ExecutableTarget} PRIVATE ${INCLUDE_DIRECTORIES})
 
 if (UNIX AND NOT APPLE)
 
-    # Install tray icons for Linux
+    # Install tray icons and resources for Linux
 
     # color
     set(HICOLOR "share/icons/hicolor/scalable/status")
@@ -593,5 +656,35 @@ if (UNIX AND NOT APPLE)
     install(FILES gui/images/uptodate_clear.svg RENAME megauptodate.svg
         DESTINATION "${CMAKE_INSTALL_BINDIR}/../${MONOCOLOR}"
     )
+
+    # rcc files
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_win.rcc"
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
+    )
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_linux.rcc"
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
+    )
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_macx.rcc"
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
+    )
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_light.rcc"
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
+    )
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_dark.rcc"
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
+    )
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_qml.rcc"
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
+    )
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/qml.rcc"
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
+    )
+
 
 endif()
