@@ -60,19 +60,37 @@ set(DESKTOP_APP_TRANSFERS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/gui/TransferManagerStatusHeaderWidget.cpp
 )
 
+set_property(TARGET ${ExecutableTarget}
+        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
+        ${CMAKE_CURRENT_LIST_DIR}/gui/ui
+        ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/ui
+    )
+
 set (DESKTOP_APP_TRANSFERS_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransferManagerStatusHeaderWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransferWidgetHeaderItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransferManagerDelegateWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransferManager.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransfersWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransferManagerLoadingItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransferManagerDragBackDrop.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/InfoDialogTransfersWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/InfoDialogTransferDelegateWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/InfoDialogTransferLoadingItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransfersStatusWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransfersSummaryWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/SomeIssuesOccurredMessage.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransfersAccountInfoWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/MediaTypeFilterWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/ui/DuplicatedNodeDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/ui/DuplicatedNodeItem.ui
-    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/SomeIssuesOccurredMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/InfoDialogTransferDelegateWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/InfoDialogTransfersWidget.ui
 )
 
 target_sources(${ExecutableTarget}
     PRIVATE
     ${DESKTOP_APP_TRANSFERS_HEADERS}
     ${DESKTOP_APP_TRANSFERS_SOURCES}
+    ${DESKTOP_APP_TRANSFERS_UI_FILES}
 )
 
 set (INCLUDE_DIRECTORIES
