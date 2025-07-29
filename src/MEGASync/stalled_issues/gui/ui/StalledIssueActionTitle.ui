@@ -32,7 +32,13 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#backgroundWidget
+   <string notr="true">WordWrapLabel
+{
+font-size: 12px;
+font-weight: 600;
+}
+
+#backgroundWidget
 {
 border-radius: 4px;
 }
@@ -197,7 +203,7 @@ border-radius: 4px;
                  </property>
                 </widget>
                </item>
-               <item>
+               <item alignment="Qt::AlignVCenter">
                 <widget class="WordWrapLabel" name="titleLabel">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -212,7 +218,7 @@ border-radius: 4px;
                   </font>
                  </property>
                  <property name="type" stdset="0">
-                  <string notr="true">secondary</string>
+                  <string notr="true">primary</string>
                  </property>
                 </widget>
                </item>

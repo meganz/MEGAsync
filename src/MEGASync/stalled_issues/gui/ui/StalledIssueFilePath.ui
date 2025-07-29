@@ -26,62 +26,26 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">*
+   <string notr="true">WordWrapLabel
 {
-	background-color: transparent;
+font-size: 10px;
+font-weight: 400;
 }
 
-#moveFilePathContainer[hasProblem=false][itsHover=false], #filePathContainer[hasProblem=false][itsHover=false]
+#moveFilePathContainer[hasProblem=false], #filePathContainer[hasProblem=false]
 {
   height: 24px;
   border-radius: 4px;
-  background-color: rgba(0,0,0,0.04);
+  background-color: #222324; /*colorToken.surface-1*/
 }
 
-#moveFilePathContainer[hasProblem=false][itsHover=true], #filePathContainer[hasProblem=false][itsHover=true]
-{
-  height: 24px;
-  border-radius: 4px;
-  background-color: rgba(0,0,0,0.1);
-}
-#moveFilePathContainer[hasProblem=true] QLabel, #filePathContainer[hasProblem=true] QLabel
-{
-    font-family: Lato Regular;
-    font-size: 12px;
-    line-height: 20px;
-    color: #FFFFFF;
-}
-
-#moveFilePathContainer[hasProblem=true] QTextEdit, #filePathContainer[hasProblem=true] QTextEdit
-{
-    font-family: Lato Regular;
-    font-size: 12px;
-    line-height: 20px;
-    color: #FFFFFF;
-}
-
-#moveFilePathContainer[hasProblem=false] QLabel, #filePathContainer[hasProblem=false] QLabel
-{
-    font-family: Lato;
-    font-size: 12px;
-    line-height: 20px;
-    color: #333333;
-}
-
-#moveFilePathContainer[hasProblem=false] QTextEdit, #filePathContainer[hasProblem=false] QTextEdit
-{
-    font-family: Lato;
-    font-size: 12px;
-    line-height: 20px;
-    color: #333333;
-}
 
 #moveFilePathContainer[hasProblem=true], #filePathContainer[hasProblem=true]
 {
   height: 24px;
   border-radius: 4px;
-  background-color: #F4484B;
-  color: #FFFFFF;
+  background-color: #E31B57; /*colorToken.support-error*/
+  color: #FAFAFB; /*colorToken.text-inverse-accent*/
 }
 
 #pathProblem, #movePathProblem
@@ -89,21 +53,15 @@
   min-height: 24px;
   max-height: 24px;
   border-radius: 4px;
-  background-color: #333333;
+  background-color: #2A2B2C; /*colorToken.background-inverse*/
   border: none;
 }
 
 #pathProblemMessage, #movePathProblemMessage
 {
-  font-family: Lato;
   font-size: 12px;
-  line-height: 20px;
-  color: #FFFFFF;
-}
-
-#filePath, #filePathIcon, #moveFilePath, #moveFilePathIcon
-{
-   background-color: &quot;transparent&quot;;
+  font-weight: 400;
+  color: #FAFAFA; /*colorToken.text-inverse*/
 }
 
 QPushButton
@@ -115,14 +73,6 @@ QPushButton
 {
    min-width: 24px;
    max-width: 24px;
-}
-
-#LocalOrRemoteText
-{
-    font-family: Lato;
-    font-size: 12px;
-    line-height: 15px;
-    color: #666666;
 }
 
 #moveLabel
@@ -213,6 +163,12 @@ QPushButton
      <property name="text">
       <string/>
      </property>
+     <property name="type" stdset="0">
+      <string notr="true">secondary</string>
+     </property>
+     <property name="dimension" stdset="0">
+      <string notr="true">small</string>
+     </property>
     </widget>
    </item>
    <item row="3" column="1" colspan="2" alignment="Qt::AlignTop">
@@ -276,13 +232,13 @@ QPushButton
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>0</number>
+          <number>2</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>0</number>
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="filePathIcon">
@@ -312,13 +268,16 @@ QPushButton
            </property>
           </widget>
          </item>
-         <item>
+         <item alignment="Qt::AlignVCenter">
           <widget class="WordWrapLabel" name="filePathEdit">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="type" stdset="0">
+            <string notr="true">secondary</string>
            </property>
           </widget>
          </item>
@@ -655,13 +614,13 @@ QPushButton
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>0</number>
+          <number>2</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>0</number>
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="moveFilePathIcon">
@@ -698,6 +657,9 @@ QPushButton
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="type" stdset="0">
+            <string notr="true">secondary</string>
            </property>
           </widget>
          </item>

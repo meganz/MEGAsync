@@ -14,7 +14,8 @@
    <string notr="true">#frame
 {
     border-radius: 6px;
-    border: 1px solid #D6D6D6;
+    border: 1px solid #5254570D; /*colorToken.border-subtle*/
+    background-color: #FFFFFFFF; /*colorToken.page-background*/
 }</string>
   </property>
   <property name="frameShape">
