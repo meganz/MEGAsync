@@ -209,7 +209,10 @@ color: #FFB55407; /*colorToken.text-warning*/
 {
 	border: none;
 }
-
+#lWarningOverDiskQuotaIcon
+{
+background-color: transparent;
+}
 #wHeaderframe
 {
 border: none;
@@ -2038,7 +2041,7 @@ background-color: transparent;
                                 </sizepolicy>
                                </property>
                                <property name="class" stdset="0">
-                                <string>warning</string>
+                                <string notr="true">warning</string>
                                </property>
                                <property name="type" stdset="0">
                                 <string notr="true">primary</string>
@@ -2802,7 +2805,7 @@ background-color: transparent;
                                 <string notr="true">secondary</string>
                                </property>
                                <property name="dimension" stdset="0">
-                                <string>medium</string>
+                                <string notr="true">medium</string>
                                </property>
                               </widget>
                              </item>
