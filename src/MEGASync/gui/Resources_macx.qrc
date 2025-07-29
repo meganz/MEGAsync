@@ -402,8 +402,6 @@
         <file alias="images/tray_sync.ico">images/tray_sync.ico</file>
         <file alias="images/upload_to_mega.png">images/upload_to_mega.png</file>
         <file alias="images/upload_to_mega@2x.png">images/upload_to_mega@2x.png</file>
-        <file alias="images/help_ico.png">images/help_ico.png</file>
-        <file alias="images/help_ico@2x.png">images/help_ico@2x.png</file>
         <file alias="translations/MEGASyncStrings_ar.qm">translations/MEGASyncStrings_ar.qm</file>
         <file alias="translations/MEGASyncStrings_de.qm">translations/MEGASyncStrings_de.qm</file>
         <file alias="translations/MEGASyncStrings_en.qm">translations/MEGASyncStrings_en.qm</file>

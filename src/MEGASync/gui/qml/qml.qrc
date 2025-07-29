@@ -219,12 +219,6 @@
         <file>messageDialogs/MessageDialog.qml</file>
         <file>messageDialogs/MessageDialogMediumSizes.qml</file>
         <file>messageDialogs/TextLoader.qml</file>
-        <file>components/menus/MenuItem.qml</file>
-        <file>components/menus/qmldir</file>
-        <file>components/menus/ContextMenuItem.qml</file>
-        <file>components/menus/ContextMenu.qml</file>
-        <file>components/menus/Colors.qml</file>
-        <file>components/menus/Sizes.qml</file>
         <file>deviceCentre/RenameDeviceDialog.qml</file>
         <file>common/DeviceName.qml</file>
         <file>syncs/ChooseSyncFolder.qml</file>
