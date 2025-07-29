@@ -1255,7 +1255,7 @@ void MegaApplication::requestUserData()
     megaApi->getPSA();
 }
 
-void MegaApplication::onboardingFinished(bool fastLogin)
+void MegaApplication::onboardingFinished(bool fastLogin, bool comesFromOnboarding)
 {
     if (appfinished)
     {
@@ -1447,8 +1447,6 @@ if (!preferences->lastExecutionTime())
 
     if (!preferences->isFirstSyncDone())
     {
-        bool comesFromOnboarding(
-            !preferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN));
         mSyncReminderNotificationManager = new SyncReminderNotificationManager(comesFromOnboarding);
         connect(&SyncController::instance(),
                 &SyncController::syncAddStatus,

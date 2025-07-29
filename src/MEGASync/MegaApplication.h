@@ -159,7 +159,7 @@ public:
     std::shared_ptr<mega::MegaNode> getRubbishNode(bool forceReset = false);
     void resetRootNodes();
     void initLocalServer();
-    void onboardingFinished(bool fastLogin);
+    void onboardingFinished(bool fastLogin, bool comesFromOnboarding = false);
     void onLoginFinished();
     void onFetchNodesFinished();
     void onLogout();
