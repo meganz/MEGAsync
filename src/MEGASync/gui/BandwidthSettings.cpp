@@ -32,6 +32,11 @@ BandwidthSettings::~BandwidthSettings()
     delete mUi;
 }
 
+bool BandwidthSettings::settingHasChanged(SettingChanged setting) const
+{
+    return mSettingsChanged.testFlag(setting);
+}
+
 void BandwidthSettings::initialize()
 {
     int uploadLimitKB = mPreferences->uploadLimitKB();
@@ -88,40 +93,85 @@ void BandwidthSettings::on_rDownloadLimit_toggled(bool checked)
 
 void BandwidthSettings::on_bUpdate_clicked()
 {
+    // Reset Flags
+    mSettingsChanged = SettingChanged::NONE;
+
+    // UPLOAD
+    auto currentUploadLimit(mPreferences->uploadLimitKB());
+
     if (mUi->rUploadNoLimit->isChecked())
     {
-        mPreferences->setUploadLimitKB(BANDWIDTH_LIMIT_NONE);
+        if (currentUploadLimit != BANDWIDTH_LIMIT_NONE)
+        {
+            mSettingsChanged.setFlag(UPLOAD_LIMIT, true);
+
+            mPreferences->setUploadLimitKB(BANDWIDTH_LIMIT_NONE);
+        }
     }
     else if (mUi->rUploadAutoLimit->isChecked())
     {
-        mPreferences->setUploadLimitKB(BANDWIDTH_LIMIT_AUTO);
+        if (currentUploadLimit != BANDWIDTH_LIMIT_AUTO)
+        {
+            mSettingsChanged.setFlag(UPLOAD_LIMIT, true);
+
+            mPreferences->setUploadLimitKB(BANDWIDTH_LIMIT_AUTO);
+        }
     }
     else
     {
-        mPreferences->setUploadLimitKB(mUi->eUploadLimit->text().toInt());
+        auto newUploadLimit(mUi->eUploadLimit->text().toInt());
+        if (newUploadLimit != currentUploadLimit)
+        {
+            mSettingsChanged.setFlag(UPLOAD_LIMIT, true);
+
+            mPreferences->setUploadLimitKB(newUploadLimit);
+        }
     }
+
+    // DOWNLOAD
+    auto currentDownloadLimit(mPreferences->downloadLimitKB());
 
     if (mUi->rDownloadNoLimit->isChecked())
     {
-        mPreferences->setDownloadLimitKB(BANDWIDTH_LIMIT_NONE);
+        if (currentDownloadLimit != BANDWIDTH_LIMIT_NONE)
+        {
+            mSettingsChanged.setFlag(DOWNLOAD_LIMIT, true);
+
+            mPreferences->setDownloadLimitKB(BANDWIDTH_LIMIT_NONE);
+        }
     }
     else
     {
-        mPreferences->setDownloadLimitKB(mUi->eDownloadLimit->text().toInt());
+        auto newDownloadLimit(mUi->eDownloadLimit->text().toInt());
+
+        if (newDownloadLimit != currentDownloadLimit)
+        {
+            mSettingsChanged.setFlag(DOWNLOAD_LIMIT, true);
+
+            mPreferences->setDownloadLimitKB(newDownloadLimit);
+        }
     }
 
+    // MAX CONNECTIONS
     if (mUi->eMaxUploadConnections->value() != mPreferences->parallelUploadConnections())
     {
+        mSettingsChanged.setFlag(UPLOAD_CONNECTIONS, true);
+
         mPreferences->setParallelUploadConnections(mUi->eMaxUploadConnections->value());
     }
 
     if (mUi->eMaxDownloadConnections->value() != mPreferences->parallelDownloadConnections())
     {
+        mSettingsChanged.setFlag(DOWNLOAD_CONNECTIONS, true);
+
         mPreferences->setParallelDownloadConnections(mUi->eMaxDownloadConnections->value());
     }
 
+    // URL
     if (mUi->cbUseHttps->isChecked() != mPreferences->usingHttpsOnly())
     {
+        mSettingsChanged.setFlag(USE_HTTPS, true);
+
         mPreferences->setUseHttpsOnly(mUi->cbUseHttps->isChecked());
     }
 

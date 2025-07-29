@@ -1593,15 +1593,37 @@ void SettingsDialog::on_bOpenBandwidthSettings_clicked()
         {
             if (bandwidthSettings->result() == QDialog::Accepted)
             {
-                mApp->setMaxUploadSpeed(mPreferences->uploadLimitKB());
-                mApp->setMaxDownloadSpeed(mPreferences->downloadLimitKB());
+                if (bandwidthSettings->settingHasChanged(
+                        BandwidthSettings::SettingChanged::UPLOAD_LIMIT))
+                {
+                    mApp->setMaxUploadSpeed(mPreferences->uploadLimitKB());
+                }
 
-                mApp->setMaxConnections(MegaTransfer::TYPE_UPLOAD,
-                                        mPreferences->parallelUploadConnections());
-                mApp->setMaxConnections(MegaTransfer::TYPE_DOWNLOAD,
-                                        mPreferences->parallelDownloadConnections());
+                if (bandwidthSettings->settingHasChanged(
+                        BandwidthSettings::SettingChanged::DOWNLOAD_LIMIT))
+                {
+                    mApp->setMaxDownloadSpeed(mPreferences->downloadLimitKB());
+                }
 
-                mApp->setUseHttpsOnly(mPreferences->usingHttpsOnly());
+                if (bandwidthSettings->settingHasChanged(
+                        BandwidthSettings::SettingChanged::UPLOAD_CONNECTIONS))
+                {
+                    mApp->setMaxConnections(MegaTransfer::TYPE_UPLOAD,
+                                            mPreferences->parallelUploadConnections());
+                }
+
+                if (bandwidthSettings->settingHasChanged(
+                        BandwidthSettings::SettingChanged::DOWNLOAD_CONNECTIONS))
+                {
+                    mApp->setMaxConnections(MegaTransfer::TYPE_DOWNLOAD,
+                                            mPreferences->parallelDownloadConnections());
+                }
+
+                if (bandwidthSettings->settingHasChanged(
+                        BandwidthSettings::SettingChanged::USE_HTTPS))
+                {
+                    mApp->setUseHttpsOnly(mPreferences->usingHttpsOnly());
+                }
 
                 updateNetworkTab();
             }

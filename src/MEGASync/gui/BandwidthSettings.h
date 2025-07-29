@@ -18,6 +18,20 @@ public:
     explicit BandwidthSettings(MegaApplication* app, QWidget* parent = nullptr);
     ~BandwidthSettings();
 
+    enum SettingChanged
+    {
+        NONE = 0x0,
+        UPLOAD_LIMIT = 0x1,
+        DOWNLOAD_LIMIT = 0x02,
+        UPLOAD_CONNECTIONS = 0X04,
+        DOWNLOAD_CONNECTIONS = 0x08,
+        USE_HTTPS = 0x10
+    };
+
+    Q_DECLARE_FLAGS(SettingsChanged, SettingChanged);
+
+    bool settingHasChanged(SettingChanged setting) const;
+
 private slots:
     void on_rUploadAutoLimit_toggled(bool checked);
     void on_rUploadNoLimit_toggled(bool checked);
@@ -39,6 +53,7 @@ private:
     Ui::BandwidthSettings* mUi;
     MegaApplication* mApp;
     std::shared_ptr<Preferences> mPreferences;
+    SettingsChanged mSettingsChanged;
 };
 
 #endif // BANDWIDTHSETTINGS_H

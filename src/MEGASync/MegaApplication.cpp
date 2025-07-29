@@ -31,6 +31,7 @@
 #include "NodeSelectorSpecializations.h"
 #include "Onboarding.h"
 #include "OverQuotaDialog.h"
+#include "ParallelConnectionsValues.h"
 #include "Platform.h"
 #include "PlatformStrings.h"
 #include "PowerOptions.h"
@@ -603,12 +604,14 @@ void MegaApplication::initialize()
 
     megaApi->setLanguage(currentLanguageCode.toUtf8().constData());
     megaApiFolders->setLanguage(currentLanguageCode.toUtf8().constData());
-    setMaxConnections(MegaTransfer::TYPE_UPLOAD,   preferences->parallelUploadConnections());
+
+    // In case the user has logout and closed the app, we set the default values
+    setMaxConnections(MegaTransfer::TYPE_UPLOAD, preferences->parallelUploadConnections());
     setMaxConnections(MegaTransfer::TYPE_DOWNLOAD, preferences->parallelDownloadConnections());
     setUseHttpsOnly(preferences->usingHttpsOnly());
-
     megaApi->setDefaultFilePermissions(preferences->filePermissionsValue());
     megaApi->setDefaultFolderPermissions(preferences->folderPermissionsValue());
+
     megaApi->retrySSLerrors(true);
 
     mStatusController = new AccountStatusController(this);
@@ -3369,7 +3372,8 @@ void MegaApplication::setMaxConnections(int direction, int connections)
         return;
     }
 
-    if (connections > 0 && connections <= 6)
+    if (connections >= ParallelConnectionsValues::getMinValue() &&
+        connections <= ParallelConnectionsValues::getMaxValue())
     {
         megaApi->setMaxConnections(direction, connections);
     }
