@@ -287,7 +287,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/win/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/VerifyLockMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/AccountTypeWidget.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
@@ -298,7 +297,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/macx/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/VerifyLockMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/LockedPopOver.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/AccountTypeWidget.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
@@ -309,7 +307,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/linux/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/VerifyLockMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/AccountTypeWidget.ui
 )
 
 # Resources and platform-specific additions

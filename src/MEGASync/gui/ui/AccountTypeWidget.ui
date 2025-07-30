@@ -34,27 +34,14 @@
   <property name="styleSheet">
    <string notr="true">#bAccountType
 {
-        font-family: Lato;
-	font-size: 10px;
-    line-height: 14px;
-	font-weight: 600;
-	border-radius: 4px;
-    padding: 0px 8px;
+	font-size: 11px;
+    line-height: 13px;
+	color: #FF303233; /*colorToken.icon-primary*/
 }
-
-#bAccountType[level=&quot;free&quot;]
-{
-	background-color: #CFFCDB; /*colorToken.notification-success*/
-	color: #007C3E; /*colorToken.text-success*/
-}
-
-#bAccountType[level=&quot;pro&quot;]
-{
-	background-color: #FFE4E8; /*colorToken.notification-error*/
-    color: #E31B57; /*colorToken.text-error*/
-}
-
 </string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -73,29 +60,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QPushButton" name="bAccountType">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>24</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>24</height>
-      </size>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
+    <widget class="QLabel" name="bAccountType"/>
    </item>
   </layout>
  </widget>
