@@ -2,7 +2,6 @@
 
 #include "MegaApplication.h"
 #include "MegaDelegateHoverManager.h"
-#include "TokenParserWidgetManager.h"
 #include "TransferBaseDelegateWidget.h"
 #include "TransfersModel.h"
 
@@ -132,8 +131,6 @@ TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QM
         if(row >= mTransferItems.size())
         {
             item = mProxyModel->createTransferManagerItem(mView);
-            TokenParserWidgetManager::instance()->registerWidgetForTheming(item);
-            TokenParserWidgetManager::instance()->polish(item);
 
             mTransferItems.append(item);
         }

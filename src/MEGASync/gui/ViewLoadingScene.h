@@ -139,8 +139,6 @@ public:
 protected:
     inline void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override
     {
-        painter->fillRect(option.rect, Qt::white);
-
         auto pos (option.rect.topLeft());
         auto width (option.rect.width());
         auto height (option.rect.height());
@@ -188,7 +186,7 @@ private:
         if(row >= mLoadingItems.size())
         {
             item = new DelegateWidget(getView());
-            TokenParserWidgetManager::instance()->registerWidgetForTheming(item);
+            TokenParserWidgetManager::instance()->applyCurrentTheme(item);
             TokenParserWidgetManager::instance()->polish(item);
             mLoadingItems.append(item);
         }
