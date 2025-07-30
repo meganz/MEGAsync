@@ -131,7 +131,6 @@ TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QM
         if(row >= mTransferItems.size())
         {
             item = mProxyModel->createTransferManagerItem(mView);
-
             mTransferItems.append(item);
         }
         else
