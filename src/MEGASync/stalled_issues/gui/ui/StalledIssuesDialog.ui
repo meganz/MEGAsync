@@ -43,7 +43,7 @@
 background-color: #FFFFFFFF; /*colorToken.page-background*/
 }
 
-#stalledIssuesTree{
+#TreeViewContainer QTreeView{
 background-color: #FFFFFFFF; /*colorToken.page-background*/
 }
 

@@ -433,6 +433,7 @@ public:
             mLoadingView->setFrameStyle(QFrame::NoFrame);
             mLoadingView->setIndentation(0);
             mLoadingView->setSelectionMode(QAbstractItemView::NoSelection);
+            mLoadingView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
             mLoadingModel = new QStandardItemModel(mLoadingView);
             mLoadingDelegate = new LoadingSceneDelegate<DelegateWidget>(mLoadingView);
             mLoadingView->setModel(mLoadingModel);
