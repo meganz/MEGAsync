@@ -131,6 +131,12 @@ TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QM
         if(row >= mTransferItems.size())
         {
             item = mProxyModel->createTransferManagerItem(mView);
+            TokenParserWidgetManager::instance()->registerWidgetForTheming(item);
+            // As the widget will never be shown, you need to force the polish
+            item->style()->unpolish(item);
+            item->style()->polish(item);
+            item->update();
+
             mTransferItems.append(item);
         }
         else
