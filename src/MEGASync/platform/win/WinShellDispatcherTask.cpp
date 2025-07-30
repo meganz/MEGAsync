@@ -371,7 +371,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
         case L'T':
         {
             // Separator ':' is used in old versions, the new version only sends the type of string
-            auto parameters(extractParameters(content, QChar::fromLatin1(':')));
+            const auto parameters(extractParameters(content, QLatin1Char(':')));
 
             if (parameters.isEmpty())
             {
@@ -396,7 +396,8 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                 case STRING_GETLINK:
                 {
                     //Only for non incoming share syncs
-                    string tmpPath(lastPath.toStdString());
+                    const char* data = reinterpret_cast<const char*>(lastPath.utf16());
+                    std::string tmpPath(data, data + lastPath.size() * 2);
                     std::unique_ptr<MegaNode> node(MegaSyncApp->getMegaApi()->getSyncedNode(&tmpPath));
                     if(!Utilities::isIncommingShare(node.get()))
                     {
@@ -429,17 +430,17 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 
             if(!actionString.isEmpty())
             {
-                wcscpy_s(pipe->chReply, BUFSIZE, (const wchar_t *)actionString.utf16());
+                wcscpy_s(pipe->chReply, BUFSIZE, actionString.toStdWString().data());
             }
 
             break;
         }
         case L'F':
         {
-            auto parameters(extractParameters(content));
+            const auto parameters(extractParameters(content));
             if (!parameters.isEmpty())
             {
-                auto path(parameters.first());
+                const auto path(parameters.first());
                 if (!path.isEmpty())
                 {
                     MegaApi::log(MegaApi::LOG_LEVEL_INFO,
@@ -456,10 +457,10 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
         }
         case L'L':
         {
-            auto parameters(extractParameters(content));
+            const auto parameters(extractParameters(content));
             if (!parameters.isEmpty())
             {
-                auto path(parameters.first());
+                const auto path(parameters.first());
                 if (!path.isEmpty())
                 {
                     MegaApi::log(MegaApi::LOG_LEVEL_INFO,
@@ -479,10 +480,9 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             // Parameter 0 -> path
             // Parameter 1 -> overlayicons state
             // Separator '|'
-            auto parametersWChar(extractParametersWChar(content, QChar::fromLatin1('|')));
-            auto parameters(extractParameters(content, QChar::fromLatin1('|')));
+            const auto parameters(extractParameters(content, QLatin1Char('|')));
 
-            if (parametersWChar.size() == 0)
+            if (parameters.size() == 0)
             {
                 sendErrorToPipe(pipe);
                 break;
@@ -500,23 +500,20 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             }
 
             int state(MegaApi::STATE_NONE);
-            auto wcharTemp(parametersWChar.first());
+            const auto& path(parameters.first());
+            auto strPath(Platform::getInstance()->toLocalEncodedPath(path));
 
-            if ((wcharTemp == lastPath) && (numHits < 3))
+            if ((path == lastPath) && (numHits < 3))
             {
                 state = lastState;
                 numHits++;
             }
-            else
+            else if (!strPath.empty())
             {
-                string tmpPath(wcharTemp.toStdString());
-                if (!tmpPath.empty())
-                {
-                    state = MegaSyncApp->getMegaApi()->syncPathState(&tmpPath);
-                    lastState = state;
-                    lastPath = wcharTemp;
-                    numHits = 1;
-                }
+                state = MegaSyncApp->getMegaApi()->syncPathState(&strPath);
+                lastState = state;
+                lastPath = path;
+                numHits = 1;
             }
 
             wstring syncStatus;
@@ -533,11 +530,8 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                     break;
                 case MegaApi::STATE_IGNORED:
                 {
-                    QString path(parameters.first());
-
                     int runState = MegaSync::SyncRunningState::RUNSTATE_DISABLED;
-                    auto megaSync =
-                        MegaSyncApp->getMegaApi()->getSyncByPath(path.toStdString().c_str());
+                    auto megaSync = MegaSyncApp->getMegaApi()->getSyncByPath(strPath.data());
                     if (megaSync != nullptr)
                     {
                         runState = megaSync->getRunState();
@@ -599,13 +593,13 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
         }
         case L'V': //View on MEGA
         {
-            auto parameters(extractParametersWChar(content));
+            const auto parameters(extractParameters(content));
             sendViewOnMegaSignal(parameters, false, pipe);
             break;
         }
         case L'R': //Open pRevious versions
         {
-            auto parameters(extractParametersWChar(content));
+            const auto parameters(extractParameters(content));
             sendViewOnMegaSignal(parameters, true, pipe);
             break;
         }
@@ -623,7 +617,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             // First n parameters -> paths separated by '|'
             // Last parameters -> Sync type -> 0 for TYPE_TWO_WAY and 1 for TYPE_BACKUP
             // At least we must have 2 parameters: one path and the sync type
-            auto parameters(extractParameters(content, QChar::fromLatin1('|')));
+            auto parameters(extractParameters(content, QLatin1Char('|')));
             if (parameters.size() >= 2)
             {
                 auto syncType(parameters.takeLast().toUInt());
@@ -655,10 +649,10 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
         }
         case L'J':
         {
-            auto parameters(extractParameters(content));
+            const auto parameters(extractParameters(content));
             if (parameters.size() == 1)
             {
-                auto filePath(parameters.first());
+                const auto filePath(parameters.first());
                 if (!filePath.isEmpty())
                 {
                     Platform::getInstance()->removeSyncFromLeftPane(filePath);
@@ -680,21 +674,6 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 QStringList WinShellDispatcherTask::extractParameters(wchar_t* content, const QChar& separator)
 {
     return QString::fromWCharArray(content).split(separator);
-}
-
-QStringList WinShellDispatcherTask::extractParametersWChar(wchar_t* content, const QChar& separator)
-{
-    QByteArray filePath = QByteArray((const char*)content, lstrlen(content) * 2 + 2);
-    string tmpPath((const char*)filePath.constData(), filePath.size() - 2);
-    QString fileStr(QString::fromStdString(tmpPath));
-    if (separator != QChar())
-    {
-        return fileStr.split(separator);
-    }
-    else
-    {
-        return QStringList() << fileStr;
-    }
 }
 
 int WinShellDispatcherTask::toIntFromWChar(const QString& str, bool& ok)

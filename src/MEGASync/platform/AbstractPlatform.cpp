@@ -291,6 +291,11 @@ std::shared_ptr<AbstractShellNotifier> AbstractPlatform::getShellNotifier()
     return mShellNotifier;
 }
 
+std::string AbstractPlatform::toLocalEncodedPath(const QString& path) const
+{
+    return path.toStdString();
+}
+
 QString AbstractPlatform::rectToString(const QRect &rect)
 {
     return QString::fromUtf8("[%1,%2,%3,%4]").arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height());
