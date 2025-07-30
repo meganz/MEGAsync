@@ -39,6 +39,11 @@ void StalledIssueBaseDelegateWidget::render(const QStyleOptionViewItem &,
 
 void StalledIssueBaseDelegateWidget::updateUi(const QModelIndex& index, const StalledIssueVariant & issueData)
 {
+    if (styleSheet().isEmpty())
+    {
+        setStyleSheet(QLatin1String("#%1{background-color: transparent;}").arg(objectName()));
+    }
+
     MegaSyncApp->getStalledIssuesModel()->UiItemUpdate(mCurrentIndex, index);
 
     if(mCurrentIndex != index)

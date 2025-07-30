@@ -255,8 +255,8 @@ void NameConflict::initActionButtons(StalledIssueActionTitle* title)
 {
     QIcon renameIcon(QString::fromUtf8("://images/StalledIssues/rename_node_default.png"));
     QIcon removeIcon(QString::fromUtf8("://images/StalledIssues/remove_default.png"));
-    title->addActionButton(renameIcon, tr("Rename"), RENAME_ID, false);
-    title->addActionButton(removeIcon, QString(), REMOVE_ID, false, QLatin1String("outline"));
+    title->addActionButton(renameIcon, tr("Rename"), RENAME_ID, false, QLatin1String("secondary"));
+    title->addActionButton(removeIcon, QString(), REMOVE_ID, false, QLatin1String("icon"));
 }
 
 void NameConflict::onRawInfoChecked()

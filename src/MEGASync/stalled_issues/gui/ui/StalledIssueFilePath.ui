@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>339</width>
-    <height>275</height>
+    <height>283</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -45,6 +45,10 @@ font-weight: 400;
   height: 24px;
   border-radius: 4px;
   background-color: #E31B57; /*colorToken.support-error*/
+}
+
+#moveFilePathContainer[hasProblem=true] WordWrapLabel, #filePathContainer[hasProblem=true] WordWrapLabel
+{
   color: #FAFAFB; /*colorToken.text-inverse-accent*/
 }
 
@@ -102,6 +106,22 @@ QPushButton
    <property name="verticalSpacing">
     <number>0</number>
    </property>
+   <item row="0" column="0">
+    <spacer name="indent">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
    <item row="0" column="1" alignment="Qt::AlignTop">
     <widget class="QLabel" name="LocalOrRemoteIcon">
      <property name="sizePolicy">
@@ -130,22 +150,6 @@ QPushButton
      </property>
     </widget>
    </item>
-   <item row="0" column="0">
-    <spacer name="indent">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>0</width>
-       <height>0</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
    <item row="0" column="2" alignment="Qt::AlignLeft|Qt::AlignTop">
     <widget class="QLabel" name="LocalOrRemoteText">
      <property name="minimumSize">
@@ -171,7 +175,7 @@ QPushButton
      </property>
     </widget>
    </item>
-   <item row="3" column="1" colspan="2" alignment="Qt::AlignTop">
+   <item row="2" column="1" colspan="2" alignment="Qt::AlignTop">
     <widget class="QWidget" name="file" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -505,7 +509,7 @@ QPushButton
      </layout>
     </widget>
    </item>
-   <item row="4" column="1" colspan="2" alignment="Qt::AlignTop">
+   <item row="3" column="1" colspan="2" alignment="Qt::AlignTop">
     <widget class="QWidget" name="moveFile" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -858,22 +862,6 @@ QPushButton
       </item>
      </layout>
     </widget>
-   </item>
-   <item row="1" column="1">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>0</width>
-       <height>4</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>

@@ -61,6 +61,11 @@ border-radius: 4px;
 	background-color: #FFFDEBEB; /*colorToken.support-error*/
 }
 
+#backgroundWidget[disable_background=false][failed=true] WordWrapLabel
+{
+	color: #FAFAFB; /*colorToken.text-inverse-accent*/
+}
+
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -289,6 +294,9 @@ border-radius: 4px;
                  <property name="text">
                   <string/>
                  </property>
+                 <property name="type" stdset="0">
+                  <string notr="true">primary</string>
+                 </property>
                 </widget>
                </item>
               </layout>
@@ -331,7 +339,7 @@ border-radius: 4px;
        <widget class="QWidget" name="actionContainer" native="true">
         <layout class="QHBoxLayout" name="actionLayout">
          <property name="spacing">
-          <number>20</number>
+          <number>8</number>
          </property>
          <property name="leftMargin">
           <number>0</number>

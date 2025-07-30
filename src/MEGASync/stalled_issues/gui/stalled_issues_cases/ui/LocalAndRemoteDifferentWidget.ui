@@ -13,12 +13,6 @@
   <property name="windowTitle">
    <string notr="true"/>
   </property>
-  <property name="styleSheet">
-   <string notr="true">#LocalAndRemoteDifferentWidget
-{
-background-color: transparent;
-}</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>7</number>

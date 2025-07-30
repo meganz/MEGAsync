@@ -246,38 +246,14 @@ void StalledIssueActionTitle::addExtraInfo(AttributeType type, const QString& ti
 
 void StalledIssueActionTitle::setFailed(bool state, const QString& errorTooltip)
 {
-    // setToolTip(errorTooltip);
-    // ui->backgroundWidget->setProperty(FAILED_BACKGROUND, state);
-    // setStyleSheet(styleSheet());
+    setToolTip(errorTooltip);
+    ui->backgroundWidget->setProperty(FAILED_BACKGROUND, state);
+    setStyleSheet(styleSheet());
 }
 
 void StalledIssueActionTitle::setDisable(bool state)
 {
-    ui->backgroundWidget->setProperty(DISCARDED,state);
-
-    // setStyleSheet(styleSheet());
-
-    // if(state)
-    // {
-    //     if(!ui->titleContainer->graphicsEffect())
-    //     {
-    //         auto titleEffect = new QGraphicsOpacityEffect(this);
-    //         titleEffect->setOpacity(0.3);
-    //         ui->titleContainer->setGraphicsEffect(titleEffect);
-    //     }
-
-    // if(!ui->extraInfoContainer->graphicsEffect())
-    // {
-    //     auto extraInfoDisableEffect = new QGraphicsOpacityEffect(this);
-    //     extraInfoDisableEffect->setOpacity(0.3);
-    //     ui->extraInfoContainer->setGraphicsEffect(extraInfoDisableEffect);
-    // }
-    // }
-    // else
-    // {
-    // ui->titleContainer->setGraphicsEffect(nullptr);
-    // ui->extraInfoContainer->setGraphicsEffect(nullptr);
-    // }
+    ui->backgroundWidget->setProperty(DISCARDED, state);
 }
 
 bool StalledIssueActionTitle::isSolved() const

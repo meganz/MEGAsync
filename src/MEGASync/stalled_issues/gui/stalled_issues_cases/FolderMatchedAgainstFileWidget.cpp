@@ -79,8 +79,16 @@ void FolderMatchedAgainstFileWidget::refreshUi()
     }
     else if(issue->isFailed())
     {
-        ui->remoteCopy->setFailed(true, RenameRemoteNodeDialog::renamedFailedErrorString(result.error.get(), issue->consultCloudData()->getNode()->isFile()));
-        ui->localCopy->setFailed(true, RenameLocalNodeDialog::renamedFailedErrorString(issue->consultLocalData()->isFile()));
+        if (result.error)
+        {
+            ui->remoteCopy->setFailed(true,
+                                      RenameRemoteNodeDialog::renamedFailedErrorString(
+                                          result.error.get(),
+                                          issue->consultCloudData()->getNode()->isFile()));
+        }
+        ui->localCopy->setFailed(
+            true,
+            RenameLocalNodeDialog::renamedFailedErrorString(issue->consultLocalData()->isFile()));
     }
 
     updateSizeHint();
