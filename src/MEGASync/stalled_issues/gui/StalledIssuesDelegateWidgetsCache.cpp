@@ -9,7 +9,6 @@
 #include "OtherSideMissingOrBlocked.h"
 #include "StalledIssuesCaseHeaders.h"
 #include "StalledIssuesProxyModel.h"
-#include "TokenParserWidgetManager.h"
 #include "Utilities.h"
 
 const int StalledIssuesDelegateWidgetsCache::DELEGATEWIDGETS_CACHESIZE = 30;
@@ -120,9 +119,6 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
 
         item = createBodyWidget(parent, issue);
         item->resize(QSize(size.width(), item->size().height()));
-        TokenParserWidgetManager::instance()->registerWidgetForTheming(item);
-        // Use to force a sizeHint recalculation
-        // It also forces a widget repolish
         item->show();
         item->hide();
         item->updateUi(sourceIndex, issue);
