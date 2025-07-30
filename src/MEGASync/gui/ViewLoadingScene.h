@@ -1,6 +1,8 @@
 #ifndef VIEWLOADINGSCENE_H
 #define VIEWLOADINGSCENE_H
 
+#include "TokenParserWidgetManager.h"
+
 #include <QDateTime>
 #include <QEvent>
 #include <QHeaderView>
@@ -186,6 +188,8 @@ private:
         if(row >= mLoadingItems.size())
         {
             item = new DelegateWidget(getView());
+            TokenParserWidgetManager::instance()->registerWidgetForTheming(item);
+            TokenParserWidgetManager::instance()->polish(item);
             mLoadingItems.append(item);
         }
         else

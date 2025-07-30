@@ -2,6 +2,7 @@
 
 #include "MegaApplication.h"
 #include "MegaDelegateHoverManager.h"
+#include "TokenParserWidgetManager.h"
 #include "TransferBaseDelegateWidget.h"
 #include "TransfersModel.h"
 
@@ -132,10 +133,7 @@ TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QM
         {
             item = mProxyModel->createTransferManagerItem(mView);
             TokenParserWidgetManager::instance()->registerWidgetForTheming(item);
-            // As the widget will never be shown, you need to force the polish
-            item->style()->unpolish(item);
-            item->style()->polish(item);
-            item->update();
+            TokenParserWidgetManager::instance()->polish(item);
 
             mTransferItems.append(item);
         }
