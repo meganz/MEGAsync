@@ -35,72 +35,54 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#NotificationItem
+   <string notr="true">#lHeaderText
 {
-background-color: #FFFFFF;
-}
-
-#lHeaderText
-{
-color: #D64446;
-font-weight: bold;
-font-family: Lato;
-font-size: 10px;
-border-radius: 4px;
+font-weight: 700;
 }
 
 #lHeaderTag
 {
-background-color: #FF333A;
-color: #FFFFFF;
-font-weight: bold;
-font-family: Lato;
+background-color: #FFDD1405;/*colorToken.icon-brand*/
+color: #FAFAFB;/*colorToken.text-inverse-accent*/
+font-weight: 600;
 font-size: 10px;
+line-height: 16px;
 border-radius: 4px;
 }
 
 #lTitle 
 { 
-font-family: Lato; 
 font-size: 16px; 
-color: #333333; 
-font-weight: bold;
+font-weight: 600;
+line-height: 24px;
 }
 
 #lDescription 
 { 
-font-family: Lato; 
 font-size: 14px; 
-color: #333333;
-}
-
-#bCTA
-{
-font-family: Lato; 
-font-size: 14px; 
-color: #333333;
-line-height: 18px; 
-background-color: #FFFFFF;
-border: 1px solid rgba(0, 0, 0, 0.1);
-border-radius: 5px; 
-padding: 5px 8px;
+line-height: 20px;
+color: #A9ABAD;/*colorToken.text-secondary*/
 }
 
 #lTime
 { 
-font-family: Lato; 
 font-size: 12px; 
-color: #777777;
+color: #FF616366;/*colorToken.text-secondary*/
 }
 
 #wSeparator
 {
-background-color: rgba(0,0,0,0.1);
-}</string>
+background-color: #FFF3F4F4;/*colorToken.border-subtle*/
+}
+
+</string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
    <property name="spacing">
-    <number>11</number>
+    <number>0</number>
    </property>
    <property name="sizeConstraint">
     <enum>QLayout::SetDefaultConstraint</enum>
@@ -203,7 +185,7 @@ background-color: rgba(0,0,0,0.1);
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>16</height>
+             <height>20</height>
             </size>
            </property>
            <property name="maximumSize">
@@ -261,6 +243,12 @@ background-color: rgba(0,0,0,0.1);
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>20</height>
+               </size>
               </property>
               <property name="styleSheet">
                <string notr="true"/>
@@ -339,7 +327,7 @@ background-color: rgba(0,0,0,0.1);
                <string notr="true"/>
               </property>
               <property name="pixmap">
-               <pixmap resource="../Resources_common.qrc">:/images/app_64.png</pixmap>
+               <pixmap resource="../Resources_qml.qrc">:/images/qml/mega.svg</pixmap>
               </property>
               <property name="scaledContents">
                <bool>true</bool>
@@ -592,6 +580,12 @@ background-color: rgba(0,0,0,0.1);
               <property name="text">
                <string/>
               </property>
+              <property name="type" stdset="0">
+               <string notr="true">primary</string>
+              </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">medium</string>
+              </property>
              </widget>
             </item>
            </layout>
@@ -659,7 +653,7 @@ background-color: rgba(0,0,0,0.1);
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_common.qrc"/>
+  <include location="../Resources_qml.qrc"/>
  </resources>
  <connections/>
 </ui>
