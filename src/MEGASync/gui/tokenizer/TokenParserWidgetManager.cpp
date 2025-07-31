@@ -173,6 +173,14 @@ void TokenParserWidgetManager::registerWidgetForTheming(QWidget* dialog)
                          mRegisteredWidgets.remove(dialog);
                      });
     mRegisteredWidgets.insert(dialog);
+    applyCurrentTheme(dialog);
+}
+
+void TokenParserWidgetManager::polish(QWidget* widget)
+{
+    widget->style()->unpolish(widget);
+    widget->style()->polish(widget);
+    widget->update();
 }
 
 bool TokenParserWidgetManager::isTokenized(QWidget* widget)
