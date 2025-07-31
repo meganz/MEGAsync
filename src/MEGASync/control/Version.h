@@ -37,8 +37,9 @@ Format: 1 item by line, starting from line following the #define
 "- item n\n"
 )*/
 #define VER_CHANGES_NOTES \
-    QT_TRANSLATE_NOOP("Preferences", \
-                      "- We’ve improved error handling.\n" \
-                      "- We’ve fixed bugs and made the app more reliable.\n")
+    QT_TRANSLATE_NOOP( \
+        "Preferences", \
+        "- Error messages are now clearer, making it easier to understand when things go wrong.\n" \
+        "- We’ve fixed bugs and made the app more reliable.\n")
 
 #endif // VERSION_H

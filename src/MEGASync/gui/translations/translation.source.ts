@@ -3914,6 +3914,16 @@ You will not be able to regain access to your stored data or be authorised to si
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the app detect errors while loading resources (images, fonts...) - CON-1431</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Alert</source>
+        <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[B]Error detected during startup[/B][BR]An error has occurred loading application resources, and the app needs to close. If this happens more than once, reinstall the app from [A]mega.io/desktop[/A] or contact support for further assistance.</source>
+        <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaNodeNames</name>
@@ -6183,7 +6193,7 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We’ve improved error handling.
+        <source>- Error messages are now clearer, making it easier to understand when things go wrong.
 - We’ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
