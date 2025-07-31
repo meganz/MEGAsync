@@ -302,7 +302,6 @@ bool AbstractPlatform::loadRccResources(const QStringList& rccFiles)
     bool allLoaded = true;
 
     // We clear the icon caches so Qt can take the new icons from the recently reloaded rccs
-    QPixmapCache::clear();
     Utilities::clearIconCache();
 
     for (const QString& file: rccFiles)

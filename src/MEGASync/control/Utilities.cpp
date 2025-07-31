@@ -16,6 +16,7 @@
 #include <QDesktopWidget>
 #include <QDirIterator>
 #include <QImageReader>
+#include <QPixmapCache>
 #include <QScreen>
 #include <QTextStream>
 
@@ -538,7 +539,8 @@ QIcon Utilities::getExtensionPixmapMedium(QString fileName)
 
 void Utilities::clearIconCache()
 {
-    return gIconCache.clear();
+    QPixmapCache::clear();
+    gIconCache.clear();
 }
 
 QString Utilities::getAvatarPath(QString email)

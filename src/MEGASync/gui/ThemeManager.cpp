@@ -26,6 +26,11 @@ QString ThemeManager::getSelectedThemeString() const
     return mThemesMap.value(mCurrentTheme, QLatin1String("Light"));
 }
 
+QString ThemeManager::getThemeString(Preferences::ThemeType type) const
+{
+    return mThemesMap.value(type, QLatin1String("Light"));
+}
+
 ThemeManager* ThemeManager::instance()
 {
     static ThemeManager manager;
@@ -44,9 +49,7 @@ void ThemeManager::setTheme(Preferences::ThemeType theme)
     {
         mCurrentTheme = theme;
 
-        Preferences::instance()->setThemeType(mCurrentTheme);
-
-        if (!Platform::getInstance()->loadThemeResource(getSelectedThemeString()))
+        if (!Platform::getInstance()->loadThemeResource(getThemeString(theme)))
         {
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, "Error loading resource files.");
 
@@ -70,6 +73,8 @@ void ThemeManager::setTheme(Preferences::ThemeType theme)
             QMessageBox::warning(nullptr, title, msg, QMessageBox::Ok);
             ::exit(0);
         }
+
+        Preferences::instance()->setThemeType(mCurrentTheme);
 
         emit themeChanged(theme);
         Utilities::propagateCustomEvent(ThemeChanged);
