@@ -6183,7 +6183,7 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We’ve improved error handling.
+        <source>- Error messages are now clearer, making it easier to understand when things go wrong.
 - We’ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
