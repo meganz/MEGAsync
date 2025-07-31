@@ -3910,17 +3910,12 @@ You will not be able to regain access to your stored data or be authorised to si
         <translation>Your sync and backup settings were corrupted and have been reset. You will need to set up any syncs and backups you had again.</translation>
     </message>
     <message>
-        <source>The app has detected an error loading resources and needs to close. If you experience this issue more than once, contact our Support team.</source>
-        <translatorcomment>Message show in a warning dialog (and guest widget) shown when the app detect errors while loading resources (images, fonts...) - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Alert</source>
         <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>[B]Error detected during startup[/B][BR]An error has occurred loading application resources, and the app needs to close. If this happens more than once, reinstall the app from [A]mega.io/desktop[/A] or contact support for further assistance.</source>
+        <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. If this happens more than once, reinstall the app from [A]mega.io/desktop[/A] or contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
