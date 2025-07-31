@@ -18,6 +18,7 @@ public:
     QStringList themesAvailable() const;
     Preferences::ThemeType getSelectedTheme() const;
     QString getSelectedThemeString() const;
+    QString getThemeString(Preferences::ThemeType type) const;
     void setTheme(Preferences::ThemeType theme);
 
 signals:
