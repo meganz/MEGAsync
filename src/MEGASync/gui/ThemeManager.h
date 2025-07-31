@@ -15,10 +15,11 @@ public:
         static_cast<QEvent::Type>(QEvent::registerEventType());
 
     static ThemeManager* instance();
+    void init();
     QStringList themesAvailable() const;
     Preferences::ThemeType getSelectedTheme() const;
     QString getSelectedThemeString() const;
-    QString getThemeString(Preferences::ThemeType type) const;
+    QString getThemeString(Preferences::ThemeType theme) const;
     void setTheme(Preferences::ThemeType theme);
 
 signals:

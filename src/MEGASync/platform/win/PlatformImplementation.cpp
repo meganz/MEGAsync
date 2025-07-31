@@ -1019,7 +1019,7 @@ bool PlatformImplementation::loadThemeResource(const QString& theme)
     if (allLoaded)
     {
         currentTheme = QCoreApplication::applicationDirPath() +
-                       QString::fromUtf8("/../Resources/Resources_%1.rcc").arg(theme.toLower());
+                       QString::fromUtf8("/Resources_%1.rcc").arg(theme.toLower());
     }
 
     return allLoaded;
