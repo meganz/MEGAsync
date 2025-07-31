@@ -10,11 +10,10 @@ const QMap<Preferences::ThemeType, QString> ThemeManager::mThemesMap = {
     {Preferences::ThemeType::DARK_THEME,  QLatin1String("Dark")}
 };
 
-ThemeManager::ThemeManager()
-    : QObject(nullptr)
-{
-    setTheme(Preferences::instance()->getThemeType());
-}
+ThemeManager::ThemeManager():
+    QObject(nullptr),
+    mCurrentTheme(Preferences::ThemeType::LAST)
+{}
 
 Preferences::ThemeType ThemeManager::getSelectedTheme() const
 {
@@ -26,9 +25,9 @@ QString ThemeManager::getSelectedThemeString() const
     return mThemesMap.value(mCurrentTheme, QLatin1String("Light"));
 }
 
-QString ThemeManager::getThemeString(Preferences::ThemeType type) const
+QString ThemeManager::getThemeString(Preferences::ThemeType theme) const
 {
-    return mThemesMap.value(type, QLatin1String("Light"));
+    return mThemesMap.value(theme, QLatin1String("Light"));
 }
 
 ThemeManager* ThemeManager::instance()
@@ -36,6 +35,11 @@ ThemeManager* ThemeManager::instance()
     static ThemeManager manager;
 
     return &manager;
+}
+
+void ThemeManager::init()
+{
+    setTheme(Preferences::instance()->getThemeType());
 }
 
 QStringList ThemeManager::themesAvailable() const
