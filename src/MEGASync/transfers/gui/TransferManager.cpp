@@ -487,8 +487,6 @@ void TransferManager::onUpdatePauseState(bool isPaused)
         }
     }
 
-    updatePauseButtonClass();
-
     checkPauseButtonVisibilityIfPossible();
 }
 
@@ -887,8 +885,6 @@ void TransferManager::on_bPause_toggled()
     pauseResumeTransfers(newState);
 
     showQuotaStorageDialogs(newState);
-
-    updatePauseButtonClass();
 }
 
 void TransferManager::pauseResumeTransfers(bool isPaused)
@@ -1489,14 +1485,4 @@ void TransferManager::onRequestTaskbarPinningTimeout()
 {
     mTaskbarPinningRequestTimer->stop();
     Platform::getInstance()->pinOnTaskbar();
-}
-
-void TransferManager::updatePauseButtonClass()
-{
-    mUi->bPause->setProperty("class",
-                             mUi->bPause->isChecked() ? QString::fromLatin1("play") :
-                                                        QString::fromLatin1("pause"));
-
-    mUi->bPause->style()->unpolish(mUi->bPause);
-    mUi->bPause->style()->polish(mUi->bPause);
 }

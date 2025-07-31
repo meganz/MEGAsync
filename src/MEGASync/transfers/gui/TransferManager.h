@@ -178,7 +178,6 @@ private slots:
 
     void onSortCriterionChanged(int sortBy, Qt::SortOrder order);
     void onRequestTaskbarPinningTimeout();
-    void updatePauseButtonClass();
 };
 
 #endif // TRANSFERMANAGER_H

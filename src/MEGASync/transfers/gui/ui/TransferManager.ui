@@ -191,16 +191,16 @@ QFrame[itsOn=true] &gt; #tFailed
     background-color: #ffefeff0; /*colorToken.surface-2*/
 }
 
-#bPause, #bPause.pause
+#bPause
 {
-    qproperty-iconSize: 16px;
-    qproperty-icon: url(:/images/themed/light/pause.svg); /*replaceThemeToken*/
+icon-size: 16px;
+icon: url(:/images/themed/light/play.svg); /*replaceThemeToken*/
 }
 
-#bPause.play
+#bPause:checked
 {
-    qproperty-iconSize: 16px;
-    qproperty-icon: url(:/images/themed/light/play.svg); /*replaceThemeToken*/
+icon-size: 16px;
+icon: url(:/images/themed/light/pause.svg); /*replaceThemeToken*/
 }
 
 #bSearch
@@ -700,6 +700,9 @@ QToolButton
                 </property>
                 <property name="checkable">
                  <bool>true</bool>
+                </property>
+                <property name="checked">
+                 <bool>false</bool>
                 </property>
                 <property name="flat">
                  <bool>true</bool>
