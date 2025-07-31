@@ -41,40 +41,36 @@
 {
 	border: none;
 }
-
-#lFileName, #lFileNameCompleted
+#lFileName, #lFileNameCompleted 
 {
-  font-family: &quot;Lato&quot;;
-  font-size: 13px;
-  color: #333333;
+	font-weight:700;
 }
-
-#lSpeed
+#lSpeed, #lElapsedTime, #lTransferTypeCompleted
 {
-  font-family: &quot;Lato&quot;;
-  font-size: 12px;
-  color: #666666;
+color: #ff616366; /*colorToken.text-secondary*/
+font-size: 10px;
+line-height: 16px;
+font-weight:600;
 }
-
+#pbTransfer
+{
+background-color: transparent;
+}
+#pbTransfer::chunck
+{
+background-color: #29DD74;/*colorToken.indicator-green*/
+}
 #lTransfers
 {
-  font-family: &quot;Lato&quot;;
-  font-size: 12px;
-  color: #666666;
-}
-
-#lElapsedTime
-{
-  font-family: &quot;Lato&quot;;
-  font-size: 12px;
-  color: #999;
 }
 
 #lRemainingTime
 {
-  font-family: &quot;Lato&quot;;
   font-size: 13px;
 }</string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_8">
    <property name="spacing">
@@ -110,7 +106,7 @@
       <number>0</number>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="completedTransfer">
       <property name="minimumSize">
@@ -190,8 +186,8 @@
             </property>
             <property name="iconSize">
              <size>
-              <width>48</width>
-              <height>48</height>
+              <width>24</width>
+              <height>24</height>
              </size>
             </property>
            </widget>
@@ -261,6 +257,7 @@
                   <property name="font">
                    <font>
                     <family>Lato</family>
+                    <bold>true</bold>
                    </font>
                   </property>
                   <property name="focusPolicy">
@@ -617,8 +614,8 @@ background-color: rgba(0, 0, 0, 8%);
                   </property>
                   <property name="iconSize">
                    <size>
-                    <width>48</width>
-                    <height>48</height>
+                    <width>24</width>
+                    <height>24</height>
                    </size>
                   </property>
                  </widget>
@@ -688,7 +685,7 @@ background-color: rgba(0, 0, 0, 8%);
                         <property name="font">
                          <font>
                           <family>Lato</family>
-                          <pointsize>-1</pointsize>
+                          <bold>true</bold>
                          </font>
                         </property>
                         <property name="focusPolicy">
@@ -935,7 +932,7 @@ background-color: rgba(0, 0, 0, 8%);
                 <string notr="true">#wProgressBar
 {
 	margin-top: 1px;
-	background-color: rgba(0, 0, 0, 8%);
+	background-color:#FFD8D9DB; /*colorToken.border-disabled*/
 }</string>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -973,9 +970,6 @@ background-color: rgba(0, 0, 0, 8%);
                     <width>400</width>
                     <height>2</height>
                    </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true"/>
                   </property>
                   <property name="maximum">
                    <number>1000</number>

@@ -1,6 +1,7 @@
 #include "InfoDialogTransferDelegateWidget.h"
 
 #include "MegaApplication.h"
+#include "TokenParserWidgetManager.h"
 #include "TransferItem.h"
 #include "ui_InfoDialogTransferDelegateWidget.h"
 #include "Utilities.h"
@@ -31,6 +32,7 @@ InfoDialogTransferDelegateWidget::InfoDialogTransferDelegateWidget(QWidget *pare
     mUi->lFileNameCompleted->installEventFilter(this);
     mUi->lFileName->installEventFilter(this);
     mUi->lElapsedTime->installEventFilter(this);
+    setProperty("TOKENIZED", true);
 }
 
 InfoDialogTransferDelegateWidget::~InfoDialogTransferDelegateWidget()
@@ -67,7 +69,8 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
         case TransferData::TransferState::TRANSFER_ACTIVE:
         {
             mUi->bClockDown->setVisible(getData()->mRemainingTime > 0);
-            mUi->lRemainingTime->setText(Utilities::getTimeString(getData()->mRemainingTime));
+            mUi->lRemainingTime->setText(
+                Utilities::getTimeString(getData()->mRemainingTime, true, true));
 
             // Update current transfer speed
             QString downloadString;
@@ -168,15 +171,13 @@ void InfoDialogTransferDelegateWidget::setType()
 
     if(transferType & TransferData::TRANSFER_DOWNLOAD || transferType & TransferData::TRANSFER_LTCPDOWNLOAD)
     {
-        icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/transfer_manager/transfers_states/download_item_ico.png"));
-        mUi->pbTransfer->setStyleSheet(QString::fromLatin1("QProgressBar#pbTransfer{background-color: transparent;}"
-                                                        "QProgressBar#pbTransfer::chunk {background-color: %1;}").arg(DOWNLOAD_TRANSFER_COLOR.name()));
+        icon = Utilities::getCachedPixmap(QString::fromLatin1(
+            ":/images/transfer_manager/transfers_states/download_item_ico.png"));
     }
     else if(transferType & TransferData::TRANSFER_UPLOAD)
     {
-        icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/transfer_manager/transfers_states/upload_item_ico.png"));
-        mUi->pbTransfer->setStyleSheet(QString::fromLatin1("QProgressBar#pbTransfer{background-color: transparent;}"
-                                                        "QProgressBar#pbTransfer::chunk {background-color: %1;}").arg(UPLOAD_TRANSFER_COLOR.name()));
+        icon = Utilities::getCachedPixmap(
+            QString::fromLatin1(":/images/transfer_manager/transfers_states/upload_item_ico.png"));
     }
 
     mUi->lTransferType->setPixmap(icon.pixmap(mUi->lTransferType->size()));
@@ -331,7 +332,7 @@ void InfoDialogTransferDelegateWidget::finishTransfer()
     {
         mUi->lActionTransfer->setIcon(QIcon(QString::fromLatin1("://images/error.png")));
         mUi->lActionTransfer->setIconSize(QSize(24,24));
-        mUi->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #F0373A"));
+        // mUi->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #F0373A"));
 
         mUi->lElapsedTime->setText(tr("Failed: %1").arg(getErrorText()));
         updateFinishedIco(getData()->mType, true);
@@ -353,7 +354,7 @@ void InfoDialogTransferDelegateWidget::updateFinishedTime()
         return;
     }
 
-    mUi->lElapsedTime->setStyleSheet(QLatin1String("color: #999999"));
+    // mUi->lElapsedTime->setStyleSheet(QLatin1String("color: #999999"));
     mUi->lElapsedTime->setText(Utilities::getAddedTimeString(finishedTime));
 }
 
