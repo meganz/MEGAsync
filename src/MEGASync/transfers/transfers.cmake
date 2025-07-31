@@ -60,6 +60,50 @@ set(DESKTOP_APP_TRANSFERS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/gui/TransferManagerStatusHeaderWidget.cpp
 )
 
+target_sources_conditional(${ExecutableTarget}
+   FLAG WIN32
+   QT_AWARE
+   PRIVATE
+   ${CMAKE_CURRENT_LIST_DIR}/gui/win/InfoDialogTransfersWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/win/InfoDialogTransferDelegateWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/win/InfoDialogTransferLoadingItem.ui
+)
+
+target_sources_conditional(${ExecutableTarget}
+   FLAG APPLE
+   QT_AWARE
+   PRIVATE
+   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/InfoDialogTransfersWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/InfoDialogTransferDelegateWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/InfoDialogTransferLoadingItem.ui
+)
+
+target_sources_conditional(${ExecutableTarget}
+   FLAG UNIX AND NOT APPLE
+   QT_AWARE
+   PRIVATE
+   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/InfoDialogTransfersWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/InfoDialogTransferDelegateWidget.ui
+   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/InfoDialogTransferLoadingItem.ui
+)
+
+if (WIN32)
+    set_property(TARGET ${ExecutableTarget}
+        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
+        ${CMAKE_CURRENT_LIST_DIR}/gui/win
+    )
+elseif (APPLE)
+    set_property(TARGET ${ExecutableTarget}
+        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
+        ${CMAKE_CURRENT_LIST_DIR}/gui/macx
+    )
+else()
+    set_property(TARGET ${ExecutableTarget}
+        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
+        ${CMAKE_CURRENT_LIST_DIR}/gui/linux
+    )
+endif()
+
 target_sources(${ExecutableTarget}
     PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransferManagerStatusHeaderWidget.ui
@@ -69,9 +113,6 @@ target_sources(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransfersWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransferManagerLoadingItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransferManagerDragBackDrop.ui
-    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/InfoDialogTransfersWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/InfoDialogTransferDelegateWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/InfoDialogTransferLoadingItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransfersStatusWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransfersSummaryWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/SomeIssuesOccurredMessage.ui
