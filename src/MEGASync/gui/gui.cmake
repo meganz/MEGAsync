@@ -306,9 +306,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/win/UploadToMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/MegaProgressCustomDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/Login2FA.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/AlertItem.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/FilterAlertWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/AlertFilterType.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/VerifyLockMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/OverQuotaDialog.ui
@@ -331,9 +328,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/macx/UploadToMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/MegaProgressCustomDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/Login2FA.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/AlertItem.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/FilterAlertWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/AlertFilterType.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/VerifyLockMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/OverQuotaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/ScanningWidget.ui
@@ -356,9 +350,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/linux/UploadToMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/MegaProgressCustomDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/Login2FA.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/AlertItem.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/FilterAlertWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/AlertFilterType.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/VerifyLockMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/OverQuotaDialog.ui
@@ -549,7 +540,9 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/InfoDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/StatusInfo.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/PSAwidget.ui
-
+    ${CMAKE_CURRENT_LIST_DIR}/ui/AlertFilterType.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/FilterAlertWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/AlertItem.ui
 )
 
 target_sources_conditional(${ExecutableTarget}

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>193</width>
-    <height>21</height>
+    <width>177</width>
+    <height>32</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -32,7 +32,23 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">#lFilterActive
+{
+	color: #FF303233;/*colorToken.text-primary*/
+	font-size: 14px;
+	text-align: center;
+     border: none;
+	margin-left: -4px;
+}
+#bDropDownArrow
+{
+	border: none;
+}
+#liconType
+{
+	border: none;
+}
+</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_3">
    <property name="spacing">
@@ -52,9 +68,6 @@
    </property>
    <item>
     <widget class="QWidget" name="wIconType" native="true">
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">
        <number>0</number>
@@ -75,21 +88,18 @@
        <widget class="QToolButton" name="liconType">
         <property name="minimumSize">
          <size>
-          <width>6</width>
-          <height>6</height>
+          <width>16</width>
+          <height>16</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>6</width>
-          <height>6</height>
+          <width>16</width>
+          <height>16</height>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">#liconType
-{
-	border: none;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string/>
@@ -101,8 +111,8 @@
         </property>
         <property name="iconSize">
          <size>
-          <width>6</width>
-          <height>6</height>
+          <width>16</width>
+          <height>16</height>
          </size>
         </property>
        </widget>
@@ -112,17 +122,6 @@
    </item>
    <item>
     <widget class="QToolButton" name="lFilterActive">
-     <property name="styleSheet">
-      <string notr="true">#lFilterActive
-{
-	color: #666666;
-	font-family: Lato;
-	font-size: 14px;
-	text-align: center;
-     border: none;
-	margin-left: -4px;
-}</string>
-     </property>
      <property name="text">
       <string>All notifications</string>
      </property>
@@ -148,23 +147,17 @@
       </property>
       <item>
        <widget class="QToolButton" name="bDropDownArrow">
-        <property name="styleSheet">
-         <string notr="true">#bDropDownArrow
-{
-	border: none;
-}</string>
-        </property>
         <property name="text">
          <string/>
         </property>
         <property name="icon">
          <iconset>
-          <normalon>:/images/arrow-to-left.png</normalon>
+          <normalon>:/images/themed/light/chevron-down.svg</normalon>
          </iconset>
         </property>
         <property name="iconSize">
          <size>
-          <width>8</width>
+          <width>9</width>
           <height>5</height>
          </size>
         </property>

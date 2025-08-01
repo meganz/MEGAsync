@@ -26,10 +26,36 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#AlertItem
+   <string notr="true">#lTitle
 {
-background-color: #FFFFFF;
+font-size: 10px;
+line-height: 16px;
+}
+#lHeading 
+{ 
+line-height: 24px;
+}
+#lTimeStamp
+{
+line-height: 16px;
+}
+#wSeparator
+{
+background-color: #FFF3F4F4; /*colorToken.border-subtle*/
+}
+#lNew
+{
+border-width: 1px;
+border-style: solid;
+border-radius: 4px;
+font-size: 13px;
+border-color: #ff04101E; /*colorToken.button-brand*/
+background-color: transparent;
+color: #ff04101E; /*colorToken.button-brand*/
 }</string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -49,15 +75,21 @@ background-color: #FFFFFF;
    </property>
    <item>
     <widget class="QWidget" name="wContainer" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
-       <width>0</width>
+       <width>400</width>
        <height>121</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>16777215</width>
+       <width>400</width>
        <height>121</height>
       </size>
      </property>
@@ -66,13 +98,13 @@ background-color: #FFFFFF;
        <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>16</number>
       </property>
       <property name="topMargin">
        <number>7</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>16</number>
       </property>
       <property name="bottomMargin">
        <number>7</number>
@@ -84,13 +116,13 @@ background-color: #FFFFFF;
           <number>4</number>
          </property>
          <property name="leftMargin">
-          <number>16</number>
+          <number>2</number>
          </property>
          <property name="topMargin">
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>16</number>
+          <number>0</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
@@ -155,6 +187,9 @@ border: none;
            <property name="text">
             <string/>
            </property>
+           <property name="type" stdset="0">
+            <string notr="true">secondary</string>
+           </property>
           </widget>
          </item>
          <item>
@@ -178,22 +213,17 @@ border: none;
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>20</height>
+            </size>
+           </property>
            <property name="maximumSize">
             <size>
              <width>16777215</width>
              <height>16</height>
             </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">#lNew
-{
-background-color: #FF333A;
-color: #FFFFFF;
-font-weight: bold;
-font-family: Lato;
-font-size: 10px;
-border-radius: 4px;
-}</string>
            </property>
            <property name="text">
             <string>NEW</string>
@@ -228,13 +258,13 @@ border-radius: 4px;
           <number>4</number>
          </property>
          <property name="leftMargin">
-          <number>14</number>
+          <number>0</number>
          </property>
          <property name="topMargin">
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>14</number>
+          <number>0</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
@@ -351,16 +381,11 @@ border: none;
              <height>0</height>
             </size>
            </property>
-           <property name="styleSheet">
-            <string notr="true">#lHeading 
-{ 
-font-family: &quot;Lato&quot;; 
-font-size: 16px; 
-color: #333333; 
-}</string>
-           </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="type" stdset="0">
+            <string notr="true">title</string>
            </property>
           </widget>
          </item>
@@ -392,8 +417,6 @@ color: #333333;
          <string notr="true">#lDesc
 {
 font-family: Lato;
-margin-left: 13px;
-margin-right: 13px;
 font-size: 14px;
 }</string>
         </property>
@@ -409,22 +432,21 @@ font-size: 14px;
         <property name="wordWrap">
          <bool>true</bool>
         </property>
+        <property name="type" stdset="0">
+         <string notr="true">secondary</string>
+        </property>
        </widget>
       </item>
       <item>
        <widget class="QLabel" name="lTimeStamp">
         <property name="styleSheet">
-         <string notr="true">#lTimeStamp
-{
-	color: #999999;
-	font-family: Lato;
-	font-size: 12px;
-	margin-left: 12px;
-    margin-right: 12px;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string/>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">secondary</string>
         </property>
        </widget>
       </item>
@@ -444,12 +466,6 @@ font-size: 14px;
        <width>400</width>
        <height>1</height>
       </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">#wSeparator
-{
-	background-color: rgba(0,0,0,0.1);
-}</string>
      </property>
     </widget>
    </item>

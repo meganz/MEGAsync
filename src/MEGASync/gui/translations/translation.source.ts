@@ -2435,11 +2435,6 @@ Check your email inbox for instructions on unlocking your account and tips on ho
         <translation>Upgrade your account.</translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translatorcomment>This is the string used to refer to settings for all platforms.</translatorcomment>
-        <translation>Settings</translation>
-    </message>
-    <message>
         <source>Show MEGAsync options</source>
         <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
         <translation>Show options</translation>

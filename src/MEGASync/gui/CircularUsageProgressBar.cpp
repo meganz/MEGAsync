@@ -110,27 +110,6 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent*)
     {
         drawText(painter, innerRect, innerRadius, mPbValue);
     }
-
-    // If value higher than warning threshold show warning image
-    if (mState != STATE_OK)
-    {
-        constexpr double nativeOuterRadius (48.);
-        constexpr int    iconSizePixels    (24);
-        constexpr int    iconPaddingX      (3);
-        constexpr int    iconPaddingY      (4);
-
-        const double pixmapTotalSideLength ((mOuterRadius / nativeOuterRadius) * iconSizePixels);
-
-        const int x (static_cast<int>(mOuterRadius - (pixmapTotalSideLength / 2.) - iconPaddingX));
-        const int y (padingPixels / 2 - iconPaddingY);
-
-        const int sideLength(static_cast<int>(pixmapTotalSideLength));
-
-        const QIcon&  icon   (mState == STATE_OVER ? mMarkFull : mMarkWarning);
-        const QPixmap pixmap (icon.pixmap(iconSizePixels, iconSizePixels));
-
-        painter.drawPixmap(x, y, sideLength, sideLength, pixmap);
-    }
 }
 
 void CircularUsageProgressBar::drawText(QPainter& p, const QRectF& innerRect, double innerRadius,

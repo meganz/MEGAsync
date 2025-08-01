@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>194</width>
-    <height>152</height>
+    <width>250</width>
+    <height>182</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>194</width>
+    <width>250</width>
     <height>0</height>
    </size>
   </property>
@@ -31,41 +31,53 @@
   <property name="styleSheet">
    <string notr="true">#wFilterAlertContainer
 {
-border: 1px solid #B8B8B8;
-background-color: #FFFFFF;
-border-radius: 5px;
+border: 1px solid;
+border-color: #FFD8D9DB; /*colorToken.border-disabled*/
+border-radius: 8px;
 }
-
-#bAll, #bContacts, #bPayment, #bShares
+QPushButton
 {
 border: none;
-margin-left: 8px;
-color: #777777;
-font-family: Lato;
-font-size: 14px;
+background:transparent;
 }
-
-#bAll::hover, #bContacts::hover, #bPayment::hover, #bShares::hover
+QPushButton.menu-style
 {
-color: #000000;
+color: #FF303233;/*colorToken.text-primary*/
+font-size: 14px;
+line-height: 20px;
+text-align: left;
 }
-
-
+QWidget.menu-style:hover
+{
+background-color:#FFF7F7F7;/*colorToken.surface-1*/
+}
+QWidget.menu-style:pressed
+{
+background-color:#FFEFEFF0;/*colorToken.surface-2*/
+}
+QWidget.menu-style[active=&quot;true&quot;]
+{
+background-color:#FFEFEFF0;/*colorToken.surface-2*/
+}
+#wAllNotifications, #wContactsNotifications, #wPaymentNotifications, #wSharesNotifications
+{
+border-radius: 6px;
+}
 #bNumberNotifications, #bNumberNotificationsContacts, #bNumberNotificationsPayments, #bNumberNotificationsShares
 {
 border: none;
-background-color: #FF333A;
-color: #FFFFFF;
-font-weight: bold;
-font-family: Lato;
-font-size: 11px;
-border-radius: 4px;
+background-color: #FFDD1405;/*colorToken.icon-brand*/
+color: #FFFAFAFB;/*colorToken.text-inverse-accent*/
+font-weight: 600;
+font-size: 8px;
+line-height: 12px;
+border-radius:7px;
 margin-right: 8px;
 }
 
 #wSeparator
 {
-background-color: rgba(0,0,0,0.1);
+background-color: #FFEFEFF0;/*colorToken.surface-2*/
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -92,21 +104,27 @@ background-color: rgba(0,0,0,0.1);
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="minimumSize">
+      <size>
+       <width>250</width>
+       <height>0</height>
+      </size>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <property name="spacing">
-       <number>8</number>
+       <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>8</number>
+       <number>4</number>
       </property>
       <property name="topMargin">
-       <number>11</number>
+       <number>4</number>
       </property>
       <property name="rightMargin">
-       <number>8</number>
+       <number>4</number>
       </property>
       <property name="bottomMargin">
-       <number>11</number>
+       <number>4</number>
       </property>
       <item>
        <widget class="QWidget" name="wAllNotifications" native="true">
@@ -116,12 +134,21 @@ background-color: rgba(0,0,0,0.1);
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,0">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="class" stdset="0">
+         <string notr="true">menu-style</string>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,0">
          <property name="spacing">
-          <number>5</number>
+          <number>12</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>16</number>
          </property>
          <property name="topMargin">
           <number>0</number>
@@ -132,23 +159,55 @@ background-color: rgba(0,0,0,0.1);
          <property name="bottomMargin">
           <number>0</number>
          </property>
-         <item alignment="Qt::AlignLeft">
-          <widget class="QToolButton" name="bAll">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+         <item>
+          <widget class="QPushButton" name="bAllIcon">
+           <property name="minimumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="icon">
+            <iconset resource="../Resources.qrc">
+             <normaloff>:/images/themed/light/bell.svg</normaloff>:/images/themed/light/bell.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="autoDefault">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="bAll">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
            </property>
            <property name="text">
             <string>All notifications</string>
+           </property>
+           <property name="class" stdset="0">
+            <string notr="true">menu-style</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QToolButton" name="bNumberNotifications">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -199,7 +258,7 @@ background-color: rgba(0,0,0,0.1);
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
          <property name="spacing">
-          <number>12</number>
+          <number>2</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -221,12 +280,21 @@ background-color: rgba(0,0,0,0.1);
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="class" stdset="0">
+            <string notr="true">menu-style</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0">
             <property name="spacing">
-             <number>5</number>
+             <number>12</number>
             </property>
             <property name="leftMargin">
-             <number>0</number>
+             <number>16</number>
             </property>
             <property name="topMargin">
              <number>0</number>
@@ -238,29 +306,47 @@ background-color: rgba(0,0,0,0.1);
              <number>0</number>
             </property>
             <item>
-             <widget class="QToolButton" name="bContacts">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+             <widget class="QPushButton" name="bContactsIcon">
+              <property name="minimumSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="icon">
+               <iconset resource="../Resources.qrc">
+                <normaloff>:/images/themed/light/users.svg</normaloff>:/images/themed/light/users.svg</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="bContacts">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
               </property>
               <property name="text">
                <string>Contacts</string>
               </property>
-              <property name="icon">
-               <iconset>
-                <normalon>:/images/contacts_padding.png</normalon>
-               </iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>14</width>
-                <height>6</height>
-               </size>
-              </property>
-              <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextBesideIcon</enum>
+              <property name="class" stdset="0">
+               <string notr="true">menu-style</string>
               </property>
              </widget>
             </item>
@@ -300,12 +386,21 @@ background-color: rgba(0,0,0,0.1);
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="class" stdset="0">
+            <string notr="true">menu-style</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="0,0,0">
             <property name="spacing">
-             <number>5</number>
+             <number>12</number>
             </property>
             <property name="leftMargin">
-             <number>0</number>
+             <number>16</number>
             </property>
             <property name="topMargin">
              <number>0</number>
@@ -317,29 +412,47 @@ background-color: rgba(0,0,0,0.1);
              <number>0</number>
             </property>
             <item>
-             <widget class="QToolButton" name="bShares">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+             <widget class="QPushButton" name="bSharesIcon">
+              <property name="minimumSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="icon">
+               <iconset resource="../Resources.qrc">
+                <normaloff>:/images/themed/light/folder-users.svg</normaloff>:/images/themed/light/folder-users.svg</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="autoDefault">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="bShares">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
               </property>
               <property name="text">
                <string>Incoming Shares</string>
               </property>
-              <property name="icon">
-               <iconset>
-                <normalon>:/images/Incoming_padding.png</normalon>
-               </iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>14</width>
-                <height>6</height>
-               </size>
-              </property>
-              <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextBesideIcon</enum>
+              <property name="class" stdset="0">
+               <string notr="true">menu-style</string>
               </property>
              </widget>
             </item>
@@ -379,12 +492,21 @@ background-color: rgba(0,0,0,0.1);
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,0">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="class" stdset="0">
+            <string notr="true">menu-style</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="0,0,0">
             <property name="spacing">
-             <number>5</number>
+             <number>12</number>
             </property>
             <property name="leftMargin">
-             <number>0</number>
+             <number>16</number>
             </property>
             <property name="topMargin">
              <number>0</number>
@@ -396,29 +518,47 @@ background-color: rgba(0,0,0,0.1);
              <number>0</number>
             </property>
             <item>
-             <widget class="QToolButton" name="bPayment">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+             <widget class="QPushButton" name="bPaymentIcon">
+              <property name="minimumSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="icon">
+               <iconset resource="../Resources.qrc">
+                <normaloff>:/images/themed/light/currency-dollar.svg</normaloff>:/images/themed/light/currency-dollar.svg</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="autoDefault">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="bPayment">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
               </property>
               <property name="text">
                <string>Payment</string>
               </property>
-              <property name="icon">
-               <iconset>
-                <normalon>:/images/payment_padding.png</normalon>
-               </iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>14</width>
-                <height>6</height>
-               </size>
-              </property>
-              <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextBesideIcon</enum>
+              <property name="class" stdset="0">
+               <string notr="true">menu-style</string>
               </property>
              </widget>
             </item>
@@ -458,6 +598,41 @@ background-color: rgba(0,0,0,0.1);
    </item>
   </layout>
  </widget>
- <resources/>
- <connections/>
+ <resources>
+  <include location="../Resources.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>bAllIcon</sender>
+   <signal>clicked()</signal>
+   <receiver>bAll</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>29</x>
+     <y>24</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>60</x>
+     <y>23</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bNumberNotifications</sender>
+   <signal>clicked()</signal>
+   <receiver>bAll</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>172</x>
+     <y>27</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>100</x>
+     <y>23</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

@@ -35,7 +35,23 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: transparent;</string>
+   <string notr="true">#issuesIcon
+{
+   border:none;
+   background-color:transparent
+}
+
+
+#issuesInfoLabel
+{
+    color: #FFE31B57; /*colorToken.text-error*/
+}
+
+#issueContainer
+{
+   border-radius: 8px;
+   background-color:#FFFFE4E8; /*colorToken.notification-error*/
+}</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
@@ -68,32 +84,7 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">QPushButton
-{
-   border:none;
-}
-
-#viewIssuesButton
-{
-    font-size: 14px;
-    height:24px;
-    width: 71px;
-    background-color: #F0373A;
-    color: #FFFFFF;
-    border-radius:3px;
-}
-
-#issuesInfoLabel
-{
-    color: #DA3135;
-    font-size: 13px;
-}
-
-#issueContainer
-{
-   border-radius: 8px;
-   background-color: #FDEBEB;
-}</string>
+      <string notr="true"/>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">
@@ -175,6 +166,12 @@
         </property>
         <property name="text">
          <string>View...</string>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">outline</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string notr="true">small</string>
         </property>
        </widget>
       </item>

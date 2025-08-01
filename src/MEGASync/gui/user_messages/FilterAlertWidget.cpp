@@ -2,6 +2,8 @@
 
 #include "ui_FilterAlertWidget.h"
 
+#include <QStyle>
+
 namespace
 {
 constexpr int RED_BUBBLE_MARGIN = 17;
@@ -18,6 +20,7 @@ FilterAlertWidget::FilterAlertWidget(QWidget* parent)
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint | Qt::Popup);
     setAttribute(Qt::WA_TranslucentBackground);
     adjustSize();
+    prepareEventFilters();
 }
 
 FilterAlertWidget::~FilterAlertWidget()
@@ -94,21 +97,21 @@ void FilterAlertWidget::on_bAll_clicked()
     emit filterClicked(mCurrentFilter);
 }
 
-void FilterAlertWidget::on_bContacts_clicked()
+void FilterAlertWidget::onBContactsClicked()
 {
     mCurrentFilter = MessageType::ALERT_CONTACTS;
     emit filterClicked(mCurrentFilter);
     QApplication::postEvent(mUi->bContacts, new QEvent(QEvent::Leave));
 }
 
-void FilterAlertWidget::on_bShares_clicked()
+void FilterAlertWidget::onBSharesClicked()
 {
     mCurrentFilter = MessageType::ALERT_SHARES;
     emit filterClicked(mCurrentFilter);
     QApplication::postEvent(mUi->bShares, new QEvent(QEvent::Leave));
 }
 
-void FilterAlertWidget::on_bPayment_clicked()
+void FilterAlertWidget::onBPaymentClicked()
 {
     mCurrentFilter = MessageType::ALERT_PAYMENTS;
     emit filterClicked(mCurrentFilter);
@@ -122,4 +125,70 @@ bool FilterAlertWidget::event(QEvent* event)
         mUi->retranslateUi(this);
     }
     return QWidget::event(event);
+}
+
+bool FilterAlertWidget::eventFilter(QObject* obj, QEvent* event)
+{
+    // We're only interested in mouse press/release events
+    if (event->type() != QEvent::MouseButtonPress && event->type() != QEvent::MouseButtonRelease)
+    {
+        return QObject::eventFilter(obj, event);
+    }
+    QWidget* widget = qobject_cast<QWidget*>(obj);
+    if (!widget)
+    {
+        return QObject::eventFilter(obj, event);
+    }
+    if (!(widget == mUi->wContactsNotifications || widget == mUi->wSharesNotifications ||
+          widget == mUi->wPaymentNotifications || widget == mUi->wAllNotifications))
+    {
+        widget = widget->parentWidget();
+    }
+    if (!widget)
+    {
+        return QObject::eventFilter(obj, event);
+    }
+
+    if (event->type() == QEvent::MouseButtonPress)
+    {
+        widget->setProperty("active", true);
+        widget->style()->unpolish(widget);
+        widget->style()->polish(widget);
+    }
+    else if (event->type() == QEvent::MouseButtonRelease)
+    {
+        widget->setProperty("active", false);
+        widget->style()->unpolish(widget);
+        widget->style()->polish(widget);
+
+        if (widget == mUi->wContactsNotifications)
+        {
+            onBContactsClicked();
+        }
+        else if (widget == mUi->wSharesNotifications)
+        {
+            onBSharesClicked();
+        }
+        else if (widget == mUi->wPaymentNotifications)
+        {
+            onBPaymentClicked();
+        }
+    }
+    return QObject::eventFilter(obj, event);
+}
+
+void FilterAlertWidget::prepareEventFilters()
+{
+    auto initializeEventFilter = [this](QWidget* widget)
+    {
+        widget->installEventFilter(this);
+        for (auto child: widget->children())
+        {
+            child->installEventFilter(this);
+        }
+    };
+    initializeEventFilter(mUi->wContactsNotifications);
+    initializeEventFilter(mUi->wSharesNotifications);
+    initializeEventFilter(mUi->wPaymentNotifications);
+    initializeEventFilter(mUi->wAllNotifications);
 }

@@ -25,11 +25,14 @@ public:
     void reset();
     MessageType getCurrentFilter() const;
 
+private:
+    void prepareEventFilters();
+
 private slots:
     void on_bAll_clicked();
-    void on_bContacts_clicked();
-    void on_bShares_clicked();
-    void on_bPayment_clicked();
+    void onBContactsClicked();
+    void onBSharesClicked();
+    void onBPaymentClicked();
 
 signals:
     void filterClicked(MessageType);
@@ -40,6 +43,7 @@ private:
 
 protected:
     bool event(QEvent* event) override;
+    bool eventFilter(QObject* o, QEvent* e) override;
 };
 
 #endif // FILTERALERTWIDGET_H

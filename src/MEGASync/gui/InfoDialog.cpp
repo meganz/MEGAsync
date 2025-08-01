@@ -11,6 +11,8 @@
 #include "ServiceUrls.h"
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
+#include "ThemeManager.h"
+#include "TokenParserWidgetManager.h"
 #include "TransferManager.h"
 #include "TransferQuota.h"
 #include "ui_InfoDialog.h"
@@ -19,6 +21,7 @@
 #include "UserMessageDelegate.h"
 #include "Utilities.h"
 
+#include <QColor>
 #include <QDesktopServices>
 #include <QDesktopWidget>
 #include <QEvent>
@@ -91,6 +94,7 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
     qtBugFixer(this)
 {
     ui->setupUi(this);
+    auto shet = ui->wSortNotifications->styleSheet();
     connect(AppState::instance().get(),
             &AppState::appStateChanged,
             this,
@@ -419,6 +423,8 @@ void InfoDialog::setUsage()
     auto accType = mPreferences->accountType();
 
     QString quotaStringFormat = QString::fromLatin1("<span style='color:%1; font-size:%2px;'>%3</span>");
+    QString quotaStringFormatNonColored =
+        QString::fromLatin1("<span style='font-size:%1px;'>%2</span>");
     // Get font to adapt size to widget if needed
     // Getting font from lUsedStorage considering both
     // lUsedStorage and lUsedTransfer use the same font.
@@ -435,12 +441,17 @@ void InfoDialog::setUsage()
     QString usedStorageString = Utilities::getSizeString(usedStorage);
     QString totalStorageString;
     QString storageUsageStringFormatted (usedStorageString);
-
+    auto textPrimaryColor =
+        TokenParserWidgetManager::instance()->getColor(QLatin1String("text-primary"),
+                                                       QLatin1String("#ff303233"));
+    auto textSecondaryColor =
+        TokenParserWidgetManager::instance()->getColor(QLatin1String("text-secondary"),
+                                                       QLatin1String("#ff616366"));
     if (Utilities::isBusinessAccount())
     {
         ui->sStorage->setCurrentWidget(ui->wBusinessStorage);
         ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_OK);
-        usageColorS = QString::fromLatin1("#333333");
+        usageColorS = textSecondaryColor.name(QColor::HexArgb);
         font.setPixelSize(FONT_SIZE_BUSINESS_PX);
     }
     else
@@ -456,13 +467,19 @@ void InfoDialog::setUsage()
                 case MegaApi::STORAGE_STATE_RED:
                 {
                     ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_OVER);
-                    usageColorS = QString::fromLatin1("#D90007");
+                    usageColorS =
+                        TokenParserWidgetManager::instance()
+                            ->getColor(QLatin1String("text-error"), QLatin1String("#FFE31B57"))
+                            .name(QColor::HexArgb);
                     break;
                 }
                 case MegaApi::STORAGE_STATE_ORANGE:
                 {
                     ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_WARNING);
-                    usageColorS = QString::fromLatin1("#F98400");
+                    usageColorS =
+                        TokenParserWidgetManager::instance()
+                            ->getColor(QLatin1String("text-warning"), QLatin1String("#FFE31B57"))
+                            .name(QColor::HexArgb);
                     break;
                 }
                 case MegaApi::STORAGE_STATE_UNKNOWN:
@@ -472,7 +489,7 @@ void InfoDialog::setUsage()
                 default:
                 {
                     ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_OK);
-                    usageColorS = QString::fromLatin1("#666666");
+                    usageColorS = textPrimaryColor.name(QColor::HexArgb);
                     break;
                 }
             }
@@ -502,14 +519,14 @@ void InfoDialog::setUsage()
     auto usedTransfer(mPreferences->usedBandwidth());
 
     QString usageColorT;
-    QString usedTransferString (Utilities::getSizeString(usedTransfer));
+    QString usedTransferString(Utilities::getSizeString(usedTransfer));
     QString totalTransferString;
-    QString transferUsageStringFormatted (usedTransferString);
+    QString transferUsageStringFormatted(usedTransferString);
 
     if (Utilities::isBusinessAccount())
     {
         ui->sQuota->setCurrentWidget(ui->wBusinessQuota);
-        usageColorT = QString::fromLatin1("#333333");
+        usageColorT = textSecondaryColor.name(QColor::HexArgb);
         ui->wCircularStorage->setTotalValueUnknown();
     }
     else
@@ -520,13 +537,17 @@ void InfoDialog::setUsage()
             case QuotaState::OK:
             {
                 ui->wCircularQuota->setState(CircularUsageProgressBar::STATE_OK);
-                usageColorT = QString::fromLatin1("#666666");
+                usageColorT = textPrimaryColor.name(QColor::HexArgb);
+
                 break;
             }
             case QuotaState::WARNING:
             {
                 ui->wCircularQuota->setState(CircularUsageProgressBar::STATE_WARNING);
-                usageColorT = QString::fromLatin1("#F98400");
+                usageColorS =
+                    TokenParserWidgetManager::instance()
+                        ->getColor(QLatin1String("text-warning"), QLatin1String("#FFE31B57"))
+                        .name(QColor::HexArgb);
                 break;
             }
             case QuotaState::OVERQUOTA:
@@ -534,7 +555,10 @@ void InfoDialog::setUsage()
             case QuotaState::FULL:
             {
                 ui->wCircularQuota->setState(CircularUsageProgressBar::STATE_OVER);
-                usageColorT = QString::fromLatin1("#D90007");
+                usageColorS =
+                    TokenParserWidgetManager::instance()
+                        ->getColor(QLatin1String("text-error"), QLatin1String("#FFE31B57"))
+                        .name(QColor::HexArgb);
                 break;
             }
             default:
@@ -579,7 +603,6 @@ void InfoDialog::setUsage()
 
     // Now compute the font size and set usage strings
     // Find correct font size so that the string does not overflow
-    auto defaultColor = QString::fromLatin1("#999999");
 
     auto contentsMargins = ui->lUsedStorage->contentsMargins();
     auto margin = contentsMargins.left() + contentsMargins.right() + 2 * ui->lUsedStorage->margin();
@@ -611,9 +634,9 @@ void InfoDialog::setUsage()
         storageUsageStringFormatted = Utilities::getTranslatedSeparatorTemplate().arg(
             usedStorageStringFormatted,
             totalStorageString);
-        storageUsageStringFormatted = quotaStringFormat.arg(defaultColor,
-                                                            QString::number(font.pixelSize()),
-                                                            storageUsageStringFormatted);
+        storageUsageStringFormatted =
+            quotaStringFormatNonColored.arg(QString::number(font.pixelSize()),
+                                            storageUsageStringFormatted);
     }
 
     ui->lUsedStorage->setText(storageUsageStringFormatted);
@@ -631,9 +654,9 @@ void InfoDialog::setUsage()
         transferUsageStringFormatted = Utilities::getTranslatedSeparatorTemplate().arg(
             usedTransferStringFormatted,
             totalTransferString);
-        transferUsageStringFormatted = quotaStringFormat.arg(defaultColor,
-                                                            QString::number(font.pixelSize()),
-                                                            transferUsageStringFormatted);
+        transferUsageStringFormatted =
+            quotaStringFormatNonColored.arg(QString::number(font.pixelSize()),
+                                            transferUsageStringFormatted);
     }
 
     ui->lUsedQuota->setText(transferUsageStringFormatted);
@@ -1207,6 +1230,10 @@ bool InfoDialog::event(QEvent* event)
         ui->retranslateUi(this);
         updateUpgradeButtonText();
         updateCreateSyncButtonText();
+    }
+    else if (event->type() == ThemeManager::ThemeChanged)
+    {
+        setUsage();
     }
     return QDialog::event(event);
 }

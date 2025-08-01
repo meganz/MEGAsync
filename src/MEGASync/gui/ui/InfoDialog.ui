@@ -20,10 +20,7 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">/*SubWidget;wStatus;widget;*/
-/*SubWidget;wPSA;widget;*/
-
-#wInfoDialogIn
+   <string notr="true">#wInfoDialogIn
 {
  border-radius: 10px;
  border: 1px solid;
@@ -120,26 +117,51 @@ background-color:transparent;
 {
 background-color: #FFFF333A;/*colorToken.button-brand*/
 color: #FFFAFAFB;  /*colorToken.text-inverse-accent*/
-font-weight: 400;
-font-size: 11px;
-border-radius: 4px;
+font-weight: 600;
+font-size: 8px;
+line-height: 12px;
+border-radius: 6px;
 padding-left: 4px;
 padding-right: 4px;
 margin-right: 4px;
 }
+#lTotalUsedStorage,  #lTotalUsedQuota
+{
+font-weight: 600;
+border: none;
+color: #FF616366;/*colorToken.text-primary*/
+}
+#lUsedQuota, #lUsedStorage
+{
+color: #FF616366;/*colorToken.text-secondary*/
+}
+#wCircularStorage, #wCircularQuota
+{
+qproperty-outerCircleBackgroundColor: #FFD8D9DB; /*colorToken.border-strong*/
+qproperty-innerCircleBackgroundColor: #ffffffff; /*colorToken.page-background*/
+
+qproperty-lightOkProgressBarColors: #FF29DD74; /*colorToken.indicator-green*/
+qproperty-darkOkProgressBarColors: #FF29DD74; /*colorToken.indicator-green*/
+qproperty-lightWarnProgressBarColors: #fffb6514; /*colorToken.indicator-orange*/
+qproperty-darkWarnProgressBarColors: #fffb6514; /*colorToken.indicator-orange*/
+qproperty-lightFullProgressBarColors: #ffF63D6B; /*colorToken.indicator-pink*/
+qproperty-darkFullProgressBarColors: #ffF63D6B; /*colorToken.indicator-pink*/
+
+qproperty-okStateTextColor: #ff303233; /*colorToken.text-primary*/
+}
+#lNoNotifications
+{
+	color: #FF616366;/*colorToken.text-secondary*/
+}
+#bNoNotificationsIcon
+{
+     border: none;
+}
+/***************************************************/
 #wContaine
 #bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon, #bBusinessQuota, #bBusinessStorage, #bSyncsDisabled, #bAddSync, #bAddBackup, #bSettings, #bBackupsDisabled, #bAllSyncsDisabled, #bCloudDrive
 {
 	border: none;
-}
-
-#lTotalUsedStorage,  #lTotalUsedQuota
-{
-font-family: &quot;Lato&quot;;
-font-size: 13px;
-font-weight: normal;
-border: none;
-color: #333333;
 }
 
 QPushButton
@@ -163,34 +185,13 @@ border: none;
     border: none;
 }
 
-
-#wUsageStats, #wUsageStats *
-{
-    background-color: #FFFFFF;
-}
-#lTotalUsedStorage
-{
-font-family: &quot;Lato&quot;;
-font-weight: bold;
-font-size: 13px;
-}
 #wVerticalSeparator, #wVerticalSeparator *
 {
 background-color:  rgba(0, 0, 0, 0.1);
 margin-top: 12px;
 margin-bottom: 12px;
 }
-#lTotalUsedQuota
-{
-font-family: &quot;Lato&quot;;
-font-weight: bold;
-font-size: 13px;
-}
 
-#wSomeIssuesOccurred, #wSomeIssuesOccurred *
-{
-background-color: rgb(255, 255, 255);
-}
 #sActiveTransfers
 {
 background-color: transparent;
@@ -472,11 +473,6 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
 	border: 1px solid rgba(0,191, 165, 80%);
 }
 
-#wFilterAndSettings
-{
-background-color: #FFFFFF;
-}
-
 #bNotificationsSettings
 {
 	color: #666666;
@@ -487,22 +483,6 @@ background-color: #FFFFFF;
     border: none;
 }
 
-#pNoNotifications
-{
-	background-color: #FAFAFA;
-}
-
-#bNoNotificationsIcon
-{
-     border: none;
-}
-
-#lNoNotifications
-{
-	color: #999999;
-	font-family: Lato;
-	font-size: 14px;
-}
 #wContainerBottom, #wBottomFrame, #wBottom
 {
  border-bottom-right-radius: 10px;
@@ -1175,7 +1155,7 @@ background-color: #FFFFFF;
                   </size>
                  </property>
                  <property name="currentIndex">
-                  <number>0</number>
+                  <number>1</number>
                  </property>
                  <widget class="QWidget" name="pTransfersTab">
                   <property name="sizePolicy">
@@ -1658,7 +1638,7 @@ background-color: #FFFFFF;
                          </size>
                         </property>
                         <property name="currentIndex">
-                         <number>5</number>
+                         <number>0</number>
                         </property>
                         <widget class="QWidget" name="pUpdated">
                          <property name="sizePolicy">
@@ -3202,13 +3182,13 @@ background-color: #FFFFFF;
                      </property>
                      <layout class="QHBoxLayout" name="horizontalLayout_14">
                       <property name="leftMargin">
-                       <number>16</number>
+                       <number>12</number>
                       </property>
                       <property name="topMargin">
                        <number>0</number>
                       </property>
                       <property name="rightMargin">
-                       <number>16</number>
+                       <number>12</number>
                       </property>
                       <property name="bottomMargin">
                        <number>0</number>
@@ -3250,12 +3230,9 @@ background-color: #FFFFFF;
                         <property name="toolTip">
                          <string>Open notification settings</string>
                         </property>
-                        <property name="text">
-                         <string>Settings</string>
-                        </property>
                         <property name="icon">
                          <iconset>
-                          <normalon>:/images/notification_color.png</normalon>
+                          <normalon>:/images/themed/light/gear-six.svg</normalon>
                          </iconset>
                         </property>
                         <property name="iconSize">
@@ -3263,6 +3240,9 @@ background-color: #FFFFFF;
                           <width>24</width>
                           <height>24</height>
                          </size>
+                        </property>
+                        <property name="flat">
+                         <bool>true</bool>
                         </property>
                        </widget>
                       </item>
@@ -3406,14 +3386,14 @@ background-color: #FFFFFF;
                                  <widget class="QToolButton" name="bNoNotificationsIcon">
                                   <property name="minimumSize">
                                    <size>
-                                    <width>98</width>
-                                    <height>107</height>
+                                    <width>96</width>
+                                    <height>96</height>
                                    </size>
                                   </property>
                                   <property name="maximumSize">
                                    <size>
-                                    <width>98</width>
-                                    <height>107</height>
+                                    <width>96</width>
+                                    <height>96</height>
                                    </size>
                                   </property>
                                   <property name="text">
@@ -3421,13 +3401,13 @@ background-color: #FFFFFF;
                                   </property>
                                   <property name="icon">
                                    <iconset>
-                                    <normalon>:/images/empty-notifications.png</normalon>
+                                    <normalon>:/images/themed/light/red-bell.svg</normalon>
                                    </iconset>
                                   </property>
                                   <property name="iconSize">
                                    <size>
-                                    <width>98</width>
-                                    <height>107</height>
+                                    <width>96</width>
+                                    <height>96</height>
                                    </size>
                                   </property>
                                  </widget>
