@@ -352,7 +352,7 @@ void BackgroundColorDelegate::paint(QPainter* painter,
             painter,
             option,
             index,
-            TokenParserWidgetManager::instance()->getColor(QLatin1String("link-primary_aux")));
+            TokenParserWidgetManager::instance()->getColor(QLatin1String("link-primary")));
 
         painter->setPen(
             TokenParserWidgetManager::instance()->getColor(QLatin1String("text-inverse-accent")));
