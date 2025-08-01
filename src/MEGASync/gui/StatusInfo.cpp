@@ -166,8 +166,7 @@ void StatusInfo::setOverQuotaState(bool oq)
 
 QIcon StatusInfo::scanningIcon(int index)
 {
-    return Utilities::getCachedPixmap(ThemeManager::instance()->getThemedImage(
-        QString::fromUtf8("activity_indicator_%1.svg").arg(index)));
+    return Utilities::getCachedPixmap(QString::fromUtf8(":/activity_indicator_%1.svg").arg(index));
 }
 
 void StatusInfo::scanningAnimationStep()

@@ -442,11 +442,9 @@ void InfoDialog::setUsage()
     QString totalStorageString;
     QString storageUsageStringFormatted (usedStorageString);
     auto textPrimaryColor =
-        TokenParserWidgetManager::instance()->getColor(QLatin1String("text-primary"),
-                                                       QLatin1String("#ff303233"));
+        TokenParserWidgetManager::instance()->getColor(QLatin1String("text-primary"));
     auto textSecondaryColor =
-        TokenParserWidgetManager::instance()->getColor(QLatin1String("text-secondary"),
-                                                       QLatin1String("#ff616366"));
+        TokenParserWidgetManager::instance()->getColor(QLatin1String("text-secondary"));
     if (Utilities::isBusinessAccount())
     {
         ui->sStorage->setCurrentWidget(ui->wBusinessStorage);
@@ -467,19 +465,17 @@ void InfoDialog::setUsage()
                 case MegaApi::STORAGE_STATE_RED:
                 {
                     ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_OVER);
-                    usageColorS =
-                        TokenParserWidgetManager::instance()
-                            ->getColor(QLatin1String("text-error"), QLatin1String("#FFE31B57"))
-                            .name(QColor::HexArgb);
+                    usageColorS = TokenParserWidgetManager::instance()
+                                      ->getColor(QLatin1String("text-error"))
+                                      .name(QColor::HexArgb);
                     break;
                 }
                 case MegaApi::STORAGE_STATE_ORANGE:
                 {
                     ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_WARNING);
-                    usageColorS =
-                        TokenParserWidgetManager::instance()
-                            ->getColor(QLatin1String("text-warning"), QLatin1String("#FFE31B57"))
-                            .name(QColor::HexArgb);
+                    usageColorS = TokenParserWidgetManager::instance()
+                                      ->getColor(QLatin1String("text-warning"))
+                                      .name(QColor::HexArgb);
                     break;
                 }
                 case MegaApi::STORAGE_STATE_UNKNOWN:
@@ -544,10 +540,9 @@ void InfoDialog::setUsage()
             case QuotaState::WARNING:
             {
                 ui->wCircularQuota->setState(CircularUsageProgressBar::STATE_WARNING);
-                usageColorS =
-                    TokenParserWidgetManager::instance()
-                        ->getColor(QLatin1String("text-warning"), QLatin1String("#FFE31B57"))
-                        .name(QColor::HexArgb);
+                usageColorS = TokenParserWidgetManager::instance()
+                                  ->getColor(QLatin1String("text-warning"))
+                                  .name(QColor::HexArgb);
                 break;
             }
             case QuotaState::OVERQUOTA:
@@ -555,10 +550,9 @@ void InfoDialog::setUsage()
             case QuotaState::FULL:
             {
                 ui->wCircularQuota->setState(CircularUsageProgressBar::STATE_OVER);
-                usageColorS =
-                    TokenParserWidgetManager::instance()
-                        ->getColor(QLatin1String("text-error"), QLatin1String("#FFE31B57"))
-                        .name(QColor::HexArgb);
+                usageColorS = TokenParserWidgetManager::instance()
+                                  ->getColor(QLatin1String("text-error"))
+                                  .name(QColor::HexArgb);
                 break;
             }
             default:

@@ -174,14 +174,12 @@ void AlertItem::updateAlertType()
             if (mAlertData->getType() == MegaUserAlert::TYPE_DELETEDSHARE)
             {
                 mUi->bSharedFolder->setIcon(
-                    QIcon(QString::fromUtf8(":/images/folder-user-disabled.svg"))
-                        .pixmap(24.0, 24.0));
+                    QIcon(QString::fromUtf8(":/folder-user-disabled.svg")).pixmap(24.0, 24.0));
             }
             else
             {
                 mUi->bSharedFolder->setIcon(
-                    QIcon(QString::fromUtf8(":/images/folder-users-yellow.svg"))
-                        .pixmap(24.0, 24.0));
+                    QIcon(QString::fromUtf8(":/folder-users-yellow.svg")).pixmap(24.0, 24.0));
             }
             notificationTitle = tr("Incoming Shares").toUpper();
             break;
@@ -771,10 +769,9 @@ bool AlertItem::event(QEvent* event)
 
 QString AlertItem::formatRichString(const QString& str)
 {
-    auto textPrimaryColor =
-        TokenParserWidgetManager::instance()
-            ->getColor(QLatin1String("text-primary"), QLatin1String("#ff303233"))
-            .name(QColor::HexArgb);
+    auto textPrimaryColor = TokenParserWidgetManager::instance()
+                                ->getColor(QLatin1String("text-primary"))
+                                .name(QColor::HexArgb);
     return QString::fromUtf8("<span style='color:%1; font-size: 14px; line-height: "
                              "20px;font-weight: 400; text-decoration:none;'>%2</span>")
         .arg(textPrimaryColor, str);

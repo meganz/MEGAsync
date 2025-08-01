@@ -78,11 +78,3 @@ void ThemeManager::setTheme(Preferences::ThemeType theme)
         Utilities::propagateCustomEvent(ThemeChanged);
     }
 }
-
-QString ThemeManager::getThemedImage(const QString& imageName) const
-{
-    auto image =
-        QString::fromUtf8(":/images/themed/%1/%2")
-            .arg(mThemesMap.value(mCurrentTheme, QLatin1String("Light")).toLower(), imageName);
-    return image;
-}

@@ -96,11 +96,11 @@ border: none;
 {
 image-position: left;
 text-align: right;
-qproperty-icon: url(:/images/themed/light/plus_icon_secondary.svg); /*replaceThemeToken*/
+qproperty-icon: url(:/plus_icon_secondary.svg);
 }
 #bSettings
 {
-qproperty-icon: url(:/images/themed/light/menu.svg); /*replaceThemeToken*/
+qproperty-icon: url(:/menu.svg);
 background-color:transparent;
 }
 
@@ -3232,7 +3232,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                         </property>
                         <property name="icon">
                          <iconset>
-                          <normalon>:/images/themed/light/gear-six.svg</normalon>
+                          <normalon>:/gear-six.svg</normalon>
                          </iconset>
                         </property>
                         <property name="iconSize">
@@ -3401,7 +3401,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                   </property>
                                   <property name="icon">
                                    <iconset>
-                                    <normalon>:/images/themed/light/red-bell.svg</normalon>
+                                    <normalon>:/red-bell.svg</normalon>
                                    </iconset>
                                   </property>
                                   <property name="iconSize">
@@ -3661,6 +3661,12 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
  </widget>
  <customwidgets>
   <customwidget>
+   <class>SomeIssuesOccurredMessage</class>
+   <extends>QWidget</extends>
+   <header>SomeIssuesOccurredMessage.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>AvatarWidget</class>
    <extends>QWidget</extends>
    <header>AvatarWidget.h</header>
@@ -3694,12 +3700,6 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
    <class>AlertFilterType</class>
    <extends>QWidget</extends>
    <header location="global">AlertFilterType.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>SomeIssuesOccurredMessage</class>
-   <extends>QWidget</extends>
-   <header>SomeIssuesOccurredMessage.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

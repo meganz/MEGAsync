@@ -174,8 +174,8 @@ background-color: #FFEFEFF0;/*colorToken.surface-2*/
             </size>
            </property>
            <property name="icon">
-            <iconset resource="../Resources.qrc">
-             <normaloff>:/images/themed/light/bell.svg</normaloff>:/images/themed/light/bell.svg</iconset>
+            <iconset resource="../Resources_light.qrc">
+             <normaloff>:/bell.svg</normaloff>:/bell.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -320,8 +320,8 @@ background-color: #FFEFEFF0;/*colorToken.surface-2*/
                </size>
               </property>
               <property name="icon">
-               <iconset resource="../Resources.qrc">
-                <normaloff>:/images/themed/light/users.svg</normaloff>:/images/themed/light/users.svg</iconset>
+               <iconset resource="../Resources_light.qrc">
+                <normaloff>:/users.svg</normaloff>:/users.svg</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -426,8 +426,8 @@ background-color: #FFEFEFF0;/*colorToken.surface-2*/
                </size>
               </property>
               <property name="icon">
-               <iconset resource="../Resources.qrc">
-                <normaloff>:/images/themed/light/folder-users.svg</normaloff>:/images/themed/light/folder-users.svg</iconset>
+               <iconset resource="../Resources_light.qrc">
+                <normaloff>:/folder-users.svg</normaloff>:/folder-users.svg</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -532,8 +532,8 @@ background-color: #FFEFEFF0;/*colorToken.surface-2*/
                </size>
               </property>
               <property name="icon">
-               <iconset resource="../Resources.qrc">
-                <normaloff>:/images/themed/light/currency-dollar.svg</normaloff>:/images/themed/light/currency-dollar.svg</iconset>
+               <iconset resource="../Resources_light.qrc">
+                <normaloff>:/currency-dollar.svg</normaloff>:/currency-dollar.svg</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -599,7 +599,7 @@ background-color: #FFEFEFF0;/*colorToken.surface-2*/
   </layout>
  </widget>
  <resources>
-  <include location="../Resources.qrc"/>
+  <include location="../Resources_light.qrc"/>
  </resources>
  <connections>
   <connection>

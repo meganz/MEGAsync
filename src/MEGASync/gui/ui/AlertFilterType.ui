@@ -152,7 +152,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normalon>:/images/themed/light/chevron-down.svg</normalon>
+          <normalon>:/chevron-down.svg</normalon>
          </iconset>
         </property>
         <property name="iconSize">
