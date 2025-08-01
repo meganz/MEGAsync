@@ -231,7 +231,6 @@ Rectangle {
                         root.navInfo.selectiveSyncDone = true;
                     }
                     root.navInfo.typeSelected = Constants.SyncType.SYNC;
-                    root.navInfo.errorOnSyncs = false;
                     root.state = root.resume;
                 }
 
