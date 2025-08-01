@@ -129,16 +129,5 @@
         <file alias="images/qml/onboarding/backup@2x.png">images/qml/onboarding/backup@2x.png</file>
         <file alias="images/qml/onboarding/backup.png">images/qml/onboarding/backup.png</file>
         <file alias="images/qml/onboarding/sync.png">images/qml/onboarding/sync.png</file>
-        <file alias="images/qml/onboarding/mega.svg">images/qml/onboarding/mega.svg</file>
-        <file alias="images/qml/onboarding/monitor.svg">images/qml/onboarding/monitor.svg</file>
-        <file alias="images/qml/onboarding/remote_folder.svg">images/qml/onboarding/remote_folder.svg</file>
-        <file alias="images/qml/onboarding/syncs.svg">images/qml/onboarding/syncs.svg</file>
-        <file alias="images/qml/onboarding/sync_plus.svg">images/qml/onboarding/sync_plus.svg</file>
-        <file alias="images/qml/onboarding/more_horizontal.svg">images/qml/onboarding/more_horizontal.svg</file>
-        <file alias="images/qml/onboarding/local_folder.png">images/qml/onboarding/local_folder.png</file>
-        <file alias="images/qml/onboarding/local_folder@2x.png">images/qml/onboarding/local_folder@2x.png</file>
-        <file alias="images/qml/onboarding/local_folder@3x.png">images/qml/onboarding/local_folder@3x.png</file>
-        <file alias="images/qml/onboarding/minus-circle.svg">images/qml/onboarding/minus-circle.svg</file>
-        <file alias="images/qml/onboarding/cross.svg">images/qml/onboarding/cross.svg</file>
     </qresource>
 </RCC>
