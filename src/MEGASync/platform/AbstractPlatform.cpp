@@ -5,7 +5,6 @@
 #include "MultiQFileDialog.h"
 
 #include <QDesktopWidget>
-#include <QPixmapCache>
 #include <QScreen>
 
 using namespace mega;
