@@ -1395,7 +1395,7 @@ background-color: transparent;
                          </size>
                         </property>
                         <property name="currentIndex">
-                         <number>0</number>
+                         <number>5</number>
                         </property>
                         <widget class="QWidget" name="pUpdated">
                          <property name="sizePolicy">
@@ -1459,8 +1459,8 @@ background-color: transparent;
                                <string/>
                               </property>
                               <property name="icon">
-                               <iconset resource="../Resources_common.qrc">
-                                <normaloff>:/images/upload_to_mega.png</normaloff>:/images/upload_to_mega.png</iconset>
+                               <iconset resource="../Resources_light.qrc">
+                                <normaloff>:/upload-to-mega.png</normaloff>:/upload-to-mega.png</iconset>
                               </property>
                               <property name="iconSize">
                                <size>
@@ -2084,7 +2084,7 @@ background-color: transparent;
                                   </property>
                                   <property name="icon">
                                    <iconset>
-                                    <normalon>:/images/themed/dark/alert-triangle.svg</normalon>
+                                    <normalon>:/alert-triangle.svg</normalon>
                                    </iconset>
                                   </property>
                                   <property name="iconSize">
@@ -2317,7 +2317,7 @@ background-color: transparent;
                                </property>
                                <property name="icon">
                                 <iconset>
-                                 <normalon>:/images/themed/dark/sync-warning.svg</normalon>
+                                 <normalon>:/sync-warning.svg</normalon>
                                 </iconset>
                                </property>
                                <property name="iconSize">
@@ -2630,8 +2630,8 @@ background-color: transparent;
                                 <string/>
                                </property>
                                <property name="icon">
-                                <iconset resource="../Resources_common.qrc">
-                                 <normaloff>:/images/icons/infodialog/warning-disabled-backups.png</normaloff>:/images/icons/infodialog/warning-disabled-backups.png</iconset>
+                                <iconset resource="../Resources_light.qrc">
+                                 <normaloff>:/database-warning.svg</normaloff>:/database-warning.svg</iconset>
                                </property>
                                <property name="iconSize">
                                 <size>
@@ -2944,7 +2944,7 @@ background-color: transparent;
                                </property>
                                <property name="icon">
                                 <iconset>
-                                 <normalon>:/images/themed/dark/sync-warning.svg</normalon>
+                                 <normalon>:/sync-warning.svg</normalon>
                                 </iconset>
                                </property>
                                <property name="iconSize">
@@ -3743,12 +3743,6 @@ background-color: transparent;
    <class>AlertFilterType</class>
    <extends>QWidget</extends>
    <header location="global">AlertFilterType.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>TransfersSummaryQuickWidget</class>
-   <extends>QWidget</extends>
-   <header>TransfersSummaryQuickWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
