@@ -59,7 +59,6 @@ ResumePageForm {
 
             PropertyChanges { target: titleItem; restoreEntryValues: true; text: SyncsStrings.finalStepSyncTitle; }
             PropertyChanges { target: descriptionItem; visible: true; }
-            PropertyChanges { target: errorItem; visible: false; }
             PropertyChanges { target: descriptionItem2; visible: false; }
             PropertyChanges { target: syncButton; visible: false; }
             PropertyChanges {
