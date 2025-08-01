@@ -450,8 +450,7 @@ private:
     static QHash<QString, QString> languageNames;
     static void initializeExtensions();
     static void initializeFileTypes();
-    static QString getExtensionPixmapNameSmall(QString fileName);
-    static QString getExtensionPixmapNameMedium(QString fileName);
+    static QString getExtensionPixmapName(QString fileName);
     static double toDoubleInUnit(unsigned long long bytes, unsigned long long unit);
     static QString getTimeFormat(const TimeInterval& interval);
     static QString filledTimeString(const QString& timeFormat, const TimeInterval& interval, bool color);
@@ -480,8 +479,7 @@ public:
     static qreal getDevicePixelRatio();
 
     static QIcon getCachedPixmap(QString fileName);
-    static QIcon getExtensionPixmapSmall(QString fileName);
-    static QIcon getExtensionPixmapMedium(QString fileName);
+    static QIcon getExtensionPixmap(QString fileName);
     static QString getExtensionPixmapName(QString fileName, QString prefix);
     static void clearIconCache();
     static FileType getFileType(QString fileName, QString prefix);

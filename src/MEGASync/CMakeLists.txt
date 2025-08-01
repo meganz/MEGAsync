@@ -50,9 +50,7 @@ elseif (APPLE)
         ${CMAKE_CURRENT_SOURCE_DIR}/folder_yosemite.icns
         ${CMAKE_CURRENT_SOURCE_DIR}/folder_bigsur.icns
         ${CMAKE_CURRENT_SOURCE_DIR}/appicon32.tiff
-        ${CMAKE_CURRENT_BINARY_DIR}/Resources_macx.rcc
-        ${CMAKE_CURRENT_BINARY_DIR}/Resources_win.rcc
-        ${CMAKE_CURRENT_BINARY_DIR}/Resources_linux.rcc
+        ${CMAKE_CURRENT_BINARY_DIR}/Resources_common.rcc
         ${CMAKE_CURRENT_BINARY_DIR}/Resources_qml.rcc
         ${CMAKE_CURRENT_BINARY_DIR}/Resources_light.rcc
         ${CMAKE_CURRENT_BINARY_DIR}/Resources_dark.rcc
