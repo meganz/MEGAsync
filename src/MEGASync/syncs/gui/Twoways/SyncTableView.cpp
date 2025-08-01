@@ -352,34 +352,29 @@ void BackgroundColorDelegate::paint(QPainter* painter,
             painter,
             option,
             index,
-            TokenParserWidgetManager::instance()->getColor(QLatin1String("link-primary"),
-                                                           QLatin1String("#FF2C5BEB")));
+            TokenParserWidgetManager::instance()->getColor(QLatin1String("link-primary_aux")));
 
         painter->setPen(
-            TokenParserWidgetManager::instance()->getColor(QLatin1String("text-inverse-accent"),
-                                                           QLatin1String("#FFFAFAFB")));
+            TokenParserWidgetManager::instance()->getColor(QLatin1String("text-inverse-accent")));
     }
     else
     {
         auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
         if (sync->getError())
         {
-            paintRowBackground(
-                painter,
-                option,
-                index,
-                TokenParserWidgetManager::instance()->getColor(QLatin1String("notification-error"),
-                                                               QLatin1String("#FFFFE4E8")));
+            paintRowBackground(painter,
+                               option,
+                               index,
+                               TokenParserWidgetManager::instance()->getColor(
+                                   QLatin1String("notification-error")));
 
             painter->setPen(
-                TokenParserWidgetManager::instance()->getColor(QLatin1String("text-error"),
-                                                               QLatin1String("#FFE31B57")));
+                TokenParserWidgetManager::instance()->getColor(QLatin1String("text-error")));
         }
         else
         {
             painter->setPen(
-                TokenParserWidgetManager::instance()->getColor(QLatin1String("text-primary"),
-                                                               QLatin1String("#ff303233")));
+                TokenParserWidgetManager::instance()->getColor(QLatin1String("text-primary")));
         }
     }
 
