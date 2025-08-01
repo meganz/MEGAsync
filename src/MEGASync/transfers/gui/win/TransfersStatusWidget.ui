@@ -57,7 +57,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../gui/Resources_win.qrc">
+      <iconset resource="../../../gui/Resources_common.qrc">
        <normaloff>:/images/transfer_manager.png</normaloff>:/images/transfer_manager.png</iconset>
      </property>
      <property name="autoRepeat">
@@ -74,7 +74,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../../gui/Resources_win.qrc"/>
+  <include location="../../../gui/Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>

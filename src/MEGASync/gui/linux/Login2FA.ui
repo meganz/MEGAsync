@@ -538,7 +538,7 @@ background-color:  rgba(0, 0, 0, 10%);
          <string notr="true"/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_common.qrc">
           <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -642,7 +642,7 @@ background-color:  rgba(0, 0, 0, 10%);
   <tabstop>bCancel</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>

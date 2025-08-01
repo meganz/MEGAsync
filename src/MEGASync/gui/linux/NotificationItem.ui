@@ -339,7 +339,7 @@ background-color: rgba(0,0,0,0.1);
                <string notr="true"/>
               </property>
               <property name="pixmap">
-               <pixmap resource="../Resources_linux.qrc">:/images/app_64.png</pixmap>
+               <pixmap resource="../Resources_common.qrc">:/images/app_64.png</pixmap>
               </property>
               <property name="scaledContents">
                <bool>true</bool>
@@ -659,7 +659,7 @@ background-color: rgba(0,0,0,0.1);
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>

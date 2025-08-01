@@ -48,7 +48,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="../Resources_win.qrc">:/images/icon_warning.png</pixmap>
+        <pixmap resource="../Resources_common.qrc">:/images/icon_warning.png</pixmap>
        </property>
       </widget>
      </item>
@@ -328,7 +328,7 @@ font-weight:400;</string>
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>

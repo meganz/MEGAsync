@@ -61,7 +61,7 @@ padding-left:3px;
 }</string>
      </property>
      <property name="icon">
-      <iconset theme="search_ico" resource="../../../Resources_win.qrc">
+      <iconset theme="search_ico" resource="../../../Resources_common.qrc">
        <normaloff>:/images/transfer_manager/sidebar/search_ico_default.png</normaloff>:/images/transfer_manager/sidebar/search_ico_default.png</iconset>
      </property>
      <property name="checkable">
@@ -107,7 +107,7 @@ padding-right:3px;
 }</string>
      </property>
      <property name="icon">
-      <iconset theme="delete_search_ico" resource="../../../Resources_win.qrc">
+      <iconset theme="delete_search_ico" resource="../../../Resources_common.qrc">
        <normaloff>:/images/transfer_manager/sidebar/delete_search_ico_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_ico_default.png</iconset>
      </property>
      <property name="popupMode">
@@ -121,9 +121,9 @@ padding-right:3px;
   </layout>
  </widget>
  <resources>
-  <include location="../../../Resources_win.qrc"/>
-  <include location="../../../Resources_win.qrc"/>
-  <include location="../../../Resources_win.qrc"/>
+  <include location="../../../Resources_common.qrc"/>
+  <include location="../../../Resources_common.qrc"/>
+  <include location="../../../Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>

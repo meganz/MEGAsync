@@ -539,7 +539,7 @@ background-color:  rgba(0, 0, 0, 10%);
          <string notr="true"/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_common.qrc">
           <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -631,7 +631,7 @@ background-color:  rgba(0, 0, 0, 10%);
   <tabstop>bCancel</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>
