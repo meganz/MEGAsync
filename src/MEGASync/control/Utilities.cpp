@@ -16,6 +16,7 @@
 #include <QDesktopWidget>
 #include <QDirIterator>
 #include <QImageReader>
+#include <QPixmapCache>
 #include <QScreen>
 #include <QTextStream>
 
@@ -397,6 +398,11 @@ struct IconCache
     {
         return getDirect(Utilities::getExtensionPixmapName(fileName, prefix));
     }
+
+    void clear()
+    {
+        mIcons.clear();
+    }
 };
 
 IconCache gIconCache;
@@ -529,6 +535,12 @@ QIcon Utilities::getExtensionPixmapSmall(QString fileName)
 QIcon Utilities::getExtensionPixmapMedium(QString fileName)
 {
     return gIconCache.getDirect(getExtensionPixmapNameMedium(fileName));
+}
+
+void Utilities::clearIconCache()
+{
+    QPixmapCache::clear();
+    gIconCache.clear();
 }
 
 QString Utilities::getAvatarPath(QString email)

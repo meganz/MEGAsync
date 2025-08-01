@@ -415,30 +415,7 @@ bool gCrashableForTesting = false;
 
 void MegaApplication::initStyleAndResources()
 {
-    if (!Platform::getInstance()->loadThemeResource(
-            ThemeManager::instance()->getSelectedThemeString()))
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error loading resource files.");
-
-        auto title = QCoreApplication::translate("MegaError", "Alert");
-        auto msg = QCoreApplication::translate(
-            "MegaError",
-            "[B]Error detected[/B][BR]An error has occurred loading application "
-            "resources, and the app needs to close. If this happens more than once, reinstall the "
-            "app from [A]mega.io/desktop[/A] or contact support for further assistance.");
-
-        const Text::Bold boldDecorator;
-        boldDecorator.process(msg);
-
-        const Text::NewLine newLineDecorator;
-        newLineDecorator.process(msg);
-
-        const Text::Link linkDecorator(Utilities::DESKTOP_APP_URL);
-        linkDecorator.process(msg);
-
-        QMessageBox::warning(nullptr, title, msg, QMessageBox::Ok);
-        ::exit(0);
-    }
+    ThemeManager::instance()->init();
 
     setStyle(new MegaProxyStyle());
     QFile file(QLatin1String(":/style/WidgetsComponentsStyleSheetsSizes.css"));
