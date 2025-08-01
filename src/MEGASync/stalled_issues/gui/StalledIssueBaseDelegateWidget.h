@@ -16,6 +16,8 @@ class StalledIssueBaseDelegateWidget : public QWidget
 public:
     explicit StalledIssueBaseDelegateWidget(QWidget *parent);
 
+    void init();
+
     void updateIndex();
     virtual void expand(bool){}
 

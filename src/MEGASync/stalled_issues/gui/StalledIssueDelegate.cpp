@@ -7,6 +7,7 @@
 #include "StalledIssueHeader.h"
 #include "StalledIssuesDialog.h"
 #include "StalledIssuesView.h"
+#include "ThemeManager.h"
 #include "TokenParserWidgetManager.h"
 
 #include <QDebug>
@@ -240,9 +241,6 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
     if (index.isValid() && row < rowCount)
     {
-        // Temporary -> Connect this method to RefreshAppEvent
-        updateColors();
-
         auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
 
         bool isExpanded(mView->isExpanded(index) && stalledIssueItem.consultData()->isExpandable());
@@ -434,40 +432,52 @@ void StalledIssueDelegate::updateEditorGeometry(QWidget *editor, const QStyleOpt
 
 bool StalledIssueDelegate::event(QEvent *event)
 {
-    if(auto hoverEvent = dynamic_cast<MegaDelegateHoverEvent*>(event))
+    if (event)
     {
-        if(hoverEvent->type() == QEvent::Enter)
+        if (auto hoverEvent = dynamic_cast<MegaDelegateHoverEvent*>(event))
         {
-            auto headerIndex(getHeaderIndex(hoverEvent->index()));
-            auto relativeIndex(getRelativeIndex(hoverEvent->index()));
-
-            mLastHoverIndex = headerIndex;
-            QTimer::singleShot(0, this, [this, relativeIndex](){
-                mView->update(relativeIndex);
-            });
-
-            onHoverEnter(hoverEvent->index());
-        }
-        else if(hoverEvent->type() == QEvent::MouseMove)
-        {
-            onHoverEnter(hoverEvent->index());
-        }
-        else if(hoverEvent->type() == QEvent::Leave)
-        {
-            auto headerIndex(getHeaderIndex(hoverEvent->index()));
-            if(mLastHoverIndex == headerIndex)
+            if (hoverEvent->type() == QEvent::Enter)
             {
+                auto headerIndex(getHeaderIndex(hoverEvent->index()));
                 auto relativeIndex(getRelativeIndex(hoverEvent->index()));
-                QTimer::singleShot(0, this, [this, relativeIndex](){
-                    mView->update(relativeIndex);
-                });
 
-                mLastHoverIndex = QModelIndex();
+                mLastHoverIndex = headerIndex;
+                QTimer::singleShot(0,
+                                   this,
+                                   [this, relativeIndex]()
+                                   {
+                                       mView->update(relativeIndex);
+                                   });
+
+                onHoverEnter(hoverEvent->index());
             }
-            onHoverLeave(hoverEvent->index());
+            else if (hoverEvent->type() == QEvent::MouseMove)
+            {
+                onHoverEnter(hoverEvent->index());
+            }
+            else if (hoverEvent->type() == QEvent::Leave)
+            {
+                auto headerIndex(getHeaderIndex(hoverEvent->index()));
+                if (mLastHoverIndex == headerIndex)
+                {
+                    auto relativeIndex(getRelativeIndex(hoverEvent->index()));
+                    QTimer::singleShot(0,
+                                       this,
+                                       [this, relativeIndex]()
+                                       {
+                                           mView->update(relativeIndex);
+                                       });
+
+                    mLastHoverIndex = QModelIndex();
+                }
+                onHoverLeave(hoverEvent->index());
+            }
+        }
+        else if (event->type() == ThemeManager::ThemeChanged)
+        {
+            updateColors();
         }
     }
-
     return QStyledItemDelegate::event(event);
 }
 

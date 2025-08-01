@@ -64,6 +64,7 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
     {
         header = new StalledIssueHeader(parent);
         header->setDelegate(mDelegate);
+        header->init();
     }
 
     if(needsUpdate)
@@ -196,6 +197,11 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
             item = new OtherSideMissingOrBlocked(parent);
             break;
         }
+    }
+
+    if (item)
+    {
+        item->init();
     }
 
     return item;

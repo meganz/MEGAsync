@@ -2049,10 +2049,17 @@ bool Utilities::shouldDisplayUpgradeButton(const bool isTransferOverquota)
 
 void Utilities::propagateCustomEvent(QEvent::Type type)
 {
-    const auto widgets = QApplication::allWidgets();
-    for (QWidget* widget: widgets)
+    const auto topWidgets = QApplication::topLevelWidgets();
+    for (QWidget* topW: topWidgets)
     {
-        QApplication::postEvent(widget, new QEvent(type));
+        const auto children(topW->findChildren<QObject*>());
+
+        for (QObject* child: children)
+        {
+            QApplication::postEvent(child, new QEvent(type));
+        }
+
+        QApplication::postEvent(topW, new QEvent(type));
     }
 }
 

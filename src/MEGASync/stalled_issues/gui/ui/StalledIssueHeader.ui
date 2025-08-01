@@ -35,12 +35,7 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#StalledIssueHeader
-{
-	background-color: transparent;
-}
-
-/*********** actionContainer **********/
+   <string notr="true">/*********** actionContainer **********/
 #actionMessageContainer
 {
    border-radius: 4px;
