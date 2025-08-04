@@ -478,7 +478,7 @@ void LoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e)
 
 void LoginController::onboardingFinished()
 {
-    SyncInfo::instance()->rewriteSyncSettings(); // write sync settings into user's preferences
+    SyncInfo::instance()->onboardingFinished(mOnboardingShown);
     MegaSyncApp->onboardingFinished(false, mOnboardingShown);
 }
 

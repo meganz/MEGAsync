@@ -358,11 +358,6 @@ QString Syncs::getLocalError() const
             return tr("Select a local folder to sync.");
         }
 
-        case LocalErrors::ALREADY_SYNC_CANDIDATE:
-        {
-            return getAlreadySyncCandidateError();
-        }
-
         case LocalErrors::NO_ACCESS_PERMISSIONS_CANT_CREATE:
         {
             return QCoreApplication::translate(
@@ -387,11 +382,6 @@ QString Syncs::getLocalError() const
     }
 
     return {};
-}
-
-QString Syncs::getAlreadySyncCandidateError() const
-{
-    return tr("Folder can't be synced as it's already a candidate.");
 }
 
 QString Syncs::getRemoteError() const
