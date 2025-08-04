@@ -398,11 +398,6 @@ QString Syncs::getRemoteError() const
             return tr("Select a MEGA folder to sync.");
         }
 
-        case RemoteErrors::ALREADY_SYNC_CANDIDATE:
-        {
-            return getAlreadySyncCandidateError();
-        }
-
         case RemoteErrors::CANT_SYNC:
         {
             if (mRemoteMegaError.error != mega::MegaError::API_OK)

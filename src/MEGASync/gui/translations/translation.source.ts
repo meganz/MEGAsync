@@ -8661,11 +8661,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Folder can’t be synced as it can’t be located. It may have been moved or deleted, or you might not have access.</translation>
     </message>
     <message>
-        <source>Folder can&apos;t be synced as it&apos;s already a candidate.</source>
-        <translatorcomment>Error message indicating the user we have a sync candidate with the same folder already in the sync candidates table. CON-1386</translatorcomment>
-        <translation>This folder is already in the list of pending syncs</translation>
-    </message>
-    <message>
         <source>Select a MEGA folder to sync.</source>
         <translatorcomment>Error message indicating that the user should choose a remote folder (cloud/mega) in order to create a sync. CON-467</translatorcomment>
         <translation>Select a MEGA folder to sync</translation>
