@@ -19,37 +19,37 @@
 
 #include <memory>
 
-namespace Ui {
+namespace Ui
+{
 class ViewLoadingSceneUI;
 }
 
-namespace Ui {
+namespace Ui
+{
 class ViewLoadingSceneUI;
 }
 
-template <class DelegateWidget, class ViewType>
+template<class DelegateWidget, class ViewType>
 class LoadingSceneView;
 
-class LoadingSceneDelegateBase : public QStyledItemDelegate
+class LoadingSceneDelegateBase: public QStyledItemDelegate
 {
     Q_OBJECT
 
     const double MIN_OPACITY = 0.3;
     const double OPACITY_STEPS = 0.05;
     const double MAX_OPACITY = 1.0;
-    const int    UPDATE_TIMER = 100;
+    const int UPDATE_TIMER = 100;
 
 public:
-    explicit LoadingSceneDelegateBase(QAbstractItemView* view) :
+    explicit LoadingSceneDelegateBase(QAbstractItemView* view):
         QStyledItemDelegate(view),
         mView(view),
         mOpacitySteps(OPACITY_STEPS),
         mOpacity(MAX_OPACITY)
-    {
-    }
-    QWidget *createEditor(QWidget *,
-                          const QStyleOptionViewItem &,
-                          const QModelIndex &) const override
+    {}
+
+    QWidget* createEditor(QWidget*, const QStyleOptionViewItem&, const QModelIndex&) const override
     {
         return nullptr;
     }
@@ -69,14 +69,20 @@ public:
 protected:
     inline void updateTimer(bool state)
     {
-        if(state)
+        if (state)
         {
-            connect(&mTimer, &QTimer::timeout, this, &LoadingSceneDelegateBase::onLoadingTimerTimeout);
+            connect(&mTimer,
+                    &QTimer::timeout,
+                    this,
+                    &LoadingSceneDelegateBase::onLoadingTimerTimeout);
             mTimer.start(UPDATE_TIMER);
         }
         else
         {
-            disconnect(&mTimer, &QTimer::timeout, this, &LoadingSceneDelegateBase::onLoadingTimerTimeout);
+            disconnect(&mTimer,
+                       &QTimer::timeout,
+                       this,
+                       &LoadingSceneDelegateBase::onLoadingTimerTimeout);
             mTimer.stop();
         }
     }
@@ -92,18 +98,19 @@ protected:
     }
 
 private slots:
+
     void onLoadingTimerTimeout()
     {
         QPointer<LoadingSceneDelegateBase> currentClass(this);
 
-        if(currentClass && mView)
+        if (currentClass && mView)
         {
-            if(mOpacity < MIN_OPACITY)
+            if (mOpacity < MIN_OPACITY)
             {
                 mOpacitySteps = OPACITY_STEPS;
                 mOpacity = MIN_OPACITY;
             }
-            else if(mOpacity > MAX_OPACITY)
+            else if (mOpacity > MAX_OPACITY)
             {
                 mOpacitySteps = -OPACITY_STEPS;
                 mOpacity = MAX_OPACITY;
@@ -124,11 +131,12 @@ private:
     double mOpacity;
 };
 
-template <class DelegateWidget>
-class LoadingSceneDelegate : public LoadingSceneDelegateBase
+template<class DelegateWidget>
+class LoadingSceneDelegate: public LoadingSceneDelegateBase
 {
 public:
-    explicit LoadingSceneDelegate(QAbstractItemView* view) : LoadingSceneDelegateBase(view)
+    explicit LoadingSceneDelegate(QAbstractItemView* view):
+        LoadingSceneDelegateBase(view)
     {}
 
     inline QSize sizeHint(const QStyleOptionViewItem&, const QModelIndex&) const override
@@ -137,15 +145,17 @@ public:
     }
 
 protected:
-    inline void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override
+    inline void paint(QPainter* painter,
+                      const QStyleOptionViewItem& option,
+                      const QModelIndex& index) const override
     {
-        auto pos (option.rect.topLeft());
-        auto width (option.rect.width());
-        auto height (option.rect.height());
+        auto pos(option.rect.topLeft());
+        auto width(option.rect.width());
+        auto height(option.rect.height());
 
-        auto loadingItem = getLoadingWidget(index,option.rect.size());
+        auto loadingItem = getLoadingWidget(index, option.rect.size());
 
-        if(!loadingItem)
+        if (!loadingItem)
         {
             return;
         }
@@ -166,24 +176,24 @@ protected:
 
         painter->setOpacity(getOpacity());
         painter->translate(pos);
-        loadingItem->render(painter,QPoint(0,0), QRegion(0, 0, width, height));
+        loadingItem->render(painter, QPoint(0, 0), QRegion(0, 0, width, height));
 
         painter->restore();
     }
 
 private:
-    inline DelegateWidget* getLoadingWidget(const QModelIndex &index, const QSize &size) const
+    inline DelegateWidget* getLoadingWidget(const QModelIndex& index, const QSize& size) const
     {
         auto nbRowsMaxInView(1);
-        if(size.height() > 0)
+        if (size.height() > 0)
         {
             nbRowsMaxInView = getView()->height() / size.height() + 1;
         }
-        auto row (index.row() % nbRowsMaxInView);
+        auto row(index.row() % nbRowsMaxInView);
 
         DelegateWidget* item(nullptr);
 
-        if(row >= mLoadingItems.size())
+        if (row >= mLoadingItems.size())
         {
             item = new DelegateWidget(getView());
             TokenParserWidgetManager::instance()->applyCurrentTheme(item);
@@ -198,7 +208,7 @@ private:
         return item;
     }
 
-    //These items are removed when the view is removed
+    // These items are removed when the view is removed
     mutable QVector<DelegateWidget*> mLoadingItems;
 };
 
@@ -221,7 +231,7 @@ Q_DECLARE_METATYPE(MessageInfo)
 
 class ViewLoadingMessage;
 
-class LoadingSceneMessageHandler : public QObject
+class LoadingSceneMessageHandler: public QObject
 {
     Q_OBJECT
 
@@ -243,7 +253,7 @@ signals:
     void buttonPressed(MessageInfo::ButtonType);
 
 protected:
-    bool eventFilter(QObject *watched, QEvent *event) override;
+    bool eventFilter(QObject* watched, QEvent* event) override;
 
 private slots:
     void onButtonPressed(int buttonType);
@@ -261,7 +271,7 @@ private:
     bool mLoadingViewVisible = false;
 };
 
-class ViewLoadingSceneBase : public QObject
+class ViewLoadingSceneBase: public QObject
 {
     Q_OBJECT
 
@@ -282,7 +292,7 @@ public:
     void hide();
 
 protected:
-    bool eventFilter(QObject *watched, QEvent *event) override;
+    bool eventFilter(QObject* watched, QEvent* event) override;
     virtual void showLoadingScene();
     virtual void showViewCopy();
     virtual void hideLoadingScene();
@@ -308,6 +318,7 @@ protected:
         COPY_VIEW,
         LOADING_VIEW
     };
+
     LoadingViewType mLoadingViewSet;
     LoadingSceneMessageHandler* mMessageHandler;
 
@@ -320,8 +331,8 @@ private slots:
     }
 };
 
-template <class DelegateWidget, class ViewType>
-class ViewLoadingScene : public ViewLoadingSceneBase
+template<class DelegateWidget, class ViewType>
+class ViewLoadingScene: public ViewLoadingSceneBase
 {
     const uint8_t MAX_LOADING_ROWS = 50;
     const int MIN_TIME_DISPLAYING_VIEW = 350;
@@ -339,11 +350,11 @@ public:
 
     ~ViewLoadingScene()
     {
-        if(mLoadingDelegate)
+        if (mLoadingDelegate)
         {
             mLoadingDelegate->deleteLater();
         }
-        if(mLoadingModel)
+        if (mLoadingModel)
         {
             mLoadingModel->deleteLater();
         }
@@ -375,7 +386,7 @@ public:
         mViewModel = view->model();
 
         auto parentWidget = mView->parentWidget();
-        if(parentWidget && parentWidget->layout())
+        if (parentWidget && parentWidget->layout())
         {
             mViewLayout = parentWidget->layout();
         }
@@ -388,26 +399,28 @@ public:
             return;
         }
 
-        if(state && isLoadingViewSet())
+        if (state && isLoadingViewSet())
         {
             return;
         }
-        else if(!state && !isLoadingViewSet())
+        else if (!state && !isLoadingViewSet())
         {
-            if(mDelayTimerToShow.isActive())
+            if (mDelayTimerToShow.isActive())
             {
                 mDelayTimerToShow.stop();
             }
             return;
         }
 
-        //Don´t close the loading view if we need interaction from the user (like clicking ok or stop...)
-        if(!state && getLoadingMessageHandler() && getLoadingMessageHandler()->needsAnswerFromUser())
+        // Don´t close the loading view if we need interaction from the user (like clicking ok or
+        // stop...)
+        if (!state && getLoadingMessageHandler() &&
+            getLoadingMessageHandler()->needsAnswerFromUser())
         {
             return;
         }
 
-        if(!mLoadingModel)
+        if (!mLoadingModel)
         {
             mLoadingView = new ViewType(mLoadingSceneUI);
             mLoadingView->setObjectName(QString::fromStdString("Loading View"));
@@ -425,12 +438,12 @@ public:
             mLoadingView->setItemDelegate(mLoadingDelegate);
         }
 
-        if(state)
+        if (state)
         {
             mDelayTimerToHide.stop();
-            if(mDelayTimeToShowInMs > 0)
+            if (mDelayTimeToShowInMs > 0)
             {
-                if(!mDelayTimerToShow.isActive())
+                if (!mDelayTimerToShow.isActive())
                 {
                     mViewPixmap = getTopParent()->grab();
                     mDelayTimerToShow.start(mDelayTimeToShowInMs);
@@ -444,7 +457,7 @@ public:
         }
         else
         {
-            if(mDelayTimerToShow.isActive())
+            if (mDelayTimerToShow.isActive())
             {
                 mDelayTimerToShow.stop();
             }
@@ -453,10 +466,9 @@ public:
             mView->header()->blockSignals(false);
             mView->setViewPortEventsBlocked(false);
 
-            if(mLoadingViewSet == LoadingViewType::LOADING_VIEW)
+            if (mLoadingViewSet == LoadingViewType::LOADING_VIEW)
             {
-                qint64 timeFromStart(QDateTime::currentMSecsSinceEpoch()
-                                     - mStartTime);
+                qint64 timeFromStart(QDateTime::currentMSecsSinceEpoch() - mStartTime);
                 int delay = std::max(0, MIN_TIME_DISPLAYING_VIEW - static_cast<int>(timeFromStart));
                 delay > 0 ? mDelayTimerToHide.start(delay) : hideLoadingScene();
             }
@@ -477,7 +489,7 @@ public:
         mLoadingModel->setRowCount(0);
         mViewLayout->replaceWidget(mLoadingSceneUI, mView);
         hide();
-        if(mWasFocused)
+        if (mWasFocused)
         {
             mView->setFocus();
         }
@@ -489,7 +501,7 @@ public:
 protected:
     QWidget* getTopParent() override
     {
-        if(!mTopParent)
+        if (!mTopParent)
         {
             mTopParent = mView->window();
             mTopParent->installEventFilter(this);
@@ -520,21 +532,25 @@ private:
 
         int visibleRows(0);
 
-        if(mView->isVisible())
+        if (mView->isVisible())
         {
             mWasFocused = mView->hasFocus();
-            int delegateHeight(mLoadingDelegate->sizeHint(QStyleOptionViewItem(), QModelIndex()).height());
+            int delegateHeight(
+                mLoadingDelegate->sizeHint(QStyleOptionViewItem(), QModelIndex()).height());
 
             mView->updateGeometry();
-            visibleRows = mView->size().height()/delegateHeight + 1;
+            visibleRows = mView->size().height() / delegateHeight + 1;
 
-            //If the vertical header is visible, add one row to the loading model to show the vertical scroll
-            if(mViewModel)
+            // If the vertical header is visible, add one row to the loading model to show the
+            // vertical scroll
+            if (mViewModel)
             {
-                mView->verticalScrollBar()->isVisible() ? mLoadingView->verticalScrollBar()->show() : mLoadingView->verticalScrollBar()->hide();
+                mView->verticalScrollBar()->isVisible() ?
+                    mLoadingView->verticalScrollBar()->show() :
+                    mLoadingView->verticalScrollBar()->hide();
             }
 
-            if(visibleRows > MAX_LOADING_ROWS)
+            if (visibleRows > MAX_LOADING_ROWS)
             {
                 visibleRows = MAX_LOADING_ROWS;
             }
@@ -544,7 +560,7 @@ private:
             visibleRows = MAX_LOADING_ROWS;
         }
 
-        for(int row = 0; row < visibleRows; ++row)
+        for (int row = 0; row < visibleRows; ++row)
         {
             mLoadingModel->appendRow(new QStandardItem());
         }
@@ -573,10 +589,11 @@ private:
 };
 
 template<class DelegateWidget, class ViewType>
-class LoadingSceneView : public ViewType
+class LoadingSceneView: public ViewType
 {
 public:
-    LoadingSceneView(QWidget* parent): ViewType(parent)
+    LoadingSceneView(QWidget* parent):
+        ViewType(parent)
     {
         mLoadingView.setView(this);
     }
@@ -602,9 +619,9 @@ public:
     }
 
 protected:
-    bool viewportEvent(QEvent *event) override
+    bool viewportEvent(QEvent* event) override
     {
-        if(mViewPortEventsBlocked)
+        if (mViewPortEventsBlocked)
         {
             event->accept();
             return true;

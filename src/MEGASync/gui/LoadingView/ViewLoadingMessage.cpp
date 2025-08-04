@@ -1,5 +1,6 @@
 #include "ViewLoadingMessage.h"
 
+#include "BlurredShadowEffect.h"
 #include "ui_ViewLoadingMessage.h"
 #include "ViewLoadingScene.h"
 
@@ -15,6 +16,11 @@ ViewLoadingMessage::ViewLoadingMessage(QWidget* parent):
     setAttribute(Qt::WA_DeleteOnClose);
 
     connect(ui->bButton, &QPushButton::clicked, this, &ViewLoadingMessage::onButtonPressed);
+
+    setProperty("TOKENIZED", true);
+
+    // Shadow
+    setGraphicsEffect(CreateBlurredShadowEffect(QColor(0, 0, 0, 90), 30, 0, 25));
 }
 
 ViewLoadingMessage::~ViewLoadingMessage()

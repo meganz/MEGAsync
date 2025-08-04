@@ -1,5 +1,6 @@
 #include "ViewLoadingScene.h"
 
+#include "TokenParserWidgetManager.h"
 #include "ui_ViewLoadingScene.h"
 #include "ViewLoadingMessage.h"
 
@@ -7,19 +8,25 @@
 
 #include <memory>
 
-ViewLoadingSceneBase::ViewLoadingSceneBase() :
-      mDelayTimeToShowInMs(0)
-    , mLoadingView(nullptr)
-    , ui(new Ui::ViewLoadingSceneUI())
-    , mTopParent(nullptr)
-    , mLoadingViewSet(LoadingViewType::NONE)
-    , mMessageHandler(nullptr)
+ViewLoadingSceneBase::ViewLoadingSceneBase():
+    mDelayTimeToShowInMs(0),
+    mLoadingView(nullptr),
+    ui(new Ui::ViewLoadingSceneUI()),
+    mTopParent(nullptr),
+    mLoadingViewSet(LoadingViewType::NONE),
+    mMessageHandler(nullptr)
 {
     mDelayTimerToShow.setSingleShot(true);
     mDelayTimerToHide.setSingleShot(true);
 
-    connect(&mDelayTimerToShow, &QTimer::timeout, this, &ViewLoadingSceneBase::onDelayTimerToShowTimeout);
-    connect(&mDelayTimerToHide, &QTimer::timeout, this, &ViewLoadingSceneBase::onDelayTimerToHideTimeout);
+    connect(&mDelayTimerToShow,
+            &QTimer::timeout,
+            this,
+            &ViewLoadingSceneBase::onDelayTimerToShowTimeout);
+    connect(&mDelayTimerToHide,
+            &QTimer::timeout,
+            this,
+            &ViewLoadingSceneBase::onDelayTimerToHideTimeout);
 
     mLoadingSceneUI = new QWidget();
     mMessageHandler = new LoadingSceneMessageHandler(ui, mLoadingSceneUI);
@@ -43,16 +50,16 @@ void ViewLoadingSceneBase::hide()
     mMessageHandler->hideLoadingMessage();
 }
 
-bool ViewLoadingSceneBase::eventFilter(QObject *watched, QEvent *event)
+bool ViewLoadingSceneBase::eventFilter(QObject* watched, QEvent* event)
 {
-    if(event->type() == QEvent::Resize)
+    if (event->type() == QEvent::Resize)
     {
         ui->swLoadingViewContainer->resize(mLoadingSceneUI->size());
-        ui->swLoadingViewContainer->move(0,0);
+        ui->swLoadingViewContainer->move(0, 0);
 
-        if(mLoadingViewSet == LoadingViewType::COPY_VIEW)
+        if (mLoadingViewSet == LoadingViewType::COPY_VIEW)
         {
-            ui->wParentViewCopy->setGeometry(QRect(QPoint(0,0), getTopParent()->size()));
+            ui->wParentViewCopy->setGeometry(QRect(QPoint(0, 0), getTopParent()->size()));
         }
     }
 
@@ -67,15 +74,15 @@ void ViewLoadingSceneBase::onDelayTimerToShowTimeout()
 
 void ViewLoadingSceneBase::hideLoadingScene()
 {
-    if(mLoadingViewSet == LoadingViewType::COPY_VIEW)
+    if (mLoadingViewSet == LoadingViewType::COPY_VIEW)
     {
         ui->wParentViewCopy->hide();
     }
 }
 
-QWidget *ViewLoadingSceneBase::getTopParent()
+QWidget* ViewLoadingSceneBase::getTopParent()
 {
-    if(ui->wParentViewCopy->parentWidget() != mTopParent)
+    if (ui->wParentViewCopy->parentWidget() != mTopParent)
     {
         ui->wParentViewCopy->setParent(mTopParent);
     }
@@ -87,7 +94,7 @@ QWidget *ViewLoadingSceneBase::getTopParent()
 
 void ViewLoadingSceneBase::showViewCopy()
 {
-    ui->wParentViewCopy->setGeometry(QRect(QPoint(0,0), getTopParent()->size()));
+    ui->wParentViewCopy->setGeometry(QRect(QPoint(0, 0), getTopParent()->size()));
     ui->lParentViewCopyLabel->setPixmap(mViewPixmap);
     ui->wParentViewCopy->show();
     ui->wParentViewCopy->raise();
@@ -130,9 +137,9 @@ void LoadingSceneMessageHandler::hideLoadingMessage()
     setLoadingViewVisible(false);
 }
 
-void LoadingSceneMessageHandler::setTopParent(QWidget *widget)
+void LoadingSceneMessageHandler::setTopParent(QWidget* widget)
 {
-    if(!mTopParent)
+    if (!mTopParent)
     {
         mTopParent = widget;
         mTopParent->installEventFilter(this);
@@ -149,12 +156,12 @@ void LoadingSceneMessageHandler::updateMessage(std::shared_ptr<MessageInfo> info
     }
 }
 
-bool LoadingSceneMessageHandler::eventFilter(QObject *watched, QEvent *event)
+bool LoadingSceneMessageHandler::eventFilter(QObject* watched, QEvent* event)
 {
     if (event->type() == QEvent::KeyRelease && mLoadingMessage)
     {
         auto keyEvent = dynamic_cast<QKeyEvent*>(event);
-        if(keyEvent && keyEvent->key() == Qt::Key_Return)
+        if (keyEvent && keyEvent->key() == Qt::Key_Return)
         {
             onButtonPressed(mLoadingMessage->getButtonType());
         }
@@ -189,6 +196,10 @@ void LoadingSceneMessageHandler::createLoadingMessage()
     if (!mLoadingMessage)
     {
         mLoadingMessage = new ViewLoadingMessage(mTopParent ? mTopParent : mViewBase);
+        TokenParserWidgetManager::instance()->applyCurrentTheme(mLoadingMessage);
+        // Temporary -> Delete when all moudules using this loading message are tokenized
+        TokenParserWidgetManager::instance()->registerWidgetForTheming(mLoadingMessage);
+        TokenParserWidgetManager::instance()->polish(mLoadingMessage);
         mLoadingMessage->hide();
         connect(mLoadingMessage,
                 &ViewLoadingMessage::buttonPressed,

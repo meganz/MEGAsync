@@ -23,7 +23,53 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">ViewLoadingMessage
+{
+background-color: rgba(0,0,0,0.50); /*colorToken.background-blur*/
+}
+
+#wMessageContainer
+{
+border-radius: 10px;
+background-color: #FFFFFF; /*colorToken.page-background*/
+}
+
+#lMessageLabel
+{
+  font-size:16px;
+  line-height: 30px;
+  font-weight: 600;
+  color: #666666;
+}
+
+#lProgressLabel
+{
+  font-size:12px;
+  line-height: 18px;
+  font-weight: 600;
+  color: #303233;
+}
+
+QPushButton 
+{ 
+font-size: 14px; font-weight:400;
+line-height: 20px;
+padding-top : 5px; padding-bottom : 8px; padding-left : 10px; padding-right : 10px;
+background-color : #AAAAAA;
+border-style: solid; border-width: 1px; border-color: #d7d6d5; border-radius: 3px;
+color: #FFFFFF;
+}
+
+QProgressBar 
+{
+     border: none;
+     background-color: rgba(0,0,0,0.10);
+}
+
+QProgressBar::chunk 
+{
+    background-color: #04101E;
+}</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
@@ -43,9 +89,6 @@
    </property>
    <item row="0" column="0">
     <widget class="QWidget" name="wContainer" native="true">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgba(0,0,0,0.20);</string>
-     </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="1">
        <spacer name="verticalSpacer_3">
@@ -86,56 +129,6 @@
           <width>300</width>
           <height>200</height>
          </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">#wMessageContainer
-{
-border: 1px solid white;
-border-radius: 10px;
-background-color: white;
-}
-
-QLabel
-{
-  background-color: white;
-}
-
-#lMessageLabel
-{
-  font-size:16px;
-  line-height: 30px;
-  font-weight: 600;
-  color: #666666;
-}
-
-#lProgressLabel
-{
-  font-size:12px;
-  line-height: 18px;
-  font-weight: 600;
-  color: #303233;
-}
-
-QPushButton 
-{ 
-font-size: 14px; font-weight:400;
-line-height: 20px;
-padding-top : 5px; padding-bottom : 8px; padding-left : 10px; padding-right : 10px;
-background-color : #AAAAAA;
-border-style: solid; border-width: 1px; border-color: #d7d6d5; border-radius: 3px;
-color: #FFFFFF;
-}
-
-QProgressBar 
-{
-     border: none;
-     background-color: rgba(0,0,0,0.10);
-}
-
-QProgressBar::chunk 
-{
-    background-color: #04101E;
-}</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
          <property name="spacing">

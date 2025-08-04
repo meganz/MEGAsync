@@ -7,12 +7,13 @@ QGraphicsEffect* CreateBlurredShadowEffect(qreal radius)
     return CreateBlurredShadowEffect(QColor(0, 0, 0, 38), radius);
 }
 
-QGraphicsEffect* CreateBlurredShadowEffect(const QColor& shadowColor, qreal radius)
+QGraphicsEffect*
+    CreateBlurredShadowEffect(const QColor& shadowColor, qreal radius, int XOffset, int YOffset)
 {
     QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect;
     effect->setBlurRadius(radius);
-    effect->setXOffset(0);
-    effect->setYOffset(1);
+    effect->setXOffset(XOffset);
+    effect->setYOffset(YOffset);
     effect->setColor(shadowColor);
     return effect;
 }

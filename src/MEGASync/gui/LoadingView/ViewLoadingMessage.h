@@ -10,7 +10,7 @@ class ViewLoadingMessage;
 
 struct MessageInfo;
 
-class ViewLoadingMessage : public QWidget
+class ViewLoadingMessage: public QWidget
 {
     Q_OBJECT
 
