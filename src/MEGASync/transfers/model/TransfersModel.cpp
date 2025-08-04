@@ -2,6 +2,7 @@
 
 #include "EventUpdater.h"
 #include "mega/types.h"
+#include "MegaApiSynchronizedRequest.h"
 #include "MegaApplication.h"
 #include "MegaTransferView.h"
 #include "MessageDialogOpener.h"
@@ -9,6 +10,7 @@
 #include "PowerOptions.h"
 #include "SettingsDialog.h"
 #include "StatsEventHandler.h"
+#include "ThreadPool.h"
 #include "TransferItem.h"
 #include "TransferMetaData.h"
 #include "Utilities.h"
@@ -882,8 +884,7 @@ TransfersModel::TransfersModel():
     mUiBlockedByCounter(0),
     mCancelledFrom(nullptr),
     mSyncsInRowsToCancel(false),
-    mIgnoreMoveSignal(false),
-    mInverseMoveSignal(false)
+    mIgnoreMoveSignal(false)
 {
     qRegisterMetaType<QList<QPersistentModelIndex>>("QList<QPersistentModelIndex>");
     qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
@@ -2750,13 +2751,10 @@ void TransfersModel::ignoreMoveRowsSignal(bool state)
     mIgnoreMoveSignal = state;
 }
 
-void TransfersModel::inverseMoveRowsSignal(bool state)
-{
-    mInverseMoveSignal = state;
-}
-
-bool TransfersModel::moveTransferPriority(const QModelIndex &sourceParent, const QList<int>& rows,
-                              const QModelIndex &destinationParent, int destinationChild)
+bool TransfersModel::moveTransferPriorityByDrag(const QModelIndex& sourceParent,
+                                                const QList<int>& rows,
+                                                const QModelIndex& destinationParent,
+                                                int destinationChild)
 {
     bool result(false);
 
@@ -2767,8 +2765,8 @@ bool TransfersModel::moveTransferPriority(const QModelIndex &sourceParent, const
             //TODO MOVE TO TOP THE SECOND ITEM
             int lastRow (sourceRow);
 
-            if (sourceParent == destinationParent
-                    && (destinationChild < sourceRow || destinationChild > lastRow))
+            if (sourceParent == destinationParent &&
+                (destinationChild < sourceRow || destinationChild > lastRow))
             {
                 // To keep order, do from first to last if destination is before first,
                 // and from last to first if destination is after last.
@@ -2813,16 +2811,11 @@ bool TransfersModel::moveTransferPriority(const QModelIndex &sourceParent, const
                         if(target)
                         {
                             mMegaApi->moveTransferBeforeByTag(tag, target->mTag);
-
-                            if(!mIgnoreMoveSignal && mInverseMoveSignal)
-                            {
-                                emit rowsAboutToBeMoved(target->mTag);
-                            }
                         }
                     }
 
-                    if(!mIgnoreMoveSignal && !mInverseMoveSignal)
-                    {  
+                    if (!mIgnoreMoveSignal)
+                    {
                         emit rowsAboutToBeMoved(tag);
                     }
                 }
@@ -2833,6 +2826,83 @@ bool TransfersModel::moveTransferPriority(const QModelIndex &sourceParent, const
     }
 
     return result;
+}
+
+void TransfersModel::moveTransferPriorityUp(const QModelIndexList& sourceIndexes)
+{
+    moveTransferPriority(sourceIndexes,
+                         true,
+                         [this](QExplicitlySharedDataPointer<TransferData> transfer,
+                                mega::MegaRequestListener* listener)
+                         {
+                             mMegaApi->moveTransferUpByTag(transfer->mTag, listener);
+                         });
+}
+
+void TransfersModel::moveTransferPriorityDown(QModelIndexList sourceIndexes)
+{
+    moveTransferPriority(sourceIndexes,
+                         false,
+                         [this](QExplicitlySharedDataPointer<TransferData> transfer,
+                                mega::MegaRequestListener* listener)
+                         {
+                             mMegaApi->moveTransferDownByTag(transfer->mTag, listener);
+                         });
+}
+
+void TransfersModel::moveTransferPriorityToTop(QModelIndexList sourceIndexes)
+{
+    moveTransferPriority(sourceIndexes,
+                         true,
+                         [this](QExplicitlySharedDataPointer<TransferData> transfer,
+                                mega::MegaRequestListener* listener)
+                         {
+                             mMegaApi->moveTransferToFirstByTag(transfer->mTag, listener);
+                         });
+}
+
+void TransfersModel::moveTransferPriorityToBottom(QModelIndexList sourceIndexes)
+{
+    moveTransferPriority(sourceIndexes,
+                         false,
+                         [this](QExplicitlySharedDataPointer<TransferData> transfer,
+                                mega::MegaRequestListener* listener)
+                         {
+                             mMegaApi->moveTransferToLastByTag(transfer->mTag, listener);
+                         });
+}
+
+void TransfersModel::moveTransferPriority(
+    const QModelIndexList& sourceIndexes,
+    bool up,
+    std::function<void(QExplicitlySharedDataPointer<TransferData>, mega::MegaRequestListener*)>
+        func)
+{
+    ThreadPoolSingleton::getInstance()->push(
+        [this, sourceIndexes, up, func]()
+        {
+            auto auxList(sourceIndexes);
+            std::sort(auxList.begin(),
+                      auxList.end(),
+                      [this, up](QModelIndex check1, QModelIndex check2)
+                      {
+                          auto transfer1(getTransfer(check1.row()));
+                          auto transfer2(getTransfer(check2.row()));
+                          return up ? transfer1->mPriority < transfer2->mPriority :
+                                      transfer1->mPriority > transfer2->mPriority;
+                      });
+
+            for (const auto index: auxList)
+            {
+                auto transfer(getTransfer(index.row()));
+                MegaApiSynchronizedRequest::runRequestLambda(func, mMegaApi, transfer);
+
+                if (!mIgnoreMoveSignal)
+                {
+                    emit rowsAboutToBeMoved(transfer->mTag);
+                }
+            }
+        });
 }
 
 void TransfersModel::resetModel()
@@ -2921,7 +2991,7 @@ bool TransfersModel::dropMimeData(const QMimeData* data, Qt::DropAction action, 
     {
         QList<int> rows = getDragAndDropRows(data);
 
-        moveTransferPriority(parent, rows, parent, destRow);
+        moveTransferPriorityByDrag(parent, rows, parent, destRow);
     }
 
     // Return false to avoid row deletion...dirty!

@@ -175,6 +175,17 @@ void TransfersManagerSortFilterProxyModel::setColumnManager(
     mColumnManager = newColumnManager;
 }
 
+QModelIndexList
+    TransfersManagerSortFilterProxyModel::mapToSourceList(const QModelIndexList& proxyIndexes)
+{
+    QModelIndexList sourceIndexes;
+    for (auto proxyIndex: proxyIndexes)
+    {
+        sourceIndexes.append(mapToSource(proxyIndex));
+    }
+    return sourceIndexes;
+}
+
 void TransfersManagerSortFilterProxyModel::setFilters(const TransferData::TransferTypes transferTypes,
                                                const TransferData::TransferStates transferStates,
                                                const Utilities::FileTypes fileTypes)
@@ -532,30 +543,36 @@ bool TransfersManagerSortFilterProxyModel::dropMimeData(const QMimeData *data, Q
             QModelIndex proxyIndex = index(destRow, column,parent);
             auto sourceIndex = mapToSource(proxyIndex);
 
-            sourceM->moveTransferPriority(parent,rows,parent, sourceIndex.row());
+            sourceM->moveTransferPriorityByDrag(parent, rows, parent, sourceIndex.row());
 
             sourceM->ignoreMoveRowsSignal(true);
-            sourceM->moveTransferPriority(parent, QList<int>() << sourceIndex.row(), parent, rows.first());
+            sourceM->moveTransferPriorityByDrag(parent,
+                                                QList<int>() << sourceIndex.row(),
+                                                parent,
+                                                rows.first());
             sourceM->ignoreMoveRowsSignal(false);
         }
         else if(destRow == 0)
         {
             QModelIndex proxyIndex = index(destRow, column,parent);
             auto sourceIndex = mapToSource(proxyIndex);
-            sourceM->moveTransferPriority(parent, rows , parent, sourceIndex.row());
+            sourceM->moveTransferPriorityByDrag(parent, rows, parent, sourceIndex.row());
         }
         else
         {
             QModelIndex proxyIndex = index(destRow, column,parent);
             auto sourceIndex = mapToSource(proxyIndex);
-            sourceM->moveTransferPriority(parent, rows , parent, sourceIndex.row());
+            sourceM->moveTransferPriorityByDrag(parent, rows, parent, sourceIndex.row());
 
             if(mSortCriterion != SortCriterion::PRIORITY)
             {
                 sourceM->ignoreMoveRowsSignal(true);
                 auto previousProxyIndex = index(destRow -1, column, parent);
                 auto previousSourceIndex = mapToSource(previousProxyIndex);
-                sourceM->moveTransferPriority(parent, QList<int>() << previousSourceIndex.row() , parent, rows.first());
+                sourceM->moveTransferPriorityByDrag(parent,
+                                                    QList<int>() << previousSourceIndex.row(),
+                                                    parent,
+                                                    rows.first());
                 sourceM->ignoreMoveRowsSignal(false);
             }
         }
@@ -672,8 +689,10 @@ bool TransfersManagerSortFilterProxyModel::moveRows(const QModelIndex &proxyPare
             destRow = mapToSource(index(destinationChild, 0, destinationParent)).row();
         }
 
-        moveOk = sourceM->moveTransferPriority(sourceIndex.parent(), QList<int>() << sourceIndex.row(),
-                                         sourceIndex.parent(), destRow);
+        moveOk = sourceM->moveTransferPriorityByDrag(sourceIndex.parent(),
+                                                     QList<int>() << sourceIndex.row(),
+                                                     sourceIndex.parent(),
+                                                     destRow);
         row++;
     }
 
