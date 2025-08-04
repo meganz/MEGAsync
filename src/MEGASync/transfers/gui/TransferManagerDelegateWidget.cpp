@@ -345,7 +345,7 @@ void TransferManagerDelegateWidget::setFileNameAndType()
     QIcon icon;
     // File type icon
     icon = Utilities::getCachedPixmap(
-        Utilities::getExtensionPixmapName(getData()->mFilename, QLatin1String("medium")));
+        Utilities::getExtensionPixmapName(getData()->mFilename, Utilities::AttributeType::medium));
     mUi->tFileType->setIcon(icon);
 
     // File name

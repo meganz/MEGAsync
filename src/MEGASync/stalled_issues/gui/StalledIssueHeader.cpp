@@ -454,7 +454,7 @@ void StalledIssueHeader::refreshUi()
     {
         fileTypeIcon = Utilities::getCachedPixmap(
             Utilities::getExtensionPixmapName(getData().consultData()->getFileName(false),
-                                              QLatin1String("medium")));
+                                              Utilities::AttributeType::medium));
     }
     else
     {

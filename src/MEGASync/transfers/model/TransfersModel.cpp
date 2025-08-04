@@ -246,7 +246,7 @@ void TransferThread::onTransferStart(MegaApi *, MegaTransfer *transfer)
             if(!isTemp)
             {
                 QMutexLocker counterLock(&mCountersMutex);
-                auto fileType = Utilities::getFileType(QString::fromStdString(transfer->getFileName()), QString());
+                auto fileType = Utilities::getFileType(QString::fromStdString(transfer->getFileName()), Utilities::AttributeType::NONE);
                 mTransfersCount.transfersByType[fileType]++;
 
                 if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
@@ -382,7 +382,7 @@ void TransferThread::onTransferFinish(MegaApi* megaApi, MegaTransfer *transfer, 
                     QMutexLocker counterLock(&mCountersMutex);
                     auto fileType =
                         Utilities::getFileType(QString::fromStdString(transfer->getFileName()),
-                                               QString());
+                                               Utilities::AttributeType::NONE);
 
                     if (transfer->getState() == MegaTransfer::STATE_CANCELLED ||
                         (transfer->getState() == MegaTransfer::STATE_FAILED &&

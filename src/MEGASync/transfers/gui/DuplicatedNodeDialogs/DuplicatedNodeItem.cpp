@@ -83,7 +83,7 @@ void DuplicatedNodeItem::fillUi()
     ui->lNodeName->setText(nodeName);
 
     QIcon icon = isFile() ?
-                     QIcon(Utilities::getExtensionPixmapName(nodeName, QLatin1String("medium"))) :
+                     QIcon(Utilities::getExtensionPixmapName(nodeName, Utilities::AttributeType::medium)) :
                      QIcon(QLatin1String(":/images/icons/folder/medium-folder.png"));
 
     ui->lIcon->setPixmap(icon.pixmap(ui->lIcon->size()));

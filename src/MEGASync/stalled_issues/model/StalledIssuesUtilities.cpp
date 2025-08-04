@@ -63,7 +63,7 @@ QIcon StalledIssuesUtilities::getIcon(bool isFile, const QFileInfo& fileInfo, bo
         else
         {
             fileTypeIcon = Utilities::getCachedPixmap(
-                Utilities::getExtensionPixmapName(fileInfo.fileName(), QLatin1String("medium")));
+                Utilities::getExtensionPixmapName(fileInfo.fileName(), Utilities::AttributeType::medium));
         }
     }
     else

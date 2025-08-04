@@ -51,7 +51,7 @@ void ImportListWidgetItem::updateGui()
 
     QIcon typeIcon = Utilities::getExtensionPixmap(
         isFolder ? fileName.append(QString::fromUtf8(".folder")) : fileName,
-        QLatin1String("small"));
+        Utilities::AttributeType::small);
 
 #ifdef __APPLE__
     ui->lImage->setIcon(typeIcon);

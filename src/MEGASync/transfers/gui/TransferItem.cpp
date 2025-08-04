@@ -75,7 +75,7 @@ void TransferData::update(mega::MegaTransfer* transfer)
             mType |= TransferData::TRANSFER_SYNC;
         }
 
-        mFileType = Utilities::getFileType(mFilename, QString());
+        mFileType = Utilities::getFileType(mFilename, Utilities::AttributeType::NONE);
 
         //Update priority before setState as the setState changes the priority
         mPriority = transfer->getPriority();

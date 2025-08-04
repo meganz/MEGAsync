@@ -326,9 +326,19 @@ struct TimeInterval
     bool useSecondPrecision;
 };
 
-class Utilities
+class Utilities : public QObject
 {
+    Q_OBJECT
+
 public:
+    enum class AttributeType
+    {
+        NONE,
+        small,
+        medium
+    };
+    Q_ENUM(AttributeType)
+
     enum class FileType
     {
         TYPE_OTHER    = 0x01,
@@ -478,10 +488,10 @@ public:
     static qreal getDevicePixelRatio();
 
     static QIcon getCachedPixmap(QString fileName);
-    static QIcon getExtensionPixmap(QString fileName, QString attribute);
-    static QString getExtensionPixmapName(QString fileName, QString attribute);
+    static QIcon getExtensionPixmap(QString fileName, AttributeType attribute);
+    static QString getExtensionPixmapName(QString fileName, AttributeType attribute);
     static void clearIconCache();
-    static FileType getFileType(QString fileName, QString prefix);
+    static FileType getFileType(QString fileName, AttributeType prefix);
 
     static long long getSystemsAvailableMemory();
 

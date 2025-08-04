@@ -200,57 +200,57 @@ void Utilities::initializeExtensions()
 
 void Utilities::initializeFileTypes()
 {
-    fileTypes[getExtensionPixmapName(QLatin1String("a.wav"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.wav"), AttributeType::NONE)]
             = FileType::TYPE_AUDIO;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.mkv"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.mkv"), AttributeType::NONE)]
             = FileType::TYPE_VIDEO;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.tar"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.tar"), AttributeType::NONE)]
             = FileType::TYPE_ARCHIVE;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.torrent"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.torrent"), AttributeType::NONE)]
             = FileType::TYPE_ARCHIVE;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.dmg"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.dmg"), AttributeType::NONE)]
             = FileType::TYPE_ARCHIVE;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.xd"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.xd"), AttributeType::NONE)]
             = FileType::TYPE_ARCHIVE;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.sketch"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.sketch"), AttributeType::NONE)]
             = FileType::TYPE_ARCHIVE;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.txt"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.txt"), AttributeType::NONE)]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.odt"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.odt"), AttributeType::NONE)]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.pdf"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.pdf"), AttributeType::NONE)]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.doc"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.doc"), AttributeType::NONE)]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.ods"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.ods"), AttributeType::NONE)]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.odt"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.odt"), AttributeType::NONE)]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.ppt"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.ppt"), AttributeType::NONE)]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.pages"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.pages"), AttributeType::NONE)]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.numbers"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.numbers"), AttributeType::NONE)]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.key"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.key"), AttributeType::NONE)]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.xml"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.xml"), AttributeType::NONE)]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.xls"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.xls"), AttributeType::NONE)]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.png"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.png"), AttributeType::NONE)]
             = FileType::TYPE_IMAGE;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.jpg"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.jpg"), AttributeType::NONE)]
             = FileType::TYPE_IMAGE;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.ai"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.ai"), AttributeType::NONE)]
             = FileType::TYPE_IMAGE;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.abr"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.abr"), AttributeType::NONE)]
             = FileType::TYPE_IMAGE;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.3fr"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.3fr"), AttributeType::NONE)]
             = FileType::TYPE_IMAGE;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.svg"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.svg"), AttributeType::NONE)]
             = FileType::TYPE_IMAGE;
-    fileTypes[getExtensionPixmapName(QLatin1String("a.bin"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.bin"), AttributeType::NONE)]
             = FileType::TYPE_OTHER;
 }
 
@@ -293,9 +293,11 @@ qreal Utilities::getDevicePixelRatio()
     return qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? qApp->devicePixelRatio() : 1.0;
 }
 
-QString Utilities::getExtensionPixmapName(QString fileName, QString attribute)
+QString Utilities::getExtensionPixmapName(QString fileName, AttributeType attribute)
 {
     QString path = QLatin1String(":/images/");
+    EnumConversions<AttributeType> convertEnum;
+    QString stringAttr = convertEnum.getString(attribute);
 
     if (extensionIcons.isEmpty())
     {
@@ -306,15 +308,15 @@ QString Utilities::getExtensionPixmapName(QString fileName, QString attribute)
     QFileInfo f(fileName);
     if (extensionIcons.contains(f.suffix().toLower()))
     {
-        return QString(extensionIcons[f.suffix().toLower()]).insert(0, path).arg(attribute);
+        return QString(extensionIcons[f.suffix().toLower()]).insert(0, path).arg(stringAttr);
     }
     else
     {
-        return path + QString::fromLatin1("generic_%1.svg").arg(attribute);
+        return path + QString::fromLatin1("generic_%1.svg").arg(stringAttr);
     }
 }
 
-Utilities::FileType Utilities::getFileType(QString fileName, QString prefix)
+Utilities::FileType Utilities::getFileType(QString fileName, AttributeType prefix)
 {
     auto extensionPixmapName = getExtensionPixmapName(fileName, prefix);
     return fileTypes.value(extensionPixmapName,FileType::TYPE_OTHER);
@@ -395,7 +397,7 @@ struct IconCache
         return i->second;
     }
 
-    QIcon& getByExtension(const QString& fileName, const QString& attribute)
+    QIcon& getByExtension(const QString& fileName, const Utilities::AttributeType& attribute)
     {
         return getDirect(Utilities::getExtensionPixmapName(fileName, attribute));
     }
@@ -518,7 +520,7 @@ QIcon Utilities::getCachedPixmap(QString fileName)
     return gIconCache.getDirect(fileName);
 }
 
-QIcon Utilities::getExtensionPixmap(QString fileName, QString attribute)
+QIcon Utilities::getExtensionPixmap(QString fileName, AttributeType attribute)
 {
     return gIconCache.getDirect(getExtensionPixmapName(fileName, attribute));
 }
