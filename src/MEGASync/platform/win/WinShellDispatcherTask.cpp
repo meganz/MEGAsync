@@ -396,8 +396,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                 case STRING_GETLINK:
                 {
                     //Only for non incoming share syncs
-                    const char* data = reinterpret_cast<const char*>(lastPath.utf16());
-                    std::string tmpPath(data, data + lastPath.size() * 2);
+                    auto tmpPath = Platform::getInstance()->toLocalEncodedPath(lastPath);
                     std::unique_ptr<MegaNode> node(MegaSyncApp->getMegaApi()->getSyncedNode(&tmpPath));
                     if(!Utilities::isIncommingShare(node.get()))
                     {
