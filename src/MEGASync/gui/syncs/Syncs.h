@@ -50,8 +50,7 @@ protected:
         EMPTY_PATH,
         NO_ACCESS_PERMISSIONS_NO_EXIST,
         NO_ACCESS_PERMISSIONS_CANT_CREATE,
-        CANT_SYNC,
-        ALREADY_SYNC_CANDIDATE
+        CANT_SYNC
     };
 
     enum class RemoteErrors
@@ -60,8 +59,7 @@ protected:
         CANT_SYNC,
         CANT_CREATE_REMOTE_FOLDER,
         CANT_CREATE_REMOTE_FOLDER_MSG,
-        CANT_ADD_SYNC,
-        ALREADY_SYNC_CANDIDATE
+        CANT_ADD_SYNC
     };
 
     struct MegaRemoteCodeError
@@ -96,7 +94,6 @@ private:
     void setDefaultRemoteFolder();
     bool checkLocalSync(const QString& path);
     bool checkRemoteSync(const QString& path);
-    QString getAlreadySyncCandidateError() const;
 };
 
 #endif // SYNCS_H

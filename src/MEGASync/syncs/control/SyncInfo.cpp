@@ -332,6 +332,20 @@ void SyncInfo::rewriteSyncSettings()
     }
 }
 
+void SyncInfo::onboardingFinished(bool onboardingShown)
+{
+    // write sync settings into user's preferences
+    rewriteSyncSettings();
+
+    // If the onboarding has finished and more than one sync has been created, send an event
+    if (onboardingShown && configuredSyncs.contains(SyncType::TYPE_TWOWAY) &&
+        configuredSyncs[SyncType::TYPE_TWOWAY].size() > 1)
+    {
+        MegaSyncApp->getStatsEventHandler()->sendEvent(
+            AppStatsEvents::EventType::MULTIPLE_SYNCS_CREATED_ON_ONBOARDING);
+    }
+}
+
 void SyncInfo::pickInfoFromOldSync(const SyncData &osd, MegaHandle backupId, bool loadedFromPreviousSessions)
 {
     QMutexLocker qm(&syncMutex);
