@@ -51,6 +51,7 @@
     <file alias="fonts/Poppins-ThinItalic.ttf">fonts/Poppins-ThinItalic.ttf</file>
     <file alias="fonts/SourceSansPro-Semibold.ttf">fonts/SourceSansPro-Semibold.ttf</file>
     <file alias="images/3D_medium.svg">images/3D_medium.svg</file>
+    <file alias="images/3D_small.svg">images/3D_small.svg</file>
     <file alias="images/Backups_24_ico.png">images/Backups_24_ico.png</file>
     <file alias="images/Backups_24_ico@2x.png">images/Backups_24_ico@2x.png</file>
     <file alias="images/Backups_24_ico@3x.png">images/Backups_24_ico@3x.png</file>
@@ -223,6 +224,7 @@
     <file alias="images/Switches/switch_unchecked_rest-macx.svg">images/Switches/switch_unchecked_rest-macx.svg</file>
     <file alias="images/Switches/switch_unchecked_rest.svg">images/Switches/switch_unchecked_rest.svg</file>
     <file alias="images/aftereffects_medium.svg">images/aftereffects_medium.svg</file>
+    <file alias="images/aftereffects_small.svg">images/aftereffects_small.svg</file>
     <file alias="images/alert-triangle-small.png">images/alert-triangle-small.png</file>
     <file alias="images/alert-triangle-small@2x.png">images/alert-triangle-small@2x.png</file>
     <file alias="images/alert-triangle-small@3x.png">images/alert-triangle-small@3x.png</file>
@@ -239,6 +241,7 @@
     <file alias="images/arrow-to-left@2x.png">images/arrow-to-left@2x.png</file>
     <file alias="images/arrow-to-left@3x.png">images/arrow-to-left@3x.png</file>
     <file alias="images/audio_medium.svg">images/audio_medium.svg</file>
+    <file alias="images/audio_small.svg">images/audio_small.svg</file>
     <file alias="images/backup_ico_black_default.png">images/backup_ico_black_default.png</file>
     <file alias="images/backup_ico_black_default@2x.png">images/backup_ico_black_default@2x.png</file>
     <file alias="images/backup_ico_black_default@3x.png">images/backup_ico_black_default@3x.png</file>
@@ -249,6 +252,7 @@
     <file alias="images/bug_report_success@2x.png">images/bug_report_success@2x.png</file>
     <file alias="images/bug_report_success@3x.png">images/bug_report_success@3x.png</file>
     <file alias="images/cad_medium.svg">images/cad_medium.svg</file>
+    <file alias="images/cad_small.svg">images/cad_small.svg</file>
     <file alias="images/chevron-down-ico.png">images/chevron-down-ico.png</file>
     <file alias="images/chevron-down-ico@2x.png">images/chevron-down-ico@2x.png</file>
     <file alias="images/chevron-down-ico@3x.png">images/chevron-down-ico@3x.png</file>
@@ -277,6 +281,7 @@
     <file alias="images/completed_item_ico@2x.png">images/completed_item_ico@2x.png</file>
     <file alias="images/completed_item_ico@3x.png">images/completed_item_ico@3x.png</file>
     <file alias="images/compressed_medium.svg">images/compressed_medium.svg</file>
+    <file alias="images/compressed_small.svg">images/compressed_small.svg</file>
     <file alias="images/confirmation_link.png">images/confirmation_link.png</file>
     <file alias="images/confirmation_link@2x.png">images/confirmation_link@2x.png</file>
     <file alias="images/confirmation_link@3x.png">images/confirmation_link@3x.png</file>
@@ -296,6 +301,7 @@
     <file alias="images/desktop_app_TM@2x.png">images/desktop_app_TM@2x.png</file>
     <file alias="images/desktop_app_TM@3x.png">images/desktop_app_TM@3x.png</file>
     <file alias="images/dmg_medium.svg">images/dmg_medium.svg</file>
+    <file alias="images/dmg_small.svg">images/dmg_small.svg</file>
     <file alias="images/drive-low-space.svg">images/drive-low-space.svg</file>
     <file alias="images/dynamic_transfer_icon.png">images/dynamic_transfer_icon.png</file>
     <file alias="images/dynamic_transfer_icon@2x.png">images/dynamic_transfer_icon@2x.png</file>
@@ -313,8 +319,11 @@
     <file alias="images/error@2x.png">images/error@2x.png</file>
     <file alias="images/error@3x.png">images/error@3x.png</file>
     <file alias="images/excel_medium.svg">images/excel_medium.svg</file>
+    <file alias="images/excel_small.svg">images/excel_small.svg</file>
     <file alias="images/executable_medium.svg">images/executable_medium.svg</file>
+    <file alias="images/executable_small.svg">images/executable_small.svg</file>
     <file alias="images/experiencedesign_medium.svg">images/experiencedesign_medium.svg</file>
+    <file alias="images/experiencedesign_small.svg">images/experiencedesign_small.svg</file>
     <file alias="images/file-question-hover.png">images/file-question-hover.png</file>
     <file alias="images/file-question-hover@2x.png">images/file-question-hover@2x.png</file>
     <file alias="images/file-question-hover@3x.png">images/file-question-hover@3x.png</file>
@@ -328,13 +337,18 @@
     <file alias="images/file-search@2x.png">images/file-search@2x.png</file>
     <file alias="images/file-search@3x.png">images/file-search@3x.png</file>
     <file alias="images/folder_incoming_medium.svg">images/folder_incoming_medium.svg</file>
+    <file alias="images/folder_incoming_small.svg">images/folder_incoming_small.svg</file>
     <file alias="images/folder_medium.svg">images/folder_medium.svg</file>
     <file alias="images/folder_outgoing_medium.svg">images/folder_outgoing_medium.svg</file>
+    <file alias="images/folder_outgoing_small.svg">images/folder_outgoing_small.svg</file>
+    <file alias="images/folder_small.svg">images/folder_small.svg</file>
     <file alias="images/font_medium.svg">images/font_medium.svg</file>
+    <file alias="images/font_small.svg">images/font_small.svg</file>
     <file alias="images/full_sync_ico.png">images/full_sync_ico.png</file>
     <file alias="images/full_sync_ico@2x.png">images/full_sync_ico@2x.png</file>
     <file alias="images/full_sync_ico@3x.png">images/full_sync_ico@3x.png</file>
     <file alias="images/generic_medium.svg">images/generic_medium.svg</file>
+    <file alias="images/generic_small.svg">images/generic_small.svg</file>
     <file alias="images/help-icon.svg">images/help-icon.svg</file>
     <file alias="images/help_ico.png">images/help_ico.png</file>
     <file alias="images/help_ico@2x.png">images/help_ico@2x.png</file>
@@ -617,7 +631,9 @@
     <file alias="images/icons/synced-ico-rest@2x.png">images/icons/synced-ico-rest@2x.png</file>
     <file alias="images/icons/synced-ico-rest@3x.png">images/icons/synced-ico-rest@3x.png</file>
     <file alias="images/illustrator_medium.svg">images/illustrator_medium.svg</file>
+    <file alias="images/illustrator_small.svg">images/illustrator_small.svg</file>
     <file alias="images/image_medium.svg">images/image_medium.svg</file>
+    <file alias="images/image_small.svg">images/image_small.svg</file>
     <file alias="images/img_wizard_1.png">images/img_wizard_1.png</file>
     <file alias="images/img_wizard_1@2x.png">images/img_wizard_1@2x.png</file>
     <file alias="images/img_wizard_1@3x.png">images/img_wizard_1@3x.png</file>
@@ -643,10 +659,12 @@
     <file alias="images/incoming_share@2x.png">images/incoming_share@2x.png</file>
     <file alias="images/incoming_share@3x.png">images/incoming_share@3x.png</file>
     <file alias="images/indesign_medium.svg">images/indesign_medium.svg</file>
+    <file alias="images/indesign_small.svg">images/indesign_small.svg</file>
     <file alias="images/init_scanning.png">images/init_scanning.png</file>
     <file alias="images/init_scanning@2x.png">images/init_scanning@2x.png</file>
     <file alias="images/init_scanning@3x.png">images/init_scanning@3x.png</file>
     <file alias="images/keynote_medium.svg">images/keynote_medium.svg</file>
+    <file alias="images/keynote_small.svg">images/keynote_small.svg</file>
     <file alias="images/link-hover.png">images/link-hover.png</file>
     <file alias="images/link-hover@2x.png">images/link-hover@2x.png</file>
     <file alias="images/link-hover@3x.png">images/link-hover@3x.png</file>
@@ -654,6 +672,7 @@
     <file alias="images/link@2x.png">images/link@2x.png</file>
     <file alias="images/link@3x.png">images/link@3x.png</file>
     <file alias="images/link_medium.svg">images/link_medium.svg</file>
+    <file alias="images/link_small.svg">images/link_small.svg</file>
     <file alias="images/locked_account_ico.png">images/locked_account_ico.png</file>
     <file alias="images/locked_account_ico@2x.png">images/locked_account_ico@2x.png</file>
     <file alias="images/locked_account_ico@3x.png">images/locked_account_ico@3x.png</file>
@@ -839,8 +858,11 @@
     <file alias="images/notification_color@2x.png">images/notification_color@2x.png</file>
     <file alias="images/notification_color@3x.png">images/notification_color@3x.png</file>
     <file alias="images/numbers_medium.svg">images/numbers_medium.svg</file>
+    <file alias="images/numbers_small.svg">images/numbers_small.svg</file>
     <file alias="images/openoffice_medium.svg">images/openoffice_medium.svg</file>
+    <file alias="images/openoffice_small.svg">images/openoffice_small.svg</file>
     <file alias="images/pages_medium.svg">images/pages_medium.svg</file>
+    <file alias="images/pages_small.svg">images/pages_small.svg</file>
     <file alias="images/password/ico_eye_hide.png">images/password/ico_eye_hide.png</file>
     <file alias="images/password/ico_eye_hide@2x.png">images/password/ico_eye_hide@2x.png</file>
     <file alias="images/password/ico_eye_hide@3x.png">images/password/ico_eye_hide@3x.png</file>
@@ -867,14 +889,19 @@
     <file alias="images/payments@2x.png">images/payments@2x.png</file>
     <file alias="images/payments@3x.png">images/payments@3x.png</file>
     <file alias="images/pdf_medium.svg">images/pdf_medium.svg</file>
+    <file alias="images/pdf_small.svg">images/pdf_small.svg</file>
     <file alias="images/photoshop_medium.svg">images/photoshop_medium.svg</file>
+    <file alias="images/photoshop_small.svg">images/photoshop_small.svg</file>
     <file alias="images/play_ico.png">images/play_ico.png</file>
     <file alias="images/play_ico@2x.png">images/play_ico@2x.png</file>
     <file alias="images/play_ico@3x.png">images/play_ico@3x.png</file>
     <file alias="images/plus.svg">images/plus.svg</file>
     <file alias="images/powerpoint_medium.svg">images/powerpoint_medium.svg</file>
+    <file alias="images/powerpoint_small.svg">images/powerpoint_small.svg</file>
     <file alias="images/premiere_medium.svg">images/premiere_medium.svg</file>
+    <file alias="images/premiere_small.svg">images/premiere_small.svg</file>
     <file alias="images/raw_medium.svg">images/raw_medium.svg</file>
+    <file alias="images/raw_small.svg">images/raw_small.svg</file>
     <file alias="images/resume.png">images/resume.png</file>
     <file alias="images/resume@2x.png">images/resume@2x.png</file>
     <file alias="images/resume@3x.png">images/resume@3x.png</file>
@@ -923,7 +950,8 @@
     <file alias="images/show_in_folder_ico.png">images/show_in_folder_ico.png</file>
     <file alias="images/show_in_folder_ico@2x.png">images/show_in_folder_ico@2x.png</file>
     <file alias="images/show_in_folder_ico@3x.png">images/show_in_folder_ico@3x.png</file>
-    <file alias="images/spreasheet_medium.svg">images/spreasheet_medium.svg</file>
+    <file alias="images/spreadsheet_medium.svg">images/spreadsheet_medium.svg</file>
+    <file alias="images/spreadsheet_small.svg">images/spreadsheet_small.svg</file>
     <file alias="images/step_4_full_sync.png">images/step_4_full_sync.png</file>
     <file alias="images/step_4_full_sync@2x.png">images/step_4_full_sync@2x.png</file>
     <file alias="images/step_4_full_sync@3x.png">images/step_4_full_sync@3x.png</file>
@@ -1025,6 +1053,9 @@
     <file alias="images/sync_states/x-circle@3x.png">images/sync_states/x-circle@3x.png</file>
     <file alias="images/synching.svg">images/synching.svg</file>
     <file alias="images/text_medium.svg">images/text_medium.svg</file>
+    <file alias="images/text_small.svg">images/text_small.svg</file>
+    <file alias="images/torrent_medium.svg">images/torrent_medium.svg</file>
+    <file alias="images/torrent_small.svg">images/torrent_small.svg</file>
     <file alias="images/transfer_empty_100.png">images/transfer_empty_100.png</file>
     <file alias="images/transfer_empty_100@2x.png">images/transfer_empty_100@2x.png</file>
     <file alias="images/transfer_empty_100@3x.png">images/transfer_empty_100@3x.png</file>
@@ -1355,12 +1386,17 @@
     <file alias="images/upload_to_mega_ico_white@3x.png">images/upload_to_mega_ico_white@3x.png</file>
     <file alias="images/uptodate.svg">images/uptodate.svg</file>
     <file alias="images/vector_medium.svg">images/vector_medium.svg</file>
+    <file alias="images/vector_small.svg">images/vector_small.svg</file>
     <file alias="images/video_medium.svg">images/video_medium.svg</file>
+    <file alias="images/video_small.svg">images/video_small.svg</file>
     <file alias="images/warning.svg">images/warning.svg</file>
     <file alias="images/warning_ico.ico">images/warning_ico.ico</file>
     <file alias="images/web_data_medium.svg">images/web_data_medium.svg</file>
+    <file alias="images/web_data_small.svg">images/web_data_small.svg</file>
     <file alias="images/web_lang_medium.svg">images/web_lang_medium.svg</file>
+    <file alias="images/web_lang_small.svg">images/web_lang_small.svg</file>
     <file alias="images/word_medium.svg">images/word_medium.svg</file>
+    <file alias="images/word_small.svg">images/word_small.svg</file>
     <file alias="style/WidgetsComponentsStyleSheetsSizes.css">style/WidgetsComponentsStyleSheetsSizes.css</file>
     <file alias="style/WidgetsComponentsStyleSheetsTokens.css">style/WidgetsComponentsStyleSheetsTokens.css</file>
     <file alias="translations/MEGASyncStrings_ar.qm">translations/MEGASyncStrings_ar.qm</file>
@@ -1382,6 +1418,5 @@
     <file alias="translations/MEGASyncStrings_vi.qm">translations/MEGASyncStrings_vi.qm</file>
     <file alias="translations/MEGASyncStrings_zh_CN.qm">translations/MEGASyncStrings_zh_CN.qm</file>
     <file alias="translations/MEGASyncStrings_zh_TW.qm">translations/MEGASyncStrings_zh_TW.qm</file>
-
     </qresource>
 </RCC>
