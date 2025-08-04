@@ -41,9 +41,9 @@
 {
 	border: none;
 }
-#lFileName, #lFileNameCompleted 
+#lFileNameCompleted, #lFileName
 {
-	font-weight:700;
+font-weight:700;
 }
 #lSpeed, #lElapsedTime, #lTransferTypeCompleted
 {
@@ -67,6 +67,19 @@ background-color: #29DD74;/*colorToken.indicator-green*/
 #lRemainingTime
 {
   font-size: 13px;
+}
+#wProgressBar
+{
+	margin-top: 1px;
+	margin-left: 50px;
+	margin-right: 16px;
+	background-color:#FFD8D9DB; /*colorToken.border-disabled*/
+
+}
+#pbTransfer
+{
+	margin-left: 50px;
+	margin-right: 16px;
 }</string>
   </property>
   <property name="TOKENIZED" stdset="0">
@@ -786,14 +799,14 @@ background-color: rgba(0, 0, 0, 8%);
                         </property>
                         <property name="minimumSize">
                          <size>
-                          <width>10</width>
-                          <height>12</height>
+                          <width>16</width>
+                          <height>16</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>10</width>
-                          <height>12</height>
+                          <width>16</width>
+                          <height>16</height>
                          </size>
                         </property>
                         <property name="focusPolicy">
@@ -833,48 +846,6 @@ background-color: rgba(0, 0, 0, 8%);
                     </widget>
                    </item>
                   </layout>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="bClockDown">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>16</width>
-                    <height>16</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>16</width>
-                    <height>16</height>
-                   </size>
-                  </property>
-                  <property name="focusPolicy">
-                   <enum>Qt::NoFocus</enum>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset>
-                    <normalon>:/images/clock_ico.png</normalon>
-                   </iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>15</width>
-                    <height>15</height>
-                   </size>
-                  </property>
-                  <property name="flat">
-                   <bool>true</bool>
-                  </property>
                  </widget>
                 </item>
                 <item>
@@ -927,13 +898,6 @@ background-color: rgba(0, 0, 0, 8%);
                  <width>16777215</width>
                  <height>2</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">#wProgressBar
-{
-	margin-top: 1px;
-	background-color:#FFD8D9DB; /*colorToken.border-disabled*/
-}</string>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_2">
                 <property name="spacing">

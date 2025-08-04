@@ -24,7 +24,6 @@ InfoDialogTransferDelegateWidget::InfoDialogTransferDelegateWidget(QWidget *pare
     retainShowInFolder.setRetainSizeWhenHidden(true);
     mUi->lShowInFolder->setSizePolicy(retainShowInFolder);
 
-    mUi->bClockDown->setVisible(false);
     mUi->lShowInFolder->hide();
 
     mUi->lTransferType->installEventFilter(this);
@@ -68,7 +67,6 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
             break;
         case TransferData::TransferState::TRANSFER_ACTIVE:
         {
-            mUi->bClockDown->setVisible(getData()->mRemainingTime > 0);
             mUi->lRemainingTime->setText(
                 Utilities::getTimeString(getData()->mRemainingTime, true, true));
 
@@ -139,7 +137,6 @@ void InfoDialogTransferDelegateWidget::updateTransferControlsOnHold(const QStrin
     if (stateHasChanged())
     {
         mUi->lSpeed->setText(speedText);
-        mUi->bClockDown->setVisible(false);
         mUi->lRemainingTime->clear();
     }
 }
@@ -158,9 +155,9 @@ void InfoDialogTransferDelegateWidget::setFileNameAndType()
 
     QIcon icon = Utilities::getExtensionPixmap(getData()->mFilename, Utilities::AttributeType::MEDIUM);
     mUi->lFileType->setIcon(icon);
-    mUi->lFileType->setIconSize(QSize(48, 48));
+    mUi->lFileType->setIconSize(QSize(24, 24));
     mUi->lFileTypeCompleted->setIcon(icon);
-    mUi->lFileTypeCompleted->setIconSize(QSize(48, 48));
+    mUi->lFileTypeCompleted->setIconSize(QSize(24, 24));
 }
 
 void InfoDialogTransferDelegateWidget::setType()
@@ -171,13 +168,11 @@ void InfoDialogTransferDelegateWidget::setType()
 
     if(transferType & TransferData::TRANSFER_DOWNLOAD || transferType & TransferData::TRANSFER_LTCPDOWNLOAD)
     {
-        icon = Utilities::getCachedPixmap(QString::fromLatin1(
-            ":/images/transfer_manager/transfers_states/download_item_ico.png"));
+        icon = Utilities::getCachedPixmap(QString::fromLatin1(":/down-arrow.svg"));
     }
     else if(transferType & TransferData::TRANSFER_UPLOAD)
     {
-        icon = Utilities::getCachedPixmap(
-            QString::fromLatin1(":/images/transfer_manager/transfers_states/upload_item_ico.png"));
+        icon = Utilities::getCachedPixmap(QString::fromLatin1(":/up-arrow.svg"));
     }
 
     mUi->lTransferType->setPixmap(icon.pixmap(mUi->lTransferType->size()));
