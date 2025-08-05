@@ -241,11 +241,7 @@ bool PlatformImplementation::loadThemeResource(const QString& theme)
     QStringList rccFiles =
         QStringList()
         << QCoreApplication::applicationDirPath() +
-               QString::fromUtf8("/../Resources/Resources_macx.rcc")
-        << QCoreApplication::applicationDirPath() +
-               QString::fromUtf8("/../Resources/Resources_win.rcc")
-        << QCoreApplication::applicationDirPath() +
-               QString::fromUtf8("/../Resources/Resources_linux.rcc")
+               QString::fromUtf8("/../Resources/Resources_common.rcc")
         << QCoreApplication::applicationDirPath() +
                QString::fromUtf8("/../Resources/Resources_qml.rcc")
         << QCoreApplication::applicationDirPath() + QString::fromUtf8("/../Resources/qml.rcc")

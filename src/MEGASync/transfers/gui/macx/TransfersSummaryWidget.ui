@@ -128,7 +128,7 @@ background: transparent;
 </string>
      </property>
      <property name="icon">
-      <iconset resource="../../../gui/Resources_macx.qrc">
+      <iconset resource="../../../gui/Resources_common.qrc">
        <normaloff>:/images/pause.png</normaloff>:/images/pause.png</iconset>
      </property>
     </widget>
@@ -144,7 +144,7 @@ background: transparent;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../gui/Resources_macx.qrc"/>
+  <include location="../../../gui/Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>

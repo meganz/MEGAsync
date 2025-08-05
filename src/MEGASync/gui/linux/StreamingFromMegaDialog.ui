@@ -809,7 +809,7 @@ padding-left: -16px;</string>
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_win.qrc">
+                  <iconset resource="../Resources_common.qrc">
                    <normaloff>:/images/streaming_link.png</normaloff>:/images/streaming_link.png</iconset>
                  </property>
                 </widget>
@@ -967,7 +967,7 @@ padding-left: -16px;</string>
          <string notr="true"/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_common.qrc">
           <normaloff>:/images/icon_error.png</normaloff>:/images/icon_error.png</iconset>
         </property>
         <property name="iconSize">
@@ -1043,10 +1043,10 @@ padding-left: -16px;</string>
   <tabstop>bClose</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_win.qrc"/>
-  <include location="../Resources_win.qrc"/>
-  <include location="../Resources_win.qrc"/>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_common.qrc"/>
+  <include location="../Resources_common.qrc"/>
+  <include location="../Resources_common.qrc"/>
+  <include location="../Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>

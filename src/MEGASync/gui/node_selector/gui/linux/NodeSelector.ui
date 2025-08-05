@@ -298,7 +298,7 @@ min-height:36px;
                <string>Cloud Drive</string>
               </property>
               <property name="icon">
-               <iconset theme="cloud_ico" resource="../../../Resources_linux.qrc">
+               <iconset theme="cloud_ico" resource="../../../Resources_common.qrc">
                 <normaloff>:/images/node_selector/sidebar/cloud_ico_default.png</normaloff>:/images/node_selector/sidebar/cloud_ico_default.png</iconset>
               </property>
               <property name="checkable">
@@ -382,7 +382,7 @@ min-height:36px;
                <string>Backups</string>
               </property>
               <property name="icon">
-               <iconset theme="backups_ico" resource="../../../Resources_linux.qrc">
+               <iconset theme="backups_ico" resource="../../../Resources_common.qrc">
                 <normaloff>:/images/node_selector/sidebar/backup_ico_default.png</normaloff>:/images/node_selector/sidebar/backup_ico_default.png</iconset>
               </property>
               <property name="checkable">
@@ -481,7 +481,7 @@ min-height:36px;
                <string>Incoming Shares</string>
               </property>
               <property name="icon">
-               <iconset resource="../../../Resources_linux.qrc">
+               <iconset resource="../../../Resources_common.qrc">
                 <normaloff>:/images/node_selector/sidebar/folder-users_default.png</normaloff>:/images/node_selector/sidebar/folder-users_default.png</iconset>
               </property>
               <property name="checkable">
@@ -555,7 +555,7 @@ min-height:36px;
                <string notr="true">Rubbish bin</string>
               </property>
               <property name="icon">
-               <iconset resource="../../../Resources_linux.qrc">
+               <iconset resource="../../../Resources_common.qrc">
                 <normaloff>:/images/node_selector/sidebar/rubbish_default.png</normaloff>:/images/node_selector/sidebar/rubbish_default.png</iconset>
               </property>
               <property name="checkable">
@@ -647,7 +647,7 @@ min-height:36px;
                <string notr="true"/>
               </property>
               <property name="icon">
-               <iconset resource="../../../Resources_linux.qrc">
+               <iconset resource="../../../Resources_common.qrc">
                 <normaloff>:/images/node_selector/sidebar/search_default.png</normaloff>:/images/node_selector/sidebar/search_default.png</iconset>
               </property>
               <property name="checkable">
@@ -680,7 +680,7 @@ padding-right:1px;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../Resources_linux.qrc">
+               <iconset resource="../../../Resources_common.qrc">
                 <normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</iconset>
               </property>
               <property name="iconSize">
@@ -732,7 +732,7 @@ padding-right:1px;
   </layout>
  </widget>
  <resources>
-  <include location="../../../Resources_linux.qrc"/>
+  <include location="../../../Resources_common.qrc"/>
  </resources>
  <connections/>
  <buttongroups>

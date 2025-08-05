@@ -393,7 +393,7 @@ void StreamingFromMegaDialog::updateFileInfo(QString fileName, LinkStatus status
         ui->lFileName->setText(ui->lFileName->fontMetrics().elidedText(fileName,Qt::ElideMiddle,ui->lFileName->maximumWidth()));
         ui->lFileSize->setText(Utilities::getSizeString(mSelectedMegaNode->getSize()));
 
-        QIcon typeIcon = Utilities::getExtensionPixmapMedium(fileName);
+        QIcon typeIcon = Utilities::getExtensionPixmap(fileName, Utilities::AttributeType::MEDIUM);
 
         ui->lFileType->setIcon(typeIcon);
         ui->lFileType->setIconSize(QSize(48, 48));

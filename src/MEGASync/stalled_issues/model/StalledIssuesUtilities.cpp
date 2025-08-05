@@ -58,12 +58,12 @@ QIcon StalledIssuesUtilities::getIcon(bool isFile, const QFileInfo& fileInfo, bo
         //Without extension
         if(fileInfo.completeSuffix().isEmpty())
         {
-            fileTypeIcon = Utilities::getCachedPixmap(QLatin1String(":/images/drag_generic.png"));
+            fileTypeIcon = Utilities::getCachedPixmap(QLatin1String(":/images/generic_medium.svg"));
         }
         else
         {
-            fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                          fileInfo.fileName(), QLatin1String(":/images/drag_")));
+            fileTypeIcon = Utilities::getCachedPixmap(
+                Utilities::getExtensionPixmapName(fileInfo.fileName(), Utilities::AttributeType::MEDIUM));
         }
     }
     else

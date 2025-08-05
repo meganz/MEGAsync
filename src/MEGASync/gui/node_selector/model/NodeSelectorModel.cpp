@@ -2806,7 +2806,8 @@ QIcon NodeSelectorModel::getFolderIcon(NodeSelectorModelItem *item) const
             }
             else
             {
-                return Utilities::getExtensionPixmapSmall(QString::fromUtf8(node->getName()));
+                return Utilities::getExtensionPixmap(QString::fromUtf8(node->getName()),
+                                                     Utilities::AttributeType::SMALL);
             }
         }
     }

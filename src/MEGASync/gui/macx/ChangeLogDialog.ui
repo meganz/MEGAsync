@@ -116,7 +116,7 @@ background-color: #FFFFFF;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
+         <iconset resource="../Resources_common.qrc">
           <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
         </property>
         <property name="iconSize">
@@ -544,7 +544,7 @@ border-bottom: 1px solid #EFEFEC;
   <tabstop>bPolicy</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>

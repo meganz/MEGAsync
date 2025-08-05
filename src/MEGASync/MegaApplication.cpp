@@ -5629,7 +5629,7 @@ void MegaApplication::createInfoDialogMenus()
     recreateMenuAction(&filesAction,
                        infoDialogMenu,
                        tr("Files"),
-                       "://images/small_folder.png",
+                       "://images/folder_medium.svg",
                        &MegaApplication::goToFiles);
 
     // recreateMenuAction(&deviceCentreAction,

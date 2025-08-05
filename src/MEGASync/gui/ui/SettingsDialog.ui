@@ -419,7 +419,7 @@ margin-bottom: 3px;
          <string>Sync</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_common.qrc">
           <normaloff>:/images/settings-sync.svg</normaloff>:/images/settings-sync.svg</iconset>
         </property>
         <property name="iconSize">
@@ -469,7 +469,7 @@ margin-bottom: 3px;
          <string>Backup</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_common.qrc">
           <normaloff>:/images/settings-backup.svg</normaloff>:/images/settings-backup.svg</iconset>
         </property>
         <property name="iconSize">
@@ -519,7 +519,7 @@ margin-bottom: 3px;
          <string>Security</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_common.qrc">
           <normaloff>:/images/settings-shield.svg</normaloff>:/images/settings-shield.svg</iconset>
         </property>
         <property name="iconSize">
@@ -619,7 +619,7 @@ margin-bottom: 3px;
          <string>Network</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_common.qrc">
           <normaloff>:/images/settings-network.svg</normaloff>:/images/settings-network.svg</iconset>
         </property>
         <property name="iconSize">
@@ -1351,7 +1351,7 @@ margin-bottom: 3px;
                    </sizepolicy>
                   </property>
                   <property name="icon">
-                   <iconset resource="../Resources_win.qrc">
+                   <iconset resource="../Resources_common.qrc">
                     <normaloff>:/images/Small_Free.png</normaloff>:/images/Small_Free.png</iconset>
                   </property>
                   <property name="iconSize">
