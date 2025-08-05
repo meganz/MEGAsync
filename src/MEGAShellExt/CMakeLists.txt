@@ -102,8 +102,10 @@ if(WIN32)
     # Generate Appxmanifest.xml
     if(CMAKE_SIZEOF_VOID_P EQUAL 8)
         set(DLL "ShellExtX64.dll")
+        set(MEGA_SHELL_EXT_ARCH "x64")
     elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
         set(DLL "ShellExtX32.dll")
+        set(MEGA_SHELL_EXT_ARCH "x86")
     endif()
 
     set(OutputPath "$<TARGET_FILE_DIR:MEGAShellExt>")
@@ -111,7 +113,10 @@ if(WIN32)
     add_custom_command(
         TARGET MEGAShellExt
         POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -DDLL=${DLL} -DOutputPath=${OutputPath}
+        COMMAND ${CMAKE_COMMAND}
+        -DDLL=${DLL}
+        -DMEGA_SHELL_EXT_ARCH=${MEGA_SHELL_EXT_ARCH}
+        -DOutputPath=${OutputPath}
         -P ${GenerateAppxManifestXmlScript}
         COMMENT "Generating AppxManifest.xml"
     )
