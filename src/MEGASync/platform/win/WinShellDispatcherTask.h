@@ -65,7 +65,6 @@ protected:
 
 private:
     QStringList extractParameters(wchar_t* content, const QChar& separator = QChar());
-    QStringList extractParametersWChar(wchar_t* content, const QChar& separator = QChar());
     int toIntFromWChar(const QString& str, bool& ok);
 
     void sendViewOnMegaSignal(const QStringList& parameters, bool versions, LPPIPEINST pipe);

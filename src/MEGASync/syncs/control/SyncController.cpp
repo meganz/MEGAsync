@@ -122,8 +122,9 @@ void SyncController::prevalidateSync(SyncConfig& sync)
         });
 
     mApi->prevalidateSyncFolder(sync.type,
-                                sync.localFolder.toUtf8().constData(),
-                                syncCleanName.toUtf8().constData(),
+                                // The SDK wants the path in utf8, even in Windows!!
+                                sync.localFolder.toStdString(),
+                                syncCleanName.toStdString(),
                                 sync.remoteHandle,
                                 std::string(),
                                 listener.get());
@@ -193,10 +194,11 @@ void SyncController::addSync(SyncConfig& sync)
 
     mSyncInfo->setSyncToCreateOrigin(sync.origin);
     mApi->syncFolder(sync.type,
-                     sync.localFolder.toUtf8().constData(),
-                     syncCleanName.isEmpty() ? nullptr : syncCleanName.toUtf8().constData(),
+                     // The SDK wants the path in utf8, even in Windows!!
+                     sync.localFolder.toStdString(),
+                     syncCleanName.toStdString(),
                      sync.remoteHandle,
-                     nullptr,
+                     std::string(),
                      listener.get());
 }
 

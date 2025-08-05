@@ -3587,11 +3587,10 @@ void MegaApplication::checkOperatingSystem()
 
 void MegaApplication::notifyChangeToAllFolders()
 {
-    for (auto localFolder : model->getLocalFolders(SyncInfo::AllHandledSyncTypes))
+    for (const auto& localFolder: model->getLocalFolders(SyncInfo::AllHandledSyncTypes))
     {
         ++mProcessingShellNotifications;
-
-        string stdLocalFolder = localFolder.toUtf8().constData();
+        auto stdLocalFolder = Platform::getInstance()->toLocalEncodedPath(localFolder);
         Platform::getInstance()->notifyItemChange(localFolder, megaApi->syncPathState(&stdLocalFolder));
     }
 }
@@ -4789,7 +4788,7 @@ void MegaApplication::shellExport(QQueue<QString> newExportQueue)
 
 void MegaApplication::shellViewOnMega(const QString& path, bool versions)
 {
-    string tmpPath(path.toStdString());
+    auto tmpPath = Platform::getInstance()->toLocalEncodedPath(path);
 
     std::unique_ptr<MegaNode> node(megaApi->getSyncedNode(&tmpPath));
     if (node)

@@ -13,6 +13,8 @@
 #include <QString>
 #include <QThread>
 
+#include <string>
+
 class WinShellDispatcherTask;
 
 class PlatformImplementation : public AbstractPlatform
@@ -73,6 +75,8 @@ public:
 
     void calculateInfoDialogCoordinates(const QRect& rect, int *posx, int *posy) override;
     void pinOnTaskbar() override;
+
+    std::string toLocalEncodedPath(const QString& path) const override;
 
 private:
     void removeSyncFromLeftPane(QString syncPath, QString syncName, QString uuid);
