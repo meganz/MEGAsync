@@ -83,34 +83,34 @@ void SyncReminderNotificationManager::onSyncAddRequestStatus(int errorCode,
         return;
     }
 
-    if (!mActions.count(mLastState.value()))
+    if (mActions.count(mLastState.value()))
     {
-        return;
-    }
-
-    int reminderID(static_cast<int>(mLastState.value()));
-    if (mActions[mLastState.value()]->isClicked())
-    {
-        // Send event if a sync has been created after clicking in the notification.
-        MegaSyncApp->getStatsEventHandler()->sendEvent(
-            AppStatsEvents::EventType::SYNC_CREATED_AFTER_CLICKING_NOTIFICATION,
-            {QString::number(reminderID)});
-    }
-    else
-    {
-        auto currentTime(getCurrentTimeSecs());
-        auto maxTime(mLastSyncReminderTime.value() + mTimeTestInfo.mSyncCreationMaxInterval);
-        if (currentTime <= maxTime)
+        int reminderID(static_cast<int>(mLastState.value()));
+        if (mActions[mLastState.value()]->isClicked())
         {
-            // Send event if a sync has been created before the first 15 mins. after
-            // showing the notification.
+            // Send event if a sync has been created after clicking in the notification.
             MegaSyncApp->getStatsEventHandler()->sendEvent(
-                AppStatsEvents::EventType::SYNC_CREATED_AFTER_NOTIFICATION,
+                AppStatsEvents::EventType::SYNC_CREATED_AFTER_CLICKING_NOTIFICATION,
                 {QString::number(reminderID)});
         }
+        else
+        {
+            auto currentTime(getCurrentTimeSecs());
+            auto maxTime(mLastSyncReminderTime.value() + mTimeTestInfo.mSyncCreationMaxInterval);
+            if (currentTime <= maxTime)
+            {
+                // Send event if a sync has been created before the first 15 mins. after
+                // showing the notification.
+                MegaSyncApp->getStatsEventHandler()->sendEvent(
+                    AppStatsEvents::EventType::SYNC_CREATED_AFTER_NOTIFICATION,
+                    {QString::number(reminderID)});
+            }
+        }
     }
+
     moveToDoneState();
     writeToPreferences();
+    deleteLater();
 }
 
 void SyncReminderNotificationManager::readFromPreferences()
