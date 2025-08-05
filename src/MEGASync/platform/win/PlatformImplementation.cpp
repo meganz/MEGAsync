@@ -225,6 +225,14 @@ void PlatformImplementation::pinOnTaskbar()
     }
 }
 
+std::string PlatformImplementation::toLocalEncodedPath(const QString& path) const
+{
+    // We put an utf16 encoded QString in a std::string (1 wchar -> 2 chars)
+    // That's what the Mega SDK expects.
+    auto data = reinterpret_cast<const char*>(path.utf16());
+    return {data, data + path.size() * sizeof(wchar_t)};
+}
+
 void PlatformImplementation::notifyItemChange(const QString& path, int)
 {
     notifyItemChange(path, mShellNotifier);
@@ -232,8 +240,7 @@ void PlatformImplementation::notifyItemChange(const QString& path, int)
 
 void PlatformImplementation::notifySyncFileChange(std::string *localPath, int)
 {
-    QString path = QString::fromUtf8(localPath->c_str());
-    notifyItemChange(path, mSyncFileNotifier);
+    notifyItemChange(QString::fromStdString(*localPath), mSyncFileNotifier);
 }
 
 void PlatformImplementation::notifyItemChange(const QString& localPath, std::shared_ptr<AbstractShellNotifier> notifier)

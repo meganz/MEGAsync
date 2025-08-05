@@ -82,8 +82,9 @@ public:
     virtual void removeAllSyncsFromLeftPane();
     virtual bool makePubliclyReadable(const QString& fileName);
 
-    virtual void addFileManagerExtensionToSystem(){};
-    virtual void enableFileManagerExtension(bool) {};
+    virtual void addFileManagerExtensionToSystem() {}
+
+    virtual void enableFileManagerExtension(bool) {}
     virtual bool validateSystemTrayIntegration();
 
     virtual void calculateInfoDialogCoordinates(const QRect& rect, int *posx, int *posy) = 0;
@@ -95,13 +96,15 @@ public:
     virtual DriveSpaceData getDriveData(const QString& path) = 0;
 
     // AutoUpdate tasks
-    virtual void runPostAutoUpdateStep(){};
+    virtual void runPostAutoUpdateStep() {}
 
 #if defined(ENABLE_SDK_ISOLATED_GFX)
     virtual QString getGfxProviderPath() = 0;
 #endif
 
-    virtual void pinOnTaskbar(){};
+    virtual void pinOnTaskbar() {}
+
+    virtual std::string toLocalEncodedPath(const QString& path) const;
 
 protected:
     std::shared_ptr<AbstractShellNotifier> mShellNotifier = nullptr;

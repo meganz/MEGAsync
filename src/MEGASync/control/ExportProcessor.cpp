@@ -1,5 +1,6 @@
 #include "ExportProcessor.h"
 
+#include "Platform.h"
 #include "RequestListenerManager.h"
 
 using namespace mega;
@@ -47,11 +48,8 @@ void ExportProcessor::requestLinks()
             {
                 fileList[i].insert(0, QString::fromLatin1("\\\\?\\"));
             }
-
-            std::string tmpPath((const char*)fileList[i].utf16(), fileList[i].size()*sizeof(wchar_t));
-    #else
-            std::string tmpPath((const char*)fileList[i].toUtf8().constData());
-    #endif
+#endif
+            auto tmpPath = Platform::getInstance()->toLocalEncodedPath(fileList[i]);
 
             node.reset(megaApi->getSyncedNode(&tmpPath));
             if (!node)
