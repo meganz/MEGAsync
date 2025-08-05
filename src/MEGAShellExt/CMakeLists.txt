@@ -4,8 +4,11 @@
 #
 
 project(MEGAShellExt
+    VERSION ${MEGA_DESKTOP_APP_VER}
     DESCRIPTION "MEGAShellExt"
     )
+
+message(STATUS "Building MEGA Desktop App Windows Shell Extension project v${PROJECT_VERSION}")
 
 add_library(MEGAShellExt SHARED)
 
@@ -116,6 +119,7 @@ if(WIN32)
         COMMAND ${CMAKE_COMMAND}
         -DDLL=${DLL}
         -DMEGA_SHELL_EXT_ARCH=${MEGA_SHELL_EXT_ARCH}
+        -DMEGA_DESKTOP_APP_VER=${PROJECT_VERSION}
         -DOutputPath=${OutputPath}
         -P ${GenerateAppxManifestXmlScript}
         COMMENT "Generating AppxManifest.xml"
