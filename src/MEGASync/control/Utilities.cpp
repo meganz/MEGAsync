@@ -297,7 +297,7 @@ QString Utilities::getExtensionPixmapName(QString fileName, AttributeType attrib
 {
     QString path = QLatin1String(":/images/");
     EnumConversions<AttributeType> convertEnum;
-    QString stringAttr = convertEnum.getString(attribute);
+    QString stringAttr = convertEnum.getString(attribute).toLower();
 
     if (extensionIcons.isEmpty())
     {

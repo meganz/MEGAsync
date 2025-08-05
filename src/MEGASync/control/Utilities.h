@@ -334,8 +334,8 @@ public:
     enum class AttributeType
     {
         NONE,
-        small,
-        medium
+        SMALL,
+        MEDIUM
     };
     Q_ENUM(AttributeType)
 
