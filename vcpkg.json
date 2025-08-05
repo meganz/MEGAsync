@@ -102,6 +102,10 @@
     "builtin-baseline": "ef7dbf94b9198bc58f45951adcf1f041fcbc5ea0",
     "overrides": [
         {
+            "name": "icu",
+            "version": "74.2#4"
+        },
+        {
             "name": "libuv",
             "version": "1.49.2"
         }
