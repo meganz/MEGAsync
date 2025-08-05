@@ -18,8 +18,13 @@ Item {
 	readonly property color borderStrongSelected: loader.item.borderStrongSelected
 	readonly property color borderSubtle: loader.item.borderSubtle
 	readonly property color borderSubtleSelected: loader.item.borderSubtleSelected
+	readonly property color brandContainerDefault: loader.item.brandContainerDefault
+	readonly property color brandContainerHover: loader.item.brandContainerHover
+	readonly property color brandContainerPressed: loader.item.brandContainerPressed
 	readonly property color brandDefault: loader.item.brandDefault
 	readonly property color brandHover: loader.item.brandHover
+	readonly property color brandOnBrand: loader.item.brandOnBrand
+	readonly property color brandOnContainer: loader.item.brandOnContainer
 	readonly property color brandPressed: loader.item.brandPressed
 	readonly property color buttonBrand: loader.item.buttonBrand
 	readonly property color buttonBrandHover: loader.item.buttonBrandHover
@@ -39,9 +44,6 @@ Item {
 	readonly property color buttonSecondaryHover: loader.item.buttonSecondaryHover
 	readonly property color buttonSecondaryPressed: loader.item.buttonSecondaryPressed
 	readonly property color componentsInteractive: loader.item.componentsInteractive
-	readonly property color containerDefault: loader.item.containerDefault
-	readonly property color containerHover: loader.item.containerHover
-	readonly property color containerPressed: loader.item.containerPressed
 	readonly property color focusColor: loader.item.focusColor
 	readonly property color iconAccent: loader.item.iconAccent
 	readonly property color iconBrand: loader.item.iconBrand
@@ -63,12 +65,18 @@ Item {
 	readonly property color linkInverse: loader.item.linkInverse
 	readonly property color linkPrimary: loader.item.linkPrimary
 	readonly property color linkVisited: loader.item.linkVisited
+	readonly property color neutralContainerDefault: loader.item.neutralContainerDefault
+	readonly property color neutralContainerHover: loader.item.neutralContainerHover
+	readonly property color neutralContainerPressed: loader.item.neutralContainerPressed
+	readonly property color neutralDefault: loader.item.neutralDefault
+	readonly property color neutralHover: loader.item.neutralHover
+	readonly property color neutralOnContainer: loader.item.neutralOnContainer
+	readonly property color neutralOnGrey: loader.item.neutralOnGrey
+	readonly property color neutralPressed: loader.item.neutralPressed
 	readonly property color notificationError: loader.item.notificationError
 	readonly property color notificationInfo: loader.item.notificationInfo
 	readonly property color notificationSuccess: loader.item.notificationSuccess
 	readonly property color notificationWarning: loader.item.notificationWarning
-	readonly property color onBrand: loader.item.onBrand
-	readonly property color onContainer: loader.item.onContainer
 	readonly property color pageBackground: loader.item.pageBackground
 	readonly property color selectionControl: loader.item.selectionControl
 	readonly property color supportError: loader.item.supportError
