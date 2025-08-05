@@ -4,7 +4,8 @@
 #include "ChooseFolder.h"
 #include "QmlDialogWrapper.h"
 
-class SyncsCandidatesController;
+class Syncs;
+class SyncsData;
 class SyncsComponent : public QMLComponent
 {
     Q_OBJECT
@@ -22,15 +23,6 @@ public:
     Q_INVOKABLE void clearRemoteFolderErrorHint();
     Q_INVOKABLE void clearLocalFolderErrorHint();
     Q_INVOKABLE void syncButtonClicked(const QString& localFolder, const QString& megaFolder);
-    Q_INVOKABLE void confirmSyncCandidateButtonClicked();
-    Q_INVOKABLE void addSyncCandidadeButtonClicked(const QString& localFolder,
-                                                   const QString& megaFolder);
-    Q_INVOKABLE void editSyncCandidadeButtonClicked(const QString& localFolder,
-                                                    const QString& megaFolder,
-                                                    const QString& originalLocalFolder,
-                                                    const QString& originalMegaFolder);
-    Q_INVOKABLE void removeSyncCandidadeButtonClicked(const QString& localFolder,
-                                                      const QString& megaFolder);
     Q_INVOKABLE void closeDialogButtonClicked();
     Q_INVOKABLE void viewSyncsInSettingsButtonClicked();
     Q_INVOKABLE void exclusionsButtonClicked(const QString& currentPath);
@@ -48,7 +40,7 @@ signals:
 private:
     ChooseRemoteFolder mRemoteFolderChooser;
     ChooseLocalFolder mLocalFolderChooser;
-    std::unique_ptr<SyncsCandidatesController> mSyncsCandidates;
+    std::unique_ptr<Syncs> mSyncs;
     bool mEnteredOnSyncCreation = false;
 
     void onRemoteFolderChosen(QString remotePath);
