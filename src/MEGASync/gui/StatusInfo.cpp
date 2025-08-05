@@ -40,7 +40,9 @@ void StatusInfo::setState(TRANSFERS_STATES state)
             const QString statusText{tr("Paused")};
             ui->lStatusDesc->setToolTip(statusText);
             ui->lStatusDesc->setText(statusText);
-            ui->bIconState->setProperty("state", QLatin1String("paused"));
+            ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/pause.svg")));
+            ui->bIconState->setIconSize(QSize(16, 16));
+
             break;
         }
         case TRANSFERS_STATES::STATE_UPDATED:
@@ -55,14 +57,18 @@ void StatusInfo::setState(TRANSFERS_STATES state)
                 const QString statusText{tr("Account full")};
                 ui->lStatusDesc->setToolTip(statusText);
                 ui->lStatusDesc->setText(statusText);
-                ui->bIconState->setProperty("state", QString::fromUtf8("over_quota"));
+                ui->bIconState->setIcon(
+                    Utilities::getCachedPixmap(QString::fromUtf8(":/alert-circle.svg")));
+                ui->bIconState->setIconSize(QSize(16, 16));
             }
             else
             {
                 const QString statusText{tr("Up to date")};
                 ui->lStatusDesc->setToolTip(statusText);
                 ui->lStatusDesc->setText(statusText);
-                ui->bIconState->setProperty("state", QString::fromUtf8("updated"));
+                ui->bIconState->setIcon(
+                    Utilities::getCachedPixmap(QString::fromUtf8(":/check-circle.svg")));
+                ui->bIconState->setIconSize(QSize(16, 16));
             }
 
             break;
@@ -91,7 +97,6 @@ void StatusInfo::setState(TRANSFERS_STATES state)
             const QString statusText{tr("Waiting")+QString::fromUtf8("...")};
             ui->lStatusDesc->setToolTip(statusText);
             ui->lStatusDesc->setText(statusText);
-            ui->bIconState->setProperty("state", QString::fromUtf8("waiting"));
             break;
         }
         case TRANSFERS_STATES::STATE_INDEXING:
@@ -105,7 +110,6 @@ void StatusInfo::setState(TRANSFERS_STATES state)
             const QString statusText{tr("Scanning")+QString::fromUtf8("...")};
             ui->lStatusDesc->setToolTip(statusText);
             ui->lStatusDesc->setText(statusText);
-            ui->bIconState->setProperty("state", QString::fromUtf8("indexing"));
             break;
         }
         case TRANSFERS_STATES::STATE_TRANSFERRING:
@@ -119,7 +123,6 @@ void StatusInfo::setState(TRANSFERS_STATES state)
             const QString statusText{tr("Transferring")+QString::fromUtf8("...")};
             ui->lStatusDesc->setToolTip(statusText);
             ui->lStatusDesc->setText(statusText);
-            ui->bIconState->setProperty("state", QString::fromUtf8("transferring"));
             break;
         }
         case TRANSFERS_STATES::STATE_FAILED:
@@ -130,7 +133,9 @@ void StatusInfo::setState(TRANSFERS_STATES state)
             }
 
             setFailedText();
-            ui->bIconState->setProperty("state", QString::fromUtf8("failed"));
+            ui->bIconState->setIcon(
+                Utilities::getCachedPixmap(QString::fromUtf8(":/x-circle.svg")));
+            ui->bIconState->setIconSize(QSize(16, 16));
             break;
         }
         default:
