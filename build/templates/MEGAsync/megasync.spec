@@ -537,6 +537,9 @@ killall -s SIGUSR2 megasync 2> /dev/null || true
 %{_datadir}/icons/hicolor/*/*/mega.png
 %{_datadir}/icons/hicolor/*/*/*
 %{_datadir}/icons/*/*/*/*
+%{_datadir}/megasync
+%{_datadir}/megasync/resources
+%{_datadir}/megasync/resources/*.rcc
 %{_docdir}/megasync
 %{_docdir}/megasync/*
 /etc/sysctl.d/99-megasync-inotify-limit.conf
