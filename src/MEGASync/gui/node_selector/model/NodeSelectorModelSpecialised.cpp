@@ -505,11 +505,14 @@ bool NodeSelectorModelSearch::rootNodeUpdated(mega::MegaNode* node)
             {
                 auto newType(calculateSearchType(node));
                 auto oldType(searchItem->getType());
+                // The file still exists but in other search type: CD, incoming, rubbish...
                 if (newType != oldType)
                 {
                     searchItem->setType(newType);
                     updateRow(index);
                     emit nodeTypeHasChanged();
+                    // The loading view is set, so reduce by one the processed move
+                    moveProcessedByNumber(1);
                     return true;
                 }
             }
