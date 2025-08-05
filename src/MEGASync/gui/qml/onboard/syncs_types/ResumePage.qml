@@ -57,9 +57,8 @@ ResumePageForm {
         State {
             name: root.stateFullSync
 
-            PropertyChanges { target: titleItem; restoreEntryValues: true; text: (navInfoRef.errorOnSyncs ? OnboardingStrings.finalStepSyncTitleError : SyncsStrings.finalStepSyncTitle); }
-            PropertyChanges { target: descriptionItem; visible: !navInfoRef.errorOnSyncs; }
-            PropertyChanges { target: errorItem; visible: navInfoRef.errorOnSyncs; }
+            PropertyChanges { target: titleItem; restoreEntryValues: true; text: SyncsStrings.finalStepSyncTitle; }
+            PropertyChanges { target: descriptionItem; visible: true; }
             PropertyChanges { target: descriptionItem2; visible: false; }
             PropertyChanges { target: syncButton; visible: false; }
             PropertyChanges {

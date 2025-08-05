@@ -25,7 +25,6 @@ FooterButtonsPage {
     property alias syncButton: syncButtonItem
     property alias titleItem: titleItem
     property alias descriptionItem: descriptionItem
-    property alias errorItem: errorItem
     property alias descriptionItem2: descriptionItem2
 
     footerButtons {
@@ -66,19 +65,6 @@ FooterButtonsPage {
             font.pixelSize: Texts.Text.Size.MEDIUM
             wrapMode: Text.Wrap
             text: SyncsStrings.finalStepSync
-        }
-
-        Texts.BannerText {
-            id: errorItem
-
-            showBorder: false
-            type: Constants.MessageType.ERROR
-            text: OnboardingStrings.finalStepSyncError
-            visible: false
-            backgroundColor: ColorTheme.notificationError
-            icon: Images.xCircle
-            Layout.preferredWidth: parent.width
-            Layout.topMargin: topMargin
         }
 
         Texts.SecondaryText {

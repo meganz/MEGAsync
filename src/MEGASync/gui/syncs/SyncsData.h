@@ -19,7 +19,6 @@ class SyncsData: public QObject
     Q_PROPERTY(QString remoteError READ getRemoteError NOTIFY remoteErrorChanged)
 
     friend class Syncs;
-    friend class SyncsCandidatesController;
 
 public:
     explicit SyncsData(QObject* parent = nullptr);
@@ -30,14 +29,10 @@ signals:
     void remoteErrorChanged();
     void syncSetupSuccess(bool isFullSync);
     void syncSetupFailed();
-    void syncPrevalidationSuccess();
-    void syncPrevalidationFailed();
     void syncRemoved();
     void syncOriginChanged();
     void defaultLocalFolderChanged();
     void defaultRemoteFolderChanged();
-    void syncCandidatesSetupSuccess(bool isFullSync);
-    void syncCandidatesSetupFailed();
 
 private:
     QString getLocalError() const;

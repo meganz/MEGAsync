@@ -11,11 +11,5 @@ InstallationTypePageForm 1.0 InstallationTypePageForm.ui.qml
 NavigationInfo 1.0 NavigationInfo.qml
 StepPanel 1.0 StepPanel.qml
 SyncsPage 1.0 SyncsPage.qml
-SyncsFlow 1.0 SyncsFlow.qml
 AddSyncPage 1.0 AddSyncPage.qml
 AddSyncPageForm 1.0 AddSyncPageForm.ui.qml
-ConfirmSyncsPage 1.0 ConfirmSyncsPage.qml
-ConfirmSyncsPageForm 1.0 ConfirmSyncsPageForm.ui.qml
-ConfirmSyncsTable 1.0 ConfirmSyncsTable.qml
-HandleSyncCandidatesDialog 1.0 HandleSyncCandidatesDialog.qml
-RemoveSyncCandidateConfirmationDialog 1.0 RemoveSyncCandidateConfirmationDialog.qml

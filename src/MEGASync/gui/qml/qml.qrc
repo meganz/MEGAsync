@@ -139,14 +139,7 @@
         <file>onboard/syncs_types/SyncsPage.qml</file>
         <file>onboard/syncs_types/AddSyncPage.qml</file>
         <file>onboard/syncs_types/AddSyncPageForm.ui.qml</file>
-        <file>onboard/syncs_types/HandleSyncCandidatesDialog.qml</file>
-        <file>onboard/syncs_types/HandleSyncCandidatesDialogForm.ui.qml</file>
-        <file>onboard/syncs_types/RemoveSyncCandidateConfirmationDialog.qml</file>
-        <file>onboard/syncs_types/SyncsFlow.qml</file>
         <file>onboard/syncs_types/backups/qmldir</file>
-        <file>onboard/syncs_types/ConfirmSyncsPage.qml</file>
-        <file>onboard/syncs_types/ConfirmSyncsPageForm.ui.qml</file>
-        <file>onboard/syncs_types/ConfirmSyncsTable.qml</file>
         <file>onboard/syncs_types/backups/BackupsPage.qml</file>
         <file>onboard/syncs_types/backups/ConfirmFoldersPage.qml</file>
         <file>onboard/syncs_types/backups/ConfirmFoldersPageForm.ui.qml</file>
