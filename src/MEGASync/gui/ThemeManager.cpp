@@ -61,9 +61,9 @@ void ThemeManager::setTheme(Preferences::ThemeType theme)
             auto msg = QCoreApplication::translate(
                 "MegaError",
                 "[B]Error detected[/B][BR]An error has occurred loading application "
-                "resources, and the app needs to close. If this happens more than once, reinstall "
-                "the "
-                "app from [A]mega.io/desktop[/A] or contact support for further assistance.");
+                "resources, and the app needs to close. Please reinstall the app from "
+                "[A]mega.io/desktop[/A] to resolve this issue. If the problem persists after "
+                "reinstalling, contact support for further assistance.");
 
             const Text::Bold boldDecorator;
             boldDecorator.process(msg);
