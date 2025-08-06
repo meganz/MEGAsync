@@ -3915,9 +3915,9 @@ You will not be able to regain access to your stored data or be authorised to si
         <translation>Alert</translation>
     </message>
     <message>
-        <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. If this happens more than once, reinstall the app from [A]mega.io/desktop[/A] or contact support for further assistance.</source>
+        <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. If this happens more than once, reinstall the app from [A]mega.io/desktop[/A] or contact support for further assistance.</translation>
+        <translation>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</translation>
     </message>
 </context>
 <context>

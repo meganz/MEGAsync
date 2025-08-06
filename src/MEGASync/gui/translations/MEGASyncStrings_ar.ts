@@ -3829,9 +3829,9 @@ https://mega.co.nz/#sync</source>
         <translation>تنبيه</translation>
     </message>
     <message>
-        <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. If this happens more than once, reinstall the app from [A]mega.io/desktop[/A] or contact support for further assistance.</source>
+        <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation>[B]تم اكتشاف خطأ[/B][BR]حدث خطأ أثناء تحميل موارد التطبيق، ويجب إغلاق التطبيق. إذا حدث ذلك أكثر من مرة فأعد تثبيت التطبيق من [A]mega.io/desktop[/A] أو تواصل مع الدعم للحصول على مزيد من المساعدة.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5216,29 +5216,14 @@ Enter a different name</source>
         <translation>اكمل التسجيل</translation>
     </message>
     <message>
-        <source>Add</source>
-        <translatorcomment>Button label to add a new sync candidate. CON-1386</translatorcomment>
-        <translation>أضِف</translation>
-    </message>
-    <message>
         <source>Add folder</source>
         <translatorcomment>Button text to add a new folder to the backups table CON-468</translatorcomment>
         <translation>إضافة مجلد</translation>
     </message>
     <message>
-        <source>Add more syncs</source>
-        <translatorcomment>Label for a button to add more sync candidates. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Add the name of your device.</source>
         <translatorcomment>Device name window secondary title CON-467</translatorcomment>
         <translation>أضف اسم جهازك.</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove the selected sync?</source>
-        <translatorcomment>Description on removing an sync candidate. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>At least one number or special character</source>
@@ -5279,11 +5264,6 @@ Enter a different name</source>
         <source>Backup: Select folders</source>
         <translatorcomment>Onboarding step text indicating the user that he is in the backup select folders step CON-468</translatorcomment>
         <translation>النسخ الاحتياطي: حدد المجلدات</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label on cancel current sync candidate removal process. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel account</source>
@@ -5331,11 +5311,6 @@ Enter a different name</source>
         <translation>قم بتأكيد المجلدات للنسخ الاحتياطي</translation>
     </message>
     <message>
-        <source>Confirm folders to sync</source>
-        <translatorcomment>Page title for sync candidate table page. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Confirm password</source>
         <translatorcomment>Label indicating that the password should be confirmed CON-466</translatorcomment>
         <translation>تأكيد كلمة المرور</translation>
@@ -5379,11 +5354,6 @@ Enter a different name</source>
         <source>Don’t stop</source>
         <translatorcomment>Cancel button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
         <translation>لا توقف</translation>
-    </message>
-    <message>
-        <source>Edit sync</source>
-        <translatorcomment>Action label for a menu button to edit  a sync candidate. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Email</source>
@@ -5481,11 +5451,6 @@ Enter a different name</source>
         <translation>دعنا نجهز إعداداتك</translation>
     </message>
     <message>
-        <source>Local folders</source>
-        <translatorcomment>SubTitle for the local part on a sync inside a Sync candidate table. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Log in</source>
         <translatorcomment>Log in button text CON-465</translatorcomment>
         <translation>تسجيل الدخول</translation>
@@ -5501,11 +5466,6 @@ Enter a different name</source>
         <translation>جاري تسجيل الدخول…</translation>
     </message>
     <message>
-        <source>MEGA folders</source>
-        <translatorcomment>SubTitle for the remote part on a sync inside a Sync candidate table. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Names longer than 32 characters are not supported</source>
         <translatorcomment>Error shown in case the user types a name larger than 32 characters in the device name field CON-467</translatorcomment>
         <translation>لا يتم دعم الأسماء التي يزيد طولها عن 32 محرفًا</translation>
@@ -5514,11 +5474,6 @@ Enter a different name</source>
         <source>Once confirmed, your account will be activated.</source>
         <translatorcomment>Page secondary title for new accounts in login page CON-465</translatorcomment>
         <translation>بمجرد التأكيد سيتم تفعيل حسابك.</translation>
-    </message>
-    <message>
-        <source>One or more syncs were unable to be set up. Check the folders and try again.</source>
-        <translatorcomment>Error banner description on resume page for sync candidates confirmation, we have at least one error. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Password</source>
@@ -5556,26 +5511,6 @@ Enter a different name</source>
         <translation>مشكلة في توثيق المصادقة المزدوجة؟</translation>
     </message>
     <message>
-        <source>Remove</source>
-        <translatorcomment>Button label on confirmation on sync candidate removal process. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove sync</source>
-        <translatorcomment>Action label for a menu button to remove a sync candidate. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove sync?</source>
-        <translatorcomment>Title for a pop-up dialog that request user confirmation to remove a sync candidate. CON-1386.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Removing this sync will take you back to the start of setup.</source>
-        <translatorcomment>Description off the consequences of removing the last sync candidate left on the table. CON-1386</translatorcomment>
-        <translation>سيؤدي هذا إلى بدء إعداد المزامنة مرة أخرى</translation>
-    </message>
-    <message>
         <source>Rename</source>
         <translatorcomment>Button to rename a backup CON-468</translatorcomment>
         <translation>إعادة التسمية</translation>
@@ -5584,11 +5519,6 @@ Enter a different name</source>
         <source>Resend</source>
         <translatorcomment>Button text to resend the email for account confirmation CON-466</translatorcomment>
         <translation>إعادة إرسال</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translatorcomment>Button label to save the changes on the paths of a sync candidate. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
@@ -5669,11 +5599,6 @@ Enter a different name</source>
         <source>Sync set up</source>
         <translatorcomment>Onboarding step text indicating the user that he is in the sync setup step CON-467</translatorcomment>
         <translation>إعداد المزامنة</translation>
-    </message>
-    <message>
-        <source>Sync wasn’t fully set up</source>
-        <translatorcomment>Error banner title on resume page for sync candidates confirmation, we have at least one error. CON-1386</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
@@ -8554,11 +8479,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Folder can&apos;t be synced as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
         <translatorcomment>Error message indicating that the selected folder is unreachable. CON-467</translatorcomment>
         <translation>لا يمكن مزامنة المجلد لأنه لا يمكن تحديد موقعه. ربما تم نقله أو حذفه، أو ربما لا يمكنك الوصول إليه.</translation>
-    </message>
-    <message>
-        <source>Folder can&apos;t be synced as it&apos;s already a candidate.</source>
-        <translatorcomment>Error message indicating the user we have a sync candidate with the same folder already in the sync candidates table. CON-1386</translatorcomment>
-        <translation>هذا المجلد موجود بالفعل في قائمة عمليات المزامنة المعلقة</translation>
     </message>
     <message>
         <source>Select a MEGA folder to sync.</source>
