@@ -6,9 +6,9 @@
 #define VER_MAJOR 5
 #define VER_MINOR 15
 #define VER_MICRO 0
-#define VER_RC 0
+#define VER_RC 1
 // Format: "VER_MAJOR.VER_MINOR.VER_MICRO.VER_RC\0"
-#define VER_PRODUCTVERSION_STR "5.15.0.0\0"
+#define VER_PRODUCTVERSION_STR "5.15.0.1\0"
 #define VER_PRODUCTVERSION VER_MAJOR, VER_MINOR, VER_MICRO, VER_RC
 #define VER_FILEVERSION VER_MAJOR, VER_MINOR, VER_MICRO, VER_RC
 #define VER_FILEVERSION_CODE (VER_MAJOR * 10000 + VER_MINOR * 100 + VER_MICRO)
@@ -26,7 +26,7 @@
 #define VER_PRODUCTNAME_STR         "MEGAsync\0"
 
 /* SDK commit hash, 7 chars */
-#define VER_SDK_ID "024b12f"
+#define VER_SDK_ID "784ad98"
 
 /* Update scrips relying on this value if you move it
 Format: 1 item by line, starting from line following the #define
