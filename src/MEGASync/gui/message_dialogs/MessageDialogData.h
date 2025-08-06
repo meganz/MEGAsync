@@ -186,6 +186,7 @@ private:
     void buttonClicked(QMessageBox::StandardButton type);
 
     void setImageUrl(const QUrl& url);
+    void setImageSize(const QSize& size);
     void buildButtons();
     void processButtonInfo(QMessageBox::StandardButtons buttons,
                            QMessageBox::StandardButton type,

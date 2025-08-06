@@ -103,6 +103,7 @@ MessageDialogInfo::MessageDialogInfo():
     buttons(QMessageBox::NoButton),
     defaultButton(QMessageBox::NoButton),
     textFormat(Qt::PlainText),
+    imageSize(QSize(100, 100)),
     enqueue(false),
     hideCloseButton(false),
     checkboxChecked(false),
