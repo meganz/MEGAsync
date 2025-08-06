@@ -23,53 +23,31 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">ViewLoadingMessage
+   <string notr="true">#ViewLoadingMessage
 {
-background-color: rgba(0,0,0,0.50); /*colorToken.background-blur*/
+background-color: #33000000; /*colorToken.background-blur*/
 }
 
 #wMessageContainer
 {
 border-radius: 10px;
-background-color: #FFFFFF; /*colorToken.page-background*/
-}
-
-#lMessageLabel
-{
-  font-size:16px;
-  line-height: 30px;
-  font-weight: 600;
-  color: #666666;
-}
-
-#lProgressLabel
-{
-  font-size:12px;
-  line-height: 18px;
-  font-weight: 600;
-  color: #303233;
-}
-
-QPushButton 
-{ 
-font-size: 14px; font-weight:400;
-line-height: 20px;
-padding-top : 5px; padding-bottom : 8px; padding-left : 10px; padding-right : 10px;
-background-color : #AAAAAA;
-border-style: solid; border-width: 1px; border-color: #d7d6d5; border-radius: 3px;
-color: #FFFFFF;
+background-color: #FFFFFFFF; /*colorToken.page-background*/
 }
 
 QProgressBar 
 {
      border: none;
-     background-color: rgba(0,0,0,0.10);
+     background-color: #D8D9DB; /*colorToken.border-strong*/
+     max-height: 2px;
 }
 
 QProgressBar::chunk 
 {
-    background-color: #04101E;
+    background-color: #04101E; /*colorToken.border-strong-selected*/
 }</string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
@@ -170,19 +148,22 @@ QProgressBar::chunk
            <property name="wordWrap">
             <bool>true</bool>
            </property>
+           <property name="type" stdset="0">
+            <string notr="true">sub-title</string>
+           </property>
           </widget>
          </item>
          <item alignment="Qt::AlignVCenter">
           <widget class="QProgressBar" name="pbProgressBar">
            <property name="minimumSize">
             <size>
-             <width>0</width>
+             <width>200</width>
              <height>2</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>16777215</width>
+             <width>200</width>
              <height>2</height>
             </size>
            </property>
@@ -195,7 +176,11 @@ QProgressBar::chunk
           </widget>
          </item>
          <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-          <widget class="QLabel" name="lProgressLabel"/>
+          <widget class="QLabel" name="lProgressLabel">
+           <property name="type" stdset="0">
+            <string notr="true">sub-title</string>
+           </property>
+          </widget>
          </item>
          <item>
           <spacer name="verticalSpacer_2">
@@ -220,6 +205,12 @@ QProgressBar::chunk
            </property>
            <property name="autoDefault">
             <bool>true</bool>
+           </property>
+           <property name="type" stdset="0">
+            <string notr="true">secondary</string>
+           </property>
+           <property name="dimension" stdset="0">
+            <string notr="true">small</string>
            </property>
           </widget>
          </item>

@@ -196,6 +196,7 @@ private:
         if (row >= mLoadingItems.size())
         {
             item = new DelegateWidget(getView());
+            item->hide();
             TokenParserWidgetManager::instance()->applyCurrentTheme(item);
             TokenParserWidgetManager::instance()->polish(item);
             mLoadingItems.append(item);

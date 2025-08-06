@@ -182,7 +182,9 @@ void LoadingSceneMessageHandler::checkLoadingMessageVisibility()
         if (mLoadingViewVisible)
         {
             mLoadingMessage->updateGeometry();
-            mLoadingMessage->setVisible(true);
+            mLoadingMessage->show();
+
+            TokenParserWidgetManager::instance()->applyCurrentTheme(mLoadingMessage);
         }
         else
         {
@@ -196,10 +198,6 @@ void LoadingSceneMessageHandler::createLoadingMessage()
     if (!mLoadingMessage)
     {
         mLoadingMessage = new ViewLoadingMessage(mTopParent ? mTopParent : mViewBase);
-        TokenParserWidgetManager::instance()->applyCurrentTheme(mLoadingMessage);
-        // Temporary -> Delete when all moudules using this loading message are tokenized
-        TokenParserWidgetManager::instance()->registerWidgetForTheming(mLoadingMessage);
-        TokenParserWidgetManager::instance()->polish(mLoadingMessage);
         mLoadingMessage->hide();
         connect(mLoadingMessage,
                 &ViewLoadingMessage::buttonPressed,

@@ -36,6 +36,8 @@ private slots:
     void onButtonPressed();
 
 private:
+    void retainSizeWhenHidden();
+
     Ui::ViewLoadingMessage* ui;
     std::shared_ptr<MessageInfo> mInfo;
     bool mCloseWhenAnyButtonIsPressed;

@@ -17,10 +17,13 @@ ViewLoadingMessage::ViewLoadingMessage(QWidget* parent):
 
     connect(ui->bButton, &QPushButton::clicked, this, &ViewLoadingMessage::onButtonPressed);
 
-    setProperty("TOKENIZED", true);
-
     // Shadow
-    setGraphicsEffect(CreateBlurredShadowEffect(QColor(0, 0, 0, 90), 30, 0, 25));
+    setGraphicsEffect(CreateBlurredShadowEffect(QColor(0, 0, 0, 38), 30, 10, 25));
+
+    setAttribute(Qt::WA_StyledBackground);
+
+    // Retain sizes to avoid UI changes
+    retainSizeWhenHidden();
 }
 
 ViewLoadingMessage::~ViewLoadingMessage()
@@ -40,6 +43,17 @@ void ViewLoadingMessage::onButtonPressed()
     if (mCloseWhenAnyButtonIsPressed || mInfo->buttonType == MessageInfo::ButtonType::OK)
     {
         close();
+    }
+}
+
+void ViewLoadingMessage::retainSizeWhenHidden()
+{
+    const auto widgets(ui->wMessageContainer->findChildren<QWidget*>());
+    for (auto wid: widgets)
+    {
+        auto sizeP(wid->sizePolicy());
+        sizeP.setRetainSizeWhenHidden(true);
+        wid->setSizePolicy(sizeP);
     }
 }
 
