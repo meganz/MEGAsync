@@ -3912,12 +3912,12 @@ You will not be able to regain access to your stored data or be authorised to si
     <message>
         <source>Alert</source>
         <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alert</translation>
     </message>
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</translation>
     </message>
 </context>
 <context>
@@ -6117,7 +6117,9 @@ Enter a different name.</translation>
 - We’ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Error messages are now clearer, making it easier to understand when things go wrong.
+- We’ve fixed bugs and made the app more reliable.
+</translation>
     </message>
 </context>
 <context>
@@ -6672,22 +6674,22 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
-        <translation>Delete folder permanently</translation>
+        <translation>Delete folder from MEGA</translation>
     </message>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation>Folder will be deleted from MEGA. It won’t be deleted from your computer. This action can’t be undone.</translation>
+        <translation>The folder will be deleted from MEGA, but it won’t be deleted from your device. This action can’t be undone.</translation>
     </message>
     <message>
         <source>Move folder</source>
         <translatorcomment>Radio button option label</translatorcomment>
-        <translation>Move folder</translation>
+        <translation>Move folder to Cloud drive</translation>
     </message>
     <message>
         <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
         <translatorcomment>Radio button description</translatorcomment>
-        <translation>Move this folder from backups to another location in your Cloud drive to get full access to your data. This folder will stop being backed up.</translation>
+        <translation>Move this folder to your Cloud drive to get full access to your data. It will no longer be backed up to.</translation>
     </message>
     <message>
         <source>Move to:</source>
@@ -6707,7 +6709,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>To stop backing up this folder, you need to either move it or delete it.</source>
         <translatorcomment>Backup removal title description</translatorcomment>
-        <translation>To stop backing up this folder, you need to either move it or delete it.</translation>
+        <translation>To stop backing up this folder, you need to either move it or delete it</translation>
     </message>
 </context>
 <context>
