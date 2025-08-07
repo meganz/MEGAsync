@@ -147,6 +147,27 @@ MessageDialogData::Type MessageDialogData::getType() const
 
 QWidget* MessageDialogData::getParentWidget() const
 {
+    if (mInfo.parent)
+    {
+        auto isDialog = qobject_cast<QDialog*>(mInfo.parent) != nullptr;
+
+        if (!isDialog)
+        {
+            QWidget* currentParent(mInfo.parent->parentWidget());
+            QDialog* parentDialog(nullptr);
+            while (!parentDialog && currentParent)
+            {
+                parentDialog = qobject_cast<QDialog*>(currentParent);
+                currentParent = currentParent->parentWidget();
+            }
+
+            if (parentDialog)
+            {
+                return parentDialog;
+            }
+        }
+    }
+
     return mInfo.parent;
 }
 

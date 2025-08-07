@@ -1316,5 +1316,6 @@
         <file alias="pause-circle_medium_thin_outline">images/themed/tokenizable/pause-circle_medium_thin_outline.svg</file>
         <file alias="gear_six_small_thin_outline">images/themed/tokenizable/gear_six_small_thin_outline.svg</file>
         <file alias="menu_01_medium_thin_outline">images/themed/tokenizable/menu_01_medium_thin_outline.svg</file>
+        <file alias="alert-circle">images/themed/common/alert-circle.svg</file>
     </qresource>
 </RCC>
