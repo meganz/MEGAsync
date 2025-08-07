@@ -26,47 +26,46 @@
    <string>Open links</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget
+   <string notr="true">#PasteMegaLinksDialog
 {
-font-size: 11px;
-}
-
-QCheckBox::indicator {
-     width: 16px;
-     height: 16px;
- }
-
-QRadioButton::indicator {
-     width: 16px;
-     height: 16px;
- }
-
-QScrollBar:horizontal {
-height: 16px;
+background-color: #ffffff; /*colorToken.page-background*/
 }
 
 #eLinks
 {
-margin-right: 5px;
-margin-left: 5px;
+background-color: #ffffff; /*colorToken.page-background*/
+border: 1px solid #D8D9DB; /*colorToken.border-strong*/
+border-radius: 8px;
+color: #616366; /*colorToken.text-placeholder*/
+padding-right: 5px;
 }
+
+#lHeader
+{
+color: #303233; /*colorToken.color-text-primary*/
+font-size: 12px;
+}
+
 </string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
-    <number>6</number>
+    <number>12</number>
    </property>
    <property name="leftMargin">
-    <number>6</number>
+    <number>24</number>
    </property>
    <property name="topMargin">
-    <number>6</number>
+    <number>24</number>
    </property>
    <property name="rightMargin">
-    <number>6</number>
+    <number>24</number>
    </property>
    <property name="bottomMargin">
-    <number>6</number>
+    <number>24</number>
    </property>
    <item>
     <widget class="QLabel" name="lHeader">
@@ -77,12 +76,18 @@ margin-left: 5px;
       <string>Enter one or multiple MEGA file links</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="semibold" stdset="0">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QPlainTextEdit" name="eLinks">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <property name="verticalScrollBarPolicy">
       <enum>Qt::ScrollBarAsNeeded</enum>
      </property>
@@ -94,6 +99,19 @@ margin-left: 5px;
      </property>
      <property name="lineWrapMode">
       <enum>QPlainTextEdit::WidgetWidth</enum>
+     </property>
+     <property name="plainText">
+      <string>https://mega.nz/file/XgRAlLLQ#QC1nLTVoR6uWBsfKCbZGrHiF8-uVjr6VFMH_d1SVRIs
+https://mega.nz/file/upxRjbAR#2JvZrG8yRt5LdqXceMrF-vh0NTDZHXfvIbff0LP2EDo
+https://mega.nz/file/n5xRlY7I#nUlNf98MatTTGDuF0bdwJ_nKN8qbga-T9491qXNaRGo
+https://mega.nz/file/29BhgBKR#-vaVuCSOrq70dSlymLaHPBoYmOa6E99rsGnqOP3tUpo
+https://mega.nz/file/ughB0RSJ#Nf5zQ1FJoQ0pruWzghxu8yitxWUyV-GXvdIS3SYreg8
+https://mega.nz/file/XoBXyRoB#E5VKdOWWrsFBtIj-ZmZBLey1SwPJ9Kz5izPX1Ny7tVA
+https://mega.nz/file/uohWxZYD#FjQZ3UFODyWPsnprLoYVGppNXWI3fSCgwqlSoEiQlGk
+https://mega.nz/file/2xIzQIiK#lfwKZzh1GSdRAYe3i3Wz-OLJIgAvU7rYAcVTlvtnd1I
+https://mega.nz/file/asoSRCjZ#7ZvnR--UJgSKXi4KJ0ZdxGIwi9XzbTzFZy_tz13D07U
+https://mega.nz/file/eppBQSqb#jrhrPVKYwTxYPud39vEcb-BwdJ0kXoKP6wEnRTImC9w
+https://mega.nz/file/bo4lBZjL#-2pR965_J3muFW_lk23qEaHlxxDHwXZ1BiRYbvF-vyM</string>
      </property>
      <property name="centerOnScroll">
       <bool>false</bool>
@@ -163,6 +181,12 @@ margin-left: 5px;
         <property name="text">
          <string>Cancel</string>
         </property>
+        <property name="type" stdset="0">
+         <string notr="true">secondary</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string notr="true">small</string>
+        </property>
        </widget>
       </item>
       <item>
@@ -187,6 +211,12 @@ margin-left: 5px;
         </property>
         <property name="text">
          <string>Submit</string>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">primary</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string notr="true">small</string>
         </property>
        </widget>
       </item>
@@ -214,4 +244,7 @@ margin-left: 5px;
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>reject()</slot>
+ </slots>
 </ui>

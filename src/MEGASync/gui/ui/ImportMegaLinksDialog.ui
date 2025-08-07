@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>ImportMegaLinksDialog</class>
  <widget class="QDialog" name="ImportMegaLinksDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>445</width>
+    <height>371</height>
+   </rect>
+  </property>
   <property name="minimumSize">
    <size>
     <width>445</width>
@@ -18,35 +26,35 @@
    <string>Open links</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget
+   <string notr="true">#linkList
 {
-font-size: 11px;
+background-color: #F7F7F7; /*colorToken.surface-1*/
+padding-left: 24px;
+padding-right: 5px;
+border: none;
 }
 
-#linkList
+#eLocalFolder, #eMegaFolder
 {
-background-color: #FFFFFF;
+background-color: #D8D9DB;/*colorToken.page-background*/
+border: 1px solid #D8D9DB; /*colorToken.border-strong*/
+border-radius: 8px;
+height: 36px;
+font-size: 14px;
+color: #C1C2C4; /*colorToken.text-placeholder*/
 }
 
-QCheckBox::indicator {
-     width: 16px;
-     height: 16px;
- }
-
-QRadioButton::indicator {
-     width: 16px;
-     height: 16px;
- }
-
-QScrollBar:horizontal {
-height: 16px;
-}
-
-#cImport, #cDownload
+#cDownload, #cImport
 {
-spacing: 10px;
+color: #F3F4F4; /*colorToken.text-primary*/
 }
+
+
+
 </string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0">
    <property name="spacing">
@@ -62,7 +70,7 @@ spacing: 10px;
     <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>24</number>
    </property>
    <item>
     <widget class="QListWidget" name="linkList">
@@ -78,16 +86,16 @@ spacing: 10px;
     <widget class="QWidget" name="widget" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="spacing">
-       <number>6</number>
+       <number>9</number>
       </property>
       <property name="leftMargin">
-       <number>6</number>
+       <number>24</number>
       </property>
       <property name="topMargin">
-       <number>14</number>
+       <number>24</number>
       </property>
       <property name="rightMargin">
-       <number>6</number>
+       <number>24</number>
       </property>
       <property name="bottomMargin">
        <number>9</number>
@@ -118,6 +126,12 @@ spacing: 10px;
            <property name="checked">
             <bool>true</bool>
            </property>
+           <property name="type" stdset="0">
+            <string>mega</string>
+           </property>
+           <property name="semibold" stdset="0">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
         </layout>
@@ -131,12 +145,12 @@ spacing: 10px;
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>26</height>
+          <height>0</height>
          </size>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <property name="spacing">
-          <number>6</number>
+          <number>12</number>
          </property>
          <property name="leftMargin">
           <number>10</number>
@@ -158,11 +172,17 @@ spacing: 10px;
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>21</height>
+             <height>0</height>
             </size>
+           </property>
+           <property name="text">
+            <string>asdfasdf</string>
            </property>
            <property name="readOnly">
             <bool>true</bool>
+           </property>
+           <property name="dimension" stdset="0">
+            <string>medium</string>
            </property>
           </widget>
          </item>
@@ -179,6 +199,12 @@ spacing: 10px;
            </property>
            <property name="flat">
             <bool>false</bool>
+           </property>
+           <property name="type" stdset="0">
+            <string>secondary</string>
+           </property>
+           <property name="dimension" stdset="0">
+            <string>medium</string>
            </property>
           </widget>
          </item>
@@ -214,6 +240,12 @@ spacing: 10px;
            <property name="checked">
             <bool>true</bool>
            </property>
+           <property name="type" stdset="0">
+            <string>mega</string>
+           </property>
+           <property name="style" stdset="0">
+            <string>semibold</string>
+           </property>
           </widget>
          </item>
         </layout>
@@ -224,12 +256,12 @@ spacing: 10px;
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>26</height>
+          <height>0</height>
          </size>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <property name="spacing">
-          <number>6</number>
+          <number>12</number>
          </property>
          <property name="leftMargin">
           <number>10</number>
@@ -251,8 +283,11 @@ spacing: 10px;
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>21</height>
+             <height>0</height>
             </size>
+           </property>
+           <property name="text">
+            <string>asdfasdfasd</string>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -264,6 +299,12 @@ spacing: 10px;
            <property name="text">
             <string>Choose</string>
            </property>
+           <property name="type" stdset="0">
+            <string>secondary</string>
+           </property>
+           <property name="dimension" stdset="0">
+            <string>medium</string>
+           </property>
           </widget>
          </item>
         </layout>
@@ -274,24 +315,24 @@ spacing: 10px;
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>34</height>
+          <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>32</height>
+          <height>16777215</height>
          </size>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <property name="spacing">
-          <number>6</number>
+          <number>8</number>
          </property>
          <property name="leftMargin">
           <number>8</number>
          </property>
          <property name="topMargin">
-          <number>6</number>
+          <number>0</number>
          </property>
          <property name="rightMargin">
           <number>8</number>
@@ -323,6 +364,12 @@ spacing: 10px;
            <property name="text">
             <string>Cancel</string>
            </property>
+           <property name="type" stdset="0">
+            <string>secondary</string>
+           </property>
+           <property name="dimension" stdset="0">
+            <string>small</string>
+           </property>
           </widget>
          </item>
          <item>
@@ -338,6 +385,12 @@ spacing: 10px;
            </property>
            <property name="text">
             <string>OK</string>
+           </property>
+           <property name="type" stdset="0">
+            <string>primary</string>
+           </property>
+           <property name="dimension" stdset="0">
+            <string>small</string>
            </property>
           </widget>
          </item>

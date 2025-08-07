@@ -66,17 +66,26 @@ void ImportListWidgetItem::updateGui()
     case LOADING:
         break;
     case CORRECT:
-        statusIcon.addFile(QString::fromUtf8(":/images/import_ok_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        statusIcon.addFile(QString::fromUtf8(":/images/import_check.svg"),
+                           QSize(),
+                           QIcon::Normal,
+                           QIcon::Off);
         ui->cSelected->setChecked(true);
         ui->cSelected->setEnabled(true);
         break;
     case WARNING:
-        statusIcon.addFile(QString::fromUtf8(":/images/import_warning_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+        statusIcon.addFile(QString::fromUtf8(":/images/alert_triangle.svg"),
+                           QSize(),
+                           QIcon::Normal,
+                           QIcon::Off);
         ui->cSelected->setChecked(false);
         ui->cSelected->setEnabled(false);
         break;
     default:
-        statusIcon.addFile(QString::fromUtf8(":/images/import_error_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+        statusIcon.addFile(QString::fromUtf8(":/images/import_failed.svg"),
+                           QSize(),
+                           QIcon::Normal,
+                           QIcon::Off);
         ui->cSelected->setChecked(false);
         ui->cSelected->setEnabled(false);
         break;
@@ -84,7 +93,7 @@ void ImportListWidgetItem::updateGui()
 
 #ifdef __APPLE__
     ui->lState->setIcon(statusIcon);
-    ui->lState->setIconSize(QSize(24, 24));
+    ui->lState->setIconSize(QSize(16, 16));
 #else
     ui->lState->setPixmap(statusIcon.pixmap(QSize(24, 24)));
 #endif
@@ -103,4 +112,13 @@ QString ImportListWidgetItem::getLink()
 void ImportListWidgetItem::on_cSelected_stateChanged(int state)
 {
     emit stateChanged(id, state);
+}
+
+void ImportListWidgetItem::resizeEvent(QResizeEvent* e)
+{
+    QWidget::resizeEvent(e);
+    if (parentWidget())
+    {
+        setFixedWidth(parentWidget()->width());
+    }
 }
