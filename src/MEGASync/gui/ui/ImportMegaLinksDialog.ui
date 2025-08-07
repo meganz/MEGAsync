@@ -34,6 +34,20 @@ padding-right: 5px;
 border: none;
 }
 
+#linkList::item:selected 
+{
+background: transparent;
+}
+
+#linkList::item:selected:active 
+{
+background: transparent;
+}
+#linkList::item:selected:!active 
+{
+background: transparent;
+}
+
 #eLocalFolder, #eMegaFolder
 {
 background-color: #D8D9DB;/*colorToken.page-background*/
@@ -56,7 +70,7 @@ color: #F3F4F4; /*colorToken.text-primary*/
   <property name="TOKENIZED" stdset="0">
    <bool>true</bool>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,0">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -70,7 +84,7 @@ color: #F3F4F4; /*colorToken.text-primary*/
     <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>24</number>
+    <number>10</number>
    </property>
    <item>
     <widget class="QListWidget" name="linkList">
@@ -84,317 +98,355 @@ color: #F3F4F4; /*colorToken.text-primary*/
    </item>
    <item>
     <widget class="QWidget" name="widget" native="true">
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QVBoxLayout" name="verticalLayout_4">
       <property name="spacing">
-       <number>9</number>
+       <number>32</number>
       </property>
       <property name="leftMargin">
        <number>24</number>
       </property>
       <property name="topMargin">
-       <number>24</number>
+       <number>33</number>
       </property>
       <property name="rightMargin">
        <number>24</number>
       </property>
       <property name="bottomMargin">
-       <number>9</number>
+       <number>17</number>
       </property>
       <item>
-       <widget class="QWidget" name="widget_4" native="true">
-        <layout class="QHBoxLayout" name="horizontalLayout_5">
-         <property name="leftMargin">
-          <number>10</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QCheckBox" name="cDownload">
-           <property name="enabled">
-            <bool>true</bool>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="spacing">
+         <number>10</number>
+        </property>
+        <item>
+         <widget class="QWidget" name="widget_4" native="true">
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <property name="leftMargin">
+            <number>0</number>
            </property>
-           <property name="text">
-            <string>Download to my computer</string>
+           <property name="topMargin">
+            <number>0</number>
            </property>
-           <property name="checked">
-            <bool>true</bool>
+           <property name="rightMargin">
+            <number>0</number>
            </property>
-           <property name="type" stdset="0">
-            <string>mega</string>
+           <property name="bottomMargin">
+            <number>0</number>
            </property>
-           <property name="semibold" stdset="0">
-            <bool>true</bool>
+           <item>
+            <widget class="QCheckBox" name="cDownload">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="text">
+              <string>Download to my computer</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+             <property name="type" stdset="0">
+              <string>mega</string>
+             </property>
+             <property name="semibold" stdset="0">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="widget_2" native="true">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <property name="spacing">
+            <number>12</number>
            </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLineEdit" name="eLocalFolder">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+             <property name="dimension" stdset="0">
+              <string>medium</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="bLocalFolder">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Choose</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+             <property name="type" stdset="0">
+              <string>secondary</string>
+             </property>
+             <property name="dimension" stdset="0">
+              <string>medium</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
-       <widget class="QWidget" name="widget_2" native="true">
-        <property name="enabled">
-         <bool>true</bool>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="spacing">
+         <number>10</number>
         </property>
-        <property name="minimumSize">
+        <item>
+         <widget class="QWidget" name="widget_3" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QCheckBox" name="cImport">
+             <property name="text">
+              <string>Import to my cloud drive</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+             <property name="type" stdset="0">
+              <string>mega</string>
+             </property>
+             <property name="style" stdset="0">
+              <string>semibold</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="wImport" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <property name="spacing">
+            <number>12</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLineEdit" name="eMegaFolder">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="bMegaFolder">
+             <property name="text">
+              <string>Choose</string>
+             </property>
+             <property name="type" stdset="0">
+              <string>secondary</string>
+             </property>
+             <property name="dimension" stdset="0">
+              <string>medium</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="bLayout" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <property name="spacing">
+       <number>12</number>
+      </property>
+      <property name="leftMargin">
+       <number>24</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>24</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
          <size>
-          <width>0</width>
-          <height>0</height>
+          <width>40</width>
+          <height>24</height>
          </size>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <property name="spacing">
-          <number>12</number>
-         </property>
-         <property name="leftMargin">
-          <number>10</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>8</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLineEdit" name="eLocalFolder">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>asdfasdf</string>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-           <property name="dimension" stdset="0">
-            <string>medium</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="bLocalFolder">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Choose</string>
-           </property>
-           <property name="flat">
-            <bool>false</bool>
-           </property>
-           <property name="type" stdset="0">
-            <string>secondary</string>
-           </property>
-           <property name="dimension" stdset="0">
-            <string>medium</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
+       </spacer>
       </item>
       <item>
-       <widget class="QWidget" name="widget_3" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
+       <widget class="QPushButton" name="bCancel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <property name="leftMargin">
-          <number>10</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QCheckBox" name="cImport">
-           <property name="text">
-            <string>Import to my cloud drive</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="type" stdset="0">
-            <string>mega</string>
-           </property>
-           <property name="style" stdset="0">
-            <string>semibold</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QWidget" name="wImport" native="true">
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <property name="spacing">
-          <number>12</number>
-         </property>
-         <property name="leftMargin">
-          <number>10</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>8</number>
-         </property>
-         <property name="bottomMargin">
-          <number>6</number>
-         </property>
-         <item>
-          <widget class="QLineEdit" name="eMegaFolder">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>asdfasdfasd</string>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="bMegaFolder">
-           <property name="text">
-            <string>Choose</string>
-           </property>
-           <property name="type" stdset="0">
-            <string>secondary</string>
-           </property>
-           <property name="dimension" stdset="0">
-            <string>medium</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QWidget" name="bLayout" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
+          <height>32</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>16777215</height>
+          <height>32</height>
          </size>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <property name="spacing">
-          <number>8</number>
-         </property>
-         <property name="leftMargin">
-          <number>8</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>8</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>24</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="bCancel">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Cancel</string>
-           </property>
-           <property name="type" stdset="0">
-            <string>secondary</string>
-           </property>
-           <property name="dimension" stdset="0">
-            <string>small</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="bOk">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>OK</string>
-           </property>
-           <property name="type" stdset="0">
-            <string>primary</string>
-           </property>
-           <property name="dimension" stdset="0">
-            <string>small</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <property name="text">
+         <string>Cancel</string>
+        </property>
+        <property name="type" stdset="0">
+         <string>secondary</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string>small</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="bOk">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>OK</string>
+        </property>
+        <property name="type" stdset="0">
+         <string>primary</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string>small</string>
+        </property>
        </widget>
       </item>
      </layout>
