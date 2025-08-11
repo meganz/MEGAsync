@@ -121,5 +121,6 @@
         <file alias="images/qml/dialog_message_information.svg">images/qml/dialog_message_information.svg</file>
         <file alias="images/qml/dialog_message_question.svg">images/qml/dialog_message_question.svg</file>
         <file alias="images/qml/dialog_message_warning.svg">images/qml/dialog_message_warning.svg</file>
+        <file alias="images/qml/arrows-up-down-circle.svg">images/qml/arrows-up-down-circle.svg</file>
     </qresource>
 </RCC>

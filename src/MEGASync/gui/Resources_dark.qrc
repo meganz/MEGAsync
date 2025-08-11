@@ -88,10 +88,8 @@
         <file alias="pause.svg">images/themed/dark/pause.svg</file>
         <file alias="pause-circle.svg">images/themed/dark/pause-circle.svg</file>
         <file alias="play-circle.svg">images/themed/dark/play-circle.svg</file>
-        <file alias="arrows-up-down-circle.svg">images/themed/dark/arrows-up-down-circle.svg</file>
         <file alias="x-circle.svg">images/themed/dark/x-circle.svg</file>
         <file alias="alert-circle.svg">images/themed/dark/alert-circle.svg</file>
-        <file alias="arrows-up-down-circle.svg">images/qml/arrows-up-down-circle.svg</file>
         <file alias="down-arrow.svg">images/qml/down-arrow.svg</file>
         <file alias="up-arrow.svg">images/qml/up-arrow.svg</file>
         <file alias="activity_indicator_1.svg">images/themed/dark/activity_indicator_1.svg</file>
