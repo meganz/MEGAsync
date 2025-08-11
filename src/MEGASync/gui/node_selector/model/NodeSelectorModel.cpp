@@ -424,6 +424,7 @@ void NodeRequester::removeRootItem(NodeSelectorModelItem* item)
     QMutexLocker lock(&mDataMutex);
     item->deleteLater();
     mRootItems.removeOne(item);
+    emit rootItemsDeleted();
 }
 
 void NodeRequester::removeRootItem(std::shared_ptr<mega::MegaNode> node)
@@ -535,6 +536,7 @@ NodeSelectorModel::NodeSelectorModel(QObject* parent):
     mAcceptDragAndDrop(false),
     mMoveRequestsCounter(0),
     mAddNodesQueue(this),
+    mRemoveNodesQueue(this),
     mExtraSpaceAdded(false),
     mExtraSpaceRemoved(false),
     mRemovingPreviousExtraSpace(false)
@@ -561,8 +563,11 @@ NodeSelectorModel::NodeSelectorModel(QObject* parent):
     connect(mNodeRequesterWorker, &NodeRequester::nodesReady, this, &NodeSelectorModel::onChildNodesReady, Qt::QueuedConnection);
     connect(mNodeRequesterWorker, &NodeRequester::nodesAdded, this, &NodeSelectorModel::onNodesAdded, Qt::QueuedConnection);
 
-    connect(mNodeRequesterWorker, &NodeRequester::rootItemsAdded, this, &NodeSelectorModel::onRootItemAdded, Qt::QueuedConnection);
-    connect(mNodeRequesterWorker, &NodeRequester::rootItemsDeleted, this, &NodeSelectorModel::onRootItemDeleted, Qt::QueuedConnection);
+    connect(mNodeRequesterWorker,
+            &NodeRequester::rootItemsAdded,
+            this,
+            &NodeSelectorModel::onRootItemAdded,
+            Qt::QueuedConnection);
 
     connect(mNodeRequesterWorker, &NodeRequester::updateLoadingMessage, this, &NodeSelectorModel::updateLoadingMessage, Qt::DirectConnection);
 
@@ -586,6 +591,11 @@ NodeSelectorModel::NodeSelectorModel(QObject* parent):
     protectModelWhenPerformingActions();
 
     mListener = RequestListenerManager::instance().registerAndGetFinishListener(this, false);
+
+    connect(&mRemoveNodesQueue,
+            &RemoveNodesQueue::startBeginRemoveRows,
+            this,
+            &NodeSelectorModel::onStartBeginRemoveRowsAsync);
 }
 
 NodeSelectorModel::~NodeSelectorModel()
@@ -1533,6 +1543,24 @@ void NodeSelectorModel::sendBlockUiSignal(bool state)
     emit blockUi(state, QPrivateSignal());
 }
 
+void NodeSelectorModel::beginRemoveRowsAsync(const mega::MegaHandle& handle,
+                                             std::function<void()> func)
+{
+    mRemoveNodesQueue.addStep(handle, func);
+}
+
+void NodeSelectorModel::onStartBeginRemoveRowsAsync(const mega::MegaHandle& handle)
+{
+    if (handle != mega::INVALID_HANDLE)
+    {
+        auto index = findIndexByNodeHandle(handle, QModelIndex());
+        if (index.isValid())
+        {
+            deleteNodeFromModel(index);
+        }
+    }
+}
+
 QModelIndex NodeSelectorModel::index(int row, int column, const QModelIndex &parent) const
 {
     QModelIndex index;
@@ -1816,11 +1844,6 @@ void NodeSelectorModel::onSyncStateChanged(std::shared_ptr<SyncSettings> sync)
 void NodeSelectorModel::onRootItemAdded()
 {
     endInsertRows();
-}
-
-void NodeSelectorModel::onRootItemDeleted()
-{
-    endRemoveRows();
 }
 
 bool NodeSelectorModel::addToLoadingList(const std::shared_ptr<mega::MegaNode> node)
@@ -2841,5 +2864,49 @@ void AddNodesQueue::onNodesAdded(bool state)
     {
         auto info(mSteps.dequeue());
         mModel->addNodes(info.nodesToAdd, info.parentIndex);
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+/// Remove nodes queue (To avoid calling beginRemoveRows more than once at the same time)
+RemoveNodesQueue::RemoveNodesQueue(NodeSelectorModel* model):
+    mModel(model)
+{
+    connect(mModel, &NodeSelectorModel::rowsRemoved, this, &RemoveNodesQueue::onRowsRemoved);
+}
+
+void RemoveNodesQueue::addStep(const mega::MegaHandle& handle, std::function<void()> func = nullptr)
+{
+    Info info;
+    info.handle = handle;
+    info.func = func;
+    mSteps.append(info);
+
+    if (mSteps.size() == 1)
+    {
+        emit startBeginRemoveRows(handle);
+        if (info.func)
+        {
+            info.func();
+        }
+    }
+}
+
+void RemoveNodesQueue::onRowsRemoved()
+{
+    if (!mSteps.isEmpty())
+    {
+        // Remove the previously used
+        mSteps.dequeue();
+
+        if (!mSteps.isEmpty())
+        {
+            auto nextStep(mSteps.at(0));
+            emit startBeginRemoveRows(nextStep.handle);
+            if (nextStep.func)
+            {
+                nextStep.func();
+            }
+        }
     }
 }

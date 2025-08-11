@@ -172,6 +172,32 @@ private:
     NodeSelectorModel* mModel;
 };
 
+class RemoveNodesQueue: public QObject
+{
+    Q_OBJECT
+
+public:
+    RemoveNodesQueue(NodeSelectorModel* model);
+
+    void addStep(const mega::MegaHandle& handle, std::function<void()> func);
+
+signals:
+    void startBeginRemoveRows(const mega::MegaHandle& handle);
+
+private slots:
+    void onRowsRemoved();
+
+private:
+    struct Info
+    {
+        mega::MegaHandle handle;
+        std::function<void()> func;
+    };
+
+    QQueue<Info> mSteps;
+    NodeSelectorModel* mModel;
+};
+
 struct NodeSelectorMergeInfo
 {
     std::shared_ptr<mega::MegaNode> nodeToMerge;
@@ -394,6 +420,8 @@ signals:
     void finishAsyncRequest(mega::MegaHandle handle, int error);
 
 protected:
+    void beginRemoveRowsAsync(const mega::MegaHandle& handle, std::function<void()> func = nullptr);
+
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     Qt::DropActions supportedDropActions() const override;
 
@@ -422,7 +450,6 @@ protected:
 
 protected slots:
     void onRootItemAdded();
-    void onRootItemDeleted();
 
 private slots:
     void onChildNodesReady(NodeSelectorModelItem *parent);
@@ -430,6 +457,7 @@ private slots:
     void onSyncStateChanged(std::shared_ptr<SyncSettings> sync);
     void resetMoveProcessing();
     void checkFinishedRequest(mega::MegaHandle handle, int errorCode);
+    void onStartBeginRemoveRowsAsync(const mega::MegaHandle& handle);
 
 private:
     virtual void createRootNodes() = 0;
@@ -490,8 +518,9 @@ private:
 
     int mMoveRequestsCounter;
 
-    // If the model is being modified, queue the nodes to add
+    // If the model is being modified, queue the nodes to add or to remove
     AddNodesQueue mAddNodesQueue;
+    RemoveNodesQueue mRemoveNodesQueue;
 
     // Current root index
     QModelIndex mCurrentRootIndex;
