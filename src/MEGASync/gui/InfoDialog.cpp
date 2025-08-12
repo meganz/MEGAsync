@@ -847,9 +847,9 @@ void InfoDialog::onAddBackup()
 void InfoDialog::updateDialogState()
 {
     updateState();
-    bool hasTransfers = false;
-    const bool transferOverQuotaEnabled{(transferQuotaState == QuotaState::FULL || transferQuotaState == QuotaState::OVERQUOTA)
-                && transferOverquotaAlertEnabled};
+    const bool transferOverQuotaEnabled{
+        (transferQuotaState == QuotaState::FULL || transferQuotaState == QuotaState::OVERQUOTA) &&
+        transferOverquotaAlertEnabled};
 
     if (storageState == Preferences::STATE_PAYWALL)
     {
@@ -861,7 +861,9 @@ void InfoDialog::updateDialogState()
             long long numFiles{mPreferences->cloudDriveFiles() + mPreferences->vaultFiles() +
                                mPreferences->rubbishFiles()};
             QString contactMessage =
-                tr("We have contacted you by email to [A] on [B] but you still have %n file taking "
+                tr("We have contacted you by email to [A] on [B] but you still "
+                   "have "
+                   "%n file taking "
                    "up [D] in your MEGA account, which requires you to have [E].",
                    "",
                    static_cast<int>(numFiles));
@@ -911,78 +913,86 @@ void InfoDialog::updateDialogState()
             ui->wPSA->hidePSA();
         }
     }
-    else if(storageState == Preferences::STATE_OVER_STORAGE)
+    else if (storageState == Preferences::STATE_OVER_STORAGE)
     {
-        const bool transferIsOverQuota{transferQuotaState == QuotaState::FULL || transferQuotaState == QuotaState::OVERQUOTA};
-        const bool userIsFree{mPreferences->accountType() == Preferences::Preferences::ACCOUNT_TYPE_FREE};
+        const bool transferIsOverQuota{transferQuotaState == QuotaState::FULL ||
+                                       transferQuotaState == QuotaState::OVERQUOTA};
+        const bool userIsFree{mPreferences->accountType() ==
+                              Preferences::Preferences::ACCOUNT_TYPE_FREE};
         if (transferIsOverQuota && userIsFree)
         {
-            ui->bOQIcon->setIcon(QIcon(QString::fromLatin1("://images/storage_transfer_full_FREE.png")));
-            ui->bOQIcon->setIconSize(QSize(96,96));
+            ui->bOQIcon->setIcon(
+                QIcon(QString::fromLatin1("://images/storage_transfer_full_FREE.png")));
+            ui->bOQIcon->setIconSize(QSize(96, 96));
         }
-        else if(transferIsOverQuota && !userIsFree)
+        else if (transferIsOverQuota && !userIsFree)
         {
-            ui->bOQIcon->setIcon(QIcon(QString::fromLatin1("://images/storage_transfer_full_PRO.png")));
-            ui->bOQIcon->setIconSize(QSize(96,96));
+            ui->bOQIcon->setIcon(
+                QIcon(QString::fromLatin1("://images/storage_transfer_full_PRO.png")));
+            ui->bOQIcon->setIconSize(QSize(96, 96));
         }
         else
         {
             ui->bOQIcon->setIcon(QIcon(QString::fromLatin1("://images/storage_full.png")));
-            ui->bOQIcon->setIconSize(QSize(64,64));
+            ui->bOQIcon->setIconSize(QSize(64, 64));
         }
         ui->lOQTitle->setText(tr("Your MEGA account is full."));
-        ui->lOQDesc->setText(tr("All file uploads are currently disabled.")
-                                + QString::fromUtf8("<br>")
-                                + tr("Please upgrade to PRO."));
+        ui->lOQDesc->setText(tr("All file uploads are currently disabled.") +
+                             QString::fromUtf8("<br>") + tr("Please upgrade to PRO."));
         ui->bBuyQuota->setText(tr("Buy more space"));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
-    else if(transferOverQuotaEnabled)
+    else if (transferOverQuotaEnabled)
     {
         ui->lOQTitle->setText(tr("Transfer quota exceeded"));
 
-        if(mPreferences->accountType() == Preferences::ACCOUNT_TYPE_FREE)
+        if (mPreferences->accountType() == Preferences::ACCOUNT_TYPE_FREE)
         {
-            ui->lOQDesc->setText(tr("Your queued transfers exceed the current quota available for your IP address."));
+            ui->lOQDesc->setText(tr("Your queued transfers exceed the current quota "
+                                    "available for your IP address."));
             ui->bBuyQuota->setText(tr("Upgrade Account"));
             ui->bDiscard->setText(tr("I will wait"));
         }
         else
         {
-
-            ui->lOQDesc->setText(tr("You can't continue downloading as you don't have enough transfer quota left on this account. "
-                                    "To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, "
-                                    "you can wait for your plan to renew."));
+            ui->lOQDesc->setText(
+                tr("You can't continue downloading as you don't have enough transfer "
+                   "quota left on this account. "
+                   "To continue downloading, purchase a new plan, or if you have a "
+                   "recurring subscription with MEGA, "
+                   "you can wait for your plan to renew."));
             ui->bBuyQuota->setText(tr("Buy new plan"));
             ui->bDiscard->setText(tr("Dismiss"));
         }
         ui->bOQIcon->setIcon(QIcon(QString::fromLatin1(":/images/transfer_empty_64.png")));
-        ui->bOQIcon->setIconSize(QSize(64,64));
+        ui->bOQIcon->setIconSize(QSize(64, 64));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
-    else if(storageState == Preferences::STATE_ALMOST_OVER_STORAGE)
+    else if (storageState == Preferences::STATE_ALMOST_OVER_STORAGE)
     {
         ui->bOQIcon->setIcon(QIcon(QString::fromLatin1("://images/storage_almost_full.png")));
-        ui->bOQIcon->setIconSize(QSize(64,64));
+        ui->bOQIcon->setIconSize(QSize(64, 64));
         ui->lOQTitle->setText(tr("You're running out of storage space."));
-        ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full and your uploads to MEGA stop."));
+        ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full "
+                                "and your uploads to MEGA stop."));
         ui->bBuyQuota->setText(tr("Buy more space"));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
-    else if(transferQuotaState == QuotaState::WARNING &&
-            transferAlmostOverquotaAlertEnabled)
+    else if (transferQuotaState == QuotaState::WARNING && transferAlmostOverquotaAlertEnabled)
     {
         ui->bOQIcon->setIcon(QIcon(QString::fromLatin1(":/images/transfer_empty_64.png")));
-        ui->bOQIcon->setIconSize(QSize(64,64));
+        ui->bOQIcon->setIconSize(QSize(64, 64));
         ui->lOQTitle->setText(tr("Limited available transfer quota"));
-        ui->lOQDesc->setText(tr("Downloading may be interrupted as you have used 90% of your transfer quota on this "
-                                "account. To continue downloading, purchase a new plan, or if you have a recurring "
+        ui->lOQDesc->setText(tr("Downloading may be interrupted as you have used 90% of your "
+                                "transfer quota on this "
+                                "account. To continue downloading, purchase a new plan, or if you "
+                                "have a recurring "
                                 "subscription with MEGA, you can wait for your plan to renew. "));
         ui->bBuyQuota->setText(tr("Buy new plan"));
 
@@ -990,10 +1000,11 @@ void InfoDialog::updateDialogState()
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
-    else if (mSyncInfo->hasUnattendedDisabledSyncs({mega::MegaSync::TYPE_TWOWAY, mega::MegaSync::TYPE_BACKUP}))
+    else if (mSyncInfo->hasUnattendedDisabledSyncs(
+                 {mega::MegaSync::TYPE_TWOWAY, mega::MegaSync::TYPE_BACKUP}))
     {
-        if (mSyncInfo->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY)
-            && mSyncInfo->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP))
+        if (mSyncInfo->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY) &&
+            mSyncInfo->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP))
         {
             ui->sActiveTransfers->setCurrentWidget(ui->pAllSyncsDisabled);
         }
@@ -1010,16 +1021,15 @@ void InfoDialog::updateDialogState()
     }
     else
     {
-        if(app->getTransfersModel())
+        if (app->getTransfersModel())
         {
             auto transfersCount = app->getTransfersModel()->getTransfersCount();
 
-            if (transfersCount.totalDownloads || transfersCount.totalUploads
-                    || ui->wPSA->isPSAready())
+            if (transfersCount.totalDownloads || transfersCount.totalUploads ||
+                ui->wPSA->isPSAready())
             {
                 overlay->setVisible(false);
                 ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
-                hasTransfers = true;
                 ui->wPSA->showPSA();
             }
             else
@@ -1691,7 +1701,6 @@ void InfoDialog::initNotificationArea()
 
 void InfoDialog::applyNotificationFilter(MessageType opt)
 {
-    bool hasNotification = false;
     switch (opt)
     {
         case MessageType::ALERT_CONTACTS:
@@ -1701,7 +1710,6 @@ void InfoDialog::applyNotificationFilter(MessageType opt)
             if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_CONTACTS))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
-                hasNotification = true;
             }
             else
             {
@@ -1718,7 +1726,6 @@ void InfoDialog::applyNotificationFilter(MessageType opt)
             if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_SHARES))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
-                hasNotification = true;
             }
             else
             {
@@ -1735,7 +1742,6 @@ void InfoDialog::applyNotificationFilter(MessageType opt)
             if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_PAYMENTS))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
-                hasNotification = true;
             }
             else
             {
@@ -1753,7 +1759,6 @@ void InfoDialog::applyNotificationFilter(MessageType opt)
             if (app->getNotificationController()->hasNotifications())
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
-                hasNotification = true;
             }
             else
             {
