@@ -176,5 +176,6 @@
         <file alias="arrow-up-small-thin-outline-support-success.svg">images/themed/light/arrow-up-small-thin-outline-support-success.svg</file>
         <file alias="app-icon">images/themed/light/app-icon.svg</file>
         <file alias="scanning_icon">images/themed/light/scanning_icon.svg</file>
+        <file alias="alert-triangle">images/themed/light/Stalled Issues/Header/alert-triangle.svg</file>
     </qresource>
 </RCC>

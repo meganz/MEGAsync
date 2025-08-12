@@ -2817,8 +2817,21 @@ QIcon NodeSelectorModel::getFolderIcon(NodeSelectorModelItem *item) const
                         }
                         return QIcon(QLatin1String("://images/icons/pc/pc_24.png"));
                     }
+<<<<<<< HEAD
                     return Utilities::getFolderPixmap(Utilities::FolderType::TYPE_NORMAL,
                                                       Utilities::AttributeType::SMALL);
+=======
+
+                    QIcon icon;
+                    icon.addFile(Utilities::getFolderPixmapName(Utilities::FolderType::TYPE_NORMAL,
+                                                                Utilities::AttributeType::SMALL),
+                                 QSize(),
+                                 QIcon::Normal);
+                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-disabled.png"),
+                                 QSize(),
+                                 QIcon::Disabled);
+                    return icon;
+>>>>>>> 894bff82e (Working on MIME and Folder icons)
                 }
             }
             else
