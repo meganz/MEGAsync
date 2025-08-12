@@ -35,7 +35,7 @@ signals:
 #endif
 
 protected:
-    void changeEvent(QEvent* event) override;
+    bool event(QEvent* event) override;
 
 private:
     void setTableViewProperties(QTableView* view) const;

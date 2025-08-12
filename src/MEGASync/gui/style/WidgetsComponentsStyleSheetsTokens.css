@@ -1,0 +1,576 @@
+QWidget
+{
+background-color: #FFFFFFFF; /*colorToken.page-background*/
+color: #ff303233; /*colorToken.text-primary*/
+}
+
+QWidget[type="notification"]
+{
+background-color: #ffdff4fe;/*colorToken.notification-info*/
+}
+
+QWidget[type="notification"][error="true"]
+{
+background-color: #ffffe4e8;/*colorToken.notification-error*/
+}
+
+/*
+    QTableView
+*/
+QTableView
+{
+background-color: transparent;
+border: 1px solid #ff18191A; /*colorToken.page-background*/
+selection-color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
+selection-background-color: transparent;
+}
+
+QTableView::item::selected
+{
+color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
+background-color: transparent;
+}
+
+QTableView::indicator:checked
+{
+image: url(:/images/themed/light/checkbox_on.svg); /*replaceThemeToken*/
+}
+
+QTableView::indicator:checked:hover
+{
+image: url(:/images/themed/light/checkbox_on_hover.svg); /*replaceThemeToken*/
+}
+
+QTableView::indicator:checked:pressed
+{
+image: url(:/images/themed/light/checkbox_on_pressed.svg); /*replaceThemeToken*/
+}
+
+QTableView::indicator:checked:disabled
+{
+image: url(:/images/themed/light/checkbox_on_disabled.svg); /*replaceThemeToken*/
+}
+
+QTableView::indicator:unchecked
+{
+image: url(:/images/themed/light/checkbox_off.svg); /*replaceThemeToken*/
+}
+
+QTableView::indicator:unchecked:hover
+{
+image: url(:/images/themed/light/checkbox_off_hover.svg); /*replaceThemeToken*/
+}
+
+QTableView::indicator:unchecked:pressed
+{
+image: url(:/images/themed/light/checkbox_off_pressed.svg); /*replaceThemeToken*/
+}
+
+QTableView::indicator:unchecked:disabled
+{
+image: url(:/images/themed/light/checkbox_off_disabled.svg); /*replaceThemeToken*/
+}
+
+/*
+    QScrollBar
+*/
+
+QScrollBar::handle:vertical
+{
+background: #ff04101e; /*colorToken.selection-control*/
+}
+
+/*
+    QHeaderView
+*/
+QHeaderView
+{
+background: #FF18191A; /*colorToken.page-background*/
+}
+
+QHeaderView::section
+{
+background: #FF18191A; /*colorToken.page-background*/
+color: #FFF3F4F4; /*colorToken.text-primary*/
+}
+
+QHeaderView::up-arrow
+{
+image: url(:/images/themed/light/spinbox_up_arrow.svg); /*replaceThemeToken*/
+}
+
+QHeaderView::down-arrow
+{
+image: url(:/images/themed/light/spinbox_down_arrow.svg); /*replaceThemeToken*/
+}
+
+
+/*
+    QComboBox
+*/
+QComboBox::item:selected[type="mega"]
+{
+background-color: #fff3f4f4; /*colorToken.surface-2*/
+}
+
+QComboBox::item[type="mega"]
+{
+background-color: #fffafafa; /*colorToken.surface-1*/;
+}
+
+QComboBox[type="mega"]
+{
+background-color: #ffFFFFFF; /*colorToken.page-background*/
+color: #ff333333; /*colorToken.text-primary*/
+border-color: #ff04101E; /*colorToken.button-outline*/
+}
+
+QComboBox:disabled[type="mega"]
+{
+color: #ff797c80; /*colorToken.text-disabled*/
+border-color: #ff797c80; /*colorToken.button-disabled*/
+}
+
+QComboBox::drop-down[type="mega"]
+{
+image: url(:/images/themed/light/chevron-down_default.svg); /*replaceThemeToken*/
+}
+
+QComboBox::drop-down:disabled[type="mega"]
+{
+image: url(:/images/themed/light/chevron-down_disabled.svg); /*replaceThemeToken*/
+}
+
+QComboBox::drop-down:hover[type="mega"]
+{
+image: url(:/images/themed/light/chevron-down_hover.svg); /*replaceThemeToken*/
+}
+
+QComboBox::drop-down:pressed[type="mega"]
+{
+image: url(:/images/themed/light/chevron-down_press.svg); /*replaceThemeToken*/
+}
+
+QComboBox[type="mega"] QAbstractItemView
+{
+border: 2px solid #ff04101E; /*colorToken.button-outline*/
+background-color:  #fffafafa; /*colorToken.surface-1*/
+}
+
+/*
+    QRadioButton
+*/
+QRadioButton
+{
+color: #ff303233; /*colorToken.text-primary*/
+background-color: transparent;
+}
+
+QRadioButton:disabled
+{
+color: #ff797c80; /*colorToken.icon-disabled*/
+}
+
+QRadioButton::indicator::unchecked
+{
+image: url(:/images/themed/light/radio_unchecked.svg); /*replaceThemeToken*/
+}
+
+QRadioButton::indicator:unchecked:hover
+{
+image: url(:/images/themed/light/radio_unchecked_hover.svg); /*replaceThemeToken*/
+}
+
+QRadioButton::indicator:unchecked:pressed
+{
+image: url(:/images/themed/light/radio_unchecked_pressed.svg); /*replaceThemeToken*/
+}
+
+QRadioButton::indicator:unchecked:disabled
+{
+image: url(:/images/themed/light/radio_unchecked_disabled.svg); /*replaceThemeToken*/
+}
+
+QRadioButton::indicator::checked
+{
+image: url(:/images/themed/light/radio_checked.svg); /*replaceThemeToken*/
+}
+
+QRadioButton::indicator:checked:hover
+{
+image: url(:/images/themed/light/radio_checked_hover.svg); /*replaceThemeToken*/
+}
+
+QRadioButton::indicator:checked:pressed
+{
+image: url(:/images/themed/light/radio_checked_pressed.svg); /*replaceThemeToken*/
+}
+
+QRadioButton::indicator:checked:disabled
+{
+image: url(:/images/themed/light/radio_checked_disabled.svg); /*replaceThemeToken*/
+}
+
+/*
+    QGroupBox
+*/
+QGroupBox[type="mega"]
+{
+border-color: #ffd8d9db; /*colorToken.border-strong*/
+background-color: transparent;
+}
+
+QGroupBox::title[type="mega"]
+{
+color: #ff04101E; /*colorToken.text-accent*/
+}
+
+QGroupBox::title:disabled[type="mega"]
+{
+color: #ff797c80; /*colorToken.text-disabled*/
+}
+
+/*
+    QProgressBar
+*/
+QProgressBar
+{
+/* TODO: surface-2 should be replaced by --color-indicator-background */
+background-color: #fff3f4f4; /*colorToken.surface-2*/
+}
+
+QProgressBar::chunk
+{
+background-color: #ff09bf5b; /*colorToken.indicator-green*/
+}
+
+/*
+    QCheckBox
+*/
+
+QCheckBox[type="mega"][error="true"]
+{
+color: #ffe31b57; /*colorToken.text-error*/
+}
+
+QCheckBox:disabled[type="mega"]
+{
+color: #ff797c80; /*colorToken.icon-disabled*/
+}
+
+QCheckBox::indicator:checked[type="mega"]
+{
+image: url(:/images/themed/light/checkbox_on.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:checked:hover[type="mega"]
+{
+image: url(:/images/themed/light/checkbox_on_hover.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:checked:pressed[type="mega"]
+{
+image: url(:/images/themed/light/checkbox_on_pressed.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:checked:disabled[type="mega"]
+{
+image: url(:/images/themed/light/checkbox_on_disabled.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:unchecked[type="mega"]
+{
+image: url(:/images/themed/light/checkbox_off.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:unchecked:hover[type="mega"]
+{
+image: url(:/images/themed/light/checkbox_off_hover.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:unchecked:pressed[type="mega"]
+{
+image: url(:/images/themed/light/checkbox_off_pressed.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:unchecked:disabled[type="mega"]
+{
+image: url(:/images/themed/light/checkbox_off_disabled.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:checked[type="mega"][error="true"]
+{
+image: url(:/images/themed/light/checkbox_on_error.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:checked:hover[type="mega"][error="true"]
+{
+image: url(:/images/themed/light/checkbox_on_error.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:checked:pressed[type="mega"][error="true"]
+{
+image: url(:/images/themed/light/checkbox_on_error.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:checked:disabled[type="mega"][error="true"]
+{
+image: url(:/images/themed/light/checkbox_on_disabled.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:unchecked[type="mega"][error="true"]
+{
+image: url(:/images/themed/light/checkbox_off_error.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:unchecked:hover[type="mega"][error="true"]
+{
+image: url(:/images/themed/light/checkbox_off_error.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:unchecked:pressed[type="mega"][error="true"]
+{
+image: url(:/images/themed/light/checkbox_off_error.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:unchecked:disabled[type="mega"][error="true"]
+{
+image: url(:/images/themed/light/checkbox_off_disabled.svg); /*replaceThemeToken*/
+}
+
+/*
+    QLabel
+*/
+QLabel
+{
+color: #ff303233; /*colorToken.text-primary*/
+background-color: transparent;
+}
+
+QLabel[type="secondary"]
+{
+color: #ff616366; /*colorToken.text-secondary*/
+}
+
+QLabel[type="notification"]
+{
+background-color: #ffdff4fe;/*colorToken.notification-info*/
+color: #ff0078a4; /*colorToken.text-info*/
+}
+
+QLabel[type="notification"][error="true"]
+{
+background-color: #ffffe4e8;/*colorToken.notification-error*/
+color: #ffe31b57; /*colorToken.text-error*/
+}
+
+QLabel:disabled
+{
+color: #ff797c80; /*colorToken.icon-disabled*/
+}
+
+/*
+    Outline button.
+*/
+QPushButton[type="outline"]
+{
+background-color: transparent;
+color: #ff04101E; /*colorToken.button-outline*/
+border-color: #ff04101E; /*colorToken.button-outline*/
+}
+
+QPushButton:hover[type="outline"]
+{
+color: #ff39424E; /*colorToken.button-outline-hover*/
+border-color: #ff39424E; /*colorToken.button-outline-hover*/
+}
+
+QPushButton:pressed[type="outline"]
+{
+color: #ff535B65; /*colorToken.button-outline-pressed*/
+border-color: #ff535B65; /*colorToken.button-outline-pressed*/
+}
+
+QPushButton:disabled[type="outline"]
+{
+color: #ffC1C2C4; /*colorToken.text-disabled*/
+border-color: #ff494a4d; /*colorToken.border-disabled*/
+}
+
+/*
+    Primary button.
+*/
+QPushButton[type="primary"]
+{
+background-color: #ff04101E; /*colorToken.button-primary*/
+color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
+}
+
+QPushButton:hover[type="primary"]
+{
+color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
+background-color: #ff39424E; /*colorToken.button-primary-hover*/
+}
+
+QPushButton:pressed[type="primary"]
+{
+color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
+background-color: #ff535B65; /*colorToken.button-primary-pressed*/
+}
+
+QPushButton:disabled[type="primary"]
+{
+color: #ffC1C2C4; /*colorToken.text-disabled*/
+background-color: #ff797c80; /*colorToken.button-disabled*/
+}
+
+/*
+    Secondary button.
+*/
+QPushButton[type="secondary"]
+{
+background-color: #ff04101E; /*colorToken.button-secondary*/
+color: #ffFAFAFB; /*colorToken.text-secondary*/
+border-color: #ff04101E; /*colorToken.button-secondary*/
+}
+
+QPushButton:hover[type="secondary"]
+{
+background-color: #ff39424E; /*colorToken.button-secondary-hover*/
+border-color: #ff39424E; /*colorToken.button-secondary-hover*/
+}
+
+QPushButton:pressed[type="secondary"]
+{
+background-color: #ff535B65; /*colorToken.button-secondary-pressed*/
+border-color: #ff535B65; /*colorToken.button-secondary-pressed*/
+}
+
+QPushButton:disabled[type="secondary"]
+{
+color: #ffC1C2C4; /*colorToken.text-disabled*/
+background-color: #ff797c80; /*colorToken.button-disabled*/
+border-color: transparent;
+}
+
+/*
+    QLineEdit
+*/
+QLineEdit[type="mega"], QTextEdit[type="mega"]
+{
+background-color: #ffFFFFFF; /*colorToken.page-background*/
+border-color: #ffd8d9db; /*colorToken.border-strong*/
+color: #ff303233; /*colorToken.text-primary*/
+}
+
+QLineEdit:focus[type="mega"], QTextEdit:focus[type="mega"]
+{
+border-color: #ff04101e; /*colorToken.border-strong-selected*/
+}
+
+QLineEdit:disabled[type="mega"], QTextEdit:disabled[type="mega"]
+{
+color: #ff797c80; /*colorToken.text-disabled*/
+border-color: #ff797c80; /*colorToken.border-disabled*/
+}
+
+QLineEdit[type="mega"][error="true"], QTextEdit[type="mega"][error="true"]
+{
+border-color: #ffe31b57; /*colorToken.text-error*/
+}
+
+/*
+    QSpinBox
+*/
+QSpinBox
+{
+border-color: #ffd8d9db; /*colorToken.border-strong*/
+color: #ff303233; /*colorToken.text-primary*/
+background-color: #ffFFFFFF; /*colorToken.page-background*/
+}
+
+QSpinBox:focus
+{
+border-color: #ff04101e; /*colorToken.border-strong-selected*/
+}
+
+QSpinBox:disabled
+{
+color: #ff797c80; /*colorToken.text-disabled*/
+border-color: #ff797c80; /*colorToken.border-disabled*/
+}
+
+QSpinBox::up-arrow
+{
+image: url(:/images/themed/light/spinbox_up_arrow.svg); /*replaceThemeToken*/
+}
+
+QSpinBox::down-arrow
+{
+image: url(:/images/themed/light/spinbox_down_arrow.svg); /*replaceThemeToken*/
+}
+
+QSpinBox::down-button
+{
+background-color: transparent;
+}
+
+QSpinBox::up-button
+{
+background-color: transparent;
+}
+
+/*
+    SwitchButton
+    In the constructor of the class we assign the object name switch
+*/
+#switch
+{
+background-color: transparent;
+}
+
+#switch::indicator
+{
+background-color: transparent;
+}
+
+#switch::indicator:checked
+{
+image: url(:/images/themed/light/switch_on.svg); /*replaceThemeToken*/
+}
+
+#switch::indicator:checked:hover
+{
+image: url(:/images/themed/light/switch_on_hover.svg); /*replaceThemeToken*/
+}
+
+#switch::indicator:checked:pressed
+{
+image: url(:/images/themed/light/switch_on_pressed.svg); /*replaceThemeToken*/
+}
+
+#switch::indicator:unchecked
+{
+image: url(:/images/themed/light/switch_off.svg); /*replaceThemeToken*/
+}
+
+#switch::indicator:unchecked:hover
+{
+image: url(:/images/themed/light/switch_off_hover.svg); /*replaceThemeToken*/
+}
+
+#switch::indicator:unchecked:pressed
+{
+image: url(:/images/themed/light/switch_off_pressed.svg); /*replaceThemeToken*/
+}
+
+/*
+    PasswordLineEdit
+*/
+PasswordLineEdit
+{
+qproperty-eyeRevealImage: url(:/images/themed/light/eye_default.svg); /*replaceThemeToken*/
+qproperty-eyeRevealDisabledImage: url(:/images/themed/light/eye_disabled.svg); /*replaceThemeToken*/
+qproperty-eyeClosedImage: url(:/images/themed/light/eye-off_default.svg); /*replaceThemeToken*/
+qproperty-eyeClosedDisabledImage: url(:/images/themed/light/eye-off_disabled.svg); /*replaceThemeToken*/
+}

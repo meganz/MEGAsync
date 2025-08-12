@@ -24,7 +24,8 @@ LoginController::LoginController(QObject* parent):
     mState(LOGGED_OUT),
     mNewAccount(false),
     mTriggerFatalErrorAfterFetchnodes(false),
-    mForceOnboarding(false)
+    mForceOnboarding(false),
+    mOnboardingShown(false)
 {
     ListenerCallbacks lcInfo{
         this,
@@ -122,6 +123,7 @@ void LoginController::setState(State state)
     if ((getState() == State::FETCHING_NODES || getState() == State::FETCHING_NODES_2FA) &&
         state == State::FETCH_NODES_FINISHED)
     {
+        mOnboardingShown = false;
         // Should the onboarding be shown (without taking "force" into account)?
         auto showOnboarding =
             !mPreferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN) &&
@@ -142,6 +144,7 @@ void LoginController::setState(State state)
         }
         else if (mForceOnboarding || showOnboarding)
         {
+            mOnboardingShown = true;
             QmlDialogManager::instance()->openOnboardingDialog(mForceOnboarding);
             state = State::FETCH_NODES_FINISHED_ONBOARDING;
             mPreferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN,
@@ -475,8 +478,8 @@ void LoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e)
 
 void LoginController::onboardingFinished()
 {
-    SyncInfo::instance()->rewriteSyncSettings(); // write sync settings into user's preferences
-    MegaSyncApp->onboardingFinished(false);
+    SyncInfo::instance()->onboardingFinished(mOnboardingShown);
+    MegaSyncApp->onboardingFinished(false, mOnboardingShown);
 }
 
 void LoginController::onAccountCreation(mega::MegaRequest* request, mega::MegaError* e)

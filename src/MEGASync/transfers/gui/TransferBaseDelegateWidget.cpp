@@ -1,6 +1,7 @@
 #include "TransferBaseDelegateWidget.h"
 
 #include "MegaApplication.h"
+#include "ThemeManager.h"
 
 #include <QLayout>
 #include <QPointer>
@@ -92,6 +93,13 @@ bool TransferBaseDelegateWidget::isMouseHoverInAction(QToolButton *button, const
 void TransferBaseDelegateWidget::onRetryTransfer()
 {
     emit retryTransfer();
+}
+
+bool TransferBaseDelegateWidget::isDataStillValid()
+{
+    auto transferItem(qvariant_cast<TransferItem>(getCurrentIndex().data(Qt::DisplayRole)));
+    return transferItem.getTransferData() && getData() &&
+           transferItem.getTransferData() == getData();
 }
 
 QString TransferBaseDelegateWidget::getState(TRANSFER_STATES state)
@@ -233,13 +241,13 @@ void TransferBaseDelegateWidget::reset()
     mLastActionTransferIconName.clear();
 }
 
-void TransferBaseDelegateWidget::changeEvent(QEvent* event)
+bool TransferBaseDelegateWidget::event(QEvent* event)
 {
-    if(event->type() == QEvent::LanguageChange)
+    if (event->type() == QEvent::LanguageChange || event->type() == ThemeManager::ThemeChanged)
     {
         //Reset to allow the delegate to repaint all items
         mPreviousState = TransferData::TransferState::TRANSFER_NONE;
     }
 
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }

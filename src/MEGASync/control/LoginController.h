@@ -146,6 +146,7 @@ private:
     bool mNewAccount;
     bool mTriggerFatalErrorAfterFetchnodes;
     bool mForceOnboarding;
+    bool mOnboardingShown;
 };
 
 class FastLoginController : public LoginController

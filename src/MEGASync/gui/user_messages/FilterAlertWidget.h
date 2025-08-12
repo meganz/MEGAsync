@@ -39,8 +39,7 @@ private:
     MessageType mCurrentFilter;
 
 protected:
-    void changeEvent(QEvent* event);
-
+    bool event(QEvent* event) override;
 };
 
 #endif // FILTERALERTWIDGET_H

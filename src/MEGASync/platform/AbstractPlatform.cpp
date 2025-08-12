@@ -1,10 +1,13 @@
 #include "AbstractPlatform.h"
 
-#include "MultiQFileDialog.h"
 #include "DialogOpener.h"
+#include "megaapi.h"
+#include "MultiQFileDialog.h"
 
-#include <QScreen>
 #include <QDesktopWidget>
+#include <QScreen>
+
+using namespace mega;
 
 void AbstractPlatform::prepareForSync()
 {
@@ -288,9 +291,55 @@ std::shared_ptr<AbstractShellNotifier> AbstractPlatform::getShellNotifier()
     return mShellNotifier;
 }
 
+std::string AbstractPlatform::toLocalEncodedPath(const QString& path) const
+{
+    return path.toStdString();
+}
+
 QString AbstractPlatform::rectToString(const QRect &rect)
 {
     return QString::fromUtf8("[%1,%2,%3,%4]").arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height());
+}
+
+bool AbstractPlatform::loadRccResources(const QStringList& rccFiles)
+{
+    bool allLoaded = true;
+
+    // We clear the icon caches so Qt can take the new icons from the recently reloaded rccs
+    Utilities::clearIconCache();
+
+    for (const QString& file: rccFiles)
+    {
+        if (!QFile::exists(file))
+        {
+            MegaApi::log(
+                MegaApi::LOG_LEVEL_DEBUG,
+                QString::fromUtf8("Missing resource file: %1").arg(file).toUtf8().constData());
+            allLoaded = false;
+            continue;
+        }
+
+        bool temp = QResource::unregisterResource(file);
+        qDebug() << temp;
+
+        if (!QResource::registerResource(file))
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG,
+                         QString::fromUtf8("Failed to register resource file: %1")
+                             .arg(file)
+                             .toUtf8()
+                             .constData());
+            allLoaded = false;
+        }
+        else
+        {
+            MegaApi::log(
+                MegaApi::LOG_LEVEL_DEBUG,
+                QString::fromUtf8("Registered resource file: %1").arg(file).toUtf8().constData());
+        }
+    }
+
+    return allLoaded;
 }
 
 void AbstractPlatform::logInfoDialogCoordinates(const char *message, const QRect &screenGeometry, const QString &otherInformation)

@@ -181,14 +181,14 @@ void StalledIssueTab::createTitle()
     ui->title->setText(mTitle);
 }
 
-void StalledIssueTab::changeEvent(QEvent *event)
+bool StalledIssueTab::event(QEvent* event)
 {
-    if(event->type() == QEvent::LanguageChange)
+    if (event->type() == QEvent::LanguageChange)
     {
         createTitle();
     }
 
-    QFrame::changeEvent(event);
+    return QFrame::event(event);
 }
 
 void StalledIssueTab::resizeEvent(QResizeEvent *event)

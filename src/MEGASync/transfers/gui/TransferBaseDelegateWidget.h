@@ -63,11 +63,13 @@ protected:
     bool isMouseHoverInAction(QToolButton* button, const QPoint &mousePos);
     void onRetryTransfer();
 
+    bool isDataStillValid();
+
     virtual void updateTransferState() = 0;
     virtual void setFileNameAndType() = 0;
     virtual void setType() = 0;
 
-    void changeEvent(QEvent *) override;
+    bool event(QEvent* event) override;
 
     QString getState(TRANSFER_STATES state);
 

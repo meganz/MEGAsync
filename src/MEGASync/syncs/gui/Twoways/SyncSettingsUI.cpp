@@ -107,7 +107,7 @@ void SyncSettingsUI::setSyncsTitle()
     setTitle(tr("Synced Folders"));
 }
 
-void SyncSettingsUI::changeEvent(QEvent* event)
+bool SyncSettingsUI::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
@@ -115,7 +115,7 @@ void SyncSettingsUI::changeEvent(QEvent* event)
         setSyncsTitle();
     }
 
-    SyncSettingsUIBase::changeEvent(event);
+    return SyncSettingsUIBase::event(event);
 }
 
 void SyncSettingsUI::storageStateChanged(int newStorageState)

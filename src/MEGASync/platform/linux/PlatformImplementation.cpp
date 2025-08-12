@@ -233,9 +233,42 @@ QString PlatformImplementation::preparePathForSync(const QString& path)
     return QDir::toNativeSeparators(QDir::cleanPath(path));
 }
 
-void PlatformImplementation::processSymLinks()
-{
+void PlatformImplementation::processSymLinks() {}
 
+bool PlatformImplementation::loadThemeResource(const QString& theme)
+{
+    static QString currentTheme = QString();
+
+    if (!currentTheme.isEmpty())
+    {
+        QResource::unregisterResource(currentTheme);
+    }
+
+    QString execPath = MegaApplication::applicationDirPath();
+    QString resourcePath = execPath + QString::fromUtf8("/../share/megasync/resources");
+
+    if (QDir(resourcePath).exists())
+    {
+        // Look for installed files, if not, use rcc files from same path as binary.
+        execPath = resourcePath;
+    }
+
+    QStringList rccFiles =
+        QStringList() << execPath + QString::fromUtf8("/Resources_macx.rcc")
+                      << execPath + QString::fromUtf8("/Resources_win.rcc")
+                      << execPath + QString::fromUtf8("/Resources_linux.rcc")
+                      << execPath + QString::fromUtf8("/Resources_qml.rcc")
+                      << execPath + QString::fromUtf8("/qml.rcc")
+                      << execPath + QString::fromUtf8("/Resources_%1.rcc").arg(theme.toLower());
+
+    bool allLoaded = loadRccResources(rccFiles);
+
+    if (allLoaded)
+    {
+        currentTheme = execPath + QString::fromUtf8("/Resources_%1.rcc").arg(theme.toLower());
+    }
+
+    return allLoaded;
 }
 
 QString PlatformImplementation::getDefaultFileBrowserApp()
@@ -257,11 +290,14 @@ QString PlatformImplementation::getDefaultOpenApp(QString extension)
 
 QString PlatformImplementation::getDefaultOpenAppByMimeType(QString mimeType)
 {
-    QString getDefaultAppDesktopFileName = QString::fromUtf8("xdg-mime query default ") + mimeType;
+    QString exe = QLatin1String("xdg-mime");
+    QStringList args;
+    args << QLatin1String("query");
+    args << QLatin1String("default");
+    args << mimeType;
 
     QProcess process;
-    process.start(getDefaultAppDesktopFileName,
-                  QIODevice::ReadWrite | QIODevice::Text);
+    process.start(exe, args, QIODevice::ReadWrite | QIODevice::Text);
     if(!process.waitForFinished(5000))
     {
         return QString();
@@ -404,33 +440,6 @@ bool PlatformImplementation::registerUpdateJob()
     return true;
 }
 
-// Check if it's needed to start the local HTTP server
-// for communications with the webclient
-bool PlatformImplementation::shouldRunHttpServer()
-{
-    QStringList data = getListRunningProcesses();
-    if (data.size() > 1)
-    {
-        for (int i = 1; i < data.size(); i++)
-        {
-            // The MEGA webclient sends request to MEGAsync to improve the
-            // user experience. We check if web browsers are running because
-            // otherwise it isn't needed to run the local web server for this purpose.
-            // Here is the list or web browsers that allow HTTP communications
-            // with 127.0.0.1 inside HTTPS webs.
-            QString command = data.at(i).trimmed();
-            if (command.contains(QString::fromUtf8("firefox"), Qt::CaseInsensitive)
-                    || command.contains(QString::fromUtf8("chrome"), Qt::CaseInsensitive)
-                    || command.contains(QString::fromUtf8("chromium"), Qt::CaseInsensitive)
-                    )
-            {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
 bool PlatformImplementation::isUserActive()
 {
     return true;
@@ -509,8 +518,7 @@ void PlatformImplementation::fileAndFolderSelector(const SelectorInfo& info)
 
 void PlatformImplementation::streamWithApp(const QString &app, const QString &url)
 {
-    QString command = QString::fromUtf8("%1 \"%2\"").arg(QDir::toNativeSeparators(app)).arg(url);
-    QProcess::startDetached(command);
+    QProcess::startDetached(QDir::toNativeSeparators(app), {url});
 }
 
 DriveSpaceData PlatformImplementation::getDriveData(const QString& path)
@@ -531,35 +539,6 @@ QString PlatformImplementation::getGfxProviderPath()
     return QCoreApplication::applicationDirPath() + QLatin1String("/mega-desktop-app-gfxworker");
 }
 #endif
-
-QStringList PlatformImplementation::getListRunningProcesses()
-{
-    QProcess p;
-    p.start(QString::fromUtf8("ps ax -o comm"));
-    p.waitForFinished(2000);
-    QString output = QString::fromUtf8(p.readAllStandardOutput().constData());
-    QString e = QString::fromUtf8(p.readAllStandardError().constData());
-    if (e.size())
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error for \"ps ax -o comm\" command:");
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
-    }
-
-    p.start(QString::fromUtf8("/bin/bash -c \"readlink /proc/*/exe\""));
-    p.waitForFinished(2000);
-    QString output2 = QString::fromUtf8(p.readAllStandardOutput().constData());
-    e = QString::fromUtf8(p.readAllStandardError().constData());
-    if (e.size())
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error for \"readlink /proc/*/exe\" command:");
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
-    }
-    QStringList data = output.split(QString::fromUtf8("\n"));
-
-    data.append(output2.split(QString::fromUtf8("\n")));
-
-    return data;
-}
 
 xcb_atom_t PlatformImplementation::getAtom(xcb_connection_t * const connection, const char *name)
 {

@@ -118,7 +118,7 @@ protected:
     void showEvent(QShowEvent* ) override;
     void resizeEvent(QResizeEvent* ) override;
     void mousePressEvent(QMouseEvent* event) override;
-    void changeEvent(QEvent* event) override;
+    bool event(QEvent* event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
     void setTitle(const QString& title);
     void selectionChanged(const QModelIndexList &selected);
@@ -293,6 +293,11 @@ class SelectType
 public:
     explicit SelectType() = default;
     virtual ~SelectType() = default;
+
+    virtual bool isContextMenuAllowed()
+    {
+        return false;
+    }
     virtual bool isAllowedToNavigateInside(const QModelIndex& index);
     virtual void init(NodeSelectorTreeViewWidget* wdg) = 0;
     virtual bool okButtonEnabled(NodeSelectorTreeViewWidget* wdg,
@@ -368,6 +373,11 @@ public:
     };
 
     explicit CloudDriveType() = default;
+
+    bool isContextMenuAllowed() override
+    {
+        return true;
+    }
     void init(NodeSelectorTreeViewWidget* wdg) override;
     void selectionHasChanged(NodeSelectorTreeViewWidget* wdg) override;
     void okCancelButtonsVisibility(NodeSelectorTreeViewWidget* wdg) override;

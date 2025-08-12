@@ -416,7 +416,7 @@ void TransfersWidget::updateHeaderItems()
     ui->speedColumn->setTitle(mHeaderInfo.headerSpeed);
 }
 
-void TransfersWidget::changeEvent(QEvent *event)
+bool TransfersWidget::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
@@ -424,7 +424,7 @@ void TransfersWidget::changeEvent(QEvent *event)
         updateHeaderItems();
     }
 
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }
 
 bool TransfersWidget::eventFilter(QObject *watched, QEvent *event)

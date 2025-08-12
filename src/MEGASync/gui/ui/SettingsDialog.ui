@@ -233,6 +233,9 @@ margin-top: 3px;
 margin-bottom: 3px;
 }</string>
   </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="leftMargin">
     <number>24</number>
@@ -904,7 +907,7 @@ margin-bottom: 3px;
               <item>
                <widget class="QPushButton" name="bUpdate">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -1196,7 +1199,7 @@ margin-bottom: 3px;
               <item>
                <widget class="QPushButton" name="bSendBug">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -1391,16 +1394,22 @@ margin-bottom: 3px;
                <layout class="QHBoxLayout" name="horizontalLayout">
                 <item>
                  <widget class="QPushButton" name="bUpgrade">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
-                    <height>26</height>
+                    <height>0</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
                     <width>16777215</width>
-                    <height>26</height>
+                    <height>16777215</height>
                    </size>
                   </property>
                   <property name="cursor">
@@ -1425,16 +1434,22 @@ margin-bottom: 3px;
                 </item>
                 <item>
                  <widget class="QPushButton" name="bMyAccount">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
-                    <height>26</height>
+                    <height>0</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
                     <width>16777215</width>
-                    <height>26</height>
+                    <height>16777215</height>
                    </size>
                   </property>
                   <property name="cursor">
@@ -1536,16 +1551,22 @@ margin-bottom: 3px;
             </item>
             <item>
              <widget class="QPushButton" name="bStorageDetails">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>26</height>
+                <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-                <height>26</height>
+                <height>16777215</height>
                </size>
               </property>
               <property name="cursor">
@@ -2170,16 +2191,22 @@ margin-top: 0px;
             </item>
             <item>
              <widget class="QPushButton" name="bUploadFolder">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>26</height>
+                <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-                <height>26</height>
+                <height>16777215</height>
                </size>
               </property>
               <property name="cursor">
@@ -2308,16 +2335,22 @@ margin-top: 0px;
             </item>
             <item>
              <widget class="QPushButton" name="bDownloadFolder">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>26</height>
+                <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-                <height>26</height>
+                <height>16777215</height>
                </size>
               </property>
               <property name="cursor">
@@ -2397,16 +2430,22 @@ margin-top: 0px;
           </item>
           <item>
            <widget class="QPushButton" name="bClearCache">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>26</height>
+              <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>26</height>
+              <height>16777215</height>
              </size>
             </property>
             <property name="cursor">
@@ -2581,16 +2620,22 @@ margin-top: 0px;
           </item>
           <item>
            <widget class="QPushButton" name="bClearRemoteCache">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>26</height>
+              <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>26</height>
+              <height>16777212</height>
              </size>
             </property>
             <property name="cursor">
@@ -2675,16 +2720,22 @@ margin-top: 0px;
           </item>
           <item>
            <widget class="QPushButton" name="bClearFileVersions">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>26</height>
+              <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>26</height>
+              <height>16777212</height>
              </size>
             </property>
             <property name="cursor">
@@ -2861,16 +2912,22 @@ margin-top: 0px;
             </item>
             <item>
              <widget class="QPushButton" name="bOpenBandwidthSettings">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>26</height>
+                <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-                <height>26</height>
+                <height>16777215</height>
                </size>
               </property>
               <property name="cursor">
@@ -2936,15 +2993,15 @@ margin-top: 0px;
           <item>
            <widget class="QPushButton" name="bOpenProxySettings">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
-              <verstretch>26</verstretch>
+              <verstretch>0</verstretch>
              </sizepolicy>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>26</height>
+              <height>16777215</height>
              </size>
             </property>
             <property name="cursor">

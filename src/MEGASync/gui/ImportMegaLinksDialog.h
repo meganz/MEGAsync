@@ -48,7 +48,7 @@ public slots:
                              bool isFolder);
 
 protected:
-    void changeEvent(QEvent * event) override;
+    bool event(QEvent* event) override;
 
 private:
     Ui::ImportMegaLinksDialog *ui;

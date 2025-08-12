@@ -84,7 +84,7 @@ QSize NotificationItem::sizeHint() const
     return size;
 }
 
-void NotificationItem::changeEvent(QEvent* event)
+bool NotificationItem::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
@@ -92,7 +92,7 @@ void NotificationItem::changeEvent(QEvent* event)
         updateNotificationData();
     }
 
-    QWidget::changeEvent(event);
+    return UserMessageWidget::event(event);
 }
 
 void NotificationItem::showEvent(QShowEvent* event)
@@ -107,7 +107,7 @@ void NotificationItem::showEvent(QShowEvent* event)
         mDisplayEventSent = true;
     }
 
-    QWidget::showEvent(event);
+    UserMessageWidget::showEvent(event);
 }
 
 void NotificationItem::mousePressEvent(QMouseEvent* event)

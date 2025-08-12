@@ -46,14 +46,14 @@ void CancelConfirmWidget::setInCancellingStage()
     ui->cancelControlStack->setCurrentIndex(1);
 }
 
-void CancelConfirmWidget::changeEvent(QEvent *event)
+bool CancelConfirmWidget::event(QEvent* event)
 {
-    if(event->type() == QEvent::LanguageChange)
+    if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
     }
 
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }
 
 void CancelConfirmWidget::onDismissClicked()

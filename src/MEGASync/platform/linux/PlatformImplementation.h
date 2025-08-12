@@ -35,7 +35,6 @@ public:
     std::string getValue(const char * const name, const std::string &default_value) override;
     QString getWindowManagerName() override;
     bool registerUpdateJob() override;
-    bool shouldRunHttpServer() override;
     bool isUserActive() override;
     QString getDeviceName() override;
     bool validateSystemTrayIntegration() override;
@@ -47,6 +46,7 @@ public:
     void calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy) override;
     void streamWithApp(const QString& app, const QString& url) override;
     void processSymLinks() override;
+    bool loadThemeResource(const QString& theme) override;
     DriveSpaceData getDriveData(const QString &path) override;
 
 #if defined(ENABLE_SDK_ISOLATED_GFX)
@@ -54,7 +54,6 @@ public:
 #endif
 
 private:
-    QStringList getListRunningProcesses();
     static xcb_atom_t getAtom(xcb_connection_t * const connection, const char *name);
     bool isFedoraWithGnome();
     void promptFedoraGnomeUser();

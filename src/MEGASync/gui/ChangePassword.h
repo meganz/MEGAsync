@@ -25,7 +25,7 @@ private:
     mega::MegaApi* mMegaApi;
 
 protected:
-    void changeEvent(QEvent * event);
+    bool event(QEvent* event) override;
 
 private slots:
     void on_bOk_clicked();

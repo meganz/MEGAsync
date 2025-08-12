@@ -26,7 +26,7 @@ public:
     void showIfGroupboxVisible(TransfersWidget::TM_TAB tab, unsigned long long counter);
 
 protected:
-    void changeEvent(QEvent* event) override;
+    bool event(QEvent* event) override;
 
 private slots:
     void handleGroupboxToggled(bool checked);

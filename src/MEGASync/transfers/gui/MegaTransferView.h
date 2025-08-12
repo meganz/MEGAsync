@@ -90,7 +90,7 @@ signals:
 protected:
     virtual void mouseReleaseEvent(QMouseEvent* event) override;
     virtual void mouseMoveEvent(QMouseEvent* event) override;
-    void changeEvent(QEvent* event) override;
+    bool event(QEvent* event) override;
     void dropEvent(QDropEvent* event) override;
     void keyPressEvent(QKeyEvent *event) override;
     void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) override;

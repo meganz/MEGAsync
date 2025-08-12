@@ -111,6 +111,9 @@ public:
     // store all megasync specific info of syncsettings into megasync cache
     void rewriteSyncSettings();
 
+    // OnboardingFinished
+    void onboardingFinished(bool onboardingShown);
+
     // load into sync model the information from an old cached sync
     void pickInfoFromOldSync(const SyncData &osd, mega::MegaHandle backupId, bool loadedFromPreviousSessions);
 

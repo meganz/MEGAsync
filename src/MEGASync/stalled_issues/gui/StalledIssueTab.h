@@ -41,7 +41,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
     void enterEvent(QEvent*) override;
     void leaveEvent(QEvent*) override;
-    void changeEvent(QEvent *) override;
+    bool event(QEvent*) override;
     void resizeEvent(QResizeEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
 

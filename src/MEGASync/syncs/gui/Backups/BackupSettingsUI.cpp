@@ -59,7 +59,7 @@ void BackupSettingsUI::addButtonClicked(mega::MegaHandle)
     CreateRemoveBackupsManager::addBackup(true);
 }
 
-void BackupSettingsUI::changeEvent(QEvent* event)
+bool BackupSettingsUI::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
@@ -68,7 +68,7 @@ void BackupSettingsUI::changeEvent(QEvent* event)
         setBackupsTitle();
     }
 
-    SyncSettingsUIBase::changeEvent(event);
+    return SyncSettingsUIBase::event(event);
 }
 
 void BackupSettingsUI::removeSync(std::shared_ptr<SyncSettings> backup)

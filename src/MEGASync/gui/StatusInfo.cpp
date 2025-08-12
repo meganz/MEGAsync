@@ -186,12 +186,12 @@ void StatusInfo::setFailedText()
     ui->lStatusDesc->setText(statusText);
 }
 
-void StatusInfo::changeEvent(QEvent *event)
+bool StatusInfo::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
         setState(mState);
     }
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }

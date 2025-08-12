@@ -22,14 +22,14 @@ MediaTypeFilterWidget::~MediaTypeFilterWidget()
     delete mUi;
 }
 
-void MediaTypeFilterWidget::changeEvent(QEvent* event)
+bool MediaTypeFilterWidget::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
         updateStrings();
     }
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }
 
 QFrame* MediaTypeFilterWidget::getFrame(TransfersWidget::TM_TAB tab) const

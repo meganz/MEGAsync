@@ -225,6 +225,14 @@ void PlatformImplementation::pinOnTaskbar()
     }
 }
 
+std::string PlatformImplementation::toLocalEncodedPath(const QString& path) const
+{
+    // We put an utf16 encoded QString in a std::string (1 wchar -> 2 chars)
+    // That's what the Mega SDK expects.
+    auto data = reinterpret_cast<const char*>(path.utf16());
+    return {data, data + path.size() * sizeof(wchar_t)};
+}
+
 void PlatformImplementation::notifyItemChange(const QString& path, int)
 {
     notifyItemChange(path, mShellNotifier);
@@ -232,8 +240,7 @@ void PlatformImplementation::notifyItemChange(const QString& path, int)
 
 void PlatformImplementation::notifySyncFileChange(std::string *localPath, int)
 {
-    QString path = QString::fromUtf8(localPath->c_str());
-    notifyItemChange(path, mSyncFileNotifier);
+    notifyItemChange(QString::fromStdString(*localPath), mSyncFileNotifier);
 }
 
 void PlatformImplementation::notifyItemChange(const QString& localPath, std::shared_ptr<AbstractShellNotifier> notifier)
@@ -995,6 +1002,36 @@ void PlatformImplementation::processSymLinks()
 
 }
 
+bool PlatformImplementation::loadThemeResource(const QString& theme)
+{
+    static QString currentTheme = QString();
+
+    if (!currentTheme.isEmpty())
+    {
+        QResource::unregisterResource(currentTheme);
+    }
+
+    QStringList rccFiles =
+        QStringList()
+        << QCoreApplication::applicationDirPath() + QString::fromUtf8("/Resources_macx.rcc")
+        << QCoreApplication::applicationDirPath() + QString::fromUtf8("/Resources_win.rcc")
+        << QCoreApplication::applicationDirPath() + QString::fromUtf8("/Resources_linux.rcc")
+        << QCoreApplication::applicationDirPath() + QString::fromUtf8("/Resources_qml.rcc")
+        << QCoreApplication::applicationDirPath() + QString::fromUtf8("/qml.rcc")
+        << QCoreApplication::applicationDirPath() +
+               QString::fromUtf8("/Resources_%1.rcc").arg(theme.toLower());
+
+    bool allLoaded = loadRccResources(rccFiles);
+
+    if (allLoaded)
+    {
+        currentTheme = QCoreApplication::applicationDirPath() +
+                       QString::fromUtf8("/Resources_%1.rcc").arg(theme.toLower());
+    }
+
+    return allLoaded;
+}
+
 QByteArray PlatformImplementation::encrypt(QByteArray data, QByteArray key)
 {
     DATA_BLOB dataIn;
@@ -1419,40 +1456,6 @@ void PlatformImplementation::uninstall()
     {
         pService->Release();
     }
-}
-
-// Check if it's needed to start the local HTTP server
-// for communications with the webclient
-bool PlatformImplementation::shouldRunHttpServer()
-{
-    bool result = false;
-    PROCESSENTRY32 entry = {0};
-    entry.dwSize = sizeof(PROCESSENTRY32);
-    HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
-    if (snapshot == INVALID_HANDLE_VALUE)
-    {
-        return false;
-    }
-
-    if (Process32First(snapshot, &entry))
-    {
-        while (Process32Next(snapshot, &entry))
-        {
-            // The MEGA webclient sends request to MEGAsync to improve the
-            // user experience. We check if web browsers are running because
-            // otherwise it isn't needed to run the local web server for this purpose.
-            // Here is the list or web browsers that allow HTTP communications
-            // with 127.0.0.1 inside HTTPS webs.
-            if (!_wcsicmp(entry.szExeFile, L"chrome.exe") // Chromium has the same process name on Windows
-                    || !_wcsicmp(entry.szExeFile, L"firefox.exe"))
-            {
-                result = true;
-                break;
-            }
-        }
-    }
-    CloseHandle(snapshot);
-    return result;
 }
 
 bool PlatformImplementation::isUserActive()

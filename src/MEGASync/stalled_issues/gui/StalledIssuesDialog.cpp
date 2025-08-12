@@ -341,14 +341,14 @@ void StalledIssuesDialog::onGlobalSyncStateChanged(bool)
     //For the future, detect if the stalled issues have been removed remotely to close the dialog
 }
 
-void StalledIssuesDialog::changeEvent(QEvent *event)
+bool StalledIssuesDialog::event(QEvent* event)
 {
-    if(event->type() == QEvent::LanguageChange)
+    if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
         MegaSyncApp->getStalledIssuesModel()->languageChanged();
         ui->stalledIssuesTree->update();
     }
 
-    QWidget::changeEvent(event);
+    return QDialog::event(event);
 }

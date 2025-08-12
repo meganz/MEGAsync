@@ -7,8 +7,8 @@ import SyncInfo 1.0
 AddSyncPageForm {
     id: root
 
+    signal syncSetupSucceed(bool isFullSync)
     signal moveBack
-    signal moveNext
 
     function enableScreen() {
         root.enabled = true;
@@ -53,7 +53,7 @@ AddSyncPageForm {
         rightPrimary.onClicked: {
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            syncsComponentAccess.addSyncCandidadeButtonClicked(localFolderChooser.chosenPath, remoteFolderChooser.chosenPath);
+            syncsComponentAccess.syncButtonClicked(localFolderChooser.chosenPath, remoteFolderChooser.chosenPath);
         }
     }
 
@@ -75,12 +75,13 @@ AddSyncPageForm {
     Connections {
         target: syncsDataAccess
 
-        function onSyncPrevalidationSuccess() {
+        function onSyncSetupSuccess(isFullSync) {
             enableScreen();
-            root.moveNext();
+
+            root.syncSetupSucceed(isFullSync);
         }
 
-        function onSyncPrevalidationFailed() {
+        function onSyncSetupFailed() {
             enableScreen();
         }
     }

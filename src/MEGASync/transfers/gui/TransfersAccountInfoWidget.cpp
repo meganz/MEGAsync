@@ -54,7 +54,7 @@ void TransfersAccountInfoWidget::setTransferOverquota(const bool isOverquota)
     updateUpgradeButtonVisibility();
 }
 
-void TransfersAccountInfoWidget::changeEvent(QEvent* event)
+bool TransfersAccountInfoWidget::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
@@ -62,7 +62,7 @@ void TransfersAccountInfoWidget::changeEvent(QEvent* event)
         updateUpgradeButtonText();
         updateStorageElements();
     }
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }
 
 void TransfersAccountInfoWidget::updateStorageText()

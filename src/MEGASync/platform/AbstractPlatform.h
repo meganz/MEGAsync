@@ -65,7 +65,6 @@ public:
     virtual void enableDialogBlur(QDialog *dialog);
     virtual bool registerUpdateJob() = 0;
     virtual void uninstall();
-    virtual bool shouldRunHttpServer() = 0;
     virtual bool isUserActive() = 0;
     virtual QString getDeviceName() = 0;
     virtual void initMenu(QMenu* m, const char* objectName, const bool applyDefaultStyling = true);
@@ -83,32 +82,36 @@ public:
     virtual void removeAllSyncsFromLeftPane();
     virtual bool makePubliclyReadable(const QString& fileName);
 
-    virtual void addFileManagerExtensionToSystem(){};
-    virtual void enableFileManagerExtension(bool) {};
+    virtual void addFileManagerExtensionToSystem() {}
+
+    virtual void enableFileManagerExtension(bool) {}
     virtual bool validateSystemTrayIntegration();
 
     virtual void calculateInfoDialogCoordinates(const QRect& rect, int *posx, int *posy) = 0;
     virtual void streamWithApp(const QString& app, const QString& url) = 0;
     virtual void processSymLinks() = 0;
+    virtual bool loadThemeResource(const QString& theme) = 0;
 
     std::shared_ptr<AbstractShellNotifier> getShellNotifier();
     virtual DriveSpaceData getDriveData(const QString& path) = 0;
 
     // AutoUpdate tasks
-    virtual void runPostAutoUpdateStep(){};
+    virtual void runPostAutoUpdateStep() {}
 
 #if defined(ENABLE_SDK_ISOLATED_GFX)
     virtual QString getGfxProviderPath() = 0;
 #endif
 
-    virtual void pinOnTaskbar(){};
+    virtual void pinOnTaskbar() {}
+
+    virtual std::string toLocalEncodedPath(const QString& path) const;
 
 protected:
     std::shared_ptr<AbstractShellNotifier> mShellNotifier = nullptr;
 
     void logInfoDialogCoordinates(const char *message, const QRect &screenGeometry, const QString &otherInformation);
     QString rectToString(const QRect &rect);
-
+    bool loadRccResources(const QStringList& rccFiles);
 };
 
 #endif // ABSTRACTPLATFORM_H

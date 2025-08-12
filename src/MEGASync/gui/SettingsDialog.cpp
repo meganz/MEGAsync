@@ -505,7 +505,7 @@ void SettingsDialog::on_bHelp_clicked()
     Utilities::openUrl(QUrl(helpUrl));
 }
 
-void SettingsDialog::changeEvent(QEvent* event)
+bool SettingsDialog::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
@@ -528,7 +528,7 @@ void SettingsDialog::changeEvent(QEvent* event)
         updateDownloadFolder();
     }
 
-    QDialog::changeEvent(event);
+    return QDialog::event(event);
 }
 
 void SettingsDialog::on_bGeneral_clicked()
@@ -1451,6 +1451,8 @@ void SettingsDialog::on_bFolders_clicked()
 void SettingsDialog::on_bUploadFolder_clicked()
 {
     UploadNodeSelector* nodeSelector = new UploadNodeSelector(this);
+    // Temporary
+    nodeSelector->setProperty("TOKENIZED", true);
     std::shared_ptr<mega::MegaNode> defaultNode(
         mMegaApi->getNodeByPath(mUi->eUploadFolder->text().toStdString().c_str()));
     nodeSelector->setSelectedNodeHandle(defaultNode);
@@ -1575,15 +1577,37 @@ void SettingsDialog::on_bOpenBandwidthSettings_clicked()
         {
             if (bandwidthSettings->result() == QDialog::Accepted)
             {
-                mApp->setMaxUploadSpeed(mPreferences->uploadLimitKB());
-                mApp->setMaxDownloadSpeed(mPreferences->downloadLimitKB());
+                if (bandwidthSettings->settingHasChanged(
+                        BandwidthSettings::SettingChanged::UPLOAD_LIMIT))
+                {
+                    mApp->setMaxUploadSpeed(mPreferences->uploadLimitKB());
+                }
 
-                mApp->setMaxConnections(MegaTransfer::TYPE_UPLOAD,
-                                        mPreferences->parallelUploadConnections());
-                mApp->setMaxConnections(MegaTransfer::TYPE_DOWNLOAD,
-                                        mPreferences->parallelDownloadConnections());
+                if (bandwidthSettings->settingHasChanged(
+                        BandwidthSettings::SettingChanged::DOWNLOAD_LIMIT))
+                {
+                    mApp->setMaxDownloadSpeed(mPreferences->downloadLimitKB());
+                }
 
-                mApp->setUseHttpsOnly(mPreferences->usingHttpsOnly());
+                if (bandwidthSettings->settingHasChanged(
+                        BandwidthSettings::SettingChanged::UPLOAD_CONNECTIONS))
+                {
+                    mApp->setMaxConnections(MegaTransfer::TYPE_UPLOAD,
+                                            mPreferences->parallelUploadConnections());
+                }
+
+                if (bandwidthSettings->settingHasChanged(
+                        BandwidthSettings::SettingChanged::DOWNLOAD_CONNECTIONS))
+                {
+                    mApp->setMaxConnections(MegaTransfer::TYPE_DOWNLOAD,
+                                            mPreferences->parallelDownloadConnections());
+                }
+
+                if (bandwidthSettings->settingHasChanged(
+                        BandwidthSettings::SettingChanged::USE_HTTPS))
+                {
+                    mApp->setUseHttpsOnly(mPreferences->usingHttpsOnly());
+                }
 
                 updateNetworkTab();
             }

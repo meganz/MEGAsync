@@ -64,14 +64,14 @@ StreamingFromMegaDialog::~StreamingFromMegaDialog()
     }
 }
 
-void StreamingFromMegaDialog::changeEvent(QEvent *event)
+bool StreamingFromMegaDialog::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
     }
 
-    QDialog::changeEvent(event);
+    return QDialog::event(event);
 }
 
 void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)

@@ -32,13 +32,13 @@ void AccountTypeWidget::updateAccountElements()
     updateAccountText();
 }
 
-void AccountTypeWidget::changeEvent(QEvent* event)
+bool AccountTypeWidget::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
         updateAccountText();
     }
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }
 
 void AccountTypeWidget::updateAccountText()

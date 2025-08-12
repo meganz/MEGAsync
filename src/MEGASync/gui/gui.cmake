@@ -110,8 +110,6 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsQmlDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/syncs/Syncs.h
     ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsData.h
-    ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsCandidatesController.h
-    ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsCandidatesModel.h
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyComponent.h
     ${CMAKE_CURRENT_LIST_DIR}/surveys/Surveys.h
@@ -252,8 +250,6 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsQmlDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/syncs/Syncs.cpp
     ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsData.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsCandidatesController.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncsCandidatesModel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/surveys/Surveys.cpp
@@ -402,12 +398,6 @@ target_sources_conditional(${ExecutableTarget}
    FLAG APPLE
    QT_AWARE
    PRIVATE
-   ${CMAKE_CURRENT_LIST_DIR}/CocoaHelpButton.mm
-   ${CMAKE_CURRENT_LIST_DIR}/QMacSpinningProgressIndicator.mm
-   ${CMAKE_CURRENT_LIST_DIR}/QSegmentedControl.mm
-   ${CMAKE_CURRENT_LIST_DIR}/QMacSpinningProgressIndicator.h
-   ${CMAKE_CURRENT_LIST_DIR}/CocoaHelpButton.h
-   ${CMAKE_CURRENT_LIST_DIR}/QSegmentedControl.h
    ${CMAKE_CURRENT_LIST_DIR}/macx/LockedPopOver.ui
 )
 
@@ -466,33 +456,96 @@ set (DESKTOP_APP_TS_FILES
 set_source_files_properties(${DESKTOP_APP_TS_FILES} PROPERTIES OUTPUT_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/gui/translations)
 
 if (NOT DontUseResources)
-    target_sources_conditional(${ExecutableTarget}
-        FLAG WIN32
-        QT_AWARE
-        PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/Resources_win.qrc
+
+    # Load functions to process qrcs and create aliases
+    include(desktopapp_resources_processing)
+
+    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_win.qrc")
+    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_macx.qrc")
+    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_linux.qrc")
+    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_qml.qrc")
+    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_light.qrc")
+    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_dark.qrc")
+
+    qt5_add_binary_resources(Resources_win "${CMAKE_CURRENT_LIST_DIR}/Resources_win.qrc")
+    qt5_add_binary_resources(Resources_macx "${CMAKE_CURRENT_LIST_DIR}/Resources_macx.qrc")
+    qt5_add_binary_resources(Resources_linux "${CMAKE_CURRENT_LIST_DIR}/Resources_linux.qrc")
+    qt5_add_binary_resources(Resources_qml "${CMAKE_CURRENT_LIST_DIR}/Resources_qml.qrc")
+    qt5_add_binary_resources(Resources_light "${CMAKE_CURRENT_LIST_DIR}/Resources_light.qrc")
+    qt5_add_binary_resources(Resources_dark "${CMAKE_CURRENT_LIST_DIR}/Resources_dark.qrc")
+    qt5_add_binary_resources(qml "${CMAKE_CURRENT_LIST_DIR}/qml/qml.qrc")
+
+    add_dependencies(MEGAsync Resources_win)
+    add_dependencies(MEGAsync Resources_macx)
+    add_dependencies(MEGAsync Resources_linux)
+    add_dependencies(MEGAsync Resources_qml)
+    add_dependencies(MEGAsync Resources_light)
+    add_dependencies(MEGAsync Resources_dark)
+    add_dependencies(MEGAsync qml)
+
+if (NOT APPLE)
+    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_CURRENT_BINARY_DIR}/Resources_win.rcc
+                $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying Resources_win.rcc to target output directory"
     )
 
-    target_sources_conditional(${ExecutableTarget}
-       FLAG APPLE
-       QT_AWARE
-       PRIVATE
-       ${CMAKE_CURRENT_LIST_DIR}/Resources_macx.qrc
+    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_CURRENT_BINARY_DIR}/Resources_macx.rcc
+                $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying Resources_macx.rcc to target output directory"
     )
 
-    target_sources_conditional(${ExecutableTarget}
-        FLAG UNIX AND NOT APPLE
-        QT_AWARE
-        PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/Resources_linux.qrc
+    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_CURRENT_BINARY_DIR}/Resources_linux.rcc
+                $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying Resources_linux.rcc to target output directory"
     )
+
+    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_CURRENT_BINARY_DIR}/Resources_qml.rcc
+                $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying Resources_qml.rcc to target output directory"
+    )
+
+    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_CURRENT_BINARY_DIR}/Resources_light.rcc
+                $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying Resources_light.rcc to target output directory"
+    )
+
+
+    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_CURRENT_BINARY_DIR}/Resources_dark.rcc
+                $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying Resources_dark.rcc to target output directory"
+    )
+
+    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_CURRENT_BINARY_DIR}/qml.rcc
+                $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying qml.rcc to target output directory"
+    )
+endif()
 
     qt5_add_translation(DESKTOP_APP_QM_FILES ${DESKTOP_APP_TS_FILES})
 endif()
 
+#Review to load only the resource file per platform and not all of them
 set(DESKTOP_APP_GUI_RESOURCES
-    ${CMAKE_CURRENT_LIST_DIR}/Resources.qrc
+    ${CMAKE_CURRENT_LIST_DIR}/Resources_macx.qrc
+    ${CMAKE_CURRENT_LIST_DIR}/Resources_win.qrc
+    ${CMAKE_CURRENT_LIST_DIR}/Resources_linux.qrc
     ${CMAKE_CURRENT_LIST_DIR}/Resources_qml.qrc
+    ${CMAKE_CURRENT_LIST_DIR}/Resources_light.qrc
+    ${CMAKE_CURRENT_LIST_DIR}/Resources_dark.qrc
     ${CMAKE_CURRENT_LIST_DIR}/qml/qml.qrc
 )
 
@@ -502,7 +555,6 @@ set(QML_IMPORT_PATH ${QML_IMPORT_PATH} CACHE STRING "Qt Creator extra qml import
 
 set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/AccountDetailsDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveBackupDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/BugReportDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/ChangePassword.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveSyncConfirmationDialog.ui
@@ -513,31 +565,11 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/ProxySettings.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/SettingsDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/CrashReportDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/CrashReportDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/NotificationsSettings.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/OpenBackupsFolder.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/ProgressIndicatorDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/SyncSettingsUIBase.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoteItemUi.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/SyncStallModeSelector.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/BannerWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/SyncAccountFullMessage.ui
 )
-
-set (DESKTOP_APP_GUI_UI_FILES_ROOT
-    ${CMAKE_CURRENT_LIST_DIR}/ui/SettingsDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/CrashReportDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/AccountDetailsDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveBackupDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveSyncConfirmationDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/DownloadFromMegaDialog.ui
-)
-
-list(JOIN DESKTOP_APP_GUI_UI_FILES "|" DESKTOP_APP_GUI_UI_FILES_TEMP )
-list(JOIN DESKTOP_APP_GUI_UI_FILES_ROOT "|" DESKTOP_APP_GUI_UI_FILES_ROOT_TEMP )
-
-target_compile_definitions(${ExecutableTarget} PRIVATE "DESKTOP_APP_GUI_UI_FILES=\"${DESKTOP_APP_GUI_UI_FILES_TEMP}\"")
-target_compile_definitions(${ExecutableTarget} PRIVATE "DESKTOP_APP_GUI_UI_FILES_ROOT=\"${DESKTOP_APP_GUI_UI_FILES_ROOT_TEMP}\"")
 
 target_sources_conditional(${ExecutableTarget}
    FLAG NOT DontUseResources
@@ -577,7 +609,7 @@ target_include_directories(${ExecutableTarget} PRIVATE ${INCLUDE_DIRECTORIES})
 
 if (UNIX AND NOT APPLE)
 
-    # Install tray icons for Linux
+    # Install tray icons and resources for Linux
 
     # color
     set(HICOLOR "share/icons/hicolor/scalable/status")
@@ -620,5 +652,35 @@ if (UNIX AND NOT APPLE)
     install(FILES gui/images/uptodate_clear.svg RENAME megauptodate.svg
         DESTINATION "${CMAKE_INSTALL_BINDIR}/../${MONOCOLOR}"
     )
+
+    # rcc files
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_win.rcc"
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
+    )
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_linux.rcc"
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
+    )
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_macx.rcc"
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
+    )
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_light.rcc"
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
+    )
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_dark.rcc"
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
+    )
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_qml.rcc"
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
+    )
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/qml.rcc"
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
+    )
+
 
 endif()

@@ -115,11 +115,11 @@ void FilterAlertWidget::on_bPayment_clicked()
     QApplication::postEvent(mUi->bPayment, new QEvent(QEvent::Leave));
 }
 
-void FilterAlertWidget::changeEvent(QEvent* event)
+bool FilterAlertWidget::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
     }
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }

@@ -24,7 +24,7 @@ public:
     void setStorageQuotaState(int newStorageQuotaState);
 
 protected:
-    void changeEvent(QEvent* event) override;
+    bool event(QEvent* event) override;
 
 private slots:
     void onTransferQuotaExceededUpdate();

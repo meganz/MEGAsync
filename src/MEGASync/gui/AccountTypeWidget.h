@@ -21,7 +21,7 @@ public:
     void updateAccountElements() override;
 
 protected:
-    void changeEvent(QEvent* event) override;
+    bool event(QEvent* event) override;
 
 private:
     Ui::AccountTypeWidget* mUi;

@@ -7,6 +7,7 @@
 #include <QDesktopServices>
 #include <QDir>
 #include <QEasingCurve>
+#include <QEvent>
 #include <QEventLoop>
 #include <QFuture>
 #include <QHash>
@@ -482,6 +483,7 @@ public:
     static QIcon getExtensionPixmapSmall(QString fileName);
     static QIcon getExtensionPixmapMedium(QString fileName);
     static QString getExtensionPixmapName(QString fileName, QString prefix);
+    static void clearIconCache();
     static FileType getFileType(QString fileName, QString prefix);
 
     static long long getSystemsAvailableMemory();
@@ -503,6 +505,8 @@ public:
     static bool isNodeNameValid(const QString& name);
 
     static bool shouldDisplayUpgradeButton(const bool isTransferOverquota);
+
+    static void propagateCustomEvent(QEvent::Type event);
 };
 
 Q_DECLARE_METATYPE(Utilities::FileType)

@@ -35,7 +35,7 @@ public slots:
     void updateStreamingState();
 
 protected:
-    void changeEvent(QEvent * event) override;
+    bool event(QEvent* event) override;
     void closeEvent(QCloseEvent * event) override;
 
 private slots:

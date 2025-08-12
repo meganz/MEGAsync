@@ -72,7 +72,7 @@ void VerifyLockMessage::mousePressEvent(QMouseEvent *event)
     }
 }
 
-void VerifyLockMessage::changeEvent(QEvent *event)
+bool VerifyLockMessage::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
@@ -80,7 +80,7 @@ void VerifyLockMessage::changeEvent(QEvent *event)
         regenerateUI(m_lockStatus, true);
     }
 
-    QDialog::changeEvent(event);
+    return QDialog::event(event);
 }
 
 void VerifyLockMessage::regenerateUI(int currentStatus, bool force)

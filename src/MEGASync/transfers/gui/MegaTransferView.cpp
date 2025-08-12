@@ -938,7 +938,7 @@ void MegaTransferView::mouseReleaseEvent(QMouseEvent* event)
         clearSelection();
     }
 
-    QTreeView::mouseReleaseEvent(event);
+    LoadingSceneView::mouseReleaseEvent(event);
 }
 
 void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
@@ -948,17 +948,17 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
         return;
     }
 
-    QTreeView::mouseMoveEvent(event);
+    LoadingSceneView::mouseMoveEvent(event);
 }
 
-void MegaTransferView::changeEvent(QEvent* event)
+bool MegaTransferView::event(QEvent* event)
 {
-    if(event->type() == QEvent::LanguageChange)
+    if (event->type() == QEvent::LanguageChange)
     {
         viewport()->update();
     }
 
-    QTreeView::changeEvent(event);
+    return LoadingSceneView::event(event);
 }
 
 void MegaTransferView::dropEvent(QDropEvent* event)
@@ -979,7 +979,7 @@ void MegaTransferView::keyPressEvent(QKeyEvent *event)
         mKeyNavigation = true;
     }
 
-    QTreeView::keyPressEvent(event);
+    LoadingSceneView::keyPressEvent(event);
 
     if(mKeyNavigation)
     {
@@ -1004,7 +1004,7 @@ void MegaTransferView::selectionChanged(const QItemSelection &selected, const QI
         }
     }
 
-    QTreeView::selectionChanged(selected, deselected);
+    LoadingSceneView::selectionChanged(selected, deselected);
 }
 
 bool MegaTransferView::eventFilter(QObject *object, QEvent *event)
@@ -1021,7 +1021,7 @@ bool MegaTransferView::eventFilter(QObject *object, QEvent *event)
         }
     }
 
-    return QTreeView::eventFilter(object, event);
+    return LoadingSceneView::eventFilter(object, event);
 }
 
 void MegaTransferView::paintEvent(QPaintEvent *event)
@@ -1038,7 +1038,7 @@ void MegaTransferView::paintEvent(QPaintEvent *event)
         }
     }
 
-    QTreeView::paintEvent(event);
+    LoadingSceneView::paintEvent(event);
 }
 
 void MegaTransferView::moveToTopClicked()

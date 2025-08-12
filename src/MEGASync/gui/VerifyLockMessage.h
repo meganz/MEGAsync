@@ -45,7 +45,7 @@ protected:
     bool eventFilter(QObject* obj, QEvent* event) override;
 
     void mousePressEvent(QMouseEvent *event) override;
-    void changeEvent(QEvent *event) override;
+    bool event(QEvent* event) override;
 
 private:
     Ui::VerifyLockMessage *m_ui;

@@ -26,8 +26,8 @@ FetchContent_MakeAvailable(megadesignassets)
 add_executable(DesignTokensImporter)
 set_target_properties(DesignTokensImporter PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 
-find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Gui Xml)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui Xml)
+find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Xml)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Xml)
 
 set(DESIGN_TOKENS_IMPORTER_SOURCES)
 set(DESIGN_TOKENS_IMPORTER_HEADERS)
@@ -45,6 +45,5 @@ target_sources(DesignTokensImporter
 
 target_link_libraries(DesignTokensImporter
     Qt${QT_VERSION_MAJOR}::Core
-    Qt${QT_VERSION_MAJOR}::Gui
     Qt${QT_VERSION_MAJOR}::Xml
 )

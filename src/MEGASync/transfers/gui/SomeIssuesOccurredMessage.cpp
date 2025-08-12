@@ -16,14 +16,14 @@ SomeIssuesOccurredMessage::~SomeIssuesOccurredMessage()
     delete ui;
 }
 
-void SomeIssuesOccurredMessage::changeEvent(QEvent *event)
+bool SomeIssuesOccurredMessage::event(QEvent* event)
 {
-    if(event->type() == QEvent::LanguageChange)
+    if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
     }
 
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }
 
 void SomeIssuesOccurredMessage::on_viewIssuesButton_clicked()

@@ -237,7 +237,7 @@ protected:
     void updateBlockedState();
     void updateState();
     bool checkFailedState();
-    void changeEvent(QEvent * event) override;
+    bool event(QEvent* event) override;
     bool eventFilter(QObject *obj, QEvent *e) override;
 
 protected:

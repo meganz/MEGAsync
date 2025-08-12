@@ -1,9 +1,9 @@
 #!/usr/bin/make -f
 NJOBS := $(shell echo ${DEB_BUILD_OPTIONS} | sed -rn 's/.*parallel=([0-9]*).*/\1/p')
 VCPKG_ROOT := $(shell [ -f /opt/vcpkg.tar.gz ] && echo "-DVCPKG_ROOT=vcpkg" || echo "")
-DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 25\|Plucky Puffin\|Ubuntu 24\|Oracular Oriole\|Noble Numbat\|Ubuntu 23\|Mantic Minotaur\|Lunar Lobster\|Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
-EXTRADEFINES := $(shell cat /etc/issue | grep "Ubuntu 1[23456789]\|Ubuntu 20\|Ubuntu 21\|Ubuntu 22.10\|Ubuntu 23\|Debian.* [789]" >/dev/null && echo "-DMEGASYNC_DEPRECATED_OS" || echo "")
-QTINSTALL := $(shell cat /etc/issue | grep "Ubuntu 14.04\|Ubuntu 16.04\|Ubuntu 18.04\|Ubuntu 20.04\|Debian.* 9\|Debian.* 10" >/dev/null && echo "-DDEPLOY_QT_LIBRARIES=ON -DCMAKE_PREFIX_PATH=/opt/mega" || echo "")
+DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 25\|Questing Quokka\|Plucky Puffin\|Ubuntu 24\|Ubuntu 23\|Ubuntu 22" >/dev/null && echo "-- -Zxz" || echo "")
+EXTRADEFINES := $(shell cat /etc/issue | grep "Ubuntu 1[23456789]\|Ubuntu 20\|Ubuntu 21\|Ubuntu 22.10\|Ubuntu 23\|Ubuntu 24.10\|Debian.* [789]" >/dev/null && echo "-DMEGASYNC_DEPRECATED_OS" || echo "")
+QTINSTALL := $(shell cat /etc/issue | grep "Ubuntu 20.04" >/dev/null && echo "-DDEPLOY_QT_LIBRARIES=ON -DCMAKE_PREFIX_PATH=/opt/mega" || echo "")
 QTDEFINES := $(shell [ -f /opt/mega/bin/qmake ] && echo "${QTINSTALL}" || echo "" )
 DEB_TESTING := $(shell cat /etc/issue | grep "Debian" > /dev/null && cat /etc/apt/sources.list.d/debian.sources | grep -v "^\#" | grep testing > /dev/null && echo "testing")
 MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
@@ -26,7 +26,16 @@ build-stamp:
 		mkdir -p $(VCPKG_DEFAULT_BINARY_CACHE); \
 	fi
 
-	if [ -f /opt/cmake.tar.gz ]; then echo "ebc26503469f12bf1e956c564fcfa82a  /opt/cmake.tar.gz" | md5sum -c -; fi
+	if [ -f /opt/cmake.tar.gz ]; then																						\
+		HASH=$$(md5sum /opt/cmake.tar.gz | awk '{print $$1}');																\
+		if [ "$$HASH" = "ebc26503469f12bf1e956c564fcfa82a" ] || [ "$$HASH" = "2e278820bb4ec6fb71dbef1704fb5359" ]; then		\
+			echo "Valid cmake.tar.gz (hash: $$HASH)";																		\
+		else																												\
+			echo "Invalid cmake.tar.gz hash: $$HASH" >&2;																	\
+			exit 1;																											\
+		fi;																													\
+	fi
+	
 	if [ -f /opt/cmake.tar.gz ]; then     \
 		tar xzf /opt/cmake.tar.gz;        \
 		ln -s cmake-*-linux* cmake_inst;  \

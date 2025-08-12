@@ -106,14 +106,14 @@ void DownloadFromMegaDialog::updatePath()
     }
 }
 
-void DownloadFromMegaDialog::changeEvent(QEvent *event)
+bool DownloadFromMegaDialog::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
         updatePath();
     }
-    QDialog::changeEvent(event);
+    return QDialog::event(event);
 }
 
 void DownloadFromMegaDialog::on_bOK_clicked()

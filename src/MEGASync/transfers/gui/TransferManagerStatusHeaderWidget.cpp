@@ -166,12 +166,12 @@ void TransferManagerStatusHeaderWidget::setStorageQuotaState(int newStorageQuota
     mStorageQuotaState = newStorageQuotaState;
 }
 
-void TransferManagerStatusHeaderWidget::changeEvent(QEvent* event)
+bool TransferManagerStatusHeaderWidget::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
         updateStorageBannerText();
     }
-    QWidget::changeEvent(event);
+    return QWidget::event(event);
 }

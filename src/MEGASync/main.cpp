@@ -74,11 +74,12 @@ void msgHandler(QtMsgType type, const char *msg)
 }
 
 #ifdef Q_OS_LINUX
-MegaApplication *theapp = NULL;
-bool waitForRestartSignal = false;
+MegaApplication* theapp = NULL;
 std::mutex mtxcondvar;
 std::condition_variable condVarRestart;
-QString appToWaitForSignal;
+QString appExecPath;
+QStringList appArgs;
+const QString waitForSignalArg = QLatin1String("--waitforsignal");
 
 void LinuxSignalHandler(int signum)
 {
@@ -89,13 +90,12 @@ void LinuxSignalHandler(int signum)
     }
     else if (signum == SIGUSR1)
     {
-        waitForRestartSignal = true;
-        if (waitForRestartSignal)
-        {
-            appToWaitForSignal.append(QString::fromUtf8(" --waitforsignal"));
-            bool success = QProcess::startDetached(appToWaitForSignal);
-            cout << "Started detached MEGAsync to wait for restart signal: " << appToWaitForSignal.toUtf8().constData() << " " << (success?"OK":"FAILED!") << endl;
-        }
+        appArgs << waitForSignalArg;
+        bool success = QProcess::startDetached(appExecPath, appArgs);
+        cout << "Started detached MEGAsync to wait for restart signal: "
+             << appExecPath.toUtf8().constData() << " "
+             << appArgs.join(QLatin1Char(' ')).toUtf8().constData() << " "
+             << (success ? "OK" : "FAILED!") << endl;
 
         if (theapp)
         {
@@ -351,40 +351,37 @@ int main(int argc, char *argv[])
         cerr << " Failed to register signal SIGUSR1 " << endl;
     }
 
-    for (int i = 1; i < argc ; i++)
+    // Get app parameters
+    for (int i = 0; i < argc; ++i)
     {
-        if (!strcmp(argv[i],"--waitforsignal"))
+        appArgs << QString::fromUtf8(argv[i]);
+    }
+    appExecPath = appArgs.takeFirst();
+
+    // Process "waitforsignal" if passed
+    if (appArgs.contains(waitForSignalArg))
+    {
+        std::unique_lock<std::mutex> lock(mtxcondvar);
+        if (signal(SIGUSR2, LinuxSignalHandler))
         {
-            std::unique_lock<std::mutex> lock(mtxcondvar);
-            if (signal(SIGUSR2, LinuxSignalHandler))
-            {
-                cerr << " Failed to register signal SIGUSR2 " << endl;
-            }
-
-            cout << "Waiting for signal to restart MEGAsync ... "<< endl;
-            if (condVarRestart.wait_for(lock, std::chrono::minutes(30)) == std::cv_status::no_timeout )
-            {
-                QString app;
-
-                for (int j = 0; j < argc; j++)
-                {
-                    if (strcmp(argv[j],"--waitforsignal"))
-                    {
-                        app.append(QString::fromUtf8(" \""));
-                        app.append(QString::fromUtf8(argv[j]));
-                        app.append(QString::fromUtf8("\""));
-                    }
-                }
-
-                bool success = QProcess::startDetached(app);
-                cout << "Restarting MEGAsync: " << app.toUtf8().constData() << " " << (success?"OK":"FAILED!") << endl;
-                freeStaticResources();
-                exit(!success);
-            }
-            cout << "Timed out waiting for restart signal" << endl;
-            freeStaticResources();
-            exit(2);
+            cerr << " Failed to register signal SIGUSR2 " << endl;
         }
+
+        cout << "Waiting for signal to restart MEGAsync ... " << endl;
+        if (condVarRestart.wait_for(lock, std::chrono::minutes(30)) == std::cv_status::no_timeout)
+        {
+            appArgs.removeAll(waitForSignalArg);
+            bool success = QProcess::startDetached(appExecPath, appArgs);
+            cout << "Restarting MEGAsync: " << appExecPath.toUtf8().constData() << " "
+                 << appArgs.join(QLatin1Char(' ')).toUtf8().constData() << " "
+                 << (success ? "OK" : "FAILED!") << endl;
+            freeStaticResources();
+            exit(!success);
+        }
+
+        cout << "Timed out waiting for restart signal" << endl;
+        freeStaticResources();
+        exit(2);
     }
 
     // Block SIGUSR2 for normal execution: we don't want it to kill the process, in case there's a rogue update going on.
@@ -499,13 +496,6 @@ int main(int argc, char *argv[])
     MegaApplication app(argc, argv);
 #if defined(Q_OS_LINUX)
     theapp = &app;
-    appToWaitForSignal = QString::fromUtf8("\"%1\"").arg(MegaApplication::applicationFilePath());
-    for (int i = 1; i < argc; i++)
-    {
-        appToWaitForSignal.append(QString::fromUtf8(" \""));
-        appToWaitForSignal.append(QString::fromUtf8(argv[i]));
-        appToWaitForSignal.append(QString::fromUtf8("\""));
-    }
 #endif
 
     for(const auto &message : logMessages)
@@ -540,8 +530,6 @@ int main(int argc, char *argv[])
 #endif
 
     qInstallMessageHandler(messageHandler);
-
-    app.setStyle(new MegaProxyStyle());
 
 #ifdef Q_OS_MACX
 
@@ -659,7 +647,6 @@ int main(int argc, char *argv[])
     addFonts();
 
     app.setWindowIcon(QIcon(QString::fromUtf8(":/images/app_ico.ico")));
-
     app.initialize();
     app.start();
 

@@ -148,14 +148,14 @@ bool NodeSelector::getDefaultUploadOption()
     return mCloudDriveWidget->getDefaultUploadOption();
 }
 
-void NodeSelector::changeEvent(QEvent *event)
+bool NodeSelector::event(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
         updateNodeSelectorTabs();
     }
-    QDialog::changeEvent(event);
+    return QDialog::event(event);
 }
 
 void NodeSelector::keyPressEvent(QKeyEvent *e)

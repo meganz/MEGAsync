@@ -15,6 +15,7 @@ public:
 
     void applyCurrentTheme();
     void applyCurrentTheme(QWidget* dialog);
+    void registerWidgetForTheming(QWidget* dialog);
     QColor getColor(const QString& colorToken, const QString& defaultValue);
 
 private:
@@ -33,11 +34,12 @@ private:
     void replaceColorTokens(QString& styleSheet, const ColorTokens& colorTokens);
     void removeFrameOnDialogCombos(QWidget* widget);
     bool isTokenized(QWidget* widget);
-    bool isRoot(QWidget* widget);
+    void tokenizeChildStyleSheets(QWidget* widget);
 
     QMap<QString, ColorTokens> mColorThemedTokens;
     QMap<QString, QString> mThemedStandardComponentsStyleSheet;
     QMap<QString, QString> mWidgetsStyleSheets;
+    QSet<QWidget*> mRegisteredWidgets;
 };
 
 #endif // THEMEWIDGET_H

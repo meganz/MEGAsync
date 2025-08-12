@@ -1,4 +1,5 @@
 #include "LockedPopOver.h"
+#include "ThemeManager.h"
 
 LockedPopOver::LockedPopOver()
 {
@@ -6,14 +7,14 @@ LockedPopOver::LockedPopOver()
     tweakStrings();
 }
 
-void LockedPopOver::changeEvent(QEvent *event)
+bool LockedPopOver::event(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
         m_ui.retranslateUi(this);
         tweakStrings();
     }
-    QWidget::changeEvent(event);
+    return QMacNativeWidget::event(event);
 }
 
 void LockedPopOver::tweakStrings()

@@ -24,12 +24,14 @@
 #include "IntervalExecutioner.h"
 #include "LoginController.h"
 #include "mega/types.h"
+#include "MegaProxyStyle.h"
 #include "MessageDialogOpener.h"
 #include "MyBackupsHandle.h"
 #include "NodeSelector.h"
 #include "NodeSelectorSpecializations.h"
 #include "Onboarding.h"
 #include "OverQuotaDialog.h"
+#include "ParallelConnectionsValues.h"
 #include "Platform.h"
 #include "PlatformStrings.h"
 #include "PowerOptions.h"
@@ -46,6 +48,7 @@
 #include "SyncController.h"
 #include "SyncReminderNotificationManager.h"
 #include "SyncsMenu.h"
+#include "ThemeManager.h"
 #include "TransferMetaData.h"
 #include "UploadToMegaDialog.h"
 #include "UpsellComponent.h"
@@ -181,7 +184,8 @@ MegaApplication::MegaApplication(int& argc, char** argv):
 
     if (args.contains(QLatin1String("--version")))
     {
-        QTextStream(stdout) << getMEGAString() << " v" << Preferences::VERSION_STRING << " (" << Preferences::SDK_ID << ")" << endl;
+        QTextStream(stdout) << getMEGAString() << " v" << Preferences::VERSION_STRING << " ("
+                            << Preferences::SDK_ID << ")" << Qt::endl;
         ::exit(0);
     }
 
@@ -409,6 +413,25 @@ void MegaApplication::showInterface(QString)
 
 bool gCrashableForTesting = false;
 
+void MegaApplication::initStyleAndResources()
+{
+    ThemeManager::instance()->init();
+
+    setStyle(new MegaProxyStyle());
+    QFile file(QLatin1String(":/style/WidgetsComponentsStyleSheetsSizes.css"));
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QString sourceStandardComponentsStyleSheet = QString::fromLatin1(file.readAll());
+        file.close();
+        setStyleSheet(sourceStandardComponentsStyleSheet);
+    }
+    else
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                     "Couldn't open WidgetsComponentsStyleSheetsSizes.css");
+    }
+}
+
 void MegaApplication::initialize()
 {
     if (megaApi)
@@ -443,6 +466,9 @@ void MegaApplication::initialize()
 
     preferences->setLastStatsRequest(0);
     lastExit = preferences->getLastExit();
+
+    // Apply specific rcc files depending on selected theme
+    initStyleAndResources();
 
     installTranslator(&translator);
     QString language = preferences->language();
@@ -562,12 +588,14 @@ void MegaApplication::initialize()
 
     megaApi->setLanguage(currentLanguageCode.toUtf8().constData());
     megaApiFolders->setLanguage(currentLanguageCode.toUtf8().constData());
-    setMaxConnections(MegaTransfer::TYPE_UPLOAD,   preferences->parallelUploadConnections());
+
+    // In case the user has logout and closed the app, we set the default values
+    setMaxConnections(MegaTransfer::TYPE_UPLOAD, preferences->parallelUploadConnections());
     setMaxConnections(MegaTransfer::TYPE_DOWNLOAD, preferences->parallelDownloadConnections());
     setUseHttpsOnly(preferences->usingHttpsOnly());
-
     megaApi->setDefaultFilePermissions(preferences->filePermissionsValue());
     megaApi->setDefaultFolderPermissions(preferences->folderPermissionsValue());
+
     megaApi->retrySSLerrors(true);
 
     mStatusController = new AccountStatusController(this);
@@ -1214,7 +1242,7 @@ void MegaApplication::requestUserData()
     megaApi->getPSA();
 }
 
-void MegaApplication::onboardingFinished(bool fastLogin)
+void MegaApplication::onboardingFinished(bool fastLogin, bool comesFromOnboarding)
 {
     if (appfinished)
     {
@@ -1406,8 +1434,6 @@ if (!preferences->lastExecutionTime())
 
     if (!preferences->isFirstSyncDone())
     {
-        bool comesFromOnboarding(
-            !preferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN));
         mSyncReminderNotificationManager = new SyncReminderNotificationManager(comesFromOnboarding);
         connect(&SyncController::instance(),
                 &SyncController::syncAddStatus,
@@ -3330,7 +3356,8 @@ void MegaApplication::setMaxConnections(int direction, int connections)
         return;
     }
 
-    if (connections > 0 && connections <= 6)
+    if (connections >= ParallelConnectionsValues::getMinValue() &&
+        connections <= ParallelConnectionsValues::getMaxValue())
     {
         megaApi->setMaxConnections(direction, connections);
     }
@@ -3560,11 +3587,10 @@ void MegaApplication::checkOperatingSystem()
 
 void MegaApplication::notifyChangeToAllFolders()
 {
-    for (auto localFolder : model->getLocalFolders(SyncInfo::AllHandledSyncTypes))
+    for (const auto& localFolder: model->getLocalFolders(SyncInfo::AllHandledSyncTypes))
     {
         ++mProcessingShellNotifications;
-
-        string stdLocalFolder = localFolder.toUtf8().constData();
+        auto stdLocalFolder = Platform::getInstance()->toLocalEncodedPath(localFolder);
         Platform::getInstance()->notifyItemChange(localFolder, megaApi->syncPathState(&stdLocalFolder));
     }
 }
@@ -4762,7 +4788,7 @@ void MegaApplication::shellExport(QQueue<QString> newExportQueue)
 
 void MegaApplication::shellViewOnMega(const QString& path, bool versions)
 {
-    string tmpPath(path.toStdString());
+    auto tmpPath = Platform::getInstance()->toLocalEncodedPath(path);
 
     std::unique_ptr<MegaNode> node(megaApi->getSyncedNode(&tmpPath));
     if (node)
@@ -5394,26 +5420,31 @@ void MegaApplication::createTrayIconMenus()
         Platform::getInstance()->initMenu(initialTrayMenu, "TrayMenu", false);
     }
 
-    guestSettingsAction = new QAction(tr("Settings"), this);
+#ifdef USE_BREAKPAD
+    if (!preferences->isCrashed())
+#endif
+    {
+        guestSettingsAction = new QAction(tr("Settings"), this);
 
 #ifdef __APPLE__
-    guestSettingsAction->setIcon(
-        QIcon(QString::fromUtf8(":/images/icons/tray/macos/settings.svg")));
+        guestSettingsAction->setIcon(
+            QIcon(QString::fromUtf8(":/images/icons/tray/macos/settings.svg")));
 #endif
 
 #ifdef Q_OS_LINUX
-    guestSettingsAction->setIcon(
-        QIcon(QString::fromUtf8(":/images/icons/tray/linux/settings.svg")));
+        guestSettingsAction->setIcon(
+            QIcon(QString::fromUtf8(":/images/icons/tray/linux/settings.svg")));
 #endif
 
 #ifdef _WIN32
-    guestSettingsAction->setIcon(
-        QIcon(QString::fromUtf8(":/images/icons/tray/windows/settings.svg")));
+        guestSettingsAction->setIcon(
+            QIcon(QString::fromUtf8(":/images/icons/tray/windows/settings.svg")));
 #endif
 
-    // When triggered, open "Settings" window. As the user is not logged in, it
-    // will only show proxy settings.
-    connect(guestSettingsAction, &QAction::triggered, this, &MegaApplication::openSettings);
+        // When triggered, open "Settings" window. As the user is not logged in, it
+        // will only show proxy settings.
+        connect(guestSettingsAction, &QAction::triggered, this, &MegaApplication::openSettings);
+    }
 
     initialExitAction = new QAction(PlatformStrings::exit(), this);
 

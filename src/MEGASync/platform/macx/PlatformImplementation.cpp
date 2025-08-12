@@ -229,6 +229,40 @@ void PlatformImplementation::processSymLinks()
     }
 }
 
+bool PlatformImplementation::loadThemeResource(const QString& theme)
+{
+    static QString currentTheme = QString();
+
+    if (!currentTheme.isEmpty())
+    {
+        QResource::unregisterResource(currentTheme);
+    }
+
+    QStringList rccFiles =
+        QStringList()
+        << QCoreApplication::applicationDirPath() +
+               QString::fromUtf8("/../Resources/Resources_macx.rcc")
+        << QCoreApplication::applicationDirPath() +
+               QString::fromUtf8("/../Resources/Resources_win.rcc")
+        << QCoreApplication::applicationDirPath() +
+               QString::fromUtf8("/../Resources/Resources_linux.rcc")
+        << QCoreApplication::applicationDirPath() +
+               QString::fromUtf8("/../Resources/Resources_qml.rcc")
+        << QCoreApplication::applicationDirPath() + QString::fromUtf8("/../Resources/qml.rcc")
+        << QCoreApplication::applicationDirPath() +
+               QString::fromUtf8("/../Resources/Resources_%1.rcc").arg(theme.toLower());
+
+    bool allLoaded = loadRccResources(rccFiles);
+
+    if (allLoaded)
+    {
+        currentTheme = QCoreApplication::applicationDirPath() +
+                       QString::fromUtf8("/../Resources/Resources_%1.rcc").arg(theme.toLower());
+    }
+
+    return allLoaded;
+}
+
 bool PlatformImplementation::showInFolder(QString pathIn)
 {
 
@@ -343,11 +377,6 @@ QString PlatformImplementation::getDefaultOpenApp(QString extension)
 bool PlatformImplementation::registerUpdateJob()
 {
     return registerUpdateDaemon();
-}
-
-bool PlatformImplementation::shouldRunHttpServer()
-{
-    return runHttpServer();
 }
 
 bool PlatformImplementation::isUserActive()

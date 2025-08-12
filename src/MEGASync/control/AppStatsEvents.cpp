@@ -153,7 +153,7 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     {AppStatsEvents::EventType::SYNC_ADDED_MAIN_APP, 600047},
     {AppStatsEvents::EventType::CLOUD_DRIVE_HOURLY_ACTIVE_USERS, 600048},
     {AppStatsEvents::EventType::USER_ABORTS_ONBOARDING_SYNC_CREATION, 600049},
-    {AppStatsEvents::EventType::SYNC_CANDIDATE_PACK_CONFIRMED, 600050},
+    {AppStatsEvents::EventType::MULTIPLE_SYNCS_CREATED_ON_ONBOARDING, 600050},
 };
 
 // Deprecated are not displayed
@@ -335,8 +335,8 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
      "In the onboarding the user entered in the sync creation pages but it exited the process "
      "without any sync "
      "created."},
-    {AppStatsEvents::EventType::SYNC_CANDIDATE_PACK_CONFIRMED,
-     "A pack of sync candidates has been confirmed"}};
+    {AppStatsEvents::EventType::MULTIPLE_SYNCS_CREATED_ON_ONBOARDING,
+     "More than one sync has been created during onboarding."}};
 
 QString AppStatsEvents::getEventMessage(EventType event,
                                          const QStringList& args)

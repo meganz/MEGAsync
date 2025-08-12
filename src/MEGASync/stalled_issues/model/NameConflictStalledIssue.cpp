@@ -1010,7 +1010,9 @@ NameConflictedStalledIssue::CloudConflictedNames::mergeFolders()
                 if (error != mega::MegaError::API_OK)
                 {
                     errorInfo.conflictIndex = index;
-                    errorInfo.error = tr("Unable to merge this folder.");
+                    errorInfo.error = QCoreApplication::translate(
+                        "NameConflictedStalledIssue::CloudConflictedNames",
+                        "Unable to merge this folder.");
                     break;
                 }
                 else

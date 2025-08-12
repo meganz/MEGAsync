@@ -161,7 +161,34 @@ public:
         mWrapper = new Type(nullptr, std::forward<A>(args)...);
         QQmlEngine* engine = QmlManager::instance()->getEngine();
         QQmlComponent qmlComponent(engine);
+        const auto startTime = QDateTime::currentMSecsSinceEpoch();
         qmlComponent.loadUrl(mWrapper->getQmlUrl());
+        QEventLoop eventLoop;
+
+        QMetaObject::Connection connection = QObject::connect(
+            &qmlComponent,
+            &QQmlComponent::statusChanged,
+            [&](QQmlComponent::Status status)
+            {
+                if (status == QQmlComponent::Ready || status == QQmlComponent::Error)
+                {
+                    eventLoop.quit();
+                }
+            });
+        qmlComponent.loadUrl(mWrapper->getQmlUrl());
+
+        if (qmlComponent.isLoading())
+        {
+            eventLoop.exec();
+        }
+
+        QObject::disconnect(connection);
+
+        QString message = QString::fromUtf8("Time to load Qml file %1: %2ms Status: %3")
+                              .arg(mWrapper->getQmlUrl().toString())
+                              .arg(QDateTime::currentMSecsSinceEpoch() - startTime)
+                              .arg(qmlComponent.status());
+        ::mega::MegaApi::log(::mega::MegaApi::LOG_LEVEL_INFO, message.toUtf8().constData());
 
         if (qmlComponent.isReady())
         {

@@ -1,8 +1,5 @@
 #include "SyncSettingsElements.h"
 
-#ifdef Q_OS_MACOS
-#include "CocoaHelpButton.h"
-#endif
 #include "MegaApplication.h"
 #include "Preferences.h"
 #include "StalledIssuesModel.h"
@@ -85,8 +82,6 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
             &SyncSettingsElements::onPreferencesValueChanged);
 
     syncSettingsUi->insertUIElement(mSyncStallModeSelector, 2);
-
-    emit MegaSyncApp->updateUserInterface();
 }
 
 void SyncSettingsElements::setOverQuotaMode(bool mode)

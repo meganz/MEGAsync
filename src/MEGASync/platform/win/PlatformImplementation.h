@@ -13,6 +13,8 @@
 #include <QString>
 #include <QThread>
 
+#include <string>
+
 class WinShellDispatcherTask;
 
 class PlatformImplementation : public AbstractPlatform
@@ -48,7 +50,6 @@ public:
     void enableDialogBlur(QDialog *dialog) override;
     bool registerUpdateJob() override;
     void uninstall() override;
-    bool shouldRunHttpServer() override;
     bool isUserActive() override;
     QString getDeviceName() override;
 
@@ -59,6 +60,8 @@ public:
 
     void streamWithApp(const QString& app, const QString& url) override;
     void processSymLinks() override;
+    bool loadThemeResource(const QString& theme) override;
+
     DriveSpaceData getDriveData(const QString &path) override;
 
     // AutoUpdate tasks
@@ -72,6 +75,8 @@ public:
 
     void calculateInfoDialogCoordinates(const QRect& rect, int *posx, int *posy) override;
     void pinOnTaskbar() override;
+
+    std::string toLocalEncodedPath(const QString& path) const override;
 
 private:
     void removeSyncFromLeftPane(QString syncPath, QString syncName, QString uuid);
