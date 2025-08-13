@@ -88,7 +88,7 @@
         <file alias="images/icons/tray/windows/open_links.svg">images/icons/tray/windows/open_links.svg</file>
         <file alias="images/icons/tray/macos/exit.svg">images/icons/tray/macos/exit.svg</file>
         <file alias="images/icons/tray/macos/settings.svg">images/icons/tray/macos/settings.svg</file>
-        <file alias="check-circle.svg">images/themed/light/check-circle.svg</file>
+        <file alias="check-circle-indicator-green.svg">images/themed/light/check-circle-indicator-green.svg</file>
         <file alias="pause.svg">images/themed/light/pause.svg</file>
         <file alias="pause-circle.svg">images/themed/light/pause-circle.svg</file>
         <file alias="play-circle.svg">images/themed/light/play-circle.svg</file>
@@ -146,5 +146,8 @@
         <file alias="rotate-cw.svg">images/themed/light/rotate-cw.svg</file>
         <file alias="arrow-down-brand-primary.svg">images/themed/light/arrow-down-brand-primary.svg</file>
         <file alias="arrow-up-brand-primary.svg">images/themed/light/arrow-up-brand-primary.svg</file>
+        <file alias="syncing-icon-secondary.svg">images/themed/light/syncing-icon-secondary.svg</file>
+        <file alias="file-search-02.svg">images/themed/light/file-search-02.svg</file>
+        <file alias="link-01.svg">images/themed/light/link-01.svg</file>
     </qresource>
 </RCC>

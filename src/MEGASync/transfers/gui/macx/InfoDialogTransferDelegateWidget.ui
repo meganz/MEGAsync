@@ -77,7 +77,8 @@ background-color: #29DD74;/*colorToken.indicator-green*/
 #wCompletedSeparator
 {
 background-color: #FFD8D9DB; /*colorToken.border-disabled*/
-}</string>
+}
+</string>
   </property>
   <property name="TOKENIZED" stdset="0">
    <bool>true</bool>
@@ -407,14 +408,14 @@ background-color: #FFD8D9DB; /*colorToken.border-disabled*/
               <widget class="QToolButton" name="lShowInFolder">
                <property name="minimumSize">
                 <size>
-                 <width>24</width>
-                 <height>24</height>
+                 <width>16</width>
+                 <height>16</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>24</width>
-                 <height>24</height>
+                 <width>16</width>
+                 <height>16</height>
                 </size>
                </property>
                <property name="styleSheet">
@@ -425,8 +426,8 @@ background-color: #FFD8D9DB; /*colorToken.border-disabled*/
                </property>
                <property name="iconSize">
                 <size>
-                 <width>24</width>
-                 <height>24</height>
+                 <width>16</width>
+                 <height>16</height>
                 </size>
                </property>
               </widget>
@@ -435,14 +436,14 @@ background-color: #FFD8D9DB; /*colorToken.border-disabled*/
               <widget class="QToolButton" name="lActionTransfer">
                <property name="minimumSize">
                 <size>
-                 <width>24</width>
-                 <height>24</height>
+                 <width>16</width>
+                 <height>16</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>24</width>
-                 <height>24</height>
+                 <width>16</width>
+                 <height>16</height>
                 </size>
                </property>
                <property name="text">
@@ -450,8 +451,8 @@ background-color: #FFD8D9DB; /*colorToken.border-disabled*/
                </property>
                <property name="iconSize">
                 <size>
-                 <width>24</width>
-                 <height>24</height>
+                 <width>16</width>
+                 <height>16</height>
                 </size>
                </property>
               </widget>

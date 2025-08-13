@@ -181,7 +181,8 @@ void InfoDialogTransferDelegateWidget::setType()
 
     if(getData()->isSyncTransfer())
     {
-        auto sync_icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/transfer_manager/transfers_states/synching_ico.png"));
+        auto sync_icon =
+            Utilities::getCachedPixmap(QString::fromLatin1(":/syncing-icon-secondary.svg"));
         mUi->lSyncIcon->setPixmap(sync_icon.pixmap(mUi->lSyncIcon->size()));
     }
 }
@@ -213,7 +214,8 @@ void InfoDialogTransferDelegateWidget::updateFinishedIco(TransferData::TransferT
 
     if(getData()->isSyncTransfer())
     {
-        auto sync_icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/transfer_manager/transfers_states/synching_ico.png"));
+        auto sync_icon =
+            Utilities::getCachedPixmap(QString::fromLatin1(":/syncing-icon-secondary.svg"));
         mUi->lSyncIconCompleted->setPixmap(sync_icon.pixmap(mUi->lSyncIconCompleted->size()));
     }
 }
@@ -257,9 +259,9 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 else
                 {
                     update = setActionTransferIcon(mUi->lActionTransfer,
-                                                   QString::fromLatin1("://images/error.png"));
-                    //Double check that the mFailedTransfer is OK
-                    if(getData()->isFailed())
+                                                   QString::fromLatin1(":/alert-circle.svg"));
+                    // Double check that the mFailedTransfer is OK
+                    if (getData()->isFailed())
                     {
                         mUi->lActionTransfer->setToolTip(tr("Failed: %1").arg(getErrorText()));
                     }
@@ -278,7 +280,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 {
                     inAction = isMouseHoverInAction(mUi->lActionTransfer, pos);
                     setActionTransferIcon(mUi->lActionTransfer,
-                                                   QString::fromLatin1("://images/link%1.png").arg(QString::fromLatin1(inAction ? "-hover" : "")));
+                                          QString::fromLatin1(":/link-01.svg"));
                     mUi->lActionTransfer->setToolTip(tr("Copy link to file"));
                 }
                 else
@@ -293,8 +295,11 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
 
                 bool fileExists = QFile(getData()->path()).exists();
 
-                const char* baseIconName = (fileExists) ? "://images/file-search%1.png" : "://images/file-question%1.png";
-                setActionTransferIcon(mUi->lShowInFolder, QString::fromLatin1(baseIconName).arg(QString::fromLatin1(inShowFolder?"-hover":"")));
+                const char* baseIconName =
+                    (fileExists) ? ":/file-search-02.svg" : "://images/file-question%1.png";
+                setActionTransferIcon(mUi->lShowInFolder,
+                                      QString::fromLatin1(baseIconName)
+                                          .arg(QString::fromLatin1(inShowFolder ? "" : "")));
                 QString tooltipText = (fileExists) ? tr("Show in folder") : tr("Deleted or moved file");
                 mUi->lShowInFolder->setToolTip(tooltipText);
 
@@ -303,11 +308,12 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
         }
         else
         {
-            const char* iconName = (getData()->mErrorCode < 0) ? "://images/error.png" : "://images/success.png";
+            const char* iconName =
+                (getData()->mErrorCode < 0) ? ":/alert-circle.svg" : ":/images/qml/check.svg";
             update = setActionTransferIcon(mUi->lActionTransfer, QString::fromLatin1(iconName));
-            mUi->lActionTransfer->setIconSize(QSize(24,24));
+            mUi->lActionTransfer->setIconSize(QSize(16, 16));
 
-            if(update)
+            if (update)
             {
                 hoverType = ActionHoverType::HOVER_LEAVE;
             }
@@ -328,8 +334,8 @@ void InfoDialogTransferDelegateWidget::finishTransfer()
     mUi->sTransferState->setCurrentWidget(mUi->completedTransfer);
     if (getData()->mErrorCode < 0)
     {
-        mUi->lActionTransfer->setIcon(QIcon(QString::fromLatin1("://images/error.png")));
-        mUi->lActionTransfer->setIconSize(QSize(24,24));
+        mUi->lActionTransfer->setIcon(QIcon(QString::fromLatin1(":/alert-circle.svg")));
+        mUi->lActionTransfer->setIconSize(QSize(16, 16));
         // mUi->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #F0373A"));
 
         mUi->lElapsedTime->setText(tr("Failed: %1").arg(getErrorText()));
@@ -337,8 +343,8 @@ void InfoDialogTransferDelegateWidget::finishTransfer()
     }
     else
     {
-        mUi->lActionTransfer->setIcon(QIcon(QString::fromLatin1("://images/success.png")));
-        mUi->lActionTransfer->setIconSize(QSize(24,24));
+        mUi->lActionTransfer->setIcon(QIcon(QString::fromLatin1(":/images/qml/check.svg")));
+        mUi->lActionTransfer->setIconSize(QSize(16, 16));
         updateFinishedIco(getData()->mType, false);
     }
 }

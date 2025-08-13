@@ -66,8 +66,8 @@ void StatusInfo::setState(TRANSFERS_STATES state)
                 const QString statusText{tr("Up to date")};
                 ui->lStatusDesc->setToolTip(statusText);
                 ui->lStatusDesc->setText(statusText);
-                ui->bIconState->setIcon(
-                    Utilities::getCachedPixmap(QString::fromUtf8(":/check-circle.svg")));
+                ui->bIconState->setIcon(Utilities::getCachedPixmap(
+                    QString::fromUtf8(":/check-circle-indicator-green")));
                 ui->bIconState->setIconSize(QSize(16, 16));
             }
 
