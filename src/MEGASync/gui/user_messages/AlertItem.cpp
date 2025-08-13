@@ -168,16 +168,13 @@ void AlertItem::updateAlertType()
         case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
         case MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
         {
-            if (mAlertData->getType() == MegaUserAlert::TYPE_DELETEDSHARE)
-            {
-                mUi->bSharedFolder->setIcon(QIcon(QString::fromUtf8(":/images/icons/folder/small-folder-disabled.png")).pixmap(24.0, 24.0));
-            }
-            else
-            {
-                mUi->bSharedFolder->setIcon(
-                    QIcon(Utilities::getFolderPixmapName(Utilities::FolderType::TYPE_NORMAL,
-                                                         Utilities::AttributeType::SMALL)));
-            }
+            mUi->bSharedFolder->setIcon(
+                QIcon(Utilities::getFolderPixmapName(Utilities::FolderType::TYPE_NORMAL,
+                                                     Utilities::AttributeType::SMALL)));
+
+            mUi->bSharedFolder->setDisabled(mAlertData->getType() ==
+                                            MegaUserAlert::TYPE_DELETEDSHARE);
+
             mUi->bNotificationIcon->setMinimumSize(QSize(10, 8));
             mUi->bNotificationIcon->setMaximumSize(QSize(10, 8));
             mUi->bNotificationIcon->setIconSize(QSize(10, 8));
