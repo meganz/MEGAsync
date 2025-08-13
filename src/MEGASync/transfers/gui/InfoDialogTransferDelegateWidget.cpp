@@ -168,11 +168,11 @@ void InfoDialogTransferDelegateWidget::setType()
 
     if(transferType & TransferData::TRANSFER_DOWNLOAD || transferType & TransferData::TRANSFER_LTCPDOWNLOAD)
     {
-        icon = Utilities::getCachedPixmap(QString::fromLatin1(":/down-arrow.svg"));
+        icon = Utilities::getCachedPixmap(QString::fromLatin1(":/arrow-down-brand-primary.svg"));
     }
     else if(transferType & TransferData::TRANSFER_UPLOAD)
     {
-        icon = Utilities::getCachedPixmap(QString::fromLatin1(":/up-arrow.svg"));
+        icon = Utilities::getCachedPixmap(QString::fromLatin1(":/arrow-up-brand-primary.svg"));
     }
 
     mUi->lTransferType->setPixmap(icon.pixmap(mUi->lTransferType->size()));
@@ -197,13 +197,15 @@ void InfoDialogTransferDelegateWidget::updateFinishedIco(TransferData::TransferT
 
     if(transferType & TransferData::TRANSFER_DOWNLOAD || transferType & TransferData::TRANSFER_LTCPDOWNLOAD)
     {
-        iconCompleted = Utilities::getCachedPixmap(error ? QString::fromLatin1(":/images/transfer_manager/transfers_states/download_fail_item_ico.png")
-                                                         : QString::fromLatin1(":/images/transfer_manager/transfers_states/downloaded_item_ico.png"));
+        iconCompleted = Utilities::getCachedPixmap(
+            error ? QString::fromLatin1(":/alert-circle.svg") :
+                    QString::fromLatin1(":/arrow-down-brand-primary.svg"));
     }
     else if(transferType & TransferData::TRANSFER_UPLOAD)
     {
-        iconCompleted = Utilities::getCachedPixmap(error ? QString::fromLatin1(":/images/transfer_manager/transfers_states/upload_fail_item_ico.png")
-                                                         : QString::fromLatin1(":/images/transfer_manager/transfers_states/uploaded_item_ico.png"));
+        iconCompleted =
+            Utilities::getCachedPixmap(error ? QString::fromLatin1(":/alert-circle.svg") :
+                                               QString::fromLatin1(":/arrow-up-brand-primary.svg"));
     }
 
     mUi->lTransferTypeCompleted->setPixmap(iconCompleted.pixmap(mUi->lTransferTypeCompleted->size()));
@@ -245,7 +247,8 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 {
                     bool in = isMouseHoverInAction(mUi->lActionTransfer, pos);
                     mUi->lActionTransfer->setToolTip(tr("Retry"));
-                    update = setActionTransferIcon(mUi->lActionTransfer, QString::fromLatin1("://images/retry.png"));
+                    update = setActionTransferIcon(mUi->lActionTransfer,
+                                                   QString::fromLatin1(":/rotate-cw.svg"));
                     if(update)
                     {
                         hoverType = (in) ? ActionHoverType::HOVER_ENTER : ActionHoverType::HOVER_LEAVE;

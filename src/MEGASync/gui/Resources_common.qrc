@@ -754,10 +754,6 @@
         <file alias="images/play_ico@2x.png">images/play_ico@2x.png</file>
         <file alias="images/play_ico@3x.png">images/play_ico@3x.png</file>
         <file alias="images/plus.svg">images/plus.svg</file>
-        <file alias="images/resume.png">images/resume.png</file>
-        <file alias="images/resume@2x.png">images/resume@2x.png</file>
-        <file alias="images/resume@3x.png">images/resume@3x.png</file>
-        <file alias="images/retry.png">images/retry.png</file>
         <file alias="images/retry@2x.png">images/retry@2x.png</file>
         <file alias="images/retry@3x.png">images/retry@3x.png</file>
         <file alias="images/select_sync_bt.png">images/select_sync_bt.png</file>

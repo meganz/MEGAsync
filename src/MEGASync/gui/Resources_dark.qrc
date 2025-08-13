@@ -6,7 +6,7 @@
         <file alias="images/account_details/database.svg">images/account_details/database.svg</file>
         <file alias="images/account_details/cloud.svg">images/account_details/cloud.svg</file>
         <file alias="images/minus-circle.svg">images/minus-circle.svg</file>
-        <file alias="images/x.svg">images/x.svg</file>   
+        <file alias="images/x.svg">images/x.svg</file>
         <file alias="images/themed/dark/spinbox_up_arrow.svg">images/themed/dark/spinbox_up_arrow.svg</file>
         <file alias="images/themed/dark/spinbox_down_arrow.svg">images/themed/dark/spinbox_down_arrow.svg</file>
         <file alias="images/themed/dark/switch_on_pressed.svg">images/themed/dark/switch_on_pressed.svg</file>
@@ -139,5 +139,8 @@
         <file alias="upload-to-mega.png">images/upload-to-mega.png</file>
         <file alias="upload-to-mega@2x.png">images/upload-to-mega@2x.png</file>
         <file alias="upload-to-mega@3x.png">images/upload-to-mega@3x.png</file>
+        <file alias="rotate-cw.svg">images/themed/dark/rotate-cw.svg</file>
+        <file alias="arrow-down-brand-primary.svg">images/themed/dark/arrow-down-brand-primary.svg</file>
+        <file alias="arrow-up-brand-primary.svg">images/themed/dark/arrow-up-brand-primary.svg</file>
     </qresource>
 </RCC>

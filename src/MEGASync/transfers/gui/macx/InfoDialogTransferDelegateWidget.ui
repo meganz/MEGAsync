@@ -73,7 +73,11 @@ background-color: #29DD74;/*colorToken.indicator-green*/
 	margin-top: 1px;
 	background-color:#FFD8D9DB; /*colorToken.border-disabled*/
 }
-</string>
+
+#wCompletedSeparator
+{
+background-color: #FFD8D9DB; /*colorToken.border-disabled*/
+}</string>
   </property>
   <property name="TOKENIZED" stdset="0">
    <bool>true</bool>
@@ -112,7 +116,7 @@ background-color: #29DD74;/*colorToken.indicator-green*/
       <number>0</number>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="completedTransfer">
       <property name="minimumSize">
@@ -159,16 +163,16 @@ background-color: #29DD74;/*colorToken.indicator-green*/
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_7">
           <property name="spacing">
-           <number>9</number>
+           <number>16</number>
           </property>
           <property name="leftMargin">
-           <number>6</number>
+           <number>24</number>
           </property>
           <property name="topMargin">
            <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>12</number>
+           <number>24</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
@@ -177,14 +181,14 @@ background-color: #29DD74;/*colorToken.indicator-green*/
            <widget class="QPushButton" name="lFileTypeCompleted">
             <property name="minimumSize">
              <size>
-              <width>48</width>
-              <height>48</height>
+              <width>24</width>
+              <height>24</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>48</width>
-              <height>48</height>
+              <width>24</width>
+              <height>24</height>
              </size>
             </property>
             <property name="text">
@@ -333,14 +337,14 @@ background-color: #29DD74;/*colorToken.indicator-green*/
                 <widget class="QLabel" name="lTransferTypeCompleted">
                  <property name="minimumSize">
                   <size>
-                   <width>10</width>
-                   <height>12</height>
+                   <width>16</width>
+                   <height>16</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>10</width>
-                   <height>12</height>
+                   <width>16</width>
+                   <height>16</height>
                   </size>
                  </property>
                  <property name="text">
@@ -474,12 +478,6 @@ background-color: #29DD74;/*colorToken.indicator-green*/
            <width>400</width>
            <height>1</height>
           </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">#wCompletedSeparator
-{
-background-color: rgba(0, 0, 0, 8%);
-}</string>
          </property>
         </widget>
        </item>
