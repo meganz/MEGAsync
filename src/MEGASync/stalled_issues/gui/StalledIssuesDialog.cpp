@@ -48,7 +48,7 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
         connect(tab, &StalledIssueTab::tabToggled, this, &StalledIssuesDialog::onTabToggled);
     }
 
-    ui->allIssuesTab->setItsOn(true);
+    ui->allIssuesTab->setIsSelected(true);
 
     mProxyModel = new StalledIssuesProxyModel(this);
     mProxyModel->setSourceModel(MegaSyncApp->getStalledIssuesModel());

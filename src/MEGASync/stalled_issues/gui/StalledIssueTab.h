@@ -24,15 +24,15 @@ public:
     Q_PROPERTY(QString title MEMBER mTitle)
     void setTitle(const QString& title);
 
-    Q_PROPERTY(QString iconPrefix MEMBER mIconPrefix WRITE setIconPrefix)
-    void setIconPrefix(const QString& iconPrefix);
+    Q_PROPERTY(QString iconName MEMBER mIconName WRITE setIconName)
+    void setIconName(const QString& icon);
 
     Q_PROPERTY(int filterCriterion MEMBER mFilterCriterion READ filterCriterion WRITE setFilterCriterion)
     int filterCriterion() const;
     void setFilterCriterion(int filterCriterion);
 
     bool toggleTab();
-    void setItsOn(bool itsOn);
+    void setIsSelected(bool selected);
 
 signals:
     void tabToggled(StalledIssueFilterCriterion criterion);
@@ -49,17 +49,17 @@ private slots:
     void onUpdateCounter();
 
 private:
-    Q_PROPERTY(bool itsOn MEMBER mItsOn READ itsOn WRITE setItsOn)
-    bool itsOn() const;
+    Q_PROPERTY(bool isSelected MEMBER mIsSelected READ isSelected WRITE setIsSelected)
+    bool isSelected() const;
 
     void updateIcon();
     void toggleOffSiblings();
     void createTitle();
 
     Ui::StalledIssueTab *ui;
-    QString mIconPrefix;
+    QString mIconName;
     QString mTitle;
-    bool mItsOn;
+    bool mIsSelected;
     int mFilterCriterion;
 
     QGraphicsDropShadowEffect* mShadowTab;

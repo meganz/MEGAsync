@@ -29,32 +29,32 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">QFrame[itsOn=true]
+   <string notr="true">QFrame[isSelected=true]
 {
     border-radius: 16px; 
     border: none;
     background-color: #ff04101E; /*colorToken.selection-control*/
 }
 
-QFrame[itsOn=false][itsHover=true] 
+QFrame[isSelected=false][itsHover=true] 
 {
     border: none;
 	background-color: transparent;
 }
 
-QFrame[itsOn=false][itsHover=false] 
+QFrame[isSelected=false][itsHover=false] 
 {
 	border-radius: 16px;
      border: none;
 	background-color: #ffE4E4E5; /*colorToken.surface-3*/
 }
 
-QFrame[itsOn=true] QLabel
+QFrame[isSelected=true] QLabel
 {
     color: #ff616366; /*colorToken.text-inverse-accent*/
 }
 
-QFrame[itsOn=false] QLabel
+QFrame[isSelected=false] QLabel
 {
 	color: #ff616366; /*colorToken.text-secondary*/
 }
@@ -67,6 +67,9 @@ QFrame[itsOn=false] QLabel
    <bool>false</bool>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
     <number>8</number>
    </property>
@@ -81,16 +84,22 @@ QFrame[itsOn=false] QLabel
    </property>
    <item>
     <widget class="QLabel" name="icon">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
-       <width>14</width>
-       <height>14</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>14</width>
-       <height>14</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="text">

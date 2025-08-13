@@ -173,5 +173,17 @@
         <file alias="app-icon">images/themed/dark/app-icon.svg</file>
         <file alias="scanning_icon">images/themed/dark/scanning_icon.svg</file>
         <file alias="alert-triangle">images/themed/dark/Stalled Issues/Header/alert-triangle.svg</file>
+        <file alias="tab_all_issues_outline">images/themed/dark/Stalled Issues/Tabs/tab_all_issues_outline.svg</file>
+        <file alias="tab_all_issues_solid">images/themed/dark/Stalled Issues/Tabs/tab_all_issues_solid.svg</file>
+        <file alias="tab_failed_outline">images/themed/dark/Stalled Issues/Tabs/tab_failed_outline.svg</file>
+        <file alias="tab_failed_solid">images/themed/dark/Stalled Issues/Tabs/tab_failed_solid.svg</file>
+        <file alias="tab_item_type_conflicts_outline">images/themed/dark/Stalled Issues/Tabs/tab_item_type_conflicts_outline.svg</file>
+        <file alias="tab_item_type_conflicts_solid">images/themed/dark/Stalled Issues/Tabs/tab_item_type_conflicts_solid.svg</file>
+        <file alias="tab_name_conflicts_outline">images/themed/dark/Stalled Issues/Tabs/tab_name_conflicts_outline.svg</file>
+        <file alias="tab_name_conflicts_solid">images/themed/dark/Stalled Issues/Tabs/tab_name_conflicts_solid.svg</file>
+        <file alias="tab_others_outline">images/themed/dark/Stalled Issues/Tabs/tab_others_outline.svg</file>
+        <file alias="tab_others_solid">images/themed/dark/Stalled Issues/Tabs/tab_others_solid.svg</file>
+        <file alias="tab_resolved_outline">images/themed/dark/Stalled Issues/Tabs/tab_resolved_outline.svg</file>
+        <file alias="tab_resolved_solid">images/themed/dark/Stalled Issues/Tabs/tab_resolved_solid.svg</file>
     </qresource>
 </RCC>

@@ -7,12 +7,12 @@
 
 const char* StalledIssueTab::HOVER_PROPERTY = "itsHover";
 
-StalledIssueTab::StalledIssueTab(QWidget *parent) :
+StalledIssueTab::StalledIssueTab(QWidget* parent):
     QFrame(parent),
     ui(new Ui::StalledIssueTab),
-    mItsOn(false),
+    mIsSelected(false),
     mFilterCriterion(-1),
-    mShadowTab (new QGraphicsDropShadowEffect(nullptr))
+    mShadowTab(new QGraphicsDropShadowEffect(nullptr))
 {
     ui->setupUi(this);
     ui->title->installEventFilter(this);
@@ -27,9 +27,9 @@ StalledIssueTab::~StalledIssueTab()
     delete ui;
 }
 
-void StalledIssueTab::setIconPrefix(const QString &iconPrefix)
+void StalledIssueTab::setIconName(const QString& icon)
 {
-    mIconPrefix = iconPrefix;
+    mIconName = icon;
     updateIcon();
 }
 
@@ -53,16 +53,6 @@ void StalledIssueTab::enterEvent(QEvent*)
    {
        setProperty(HOVER_PROPERTY,true);
        setStyleSheet(styleSheet());
-
-       if(!mIconPrefix.isEmpty())
-       {
-           QString iconName =  QString::fromUtf8(":images/StalledIssues/") + mIconPrefix
-                   + QString::fromUtf8("-solid")
-                   + QString::fromUtf8(".png");
-           QIcon icon = Utilities::getCachedPixmap(iconName);
-
-           ui->icon->setPixmap(icon.pixmap(ui->icon->size()));
-       }
    }
 }
 
@@ -78,19 +68,19 @@ void StalledIssueTab::onUpdateCounter()
     createTitle();
 }
 
-bool StalledIssueTab::itsOn() const
+bool StalledIssueTab::isSelected() const
 {
-    return mItsOn;
+    return mIsSelected;
 }
 
 bool StalledIssueTab::toggleTab()
 {
     //If turned off, turn on and turn off siblings
-    if(!itsOn())
+    if (!isSelected())
     {
         toggleOffSiblings();
 
-        setItsOn(true);
+        setIsSelected(true);
 
         updateIcon();
 
@@ -100,12 +90,12 @@ bool StalledIssueTab::toggleTab()
     return false;
 }
 
-void StalledIssueTab::setItsOn(bool itsOn)
+void StalledIssueTab::setIsSelected(bool selected)
 {
-    mItsOn = itsOn;
+    mIsSelected = selected;
     updateIcon();
 
-    if(mItsOn)
+    if (mIsSelected)
     {
         emit tabToggled(static_cast<StalledIssueFilterCriterion>(mFilterCriterion));
     }
@@ -115,14 +105,12 @@ void StalledIssueTab::setItsOn(bool itsOn)
 
 void StalledIssueTab::updateIcon()
 {
-    if(!mIconPrefix.isEmpty())
+    if (!mIconName.isEmpty())
     {
-        QString iconName =  QString::fromUtf8(":images/StalledIssues/") + mIconPrefix
-                + (mItsOn ? QString::fromUtf8("-solid") : QString::fromUtf8("-outline"))
-                + QString::fromUtf8(".png");
-        QIcon icon = Utilities::getCachedPixmap(iconName);
-
-        ui->icon->setPixmap(icon.pixmap(ui->icon->size()));
+        ui->icon->setPixmap(Utilities::getPixmap(mIconName,
+                                                 isSelected() ? Utilities::AttributeType::SOLID :
+                                                                Utilities::AttributeType::OUTLINE,
+                                                 ui->icon));
     }
 }
 
@@ -134,7 +122,7 @@ void StalledIssueTab::toggleOffSiblings()
     {
         if(headerItem != this)
         {
-            headerItem->setItsOn(false);
+            headerItem->setIsSelected(false);
         }
     }
 }

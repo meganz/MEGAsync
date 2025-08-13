@@ -284,7 +284,7 @@ color: grey;
             <string/>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="../../../gui/Resources_common.qrc">
              <normaloff>:/images/StalledIssues/refresh.png</normaloff>:/images/StalledIssues/refresh.png</iconset>
            </property>
            <property name="iconSize">
@@ -319,7 +319,7 @@ color: grey;
             <string/>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="../../../gui/Resources_common.qrc">
              <normaloff>:/images/StalledIssues/settings-stalled-issues.png</normaloff>:/images/StalledIssues/settings-stalled-issues.png</iconset>
            </property>
            <property name="iconSize">
@@ -377,8 +377,8 @@ color: grey;
            <property name="filterCriterion" stdset="0">
             <number>0</number>
            </property>
-           <property name="iconPrefix" stdset="0">
-            <string notr="true">alert-circle-small</string>
+           <property name="iconName" stdset="0">
+            <string notr="true">tab_all_issues</string>
            </property>
           </widget>
          </item>
@@ -396,8 +396,8 @@ color: grey;
            <property name="filterCriterion" stdset="0">
             <number>1</number>
            </property>
-           <property name="iconPrefix" stdset="0">
-            <string notr="true">edit-small</string>
+           <property name="iconName" stdset="0">
+            <string notr="true">tab_name_conflicts</string>
            </property>
           </widget>
          </item>
@@ -412,11 +412,11 @@ color: grey;
            <property name="title" stdset="0">
             <string/>
            </property>
-           <property name="iconPrefix" stdset="0">
-            <string notr="true">folder-small</string>
-           </property>
            <property name="filterCriterion" stdset="0">
             <number>2</number>
+           </property>
+           <property name="iconName" stdset="0">
+            <string notr="true">tab_item_type_conflicts</string>
            </property>
           </widget>
          </item>
@@ -431,11 +431,11 @@ color: grey;
            <property name="title" stdset="0">
             <string/>
            </property>
-           <property name="iconPrefix" stdset="0">
-            <string notr="true">more-circle-small</string>
-           </property>
            <property name="filterCriterion" stdset="0">
             <number>3</number>
+           </property>
+           <property name="iconName" stdset="0">
+            <string notr="true">tab_others</string>
            </property>
           </widget>
          </item>
@@ -450,8 +450,8 @@ color: grey;
            <property name="filterCriterion" stdset="0">
             <UInt>4</UInt>
            </property>
-           <property name="iconPrefix" stdset="0">
-            <string notr="true">x-circle</string>
+           <property name="iconName" stdset="0">
+            <string notr="true">tab_failed</string>
            </property>
           </widget>
          </item>
@@ -469,8 +469,8 @@ color: grey;
            <property name="filterCriterion" stdset="0">
             <UInt>5</UInt>
            </property>
-           <property name="iconPrefix" stdset="0">
-            <string notr="true">solved-issues</string>
+           <property name="iconName" stdset="0">
+            <string notr="true">tab_resolved</string>
            </property>
           </widget>
          </item>
@@ -604,7 +604,7 @@ color: grey;
           <string notr="true">...</string>
          </property>
          <property name="icon">
-          <iconset>
+          <iconset resource="../../../gui/Resources_common.qrc">
            <normaloff>:/images/transfer_manager/empty_categories/no_transfers@2x.png</normaloff>:/images/transfer_manager/empty_categories/no_transfers@2x.png</iconset>
          </property>
          <property name="iconSize">
@@ -655,7 +655,7 @@ color: grey;
          <string>Help</string>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="../../../gui/Resources_common.qrc">
           <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -728,6 +728,8 @@ color: grey;
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../../gui/Resources_common.qrc"/>
+ </resources>
  <connections/>
 </ui>
