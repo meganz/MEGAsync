@@ -11,13 +11,15 @@ Packager:	MEGA Linux Team <linux@mega.co.nz>
 
 BuildRequires:   nemo-devel
 
+%if 0%{?rhel} || 0%{?rhel_version} || 0%{?centos} || 0%{?centos_version} || 0%{?almalinux}
+%global debug_package %{nil}
+BuildRequires: redhat-rpm-config
+BuildRequires: gcc-c++
+%endif
 %if 0%{?suse_version} || 0%{?sle_version}
 BuildRequires: libnemo-extension1, libqt5-qtbase-devel
 %else
 BuildRequires: nemo-extensions, qt5-qtbase-devel
-%endif
-%if 0%{?rhel_version} 
-BuildRequires: redhat-logos
 %endif
 %if 0%{?fedora_version} 
 BuildRequires: fedora-logos
@@ -51,12 +53,18 @@ else
 fi
 
 export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
-
+%if 0%{?rhel}
+qmake-qt5 QMAKE_CFLAGS_RELEASE+="-g" QMAKE_CXXFLAGS_RELEASE+="-g" || qmake
+%else
 qmake-qt5 || qmake
+%endif
 make
+
 
 %install
 make install
+echo "== INSTALLED TREE =="
+find %{buildroot} -type f | sort
 # clean up
 rm -fr $RPM_BUILD_ROOT/usr/share/icons/hicolor/icon-theme.cache || true
 

@@ -120,6 +120,12 @@ BuildRequires: hicolor-icon-theme, zip, unzip, nasm, cmake, perl
     %endif
 %endif
 
+#centos/rhel specific
+%if (0%{?rhel} >= 9) || (0%{?rhel_version} >= 900) || (0%{?centos_version} >= 900)
+    BuildRequires: patchelf
+    %define __brp_check_rpaths QA_RPATHS=$(( 0x0002|0x0008 )) /usr/lib/rpm/check-rpaths
+%endif
+
 #centos/scientific linux
 %if 0%{?centos_version} || 0%{?scientificlinux_version}
     BuildRequires: openssl-devel, sqlite-devel, c-ares-devel, bzip2-devel
@@ -127,7 +133,7 @@ BuildRequires: hicolor-icon-theme, zip, unzip, nasm, cmake, perl
     BuildRequires: systemd-devel
     Requires: qt5-qtdeclarative
 
-    %if 0%{?centos_version} >= 800
+    %if 0%{?centos_version} >= 800 || 0%{?rhel} >= 8 || 0%{?rhel_version} >= 800
         BuildRequires: bzip2-devel
         BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel, qt5-qtx11extras-devel, qt5-qtdeclarative-devel
     %else
@@ -240,6 +246,16 @@ fi
 
 cmake --install %{_builddir}/build_dir --prefix %{buildroot}
 
+# /usr/bin -> $ORIGIN/../../opt/megasync/lib = /opt/megasync/lib
+%if (0%{?rhel} >= 9) || (0%{?rhel_version} >= 900) || (0%{?centos_version} >= 900)
+for b in %{buildroot}%{_bindir}/megasync %{buildroot}%{_bindir}/mega-desktop-app-gfxworker; do
+    if [ -x "$b" ]; then
+        patchelf --set-rpath '\$ORIGIN/../../opt/megasync/lib' "$b"
+        patchelf --print-rpath "$b" || :
+    fi
+done
+%endif
+
 %if 0%{?suse_version}
     %suse_update_desktop_file -n -i %{name} Network System
 %else
@@ -256,8 +272,21 @@ mkdir -p  %{buildroot}/etc/udev/rules.d/
 echo "SUBSYSTEM==\"block\", ATTRS{idDevtype}==\"partition\"" > %{buildroot}/etc/udev/rules.d/99-megasync-udev.rules
 
 mkdir -p  %{buildroot}%{_docdir}/%{name}
-lsb_release -ds > %{buildroot}%{_docdir}/%{name}/distro
-lsb_release -rs > %{buildroot}%{_docdir}/%{name}/version
+if command -v lsb_release >/dev/null 2>&1; then
+    lsb_release -ds > %{buildroot}%{_docdir}/%{name}/distro
+    lsb_release -rs > %{buildroot}%{_docdir}/%{name}/version
+elif [ -r /etc/os-release ]; then
+    . /etc/os-release
+    if [ -n "${PRETTY_NAME}" ]; then
+        echo "${PRETTY_NAME}" > %{buildroot}%{_docdir}/%{name}/distro
+    else
+        echo "${NAME} ${VERSION}" > %{buildroot}%{_docdir}/%{name}/distro
+    fi
+    echo "${VERSION_ID}" > %{buildroot}%{_docdir}/%{name}/version
+else
+    echo "Unknown" > %{buildroot}%{_docdir}/%{name}/distro
+    echo "0"       > %{buildroot}%{_docdir}/%{name}/version
+fi
 
 %post
 %if 0%{?suse_version} >= 1140
@@ -274,7 +303,7 @@ lsb_release -rs > %{buildroot}%{_docdir}/%{name}/version
 %if 0%{?fedora}
 
     YUM_FILE="/etc/yum.repos.d/megasync.repo"
-    cat > "$YUM_FILE" << DATA
+    cat > "$YUM_FILE" << DATA 
 [MEGAsync]
 name=MEGAsync
 baseurl=https://mega.nz/linux/repo/Fedora_\$releasever/

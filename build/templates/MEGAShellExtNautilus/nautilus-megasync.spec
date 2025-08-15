@@ -11,8 +11,10 @@ Packager:	MEGA Linux Team <linux@mega.co.nz>
 
 BuildRequires: nautilus-devel, cmake, gcc-c++
 
-%if 0%{?rhel_version}
-BuildRequires: redhat-logos
+%if 0%{?rhel}
+%global _enable_debugsource 0
+BuildRequires: redhat-rpm-config
+BuildRequires: gcc-c++
 %endif
 %if 0%{?fedora_version}
 BuildRequires: fedora-logos
@@ -36,7 +38,7 @@ Requires: nautilus, megasync >= 5.3.0
 %setup -q
 
 %build
-cmake -S . -B %{_builddir} -DCMAKE_INSTALL_PREFIX=%{_prefix}
+cmake -S . -B %{_builddir} -DCMAKE_INSTALL_PREFIX=%{_prefix} -DCMAKE_BUILD_TYPE=RelWithDebInfo
 cmake --build %{_builddir}
 
 %install
