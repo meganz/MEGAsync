@@ -9,6 +9,8 @@ Source0:	megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 
+%global __requires_exclude ^lib(avcodec|avformat|avutil|swresample|swscale)\\.so\\.
+
 BuildRequires: autoconf, autoconf-archive, automake, libtool, gcc-c++, libicu-devel
 BuildRequires: hicolor-icon-theme, zip, unzip, nasm, cmake, perl
 
@@ -84,15 +86,6 @@ BuildRequires: hicolor-icon-theme, zip, unzip, nasm, cmake, perl
     BuildRequires: systemd-devel
     BuildRequires: lsb_release, pkgconf-pkg-config
 
-    %if 0%{?fedora_version} < 33
-        BuildRequires: cryptopp-devel
-        Requires: cryptopp >= 5.6.5
-    %endif
-
-    %if 0%{?fedora_version}==25
-        BuildRequires: lz4-libs
-    %endif
-
     %if 0%{?fedora_version} >= 31
         BuildRequires: fonts-filesystem
     %else
@@ -120,45 +113,23 @@ BuildRequires: hicolor-icon-theme, zip, unzip, nasm, cmake, perl
     %endif
 %endif
 
-#centos/rhel specific
+#centos/rhel/almalinux specific
 %if (0%{?rhel} >= 9) || (0%{?rhel_version} >= 900) || (0%{?centos_version} >= 900)
-    BuildRequires: patchelf
     %define __brp_check_rpaths QA_RPATHS=$(( 0x0002|0x0008 )) /usr/lib/rpm/check-rpaths
 %endif
 
-#centos/scientific linux
-%if 0%{?centos_version} || 0%{?scientificlinux_version}
+#centos/scientific linux/red hat/almalinux
+%if 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version}
     BuildRequires: openssl-devel, sqlite-devel, c-ares-devel, bzip2-devel
     BuildRequires: desktop-file-utils
     BuildRequires: systemd-devel
-    Requires: qt5-qtdeclarative
-
-    %if 0%{?centos_version} >= 800 || 0%{?rhel} >= 8 || 0%{?rhel_version} >= 800
-        BuildRequires: bzip2-devel
-        BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel, qt5-qtx11extras-devel, qt5-qtdeclarative-devel
-    %else
-        BuildRequires: qt-mega, mesa-libGL-devel
-        Requires: freetype >= 2.8
-    %endif
-%endif
-
-#red hat
-%if 0%{?rhel_version}
-    BuildRequires: openssl-devel, sqlite-devel, desktop-file-utils
-    %if 0%{?rhel_version} < 800
-        BuildRequires: qt, qt-x11, qt-devel
-    %else
-        BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel, qt5-qtx11extras-devel, qt5-qtdeclarative-devel
-        BuildRequires: bzip2-devel
-    %endif
+    BuildRequires: bzip2-devel
+    BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-linguist, qt5-qtsvg-devel, qt5-qtx11extras-devel, qt5-qtdeclarative-devel
+    Requires: qt5-qtbase qt5-qtquickcontrols qt5-qtquickcontrols2 qt5-qtdeclarative
 %endif
 
 
 ### Specific buildable dependencies ###
-
-%if 0%{?fedora_version}==21 || 0%{?fedora_version}==22 || 0%{?fedora_version}>=25 || !(0%{?sle_version} < 120300)
-    BuildRequires: libzen-devel, libmediainfo-devel
-%endif
 
 %description
 - Sync your entire MEGA Cloud or selected folders with your computer so your MEGA stays up to date with the changes you make to your data on your computer and vice versa.
@@ -246,16 +217,6 @@ fi
 
 cmake --install %{_builddir}/build_dir --prefix %{buildroot}
 
-# /usr/bin -> $ORIGIN/../../opt/megasync/lib = /opt/megasync/lib
-%if (0%{?rhel} >= 9) || (0%{?rhel_version} >= 900) || (0%{?centos_version} >= 900)
-for b in %{buildroot}%{_bindir}/megasync %{buildroot}%{_bindir}/mega-desktop-app-gfxworker; do
-    if [ -x "$b" ]; then
-        patchelf --set-rpath '\$ORIGIN/../../opt/megasync/lib' "$b"
-        patchelf --print-rpath "$b" || :
-    fi
-done
-%endif
-
 %if 0%{?suse_version}
     %suse_update_desktop_file -n -i %{name} Network System
 %else
@@ -316,24 +277,21 @@ DATA
 
 %if 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
 
-    %if 0%{?rhel_version} == 800
-        %define reponame RHEL_8
+
+    %if 0%{?rhel_version} == 900 && 0%{?almalinux}
+        %define reponame AlmaLinux_9
     %endif
 
-    %if 0%{?rhel_version} == 700
-        %define reponame RHEL_7
+    %if 0%{?rhel_version} == 1000 && 0%{?almalinux}
+        %define reponame AlmaLinux_10
     %endif
 
-    %if 0%{?scientificlinux_version} == 700
-        %define reponame ScientificLinux_7
+    %if 0%{?centos_version} == 900 && ! 0%{?almalinux}
+        %define reponame CentOS_Stream_9
     %endif
-
-    %if 0%{?centos_version} == 700
-        %define reponame CentOS_7
-    %endif
-
-    %if 0%{?centos_version} == 800
-        %define reponame CentOS_8
+ 
+    %if 0%{?centos_version} == 1000 && ! 0%{?almalinux}
+        %define reponame CentOS_Stream_10
     %endif
 
     YUM_FILE="/etc/yum.repos.d/megasync.repo"
@@ -349,26 +307,6 @@ DATA
 %endif
 
 %if 0%{?sle_version} || 0%{?suse_version}
-    %if 0%{?sle_version} == 120300
-        %define reponame openSUSE_Leap_42.3
-    %endif
-
-    %if 0%{?sle_version} == 120200
-        %define reponame openSUSE_Leap_42.2
-    %endif
-
-    %if 0%{?sle_version} == 120100
-        %define reponame openSUSE_Leap_42.1
-    %endif
-
-    %if 0%{?sle_version} == 150000 || 0%{?sle_version} == 150100 || 0%{?sle_version} == 150200
-        %define reponame openSUSE_Leap_15.0
-    %endif
-
-    %if 0%{?sle_version} == 150300
-        %define reponame openSUSE_Leap_15.3
-    %endif
-
     %if 0%{?sle_version} == 150400
         %define reponame openSUSE_Leap_15.4
     %endif
