@@ -145,5 +145,21 @@
         <file alias="syncing-icon-secondary.svg">images/themed/dark/syncing-icon-secondary.svg</file>
         <file alias="file-search-02.svg">images/themed/dark/file-search-02.svg</file>
         <file alias="link-01.svg">images/themed/dark/link-01.svg</file>
+        <file alias="mega-outline.svg">images/themed/dark/mega-outline.svg</file>
+        <file alias="log-out.svg">images/themed/dark/log-out.svg</file>
+        <file alias="folder-open.svg">images/themed/dark/folder-open.svg</file>
+        <file alias="globe-01.svg">images/themed/dark/globe-01.svg</file>
+        <file alias="sync-plus.svg">images/themed/dark/sync-plus.svg</file>
+        <file alias="database-plus.svg">images/themed/dark/database-plus.svg</file>
+        <file alias="link-01-primary.svg">images/themed/dark/link-01-primary.svg</file>
+        <file alias="arrow-up-circle-primary.svg">images/themed/dark/arrow-up-circle-primary.svg</file>
+        <file alias="arrow-down-circle-primary.svg">images/themed/dark/arrow-down-circle-primary.svg</file>
+        <file alias="stream.svg">images/themed/dark/stream.svg</file>
+        <file alias="gear-8.svg">images/themed/dark/gear-8.svg</file>
+        <file alias="chevron-right-icon-secondary.svg">images/themed/dark/chevron-right-icon-secondary.svg</file>
+        <file alias="folder.svg">images/themed/dark/folder.svg</file>
+        <file alias="database.svg">images/themed/dark/database.svg</file>
+        <file alias="sync-01.svg">images/themed/dark/sync-01.svg</file>
+        <file alias="monitor.svg">images/themed/dark/monitor.svg</file>
     </qresource>
 </RCC>

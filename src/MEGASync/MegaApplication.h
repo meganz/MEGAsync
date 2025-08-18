@@ -11,6 +11,7 @@
 #include "LinkProcessor.h"
 #include "megaapi.h"
 #include "MegaDownloader.h"
+#include "MegaMenuItemAction.h"
 #include "MegaSyncLogger.h"
 #include "MegaUploader.h"
 #include "PasteMegaLinksDialog.h"
@@ -368,14 +369,14 @@ protected:
     QPointer<QMenu> guestMenu;
     QMenu emptyMenu;
 
-    MenuItemAction *exitAction;
-    MenuItemAction *settingsAction;
-    MenuItemAction *importLinksAction;
-    MenuItemAction *uploadAction;
-    MenuItemAction *downloadAction;
-    MenuItemAction *streamAction;
-    MenuItemAction* filesAction;
-    MenuItemAction* MEGAWebAction;
+    MegaMenuItemAction* exitAction;
+    MegaMenuItemAction* settingsAction;
+    MegaMenuItemAction* importLinksAction;
+    MegaMenuItemAction* uploadAction;
+    MegaMenuItemAction* downloadAction;
+    MegaMenuItemAction* streamAction;
+    MegaMenuItemAction* filesAction;
+    MegaMenuItemAction* MEGAWebAction;
     MenuItemAction* deviceCentreAction;
     MenuItemAction *updateAction;
     MenuItemAction *aboutAction;
@@ -583,6 +584,16 @@ private:
         (*action)->setEnabled(previousEnabledState);
     }
 
+    template<class Func>
+    void recreateMegaMenuAction(MegaMenuItemAction** action,
+                                QMenu* menu,
+                                const QString& actionName,
+                                const char* iconPath,
+                                Func slotFunc)
+    {
+        *action = new MegaMenuItemAction(actionName, QLatin1String(iconPath), 0);
+        connect(*action, &QAction::triggered, this, slotFunc, Qt::QueuedConnection);
+    }
     template<class Func>
     void recreateAction(QAction** action,
                         QMenu* menu,

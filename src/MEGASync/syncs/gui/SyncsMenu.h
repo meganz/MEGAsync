@@ -2,7 +2,7 @@
 #define SYNCSMENU_H
 
 #include "megaapi.h"
-#include "MenuItemAction.h"
+#include "MegaMenuItemAction.h"
 #include "SyncSettings.h"
 
 #include <QMenu>
@@ -22,10 +22,10 @@ class SyncsMenu: public QObject
     Q_OBJECT
 
 public:
-    explicit SyncsMenu(mega::MegaSync::SyncType type);
+    explicit SyncsMenu(mega::MegaSync::SyncType type, QWidget* parent = nullptr);
 
-    static SyncsMenu* newSyncsMenu(mega::MegaSync::SyncType type, bool isEnabled);
-    QPointer<MenuItemAction> getAction();
+    static SyncsMenu* newSyncsMenu(mega::MegaSync::SyncType type, QWidget* parent = nullptr);
+    QPointer<MegaMenuItemAction> getAction();
     void callMenu(const QPoint& p);
     void setEnabled(bool state);
 
@@ -33,7 +33,7 @@ signals:
     void addSync(mega::MegaSync::SyncType type);
 
 protected:
-    explicit SyncsMenu(mega::MegaSync::SyncType type, int itemIndent, const QIcon& iconMenu);
+    explicit SyncsMenu(mega::MegaSync::SyncType type, int itemIndent, QWidget* parent = nullptr);
     ~SyncsMenu();
 
     bool eventFilter(QObject* obj, QEvent* e) override;
@@ -51,15 +51,11 @@ private slots:
     void onAddSync();
 
 private:
-    void highLightMenuEntry(QAction *action);
+    QPointer<MegaMenuItemAction> mAddAction;
+    QPointer<MegaMenuItemAction> mMenuAction;
 
-    QPointer<MenuItemAction> mAddAction;
-    QPointer<MenuItemAction> mMenuAction;
-    QPointer<MenuItemAction> mLastHovered;
     mega::MegaSync::SyncType mType;
     int mItemIndent;
-    QIcon mMenuIcon;
-
 };
 
 class TwoWaySyncsMenu : public SyncsMenu
@@ -67,7 +63,7 @@ class TwoWaySyncsMenu : public SyncsMenu
     Q_OBJECT
 
 public:
-    explicit TwoWaySyncsMenu();
+    explicit TwoWaySyncsMenu(QWidget* parent = nullptr);
 
 protected:
     QString getMenuActionText() const override;
@@ -84,7 +80,7 @@ class BackupSyncsMenu : public SyncsMenu
     Q_OBJECT
 
 public:
-    explicit BackupSyncsMenu();
+    explicit BackupSyncsMenu(QWidget* parent = nullptr);
 
 protected:
     QString getMenuActionText() const override;
@@ -98,7 +94,7 @@ private:
     void refresh() override;
 
     static const int mBackupItemIndent = 1;
-    QPointer<MenuItemAction> mDevNameAction;
+    QPointer<MegaMenuItemAction> mDevNameAction;
     std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;
     std::shared_ptr<UserAttributes::MyBackupsHandle> mMyBackupsHandleRequest;
 };

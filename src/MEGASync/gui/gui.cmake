@@ -30,6 +30,8 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/MegaInputDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/AvatarWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/MenuItemAction.h
+    ${CMAKE_CURRENT_LIST_DIR}/MegaMenuItem.h
+    ${CMAKE_CURRENT_LIST_DIR}/MegaMenuItemAction.h
     ${CMAKE_CURRENT_LIST_DIR}/StatusInfo.h
     ${CMAKE_CURRENT_LIST_DIR}/PSAwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/ElidedLabel.h
@@ -183,6 +185,8 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/MegaInputDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/AvatarWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/MenuItemAction.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MegaMenuItem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MegaMenuItemAction.cpp
     ${CMAKE_CURRENT_LIST_DIR}/StatusInfo.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ChangePassword.cpp
     ${CMAKE_CURRENT_LIST_DIR}/PSAwidget.cpp
