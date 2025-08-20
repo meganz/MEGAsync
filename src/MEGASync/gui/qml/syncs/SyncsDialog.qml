@@ -8,6 +8,8 @@ import components.steps 1.0
 import SyncsComponents 1.0
 import SyncInfo 1.0
 
+import ServiceUrls 1.0
+
 SyncsQmlDialog {
     id: window
 
@@ -32,7 +34,7 @@ SyncsQmlDialog {
             width: parent.width
             step1String: SyncsStrings.selectFolders
             step2String: SyncsStrings.confirm
-            helpUrl: Links.setUpSyncs
+            helpUrl: serviceUrlsAccess.getCreateSyncHelpUrl()
         }
 
         Rectangle {

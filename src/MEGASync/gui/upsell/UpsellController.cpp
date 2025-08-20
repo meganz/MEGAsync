@@ -6,6 +6,7 @@
 #include "Preferences.h"
 #include "QmlManager.h"
 #include "RequestListenerManager.h"
+#include "ServiceUrls.h"
 #include "UpsellPlans.h"
 #include "Utilities.h"
 
@@ -23,19 +24,6 @@ constexpr float PERCENTAGE(100.0f);
 constexpr long long TRANSFER_REMAINING_TIME_INTERVAL_MS(1000ll);
 constexpr int64_t NB_B_IN_1GB(1024 * 1024 * 1024);
 constexpr QLatin1Char BILLING_CURRENCY_REMARK('*');
-constexpr const char* DEFAULT_PRO_URL("mega://#pro");
-constexpr const char* PERIOD_SUFFIX_URL("?m=");
-const std::map<int, const char*> PRO_LEVEL_TO_URL = {
-    {Preferences::AccountType::ACCOUNT_TYPE_PROI,      "mega://#propay_1"  },
-    {Preferences::AccountType::ACCOUNT_TYPE_PROII,     "mega://#propay_2"  },
-    {Preferences::AccountType::ACCOUNT_TYPE_PROIII,    "mega://#propay_3"  },
-    {Preferences::AccountType::ACCOUNT_TYPE_LITE,      "mega://#propay_4"  },
-    {Preferences::AccountType::ACCOUNT_TYPE_STARTER,   "mega://#propay_11" },
-    {Preferences::AccountType::ACCOUNT_TYPE_BASIC,     "mega://#propay_12" },
-    {Preferences::AccountType::ACCOUNT_TYPE_ESSENTIAL, "mega://#propay_13" },
-    {Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI, "mega://#propay_101"}
-  // BUSINESS and PRO_FLEXI are not supported
-};
 const std::vector<int> ACCOUNT_TYPES_IN_ORDER = {Preferences::AccountType::ACCOUNT_TYPE_FREE,
                                                  Preferences::AccountType::ACCOUNT_TYPE_STARTER,
                                                  Preferences::AccountType::ACCOUNT_TYPE_BASIC,
@@ -262,7 +250,9 @@ void UpsellController::openPlanUrl(int index)
 
     mPlans->setIsAnyPlanClicked(true);
 
-    Utilities::openUrl(getUpsellPlanUrl(plan->proLevel()));
+    auto periodInMonths = mPlans->isMonthly() ? MONTH_PERIOD : YEAR_PERIOD;
+
+    Utilities::openUrl(ServiceUrls::getUpsellPlanUrl(plan->proLevel(), periodInMonths));
 }
 
 void UpsellController::setBilledPeriod(bool isMonthly)
@@ -465,28 +455,6 @@ bool UpsellController::isProLevelValid(int proLevel) const
            proLevel != mega::MegaAccountDetails::ACCOUNT_TYPE_PRO_FLEXI &&
            proLevel != mega::MegaAccountDetails::ACCOUNT_TYPE_BUSINESS &&
            proLevel != mega::MegaAccountDetails::ACCOUNT_TYPE_FEATURE;
-}
-
-QUrl UpsellController::getUpsellPlanUrl(int proLevel)
-{
-    const char* planUrlChar;
-    auto it(PRO_LEVEL_TO_URL.find(proLevel));
-    if (it != PRO_LEVEL_TO_URL.end())
-    {
-        planUrlChar = it->second;
-    }
-    else
-    {
-        planUrlChar = DEFAULT_PRO_URL;
-    }
-
-    QString planUrlString(QString::fromLatin1(planUrlChar));
-    Utilities::getPROurlWithParameters(planUrlString);
-    planUrlString += QString::fromLatin1(PERIOD_SUFFIX_URL);
-    planUrlString +=
-        (mPlans->isMonthly() ? QString::number(MONTH_PERIOD) : QString::number(YEAR_PERIOD));
-
-    return QUrl(planUrlString);
 }
 
 QString UpsellController::getLocalePriceString(float price) const

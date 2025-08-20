@@ -8,6 +8,7 @@
 #include "DialogOpener.h"
 #include "MegaApplication.h"
 #include "Platform.h"
+#include "ServiceUrls.h"
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
 #include "TransferManager.h"
@@ -1420,7 +1421,7 @@ void InfoDialog::applyFilterOption(MessageType opt)
 
 void InfoDialog::on_bNotificationsSettings_clicked()
 {
-    Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/account/notifications")));
+    Utilities::openUrl(ServiceUrls::getAccountNotificationsUrl());
     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::NOTIFICATION_SETTINGS_CLICKED, true);
 }
 

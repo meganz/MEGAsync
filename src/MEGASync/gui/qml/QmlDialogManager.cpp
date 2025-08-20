@@ -9,6 +9,7 @@
 #include "Onboarding.h"
 #include "OnboardingQmlDialog.h"
 #include "QmlDialogWrapper.h"
+#include "ServiceUrls.h"
 #include "WhatsNewWindow.h"
 
 std::shared_ptr<QmlDialogManager> QmlDialogManager::instance()
@@ -55,12 +56,24 @@ bool QmlDialogManager::openOnboardingDialog(bool force)
     }
     else
     {
-        QPointer<QmlDialogWrapper<Onboarding>> onboarding = new QmlDialogWrapper<Onboarding>();
-        auto onboardingInfo(DialogOpener::showDialog(onboarding));
-        if (onboardingInfo)
-        {
-            onboardingInfo->setIgnoreCloseAllAction(true);
-        }
+        // We need to wait for the ServiceUrls to be ready before creating the onboarding dialog
+        auto serviceUrls = ServiceUrls::instance();
+        QObject* ctx = new QObject();
+        connect(serviceUrls.get(),
+                &ServiceUrls::dataReady,
+                ctx,
+                [=]()
+                {
+                    delete ctx;
+                    QPointer<QmlDialogWrapper<Onboarding>> onboarding =
+                        new QmlDialogWrapper<Onboarding>();
+                    auto onboardingInfo(DialogOpener::showDialog(onboarding));
+                    if (onboardingInfo)
+                    {
+                        onboardingInfo->setIgnoreCloseAllAction(true);
+                    }
+                });
+        serviceUrls->isDataReady(true);
     }
     return true;
 }

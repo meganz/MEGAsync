@@ -29,7 +29,7 @@ protected:
    void initialCleanup();
    void finalCleanup();
    void postponeUpdate();
-   void downloadFile(QString url);
+   void downloadFile(const QUrl& url);
    QString readNextLine(QNetworkReply *reply);
    bool processUpdateFile(QNetworkReply *reply);
    bool processFile(QNetworkReply *reply);

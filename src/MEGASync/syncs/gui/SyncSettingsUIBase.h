@@ -4,6 +4,7 @@
 #include "GuiUtilities.h"
 #include "MessageDialogOpener.h"
 #include "Preferences.h"
+#include "ServiceUrls.h"
 #include "SyncInfo.h"
 #include "SyncSettings.h"
 #include "TextDecorator.h"
@@ -167,17 +168,14 @@ public:
                     {
                         if (errorCode != mega::MegaError::API_OK)
                         {
-                            Text::Link link(QString::fromUtf8("https://mega.nz/contact"));
-                            Text::Decorator dec(&link);
-                            QString msg =
-                                Controller::instance().getErrorString(errorCode, syncErrorCode);
-                            dec.process(msg);
-
                             MessageDialogInfo msgInfo;
                             msgInfo.parent = this;
                             msgInfo.titleText = title;
-                            msgInfo.descriptionText = msg;
                             msgInfo.textFormat = Qt::RichText;
+                            msgInfo.descriptionText =
+                                Controller::instance().getErrorString(errorCode, syncErrorCode);
+                            const auto link = ServiceUrls::instance()->getContactUrl().toString();
+                            Text::RichText(link).process(msgInfo.descriptionText);
                             MessageDialogOpener::warning(msgInfo);
                         }
                     }

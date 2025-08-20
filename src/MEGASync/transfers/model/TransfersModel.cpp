@@ -8,6 +8,7 @@
 #include "MessageDialogOpener.h"
 #include "Platform.h"
 #include "PowerOptions.h"
+#include "ServiceUrls.h"
 #include "SettingsDialog.h"
 #include "StatsEventHandler.h"
 #include "ThreadPool.h"
@@ -1463,9 +1464,11 @@ void TransfersModel::getLinks(const QList<int> &rows)
                 std::unique_ptr<char[]>key(node->getBase64Key());
                 if (handle && key)
                 {
-                    QString link = Preferences::BASE_URL + QString::fromUtf8("/#!%1!%2")
-                            .arg(QString::fromUtf8(handle.get()), QString::fromUtf8(key.get()));
-                    if(!linkList.contains(link))
+                    QString link = QString::fromUtf8("%1/#!%2!%3")
+                                       .arg(ServiceUrls::instance()->getLinkBaseUrl().toString(),
+                                            QString::fromUtf8(handle.get()),
+                                            QString::fromUtf8(key.get()));
+                    if (!linkList.contains(link))
                     {
                         linkList.push_back(link);
                     }
@@ -1484,7 +1487,7 @@ void TransfersModel::openInMEGA(const QList<int> &rows)
     if (!rows.isEmpty())
     {
         QMutexLocker lock(&mModelMutex);
-        QStringList urlsOpened;
+        QSet<QUrl> urlsOpened;
         for (auto row : rows)
         {
             auto node = getParentNodeToOpenByRow(row);
@@ -1495,7 +1498,7 @@ void TransfersModel::openInMEGA(const QList<int> &rows)
                 std::unique_ptr<char[]> key(node->getBase64Key());
                 if (handle && key)
                 {
-                    QString url;
+                    QUrl url;
                     std::unique_ptr<MegaError> err(
                         MegaSyncApp->getMegaApi()->isNodeSyncableWithError(node.get()));
                     if (err->getSyncError() == SyncError::ACTIVE_SYNC_SAME_PATH ||
@@ -1503,17 +1506,17 @@ void TransfersModel::openInMEGA(const QList<int> &rows)
                         err->getSyncError() == SyncError::ACTIVE_SYNC_ABOVE_PATH)
                     {
                         auto deviceID = QString::fromUtf8(MegaSyncApp->getMegaApi()->getDeviceId());
-                        url = QString::fromUtf8("mega://#fm/device-centre/") + deviceID +
-                              QString::fromUtf8("/") + QString::fromUtf8(handle.get());
+                        url = ServiceUrls::getOpenInMegaUrl(deviceID,
+                                                            QString::fromUtf8(handle.get()));
                     }
                     else
                     {
-                        url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle.get());
+                        url = ServiceUrls::getNodeUrl(QString::fromUtf8(handle.get()));
                     }
                     if (!urlsOpened.contains(url))
                     {
-                        urlsOpened.append(url);
-                        Utilities::openUrl(QUrl(url));
+                        urlsOpened << url;
+                        Utilities::openUrl(url);
                     }
                 }
             }

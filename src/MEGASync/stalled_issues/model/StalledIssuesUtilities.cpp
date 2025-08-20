@@ -6,6 +6,7 @@
 #include "MegaDownloader.h"
 #include "MessageDialogOpener.h"
 #include "MoveToMEGABin.h"
+#include "ServiceUrls.h"
 #include "StalledIssuesDialog.h"
 
 #include <QDir>
@@ -90,7 +91,7 @@ void StalledIssuesUtilities::openLink(bool isCloud, const QString& path)
         auto url(getLink(isCloud, path));
         if (!url.isEmpty())
         {
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+            QtConcurrent::run(QDesktopServices::openUrl, url);
         }
         else
         {
@@ -120,9 +121,9 @@ void StalledIssuesUtilities::openLink(bool isCloud, const QString& path)
     }
 }
 
-QString StalledIssuesUtilities::getLink(bool isCloud, const QString& path)
+QUrl StalledIssuesUtilities::getLink(bool isCloud, const QString& path)
 {
-    QString url;
+    QUrl url;
 
     if(isCloud)
     {
@@ -130,7 +131,7 @@ QString StalledIssuesUtilities::getLink(bool isCloud, const QString& path)
         if(node)
         {
             std::unique_ptr<char[]> handle(node->getBase64Handle());
-            url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle.get());
+            url = ServiceUrls::getNodeUrl(QString::fromUtf8(handle.get()));
         }
     }
 

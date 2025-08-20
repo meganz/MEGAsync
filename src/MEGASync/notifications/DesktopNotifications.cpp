@@ -8,6 +8,7 @@
 #include "Notificator.h"
 #include "Platform.h"
 #include "RequestListenerManager.h"
+#include "ServiceUrls.h"
 #include "TransferMetaData.h"
 #include "TransferNotificationBuilder.h"
 
@@ -565,7 +566,7 @@ void DesktopNotifications::viewContactOnWebClient(DesktopAppNotification::Action
     }
     const auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
     const auto userMail = megaApi->getContact(notification->getData().toString().toUtf8());
-    auto url = QUrl(QString::fromUtf8("mega://#fm/contacts"));
+    auto url = ServiceUrls::getContactsUrl();
     const auto userVisible = userMail && userMail->getVisibility() == mega::MegaUser::VISIBILITY_VISIBLE;
     if (userVisible)
     {
@@ -574,11 +575,11 @@ void DesktopNotifications::viewContactOnWebClient(DesktopAppNotification::Action
         const bool actionIsOpenChat{activationButton == DesktopAppNotification::Action::secondButton};
         if(actionIsViewContact)
         {
-            url = QUrl(QString::fromUtf8("mega://#fm/%1").arg(userHandle));
+            url = ServiceUrls::getContactUrl(userHandle);
         }
         else if(actionIsOpenChat)
         {
-            url = QUrl(QString::fromUtf8("mega://#fm/chat/p/%1").arg(userHandle));
+            url = ServiceUrls::getChatUrl(userHandle);
         }
     }
     Utilities::openUrl(url);
@@ -846,9 +847,7 @@ void DesktopNotifications::redirectToPayBusiness(DesktopAppNotification::Action 
 {
     if (checkIfActionIsValid(activationButton))
     {
-        QString url = QString::fromUtf8("mega://#repay");
-        Utilities::getPROurlWithParameters(url);
-        Utilities::openUrl(QUrl(url));
+        Utilities::openUrl(ServiceUrls::getRepayUrl());
     }
 }
 
@@ -997,16 +996,16 @@ void DesktopNotifications::getRemoteNodeLink(const QList<std::shared_ptr<mega::M
             }
             else
             {
-                char *handle = node->getBase64Handle();
-                char *key = node->getBase64Key();
+                std::unique_ptr<char[]> handle(node->getBase64Handle());
+                std::unique_ptr<char[]> key(node->getBase64Key());
                 if (handle && key)
                 {
-                    QString link = Preferences::BASE_URL + QString::fromUtf8("/#!%1!%2")
-                            .arg(QString::fromUtf8(handle), QString::fromUtf8(key));
+                    auto link = ServiceUrls::instance()
+                                    ->getRemoteNodeLinkUrl(QString::fromUtf8(handle.get()),
+                                                           QString::fromUtf8(key.get()))
+                                    .toString();
                     linkList.push_back(link);
                 }
-                delete [] key;
-                delete [] handle;
             }
         }
 
@@ -1032,8 +1031,7 @@ void DesktopNotifications::viewShareOnWebClientByHandle(const QString& nodeBase6
 {
     if(!nodeBase64Handle.isEmpty())
     {
-        const auto url = QUrl(QString::fromUtf8("mega://#fm/%1").arg(nodeBase64Handle));
-        Utilities::openUrl(url);
+        Utilities::openUrl(ServiceUrls::getNodeUrl(nodeBase64Handle));
     }
 }
 

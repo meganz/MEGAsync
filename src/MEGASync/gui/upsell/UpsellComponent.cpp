@@ -1,16 +1,9 @@
 #include "UpsellComponent.h"
 
+#include "ServiceUrls.h"
 #include "UpsellController.h"
 #include "UpsellModel.h"
 #include "UpsellQmlDialog.h"
-
-namespace
-{
-const QLatin1String
-    URL_ABOUT_TRANSFER_QUOTA("https://help.mega.io/plans-storage/space-storage/transfer-quota");
-const QLatin1String URL_PRO("mega://#pro");
-const QLatin1String URL_PRO_FLEXI_PARAM("?tab=flexi");
-}
 
 static bool qmlRegistrationDone = false;
 
@@ -105,16 +98,13 @@ void UpsellComponent::linkInDescriptionClicked()
     {
         MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
             AppStatsEvents::EventType::UPSELL_DIALOG_LEARN_MORE_TX_QUOTA_CLICKED);
-        Utilities::openUrl(QUrl(URL_ABOUT_TRANSFER_QUOTA));
+        Utilities::openUrl(ServiceUrls::getTransferQuotaHelpUrl());
     }
 }
 
 void UpsellComponent::linkTryProFlexiClicked()
 {
-    QString urlString(URL_PRO);
-    Utilities::getPROurlWithParameters(urlString);
-    urlString += URL_PRO_FLEXI_PARAM;
-    Utilities::openUrl(QUrl(urlString));
+    Utilities::openUrl(ServiceUrls::getProFlexiUrl());
 
     MegaSyncApp->getStatsEventHandler()->sendTrackedEventArg(
         AppStatsEvents::EventType::UPSELL_DIALOG_TRY_PRO_FLEXI_CLICKED,

@@ -2,6 +2,7 @@
 
 #include "DialogOpener.h"
 #include "MegaApplication.h"
+#include "ServiceUrls.h"
 #include "StalledIssue.h"
 #include "StalledIssueDelegate.h"
 #include "StalledIssuesModel.h"
@@ -93,7 +94,7 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
             this,
             []()
             {
-                Utilities::openUrl(QUrl(Utilities::SYNC_SUPPORT_URL));
+                Utilities::openUrl(ServiceUrls::getSyncHelpUrl());
             });
 
     connect(SyncInfo::instance(),

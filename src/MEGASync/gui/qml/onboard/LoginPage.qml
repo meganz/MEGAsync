@@ -8,6 +8,7 @@ import ApiEnums 1.0
 import AppStatsEvents 1.0
 import LoginController 1.0
 import AccountStatusController 1.0
+import ServiceUrls 1.0
 
 LoginPageForm {
     id: root
@@ -188,7 +189,7 @@ LoginPageForm {
         loginButton.clicked();
     }
 
-    helpButton.url: Links.recovery + (email.valid() ? "?email=" + Qt.btoa(email.text) : "")
+    helpButton.url: serviceUrlsAccess.getRecoveryUrl() + (email.valid() ? "?email=" + Qt.btoa(email.text) : "")
 
     Component.onDestruction: {
         resetLoginControllerStatus();

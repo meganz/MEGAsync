@@ -3,6 +3,7 @@
 #include "DuplicatedNodeDialog.h"
 #include "MegaApplication.h"
 #include "Preferences.h"
+#include "ServiceUrls.h"
 
 #include <QDir>
 #include <QFileInfo>
@@ -57,8 +58,9 @@ void DuplicatedUploadFile::fillUi(DuplicatedNodeDialog *dialog, std::shared_ptr<
         else
         {
             uploadItem->setInfo(conflict, NodeItemType::FILE_UPLOAD_AND_UPDATE);
-            uploadItem->setDescription(DuplicatedNodeDialog::tr("The file at this destination will be updated if the new file is different."));
-            uploadItem->showLearnMore(QLatin1String("https://help.mega.io/files-folders/restore-delete/file-version-history"));
+            uploadItem->setDescription(DuplicatedNodeDialog::tr(
+                "The file at this destination will be updated if the new file is different."));
+            uploadItem->showLearnMore(ServiceUrls::getFileVersionHistoryHelpUrl().toString());
         }
 
         connect(uploadItem, &DuplicatedNodeItem::actionClicked, this, &DuplicatedUploadFile::onNodeItemSelected);

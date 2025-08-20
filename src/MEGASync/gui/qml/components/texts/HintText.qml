@@ -5,6 +5,8 @@ import common 1.0
 import components.images 1.0
 import components.texts 1.0 as Texts
 
+import ServiceUrls 1.0
+
 Item {
     id: root
 
@@ -91,7 +93,7 @@ Item {
                 opacity: enabled ? 1.0 : 0.2
                 font.pixelSize: root.textSize
                 wrapMode: Text.WordWrap
-                url: Links.contact
+                url: serviceUrlsAccess.getContactUrl()
                 manageMouse: true
             }
         }

@@ -1,6 +1,7 @@
 #include "GuiUtilities.h"
 
 #include "MessageDialogOpener.h"
+#include "ServiceUrls.h"
 #include "Utilities.h"
 
 #include <QApplication>
@@ -52,9 +53,7 @@ void GuiUtilities::showPayOrDismiss(const QString &title, const QString &message
     {
         if(msg->result() == QMessageBox::Yes)
         {
-            QString url = QString::fromUtf8("mega://#repay");
-            Utilities::getPROurlWithParameters(url);
-            Utilities::openUrl(QUrl(url));
+            Utilities::openUrl(ServiceUrls::getRepayUrl());
         }
     };
 

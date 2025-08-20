@@ -3,6 +3,7 @@
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "Preferences.h"
+#include "ServiceUrls.h"
 #include "TextDecorator.h"
 #include "ui_TransferManagerStatusHeaderWidget.h"
 
@@ -12,8 +13,6 @@ namespace
 {
 constexpr int TRANSFER_QUOTA_CHECK_TIME_MS(1000);
 const QLatin1String TIME_FORMAT("hh:mm:ss");
-const QLatin1String
-    TRANSFER_QUOTA_EXCEEDED_URL("https://help.mega.io/plans-storage/space-storage/transfer-quota");
 }
 
 TransferManagerStatusHeaderWidget::TransferManagerStatusHeaderWidget(QWidget* parent):
@@ -151,7 +150,8 @@ void TransferManagerStatusHeaderWidget::onTransferQuotaExceededUpdate()
            "quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.")
             .arg(MegaSyncApp->getTransferQuota()->getRemainingTransferQuotaTime().toString(
                 TIME_FORMAT)));
-    Text::RichText(TRANSFER_QUOTA_EXCEEDED_URL).process(bannerText);
+    const auto link = ServiceUrls::getTransferQuotaHelpUrl().toString();
+    Text::RichText(link).process(bannerText);
     mUi->wTransferBanner->setText(bannerText);
 }
 

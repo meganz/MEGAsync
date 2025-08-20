@@ -6,6 +6,7 @@
 #include "NodeSelectorSpecializations.h"
 #include "Platform.h"
 #include "QTMegaApiManager.h"
+#include "ServiceUrls.h"
 #include "ui_StreamingFromMegaDialog.h"
 #include "Utilities.h"
 
@@ -126,13 +127,14 @@ void StreamingFromMegaDialog::on_bFromPublicLink_clicked()
     {
         if (inputDialog->result() == QDialog::Accepted)
         {
-            if (isFolderLink(inputDialog->textValue()))
+            const auto link = inputDialog->textValue();
+            if (ServiceUrls::instance()->isFolderLink(link))
             {
                 showErrorMessage(tr("Folder links can't be streamed"));
             }
             else
             {
-                mPublicLink = inputDialog->textValue();
+                mPublicLink = link;
                 requestNodeToLinkProcessor();
             }
         }
@@ -152,12 +154,6 @@ void StreamingFromMegaDialog::requestNodeToLinkProcessor()
     updateFileInfo(QString(),LinkStatus::LOADING);
 
     mLinkProcessor->requestLinkInfo();
-}
-
-bool StreamingFromMegaDialog::isFolderLink(const QString& link) const
-{
-    auto folderLinkRegexp = std::regex(R"(^https://mega\.nz/folder/.*$)");
-    return std::regex_match(link.trimmed().toUtf8().constData(), folderLinkRegexp);
 }
 
 void StreamingFromMegaDialog::showErrorMessage(const QString& message)

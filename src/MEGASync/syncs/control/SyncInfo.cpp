@@ -4,7 +4,9 @@
 #include "MessageDialogOpener.h"
 #include "MyBackupsHandle.h"
 #include "Platform.h"
+#include "ServiceUrls.h"
 #include "StatsEventHandler.h"
+#include "TextDecorator.h"
 #include <MegaNodeNames.h>
 
 #include <mega/types.h>
@@ -189,18 +191,14 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
     if (!preferences->isFatWarningShown() && syncSetting->getWarning() == MegaSync::Warning::LOCAL_IS_FAT)
     {
         msgInfo.descriptionText =
-            tr("You are syncing a local folder formatted with a FAT filesystem. "
-               "That filesystem has deficiencies managing big files and modification"
-               " times that can cause synchronization problems (e.g. when daylight "
-               "saving changes), so it's strongly recommended that you only sync "
-               "folders formatted with more reliable filesystems like NTFS (more information "
-               "[A]here[/A]).")
-                .replace(QString::fromUtf8("[A]"),
-                         QString::fromUtf8(
-                             "<a "
-                             "href=\"https://help.mega.nz/megasync/"
-                             "syncing.html#can-i-sync-fat-fat32-partitions-under-windows\">"))
-                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>"));
+            tr("You are syncing a local folder formatted with a FAT filesystem. That filesystem "
+               "has deficiencies managing big files and modification times that can cause "
+               "synchronization problems (e.g. when daylight saving changes), so it's strongly "
+               "recommended that you only sync folders formatted with more reliable filesystems "
+               "like NTFS (more information [A]here[/A]).");
+        Text::Link link(ServiceUrls::getSyncFat32HelpUrl().toString());
+        link.process(msgInfo.descriptionText);
+
         msgInfo.finishFunc = [this](QPointer<MessageDialogResult>)
         {
             preferences->setFatWarningShown();

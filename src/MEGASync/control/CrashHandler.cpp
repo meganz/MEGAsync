@@ -2,6 +2,7 @@
 #include "CrashHandler.h"
 
 #include "MegaApplication.h"
+#include "ServiceUrls.h"
 #include "Utilities.h"
 #include "Version.h"
 
@@ -392,7 +393,8 @@ void CrashHandler::sendOSNotification(bool succeeded)
         {
             if (action == DesktopAppNotificationBase::Action::firstButton)
             {
-                Utilities::openUrl(QUrl(Utilities::SUPPORT_URL));
+                // FIXME mega.app -- contact url
+                Utilities::openUrl(ServiceUrls::instance()->getContactUrl());
             }
         };
     }

@@ -71,7 +71,6 @@ private:
     std::shared_ptr<UpsellPlans::Data> appendPlan(int proLevel,
                                                   QList<std::shared_ptr<UpsellPlans::Data>>& plans);
     bool isProLevelValid(int proLevel) const;
-    QUrl getUpsellPlanUrl(int proLevel);
     QString getLocalePriceString(float price) const;
     UpsellPlans::Data::AccountBillingPlanData createAccountBillingPlanData(int storage,
                                                                            int transfer,

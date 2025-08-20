@@ -2,6 +2,7 @@
 
 #include "MegaApplication.h"
 #include "Preferences.h"
+#include "ServiceUrls.h"
 #include "StalledIssuesModel.h"
 #include "SyncController.h"
 #include "SyncInfo.h"
@@ -42,7 +43,7 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
             &QPushButton::clicked,
             []()
             {
-                Utilities::openUrl(QUrl(Utilities::SYNC_SUPPORT_URL));
+                Utilities::openUrl(ServiceUrls::getSyncHelpUrl());
             });
 
     auto mode = Preferences::instance()->stalledIssuesMode();

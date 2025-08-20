@@ -4,8 +4,9 @@
 
 using namespace mega;
 
-ConnectivityChecker::ConnectivityChecker(QString testURL, QObject *parent) :
-    QObject(parent) , testRequest(testURL)
+ConnectivityChecker::ConnectivityChecker(const QUrl& testURL, QObject* parent):
+    QObject(parent),
+    testRequest(testURL)
 {
     networkAccess = new QNetworkAccessManager(this);
     timer = new QTimer(this);
@@ -18,7 +19,6 @@ ConnectivityChecker::ConnectivityChecker(QString testURL, QObject *parent) :
             this, SLOT(onProxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)));
 
     this->method = METHOD_GET;
-    this->testURL = testURL;
     this->reply = NULL;
     timeoutms = 1000000;
 }

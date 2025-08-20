@@ -501,8 +501,7 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
 
 void SettingsDialog::on_bHelp_clicked()
 {
-    QString helpUrl = Preferences::BASE_MEGA_HELP_URL + QString::fromUtf8("/installs-apps/desktop");
-    Utilities::openUrl(QUrl(helpUrl));
+    Utilities::openUrl(ServiceUrls::getDesktopAppHelpUrl());
 }
 
 bool SettingsDialog::event(QEvent* event)
@@ -605,9 +604,10 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
            " permanently deleted. Please, check your [A] folder in the Rubbish Bin"
            " of your MEGA account to see if you need to rescue something"
            " before continuing.")
-            .replace(QString::fromUtf8("[A]"),
-                     QString::fromUtf8("<a href=\"mega://#fm/%1\">SyncDebris</a>")
-                         .arg(QString::fromUtf8(base64Handle.get()))) +
+            .replace(QLatin1String("[A]"),
+                     QString::fromUtf8("<a href=\"%1\">SyncDebris</a>")
+                         .arg(ServiceUrls::getNodeUrl(QString::fromUtf8(base64Handle.get()))
+                                  .toString())) +
         QString::fromUtf8("<br/><br/>") + tr("Do you want to delete your remote backup now?");
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
@@ -1109,7 +1109,7 @@ void SettingsDialog::on_bUpgrade_clicked()
 
 void SettingsDialog::on_bMyAccount_clicked()
 {
-    Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/account")));
+    Utilities::openUrl(ServiceUrls::getAccountUrl());
 }
 
 void SettingsDialog::on_bStorageDetails_clicked()
@@ -1390,7 +1390,7 @@ void SettingsDialog::on_bChangePassword_clicked()
 
 void SettingsDialog::on_bSessionHistory_clicked()
 {
-    Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/account/history")));
+    Utilities::openUrl(ServiceUrls::getSessionHistoryUrl());
 }
 
 // Folders -----------------------------------------------------------------------------------------

@@ -371,11 +371,6 @@ public:
         TYPE_USERS
     };
 
-    static const QString SUPPORT_URL;
-    static const QString BACKUP_CENTER_URL;
-    static const QString SYNC_SUPPORT_URL;
-    static const QString DESKTOP_APP_URL;
-
     static QString getSizeString(long long bytes);
     static QString getSizeStringLocalized(qint64 bytes);
     static int toNearestUnit(long long bytes);
@@ -399,7 +394,6 @@ public:
     static QStringList extractJSONStringList(const QString& json, const QString& name);
     static long long extractJSONNumber(QString json, QString name);
     static QString getDefaultBasePath();
-    static void getPROurlWithParameters(QString &url);
     static QString joinLogZipFiles(mega::MegaApi *megaApi, const QDateTime *timestampSince = nullptr, QString appendHashReference = QString());
 
     static void adjustToScreenFunc(QPoint position, QWidget* what);

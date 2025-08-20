@@ -4,6 +4,7 @@
 #include "FullName.h"
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
+#include "ServiceUrls.h"
 #include "ThemeManager.h"
 #include "ui_AlertItem.h"
 #include "UserAlert.h"
@@ -709,7 +710,7 @@ void AlertItem::processIncomingPendingContactClick()
             if (mAlertData && mAlertData->getEmail().toStdString().c_str() == email)
             {
                 found = true;
-                Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/ipc")));
+                Utilities::openUrl(ServiceUrls::getIncomingPendingContactUrl());
                 break;
             }
         }
@@ -717,7 +718,7 @@ void AlertItem::processIncomingPendingContactClick()
 
     if (!found)
     {
-        Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/contacts")));
+        Utilities::openUrl(ServiceUrls::getContactsUrl());
     }
 }
 
@@ -726,12 +727,12 @@ void AlertItem::processIncomingContactChangeOrAcceptedClick()
     std::unique_ptr<MegaUser> user { mMegaApi->getContact(mAlertData->getEmail().toStdString().c_str()) };
     if (user && user->getVisibility() == MegaUser::VISIBILITY_VISIBLE)
     {
-        Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/%1")
-                                    .arg(QString::fromUtf8(mMegaApi->userHandleToBase64(user->getHandle())))));
+        std::unique_ptr<char[]> handle(mMegaApi->userHandleToBase64(user->getHandle()));
+        Utilities::openUrl(ServiceUrls::getContactUrl(QString::fromUtf8(handle.get())));
     }
     else
     {
-        Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/contacts")));
+        Utilities::openUrl(ServiceUrls::getContactsUrl());
     }
 }
 
@@ -740,14 +741,14 @@ void AlertItem::processShareOrTakedownClick()
     std::unique_ptr<MegaNode> node { mMegaApi->getNodeByHandle(mAlertData->getNodeHandle()) };
     if (node)
     {
-        Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/%1")
-                                    .arg(QString::fromUtf8(node->getBase64Handle()))));
+        std::unique_ptr<char[]> handle(node->getBase64Handle());
+        Utilities::openUrl(ServiceUrls::getNodeUrl(QString::fromUtf8(handle.get())));
     }
 }
 
 void AlertItem::processPaymentClick()
 {
-    Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/account/plan")));
+    Utilities::openUrl(ServiceUrls::getAccountPlanUrl());
 }
 
 bool AlertItem::event(QEvent* event)
