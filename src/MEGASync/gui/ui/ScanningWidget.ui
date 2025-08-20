@@ -13,6 +13,17 @@
   <property name="windowTitle">
    <string notr="true"/>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#lStepTitle
+{
+font-size: 14px;
+line-height: 20px;
+}
+#frame
+{
+border-radius: 8px;
+}</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <spacer name="verticalSpacer_4">
@@ -129,6 +140,9 @@
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
+     <property name="type" stdset="0">
+      <string notr="true">secondary</string>
+     </property>
     </widget>
    </item>
    <item>
@@ -169,6 +183,12 @@
        </property>
        <property name="text">
         <string>Cancel</string>
+       </property>
+       <property name="type" stdset="0">
+        <string notr="true">secondary</string>
+       </property>
+       <property name="dimension" stdset="0">
+        <string notr="true">medium</string>
        </property>
       </widget>
      </item>
@@ -229,22 +249,12 @@
        <property name="autoFillBackground">
         <bool>false</bool>
        </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(223, 244, 254);
-border-color: rgb(52, 101, 164);
-border-style: solid;
-border-width: 1px; 
-border-radius: 3px;</string>
+       <property name="type" stdset="0">
+        <string notr="true">notification</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QLabel" name="label">
-          <property name="styleSheet">
-           <string notr="true">color: rgb(4, 55, 81);
-border-width : 0px;
-font: 12pt
-</string>
-          </property>
           <property name="frameShadow">
            <enum>QFrame::Plain</enum>
           </property>
@@ -256,6 +266,9 @@ font: 12pt
           </property>
           <property name="wordWrap">
            <bool>true</bool>
+          </property>
+          <property name="type" stdset="0">
+           <string notr="true">notification</string>
           </property>
          </widget>
         </item>

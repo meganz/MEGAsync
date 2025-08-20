@@ -13,6 +13,13 @@
   <property name="windowTitle">
    <string notr="true"/>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#lCancelTransfers
+{
+font-size: 14px;
+line-height: 20px;
+}</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <spacer name="verticalSpacer_3">
@@ -48,7 +55,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="../Resources_common.qrc">:/images/icon_warning.png</pixmap>
+        <pixmap resource="../Resources_light.qrc">:/alert-circle-support-warning.svg</pixmap>
        </property>
       </widget>
      </item>
@@ -102,9 +109,6 @@
       <widget class="QLabel" name="lCancelTransfers">
        <property name="text">
         <string>Cancel transfers?</string>
-       </property>
-       <property name="role" stdset="0">
-        <string notr="true">title</string>
        </property>
       </widget>
      </item>
@@ -168,8 +172,8 @@
        <property name="wordWrap">
         <bool>true</bool>
        </property>
-       <property name="role" stdset="0">
-        <string notr="true">details</string>
+       <property name="type" stdset="0">
+        <string notr="true">secondary</string>
        </property>
       </widget>
      </item>
@@ -210,7 +214,7 @@
    <item>
     <widget class="QStackedWidget" name="cancelControlStack">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pCancelChoice">
       <layout class="QHBoxLayout" name="horizontalLayout">
@@ -235,6 +239,12 @@
          <property name="text">
           <string>No, continue</string>
          </property>
+         <property name="type" stdset="0">
+          <string notr="true">secondary</string>
+         </property>
+         <property name="dimension" stdset="0">
+          <string notr="true">medium</string>
+         </property>
         </widget>
        </item>
        <item>
@@ -244,6 +254,12 @@
          </property>
          <property name="text">
           <string>Yes, cancel</string>
+         </property>
+         <property name="type" stdset="0">
+          <string notr="true">primary</string>
+         </property>
+         <property name="dimension" stdset="0">
+          <string notr="true">medium</string>
          </property>
         </widget>
        </item>
@@ -328,7 +344,7 @@ font-weight:400;</string>
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_common.qrc"/>
+  <include location="../Resources_light.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -36,8 +36,6 @@ private:
     CancelConfirmWidget* mConfirmWidget = nullptr;
     QWidget* mLastSelectedWidget = nullptr;
     QWidget* mFinishedWidget;
-
-    static const char* getControlStyles();
 };
 
 #endif // BLOCKINGUI_H

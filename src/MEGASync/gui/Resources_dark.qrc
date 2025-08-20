@@ -161,5 +161,6 @@
         <file alias="database.svg">images/themed/dark/database.svg</file>
         <file alias="sync-01.svg">images/themed/dark/sync-01.svg</file>
         <file alias="monitor.svg">images/themed/dark/monitor.svg</file>
+        <file alias="alert-circle-support-warning.svg">images/themed/dark/alert-circle-support-warning.svg</file>
     </qresource>
 </RCC>

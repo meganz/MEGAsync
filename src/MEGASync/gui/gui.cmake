@@ -313,8 +313,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/win/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/VerifyLockMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/OverQuotaDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/ScanningWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/CancelConfirmWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/NodeNameSetterDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/ViewLoadingScene.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/ViewLoadingMessage.ui
@@ -333,8 +331,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/macx/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/VerifyLockMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/OverQuotaDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/ScanningWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/CancelConfirmWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/NodeNameSetterDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/ViewLoadingScene.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/ViewLoadingMessage.ui
@@ -355,8 +351,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/linux/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/VerifyLockMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/OverQuotaDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/CancelConfirmWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/ScanningWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/NodeNameSetterDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/ViewLoadingScene.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/ViewLoadingMessage.ui
@@ -545,6 +539,8 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/FilterAlertWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/AlertItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/NotificationItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/ScanningWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/CancelConfirmWidget.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
