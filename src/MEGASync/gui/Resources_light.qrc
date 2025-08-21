@@ -57,10 +57,10 @@
         <file alias="images/themed/light/eye_hover.svg">images/themed/light/eye_hover.svg</file>
         <file alias="images/themed/light/eye_disabled.svg">images/themed/light/eye_disabled.svg</file>
         <file alias="images/themed/light/eye_default.svg">images/themed/light/eye_default.svg</file>
-        <file alias="images/themed/light/chevron-down_press.svg">images/themed/light/chevron-down_press.svg</file>
-        <file alias="images/themed/light/chevron-down_hover.svg">images/themed/light/chevron-down_hover.svg</file>
-        <file alias="images/themed/light/chevron-down_disabled.svg">images/themed/light/chevron-down_disabled.svg</file>
-        <file alias="images/themed/light/chevron-down_default.svg">images/themed/light/chevron-down_default.svg</file>
+        <file alias="chevron-down_press">images/themed/light/chevron-down_press.svg</file>
+        <file alias="chevron-down_hover">images/themed/light/chevron-down_hover.svg</file>
+        <file alias="chevron-down_disabled">images/themed/light/chevron-down_disabled.svg</file>
+        <file alias="chevron-down_default">images/themed/light/chevron-down_default.svg</file>
         <file alias="images/themed/light/arrow-up-circle.svg">images/themed/light/arrow-up-circle.svg</file>
         <file alias="images/themed/light/arrow-down-circle.svg">images/themed/light/arrow-down-circle.svg</file>
         <file alias="images/lock.png">images/lock.png</file>
