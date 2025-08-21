@@ -21,7 +21,9 @@ public:
     virtual ~StalledIssueChooseWidget();
 
     void setActionButtonVisibility(bool state);
-    void setMessage(const QString& string, const QPixmap& pixmap, const QString& tooltip);
+    void setMessage(const QString& string,
+                    const QString& pixmapName,
+                    const QString& tooltip = QString());
     void setFailed(bool state, const QString& tooltip = QString());
 
     void addDefaultButton();

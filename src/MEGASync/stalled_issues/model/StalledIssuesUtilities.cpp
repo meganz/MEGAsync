@@ -22,7 +22,7 @@ std::unique_ptr<MegaUploader> StalledIssuesUtilities::mUploader = nullptr;
 StalledIssuesUtilities::StalledIssuesUtilities()
 {}
 
-QIcon StalledIssuesUtilities::getLocalFileIcon(const QFileInfo &fileInfo, bool hasProblem)
+QString StalledIssuesUtilities::getLocalFileIcon(const QFileInfo& fileInfo)
 {
     bool isFile(false);
 
@@ -35,48 +35,42 @@ QIcon StalledIssuesUtilities::getLocalFileIcon(const QFileInfo &fileInfo, bool h
         isFile = !fileInfo.completeSuffix().isEmpty();
     }
 
-    return getIcon(isFile, fileInfo, hasProblem);
+    return getIcon(isFile, fileInfo);
 }
 
-QIcon StalledIssuesUtilities::getRemoteFileIcon(mega::MegaNode *node, const QFileInfo& fileInfo, bool hasProblem)
+QString StalledIssuesUtilities::getRemoteFileIcon(mega::MegaNode* node, const QFileInfo& fileInfo)
 {
-    if(node)
+    if (!node)
     {
-        return getIcon(node->isFile(), fileInfo, hasProblem);
+        return getIcon(node->isFile(), fileInfo);
     }
     else
     {
-        return Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/help-circle.png"));
+        return Utilities::getPixmapName(QLatin1String("generic"), Utilities::AttributeType::NONE);
     }
 }
 
-QIcon StalledIssuesUtilities::getIcon(bool isFile, const QFileInfo& fileInfo, bool hasProblem)
+QString StalledIssuesUtilities::getIcon(bool isFile, const QFileInfo& fileInfo)
 {
-    QIcon fileTypeIcon;
+    QString fileTypeIcon;
+    Utilities::AttributeTypes attributes(Utilities::AttributeType::SMALL);
 
     if(isFile)
     {
         //Without extension
         if(fileInfo.completeSuffix().isEmpty())
         {
-            fileTypeIcon = Utilities::getCachedPixmap(QLatin1String(":/images/generic_medium.svg"));
+            fileTypeIcon = Utilities::getPixmapName(QLatin1String("generic"), attributes);
         }
         else
         {
-            fileTypeIcon = Utilities::getCachedPixmap(
-                Utilities::getExtensionPixmapName(fileInfo.fileName(), Utilities::AttributeType::MEDIUM));
+            fileTypeIcon = Utilities::getExtensionPixmapName(fileInfo.fileName(), attributes);
         }
     }
     else
     {
-        if(hasProblem)
-        {
-            fileTypeIcon = Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/folder_error_default.png"));
-        }
-        else
-        {
-            fileTypeIcon = Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/folder_orange_default.png"));
-        }
+        fileTypeIcon =
+            Utilities::getFolderPixmapName(Utilities::FolderType::TYPE_NORMAL, attributes);
     }
 
     return fileTypeIcon;

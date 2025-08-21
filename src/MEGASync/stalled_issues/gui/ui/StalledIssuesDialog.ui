@@ -28,8 +28,8 @@
   <property name="styleSheet">
    <string notr="true">QStackedWidget
 {
-    border-top: 1px solid rgba(0,0,0,0.08);
-    border-bottom: 1px solid rgba(0,0,0,0.08); 
+    border-top: 0px;
+    border-bottom: 0px;
     border-left: 0px;
     border-right: 0px;
 }
@@ -45,6 +45,7 @@ background-color: #FFFFFFFF; /*colorToken.page-background*/
 
 #TreeViewContainer QTreeView{
 background-color: #FFFFFFFF; /*colorToken.page-background*/
+border:none;
 }
 
 /**********  TreeView Container **********/
@@ -125,9 +126,14 @@ QMenu::item:default
 /**********  TreeView Container **********/
 
 /**********  Footer **********/
-#footer
+#footer[scroll=true]
 {
     background-color: #FFAAAAAA; /*colorToken.surface-1*/
+}
+
+#footer[scroll=false]
+{
+    background-color: #FFFFFFFF; /*colorToken.page-background*/
 }
 
 #HelpButton {
@@ -146,6 +152,7 @@ color: grey;
 #header
 {
     background-color: #FFAAAAAA; /*colorToken.surface-1*/
+    border:  1px solid #5254570D; /*colorToken.border-subtle*/
 }
 
 #titleLabel
@@ -162,7 +169,7 @@ color: grey;
 }
 /**********  Header **********/
 
-</string>
+ </string>
   </property>
   <property name="TOKENIZED" stdset="0">
    <bool>true</bool>
@@ -284,8 +291,8 @@ color: grey;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../gui/Resources_common.qrc">
-             <normaloff>:/images/StalledIssues/refresh.png</normaloff>:/images/StalledIssues/refresh.png</iconset>
+            <iconset resource="../../../gui/Resources_light.qrc">
+             <normaloff>:/refresh_issues</normaloff>:/refresh_issues</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -319,8 +326,8 @@ color: grey;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../gui/Resources_common.qrc">
-             <normaloff>:/images/StalledIssues/settings-stalled-issues.png</normaloff>:/images/StalledIssues/settings-stalled-issues.png</iconset>
+            <iconset resource="../../../gui/Resources_light.qrc">
+             <normaloff>:/settings</normaloff>:/settings</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -656,12 +663,12 @@ color: grey;
         </property>
         <property name="icon">
          <iconset resource="../../../gui/Resources_common.qrc">
-          <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
+          <normaloff>:/help-circle</normaloff>:/help-circle</iconset>
         </property>
         <property name="iconSize">
          <size>
-          <width>24</width>
-          <height>24</height>
+          <width>16</width>
+          <height>16</height>
          </size>
         </property>
         <property name="flat">
@@ -730,6 +737,7 @@ color: grey;
  </customwidgets>
  <resources>
   <include location="../../../gui/Resources_common.qrc"/>
+  <include location="../../../gui/Resources_light.qrc"/>
  </resources>
  <connections/>
 </ui>

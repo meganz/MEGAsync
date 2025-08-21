@@ -25,8 +25,8 @@ public:
 
     void removeBackgroundColor();
 
-    void setHTML(const QString& title, const QPixmap& icon = QPixmap());
-    void setTitle(const QString& title, const QPixmap& icon = QPixmap());
+    void setHTML(const QString& title, const QString& iconPath = QString());
+    void setTitle(const QString& title, const QString& iconPath = QString());
     QString title() const;
 
     void setHyperLinkMode();
@@ -35,16 +35,19 @@ public:
                          const QString& text,
                          int id,
                          bool mainButton,
-                         const QString& type = QLatin1String("secondary"));
+                         const QString& type = QLatin1String("primary"));
     void setActionButtonVisibility(int id, bool state);
 
     virtual void showIcon();
-    void setMessage(const QString& message, const QPixmap& pixmap = QPixmap(), const QString& tooltip = QString());
-
+    void setMessage(const QString& message,
+                    const QString& pixmapName = QString(),
+                    const QString& tooltip = QString());
 
     void setFailed(bool state, const QString& errorTooltip);
     void setDisable(bool state);
+
     bool isSolved() const;
+    bool isFailed() const;
 
     void setIsCloud(bool state);
 
@@ -83,6 +86,7 @@ protected:
     Ui::StalledIssueActionTitle* ui;
     bool mIsCloud;
     QString mPath;
+    QString mIconPath;
     bool mIsFile;
     std::unique_ptr<mega::MegaNode> mNode;
 
@@ -92,6 +96,7 @@ private:
     bool isRawInfoVisible() const;
     void showAttribute(AttributeType type);
     void updateLabel(QLabel* label, const QString& text);
+    void updateIcon();
     QMap<AttributeType, QPointer<QLabel>> mUpdateLabels;
     QMap<AttributeType, QPointer<QLabel>> mTitleLabels;
 };

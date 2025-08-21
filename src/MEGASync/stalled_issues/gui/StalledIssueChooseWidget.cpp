@@ -36,9 +36,11 @@ void StalledIssueChooseWidget::setActionButtonVisibility(bool state)
     ui->chooseTitle->setActionButtonVisibility(BUTTON_ID, state);
 }
 
-void StalledIssueChooseWidget::setMessage(const QString& string, const QPixmap& pixmap, const QString& tooltip)
+void StalledIssueChooseWidget::setMessage(const QString& string,
+                                          const QString& pixmapName,
+                                          const QString& tooltip)
 {
-    ui->chooseTitle->setMessage(string, pixmap, tooltip);
+    ui->chooseTitle->setMessage(string, pixmapName, tooltip);
 }
 
 void StalledIssueChooseWidget::setFailed(bool state, const QString& tooltip)
@@ -110,8 +112,9 @@ void GenericChooseWidget::setSolved(bool isSolved, bool isSelected)
 {
     if(isSelected)
     {
-        QIcon solvedIcon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-        ui->chooseTitle->setMessage(mInfo.solvedText, solvedIcon.pixmap(16,16));
+        ui->chooseTitle->setMessage(mInfo.solvedText,
+                                    Utilities::getPixmapName(QLatin1String("check_support_success"),
+                                                             Utilities::AttributeType::NONE));
     }
     else
     {
@@ -126,8 +129,6 @@ void GenericChooseWidget::setInfo(const GenericInfo &info)
 {
     mInfo = info;
 
-    QIcon icon(info.icon);
-    auto iconPixmap(icon.pixmap(QSize(16,16)));
-    ui->chooseTitle->setHTML(info.title, iconPixmap);
+    ui->chooseTitle->setHTML(info.title, info.icon);
     ui->chooseTitle->addActionButton(QIcon(), info.buttonText, BUTTON_ID, true);
 }

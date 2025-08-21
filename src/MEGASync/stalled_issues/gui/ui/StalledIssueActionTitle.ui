@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>212</width>
-    <height>79</height>
+    <height>90</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -64,6 +64,12 @@ border-radius: 4px;
 #backgroundWidget[disable_background=false][failed=true] WordWrapLabel
 {
 	color: #FAFAFB; /*colorToken.text-inverse-accent*/
+}
+
+/*DISCARDED*/
+#backgroundWidget[discarded=true] WordWrapLabel
+{
+	color: #FAFAFB; /*colorToken.text-disabled*/
 }
 
 </string>
@@ -181,13 +187,7 @@ border-radius: 4px;
                 <number>0</number>
                </property>
                <item>
-                <widget class="QLabel" name="icon">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
+                <widget class="QPushButton" name="icon">
                  <property name="minimumSize">
                   <size>
                    <width>24</width>
@@ -201,10 +201,19 @@ border-radius: 4px;
                   </size>
                  </property>
                  <property name="text">
-                  <string/>
+                  <string notr="true"/>
                  </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
+                 <property name="iconSize">
+                  <size>
+                   <width>24</width>
+                   <height>24</height>
+                  </size>
+                 </property>
+                 <property name="flat">
+                  <bool>false</bool>
+                 </property>
+                 <property name="type" stdset="0">
+                  <string notr="true">icon</string>
                  </property>
                 </widget>
                </item>
@@ -284,6 +293,18 @@ border-radius: 4px;
                </property>
                <item>
                 <widget class="QLabel" name="iconLabel">
+                 <property name="minimumSize">
+                  <size>
+                   <width>16</width>
+                   <height>16</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16</width>
+                   <height>16</height>
+                  </size>
+                 </property>
                  <property name="text">
                   <string/>
                  </property>
@@ -295,7 +316,7 @@ border-radius: 4px;
                   <string/>
                  </property>
                  <property name="type" stdset="0">
-                  <string notr="true">primary</string>
+                  <string notr="true">secondary</string>
                  </property>
                 </widget>
                </item>
@@ -368,6 +389,8 @@ border-radius: 4px;
    <header>WordWrapLabel.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../../gui/Resources_common.qrc"/>
+ </resources>
  <connections/>
 </ui>

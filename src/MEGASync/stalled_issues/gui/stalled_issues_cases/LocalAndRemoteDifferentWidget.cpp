@@ -80,7 +80,8 @@ void LocalAndRemoteDifferentWidget::refreshUi()
         QString bothInfoTitle = tr("[B]Keep both[/B]");
         StalledIssuesBoldTextDecorator::boldTextDecorator.process(bothInfoTitle);
         bothInfo.title = bothInfoTitle;
-        bothInfo.icon = QLatin1String(":/images/copy.png");
+        bothInfo.icon =
+            Utilities::getPixmapName(QLatin1String("keep_both"), Utilities::AttributeType::NONE);
         bothInfo.solvedText = ui->keepBothOption->chosenString();
         ui->keepBothOption->setInfo(bothInfo);
 
@@ -98,7 +99,8 @@ void LocalAndRemoteDifferentWidget::refreshUi()
 
         StalledIssuesBoldTextDecorator::boldTextDecorator.process(lastModifiedInfoTitle);
         lastModifiedInfo.title = lastModifiedInfoTitle;
-        lastModifiedInfo.icon = QLatin1String(":/images/clock_ico.png");
+        lastModifiedInfo.icon = Utilities::getPixmapName(QLatin1String("keep_last_modified"),
+                                                         Utilities::AttributeType::NONE);
         lastModifiedInfo.solvedText = ui->keepLastModifiedOption->chosenString();
         ui->keepLastModifiedOption->setInfo(lastModifiedInfo);
     }

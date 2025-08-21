@@ -3,6 +3,8 @@
 #include "MegaApplication.h"
 #include "StalledIssuesModel.h"
 #include "StalledIssuesUtilities.h"
+#include "ThemeManager.h"
+#include "TokenParserWidgetManager.h"
 #include "ui_StalledIssueActionTitle.h"
 #include "Utilities.h"
 
@@ -16,7 +18,6 @@
 #include <QSpacerItem>
 
 const char* BUTTON_ID = "button_id";
-const char* ONLY_ICON = "onlyIcon";
 const char* MAIN_BUTTON = "main";
 const char* DISCARDED = "discarded";
 const char* FAILED_BACKGROUND = "failed";
@@ -60,27 +61,25 @@ void StalledIssueActionTitle::removeBackgroundColor()
     setStyleSheet(styleSheet());
 }
 
-void StalledIssueActionTitle::setHTML(const QString& title, const QPixmap& icon)
+void StalledIssueActionTitle::setHTML(const QString& title, const QString& iconPath)
 {
     auto font(ui->titleLabel->font());
     font.setBold(false);
     ui->titleLabel->setFont(font);
     ui->titleLabel->setTextFormat(Qt::AutoText);
 
-    setTitle(title, icon);
+    setTitle(title, iconPath);
 }
 
-void StalledIssueActionTitle::setTitle(const QString& title, const QPixmap& icon)
+void StalledIssueActionTitle::setTitle(const QString& title, const QString& iconPath)
 {
     updateSizeHints();
 
     ui->titleLabel->setText(title);
-    if(!icon.isNull())
-    {
-        ui->icon->setFixedSize(icon.size());
-        ui->icon->setPixmap(icon);
-        ui->icon->show();
-    }
+
+    mIconPath = iconPath;
+
+    updateIcon();
 }
 
 QString StalledIssueActionTitle::title() const
@@ -116,7 +115,6 @@ void StalledIssueActionTitle::addActionButton(const QIcon& icon,
     auto button = new QPushButton(icon, text, this);
 
     button->setProperty(BUTTON_ID, id);
-    button->setProperty(ONLY_ICON, false);
     button->setProperty(MAIN_BUTTON,mainButton);
     button->setProperty("type", type);
     button->setProperty("dimension", QLatin1String("small"));
@@ -134,11 +132,11 @@ void StalledIssueActionTitle::addActionButton(const QIcon& icon,
 
     if(!icon.isNull())
     {
-        button->setIconSize(QSize(24,24));
+        button->setIconSize(QSize(16, 16));
 
         if(text.isEmpty())
         {
-            button->setProperty(ONLY_ICON, true);
+            button->setFixedSize(QSize(24, 24));
         }
     }
 
@@ -157,7 +155,7 @@ void StalledIssueActionTitle::setActionButtonVisibility(int id, bool state)
             button->setVisible(state);
             if(state)
             {
-                setMessage(QString(), QPixmap());
+                setMessage(QString());
                 allHidden = false;
             }
         }
@@ -181,23 +179,26 @@ void StalledIssueActionTitle::showIcon()
 {
     QFileInfo fileInfo(mPath);
 
-    QIcon fileTypeIcon = StalledIssuesUtilities::getIcon(mIsFile, fileInfo, false);
+    QString fileTypeIcon = StalledIssuesUtilities::getIcon(mIsFile, fileInfo);
 
     if(!fileTypeIcon.isNull())
     {
-        ui->icon->setPixmap(fileTypeIcon.pixmap(ui->icon->size()));
+        ui->icon->setIcon(QIcon(fileTypeIcon));
+        ui->icon->setIconSize(QSize(24, 24));
         ui->icon->show();
     }
 }
 
-void StalledIssueActionTitle::setMessage(const QString& message, const QPixmap& pixmap, const QString& tooltip)
+void StalledIssueActionTitle::setMessage(const QString& message,
+                                         const QString& pixmapName,
+                                         const QString& tooltip)
 {
     updateSizeHints();
     ui->messageContainer->show();
     ui->messageContainer->installEventFilter(this);
     ui->messageContainer->setToolTip(tooltip);
 
-    ui->iconLabel->setPixmap(pixmap);
+    ui->iconLabel->setPixmap(QIcon(pixmapName).pixmap(ui->iconLabel->size()));
 
     ui->messageLabel->setText(ui->messageLabel->fontMetrics().elidedText(message, Qt::ElideMiddle, ui->contents->width()/3));
     ui->messageLabel->setProperty(MESSAGE_TEXT, message);
@@ -254,11 +255,18 @@ void StalledIssueActionTitle::setFailed(bool state, const QString& errorTooltip)
 void StalledIssueActionTitle::setDisable(bool state)
 {
     ui->backgroundWidget->setProperty(DISCARDED, state);
+    ui->icon->setDisabled(state);
+    setStyleSheet(styleSheet());
 }
 
 bool StalledIssueActionTitle::isSolved() const
 {
     return ui->backgroundWidget->property(DISCARDED).toBool();
+}
+
+bool StalledIssueActionTitle::isFailed() const
+{
+    return ui->backgroundWidget->property(FAILED_BACKGROUND).toBool();
 }
 
 void StalledIssueActionTitle::setIsCloud(bool state)
@@ -539,6 +547,16 @@ void StalledIssueActionTitle::updateLabel(QLabel *label, const QString &text)
     }
 
     label->setProperty(MESSAGE_TEXT, text);
+}
+
+void StalledIssueActionTitle::updateIcon()
+{
+    if (!mIconPath.isEmpty())
+    {
+        ui->icon->setIcon(QIcon(mIconPath));
+        ui->icon->setIconSize(QSize(16, 16));
+        ui->icon->show();
+    }
 }
 
 void StalledIssueActionTitle::updateExtraInfoLayout()

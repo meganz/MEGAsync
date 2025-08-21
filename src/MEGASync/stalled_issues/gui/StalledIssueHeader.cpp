@@ -7,6 +7,7 @@
 #include "StalledIssuesCaseHeaders.h"
 #include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
+#include "TokenParserWidgetManager.h"
 #include "Utilities.h"
 
 #include <QCheckBox>
@@ -234,7 +235,7 @@ void StalledIssueHeader::showMessage(const QString &message, const QPixmap& pixm
 void StalledIssueHeader::updateIssueState()
 {
     StalledIssue::SolveType type(StalledIssue::SolveType::UNSOLVED);
-    QIcon icon;
+    QString iconName;
     QString message;
 
     if (getData().consultData()->hasCustomMessage())
@@ -252,6 +253,8 @@ void StalledIssueHeader::updateIssueState()
     if(type == StalledIssue::SolveType::BEING_SOLVED)
     {
         ui->actionWaitingSpinner->start();
+        ui->actionWaitingSpinner->setColor(
+            TokenParserWidgetManager::instance()->getColor(QLatin1String("icon-primary")));
     }
     else
     {
@@ -271,10 +274,12 @@ void StalledIssueHeader::updateIssueState()
         }
         case StalledIssue::SolveType::SOLVED:
         {
-            ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("solved"));
             if(getData().convert<IgnoredStalledIssue>())
             {
-                icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/solved_state.png"));
+                ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("ignored"));
+
+                iconName = Utilities::getPixmapName(QLatin1String("minus_circle_support_warning"),
+                                                    Utilities::AttributeType::NONE);
                 if (message.isEmpty())
                 {
                     message = tr("Ignored");
@@ -282,9 +287,12 @@ void StalledIssueHeader::updateIssueState()
             }
             else
             {
+                ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("solved"));
+
                 if(getData().consultData()->wasAutoResolutionApplied())
                 {
-                    icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/auto_solved_state.png"));
+                    iconName = Utilities::getPixmapName(QLatin1String("magic_wand_support_success"),
+                                                        Utilities::AttributeType::NONE);
                     if (message.isEmpty())
                     {
                         message = tr("Auto-solved");
@@ -292,7 +300,8 @@ void StalledIssueHeader::updateIssueState()
                 }
                 else
                 {
-                    icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/solved_state.png"));
+                    iconName = Utilities::getPixmapName(QLatin1String("check_support_success"),
+                                                        Utilities::AttributeType::NONE);
                     if (message.isEmpty())
                     {
                         message = tr("Solved");
@@ -305,7 +314,8 @@ void StalledIssueHeader::updateIssueState()
         case StalledIssue::SolveType::FAILED:
         {
             ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("failed"));
-            icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/failed_state.png"));
+            iconName = Utilities::getPixmapName(QLatin1String("cross_support_error"),
+                                                Utilities::AttributeType::NONE);
             if (message.isEmpty())
             {
                 message = tr("Failed");
@@ -328,7 +338,7 @@ void StalledIssueHeader::updateIssueState()
         }
     }
 
-    showMessage(message, icon.pixmap(16, 16));
+    showMessage(message, iconName);
     ui->actionMessageContainer->setStyleSheet(ui->actionMessageContainer->styleSheet());
 }
 

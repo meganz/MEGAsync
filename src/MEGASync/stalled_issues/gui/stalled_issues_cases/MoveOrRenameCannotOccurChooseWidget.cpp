@@ -31,16 +31,19 @@ void MoveOrRenameCannotOccurChooseWidget::updateUi(
     {
         ui->chooseTitle->setActionButtonVisibility(StalledIssueChooseWidget::BUTTON_ID, false);
 
-        QIcon icon;
         if(side == mChosenSide)
         {
-            icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-            ui->chooseTitle->setMessage(chosenString(), icon.pixmap(16, 16));
+            ui->chooseTitle->setMessage(
+                chosenString(),
+                Utilities::getPixmapName(QLatin1String("check_support_success"),
+                                         Utilities::AttributeType::NONE));
         }
         else
         {
-            icon.addFile(QString::fromUtf8(":/images/StalledIssues/rotate-ccw.png"));
-            ui->chooseTitle->setMessage(tr("Changes Undone"), icon.pixmap(16, 16));
+            ui->chooseTitle->setMessage(
+                tr("Changes Undone"),
+                Utilities::getPixmapName(QLatin1String("rotate_arrow_support_error"),
+                                         Utilities::AttributeType::NONE));
         }
     }
 

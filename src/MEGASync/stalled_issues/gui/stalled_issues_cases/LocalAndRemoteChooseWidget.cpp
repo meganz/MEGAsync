@@ -14,9 +14,9 @@ void LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(StalledIssueDataPtr da
     LocalOrRemoteUserMustChooseStalledIssue::ChosenSide side)
 {
     auto fileName = data->getFileName();
-    ui->chooseTitle->showIcon();
-
     ui->name->setTitle(fileName);
+
+    ui->chooseTitle->showIcon();
 
     mega::MegaHandle handle(mega::INVALID_HANDLE);
     if(data->isCloud())
@@ -40,40 +40,52 @@ void LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(StalledIssueDataPtr da
     {
         ui->chooseTitle->setActionButtonVisibility(StalledIssueChooseWidget::BUTTON_ID, false);
 
-        //In order to keep the old context, we use QApplication::translate even when the strings are only used here
-        QIcon icon;
+        // In order to keep the old context, we use QApplication::translate even when the strings
+        // are only used here QIcon icon;
         if(side == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::REMOTE)
         {
             if(data->isCloud())
             {
-                icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-                ui->chooseTitle->setMessage(chosenString(), icon.pixmap(16,16));
+                ui->chooseTitle->setMessage(
+                    chosenString(),
+                    Utilities::getPixmapName(QLatin1String("check_support_success"),
+                                             Utilities::AttributeType::NONE));
             }
             else
             {
-                icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
-                ui->chooseTitle->setMessage(solvedString(), icon.pixmap(16,16));
+                ui->chooseTitle->setMessage(
+                    solvedString(),
+                    Utilities::getPixmapName(QLatin1String("cross_support_error"),
+                                             Utilities::AttributeType::NONE));
             }
         }
         else if(side == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LOCAL)
         {
             if(data->isCloud())
             {
-                icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
-                ui->chooseTitle->setMessage(solvedString(), icon.pixmap(16,16));
+                ui->chooseTitle->setMessage(
+                    solvedString(),
+                    Utilities::getPixmapName(QLatin1String("cross_support_error"),
+                                             Utilities::AttributeType::NONE));
             }
             else
             {
-                icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-                ui->chooseTitle->setMessage(QApplication::translate("StalledIssueChooseWidget", "Local file is being uploaded"), icon.pixmap(16,16));
+                ui->chooseTitle->setMessage(
+                    QApplication::translate("StalledIssueChooseWidget",
+                                            "Local file is being uploaded"),
+                    Utilities::getPixmapName(QLatin1String("check_support_success"),
+                                             Utilities::AttributeType::NONE));
             }
         }
         else if(side == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::BOTH)
         {
-            icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
             if(!data->renamedFileName().isEmpty())
             {
-                ui->chooseTitle->setMessage(QApplication::translate("NameConflict", "Renamed to \"%1\"").arg(data->renamedFileName()), icon.pixmap(16,16));
+                ui->chooseTitle->setMessage(
+                    QApplication::translate("NameConflict", "Renamed to \"%1\"")
+                        .arg(data->renamedFileName()),
+                    Utilities::getPixmapName(QLatin1String("check_support_success"),
+                                             Utilities::AttributeType::NONE));
             }
             else
             {

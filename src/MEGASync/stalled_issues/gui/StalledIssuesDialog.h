@@ -48,8 +48,11 @@ private slots:
     void onModelFiltered();
     void onLoadingSceneVisibilityChange(bool state);
 
+    void onScrollRangeChanged(int, int max);
+
 private:
     void showView();
+    void setScrollMode(bool state);
 
     Ui::StalledIssuesDialog *ui;
     MegaDelegateHoverManager mViewHoverManager;

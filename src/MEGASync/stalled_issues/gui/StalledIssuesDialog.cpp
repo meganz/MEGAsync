@@ -11,6 +11,7 @@
 #include "Utilities.h"
 
 const char* MODE_SELECTED = "SELECTED";
+const char* SCROLL = "scroll";
 
 StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     QDialog(parent),
@@ -102,7 +103,16 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
             this,
             &StalledIssuesDialog::onSyncRootChanged);
 
+    // Init value
+    setScrollMode(false);
+
+    connect(ui->stalledIssuesTree->verticalScrollBar(),
+            &QScrollBar::rangeChanged,
+            this,
+            &StalledIssuesDialog::onScrollRangeChanged);
+
     showView();
+
     if(MegaSyncApp->getStalledIssuesModel()->issuesRequested())
     {
         onUiBlocked();
@@ -331,9 +341,26 @@ void StalledIssuesDialog::onLoadingSceneVisibilityChange(bool state)
     }
 }
 
+void StalledIssuesDialog::onScrollRangeChanged(int, int max)
+{
+    auto currentScrollMode(ui->footer->property(SCROLL).toBool());
+    auto newScrollMode(max > 0);
+
+    if (newScrollMode != currentScrollMode)
+    {
+        setScrollMode(newScrollMode);
+    }
+}
+
 void StalledIssuesDialog::showView()
 {
     on_refreshButton_clicked();
+}
+
+void StalledIssuesDialog::setScrollMode(bool state)
+{
+    ui->footer->setProperty(SCROLL, state);
+    setStyleSheet(styleSheet());
 }
 
 void StalledIssuesDialog::onGlobalSyncStateChanged(bool)

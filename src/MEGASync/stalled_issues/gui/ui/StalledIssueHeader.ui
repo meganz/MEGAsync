@@ -56,9 +56,19 @@
     color: #007C3E; /*colorToken.text-success*/
 }
 
+#actionMessageContainer[STATE=&quot;ignored&quot;]
+{
+	background-color: #CFFCDB; /*colorToken.notification-success*/
+}
+
+#actionMessageContainer[STATE=&quot;ignored&quot;]
+{
+	background-color: #FEF4C6; /*colorToken.notification-warning*/
+}
+
 #actionMessageContainer[STATE=&quot;failed&quot;]
 {
-	background-color: #FFE4E8; /*colorToken.notification-error*/
+	background-color: #B55407; /*colorToken.notification-error*/
 }
 
 #actionMessageContainer[STATE=&quot;failed&quot;] QLabel
@@ -66,7 +76,29 @@
 	color: #E31B57; /*colorToken.text-error*/
 }
 /*********** actionContainer **********/
-</string>
+
+/*********** multiple action button ****/
+#multipleActionButton
+{
+    	qproperty-icon: url(:/chevron-down_default); 
+    	qproperty-iconSize: 16px;
+}
+
+#multipleActionButton:hover
+{
+    	qproperty-icon: url(:/chevron-down_hover); 
+    	qproperty-iconSize: 16px;
+}
+
+#multipleActionButton:pressed
+{
+    	qproperty-icon: url(:/chevron-down_pressed); 
+    	qproperty-iconSize: 16px;
+}
+/*********** multiple action button ****/</string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,0">
    <property name="spacing">
@@ -355,22 +387,17 @@
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>0</height>
+          <height>26</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>16777215</height>
+          <height>26</height>
          </size>
         </property>
         <property name="text">
          <string/>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normalon>:/images/node_selector/Icon-Small-Arrow-Down.png</normalon>
-         </iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -382,7 +409,7 @@
          <string notr="true">secondary</string>
         </property>
         <property name="dimension" stdset="0">
-         <string notr="true">medium</string>
+         <string notr="true">small</string>
         </property>
        </widget>
       </item>
@@ -471,15 +498,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>WordWrapLabel</class>
-   <extends>QTextEdit</extends>
-   <header>WordWrapLabel.h</header>
-  </customwidget>
-  <customwidget>
    <class>WaitingSpinnerWidget</class>
    <extends>QWidget</extends>
    <header>gui/WaitingSpinnerWidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WordWrapLabel</class>
+   <extends>QTextEdit</extends>
+   <header>WordWrapLabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

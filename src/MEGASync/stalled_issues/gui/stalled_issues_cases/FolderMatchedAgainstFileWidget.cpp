@@ -57,23 +57,30 @@ void FolderMatchedAgainstFileWidget::refreshUi()
 
     if (issue->isSolved())
     {
-        QIcon icon;
-        icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+        QString successIconName(Utilities::getPixmapName(QLatin1String("check_support_success"),
+                                                         Utilities::AttributeType::NONE));
 
-        switch(result.sideRenamed)
+        switch (result.sideRenamed)
         {
             case StalledIssuesUtilities::KeepBothSidesState::REMOTE:
             {
-                ui->remoteCopy->setMessage(QApplication::translate("NameConflict", "Renamed to \"%1\"").arg(result.newName), icon.pixmap(16,16), QString());
+                ui->remoteCopy->setMessage(
+                    QApplication::translate("NameConflict", "Renamed to \"%1\"")
+                        .arg(result.newName),
+                    successIconName);
                 break;
             }
             case StalledIssuesUtilities::KeepBothSidesState::LOCAL:
             {
-                ui->localCopy->setMessage(QApplication::translate("NameConflict", "Renamed to \"%1\"").arg(result.newName), icon.pixmap(16,16), QString());
+                ui->localCopy->setMessage(
+                    QApplication::translate("NameConflict", "Renamed to \"%1\"")
+                        .arg(result.newName),
+                    successIconName);
                 break;
             }
             default:
             {
+                break;
             }
         }
     }

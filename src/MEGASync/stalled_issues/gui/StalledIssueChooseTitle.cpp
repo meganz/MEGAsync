@@ -3,24 +3,28 @@
 #include "ui_StalledIssueActionTitle.h"
 #include "Utilities.h"
 
-StalledIssueChooseTitle::StalledIssueChooseTitle(QWidget *parent)
-    : StalledIssueActionTitle(parent)
+StalledIssueChooseTitle::StalledIssueChooseTitle(QWidget* parent):
+    StalledIssueActionTitle(parent)
 {
 }
 
 void StalledIssueChooseTitle::showIcon()
 {
-    QIcon icon;
+    QString pixmapName;
 
     if(mIsCloud)
     {
-        icon = Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/cloud_default.png"));
+        pixmapName = Utilities::getPixmapName(QLatin1String("MEGA"),
+                                              isFailed() ? Utilities::AttributeType::INVERSE :
+                                                           Utilities::AttributeType::NONE);
     }
     else
     {
-        icon = Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/monitor_default.png"));
+        pixmapName = Utilities::getPixmapName(QLatin1String("monitor"),
+                                              isFailed() ? Utilities::AttributeType::INVERSE :
+                                                           Utilities::AttributeType::NONE);
     }
 
-    ui->icon->setPixmap(icon.pixmap(QSize(16,16)));
+    ui->icon->setIcon(QIcon(pixmapName));
     ui->icon->show();
 }

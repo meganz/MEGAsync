@@ -68,7 +68,7 @@ QFrame[isSelected=false] QLabel
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
-    <number>0</number>
+    <number>4</number>
    </property>
    <property name="leftMargin">
     <number>8</number>

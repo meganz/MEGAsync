@@ -134,9 +134,6 @@
         <file alias="images/StalledIssues/folder_orange_default.png">images/StalledIssues/folder_orange_default.png</file>
         <file alias="images/StalledIssues/folder_orange_default@2x.png">images/StalledIssues/folder_orange_default@2x.png</file>
         <file alias="images/StalledIssues/folder_orange_default@3x.png">images/StalledIssues/folder_orange_default@3x.png</file>
-        <file alias="images/StalledIssues/help-circle.png">images/StalledIssues/help-circle.png</file>
-        <file alias="images/StalledIssues/help-circle@2x.png">images/StalledIssues/help-circle@2x.png</file>
-        <file alias="images/StalledIssues/help-circle@3x.png">images/StalledIssues/help-circle@3x.png</file>
         <file alias="images/StalledIssues/ic-open-outside.png">images/StalledIssues/ic-open-outside.png</file>
         <file alias="images/StalledIssues/ic-open-outside@2x.png">images/StalledIssues/ic-open-outside@2x.png</file>
         <file alias="images/StalledIssues/ic-open-outside@3x.png">images/StalledIssues/ic-open-outside@3x.png</file>
@@ -1318,5 +1315,6 @@
         <file alias="menu_01_medium_thin_outline">images/themed/tokenizable/menu_01_medium_thin_outline.svg</file>
         <file alias="alert-circle">images/themed/common/alert-circle.svg</file>
         <file alias="alert-triangle">images/themed/common/Stalled Issues/Header/alert-triangle.svg</file>
+        <file alias="help-circle">images/themed/common/help-circle.svg</file>
     </qresource>
 </RCC>

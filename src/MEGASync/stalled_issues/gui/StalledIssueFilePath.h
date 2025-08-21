@@ -36,6 +36,8 @@ private:
     void showHoverAction(QEvent::Type type, QLabel *actionWidget, const QString &path);
     void updateFileIcons();
     void updateMoveFileIcons();
+    void updateCornerArrows();
+    void updateLocalOrMegaTitle();
 
     void fillFilePath();
     QString getFilePath() const;
