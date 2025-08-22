@@ -336,7 +336,9 @@ public:
         NONE = 0x0,
         SMALL = 0x1,
         MEDIUM = 0x2,
-        DISABLED = 0x4
+        DISABLED = 0x4,
+        SOLID = 0x8,
+        OUTLINE = 0x10
     };
     Q_DECLARE_FLAGS(AttributeTypes, AttributeType)
     Q_ENUM(AttributeType)
@@ -509,6 +511,11 @@ public:
     static qreal getDevicePixelRatio();
 
     static QIcon getCachedPixmap(QString fileName);
+    static QIcon getIcon(const QString& iconName, AttributeTypes attribute);
+    static QPixmap getPixmap(const QString& iconName,
+                             AttributeTypes attribute,
+                             QWidget* canvas = nullptr);
+    static QString getPixmapName(const QString& iconName, AttributeTypes attribute);
     static QIcon getExtensionPixmap(QString fileName, AttributeTypes attribute);
     static QString getExtensionPixmapName(QString fileName, AttributeTypes attribute);
     static QString getUndecryptedPixmapName(AttributeTypes attribute);

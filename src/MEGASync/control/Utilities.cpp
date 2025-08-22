@@ -313,6 +313,14 @@ qreal Utilities::getDevicePixelRatio()
     return qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? qApp->devicePixelRatio() : 1.0;
 }
 
+QString Utilities::getPixmapName(const QString& iconName, AttributeTypes attribute)
+{
+    FlagsConversions<AttributeTypes> convertEnum;
+    QString stringAttr = convertEnum.getString(attribute).toLower();
+
+    return QLatin1String(":%1_%2").arg(iconName, stringAttr);
+}
+
 QString Utilities::getExtensionPixmapName(QString fileName, AttributeTypes attribute)
 {
     QString icon;
@@ -566,6 +574,16 @@ long long Utilities::getNearestUnit(long long bytes)
 QIcon Utilities::getCachedPixmap(QString fileName)
 {
     return gIconCache.getDirect(fileName);
+}
+
+QIcon Utilities::getIcon(const QString& iconName, AttributeTypes attribute)
+{
+    return gIconCache.getDirect(getPixmapName(iconName, attribute));
+}
+
+QPixmap Utilities::getPixmap(const QString& iconName, AttributeTypes attribute, QWidget* canvas)
+{
+    return getIcon(iconName, attribute).pixmap(canvas ? canvas->size() : QSize());
 }
 
 QIcon Utilities::getExtensionPixmap(QString fileName, AttributeTypes attribute)
