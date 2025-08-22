@@ -338,7 +338,8 @@ public:
         MEDIUM = 0x2,
         DISABLED = 0x4,
         SOLID = 0x8,
-        OUTLINE = 0x10
+        OUTLINE = 0x10,
+        INVERSE = 0x20
     };
     Q_DECLARE_FLAGS(AttributeTypes, AttributeType)
     Q_ENUM(AttributeType)

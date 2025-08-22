@@ -315,10 +315,19 @@ qreal Utilities::getDevicePixelRatio()
 
 QString Utilities::getPixmapName(const QString& iconName, AttributeTypes attribute)
 {
-    FlagsConversions<AttributeTypes> convertEnum;
-    QString stringAttr = convertEnum.getString(attribute).toLower();
+    QString name(QLatin1String(":%1").arg(iconName));
 
-    return QLatin1String(":%1_%2").arg(iconName, stringAttr);
+    if (!attribute.testFlag(AttributeType::NONE))
+    {
+        FlagsConversions<AttributeTypes> convertEnum;
+        QString stringAttr = convertEnum.getString(attribute).toLower();
+        if (!stringAttr.isEmpty())
+        {
+            name.append(QLatin1String("_%1").arg(stringAttr));
+        }
+    }
+
+    return name;
 }
 
 QString Utilities::getExtensionPixmapName(QString fileName, AttributeTypes attribute)
