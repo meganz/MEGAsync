@@ -244,7 +244,9 @@ void StalledIssueFilePath::updateFileIcons()
     if(mData->isCloud())
     {
         auto node(getNode());
-        fileTypeIcon = StalledIssuesUtilities::getRemoteFileIcon(node.get(), fileInfo);
+        auto hasProblem(mData->getPath().pathProblem !=
+                        mega::MegaSyncStall::SyncPathProblem::NoProblem);
+        fileTypeIcon = StalledIssuesUtilities::getRemoteFileIcon(node.get(), fileInfo, hasProblem);
         if(!node)
         {
             iconSize = QSize(16,16);
@@ -268,7 +270,9 @@ void StalledIssueFilePath::updateMoveFileIcons()
     if(mData->isCloud())
     {
         auto node(getMoveNode());
-        fileTypeIcon = StalledIssuesUtilities::getRemoteFileIcon(node.get(), fileInfo);
+        auto hasProblem(mData->getMovePath().pathProblem !=
+                        mega::MegaSyncStall::SyncPathProblem::NoProblem);
+        fileTypeIcon = StalledIssuesUtilities::getRemoteFileIcon(node.get(), fileInfo, hasProblem);
         if(!node)
         {
             iconSize = QSize(16,16);

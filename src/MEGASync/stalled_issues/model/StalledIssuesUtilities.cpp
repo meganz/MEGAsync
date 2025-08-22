@@ -38,15 +38,19 @@ QString StalledIssuesUtilities::getLocalFileIcon(const QFileInfo& fileInfo)
     return getIcon(isFile, fileInfo);
 }
 
-QString StalledIssuesUtilities::getRemoteFileIcon(mega::MegaNode* node, const QFileInfo& fileInfo)
+QString StalledIssuesUtilities::getRemoteFileIcon(mega::MegaNode* node,
+                                                  const QFileInfo& fileInfo,
+                                                  bool hasProblem)
 {
-    if (!node)
+    if (node)
     {
         return getIcon(node->isFile(), fileInfo);
     }
     else
     {
-        return Utilities::getPixmapName(QLatin1String("generic"), Utilities::AttributeType::NONE);
+        return Utilities::getPixmapName(QLatin1String("help-circle_inverse_accent"),
+                                        hasProblem ? Utilities::AttributeType::INVERSE :
+                                                     Utilities::AttributeType::NONE);
     }
 }
 

@@ -116,7 +116,10 @@ void StalledIssueActionTitle::addActionButton(const QIcon& icon,
 
     button->setProperty(BUTTON_ID, id);
     button->setProperty(MAIN_BUTTON,mainButton);
-    button->setProperty("type", type);
+    if (!type.isEmpty())
+    {
+        button->setProperty("type", type);
+    }
     button->setProperty("dimension", QLatin1String("small"));
     button->setCursor(Qt::PointingHandCursor);
     button->setFixedHeight(26);

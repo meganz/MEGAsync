@@ -51,7 +51,9 @@ public:
     StalledIssuesUtilities();
 
     static QString getLocalFileIcon(const QFileInfo& fileInfo);
-    static QString getRemoteFileIcon(mega::MegaNode* node, const QFileInfo& fileInfo);
+    static QString getRemoteFileIcon(mega::MegaNode* node,
+                                     const QFileInfo& fileInfo,
+                                     bool hasProblem);
     static QString getIcon(bool isFile, const QFileInfo& fileInfo);
 
     static void openLink(bool isCloud, const QString& path);

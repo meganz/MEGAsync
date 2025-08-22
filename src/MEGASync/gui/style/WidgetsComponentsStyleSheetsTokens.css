@@ -152,22 +152,22 @@ border-color: #ffe5e5e5; /*colorToken.button-disabled*/
 
 QComboBox::drop-down[type="mega"]
 {
-image: url(:/images/themed/light/chevron-down_default.svg); /*replaceThemeToken*/
+image: url(:/chevron-down_default);
 }
 
 QComboBox::drop-down:disabled[type="mega"]
 {
-image: url(:/images/themed/light/chevron-down_disabled.svg); /*replaceThemeToken*/
+image: url(:/chevron-down_disabled);
 }
 
 QComboBox::drop-down:hover[type="mega"]
 {
-image: url(:/images/themed/light/chevron-down_hover.svg); /*replaceThemeToken*/
+image: url(:/chevron-down_hover);
 }
 
 QComboBox::drop-down:pressed[type="mega"]
 {
-image: url(:/images/themed/light/chevron-down_press.svg); /*replaceThemeToken*/
+image: url(:/chevron-down_press);
 }
 
 QComboBox[type="mega"] QAbstractItemView

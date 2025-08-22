@@ -201,5 +201,7 @@
         <file alias="cross_button_primary">images/themed/dark/cross_button_primary.svg</file>
         <file alias="MEGA_inverse">images/themed/dark/MEGA_inverse.svg</file>
         <file alias="monitor_inverse">images/themed/dark/monitor_inverse.svg</file>
+        <file alias="help-circle_inverse_accent_inverse">images/themed/dark/help-circle_inverse_accent_inverse.svg</file>
+        <file alias="help-circle_inverse_accent">images/themed/dark/help-circle_inverse_accent.svg</file>
     </qresource>
 </RCC>
