@@ -38,6 +38,7 @@ private slots:
 
 private:
     void setCursor(const QCursor& cursor);
+    void sanitizeHeight(int& height);
 
     bool mLinkActivated;
     int mMaxHeight;
