@@ -225,123 +225,57 @@ font-weight: 600;
 }
 
 /*
+    Buttons Sizes
+*/
+QPushButton[dimension=small], QPushButton[dimension=medium], QPushButton[dimension=large]
+{
+padding-top: 0px;
+padding-bottom: 0px;
+font-weight: 600;
+}
+
+QPushButton[dimension=small]
+{
+border-radius: 6px;
+height: 26px;
+font-size: 12px;
+padding-left: 8px;
+padding-right: 8px;
+}
+
+QPushButton[dimension=medium]
+{
+border-radius: 6px;
+height: 36px;
+font-size: 14px;
+padding-left: 16px;
+padding-right: 16px;
+}
+
+QPushButton[dimension=large]
+{
+border-radius: 8px;
+height: 46px;
+font-size: 16px;
+padding-left: 24px;
+padding-right: 24px;
+}
+
+/*
     Outline button.
 */
 QPushButton[type="outline"]
 {
 border-width: 2px;
 border-style: solid;
-font-weight: 600;
-}
-
-QPushButton[type="outline"][dimension=small]
-{
-border-radius: 6px;
-font-size: 12px;
-padding-left: 8px;
-padding-right: 8px;
-padding-top: 4px;
-padding-bottom: 4px;
-}
-
-QPushButton[type="outline"][dimension=medium]
-{
-border-radius: 6px;
-font-size: 14px;
-padding-left: 16px;
-padding-right: 16px;
-padding-top: 8px;
-padding-bottom: 8px;
-}
-
-QPushButton[type="outline"][dimension=large]
-{
-border-radius: 8px;
-font-size: 16px;
-padding-left: 24px;
-padding-right: 24px;
-padding-top: 12px;
-padding-bottom: 12px;
 }
 
 /*
     Primary button.
 */
-QPushButton[type="primary"]
+QPushButton[type = "primary"], QPushButton[type = "secondary"], QPushButton[type = "icon"]
 {
-border-width: 2px;
-border-style: solid;
-font-weight: 600;
-}
-
-QPushButton[type="primary"][dimension=small]
-{
-border-radius: 6px;
-font-size: 12px;
-padding-left: 8px;
-padding-right: 8px;
-padding-top: 4px;
-padding-bottom: 4px;
-}
-
-QPushButton[type="primary"][dimension=medium]
-{
-border-radius: 6px;
-font-size: 14px;
-padding-left: 16px;
-padding-right: 16px;
-padding-top: 8px;
-padding-bottom: 8px;
-}
-
-QPushButton[type="primary"][dimension=large]
-{
-border-radius: 8px;
-font-size: 16px;
-padding-left: 24px;
-padding-right: 24px;
-padding-top: 12px;
-padding-bottom: 12px;
-}
-
-/*
-    Secondary button.
-*/
-QPushButton[type="secondary"]
-{
-border-width: 2px;
-border-style: solid;
-font-weight: 600;
-}
-
-QPushButton[type="secondary"][dimension=small]
-{
-border-radius: 6px;
-font-size: 12px;
-padding-left: 8px;
-padding-right: 8px;
-padding-top: 4px;
-padding-bottom: 4px;
-}
-
-QPushButton[type="secondary"][dimension=medium]
-{
-border-radius: 6px;
-font-size: 14px;
-padding-left: 16px;
-padding-right: 16px;
-padding-top: 8px;
-padding-bottom: 8px;
-}
-
-QPushButton[type="secondary"][dimension=large]
-{
-border-radius: 8px;
-font-size: 16px;
-padding-left: 24px;
-padding-right: 24px;
-padding-top: 12px;
-padding-bottom: 12px;
+border:none;
 }
 
 /*
@@ -407,7 +341,6 @@ WordWrapLabel[dimension="medium"]
 {
 font-size: 12px;
 }
-
 
 /*
     SwitchButton

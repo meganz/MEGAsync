@@ -370,6 +370,24 @@ color: #ff797c80; /*colorToken.icon-disabled*/
 }
 
 /*
+    Icon button
+*/
+QPushButton[type="icon"]
+{
+background-color: transparent;
+}
+
+QPushButton:hover[type="icon"]
+{
+background-color: #F7F7F7; /*colorToken.surface-1*/
+}
+
+QPushButton:pressed[type="icon"]
+{
+background-color: #EFEFF0; /*colorToken.surface-2*/
+}
+
+/*
     Outline button.
 */
 QPushButton[type="outline"]
@@ -431,26 +449,22 @@ QPushButton[type="secondary"]
 {
 background-color: #ff04101E; /*colorToken.button-secondary*/
 color: #ffFAFAFB; /*colorToken.text-secondary*/
-border-color: #ff04101E; /*colorToken.button-secondary*/
 }
 
 QPushButton:hover[type="secondary"]
 {
 background-color: #ff39424E; /*colorToken.button-secondary-hover*/
-border-color: #ff39424E; /*colorToken.button-secondary-hover*/
 }
 
 QPushButton:pressed[type="secondary"]
 {
 background-color: #ff535B65; /*colorToken.button-secondary-pressed*/
-border-color: #ff535B65; /*colorToken.button-secondary-pressed*/
 }
 
 QPushButton:disabled[type="secondary"]
 {
 color: #ffC1C2C4; /*colorToken.text-disabled*/
 background-color: #ff797c80; /*colorToken.button-disabled*/
-border-color: transparent;
 }
 
 /*
@@ -538,6 +552,16 @@ color: #ff303233; /*colorToken.text-primary*/
 WordWrapLabel[type="secondary"]
 {
 color: #ff616366; /*colorToken.text-secondary*/
+}
+
+/*
+    Tooltip
+*/
+QToolTip
+{
+       color: #FAFAFA;                 /*colorToken.text-inverse*/
+       background-color: #2A2B2C;     /*colorToken.background-inverse*/
+       border: 1px solid #2A2B2C;     /*colorToken.background-inverse*/
 }
 
 /*
