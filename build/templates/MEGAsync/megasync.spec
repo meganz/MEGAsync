@@ -74,10 +74,6 @@ BuildRequires: hicolor-icon-theme, zip, unzip, nasm, cmake, perl
 
 %endif
 
-%if 0%{?is_opensuse} && (0%{?sle_version} && 0%{?sle_version} <= 120300)
-    BuildRequires: gcc5, gcc5-c++
-%endif
-
 #Fedora specific
 %if 0%{?fedora}
     BuildRequires: openssl-devel, sqlite-devel, c-ares-devel
@@ -118,7 +114,7 @@ BuildRequires: hicolor-icon-theme, zip, unzip, nasm, cmake, perl
     %define __brp_check_rpaths QA_RPATHS=$(( 0x0002|0x0008 )) /usr/lib/rpm/check-rpaths
 %endif
 
-#centos/scientific linux/red hat/almalinux
+#CentOS/RedHat/AlmaLinux
 %if 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version}
     BuildRequires: openssl-devel, sqlite-devel, c-ares-devel, bzip2-devel
     BuildRequires: desktop-file-utils
@@ -180,28 +176,10 @@ if [ -n "%{extradefines}" ]; then
     export CXXFLAGS="%{extradefines} ${CXXFLAGS}"
 fi
 
-# OpenSuse Leap 15.x defaults to gcc7.
-# Python>=10 needed for VCPKG pkgconf
-%if 0%{?suse_version} && 0%{?suse_version} <= 1500
-    export CC=gcc-13
-    export CXX=g++-13
-    mkdir python311
-    ln -sf /usr/bin/python3.11 python311/python3
-    export PATH=$PWD/python311:$PATH
-%endif
-
 cmake --version
 cmake ${vcpkg_root} -DENABLE_DESKTOP_UPDATE_GEN=OFF -DENABLE_DESIGN_TOKENS_IMPORTER=OFF -DENABLE_DESKTOP_APP_TESTS=OFF ${qtdefinitions} -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B %{_builddir}/build_dir
 
 %build
-
-%if 0%{?is_opensuse} && (0%{?sle_version} && 0%{?sle_version} <= 120300)
-    # ln to gcc/g++ v5, instead of default 4.8
-    mkdir userPath
-    ln -sf /usr/bin/gcc-5 userPath/gcc
-    ln -sf /usr/bin/g++-5 userPath/g++
-    export PATH=`pwd`/userPath:$PATH
-%endif
 
 if [ -f /opt/cmake.tar.gz ]; then
     export PATH="${PWD}/cmake_inst/bin:${PATH}"
@@ -307,10 +285,6 @@ DATA
 %endif
 
 %if 0%{?sle_version} || 0%{?suse_version}
-    %if 0%{?sle_version} == 150400
-        %define reponame openSUSE_Leap_15.4
-    %endif
-
     %if 0%{?sle_version} == 150500
         %define reponame openSUSE_Leap_15.5
     %endif
