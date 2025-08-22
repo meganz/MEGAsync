@@ -394,6 +394,19 @@ color: #ff797c80; /*colorToken.icon-disabled*/
 QToolButton.icon-label
 {
 background-color: transparent;
+<<<<<<< HEAD
+=======
+}
+
+QPushButton:hover[type="icon"]
+{
+background-color: #F7F7F7; /*colorToken.surface-1*/
+}
+
+QPushButton:pressed[type="icon"]
+{
+background-color: #EFEFF0; /*colorToken.surface-2*/
+>>>>>>> 78164dfb7 (Adapting button to border-none style)
 }
 
 /*
@@ -481,6 +494,7 @@ QPushButton:disabled[type="secondary"]
 {
 color: #ffC1C2C4; /*colorToken.text-disabled*/
 background-color: #ff797c80; /*colorToken.button-disabled*/
+<<<<<<< HEAD
 }
 
 /*
@@ -514,6 +528,8 @@ QPushButton[type="link"]
 {
 background-color: transparent;
 color: #2C5BEB; /*colorToken.link-primary*/
+=======
+>>>>>>> 78164dfb7 (Adapting button to border-none style)
 }
 
 /*
