@@ -214,16 +214,16 @@ font-size: 16px;
 font-weight: 600;
 }
 
-QLabel[type="secondary"]
+QLabel[dimension="small"]
 {
-font-size: 12px;
-font-weight: 400;
+font-size: 10px;
 }
 
 QLabel[semibold]
 {
 font-weight: 600;
 }
+
 /*
     Outline button.
 */
@@ -384,6 +384,31 @@ subcontrol-position: bottom right;
 padding-right: 4px;
 padding-bottom: 4px;
 }
+
+/*
+    WordWrapLabel
+*/
+WordWrapLabel[type="primary"]
+{
+font-weight: 600;
+}
+
+WordWrapLabel[type="secondary"]
+{
+font-weight: 400;
+}
+
+WordWrapLabel[dimension="small"]
+{
+font-size: 10px;
+}
+
+WordWrapLabel[dimension="medium"]
+{
+font-size: 12px;
+}
+
+
 /*
     SwitchButton
     In the constructor of the class we assign the object name switch

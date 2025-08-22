@@ -521,6 +521,18 @@ background-color: transparent;
 }
 
 /*
+    WordWrapLabel
+*/
+
+WordWrapLabel[type="secondary"]
+{
+color: #ff616366; /*colorToken.text-secondary*/
+/*By default, WordWrapLabel don´t have a background color*/
+background-color: transparent;
+}
+
+
+/*
     SwitchButton
     In the constructor of the class we assign the object name switch
 */

@@ -316,7 +316,7 @@ margin-bottom: 3px;
          <string>General</string>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="../Resources_common.qrc">
           <normaloff>:/images/settings-general.svg</normaloff>:/images/settings-general.svg</iconset>
         </property>
         <property name="iconSize">
@@ -369,7 +369,7 @@ margin-bottom: 3px;
          <string>Account</string>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="../Resources_common.qrc">
           <normaloff>:/images/settings-account.svg</normaloff>:/images/settings-account.svg</iconset>
         </property>
         <property name="iconSize">
@@ -569,7 +569,7 @@ margin-bottom: 3px;
          <string>Folders</string>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="../Resources_common.qrc">
           <normaloff>:/images/settings-folders.svg</normaloff>:/images/settings-folders.svg</iconset>
         </property>
         <property name="iconSize">
@@ -669,7 +669,7 @@ margin-bottom: 3px;
          <string>Notifications</string>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="../Resources_common.qrc">
           <normaloff>:/images/settings-notifications.svg</normaloff>:/images/settings-notifications.svg</iconset>
         </property>
         <property name="iconSize">
@@ -714,7 +714,7 @@ margin-bottom: 3px;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="pGeneral">
       <property name="sizePolicy">
@@ -858,10 +858,10 @@ margin-bottom: 3px;
           <item>
            <spacer name="horizontalSpacer">
             <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
+             <enum>Qt::Horizontal</enum>
             </property>
             <property name="sizeType">
-             <enum>QSizePolicy::Policy::Expanding</enum>
+             <enum>QSizePolicy::Expanding</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -1825,9 +1825,6 @@ margin-bottom: 3px;
               <property name="wordWrap">
                <bool>true</bool>
               </property>
-              <property name="type" stdset="0">
-               <string notr="true">secondary</string>
-              </property>
              </widget>
             </item>
             <item>
@@ -1972,9 +1969,6 @@ margin-bottom: 3px;
               </property>
               <property name="wordWrap">
                <bool>true</bool>
-              </property>
-              <property name="type" stdset="0">
-               <string notr="true">secondary</string>
               </property>
              </widget>
             </item>
@@ -3042,7 +3036,7 @@ margin-top: 0px;
      <widget class="NotificationsSettings" name="pNotifications"/>
     </widget>
    </item>
-   <item alignment="Qt::AlignmentFlag::AlignBottom">
+   <item alignment="Qt::AlignBottom">
     <widget class="QWidget" name="wBottom" native="true">
      <property name="styleSheet">
       <string notr="true"/>
@@ -3072,7 +3066,7 @@ margin-top: 0px;
          <string>Help</string>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="../Resources_common.qrc">
           <normaloff>:/images/help-icon.svg</normaloff>:/images/help-icon.svg</iconset>
         </property>
         <property name="iconSize">
@@ -3379,6 +3373,8 @@ margin-top: 0px;
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../Resources_common.qrc"/>
+ </resources>
  <connections/>
 </ui>
