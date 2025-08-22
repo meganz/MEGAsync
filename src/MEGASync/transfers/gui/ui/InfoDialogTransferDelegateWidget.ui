@@ -466,22 +466,6 @@ background-color: #FFD8D9DB; /*colorToken.border-disabled*/
          <zorder>wOptions</zorder>
         </widget>
        </item>
-       <item>
-        <widget class="QWidget" name="wCompletedSeparator" native="true">
-         <property name="minimumSize">
-          <size>
-           <width>350</width>
-           <height>1</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>400</width>
-           <height>1</height>
-          </size>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="activeTransfer">

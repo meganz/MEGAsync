@@ -395,10 +395,10 @@ background-color: transparent;
                 <number>8</number>
                </property>
                <property name="leftMargin">
-                <number>15</number>
+                <number>16</number>
                </property>
                <property name="rightMargin">
-                <number>13</number>
+                <number>16</number>
                </property>
                <item>
                 <widget class="AvatarWidget" name="bAvatar" native="true">
@@ -3225,13 +3225,13 @@ background-color: transparent;
                      </property>
                      <layout class="QHBoxLayout" name="horizontalLayout_14">
                       <property name="leftMargin">
-                       <number>12</number>
+                       <number>16</number>
                       </property>
                       <property name="topMargin">
                        <number>0</number>
                       </property>
                       <property name="rightMargin">
-                       <number>12</number>
+                       <number>16</number>
                       </property>
                       <property name="bottomMargin">
                        <number>0</number>
@@ -3267,6 +3267,12 @@ background-color: transparent;
                       </item>
                       <item>
                        <widget class="QPushButton" name="bNotificationsSettings">
+                        <property name="maximumSize">
+                         <size>
+                          <width>24</width>
+                          <height>24</height>
+                         </size>
+                        </property>
                         <property name="cursor">
                          <cursorShape>PointingHandCursor</cursorShape>
                         </property>
@@ -3629,13 +3635,13 @@ background-color: transparent;
                 <number>3</number>
                </property>
                <property name="leftMargin">
-                <number>14</number>
+                <number>16</number>
                </property>
                <property name="topMargin">
                 <number>0</number>
                </property>
                <property name="rightMargin">
-                <number>17</number>
+                <number>16</number>
                </property>
                <property name="bottomMargin">
                 <number>0</number>
@@ -3757,6 +3763,7 @@ background-color: transparent;
  </tabstops>
  <resources>
   <include location="../Resources_common.qrc"/>
+  <include location="../Resources_light.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -144,6 +144,7 @@
         <file alias="arrow-up-brand-primary.svg">images/themed/dark/arrow-up-brand-primary.svg</file>
         <file alias="syncing-icon-secondary.svg">images/themed/dark/syncing-icon-secondary.svg</file>
         <file alias="file-search-02.svg">images/themed/dark/file-search-02.svg</file>
+        <file alias="file-question-02.svg">images/themed/dark/file-question-02.svg</file>
         <file alias="link-01.svg">images/themed/dark/link-01.svg</file>
         <file alias="mega-outline.svg">images/themed/dark/mega-outline.svg</file>
         <file alias="log-out.svg">images/themed/dark/log-out.svg</file>
@@ -162,5 +163,6 @@
         <file alias="sync-01.svg">images/themed/dark/sync-01.svg</file>
         <file alias="monitor.svg">images/themed/dark/monitor.svg</file>
         <file alias="alert-circle-support-warning.svg">images/themed/dark/alert-circle-support-warning.svg</file>
+        <file alias="atom.svg">images/themed/dark/atom.svg</file>
     </qresource>
 </RCC>

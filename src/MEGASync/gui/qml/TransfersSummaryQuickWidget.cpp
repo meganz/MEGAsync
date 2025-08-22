@@ -1,8 +1,6 @@
 
 #include "TransfersSummaryQuickWidget.h"
 
-#include "QmlManager.h"
-
 #include <QQuickItem>
 
 TransfersSummaryQuickWidget::TransfersSummaryQuickWidget(QWidget* parent):
@@ -50,5 +48,13 @@ void TransfersSummaryQuickWidget::setPauseEnabled(bool pauseEnabled)
     if (auto rootObject = this->rootObject())
     {
         rootObject->setProperty("pauseEnabled", pauseEnabled);
+    }
+}
+
+void TransfersSummaryQuickWidget::setOngoingTransfers(int count)
+{
+    if (auto rootObject = this->rootObject())
+    {
+        rootObject->setProperty("ongoingTransfers", count);
     }
 }

@@ -27,10 +27,7 @@ CircularUsageProgressBar::CircularUsageProgressBar(QWidget* parent):
     mBgColor(Qt::transparent),
     mOkStateTextColor(DEFAULT_TEXT_COLOR),
     mPbGradient(&mOkPbGradient),
-    mMarkWarning(QStringLiteral(":/images/icon_warning_24.png")),
-    mMarkFull(QStringLiteral(":/images/icon_error_24.png")),
-    mDynTrsfOk(QStringLiteral(":/images/dynamic_transfer_icon_32.png")),
-    mDynTrsfFull(QStringLiteral(":/images/dynamic_transfer_overquota_icon.png")),
+    mDynTrsfOk(QStringLiteral(":/atom.svg")),
     mNoTotalValue(true)
 {
     // Init Gradients
@@ -96,12 +93,12 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent*)
 
     if (mNoTotalValue)
     {
-        constexpr QSize dynamicIconNativeSizePixels (32, 32);
+        constexpr QSize dynamicIconNativeSizePixels(16, 16);
 
         QRectF dynamicIconRect(QPoint(0, 0), dynamicIconNativeSizePixels);
         dynamicIconRect.moveCenter(innerRect.center());
 
-        const QIcon& dynamicQuotaIcon (mState == STATE_OVER ? mDynTrsfFull : mDynTrsfOk);
+        const QIcon& dynamicQuotaIcon(mDynTrsfOk);
 
         painter.drawPixmap(dynamicIconRect.toRect(),
                            dynamicQuotaIcon.pixmap(dynamicIconNativeSizePixels));

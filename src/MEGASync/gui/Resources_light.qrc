@@ -148,6 +148,7 @@
         <file alias="arrow-up-brand-primary.svg">images/themed/light/arrow-up-brand-primary.svg</file>
         <file alias="syncing-icon-secondary.svg">images/themed/light/syncing-icon-secondary.svg</file>
         <file alias="file-search-02.svg">images/themed/light/file-search-02.svg</file>
+        <file alias="file-question-02.svg">images/themed/light/file-question-02.svg</file>
         <file alias="link-01.svg">images/themed/light/link-01.svg</file>
         <file alias="mega-outline.svg">images/themed/light/mega-outline.svg</file>
         <file alias="log-out.svg">images/themed/light/log-out.svg</file>
@@ -166,5 +167,8 @@
         <file alias="sync-01.svg">images/themed/light/sync-01.svg</file>
         <file alias="monitor.svg">images/themed/light/monitor.svg</file>
         <file alias="alert-circle-support-warning.svg">images/themed/light/alert-circle-support-warning.svg</file>
+        <file alias="atom.svg">images/themed/light/atom.svg</file>
+        <file alias="adial-speedometer.svg">images/themed/light/radial-speedometer.svg</file>
+        <file alias="radial-cloud.svg">images/themed/light/radial-cloud.svg</file>
     </qresource>
 </RCC>

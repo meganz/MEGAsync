@@ -40,10 +40,6 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, int itemIndent, QWidget* par
     mMenu->setAttribute(Qt::WA_TranslucentBackground);
 
     mMenu->setToolTipsVisible(true);
-
-    // Highlight menu entry on mouse over
-    //  connect(mMenu, &QMenu::hovered,
-    //          this, &SyncsMenu::highLightMenuEntry);
     mMenu->installEventFilter(this);
 }
 
@@ -79,7 +75,8 @@ SyncsMenu* SyncsMenu::newSyncsMenu(mega::MegaSync::SyncType type, QWidget* paren
 QPointer<MegaMenuItemAction> SyncsMenu::getAction()
 {
     refresh();
-    return mMenu->actions().isEmpty() ? mAddAction : mMenuAction;
+    auto actions = mMenu->actions();
+    return actions.isEmpty() ? mAddAction : mMenuAction;
 }
 
 QPointer<QMenu> SyncsMenu::getMenu()
@@ -101,16 +98,6 @@ void SyncsMenu::setEnabled(bool state)
 
 bool SyncsMenu::eventFilter(QObject* obj, QEvent* e)
 {
-    /*    if (obj == mMenu && e->type() == QEvent::Leave)
-        {
-            if (mLastHovered)
-            {
-                mLastHovered->setHighlight(false);
-                mLastHovered = nullptr;
-            }
-            return true;
-        }
-        else*/
     if (obj == mMenu && e->type() == QEvent::LanguageChange)
     {
         mMenuAction->setLabelText(getMenuActionText());
@@ -124,7 +111,6 @@ void SyncsMenu::refresh()
     auto* model (SyncInfo::instance());
 
     // // Actions will be deleted, so reset the last hovered pointer
-    // mLastHovered = nullptr;
 
     // Reset menu (leave actionsToKeep)
     const auto actions (mMenu->actions());
@@ -169,8 +155,6 @@ void SyncsMenu::refresh()
     // Display "Add <type>" at the end of the list
     if (activeFolders)
     {
-        mAddAction->setActionIcon(
-            QLatin1String(mType == mega::MegaSync::TYPE_TWOWAY ? SYNC_ADD_ICON : BACKUP_ADD_ICON));
         mMenu->addSeparator();
         mMenu->addAction(mAddAction);
     }
@@ -178,8 +162,6 @@ void SyncsMenu::refresh()
     if (!numItems || !activeFolders)
     {
         mMenuAction->setSubmenu(nullptr);
-        mAddAction->setActionIcon(
-            QLatin1String(mType == mega::MegaSync::TYPE_TWOWAY ? SYNC_ICON : BACKUPC_ICON));
     }
     else
     {

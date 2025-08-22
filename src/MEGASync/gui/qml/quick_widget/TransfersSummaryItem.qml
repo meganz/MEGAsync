@@ -12,7 +12,6 @@ Rectangle {
     readonly property int componentRadius: 24
     readonly property int iconSize: 16
     readonly property int buttonIconSize: 24
-    readonly property int margins: 8
 
     color: "transparent"
     width:  transfersRect.width
@@ -20,10 +19,12 @@ Rectangle {
 
     property int completedTransfers: 0
     property int totalTransfers: 0
+    property int ongoingTransfers: 0
     property bool isTopTransferUpload: true
     property bool paused: false
     property bool pauseEnabled: true
     property bool areThereTransfers : (completedTransfers !== 0 || totalTransfers !== 0)
+    readonly property int margins: areThereTransfers? 8: 0;
 
     signal transferManagerClicked
     signal pauseResumeClicked
@@ -32,7 +33,7 @@ Rectangle {
         id: transfersRect
         color: areThereTransfers? ColorTheme.surface3 : "transparent"
         radius: componentRadius
-        width: layout.implicitWidth + root.margins*2
+        width: layout.implicitWidth + root.margins * 2
         height: componentHeight
 
         MouseArea {
@@ -81,7 +82,7 @@ Rectangle {
                 id: transferText
                 Layout.alignment: Qt.AlignVCenter
                 visible: areThereTransfers
-                text: completedTransfers + "/" + totalTransfers
+                text: (ongoingTransfers + completedTransfers) + "/" + totalTransfers
 
                 MouseArea {
                     anchors.fill: parent

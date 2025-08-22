@@ -16,6 +16,7 @@ public:
     void setTopTransferDirection(bool upload);
     void setPaused(bool paused);
     void setPauseEnabled(bool);
+    void setOngoingTransfers(int);
 
 signals:
     void transferManagerClicked();

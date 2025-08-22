@@ -660,6 +660,9 @@ void InfoDialog::updateTransfersCount()
     if (auto transferModel = app->getTransfersModel())
     {
         auto transfersCountUpdated = transferModel->getLastTransfersCount();
+        int ongoingTransfers =
+            (transfersCountUpdated.totalDownloads != transfersCountUpdated.completedDownloads()) +
+            (transfersCountUpdated.totalUploads != transfersCountUpdated.completedUploads());
         auto totalTransfers =
             transfersCountUpdated.totalDownloads + transfersCountUpdated.totalUploads;
         auto completedTransfers =
@@ -668,6 +671,7 @@ void InfoDialog::updateTransfersCount()
         auto topTransferType = transferModel->getTopTransferType();
         ui->bTransferManager->setTopTransferDirection(topTransferType ==
                                                       TransferData::TransferType::TRANSFER_UPLOAD);
+        ui->bTransferManager->setOngoingTransfers(ongoingTransfers);
     }
 }
 

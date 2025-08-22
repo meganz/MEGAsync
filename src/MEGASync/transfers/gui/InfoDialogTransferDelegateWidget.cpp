@@ -1,7 +1,6 @@
 #include "InfoDialogTransferDelegateWidget.h"
 
 #include "MegaApplication.h"
-#include "TokenParserWidgetManager.h"
 #include "TransferItem.h"
 #include "ui_InfoDialogTransferDelegateWidget.h"
 #include "Utilities.h"
@@ -296,10 +295,8 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 bool fileExists = QFile(getData()->path()).exists();
 
                 const char* baseIconName =
-                    (fileExists) ? ":/file-search-02.svg" : "://images/file-question%1.png";
-                setActionTransferIcon(mUi->lShowInFolder,
-                                      QString::fromLatin1(baseIconName)
-                                          .arg(QString::fromLatin1(inShowFolder ? "" : "")));
+                    (fileExists) ? "://file-search-02.svg" : "://file-question-02.svg";
+                setActionTransferIcon(mUi->lShowInFolder, QString::fromLatin1(baseIconName));
                 QString tooltipText = (fileExists) ? tr("Show in folder") : tr("Deleted or moved file");
                 mUi->lShowInFolder->setToolTip(tooltipText);
 
@@ -336,7 +333,6 @@ void InfoDialogTransferDelegateWidget::finishTransfer()
     {
         mUi->lActionTransfer->setIcon(QIcon(QString::fromLatin1(":/alert-circle.svg")));
         mUi->lActionTransfer->setIconSize(QSize(16, 16));
-        // mUi->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #F0373A"));
 
         mUi->lElapsedTime->setText(tr("Failed: %1").arg(getErrorText()));
         updateFinishedIco(getData()->mType, true);
@@ -358,7 +354,6 @@ void InfoDialogTransferDelegateWidget::updateFinishedTime()
         return;
     }
 
-    // mUi->lElapsedTime->setStyleSheet(QLatin1String("color: #999999"));
     mUi->lElapsedTime->setText(Utilities::getAddedTimeString(finishedTime));
 }
 
