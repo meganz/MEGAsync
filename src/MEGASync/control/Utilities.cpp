@@ -592,7 +592,26 @@ QIcon Utilities::getIcon(const QString& iconName, AttributeTypes attribute)
 
 QPixmap Utilities::getPixmap(const QString& iconName, AttributeTypes attribute, QWidget* canvas)
 {
+    if (!canvas)
+    {
+        qWarning() << __func__ << " Error canvas argument is nullptr";
+
+        return QPixmap();
+    }
+
     return getIcon(iconName, attribute).pixmap(canvas ? canvas->size() : QSize());
+}
+
+QPixmap Utilities::getPixmap(const QString& iconName, AttributeTypes attribute, const QSize& size)
+{
+    if (size.isEmpty())
+    {
+        qWarning() << __func__ << " Error size argument is nullptr";
+
+        return QPixmap();
+    }
+
+    return getIcon(iconName, attribute).pixmap(size);
 }
 
 QIcon Utilities::getExtensionPixmap(QString fileName, AttributeTypes attribute)
