@@ -5704,13 +5704,11 @@ void MegaApplication::createInfoDialogMenus()
                            "://stream.svg",
                            &MegaApplication::streamActionClicked);
 
-    // previousEnabledState = true;
-    // if (updateAction)
-    // {
-    //     previousEnabledState = updateAction->isEnabled();
-    //     updateAction->deleteLater();
-    //     updateAction = nullptr;
-    // }
+    if (updateAction)
+    {
+        updateAction->deleteLater();
+        updateAction = nullptr;
+    }
 
     if(aboutAction)
     {
@@ -5720,26 +5718,25 @@ void MegaApplication::createInfoDialogMenus()
 
     if (updateAvailable)
     {
-        MegaMenuItemAction* mUpdateAction =
+        updateAction =
             new MegaMenuItemAction(tr("Install update"), QLatin1String("://mega-outline.svg"), 0);
-        connect(mUpdateAction,
+        connect(updateAction,
                 &QAction::triggered,
                 this,
                 &MegaApplication::onInstallUpdateClicked,
                 Qt::QueuedConnection);
-        infoDialogMenu->addAction(mUpdateAction);
+        infoDialogMenu->addAction(updateAction);
     }
     else
     {
-        MegaMenuItemAction* mAboutAction =
-            new MegaMenuItemAction(tr("About"), QLatin1String("://mega-outline.svg"), 0);
-        connect(mAboutAction,
+        aboutAction = new MegaMenuItemAction(tr("About"), QLatin1String("://mega-outline.svg"), 0);
+        connect(aboutAction,
                 &QAction::triggered,
                 this,
                 &MegaApplication::onAboutClicked,
                 Qt::QueuedConnection);
 
-        infoDialogMenu->addAction(mAboutAction);
+        infoDialogMenu->addAction(aboutAction);
     }
 
     infoDialogMenu->addAction(MEGAWebAction);

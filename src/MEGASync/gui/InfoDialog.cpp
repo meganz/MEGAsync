@@ -1786,7 +1786,9 @@ void InfoDialog::setFooterState()
     }
     else
     {
-        hasTransfers = ui->sActiveTransfers->currentWidget() == ui->pTransfers;
+        auto transfersCount = app->getTransfersModel()->getTransfersCount();
+        hasTransfers = (ui->sActiveTransfers->currentWidget() == ui->pTransfers &&
+                        (transfersCount.totalDownloads || transfersCount.totalUploads));
     }
     ui->wBottom->setProperty("hasTransfers", hasTransfers);
     ui->wBottom->style()->unpolish(ui->wBottom);

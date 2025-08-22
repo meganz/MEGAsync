@@ -378,8 +378,8 @@ protected:
     MegaMenuItemAction* filesAction;
     MegaMenuItemAction* MEGAWebAction;
     MenuItemAction* deviceCentreAction;
-    MenuItemAction *updateAction;
-    MenuItemAction *aboutAction;
+    MegaMenuItemAction* updateAction = nullptr;
+    MegaMenuItemAction* aboutAction = nullptr;
     QAction *showStatusAction;
     QPointer<SyncsMenu> mSyncs2waysMenu;
     QPointer<SyncsMenu> mBackupsMenu;
