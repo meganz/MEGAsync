@@ -590,18 +590,6 @@ QIcon Utilities::getIcon(const QString& iconName, AttributeTypes attribute)
     return gIconCache.getDirect(getPixmapName(iconName, attribute));
 }
 
-QPixmap Utilities::getPixmap(const QString& iconName, AttributeTypes attribute, QWidget* canvas)
-{
-    if (!canvas)
-    {
-        qWarning() << __func__ << " Error canvas argument is nullptr";
-
-        return QPixmap();
-    }
-
-    return getIcon(iconName, attribute).pixmap(canvas ? canvas->size() : QSize());
-}
-
 QPixmap Utilities::getPixmap(const QString& iconName, AttributeTypes attribute, const QSize& size)
 {
     if (size.isEmpty())
