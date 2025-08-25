@@ -238,6 +238,7 @@ QPushButton[dimension=small]
 {
 border-radius: 6px;
 height: 26px;
+min-width: 44px; /*min width = 44px + padding-left(8px) + padding-righ(8px) = 60px*/
 font-size: 12px;
 padding-left: 8px;
 padding-right: 8px;
@@ -247,6 +248,7 @@ QPushButton[dimension=medium]
 {
 border-radius: 6px;
 height: 36px;
+min-width: 48px; /*min width = 48px + padding-left(16px) + padding-righ(16px) = 80px*/
 font-size: 14px;
 padding-left: 16px;
 padding-right: 16px;
@@ -256,6 +258,7 @@ QPushButton[dimension=large]
 {
 border-radius: 8px;
 height: 46px;
+min-width: 52px; /*min width = 52px + padding-left(24px) + padding-righ(24px) = 100px*/
 font-size: 16px;
 padding-left: 24px;
 padding-right: 24px;
