@@ -18,9 +18,9 @@ public:
 private:
     explicit IconTokenizer(QObject *parent = nullptr);
 
-    static std::optional<QPixmap> changePixmapColor(const QPixmap& pixmap, QColor toColor);
     static std::optional<QIcon::Mode> getIconMode(const QString& mode);
     static std::optional<QIcon::State> getIconState(const QString& state);
+    static std::optional<QPixmap> changePixmapColor(const QPixmap& pixmap, QColor toColor);
 };
 
 #endif

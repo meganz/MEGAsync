@@ -82,9 +82,11 @@ void DuplicatedNodeItem::fillUi()
     ui->lNodeName->setMaximumLines(4);
     ui->lNodeName->setText(nodeName);
 
-    QIcon icon = isFile() ?
-                     QIcon(Utilities::getExtensionPixmapName(nodeName, Utilities::AttributeType::MEDIUM)) :
-                     QIcon(QLatin1String(":/images/icons/folder/medium-folder.png"));
+    QIcon icon =
+        isFile() ?
+            QIcon(Utilities::getExtensionPixmapName(nodeName, Utilities::AttributeType::MEDIUM)) :
+            QIcon(Utilities::getFolderPixmapName(Utilities::FolderType::TYPE_NORMAL,
+                                                 Utilities::AttributeType::MEDIUM));
 
     ui->lIcon->setPixmap(icon.pixmap(ui->lIcon->size()));
 }

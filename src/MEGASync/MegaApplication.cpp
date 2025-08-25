@@ -5628,7 +5628,10 @@ void MegaApplication::createInfoDialogMenus()
     recreateMenuAction(&filesAction,
                        infoDialogMenu,
                        tr("Files"),
-                       "://images/folder_medium.svg",
+                       Utilities::getFolderPixmapName(Utilities::FolderType::TYPE_NORMAL,
+                                                      Utilities::AttributeType::MEDIUM)
+                           .toUtf8()
+                           .constData(),
                        &MegaApplication::goToFiles);
 
     // recreateMenuAction(&deviceCentreAction,

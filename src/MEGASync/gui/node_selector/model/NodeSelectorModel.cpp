@@ -2733,31 +2733,23 @@ QIcon NodeSelectorModel::getFolderIcon(NodeSelectorModelItem *item) const
                 if(node->getHandle() == mCameraFolderAttribute->getCameraUploadFolderHandle()
                         || node->getHandle() == mCameraFolderAttribute->getCameraUploadFolderSecondaryHandle())
                 {
-                    QIcon icon;
-                    icon.addFile(QLatin1String("://images/icons/folder/small-camera-sync.png"), QSize(), QIcon::Normal);
-                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-camera-sync-disabled.png"), QSize(), QIcon::Disabled);
-                    return icon;;
+                    return Utilities::getFolderPixmap(Utilities::FolderType::TYPE_CAMERA_UPLOADS,
+                                                      Utilities::AttributeType::SMALL);
                 }
                 else if(node->getHandle() == mMyChatFilesFolderAttribute->getMyChatFilesFolderHandle())
                 {
-                    QIcon icon;
-                    icon.addFile(QLatin1String("://images/icons/folder/small-chat-files.png"), QSize(), QIcon::Normal);
-                    icon.addFile(QLatin1String("://images/icons/folder/small-chat-files-disabled.png"), QSize(), QIcon::Disabled);
-                    return icon;
+                    return Utilities::getFolderPixmap(Utilities::FolderType::TYPE_CHAT,
+                                                      Utilities::AttributeType::SMALL);
                 }
                 else if (node->isInShare())
                 {
-                    QIcon icon;
-                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-incoming.png"), QSize(), QIcon::Normal);
-                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-incoming-disabled.png"), QSize(), QIcon::Disabled);
-                    return icon;
+                    return Utilities::getFolderPixmap(Utilities::FolderType::TYPE_INCOMING_SHARE,
+                                                      Utilities::AttributeType::SMALL);
                 }
                 else if (node->isOutShare())
                 {
-                    QIcon icon;
-                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing.png"), QSize(), QIcon::Normal);
-                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing-disabled.png"), QSize(), QIcon::Disabled);
-                    return icon;
+                    return Utilities::getFolderPixmap(Utilities::FolderType::TYPE_OUTGOING_SHARE,
+                                                      Utilities::AttributeType::SMALL);
                 }
                 else if (item->isCloudDrive())
                 {
@@ -2798,10 +2790,8 @@ QIcon NodeSelectorModel::getFolderIcon(NodeSelectorModelItem *item) const
                         }
                         return QIcon(QLatin1String("://images/icons/pc/pc_24.png"));
                     }
-                    QIcon icon;
-                    icon.addFile(QLatin1String("://images/icons/folder/small-folder.png"), QSize(), QIcon::Normal);
-                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-disabled.png"), QSize(), QIcon::Disabled);
-                    return icon;
+                    return Utilities::getFolderPixmap(Utilities::FolderType::TYPE_NORMAL,
+                                                      Utilities::AttributeType::SMALL);
                 }
             }
             else
