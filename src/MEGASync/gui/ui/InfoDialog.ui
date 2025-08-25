@@ -23,9 +23,6 @@
    <string notr="true">#wInfoDialogIn
 {
  border-radius: 10px;
- border: 1px solid;
- border-color: #fffafafa; /*colorToken.border-strong*/
- background-color:  #F4F6F8;
  padding: 10px;
 }
 /* Override hover for selected tabs */
@@ -133,7 +130,7 @@ background-color:transparent;
 
 #wSeparator
 {
- background-color: #fffafafa; /*colorToken.border-subtle*/
+background-color: #FFF3F4F4; /*colorToken.border-subtle*/
 }
 #bNumberUnseenNotifications
 {
@@ -159,7 +156,7 @@ color: #FF616366;/*colorToken.text-secondary*/
 }
 #wCircularStorage, #wCircularQuota
 {
-qproperty-outerCircleBackgroundColor: #FFD8D9DB; /*colorToken.border-strong*/
+qproperty-outerCircleBackgroundColor: #fff3f4f4; /*colorToken.surface-2*/
 qproperty-innerCircleBackgroundColor: #ffffffff; /*colorToken.page-background*/
 
 qproperty-lightOkProgressBarColors: #FF29DD74; /*colorToken.indicator-green*/
@@ -171,6 +168,7 @@ qproperty-darkFullProgressBarColors: #ffF63D6B; /*colorToken.indicator-pink*/
 
 qproperty-okStateTextColor: #ff303233; /*colorToken.text-primary*/
 }
+
 #lNoNotifications
 {
 	color: #FF616366;/*colorToken.text-secondary*/
@@ -3710,15 +3708,15 @@ background-color: transparent;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>SomeIssuesOccurredMessage</class>
-   <extends>QWidget</extends>
-   <header>SomeIssuesOccurredMessage.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>AvatarWidget</class>
    <extends>QWidget</extends>
    <header>AvatarWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SomeIssuesOccurredMessage</class>
+   <extends>QWidget</extends>
+   <header>SomeIssuesOccurredMessage.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

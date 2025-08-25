@@ -184,9 +184,7 @@ void SyncsMenu::onAddSync()
 // TwoWaySyncsMenu ----
 TwoWaySyncsMenu::TwoWaySyncsMenu(QWidget* parent):
     SyncsMenu(mega::MegaSync::TYPE_TWOWAY, mTwoWaySyncItemIndent, parent)
-{
-    Platform::getInstance()->initMenu(mMenu, "SyncsMenu - Syncs");
-}
+{}
 
 QString TwoWaySyncsMenu::createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const
 {
@@ -211,8 +209,6 @@ BackupSyncsMenu::BackupSyncsMenu(QWidget* parent):
     mDeviceNameRequest(UserAttributes::DeviceName::requestDeviceName()),
     mMyBackupsHandleRequest(UserAttributes::MyBackupsHandle::requestMyBackupsHandle())
 {
-    Platform::getInstance()->initMenu(mMenu, "SyncsMenu - Backups");
-
     connect(mDeviceNameRequest.get(),
             &UserAttributes::DeviceName::attributeReady,
             this,

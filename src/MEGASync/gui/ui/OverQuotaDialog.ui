@@ -26,7 +26,14 @@
    <string>Storage full</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: #FAFAFA;</string>
+   <string notr="true">#labelTitle
+{
+font-size: 20px;
+line-height: 30px;
+}</string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -85,38 +92,6 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="buttonWarning">
-        <property name="minimumSize">
-         <size>
-          <width>36</width>
-          <height>36</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>36</width>
-          <height>36</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">border: none;</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../Resources_common.qrc">
-          <normaloff>:/images/icon_warning_36.png</normaloff>:/images/icon_warning_36.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>36</width>
-          <height>36</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="CustomLabel" name="labelTitle">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -141,14 +116,6 @@
           <family>SF UI Text</family>
           <pointsize>-1</pointsize>
          </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">#labelTitle
-{
-  color: #333333;
-  font-family: &quot;SF UI Text&quot;;
-  font-size: 20px;
-}</string>
         </property>
         <property name="text">
          <string/>
@@ -347,15 +314,6 @@
        <height>16777215</height>
       </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true">#labelMessage
-{
-	color: #242424;
-	font-family: &quot;SF UI Text&quot;;
-	font-size: 12px;
-	qproperty-alignment: AlignCenter;
-}</string>
-     </property>
      <property name="text">
       <string/>
      </property>
@@ -364,6 +322,9 @@
      </property>
      <property name="margin">
       <number>0</number>
+     </property>
+     <property name="type" stdset="0">
+      <string notr="true">secondary</string>
      </property>
     </widget>
    </item>
@@ -413,21 +374,14 @@
           <height>50</height>
          </size>
         </property>
-        <property name="styleSheet">
-         <string notr="true">#buttonDismiss
-{
- background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #ffffff, stop: 1 #fcfcfc);
- border-radius: 3px;
- border: 1px solid rgba(0, 0, 0, 5%);
- padding: 7px 14px 7px 14px;
- font-family: &quot;Lato&quot;;
- font-size: 14px;
- color: #333333;
-}</string>
-        </property>
         <property name="text">
          <string>Dismiss</string>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">secondary</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string notr="true">medium</string>
         </property>
        </widget>
       </item>
@@ -439,22 +393,14 @@
           <height>50</height>
          </size>
         </property>
-        <property name="styleSheet">
-         <string notr="true">#buttonUpgrade
-{
-background-color: #00BFA5;
- border-radius: 3px;
- border: 1px solid rgba(0, 0, 0, 5%);
- border-color:#00AC94;
- padding: 7px 14px 7px 14px;
- font-family: &quot;Lato&quot;;
- font-size: 14px;
- color: #ffffff;
-
-}</string>
-        </property>
         <property name="text">
          <string>Upgrade</string>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">primary</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string notr="true">medium</string>
         </property>
        </widget>
       </item>

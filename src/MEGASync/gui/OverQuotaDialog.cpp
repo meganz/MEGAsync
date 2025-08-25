@@ -191,7 +191,7 @@ void OverQuotaDialog::onUpgradeClicked()
 
 void OverQuotaDialog::onTitleLengthChanged()
 {
-    int sizeLimitToWrap = ui->widgetHeader->width() - ui->buttonWarning->width() - ui->widgetHeader->layout()->spacing();
+    int sizeLimitToWrap = ui->widgetHeader->width() - ui->widgetHeader->layout()->spacing();
 
 #ifndef Q_OS_MACOS
     sizeLimitToWrap -= ui->widgetHeader->layout()->contentsMargins().left() + ui->widgetHeader->layout()->contentsMargins().right();

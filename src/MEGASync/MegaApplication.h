@@ -270,7 +270,6 @@ public slots:
     void onUpdateError();
     void rebootApplication(bool update = true);
     void tryExitApplication(bool force = false);
-    void highLightMenuEntry(QAction* action);
     void pauseTransfers(bool pause);
     void checkNetworkInterfaces();
     void checkMemoryUsage();
@@ -565,24 +564,6 @@ private:
     void processUploads(const QStringList& uploads);
 
     void updateMetadata(TransferMetaData* data, const QString& filePath);
-
-    template <class Func>
-    void recreateMenuAction(MenuItemAction** action, QMenu* menu, const QString& actionName,
-                            const char* iconPath, Func slotFunc)
-    {
-        bool previousEnabledState = true;
-        if (*action)
-        {
-            previousEnabledState = (*action)->isEnabled();
-            (*action)->deleteLater();
-            *action = nullptr;
-        }
-
-        *action = new MenuItemAction(actionName, QLatin1String(iconPath), menu);
-        (*action)->setManagesHoverStates(true);
-        connect(*action, &QAction::triggered, this, slotFunc, Qt::QueuedConnection);
-        (*action)->setEnabled(previousEnabledState);
-    }
 
     template<class Func>
     void recreateMegaMenuAction(MegaMenuItemAction** action,

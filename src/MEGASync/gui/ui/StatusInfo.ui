@@ -123,11 +123,6 @@ qproperty-iconSize: 16px 16px;
      <property name="text">
       <string/>
      </property>
-     <property name="icon">
-      <iconset>
-       <normalon>:/images/ico_menu_uptodate_state.png</normalon>
-      </iconset>
-     </property>
      <property name="iconSize">
       <size>
        <width>16</width>

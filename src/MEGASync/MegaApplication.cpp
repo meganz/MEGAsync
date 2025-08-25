@@ -1842,22 +1842,6 @@ void MegaApplication::tryExitApplication(bool force)
     }
 }
 
-void MegaApplication::highLightMenuEntry(QAction *action)
-{
-    if (!action)
-    {
-        return;
-    }
-
-    // MenuItemAction* pAction = (MenuItemAction*)action;
-    // if (lastHovered)
-    // {
-    //     lastHovered->setHighlight(false);
-    // }
-    // pAction->setHighlight(true);
-    // lastHovered = pAction;
-}
-
 void MegaApplication::pauseTransfers(bool pause)
 {
     if (appfinished || !megaApi)
@@ -5621,7 +5605,6 @@ void MegaApplication::createInfoDialogMenus()
     {
         deleteMenu(infoDialogMenu);
         infoDialogMenu = new QMenu(infoDialog);
-        // Platform::getInstance()->initMenu(infoDialogMenu, "InfoDialogMenu");
 
         //Highlight menu entry on mouse over
         connect(infoDialogMenu, SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
@@ -5664,7 +5647,6 @@ void MegaApplication::createInfoDialogMenus()
     //                    "://images/ico-device-centre.svg",
     //                    &MegaApplication::openDeviceCentre);
 
-    // bool previousEnabledState = exitAction->isEnabled();
     if (!mSyncs2waysMenu)
     {
         mSyncs2waysMenu = SyncsMenu::newSyncsMenu(MegaSync::TYPE_TWOWAY, infoDialogMenu);
@@ -5741,7 +5723,6 @@ void MegaApplication::createInfoDialogMenus()
 
     infoDialogMenu->addAction(MEGAWebAction);
     infoDialogMenu->addAction(filesAction);
-    // // infoDialogMenu->addAction(deviceCentreAction);
     infoDialogMenu->addSeparator();
     if (mSyncs2waysMenu)
         infoDialogMenu->addAction(mSyncs2waysMenu->getAction());
