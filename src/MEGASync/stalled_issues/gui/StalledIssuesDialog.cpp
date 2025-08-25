@@ -1,6 +1,7 @@
 #include "StalledIssuesDialog.h"
 
 #include "DialogOpener.h"
+#include "IconTokenizer.h"
 #include "MegaApplication.h"
 #include "ServiceUrls.h"
 #include "StalledIssue.h"
@@ -111,6 +112,7 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
             this,
             &StalledIssuesDialog::onScrollRangeChanged);
 
+    initEmptyIcon();
     showView();
 
     if(MegaSyncApp->getStalledIssuesModel()->issuesRequested())
@@ -361,6 +363,17 @@ void StalledIssuesDialog::setScrollMode(bool state)
 {
     ui->footer->setProperty(SCROLL, state);
     setStyleSheet(styleSheet());
+}
+
+void StalledIssuesDialog::initEmptyIcon()
+{
+    auto pixmap(Utilities::getPixmap(QLatin1String("arrows-up-down-circle"),
+                                     Utilities::AttributeType::NONE,
+                                     ui->emptyIcon));
+    auto coloredPixmap = IconTokenizer::changePixmapColor(
+        pixmap,
+        TokenParserWidgetManager::instance()->getColor(QLatin1String("icon-secondary")));
+    ui->emptyIcon->setIcon(QIcon(coloredPixmap.value_or(pixmap)));
 }
 
 void StalledIssuesDialog::onGlobalSyncStateChanged(bool)

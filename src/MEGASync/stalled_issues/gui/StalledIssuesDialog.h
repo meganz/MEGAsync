@@ -53,6 +53,7 @@ private slots:
 private:
     void showView();
     void setScrollMode(bool state);
+    void initEmptyIcon();
 
     Ui::StalledIssuesDialog *ui;
     MegaDelegateHoverManager mViewHoverManager;
