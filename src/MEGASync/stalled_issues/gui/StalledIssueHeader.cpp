@@ -1,6 +1,7 @@
 #include "StalledIssueHeader.h"
 
 #include "DialogOpener.h"
+#include "IconTokenizer.h"
 #include "IgnoredStalledIssue.h"
 #include "MegaApplication.h"
 #include "MessageDialogOpener.h"
@@ -51,10 +52,13 @@ void StalledIssueHeader::expand(bool state)
 {
     if(mIsExpandable)
     {
-        auto arrowIcon = Utilities::getCachedPixmap(
-            state ? QLatin1String(":/images/node_selector/Icon-Small-Arrow-Down.png")
-                  : QLatin1String(":/images/node_selector/Icon-Small-Arrow-Left.png"));
-        ui->arrow->setPixmap(arrowIcon.pixmap(ui->arrow->size()));
+        QString arrow(state ? QLatin1String("chevron-down_default") :
+                              QLatin1String("chevron-left_default"));
+
+        ui->arrow->setPixmap(Utilities::getColoredPixmap(arrow,
+                                                         Utilities::AttributeType::NONE,
+                                                         QLatin1String("icon-secondary"),
+                                                         ui->arrow->size()));
     }
 }
 
@@ -444,8 +448,10 @@ QString StalledIssueHeader::fileName()
 
 void StalledIssueHeader::refreshUi()
 {
-    auto errorTitleIcon = Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/ico_menu_full.png"));
-    ui->errorTitleIcon->setPixmap(errorTitleIcon.pixmap(ui->errorTitleIcon->size()));
+    ui->errorTitleIcon->setPixmap(Utilities::getColoredPixmap(QLatin1String("alert-triangle"),
+                                                              Utilities::AttributeType::NONE,
+                                                              QLatin1String("support-warning"),
+                                                              ui->errorTitleIcon->size()));
 
     QIcon fileTypeIcon;
     QFileInfo fileInfo;
@@ -468,7 +474,8 @@ void StalledIssueHeader::refreshUi()
     }
     else
     {
-        fileTypeIcon = Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/folder_orange_default@2x.png"));
+        fileTypeIcon = Utilities::getFolderPixmap(Utilities::FolderType::TYPE_NORMAL,
+                                                  Utilities::AttributeType::MEDIUM);
     }
 
     ui->fileTypeIcon->setPixmap(fileTypeIcon.pixmap(ui->fileTypeIcon->size()));

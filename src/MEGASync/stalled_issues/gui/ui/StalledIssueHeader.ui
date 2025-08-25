@@ -254,14 +254,14 @@
              <widget class="QLabel" name="errorTitleIcon">
               <property name="minimumSize">
                <size>
-                <width>24</width>
-                <height>24</height>
+                <width>16</width>
+                <height>16</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>24</width>
-                <height>24</height>
+                <width>16</width>
+                <height>16</height>
                </size>
               </property>
               <property name="text">
@@ -498,15 +498,15 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>WordWrapLabel</class>
+   <extends>QTextEdit</extends>
+   <header>WordWrapLabel.h</header>
+  </customwidget>
+  <customwidget>
    <class>WaitingSpinnerWidget</class>
    <extends>QWidget</extends>
    <header>gui/WaitingSpinnerWidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>WordWrapLabel</class>
-   <extends>QTextEdit</extends>
-   <header>WordWrapLabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

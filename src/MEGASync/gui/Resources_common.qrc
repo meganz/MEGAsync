@@ -1314,8 +1314,9 @@
         <file alias="gear_six_small_thin_outline">images/themed/tokenizable/gear_six_small_thin_outline.svg</file>
         <file alias="menu_01_medium_thin_outline">images/themed/tokenizable/menu_01_medium_thin_outline.svg</file>
         <file alias="alert-circle">images/themed/common/alert-circle.svg</file>
-        <file alias="alert-triangle">images/themed/common/Stalled Issues/Header/alert-triangle.svg</file>
         <file alias="help-circle">images/themed/common/help-circle.svg</file>
-        <file alias="arrows-up-down-circle">images/themed/theme-aware/arrows-up-down-circle.svg</file>
+        <file alias="arrows-up-down-circle">images/themed/tokenizable/arrows-up-down-circle.svg</file>
+        <file alias="chevron-left_default">images/themed/tokenizable/chevron-left_default.svg</file>
+        <file alias="alert-triangle">images/themed/tokenizable/Stalled Issues/Header/alert-triangle.svg</file>
     </qresource>
 </RCC>

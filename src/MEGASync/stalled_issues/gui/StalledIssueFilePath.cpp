@@ -292,7 +292,7 @@ void StalledIssueFilePath::updateCornerArrows()
     {
         QPixmap icon(Utilities::getPixmap(QLatin1String("arrow_corner_right"),
                                           Utilities::AttributeType::NONE,
-                                          ui->pathArrow));
+                                          ui->pathArrow->size()));
         ui->pathArrow->setPixmap(icon);
     }
 
@@ -300,7 +300,7 @@ void StalledIssueFilePath::updateCornerArrows()
     {
         QPixmap icon(Utilities::getPixmap(QLatin1String("arrow_corner_right"),
                                           Utilities::AttributeType::NONE,
-                                          ui->problemArrow));
+                                          ui->problemArrow->size()));
         auto hasProblem(mData->getPath().pathProblem !=
                         mega::MegaSyncStall::SyncPathProblem::NoProblem);
         if (hasProblem)
@@ -317,7 +317,7 @@ void StalledIssueFilePath::updateCornerArrows()
     {
         QPixmap icon(Utilities::getPixmap(QLatin1String("arrow_corner_right"),
                                           Utilities::AttributeType::NONE,
-                                          ui->moveLines));
+                                          ui->moveLines->size()));
         ui->moveLines->setPixmap(icon);
     }
 
@@ -325,7 +325,7 @@ void StalledIssueFilePath::updateCornerArrows()
     {
         QPixmap icon(Utilities::getPixmap(QLatin1String("arrow_corner_right"),
                                           Utilities::AttributeType::NONE,
-                                          ui->movePathArrow));
+                                          ui->movePathArrow->size()));
         ui->movePathArrow->setPixmap(icon);
     }
 
@@ -333,7 +333,7 @@ void StalledIssueFilePath::updateCornerArrows()
     {
         QPixmap icon(Utilities::getPixmap(QLatin1String("arrow_corner_right"),
                                           Utilities::AttributeType::NONE,
-                                          ui->movePathProblemArrow));
+                                          ui->movePathProblemArrow->size()));
         auto hasProblem(mData->getMovePath().pathProblem !=
                         mega::MegaSyncStall::SyncPathProblem::NoProblem);
         if (hasProblem)
@@ -355,7 +355,7 @@ void StalledIssueFilePath::updateLocalOrMegaTitle()
     {
         pixmap = Utilities::getPixmap(QLatin1String("MEGA"),
                                       Utilities::AttributeType::NONE,
-                                      ui->LocalOrRemoteIcon);
+                                      ui->LocalOrRemoteIcon->size());
 
         ui->LocalOrRemoteText->setText(tr("on MEGA:"));
     }
@@ -363,7 +363,7 @@ void StalledIssueFilePath::updateLocalOrMegaTitle()
     {
         pixmap = Utilities::getPixmap(QLatin1String("monitor"),
                                       Utilities::AttributeType::NONE,
-                                      ui->LocalOrRemoteIcon);
+                                      ui->LocalOrRemoteIcon->size());
 
         ui->LocalOrRemoteText->setText(tr("Local:"));
     }

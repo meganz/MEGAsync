@@ -367,13 +367,10 @@ void StalledIssuesDialog::setScrollMode(bool state)
 
 void StalledIssuesDialog::initEmptyIcon()
 {
-    auto pixmap(Utilities::getPixmap(QLatin1String("arrows-up-down-circle"),
-                                     Utilities::AttributeType::NONE,
-                                     ui->emptyIcon));
-    auto coloredPixmap = IconTokenizer::changePixmapColor(
-        pixmap,
-        TokenParserWidgetManager::instance()->getColor(QLatin1String("icon-secondary")));
-    ui->emptyIcon->setIcon(QIcon(coloredPixmap.value_or(pixmap)));
+    ui->emptyIcon->setIcon(QIcon(Utilities::getColoredPixmap(QLatin1String("arrows-up-down-circle"),
+                                                             Utilities::AttributeType::NONE,
+                                                             QLatin1String("icon-secondary"),
+                                                             ui->emptyIcon->size())));
 }
 
 void StalledIssuesDialog::onGlobalSyncStateChanged(bool)

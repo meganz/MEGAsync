@@ -610,10 +610,6 @@ color: grey;
          <property name="text">
           <string notr="true">...</string>
          </property>
-         <property name="icon">
-          <iconset resource="../../../gui/Resources_common.qrc">
-           <normaloff>:/images/transfer_manager/empty_categories/no_transfers@2x.png</normaloff>:/images/transfer_manager/empty_categories/no_transfers@2x.png</iconset>
-         </property>
          <property name="iconSize">
           <size>
            <width>96</width>

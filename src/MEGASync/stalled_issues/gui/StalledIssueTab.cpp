@@ -110,7 +110,7 @@ void StalledIssueTab::updateIcon()
         ui->icon->setPixmap(Utilities::getPixmap(mIconName,
                                                  isSelected() ? Utilities::AttributeType::SOLID :
                                                                 Utilities::AttributeType::OUTLINE,
-                                                 ui->icon));
+                                                 ui->icon->size()));
     }
 }
 

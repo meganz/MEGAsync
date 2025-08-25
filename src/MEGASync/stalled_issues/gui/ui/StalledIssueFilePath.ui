@@ -300,10 +300,6 @@ QPushButton
               <property name="text">
                <string/>
               </property>
-              <property name="icon">
-               <iconset resource="../../../gui/Resources_common.qrc">
-                <normaloff>:/images/StalledIssues/alert_circle_small_default.png</normaloff>:/images/StalledIssues/alert_circle_small_default.png</iconset>
-              </property>
               <property name="iconSize">
                <size>
                 <width>16</width>
@@ -746,10 +742,6 @@ QPushButton
               </property>
               <property name="text">
                <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="../../../gui/Resources_common.qrc">
-                <normaloff>:/images/StalledIssues/alert_circle_small_default.png</normaloff>:/images/StalledIssues/alert_circle_small_default.png</iconset>
               </property>
               <property name="iconSize">
                <size>
