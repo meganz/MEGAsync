@@ -370,24 +370,6 @@ color: #ff797c80; /*colorToken.icon-disabled*/
 }
 
 /*
-    Icon button
-*/
-QPushButton[type="icon"]
-{
-background-color: transparent;
-}
-
-QPushButton:hover[type="icon"]
-{
-background-color: #F7F7F7; /*colorToken.surface-1*/
-}
-
-QPushButton:pressed[type="icon"]
-{
-background-color: #EFEFF0; /*colorToken.surface-2*/
-}
-
-/*
     Outline button.
 */
 QPushButton[type="outline"]
