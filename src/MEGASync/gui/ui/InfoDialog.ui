@@ -1103,9 +1103,8 @@ background-color: transparent;
                                    <string/>
                                   </property>
                                   <property name="icon">
-                                   <iconset>
-                                    <normalon>:/images/storage_for_business.png</normalon>
-                                   </iconset>
+                                   <iconset resource="../Resources_light.qrc">
+                                    <normaloff>:/radial-cloud.svg</normaloff>:/radial-cloud.svg</iconset>
                                   </property>
                                   <property name="iconSize">
                                    <size>
@@ -1275,9 +1274,8 @@ background-color: transparent;
                                    <string/>
                                   </property>
                                   <property name="icon">
-                                   <iconset>
-                                    <normalon>:/images/transfer_for_business.png</normalon>
-                                   </iconset>
+                                   <iconset resource="../Resources_light.qrc">
+                                    <normaloff>:/adial-speedometer.svg</normaloff>:/adial-speedometer.svg</iconset>
                                   </property>
                                   <property name="iconSize">
                                    <size>
