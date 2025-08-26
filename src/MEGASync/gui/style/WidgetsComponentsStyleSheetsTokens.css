@@ -74,6 +74,11 @@ QScrollBar::handle:vertical
 background: #ff04101e; /*colorToken.selection-control*/
 }
 
+QScrollBar::handle:horizontal
+{
+background: #ff04101e; /*colorToken.selection-control*/
+}
+
 /*
     QHeaderView
 */

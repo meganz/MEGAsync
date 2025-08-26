@@ -34,7 +34,14 @@ border-style: none;
 */
 QScrollBar:vertical
 {
-width: 10px;
+width: 15px;
+padding: 1px;
+}
+
+QScrollBar:horizontal
+{
+height: 15px;
+padding: 1px;
 }
 
 QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical, QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical
@@ -46,6 +53,21 @@ QScrollBar::handle:vertical
 {
 border-style: none;
 border-radius: 5px;
+min-height: 20px;
+border-radius: 4px;
+}
+
+QScrollBar::handle:horizontal
+{
+border-style: none;
+border-radius: 5px;
+min-width: 20px;
+border-radius: 4px;
+}
+
+QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal, QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal
+{
+border-style: none;
 }
 
 /*
