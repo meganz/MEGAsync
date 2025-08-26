@@ -49,6 +49,12 @@
 /*ColorTokenIcon;Button;bVersionIcon;normal;off;colorToken.icon-secondary*/
 /*ColorTokenIcon;Button;bVersionIcon;active;off;colorToken.icon-secondary*/
 
+QWidget
+{
+background-color: #FFFFFFFF; /*colorToken.page-background*/
+color: #ff303233; /*colorToken.text-primary*/
+}
+
 #wCircularStorage, #wCircularTransfer
 {
 qproperty-outerCircleBackgroundColor: #fff3f4f4; /*colorToken.surface-2*/

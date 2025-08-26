@@ -1,9 +1,3 @@
-QWidget
-{
-background-color: #FFFFFFFF; /*colorToken.page-background*/
-color: #ff303233; /*colorToken.text-primary*/
-}
-
 QWidget[type="notification"]
 {
 background-color: #ffdff4fe;/*colorToken.notification-info*/

@@ -57,6 +57,12 @@
 
 /*ColorTokenIcon;Button;bAdd;normal;off;colorToken.text-inverse-accent*/
 
+QWidget
+{
+background-color: #FFFFFFFF; /*colorToken.page-background*/
+color: #ff303233; /*colorToken.text-primary*/
+}
+
 #pSecurity QGroupBox
 {
 margin-top: 0px;
