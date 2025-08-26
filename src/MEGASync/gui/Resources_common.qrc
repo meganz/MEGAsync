@@ -1,8 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file alias="animations/cancelling.gif">animations/cancelling.gif</file>
-        <file alias="animations/cancelling@2x.gif">animations/cancelling@2x.gif</file>
-        <file alias="animations/cancelling@3x.gif">animations/cancelling@3x.gif</file>
         <file alias="animations/full-storage.gif">animations/full-storage.gif</file>
         <file alias="animations/full-storage@2x.gif">animations/full-storage@2x.gif</file>
         <file alias="animations/full-storage@3x.gif">animations/full-storage@3x.gif</file>
