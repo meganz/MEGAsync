@@ -152,7 +152,8 @@ color: grey;
 #header
 {
     background-color: #FFAAAAAA; /*colorToken.surface-1*/
-    border:  1px solid #5254570D; /*colorToken.border-subtle*/
+	border: none;
+    border-bottom:  1px solid #B0B1B31A; /*colorToken.border-subtle*/
 }
 
 #titleLabel

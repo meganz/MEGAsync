@@ -13,8 +13,8 @@
   <property name="styleSheet">
    <string notr="true">#frame 
 {
-    border-radius: 8px;
-    border: 1px solid  #D6D6D6;
+    border-radius: 6px;
+    border: 1px solid  #F6F6F7; /*colorToken.border-subtle*/
     background-color: #FFFFFFFF; /*colorToken.page-background*/
 }</string>
   </property>
