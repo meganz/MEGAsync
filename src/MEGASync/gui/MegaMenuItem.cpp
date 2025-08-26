@@ -130,8 +130,9 @@ void MegaMenuItem::updateStyleSheet()
                              .name(QColor::NameFormat::HexArgb);
         }
     }
-    styleSheet =
-        QLatin1String("MegaMenuItem {border-radius: 6px; background-color: %1; }").arg(stateColor);
+    styleSheet = QLatin1String("MegaMenuItem {border-radius: 6px; background-color: %1; } QLabel "
+                               "{background-color: %1;}")
+                     .arg(stateColor);
     setStyleSheet(styleSheet);
     TokenParserWidgetManager::instance()->polish(this);
 }

@@ -20,7 +20,13 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#wInfoDialogIn
+   <string notr="true">QWidget
+{
+background-color: #FFFFFFFF; /*colorToken.page-background*/
+color: #ff303233; /*colorToken.text-primary*/
+}
+
+#wInfoDialogIn
 {
  border-radius: 10px;
  padding: 10px;
