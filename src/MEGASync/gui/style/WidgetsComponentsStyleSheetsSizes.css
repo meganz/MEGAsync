@@ -389,3 +389,16 @@ border-style: none;
 width: 40px;
 height: 19px;
 }
+/*
+    QMenu
+*/
+QMenu.MegaMenu
+{
+border-radius: 8px;
+border: 1px solid;
+padding: 4px;
+}
+QMenu.MegaMenu::separator
+{
+height: 1px
+}

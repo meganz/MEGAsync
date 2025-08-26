@@ -623,3 +623,15 @@ qproperty-eyeRevealDisabledImage: url(:/images/themed/light/eye_disabled.svg); /
 qproperty-eyeClosedImage: url(:/images/themed/light/eye-off_default.svg); /*replaceThemeToken*/
 qproperty-eyeClosedDisabledImage: url(:/images/themed/light/eye-off_disabled.svg); /*replaceThemeToken*/
 }
+/*
+    QMenu
+*/
+QMenu.MegaMenu
+{
+background-color: #FFFFFFFF; /*colorToken.page-background*/
+border-color: #ff494a4d; /*colorToken.border-disabled*/
+}
+QMenu.MegaMenu::separator
+{
+background-color: #fff3f4f4; /*colorToken.surface-2*/
+}
