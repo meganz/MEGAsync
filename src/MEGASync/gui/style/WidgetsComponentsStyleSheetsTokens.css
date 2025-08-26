@@ -370,6 +370,27 @@ color: #ff797c80; /*colorToken.icon-disabled*/
 }
 
 /*
+    Icon button or Icon label
+*/
+QPushButton[type="icon-button"], QPushButton[type="icon-label"]
+{
+background-color: transparent;
+}
+
+/*
+    Icon button states (not applicable to Icon label)
+*/
+QPushButton:hover[type="icon-button"]
+{
+background-color: transparent;
+}
+
+QPushButton:pressed[type="icon-button"]
+{
+background-color: #EFEFF0; /*colorToken.surface-2*/
+}
+
+/*
     Outline button.
 */
 QPushButton[type="outline"]
@@ -447,6 +468,14 @@ QPushButton:disabled[type="secondary"]
 {
 color: #ffC1C2C4; /*colorToken.text-disabled*/
 background-color: #ff797c80; /*colorToken.button-disabled*/
+}
+
+/*
+    Icon: button that acts like a label with an icon
+*/
+IconLabel
+{
+background-color: transparent;
 }
 
 /*

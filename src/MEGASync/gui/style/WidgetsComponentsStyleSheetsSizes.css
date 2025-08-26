@@ -265,6 +265,35 @@ padding-right: 24px;
 }
 
 /*
+    Icon label / Icon button
+*/
+QPushButton[type="icon-label"], QPushButton[type="icon-button"]
+{
+border: none;
+border-radius: 6px;
+margin:0px;
+padding:0px;
+min-width: 0px;
+}
+
+/*
+    Icon label dimensions
+*/
+QPushButton[type="icon-label"][dimension=small]
+{
+height: 24px;
+width: 24px;
+qproperty-iconSize:16px;
+}
+
+QPushButton[type="icon-label"][dimension=medium]
+{
+height: 32px;
+width: 32px;
+qproperty-iconSize:24px;
+}
+
+/*
     Outline button.
 */
 QPushButton[type="outline"]
