@@ -263,7 +263,7 @@ void NameConflict::initActionButtons(StalledIssueActionTitle* title)
     QIcon removeIcon(Utilities::getPixmapName(QLatin1String("cross_button_primary"),
                                               Utilities::AttributeType::NONE));
     title->addActionButton(renameIcon, tr("Rename"), RENAME_ID, false, QLatin1String("secondary"));
-    title->addActionButton(removeIcon, QString(), REMOVE_ID, false, QLatin1String("icon"));
+    title->addActionButton(removeIcon, QString(), REMOVE_ID, false, QLatin1String("icon-button"));
 }
 
 void NameConflict::onRawInfoChecked()

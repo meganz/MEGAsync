@@ -26,7 +26,10 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">WordWrapLabel
+   <string notr="true">/*ColorTokenIcon;Button;pathProblemIcon;normal;off;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;movePathProblemIcon;normal;off;colorToken.icon-primary*/
+
+WordWrapLabel
 {
 font-size: 10px;
 font-weight: 400;
@@ -57,28 +60,8 @@ font-weight: 400;
   min-height: 24px;
   max-height: 24px;
   border-radius: 4px;
-  background-color: #2A2B2C; /*colorToken.background-inverse*/
+  background-color: #2A2B2C; /*colorToken.surface-1*/
   border: none;
-}
-
-#pathProblemMessage, #movePathProblemMessage
-{
-  font-size: 12px;
-  font-weight: 400;
-  color: #FAFAFA; /*colorToken.text-inverse*/
-}
-
-QPushButton
-{
-    border: none;
-}
-
-#moveLabel
-{
-    font-family: Lato;
-    font-size: 12px;
-    line-height: 20px;
-    color: #999999;
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -300,11 +283,18 @@ QPushButton
               <property name="text">
                <string/>
               </property>
+              <property name="icon">
+               <iconset resource="../../../gui/Resources_common.qrc">
+                <normaloff>:/info</normaloff>:/info</iconset>
+              </property>
               <property name="iconSize">
                <size>
                 <width>16</width>
                 <height>16</height>
                </size>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">icon-label</string>
               </property>
              </widget>
             </item>
@@ -344,6 +334,9 @@ QPushButton
              <width>24</width>
              <height>24</height>
             </size>
+           </property>
+           <property name="type" stdset="0">
+            <string notr="true">icon-label</string>
            </property>
           </widget>
          </item>
@@ -743,11 +736,18 @@ QPushButton
               <property name="text">
                <string/>
               </property>
+              <property name="icon">
+               <iconset resource="../../../gui/Resources_common.qrc">
+                <normaloff>:/info</normaloff>:/info</iconset>
+              </property>
               <property name="iconSize">
                <size>
                 <width>16</width>
                 <height>16</height>
                </size>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">icon-label</string>
               </property>
              </widget>
             </item>

@@ -34,9 +34,6 @@
        <bold>true</bold>
       </font>
      </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
      <property name="text">
       <string>Click Rename to resolve this issue, or click the folders below to make adjustments in the local filesystem or in MEGA</string>
      </property>
