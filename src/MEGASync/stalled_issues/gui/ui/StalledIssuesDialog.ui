@@ -44,15 +44,6 @@ border:none;
 }
 
 /**********  Footer **********/
-#footer[scroll=true]
-{
-    background-color: #FFAAAAAA; /*colorToken.surface-1*/
-}
-
-#footer[scroll=false]
-{
-    background-color: #FFFFFFFF; /*colorToken.page-background*/
-}
 
 #HelpButton {
 border: none;
@@ -557,6 +548,17 @@ color: grey;
        <width>16777215</width>
        <height>60</height>
       </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#footer[scroll=true]
+{
+    background-color: #FFAAAAAA; /*colorToken.surface-1*/
+}
+
+#footer[scroll=false]
+{
+    background-color: #FFFFFFFF; /*colorToken.page-background*/
+}</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">

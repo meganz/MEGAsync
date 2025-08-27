@@ -362,7 +362,7 @@ void StalledIssuesDialog::showView()
 void StalledIssuesDialog::setScrollMode(bool state)
 {
     ui->footer->setProperty(SCROLL, state);
-    setStyleSheet(styleSheet());
+    ui->footer->setStyleSheet(ui->footer->styleSheet());
 }
 
 void StalledIssuesDialog::initEmptyIcon()
