@@ -175,9 +175,9 @@ ThemedColorData DesignAssetsRepoManager::parseTheme(QFile& designTokensFile,
                             // Once border issues are fixed, please remove this section
                             colorData.insert("border-brand", theme == "Light" ? "#ffdd1405" : "#fff23433");
                             colorData.insert("border-disabled", theme == "Light" ? "#ffd8d9db" : "#ff494a4d");
-                            colorData.insert("border-strong", theme == "Light" ? "#ffdcdddd" : "#ffdfe0e1");
+                            colorData.insert("border-strong", theme == "Light" ? "#ffdcdddd" : "#ff535455");
                             colorData.insert("border-strong-selected", theme == "Light" ? "#ff04101e" : "#fff4f4f5");
-                            colorData.insert("border-subtle", theme == "Light" ? "#fff6f6f7" : "#fff7f7f7");
+                            colorData.insert("border-subtle", theme == "Light" ? "#fff6f6f7" : "#ff252626");
                             colorData.insert("border-subtle-selected", theme == "Light" ? "#ff04101e" : "#fff4f4f5");
 
 
