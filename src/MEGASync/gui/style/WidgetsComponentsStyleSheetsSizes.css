@@ -264,6 +264,7 @@ min-width: 44px; /*min width = 44px + padding-left(8px) + padding-righ(8px) = 60
 font-size: 12px;
 padding-left: 8px;
 padding-right: 8px;
+qproperty-iconSize:16px;
 }
 
 QPushButton[dimension=medium]
@@ -274,6 +275,7 @@ min-width: 48px; /*min width = 48px + padding-left(16px) + padding-righ(16px) = 
 font-size: 14px;
 padding-left: 16px;
 padding-right: 16px;
+qproperty-iconSize:24px;
 }
 
 QPushButton[dimension=large]
@@ -284,12 +286,13 @@ min-width: 52px; /*min width = 52px + padding-left(24px) + padding-righ(24px) = 
 font-size: 16px;
 padding-left: 24px;
 padding-right: 24px;
+qproperty-iconSize:24px;
 }
 
 /*
     Icon label / Icon button
 */
-QAbstractButton[type="icon-label"], QPushButton[type="icon-button"]
+QAbstractButton.icon-label, QPushButton.icon-button
 {
 border: none;
 border-radius: 6px;
@@ -299,19 +302,41 @@ min-width: 0px;
 }
 
 /*
-    Icon label dimensions
+    Icon label / Icon button dimensions
 */
-QAbstractButton[type="icon-label"][dimension=small]
+QAbstractButton.icon-label[dimension=small], QPushButton.icon-button[dimension=small]
 {
-height: 24px;
-width: 24px;
+height: 26px;
+width: 26px;
+}
+
+QAbstractButton.icon-label[dimension=medium], QPushButton.icon-button[dimension=medium]
+{
+height: 36px;
+width: 36px;
+}
+
+QAbstractButton.icon-label[dimension=large], QPushButton.icon-button[dimension=large]
+{
+height: 48px;
+width: 48px;
+}
+
+/*
+    Icon label icon sizes
+*/
+QPushButton.icon-label[dimension=small]
+{
 qproperty-iconSize:16px;
 }
 
-QAbstractButton[type="icon-label"][dimension=medium]
+QPushButton.icon-label[dimension=small]
 {
-height: 32px;
-width: 32px;
+qproperty-iconSize:24px;
+}
+
+QPushButton.icon-label[dimension=small]
+{
 qproperty-iconSize:24px;
 }
 
@@ -327,7 +352,7 @@ border-style: solid;
 /*
     Primary button.
 */
-QPushButton[type = "primary"], QPushButton[type = "secondary"], QPushButton[type = "icon"]
+QPushButton[type = "primary"], QPushButton[type = "secondary"]
 {
 border:none;
 }

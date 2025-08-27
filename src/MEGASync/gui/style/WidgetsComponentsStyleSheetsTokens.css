@@ -369,24 +369,11 @@ color: #ff797c80; /*colorToken.icon-disabled*/
 }
 
 /*
-    Icon button or Icon label
+    Icon label
 */
-QPushButton[type="icon-button"], QAbstractButton[type="icon-label"]
+QAbstractButton.icon-label
 {
 background-color: transparent;
-}
-
-/*
-    Icon button states (not applicable to Icon label)
-*/
-QPushButton:hover[type="icon-button"]
-{
-background-color: transparent;
-}
-
-QPushButton:pressed[type="icon-button"]
-{
-background-color: #EFEFF0; /*colorToken.surface-2*/
 }
 
 /*
