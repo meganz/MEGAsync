@@ -57,7 +57,7 @@ private:
     int m_itemHeight;
     int m_itemWidth;
     QMenu* m_submenu;
-    MegaMenuItem* m_item;
+    MegaMenuItem* m_item = nullptr;
 };
 
 #endif // MEGA_MENU_ITEM_ACTION_H
