@@ -9,6 +9,8 @@
 #include "Preferences.h"
 #include "StatsEventHandler.h"
 #include "EnumConverters.h"
+#include "IconTokenizer.h"
+#include "TokenParserWidgetManager.h"
 // clang-format on
 
 #include <QApplication>
@@ -588,6 +590,18 @@ QIcon Utilities::getCachedPixmap(QString fileName)
 QIcon Utilities::getIcon(const QString& iconName, AttributeTypes attribute)
 {
     return gIconCache.getDirect(getPixmapName(iconName, attribute));
+}
+
+QPixmap Utilities::getColoredPixmap(const QString& iconName,
+                                    AttributeTypes attributes,
+                                    const QString& token,
+                                    const QSize& size)
+{
+    auto pixmap(Utilities::getPixmap(iconName, attributes, size));
+    auto coloredPixmap =
+        IconTokenizer::changePixmapColor(pixmap,
+                                         TokenParserWidgetManager::instance()->getColor(token));
+    return coloredPixmap.value_or(pixmap);
 }
 
 QPixmap Utilities::getPixmap(const QString& iconName, AttributeTypes attribute, const QSize& size)

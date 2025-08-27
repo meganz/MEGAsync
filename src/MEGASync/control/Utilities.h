@@ -513,6 +513,10 @@ public:
 
     static QIcon getCachedPixmap(QString fileName);
     static QIcon getIcon(const QString& iconName, AttributeTypes attribute);
+    static QPixmap getColoredPixmap(const QString& iconName,
+                                    AttributeTypes attributes,
+                                    const QString& token,
+                                    const QSize& size);
     static QPixmap getPixmap(const QString& iconName, AttributeTypes attribute, const QSize& size);
     static QString getPixmapName(const QString& iconName, AttributeTypes attribute);
     static QIcon getExtensionPixmap(QString fileName, AttributeTypes attribute);
