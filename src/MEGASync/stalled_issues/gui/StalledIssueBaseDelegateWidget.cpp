@@ -26,8 +26,6 @@ void StalledIssueBaseDelegateWidget::init()
     styleS.prepend(QLatin1String("#%1\n{\nbackground-color: transparent;\n}\n").arg(objectName()));
     setStyleSheet(styleS);
 
-    qDebug() << styleSheet();
-
     TokenParserWidgetManager::instance()->applyCurrentTheme(this);
     TokenParserWidgetManager::instance()->polish(this);
 }

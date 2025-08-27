@@ -298,18 +298,17 @@ void StalledIssueFilePath::updateCornerArrows()
 
     // ui->problemArrow
     {
-        QPixmap icon(Utilities::getPixmap(QLatin1String("arrow_corner_right"),
-                                          Utilities::AttributeType::NONE,
-                                          ui->problemArrow->size()));
+        QIcon icon(Utilities::getIcon(QLatin1String("arrow_corner_right"),
+                                      Utilities::AttributeType::NONE));
         auto hasProblem(mData->getPath().pathProblem !=
                         mega::MegaSyncStall::SyncPathProblem::NoProblem);
         if (hasProblem)
         {
-            ui->problemArrow->setPixmap(icon);
+            ui->problemArrow->setIcon(icon);
         }
         else
         {
-            ui->problemArrow->setPixmap(QPixmap());
+            ui->problemArrow->setIcon(QIcon());
         }
     }
 
@@ -331,44 +330,39 @@ void StalledIssueFilePath::updateCornerArrows()
 
     // ui->movePathProblemArrow
     {
-        QPixmap icon(Utilities::getPixmap(QLatin1String("arrow_corner_right"),
-                                          Utilities::AttributeType::NONE,
-                                          ui->movePathProblemArrow->size()));
+        QIcon icon(Utilities::getIcon(QLatin1String("arrow_corner_right"),
+                                      Utilities::AttributeType::NONE));
         auto hasProblem(mData->getMovePath().pathProblem !=
                         mega::MegaSyncStall::SyncPathProblem::NoProblem);
         if (hasProblem)
         {
-            ui->movePathProblemArrow->setPixmap(icon);
+            ui->movePathProblemArrow->setIcon(icon);
         }
         else
         {
-            ui->movePathProblemArrow->setPixmap(QPixmap());
+            ui->movePathProblemArrow->setIcon(QIcon());
         }
     }
 }
 
 void StalledIssueFilePath::updateLocalOrMegaTitle()
 {
-    QPixmap pixmap;
+    QIcon icon;
 
     if (mData->isCloud())
     {
-        pixmap = Utilities::getPixmap(QLatin1String("MEGA"),
-                                      Utilities::AttributeType::NONE,
-                                      ui->LocalOrRemoteIcon->size());
+        icon = Utilities::getIcon(QLatin1String("MEGA"), Utilities::AttributeType::NONE);
 
         ui->LocalOrRemoteText->setText(tr("on MEGA:"));
     }
     else
     {
-        pixmap = Utilities::getPixmap(QLatin1String("monitor"),
-                                      Utilities::AttributeType::NONE,
-                                      ui->LocalOrRemoteIcon->size());
+        icon = Utilities::getIcon(QLatin1String("monitor"), Utilities::AttributeType::NONE);
 
         ui->LocalOrRemoteText->setText(tr("Local:"));
     }
 
-    ui->LocalOrRemoteIcon->setPixmap(pixmap);
+    ui->LocalOrRemoteIcon->setIcon(icon);
 }
 
 bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)

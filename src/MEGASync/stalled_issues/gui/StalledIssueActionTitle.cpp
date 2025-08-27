@@ -201,7 +201,7 @@ void StalledIssueActionTitle::setMessage(const QString& message,
     ui->messageContainer->installEventFilter(this);
     ui->messageContainer->setToolTip(tooltip);
 
-    ui->iconLabel->setPixmap(QIcon(pixmapName).pixmap(ui->iconLabel->size()));
+    ui->iconLabel->setIcon(QIcon(pixmapName));
 
     ui->messageLabel->setText(ui->messageLabel->fontMetrics().elidedText(message, Qt::ElideMiddle, ui->contents->width()/3));
     ui->messageLabel->setProperty(MESSAGE_TEXT, message);

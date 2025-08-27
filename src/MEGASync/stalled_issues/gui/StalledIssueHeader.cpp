@@ -41,6 +41,8 @@ StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
     QSizePolicy sp_retain = ui->arrow->sizePolicy();
     sp_retain.setRetainSizeWhenHidden(true);
     ui->arrow->setSizePolicy(sp_retain);
+    ui->arrow->setAttribute(Qt::WA_TransparentForMouseEvents, true);
+    ui->fileTypeIcon->setAttribute(Qt::WA_TransparentForMouseEvents, true);
 }
 
 StalledIssueHeader::~StalledIssueHeader()
@@ -55,10 +57,10 @@ void StalledIssueHeader::expand(bool state)
         QString arrow(state ? QLatin1String("chevron-down_default") :
                               QLatin1String("chevron-left_default"));
 
-        ui->arrow->setPixmap(Utilities::getColoredPixmap(arrow,
-                                                         Utilities::AttributeType::NONE,
-                                                         QLatin1String("icon-secondary"),
-                                                         ui->arrow->size()));
+        ui->arrow->setIcon(QIcon(Utilities::getColoredPixmap(arrow,
+                                                             Utilities::AttributeType::NONE,
+                                                             QLatin1String("icon-secondary"),
+                                                             ui->arrow->size())));
     }
 }
 
@@ -215,20 +217,20 @@ void StalledIssueHeader::onMultipleActionClicked()
     }
 }
 
-void StalledIssueHeader::showMessage(const QString &message, const QPixmap& pixmap)
+void StalledIssueHeader::showMessage(const QString& message, const QString& icon)
 {
     ui->actionContainer->show();
-    if(!message.isEmpty() || !pixmap.isNull())
+    if (!message.isEmpty() || !icon.isEmpty())
     {
         ui->actionMessageContainer->setVisible(true);
     }
 
     ui->actionMessage->setText(message);
 
-    if(!pixmap.isNull())
+    if (!icon.isEmpty())
     {
         ui->actionMessageIcon->show();
-        ui->actionMessageIcon->setPixmap(pixmap);
+        ui->actionMessageIcon->setIcon(QIcon(icon));
     }
     else
     {
@@ -433,9 +435,6 @@ void StalledIssueHeader::updateHeaderSizes()
         ui->errorTitle->layout()->activate();
         ui->errorTitle->updateGeometry();
 
-        ui->errorTitleTextContainer->layout()->activate();
-        ui->errorTitleTextContainer->updateGeometry();
-
         ui->fileNameTitle->updateGeometry();
         ui->errorDescriptionText->updateGeometry();
     }
@@ -448,10 +447,10 @@ QString StalledIssueHeader::fileName()
 
 void StalledIssueHeader::refreshUi()
 {
-    ui->errorTitleIcon->setPixmap(Utilities::getColoredPixmap(QLatin1String("alert-triangle"),
-                                                              Utilities::AttributeType::NONE,
-                                                              QLatin1String("support-warning"),
-                                                              ui->errorTitleIcon->size()));
+    ui->errorTitleIcon->setIcon(QIcon(Utilities::getColoredPixmap(QLatin1String("alert-triangle"),
+                                                                  Utilities::AttributeType::NONE,
+                                                                  QLatin1String("support-warning"),
+                                                                  ui->errorTitleIcon->size())));
 
     QIcon fileTypeIcon;
     QFileInfo fileInfo;
@@ -478,7 +477,7 @@ void StalledIssueHeader::refreshUi()
                                                   Utilities::AttributeType::MEDIUM);
     }
 
-    ui->fileTypeIcon->setPixmap(fileTypeIcon.pixmap(ui->fileTypeIcon->size()));
+    ui->fileTypeIcon->setIcon(fileTypeIcon);
 
     resetSolvingWidgets();
 

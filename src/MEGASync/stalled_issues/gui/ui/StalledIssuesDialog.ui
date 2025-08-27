@@ -34,11 +34,6 @@
     border-right: 0px;
 }
 
-#EmptyViewContainerPage QToolButton
-{
-    border:none;
-}
-
 #TreeViewContainer{
 background-color: #FFFFFFFF; /*colorToken.page-background*/
 }
@@ -84,12 +79,6 @@ color: grey;
   font-size:18px;
   font-weight: 700;
   color: #FFF3F4F4; /*colorToken.text-primary*/
-}
-
-#title QPushButton {
-    background-color: none;
-    outline: none;
-    border: none;
 }
 /**********  Header **********/
 
@@ -227,6 +216,9 @@ color: grey;
            <property name="flat">
             <bool>true</bool>
            </property>
+           <property name="type" stdset="0">
+            <string notr="true">icon-button</string>
+           </property>
           </widget>
          </item>
          <item>
@@ -260,7 +252,10 @@ color: grey;
             </size>
            </property>
            <property name="flat">
-            <bool>true</bool>
+            <bool>false</bool>
+           </property>
+           <property name="type" stdset="0">
+            <string notr="true">icon-button</string>
            </property>
           </widget>
          </item>
@@ -539,6 +534,9 @@ color: grey;
            <width>96</width>
            <height>96</height>
           </size>
+         </property>
+         <property name="type" stdset="0">
+          <string notr="true">icon-label</string>
          </property>
         </widget>
        </item>

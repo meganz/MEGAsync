@@ -261,7 +261,7 @@ font-weight: 400;
              <number>0</number>
             </property>
             <item>
-             <widget class="QPushButton" name="pathProblemIcon">
+             <widget class="QToolButton" name="pathProblemIcon">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -279,6 +279,9 @@ font-weight: 400;
                 <width>24</width>
                 <height>24</height>
                </size>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
               </property>
               <property name="text">
                <string/>
@@ -309,7 +312,7 @@ font-weight: 400;
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="helpIcon">
+          <widget class="QToolButton" name="helpIcon">
            <property name="minimumSize">
             <size>
              <width>24</width>
@@ -453,14 +456,8 @@ font-weight: 400;
          <property name="bottomMargin">
           <number>0</number>
          </property>
-         <item alignment="Qt::AlignRight">
-          <widget class="QLabel" name="problemArrow">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
+         <item>
+          <widget class="QToolButton" name="problemArrow">
            <property name="minimumSize">
             <size>
              <width>16</width>
@@ -472,6 +469,15 @@ font-weight: 400;
              <width>16</width>
              <height>16</height>
             </size>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string notr="true"/>
+           </property>
+           <property name="type" stdset="0">
+            <string notr="true">icon-label</string>
            </property>
           </widget>
          </item>
@@ -720,7 +726,7 @@ font-weight: 400;
              <number>0</number>
             </property>
             <item>
-             <widget class="QPushButton" name="movePathProblemIcon">
+             <widget class="QToolButton" name="movePathProblemIcon">
               <property name="minimumSize">
                <size>
                 <width>24</width>
@@ -732,6 +738,9 @@ font-weight: 400;
                 <width>24</width>
                 <height>24</height>
                </size>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
               </property>
               <property name="text">
                <string/>
@@ -862,14 +871,8 @@ font-weight: 400;
          <property name="bottomMargin">
           <number>0</number>
          </property>
-         <item alignment="Qt::AlignRight">
-          <widget class="QLabel" name="movePathProblemArrow">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
+         <item>
+          <widget class="QToolButton" name="movePathProblemArrow">
            <property name="minimumSize">
             <size>
              <width>16</width>
@@ -882,6 +885,15 @@ font-weight: 400;
              <height>16</height>
             </size>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string notr="true"/>
+           </property>
+           <property name="type" stdset="0">
+            <string notr="true">icon-label</string>
+           </property>
           </widget>
          </item>
         </layout>
@@ -891,7 +903,7 @@ font-weight: 400;
     </widget>
    </item>
    <item row="0" column="1" alignment="Qt::AlignVCenter">
-    <widget class="QLabel" name="LocalOrRemoteIcon">
+    <widget class="QToolButton" name="LocalOrRemoteIcon">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -913,8 +925,8 @@ font-weight: 400;
      <property name="text">
       <string/>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+     <property name="type" stdset="0">
+      <string notr="true">icon-label</string>
      </property>
     </widget>
    </item>

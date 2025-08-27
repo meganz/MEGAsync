@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>639</width>
-    <height>397</height>
+    <height>421</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -137,6 +137,9 @@
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_7">
+      <property name="spacing">
+       <number>8</number>
+      </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -150,7 +153,13 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QLabel" name="arrow">
+       <widget class="QToolButton" name="arrow">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>16</width>
@@ -163,13 +172,25 @@
           <height>16</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">icon-label</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="fileTypeIcon">
+       <widget class="QToolButton" name="fileTypeIcon">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>48</width>
@@ -182,11 +203,20 @@
           <height>48</height>
          </size>
         </property>
-        <property name="text">
-         <string/>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>48</width>
+          <height>48</height>
+         </size>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">icon-label</string>
         </property>
        </widget>
       </item>
@@ -234,7 +264,7 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
+           <layout class="QHBoxLayout" name="horizontalLayout">
             <property name="spacing">
              <number>3</number>
             </property>
@@ -251,7 +281,13 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="errorTitleIcon">
+             <widget class="QToolButton" name="errorTitleIcon">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>16</width>
@@ -264,49 +300,28 @@
                 <height>16</height>
                </size>
               </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
               <property name="text">
-               <string/>
+               <string notr="true"/>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">icon-label</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QWidget" name="errorTitleTextContainer" native="true">
+             <widget class="WordWrapLabel" name="fileNameTitle">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0">
-               <property name="spacing">
-                <number>3</number>
-               </property>
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="WordWrapLabel" name="fileNameTitle">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="type" stdset="0">
-                  <string notr="true">secondary</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+              <property name="type" stdset="0">
+               <string notr="true">secondary</string>
+              </property>
              </widget>
             </item>
            </layout>
@@ -460,7 +475,13 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="actionMessageIcon">
+          <widget class="QToolButton" name="actionMessageIcon">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>16</width>
@@ -473,8 +494,14 @@
              <height>16</height>
             </size>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="text">
             <string notr="true"/>
+           </property>
+           <property name="type" stdset="0">
+            <string notr="true">icon-label</string>
            </property>
           </widget>
          </item>
