@@ -371,7 +371,7 @@ color: #ff797c80; /*colorToken.icon-disabled*/
 /*
     Icon button or Icon label
 */
-QPushButton[type="icon-button"], QPushButton[type="icon-label"]
+QPushButton[type="icon-button"], QAbstractButton[type="icon-label"]
 {
 background-color: transparent;
 }
