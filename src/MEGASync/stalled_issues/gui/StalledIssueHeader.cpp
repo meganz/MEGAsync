@@ -8,6 +8,7 @@
 #include "StalledIssuesCaseHeaders.h"
 #include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
+#include "ThemeManager.h"
 #include "TokenParserWidgetManager.h"
 #include "Utilities.h"
 
@@ -28,7 +29,7 @@ const char* FILENAME_PROPERTY = "FILENAME_PROPERTY";
 const char* MULTIPLE_ACTIONS_PROPERTY = "ACTIONS_PROPERTY";
 const char* ISSUE_STATE = "STATE";
 
-StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
+StalledIssueHeader::StalledIssueHeader(QWidget* parent):
     StalledIssueBaseDelegateWidget(parent),
     ui(new Ui::StalledIssueHeader),
     mIsExpandable(true)
@@ -145,27 +146,23 @@ void StalledIssueHeader::showAction(const ActionInfo& action)
 
 void StalledIssueHeader::showActions(const QString &actionButtonText, const QList<ActionInfo>& actions)
 {
+    bool hasMultipleActions = actions.size() > 1;
+
     ui->actionContainer->show();
     ui->multipleActionButton->setVisible(true);
-    if(actions.size() == 1)
+
+    if (hasMultipleActions)
     {
-        ui->multipleActionButton->setText(actions.first().actionText);
-        if(!ui->multipleActionButton->icon().isNull())
-        {
-            ui->multipleActionButton->setProperty(MULTIACTION_ICON, QVariant::fromValue<QIcon>(ui->multipleActionButton->icon()));
-            ui->multipleActionButton->setIcon(QIcon());
-        }
+        ui->multipleActionButton->setText(actionButtonText);
     }
     else
     {
-        ui->multipleActionButton->setText(actionButtonText);
-        if(ui->multipleActionButton->icon().isNull())
-        {
-            ui->multipleActionButton->setIcon(ui->multipleActionButton->property(MULTIACTION_ICON).value<QIcon>());
-        }
+        ui->multipleActionButton->setText(actions.first().actionText);
     }
 
     ui->multipleActionButton->setProperty(MULTIPLE_ACTIONS_PROPERTY, QVariant::fromValue<QList<ActionInfo>>(actions));
+
+    updateMultipleActionButtonIcon();
 }
 
 void StalledIssueHeader::hideAction()
@@ -177,7 +174,7 @@ void StalledIssueHeader::onMultipleActionClicked()
 {
     propagateButtonClick();
 
-    auto actions(ui->multipleActionButton->property(MULTIPLE_ACTIONS_PROPERTY).value<QList<ActionInfo>>());
+    auto actions(getActions());
     if(!actions.isEmpty())
     {
         if(actions.size() == 1)
@@ -445,6 +442,16 @@ QString StalledIssueHeader::fileName()
     return QString();
 }
 
+bool StalledIssueHeader::event(QEvent* event)
+{
+    if (event->type() == ThemeManager::ThemeChanged)
+    {
+        updateMultipleActionButtonIcon();
+    }
+
+    return StalledIssueBaseDelegateWidget::event(event);
+}
+
 void StalledIssueHeader::refreshUi()
 {
     ui->errorTitleIcon->setIcon(QIcon(Utilities::getColoredPixmap(QLatin1String("alert-triangle"),
@@ -494,4 +501,27 @@ void StalledIssueHeader::resetSolvingWidgets()
 {
     ui->multipleActionButton->hide();
     ui->actionMessageContainer->hide();
+}
+
+void StalledIssueHeader::updateMultipleActionButtonIcon()
+{
+    bool hasMultipleActions(getActions().size() > 1);
+
+    if (hasMultipleActions && ui->multipleActionButton->icon().isNull())
+    {
+        ui->multipleActionButton->setIcon(
+            ui->multipleActionButton->property(MULTIACTION_ICON).value<QIcon>());
+    }
+    else if (!hasMultipleActions && !ui->multipleActionButton->icon().isNull())
+    {
+        ui->multipleActionButton->setProperty(
+            MULTIACTION_ICON,
+            QVariant::fromValue<QIcon>(ui->multipleActionButton->icon()));
+        ui->multipleActionButton->setIcon(QIcon());
+    }
+}
+
+QList<StalledIssueHeader::ActionInfo> StalledIssueHeader::getActions()
+{
+    return ui->multipleActionButton->property(MULTIPLE_ACTIONS_PROPERTY).value<QList<ActionInfo>>();
 }

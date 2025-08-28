@@ -71,6 +71,8 @@ public:
 protected:
     QString fileName();
 
+    bool event(QEvent* event) override;
+
 private slots:
     void onMultipleActionClicked();
 
@@ -83,6 +85,10 @@ private:
 
     void refreshUi() override;
     void resetSolvingWidgets();
+
+    void updateMultipleActionButtonIcon();
+
+    QList<ActionInfo> getActions();
 
     Ui::StalledIssueHeader *ui;
     QPointer<StalledIssueHeaderCase> mHeaderCase;
