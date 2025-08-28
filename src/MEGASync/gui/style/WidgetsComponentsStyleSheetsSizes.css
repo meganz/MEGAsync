@@ -350,11 +350,19 @@ border-style: solid;
 }
 
 /*
-    Primary button.
+    All types except outline have no borders
 */
-QPushButton[type = "primary"], QPushButton[type = "secondary"]
+QPushButton[type = "primary"], QPushButton[type = "secondary"], QPushButton[type = "ghost"], QPushButton[type = "link"]
 {
 border:none;
+}
+
+/*
+    Ghost and Link buttons are not semibold
+*/
+QPushButton[type = "ghost"], QPushButton[type = "link"]
+{
+font-weight:400
 }
 
 /*
