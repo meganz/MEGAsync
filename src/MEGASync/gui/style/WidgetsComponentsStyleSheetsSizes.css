@@ -247,7 +247,53 @@ font-weight: 600;
 }
 
 /*
-    Buttons Sizes
+    class = icon-label
+    Icon labels > QToolButtons with class icon-label
+    Represents an only-icon label without hover, pressed...states.
+    We use QToolButton to update the icon when the theme changes, but it is not used as a button, it is just an icon label (no mouse events)
+    QPushButton is not used to avoid strange resize events and because it is heavier than QToolButton.
+*/
+QToolButton.icon-label
+{
+border: none;
+margin:0px;
+padding:0px;
+min-width: 0px;
+}
+
+QToolButton.icon-label[dimension=small]
+{
+height: 26px;
+width: 26px;
+qproperty-iconSize:16px;
+}
+
+QToolButton.icon-label[dimension=medium]
+{
+height: 36px;
+width: 36px;
+qproperty-iconSize:24px;
+}
+
+QToolButton.icon-label[dimension=large]
+{
+height: 48px;
+width: 48px;
+qproperty-iconSize:24px;
+}
+
+/*
+    Buttons
+    We have 2 classes of buttons:
+    1) Normal buttons (text or text+icon) > by default all QPushButton will be normal buttons. Ex. NO property class needed
+    2) Only-Icon buttons > class = "icon-label"
+
+    Every button (normal or only-icon) can have 5 different types: primary, secondary, outline, ghost and link. Ex. property type = "primary"
+
+    Every button (normal or only-icon) can have 3 different dimensions: small, medium and large. Ex. property dimension = "small"
+    The only-icon button have a fixed size depending on the dimension.
+    The Normal buttons have a fixed height and a min-width depending on the dimension
+    Both types have the same icon (if any) size
 */
 QPushButton[dimension=small], QPushButton[dimension=medium], QPushButton[dimension=large]
 {
@@ -277,7 +323,7 @@ padding-left: 16px;
 padding-right: 16px;
 qproperty-iconSize:24px;
 }
-
+u
 QPushButton[dimension=large]
 {
 border-radius: 8px;
@@ -290,58 +336,37 @@ qproperty-iconSize:24px;
 }
 
 /*
-    Icon label / Icon button
+    class = icon-button
+    We need to override and reset some common properties for buttons
 */
-QAbstractButton.icon-label, QPushButton.icon-button
+
+QPushButton.icon-button
 {
-border: none;
-border-radius: 6px;
 margin:0px;
 padding:0px;
 min-width: 0px;
 }
 
-/*
-    Icon label / Icon button dimensions
-*/
-QAbstractButton.icon-label[dimension=small], QPushButton.icon-button[dimension=small]
+QPushButton.icon-button[dimension=small]
 {
 height: 26px;
 width: 26px;
 }
 
-QAbstractButton.icon-label[dimension=medium], QPushButton.icon-button[dimension=medium]
+QPushButton.icon-button[dimension=medium]
 {
 height: 36px;
 width: 36px;
 }
 
-QAbstractButton.icon-label[dimension=large], QPushButton.icon-button[dimension=large]
+QPushButton.icon-button[dimension=large]
 {
 height: 48px;
 width: 48px;
 }
 
 /*
-    Icon label icon sizes
-*/
-QPushButton.icon-label[dimension=small]
-{
-qproperty-iconSize:16px;
-}
-
-QPushButton.icon-label[dimension=small]
-{
-qproperty-iconSize:24px;
-}
-
-QPushButton.icon-label[dimension=small]
-{
-qproperty-iconSize:24px;
-}
-
-/*
-    Outline button.
+    type = outline
 */
 QPushButton[type="outline"]
 {
@@ -358,7 +383,7 @@ border:none;
 }
 
 /*
-    Ghost and Link buttons are not semibold
+    type = ghost and type = link buttons are not semibold by default
 */
 QPushButton[type = "ghost"], QPushButton[type = "link"]
 {
