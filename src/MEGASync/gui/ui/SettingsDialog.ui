@@ -3113,7 +3113,7 @@ margin-top: 0px;
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>178</width>
+              <width>0</width>
               <height>20</height>
              </size>
             </property>
@@ -3136,7 +3136,7 @@ margin-top: 0px;
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>177</width>
+              <width>0</width>
               <height>20</height>
              </size>
             </property>
@@ -3193,8 +3193,14 @@ margin-top: 0px;
           <property name="bottomMargin">
            <number>0</number>
           </property>
-          <item>
+          <item alignment="Qt::AlignRight">
            <widget class="QPushButton" name="bLogout">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -3256,8 +3262,14 @@ margin-top: 0px;
           <property name="bottomMargin">
            <number>0</number>
           </property>
-          <item>
+          <item alignment="Qt::AlignRight">
            <widget class="QPushButton" name="bBackupCenter">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -3303,8 +3315,14 @@ margin-top: 0px;
           <property name="bottomMargin">
            <number>0</number>
           </property>
-          <item>
+          <item alignment="Qt::AlignRight">
            <widget class="QPushButton" name="bSessionHistory">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>0</width>
