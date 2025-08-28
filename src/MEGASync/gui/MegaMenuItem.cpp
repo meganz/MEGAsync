@@ -26,17 +26,17 @@ MegaMenuItem::MegaMenuItem(const QString& text,
     m_layout->setSpacing(0);
     m_layout->setContentsMargins(0, 0, 0, 0);
     // Create icon label
-    m_iconLabel = new QLabel();
+    m_iconLabel = new QLabel(this);
     m_iconLabel->setAlignment(Qt::AlignCenter);
     m_iconLabel->setFixedSize(DEFAULT_ICON_SIZE,
                               DEFAULT_ICON_SIZE); // Default icon size
 
     // Create text label
-    m_textLabel = new QLabel(text);
+    m_textLabel = new QLabel(text, this);
     m_textLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 
     // Create arrow label for submenu indicator
-    m_arrowLabel = new QLabel();
+    m_arrowLabel = new QLabel(this);
     m_arrowLabel->setAlignment(Qt::AlignCenter);
     m_arrowLabel->setFixedSize(16, 16);
     createSubmenuArrow();
