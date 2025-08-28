@@ -26,7 +26,12 @@
    <string>Stalled Issues</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QStackedWidget
+   <string notr="true">/**********  TOKENIZABLE BUTTONS **********/
+/*ColorTokenIcon;Button;refreshButton;normal;off;colorToken.button-outline*/
+/**********  TOKENIZABLE BUTTONS **********/
+
+
+QStackedWidget
 {
     border-top: 0px;
     border-bottom: 0px;
@@ -195,8 +200,8 @@ color: grey;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../gui/Resources_light.qrc">
-             <normaloff>:/refresh_issues</normaloff>:/refresh_issues</iconset>
+            <iconset resource="../../../gui/Resources_common.qrc">
+             <normaloff>:/refresh</normaloff>:/refresh</iconset>
            </property>
            <property name="iconSize">
             <size>

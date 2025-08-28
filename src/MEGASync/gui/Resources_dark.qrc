@@ -185,7 +185,6 @@
         <file alias="tab_others_solid">images/themed/dark/Stalled Issues/Tabs/tab_others_solid.svg</file>
         <file alias="tab_resolved_outline">images/themed/dark/Stalled Issues/Tabs/tab_resolved_outline.svg</file>
         <file alias="tab_resolved_solid">images/themed/dark/Stalled Issues/Tabs/tab_resolved_solid.svg</file>
-        <file alias="refresh_issues">images/themed/dark/Stalled Issues/Header/refresh_issues.svg</file>
         <file alias="settings">images/themed/dark/settings.svg</file>
         <file alias="MEGA">images/themed/dark/MEGA.svg</file>
         <file alias="monitor">images/themed/dark/monitor.svg</file>

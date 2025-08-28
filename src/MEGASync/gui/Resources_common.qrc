@@ -1235,5 +1235,6 @@
         <file alias="chevron-left_default">images/themed/tokenizable/chevron-left_default.svg</file>
         <file alias="alert-triangle">images/themed/tokenizable/Stalled Issues/Header/alert-triangle.svg</file>
         <file alias="info">images/themed/tokenizable/info.svg</file>
+        <file alias="refresh">images/themed/tokenizable/Stalled Issues/refresh.svg</file>
     </qresource>
 </RCC>

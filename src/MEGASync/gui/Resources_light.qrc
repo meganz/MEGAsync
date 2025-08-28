@@ -190,7 +190,6 @@
         <file alias="tab_resolved_outline">images/themed/light/Stalled Issues/Tabs/tab_resolved_outline.svg</file>
         <file alias="tab_resolved_solid">images/themed/light/Stalled Issues/Tabs/tab_resolved_solid.svg</file>
         <file alias="settings">images/themed/light/settings.svg</file>
-        <file alias="refresh_issues">images/themed/light/Stalled Issues/Header/refresh_issues.svg</file>
         <file alias="MEGA">images/themed/light/MEGA.svg</file>
         <file alias="monitor">images/themed/light/monitor.svg</file>
         <file alias="arrow_corner_right">images/themed/light/Stalled Issues/Path/arrow_corner_right.svg</file>
