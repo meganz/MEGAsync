@@ -6,119 +6,114 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>420</width>
-    <height>322</height>
+    <width>460</width>
+    <height>344</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>420</width>
-    <height>322</height>
+    <width>460</width>
+    <height>344</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>420</width>
-    <height>322</height>
+    <width>460</width>
+    <height>344</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Stream from MEGA</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget
+   <string notr="true">#lFileType, #lState, #toolButtonError, #bCopyLink
 {
-font-size: 11px;
+border: none;
 }
 
-#lStreamResourceDesc, #lFileInfoDesc, #lOpenWithDesc, #labelError
+#StreamingFromMegaDialog
 {
-  font-family: &quot;Lato&quot;;
+background-color: #FFFFFF;  /*colorToken.page-background*/
+}
+
+#lStreamResourceDesc, #lFileInfoDesc, #lOpenWithDesc
+{
+  font-family: &quot;Inter&quot;;
   font-size: 12px;
-  color: #000000;
+  color: #303233; /*colorToken.text-primary*/
 }
-#labelError
-{
-  font-size: 13px;
-}
-#lFileSize
+
+#lFileSize, #labelError
 {
   font-family: &quot;Lato&quot;;
   font-size: 12px;
   color: #666666;
 }
-#wContainer
+
+#lFileName
 {
-	background-color: white;
-}
-#lFileInfoDesc, #lOpenWithDesc, #lStreamResourceDesc
-{
-    padding-left: 13px;
-}
-#lNothingSelected
-{
-   font-size: 12px;
-	color: rgba(0, 0, 0, 50)
+  font-family: &quot;Inter&quot;;
+  font-size: 12px;
+  color: #303233; /*colorToken.text-primary*/
 }
 
-#WaitingForFileInfoLabel
+#lFileSize
 {
-    font-size: 12px;
-    color: rgba(0, 0, 0, 50)
+  font-family: &quot;Inter&quot;;
+  font-size: 10px;
+  color: #303233; /*colorToken.text-secondary*/
 }
 
-#lFileName, #lState
+#lNothingSelected, #WaitingForFileInfoLabel
 {
-	font-size: 12px;
-	color: #000000;
+  font-family: &quot;Inter&quot;;
+  font-size: 12px;
+  color: #303233; /*colorToken.text-on-color-disabled*/
 }
-#bCopyLink
-{
-    border: 1px solid #dfdfd1;
-    border-radius: 4px;
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 rgba(246,247,250,30), stop: 1 rgba(232,233,235,30));
-}</string>
+</string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_6">
    <property name="spacing">
-    <number>0</number>
+    <number>-1</number>
    </property>
    <property name="leftMargin">
-    <number>0</number>
+    <number>24</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>24</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>24</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>11</number>
    </property>
    <item>
     <widget class="QWidget" name="wStreamResource" native="true">
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>80</height>
+       <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>80</height>
+       <height>16777215</height>
       </size>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <property name="spacing">
-       <number>0</number>
+       <number>14</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>9</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
@@ -128,16 +123,22 @@ font-size: 11px;
       </property>
       <item>
        <widget class="QLabel" name="lStreamResourceDesc">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>16</height>
+          <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>16</height>
+          <height>16777215</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -145,6 +146,9 @@ font-size: 11px;
         </property>
         <property name="text">
          <string>Select media from...</string>
+        </property>
+        <property name="semibold" stdset="0">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -167,7 +171,7 @@ font-size: 11px;
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <property name="spacing">
-          <number>5</number>
+          <number>-1</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -191,14 +195,14 @@ font-size: 11px;
            </property>
            <property name="minimumSize">
             <size>
-             <width>197</width>
-             <height>32</height>
+             <width>0</width>
+             <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>197</width>
-             <height>32</height>
+             <width>16777215</width>
+             <height>16777215</height>
             </size>
            </property>
            <property name="styleSheet">
@@ -207,24 +211,36 @@ font-size: 11px;
            <property name="text">
             <string>Cloud Drive</string>
            </property>
+           <property name="dimension" stdset="0">
+            <string>small</string>
+           </property>
+           <property name="type" stdset="0">
+            <string>primary</string>
+           </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="bFromPublicLink">
            <property name="minimumSize">
             <size>
-             <width>197</width>
-             <height>32</height>
+             <width>0</width>
+             <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>197</width>
-             <height>32</height>
+             <width>16777215</width>
+             <height>16777215</height>
             </size>
            </property>
            <property name="text">
             <string>Public link</string>
+           </property>
+           <property name="dimension" stdset="0">
+            <string>small</string>
+           </property>
+           <property name="type" stdset="0">
+            <string>secondary</string>
            </property>
           </widget>
          </item>
@@ -238,7 +254,7 @@ font-size: 11px;
     <widget class="QWidget" name="wContainer" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <property name="spacing">
-       <number>0</number>
+       <number>-1</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -250,7 +266,7 @@ font-size: 11px;
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>15</number>
       </property>
       <item>
        <widget class="QWidget" name="wStatus" native="true">
@@ -265,23 +281,29 @@ font-size: 11px;
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
          </property>
          <item>
           <widget class="QLabel" name="lFileInfoDesc">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>40</height>
+             <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
              <width>16777215</width>
-             <height>40</height>
+             <height>16777215</height>
             </size>
            </property>
            <property name="styleSheet">
@@ -289,6 +311,9 @@ font-size: 11px;
            </property>
            <property name="text">
             <string>File info:</string>
+           </property>
+           <property name="semibold" stdset="0">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -320,7 +345,7 @@ font-size: 11px;
              <number>0</number>
             </property>
             <property name="rightMargin">
-             <number>17</number>
+             <number>0</number>
             </property>
             <property name="bottomMargin">
              <number>0</number>
@@ -340,10 +365,10 @@ font-size: 11px;
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">background-color: white;</string>
+               <string notr="true"/>
               </property>
               <property name="currentIndex">
-               <number>0</number>
+               <number>1</number>
               </property>
               <widget class="QWidget" name="pFileInfo">
                <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -351,7 +376,7 @@ font-size: 11px;
                  <number>6</number>
                 </property>
                 <property name="leftMargin">
-                 <number>9</number>
+                 <number>0</number>
                 </property>
                 <property name="topMargin">
                  <number>0</number>
@@ -377,7 +402,7 @@ font-size: 11px;
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">border: none;</string>
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string/>
@@ -478,7 +503,7 @@ font-size: 11px;
                          </size>
                         </property>
                         <property name="styleSheet">
-                         <string notr="true">border:none;</string>
+                         <string notr="true"/>
                         </property>
                         <property name="text">
                          <string/>
@@ -516,7 +541,7 @@ font-size: 11px;
               <widget class="QWidget" name="pWaitingForFileInfo">
                <layout class="QHBoxLayout" name="horizontalLayout_8">
                 <property name="leftMargin">
-                 <number>16</number>
+                 <number>0</number>
                 </property>
                 <property name="topMargin">
                  <number>0</number>
@@ -550,6 +575,24 @@ font-size: 11px;
                        </color>
                       </brush>
                      </colorrole>
+                     <colorrole role="Text">
+                      <brush brushstyle="SolidPattern">
+                       <color alpha="50">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
+                       </color>
+                      </brush>
+                     </colorrole>
+                     <colorrole role="ButtonText">
+                      <brush brushstyle="SolidPattern">
+                       <color alpha="50">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
+                       </color>
+                      </brush>
+                     </colorrole>
                      <colorrole role="Base">
                       <brush brushstyle="SolidPattern">
                        <color alpha="255">
@@ -565,6 +608,15 @@ font-size: 11px;
                         <red>255</red>
                         <green>255</green>
                         <blue>255</blue>
+                       </color>
+                      </brush>
+                     </colorrole>
+                     <colorrole role="PlaceholderText">
+                      <brush brushstyle="SolidPattern">
+                       <color alpha="25">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
                        </color>
                       </brush>
                      </colorrole>
@@ -588,6 +640,24 @@ font-size: 11px;
                        </color>
                       </brush>
                      </colorrole>
+                     <colorrole role="Text">
+                      <brush brushstyle="SolidPattern">
+                       <color alpha="50">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
+                       </color>
+                      </brush>
+                     </colorrole>
+                     <colorrole role="ButtonText">
+                      <brush brushstyle="SolidPattern">
+                       <color alpha="50">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
+                       </color>
+                      </brush>
+                     </colorrole>
                      <colorrole role="Base">
                       <brush brushstyle="SolidPattern">
                        <color alpha="255">
@@ -603,6 +673,15 @@ font-size: 11px;
                         <red>255</red>
                         <green>255</green>
                         <blue>255</blue>
+                       </color>
+                      </brush>
+                     </colorrole>
+                     <colorrole role="PlaceholderText">
+                      <brush brushstyle="SolidPattern">
+                       <color alpha="25">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
                        </color>
                       </brush>
                      </colorrole>
@@ -626,6 +705,24 @@ font-size: 11px;
                        </color>
                       </brush>
                      </colorrole>
+                     <colorrole role="Text">
+                      <brush brushstyle="SolidPattern">
+                       <color alpha="50">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
+                       </color>
+                      </brush>
+                     </colorrole>
+                     <colorrole role="ButtonText">
+                      <brush brushstyle="SolidPattern">
+                       <color alpha="50">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
+                       </color>
+                      </brush>
+                     </colorrole>
                      <colorrole role="Base">
                       <brush brushstyle="SolidPattern">
                        <color alpha="255">
@@ -644,15 +741,28 @@ font-size: 11px;
                        </color>
                       </brush>
                      </colorrole>
+                     <colorrole role="PlaceholderText">
+                      <brush brushstyle="SolidPattern">
+                       <color alpha="25">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
+                       </color>
+                      </brush>
+                     </colorrole>
                     </disabled>
                    </palette>
                   </property>
                   <property name="font">
                    <font>
+                    <family>Inter</family>
                     <pointsize>-1</pointsize>
                     <italic>false</italic>
                     <bold>false</bold>
                    </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string>Please wait...</string>
@@ -676,7 +786,7 @@ font-size: 11px;
                   <number>0</number>
                  </property>
                  <property name="leftMargin">
-                  <number>16</number>
+                  <number>0</number>
                  </property>
                  <property name="topMargin">
                   <number>0</number>
@@ -703,22 +813,21 @@ font-size: 11px;
              <widget class="QToolButton" name="bCopyLink">
               <property name="minimumSize">
                <size>
-                <width>32</width>
-                <height>32</height>
+                <width>16</width>
+                <height>16</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>32</width>
-                <height>32</height>
+                <width>16</width>
+                <height>16</height>
                </size>
               </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="styleSheet">
-               <string notr="true">
-</string>
+               <string notr="true"/>
               </property>
               <property name="text">
                <string/>
@@ -740,18 +849,18 @@ font-size: 11px;
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>90</height>
+          <height>0</height>
          </size>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <property name="spacing">
-          <number>0</number>
+          <number>14</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>7</number>
+          <number>0</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
@@ -761,8 +870,17 @@ font-size: 11px;
          </property>
          <item>
           <widget class="QLabel" name="lOpenWithDesc">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Open with:</string>
+           </property>
+           <property name="semibold" stdset="0">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -773,7 +891,7 @@ font-size: 11px;
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_4">
             <property name="spacing">
-             <number>8</number>
+             <number>-1</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -785,7 +903,7 @@ font-size: 11px;
              <number>0</number>
             </property>
             <property name="bottomMargin">
-             <number>23</number>
+             <number>0</number>
             </property>
             <item>
              <widget class="QPushButton" name="bOpenDefault">
@@ -794,18 +912,24 @@ font-size: 11px;
               </property>
               <property name="minimumSize">
                <size>
-                <width>197</width>
+                <width>0</width>
                 <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>197</width>
+                <width>16777215</width>
                 <height>16777215</height>
                </size>
               </property>
               <property name="text">
                <string>Default application</string>
+              </property>
+              <property name="dimension" stdset="0">
+               <string>small</string>
+              </property>
+              <property name="type" stdset="0">
+               <string>secondary</string>
               </property>
              </widget>
             </item>
@@ -822,12 +946,18 @@ font-size: 11px;
               </property>
               <property name="maximumSize">
                <size>
-                <width>197</width>
+                <width>16777215</width>
                 <height>16777215</height>
                </size>
               </property>
               <property name="text">
                <string>Choose application</string>
+              </property>
+              <property name="dimension" stdset="0">
+               <string>small</string>
+              </property>
+              <property name="type" stdset="0">
+               <string>secondary</string>
               </property>
              </widget>
             </item>
@@ -859,13 +989,13 @@ font-size: 11px;
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_5">
       <property name="leftMargin">
-       <number>12</number>
+       <number>0</number>
       </property>
       <property name="topMargin">
-       <number>6</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>16</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -885,7 +1015,7 @@ font-size: 11px;
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">border: none;</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string notr="true"/>
@@ -947,6 +1077,12 @@ font-size: 11px;
         </property>
         <property name="text">
          <string>Close</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string>small</string>
+        </property>
+        <property name="type" stdset="0">
+         <string>primary</string>
         </property>
        </widget>
       </item>
