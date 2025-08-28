@@ -366,12 +366,31 @@ width: 48px;
 }
 
 /*
-    type = outline
+    type = outline. Due to box model paiting we need to substract the border from the width to maintain at its expected height (4px)
 */
 QPushButton[type="outline"]
 {
 border-width: 2px;
 border-style: solid;
+}
+
+/*  */
+
+QPushButton[type="outline"][dimension=small]
+{
+height: 22px;
+
+}
+
+QPushButton[type="outline"][dimension=medium]
+{
+height: 32px;
+
+}
+
+QPushButton[type="outline"][dimension=large]
+{
+height: 42px;
 }
 
 /*
