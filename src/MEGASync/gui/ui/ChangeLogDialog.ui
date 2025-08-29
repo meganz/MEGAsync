@@ -50,10 +50,6 @@ border-bottom: 1px solid #FFFFFF; /*colorToken.border-strong*/
   color: #333333; /*colorToken.text-secondary*/
 }
 
-#bMEGAlogo {
-border: none;
-}
-
 #lCopyright, #labelAllRightsReserved
 {
   font-family: &quot;Inter&quot;;
@@ -158,7 +154,7 @@ border: none;
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="bMEGAlogo">
+            <widget class="QToolButton" name="bMEGAlogo">
              <property name="minimumSize">
               <size>
                <width>80</width>
@@ -186,6 +182,9 @@ border: none;
                <width>80</width>
                <height>80</height>
               </size>
+             </property>
+             <property name="class" stdset="0">
+              <string notr="true">icon-label</string>
              </property>
             </widget>
            </item>
