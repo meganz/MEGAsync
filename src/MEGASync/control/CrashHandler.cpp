@@ -393,7 +393,6 @@ void CrashHandler::sendOSNotification(bool succeeded)
         {
             if (action == DesktopAppNotificationBase::Action::firstButton)
             {
-                // FIXME mega.app -- contact url
                 Utilities::openUrl(ServiceUrls::instance()->getContactUrl());
             }
         };

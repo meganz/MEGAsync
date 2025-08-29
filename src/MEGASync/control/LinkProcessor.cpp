@@ -353,7 +353,6 @@ void LinkProcessor::requestLinkInfo()
     if (!isValidIndex(mLinkList, mCurrentIndex)) { return; }
 
     const QString link = mLinkList[mCurrentIndex];
-    // FIXME mega.app -- link
     if (ServiceUrls::instance()->isFolderLink(link))
     {
         std::unique_ptr<char []> authToken(mMegaApi->getAccountAuth());
@@ -364,7 +363,6 @@ void LinkProcessor::requestLinkInfo()
 
         mMegaApiFolders->loginToFolder(link.toUtf8().constData(), mDelegateListener.get());
     }
-    // FIXME mega.app -- link
     else if (ServiceUrls::instance()->isSetLink(link))
     {
         emit requestFetchSetFromLink(link);

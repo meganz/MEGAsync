@@ -3518,7 +3518,7 @@ void MegaApplication::handleMEGAurl(const QUrl &url)
         QMutexLocker locker(&mMutexOpenUrls);
 
         //Remove outdated url refs
-        QMutableMapIterator<QString, std::chrono::system_clock::time_point> it(mOpenUrlsClusterTs);
+        QMutableMapIterator<QUrl, std::chrono::system_clock::time_point> it(mOpenUrlsClusterTs);
         while (it.hasNext())
         {
             it.next();
@@ -3531,7 +3531,7 @@ void MegaApplication::handleMEGAurl(const QUrl &url)
         }
 
         //Check if URl was notified within last openUrlClusterMaxElapsedTime
-        const auto megaUrlIterator = mOpenUrlsClusterTs.find(url.fragment());
+        const auto megaUrlIterator = mOpenUrlsClusterTs.find(url);
         const auto itemFound(megaUrlIterator != mOpenUrlsClusterTs.end());
         if(itemFound)
         {
@@ -3539,10 +3539,10 @@ void MegaApplication::handleMEGAurl(const QUrl &url)
             return;
         }
 
-        mOpenUrlsClusterTs.insert(url.fragment(), std::chrono::system_clock::now());
+        mOpenUrlsClusterTs.insert(url, std::chrono::system_clock::now());
     }
 
-    megaApi->getSessionTransferURL(url.fragment().toUtf8().constData());
+    megaApi->getSessionTransferURL(url.toString(QUrl::RemoveScheme).toUtf8().constData());
 }
 
 void MegaApplication::handleLocalPath(const QUrl &url)
@@ -3902,19 +3902,17 @@ void MegaApplication::pauseTransfers()
 
 void MegaApplication::officialWeb()
 {
-    // FIXME mega.app -- base url
     Utilities::openUrl(ServiceUrls::instance()->getBaseUrl());
 }
 
 void MegaApplication::goToMyCloud()
 {
-    auto rootNode(getRootNode());
-    if (rootNode)
+    auto node(getRootNode());
+    if (node)
     {
-        std::unique_ptr<char[]> rootBase64Handle(rootNode->getBase64Handle());
-        const QString rootID(QString::fromUtf8(rootBase64Handle.get()));
-        const QString url(QString::fromUtf8("fm/%1").arg(rootID));
-        megaApi->getSessionTransferURL(url.toUtf8().constData());
+        std::unique_ptr<char[]> handle(node->getBase64Handle());
+        const auto url = ServiceUrls::instance()->getNodeUrl(QString::fromUtf8(handle.get()));
+        Utilities::openUrl(url);
 
         mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_CLOUD_DRIVE_CLICKED,
                                              sender(),
@@ -4815,12 +4813,9 @@ void MegaApplication::shellViewOnMega(const QString& path, bool versions)
 
 void MegaApplication::shellViewOnMegaByHandle(MegaHandle handle, bool versions)
 {
-    const char* handleBase64Pointer{MegaApi::handleToBase64(handle)};
-    const QString handleArgument{QString::fromUtf8(handleBase64Pointer)};
-    delete [] handleBase64Pointer;
-    const QString versionsArgument{versions ? QString::fromUtf8("/versions") : QString::fromUtf8("")};
-    const QString url{QString::fromUtf8("fm%1/%2").arg(versionsArgument).arg(handleArgument)};
-    megaApi->getSessionTransferURL(url.toUtf8().constData());
+    std::unique_ptr<const char[]> nodeHandle(MegaApi::handleToBase64(handle));
+    Utilities::openUrl(
+        ServiceUrls::instance()->getNodeUrl(QString::fromUtf8(nodeHandle.get()), versions));
 }
 
 void MegaApplication::exportNodes(QList<MegaHandle> exportList, QStringList extraLinks)
@@ -5134,7 +5129,6 @@ void MegaApplication::onUpdateNotFound(bool requested)
         }
         else
         {
-            // FIXME mega.app -- installer url
             auto msg = tr("There was a problem installing the update. Please try again later or "
                           "download the last version from:\nhttps://mega.co.nz/#sync");
             // Replace old url
@@ -5152,7 +5146,6 @@ void MegaApplication::onUpdateError()
     {
         return;
     }
-    // FIXME mega.app -- installer url
     auto msg = tr("There was a problem installing the update. Please try again later or download "
                   "the last version from:\nhttps://mega.co.nz/#sync");
     // Replace old url

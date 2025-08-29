@@ -65,7 +65,7 @@ public:
     static QUrl getFmUrl();
     static QUrl getDeviceCenterUrl();
     static QUrl getOpenInMegaUrl(const QString& deviceID, const QString& nodeHandle);
-    static QUrl getNodeUrl(const QString& nodeHandle);
+    static QUrl getNodeUrl(const QString& nodeHandle, bool versions = false);
     static QUrl getContactsUrl();
     static QUrl getContactUrl(const QString& userHandle);
     static QUrl getChatUrl(const QString& userHandle);

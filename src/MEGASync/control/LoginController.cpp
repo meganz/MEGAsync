@@ -1100,7 +1100,6 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
             {
                 QString text = tr("You have been logged out. Please contact [A]support@mega.nz[/A] "
                                   "if this issue persists.");
-                // FIXME mega.app -- support
                 Text::Link link(ServiceUrls::getSupportEmail().toString());
                 link.process(text);
                 msgInfo.descriptionText = text;

@@ -405,9 +405,7 @@ void HTTPServer::openLinkRequest(QString &response, const HTTPRequest& request)
 
     if (handle.size() == 8 && key.size() == 43)
     {
-        // FIXME mega.app -- link
-        QString link = QString::fromUtf8("%1/#!%2!%3")
-                           .arg(ServiceUrls::instance()->getLinkBaseUrl().toString(), handle, key);
+        QString link = ServiceUrls::instance()->getRemoteNodeLinkUrl(handle, key).toString();
         emit onLinkReceived(link, auth);
         response = QLatin1String("0");
 

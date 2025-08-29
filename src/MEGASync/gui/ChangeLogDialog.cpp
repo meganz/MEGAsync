@@ -91,13 +91,11 @@ void ChangeLogDialog::setChangeLogNotes(QString notes)
 
 void ChangeLogDialog::on_bTerms_clicked()
 {
-    // FIXME mega.app -- base url (io)
     Utilities::openUrl(ServiceUrls::getServiceTermsUrl());
 }
 
 void ChangeLogDialog::on_bPolicy_clicked()
 {
-    // FIXME mega.app -- base url (io)
     Utilities::openUrl(ServiceUrls::getServicePolicyUrl());
 }
 

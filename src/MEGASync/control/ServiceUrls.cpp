@@ -307,134 +307,136 @@ QStringList ServiceUrls::getSupportedLinksUrls() const
 
 QUrl ServiceUrls::getSessionTransferBaseUrl()
 {
-    return {QLatin1String("mega://")};
+    return {QLatin1String("mega:")};
 }
 
 QUrl ServiceUrls::getFmUrl()
 {
     auto url = getSessionTransferBaseUrl();
-    url.setFragment(QLatin1String("fm"));
+    url.setPath(QLatin1String("fm"));
     return url;
 }
 
 QUrl ServiceUrls::getDeviceCenterUrl()
 {
     auto url = getFmUrl();
-    url.setFragment(url.fragment() + QLatin1String("/device-centre"));
+    url.setPath(url.path() + QLatin1String("/device-centre"));
     return url;
 }
 
 QUrl ServiceUrls::getOpenInMegaUrl(const QString& deviceID, const QString& nodeHandle)
 {
     auto url = getDeviceCenterUrl();
-    url.setFragment(url.fragment() + QString::fromUtf8("%1/%2").arg(deviceID, nodeHandle));
+    url.setPath(url.path() + QString::fromUtf8("%1/%2").arg(deviceID, nodeHandle));
     return url;
 }
 
-QUrl ServiceUrls::getNodeUrl(const QString& nodeHandle)
+QUrl ServiceUrls::getNodeUrl(const QString& nodeHandle, bool versions)
 {
     auto url = getFmUrl();
-    url.setFragment(url.fragment() + QString::fromUtf8("/%1").arg(nodeHandle));
+    if (versions)
+    {
+        url.setPath(url.path() + QLatin1String("/versions"));
+    }
+    url.setPath(url.path() + QString::fromUtf8("/%1").arg(nodeHandle));
     return url;
 }
 
 QUrl ServiceUrls::getContactsUrl()
 {
     auto url = getFmUrl();
-    url.setFragment(url.fragment() + QLatin1String("/contacts"));
+    url.setPath(url.path() + QLatin1String("/contacts"));
     return url;
 }
 
 QUrl ServiceUrls::getContactUrl(const QString& userHandle)
 {
     auto url = getFmUrl();
-    url.setFragment(url.fragment() + QString::fromUtf8("/%1").arg(userHandle));
+    url.setPath(url.path() + QString::fromUtf8("/%1").arg(userHandle));
     return url;
 }
 
 QUrl ServiceUrls::getChatUrl(const QString& userHandle)
 {
     auto url = getFmUrl();
-    url.setFragment(url.fragment() + QString::fromUtf8("/chat/p/%1").arg(userHandle));
+    url.setPath(url.path() + QString::fromUtf8("/chat/p/%1").arg(userHandle));
     return url;
 }
 
 QUrl ServiceUrls::getAccountUrl()
 {
     auto url = getFmUrl();
-    url.setFragment(url.fragment() + QLatin1String("/account"));
+    url.setPath(url.path() + QLatin1String("/account"));
     return url;
 }
 
 QUrl ServiceUrls::getSessionHistoryUrl()
 {
     auto url = getAccountUrl();
-    url.setFragment(url.fragment() + QLatin1String("/history"));
+    url.setPath(url.path() + QLatin1String("/history"));
     return url;
 }
 
 QUrl ServiceUrls::getAccountPlanUrl()
 {
     auto url = getAccountUrl();
-    url.setFragment(url.fragment() + QLatin1String("/plan"));
+    url.setPath(url.path() + QLatin1String("/plan"));
     return url;
 }
 
 QUrl ServiceUrls::getAccountNotificationsUrl()
 {
     auto url = getAccountUrl();
-    url.setFragment(url.fragment() + QLatin1String("/notifications"));
+    url.setPath(url.path() + QLatin1String("/notifications"));
     return url;
 }
 
 QUrl ServiceUrls::getIncomingPendingContactUrl()
 {
     auto url = getFmUrl();
-    url.setFragment(url.fragment() + QLatin1String("/ipc"));
+    url.setPath(url.path() + QLatin1String("/ipc"));
     return url;
 }
 
 QUrl ServiceUrls::getProBaseUrl()
 {
     auto url = getSessionTransferBaseUrl();
-    url.setFragment(QLatin1String("pro"));
+    url.setPath(QLatin1String("pro"));
     return url;
 }
 
 QUrl ServiceUrls::getProUrl()
 {
     auto url = getProBaseUrl();
-    url.setFragment(url.fragment() + QString::fromUtf8("/%1").arg(getProUrlParameters()));
+    url.setPath(url.path() + QString::fromUtf8("/%1").arg(getProUrlParameters()));
     return url;
 }
 
 QUrl ServiceUrls::getProFlexiUrl()
 {
     auto url = getProUrl();
-    // Note: we can't use setQuery because the "?x=y" is expected to be at the end of the url.
-    url.setFragment(url.fragment() + QLatin1String("?tab=flexi"));
+    url.setQuery(QLatin1String("tab=flexi"));
     return url;
 }
 
 QUrl ServiceUrls::getSmallProUrl()
 {
     auto url = getProUrl();
-    // Note: we can't use setQuery because the "?x=y" is expected to be at the end of the url.
-    url.setFragment(url.fragment() + QLatin1String("?tab=exc"));
+    url.setQuery(QLatin1String("tab=exc"));
     return url;
 }
 
 QUrl ServiceUrls::getRepayBaseUrl()
 {
     auto url = getSessionTransferBaseUrl();
-    url.setFragment(QLatin1String("repay"));
+    url.setPath(QLatin1String("repay"));
     return url;
 }
 
 QUrl ServiceUrls::getRepayUrl()
 {
     auto url = getRepayBaseUrl();
-    url.setFragment(url.fragment() + QString::fromUtf8("/%1").arg(getProUrlParameters()));
+    url.setPath(url.path() + QString::fromUtf8("/%1").arg(getProUrlParameters()));
     return url;
 }
 
@@ -453,8 +455,8 @@ QUrl ServiceUrls::getUpsellPlanUrl(int proLevel, int periodInMonths)
         if (isValid)
         {
             url = getSessionTransferBaseUrl();
-            url.setFragment(QString::fromUtf8("propay_%1/%2")
-                                .arg(accountTypeVar.toString(), getProUrlParameters()));
+            url.setPath(QString::fromUtf8("propay_%1/%2")
+                            .arg(accountTypeVar.toString(), getProUrlParameters()));
         }
     }
 
@@ -463,8 +465,7 @@ QUrl ServiceUrls::getUpsellPlanUrl(int proLevel, int periodInMonths)
         url = getProUrl();
     }
 
-    // Note: we can't use setQuery because the "?x=y" is expected to be at the end of the url.
-    url.setFragment(url.fragment() + QString::fromLatin1("?m=%1").arg(periodInMonths));
+    url.setQuery(QString::fromLatin1("m=%1").arg(periodInMonths));
 
     return url;
 }

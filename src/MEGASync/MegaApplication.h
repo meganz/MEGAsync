@@ -477,7 +477,7 @@ protected:
     std::shared_ptr<DesktopNotifications> mOsNotifications;
     AccountStatusController* mStatusController;
     QMutex mMutexOpenUrls;
-    QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
+    QMap<QUrl, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
 
     LogoutController* mLogoutController;
 

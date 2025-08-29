@@ -27,7 +27,6 @@ Login2FA::Login2FA(QWidget *parent) :
     ui->leCode->setFocus();
 
     auto lostAuthCodeText = tr("[A]Lost your authenticator device?[/A]");
-    // FIXME mega.app -- recovery
     const auto recoveryUrl = ServiceUrls::instance()->getRecoveryUrl().toString();
     lostAuthCodeText.replace(
         QLatin1String("[A]"),
@@ -81,7 +80,6 @@ void Login2FA::onCancelClicked()
 
 void Login2FA::onHelpClicked()
 {
-    // FIXME mega.app -- base url, recovery
     Utilities::openUrl(ServiceUrls::instance()->getRecoveryUrl());
 }
 

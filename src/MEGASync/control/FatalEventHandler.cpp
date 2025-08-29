@@ -84,7 +84,6 @@ QString FatalEventHandler::getErrorReason() const
         }
         case FatalErrorCode::ERR_FAILURE_UNSERIALIZE_NODE:
         {
-            // FIXME mega.app -- installer url
             auto msg = QCoreApplication::translate(
                 "MegaError",
                 "A serious issue has been detected in the MEGA software or the connection between "

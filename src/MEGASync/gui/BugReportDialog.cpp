@@ -186,7 +186,6 @@ void BugReportDialog::onReportFailed()
         msgInfo.titleText = tr("You must wait 10 minutes before submitting another issue");
         QString text = tr("Please try again later or contact our support team via "
                           "[A]support@mega.co.nz[/A] if the problem persists.");
-        // FIXME mega.app -- support
         Text::Link link(ServiceUrls::getSupportEmail().toString());
         link.process(text);
         msgInfo.descriptionText = text;
@@ -196,7 +195,6 @@ void BugReportDialog::onReportFailed()
     {
         QString text = tr("Bug report can't be submitted due to some error. Please try again or "
                           "contact our support team via [A]support@mega.co.nz[/A]");
-        // FIXME mega.app -- support
         Text::Link link(ServiceUrls::getSupportEmail().toString());
         link.process(text);
         msgInfo.descriptionText = text;
