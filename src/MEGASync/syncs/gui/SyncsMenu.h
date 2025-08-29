@@ -28,13 +28,13 @@ public:
     QPointer<MegaMenuItemAction> getAction();
     void callMenu(const QPoint& p);
     void setEnabled(bool state);
+    virtual ~SyncsMenu();
 
 signals:
     void addSync(mega::MegaSync::SyncType type);
 
 protected:
     explicit SyncsMenu(mega::MegaSync::SyncType type, int itemIndent, QWidget* parent = nullptr);
-    ~SyncsMenu();
 
     bool eventFilter(QObject* obj, QEvent* e) override;
     virtual QString createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const;

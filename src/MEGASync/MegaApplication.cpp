@@ -5604,6 +5604,8 @@ void MegaApplication::createInfoDialogMenus()
 #endif
     {
         deleteMenu(infoDialogMenu);
+        delete mBackupsMenu;
+        delete mSyncs2waysMenu;
         infoDialogMenu = new QMenu(infoDialog);
 
         //Highlight menu entry on mouse over
