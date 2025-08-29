@@ -14,6 +14,10 @@ const QLatin1String SYNC_ICON("://sync-01.svg");
 const QLatin1String SYNC_ADD_ICON("://sync-plus.svg");
 const QLatin1String BACKUPC_ICON("://database.svg");
 const QLatin1String BACKUP_ADD_ICON("://database-plus.svg");
+const QString ADD_BACKUP = QCoreApplication::translate("BackupSyncsMenu", "Add Backup");
+const QString ADD_SYNC = QCoreApplication::translate("TwoWaySyncsMenu", "Add Sync");
+const QString BACKUPS = QCoreApplication::translate("BackupSyncsMenu", "Backups");
+const QString SYNCS = QCoreApplication::translate("TwoWaySyncsMenu", "Syncs");
 
 SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, int itemIndent, QWidget* parent):
     QObject(parent),
@@ -23,7 +27,7 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, int itemIndent, QWidget* par
 {
     mMenu->setProperty("class", QLatin1String("MegaMenu"));
     mAddAction = new MegaMenuItemAction(
-        QString(),
+        type == mega::MegaSync::SyncType::TYPE_BACKUP ? ADD_BACKUP : ADD_SYNC,
         QLatin1String(type == mega::MegaSync::SyncType::TYPE_BACKUP ? BACKUP_ADD_ICON :
                                                                       SYNC_ADD_ICON),
         0,
@@ -32,7 +36,7 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, int itemIndent, QWidget* par
             this, &SyncsMenu::onAddSync);
 
     mMenuAction = new MegaMenuItemAction(
-        QString(),
+        type == mega::MegaSync::SyncType::TYPE_BACKUP ? BACKUPS : SYNCS,
         QLatin1String(type == mega::MegaSync::SyncType::TYPE_BACKUP ? BACKUPC_ICON : SYNC_ICON),
         0);
     mMenuAction->setSubmenu(mMenu);
