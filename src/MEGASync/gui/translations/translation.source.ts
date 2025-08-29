@@ -3921,6 +3921,19 @@ You will not be able to regain access to your stored data or be authorised to si
     </message>
 </context>
 <context>
+    <name>MegaInputDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for Cancel buttons. SNC-5798.</translatorcomment>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for Ok buttons. SNC-5798.</translatorcomment>
+        <translation type="unfinished">OK</translation>
+    </message>
+</context>
+<context>
     <name>MegaNodeNames</name>
     <message>
         <source>Backups</source>

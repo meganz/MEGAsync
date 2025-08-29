@@ -212,10 +212,10 @@ background-color: #FFFFFF;  /*colorToken.page-background*/
             <string>Cloud Drive</string>
            </property>
            <property name="dimension" stdset="0">
-            <string>small</string>
+            <string notr="true">small</string>
            </property>
            <property name="type" stdset="0">
-            <string>primary</string>
+            <string notr="true">primary</string>
            </property>
           </widget>
          </item>
@@ -237,10 +237,10 @@ background-color: #FFFFFF;  /*colorToken.page-background*/
             <string>Public link</string>
            </property>
            <property name="dimension" stdset="0">
-            <string>small</string>
+            <string notr="true">small</string>
            </property>
            <property name="type" stdset="0">
-            <string>secondary</string>
+            <string notr="true">secondary</string>
            </property>
           </widget>
          </item>
@@ -926,10 +926,10 @@ background-color: #FFFFFF;  /*colorToken.page-background*/
                <string>Default application</string>
               </property>
               <property name="dimension" stdset="0">
-               <string>small</string>
+               <string notr="true">small</string>
               </property>
               <property name="type" stdset="0">
-               <string>secondary</string>
+               <string notr="true">secondary</string>
               </property>
              </widget>
             </item>
@@ -954,10 +954,10 @@ background-color: #FFFFFF;  /*colorToken.page-background*/
                <string>Choose application</string>
               </property>
               <property name="dimension" stdset="0">
-               <string>small</string>
+               <string notr="true">small</string>
               </property>
               <property name="type" stdset="0">
-               <string>secondary</string>
+               <string notr="true">secondary</string>
               </property>
              </widget>
             </item>
@@ -1079,10 +1079,10 @@ background-color: #FFFFFF;  /*colorToken.page-background*/
          <string>Close</string>
         </property>
         <property name="dimension" stdset="0">
-         <string>small</string>
+         <string notr="true">small</string>
         </property>
         <property name="type" stdset="0">
-         <string>primary</string>
+         <string notr="true">primary</string>
         </property>
        </widget>
       </item>

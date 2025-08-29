@@ -1,6 +1,7 @@
 #include "StreamingFromMegaDialog.h"
 
 #include "DialogOpener.h"
+#include "MegaInputDialog.h"
 #include "MegaNodeNames.h"
 #include "MessageDialogOpener.h"
 #include "NodeSelectorSpecializations.h"
@@ -12,7 +13,6 @@
 
 #include <QCloseEvent>
 #include <QFileDialog>
-#include <QInputDialog>
 #include <QtConcurrent/QtConcurrent>
 
 #include <regex>
@@ -118,27 +118,29 @@ void StreamingFromMegaDialog::on_bFromCloud_clicked()
 
 void StreamingFromMegaDialog::on_bFromPublicLink_clicked()
 {
-    const QPointer<QInputDialog> inputDialog = new QInputDialog(this);
+    const QPointer<MegaInputDialog> inputDialog = new MegaInputDialog(this);
     inputDialog->setWindowTitle(tr("Open link"));
     inputDialog->setLabelText(tr("Enter a MEGA file link:"));
     inputDialog->resize(470, inputDialog->height());
 
-    DialogOpener::showDialog<QInputDialog>(inputDialog, [inputDialog, this]()
-    {
-        if (inputDialog->result() == QDialog::Accepted)
+    DialogOpener::showDialog<MegaInputDialog>(
+        inputDialog,
+        [inputDialog, this]()
         {
-            const auto link = inputDialog->textValue();
-            if (ServiceUrls::instance()->isFolderLink(link))
+            if (inputDialog->result() == QDialog::Accepted)
             {
-                showErrorMessage(tr("Folder links can't be streamed"));
+                const auto link = inputDialog->textValue();
+                if (ServiceUrls::instance()->isFolderLink(link))
+                {
+                    showErrorMessage(tr("Folder links can't be streamed"));
+                }
+                else
+                {
+                    mPublicLink = link;
+                    requestNodeToLinkProcessor();
+                }
             }
-            else
-            {
-                mPublicLink = link;
-                requestNodeToLinkProcessor();
-            }
-        }
-    });
+        });
 }
 
 void StreamingFromMegaDialog::requestNodeToLinkProcessor()
