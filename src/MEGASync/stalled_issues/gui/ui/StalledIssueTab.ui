@@ -29,32 +29,32 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">QFrame[isSelected=true]
+   <string notr="true">StalledIssueTab[isSelected=true]
 {
     border-radius: 16px; 
     border: none;
     background-color: #ff04101E; /*colorToken.selection-control*/
 }
 
-QFrame[isSelected=false][itsHover=true] 
+StalledIssueTab[isSelected=false][itsHover=true] 
 {
     border: none;
 	background-color: transparent;
 }
 
-QFrame[isSelected=false][itsHover=false] 
+StalledIssueTab[isSelected=false][itsHover=false] 
 {
 	border-radius: 16px;
      border: none;
 	background-color: #ffE4E4E5; /*colorToken.surface-3*/
 }
 
-QFrame[isSelected=true] QLabel
+StalledIssueTab[isSelected=true] QLabel
 {
     color: #ff616366; /*colorToken.text-inverse-accent*/
 }
 
-QFrame[isSelected=false] QLabel
+StalledIssueTab[isSelected=false] QLabel
 {
 	color: #ff616366; /*colorToken.text-secondary*/
 }
@@ -102,7 +102,7 @@ QFrame[isSelected=false] QLabel
      <property name="text">
       <string notr="true"/>
      </property>
-     <property name="type" stdset="0">
+     <property name="class" stdset="0">
       <string notr="true">icon-label</string>
      </property>
     </widget>

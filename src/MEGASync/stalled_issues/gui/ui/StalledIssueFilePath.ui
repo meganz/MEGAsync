@@ -296,7 +296,7 @@ font-weight: 400;
                 <height>16</height>
                </size>
               </property>
-              <property name="type" stdset="0">
+              <property name="class" stdset="0">
                <string notr="true">icon-label</string>
               </property>
              </widget>
@@ -338,7 +338,7 @@ font-weight: 400;
              <height>24</height>
             </size>
            </property>
-           <property name="type" stdset="0">
+           <property name="class" stdset="0">
             <string notr="true">icon-label</string>
            </property>
           </widget>
@@ -476,7 +476,7 @@ font-weight: 400;
            <property name="text">
             <string notr="true"/>
            </property>
-           <property name="type" stdset="0">
+           <property name="class" stdset="0">
             <string notr="true">icon-label</string>
            </property>
           </widget>
@@ -755,7 +755,7 @@ font-weight: 400;
                 <height>16</height>
                </size>
               </property>
-              <property name="type" stdset="0">
+              <property name="class" stdset="0">
                <string notr="true">icon-label</string>
               </property>
              </widget>
@@ -891,7 +891,7 @@ font-weight: 400;
            <property name="text">
             <string notr="true"/>
            </property>
-           <property name="type" stdset="0">
+           <property name="class" stdset="0">
             <string notr="true">icon-label</string>
            </property>
           </widget>
@@ -925,7 +925,7 @@ font-weight: 400;
      <property name="text">
       <string/>
      </property>
-     <property name="type" stdset="0">
+     <property name="class" stdset="0">
       <string notr="true">icon-label</string>
      </property>
     </widget>

@@ -27,7 +27,9 @@
   </property>
   <property name="styleSheet">
    <string notr="true">/**********  TOKENIZABLE BUTTONS **********/
-/*ColorTokenIcon;Button;refreshButton;normal;off;colorToken.button-outline*/
+/*ColorTokenIcon;Button;settingsButton;normal;off;colorToken.button-primary*/
+/*ColorTokenIcon;Button;refreshButton;normal;off;colorToken.button-primary*/
+/*ColorTokenIcon;Button;refreshButton;disabled;off;colorToken.icon-disabled*/
 /**********  TOKENIZABLE BUTTONS **********/
 
 
@@ -181,10 +183,16 @@ color: grey;
          </item>
          <item>
           <widget class="QPushButton" name="refreshButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>24</width>
-             <height>0</height>
+             <height>24</height>
             </size>
            </property>
            <property name="maximumSize">
@@ -197,7 +205,7 @@ color: grey;
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="text">
-            <string/>
+            <string notr="true"/>
            </property>
            <property name="icon">
             <iconset resource="../../../gui/Resources_common.qrc">
@@ -209,16 +217,25 @@ color: grey;
              <height>24</height>
             </size>
            </property>
-           <property name="flat">
-            <bool>true</bool>
+           <property name="class" stdset="0">
+            <string notr="true">icon-button</string>
            </property>
            <property name="type" stdset="0">
-            <string notr="true">icon-button</string>
+            <string notr="true">ghost</string>
+           </property>
+           <property name="dimension" stdset="0">
+            <string notr="true">medium</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="SettingsButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>24</width>
@@ -235,7 +252,7 @@ color: grey;
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="text">
-            <string/>
+            <string notr="true"/>
            </property>
            <property name="icon">
             <iconset resource="../../../gui/Resources_light.qrc">
@@ -250,8 +267,14 @@ color: grey;
            <property name="flat">
             <bool>false</bool>
            </property>
-           <property name="type" stdset="0">
+           <property name="class" stdset="0">
             <string notr="true">icon-button</string>
+           </property>
+           <property name="dimension" stdset="0">
+            <string notr="true">medium</string>
+           </property>
+           <property name="type" stdset="0">
+            <string notr="true">ghost</string>
            </property>
           </widget>
          </item>
@@ -531,7 +554,7 @@ color: grey;
            <height>96</height>
           </size>
          </property>
-         <property name="type" stdset="0">
+         <property name="class" stdset="0">
           <string notr="true">icon-label</string>
          </property>
         </widget>
@@ -583,6 +606,9 @@ color: grey;
       </property>
       <item>
        <widget class="QPushButton" name="HelpButton">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>Help</string>
         </property>
@@ -598,6 +624,12 @@ color: grey;
         </property>
         <property name="flat">
          <bool>true</bool>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">link</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string notr="true">small</string>
         </property>
        </widget>
       </item>
@@ -660,6 +692,13 @@ color: grey;
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>SettingsButton</tabstop>
+  <tabstop>stalledIssuesTree</tabstop>
+  <tabstop>doneButton</tabstop>
+  <tabstop>HelpButton</tabstop>
+  <tabstop>emptyIcon</tabstop>
+ </tabstops>
  <resources>
   <include location="../../../gui/Resources_common.qrc"/>
   <include location="../../../gui/Resources_light.qrc"/>

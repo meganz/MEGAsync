@@ -178,7 +178,7 @@
         <property name="text">
          <string notr="true"/>
         </property>
-        <property name="type" stdset="0">
+        <property name="class" stdset="0">
          <string notr="true">icon-label</string>
         </property>
        </widget>
@@ -215,7 +215,7 @@
           <height>48</height>
          </size>
         </property>
-        <property name="type" stdset="0">
+        <property name="class" stdset="0">
          <string notr="true">icon-label</string>
         </property>
        </widget>
@@ -306,7 +306,7 @@
               <property name="text">
                <string notr="true"/>
               </property>
-              <property name="type" stdset="0">
+              <property name="class" stdset="0">
                <string notr="true">icon-label</string>
               </property>
              </widget>
@@ -500,7 +500,7 @@
            <property name="text">
             <string notr="true"/>
            </property>
-           <property name="type" stdset="0">
+           <property name="class" stdset="0">
             <string notr="true">icon-label</string>
            </property>
           </widget>
