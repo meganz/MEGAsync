@@ -76,10 +76,10 @@ background: transparent;
       <bool>true</bool>
      </property>
      <property name="type" stdset="0">
-      <string>mega</string>
+      <string notr="true">mega</string>
      </property>
      <property name="state" stdset="0">
-      <string>default</string>
+      <string notr="true">default</string>
      </property>
     </widget>
    </item>
@@ -183,7 +183,7 @@ padding-left: 6px;</string>
     </spacer>
    </item>
    <item>
-    <widget class="QPushButton" name="lState">
+    <widget class="QToolButton" name="lState">
      <property name="minimumSize">
       <size>
        <width>16</width>
@@ -217,8 +217,11 @@ padding-right: -2px;
        <height>16</height>
       </size>
      </property>
-     <property name="flat">
+     <property name="flat" stdset="0">
       <bool>true</bool>
+     </property>
+     <property name="class" stdset="0">
+      <string notr="true">icon-label</string>
      </property>
     </widget>
    </item>

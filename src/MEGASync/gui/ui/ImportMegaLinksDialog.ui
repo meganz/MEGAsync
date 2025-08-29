@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>445</width>
-    <height>371</height>
+    <width>455</width>
+    <height>384</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>445</width>
+    <width>455</width>
     <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>445</width>
+    <width>455</width>
     <height>16777215</height>
    </size>
   </property>
@@ -26,7 +26,11 @@
    <string>Open links</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#linkList
+   <string notr="true">#ImportMegaLinksDialog {
+background-color: #FFFFFF; /*colorToken.page-background*/
+}
+
+#linkList
 {
 background-color: #F7F7F7; /*colorToken.surface-1*/
 padding-left: 24px;
@@ -55,7 +59,10 @@ border: 1px solid #D8D9DB; /*colorToken.border-strong*/
 border-radius: 8px;
 height: 36px;
 font-size: 14px;
-color: #C1C2C4; /*colorToken.text-placeholder*/
+color: #616366; /*colorToken.text-placeholder*/
+padding-right: 10px;
+padding-left: 10px;
+border-style: solid;
 }
 
 #cDownload, #cImport
@@ -146,10 +153,10 @@ color: #F3F4F4; /*colorToken.text-primary*/
               <bool>true</bool>
              </property>
              <property name="type" stdset="0">
-              <string>mega</string>
+              <string notr="true">mega</string>
              </property>
              <property name="semibold" stdset="0">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -200,9 +207,6 @@ color: #F3F4F4; /*colorToken.text-primary*/
              <property name="readOnly">
               <bool>true</bool>
              </property>
-             <property name="dimension" stdset="0">
-              <string>medium</string>
-             </property>
             </widget>
            </item>
            <item>
@@ -220,10 +224,10 @@ color: #F3F4F4; /*colorToken.text-primary*/
               <bool>false</bool>
              </property>
              <property name="type" stdset="0">
-              <string>secondary</string>
+              <string notr="true">secondary</string>
              </property>
              <property name="dimension" stdset="0">
-              <string>medium</string>
+              <string notr="true">medium</string>
              </property>
             </widget>
            </item>
@@ -267,10 +271,10 @@ color: #F3F4F4; /*colorToken.text-primary*/
               <bool>true</bool>
              </property>
              <property name="type" stdset="0">
-              <string>mega</string>
+              <string notr="true">mega</string>
              </property>
              <property name="style" stdset="0">
-              <string>semibold</string>
+              <string notr="true">semibold</string>
              </property>
             </widget>
            </item>
@@ -326,10 +330,10 @@ color: #F3F4F4; /*colorToken.text-primary*/
               <string>Choose</string>
              </property>
              <property name="type" stdset="0">
-              <string>secondary</string>
+              <string notr="true">secondary</string>
              </property>
              <property name="dimension" stdset="0">
-              <string>medium</string>
+              <string notr="true">medium</string>
              </property>
             </widget>
            </item>
@@ -387,7 +391,7 @@ color: #F3F4F4; /*colorToken.text-primary*/
       <item>
        <widget class="QPushButton" name="bCancel">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -395,23 +399,23 @@ color: #F3F4F4; /*colorToken.text-primary*/
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>26</height>
+          <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>26</height>
+          <height>16777215</height>
          </size>
         </property>
         <property name="text">
          <string>Cancel</string>
         </property>
         <property name="type" stdset="0">
-         <string>secondary</string>
+         <string notr="true">secondary</string>
         </property>
         <property name="dimension" stdset="0">
-         <string>small</string>
+         <string notr="true">small</string>
         </property>
        </widget>
       </item>
@@ -421,7 +425,7 @@ color: #F3F4F4; /*colorToken.text-primary*/
          <bool>false</bool>
         </property>
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -429,23 +433,23 @@ color: #F3F4F4; /*colorToken.text-primary*/
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>32</height>
+          <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>32</height>
+          <height>16777215</height>
          </size>
         </property>
         <property name="text">
          <string>OK</string>
         </property>
         <property name="type" stdset="0">
-         <string>primary</string>
+         <string notr="true">primary</string>
         </property>
         <property name="dimension" stdset="0">
-         <string>small</string>
+         <string notr="true">small</string>
         </property>
        </widget>
       </item>
