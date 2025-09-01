@@ -53,8 +53,6 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
     connect(ui->fSearch, &SideBarTab::hidden, this, &NodeSelector::onfShowSearchHidden);
 
     ui->fSearch->hide();
-    ui->fSearch->showCloseButton();
-
     ui->fRubbish->hide();
 
     updateNodeSelectorTabs();

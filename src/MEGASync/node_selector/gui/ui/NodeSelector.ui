@@ -123,9 +123,6 @@ QGroupBox::title
       </property>
       <item>
        <widget class="QGroupBox" name="wStorage">
-        <property name="title">
-         <string/>
-        </property>
         <layout class="QVBoxLayout" name="wSearchLayout_2">
          <property name="spacing">
           <number>8</number>
@@ -214,6 +211,9 @@ QGroupBox::title
             <iconset resource="../../../gui/Resources_common.qrc">
              <normaloff>:/search_outline_small</normaloff>
              <normalon>:/search_solid_small</normalon>:/search_outline_small</iconset>
+           </property>
+           <property name="closeButtonVisible" stdset="0">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
