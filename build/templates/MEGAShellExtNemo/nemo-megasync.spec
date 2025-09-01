@@ -4,10 +4,10 @@ Release:	%(cat MEGA_BUILD_ID || echo "1").1
 Summary:	MEGA Desktop App plugin for Nemo
 License:	Freeware
 Group:		Applications/Others
-Url:		https://mega.nz
+Url:		https://mega.io/desktop
 Source0:	nemo-megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
-Packager:	MEGA Linux Team <linux@mega.co.nz>
+Packager:	MEGA Linux Team <linux@mega.io>
 
 BuildRequires:   nemo-devel
 

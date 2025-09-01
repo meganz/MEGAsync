@@ -4,10 +4,10 @@ Release:	%(cat MEGA_BUILD_ID || echo "1").1
 Summary:	MEGA Desktop App plugin for Dolphin
 License:	Freeware
 Group:		Applications/Others
-Url:		https://mega.nz
+Url:		https://mega.io/desktop
 Source0:	dolphin-megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
-Packager:	MEGA Linux Team <linux@mega.co.nz>
+Packager:	MEGA Linux Team <linux@mega.io>
 
 AutoReq: 0
 

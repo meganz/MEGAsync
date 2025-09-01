@@ -4,10 +4,10 @@ Release:	%(cat MEGA_BUILD_ID || echo "1").1
 Summary:	Qt5 LTS
 License:	TODO
 Group:		Applications/Others
-Url:		https://mega.nz
+Url:		https://mega.io/desktop
 Source0:	qt-mega_%{version}.tar.gz
 Vendor:		Qt Company
-Packager:	MEGA Linux Team <linux@mega.co.nz>
+Packager:	MEGA Linux Team <linux@mega.io>
 
 BuildRequires: autoconf, automake, libtool, gcc-c++, unzip, rsync, wayland-devel, libxkbcommon-devel, libxkbcommon-x11-devel, wget
 BuildRequires: fontconfig-devel, libxkbcommon-devel, libxkbcommon-x11-devel
