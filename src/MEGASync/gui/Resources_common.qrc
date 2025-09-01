@@ -1394,5 +1394,6 @@
         <file alias="folder_sync_small">images/themed/common/folders/folder_sync_small.svg</file>
         <file alias="folder_users_medium">images/themed/common/folders/folder_users_medium.svg</file>
         <file alias="folder_users_small">images/themed/common/folders/folder_users_small.svg</file>
+        <file alias="x_solid_small">images/themed/tokenizable/x_solid_small.svg</file>
     </qresource>
 </RCC>
