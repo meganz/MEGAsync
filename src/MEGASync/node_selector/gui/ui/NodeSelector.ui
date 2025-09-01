@@ -44,38 +44,14 @@
 border:none;
 }
 
-#wStorage QFrame
-{
-    height: 32px;
-    padding-right: 6px;
-    padding-left: 6px;
-}
-
-#wSearchNS  QFrame
-{
-    padding-right: 6px;
-    padding-left: 6px;
-}
-
-#cbAlwaysUploadToLocation
-{
-    spacing: 10px;
-}
-
 #wLeftPaneNS
 {
     background-color: #F7F7F7; /*colorToken.surface-1*/
 }
 
-#wRightPaneHeader, #sCurrentContent
+#stackedWidget
 {
-    background-color: white;
-}
-
-QGroupBox::title
-{
-    color: #666666;
-    padding-left: 10px;
+background-color: #FFFFFF; /*colorToken.page-background*/
 }</string>
   </property>
   <property name="TOKENIZED" stdset="0">
