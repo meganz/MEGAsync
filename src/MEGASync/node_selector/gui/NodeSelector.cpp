@@ -48,29 +48,14 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
     connect(ui->fCloudDrive, &SideBarTab::clicked, this, &NodeSelector::onbShowCloudDriveClicked);
     connect(ui->fBackups, &SideBarTab::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
     connect(ui->fRubbish, &SideBarTab::clicked, this, &NodeSelector::onbShowRubbishClicked);
+    connect(ui->fSearch, &SideBarTab::clicked, this, &NodeSelector::onbShowSearchClicked);
 
-    connect(ui->bSearchNS, &QPushButton::clicked, this, &NodeSelector::onbShowSearchClicked);
+    connect(ui->fSearch, &SideBarTab::hidden, this, &NodeSelector::onfShowSearchHidden);
 
-    foreach(auto& button, ui->wLeftPaneNS->findChildren<QAbstractButton*>())
-    {
-        button->installEventFilter(this);
-        mButtonIconManager.addButton(button);
-    }
+    ui->fSearch->hide();
+    ui->fSearch->showCloseButton();
 
-    QColor shadowColor(188, 188, 188);
-    mShadowTab = new QGraphicsDropShadowEffect(ui->buttonGroup);
-    mShadowTab->setBlurRadius(10.);
-    mShadowTab->setXOffset(0.);
-    mShadowTab->setYOffset(0.);
-    mShadowTab->setColor(shadowColor);
-    mShadowTab->setEnabled(true);
-
-    mTabFramesToggleGroup[SEARCH] = ui->fSearchStringNS;
-
-    ui->wSearchNS->hide();
-    ui->bSearchNS->hide();
     ui->fRubbish->hide();
-    setAllFramesItsOnProperty();
 
     updateNodeSelectorTabs();
     onOptionSelected(CLOUD_DRIVE);
@@ -87,14 +72,6 @@ NodeSelector::~NodeSelector()
     delete ui;
 }
 
-void NodeSelector::setAllFramesItsOnProperty()
-{
-    for (auto& tabFrame: mTabFramesToggleGroup)
-    {
-        tabFrame->setProperty(ITS_ON_NS, false);
-    }
-}
-
 void NodeSelector::updateNodeSelectorTabs()
 {
     ui->fCloudDrive->setTitle(MegaNodeNames::getCloudDriveName());
@@ -105,14 +82,12 @@ void NodeSelector::updateNodeSelectorTabs()
 
 void NodeSelector::onSearch(const QString& text)
 {
-    ui->bSearchNS->setText(text);
-    ui->wSearchNS->setVisible(true);
-    ui->bSearchNS->setVisible(true);
+    ui->fSearch->setTitle(text);
+    ui->fSearch->setSelected(true);
 
     mSearchWidget->search(text);
     mSearchWidget->setSearchText(text);
     onbShowSearchClicked();
-    ui->bSearchNS->setChecked(true);
 
     auto senderViewWidget = getTreeViewWidget(sender());
     if (senderViewWidget && senderViewWidget != mSearchWidget)
@@ -215,15 +190,13 @@ void NodeSelector::onbOkClicked()
     onOkButtonClicked();
 }
 
-void NodeSelector::on_tClearSearchResultNS_clicked()
+void NodeSelector::onfShowSearchHidden()
 {
-    ui->wSearchNS->hide();
-    ui->bSearchNS->hide();
-    ui->bSearchNS->setText(QString());
+    ui->fSearch->setTitle(QString());
     mSearchWidget->stopSearch();
     if (getCurrentTreeViewWidget() == mSearchWidget)
     {
-        onbShowCloudDriveClicked();
+        onOptionSelected(CLOUD_DRIVE);
     }
 }
 
@@ -333,6 +306,9 @@ void NodeSelector::onOptionSelected(int index)
         case NodeSelector::RUBBISH:
             ui->fRubbish->setSelected(true);
             break;
+        case NodeSelector::SEARCH:
+            ui->fSearch->setSelected(true);
+            break;
         default:
             break;
     }
@@ -366,12 +342,9 @@ void NodeSelector::onbShowBackupsFolderClicked()
 
 void NodeSelector::onbShowSearchClicked()
 {
-    if (ui->bSearchNS->isVisible())
+    if (ui->fSearch->isVisible())
     {
         ui->stackedWidget->setCurrentWidget(mSearchWidget);
-
-        // Convenient method to toggle off all other tabs
-        ui->fCloudDrive->toggleOffSiblings(true);
     }
 }
 
@@ -686,7 +659,7 @@ void NodeSelector::onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList* nodes)
     {
         if (auto wid = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(index)))
         {
-            if (wid != mSearchWidget || !ui->wSearchNS->isHidden())
+            if (wid != mSearchWidget || !ui->fSearch->isHidden())
             {
                 wid->onNodesUpdate(api, nodes);
             }

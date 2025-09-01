@@ -1269,5 +1269,7 @@
         <file alias="folder-users_off">images/themed/tokenizable/Node Selector/Tabs OFF/folder-users_off.svg</file>
         <file alias="trash_off">images/themed/tokenizable/Node Selector/Tabs OFF/trash_off.svg</file>
         <file alias="x_solid_small">images/themed/tokenizable/x_solid_small.svg</file>
+        <file alias="search_outline_small">images/themed/tokenizable/search_outline_small.svg</file>
+        <file alias="search_solid_small">images/themed/tokenizable/search_solid_small.svg</file>
     </qresource>
 </RCC>

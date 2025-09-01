@@ -144,22 +144,19 @@ private slots:
     void onOptionSelected(int index);
     void updateNodeSelectorTabs();
     void onSearch(const QString& text);
-    void on_tClearSearchResultNS_clicked();
+    void onfShowSearchHidden();
     void onCurrentWidgetChanged(int index);
     void onShowDuplicatedNodeDialog(QPointer<DuplicatedNodeDialog>);
     void performNodeSelection();
 
 private:
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
-    void setAllFramesItsOnProperty();
+
     virtual void onOkButtonClicked() = 0;
     void shortCutConnects(int ignoreThis);
 
     std::optional<TabItem> selectedNodeTab();
 
-    ButtonIconManager mButtonIconManager;
-    QGraphicsDropShadowEffect* mShadowTab;
-    QMap<TabItem, QFrame*> mTabFramesToggleGroup;
     std::unique_ptr<mega::QTMegaListener> mDelegateListener;
 
     NodeSelectorTreeViewWidget* getTreeViewWidget(int page) const;
