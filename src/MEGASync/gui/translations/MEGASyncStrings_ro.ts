@@ -562,7 +562,7 @@
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Problema dvs. nu a putut fi încărcată din cauza unei erori. Încercați din nou mai târziu sau contactați echipa noastră de asistență prin [A]support@mega.nz[/A] dacă problema persistă.</translation>
+        <translation>Problema dvs. nu a putut fi încărcată din cauza unei erori. Încercați din nou mai târziu sau contactați echipa noastră de asistență prin [A]support@mega.io[/A] dacă problema persistă.</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
@@ -607,7 +607,7 @@
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation>Vă rugăm să încercați din nou mai târziu sau contactați echipa noastră de asistență prin [A]support@mega.nz[/A] dacă problema persistă.</translation>
+        <translation>Vă rugăm să încercați din nou mai târziu sau contactați echipa noastră de asistență prin [A]support@mega.io[/A] dacă problema persistă.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -3071,7 +3071,7 @@ Așteptați finalizarea încărcării.</translation>
     <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation>Ați fost deconectat. Contactați [A]support@mega.nz[/A] dacă această problemă persistă.</translation>
+        <translation>Ați fost deconectat. Contactați [A]support@mega.io[/A] dacă această problemă persistă.</translation>
     </message>
 </context>
 <context>
@@ -8165,7 +8165,7 @@ Actualizați lista.</translation>
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
         <translation>Ținta se află prea adânc în structura folderelor. Opriți sincronizarea, mutați folderul într-o locație mai mică de 64 de foldere și reluați sincronizarea.
-Dacă problema persistă, contactați support@mega.nz</translation>
+Dacă problema persistă, contactați support@mega.io</translation>
     </message>
     <message>
         <source>Unable to sync [B]%1[/B]</source>

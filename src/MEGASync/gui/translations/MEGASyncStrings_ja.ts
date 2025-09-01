@@ -562,7 +562,7 @@
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>エラーのため、問題をアップロードできませんでした。後でもう一度お試しいただくか、問題が解決しない場合は[A]support@mega.nz[/A]経由で当社サポートチームにご連絡ください。</translation>
+        <translation>エラーのため、問題をアップロードできませんでした。後でもう一度お試しいただくか、問題が解決しない場合は[A]support@mega.io[/A]経由で当社サポートチームにご連絡ください。</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
@@ -607,7 +607,7 @@
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation>後でもう一度お試しになるか、問題が解決しない場合は[A]support@mega.nz[/A]から当社サポートチームにご連絡ください。</translation>
+        <translation>後でもう一度お試しになるか、問題が解決しない場合は[A]support@mega.io[/A]から当社サポートチームにご連絡ください。</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -3070,7 +3070,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation>ログアウトされました。この問題が解決しない場合は、[A]support@mega.nz[/A]までご連絡ください。</translation>
+        <translation>ログアウトされました。この問題が解決しない場合は、[A]support@mega.io[/A]までご連絡ください。</translation>
     </message>
 </context>
 <context>
@@ -8163,7 +8163,7 @@ Please, refresh the list.</source>
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
         <translation>ターゲットがフォルダ構造の深すぎる場所にあります。同期を停止し、フォルダの深さが64個未満の場所にフォルダを移動し、同期を再作成してください。
-それでも問題が解決しない場合は、support@mega.nzにご連絡ください。</translation>
+それでも問題が解決しない場合は、support@mega.ioにご連絡ください。</translation>
     </message>
     <message>
         <source>Unable to sync [B]%1[/B]</source>

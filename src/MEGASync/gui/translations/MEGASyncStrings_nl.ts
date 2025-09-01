@@ -563,7 +563,7 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Uw probleem kan niet worden geüpload vanwege een fout. Probeer het later opnieuw of neem contact op met ons ondersteuningsteam via [A]support@mega.nz[/A] als het probleem zich blijft voordoen. </translation>
+        <translation>Uw probleem kan niet worden geüpload vanwege een fout. Probeer het later opnieuw of neem contact op met ons ondersteuningsteam via [A]support@mega.io[/A] als het probleem zich blijft voordoen. </translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
@@ -608,7 +608,7 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation>Probeer het later opnieuw of neem contact op met ons ondersteunde team via [A]support@mega.nz[/A] als het probleem zich blijft voordoen.</translation>
+        <translation>Probeer het later opnieuw of neem contact op met ons ondersteunde team via [A]support@mega.io[/A] als het probleem zich blijft voordoen.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -3072,7 +3072,7 @@ Wacht tot het uploaden is voltooid.</translation>
     <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation>U bent uitgelogd. Neem contact op [A]support@mega.nz[/A] als dit probleem zich blijft voordoen.</translation>
+        <translation>U bent uitgelogd. Neem contact op [A]support@mega.io[/A] als dit probleem zich blijft voordoen.</translation>
     </message>
 </context>
 <context>
@@ -8167,7 +8167,7 @@ Vernieuw de lijst.</translation>
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
         <translation>Het doel zit te diep in uw mappenstructuur. Stop de synchronisatie, verplaats de map naar een locatie met minder dan 64 mappen diep en maak de synchronisatie opnieuw.
-Als het probleem hiermee niet is opgelost, neem contact op met support@mega.nz.</translation>
+Als het probleem hiermee niet is opgelost, neem contact op met support@mega.io.</translation>
     </message>
     <message>
         <source>Unable to sync [B]%1[/B]</source>

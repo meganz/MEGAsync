@@ -562,7 +562,7 @@
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Twoje zgłoszenie nie mogło zostać przesłane z powodu błędu. Spróbuj ponownie później lub skontaktuj się z naszym zespołem pomocy technicznej za pośrednictwem [A]support@mega.nz[/A], jeśli problem nadal występuje.</translation>
+        <translation>Twoje zgłoszenie nie mogło zostać przesłane z powodu błędu. Spróbuj ponownie później lub skontaktuj się z naszym zespołem pomocy technicznej za pośrednictwem [A]support@mega.io[/A], jeśli problem nadal występuje.</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
@@ -607,7 +607,7 @@
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation>Spróbuj ponownie później lub skontaktuj się z naszym zespołem pomocy technicznej pod adresem [A]support@mega.nz[/A] jeśli problem nie ustąpi.</translation>
+        <translation>Spróbuj ponownie później lub skontaktuj się z naszym zespołem pomocy technicznej pod adresem [A]support@mega.io[/A] jeśli problem nie ustąpi.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -3071,7 +3071,7 @@ Poczekaj na zakończenie przesyłania.</translation>
     <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation>Zostałeś wylogowany. Skontaktuj się z  [A]support@mega.nz[/A] jeśli ten problem będzie się powtarzał.</translation>
+        <translation>Zostałeś wylogowany. Skontaktuj się z  [A]support@mega.io[/A] jeśli ten problem będzie się powtarzał.</translation>
     </message>
 </context>
 <context>
@@ -8168,7 +8168,7 @@ Odśwież listę.</translation>
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
         <translation>Cel jest zbyt głęboko w strukturze folderów. Zatrzymaj synchronizację, przenieś katalog do lokalizacji o głębokości mniejszej niż 64 katalog i odtwórz synchronizację.
-Jeśli to nie rozwiąże problemu, skontaktuj się z support@mega.nz.</translation>
+Jeśli to nie rozwiąże problemu, skontaktuj się z support@mega.io.</translation>
     </message>
     <message>
         <source>Unable to sync [B]%1[/B]</source>
