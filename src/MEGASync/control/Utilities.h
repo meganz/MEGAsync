@@ -475,6 +475,26 @@ public:
                             mega::MegaApi* megaApi,
                             std::function<void(mega::MegaRequest*, mega::MegaError*)> finishFunc);
 
+    template<class parentType>
+    static QPointer<parentType> getTopParent(QWidget* widget)
+    {
+        if (!widget)
+        {
+            return nullptr;
+        }
+
+        QWidget* parent = widget->parentWidget();
+        while (parent)
+        {
+            if (parentType* classParent = qobject_cast<parentType*>(parent))
+            {
+                return classParent;
+            }
+            parent = parent->parentWidget();
+        }
+        return nullptr;
+    }
+
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;

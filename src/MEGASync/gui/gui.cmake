@@ -54,6 +54,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/AccountTypeWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/BannerWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/ApiImageLabel.h
+    ${CMAKE_CURRENT_LIST_DIR}/SideBarTab.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NodeNameSetterDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NewFolderDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/RenameNodeDialog.h
@@ -196,6 +197,7 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/AccountTypeWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/BannerWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ApiImageLabel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/SideBarTab.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NewFolderDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/RenameNodeDialog.cpp
@@ -547,6 +549,7 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/ProgressIndicatorDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoteItemUi.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/BannerWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/SideBarTab.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
