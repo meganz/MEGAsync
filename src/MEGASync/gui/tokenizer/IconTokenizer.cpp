@@ -6,6 +6,7 @@
 #include <QToolButton>
 
 static const QString ButtonId = QString::fromUtf8("Button");
+static const QString CustomId = QString::fromUtf8("Custom");
 
 IconTokenizer::IconTokenizer(QObject* parent)
     : QObject{parent}
@@ -68,7 +69,8 @@ void IconTokenizer::process(QWidget* widget, const QString& mode, const QString&
                 return;
             }
 
-            auto pixmap = buttonIcons.pixmap(button->iconSize());
+            auto pixmap =
+                buttonIcons.pixmap(button->iconSize(), iconMode.value(), iconState.value());
             if (pixmap.isNull())
             {
                 qWarning() << __func__ << " Error default pixmap for icon is null : " << targetElementId;
@@ -89,6 +91,58 @@ void IconTokenizer::process(QWidget* widget, const QString& mode, const QString&
             {
                 buttonIcons.addPixmap(tintedPixmap.value(), iconMode.value(), iconState.value());
                 button->setIcon(buttonIcons);
+            }
+        }
+    }
+    else if (targetElementProperty == CustomId)
+    {
+        auto iconState = getIconState(state);
+        if (!iconState.has_value())
+        {
+            // error log created on getIconState
+            return;
+        }
+
+        auto iconMode = getIconMode(mode);
+        if (!iconMode.has_value())
+        {
+            // error log created on getIconMode
+            return;
+        }
+
+        for (auto childWidget: widgets)
+        {
+            QIcon icons = childWidget->property("icon").value<QIcon>();
+            if (icons.isNull())
+            {
+                qWarning() << __func__ << " Error Custom Widget icon is null : " << targetElementId;
+                return;
+            }
+
+            auto pixmap = icons.pixmap(childWidget->property("iconSize").toSize(),
+                                       iconMode.value(),
+                                       iconState.value());
+            if (pixmap.isNull())
+            {
+                qWarning() << __func__
+                           << " Error default pixmap for icon is null : " << targetElementId;
+                return;
+            }
+
+            if (!colorTokens.contains(tokenId))
+            {
+                qWarning() << __func__ << " Error token id not found : " << tokenId;
+                return;
+            }
+
+            QColor toColor(colorTokens.value(tokenId));
+
+            auto tintedPixmap = changePixmapColor(pixmap, toColor);
+
+            if (tintedPixmap.has_value())
+            {
+                icons.addPixmap(tintedPixmap.value(), iconMode.value(), iconState.value());
+                childWidget->setProperty("icon", icons);
             }
         }
     }
