@@ -189,7 +189,10 @@ LoginPageForm {
         loginButton.clicked();
     }
 
-    helpButton.url: serviceUrlsAccess.getRecoveryUrl() + (email.valid() ? "?email=" + Qt.btoa(email.text) : "")
+    helpButton.onClicked: {
+        var urlToOpen = serviceUrlsAccess.getRecoveryUrl(email.valid() ? email.text : "");
+        Qt.openUrlExternally(urlToOpen);
+    }
 
     Component.onDestruction: {
         resetLoginControllerStatus();

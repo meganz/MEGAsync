@@ -34,7 +34,7 @@ public:
 
     QUrl getBaseUrl() const;
     Q_INVOKABLE QUrl getContactUrl() const;
-    Q_INVOKABLE QUrl getRecoveryUrl() const;
+    Q_INVOKABLE QUrl getRecoveryUrl(const QString& email = QString()) const;
     QUrl getLinkBaseUrl() const;
     QUrl getRemoteNodeLinkUrl(const QString& handle, const QString& key) const;
 

@@ -116,10 +116,14 @@ QUrl ServiceUrls::getContactUrl() const
     return url;
 }
 
-QUrl ServiceUrls::getRecoveryUrl() const
+QUrl ServiceUrls::getRecoveryUrl(const QString& email) const
 {
     auto url = getBaseUrl();
     url.setPath(QLatin1String("/recovery"));
+    if (!email.isEmpty())
+    {
+        url.setQuery(QLatin1String("email=%1").arg(QString::fromLatin1(email.toUtf8().toBase64())));
+    }
     return url;
 }
 
