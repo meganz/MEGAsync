@@ -119,6 +119,12 @@ void SideBarTab::toggleOffSiblings()
         return;
     }
 
+    /* For a future dev: if you don´t want to affect all the dialog tabs
+     * we may need to specify the number of levels that will be affected above the tab
+     * For example: setLevelsAffected(2), we will try to find all the tabs in the parent of the
+     * parent
+     */
+
     QList<SideBarTab*> siblings = mSideBarsTopParent->findChildren<SideBarTab*>();
 
     foreach(auto& tab, siblings)
