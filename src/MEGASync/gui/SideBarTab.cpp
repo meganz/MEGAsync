@@ -14,9 +14,18 @@ SideBarTab::SideBarTab(QWidget* parent):
 {
     ui->setupUi(this);
 
-    // By default the counter is hidden
+    // By default the counter and the close button are hidden
     ui->lCounter->hide();
     ui->lClose->hide();
+
+    connect(ui->lClose,
+            &QToolButton::clicked,
+            this,
+            [this]()
+            {
+                hide();
+                emit hidden();
+            });
 
     ui->lIcon->setAttribute(Qt::WA_TransparentForMouseEvents);
     setAttribute(Qt::WA_StyledBackground, true);
@@ -44,8 +53,6 @@ QString SideBarTab::getTitle() const
 void SideBarTab::setIcon(const QIcon& icon)
 {
     ui->lIcon->setIcon(icon);
-    auto checkedPixmap = icon.pixmap(getIconSize(), QIcon::Mode::Normal, QIcon::State::On);
-    qDebug() << checkedPixmap.isNull();
 }
 
 QIcon SideBarTab::getIcon() const
@@ -58,17 +65,14 @@ QSize SideBarTab::getIconSize() const
     return ui->lIcon->iconSize();
 }
 
-void SideBarTab::showCloseButton()
+void SideBarTab::setCloseButtonVisible(bool state)
 {
-    ui->lClose->show();
-    connect(ui->lClose,
-            &QToolButton::clicked,
-            this,
-            [this]()
-            {
-                hide();
-                emit hidden();
-            });
+    ui->lClose->setVisible(state);
+}
+
+bool SideBarTab::isCloseButtonVisible() const
+{
+    return ui->lClose->isVisible();
 }
 
 void SideBarTab::setCounter(int count)

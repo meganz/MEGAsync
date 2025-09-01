@@ -29,7 +29,9 @@ public:
     Q_PROPERTY(QSize iconSize READ getIconSize)
     QSize getIconSize() const;
 
-    void showCloseButton();
+    Q_PROPERTY(bool closeButtonVisible WRITE setCloseButtonVisible READ isCloseButtonVisible)
+    void setCloseButtonVisible(bool state);
+    bool isCloseButtonVisible() const;
 
     void setCounter(int count);
 
