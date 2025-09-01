@@ -26,54 +26,25 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">QGroupBox, QPushButton
+   <string notr="true">/********** LEFT MENU **********/
+/*ColorTokenIcon;Custom;fCloudDrive;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Custom;fCloudDrive;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Custom;fIncomingShares;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Custom;fIncomingShares;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Custom;fBackups;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Custom;fBackups;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Custom;fRubbish;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Custom;fRubbish;normal;on;colorToken.icon-primary*/
+/********** LEFT MENU **********/ 
+
+#wStorage 
 {
-background-color: transparent;
-}
-
-QGroupBox {
-border-radius: 0px;
-background-color: transparent;
-}
-
-#cbAlwaysUploadToLocation
-{
-    spacing: 10px;
-}
-
-QWidget
-{
-font-size: 11px;
-}
-
-QScrollBar:horizontal {
-height: 16px;
-}
-
-#TransferManager
-{
-    border-radius: 4px;
-    border: 1px solid black;
-}
-
-*
-{
-    font-family: Lato;
-}
-
-#wLeftPaneNS
-{
-    background-color: #FAFAFA;
-    border-right: 1px solid #EEEEEE;
-}
-
-#wRightPaneHeader, #sCurrentContent
-{
-    background-color: white;
+border:none;
 }
 
 #wStorage QFrame
 {
+    height: 32px;
     padding-right: 6px;
     padding-left: 6px;
 }
@@ -84,103 +55,29 @@ height: 16px;
     padding-left: 6px;
 }
 
-#wStorage QPushButton
+#cbAlwaysUploadToLocation
 {
-    height: 34px;
+    spacing: 10px;
 }
 
-#wSearchNS QPushButton
+#wLeftPaneNS
 {
-    height: 34px;
+    background-color: #F7F7F7; /*colorToken.surface-1*/
 }
 
-QGroupBox
+#wRightPaneHeader, #sCurrentContent
 {
-    font-size: 12px;
-    border: none;
+    background-color: white;
 }
 
 QGroupBox::title
 {
-    font-family: Lato;
-   color: #666666;
+    color: #666666;
     padding-left: 10px;
-}
-
-#wStorage QPushButton
-{
-    font-size: 14px;
-    color: #15191F;
-    border: none;
-    text-align: left;
-    padding-right: 0px;
-    padding-left: 0px;
-    qProperty-iconSize: 24px;
-}
-
-#wSearchNS QPushButton
-{
-    font-size: 14px;
-    color: #15191F;
-    border: none;
-    text-align: left;
-    padding-left: -1px;
-    padding-right: 0px;
-    qProperty-iconSize: 24px;
-}
- 
-#wLeftPaneNS QToolButton
-{
-  border: none;
-}
-
-
-/*********** LEFT PANE ******************/
-#wLeftPaneNS QFrame &gt; QLabel
-{
-    font-weight: bold;
-    color: #999999;
-    font-size: 10px;
-	text-align: right;
-    border-radius: 12px;
-}
-
-#wLeftPaneNS QFrame[itsOn=true] 
-{
-	border-radius: 4px;
-    background: solid white;
-}
-
-#wLeftPaneNS QFrame[itsOn=true]  &gt; QLabel
-{
-    border: 1px solid #F5F5F5; 
-    background-color: #FAFAFA;
-    color: #333333;
-}
-
-#wLeftPaneNS QFrame[itsOn=false] 
-{
-	border-radius: none;
-    background-color: transparent;
-}
-
-#wLeftPaneNS QFrame[itsOn=false] &gt; QLabel
-{
-    border: 1px transparent #FAFAFA; 
-    background: transparent;
-}
-
-#wLeftPaneNS QFrame
-{
-min-height:36px;
-}
-
-#wLeftPaneNS QPushbutton
-{
-min-height:36px;
-}
-
-</string>
+}</string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="0,1">
    <property name="spacing">
@@ -244,183 +141,24 @@ min-height:36px;
           <number>4</number>
          </property>
          <item>
-          <widget class="QFrame" name="fCloudDrive">
+          <widget class="SideBarTab" name="fCloudDrive" native="true">
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>36</height>
+             <height>0</height>
             </size>
            </property>
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
+           <property name="icon" stdset="0">
+            <iconset resource="../../../gui/Resources_common.qrc">
+             <normaloff>:/cloud_off</normaloff>
+             <normalon>:/cloud_on</normalon>:/cloud_off</iconset>
            </property>
-           <property name="frameShadow">
-            <enum>QFrame::Plain</enum>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout">
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QPushButton" name="bShowCloudDrive">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>36</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Lato</family>
-                <pointsize>-1</pointsize>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="cursor">
-               <cursorShape>PointingHandCursor</cursorShape>
-              </property>
-              <property name="acceptDrops">
-               <bool>true</bool>
-              </property>
-              <property name="text">
-               <string notr="true">Cloud Drive</string>
-              </property>
-              <property name="icon">
-               <iconset theme="cloud_ico" resource="../../../gui/Resources_common.qrc">
-                <normaloff>:/images/node_selector/sidebar/cloud_ico_default.png</normaloff>:/images/node_selector/sidebar/cloud_ico_default.png</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <property name="autoExclusive">
-               <bool>true</bool>
-              </property>
-              <property name="autoDefault">
-               <bool>false</bool>
-              </property>
-              <property name="flat">
-               <bool>false</bool>
-              </property>
-              <property name="default_icon" stdset="0">
-               <string notr="true">qrc:/images/node_selector/sidebar/cloud_ico_default.png</string>
-              </property>
-              <property name="icon_spacing" stdset="0">
-               <UInt>4</UInt>
-              </property>
-              <attribute name="buttonGroup">
-               <string notr="true">buttonGroup</string>
-              </attribute>
-             </widget>
-            </item>
-           </layout>
           </widget>
          </item>
          <item>
-          <widget class="QFrame" name="fBackups">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>36</height>
-            </size>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Plain</enum>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QPushButton" name="bShowBackups">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>36</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Lato</family>
-                <pointsize>-1</pointsize>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="cursor">
-               <cursorShape>PointingHandCursor</cursorShape>
-              </property>
-              <property name="text">
-               <string notr="true">Backups</string>
-              </property>
-              <property name="icon">
-               <iconset theme="backups_ico" resource="../../../gui/Resources_common.qrc">
-                <normaloff>:/images/node_selector/sidebar/backup_ico_default.png</normaloff>:/images/node_selector/sidebar/backup_ico_default.png</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <property name="autoExclusive">
-               <bool>true</bool>
-              </property>
-              <property name="autoDefault">
-               <bool>false</bool>
-              </property>
-              <property name="default_icon" stdset="0">
-               <string notr="true">qrc:/images/node_selector/sidebar/backup_ico_default.png</string>
-              </property>
-              <property name="icon_spacing" stdset="0">
-               <UInt>4</UInt>
-              </property>
-              <attribute name="buttonGroup">
-               <string notr="true">buttonGroup</string>
-              </attribute>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QFrame" name="fIncomingShares">
+          <widget class="SideBarTab" name="fIncomingShares" native="true">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -428,7 +166,7 @@ min-height:36px;
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>36</height>
+             <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
@@ -437,139 +175,35 @@ min-height:36px;
              <height>16777215</height>
             </size>
            </property>
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
+           <property name="icon" stdset="0">
+            <iconset resource="../../../gui/Resources_common.qrc">
+             <normaloff>:/folder-users_off</normaloff>
+             <normalon>:/folder-users_on</normalon>:/folder-users_off</iconset>
            </property>
-           <property name="frameShadow">
-            <enum>QFrame::Plain</enum>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <property name="spacing">
-             <number>3</number>
-            </property>
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QPushButton" name="bShowIncomingShares">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>36</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Lato</family>
-                <pointsize>-1</pointsize>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="cursor">
-               <cursorShape>PointingHandCursor</cursorShape>
-              </property>
-              <property name="acceptDrops">
-               <bool>true</bool>
-              </property>
-              <property name="text">
-               <string notr="true">Incoming Shares</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../../../gui/Resources_common.qrc">
-                <normaloff>:/images/node_selector/sidebar/folder-users_default.png</normaloff>:/images/node_selector/sidebar/folder-users_default.png</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <property name="autoExclusive">
-               <bool>true</bool>
-              </property>
-              <property name="autoDefault">
-               <bool>false</bool>
-              </property>
-              <property name="default_icon" stdset="0">
-               <string notr="true">qrc:/images/node_selector/sidebar/folder-users_default.png</string>
-              </property>
-              <property name="icon_spacing" stdset="0">
-               <UInt>4</UInt>
-              </property>
-              <attribute name="buttonGroup">
-               <string notr="true">buttonGroup</string>
-              </attribute>
-             </widget>
-            </item>
-           </layout>
           </widget>
          </item>
          <item>
-          <widget class="QFrame" name="fRubbish">
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
-            <property name="spacing">
-             <number>3</number>
-            </property>
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QPushButton" name="bRubbish">
-              <property name="cursor">
-               <cursorShape>PointingHandCursor</cursorShape>
-              </property>
-              <property name="acceptDrops">
-               <bool>true</bool>
-              </property>
-              <property name="text">
-               <string notr="true">Rubbish bin</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../../../gui/Resources_common.qrc">
-                <normaloff>:/images/node_selector/sidebar/rubbish_default.png</normaloff>:/images/node_selector/sidebar/rubbish_default.png</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <property name="autoExclusive">
-               <bool>true</bool>
-              </property>
-              <property name="autoDefault">
-               <bool>false</bool>
-              </property>
-              <property name="default_icon" stdset="0">
-               <string notr="true">qrc:/images/node_selector/sidebar/rubbish_default.png</string>
-              </property>
-              <property name="icon_spacing" stdset="0">
-               <UInt>4</UInt>
-              </property>
-              <attribute name="buttonGroup">
-               <string notr="true">buttonGroup</string>
-              </attribute>
-             </widget>
-            </item>
-           </layout>
+          <widget class="SideBarTab" name="fBackups" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="icon" stdset="0">
+            <iconset resource="../../../gui/Resources_common.qrc">
+             <normaloff>:/devices_off</normaloff>
+             <normalon>:/devices_on</normalon>:/devices_off</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="SideBarTab" name="fRubbish" native="true">
+           <property name="icon" stdset="0">
+            <iconset resource="../../../gui/Resources_common.qrc">
+             <normaloff>:/trash_off</normaloff>
+             <normalon>:/trash_on</normalon>:/trash_off</iconset>
+           </property>
           </widget>
          </item>
         </layout>
@@ -715,6 +349,14 @@ min-height:36px;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SideBarTab</class>
+   <extends>QWidget</extends>
+   <header>SideBarTab.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../../gui/Resources_common.qrc"/>
  </resources>
