@@ -19,6 +19,7 @@
 #include <QSharedData>
 
 #include <algorithm>
+#include <functional>
 
 using namespace mega;
 
@@ -2839,7 +2840,7 @@ void TransfersModel::moveTransferPriorityUp(const QModelIndexList& sourceIndexes
                          });
 }
 
-void TransfersModel::moveTransferPriorityDown(QModelIndexList sourceIndexes)
+void TransfersModel::moveTransferPriorityDown(const QModelIndexList& sourceIndexes)
 {
     moveTransferPriority(sourceIndexes,
                          false,
@@ -2850,10 +2851,10 @@ void TransfersModel::moveTransferPriorityDown(QModelIndexList sourceIndexes)
                          });
 }
 
-void TransfersModel::moveTransferPriorityToTop(QModelIndexList sourceIndexes)
+void TransfersModel::moveTransferPriorityToTop(const QModelIndexList& sourceIndexes)
 {
     moveTransferPriority(sourceIndexes,
-                         true,
+                         false,
                          [this](QExplicitlySharedDataPointer<TransferData> transfer,
                                 mega::MegaRequestListener* listener)
                          {
@@ -2861,10 +2862,10 @@ void TransfersModel::moveTransferPriorityToTop(QModelIndexList sourceIndexes)
                          });
 }
 
-void TransfersModel::moveTransferPriorityToBottom(QModelIndexList sourceIndexes)
+void TransfersModel::moveTransferPriorityToBottom(const QModelIndexList& sourceIndexes)
 {
     moveTransferPriority(sourceIndexes,
-                         false,
+                         true,
                          [this](QExplicitlySharedDataPointer<TransferData> transfer,
                                 mega::MegaRequestListener* listener)
                          {
@@ -2874,22 +2875,22 @@ void TransfersModel::moveTransferPriorityToBottom(QModelIndexList sourceIndexes)
 
 void TransfersModel::moveTransferPriority(
     const QModelIndexList& sourceIndexes,
-    bool up,
-    std::function<void(QExplicitlySharedDataPointer<TransferData>, mega::MegaRequestListener*)>
-        func)
+    bool processByAscPrio,
+    const std::function<void(QExplicitlySharedDataPointer<TransferData>,
+                             mega::MegaRequestListener*)>& func)
 {
     ThreadPoolSingleton::getInstance()->push(
-        [this, sourceIndexes, up, func]()
+        [this, sourceIndexes, processByAscPrio, func]()
         {
             auto auxList(sourceIndexes);
             std::sort(auxList.begin(),
                       auxList.end(),
-                      [this, up](QModelIndex check1, QModelIndex check2)
+                      [this, processByAscPrio](QModelIndex check1, QModelIndex check2)
                       {
                           auto transfer1(getTransfer(check1.row()));
                           auto transfer2(getTransfer(check2.row()));
-                          return up ? transfer1->mPriority < transfer2->mPriority :
-                                      transfer1->mPriority > transfer2->mPriority;
+                          return processByAscPrio ? transfer1->mPriority < transfer2->mPriority :
+                                                    transfer1->mPriority > transfer2->mPriority;
                       });
 
             for (const auto index: auxList)

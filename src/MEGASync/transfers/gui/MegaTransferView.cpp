@@ -1086,13 +1086,8 @@ void MegaTransferView::moveToTopClicked()
 void MegaTransferView::moveUpClicked()
 {
     auto proxy(qobject_cast<TransfersManagerSortFilterProxyModel*>(model()));
-    if (proxy)
+    if (proxy && selectionModel())
     {
-        if (!selectionModel())
-        {
-            return;
-        }
-
         auto indexes = selectionModel()->selectedRows();
         if (!indexes.isEmpty())
         {
@@ -1108,13 +1103,8 @@ void MegaTransferView::moveUpClicked()
 void MegaTransferView::moveDownClicked()
 {
     auto proxy(qobject_cast<TransfersManagerSortFilterProxyModel*>(model()));
-    if (proxy)
+    if (proxy && selectionModel())
     {
-        if (!selectionModel())
-        {
-            return;
-        }
-
         auto indexes = selectionModel()->selectedRows();
         if (!indexes.isEmpty())
         {
@@ -1130,13 +1120,8 @@ void MegaTransferView::moveDownClicked()
 void MegaTransferView::moveToBottomClicked()
 {
     auto proxy(qobject_cast<TransfersManagerSortFilterProxyModel*>(model()));
-    if (proxy)
+    if (proxy && selectionModel())
     {
-        if (!selectionModel())
-        {
-            return;
-        }
-
         auto indexes = selectionModel()->selectedRows();
         if (!indexes.isEmpty())
         {

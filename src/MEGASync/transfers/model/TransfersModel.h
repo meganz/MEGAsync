@@ -288,9 +288,9 @@ public:
                                     const QModelIndex& destinationParent,
                                     int destinationChild);
     void moveTransferPriorityUp(const QModelIndexList& sourceIndexes);
-    void moveTransferPriorityDown(QModelIndexList sourceIndexes);
-    void moveTransferPriorityToTop(QModelIndexList sourceIndexes);
-    void moveTransferPriorityToBottom(QModelIndexList sourceIndexes);
+    void moveTransferPriorityDown(const QModelIndexList& sourceIndexes);
+    void moveTransferPriorityToTop(const QModelIndexList& sourceIndexes);
+    void moveTransferPriorityToBottom(const QModelIndexList& sourceIndexes);
 
     void resetModel();
 
@@ -425,8 +425,8 @@ private:
 
     void moveTransferPriority(const QModelIndexList& sourceIndexes,
                               bool up,
-                              std::function<void(QExplicitlySharedDataPointer<TransferData>,
-                                                 mega::MegaRequestListener*)> func);
+                              const std::function<void(QExplicitlySharedDataPointer<TransferData>,
+                                                       mega::MegaRequestListener*)>& func);
 
     void retryTransfers(const QMultiMap<unsigned long long, QExplicitlySharedDataPointer<TransferData>> &transfersToRetry);
 
