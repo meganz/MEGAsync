@@ -4724,21 +4724,6 @@ Enter a different name.</translation>
 <context>
     <name>NodeSelector</name>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Button text to navigate to backups section</translatorcomment>
-        <translation>Backups</translation>
-    </message>
-    <message>
-        <source>Cloud Drive</source>
-        <translatorcomment>Button text to navigate to cloud drive section</translatorcomment>
-        <translation>Cloud drive</translation>
-    </message>
-    <message>
-        <source>Incoming Shares</source>
-        <translatorcomment>Button text to navigate to incoming shares section</translatorcomment>
-        <translation>Incoming shares</translation>
-    </message>
-    <message>
         <source>Search</source>
         <translatorcomment>Search button header</translatorcomment>
         <translation>Search</translation>

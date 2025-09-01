@@ -151,7 +151,6 @@ private slots:
 
 private:
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
-    void setToggledStyle(TabItem item);
     void setAllFramesItsOnProperty();
     virtual void onOkButtonClicked() = 0;
     void shortCutConnects(int ignoreThis);

@@ -9,6 +9,7 @@
 #include "NodeSelectorModel.h"
 #include "NodeSelectorProxyModel.h"
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
+#include "SideBarTab.h"
 #include "ui_NodeSelector.h"
 #include "Utilities.h"
 #include "ViewLoadingScene.h"
@@ -39,21 +40,16 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
 
     mMegaApi->addListener(mDelegateListener.get());
 
-    connect(ui->bShowIncomingShares,
-            &QPushButton::clicked,
+    connect(ui->fIncomingShares,
+            &SideBarTab::clicked,
             this,
             &NodeSelector::onbShowIncomingSharesClicked,
             Qt::QueuedConnection);
-    connect(ui->bShowCloudDrive,
-            &QPushButton::clicked,
-            this,
-            &NodeSelector::onbShowCloudDriveClicked);
-    connect(ui->bShowBackups,
-            &QPushButton::clicked,
-            this,
-            &NodeSelector::onbShowBackupsFolderClicked);
+    connect(ui->fCloudDrive, &SideBarTab::clicked, this, &NodeSelector::onbShowCloudDriveClicked);
+    connect(ui->fBackups, &SideBarTab::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
+    connect(ui->fRubbish, &SideBarTab::clicked, this, &NodeSelector::onbShowRubbishClicked);
+
     connect(ui->bSearchNS, &QPushButton::clicked, this, &NodeSelector::onbShowSearchClicked);
-    connect(ui->bRubbish, &QPushButton::clicked, this, &NodeSelector::onbShowRubbishClicked);
 
     foreach(auto& button, ui->wLeftPaneNS->findChildren<QAbstractButton*>())
     {
@@ -70,10 +66,7 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
     mShadowTab->setEnabled(true);
 
     mTabFramesToggleGroup[SEARCH] = ui->fSearchStringNS;
-    mTabFramesToggleGroup[BACKUPS] = ui->fBackups;
-    mTabFramesToggleGroup[SHARES] = ui->fIncomingShares;
-    mTabFramesToggleGroup[CLOUD_DRIVE] = ui->fCloudDrive;
-    mTabFramesToggleGroup[RUBBISH] = ui->fRubbish;
+
     ui->wSearchNS->hide();
     ui->bSearchNS->hide();
     ui->fRubbish->hide();
@@ -104,10 +97,10 @@ void NodeSelector::setAllFramesItsOnProperty()
 
 void NodeSelector::updateNodeSelectorTabs()
 {
-    ui->bShowCloudDrive->setText(MegaNodeNames::getCloudDriveName());
-    ui->bShowIncomingShares->setText(MegaNodeNames::getIncomingSharesName());
-    ui->bShowBackups->setText(MegaNodeNames::getBackupsName());
-    ui->bRubbish->setText(MegaNodeNames::getRubbishName());
+    ui->fCloudDrive->setTitle(MegaNodeNames::getCloudDriveName());
+    ui->fIncomingShares->setTitle(MegaNodeNames::getIncomingSharesName());
+    ui->fBackups->setTitle(MegaNodeNames::getBackupsName());
+    ui->fRubbish->setTitle(MegaNodeNames::getRubbishName());
 }
 
 void NodeSelector::onSearch(const QString& text)
@@ -329,16 +322,16 @@ void NodeSelector::onOptionSelected(int index)
     switch (index)
     {
         case NodeSelector::CLOUD_DRIVE:
-            ui->bShowCloudDrive->click();
+            ui->fCloudDrive->setSelected(true);
             break;
         case NodeSelector::SHARES:
-            ui->bShowIncomingShares->click();
+            ui->fIncomingShares->setSelected(true);
             break;
         case NodeSelector::BACKUPS:
-            ui->bShowBackups->click();
+            ui->fBackups->setSelected(true);
             break;
         case NodeSelector::RUBBISH:
-            ui->bRubbish->click();
+            ui->fRubbish->setSelected(true);
             break;
         default:
             break;
@@ -348,30 +341,26 @@ void NodeSelector::onOptionSelected(int index)
 void NodeSelector::onbShowCloudDriveClicked()
 {
     ui->stackedWidget->setCurrentIndex(CLOUD_DRIVE);
-    setToggledStyle(CLOUD_DRIVE);
 }
 
 void NodeSelector::onbShowRubbishClicked()
 {
     ui->stackedWidget->setCurrentIndex(RUBBISH);
-    setToggledStyle(RUBBISH);
 }
 
 void NodeSelector::onbShowIncomingSharesClicked()
 {
-    if (ui->bShowIncomingShares->isVisible())
+    if (ui->fIncomingShares->isVisible())
     {
         ui->stackedWidget->setCurrentIndex(SHARES);
-        setToggledStyle(SHARES);
     }
 }
 
 void NodeSelector::onbShowBackupsFolderClicked()
 {
-    if (ui->bShowBackups->isVisible())
+    if (ui->fBackups->isVisible())
     {
         ui->stackedWidget->setCurrentIndex(BACKUPS);
-        setToggledStyle(BACKUPS);
     }
 }
 
@@ -380,7 +369,9 @@ void NodeSelector::onbShowSearchClicked()
     if (ui->bSearchNS->isVisible())
     {
         ui->stackedWidget->setCurrentWidget(mSearchWidget);
-        setToggledStyle(SEARCH);
+
+        // Convenient method to toggle off all other tabs
+        ui->fCloudDrive->toggleOffSiblings(true);
     }
 }
 
@@ -459,23 +450,6 @@ void NodeSelector::closeEvent(QCloseEvent* event)
     }
 
     QDialog::closeEvent(event);
-}
-
-void NodeSelector::setToggledStyle(TabItem item)
-{
-    setAllFramesItsOnProperty();
-
-    auto btn = mTabFramesToggleGroup[item]->findChildren<QPushButton*>();
-    if (btn.size() > 0)
-    {
-        btn.at(0)->setChecked(true);
-    }
-
-    mTabFramesToggleGroup[item]->setProperty(ITS_ON_NS, true);
-    mTabFramesToggleGroup[item]->setGraphicsEffect(mShadowTab);
-
-    // Reload QSS because it is glitchy
-    ui->wLeftPaneNS->setStyleSheet(ui->wLeftPaneNS->styleSheet());
 }
 
 std::shared_ptr<MegaNode> NodeSelector::getSelectedNode()
