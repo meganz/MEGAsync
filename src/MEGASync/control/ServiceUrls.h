@@ -28,7 +28,7 @@ public:
                          mega::MegaRequest* request,
                          mega::MegaError* e) override;
 
-    bool isDataReady(bool emitSignal = false);
+    Q_INVOKABLE bool isDataReady(bool emitSignal = false);
 
     static QUrl getSupportEmail();
 

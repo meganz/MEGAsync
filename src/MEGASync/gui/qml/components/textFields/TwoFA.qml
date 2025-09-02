@@ -155,7 +155,17 @@ FocusScope {
 
             Layout.leftMargin: -sizes.horizontalPadding
             text: qsTranslate("OnboardingStrings", "Problem with two-factor authentication?")
-            url: serviceUrlsAccess.getRecoveryUrl()
+            onClicked: {
+                if (serviceUrlsAccess.isDataReady()) {
+                    serviceUrlsAccess.dataReady.disconnect(helpButtonItem.onClicked);
+                    var urlToOpen = serviceUrlsAccess.getRecoveryUrl();
+                    Qt.openUrlExternally(urlToOpen);
+                } else {
+                    serviceUrlsAccess.dataReady.connect(helpButtonItem.onClicked);
+                    serviceUrlsAccess.isDataReady(true);
+                }
+            }
+
             icons {
                 source: Images.helpCircle
                 position: Icon.Position.LEFT

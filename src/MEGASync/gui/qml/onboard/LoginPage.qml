@@ -190,8 +190,14 @@ LoginPageForm {
     }
 
     helpButton.onClicked: {
-        var urlToOpen = serviceUrlsAccess.getRecoveryUrl(email.valid() ? email.text : "");
-        Qt.openUrlExternally(urlToOpen);
+        if (serviceUrlsAccess.isDataReady()) {
+            serviceUrlsAccess.dataReady.disconnect(helpButton.onClicked);
+            var urlToOpen = serviceUrlsAccess.getRecoveryUrl(email.valid() ? email.text : "");
+            Qt.openUrlExternally(urlToOpen);
+        } else {
+            serviceUrlsAccess.dataReady.connect(helpButton.onClicked);
+            serviceUrlsAccess.isDataReady(true);
+        }
     }
 
     Component.onDestruction: {
