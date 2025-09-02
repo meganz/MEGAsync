@@ -1543,10 +1543,9 @@ void NodeSelectorModel::sendBlockUiSignal(bool state)
     emit blockUi(state, QPrivateSignal());
 }
 
-void NodeSelectorModel::beginRemoveRowsAsync(const mega::MegaHandle& handle,
-                                             std::function<void()> func)
+void NodeSelectorModel::beginRemoveRowsAsync(const mega::MegaHandle& handle)
 {
-    mRemoveNodesQueue.addStep(handle, func);
+    mRemoveNodesQueue.addStep(handle);
 }
 
 void NodeSelectorModel::onStartBeginRemoveRowsAsync(const mega::MegaHandle& handle)
@@ -2875,20 +2874,13 @@ RemoveNodesQueue::RemoveNodesQueue(NodeSelectorModel* model):
     connect(mModel, &NodeSelectorModel::rowsRemoved, this, &RemoveNodesQueue::onRowsRemoved);
 }
 
-void RemoveNodesQueue::addStep(const mega::MegaHandle& handle, std::function<void()> func = nullptr)
+void RemoveNodesQueue::addStep(const mega::MegaHandle& handle)
 {
-    Info info;
-    info.handle = handle;
-    info.func = func;
-    mSteps.append(info);
+    mSteps.enqueue(handle);
 
     if (mSteps.size() == 1)
     {
         emit startBeginRemoveRows(handle);
-        if (info.func)
-        {
-            info.func();
-        }
     }
 }
 
@@ -2901,12 +2893,8 @@ void RemoveNodesQueue::onRowsRemoved()
 
         if (!mSteps.isEmpty())
         {
-            auto nextStep(mSteps.at(0));
-            emit startBeginRemoveRows(nextStep.handle);
-            if (nextStep.func)
-            {
-                nextStep.func();
-            }
+            auto nextStepHandle(mSteps.head());
+            emit startBeginRemoveRows(nextStepHandle);
         }
     }
 }

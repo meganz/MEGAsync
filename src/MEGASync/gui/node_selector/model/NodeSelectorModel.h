@@ -179,7 +179,7 @@ class RemoveNodesQueue: public QObject
 public:
     RemoveNodesQueue(NodeSelectorModel* model);
 
-    void addStep(const mega::MegaHandle& handle, std::function<void()> func);
+    void addStep(const mega::MegaHandle& handle);
 
 signals:
     void startBeginRemoveRows(const mega::MegaHandle& handle);
@@ -188,13 +188,7 @@ private slots:
     void onRowsRemoved();
 
 private:
-    struct Info
-    {
-        mega::MegaHandle handle;
-        std::function<void()> func;
-    };
-
-    QQueue<Info> mSteps;
+    QQueue<mega::MegaHandle> mSteps;
     NodeSelectorModel* mModel;
 };
 
@@ -420,7 +414,7 @@ signals:
     void finishAsyncRequest(mega::MegaHandle handle, int error);
 
 protected:
-    void beginRemoveRowsAsync(const mega::MegaHandle& handle, std::function<void()> func = nullptr);
+    void beginRemoveRowsAsync(const mega::MegaHandle& handle);
 
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     Qt::DropActions supportedDropActions() const override;
