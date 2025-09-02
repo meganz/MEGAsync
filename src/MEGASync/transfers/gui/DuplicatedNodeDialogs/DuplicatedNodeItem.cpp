@@ -38,7 +38,8 @@ void DuplicatedNodeItem::setDescription(const QString &description)
 
 void DuplicatedNodeItem::showLearnMore(const QString& url)
 {
-    QString moreAboutLink(QLatin1String("<a href=\"%1\"><font color=#333333>%2</font></a>"));
+    QString moreAboutLink(QLatin1String(
+        "<a href=\"%1\"><font color=#2C5BEB;/*colorToken.link-primary*/>%2</font></a>"));
     ui->lLearnMore->setText(moreAboutLink.arg(url,tr("Learn more")));
     ui->lLearnMore->show();
 }

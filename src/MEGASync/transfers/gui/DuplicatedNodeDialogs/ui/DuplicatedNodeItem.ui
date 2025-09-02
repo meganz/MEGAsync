@@ -33,12 +33,48 @@
   </property>
   <property name="styleSheet">
    <string notr="true">#container{
-   background-color: #F7F8F9;
-   border-top: 1px solid rgba(0,0,0,0.08);
-   border-bottom: 1px solid rgba(0,0,0,0.08);
+   background-color: #EFEFF0; /*colorToken.surface-2*/
+   border-top: 1px solid #525457; /*colorToken.border-subtle*/
+   border-bottom: 1px solid #525457; /*colorToken.border-subtle*/
+}
+
+#lDate, #lSize
+{
+    color: #616366; /*colorToken.text-secondary*/
+}
+
+#lIcon
+{
+   background-color: transparent;
+}
+
+#point
+{
+    border-radius: 2px;
+    background-color: #616366;   /*colorToken.icon-disabled*/
+}
+
+#fSelectionBox
+{
+    border: 1px solid #525457; /*colorToken.border-subtle*/
+    border-radius: 4px;
+    background-color: #FFFFFF; /*colorToken.page-background*/
+}
+
+#lLearnMore {
+  text-decoration: underline;
+  color: #2C5BEB; /*colorToken.link-primary*/
+}
+
+#lDescription {
+font-family: Inter;
+color: #ff616366; /*colorToken.text-secondary*/
 }
 
 </string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -65,36 +101,7 @@
       </sizepolicy>
      </property>
      <property name="styleSheet">
-      <string notr="true">#fSelectionBox
-{
-    border: 1px solid #D6D6D6;
-    border-radius: 4px;
-    background-color: #FFFFFF;
-}
-
-#lTitle
-{
-   font-family: Lato;
-   line-height: 20px;
-   font-size: 16px;
-   font-weight: 700; 
-   color: #333333;
-}
-
-#lDescription, #lLearnMore
-{
-   font-family: Lato;
-   line-height: 16px;
-   font-size: 13px;
-   font-weight: 400; 
-   color: #333333;
-}
-
-#titleContainer, #titleContainer QLabel, #titleContainer WordWrapLabel
-{
-   background-color: #F7F8F9;
-}
-</string>
+      <string notr="true"/>
      </property>
      <property name="frameShape">
       <enum>QFrame::Panel</enum>
@@ -137,6 +144,9 @@
           <widget class="QLabel" name="lTitle">
            <property name="text">
             <string notr="true"/>
+           </property>
+           <property name="type" stdset="0">
+            <string notr="true">title</string>
            </property>
           </widget>
          </item>
@@ -193,43 +203,7 @@
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">#bAction
-{
-    border: solid 1px #000000;
-    border-radius: 4px;
-    font-family: Lato;
-    font-size: 14px;
-    line-height: 20px;
-    font-weight: 400;
-    padding: 6px 12px 6px 12px;
-    background-color: #00BFA5;
-    color: #FFFFFF;
-}
-
-#lNodeName
-{
-    font-family: Lato;
-    font-size: 13px;
-    font-weight: 700;
-    line-height: 15px;
-    background-color: transparent;
-    color: #333333;
-}
-
-#lDate, #lSize
-{
-    font-family: Lato;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 14px;
-    background-color: transparent;
-    color: #333333;
-}
-
-#lIcon
-{
-   background-color: transparent;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="frameShape">
          <enum>QFrame::Panel</enum>
@@ -304,16 +278,18 @@
               <property name="text">
                <string notr="true"/>
               </property>
+              <property name="type" stdset="0">
+               <string notr="true">primary</string>
+              </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">medium</string>
+              </property>
              </widget>
             </item>
             <item>
              <widget class="QWidget" name="wNodeInfo" native="true">
               <property name="styleSheet">
-               <string notr="true">#point
-{
-    border-radius: 2px;
-    background-color: rgba(0,0,0,0.2);
-}</string>
+               <string notr="true"/>
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_2">
                <property name="spacing">
@@ -448,6 +424,12 @@
               </property>
               <property name="text">
                <string notr="true"/>
+              </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">small</string>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">primary</string>
               </property>
              </widget>
             </item>

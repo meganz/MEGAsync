@@ -83,8 +83,6 @@ target_sources_conditional(${ExecutableTarget}
    ${CMAKE_CURRENT_LIST_DIR}/gui/win/SomeIssuesOccurredMessage.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransfersAccountInfoWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/win/MediaTypeFilterWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/win/DuplicatedNodeDialog.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/win/DuplicatedNodeItem.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
@@ -105,8 +103,6 @@ target_sources_conditional(${ExecutableTarget}
    ${CMAKE_CURRENT_LIST_DIR}/gui/macx/SomeIssuesOccurredMessage.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransfersAccountInfoWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/macx/MediaTypeFilterWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/macx/DuplicatedNodeDialog.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/macx/DuplicatedNodeItem.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
@@ -127,35 +123,37 @@ target_sources_conditional(${ExecutableTarget}
    ${CMAKE_CURRENT_LIST_DIR}/gui/linux/SomeIssuesOccurredMessage.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransfersAccountInfoWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/linux/MediaTypeFilterWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/linux/DuplicatedNodeDialog.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/linux/DuplicatedNodeItem.ui
+
 )
+
 
 if (WIN32)
     set_property(TARGET ${ExecutableTarget}
         APPEND PROPERTY AUTOUIC_SEARCH_PATHS
         ${CMAKE_CURRENT_LIST_DIR}/gui/win
-        ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/win
+        ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/ui
         ${CMAKE_CURRENT_LIST_DIR}/gui/ui
     )
 elseif (APPLE)
     set_property(TARGET ${ExecutableTarget}
         APPEND PROPERTY AUTOUIC_SEARCH_PATHS
         ${CMAKE_CURRENT_LIST_DIR}/gui/macx
-        ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/macx
+        ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/ui
         ${CMAKE_CURRENT_LIST_DIR}/gui/ui
     )
 else()
     set_property(TARGET ${ExecutableTarget}
         APPEND PROPERTY AUTOUIC_SEARCH_PATHS
         ${CMAKE_CURRENT_LIST_DIR}/gui/linux
-        ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/linux
+        ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/ui
         ${CMAKE_CURRENT_LIST_DIR}/gui/ui
     )
 endif()
 
 set (DESKTOP_APP_TRANSFERS_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransferManagerStatusHeaderWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/ui/DuplicatedNodeDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/ui/DuplicatedNodeItem.ui
 )
 
 target_sources(${ExecutableTarget}
