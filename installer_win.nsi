@@ -121,8 +121,6 @@ VIAddVersionKey "ProductVersion" "${Expv_1}.${Expv_2}.${Expv_3}.${Expv_4}"
 !define MUI_FINISHPAGE_RUN ;"$INSTDIR\MEGASync.exe"
 !define MUI_FINISHPAGE_RUN_FUNCTION RunFunction
 
-;!define MUI_FINISHPAGE_NOAUTOCLOSE
-
 var APP_NAME
 var ICONS_GROUP
 ;var INSTALLDAY
@@ -572,7 +570,9 @@ modeselected:
   Delete "$INSTDIR\Resources_linux.rcc"
   Delete "$INSTDIR\Resources_win.rcc"
 
-  !ifdef BUILD_X64_VERSION
+  Delete $INSTDIR\ShellExtX32.msix
+  Delete $INSTDIR\ShellExtX64.msix  
+!ifdef BUILD_X64_VERSION
     !insertmacro Install3264DLL "${VcRedist64Path}\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
     !insertmacro Install3264DLL "${VcRedist64Path}\vcruntime140_1.dll" "$INSTDIR\vcruntime140_1.dll"
     !insertmacro Install3264DLL "${VcRedist64Path}\msvcp140.dll" "$INSTDIR\msvcp140.dll"
@@ -782,23 +782,34 @@ modeselected:
   !define LIBRARY_SHELL_EXTENSION
   !define LIBRARY_IGNORE_VERSION
 
-  !ifndef BUILD_X64_VERSION
-  DetailPrint "Install ShellExt 64"
-  !insertmacro InstallLib DLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.msix" "$INSTDIR\ShellExtX32.msix" "$INSTDIR"
-  !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
-
-  AccessControl::SetFileOwner "$INSTDIR\ShellExtX32.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\ShellExtX32.dll" "$USERNAME" "GenericRead + GenericWrite"
-  !endif
-
   ${If} ${RunningX64}
     !define LIBRARY_X64
     DetailPrint "Install ShellExt 64"
-    !insertmacro InstallLib DLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.msix" "$INSTDIR\ShellExtX64.msix" "$INSTDIR"
+    File "/oname=$INSTDIR\ShellExtX64.msix" "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.msix"
+    AccessControl::SetFileOwner "$INSTDIR\ShellExtX64.msix" "$USERNAME"
+    AccessControl::GrantOnFile "$INSTDIR\ShellExtX64.msix" "$USERNAME" "GenericRead + GenericWrite"
     !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.dll" "$INSTDIR\ShellExtX64.dll" "$INSTDIR"
+    ${If} ${Errors}
+        DetailPrint "Install ShellExt 64 failed"
+        ClearErrors
+    ${endIf}
     AccessControl::SetFileOwner "$INSTDIR\ShellExtX64.dll" "$USERNAME"
     AccessControl::GrantOnFile "$INSTDIR\ShellExtX64.dll" "$USERNAME" "GenericRead + GenericWrite"
     !undef LIBRARY_X64
+!ifndef BUILD_X64_VERSION
+    File "/oname=$INSTDIR\ShellExtX32.dll" "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll"
+    AccessControl::SetFileOwner "$INSTDIR\ShellExtX32.dll" "$USERNAME"
+    AccessControl::GrantOnFile "$INSTDIR\ShellExtX32.dll" "$USERNAME" "GenericRead + GenericWrite"
+  ${Else}
+    DetailPrint "Install ShellExt 32"
+    !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
+    ${If} ${Errors}
+        DetailPrint "Install ShellExt 32 failed"
+        ClearErrors
+    ${endIf}
+    AccessControl::SetFileOwner "$INSTDIR\ShellExtX32.dll" "$USERNAME"
+    AccessControl::GrantOnFile "$INSTDIR\ShellExtX32.dll" "$USERNAME" "GenericRead + GenericWrite"
+!endif
   ${EndIf}
 
   !undef LIBRARY_COM
@@ -913,6 +924,8 @@ Section Uninstall
   ${EndIf}
   !undef LIBRARY_COM
   !undef LIBRARY_SHELL_EXTENSION
+  Delete "$INSTDIR\ShellExtX64.msix"
+  Delete "$INSTDIR\ShellExtX32.msix"
 
   ;QT4 files
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\QtNetwork4.dll"

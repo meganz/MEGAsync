@@ -19,6 +19,7 @@ if(ENABLE_DESKTOP_UPDATER)
 endif()
 
 if(ENABLE_EXPLORER_EXT)
+    set(MEGA_DESKTOP_APP_VER ${PROJECT_VERSION})
     add_subdirectory(MEGAShellExt)
 endif()
 
