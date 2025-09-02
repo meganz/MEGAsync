@@ -74,8 +74,11 @@ max-height: 96px;
          <property name="text">
           <string>Remove this sync?</string>
          </property>
-         <property name="type" stdset="0">
-          <string notr="true">title</string>
+         <property name="dimension" stdset="0">
+          <string notr="true">label-2</string>
+         </property>
+         <property name="semibold" stdset="0">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -175,7 +178,7 @@ max-height: 96px;
         <string>Remove</string>
        </property>
        <property name="icon">
-        <iconset resource="../Resources.qrc">
+        <iconset resource="../Resources_light.qrc">
          <normaloff>:/images/x.svg</normaloff>:/images/x.svg</iconset>
        </property>
        <property name="type" stdset="0">
@@ -191,7 +194,7 @@ max-height: 96px;
   </layout>
  </widget>
  <resources>
-  <include location="../Resources.qrc"/>
+  <include location="../Resources_light.qrc"/>
  </resources>
  <connections>
   <connection>

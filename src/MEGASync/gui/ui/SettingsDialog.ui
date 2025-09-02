@@ -1812,8 +1812,11 @@ margin-bottom: 3px;
               <property name="text">
                <string>Recovery Key</string>
               </property>
-              <property name="type" stdset="0">
-               <string notr="true">sub-title</string>
+              <property name="semi-bold" stdset="0">
+               <bool>true</bool>
+              </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">body-1</string>
               </property>
              </widget>
             </item>
@@ -1957,8 +1960,11 @@ margin-bottom: 3px;
               <property name="text">
                <string>Password</string>
               </property>
-              <property name="type" stdset="0">
-               <string notr="true">sub-title</string>
+              <property name="dimension" stdset="0">
+               <string notr="true">body-1</string>
+              </property>
+              <property name="semibold" stdset="0">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
