@@ -261,27 +261,6 @@ padding:0px;
 min-width: 0px;
 }
 
-QToolButton.icon-label[dimension=small]
-{
-height: 26px;
-width: 26px;
-qproperty-iconSize:16px;
-}
-
-QToolButton.icon-label[dimension=medium]
-{
-height: 36px;
-width: 36px;
-qproperty-iconSize:24px;
-}
-
-QToolButton.icon-label[dimension=large]
-{
-height: 48px;
-width: 48px;
-qproperty-iconSize:24px;
-}
-
 /*
     Buttons
     We have 2 classes of buttons:
