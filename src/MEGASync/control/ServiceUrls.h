@@ -4,8 +4,8 @@
 #include "mega/bindings/qt/QTMegaListener.h"
 #include "megaapi.h"
 
+#include <QMap>
 #include <QObject>
-#include <QReadWriteLock>
 #include <QString>
 #include <QUrl>
 
@@ -115,7 +115,7 @@ private:
 
     bool isLink(const QString& link, const QStringList& paths) const;
 
-    QStringList mDomains;
+    QMap<ServiceDomain, QString> mDomains;
     std::unique_ptr<mega::QTMegaListener> mMegaListener;
     ServiceDomain mWebsiteDomainIndex;
     bool mDataReady;

@@ -49,7 +49,7 @@ echo "Upstream-Name: megasync" >> MEGAsync/MEGAsync/debian.copyright
 echo "Upstream-Contact: <support@mega.io>" >> MEGAsync/MEGAsync/debian.copyright
 echo "Source: https://github.com/meganz/MEGAsync" >> MEGAsync/MEGAsync/debian.copyright
 echo "Files: *" >> MEGAsync/MEGAsync/debian.copyright
-echo "Copyright: 2013, Mega Limited" >> MEGAsync/MEGAsync/debian.copyright
+echo "Copyright: 2025, Mega Limited" >> MEGAsync/MEGAsync/debian.copyright
 echo -n "License:" >> MEGAsync/MEGAsync/debian.copyright # Some software (e.g: gnome-software) would only recognized these licenses: http://spdx.org/licenses/
 cat ../LICENCE.md | sed 's#^\s*$#\.#g' | sed 's#^# #' >> MEGAsync/MEGAsync/debian.copyright
 cat ../LICENCE.md | sed 's#^\s*$#\.#g' | sed 's#^# #' >> MEGAsync/MEGAShellExtDolphin/debian.copyright

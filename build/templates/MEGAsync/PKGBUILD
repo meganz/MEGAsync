@@ -19,7 +19,7 @@
  # program.
 ##
 
-# Maintainer: Pablo Martin <pm@mega.io>
+# Maintainer: MEGA Linux Team <linux@mega.io>
 pkgname=megasync
 pkgver=MEGASYNC_VERSION
 pkgrel=`cat MEGA_BUILD_ID || echo "1"`

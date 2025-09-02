@@ -105,7 +105,7 @@ QUrl ServiceUrls::getBaseUrl() const
 {
     QUrl url;
     url.setScheme(QLatin1String("https"));
-    url.setHost(mDomains.at(mWebsiteDomainIndex));
+    url.setHost(mDomains[mWebsiteDomainIndex]);
     return url;
 }
 
@@ -281,7 +281,7 @@ QStringList ServiceUrls::getHttpAllowedOrigins() const
     url.setScheme(QLatin1String("https"));
     foreach(auto domainIndex, QSet<ServiceDomain>({DOMAIN_CO_NZ, DOMAIN_NZ, DOMAIN_APP}))
     {
-        url.setHost(mDomains.at(domainIndex));
+        url.setHost(mDomains[domainIndex]);
         urls << url.toString();
     }
     urls << QLatin1String("chrome-extension://*");
@@ -298,7 +298,7 @@ QStringList ServiceUrls::getSupportedLinksUrls() const
     QUrl url;
     foreach(auto domainIndex, QSet<ServiceDomain>({DOMAIN_CO_NZ, DOMAIN_NZ, DOMAIN_APP}))
     {
-        url.setHost(mDomains.at(domainIndex));
+        url.setHost(mDomains[domainIndex]);
         foreach(auto scheme, QStringList({QLatin1String("http"), QLatin1String("https")}))
         {
             url.setScheme(scheme);
@@ -494,7 +494,7 @@ void ServiceUrls::baseUrlOverride(const QString& url)
     mWebsiteDomainIndex = DOMAIN_OVERRIDE;
     mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
                        QString::fromUtf8("Mega domain - set to %1")
-                           .arg(mDomains.at(mWebsiteDomainIndex))
+                           .arg(mDomains[mWebsiteDomainIndex])
                            .toUtf8()
                            .constData());
 }
@@ -502,16 +502,17 @@ void ServiceUrls::baseUrlOverride(const QString& url)
 mega::MegaApi* ServiceUrls::mMegaApi = nullptr;
 
 ServiceUrls::ServiceUrls():
-    mDomains{QLatin1String("mega.co.nz"),
-             QLatin1String("mega.nz"),
-             QLatin1String("mega.app"),
-             QLatin1String("mega.io"),
-             QString()},
     mMegaListener(nullptr),
     mWebsiteDomainIndex(DOMAIN_NZ),
     mDataReady(false),
     mDataPending(false)
 {
+    mDomains[DOMAIN_CO_NZ] = QLatin1String("mega.co.nz");
+    mDomains[DOMAIN_NZ] = QLatin1String("mega.nz");
+    mDomains[DOMAIN_APP] = QLatin1String("mega.app");
+    mDomains[DOMAIN_IO] = QLatin1String("mega.io");
+    mDomains[DOMAIN_OVERRIDE] = QString();
+
     qmlRegisterUncreatableType<ServiceUrls>(
         "ServiceUrls",
         1,
@@ -574,7 +575,7 @@ QString ServiceUrls::getProUrlParameters()
 
         mega::MegaHandle aff = mega::INVALID_HANDLE;
         int affType = mega::MegaApi::AFFILIATE_TYPE_INVALID;
-        long long timestampMs = 0ll;
+        long long timestampMs = 0LL;
         preferences->getLastHandleInfo(aff, affType, timestampMs);
 
         if (aff != mega::INVALID_HANDLE)

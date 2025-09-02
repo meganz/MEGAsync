@@ -574,7 +574,6 @@ public:
     static bool HTTPS_ORIGIN_CHECK_ENABLED;
     static const QString FINDER_EXT_BUNDLE_ID;
 
-    static void setBaseUrl(const QString &value);
     template<typename T>
     static void overridePreference(const QSettings &settings, QString &&name, T &value);
     static void overridePreferences(const QSettings &settings);
