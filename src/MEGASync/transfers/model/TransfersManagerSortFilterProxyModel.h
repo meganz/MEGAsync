@@ -63,6 +63,8 @@ public:
 
         void setColumnManager(QPointer<TransferWidgetColumnsManager> newColumnManager);
 
+        QModelIndexList mapToSourceList(const QModelIndexList& proxyIndexes);
+
     signals:
         void modelAboutToBeChanged();
         void modelChanged();

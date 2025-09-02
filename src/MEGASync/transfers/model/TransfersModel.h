@@ -282,9 +282,15 @@ public:
                   const QModelIndex &destinationParent, int destinationChild) override;
 
     void ignoreMoveRowsSignal(bool state);
-    void inverseMoveRowsSignal(bool state);
-    bool moveTransferPriority(const QModelIndex& sourceParent, const QList<int>& rows,
-                  const QModelIndex& destinationParent, int destinationChild);
+
+    bool moveTransferPriorityByDrag(const QModelIndex& sourceParent,
+                                    const QList<int>& rows,
+                                    const QModelIndex& destinationParent,
+                                    int destinationChild);
+    void moveTransferPriorityUp(const QModelIndexList& sourceIndexes);
+    void moveTransferPriorityDown(const QModelIndexList& sourceIndexes);
+    void moveTransferPriorityToTop(const QModelIndexList& sourceIndexes);
+    void moveTransferPriorityToBottom(const QModelIndexList& sourceIndexes);
 
     void resetModel();
 
@@ -417,6 +423,11 @@ private:
     void restoreTagsByRow();
     QList<QExplicitlySharedDataPointer<TransferData>> getTransfersToIterate() const;
 
+    void moveTransferPriority(const QModelIndexList& sourceIndexes,
+                              bool up,
+                              const std::function<void(QExplicitlySharedDataPointer<TransferData>,
+                                                       mega::MegaRequestListener*)>& func);
+
     void retryTransfers(const QMultiMap<unsigned long long, QExplicitlySharedDataPointer<TransferData>> &transfersToRetry);
 
     bool isUiBlockedModeActive() const ;
@@ -482,7 +493,6 @@ private:
     QSet<TransferTag> mActiveTransfers;
 
     bool mIgnoreMoveSignal;
-    bool mInverseMoveSignal;
 
     QSet<int> mRetriedFolderTags;
 };
