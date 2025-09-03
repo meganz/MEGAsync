@@ -2,6 +2,7 @@
 
 #include "mega/types.h"
 #include "megaapi.h"
+#include "Platform.h"
 #include "Preferences.h"
 #include "QmlManager.h"
 
@@ -274,34 +275,13 @@ QUrl ServiceUrls::getDefaultStagingApiUrl()
 
 QUrl ServiceUrls::getAutoUpdateUrl()
 {
-    QString randomSequence;
-    for (int i = 0; i < 10; i++)
-    {
-        randomSequence += QChar::fromLatin1(static_cast<char>('A' + (rand() % 26)));
-    }
-
     auto url = QUrl(qEnvironmentVariable("MEGA_UPDATE_CHECK_URL"));
     if (url.isEmpty())
     {
         url = ServiceUrls::getAutoUpdateBaseUrl();
-
-        QString platformPath;
-#ifdef WIN32
-#ifdef _WIN64
-        platformPath = QLatin1String("/wsync64");
-#else
-        platformPath = QLatin1String("/wsync");
-#endif
-#else
-#if defined(__arm64__)
-        platformPath = QLatin1String("/msyncarm64");
-#else
-        // Using msyncv2 to serve new updates and avoid keeping loader leftovers
-        platformPath = QLatin1String("/msyncv2");
-#endif
-#endif
-
-        url.setPath(url.path() + platformPath + QLatin1String("/v.txt"));
+        url.setPath(
+            url.path() +
+            QString::fromUtf8("/%1/v.txt").arg(Platform::getInstance()->getArchUpdateString()));
     }
     else
     {
@@ -309,6 +289,11 @@ QUrl ServiceUrls::getAutoUpdateUrl()
                            "Using environment variable MEGA_UPDATE_CHECK_URL to fetch update file");
     }
 
+    QString randomSequence;
+    for (int i = 0; i < 10; i++)
+    {
+        randomSequence += QChar::fromLatin1(static_cast<char>('A' + (rand() % 26)));
+    }
     url.setQuery(randomSequence);
 
     return url;
