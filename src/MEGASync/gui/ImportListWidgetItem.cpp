@@ -53,12 +53,8 @@ void ImportListWidgetItem::updateGui()
         isFolder ? fileName.append(QString::fromUtf8(".folder")) : fileName,
         Utilities::AttributeType::SMALL);
 
-#ifdef __APPLE__
     ui->lImage->setIcon(typeIcon);
     ui->lImage->setIconSize(QSize(24, 24));
-#else
-    ui->lImage->setPixmap(typeIcon.pixmap(QSize(24, 24)));
-#endif
 
     QIcon statusIcon;
     switch(status)
@@ -91,12 +87,8 @@ void ImportListWidgetItem::updateGui()
         break;
     }
 
-#ifdef __APPLE__
     ui->lState->setIcon(statusIcon);
     ui->lState->setIconSize(QSize(16, 16));
-#else
-    ui->lState->setPixmap(statusIcon.pixmap(QSize(24, 24)));
-#endif
 }
 
 bool ImportListWidgetItem::isSelected()
