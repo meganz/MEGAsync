@@ -5,6 +5,7 @@
 #include "megaapi.h"
 
 #include <QMap>
+#include <QMutex>
 #include <QObject>
 #include <QString>
 #include <QUrl>
@@ -115,6 +116,7 @@ private:
 
     bool isLink(const QString& link, const QStringList& paths) const;
 
+    mutable QMutex mLock;
     QMap<ServiceDomain, QString> mDomains;
     std::unique_ptr<mega::QTMegaListener> mMegaListener;
     ServiceDomain mWebsiteDomainIndex;
