@@ -3917,7 +3917,7 @@ Você não poderá recuperar o acesso aos seus dados armazenados, nem estará au
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Erro detectado[/B][BR]Ocorreu um erro ao carregar os recursos do aplicativo, e ele precisa ser fechado. Por favor, reinstale o aplicativo de [A]mega.io/desktop[/A]. Se o problema persistir depois de reinstalar, entre em contato com o nosso suporte técnico para obter assistência.</translation>
     </message>
 </context>
 <context>

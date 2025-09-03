@@ -3823,12 +3823,12 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
     <message>
         <source>Alert</source>
         <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alertă</translation>
     </message>
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Eroare detectată[/B][BR]A apărut o eroare la încărcarea resurselor aplicației, iar aplicația trebuie să se închidă. Vă rugăm să îl reinstalați din [A]mega.io/desktop[/A] pentru a rezolva această problemă. Dacă această problemă persistă după reinstalare, contactați asistența pentru asistență suplimentară.</translation>
     </message>
 </context>
 <context>
@@ -5980,7 +5980,9 @@ Introdu un alt nume.</translation>
 - We’ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Mesajele de eroare sunt acum mai clare, facilitând înțelegerea când lucrurile merg prost.
+- Am remediat erorile și am făcut aplicația mai fiabilă.
+</translation>
     </message>
 </context>
 <context>

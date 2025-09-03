@@ -3649,7 +3649,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Alert</source>
         <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alerte</translation>
     </message>
     <message>
         <source>Already exists</source>
@@ -3917,7 +3917,7 @@ Vous ne pourrez pas accéder à vos données stockées de nouveau ni être autor
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Erreur détectée[/B][BR]Une erreur s’est produite lors du chargement des ressources de l’application, et celle-ci doit être fermée. Veuillez la réinstaller à partir de [A]mega.io/desktop[/A] pour résoudre ce problème. Si le problème persiste après la réinstallation, contactez le service d’assistance pour obtenir de l’aide.</translation>
     </message>
 </context>
 <context>
@@ -6118,7 +6118,9 @@ Saisissez un nom différent.</translation>
 - We’ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Les messages d’erreur sont désormais plus clairs, ce qui permet de mieux comprendre quand quelque chose ne fonctionne pas correctement.
+- Nous avons corrigé des bugs et rendu l’application plus stable.
+</translation>
     </message>
 </context>
 <context>
@@ -6673,22 +6675,22 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer le dossier de MEGA</translation>
     </message>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Le dossier sera supprimé de MEGA, mais il ne sera pas supprimé de votre appareil. Cette action ne peut pas être annulée.</translation>
     </message>
     <message>
         <source>Move folder</source>
         <translatorcomment>Radio button option label</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Déplacer le dossier vers le disque Cloud</translation>
     </message>
     <message>
         <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
         <translatorcomment>Radio button description</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Déplacez ce dossier vers votre disque Cloud pour bénéficier d’un accès complet à vos données. Il ne sera plus sauvegardé.</translation>
     </message>
     <message>
         <source>Move to:</source>
@@ -6708,7 +6710,7 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>To stop backing up this folder, you need to either move it or delete it.</source>
         <translatorcomment>Backup removal title description</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pour arrêter la sauvegarde de ce dossier, vous devez soit le déplacer, soit le supprimer.</translation>
     </message>
 </context>
 <context>

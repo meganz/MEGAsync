@@ -4,11 +4,11 @@
 // These numbers are used in different build project scripts. Keep this in
 // mind if you want to change the format.
 #define VER_MAJOR 5
-#define VER_MINOR 15
+#define VER_MINOR 16
 #define VER_MICRO 0
 #define VER_RC 0
 // Format: "VER_MAJOR.VER_MINOR.VER_MICRO.VER_RC\0"
-#define VER_PRODUCTVERSION_STR "5.15.0.0\0"
+#define VER_PRODUCTVERSION_STR "5.16.0.0\0"
 #define VER_PRODUCTVERSION VER_MAJOR, VER_MINOR, VER_MICRO, VER_RC
 #define VER_FILEVERSION VER_MAJOR, VER_MINOR, VER_MICRO, VER_RC
 #define VER_FILEVERSION_CODE (VER_MAJOR * 10000 + VER_MINOR * 100 + VER_MICRO)
@@ -26,8 +26,9 @@
 #define VER_PRODUCTNAME_STR         "MEGAsync\0"
 
 /* SDK commit hash, 7 chars */
-#define VER_SDK_ID "024b12f"
+#define VER_SDK_ID "48b642c"
 
+// clang-format off
 /* Update scrips relying on this value if you move it
 Format: 1 item by line, starting from line following the #define
 #define VER_CHANGES_NOTES QT_TRANSLATE_NOOP("Preferences",
@@ -37,9 +38,8 @@ Format: 1 item by line, starting from line following the #define
 "- item n\n"
 )*/
 #define VER_CHANGES_NOTES \
-    QT_TRANSLATE_NOOP( \
-        "Preferences", \
-        "- Error messages are now clearer, making it easier to understand when things go wrong.\n" \
-        "- We’ve fixed bugs and made the app more reliable.\n")
+QT_TRANSLATE_NOOP("Preferences", \
+                  "- We’ve fixed bugs and made the app more reliable.\n")
+// clang-format on
 
 #endif // VERSION_H

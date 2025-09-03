@@ -3824,12 +3824,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Alert</source>
         <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Предупреждение</translation>
     </message>
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Обнаружена ошибка[/B][BR]При загрузке ресурсов приложения произошла ошибка, и приложение необходимо закрыть. Пожалуйста, попробуйте переустановить его с [A]mega.io/desktop[/A]. Если проблема сохраняется после переустановки, обратитесь в службу поддержки за помощью.</translation>
     </message>
 </context>
 <context>
@@ -5981,7 +5981,9 @@ Enter a different name</source>
 - We’ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Сообщения об ошибках стали понятнее — проще разобраться, когда что-то идёт не так.
+- Мы справили ошибки и сделали приложение надёжнее.
+</translation>
     </message>
 </context>
 <context>
@@ -6536,22 +6538,22 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Удалить папку из MEGA</translation>
     </message>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Папка будет удалена из MEGA, но не с вашего устройства. Это действие нельзя отменить.</translation>
     </message>
     <message>
         <source>Move folder</source>
         <translatorcomment>Radio button option label</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Переместить папку на Облачный диск</translation>
     </message>
     <message>
         <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
         <translatorcomment>Radio button description</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Переместите эту папку на Облачный диск, чтобы получить полный доступ к данным. Резервное копирование прекратится.</translation>
     </message>
     <message>
         <source>Move to:</source>
@@ -6571,7 +6573,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>To stop backing up this folder, you need to either move it or delete it.</source>
         <translatorcomment>Backup removal title description</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Чтобы прекратить резервное копирование этой папки, её нужно либо переместить, либо удалить</translation>
     </message>
 </context>
 <context>

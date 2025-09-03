@@ -3821,12 +3821,12 @@ Bạn sẽ không thể lấy lại quyền truy cập vào dữ liệu đã �
     <message>
         <source>Alert</source>
         <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cảnh báo</translation>
     </message>
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Đã phát hiện lỗi[/B][BR]Đã xảy ra lỗi khi tải các tài nguyên của ứng dụng và ứng dụng cần phải chấm dứt. Vui lòng gỡ rồi cài đặt lại ứng dụng từ [A]mega.io/desktop[/A] để khắc phục sự cố này. Nếu sự cố vẫn tiếp diễn sau khi cài đặt lại, hãy liên lạc với bộ phận hỗ trợ để được giúp thêm.</translation>
     </message>
 </context>
 <context>
@@ -4907,7 +4907,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Leave folder</source>
         <translatorcomment>Contextual menu text that appears when we right click on inshare folder on the incoming shared page on node selector. It leaves an inshared folder. CON-1255</translatorcomment>
-        <translation>Rời khỏi thư mục</translation>
+        <translation>Từ bỏ thư mục</translation>
     </message>
     <message>
         <source>Move to Rubbish bin</source>
@@ -5000,7 +5000,7 @@ Nhập một tên khác.</translation>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
         <translatorcomment>Body of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
-        <translation><numerusform>Nếu bạn quyết định rời khỏi các thư mục này, bạn sẽ không thể truy cập lại được nữa.</numerusform></translation>
+        <translation><numerusform>Nếu bạn quyết định từ bỏ các thư mục này, bạn sẽ không thể truy cập lại được nữa.</numerusform></translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -5015,7 +5015,7 @@ Nhập một tên khác.</translation>
     <message numerus="yes">
         <source>Leave this shared folder?</source>
         <translatorcomment>Title of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
-        <translation><numerusform>Rời khỏi thư mục chia sẻ này?</numerusform></translation>
+        <translation><numerusform>Từ bỏ khỏi thư mục chia sẻ này?</numerusform></translation>
     </message>
     <message>
         <source>Move</source>
@@ -5977,7 +5977,9 @@ Nhập một tên khác.</translation>
 - We’ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Thông báo lỗi nói rõ ràng hơn, giúp bạn dễ hiểu hơn khi có sự cố.
+- Chúng tôi đã sửa lỗi và làm cho ứng dụng đáng tin cậy hơn.
+</translation>
     </message>
 </context>
 <context>

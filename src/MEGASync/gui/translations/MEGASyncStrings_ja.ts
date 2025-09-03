@@ -3825,7 +3825,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]エラーが検出されました[/B][BR]アプリケーションリソースの読み込み中にエラーが発生しました。アプリを終了してください。この問題を解決するには、[A]mega.io/desktop[/A]からアプリを再インストールしてください。再インストール後もこの問題が解決しない場合は、サポートにご連絡ください。</translation>
     </message>
 </context>
 <context>
