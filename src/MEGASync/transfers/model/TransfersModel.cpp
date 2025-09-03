@@ -1461,13 +1461,13 @@ void TransfersModel::getLinks(const QList<int> &rows)
             else if (node)
             {
                 std::unique_ptr<char[]> handle(node->getBase64Handle());
-                std::unique_ptr<char[]>key(node->getBase64Key());
+                std::unique_ptr<char[]> key(node->getBase64Key());
                 if (handle && key)
                 {
-                    QString link = QString::fromUtf8("%1/#!%2!%3")
-                                       .arg(ServiceUrls::instance()->getLinkBaseUrl().toString(),
-                                            QString::fromUtf8(handle.get()),
-                                            QString::fromUtf8(key.get()));
+                    auto link = ServiceUrls::instance()
+                                    ->getRemoteNodeLinkUrl(QString::fromUtf8(handle.get()),
+                                                           QString::fromUtf8(key.get()))
+                                    .toString();
                     if (!linkList.contains(link))
                     {
                         linkList.push_back(link);

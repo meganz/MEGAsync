@@ -5129,12 +5129,9 @@ void MegaApplication::onUpdateNotFound(bool requested)
         }
         else
         {
+            // URL handled through translations. TODO use placeholder
             auto msg = tr("There was a problem installing the update. Please try again later or "
                           "download the last version from:\nhttps://mega.co.nz/#sync");
-            // Replace old url
-            const auto desktopAppInstallerUrl = ServiceUrls::getDesktopAppUrl();
-            msg.replace(QLatin1String("https://mega.co.nz/#sync"),
-                        desktopAppInstallerUrl.toString());
             showInfoMessage(msg);
         }
     }
@@ -5146,11 +5143,9 @@ void MegaApplication::onUpdateError()
     {
         return;
     }
+    // URL handled through translations. TODO use placeholder
     auto msg = tr("There was a problem installing the update. Please try again later or download "
                   "the last version from:\nhttps://mega.co.nz/#sync");
-    // Replace old url
-    const auto desktopAppInstallerUrl = ServiceUrls::getDesktopAppUrl();
-    msg.replace(QLatin1String("https://mega.co.nz/#sync"), desktopAppInstallerUrl.toString());
     showInfoMessage(msg);
 }
 

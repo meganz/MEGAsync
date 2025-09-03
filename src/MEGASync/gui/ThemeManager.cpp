@@ -59,16 +59,13 @@ void ThemeManager::setTheme(Preferences::ThemeType theme)
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, "Error loading resource files.");
             auto desktopAppInstallerUrl = ServiceUrls::getDesktopAppUrl();
             auto title = QCoreApplication::translate("MegaError", "Alert");
+            // URL handled through translations. TODO use placeholder
             auto msg = QCoreApplication::translate(
                 "MegaError",
                 "[B]Error detected[/B][BR]An error has occurred loading application resources, and "
                 "the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to "
                 "resolve this issue. If the problem persists after reinstalling, contact support "
                 "for further assistance.");
-            // Replace old url
-            msg.replace(QLatin1String("mega.io/desktop"),
-                        desktopAppInstallerUrl.authority() + desktopAppInstallerUrl.path());
-
             Text::RichText(desktopAppInstallerUrl.toString()).process(msg);
 
             QMessageBox::warning(nullptr, title, msg, QMessageBox::Ok);

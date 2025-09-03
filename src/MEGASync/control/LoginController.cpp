@@ -1098,6 +1098,7 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
             }
             else
             {
+                // URL handled through translations. TODO use placeholder
                 QString text = tr("You have been logged out. Please contact [A]support@mega.nz[/A] "
                                   "if this issue persists.");
                 Text::Link link(ServiceUrls::getSupportEmail().toString());

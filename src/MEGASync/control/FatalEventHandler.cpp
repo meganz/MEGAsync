@@ -84,15 +84,12 @@ QString FatalEventHandler::getErrorReason() const
         }
         case FatalErrorCode::ERR_FAILURE_UNSERIALIZE_NODE:
         {
+            // URL handled through translations. TODO use placeholder
             auto msg = QCoreApplication::translate(
                 "MegaError",
                 "A serious issue has been detected in the MEGA software or the connection between "
                 "this device and MEGA. Reinstall the app from [A]mega.io/desktop[/A] or contact "
                 "support for further assistance.");
-            // Replace old url
-            const auto desktopAppInstallerUrl = ServiceUrls::getDesktopAppUrl();
-            msg.replace(QLatin1String("mega.io/desktop"),
-                        desktopAppInstallerUrl.toString(QUrl::RemoveScheme));
             return msg;
         }
         case FatalErrorCode::ERR_DB_FULL:

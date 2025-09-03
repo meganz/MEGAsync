@@ -376,7 +376,7 @@ QUrl ServiceUrls::getDeviceCenterUrl()
 QUrl ServiceUrls::getOpenInMegaUrl(const QString& deviceID, const QString& nodeHandle)
 {
     auto url = getDeviceCenterUrl();
-    url.setPath(url.path() + QString::fromUtf8("%1/%2").arg(deviceID, nodeHandle));
+    url.setPath(url.path() + QString::fromUtf8("/%1/%2").arg(deviceID, nodeHandle));
     return url;
 }
 
