@@ -847,7 +847,7 @@ void DesktopNotifications::redirectToPayBusiness(DesktopAppNotification::Action 
 {
     if (checkIfActionIsValid(activationButton))
     {
-        Utilities::openUrl(ServiceUrls::getRepayUrl());
+        Utilities::openUrl(ServiceUrls::instance()->getRepayUrl());
     }
 }
 

@@ -447,49 +447,35 @@ QUrl ServiceUrls::getIncomingPendingContactUrl()
     return url;
 }
 
-QUrl ServiceUrls::getProBaseUrl()
-{
-    auto url = getSessionTransferBaseUrl();
-    url.setPath(QLatin1String("pro"));
-    return url;
-}
-
-QUrl ServiceUrls::getProUrl()
+QUrl ServiceUrls::getProUrl() const
 {
     auto url = getProBaseUrl();
     url.setPath(url.path() + QString::fromUtf8("/%1").arg(getProUrlParameters()));
     return url;
 }
 
-QUrl ServiceUrls::getProFlexiUrl()
+QUrl ServiceUrls::getProFlexiUrl() const
 {
     auto url = getProUrl();
     url.setQuery(QLatin1String("tab=flexi"));
     return url;
 }
 
-QUrl ServiceUrls::getSmallProUrl()
+QUrl ServiceUrls::getSmallProUrl() const
 {
     auto url = getProUrl();
     url.setQuery(QLatin1String("tab=exc"));
     return url;
 }
 
-QUrl ServiceUrls::getRepayBaseUrl()
-{
-    auto url = getSessionTransferBaseUrl();
-    url.setPath(QLatin1String("repay"));
-    return url;
-}
-
-QUrl ServiceUrls::getRepayUrl()
+QUrl ServiceUrls::getRepayUrl() const
 {
     auto url = getRepayBaseUrl();
     url.setPath(url.path() + QString::fromUtf8("/%1").arg(getProUrlParameters()));
     return url;
 }
 
-QUrl ServiceUrls::getUpsellPlanUrl(int proLevel, int periodInMonths)
+QUrl ServiceUrls::getUpsellPlanUrl(int proLevel, int periodInMonths) const
 {
     QUrl url;
     auto accountTypeVar = QVariant::fromValue(proLevel);
@@ -545,8 +531,6 @@ void ServiceUrls::baseUrlOverride(const QString& url)
                            .constData());
 }
 
-mega::MegaApi* ServiceUrls::mMegaApi = nullptr;
-
 ServiceUrls::ServiceUrls():
     mLock(QMutex::Recursive),
     mMegaListener(nullptr),
@@ -571,23 +555,23 @@ ServiceUrls::ServiceUrls():
 
 void ServiceUrls::fetchData()
 {
-    // Try to get misc flags, if it fails getUserData with NO_ACCESS will be called
+    // Try to get misc flags, if it fails with NO_ACCESS getUserData will be called
+    QMutexLocker locker(&mLock);
     if (mMegaApi)
     {
-        mLock.lock();
         mDataPending = true;
-        mLock.unlock();
+        locker.unlock();
         mMegaApi->getMiscFlags();
     }
 }
 
 void ServiceUrls::updateWithDomainFromSdk()
 {
+    QMutexLocker locker(&mLock);
     if (mMegaApi)
     {
         auto* siteFlag = mMegaApi->getFlag("site");
         auto newIndex = (siteFlag && siteFlag->getGroup() == 1) ? DOMAIN_APP : DOMAIN_NZ;
-        mLock.lock();
         if (newIndex != mWebsiteDomainIndex)
         {
             mWebsiteDomainIndex = newIndex;
@@ -595,7 +579,7 @@ void ServiceUrls::updateWithDomainFromSdk()
                 QString::fromUtf8("Mega domain - changed to %1").arg(getBaseUrl().toString());
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, msg.toUtf8().constData());
         }
-        mLock.unlock();
+        locker.unlock();
         delete siteFlag;
     }
 }
@@ -610,18 +594,38 @@ QUrl ServiceUrls::getAutoUpdateBaseUrl()
     return {QLatin1String("http://g.static.mega.co.nz/upd")};
 }
 
-QString ServiceUrls::getProUrlParameters()
+QUrl ServiceUrls::getProBaseUrl()
+{
+    auto url = getSessionTransferBaseUrl();
+    url.setPath(QLatin1String("pro"));
+    return url;
+}
+
+QUrl ServiceUrls::getRepayBaseUrl()
+{
+    auto url = getSessionTransferBaseUrl();
+    url.setPath(QLatin1String("repay"));
+    return url;
+}
+
+QString ServiceUrls::getProUrlParameters() const
 {
     QString params;
-    auto preferences = Preferences::instance();
+    QString userAgent;
 
-    if (preferences && mMegaApi)
+    // Get User Agent parameter
+    mLock.lock();
+    if (mMegaApi)
     {
-        const QString userAgent =
+        userAgent =
             QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(mMegaApi->getUserAgent())));
-
         params = QString::fromUtf8("uao=%1").arg(userAgent);
+    }
+    mLock.unlock();
 
+    // Get affiliate parameter
+    if (auto preferences = Preferences::instance())
+    {
         mega::MegaHandle aff = mega::INVALID_HANDLE;
         int affType = mega::MegaApi::AFFILIATE_TYPE_INVALID;
         long long timestampMs = 0LL;
@@ -636,6 +640,7 @@ QString ServiceUrls::getProUrlParameters()
                                    QString::number(affType)));
         }
     }
+
     return params;
 }
 

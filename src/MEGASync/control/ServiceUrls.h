@@ -76,13 +76,11 @@ public:
     static QUrl getAccountNotificationsUrl();
     static QUrl getIncomingPendingContactUrl();
 
-    static QUrl getProBaseUrl();
-    static QUrl getProUrl();
-    static QUrl getProFlexiUrl();
-    static QUrl getSmallProUrl();
-    static QUrl getRepayBaseUrl();
-    static QUrl getRepayUrl();
-    static QUrl getUpsellPlanUrl(int proLevel, int periodInMonths);
+    QUrl getProUrl() const;
+    QUrl getProFlexiUrl() const;
+    QUrl getSmallProUrl() const;
+    QUrl getRepayUrl() const;
+    QUrl getUpsellPlanUrl(int proLevel, int periodInMonths) const;
 
     bool isFolderLink(const QString& link) const;
     bool isSetLink(const QString& link) const;
@@ -93,7 +91,7 @@ signals:
     void dataReady();
 
 protected:
-    static mega::MegaApi* mMegaApi;
+    mega::MegaApi* mMegaApi;
 
 private:
     enum ServiceDomain
@@ -111,8 +109,10 @@ private:
 
     static QUrl getSupportBaseUrl();
     static QUrl getAutoUpdateBaseUrl();
+    static QUrl getProBaseUrl();
+    static QUrl getRepayBaseUrl();
 
-    static QString getProUrlParameters();
+    QString getProUrlParameters() const;
 
     bool isLink(const QString& link, const QStringList& paths) const;
 

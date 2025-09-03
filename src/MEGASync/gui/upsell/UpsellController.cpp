@@ -252,7 +252,7 @@ void UpsellController::openPlanUrl(int index)
 
     auto periodInMonths = mPlans->isMonthly() ? MONTH_PERIOD : YEAR_PERIOD;
 
-    Utilities::openUrl(ServiceUrls::getUpsellPlanUrl(plan->proLevel(), periodInMonths));
+    Utilities::openUrl(ServiceUrls::instance()->getUpsellPlanUrl(plan->proLevel(), periodInMonths));
 }
 
 void UpsellController::setBilledPeriod(bool isMonthly)

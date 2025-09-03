@@ -1457,11 +1457,11 @@ void Utilities::upgradeClicked()
         || accountType == Preferences::ACCOUNT_TYPE_BASIC
         || accountType == Preferences::ACCOUNT_TYPE_ESSENTIAL)
     {
-        url = ServiceUrls::getSmallProUrl();
+        url = ServiceUrls::instance()->getSmallProUrl();
     }
     else
     {
-        url = ServiceUrls::getProUrl();
+        url = ServiceUrls::instance()->getProUrl();
     }
     openUrl(url);
 

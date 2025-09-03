@@ -104,7 +104,7 @@ void UpsellComponent::linkInDescriptionClicked()
 
 void UpsellComponent::linkTryProFlexiClicked()
 {
-    Utilities::openUrl(ServiceUrls::getProFlexiUrl());
+    Utilities::openUrl(ServiceUrls::instance()->getProFlexiUrl());
 
     MegaSyncApp->getStatsEventHandler()->sendTrackedEventArg(
         AppStatsEvents::EventType::UPSELL_DIALOG_TRY_PRO_FLEXI_CLICKED,

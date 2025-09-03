@@ -53,7 +53,7 @@ void GuiUtilities::showPayOrDismiss(const QString &title, const QString &message
     {
         if(msg->result() == QMessageBox::Yes)
         {
-            Utilities::openUrl(ServiceUrls::getRepayUrl());
+            Utilities::openUrl(ServiceUrls::instance()->getRepayUrl());
         }
     };
 
