@@ -574,10 +574,9 @@ void MegaApplication::initialize()
         {
             auto megaUrls = ServiceUrls::instance();
             const auto defaultBaseUrl = megaUrls->getBaseUrl().toString();
-            megaUrls->reset();
             megaUrls->baseUrlOverride(baseUrl);
 
-            if (baseUrl == defaultBaseUrl)
+            if (baseUrl != defaultBaseUrl)
             {
                 MessageDialogInfo msgInfo;
                 msgInfo.descriptionText = QString::fromUtf8("base URL changed to ") + baseUrl;

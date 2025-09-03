@@ -29,10 +29,10 @@ void ServiceUrls::reset(mega::MegaApi* api)
         mMegaApi = api;
         mMegaListener = std::make_unique<mega::QTMegaListener>(mMegaApi, this);
         mMegaApi->addListener(mMegaListener.get());
+        updateWithDomainFromSdk();
+        locker.unlock();
+        fetchData();
     }
-    updateWithDomainFromSdk();
-    locker.unlock();
-    fetchData();
 }
 
 void ServiceUrls::onEvent(mega::MegaApi*, mega::MegaEvent* event)
@@ -344,13 +344,6 @@ QUrl ServiceUrls::getSessionTransferBaseUrl()
     return {QLatin1String("mega:")};
 }
 
-QUrl ServiceUrls::getFmUrl()
-{
-    auto url = getSessionTransferBaseUrl();
-    url.setPath(QLatin1String("fm"));
-    return url;
-}
-
 QUrl ServiceUrls::getDeviceCenterUrl()
 {
     auto url = getFmUrl();
@@ -504,13 +497,14 @@ void ServiceUrls::baseUrlOverride(const QString& url)
 {
     const QUrl newUrl(url);
     QMutexLocker locker(&mLock);
+    reset();
     mMegaListener.reset();
     mDataReady = true;
     mDataPending = false;
     mDomains[DOMAIN_OVERRIDE] = newUrl.host();
     mWebsiteDomainIndex = DOMAIN_OVERRIDE;
     mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
-                       QString::fromUtf8("Mega domain - set to %1")
+                       QString::fromUtf8("Mega domain - changed to  %1 (override)")
                            .arg(mDomains[mWebsiteDomainIndex])
                            .toUtf8()
                            .constData());
@@ -541,21 +535,21 @@ ServiceUrls::ServiceUrls():
 void ServiceUrls::fetchData()
 {
     // Try to get misc flags, if it fails with NO_ACCESS getUserData will be called
-    QMutexLocker locker(&mLock);
     if (mMegaApi)
     {
         mDataPending = true;
-        locker.unlock();
         mMegaApi->getMiscFlags();
     }
 }
 
 void ServiceUrls::updateWithDomainFromSdk()
 {
-    QMutexLocker locker(&mLock);
     if (mMegaApi)
     {
-        auto* siteFlag = mMegaApi->getFlag("site");
+        const std::unique_ptr<mega::MegaFlag> siteFlag(mMegaApi->getFlag("site"));
+        // The rule for this flag is:
+        //     * flag == 1 -> use the .app domain
+        //     * any other value -> use the .nz domain
         auto newIndex = (siteFlag && siteFlag->getGroup() == 1) ? DOMAIN_APP : DOMAIN_NZ;
         if (newIndex != mWebsiteDomainIndex)
         {
@@ -565,7 +559,6 @@ void ServiceUrls::updateWithDomainFromSdk()
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, msg.toUtf8().constData());
         }
         locker.unlock();
-        delete siteFlag;
     }
 }
 
@@ -577,6 +570,13 @@ QUrl ServiceUrls::getSupportBaseUrl()
 QUrl ServiceUrls::getAutoUpdateBaseUrl()
 {
     return {QLatin1String("http://g.static.mega.co.nz/upd")};
+}
+
+QUrl ServiceUrls::getFmUrl()
+{
+    auto url = getSessionTransferBaseUrl();
+    url.setPath(QLatin1String("fm"));
+    return url;
 }
 
 QUrl ServiceUrls::getProBaseUrl()

@@ -63,7 +63,6 @@ public:
     QStringList getHttpAllowedOrigins() const;
 
     static QUrl getSessionTransferBaseUrl();
-    static QUrl getFmUrl();
     static QUrl getDeviceCenterUrl();
     static QUrl getOpenInMegaUrl(const QString& deviceID, const QString& nodeHandle);
     static QUrl getNodeUrl(const QString& nodeHandle, bool versions = false);
@@ -109,6 +108,7 @@ private:
 
     static QUrl getSupportBaseUrl();
     static QUrl getAutoUpdateBaseUrl();
+    static QUrl getFmUrl();
     static QUrl getProBaseUrl();
     static QUrl getRepayBaseUrl();
 
