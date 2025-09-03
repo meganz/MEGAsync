@@ -95,8 +95,64 @@ background-color: #FFFFFF; /*colorToken.page-background*/
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <property name="topMargin">
-       <number>0</number>
+       <number>24</number>
       </property>
+      <item>
+       <widget class="QWidget" name="wTop" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="title">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="SearchLineEdit" name="leSearch">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
       <item>
        <widget class="QGroupBox" name="wStorage">
         <layout class="QVBoxLayout" name="wSearchLayout_2">
@@ -228,6 +284,12 @@ background-color: #FFFFFF; /*colorToken.page-background*/
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>SearchLineEdit</class>
+   <extends>QFrame</extends>
+   <header>node_selector/gui/SearchLineEdit.h</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>SideBarTab</class>
    <extends>QWidget</extends>

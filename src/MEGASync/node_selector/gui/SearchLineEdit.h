@@ -24,7 +24,7 @@ public:
     ~SearchLineEdit();
     void setIcon(const QIcon& icon);
     void setText(const QString& text);
-    void showTextEntry(bool state, bool force = false);
+    void showTextEntry(bool state);
 
     void addCustomWidget(QWidget* widget);
 
@@ -45,8 +45,6 @@ private slots:
 
 private:
     void toggleClearButton(bool fadeIn);
-    QPropertyAnimation* runWidthAnimation(QWidget* target, bool expand);
-    QPropertyAnimation* runOpacityAnimation(QWidget* target, bool fadeIn);
     QPropertyAnimation* runGeometryAnimation(QWidget* target,
                                              const QRect& startRect,
                                              const QRect& endRect,

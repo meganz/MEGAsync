@@ -143,11 +143,11 @@ private slots:
     void onbShowBackupsFolderClicked();
     void onOptionSelected(int index);
     void updateNodeSelectorTabs();
-    void onSearch(const QString& text);
     void onfShowSearchHidden();
     void onCurrentWidgetChanged(int index);
     void onShowDuplicatedNodeDialog(QPointer<DuplicatedNodeDialog>);
     void performNodeSelection();
+    void onSearch(const QString& text);
 
 private:
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);

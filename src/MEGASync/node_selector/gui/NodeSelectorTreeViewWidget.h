@@ -74,10 +74,8 @@ public:
     bool getDefaultUploadOption();
     void showDefaultUploadOption(bool show);
 
-    void setSearchText(const QString& text);
     void setTitleText(const QString& nodeName);
 
-    void clearSearchText();
     void clearSelection();
 
     void abort();
@@ -112,7 +110,6 @@ public slots:
 signals:
     void okBtnClicked();
     void cancelBtnClicked();
-    void onSearch(const QString& text);
     void onCustomBottomButtonClicked(uint id);
     void viewReady();
 

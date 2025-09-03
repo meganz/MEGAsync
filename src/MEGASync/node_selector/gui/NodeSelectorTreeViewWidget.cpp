@@ -55,7 +55,6 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
             &QCheckBox::stateChanged,
             this,
             &NodeSelectorTreeViewWidget::oncbAlwaysUploadToLocationChanged);
-    connect(ui->leSearch, &SearchLineEdit::search, this, &NodeSelectorTreeViewWidget::onSearch);
 
     auto sizePolicy = ui->bNewFolder->sizePolicy();
     sizePolicy.setRetainSizeWhenHidden(true);
@@ -218,11 +217,6 @@ void NodeSelectorTreeViewWidget::showDefaultUploadOption(bool show)
     ui->cbAlwaysUploadToLocation->setVisible(show);
 }
 
-void NodeSelectorTreeViewWidget::setSearchText(const QString& text)
-{
-    ui->leSearch->setText(text);
-}
-
 void NodeSelectorTreeViewWidget::setTitleText(const QString& nodeName)
 {
     ui->lFolderName->setProperty(FULL_NAME_PROPERTY, nodeName);
@@ -237,11 +231,6 @@ void NodeSelectorTreeViewWidget::setTitleText(const QString& nodeName)
         ui->lFolderName->setToolTip(nodeName);
     else
         ui->lFolderName->setToolTip(QString());
-}
-
-void NodeSelectorTreeViewWidget::clearSearchText()
-{
-    ui->leSearch->onClearClicked();
 }
 
 void NodeSelectorTreeViewWidget::clearSelection()

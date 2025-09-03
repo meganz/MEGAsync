@@ -51,6 +51,9 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
     connect(ui->fSearch, &SideBarTab::clicked, this, &NodeSelector::onbShowSearchClicked);
 
     connect(ui->fSearch, &SideBarTab::hidden, this, &NodeSelector::onfShowSearchHidden);
+    connect(ui->leSearch, &SearchLineEdit::search, this, &NodeSelector::onSearch);
+
+    ui->leSearch->addCustomWidget(ui->title);
 
     ui->fSearch->hide();
     ui->fRubbish->hide();
@@ -84,14 +87,7 @@ void NodeSelector::onSearch(const QString& text)
     ui->fSearch->setSelected(true);
 
     mSearchWidget->search(text);
-    mSearchWidget->setSearchText(text);
     onbShowSearchClicked();
-
-    auto senderViewWidget = getTreeViewWidget(sender());
-    if (senderViewWidget && senderViewWidget != mSearchWidget)
-    {
-        senderViewWidget->clearSearchText();
-    }
 }
 
 void NodeSelector::showDefaultUploadOption(bool show)
@@ -191,6 +187,7 @@ void NodeSelector::onbOkClicked()
 void NodeSelector::onfShowSearchHidden()
 {
     ui->fSearch->setTitle(QString());
+    ui->leSearch->onClearClicked();
     mSearchWidget->stopSearch();
     if (getCurrentTreeViewWidget() == mSearchWidget)
     {
@@ -463,11 +460,6 @@ void NodeSelector::initSpecialisedWidgets()
                     &NodeSelectorTreeViewWidget::cancelBtnClicked,
                     this,
                     &NodeSelector::reject,
-                    Qt::UniqueConnection);
-            connect(viewContainer,
-                    &NodeSelectorTreeViewWidget::onSearch,
-                    this,
-                    &NodeSelector::onSearch,
                     Qt::UniqueConnection);
 
             if (selectedTab.has_value() && selectedTab.value() == page)

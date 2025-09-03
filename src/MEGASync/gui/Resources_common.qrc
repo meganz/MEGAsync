@@ -1271,5 +1271,6 @@
         <file alias="x_solid_small">images/themed/tokenizable/x_solid_small.svg</file>
         <file alias="search_outline_small">images/themed/tokenizable/search_outline_small.svg</file>
         <file alias="search_solid_small">images/themed/tokenizable/search_solid_small.svg</file>
+        <file alias="x_circle_outline_small">images/themed/tokenizable/x_circle_outline_small.svg</file>
     </qresource>
 </RCC>
