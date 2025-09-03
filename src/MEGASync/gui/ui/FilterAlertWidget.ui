@@ -140,6 +140,9 @@ background-color: #FFEFEFF0;/*colorToken.surface-2*/
           <height>40</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="class" stdset="0">
          <string notr="true">menu-style</string>
         </property>
@@ -286,6 +289,9 @@ background-color: #FFEFEFF0;/*colorToken.surface-2*/
              <height>40</height>
             </size>
            </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
            <property name="class" stdset="0">
             <string notr="true">menu-style</string>
            </property>
@@ -392,6 +398,9 @@ background-color: #FFEFEFF0;/*colorToken.surface-2*/
              <height>40</height>
             </size>
            </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
            <property name="class" stdset="0">
             <string notr="true">menu-style</string>
            </property>
@@ -497,6 +506,9 @@ background-color: #FFEFEFF0;/*colorToken.surface-2*/
              <width>0</width>
              <height>40</height>
             </size>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="class" stdset="0">
             <string notr="true">menu-style</string>

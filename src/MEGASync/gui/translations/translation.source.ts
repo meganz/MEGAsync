@@ -9780,11 +9780,6 @@ Please delete the folder sync from settings to cancel them.</source>
             <numerusform>%1 used</numerusform>
         </translation>
     </message>
-    <message>
-        <source>%1/%2</source>
-        <translatorcomment>This translated separator template with placeholders &quot;%1&quot; and &quot;%2&quot; is used to format the display of two values separated by a slash, without any superfluous spaces, in the UI. The placeholders represent dynamic content that will be replaced with actual data. For instance, in French, the formatted string should appear as &quot;15,2 Go/400 Go&quot;, without any spaces surrounding the slash. Translators should adjust the spaces around the slash according to their language-specific formatting rules, ensuring that the translation adheres to the standard typographical conventions of the target language. SNC-1793</translatorcomment>
-        <translation>%1/%2</translation>
-    </message>
     <message numerus="yes">
         <source>Added %n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
@@ -9942,6 +9937,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>[MINUTES] [SECONDS]</source>
         <translatorcomment>String used to control formatting of time intervals. [MINUTES] will be replaced by the minutes count and [SECONDS] by the seconds. This is used for example in the Time remaining column of Transfer Manager.</translatorcomment>
         <translation>[MINUTES] [SECONDS]</translation>
+    </message>
+    <message>
+        <source>%1 / %2</source>
+        <translatorcomment>This translated separator template with placeholders &amp;quot;%1&amp;quot; and &amp;quot;%2&amp;quot; is used to format the display of two values separated by a slash, without any superfluous spaces, in the UI. The placeholders represent dynamic content that will be replaced with actual data. For instance, in French, the formatted string should appear as &amp;quot;15,2 Go/400 Go&amp;quot;, without any spaces surrounding the slash. Translators should adjust the spaces around the slash according to their language-specific formatting rules, ensuring that the translation adheres to the standard typographical conventions of the target language. SNC-1793</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

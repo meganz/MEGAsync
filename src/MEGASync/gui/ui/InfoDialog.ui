@@ -31,11 +31,6 @@ color: #ff303233; /*colorToken.text-primary*/
  border-radius: 10px;
  padding: 10px;
 }
-/* Override hover for selected tabs */
-#tTransfers.button-brand:hover, #tNotifications.button-brand:hover
-{
- color: #FFFF09bf;  /*colorToken.button-brand-hover*/
-}
 #wHeader
 {
 background-color: #fffafafa; /*colorToken.surface-1*/
@@ -55,6 +50,8 @@ background-color:#ff04101E; /*colorToken.button-brand*/
 #tTransfers, #tNotifications
 {
  font-size: 14px;
+ line-height: 20px;
+ font-weight: 400;
  color: #ff09bf5b; /*colorToken.button-primary*/
  padding: 0px 8px 0px 8px;
  border: none;
@@ -70,11 +67,17 @@ background-color:#ff04101E; /*colorToken.button-brand*/
 #tTransfers.button-brand, #tNotifications.button-brand
 {
  color: #ffff09bf; /*colorToken.button-brand*/
+ font-weight: 600;
 }
-
+#tTransfers.button-brand:hover, #tNotifications.button-brand:hover
+{
+ color: #FFFF09bf;  /*colorToken.button-brand-hover*/
+font-weight: 600;
+}
 #tTransfers.button-brand:pressed, #tNotifications.button-brand:pressed
 {
  color: #ffff09bf;  /*colorToken.button-brand-pressed*/
+ font-weight: 600;
 }
 #wBottom[hasTransfers=&quot;true&quot;]
 {
@@ -1021,6 +1024,9 @@ background-color: transparent;
                              <height>16777215</height>
                             </size>
                            </property>
+                           <property name="cursor">
+                            <cursorShape>PointingHandCursor</cursorShape>
+                           </property>
                            <layout class="QHBoxLayout" name="horizontalLayout_4">
                             <property name="spacing">
                              <number>4</number>
@@ -1050,6 +1056,9 @@ background-color: transparent;
                                 <width>52</width>
                                 <height>50</height>
                                </size>
+                              </property>
+                              <property name="cursor">
+                               <cursorShape>PointingHandCursor</cursorShape>
                               </property>
                               <property name="currentIndex">
                                <number>0</number>
@@ -1138,6 +1147,9 @@ background-color: transparent;
                                </property>
                                <item>
                                 <widget class="QLabel" name="lTotalUsedStorage">
+                                 <property name="cursor">
+                                  <cursorShape>PointingHandCursor</cursorShape>
+                                 </property>
                                  <property name="text">
                                   <string>Storage</string>
                                  </property>
@@ -1157,6 +1169,9 @@ background-color: transparent;
                                    <height>24</height>
                                   </size>
                                  </property>
+                                 <property name="cursor">
+                                  <cursorShape>PointingHandCursor</cursorShape>
+                                 </property>
                                  <property name="text">
                                   <string/>
                                  </property>
@@ -1166,22 +1181,6 @@ background-color: transparent;
                              </widget>
                             </item>
                            </layout>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QWidget" name="wVerticalSeparator" native="true">
-                           <property name="minimumSize">
-                            <size>
-                             <width>2</width>
-                             <height>0</height>
-                            </size>
-                           </property>
-                           <property name="maximumSize">
-                            <size>
-                             <width>2</width>
-                             <height>16777215</height>
-                            </size>
-                           </property>
                           </widget>
                          </item>
                          <item>
@@ -3690,6 +3689,9 @@ background-color: transparent;
                    <width>16777215</width>
                    <height>32</height>
                   </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
                  </property>
                  <property name="styleSheet">
                   <string notr="true">background:transparent;</string>

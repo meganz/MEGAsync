@@ -836,7 +836,7 @@ int Utilities::toNearestUnit(long long bytes)
 
 QString Utilities::getTranslatedSeparatorTemplate()
 {
-    return QCoreApplication::translate("Utilities", "%1/%2");
+    return QCoreApplication::translate("Utilities", "%1 / %2");
 }
 
 Utilities::ProgressSize Utilities::getProgressSizes(long long transferredBytes, long long totalBytes)

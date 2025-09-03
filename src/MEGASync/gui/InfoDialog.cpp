@@ -1383,6 +1383,8 @@ void InfoDialog::on_tTransfers_clicked()
 
     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::TRANSFER_TAB_CLICKED,
                                                           sender(), ui->tTransfers, true);
+    ui->tNotifications->setCursor(Qt::PointingHandCursor);
+    ui->tTransfers->setCursor(Qt::ArrowCursor);
 }
 
 void InfoDialog::on_tNotifications_clicked()
@@ -1409,6 +1411,8 @@ void InfoDialog::on_tNotifications_clicked()
     setFooterState();
 
     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::NOTIFICATION_TAB_CLICKED, true);
+    ui->tTransfers->setCursor(Qt::PointingHandCursor);
+    ui->tNotifications->setCursor(Qt::ArrowCursor);
 }
 
 void InfoDialog::onActualFilterClicked()
