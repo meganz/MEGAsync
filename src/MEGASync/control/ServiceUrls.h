@@ -37,6 +37,7 @@ public:
     Q_INVOKABLE QUrl getRecoveryUrl(const QString& email = QString()) const;
     QUrl getLinkBaseUrl() const;
     QUrl getRemoteNodeLinkUrl(const QString& handle, const QString& key) const;
+    QUrl getRemoteSetLinkUrl(const QString& handle, const QString& key) const;
 
     static QUrl getDesktopAppUrl();
     Q_INVOKABLE static QUrl getServiceTermsUrl();

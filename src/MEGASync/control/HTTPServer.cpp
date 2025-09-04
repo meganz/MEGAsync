@@ -599,10 +599,7 @@ void HTTPServer::externalDownloadSetRequest(QString &response, const HTTPRequest
     //! "QM8IK0MWN9s", "Lutj3MIgxuI"]})'
     //!     'auth' contains set_ph (set public handle)
     //!     'k' contains public key
-    //! => Reconstruct link by concatenating:
-    //!     request.origin + "/collection/" + auth" + "#" + k
-    //! eg:
-    //!     "https://mega.app" + "/collection/" + "Y7VXFI6b" + "#" + "2e4l7O_oI4qGxDY5eJCojg"
+
     QString auth = Utilities::extractJSONString(request.data, QLatin1String("auth"));
     QString k = Utilities::extractJSONString(request.data, QLatin1String("k"));
     if (auth.isEmpty() || k.isEmpty())
@@ -611,22 +608,20 @@ void HTTPServer::externalDownloadSetRequest(QString &response, const HTTPRequest
         return;
     }
 
-    QString publicLink = QString::fromUtf8("%1/collection/%2#%3").arg(request.origin, auth, k);
+    auto publicLink = ServiceUrls::instance()->getRemoteSetLinkUrl(auth, k).toString();
 
     // Get Element IDs
-    QStringList e = Utilities::extractJSONStringList(request.data, QLatin1String("e"));
+    const auto e = Utilities::extractJSONStringList(request.data, QLatin1String("e"));
 
     QList<mega::MegaHandle> handleList;
-    for(const QString& eId : qAsConst(e))
+    for (const auto& eId: e)
     {
-        QByteArray ba = eId.toLocal8Bit();
-        const char *c_str2 = ba.data();
-        size_t size = static_cast<size_t>(megaApi->getSetElementHandleSize());
-        unsigned char* result;
-        megaApi->base64ToBinary(c_str2, &result, &size);
-        const mega::MegaHandle* myHandlePtr = reinterpret_cast<mega::MegaHandle*>(result);
+        auto size = static_cast<size_t>(mega::MegaApi::getSetElementHandleSize());
+        unsigned char* result = nullptr;
+        mega::MegaApi::base64ToBinary(eId.toUtf8().constData(), &result, &size);
+        const auto* myHandlePtr = reinterpret_cast<mega::MegaHandle*>(result);
         handleList.append(*myHandlePtr);
-        delete result;
+        delete[] result;
     }
 
     emit onExternalDownloadSetRequested(publicLink, handleList);

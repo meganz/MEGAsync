@@ -168,6 +168,14 @@ QUrl ServiceUrls::getRemoteNodeLinkUrl(const QString& handle, const QString& key
     return url;
 }
 
+QUrl ServiceUrls::getRemoteSetLinkUrl(const QString& handle, const QString& key) const
+{
+    auto url = getLinkBaseUrl();
+    url.setPath(url.path() + QString::fromUtf8("/collection/%1").arg(handle));
+    url.setFragment(key);
+    return url;
+}
+
 QUrl ServiceUrls::getDesktopAppUrl()
 {
     auto url = getSupportBaseUrl();
