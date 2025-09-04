@@ -121,6 +121,7 @@ image: url(:/images/themed/light/error_sync_icon.svg); /*replaceThemeToken*/
 #lDisabledSyncs
 {
 color: #ffe31b57; /*colorToken.text-error*/
+background-color: transparent;
 }
 
 #gDisabledSyncError
