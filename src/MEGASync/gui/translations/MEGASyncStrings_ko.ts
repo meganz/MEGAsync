@@ -3821,12 +3821,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Alert</source>
         <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>경고</translation>
     </message>
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]오류가 감지되었습니다[/B][BR]애플리케이션 리소스를 불러오던 중 오류가 발생하였고, 앱을 닫아야 합니다. 문제를 해결하려면 [A]mega.io/desktop[/A]에서 앱을 다시 설치하세요. 문제가 계속 되면 추가적인 도움을 받기 위해 지원으로 연락하세요.</translation>
     </message>
 </context>
 <context>
@@ -5980,7 +5980,9 @@ Enter a different name</source>
 - We’ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- 이제 오류 메시지가 더욱 깔끔해져서, 문제가 발생했을 때 이해하기 더 쉬워졌습니다.
+- 버그를 수정하고 앱을 더욱 안정적으로 만들었습니다.
+</translation>
     </message>
 </context>
 <context>
@@ -6535,22 +6537,22 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA에서 폴더 삭제</translation>
     </message>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA에서 폴더가 삭제되지만, 당신의 장치에서는 삭제되지 않습니다. 이 행동은 되돌릴 수 없습니다.</translation>
     </message>
     <message>
         <source>Move folder</source>
         <translatorcomment>Radio button option label</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>클라우드 드라이브로 폴더 이동</translation>
     </message>
     <message>
         <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
         <translatorcomment>Radio button description</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>당신의 데이터에 대한 전체 접근 권한을 받으려면 이 폴더를 클라우드 드라이브로 옮기세요. 앞으로는 백업되지 않습니다.</translation>
     </message>
     <message>
         <source>Move to:</source>
@@ -6570,7 +6572,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>To stop backing up this folder, you need to either move it or delete it.</source>
         <translatorcomment>Backup removal title description</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>이 폴더의 백업을 중단하시려면, 폴더를 이동하거나 삭제해야 합니다</translation>
     </message>
 </context>
 <context>

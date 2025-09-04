@@ -3828,7 +3828,7 @@ U zult niet opnieuw toegang krijgen tot uw opgeslagen gegevens en u kunt zich ni
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Fout gedetecteerd[/B][BR]Er is een fout opgetreden bij het laden van toepassingsbronnen en de applicatie moet worden gesloten. Installeer het alstublieft opnieuw vanaf [A]mega.io/desktop[/A] om dit probleem op te lossen. Als dit probleem zich blijft voordoen na het opnieuw installeren, neem contact op met de klantenservice voor verdere hulp.</translation>
     </message>
 </context>
 <context>

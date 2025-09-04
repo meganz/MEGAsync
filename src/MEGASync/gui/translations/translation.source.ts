@@ -3917,7 +3917,7 @@ You will not be able to regain access to your stored data or be authorised to si
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</translation>
+        <translation>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall it from [A]mega.io/desktop[/A] to resolve this issue. If this problem persists after reinstalling, contact support for further assistance.</translation>
     </message>
 </context>
 <context>
@@ -6113,13 +6113,10 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Error messages are now clearer, making it easier to understand when things go wrong.
-- We’ve fixed bugs and made the app more reliable.
+        <source>- We’ve fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
-        <translation>- Error messages are now clearer, making it easier to understand when things go wrong.
-- We’ve fixed bugs and made the app more reliable.
-</translation>
+        <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

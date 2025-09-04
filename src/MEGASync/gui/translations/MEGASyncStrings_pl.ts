@@ -3829,7 +3829,7 @@ Nie będziesz w stanie odzyskać dostępu do przechowywanych danych ani uzyskać
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Wykryto błąd[/B][BR]Wystąpił błąd podczas ładowania zasobów aplikacji i aplikacja musi zostać zamknięta. Proszę ponownie zainstalować aplikację z [A]mega.io/desktop[/A], aby rozwiązać ten problem. Jeśli problem będzie się powtarzał po ponownej instalacji, skontaktuj się ze wsparciem w celu uzyskania dalszej pomocy.</translation>
     </message>
 </context>
 <context>

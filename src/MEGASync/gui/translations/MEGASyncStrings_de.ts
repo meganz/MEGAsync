@@ -3822,12 +3822,12 @@ Sie können nicht mehr auf Ihre gespeicherten Daten zugreifen und sind nicht ber
     <message>
         <source>Alert</source>
         <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Warnung</translation>
     </message>
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Fehler erkannt[/B][BR]Beim Laden der Anwendungsressourcen ist ein Fehler aufgetreten; die App muss geschlossen werden. Um das Problem zu beheben, installieren Sie bitte die App von [A]mega.io/desktop[/A] neu. Wenn das Problem nach der Neuinstallation weiterhin besteht, wenden Sie sich an den Support, um weitere Unterstützung zu erhalten.</translation>
     </message>
 </context>
 <context>
@@ -5979,7 +5979,9 @@ Bitte geben Sie einen anderen Namen ein.</translation>
 - We’ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Die Fehlermeldungen sind jetzt klarer, sodass Probleme leichter zu verstehen sind.
+- Wir haben Bugs behoben und die Zuverlässigkeit der App verbessert.
+</translation>
     </message>
 </context>
 <context>
@@ -6534,22 +6536,22 @@ Trotzdem löschen?</translation>
     <message>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ordner auf MEGA löschen</translation>
     </message>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Der Ordner wird auf MEGA gelöscht – aber nicht auf Ihrem Gerät. Dieser Vorgang kann nicht rückgängig gemacht werden.</translation>
     </message>
     <message>
         <source>Move folder</source>
         <translatorcomment>Radio button option label</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ordner in Cloud Drive verschieben</translation>
     </message>
     <message>
         <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
         <translatorcomment>Radio button description</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Verschieben Sie diesen Ordner in Ihr Cloud Drive, um vollen Zugriff auf Ihre Daten zu erhalten. Der Ordner wird nicht mehr für Backups verwendet.</translation>
     </message>
     <message>
         <source>Move to:</source>
@@ -6569,7 +6571,7 @@ Trotzdem löschen?</translation>
     <message>
         <source>To stop backing up this folder, you need to either move it or delete it.</source>
         <translatorcomment>Backup removal title description</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Um die Sicherung dieses Ordners zu beenden, müssen Sie den Ordner verschieben oder löschen</translation>
     </message>
 </context>
 <context>
