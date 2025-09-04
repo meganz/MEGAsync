@@ -433,7 +433,7 @@ background-color: transparent;
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
-                   <width>8</width>
+                   <width>4</width>
                    <height>20</height>
                   </size>
                  </property>

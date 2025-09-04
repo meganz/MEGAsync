@@ -173,5 +173,7 @@
         <file alias="Activity.gif">images/themed/light/Activity.gif</file>
         <file alias="Activity@2x.gif">images/themed/light/Activity@2x.gif</file>
         <file alias="Activity@3x.gif">images/themed/light/Activity@3x.gif</file>
+        <file alias="arrow-down-small-thin-outline-support-success.svg">images/themed/light/arrow-down-small-thin-outline-support-success.svg</file>
+        <file alias="arrow-up-small-thin-outline-support-success.svg">images/themed/light/arrow-up-small-thin-outline-support-success.svg</file>
     </qresource>
 </RCC>

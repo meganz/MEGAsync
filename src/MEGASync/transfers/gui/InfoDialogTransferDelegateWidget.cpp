@@ -4,6 +4,7 @@
 #include "TransferItem.h"
 #include "ui_InfoDialogTransferDelegateWidget.h"
 #include "Utilities.h"
+#include <TokenParserWidgetManager.h>
 
 #include <QImageReader>
 #include <QtConcurrent/QtConcurrent>
@@ -199,13 +200,13 @@ void InfoDialogTransferDelegateWidget::updateFinishedIco(TransferData::TransferT
     {
         iconCompleted = Utilities::getCachedPixmap(
             error ? QString::fromLatin1(":/alert-circle.svg") :
-                    QString::fromLatin1(":/arrow-down-brand-primary.svg"));
+                    QString::fromLatin1(":/arrow-down-small-thin-outline-support-success.svg"));
     }
     else if(transferType & TransferData::TRANSFER_UPLOAD)
     {
-        iconCompleted =
-            Utilities::getCachedPixmap(error ? QString::fromLatin1(":/alert-circle.svg") :
-                                               QString::fromLatin1(":/arrow-up-brand-primary.svg"));
+        iconCompleted = Utilities::getCachedPixmap(
+            error ? QString::fromLatin1(":/alert-circle.svg") :
+                    QString::fromLatin1(":/arrow-up-small-thin-outline-support-success.svg"));
     }
 
     mUi->lTransferTypeCompleted->setPixmap(iconCompleted.pixmap(mUi->lTransferTypeCompleted->size()));
@@ -221,10 +222,15 @@ void InfoDialogTransferDelegateWidget::updateFinishedIco(TransferData::TransferT
 
 TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mouseHoverTransfer(bool isHover, const QPoint &pos)
 {
+    mUi->wContainerActiveTransfer->setProperty("state", QLatin1String(isHover ? "surface" : ""));
+    mUi->wContainerCompletedData->setProperty("state", QLatin1String(isHover ? "surface" : ""));
+    TokenParserWidgetManager::instance()->polish(mUi->wContainerActiveTransfer);
+    TokenParserWidgetManager::instance()->polish(mUi->wContainerCompletedData);
+
     bool update(false);
     ActionHoverType hoverType(ActionHoverType::NONE);
 
-    if(!getData())
+    if (!getData())
     {
         return hoverType;
     }
@@ -335,6 +341,8 @@ void InfoDialogTransferDelegateWidget::finishTransfer()
         mUi->lActionTransfer->setIconSize(QSize(16, 16));
 
         mUi->lElapsedTime->setText(tr("Failed: %1").arg(getErrorText()));
+        mUi->lElapsedTime->setProperty("state", QLatin1String("Failed"));
+        TokenParserWidgetManager::instance()->polish(mUi->lElapsedTime);
         updateFinishedIco(getData()->mType, true);
     }
     else
@@ -355,6 +363,8 @@ void InfoDialogTransferDelegateWidget::updateFinishedTime()
     }
 
     mUi->lElapsedTime->setText(Utilities::getAddedTimeString(finishedTime));
+    mUi->lElapsedTime->setProperty("state", QLatin1String(""));
+    TokenParserWidgetManager::instance()->polish(mUi->lElapsedTime);
 }
 
 QSize InfoDialogTransferDelegateWidget::minimumSizeHint() const
@@ -418,6 +428,8 @@ bool InfoDialogTransferDelegateWidget::eventFilter(QObject *watched, QEvent *eve
         {
             mUi->lElapsedTime->setToolTip(QString());
         }
+        mUi->lElapsedTime->setProperty("state", QLatin1String("Failed"));
+        TokenParserWidgetManager::instance()->polish(mUi->lElapsedTime);
     }
 
     return TransferBaseDelegateWidget::eventFilter(watched, event);
