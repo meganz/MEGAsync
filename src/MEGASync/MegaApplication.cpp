@@ -41,6 +41,7 @@
 #include "QTMegaApiManager.h"
 #include "ReloadingEventHandler.h"
 #include "RequestListenerManager.h"
+#include "ServiceUrls.h"
 #include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
@@ -100,7 +101,6 @@ QString MegaApplication::lastNotificationError = QString();
 
 constexpr auto openUrlClusterMaxElapsedTime = std::chrono::seconds(5);
 
-static const QString SCHEME_MEGA_URL = QString::fromUtf8("mega");
 static const QString SCHEME_LOCAL_URL = QString::fromUtf8("local");
 
 void MegaApplication::loadDataPath()
@@ -357,7 +357,7 @@ MegaApplication::MegaApplication(int& argc, char** argv):
 MegaApplication::~MegaApplication()
 {
     // Unregister own url schemes
-    QDesktopServices::unsetUrlHandler(SCHEME_MEGA_URL);
+    QDesktopServices::unsetUrlHandler(ServiceUrls::getSessionTransferBaseUrl().scheme());
     QDesktopServices::unsetUrlHandler(SCHEME_LOCAL_URL);
 
     logger.reset();
@@ -443,7 +443,9 @@ void MegaApplication::initialize()
     mIndexing = false;
 
     // Register own url schemes
-    QDesktopServices::setUrlHandler(SCHEME_MEGA_URL, this, "handleMEGAurl");
+    QDesktopServices::setUrlHandler(ServiceUrls::getSessionTransferBaseUrl().scheme(),
+                                    this,
+                                    "handleMEGAurl");
     QDesktopServices::setUrlHandler(SCHEME_LOCAL_URL, this, "handleLocalPath");
 
     qRegisterMetaTypeStreamOperators<EphemeralCredentials>("EphemeralCredentials");
@@ -533,6 +535,9 @@ void MegaApplication::initialize()
                                   : QLatin1String("enabled"))
                  .toUtf8().constData());
 
+    // Init the Service Urls instance with the newly created API
+    ServiceUrls::instance()->reset(megaApi);
+
     // Set maximum log line size to 10k (same as SDK default)
     // Otherwise network logging can cause large glitches when logging hundreds of MB
     // On Mac it is particularly apparent, causing the beachball to appear often
@@ -549,8 +554,12 @@ void MegaApplication::initialize()
     if (fstagingPath.exists())
     {
         QSettings settings(stagingPath, QSettings::IniFormat);
-        QString apiURL = settings.value(QString::fromUtf8("apiurl"), QString::fromUtf8("https://staging.api.mega.co.nz/")).toString();
-        QString disablepkp = settings.value(QString::fromUtf8("disablepkp"), QString::fromUtf8("0")).toString();
+        QString apiURL = settings
+                             .value(QString::fromUtf8("apiurl"),
+                                    ServiceUrls::getDefaultStagingApiUrl().toString())
+                             .toString();
+        QString disablepkp =
+            settings.value(QString::fromUtf8("disablepkp"), QString::fromUtf8("0")).toString();
         megaApi->changeApiUrl(apiURL.toUtf8(), disablepkp == QString::fromUtf8("1"));
         megaApiFolders->changeApiUrl(apiURL.toUtf8());
 
@@ -559,15 +568,21 @@ void MegaApplication::initialize()
         msgInfo.enqueue = true;
         MessageDialogOpener::warning(msgInfo);
 
-        QString baseURL = settings.value(QString::fromUtf8("baseurl"), Preferences::BASE_URL).toString();
-        Preferences::setBaseUrl(baseURL);
-        if (baseURL.compare(QString::fromUtf8("https://mega.nz")))
-        {
-            msgInfo.descriptionText =
-                QString::fromUtf8("base URL changed to ") + Preferences::BASE_URL;
-            MessageDialogOpener::warning(msgInfo);
-        }
+        const auto baseUrl = settings.value(QString::fromUtf8("baseurl")).toString();
 
+        if (!baseUrl.isEmpty())
+        {
+            auto megaUrls = ServiceUrls::instance();
+            const auto defaultBaseUrl = megaUrls->getBaseUrl().toString();
+            megaUrls->baseUrlOverride(baseUrl);
+
+            if (baseUrl != defaultBaseUrl)
+            {
+                MessageDialogInfo msgInfo;
+                msgInfo.descriptionText = QString::fromUtf8("base URL changed to ") + baseUrl;
+                MessageDialogOpener::warning(msgInfo);
+            }
+        }
         gCrashableForTesting = settings.value(QString::fromUtf8("crashable"), false).toBool();
 
         Preferences::overridePreferences(settings);
@@ -3502,7 +3517,7 @@ void MegaApplication::handleMEGAurl(const QUrl &url)
         QMutexLocker locker(&mMutexOpenUrls);
 
         //Remove outdated url refs
-        QMutableMapIterator<QString, std::chrono::system_clock::time_point> it(mOpenUrlsClusterTs);
+        QMutableMapIterator<QUrl, std::chrono::system_clock::time_point> it(mOpenUrlsClusterTs);
         while (it.hasNext())
         {
             it.next();
@@ -3515,7 +3530,7 @@ void MegaApplication::handleMEGAurl(const QUrl &url)
         }
 
         //Check if URl was notified within last openUrlClusterMaxElapsedTime
-        const auto megaUrlIterator = mOpenUrlsClusterTs.find(url.fragment());
+        const auto megaUrlIterator = mOpenUrlsClusterTs.find(url);
         const auto itemFound(megaUrlIterator != mOpenUrlsClusterTs.end());
         if(itemFound)
         {
@@ -3523,10 +3538,10 @@ void MegaApplication::handleMEGAurl(const QUrl &url)
             return;
         }
 
-        mOpenUrlsClusterTs.insert(url.fragment(), std::chrono::system_clock::now());
+        mOpenUrlsClusterTs.insert(url, std::chrono::system_clock::now());
     }
 
-    megaApi->getSessionTransferURL(url.fragment().toUtf8().constData());
+    megaApi->getSessionTransferURL(url.toString(QUrl::RemoveScheme).toUtf8().constData());
 }
 
 void MegaApplication::handleLocalPath(const QUrl &url)
@@ -3886,19 +3901,17 @@ void MegaApplication::pauseTransfers()
 
 void MegaApplication::officialWeb()
 {
-    QString webUrl = Preferences::BASE_URL;
-    Utilities::openUrl(QUrl(webUrl));
+    Utilities::openUrl(ServiceUrls::instance()->getBaseUrl());
 }
 
 void MegaApplication::goToMyCloud()
 {
-    auto rootNode(getRootNode());
-    if (rootNode)
+    auto node(getRootNode());
+    if (node)
     {
-        std::unique_ptr<char[]> rootBase64Handle(rootNode->getBase64Handle());
-        const QString rootID(QString::fromUtf8(rootBase64Handle.get()));
-        const QString url(QString::fromUtf8("fm/%1").arg(rootID));
-        megaApi->getSessionTransferURL(url.toUtf8().constData());
+        std::unique_ptr<char[]> handle(node->getBase64Handle());
+        const auto url = ServiceUrls::instance()->getNodeUrl(QString::fromUtf8(handle.get()));
+        Utilities::openUrl(url);
 
         mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_CLOUD_DRIVE_CLICKED,
                                              sender(),
@@ -4799,12 +4812,9 @@ void MegaApplication::shellViewOnMega(const QString& path, bool versions)
 
 void MegaApplication::shellViewOnMegaByHandle(MegaHandle handle, bool versions)
 {
-    const char* handleBase64Pointer{MegaApi::handleToBase64(handle)};
-    const QString handleArgument{QString::fromUtf8(handleBase64Pointer)};
-    delete [] handleBase64Pointer;
-    const QString versionsArgument{versions ? QString::fromUtf8("/versions") : QString::fromUtf8("")};
-    const QString url{QString::fromUtf8("fm%1/%2").arg(versionsArgument).arg(handleArgument)};
-    megaApi->getSessionTransferURL(url.toUtf8().constData());
+    std::unique_ptr<const char[]> nodeHandle(MegaApi::handleToBase64(handle));
+    Utilities::openUrl(
+        ServiceUrls::instance()->getNodeUrl(QString::fromUtf8(nodeHandle.get()), versions));
 }
 
 void MegaApplication::exportNodes(QList<MegaHandle> exportList, QStringList extraLinks)
@@ -5118,9 +5128,10 @@ void MegaApplication::onUpdateNotFound(bool requested)
         }
         else
         {
-            showInfoMessage(tr("There was a problem installing the update. Please try again later or download the last version from:\nhttps://mega.co.nz/#sync")
-                            .replace(QString::fromUtf8("mega.co.nz"), QString::fromUtf8("mega.nz"))
-                            .replace(QString::fromUtf8("#sync"), QString::fromUtf8("sync")));
+            // URL handled through translations. TODO use placeholder
+            auto msg = tr("There was a problem installing the update. Please try again later or "
+                          "download the last version from:\nhttps://mega.co.nz/#sync");
+            showInfoMessage(msg);
         }
     }
 }
@@ -5131,10 +5142,10 @@ void MegaApplication::onUpdateError()
     {
         return;
     }
-
-    showInfoMessage(tr("There was a problem installing the update. Please try again later or download the last version from:\nhttps://mega.co.nz/#sync")
-                    .replace(QString::fromUtf8("mega.co.nz"), QString::fromUtf8("mega.nz"))
-                    .replace(QString::fromUtf8("#sync"), QString::fromUtf8("sync")));
+    // URL handled through translations. TODO use placeholder
+    auto msg = tr("There was a problem installing the update. Please try again later or download "
+                  "the last version from:\nhttps://mega.co.nz/#sync");
+    showInfoMessage(msg);
 }
 
 //Called when users click in the tray icon

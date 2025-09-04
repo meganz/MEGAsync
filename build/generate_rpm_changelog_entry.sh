@@ -46,7 +46,7 @@ new_version=$(grep -Po '#define VER_PRODUCTVERSION_STR[[:space:]]*"\K.*(?=\.)' $
 
 # print ChangeLog entry
 NOW=$(LANG=en_us_8859_1;date)
-echo $NOW - linux@mega.co.nz
+echo $NOW - linux@mega.io
 echo "- Update to version $new_version:"
 echo "$out7"
 echo ""

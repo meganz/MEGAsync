@@ -1,6 +1,7 @@
 #include "BugReportDialog.h"
 
 #include "DialogOpener.h"
+#include "ServiceUrls.h"
 #include "TextDecorator.h"
 #include "ui_BugReportDialog.h"
 #include <BugReportController.h>
@@ -182,21 +183,21 @@ void BugReportDialog::onReportFailed()
     else if (data.getStatus() == BugReportData::STATUS::REPORT_SUBMIT_FAILED &&
              data.getRequestError() == MegaError::API_ETOOMANY)
     {
+        // URL handled through translations. TODO use placeholder
         msgInfo.titleText = tr("You must wait 10 minutes before submitting another issue");
-        Text::Link link(QString::fromLatin1("mailto:support@mega.nz"));
-        QString text =
-            tr("Please try again later or contact our support team via [A]support@mega.co.nz[/A] "
-               "if the problem persists.");
+        QString text = tr("Please try again later or contact our support team via "
+                          "[A]support@mega.co.nz[/A] if the problem persists.");
+        Text::Link link(ServiceUrls::getSupportEmail().toString());
         link.process(text);
         msgInfo.descriptionText = text;
         MessageDialogOpener::warning(msgInfo);
     }
     else
     {
-        Text::Link link(QString::fromLatin1("mailto:support@mega.nz"));
-        QString text =
-            tr("Bug report can't be submitted due to some error. Please try again or contact our "
-               "support team via [A]support@mega.co.nz[/A]");
+        // URL handled through translations. TODO use placeholder
+        QString text = tr("Bug report can't be submitted due to some error. Please try again or "
+                          "contact our support team via [A]support@mega.co.nz[/A]");
+        Text::Link link(ServiceUrls::getSupportEmail().toString());
         link.process(text);
         msgInfo.descriptionText = text;
         MessageDialogOpener::warning(msgInfo);

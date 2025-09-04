@@ -57,7 +57,7 @@ private:
     Ui::PasteMegaLinksDialog *ui;
     QStringList links;
 
-    QStringList extractLinks(QString text);
+    QStringList extractLinks(const QString& text);
     QString checkLink(QString link);
 };
 

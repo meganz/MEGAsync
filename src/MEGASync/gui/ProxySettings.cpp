@@ -2,6 +2,7 @@
 
 #include "DialogOpener.h"
 #include "megaapi.h"
+#include "ServiceUrls.h"
 #include "TextDecorator.h"
 #include "ui_ProxySettings.h"
 
@@ -13,12 +14,13 @@ namespace
 {
 Text::Bold boldDecorator;
 }
-ProxySettings::ProxySettings(MegaApplication *app, QWidget *parent) :
+
+ProxySettings::ProxySettings(MegaApplication* app, QWidget* parent):
     QDialog(parent),
     mUi(new Ui::ProxySettings),
     mApp(app),
     mPreferences(Preferences::instance()),
-    mConnectivityChecker(new ConnectivityChecker(Preferences::PROXY_TEST_URL)),
+    mConnectivityChecker(new ConnectivityChecker(ServiceUrls::getProxyTestUrl())),
     mProgressDialog(nullptr)
 {
     mUi->setupUi(this);

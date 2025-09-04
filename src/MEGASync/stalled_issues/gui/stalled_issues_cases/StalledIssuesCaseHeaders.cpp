@@ -7,6 +7,7 @@
 #include "MessageDialogOpener.h"
 #include "MoveOrRenameCannotOccurIssue.h"
 #include "NameConflictStalledIssue.h"
+#include "ServiceUrls.h"
 #include "StalledIssue.h"
 #include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
@@ -194,7 +195,7 @@ void CloudNodeIsBlockedHeader::refreshCaseTitles(StalledIssueHeader* header)
                          "breach of [A]MEGA’s Terms of Service[/A].")
                           .arg(header->displayFileName());
     QStringList links;
-    links << QLatin1String("https://mega.io/terms");
+    links << ServiceUrls::getServiceTermsUrl().toString();
     StalledIssuesLinkTextDecorator::process(links, headerText);
     header->setText(headerText);
 }

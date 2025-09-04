@@ -106,6 +106,11 @@ public:
 
     virtual std::string toLocalEncodedPath(const QString& path) const;
 
+    virtual QString getArchUpdateString() const
+    {
+        return {};
+    }
+
 protected:
     std::shared_ptr<AbstractShellNotifier> mShellNotifier = nullptr;
 

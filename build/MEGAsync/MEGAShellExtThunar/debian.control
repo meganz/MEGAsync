@@ -1,8 +1,8 @@
 Source: thunar-megasync
 Section: xfce
 Priority: optional
-Maintainer: MEGA Linux Team <linux@mega.co.nz>
-Homepage: https://mega.nz/#sync
+Maintainer: MEGA Linux Team <linux@mega.io>
+Homepage: https://mega.io/desktop
 Build-Depends: debhelper, qt4-qmake | qt5-qmake | qt5-qmake-bin, libthunarx-2-dev | libthunarx-3-dev
 
 Package: thunar-megasync

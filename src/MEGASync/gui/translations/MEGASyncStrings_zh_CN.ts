@@ -562,7 +562,7 @@
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>由于发生错误，您的问题无法上传。如果问题仍然存在，请稍后再试或联系我们的客服团队[A]support@mega.nz[/A]获取帮助。</translation>
+        <translation>由于发生错误，您的问题无法上传。如果问题仍然存在，请稍后再试或联系我们的客服团队[A]support@mega.io[/A]获取帮助。</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
@@ -607,7 +607,7 @@
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation>如果问题仍然存在，请稍后重试或通过[A]support@mega.nz[/A]联系我们的客服团队。</translation>
+        <translation>如果问题仍然存在，请稍后重试或通过[A]support@mega.io[/A]联系我们的客服团队。</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -3071,7 +3071,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation>您已登出。如果此问题仍然存在，请联系[A]support@mega.nz[/A] 。</translation>
+        <translation>您已登出。如果此问题仍然存在，请联系[A]support@mega.io[/A] 。</translation>
     </message>
 </context>
 <context>
@@ -8163,7 +8163,7 @@ Please, refresh the list.</source>
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
         <translation>目标在您的文件夹结构中太深。停止同步，将文件夹移至深度少于64个文件夹的位置，然后重新创建同步。
-如果这不能解决问题，请联系support@mega.nz。</translation>
+如果这不能解决问题，请联系support@mega.io。</translation>
     </message>
     <message>
         <source>Unable to sync [B]%1[/B]</source>

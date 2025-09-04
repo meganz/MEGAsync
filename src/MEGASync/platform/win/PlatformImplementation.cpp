@@ -233,6 +233,17 @@ std::string PlatformImplementation::toLocalEncodedPath(const QString& path) cons
     return {data, data + path.size() * sizeof(wchar_t)};
 }
 
+QString PlatformImplementation::getArchUpdateString() const
+{
+    QString platformPath;
+#ifdef _WIN64
+    platformPath = QLatin1String("wsync64");
+#else
+    platformPath = QLatin1String("wsync");
+#endif
+    return platformPath;
+}
+
 void PlatformImplementation::notifyItemChange(const QString& path, int)
 {
     notifyItemChange(path, mShellNotifier);

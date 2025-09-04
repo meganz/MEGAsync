@@ -562,7 +562,7 @@
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Sorununuz bir hata nedeniyle yüklenemedi. Daha sonra tekrar deneyin veya sorun devam ederse [A]support@mega.nz[/A] adresinden destek ekibimizle iletişime geçin.</translation>
+        <translation>Sorununuz bir hata nedeniyle yüklenemedi. Daha sonra tekrar deneyin veya sorun devam ederse [A]support@mega.io[/A] üzerinden destek ekibimizle iletişime geçin.</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
@@ -607,7 +607,7 @@
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation>Lütfen daha sonra tekrar deneyin veya sorun devam ederse [A]support@mega.nz[/A] adresinden destek ekibimizle iletişime geçin.</translation>
+        <translation>Lütfen daha sonra tekrar deneyin veya sorun devam ederse [A]support@mega.io[/A] üzerinden destek ekibimizle iletişime geçin.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -3071,7 +3071,7 @@ Yükleme işleminin tamamlanmasını bekleyin.</translation>
     <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation>Oturumu kapattınız. İletişim [A]support@mega.nz[/A] Bu sorun devam ederse.</translation>
+        <translation>Çıkış yapıldı. Bu sorun devam ederse [A]support@mega.io[/A] ile iletişime geçin.</translation>
     </message>
 </context>
 <context>
@@ -8163,8 +8163,8 @@ Listeyi yenileyin.</translation>
         <source>Target is too deep on your folder structure.
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
-        <translation>Hedef, klasör yapınızda çok derin. Senkronizasyonu durdurun, klasörü 64 klasörden daha küçük bir konuma taşıyın ve senkronizasyonunuzu yeniden oluşturun.
-Bu sorunu çözmezse, iletişime geçin support@mega.nz.</translation>
+        <translation>Hedef, klasör yapınızda çok derinde. Senkronizasyonu durdurun, klasörü 64 klasörden daha az derinlikte bir konuma taşıyın ve senkronizasyonunuzu yeniden oluşturun.
+Bu sorunu çözmezse support@mega.io ile iletişime geçin.</translation>
     </message>
     <message>
         <source>Unable to sync [B]%1[/B]</source>

@@ -48,7 +48,7 @@ private:
 
     QString getSyncPathProblemString(mega::MegaSyncStall::SyncPathProblem pathProblem);
     bool showError(mega::MegaSyncStall::SyncPathProblem pathProblem);
-    QString getHelpLink(mega::MegaSyncStall::SyncPathProblem pathProblem);
+    QUrl getHelpLink(mega::MegaSyncStall::SyncPathProblem pathProblem);
 
     Ui::StalledIssueFilePath *ui;
     StalledIssueDataPtr mData;

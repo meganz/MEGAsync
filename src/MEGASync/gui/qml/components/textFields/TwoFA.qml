@@ -9,6 +9,8 @@ import components.buttons 1.0
 
 import QmlClipboard 1.0
 
+import ServiceUrls 1.0
+
 FocusScope {
     id: root
 
@@ -153,7 +155,17 @@ FocusScope {
 
             Layout.leftMargin: -sizes.horizontalPadding
             text: qsTranslate("OnboardingStrings", "Problem with two-factor authentication?")
-            url: Links.recovery
+            onClicked: {
+                if (serviceUrlsAccess.isDataReady()) {
+                    serviceUrlsAccess.dataReady.disconnect(helpButtonItem.onClicked);
+                    var urlToOpen = serviceUrlsAccess.getRecoveryUrl();
+                    Qt.openUrlExternally(urlToOpen);
+                } else {
+                    serviceUrlsAccess.dataReady.connect(helpButtonItem.onClicked);
+                    serviceUrlsAccess.isDataReady(true);
+                }
+            }
+
             icons {
                 source: Images.helpCircle
                 position: Icon.Position.LEFT

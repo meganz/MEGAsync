@@ -4,9 +4,9 @@
 #include "DuplicatedNodeInfo.h"
 #include "megaapi.h"
 #include "MegaApplication.h"
+#include "MessageDialogOpener.h"
 #include "NodeSelectorModelItem.h"
 #include "Utilities.h"
-#include <MessageDialogOpener.h>
 
 #include <QAbstractItemModel>
 #include <QIcon>

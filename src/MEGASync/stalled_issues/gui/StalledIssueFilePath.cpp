@@ -1,6 +1,7 @@
 #include "StalledIssueFilePath.h"
 
 #include "MegaApplication.h"
+#include "ServiceUrls.h"
 #include "StalledIssuesUtilities.h"
 #include "ui_StalledIssueFilePath.h"
 #include "Utilities.h"
@@ -348,7 +349,7 @@ void StalledIssueFilePath::resizeEvent(QResizeEvent *event)
 
 void StalledIssueFilePath::onHelpIconClicked()
 {
-    auto helpLink = QUrl(getHelpLink(mData->getPath().pathProblem));
+    auto helpLink = getHelpLink(mData->getPath().pathProblem);
     Utilities::openUrl(helpLink);
 }
 
@@ -489,17 +490,17 @@ bool StalledIssueFilePath::showError(mega::MegaSyncStall::SyncPathProblem pathPr
     }
 }
 
-QString StalledIssueFilePath::getHelpLink(mega::MegaSyncStall::SyncPathProblem pathProblem)
+QUrl StalledIssueFilePath::getHelpLink(mega::MegaSyncStall::SyncPathProblem pathProblem)
 {
     switch(pathProblem)
     {
         case mega::MegaSyncStall::FilesystemCannotStoreThisName:
         {
-            return QLatin1String("https://help.mega.io/");
+            return ServiceUrls::getHelpBaseUrl();
         }
         default:
             break;
     }
 
-    return QString();
+    return {};
 }

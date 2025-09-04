@@ -4,10 +4,10 @@ Release:	%(cat MEGA_BUILD_ID || echo "1").1
 Summary:	Get more control over your data
 License:	Freeware
 Group:		Applications/Others
-Url:		https://mega.nz
+Url:		https://mega.io/desktop
 Source0:	megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
-Packager:	MEGA Linux Team <linux@mega.co.nz>
+Packager:	MEGA Linux Team <linux@mega.io>
 
 %global __requires_exclude ^lib(avcodec|avformat|avutil|swresample|swscale)\\.so\\.
 

@@ -259,6 +259,18 @@ bool PlatformImplementation::loadThemeResource(const QString& theme)
     return allLoaded;
 }
 
+QString PlatformImplementation::getArchUpdateString() const
+{
+    QString platformPath;
+#if defined(__arm64__)
+    platformPath = QLatin1String("msyncarm64");
+#else
+    // Using msyncv2 to serve new updates and avoid keeping loader leftovers
+    platformPath = QLatin1String("msyncv2");
+#endif
+    return platformPath;
+}
+
 bool PlatformImplementation::showInFolder(QString pathIn)
 {
 

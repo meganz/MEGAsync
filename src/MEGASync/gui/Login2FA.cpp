@@ -1,6 +1,7 @@
 #include "Login2FA.h"
 
 #include "Preferences.h"
+#include "ServiceUrls.h"
 #include "ui_Login2FA.h"
 #include "Utilities.h"
 
@@ -25,9 +26,15 @@ Login2FA::Login2FA(QWidget *parent) :
     ui->bNext->setDefault(true);
     ui->leCode->setFocus();
 
-    ui->lLostAuthCode->setText(tr("[A]Lost your authenticator device?[/A]")
-                               .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://mega.nz/recovery\"><span style='color:#666666; text-decoration:none; font-size:11px; font-family: \"Lato\"'>"))
-                               .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
+    auto lostAuthCodeText = tr("[A]Lost your authenticator device?[/A]");
+    const auto recoveryUrl = ServiceUrls::instance()->getRecoveryUrl().toString();
+    lostAuthCodeText.replace(
+        QLatin1String("[A]"),
+        QString::fromUtf8("<a href=\"%1\"><span style='color:#666666; text-decoration:none; "
+                          "font-size:11px; font-family: \"Lato\"'>")
+            .arg(recoveryUrl));
+    lostAuthCodeText.replace(QLatin1String("[/A]"), QLatin1String("</span></a>"));
+    ui->lLostAuthCode->setText(lostAuthCodeText);
 }
 
 Login2FA::~Login2FA()
@@ -73,8 +80,7 @@ void Login2FA::onCancelClicked()
 
 void Login2FA::onHelpClicked()
 {
-    QString helpUrl = Preferences::BASE_URL + QString::fromLatin1("/recovery");
-    Utilities::openUrl(QUrl(helpUrl));
+    Utilities::openUrl(ServiceUrls::instance()->getRecoveryUrl());
 }
 
 void Login2FA::inputCodeChanged()

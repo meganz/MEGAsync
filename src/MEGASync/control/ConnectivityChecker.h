@@ -19,7 +19,7 @@ public:
         METHOD_POST
     };
 
-    explicit ConnectivityChecker(QString testURL, QObject *parent = 0);
+    explicit ConnectivityChecker(const QUrl& testURL, QObject* parent = 0);
     void setProxy(QNetworkProxy proxy);
     void setTimeout(int ms);
     void setTestString(QString testString);
@@ -44,7 +44,6 @@ protected:
     QNetworkProxy proxy;
     QTimer *timer;
     int timeoutms;
-    QString testURL;
     QString testString;
     int method;
 };

@@ -1,6 +1,7 @@
 #include "UpdateTask.h"
 
 #include "Platform.h"
+#include "ServiceUrls.h"
 #include "Utilities.h"
 
 #include <QAuthenticator>
@@ -96,22 +97,7 @@ void UpdateTask::tryUpdate()
     running = true;
     initialCleanup();
 
-    QString randomSequence = QString::fromUtf8("?");
-    for (int i = 0; i < 10; i++)
-    {
-        randomSequence += QChar::fromLatin1(static_cast<char>('A'+ (rand() % 26)));
-    }
-
-    QString updateURL = Preferences::UPDATE_CHECK_URL;
-    QString updateURLEnv = qEnvironmentVariable("MEGA_UPDATE_CHECK_URL");
-    if (!updateURLEnv.isEmpty())
-    {
-        updateURL = updateURLEnv;
-
-        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Using environment variable MEGA_UPDATE_CHECK_URL to fetch update file");
-    }
-
-    downloadFile(updateURL + randomSequence);
+    downloadFile(ServiceUrls::getAutoUpdateUrl());
 }
 
 void UpdateTask::onTimeout()
@@ -195,9 +181,13 @@ void UpdateTask::postponeUpdate()
     forceCheck = false;
 }
 
-void UpdateTask::downloadFile(QString url)
+void UpdateTask::downloadFile(const QUrl& url)
 {
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Downloading updated file from %1").arg(url).toUtf8().constData());
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG,
+                 QString::fromUtf8("Downloading updated file from %1")
+                     .arg(url.toString())
+                     .toUtf8()
+                     .constData());
 
     QNetworkRequest request(url);
     request.setAttribute(QNetworkRequest::CacheLoadControlAttribute,

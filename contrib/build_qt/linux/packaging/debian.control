@@ -1,7 +1,7 @@
 Source: qt-mega
 Section: Tools
 Priority: normal
-Maintainer: MEGA Linux Team <linux@mega.co.nz>
+Maintainer: MEGA Linux Team <linux@mega.io>
 Build-Depends:  debhelper,
                 zlib1g-dev,
                 wget,

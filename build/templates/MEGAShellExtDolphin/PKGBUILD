@@ -25,7 +25,7 @@ pkgrel=`cat MEGA_BUILD_ID || echo "1"`
 epoch=
 pkgdesc="MEGA Desktop App plugin for Dolphin"
 arch=('x86_64')
-url="http://mega.nz/#sync"
+url="https://mega.io/desktop"
 license=() #TODO
 depends=('megasync>=5.3.0' 'dolphin')
 makedepends=('grep' 'cmake' 'extra-cmake-modules' 'kde-sdk-meta')

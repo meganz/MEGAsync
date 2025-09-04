@@ -88,7 +88,7 @@ licence and those Terms of Service, these terms prevail.
    you agree not to raise any jurisdictional issue if we need to enforce an
    arbitral award or judgment in New Zealand or another country.
 2. Questions and comments regarding this licence are welcomed and should be
-   addressed to support@mega.nz.
+   addressed to support@mega.io.
 
 Last updated 14 May 2025.
 

@@ -76,36 +76,21 @@ unsigned int Preferences::GFXWORKER_KEEPALIVE_S = 60u;
 const unsigned short Preferences::HTTP_PORT                   = 6341;
 
 const QString Preferences::FINDER_EXT_BUNDLE_ID = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
-QString Preferences::BASE_URL = QString::fromLatin1("https://mega.nz");
-QString Preferences::BASE_MEGA_IO_URL = QString::fromLatin1("https://mega.io");
-QString Preferences::BASE_MEGA_HELP_URL = QString::fromLatin1("https://help.mega.io");
-const QStringList Preferences::HTTPS_ALLOWED_ORIGINS = QStringList() << Preferences::BASE_URL
-                                                                     << QLatin1String("https://mega.co.nz")
-                                                                     << QLatin1String("chrome-extension://*")
-                                                                     << QLatin1String("moz-extension://*")
-                                                                     << QLatin1String("edge-extension://*");
 
 bool Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
 
-#ifdef WIN32
-    #ifdef _WIN64
-        const QString Preferences::UPDATE_CHECK_URL             = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync64/v.txt");
-    #else
-        const QString Preferences::UPDATE_CHECK_URL             = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync/v.txt");
-    #endif
-#else
-    #if defined(__arm64__)
-        const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/msyncarm64/v.txt");
-    #else
-        const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/msyncv2/v.txt"); //Using msyncv2 to serve new updates and avoid keeping loader leftovers
-    #endif
-#endif
-
-const char Preferences::UPDATE_PUBLIC_KEY[] = "EACTzXPE8fdMhm6LizLe1FxV2DncybVh2cXpW3momTb8tpzRNT833r1RfySz5uHe8gdoXN1W0eM5Bk8X-LefygYYDS9RyXrRZ8qXrr9ITJ4r8ATnFIEThO5vqaCpGWTVi5pOPI5FUTJuhghVKTyAels2SpYT5CmfSQIkMKv7YVldaV7A-kY060GfrNg4--ETyIzhvaSZ_jyw-gmzYl_dwfT9kSzrrWy1vQG8JPNjKVPC4MCTZJx9SNvp1fVi77hhgT-Mc5PLcDIfjustlJkDBHtmGEjyaDnaWQf49rGq94q23mLc56MSjKpjOR1TtpsCY31d1Oy2fEXFgghM0R-1UkKswVuWhEEd8nO2PimJOl4u9ZJ2PWtJL1Ro0Hlw9OemJ12klIAxtGV-61Z60XoErbqThwWT5Uu3D2gjK9e6rL9dufSoqjC7UA2C0h7KNtfUcUHw0UWzahlR8XBNFXaLWx9Z8fRtA_a4seZcr0AhIA7JdQG5i8tOZo966KcFnkU77pfQTSprnJhCfEmYbWm9EZA122LJBWq2UrSQQN3pKc9goNaaNxy5PYU1yXyiAfMVsBDmDonhRWQh2XhdV-FWJ3rOGMe25zOwV4z1XkNBuW4T1JF2FgqGR6_q74B2ccFC8vrNGvlTEcs3MSxTI_EKLXQvBYy7hxG8EPUkrMVCaWzzTQAFEQ";
-const QString Preferences::CRASH_REPORT_URL                 = QString::fromUtf8("http://g.api.mega.co.nz/hb?crashdump");
+const char Preferences::UPDATE_PUBLIC_KEY[] =
+    "EACTzXPE8fdMhm6LizLe1FxV2DncybVh2cXpW3momTb8tpzRNT833r1RfySz5uHe8gdoXN1W0eM5Bk8X-"
+    "LefygYYDS9RyXrRZ8qXrr9ITJ4r8ATnFIEThO5vqaCpGWTVi5pOPI5FUTJuhghVKTyAels2SpYT5CmfSQIkMKv7YVldaV7"
+    "A-kY060GfrNg4--ETyIzhvaSZ_jyw-gmzYl_dwfT9kSzrrWy1vQG8JPNjKVPC4MCTZJx9SNvp1fVi77hhgT-"
+    "Mc5PLcDIfjustlJkDBHtmGEjyaDnaWQf49rGq94q23mLc56MSjKpjOR1TtpsCY31d1Oy2fEXFgghM0R-"
+    "1UkKswVuWhEEd8nO2PimJOl4u9ZJ2PWtJL1Ro0Hlw9OemJ12klIAxtGV-"
+    "61Z60XoErbqThwWT5Uu3D2gjK9e6rL9dufSoqjC7UA2C0h7KNtfUcUHw0UWzahlR8XBNFXaLWx9Z8fRtA_"
+    "a4seZcr0AhIA7JdQG5i8tOZo966KcFnkU77pfQTSprnJhCfEmYbWm9EZA122LJBWq2UrSQQN3pKc9goNaaNxy5PYU1yXyi"
+    "AfMVsBDmDonhRWQh2XhdV-FWJ3rOGMe25zOwV4z1XkNBuW4T1JF2FgqGR6_q74B2ccFC8vrNGvlTEcs3MSxTI_"
+    "EKLXQvBYy7hxG8EPUkrMVCaWzzTQAFEQ";
 const QString Preferences::UPDATE_FOLDER_NAME               = QString::fromLatin1("update");
-const QString Preferences::UPDATE_BACKUP_FOLDER_NAME        = QString::fromLatin1("backup");
-const QString Preferences::PROXY_TEST_URL                   = QString::fromUtf8("https://g.api.mega.co.nz/cs");
+const QString Preferences::UPDATE_BACKUP_FOLDER_NAME = QString::fromLatin1("backup");
 const QString Preferences::PROXY_TEST_SUBSTRING             = QString::fromUtf8("-2");
 const QString Preferences::syncsGroupKey            = QString::fromLatin1("Syncs");
 const QString Preferences::syncsGroupByTagKey       = QString::fromLatin1("SyncsByTag");
@@ -3058,11 +3043,6 @@ void Preferences::writeSyncSetting(std::shared_ptr<SyncSettings> syncSettings)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromLatin1("Writting sync settings before logged in").toUtf8().constData());
     }
-}
-
-void Preferences::setBaseUrl(const QString &value)
-{
-    BASE_URL = value;
 }
 
 template<typename T>

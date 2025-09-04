@@ -562,7 +562,7 @@
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Báo cáo lỗi đã không thể gửi đi được do có trục trặc. Hãy thử lại sau hoặc liên hệ với đội trợ giúp qua email [A]support@mega.nz[/A] nếu vấn đề vẫn tiếp diễn.</translation>
+        <translation>Báo cáo lỗi đã không thể gửi đi được do có trục trặc. Hãy thử lại sau hoặc liên hệ với đội trợ giúp qua email [A]support@mega.io[/A] nếu vấn đề vẫn tiếp diễn.</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
@@ -607,7 +607,7 @@
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation>Vui lòng thử lại sau hoặc liên hệ với nhóm hỗ trợ của chúng tôi qua [A]support@mega.nz[/A] nếu vấn đề vẫn tiếp diễn.</translation>
+        <translation>Vui lòng thử lại sau hoặc liên hệ với nhóm hỗ trợ của chúng tôi qua [A]support@mega.io[/A] nếu vấn đề vẫn tiếp diễn.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -3071,7 +3071,7 @@ Hãy chờ cho phiên tải lên được hoàn tất.</translation>
     <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation>Bạn đã đăng xuất. Liên hệ [A]support@mega.nz[/A] nếu vấn đề này vẫn tiếp diễn.</translation>
+        <translation>Bạn đã đăng xuất. Liên hệ [A]support@mega.io[/A] nếu vấn đề này vẫn tiếp diễn.</translation>
     </message>
 </context>
 <context>
@@ -8162,7 +8162,7 @@ Làm mới danh sách.</translation>
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
         <translation>Vị trí mục tiêu nằm quá sâu trong cấu trúc thư mục. Hãy dừng đồng bộ hóa, và di chuyển thư mục đến vị trí sâu ít hơn 64 thư mục và sau đó tạo lại việc đồng bộ hóa.
-Nếu điều này không giải quyết được vấn đề, hãy liên hệ support@mega.nz.</translation>
+Nếu điều này không giải quyết được vấn đề, hãy liên hệ support@mega.io.</translation>
     </message>
     <message>
         <source>Unable to sync [B]%1[/B]</source>

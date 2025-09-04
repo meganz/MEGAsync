@@ -7,6 +7,7 @@
 #include "MegaApplication.h"
 #include "MoveToMEGABin.h"
 #include "Preferences.h"
+#include "ServiceUrls.h"
 #include "StatsEventHandler.h"
 #include "EnumConverters.h"
 #include "IconTokenizer.h"
@@ -55,12 +56,6 @@ QHash<QString, Utilities::FileType> Utilities::fileTypes;
 QHash<QString, QString> Utilities::languageNames;
 
 std::unique_ptr<ThreadPool> ThreadPoolSingleton::instance = nullptr;
-
-const QString Utilities::SUPPORT_URL = QString::fromUtf8("https://mega.nz/contact");
-const QString Utilities::BACKUP_CENTER_URL = QString::fromLatin1("mega://#fm/device-centre");
-const QString Utilities::SYNC_SUPPORT_URL =
-    QString::fromLatin1("https://help.mega.io/installs-apps/desktop/how-does-syncing-work");
-const QString Utilities::DESKTOP_APP_URL = QString::fromLatin1("https://mega.io/desktop#download");
 
 const long long KB = 1024;
 const long long MB = 1024 * KB;
@@ -1037,34 +1032,6 @@ QString Utilities::getDefaultBasePath()
     return QString();
 }
 
-void Utilities::getPROurlWithParameters(QString &url)
-{
-    auto preferences = Preferences::instance();
-    MegaApi *megaApi = ((MegaApplication *)qApp)->getMegaApi();
-
-    if (!preferences || !megaApi)
-    {
-        return;
-    }
-
-    QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-    url.append(QString::fromUtf8("/uao=%1").arg(userAgent));
-
-    MegaHandle aff;
-    int affType;
-    long long timestamp;
-    preferences->getLastHandleInfo(aff, affType, timestamp);
-
-    if (aff != INVALID_HANDLE)
-    {
-        char *base64aff = MegaApi::handleToBase64(aff);
-        url.append(QString::fromUtf8("/aff=%1/aff_time=%2/aff_type=%3").arg(QString::fromUtf8(base64aff))
-                                                                       .arg(timestamp / MSEC_IN_1_SEC)
-                                                                       .arg(affType));
-        delete [] base64aff;
-    }
-}
-
 QString Utilities::joinLogZipFiles(MegaApi *megaApi, const QDateTime *timestampSince, QString appenHashReference)
 {
     if (!megaApi)
@@ -1484,16 +1451,19 @@ QPair<QString, QString> Utilities::getFilenameBasenameAndSuffix(const QString& f
 
 void Utilities::upgradeClicked()
 {
-    QString url = QString::fromUtf8("mega://#pro");
-    getPROurlWithParameters(url);
+    QUrl url;
     int accountType = Preferences::instance()->accountType();
     if(accountType == Preferences::ACCOUNT_TYPE_STARTER
         || accountType == Preferences::ACCOUNT_TYPE_BASIC
         || accountType == Preferences::ACCOUNT_TYPE_ESSENTIAL)
     {
-        url.append(QString::fromUtf8("?tab=exc"));
+        url = ServiceUrls::instance()->getSmallProUrl();
     }
-    openUrl(QUrl(url));
+    else
+    {
+        url = ServiceUrls::instance()->getProUrl();
+    }
+    openUrl(url);
 
     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
         AppStatsEvents::EventType::UPGRADE_ACCOUNT_CLICKED,
@@ -1603,8 +1573,7 @@ void Utilities::openInMega(MegaHandle handle)
             std::unique_ptr<char[]> h (node->getBase64Handle());
             if(h)
             {
-                openUrl(QUrl(QLatin1String("mega://#fm/device-centre/") + deviceID +
-                             QString::fromUtf8("/") + QString::fromLatin1(h.get())));
+                openUrl(ServiceUrls::getOpenInMegaUrl(deviceID, QString::fromLatin1(h.get())));
             }
         }
     }
@@ -1612,7 +1581,7 @@ void Utilities::openInMega(MegaHandle handle)
 
 void Utilities::openBackupCenter()
 {
-    openUrl(QUrl(Utilities::BACKUP_CENTER_URL));
+    openUrl(ServiceUrls::getDeviceCenterUrl());
 }
 
 QString Utilities::getCommonPath(const QString &path1, const QString &path2, bool cloudPaths)

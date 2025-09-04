@@ -3,8 +3,8 @@ Source: megasync-debug
 Binary: megasync-debug
 Architecture: any
 Version: MEGASYNC_VERSION
-Maintainer: MEGA Linux Team <linux@mega.co.nz>
-Homepage: https://mega.nz/#sync
+Maintainer: MEGA Linux Team <linux@mega.io>
+Homepage: https://mega.io/desktop
 Build-Depends: debhelper, libqt4-dev, libqt4-dbus, libcrypto++-dev, libraw-dev, libc-ares-dev, libssl-dev, libsqlite3-dev, zlib1g-dev, wget, gdb, dh-autoreconf, cdbs, unzip
 Package-List:
  megasync-debug deb gnome optional

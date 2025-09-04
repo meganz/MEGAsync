@@ -3,6 +3,7 @@
 #include "DialogOpener.h"
 #include "MessageDialogOpener.h"
 #include "QmlManager.h"
+#include "ServiceUrls.h"
 #include "TextDecorator.h"
 #include "Utilities.h"
 
@@ -83,11 +84,13 @@ QString FatalEventHandler::getErrorReason() const
         }
         case FatalErrorCode::ERR_FAILURE_UNSERIALIZE_NODE:
         {
-            return QCoreApplication::translate(
+            // URL handled through translations. TODO use placeholder
+            auto msg = QCoreApplication::translate(
                 "MegaError",
                 "A serious issue has been detected in the MEGA software or the connection between "
                 "this device and MEGA. Reinstall the app from [A]mega.io/desktop[/A] or contact "
                 "support for further assistance.");
+            return msg;
         }
         case FatalErrorCode::ERR_DB_FULL:
         {
@@ -143,7 +146,7 @@ QString FatalEventHandler::getErrorReasonUrl() const
     {
         case FatalErrorCode::ERR_FAILURE_UNSERIALIZE_NODE:
         {
-            return Utilities::DESKTOP_APP_URL;
+            return ServiceUrls::getDesktopAppUrl().toString();
         }
         case FatalErrorCode::ERR_DB_IO_FAILURE:
         {

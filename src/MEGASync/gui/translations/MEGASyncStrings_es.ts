@@ -583,7 +583,7 @@
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Ha habido un error al subir el reporte. Vuelve a intentarlo más tarde o ponte en contacto con [A]support@mega.nz[/A] si el problema persiste.</translation>
+        <translation>Ha habido un error al subir el reporte. Vuelve a intentarlo más tarde o ponte en contacto con [A]support@mega.io[/A] si el problema persiste.</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
@@ -628,7 +628,7 @@
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation>Vuelve a intentarlo más tarde o ponte en contacto con nuestro equipo de soporte a través de [A]support@mega.nz[/A] si el problema persiste</translation>
+        <translation>Vuelve a intentarlo más tarde o ponte en contacto con nuestro equipo de soporte a través de [A]support@mega.io[/A] si el problema persiste</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -3155,7 +3155,7 @@ Espera a que se complete la subida.</translation>
     <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation>Se ha cerrado la sesión. Contacta con [A]support@mega.nz[/A] si el problema persiste.</translation>
+        <translation>Se ha cerrado la sesión. Contacta con [A]support@mega.io[/A] si el problema persiste.</translation>
     </message>
 </context>
 <context>
@@ -8352,7 +8352,7 @@ Actualiza la lista.</translation>
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
         <translation>La carpeta de destino se encuentra demasiado adentrada en la estructura de carpetas. Detén la sincronización, mueve la carpeta a una ubicación que tenga menos de 64 carpetas de profundidad y vuelve a crear la sincronización. 
-Si esto no resuelve el problema, contacta con support@mega.nz.</translation>
+Si esto no resuelve el problema, contacta con support@mega.io.</translation>
     </message>
     <message>
         <source>Unable to sync [B]%1[/B]</source>

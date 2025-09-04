@@ -10,7 +10,7 @@ Guide to generate MEGA Desktop App installers on Windows
 
 ## Extra plug-ins:
 Extract archive in NSIS install dir, should be C:\Program Files (x86)\NSIS\
-[Archive](https://mega.nz/file/YwFmTD5K#wni6lOitZlTAVxxlbfV0UaW1PmleeITH0Za_ti7GB6g)
+[Archive](https://mega.app/file/YwFmTD5K#wni6lOitZlTAVxxlbfV0UaW1PmleeITH0Za_ti7GB6g)
 
 ## Qt 5.15
 And the environment variable `MEGA_QTPATH` set to the Qt install dir. Example: `C:\Qt\5.15.16\x64` for the 64 bit version, or `C:\Qt\5.15.16\x86` for the 32 bit version.

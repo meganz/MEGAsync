@@ -1,6 +1,7 @@
 #include "ChangeLogDialog.h"
 
 #include "Preferences.h"
+#include "ServiceUrls.h"
 #include "ThemeManager.h"
 #include "ui_ChangeLogDialog.h"
 
@@ -90,20 +91,17 @@ void ChangeLogDialog::setChangeLogNotes(QString notes)
 
 void ChangeLogDialog::on_bTerms_clicked()
 {
-    QString temsUrl = Preferences::BASE_MEGA_IO_URL + QString::fromLatin1("/terms");
-    Utilities::openUrl(QUrl(temsUrl));
+    Utilities::openUrl(ServiceUrls::getServiceTermsUrl());
 }
 
 void ChangeLogDialog::on_bPolicy_clicked()
 {
-    QString policyUrl = Preferences::BASE_MEGA_IO_URL + QString::fromLatin1("/privacy");
-    Utilities::openUrl(QUrl(policyUrl));
+    Utilities::openUrl(ServiceUrls::getServicePolicyUrl());
 }
 
 void ChangeLogDialog::on_bAck_clicked()
 {
-    QString ackUrl = QString::fromLatin1("https://github.com/meganz/MEGAsync/blob/master/CREDITS.md");
-    Utilities::openUrl(QUrl(ackUrl));
+    Utilities::openUrl(ServiceUrls::getAcknowledgementsUrl());
 }
 
 bool ChangeLogDialog::event(QEvent* event)

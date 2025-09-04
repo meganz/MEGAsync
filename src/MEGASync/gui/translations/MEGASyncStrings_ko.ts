@@ -562,7 +562,7 @@
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>오류로 인해 문제를 업로드할 수 없습니다. 나중에 다시 시도하거나 문제가 지속될 경우 [A]support@mega.nz[/A]를 통해 지원 팀에 연락하세요.</translation>
+        <translation>오류로 인해 문제를 업로드할 수 없습니다. 나중에 다시 시도하거나 문제가 지속될 경우 [A]support@mega.io[/A]를 통해 지원 팀에 연락하세요.</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
@@ -607,7 +607,7 @@
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation>문제가 계속 되면 나중에 다시 시도하거나 [A]support@mega.nz[/A]를 통해 지원 팀으로 연락하세요.</translation>
+        <translation>문제가 계속 되면 나중에 다시 시도하거나 [A]support@mega.io[/A]를 통해 지원 팀으로 연락하세요.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -3071,7 +3071,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation>로그아웃 되었습니다. 문제가 계속 되면 [A]support@mega.nz[/A]로 연락주세요.</translation>
+        <translation>로그아웃 되었습니다. 문제가 계속 되면 [A]support@mega.io[/A]로 연락주세요.</translation>
     </message>
 </context>
 <context>
@@ -8165,7 +8165,7 @@ Please, refresh the list.</source>
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
         <translation>대상이 폴더 구조의 너무 깊은 곳에 있습니다. 동기화를 정지하고, 폴더를 64단계보다 얕은 곳으로 이동한 뒤 동기화를 다시 만드세요.
-이렇게 해서 문제가 해결되지 않는다면, support@mega.nz로 연락주세요.</translation>
+이렇게 해서 문제가 해결되지 않는다면, support@mega.io로 연락주세요.</translation>
     </message>
     <message>
         <source>Unable to sync [B]%1[/B]</source>

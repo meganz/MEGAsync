@@ -27,7 +27,7 @@ VIAddVersionKey "LegalCopyright" "MEGA Limited 2025"
 VIAddVersionKey "ProductName" "MEGAsync"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
-!define PRODUCT_WEB_SITE "http://www.mega.nz"
+!define PRODUCT_WEB_SITE "https://mega.io"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\MEGAsync.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
@@ -386,7 +386,7 @@ Function .onInit
   !ifdef BUILD_X64_VERSION
   ${If} ${RunningX64}
   ${Else}
-    MessageBox MB_OK "This is an installer for 64-bit MEGA Desktop App, but you are using a 32-bit Windows. Please, download the 32-bit MEGA Desktop App version from https://mega.nz/desktop."
+    MessageBox MB_OK "This is an installer for 64-bit MEGA Desktop App, but you are using a 32-bit Windows. Please, download the 32-bit MEGA Desktop App version from https://mega.io/desktop."
     Quit
   ${EndIf}
   !endif

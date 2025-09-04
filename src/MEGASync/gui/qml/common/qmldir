@@ -2,7 +2,6 @@ module common
 singleton Constants 1.0 Constants.qml
 singleton Images 1.0 Images.qml
 singleton FontStyles 1.0 FontStyles.qml
-singleton Links 1.0 Links.qml
 singleton RegexExpressions 1.0 RegexExpressions.qml
 singleton Utilities 1.0 Utilities.qml
 singleton OS 1.0 OS.qml
