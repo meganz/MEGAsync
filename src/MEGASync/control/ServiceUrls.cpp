@@ -7,7 +7,6 @@
 #include "QmlManager.h"
 
 #include <QChar>
-#include <QMutexLocker>
 #include <QString>
 #include <QVariant>
 
@@ -21,7 +20,6 @@ std::shared_ptr<ServiceUrls> ServiceUrls::instance()
 
 void ServiceUrls::reset(mega::MegaApi* api)
 {
-    QMutexLocker locker(&mLock);
     mDataReady = false;
     mDataPending = false;
     if (api)
@@ -30,7 +28,6 @@ void ServiceUrls::reset(mega::MegaApi* api)
         mMegaListener = std::make_unique<mega::QTMegaListener>(mMegaApi, this);
         mMegaApi->addListener(mMegaListener.get());
         updateWithDomainFromSdk();
-        locker.unlock();
         fetchData();
     }
 }
@@ -39,7 +36,6 @@ void ServiceUrls::onEvent(mega::MegaApi*, mega::MegaEvent* event)
 {
     if (event->getType() == mega::MegaEvent::EVENT_MISC_FLAGS_READY)
     {
-        QMutexLocker locker(&mLock);
         updateWithDomainFromSdk();
         mDataReady = true;
     }
@@ -59,10 +55,8 @@ void ServiceUrls::onRequestFinish(mega::MegaApi* api,
             {
                 mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
                                    "Mega domain - login: refresh with gud");
-                mLock.lock();
                 mDataReady = false;
                 mDataPending = true;
-                mLock.unlock();
                 api->getUserData();
             }
             break;
@@ -75,10 +69,8 @@ void ServiceUrls::onRequestFinish(mega::MegaApi* api,
             {
                 mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
                                    "Mega domain - logout: refresh with gmf");
-                mLock.lock();
                 mDataReady = false;
                 mDataPending = true;
-                mLock.unlock();
                 api->getMiscFlags();
             }
             break;
@@ -87,7 +79,6 @@ void ServiceUrls::onRequestFinish(mega::MegaApi* api,
         // Fallthrough
         case mega::MegaRequest::TYPE_GET_USER_DATA:
         {
-            QMutexLocker locker(&mLock);
             if (!mDataReady || mDataPending) // Only process if waiting for data
             {
                 mDataPending = false;
@@ -97,7 +88,6 @@ void ServiceUrls::onRequestFinish(mega::MegaApi* api,
                         QString::fromUtf8("Mega domain - using %1").arg(getBaseUrl().toString());
                     mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, msg.toUtf8().constData());
                     mDataReady = true;
-                    locker.unlock();
                     emit dataReady();
                 }
                 else if (!mDataReady && requestType == mega::MegaRequest::TYPE_GET_MISC_FLAGS &&
@@ -106,7 +96,6 @@ void ServiceUrls::onRequestFinish(mega::MegaApi* api,
                     mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
                                        "Mega domain - gmf KO, try gud");
                     mDataPending = true;
-                    locker.unlock();
                     api->getUserData();
                 }
             }
@@ -121,23 +110,18 @@ void ServiceUrls::onRequestFinish(mega::MegaApi* api,
 
 bool ServiceUrls::isDataReady(bool emitSignal)
 {
-    mLock.lock();
-    auto isDataReady = mDataReady;
-    auto isDataPending = mDataPending;
-    mLock.unlock();
-
-    if (isDataReady)
+    if (mDataReady)
     {
         if (emitSignal)
         {
             emit dataReady();
         }
     }
-    else if (!isDataPending)
+    else if (mDataPending)
     {
         fetchData();
     }
-    return isDataReady;
+    return mDataReady;
 }
 
 QUrl ServiceUrls::getSupportEmail()
@@ -149,9 +133,7 @@ QUrl ServiceUrls::getBaseUrl() const
 {
     QUrl url;
     url.setScheme(QLatin1String("https"));
-    QMutexLocker locker(&mLock);
     url.setHost(mDomains[mWebsiteDomainIndex]);
-    locker.unlock();
     return url;
 }
 
@@ -496,7 +478,6 @@ bool ServiceUrls::isSetLink(const QString& link) const
 void ServiceUrls::baseUrlOverride(const QString& url)
 {
     const QUrl newUrl(url);
-    QMutexLocker locker(&mLock);
     reset();
     mMegaListener.reset();
     mDataReady = true;
@@ -511,7 +492,6 @@ void ServiceUrls::baseUrlOverride(const QString& url)
 }
 
 ServiceUrls::ServiceUrls():
-    mLock(QMutex::Recursive),
     mMegaListener(nullptr),
     mWebsiteDomainIndex(DOMAIN_NZ),
     mDataReady(false),
@@ -558,7 +538,6 @@ void ServiceUrls::updateWithDomainFromSdk()
                 QString::fromUtf8("Mega domain - changed to %1").arg(getBaseUrl().toString());
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, msg.toUtf8().constData());
         }
-        locker.unlock();
     }
 }
 
@@ -599,14 +578,12 @@ QString ServiceUrls::getProUrlParameters() const
     QString userAgent;
 
     // Get User Agent parameter
-    mLock.lock();
     if (mMegaApi)
     {
         userAgent =
             QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(mMegaApi->getUserAgent())));
         params = QString::fromUtf8("uao=%1").arg(userAgent);
     }
-    mLock.unlock();
 
     // Get affiliate parameter
     if (auto preferences = Preferences::instance())
