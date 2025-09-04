@@ -28,6 +28,8 @@ SideBarTab::SideBarTab(QWidget* parent):
             });
 
     ui->lIcon->setAttribute(Qt::WA_TransparentForMouseEvents);
+    ui->lCounter->setAttribute(Qt::WA_TransparentForMouseEvents);
+
     setAttribute(Qt::WA_StyledBackground, true);
 
     mSideBarsTopParent = Utilities::getTopParent<QDialog>(parent);
