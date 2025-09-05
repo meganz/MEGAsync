@@ -24,7 +24,6 @@ ConfirmEmailPageForm {
 
         function onInitializePageFocus() {
             bodyText2.forceActiveFocus();
-            bodyText2.url = serviceUrlsAccess.getContactSupportUrl();
         }
     }
 }
