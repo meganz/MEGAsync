@@ -55,6 +55,14 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
             &QCheckBox::stateChanged,
             this,
             &NodeSelectorTreeViewWidget::oncbAlwaysUploadToLocationChanged);
+    connect(ui->bOpenLinks,
+            &QPushButton::clicked,
+            this,
+            &NodeSelectorTreeViewWidget::onOpenLinksClicked);
+    connect(ui->bSettings,
+            &QPushButton::clicked,
+            this,
+            &NodeSelectorTreeViewWidget::onSettingsClicked);
 
     auto sizePolicy = ui->bNewFolder->sizePolicy();
     sizePolicy.setRetainSizeWhenHidden(true);
@@ -1288,6 +1296,16 @@ void NodeSelectorTreeViewWidget::onNodesAdded(
     }
 }
 
+void NodeSelectorTreeViewWidget::onOpenLinksClicked()
+{
+    MegaSyncApp->importLinks();
+}
+
+void NodeSelectorTreeViewWidget::onSettingsClicked()
+{
+    MegaSyncApp->openSettings();
+}
+
 void NodeSelectorTreeViewWidget::removeItemByHandle(mega::MegaHandle handle)
 {
     auto index = mModel->findIndexByNodeHandle(handle, QModelIndex());
@@ -1574,10 +1592,10 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex& proxy_idx)
     {
         setTitleText(getRootText());
 
-        ui->lOwnerIcon->setPixmap(QPixmap());
+        ui->lOwnerIcon->setIcon(QIcon());
         ui->lAccess->hide();
         ui->avatarSpacer->spacerItem()->changeSize(0, 0);
-        ui->lIcon->setPixmap(QPixmap());
+        ui->lSyncIcon->setIcon(QIcon());
         ui->syncSpacer->spacerItem()->changeSize(0, 0);
         return;
     }
@@ -1588,15 +1606,12 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex& proxy_idx)
 
     if (!syncIcon.isNull())
     {
-        QPixmap pm = syncIcon.pixmap(
-            QSize(NodeSelectorModelItem::ICON_SIZE, NodeSelectorModelItem::ICON_SIZE),
-            QIcon::Normal);
-        ui->lIcon->setPixmap(pm);
+        ui->lSyncIcon->setIcon(syncIcon);
         ui->syncSpacer->spacerItem()->changeSize(10, 0);
     }
     else
     {
-        ui->lIcon->setPixmap(QPixmap());
+        ui->lSyncIcon->setIcon(QIcon());
         ui->syncSpacer->spacerItem()->changeSize(0, 0);
     }
 

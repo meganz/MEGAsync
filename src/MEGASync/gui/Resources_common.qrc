@@ -1272,5 +1272,11 @@
         <file alias="search_outline_small">images/themed/tokenizable/search_outline_small.svg</file>
         <file alias="search_solid_small">images/themed/tokenizable/search_solid_small.svg</file>
         <file alias="x_circle_outline_small">images/themed/tokenizable/x_circle_outline_small.svg</file>
+        <file alias="link-01_small_thin_outline">images/themed/tokenizable/link-01_small_thin_outline.svg</file>
+        <file alias="upload_small_thin_outline">images/themed/tokenizable/upload_small_thin_outline.svg</file>
+        <file alias="chevron-left_small_thin_outline">images/themed/tokenizable/chevron-left_small_thin_outline.svg</file>
+        <file alias="chevron-right_small_thin_outline">images/themed/tokenizable/chevron-right_small_thin_outline.svg</file>
+        <file alias="chevron-left_medium_thin_outline">images/themed/tokenizable/chevron-left_medium_thin_outline.svg</file>
+        <file alias="chevron-right_medium_thin_outline">images/themed/tokenizable/chevron-right_medium_thin_outline.svg</file>
     </qresource>
 </RCC>

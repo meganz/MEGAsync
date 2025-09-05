@@ -124,10 +124,10 @@ void NodeSelectorTreeViewWidgetIncomingShares::onRootIndexChanged(const QModelIn
     {
         QModelIndex in_share_idx = getParentIncomingShareByIndex(idx);
         in_share_idx = in_share_idx.sibling(in_share_idx.row(), NodeSelectorModel::COLUMN::USER);
-        QPixmap pm = qvariant_cast<QPixmap>(in_share_idx.data(Qt::DecorationRole));
+        QIcon pm = qvariant_cast<QIcon>(in_share_idx.data(Qt::DecorationRole));
         QString tooltip = in_share_idx.data(Qt::ToolTipRole).toString();
         ui->lOwnerIcon->setToolTip(tooltip);
-        ui->lOwnerIcon->setPixmap(pm);
+        ui->lOwnerIcon->setIcon(pm);
         auto item(NodeSelectorModel::getItemByIndex(idx));
         if (item)
         {

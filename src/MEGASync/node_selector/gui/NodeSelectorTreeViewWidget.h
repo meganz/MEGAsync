@@ -188,6 +188,10 @@ private slots:
     void onItemsMoved();
     void onNodesAdded(const QList<QPointer<NodeSelectorModelItem>>& itemsAdded);
 
+    // Action buttons
+    void onOpenLinksClicked();
+    void onSettingsClicked();
+
 private:
     bool mManuallyResizedColumn;
 

@@ -2439,7 +2439,7 @@ QVariant NodeSelectorModel::getIcon(const QModelIndex& index, NodeSelectorModelI
         }
         case COLUMN::USER:
         {
-            return QVariant::fromValue<QPixmap>(item->getOwnerIcon());
+            return QVariant::fromValue<QIcon>(item->getOwnerIcon());
         }
         case COLUMN::STATUS:
         {

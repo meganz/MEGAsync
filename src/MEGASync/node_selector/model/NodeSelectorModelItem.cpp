@@ -257,14 +257,14 @@ void NodeSelectorModelItem::onChildDestroyed()
     mChildrenCounter--;
 }
 
-QPixmap NodeSelectorModelItem::getOwnerIcon()
+QIcon NodeSelectorModelItem::getOwnerIcon()
 {
     if (mAvatarAttribute)
     {
         return mAvatarAttribute->getPixmap(ICON_SIZE);
     }
 
-    return QPixmap();
+    return QIcon();
 }
 
 QIcon NodeSelectorModelItem::getStatusIcons()

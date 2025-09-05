@@ -55,7 +55,7 @@ public:
     QString getOwnerName();
     QString getOwnerEmail();
     void setOwner(std::unique_ptr<mega::MegaUser> user);
-    QPixmap getOwnerIcon();
+    QIcon getOwnerIcon();
     QIcon getStatusIcons();
     Status getStatus() const;
     virtual bool isSyncable();
