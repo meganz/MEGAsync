@@ -5973,13 +5973,10 @@ Nhập một tên khác.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Error messages are now clearer, making it easier to understand when things go wrong.
-- We’ve fixed bugs and made the app more reliable.
+        <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
-        <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
-        <translation>- Thông báo lỗi nói rõ ràng hơn, giúp bạn dễ hiểu hơn khi có sự cố.
-- Chúng tôi đã sửa lỗi và làm cho ứng dụng đáng tin cậy hơn.
-</translation>
+        <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

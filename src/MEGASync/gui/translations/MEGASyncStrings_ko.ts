@@ -5976,13 +5976,10 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Error messages are now clearer, making it easier to understand when things go wrong.
-- We’ve fixed bugs and made the app more reliable.
+        <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
-        <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
-        <translation>- 이제 오류 메시지가 더욱 깔끔해져서, 문제가 발생했을 때 이해하기 더 쉬워졌습니다.
-- 버그를 수정하고 앱을 더욱 안정적으로 만들었습니다.
-</translation>
+        <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -948,7 +948,7 @@
     <message>
         <source>MEGA Imports</source>
         <translatorcomment>Default folder for imports from MEGA links to the cloud drive. SNC-4139</translatorcomment>
-        <translation>MEGA importações</translation>
+        <translation>Importado do MEGA</translation>
     </message>
     <message>
         <source>MEGA Uploads</source>
@@ -6114,12 +6114,10 @@ Digite um nome diferente.
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Error messages are now clearer, making it easier to understand when things go wrong.
-- We’ve fixed bugs and made the app more reliable.
+        <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
-        <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
-        <translation>- Mensagens de erro mais claras, facilitando a compreensão quando as coisas dão errado.
-- Correção de bugs e mais fiabilidade.</translation>
+        <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

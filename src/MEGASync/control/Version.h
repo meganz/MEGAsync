@@ -39,7 +39,7 @@ Format: 1 item by line, starting from line following the #define
 )*/
 #define VER_CHANGES_NOTES \
 QT_TRANSLATE_NOOP("Preferences", \
-                  "- We’ve fixed bugs and made the app more reliable.\n")
+                  "- This update includes numerous core improvements and fixes to enhance overall performance.\n")
 // clang-format on
 
 #endif // VERSION_H
