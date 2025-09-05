@@ -6,9 +6,9 @@
 #define VER_MAJOR 5
 #define VER_MINOR 16
 #define VER_MICRO 0
-#define VER_RC 0
+#define VER_RC 1
 // Format: "VER_MAJOR.VER_MINOR.VER_MICRO.VER_RC\0"
-#define VER_PRODUCTVERSION_STR "5.16.0.0\0"
+#define VER_PRODUCTVERSION_STR "5.16.0.1\0"
 #define VER_PRODUCTVERSION VER_MAJOR, VER_MINOR, VER_MICRO, VER_RC
 #define VER_FILEVERSION VER_MAJOR, VER_MINOR, VER_MICRO, VER_RC
 #define VER_FILEVERSION_CODE (VER_MAJOR * 10000 + VER_MINOR * 100 + VER_MICRO)
@@ -39,7 +39,7 @@ Format: 1 item by line, starting from line following the #define
 )*/
 #define VER_CHANGES_NOTES \
 QT_TRANSLATE_NOOP("Preferences", \
-                  "- We’ve fixed bugs and made the app more reliable.\n")
+                  "- This update includes numerous core improvements and fixes to enhance overall performance.\n")
 // clang-format on
 
 #endif // VERSION_H

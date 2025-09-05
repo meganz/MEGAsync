@@ -6113,10 +6113,11 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We’ve fixed bugs and made the app more reliable.
+        <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
         <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- This update includes numerous core improvements and fixes to enhance overall performance.
+</translation>
     </message>
 </context>
 <context>
