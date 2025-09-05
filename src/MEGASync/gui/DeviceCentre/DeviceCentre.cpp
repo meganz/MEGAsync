@@ -429,7 +429,7 @@ bool DeviceCentre::deviceNameAlreadyExists(const QString& name) const
 
 void DeviceCentre::learnMore() const
 {
-    Utilities::openUrl(ServiceUrls::instance()->getContactUrl());
+    Utilities::openUrl(ServiceUrls::getContactSupportUrl());
 }
 
 void DeviceCentre::applyPreviousExclusionRules() const

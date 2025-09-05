@@ -393,7 +393,7 @@ void CrashHandler::sendOSNotification(bool succeeded)
         {
             if (action == DesktopAppNotificationBase::Action::firstButton)
             {
-                Utilities::openUrl(ServiceUrls::instance()->getContactUrl());
+                Utilities::openUrl(ServiceUrls::getContactSupportUrl());
             }
         };
     }

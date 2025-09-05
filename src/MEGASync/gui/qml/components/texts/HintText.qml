@@ -93,7 +93,7 @@ Item {
                 opacity: enabled ? 1.0 : 0.2
                 font.pixelSize: root.textSize
                 wrapMode: Text.WordWrap
-                url: serviceUrlsAccess.getContactUrl()
+                url: serviceUrlsAccess.getContactSupportUrl()
                 manageMouse: true
             }
         }

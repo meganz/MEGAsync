@@ -137,13 +137,6 @@ QUrl ServiceUrls::getBaseUrl() const
     return url;
 }
 
-QUrl ServiceUrls::getContactUrl() const
-{
-    auto url = getBaseUrl();
-    url.setPath(QLatin1String("/contact"));
-    return url;
-}
-
 QUrl ServiceUrls::getRecoveryUrl(const QString& email) const
 {
     auto url = getBaseUrl();
@@ -173,6 +166,13 @@ QUrl ServiceUrls::getRemoteSetLinkUrl(const QString& handle, const QString& key)
     auto url = getLinkBaseUrl();
     url.setPath(url.path() + QString::fromUtf8("/collection/%1").arg(handle));
     url.setFragment(key);
+    return url;
+}
+
+QUrl ServiceUrls::getContactSupportUrl()
+{
+    auto url = getSupportBaseUrl();
+    url.setPath(QLatin1String("/contact"));
     return url;
 }
 

@@ -432,7 +432,7 @@ QString Syncs::getRemoteError() const
         {
             QString msg =
                 mSyncController.getErrorString(mRemoteMegaError.error, mRemoteMegaError.syncError);
-            const auto link = ServiceUrls::instance()->getContactUrl().toString();
+            const auto link = ServiceUrls::getContactSupportUrl().toString();
             Text::RichText(link).process(msg);
             return msg;
         }
