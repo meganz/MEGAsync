@@ -99,7 +99,7 @@ QString PasteMegaLinksDialog::checkLink(QString link)
     link = QUrl::fromPercentEncoding(link.toUtf8());
     link.replace(QLatin1Char(' '), QLatin1Char('+'));
 
-    auto urlLink = ServiceUrls::instance()->getLinkBaseUrl().toString();
+    auto urlLink = ServiceUrls::instance()->getLinkBaseUrl().toString() + QLatin1Char('/');
 
     if (rxHeaderFolderSubfolder.indexIn(link) != -1)
     {
