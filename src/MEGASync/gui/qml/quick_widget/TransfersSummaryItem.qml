@@ -33,7 +33,8 @@ Rectangle {
         id: transfersRect
         color: areThereTransfers? ColorTheme.surface3 : "transparent"
         radius: componentRadius
-        width: layout.implicitWidth + root.margins * 2
+
+        width: layout.implicitWidth +12
         height: componentHeight
 
         MouseArea {
@@ -59,37 +60,42 @@ Rectangle {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
-            anchors.leftMargin: root.margins
+            anchors.leftMargin: 8
             anchors.rightMargin: 4
+            spacing: 16
 
-            SvgImage {
-                id: directionIcon
-                Layout.alignment: Qt.AlignVCenter
-                source: isTopTransferUpload? Images.upArrow : Images.downArrow
-                sourceSize: Qt.size(root.iconSize, root.iconSize)
-                color: ColorTheme.textPrimary
-                visible: areThereTransfers
+            RowLayout{
 
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                        root.transferManagerClicked();
+                spacing: 4
+                SvgImage {
+                    id: directionIcon
+                    Layout.alignment: Qt.AlignVCenter
+                    source: isTopTransferUpload? Images.upArrow : Images.downArrow
+                    sourceSize: Qt.size(root.iconSize, root.iconSize)
+                    color: ColorTheme.textPrimary
+                    visible: areThereTransfers
+
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                            root.transferManagerClicked();
+                        }
                     }
                 }
-            }
 
-            Texts.Text {
-                id: transferText
-                Layout.alignment: Qt.AlignVCenter
-                visible: areThereTransfers
-                text: (ongoingTransfers + completedTransfers) + "/" + totalTransfers
+                Texts.Text {
+                    id: transferText
+                    Layout.alignment: Qt.AlignVCenter
+                    visible: areThereTransfers
+                    text: (ongoingTransfers + completedTransfers) + "/" + totalTransfers
 
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                        root.transferManagerClicked();
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                            root.transferManagerClicked();
+                        }
                     }
                 }
             }
