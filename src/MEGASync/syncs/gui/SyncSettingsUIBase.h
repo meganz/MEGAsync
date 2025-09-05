@@ -174,7 +174,7 @@ public:
                             msgInfo.textFormat = Qt::RichText;
                             msgInfo.descriptionText =
                                 Controller::instance().getErrorString(errorCode, syncErrorCode);
-                            const auto link = ServiceUrls::instance()->getContactUrl().toString();
+                            const auto link = ServiceUrls::getContactSupportUrl().toString();
                             Text::RichText(link).process(msgInfo.descriptionText);
                             MessageDialogOpener::warning(msgInfo);
                         }
