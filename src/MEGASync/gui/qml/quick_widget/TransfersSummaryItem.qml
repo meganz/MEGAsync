@@ -55,11 +55,12 @@ Rectangle {
 
         RowLayout {
             id: layout
+
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             anchors.leftMargin: root.margins
-            anchors.rightMargin: root.margins
+            anchors.rightMargin: 4
 
             SvgImage {
                 id: directionIcon

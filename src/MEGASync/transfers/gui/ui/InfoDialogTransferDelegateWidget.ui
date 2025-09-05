@@ -416,7 +416,7 @@ color: #FF009B48; /*colorToken.support-error*/
               <number>0</number>
              </property>
              <property name="bottomMargin">
-              <number>0</number>
+              <number>8</number>
              </property>
              <item>
               <widget class="QToolButton" name="lShowInFolder">

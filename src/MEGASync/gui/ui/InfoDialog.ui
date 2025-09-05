@@ -25,7 +25,11 @@
 background-color: #FFFFFFFF; /*colorToken.page-background*/
 color: #ff303233; /*colorToken.text-primary*/
 }
-
+QScrollBar:vertical
+{
+width: 12px;
+padding-left: 0px;
+}
 #wInfoDialogIn
 {
  border-radius: 10px;
@@ -3714,6 +3718,12 @@ background-color: transparent;
  </widget>
  <customwidgets>
   <customwidget>
+   <class>CircularUsageProgressBar</class>
+   <extends>QWidget</extends>
+   <header>CircularUsageProgressBar.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>AvatarWidget</class>
    <extends>QWidget</extends>
    <header>AvatarWidget.h</header>
@@ -3723,12 +3733,6 @@ background-color: transparent;
    <class>SomeIssuesOccurredMessage</class>
    <extends>QWidget</extends>
    <header>SomeIssuesOccurredMessage.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>CircularUsageProgressBar</class>
-   <extends>QWidget</extends>
-   <header>CircularUsageProgressBar.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
