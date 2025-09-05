@@ -97,6 +97,7 @@ StackViewPage {
             manageMouse: true
             Layout.preferredWidth: layout.width
             KeyNavigation.tab: bodyText2Item
+            manageClick: true
         }
     }
 }
