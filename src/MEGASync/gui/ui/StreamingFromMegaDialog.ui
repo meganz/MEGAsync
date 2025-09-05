@@ -7,19 +7,25 @@
     <x>0</x>
     <y>0</y>
     <width>460</width>
-    <height>344</height>
+    <height>442</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
     <width>460</width>
-    <height>344</height>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>460</width>
-    <height>344</height>
+    <height>442</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -69,6 +75,15 @@ background-color: #FFFFFF;  /*colorToken.page-background*/
   font-family: &quot;Inter&quot;;
   font-size: 12px;
   color: #303233; /*colorToken.text-on-color-disabled*/
+}
+
+#wErrorOQ {
+background-color: #FFE4E8; /*colorToken.notification-error*/
+border-radius: 8px;
+}
+
+#labelError {
+color: #E31B57; /*colorToken.text-error*/
 }
 </string>
   </property>
@@ -560,9 +575,9 @@ background-color: #FFFFFF;  /*colorToken.page-background*/
                      <colorrole role="WindowText">
                       <brush brushstyle="SolidPattern">
                        <color alpha="255">
-                        <red>102</red>
-                        <green>102</green>
-                        <blue>102</blue>
+                        <red>48</red>
+                        <green>50</green>
+                        <blue>51</blue>
                        </color>
                       </brush>
                      </colorrole>
@@ -577,19 +592,19 @@ background-color: #FFFFFF;  /*colorToken.page-background*/
                      </colorrole>
                      <colorrole role="Text">
                       <brush brushstyle="SolidPattern">
-                       <color alpha="50">
-                        <red>0</red>
-                        <green>0</green>
-                        <blue>0</blue>
+                       <color alpha="255">
+                        <red>48</red>
+                        <green>50</green>
+                        <blue>51</blue>
                        </color>
                       </brush>
                      </colorrole>
                      <colorrole role="ButtonText">
                       <brush brushstyle="SolidPattern">
-                       <color alpha="50">
-                        <red>0</red>
-                        <green>0</green>
-                        <blue>0</blue>
+                       <color alpha="255">
+                        <red>48</red>
+                        <green>50</green>
+                        <blue>51</blue>
                        </color>
                       </brush>
                      </colorrole>
@@ -613,10 +628,10 @@ background-color: #FFFFFF;  /*colorToken.page-background*/
                      </colorrole>
                      <colorrole role="PlaceholderText">
                       <brush brushstyle="SolidPattern">
-                       <color alpha="25">
-                        <red>0</red>
-                        <green>0</green>
-                        <blue>0</blue>
+                       <color alpha="128">
+                        <red>48</red>
+                        <green>50</green>
+                        <blue>51</blue>
                        </color>
                       </brush>
                      </colorrole>
@@ -625,9 +640,9 @@ background-color: #FFFFFF;  /*colorToken.page-background*/
                      <colorrole role="WindowText">
                       <brush brushstyle="SolidPattern">
                        <color alpha="255">
-                        <red>102</red>
-                        <green>102</green>
-                        <blue>102</blue>
+                        <red>48</red>
+                        <green>50</green>
+                        <blue>51</blue>
                        </color>
                       </brush>
                      </colorrole>
@@ -642,19 +657,19 @@ background-color: #FFFFFF;  /*colorToken.page-background*/
                      </colorrole>
                      <colorrole role="Text">
                       <brush brushstyle="SolidPattern">
-                       <color alpha="50">
-                        <red>0</red>
-                        <green>0</green>
-                        <blue>0</blue>
+                       <color alpha="255">
+                        <red>48</red>
+                        <green>50</green>
+                        <blue>51</blue>
                        </color>
                       </brush>
                      </colorrole>
                      <colorrole role="ButtonText">
                       <brush brushstyle="SolidPattern">
-                       <color alpha="50">
-                        <red>0</red>
-                        <green>0</green>
-                        <blue>0</blue>
+                       <color alpha="255">
+                        <red>48</red>
+                        <green>50</green>
+                        <blue>51</blue>
                        </color>
                       </brush>
                      </colorrole>
@@ -678,10 +693,10 @@ background-color: #FFFFFF;  /*colorToken.page-background*/
                      </colorrole>
                      <colorrole role="PlaceholderText">
                       <brush brushstyle="SolidPattern">
-                       <color alpha="25">
-                        <red>0</red>
-                        <green>0</green>
-                        <blue>0</blue>
+                       <color alpha="128">
+                        <red>48</red>
+                        <green>50</green>
+                        <blue>51</blue>
                        </color>
                       </brush>
                      </colorrole>
@@ -689,10 +704,10 @@ background-color: #FFFFFF;  /*colorToken.page-background*/
                     <disabled>
                      <colorrole role="WindowText">
                       <brush brushstyle="SolidPattern">
-                       <color alpha="127">
-                        <red>255</red>
-                        <green>255</green>
-                        <blue>255</blue>
+                       <color alpha="255">
+                        <red>48</red>
+                        <green>50</green>
+                        <blue>51</blue>
                        </color>
                       </brush>
                      </colorrole>
@@ -707,19 +722,19 @@ background-color: #FFFFFF;  /*colorToken.page-background*/
                      </colorrole>
                      <colorrole role="Text">
                       <brush brushstyle="SolidPattern">
-                       <color alpha="50">
-                        <red>0</red>
-                        <green>0</green>
-                        <blue>0</blue>
+                       <color alpha="255">
+                        <red>48</red>
+                        <green>50</green>
+                        <blue>51</blue>
                        </color>
                       </brush>
                      </colorrole>
                      <colorrole role="ButtonText">
                       <brush brushstyle="SolidPattern">
-                       <color alpha="50">
-                        <red>0</red>
-                        <green>0</green>
-                        <blue>0</blue>
+                       <color alpha="255">
+                        <red>48</red>
+                        <green>50</green>
+                        <blue>51</blue>
                        </color>
                       </brush>
                      </colorrole>
@@ -743,10 +758,10 @@ background-color: #FFFFFF;  /*colorToken.page-background*/
                      </colorrole>
                      <colorrole role="PlaceholderText">
                       <brush brushstyle="SolidPattern">
-                       <color alpha="25">
-                        <red>0</red>
-                        <green>0</green>
-                        <blue>0</blue>
+                       <color alpha="128">
+                        <red>48</red>
+                        <green>50</green>
+                        <blue>51</blue>
                        </color>
                       </brush>
                      </colorrole>
@@ -971,6 +986,87 @@ background-color: #FFFFFF;  /*colorToken.page-background*/
     </widget>
    </item>
    <item>
+    <widget class="QWidget" name="wErrorOQ" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>42</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>42</height>
+      </size>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_9">
+      <property name="leftMargin">
+       <number>13</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>13</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QToolButton" name="toolButtonError">
+        <property name="minimumSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_common.qrc">
+          <normaloff>:/images/sync_states/x-circle-error.png</normaloff>:/images/sync_states/x-circle-error.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="class" stdset="0">
+         <string notr="true">icon-label</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelError">
+        <property name="minimumSize">
+         <size>
+          <width>250</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Stream error: transfer overquota</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QWidget" name="wClose" native="true">
      <property name="minimumSize">
       <size>
@@ -1000,54 +1096,6 @@ background-color: #FFFFFF;  /*colorToken.page-background*/
       <property name="bottomMargin">
        <number>0</number>
       </property>
-      <item>
-       <widget class="QToolButton" name="toolButtonError">
-        <property name="minimumSize">
-         <size>
-          <width>27</width>
-          <height>27</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>27</width>
-          <height>27</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="text">
-         <string notr="true"/>
-        </property>
-        <property name="icon">
-         <iconset resource="../Resources_common.qrc">
-          <normaloff>:/images/icon_error.png</normaloff>:/images/icon_error.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="labelError">
-        <property name="minimumSize">
-         <size>
-          <width>250</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Stream error: transfer overquota</string>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
       <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
@@ -1093,6 +1141,7 @@ background-color: #FFFFFF;  /*colorToken.page-background*/
   <zorder>wStreamResource</zorder>
   <zorder>wClose</zorder>
   <zorder>wContainer</zorder>
+  <zorder>wErrorOQ</zorder>
  </widget>
  <resources>
   <include location="../Resources_common.qrc"/>

@@ -342,14 +342,14 @@ void StreamingFromMegaDialog::openStreamWithApp(QString app)
 
 void StreamingFromMegaDialog::showStreamingError()
 {
-    ui->toolButtonError->setVisible(true);
-    ui->labelError->setVisible(true);
+    ui->wErrorOQ->setVisible(true);
+    adjustSize();
 }
 
 void StreamingFromMegaDialog::hideStreamingError()
 {
-    ui->toolButtonError->setVisible(false);
-    ui->labelError->setVisible(false);
+    ui->wErrorOQ->setVisible(false);
+    adjustSize();
 }
 
 void StreamingFromMegaDialog::updateFileInfoFromNode(MegaNode *node)
