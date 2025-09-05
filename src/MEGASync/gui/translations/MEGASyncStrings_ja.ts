@@ -5972,13 +5972,10 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Error messages are now clearer, making it easier to understand when things go wrong.
-- We’ve fixed bugs and made the app more reliable.
+        <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
-        <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
-        <translation>－エラーメッセージがより明確になり、問題が発生した際に分かりやすくなりました。
-－バグを修正し、アプリの信頼性を向上させました。
-</translation>
+        <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
