@@ -10,84 +10,6 @@ letter-spacing: 0%;
 }
 
 /*
-    Text properties: Sizes
-*/
-
-QWidget[dimension="caption"]
-{
-font-size: 10px;
-}
-
-QWidget[dimension="body-2"]
-{
-font-size: 12px;
-}
-
-QWidget[dimension="body-1"]
-{
-font-size: 14px;
-}
-
-QWidget[dimension="label-2"]
-{
-font-size: 16px;
-}
-
-QWidget[dimension="label-1"]
-{
-font-size: 18px;
-}
-
-QWidget[dimension="subtitle"]
-{
-font-size: 20px;
-}
-
-QWidget[dimension="heading-1"]
-{
-font-size: 24px;
-}
-
-QWidget[dimension="heading-2"]
-{
-font-size: 32px;
-}
-
-QWidget[dimension="heading-3"]
-{
-font-size: 40px;
-}
-
-QWidget[dimension="heading-4"]
-{
-font-size: 48px;
-}
-
-QWidget[dimension="heading-5"]
-{
-font-size: 60px;
-}
-
-/*
-    Text properties: font-weight
-*/
-
-QWidget[regular]
-{
-font-weight: 400;
-}
-
-QWidget[semibold]
-{
-font-weight: 600;
-}
-
-QWidget[bold]
-{
-font-weight: 700;
-}
-
-/*
     QTableView
 */
 QTableView
@@ -351,7 +273,7 @@ qproperty-iconSize:24px;
     Buttons
     We have 2 classes of buttons:
     1) Normal buttons (text or text+icon) > by default all QPushButton will be normal buttons. Ex. NO property class needed
-    2) Only-Icon buttons > class = "icon-label"
+    2) Only-Icon buttons > class = "icon-button"
 
     Every button (normal or only-icon) can have 5 different types: primary, secondary, outline, ghost and link. Ex. property type = "primary"
 
@@ -409,6 +331,7 @@ qproperty-iconSize:24px;
 
 QPushButton.icon-button
 {
+border:none;
 margin:0px;
 padding:0px;
 min-width: 0px;
@@ -553,4 +476,87 @@ padding: 4px;
 QMenu.MegaMenu::separator
 {
 height: 1px
+}
+
+/*
+    Text properties
+    Always keep at the end to override possible collisions
+*/
+
+/*
+    Text properties: Sizes
+*/
+
+QWidget[font-size="caption"]
+{
+font-size: 10px;
+}
+
+QWidget[font-size="body-2"]
+{
+font-size: 12px;
+}
+
+QWidget[font-size="body-1"]
+{
+font-size: 14px;
+}
+
+QWidget[font-size="label-2"]
+{
+font-size: 16px;
+}
+
+QWidget[font-size="label-1"]
+{
+font-size: 18px;
+}
+
+QWidget[font-size="subtitle"]
+{
+font-size: 20px;
+}
+
+QWidget[font-size="heading-1"]
+{
+font-size: 24px;
+}
+
+QWidget[font-size="heading-2"]
+{
+font-size: 32px;
+}
+
+QWidget[font-size="heading-3"]
+{
+font-size: 40px;
+}
+
+QWidget[font-size="heading-4"]
+{
+font-size: 48px;
+}
+
+QWidget[font-size="heading-5"]
+{
+font-size: 60px;
+}
+
+/*
+    Text properties: font-weight
+*/
+
+QWidget[regular]
+{
+font-weight: 400;
+}
+
+QWidget[semibold]
+{
+font-weight: 600;
+}
+
+QWidget[bold]
+{
+font-weight: 700;
 }
