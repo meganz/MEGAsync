@@ -27,7 +27,7 @@ color: #ff303233; /*colorToken.text-primary*/
 }
 QScrollBar:vertical
 {
-width: 12px;
+width: 14px;
 padding-left: 0px;
 }
 #wInfoDialogIn
