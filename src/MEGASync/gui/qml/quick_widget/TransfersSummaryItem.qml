@@ -102,17 +102,45 @@ Rectangle {
 
             SvgImage {
                 id: pauseResumeButton
+
                 Layout.alignment: Qt.AlignVCenter
-                source: paused? Images.playCircle : Images.pauseCircle
+                source: paused? Images.play_circle_medium_thin_outline : Images.pause_circle_medium_thin_outline
                 sourceSize: Qt.size(root.buttonIconSize, root.buttonIconSize)
-                color: ColorTheme.textPrimary
+                color: ColorTheme.buttonOutline
                 visible: areThereTransfers
 
                 MouseArea {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
+                    hoverEnabled: true
                     onClicked: {
                         root.pauseResumeClicked();
+                    }
+                    onPressed: {
+                        pauseResumeButton.color = ColorTheme.buttonOutlinePressed
+                    }
+
+                    onReleased: {
+                        // When released, check if mouse is still hovering
+                        if (containsMouse) {
+                            pauseResumeButton.color = ColorTheme.buttonOutlineHover
+                        } else {
+                            pauseResumeButton.color = ColorTheme.buttonOutline
+                        }
+                    }
+
+                    onEntered: {
+                        // Only change to hover color if not currently pressed
+                        if (!pressed) {
+                            pauseResumeButton.color = ColorTheme.buttonOutlineHover
+                        }
+                    }
+
+                    onExited: {
+                        // Only change to normal if not currently pressed
+                        if (!pressed) {
+                            pauseResumeButton.color = ColorTheme.buttonOutline
+                        }
                     }
                 }
             }
@@ -122,14 +150,42 @@ Rectangle {
                 Layout.alignment: Qt.AlignVCenter
                 source: Images.arrowUpDown
                 sourceSize: Qt.size(root.buttonIconSize, root.buttonIconSize)
-                color: ColorTheme.textPrimary
+                color: ColorTheme.buttonOutline
                 visible: !areThereTransfers
 
                 MouseArea {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
+                    hoverEnabled: true
+
                     onClicked: {
                         root.transferManagerClicked();
+                    }
+                    onPressed: {
+                        transferManagerButton.color = ColorTheme.buttonOutlinePressed
+                    }
+
+                    onReleased: {
+                        // When released, check if mouse is still hovering
+                        if (containsMouse) {
+                            transferManagerButton.color = ColorTheme.buttonOutlineHover
+                        } else {
+                            transferManagerButton.color = ColorTheme.buttonOutline
+                        }
+                    }
+
+                    onEntered: {
+                        // Only change to hover color if not currently pressed
+                        if (!pressed) {
+                            transferManagerButton.color = ColorTheme.buttonOutlineHover
+                        }
+                    }
+
+                    onExited: {
+                        // Only change to normal if not currently pressed
+                        if (!pressed) {
+                            transferManagerButton.color = ColorTheme.buttonOutline
+                        }
                     }
                 }
             }
