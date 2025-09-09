@@ -1,16 +1,23 @@
-#include "SideBarTab.h"
+#include "TabSelector.h"
 
-#include "ui_SideBarTab.h"
+#include "ui_TabSelector.h"
 #include "Utilities.h"
 
 #include <QDebug>
 #include <QMouseEvent>
 
 const char* SELECTED = "selected";
+const char* TAB_SELECTOR_GROUP = "tabselector_group";
 
-SideBarTab::SideBarTab(QWidget* parent):
+/*
+ *  TabSelector items are autoExclusive.
+ *  TabSelectors that belong to the same parent widget (or the parent with a dynamic property
+ * TAB_SELECTOR_GROUP set) behave as if they were part of the same exclusive button group.
+ */
+
+TabSelector::TabSelector(QWidget* parent):
     QWidget(parent),
-    ui(new Ui::SideBarTab)
+    ui(new Ui::TabSelector)
 {
     ui->setupUi(this);
 
@@ -32,58 +39,70 @@ SideBarTab::SideBarTab(QWidget* parent):
 
     setAttribute(Qt::WA_StyledBackground, true);
 
-    mSideBarsTopParent = Utilities::getTopParent<QDialog>(parent);
+    // Look for a parent with the TAB_SELECTOR_GROUP property
+    // If not found, use the direct parent
+    mTabSelectorGroupParent =
+        Utilities::getParent(this,
+                             [](QWidget* parent)
+                             {
+                                 return parent->property(TAB_SELECTOR_GROUP).toBool();
+                             });
+
+    if (!mTabSelectorGroupParent)
+    {
+        mTabSelectorGroupParent = parentWidget();
+    }
 
     setProperty(SELECTED, false);
 }
 
-SideBarTab::~SideBarTab()
+TabSelector::~TabSelector()
 {
     delete ui;
 }
 
-void SideBarTab::setTitle(const QString& title)
+void TabSelector::setTitle(const QString& title)
 {
     ui->lTitle->setText(title);
 }
 
-QString SideBarTab::getTitle() const
+QString TabSelector::getTitle() const
 {
     return ui->lTitle->text();
 }
 
-void SideBarTab::setIcon(const QIcon& icon)
+void TabSelector::setIcon(const QIcon& icon)
 {
     ui->lIcon->setIcon(icon);
 }
 
-QIcon SideBarTab::getIcon() const
+QIcon TabSelector::getIcon() const
 {
     return ui->lIcon->icon();
 }
 
-QSize SideBarTab::getIconSize() const
+QSize TabSelector::getIconSize() const
 {
     return ui->lIcon->iconSize();
 }
 
-void SideBarTab::setCloseButtonVisible(bool state)
+void TabSelector::setCloseButtonVisible(bool state)
 {
     ui->lClose->setVisible(state);
 }
 
-bool SideBarTab::isCloseButtonVisible() const
+bool TabSelector::isCloseButtonVisible() const
 {
     return ui->lClose->isVisible();
 }
 
-void SideBarTab::setCounter(int count)
+void TabSelector::setCounter(int count)
 {
     ui->lCounter->show();
     ui->lCounter->setText(QString::number(count));
 }
 
-void SideBarTab::setSelected(bool state)
+void TabSelector::setSelected(bool state)
 {
     if (property(SELECTED).toBool() != state)
     {
@@ -104,7 +123,7 @@ void SideBarTab::setSelected(bool state)
     }
 }
 
-bool SideBarTab::event(QEvent* event)
+bool TabSelector::event(QEvent* event)
 {
     if (event->type() == QEvent::MouseButtonRelease)
     {
@@ -114,9 +133,9 @@ bool SideBarTab::event(QEvent* event)
     return QWidget::event(event);
 }
 
-void SideBarTab::toggleOffSiblings()
+void TabSelector::toggleOffSiblings()
 {
-    if (!mSideBarsTopParent)
+    if (!mTabSelectorGroupParent)
     {
         return;
     }
@@ -127,7 +146,7 @@ void SideBarTab::toggleOffSiblings()
      * parent
      */
 
-    QList<SideBarTab*> siblings = mSideBarsTopParent->findChildren<SideBarTab*>();
+    QList<TabSelector*> siblings = mTabSelectorGroupParent->findChildren<TabSelector*>();
 
     foreach(auto& tab, siblings)
     {

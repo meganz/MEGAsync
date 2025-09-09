@@ -544,3 +544,15 @@ QWidget[bold]
 {
 font-weight: 700;
 }
+    TabSelector
+*/
+TabSelector[type="sidebar"]
+{
+border-radius:6px;
+}
+
+TabSelector[type="chip"]
+{
+border-radius:6px;
+}
+

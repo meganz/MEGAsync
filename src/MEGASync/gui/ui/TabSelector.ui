@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SideBarTab</class>
- <widget class="QWidget" name="SideBarTab">
+ <class>TabSelector</class>
+ <widget class="QWidget" name="TabSelector">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -40,20 +40,7 @@
   <property name="styleSheet">
    <string notr="true">/*ColorTokenIcon;Button;lClose;normal;off;colorToken.icon-primary*/
 
-SideBarTab
-{
-border-radius:6px;
-}
-
-SideBarTab[selected=true]
-{
-background-color: #FFFFFF; /*colorToken.page-background*/
-}
-
-SideBarTab[selected=false]
-{
-background-color:  transparent;
-}</string>
+</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1,0,0">
    <property name="spacing">

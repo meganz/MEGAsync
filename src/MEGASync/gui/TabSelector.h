@@ -1,5 +1,5 @@
-#ifndef SIDEBARTAB_H
-#define SIDEBARTAB_H
+#ifndef TABSELECTOR_H
+#define TABSELECTOR_H
 
 #include <QEvent>
 #include <QPointer>
@@ -7,16 +7,16 @@
 
 namespace Ui
 {
-class SideBarTab;
+class TabSelector;
 }
 
-class SideBarTab: public QWidget
+class TabSelector: public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit SideBarTab(QWidget* parent = nullptr);
-    ~SideBarTab();
+    explicit TabSelector(QWidget* parent = nullptr);
+    ~TabSelector();
 
     Q_PROPERTY(QString title WRITE setTitle READ getTitle)
     void setTitle(const QString& title);
@@ -46,8 +46,8 @@ protected:
     bool event(QEvent* event) override;
 
 private:
-    Ui::SideBarTab* ui;
-    QPointer<QDialog> mSideBarsTopParent;
+    Ui::TabSelector* ui;
+    QPointer<QWidget> mTabSelectorGroupParent;
 };
 
-#endif // SIDEBARTAB_H
+#endif // TABSELECTOR_H
