@@ -9,7 +9,7 @@
 #include "NodeSelectorModel.h"
 #include "NodeSelectorProxyModel.h"
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
-#include "SideBarTab.h"
+#include "TabSelector.h"
 #include "ui_NodeSelector.h"
 #include "Utilities.h"
 #include "ViewLoadingScene.h"
@@ -41,16 +41,16 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
     mMegaApi->addListener(mDelegateListener.get());
 
     connect(ui->fIncomingShares,
-            &SideBarTab::clicked,
+            &TabSelector::clicked,
             this,
             &NodeSelector::onbShowIncomingSharesClicked,
             Qt::QueuedConnection);
-    connect(ui->fCloudDrive, &SideBarTab::clicked, this, &NodeSelector::onbShowCloudDriveClicked);
-    connect(ui->fBackups, &SideBarTab::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
-    connect(ui->fRubbish, &SideBarTab::clicked, this, &NodeSelector::onbShowRubbishClicked);
-    connect(ui->fSearch, &SideBarTab::clicked, this, &NodeSelector::onbShowSearchClicked);
+    connect(ui->fCloudDrive, &TabSelector::clicked, this, &NodeSelector::onbShowCloudDriveClicked);
+    connect(ui->fBackups, &TabSelector::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
+    connect(ui->fRubbish, &TabSelector::clicked, this, &NodeSelector::onbShowRubbishClicked);
+    connect(ui->fSearch, &TabSelector::clicked, this, &NodeSelector::onbShowSearchClicked);
 
-    connect(ui->fSearch, &SideBarTab::hidden, this, &NodeSelector::onfShowSearchHidden);
+    connect(ui->fSearch, &TabSelector::hidden, this, &NodeSelector::onfShowSearchHidden);
     connect(ui->leSearch, &SearchLineEdit::search, this, &NodeSelector::onSearch);
 
     ui->leSearch->addCustomWidget(ui->title);

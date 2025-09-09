@@ -161,6 +161,9 @@ background-color: #FFFFFF; /*colorToken.page-background*/
       </item>
       <item>
        <widget class="QGroupBox" name="wStorage">
+        <property name="sidebar_parent" stdset="0">
+         <bool>true</bool>
+        </property>
         <layout class="QVBoxLayout" name="wSearchLayout_2">
          <property name="spacing">
           <number>8</number>
@@ -178,7 +181,7 @@ background-color: #FFFFFF; /*colorToken.page-background*/
           <number>4</number>
          </property>
          <item>
-          <widget class="SideBarTab" name="fCloudDrive" native="true">
+          <widget class="TabSelector" name="fCloudDrive" native="true">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -190,10 +193,13 @@ background-color: #FFFFFF; /*colorToken.page-background*/
              <normaloff>:/cloud_off</normaloff>
              <normalon>:/cloud_on</normalon>:/cloud_off</iconset>
            </property>
+           <property name="type" stdset="0">
+            <string notr="true">sidebar</string>
+           </property>
           </widget>
          </item>
          <item>
-          <widget class="SideBarTab" name="fIncomingShares" native="true">
+          <widget class="TabSelector" name="fIncomingShares" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -217,10 +223,13 @@ background-color: #FFFFFF; /*colorToken.page-background*/
              <normaloff>:/folder-users_off</normaloff>
              <normalon>:/folder-users_on</normalon>:/folder-users_off</iconset>
            </property>
+           <property name="type" stdset="0">
+            <string notr="true">sidebar</string>
+           </property>
           </widget>
          </item>
          <item>
-          <widget class="SideBarTab" name="fBackups" native="true">
+          <widget class="TabSelector" name="fBackups" native="true">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -232,19 +241,25 @@ background-color: #FFFFFF; /*colorToken.page-background*/
              <normaloff>:/devices_off</normaloff>
              <normalon>:/devices_on</normalon>:/devices_off</iconset>
            </property>
+           <property name="type" stdset="0">
+            <string notr="true">sidebar</string>
+           </property>
           </widget>
          </item>
          <item>
-          <widget class="SideBarTab" name="fRubbish" native="true">
+          <widget class="TabSelector" name="fRubbish" native="true">
            <property name="icon" stdset="0">
             <iconset resource="../../../gui/Resources_common.qrc">
              <normaloff>:/trash_off</normaloff>
              <normalon>:/trash_on</normalon>:/trash_off</iconset>
            </property>
+           <property name="type" stdset="0">
+            <string notr="true">sidebar</string>
+           </property>
           </widget>
          </item>
          <item>
-          <widget class="SideBarTab" name="fSearch" native="true">
+          <widget class="TabSelector" name="fSearch" native="true">
            <property name="icon" stdset="0">
             <iconset resource="../../../gui/Resources_common.qrc">
              <normaloff>:/search_outline_small</normaloff>
@@ -252,6 +267,9 @@ background-color: #FFFFFF; /*colorToken.page-background*/
            </property>
            <property name="closeButtonVisible" stdset="0">
             <bool>true</bool>
+           </property>
+           <property name="type" stdset="0">
+            <string notr="true">sidebar</string>
            </property>
           </widget>
          </item>
@@ -297,9 +315,9 @@ background-color: #FFFFFF; /*colorToken.page-background*/
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>SideBarTab</class>
+   <class>TabSelector</class>
    <extends>QWidget</extends>
-   <header>SideBarTab.h</header>
+   <header>TabSelector.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
