@@ -69,8 +69,11 @@
        <property name="text">
         <string>Permissions for new folders and files</string>
        </property>
-       <property name="type" stdset="0">
-        <string notr="true">title</string>
+       <property name="dimension" stdset="0">
+        <string notr="true">label-2</string>
+       </property>
+       <property name="semibold" stdset="0">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

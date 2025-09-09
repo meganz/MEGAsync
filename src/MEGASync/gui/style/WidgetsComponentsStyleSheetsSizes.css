@@ -1,7 +1,9 @@
 *
 {
 font-family: Lato;
+/* Regular */
 font-weight: 400;
+/* Body-2 */
 font-size: 12px;
 line-height: 18px;
 letter-spacing: 0%;
@@ -113,7 +115,7 @@ padding-right: 6px;
 */
 QComboBox[type="mega"][dimension=small]
 {
-height: 18px;
+height: 26px;
 }
 
 QComboBox[type="mega"][dimension=medium]
@@ -127,6 +129,8 @@ border-width: 2px;
 border-style: solid;
 border-radius: 6px;
 padding: 4px 5px 4px 8px;
+/* Semi-bold*/
+font-weight: 600
 }
 
 QComboBox::on[type="mega"]
@@ -169,7 +173,6 @@ margin-right: 6px;
 QGroupBox[type="mega"]
 {
 margin-top: 20px;
-font-weight: bold;
 border-width: 1px;
 border-style: solid;
 border-radius: 12px;
@@ -180,6 +183,10 @@ QGroupBox::title[type="mega"]
 subcontrol-origin: margin;
 subcontrol-position: top left;
 padding: 0 0 0 10px;
+/* Semi-bold */
+font-weight: 600;
+/* Body-2 */
+font-size: 12px;
 }
 
 
@@ -220,30 +227,10 @@ border-style: none;
 */
 QLabel
 {
+/* Body-2 */
 font-size: 12px;
+/* Regular */
 font-weight: 400;
-}
-
-QLabel[type="sub-title"]
-{
-font-size: 14px;
-font-weight: 600;
-}
-
-QLabel[type="title"]
-{
-font-size: 16px;
-font-weight: 600;
-}
-
-QLabel[dimension="small"]
-{
-font-size: 10px;
-}
-
-QLabel[semibold]
-{
-font-weight: 600;
 }
 
 /*
@@ -265,7 +252,7 @@ min-width: 0px;
     Buttons
     We have 2 classes of buttons:
     1) Normal buttons (text or text+icon) > by default all QPushButton will be normal buttons. Ex. NO property class needed
-    2) Only-Icon buttons > class = "icon-label"
+    2) Only-Icon buttons > class = "icon-button"
 
     Every button (normal or only-icon) can have 5 different types: primary, secondary, outline, ghost and link. Ex. property type = "primary"
 
@@ -278,7 +265,6 @@ QPushButton[dimension=small], QPushButton[dimension=medium], QPushButton[dimensi
 {
 padding-top: 0px;
 padding-bottom: 0px;
-font-weight: 600;
 }
 
 QPushButton[dimension=small]
@@ -286,6 +272,7 @@ QPushButton[dimension=small]
 border-radius: 6px;
 height: 26px;
 min-width: 44px; /*min width = 44px + padding-left(8px) + padding-righ(8px) = 60px*/
+/* body-2 */
 font-size: 12px;
 padding-left: 8px;
 padding-right: 8px;
@@ -297,17 +284,19 @@ QPushButton[dimension=medium]
 border-radius: 6px;
 height: 36px;
 min-width: 48px; /*min width = 48px + padding-left(16px) + padding-righ(16px) = 80px*/
+/* body-1 */
 font-size: 14px;
 padding-left: 16px;
 padding-right: 16px;
 qproperty-iconSize:24px;
 }
-u
+
 QPushButton[dimension=large]
 {
 border-radius: 8px;
 height: 46px;
 min-width: 52px; /*min width = 52px + padding-left(24px) + padding-righ(24px) = 100px*/
+/* label-2 */
 font-size: 16px;
 padding-left: 24px;
 padding-right: 24px;
@@ -321,6 +310,7 @@ qproperty-iconSize:24px;
 
 QPushButton.icon-button
 {
+border:none;
 margin:0px;
 padding:0px;
 min-width: 0px;
@@ -381,10 +371,17 @@ border:none;
 }
 
 /*
-    type = ghost and type = link buttons are not semibold by default
+    common font-weight
 */
+QPushButton[type="primary"], QPushButton[type="secondary"], QPushButton[type="outline"]
+{
+/* semibold */
+font-weight: 600;
+}
+
 QPushButton[type = "ghost"], QPushButton[type = "link"]
 {
+/* regular */
 font-weight:400
 }
 
@@ -399,6 +396,7 @@ border-radius: 8px;
 border-style: solid;
 border-width: 1px;
 height: 26px;
+/* Regular and Body-2 (inherited by general rule)*/
 }
 
 /*
@@ -411,6 +409,7 @@ border-style: solid;
 border-width: 1px;
 height: 25px;
 padding-left: 5px;
+/* Regular and Body-2 (inherited by general rule)*/
 }
 
 QSpinBox::up-arrow
@@ -427,29 +426,6 @@ subcontrol-origin: padding;
 subcontrol-position: bottom right;
 padding-right: 4px;
 padding-bottom: 4px;
-}
-
-/*
-    WordWrapLabel
-*/
-WordWrapLabel[type="primary"]
-{
-font-weight: 600;
-}
-
-WordWrapLabel[type="secondary"]
-{
-font-weight: 400;
-}
-
-WordWrapLabel[dimension="small"]
-{
-font-size: 10px;
-}
-
-WordWrapLabel[dimension="medium"]
-{
-font-size: 12px;
 }
 
 /*
@@ -479,4 +455,87 @@ padding: 4px;
 QMenu.MegaMenu::separator
 {
 height: 1px
+}
+
+/*
+    Text properties
+    Always keep at the end to override possible collisions
+*/
+
+/*
+    Text properties: Sizes
+*/
+
+QWidget[font-size="caption"]
+{
+font-size: 10px;
+}
+
+QWidget[font-size="body-2"]
+{
+font-size: 12px;
+}
+
+QWidget[font-size="body-1"]
+{
+font-size: 14px;
+}
+
+QWidget[font-size="label-2"]
+{
+font-size: 16px;
+}
+
+QWidget[font-size="label-1"]
+{
+font-size: 18px;
+}
+
+QWidget[font-size="subtitle"]
+{
+font-size: 20px;
+}
+
+QWidget[font-size="heading-1"]
+{
+font-size: 24px;
+}
+
+QWidget[font-size="heading-2"]
+{
+font-size: 32px;
+}
+
+QWidget[font-size="heading-3"]
+{
+font-size: 40px;
+}
+
+QWidget[font-size="heading-4"]
+{
+font-size: 48px;
+}
+
+QWidget[font-size="heading-5"]
+{
+font-size: 60px;
+}
+
+/*
+    Text properties: font-weight
+*/
+
+QWidget[regular]
+{
+font-weight: 400;
+}
+
+QWidget[semibold]
+{
+font-weight: 600;
+}
+
+QWidget[bold]
+{
+font-weight: 700;
 }

@@ -69,8 +69,11 @@
        <property name="wordWrap">
         <bool>true</bool>
        </property>
-       <property name="type" stdset="0">
-        <string notr="true">title</string>
+       <property name="dimension" stdset="0">
+        <string notr="true">body-2</string>
+       </property>
+       <property name="semibold" stdset="0">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
