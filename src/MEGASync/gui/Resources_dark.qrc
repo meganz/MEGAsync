@@ -164,7 +164,7 @@
         <file alias="monitor.svg">images/themed/dark/monitor.svg</file>
         <file alias="alert-circle-support-warning.svg">images/themed/dark/alert-circle-support-warning.svg</file>
         <file alias="atom.svg">images/themed/dark/atom.svg</file>
-        <file alias="adial-speedometer.svg">images/themed/dark/radial-speedometer.svg</file>
+        <file alias="radial-speedometer.svg">images/themed/dark/radial-speedometer.svg</file>
         <file alias="radial-cloud.svg">images/themed/dark/radial-cloud.svg</file>
         <file alias="Activity.gif">images/themed/dark/Activity.gif</file>
         <file alias="Activity@2x.gif">images/themed/dark/Activity@2x.gif</file>

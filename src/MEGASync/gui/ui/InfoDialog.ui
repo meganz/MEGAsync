@@ -1278,7 +1278,7 @@ background-color: transparent;
                                   </property>
                                   <property name="icon">
                                    <iconset resource="../Resources_light.qrc">
-                                    <normaloff>:/adial-speedometer.svg</normaloff>:/adial-speedometer.svg</iconset>
+                                    <normaloff>:/radial-speedometer.svg</normaloff>:/radial-speedometer.svg</iconset>
                                   </property>
                                   <property name="iconSize">
                                    <size>
