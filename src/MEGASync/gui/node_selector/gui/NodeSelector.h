@@ -170,7 +170,7 @@ private:
     NodeSelectorModel* mDuplicatedModel;
 
     // Loading view
-    NodeSelectorTreeViewWidget* mSourceWid;
+    QList<NodeSelectorTreeViewWidget*> mSourceWids;
     NodeSelectorTreeViewWidget* mTargetWid;
 };
 
