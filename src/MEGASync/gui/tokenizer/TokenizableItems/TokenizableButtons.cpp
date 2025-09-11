@@ -21,19 +21,21 @@ void TokenizableButton::paintEvent(QPaintEvent* event)
         QIcon::State state =
             option.state.testFlag(QStyle::State_On) ? QIcon::State::On : QIcon::State::Off;
 
+        QIcon::Mode mode = hasFocus() ? QIcon::Active : QIcon::Normal;
+
         // Sunken goes before MouseOver because it you are pressing, you are also hovering the
         // button
         if (option.state.testFlag(QStyle::State_Sunken))
         {
             auto token = state == QIcon::State::Off ? buttonTokens.getPressedOffToken() :
                                                       buttonTokens.getPressedOnToken();
-            applyPixmap(this, token, QIcon::Normal, state);
+            applyPixmap(this, token, mode, state);
         }
         else if (option.state.testFlag(QStyle::State_MouseOver))
         {
             auto token = state == QIcon::State::Off ? buttonTokens.getHoverOffToken() :
                                                       buttonTokens.getHoverOnToken();
-            applyPixmap(this, token, QIcon::Normal, state);
+            applyPixmap(this, token, mode, state);
         }
         else
         {

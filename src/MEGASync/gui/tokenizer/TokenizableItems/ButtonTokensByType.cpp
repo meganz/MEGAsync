@@ -10,40 +10,41 @@ void ButtonTokensByType::setDefaultTokens(QAbstractButton* button)
 
     if (buttonType == QLatin1String("primary"))
     {
-        if (propertyEmpty(button, normalOff))
+        if (propertyEmpty(button, TOKEN_PROPERTIES::normalOff))
         {
-            button->setProperty(normalOff, QLatin1String("text-inverse-accent"));
+            button->setProperty(TOKEN_PROPERTIES::normalOff, QLatin1String("text-inverse-accent"));
         }
     }
     else if (buttonType == QLatin1String("secondary"))
     {
-        if (propertyEmpty(button, normalOff))
+        if (propertyEmpty(button, TOKEN_PROPERTIES::normalOff))
         {
-            button->setProperty(normalOff, QLatin1String("icon-secondary"));
+            button->setProperty(TOKEN_PROPERTIES::normalOff, QLatin1String("icon-secondary"));
         }
     }
     else if (buttonType == QLatin1String("outline") || buttonType == QLatin1String("ghost"))
     {
-        if (propertyEmpty(button, normalOff))
+        if (propertyEmpty(button, TOKEN_PROPERTIES::normalOff))
         {
-            button->setProperty(normalOff, QLatin1String("button-outline"));
+            button->setProperty(TOKEN_PROPERTIES::normalOff, QLatin1String("button-outline"));
         }
 
-        if (propertyEmpty(button, hoverOff))
+        if (propertyEmpty(button, TOKEN_PROPERTIES::hoverOff))
         {
-            button->setProperty(hoverOff, QLatin1String("button-outline-hover"));
+            button->setProperty(TOKEN_PROPERTIES::hoverOff, QLatin1String("button-outline-hover"));
         }
 
-        if (propertyEmpty(button, pressedOff))
+        if (propertyEmpty(button, TOKEN_PROPERTIES::pressedOff))
         {
-            button->setProperty(pressedOff, QLatin1String("button-outline-pressed"));
+            button->setProperty(TOKEN_PROPERTIES::pressedOff,
+                                QLatin1String("button-outline-pressed"));
         }
     }
     else if (buttonType == QLatin1String("link"))
     {
-        if (propertyEmpty(button, normalOff))
+        if (propertyEmpty(button, TOKEN_PROPERTIES::normalOff))
         {
-            button->setProperty(normalOff, QLatin1String("link-primary"));
+            button->setProperty(TOKEN_PROPERTIES::normalOff, QLatin1String("link-primary"));
         }
     }
 }

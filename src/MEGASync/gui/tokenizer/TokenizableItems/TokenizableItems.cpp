@@ -45,7 +45,10 @@ void TokenizableItem::applyDefaultPixmap(QAbstractButton* button)
     {
         auto token = state == QIcon::State::Off ? baseTokens.getNormalOffToken() :
                                                   baseTokens.getNormalOnToken();
-        applyPixmap(button, token, QIcon::Normal, state);
+
+        QIcon::Mode mode = button->hasFocus() ? QIcon::Active : QIcon::Normal;
+
+        applyPixmap(button, token, mode, state);
     }
     else
     {
@@ -80,21 +83,37 @@ void TokenizableItem::init(QAbstractButton* button)
     {
         baseTokens.fillTokens(button);
 
-        // If we don´t have any disabled token, use the normal pixmap
-        if (baseTokens.getDisabledOffToken().isEmpty() && !baseTokens.getNormalOffToken().isEmpty())
+        // Init QIcon::Mode::Active and QIcon::Mode::Disabled
+        if (!baseTokens.getNormalOffToken().isEmpty())
         {
             applyPixmap(button,
                         baseTokens.getNormalOffToken(),
-                        QIcon::Mode::Disabled,
+                        QIcon::Mode::Active,
                         QIcon::State::Off);
+
+            if (baseTokens.getDisabledOffToken().isEmpty())
+            {
+                applyPixmap(button,
+                            baseTokens.getNormalOffToken(),
+                            QIcon::Mode::Disabled,
+                            QIcon::State::Off);
+            }
         }
 
-        if (baseTokens.getDisabledOnToken().isEmpty() && !baseTokens.getNormalOnToken().isEmpty())
+        if (!baseTokens.getNormalOnToken().isEmpty())
         {
             applyPixmap(button,
                         baseTokens.getNormalOnToken(),
-                        QIcon::Mode::Disabled,
+                        QIcon::Mode::Active,
                         QIcon::State::On);
+
+            if (!baseTokens.getNormalOnToken().isEmpty())
+            {
+                applyPixmap(button,
+                            baseTokens.getNormalOnToken(),
+                            QIcon::Mode::Disabled,
+                            QIcon::State::On);
+            }
         }
     }
 

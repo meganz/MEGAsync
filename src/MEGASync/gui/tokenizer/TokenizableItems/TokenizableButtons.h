@@ -12,10 +12,10 @@ public:
 
     void fillTokens(QAbstractButton* button)
     {
-        mPressedOff = button->property(pressedOff).toString();
-        mPressedOn = button->property(pressedOn).toString();
-        mHoverOff = button->property(hoverOff).toString();
-        mHoverOn = button->property(hoverOn).toString();
+        mPressedOff = button->property(TOKEN_PROPERTIES::pressedOff).toString();
+        mPressedOn = button->property(TOKEN_PROPERTIES::pressedOn).toString();
+        mHoverOff = button->property(TOKEN_PROPERTIES::hoverOff).toString();
+        mHoverOn = button->property(TOKEN_PROPERTIES::hoverOn).toString();
     }
 
     // hover_off

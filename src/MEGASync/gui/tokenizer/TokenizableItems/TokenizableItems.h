@@ -13,10 +13,10 @@ public:
 
     virtual void fillTokens(QAbstractButton* button)
     {
-        mNormalOff = button->property(normalOff).toString();
-        mNormalOn = button->property(normalOn).toString();
-        mDisabledOff = button->property(disabledOff).toString();
-        mDisabledOn = button->property(disabledOn).toString();
+        mNormalOff = button->property(TOKEN_PROPERTIES::normalOff).toString();
+        mNormalOn = button->property(TOKEN_PROPERTIES::normalOn).toString();
+        mDisabledOff = button->property(TOKEN_PROPERTIES::disabledOff).toString();
+        mDisabledOn = button->property(TOKEN_PROPERTIES::disabledOn).toString();
     }
 
     // normal_off
