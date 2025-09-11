@@ -325,7 +325,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelectorTreeViewWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelectorLoadingDelegate.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelector.ui
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/SearchLineEdit.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
@@ -358,7 +357,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelector.ui
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/SearchLineEdit.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/AccountTypeWidget.ui
 )
@@ -395,7 +393,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelector.ui
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/SearchLineEdit.ui
 )
 
 # Resources and platform-specific additions
@@ -561,6 +558,7 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoteItemUi.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/BannerWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/TabSelector.ui
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/ui/SearchLineEdit.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
