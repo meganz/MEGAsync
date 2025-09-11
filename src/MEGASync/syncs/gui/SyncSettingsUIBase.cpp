@@ -42,6 +42,8 @@ SyncSettingsUIBase::SyncSettingsUIBase(QWidget* parent):
             this,
             &SyncSettingsUIBase::onPermissionsClicked);
 #endif
+
+    connect(mSyncInfo, &SyncInfo::syncStateChanged, this, &SyncSettingsUIBase::onSyncStateChanged);
 }
 
 void SyncSettingsUIBase::setTitle(const QString& title)
@@ -72,6 +74,30 @@ void SyncSettingsUIBase::insertUIElement(QWidget* widget, int position)
     {
         auto previousWidget = ui->SyncSettingsLayout->itemAt(position - 1)->widget();
         setTabOrder(previousWidget, widget);
+    }
+}
+
+void SyncSettingsUIBase::onSyncStateChanged(std::shared_ptr<SyncSettings>)
+{
+    ui->wSpinningIndicatorSyncs->stop();
+    // If any sync is disabled, shows warning message
+    if (mSyncInfo->syncWithErrorExist(mTable->getType()))
+    {
+        ui->sSyncsState->setCurrentWidget(ui->pSyncsDisabled);
+
+        if (mToolBarItem)
+        {
+            mToolBarItem->setIcon(QIcon(getFinishWarningIconString()));
+        }
+    }
+    else
+    {
+        ui->sSyncsState->setCurrentWidget(ui->pNoErrorsSyncs);
+
+        if (mToolBarItem)
+        {
+            mToolBarItem->setIcon(QIcon(getFinishIconString()));
+        }
     }
 }
 
@@ -108,26 +134,7 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
             {
                 emit disableParentDialog(true);
             }
-            ui->wSpinningIndicatorSyncs->stop();
-            // If any sync is disabled, shows warning message
-            if (mSyncInfo->syncWithErrorExist(mTable->getType()))
-            {
-                ui->sSyncsState->setCurrentWidget(ui->pSyncsDisabled);
-
-                if (mToolBarItem)
-                {
-                    mToolBarItem->setIcon(QIcon(getFinishWarningIconString()));
-                }
-            }
-            else
-            {
-                ui->sSyncsState->setCurrentWidget(ui->pNoErrorsSyncs);
-
-                if (mToolBarItem)
-                {
-                    mToolBarItem->setIcon(QIcon(getFinishIconString()));
-                }
-            }
+            onSyncStateChanged();
             break;
     }
 }
