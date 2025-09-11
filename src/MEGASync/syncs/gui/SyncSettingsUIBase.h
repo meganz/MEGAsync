@@ -42,6 +42,7 @@ public:
 
     void insertUIElement(QWidget* widget, int position);
 
+    void onSyncStateChanged(std::shared_ptr<SyncSettings> sc = nullptr);
     void onSavingSyncsCompleted(SyncStateInformation value);
     void syncsStateInformation(SyncStateInformation state);
 
