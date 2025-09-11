@@ -83,6 +83,12 @@ image: url(:/images/themed/light/arrow-down-circle.svg); /*replaceThemeToken*/
 image: url(:/images/themed/light/arrow-up-circle.svg); /*replaceThemeToken*/
 }
 
+
+#SettingsDialog #pStorageQuota, #SettingsDialog #pTransferQuota
+{
+background-color:  #E4E4E5; /*colorToken.surface-3*/
+}
+
 #SettingsDialog[storageState=&quot;ok&quot;] #pStorageQuota::chunk
 {
 background-color: #ff09bf5b; /*colorToken.indicator-green*/
