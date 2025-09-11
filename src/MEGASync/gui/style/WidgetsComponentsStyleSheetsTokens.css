@@ -514,6 +514,17 @@ color: #2C5BEB; /*colorToken.link-primary*/
 /*
     QLineEdit
 */
+QLineEdit[type="borderless"], QTextEdit[type="borderless"]
+{
+background-color: transparent;
+color: #ff303233; /*colorToken.text-primary*/
+}
+
+QLineEdit:disabled[type="borderless"], QTextEdit:disabled[type="borderless"]
+{
+color: #ff797c80; /*colorToken.text-disabled*/
+}
+
 QLineEdit[type="mega"], QTextEdit[type="mega"]
 {
 background-color: #ffFFFFFF; /*colorToken.page-background*/

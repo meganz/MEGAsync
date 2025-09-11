@@ -21,6 +21,9 @@ public:
     ~SearchLineEdit();
     void setIcon(const QIcon& icon);
     void setText(const QString& text);
+    void showTextEntry(bool state);
+
+    void addCustomWidget(QWidget* widget);
 
 protected:
     bool eventFilter(QObject* obj, QEvent* evnt) override;
@@ -34,10 +37,16 @@ public slots:
 
 private slots:
     void onTextChanged(const QString& text);
+    void onSearchButtonClicked();
     void animationFinished();
 
 private:
-    void makeEffect(bool fadeIn);
+    void toggleClearButton(bool fadeIn);
+    QPropertyAnimation* runGeometryAnimation(QWidget* target,
+                                             const QRect& startRect,
+                                             const QRect& endRect,
+                                             QEasingCurve type);
+
     Ui::SearchLineEdit *ui;
     ButtonIconManager mButtonManager;
     QString mOldString;
