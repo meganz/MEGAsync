@@ -558,10 +558,11 @@ void MegaApplication::initialize()
                              .value(QString::fromUtf8("apiurl"),
                                     ServiceUrls::getDefaultStagingApiUrl().toString())
                              .toString();
-        QString disablepkp =
-            settings.value(QString::fromUtf8("disablepkp"), QString::fromUtf8("0")).toString();
-        megaApi->changeApiUrl(apiURL.toUtf8(), disablepkp == QString::fromUtf8("1"));
-        megaApiFolders->changeApiUrl(apiURL.toUtf8());
+        const auto disablepkpValue =
+            settings.value(QLatin1String("disablepkp"), QLatin1String("0")).toString();
+        const bool disablepkp = disablepkpValue == QLatin1String("1");
+        megaApi->changeApiUrl(apiURL.toUtf8(), disablepkp);
+        megaApiFolders->changeApiUrl(apiURL.toUtf8(), disablepkp);
 
         MessageDialogInfo msgInfo;
         msgInfo.descriptionText = QString::fromUtf8("API URL changed to ") + apiURL;
