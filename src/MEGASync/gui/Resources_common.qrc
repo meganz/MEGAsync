@@ -1396,8 +1396,8 @@
         <file alias="folder_users_small">images/themed/common/folders/folder_users_small.svg</file>
         <file alias="x_solid_small">images/themed/tokenizable/x_solid_small.svg</file>
         <file alias="drive-low-space">images/drive-low-space.svg</file>
-        <file alias="search_outline_small">images/themed/tokenizable/search_outline_small.svg</file>
         <file alias="search_solid_small">images/themed/tokenizable/search_solid_small.svg</file>
-        <file alias="x_circle_outline_small">images/themed/tokenizable/x_circle_outline_small.svg</file>
+        <file alias="search_small_thin_outline">images/themed/tokenizable/search_small_thin_outline.svg</file>
+        <file alias="x-circle_small_thin_outline">images/themed/tokenizable/x-circle_small_thin_outline.svg</file>
     </qresource>
 </RCC>

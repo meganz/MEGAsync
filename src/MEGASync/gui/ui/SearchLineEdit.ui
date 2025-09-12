@@ -146,8 +146,8 @@ border-radius: 16px;
          <string notr="true"/>
         </property>
         <property name="icon">
-         <iconset resource="../../../gui/Resources_common.qrc">
-          <normaloff>:/search_outline_small</normaloff>:/search_outline_small</iconset>
+         <iconset resource="../Resources_common.qrc">
+          <normaloff>:/search_small_thin_outline</normaloff>:/search_small_thin_outline</iconset>
         </property>
         <property name="checkable">
          <bool>false</bool>
@@ -218,8 +218,8 @@ border-radius: 16px;
          <string notr="true"/>
         </property>
         <property name="icon">
-         <iconset resource="../../../gui/Resources_common.qrc">
-          <normaloff>:/x_circle_outline_small</normaloff>:/x_circle_outline_small</iconset>
+         <iconset resource="../Resources_common.qrc">
+          <normaloff>:/x-circle_small_thin_outline</normaloff>:/x-circle_small_thin_outline</iconset>
         </property>
         <property name="class" stdset="0">
          <string notr="true">icon-button</string>
@@ -235,7 +235,7 @@ border-radius: 16px;
   </layout>
  </widget>
  <resources>
-  <include location="../../../gui/Resources_common.qrc"/>
+  <include location="../Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>
