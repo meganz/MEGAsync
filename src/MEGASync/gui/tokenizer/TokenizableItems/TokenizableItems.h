@@ -1,0 +1,78 @@
+#ifndef TOKENIZABLEITEMS_H
+#define TOKENIZABLEITEMS_H
+
+#include "TokenPropertyNames.h"
+
+#include <QAbstractButton>
+#include <QStyleOptionButton>
+
+class BaseTokens
+{
+public:
+    BaseTokens() = default;
+
+    virtual void fillTokens(QAbstractButton* button)
+    {
+        mNormalOff = button->property(TOKEN_PROPERTIES::normalOff).toString();
+        mNormalOn = button->property(TOKEN_PROPERTIES::normalOn).toString();
+        mDisabledOff = button->property(TOKEN_PROPERTIES::disabledOff).toString();
+        mDisabledOn = button->property(TOKEN_PROPERTIES::disabledOn).toString();
+    }
+
+    // normal_off
+    QString getNormalOffToken() const
+    {
+        return mNormalOff;
+    }
+
+    // normal_on
+    QString getNormalOnToken() const
+    {
+        return mNormalOn;
+    }
+
+    // disabled_off
+    QString getDisabledOffToken() const
+    {
+        return mDisabledOff;
+    }
+
+    // disabled_on
+    QString getDisabledOnToken() const
+    {
+        return mDisabledOn;
+    }
+
+private:
+    QString mNormalOff;
+    QString mNormalOn;
+    QString mDisabledOff;
+    QString mDisabledOn;
+};
+
+class TokenizableItem
+{
+public:
+    TokenizableItem();
+    ~TokenizableItem();
+
+protected:
+    bool stateHasChanged(const QStyleOption& option);
+
+    void applyDefaultPixmap(QAbstractButton* button);
+    void applyPixmap(QAbstractButton* button,
+                     const QString& token,
+                     const QIcon::Mode& mode,
+                     const QIcon::State& state);
+
+    bool isInitialized() const;
+    virtual void init(QAbstractButton* button);
+
+private:
+    BaseTokens baseTokens;
+    QStyleOption mCurrentOption;
+    bool mInit;
+    int mThemeType;
+};
+
+#endif // TOKENIZABLEITEMS_H
