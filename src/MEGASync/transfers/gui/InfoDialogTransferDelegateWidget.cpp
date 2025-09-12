@@ -1,6 +1,7 @@
 #include "InfoDialogTransferDelegateWidget.h"
 
 #include "MegaApplication.h"
+#include "TokenParserWidgetManager.h"
 #include "TransferItem.h"
 #include "ui_InfoDialogTransferDelegateWidget.h"
 #include "Utilities.h"
@@ -32,6 +33,7 @@ InfoDialogTransferDelegateWidget::InfoDialogTransferDelegateWidget(QWidget *pare
     mUi->lFileName->installEventFilter(this);
     mUi->lElapsedTime->installEventFilter(this);
     setProperty("TOKENIZED", true);
+    TokenParserWidgetManager::instance()->polish(this);
 }
 
 InfoDialogTransferDelegateWidget::~InfoDialogTransferDelegateWidget()

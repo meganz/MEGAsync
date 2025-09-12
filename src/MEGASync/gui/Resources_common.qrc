@@ -1314,5 +1314,7 @@
         <file alias="x-circle_small_thin_outline">images/themed/tokenizable/x-circle_small_thin_outline.svg</file>
         <file alias="play-circle_medium_thin_outline">images/themed/tokenizable/play-circle_medium_thin_outline.svg</file>
         <file alias="pause-circle_medium_thin_outline">images/themed/tokenizable/pause-circle_medium_thin_outline.svg</file>
+        <file alias="gear_six_small_thin_outline">images/themed/tokenizable/gear_six_small_thin_outline.svg</file>
+        <file alias="menu_01_medium_thin_outline">images/themed/tokenizable/menu_01_medium_thin_outline.svg</file>
     </qresource>
 </RCC>

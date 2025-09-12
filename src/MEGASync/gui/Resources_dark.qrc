@@ -125,7 +125,6 @@
         <file alias="plus_icon_secondary.svg">images/themed/dark/plus_icon_secondary.svg</file>
         <file alias="menu.svg">images/themed/dark/menu.svg</file>
         <file alias="bell.svg">images/themed/dark/bell.svg</file>
-        <file alias="gear-six.svg">images/themed/dark/gear-six.svg</file>
         <file alias="currency-dollar.svg">images/themed/dark/currency-dollar.svg</file>
         <file alias="folder-users.svg">images/themed/dark/folder-users.svg</file>
         <file alias="users.svg">images/themed/dark/users.svg</file>

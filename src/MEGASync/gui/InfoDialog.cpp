@@ -116,10 +116,6 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
 
     setUnseenNotifications(0);
 
-    QSizePolicy sp_retain = ui->bNumberUnseenNotifications->sizePolicy();
-    sp_retain.setRetainSizeWhenHidden(true);
-    ui->bNumberUnseenNotifications->setSizePolicy(sp_retain);
-
     connect(ui->bTransferManager, SIGNAL(pauseResumeClicked()), this, SLOT(pauseResumeClicked()));
     connect(ui->bTransferManager,
             SIGNAL(transferManagerClicked()),

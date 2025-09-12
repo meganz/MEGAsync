@@ -57,7 +57,7 @@ background-color:#ff04101E; /*colorToken.button-brand*/
  line-height: 20px;
  font-weight: 400;
  color: #ff09bf5b; /*colorToken.button-primary*/
- padding: 0px 8px 0px 8px;
+ padding: 0px 0px 0px 0px;
  border: none;
 }
 #tTransfers:hover, #tNotifications:hover
@@ -135,12 +135,6 @@ qproperty-icon: url(:/plus_icon_secondary.svg);
 qproperty-icon: url(:/menu.svg);
 background-color:transparent;
 }
-
-#tNotifications
-{
-  padding: 0px 4px 0px 16px;
-}
-
 #wSeparator
 {
 background-color: #FFF3F4F4; /*colorToken.border-subtle*/
@@ -408,8 +402,14 @@ background-color: transparent;
                <property name="leftMargin">
                 <number>16</number>
                </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
                <property name="rightMargin">
-                <number>16</number>
+                <number>10</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
                </property>
                <item>
                 <widget class="AvatarWidget" name="bAvatar" native="true">
@@ -448,13 +448,13 @@ background-color: transparent;
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
-                   <height>26</height>
+                   <height>0</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>24</height>
+                   <height>16777215</height>
                   </size>
                  </property>
                  <property name="cursor">
@@ -482,13 +482,13 @@ background-color: transparent;
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
-                   <height>26</height>
+                   <height>0</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>24</height>
+                   <height>16777215</height>
                   </size>
                  </property>
                  <property name="cursor">
@@ -498,11 +498,11 @@ background-color: transparent;
                   <bool>true</bool>
                  </property>
                  <property name="text">
-                  <string notr="true"/>
+                  <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_common.qrc">
-                   <normaloff>:/images/icon_plus.svg</normaloff>:/images/icon_plus.svg</iconset>
+                  <iconset resource="../Resources_light.qrc">
+                   <normaloff>:/plus_icon_secondary.svg</normaloff>:/plus_icon_secondary.svg</iconset>
                  </property>
                  <property name="flat">
                   <bool>true</bool>
@@ -529,7 +529,7 @@ background-color: transparent;
                 </spacer>
                </item>
                <item>
-                <widget class="QPushButton" name="bSettings">
+                <widget class="IconOnlyButton" name="bSettings">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
                    <horstretch>0</horstretch>
@@ -538,14 +538,14 @@ background-color: transparent;
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>24</width>
-                   <height>24</height>
+                   <width>36</width>
+                   <height>36</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>24</width>
-                   <height>24</height>
+                   <width>36</width>
+                   <height>36</height>
                   </size>
                  </property>
                  <property name="cursor">
@@ -559,7 +559,7 @@ background-color: transparent;
                  </property>
                  <property name="icon">
                   <iconset resource="../Resources_common.qrc">
-                   <normaloff>:/images/more_settings.png</normaloff>:/images/more_settings.png</iconset>
+                   <normaloff>:/menu_01_medium_thin_outline</normaloff>:/menu_01_medium_thin_outline</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -569,6 +569,9 @@ background-color: transparent;
                  </property>
                  <property name="flat">
                   <bool>true</bool>
+                 </property>
+                 <property name="type" stdset="0">
+                  <string notr="true">ghost</string>
                  </property>
                 </widget>
                </item>
@@ -673,10 +676,10 @@ background-color: transparent;
                     </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_13">
                      <property name="spacing">
-                      <number>0</number>
+                      <number>16</number>
                      </property>
                      <property name="leftMargin">
-                      <number>0</number>
+                      <number>12</number>
                      </property>
                      <property name="topMargin">
                       <number>0</number>
@@ -742,13 +745,13 @@ background-color: transparent;
                           <property name="minimumSize">
                            <size>
                             <width>0</width>
-                            <height>2</height>
+                            <height>1</height>
                            </size>
                           </property>
                           <property name="maximumSize">
                            <size>
                             <width>16777215</width>
-                            <height>2</height>
+                            <height>1</height>
                            </size>
                           </property>
                           <property name="text">
@@ -812,7 +815,7 @@ background-color: transparent;
                           </property>
                           <layout class="QHBoxLayout" name="horizontalLayout_11">
                            <property name="spacing">
-                            <number>0</number>
+                            <number>4</number>
                            </property>
                            <property name="leftMargin">
                             <number>0</number>
@@ -849,14 +852,14 @@ background-color: transparent;
                              </property>
                              <property name="minimumSize">
                               <size>
-                               <width>6</width>
-                               <height>14</height>
+                               <width>18</width>
+                               <height>12</height>
                               </size>
                              </property>
                              <property name="maximumSize">
                               <size>
                                <width>16777215</width>
-                               <height>14</height>
+                               <height>12</height>
                               </size>
                              </property>
                              <property name="text">
@@ -872,13 +875,13 @@ background-color: transparent;
                           <property name="minimumSize">
                            <size>
                             <width>0</width>
-                            <height>2</height>
+                            <height>1</height>
                            </size>
                           </property>
                           <property name="maximumSize">
                            <size>
                             <width>16777215</width>
-                            <height>2</height>
+                            <height>1</height>
                            </size>
                           </property>
                           <property name="text">
@@ -923,7 +926,7 @@ background-color: transparent;
                   </size>
                  </property>
                  <property name="currentIndex">
-                  <number>0</number>
+                  <number>1</number>
                  </property>
                  <widget class="QWidget" name="pTransfersTab">
                   <property name="sizePolicy">
@@ -3219,13 +3222,13 @@ background-color: transparent;
                      <property name="minimumSize">
                       <size>
                        <width>400</width>
-                       <height>33</height>
+                       <height>48</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
                        <width>400</width>
-                       <height>33</height>
+                       <height>48</height>
                       </size>
                      </property>
                      <layout class="QHBoxLayout" name="horizontalLayout_14">
@@ -3271,7 +3274,7 @@ background-color: transparent;
                        </spacer>
                       </item>
                       <item>
-                       <widget class="QPushButton" name="bNotificationsSettings">
+                       <widget class="IconOnlyButton" name="bNotificationsSettings">
                         <property name="maximumSize">
                          <size>
                           <width>24</width>
@@ -3285,18 +3288,23 @@ background-color: transparent;
                          <string>Open notification settings</string>
                         </property>
                         <property name="icon">
-                         <iconset>
-                          <normalon>:/gear-six.svg</normalon>
-                         </iconset>
+                         <iconset resource="../Resources_common.qrc">
+                          <normaloff>:/gear_six_small_thin_outline</normaloff>:/gear_six_small_thin_outline</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
-                          <width>24</width>
-                          <height>24</height>
+                          <width>16</width>
+                          <height>16</height>
                          </size>
                         </property>
                         <property name="flat">
-                         <bool>true</bool>
+                         <bool>false</bool>
+                        </property>
+                        <property name="type" stdset="0">
+                         <string notr="true">ghost</string>
+                        </property>
+                        <property name="dimension" stdset="0">
+                         <string notr="true">small</string>
                         </property>
                        </widget>
                       </item>
@@ -3718,10 +3726,15 @@ background-color: transparent;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CircularUsageProgressBar</class>
+   <class>SomeIssuesOccurredMessage</class>
    <extends>QWidget</extends>
-   <header>CircularUsageProgressBar.h</header>
+   <header>SomeIssuesOccurredMessage.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>IconOnlyButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
   </customwidget>
   <customwidget>
    <class>AvatarWidget</class>
@@ -3730,9 +3743,9 @@ background-color: transparent;
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>SomeIssuesOccurredMessage</class>
+   <class>CircularUsageProgressBar</class>
    <extends>QWidget</extends>
-   <header>SomeIssuesOccurredMessage.h</header>
+   <header>CircularUsageProgressBar.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
