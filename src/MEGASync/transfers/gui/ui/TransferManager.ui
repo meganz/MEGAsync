@@ -27,16 +27,14 @@
     <normaloff>../../../../../../.designer/backup</normaloff>../../../../../../.designer/backup</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget
+   <string notr="true">#wLeftPane
 {
     background-color: #fff7f7f7; /*colorToken.surface-1*/
 }
-
-QPushButton, QLabel, QLineEdit, QToolButton
+#wRightPane
 {
-background-color: &quot;transparent&quot;;
+    background-color: #FFFFFFFF; /*colorToken.page-background*/
 }
-
 QGroupBox
 {
     font-size: 12px;
@@ -123,61 +121,61 @@ background-color: #fff7f7f7; /*colorToken.surface-1*/
 
 QFrame[itsOn=false] &gt; #tAllTransfers
 {
-    qproperty-icon: url(:/images/themed/light/all_transfers.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/all_transfers);
     qproperty-iconSize: 16px;
 }
 
 QFrame[itsOn=true] &gt; #tAllTransfers
 {
-    qproperty-icon: url(:/images/themed/light/all_transfers_selected.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/all_transfers_selected);
     qproperty-iconSize: 16px;
 }
 
 QFrame[itsOn=false] &gt; #tDownloads
 {
-    qproperty-icon: url(:/images/themed/light/downloads.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/downloads);
     qproperty-iconSize: 16px;
 }
 
 QFrame[itsOn=true] &gt; #tDownloads
 {
-    qproperty-icon: url(:/images/themed/light/downloads_selected.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/downloads_selected);
     qproperty-iconSize: 16px;
 }
 
 QFrame[itsOn=false] &gt; #tUploads
 {
-    qproperty-icon: url(:/images/themed/light/uploads.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/uploads);
     qproperty-iconSize: 16px;
 }
 
 QFrame[itsOn=true] &gt; #tUploads
 {
-    qproperty-icon: url(:/images/themed/light/uploads_selected.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/uploads_selected);
     qproperty-iconSize: 16px;
 }
 
 QFrame[itsOn=false] &gt; #tCompleted
 {
-    qproperty-icon: url(:/images/themed/light/completed.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/completed);
     qproperty-iconSize: 16px;
 }
 
 QFrame[itsOn=true] &gt; #tCompleted
 {
-    qproperty-icon: url(:/images/themed/light/completed_selected.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/completed_selected);
     qproperty-iconSize: 16px;
 }
 
 QFrame[itsOn=false] &gt; #tFailed
 {
-    qproperty-icon: url(:/images/themed/light/failed.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/failed);
     qproperty-iconSize: 16px;
 }
 
 QFrame[itsOn=true] &gt; #tFailed
 {
-    qproperty-icon: url(:/images/themed/light/failed_selected.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/failed_selected);
     qproperty-iconSize: 16px;
 }
 
@@ -194,19 +192,19 @@ QFrame[itsOn=true] &gt; #tFailed
 #bPause
 {
 icon-size: 16px;
-icon: url(:/images/themed/light/play.svg); /*replaceThemeToken*/
+icon: url(:/play);
 }
 
 #bPause:checked
 {
 icon-size: 16px;
-icon: url(:/images/themed/light/pause.svg); /*replaceThemeToken*/
+icon: url(:/pause);
 }
 
 #bSearch
 {
     qproperty-iconSize: 16px;
-    qproperty-icon: url(:/images/themed/light/search.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/search);
 }
 
 #wDownSpeed, #wUpSpeed
@@ -230,13 +228,13 @@ icon: url(:/images/themed/light/pause.svg); /*replaceThemeToken*/
 
 #lUpSpeedIcon
 {
-    qproperty-icon: url(:/images/themed/light/up_arrow.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/up_arrow);
     qproperty-iconSize: 16px;
 }
 
 #lDownSpeedIcon
 {
-    qproperty-icon: url(:/images/themed/light/down_arrow.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/down_arrow);
     qproperty-iconSize: 16px;
 }
 
@@ -276,14 +274,14 @@ icon: url(:/images/themed/light/pause.svg); /*replaceThemeToken*/
 {
     border: none;
     qproperty-iconSize: 16px;
-    qproperty-icon: url(:/images/themed/light/search.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/search);
 }
 
 #tSearchCancel
 {
     border: none;
     qproperty-iconSize: 16px;
-    qproperty-icon: url(:/images/themed/light/cancel.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/cancel);
 }
 
 #wSearch QPushButton
@@ -294,13 +292,13 @@ icon: url(:/images/themed/light/pause.svg); /*replaceThemeToken*/
     padding-left:-1px;
     padding-right: 0px;
     qproperty-iconSize: 16px;
-    qproperty-icon: url(:/images/themed/light/search_active.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/search_active);
 }
 
 #tClearSearchResult
 {
     qproperty-iconSize: 16px;
-    qproperty-icon: url(:/images/themed/light/x.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/x.svg);
 }
 
 /* tokenized to here */
@@ -339,17 +337,12 @@ icon: url(:/images/themed/light/pause.svg); /*replaceThemeToken*/
 
 /* right pane */
 
-#wRightPane, #wTransfers
+#wTransfers
 {
     background-color: white;
 }
 
-#wRightPaneHeader, #sCurrentContent
-{
-    background-color: white;
-}
-
-#lCurrentContent, #lSearch
+#lSearch
 {
     color: #333333;
     font-size: 20px;
@@ -369,7 +362,7 @@ icon: url(:/images/themed/light/pause.svg); /*replaceThemeToken*/
 
 #lCurrentContent
 {
-  margin-right: 16px;
+font-weight:700;
 }
 
 #lTransfering, #lMediaType
@@ -391,15 +384,6 @@ icon: url(:/images/themed/light/pause.svg); /*replaceThemeToken*/
 QToolButton
 {
   border: none;
-}
-
-#wRightPaneHeader QPushButton, #tCogWheel
-{
-  border: none;
-  color: #333333;
-  font-size: 14px;
-  font-weight: 600;
-  qProperty-iconSize: 24px;
 }
 
 #lPaused, #lNbResults
@@ -446,28 +430,6 @@ QToolButton
   color: #FFFFFF;
   font-size: 14px;
   font-weight: 600;
-}
-
-#tActionButton
-{
-	 height: 32px;
-    min-height: 32px;
-    max-height: 32px;
-  border-radius: 16px;
-	padding-left: 20px;
-	padding-right: 20px;
-  background-color: #FFA500;
-}
-
-#tActionButton:disabled
-{
-	 height: 32px;
-    min-height: 32px;
-    max-height: 32px;
-  border-radius: 16px;
-	padding-left: 20px;
-	padding-right: 20px;
-  background-color: #D3D3D3;
 }
 
 #tSeePlans
@@ -1618,7 +1580,7 @@ QToolButton
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources.qrc">
+               <iconset resource="../../../gui/Resources_common.qrc">
                 <normaloff>:/images/transfer_manager/sidebar/cancel_all_ico_default.png</normaloff>:/images/transfer_manager/sidebar/cancel_all_ico_default.png</iconset>
               </property>
               <property name="iconSize">
@@ -1870,7 +1832,7 @@ QToolButton
             </property>
             <layout class="QGridLayout" name="currentContentLayout">
              <property name="leftMargin">
-              <number>8</number>
+              <number>20</number>
              </property>
              <property name="topMargin">
               <number>0</number>
@@ -1930,13 +1892,13 @@ QToolButton
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>32</height>
+                 <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>32</height>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="cursor">
@@ -1997,8 +1959,20 @@ QToolButton
                <string>Open links</string>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources.qrc">
-                <normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</iconset>
+               <iconset resource="../../../gui/Resources_common.qrc">
+                <normaloff>:/link_01_small_thin_outline</normaloff>:/link_01_small_thin_outline</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">ghost</string>
+              </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">small</string>
               </property>
              </widget>
             </item>
@@ -2011,8 +1985,14 @@ QToolButton
                <string>Upload</string>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources.qrc">
-                <normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</iconset>
+               <iconset resource="../../../gui/Resources_common.qrc">
+                <normaloff>:/upload_small_thin_outline</normaloff>:/upload_small_thin_outline</iconset>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">ghost</string>
+              </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">small</string>
               </property>
              </widget>
             </item>
@@ -2025,19 +2005,37 @@ QToolButton
                <string>Download</string>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources.qrc">
+               <iconset resource="../../../gui/Resources_common.qrc">
                 <normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</iconset>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QPushButton" name="tCogWheel">
+              <property name="maximumSize">
+               <size>
+                <width>26</width>
+                <height>26</height>
+               </size>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources.qrc">
-                <normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</iconset>
+               <iconset resource="../../../gui/Resources_common.qrc">
+                <normaloff>:/gear_six_small_thin_outline</normaloff>:/gear_six_small_thin_outline</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">ghost</string>
+              </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">small</string>
               </property>
              </widget>
             </item>
@@ -2069,7 +2067,7 @@ QToolButton
             </size>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>1</number>
            </property>
            <widget class="TransferManagerStatusHeaderWidget" name="pStatusHeaderInfo">
             <property name="sizePolicy">
@@ -2422,7 +2420,7 @@ QToolButton
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../gui/Resources.qrc">
+             <iconset resource="../../../gui/Resources_common.qrc">
               <normaloff>:/images/transfer_manager/empty_categories/no_uploads.png</normaloff>:/images/transfer_manager/empty_categories/no_uploads.png</iconset>
             </property>
            </widget>
@@ -2508,7 +2506,7 @@ QToolButton
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../gui/Resources.qrc">
+             <iconset resource="../../../gui/Resources_common.qrc">
               <normaloff>:/images/transfer_manager/empty_categories/no_downloads.png</normaloff>:/images/transfer_manager/empty_categories/no_downloads.png</iconset>
             </property>
            </widget>
@@ -2555,7 +2553,7 @@ QToolButton
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../gui/Resources.qrc">
+             <iconset resource="../../../gui/Resources_common.qrc">
               <normaloff>:/images/transfer_manager/empty_categories/no_transfers.png</normaloff>:/images/transfer_manager/empty_categories/no_transfers.png</iconset>
             </property>
            </widget>
@@ -2602,7 +2600,7 @@ QToolButton
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../gui/Resources.qrc">
+             <iconset resource="../../../gui/Resources_common.qrc">
               <normaloff>:/images/transfer_manager/empty_categories/no_search_results.png</normaloff>:/images/transfer_manager/empty_categories/no_search_results.png</iconset>
             </property>
            </widget>
@@ -2675,7 +2673,7 @@ QToolButton
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../gui/Resources.qrc">
+             <iconset resource="../../../gui/Resources_common.qrc">
               <normaloff>:/images/transfer_manager/empty_categories/Completed_transfers.png</normaloff>:/images/transfer_manager/empty_categories/Completed_transfers.png</iconset>
             </property>
            </widget>
@@ -2781,7 +2779,7 @@ QToolButton
   <tabstop>tSearchCancel</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../gui/Resources.qrc"/>
+  <include location="../../../gui/Resources_common.qrc"/>
  </resources>
  <connections>
   <connection>

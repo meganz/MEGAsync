@@ -494,6 +494,7 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ui/ViewLoadingScene.ui
     ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ui/ViewLoadingMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/NodeNameSetterDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/AccountTypeWidget.ui
 )
 
 target_sources_conditional(${ExecutableTarget}

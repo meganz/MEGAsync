@@ -1258,7 +1258,6 @@
         <file alias="x-circle_small_thin_outline">images/themed/tokenizable/x-circle_small_thin_outline.svg</file>
         <file alias="x-circle_small_thin_solid">images/themed/tokenizable/x-circle_small_thin_solid.svg</file>
         <file alias="external_link_small_thin_outline">images/themed/tokenizable/external_link_small_thin_outline.svg</file>
-        <file alias="x_solid_small">images/themed/tokenizable/x_solid_small.svg</file>
         <file alias="search_small_thin_outline">images/themed/tokenizable/search_small_thin_outline.svg</file>
         <file alias="search_small_thin_solid">images/themed/tokenizable/search_small_thin_solid.svg</file>
         <file alias="link-01_small_thin_outline">images/themed/tokenizable/link-01_small_thin_outline.svg</file>
@@ -1290,16 +1289,15 @@
         <file alias="arrow-down-circle_small_thin_outline">images/themed/tokenizable/arrow-down-circle_small_thin_outline.svg</file>
         <file alias="clock-rotate_small_thin_outline">images/themed/tokenizable/clock-rotate_small_thin_outline.svg</file>
         <file alias="copy-02_small_thin_outline">images/themed/tokenizable/copy-02_small_thin_outline.svg</file>
-        <file alias="pen-2_small_thin_outline">images/themed/tokenizable/pen-2_small_thin_outline.svg</file>
         <file alias="clipboard_small_thin_outline">images/themed/tokenizable/clipboard_small_thin_outline.svg</file>
         <file alias="log-out-02_small_thin_outline">images/themed/tokenizable/log-out-02_small_thin_outline.svg</file>
         <file alias="sync-01_small_thin_outline">images/themed/tokenizable/sync-01_small_thin_outline.svg</file>
-        <file alias="folder_small_thin_outline">images/themed/tokenizable/folder_small_thin_outline.svg</file>
         <file alias="manage_small_thin_outline">images/themed/tokenizable/manage_small_thin_outline.svg</file>
         <file alias="pause_small_thin_outline">images/themed/tokenizable/pause_small_thin_outline.svg</file>
         <file alias="play_small_thin_outline">images/themed/tokenizable/play_small_thin_outline.svg</file>
         <file alias="reboot_small_thin_outline">images/themed/tokenizable/reboot_small_thin_outline.svg</file>
         <file alias="remove_small_thin_outline">images/themed/tokenizable/remove_small_thin_outline.svg</file>
         <file alias="rescan_small_thin_outline">images/themed/tokenizable/rescan_small_thin_outline.svg</file>
+        <file alias="link_01_small_thin_outline">images/themed/tokenizable/link_01_small_thin_outline.svg</file>
     </qresource>
 </RCC>
