@@ -1350,6 +1350,12 @@ margin-bottom: 3px;
                <layout class="QHBoxLayout" name="horizontalLayout_3">
                 <item>
                  <widget class="QLabel" name="lName">
+                  <property name="maximumSize">
+                   <size>
+                    <width>270</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
                   <property name="textFormat">
                    <enum>Qt::PlainText</enum>
                   </property>

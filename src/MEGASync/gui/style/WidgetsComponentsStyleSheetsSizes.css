@@ -130,7 +130,7 @@ border-style: solid;
 border-radius: 6px;
 padding: 4px 5px 4px 8px;
 /* Semi-bold*/
-font-weight: 600
+font-weight: 400;
 }
 
 QComboBox::on[type="mega"]
