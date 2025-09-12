@@ -71,12 +71,27 @@ image: url(:/images/themed/light/checkbox_off_disabled.svg); /*replaceThemeToken
 
 QScrollBar::handle:vertical
 {
-background: #ff04101e; /*colorToken.selection-control*/
+background: #ff04101E; /*colorToken.button-primary*/
 }
-
+QScrollBar::handle:vertical:hover
+{
+background: #ff39424E; /*colorToken.button-primary-hover*/
+}
+QScrollBar::handle:vertical:pressed
+{
+background: #ff535B65; /*colorToken.button-primary-pressed*/
+}
 QScrollBar::handle:horizontal
 {
-background: #ff04101e; /*colorToken.selection-control*/
+background: #ff04101E; /*colorToken.button-primary*/
+}
+QScrollBar::handle:horizontal:hover
+{
+background: #ff39424E; /*colorToken.button-primary-hover*/
+}
+QScrollBar::handle:horizontal:pressed
+{
+background: #ff535B65; /*colorToken.button-primary-pressed*/
 }
 
 /*

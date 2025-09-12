@@ -33,43 +33,47 @@ border-style: none;
 
 /*
     QScrollBar
+    Scroll handle will be 8px with 4 px padding to the left and right
+    making it a total of 16
 */
 QScrollBar:vertical
 {
-width: 15px;
-padding: 1px;
+width: 18px;
+padding: 4px;
 }
 
 QScrollBar:horizontal
 {
-height: 15px;
-padding: 1px;
+height: 18px;
+padding: 4px;
 }
 
 QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical, QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical
 {
 border-style: none;
+width: 0px;
+height: 0px;
 }
 
 QScrollBar::handle:vertical
 {
 border-style: none;
 border-radius: 5px;
-min-height: 20px;
-border-radius: 4px;
+min-height: 60px;
 }
 
 QScrollBar::handle:horizontal
 {
 border-style: none;
 border-radius: 5px;
-min-width: 20px;
-border-radius: 4px;
+min-width: 60px;
 }
 
-QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal, QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal
+QScrollBar::left-arrow:horizontal, QScrollBar::right-arrow:horizontal, QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal
 {
 border-style: none;
+width: 0px;
+height: 0px;
 }
 
 /*
