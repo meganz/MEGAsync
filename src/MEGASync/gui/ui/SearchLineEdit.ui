@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>SearchLineEdit</class>
- <widget class="QFrame" name="SearchLineEdit">
+ <widget class="QWidget" name="SearchLineEdit">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -37,9 +37,9 @@
 /*ColorTokenIcon;Button;tSearchCancel;normal;off;colorToken.icon-secondary*/
 /*ColorTokenIcon;Button;tSearchCancel;disabled;off;colorToken.icon-disabled*/
 
-SearchLineEdit
+QLineEdit
 {
-border: none;
+background-color: transparent;
 }
 
 #searchContainer
@@ -49,18 +49,12 @@ border-radius: 16px;
 }
 </string>
   </property>
-  <property name="frameShape">
-   <enum>QFrame::Panel</enum>
-  </property>
-  <property name="frameShadow">
-   <enum>QFrame::Plain</enum>
-  </property>
-  <property name="lineWidth">
+  <property name="lineWidth" stdset="0">
    <number>0</number>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
    <property name="spacing">
-    <number>8</number>
+    <number>0</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -76,6 +70,12 @@ border-radius: 16px;
    </property>
    <item>
     <widget class="QWidget" name="customWidget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <layout class="QHBoxLayout" name="customLayout">
       <property name="spacing">
        <number>0</number>
@@ -98,12 +98,12 @@ border-radius: 16px;
    <item>
     <widget class="QWidget" name="searchContainer" native="true">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,1,0">
+     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,0">
       <property name="spacing">
        <number>6</number>
       </property>
@@ -119,19 +119,6 @@ border-radius: 16px;
       <property name="bottomMargin">
        <number>3</number>
       </property>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
       <item>
        <widget class="QPushButton" name="tSearchIcon">
         <property name="sizePolicy">
@@ -179,7 +166,7 @@ border-radius: 16px;
       <item>
        <widget class="QLineEdit" name="leSearchField">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>

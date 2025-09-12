@@ -16,6 +16,8 @@ SearchLineEdit::SearchLineEdit(QWidget* parent):
 {
     ui->setupUi(this);
 
+    setAttribute(Qt::WA_StyledBackground, true);
+
     EventManager::addEvent(ui->tSearchCancel, QEvent::MouseButtonDblClick, EventHelper::BLOCK);
     EventManager::addEvent(ui->tSearchIcon, QEvent::MouseButtonDblClick, EventHelper::BLOCK);
 
@@ -24,6 +26,9 @@ SearchLineEdit::SearchLineEdit(QWidget* parent):
     connect(ui->leSearchField, &QLineEdit::textChanged, this, &SearchLineEdit::onTextChanged);
 
     ui->tSearchCancel->setGraphicsEffect(new QGraphicsOpacityEffect());
+    ui->leSearchField->setGraphicsEffect(new QGraphicsOpacityEffect());
+    ui->customWidget->setGraphicsEffect(new QGraphicsOpacityEffect());
+
     ui->leSearchField->installEventFilter(this);
     parentWidget()->installEventFilter(this);
 
@@ -35,8 +40,7 @@ SearchLineEdit::SearchLineEdit(QWidget* parent):
     ui->leSearchField->setVisible(false);
     ui->customWidget->setVisible(true);
 
-    ui->searchContainer->setMaximumWidth(COLLAPSE_SIZE);
-    resize(COLLAPSE_SIZE, COLLAPSE_SIZE);
+    ui->searchContainer->resize(COLLAPSE_SIZE, COLLAPSE_SIZE);
 
     setFocusProxy(ui->leSearchField);
 }
@@ -46,7 +50,7 @@ SearchLineEdit::~SearchLineEdit()
     delete ui;
 }
 
-void SearchLineEdit::setText(const QString &text)
+void SearchLineEdit::setText(const QString& text)
 {
     ui->leSearchField->setText(text);
 }
@@ -60,39 +64,71 @@ void SearchLineEdit::showTextEntry(bool state)
 
     if (!state)
     {
-        // When collapsed, all the elements are hidden
-        ui->leSearchField->hide();
-        ui->tSearchCancel->hide();
+        // Collapse lineEdit
+        {
+            runWidthAnimation(ui->leSearchField, false);
+        }
 
-        ui->customWidget->show();
+        // Collapse lineEdit
+        {
+            runWidthAnimation(ui->tSearchCancel, false);
+        }
 
-        // Reduce background to COLLAPSE size
-        QRect startRect(geometry());
-        QRect endRect(size().width() - COLLAPSE_SIZE, 0, COLLAPSE_SIZE, COLLAPSE_SIZE);
+        // Move search icon
+        {
+            QRect startRect(ui->tSearchIcon->geometry());
+            QRect endRect(ui->searchContainer->width() - ui->tSearchIcon->width(),
+                          ui->tSearchIcon->y(),
+                          ui->tSearchIcon->size().width(),
+                          ui->tSearchIcon->size().height());
 
-        QPropertyAnimation* animation =
-            runGeometryAnimation(ui->searchContainer, startRect, endRect, QEasingCurve::OutQuad);
-        connect(animation,
-                &QPropertyAnimation::finished,
-                this,
-                [this]()
-                {
-                    ui->searchContainer->setMaximumWidth(COLLAPSE_SIZE);
-                });
+            QPropertyAnimation* animation =
+                runGeometryAnimation(ui->tSearchIcon, startRect, endRect, QEasingCurve::Linear);
+
+            connect(animation,
+                    &QPropertyAnimation::finished,
+                    this,
+                    [this]()
+                    {
+                        ui->leSearchField->hide();
+                        ui->tSearchCancel->hide();
+                        ui->customWidget->show();
+                    });
+        }
+
+        {
+            // Reduce background to COLLAPSE size
+            QRect startRect(ui->searchContainer->geometry());
+            QRect endRect(size().width() - COLLAPSE_SIZE, 0, COLLAPSE_SIZE, COLLAPSE_SIZE);
+
+            runGeometryAnimation(ui->searchContainer, startRect, endRect, QEasingCurve::Linear);
+        }
     }
     else
     {
-        // Avoid resizing when changing the maximum width
-        auto currentSizePolicy(ui->searchContainer->sizePolicy());
-        ui->searchContainer->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        ui->searchContainer->setMaximumWidth(size().width());
-
         // resize background
         {
             QRect startRect(ui->searchContainer->geometry().x(), 0, COLLAPSE_SIZE, COLLAPSE_SIZE);
             QRect endRect(QRect(0, 0, size().width(), size().height()));
 
-            runGeometryAnimation(ui->searchContainer, startRect, endRect, QEasingCurve::InQuad);
+            QPropertyAnimation* animation =
+                runGeometryAnimation(ui->searchContainer, startRect, endRect, QEasingCurve::Linear);
+
+            // As we finish the resize, show the rest of elements
+            connect(animation,
+                    &QPropertyAnimation::finished,
+                    this,
+                    [this]()
+                    {
+                        ui->leSearchField->show();
+                        ui->leSearchField->resize(ui->leSearchField->sizeHint());
+                        if (!ui->leSearchField->text().isEmpty())
+                        {
+                            ui->tSearchCancel->resize(ui->tSearchCancel->sizeHint());
+                            ui->tSearchCancel->show();
+                        }
+                        ui->customWidget->hide();
+                    });
         }
 
         // Move search icon
@@ -101,29 +137,13 @@ void SearchLineEdit::showTextEntry(bool state)
                             ui->tSearchIcon->geometry().y(),
                             ui->tSearchIcon->size().width(),
                             ui->tSearchIcon->size().height());
-            QRect endRect(QRect(0,
+            // Not sure why it is 10, but with this magical number works very well
+            QRect endRect(QRect(10,
                                 ui->tSearchIcon->y(),
                                 ui->tSearchIcon->size().width(),
                                 ui->tSearchIcon->size().height()));
 
-            QPropertyAnimation* animation =
-                runGeometryAnimation(ui->tSearchIcon, startRect, endRect, QEasingCurve::InQuad);
-
-            // As we finish the resize, show the rest of elements
-            connect(animation,
-                    &QPropertyAnimation::finished,
-                    this,
-                    [this, currentSizePolicy]()
-                    {
-                        ui->leSearchField->show();
-                        if (!ui->leSearchField->text().isEmpty())
-                        {
-                            ui->tSearchCancel->show();
-                        }
-                        ui->customWidget->hide();
-
-                        ui->searchContainer->setSizePolicy(currentSizePolicy);
-                    });
+            runGeometryAnimation(ui->tSearchIcon, startRect, endRect, QEasingCurve::Linear);
         }
     }
 }
@@ -157,7 +177,7 @@ bool SearchLineEdit::event(QEvent* event)
     return QFrame::event(event);
 }
 
-bool SearchLineEdit::eventFilter(QObject *obj, QEvent *evnt)
+bool SearchLineEdit::eventFilter(QObject* obj, QEvent* evnt)
 {
     if (obj == ui->leSearchField && evnt->type() == QEvent::KeyPress)
     {
@@ -172,7 +192,7 @@ bool SearchLineEdit::eventFilter(QObject *obj, QEvent *evnt)
         }
     }
     else if (obj == ui->leSearchField && ui->leSearchField->isVisible() &&
-             evnt->type() == QEvent::FocusOut)
+             evnt->type() == QEvent::FocusOut && ui->leSearchField->text().isEmpty())
     {
         showTextEntry(false);
     }
@@ -183,7 +203,7 @@ bool SearchLineEdit::eventFilter(QObject *obj, QEvent *evnt)
 void SearchLineEdit::onClearClicked()
 {
     ui->leSearchField->clear();
-    if(ui->tSearchCancel->isVisible())
+    if (ui->tSearchCancel->isVisible())
     {
         toggleClearButton(false);
     }
@@ -194,13 +214,13 @@ void SearchLineEdit::onClearClicked()
     mOldString = QString();
 }
 
-void SearchLineEdit::onTextChanged(const QString &text)
+void SearchLineEdit::onTextChanged(const QString& text)
 {
-    if(!text.isEmpty() && !ui->tSearchCancel->isVisible())
+    if (!text.isEmpty() && !ui->tSearchCancel->isVisible())
     {
         toggleClearButton(true);
     }
-    else if(text.isEmpty() && ui->tSearchCancel->isVisible())
+    else if (text.isEmpty() && ui->tSearchCancel->isVisible())
     {
         toggleClearButton(false);
     }
@@ -213,15 +233,45 @@ void SearchLineEdit::onSearchButtonClicked()
 
 void SearchLineEdit::animationFinished()
 {
-   ui->tSearchCancel->setVisible(!ui->leSearchField->text().isEmpty());
-   connect(ui->leSearchField, &QLineEdit::textChanged, this, &SearchLineEdit::onTextChanged);
+    ui->tSearchCancel->setVisible(!ui->leSearchField->text().isEmpty());
+    connect(ui->leSearchField, &QLineEdit::textChanged, this, &SearchLineEdit::onTextChanged);
 }
 
 void SearchLineEdit::toggleClearButton(bool fadeIn)
 {
-    auto an = new QPropertyAnimation(ui->tSearchCancel->graphicsEffect(), "opacity");
+    auto an = runOpacityAnimation(ui->tSearchCancel, fadeIn);
+    connect(an, &QPropertyAnimation::finished, this, &SearchLineEdit::animationFinished);
+
+    // Meanwhile the close button appears/disappears
+    disconnect(ui->leSearchField, &QLineEdit::textChanged, this, &SearchLineEdit::onTextChanged);
+}
+
+QPropertyAnimation* SearchLineEdit::runWidthAnimation(QWidget* target, bool expand)
+{
+    auto an = new QPropertyAnimation(target->graphicsEffect(), "width");
+    an->setDuration(250);
+    if (expand)
+    {
+        an->setStartValue(0);
+        an->setEndValue(target->sizeHint().width());
+        an->setEasingCurve(QEasingCurve::Linear);
+        ui->tSearchCancel->setVisible(true);
+    }
+    else
+    {
+        an->setStartValue(target->width());
+        an->setEndValue(0);
+        an->setEasingCurve(QEasingCurve::Linear);
+    }
+    an->start(QAbstractAnimation::DeleteWhenStopped);
+    return an;
+}
+
+QPropertyAnimation* SearchLineEdit::runOpacityAnimation(QWidget* target, bool fadeIn)
+{
+    auto an = new QPropertyAnimation(target->graphicsEffect(), "opacity");
     an->setDuration(350);
-    if(fadeIn)
+    if (fadeIn)
     {
         an->setStartValue(0);
         an->setEndValue(1);
@@ -234,7 +284,6 @@ void SearchLineEdit::toggleClearButton(bool fadeIn)
         an->setEndValue(0);
         an->setEasingCurve(QEasingCurve::OutBack);
     }
-    connect(an, &QPropertyAnimation::finished, this, &SearchLineEdit::animationFinished);
     an->start(QAbstractAnimation::DeleteWhenStopped);
-    disconnect(ui->leSearchField, &QLineEdit::textChanged, this, &SearchLineEdit::onTextChanged);
+    return an;
 }

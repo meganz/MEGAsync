@@ -54,7 +54,12 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/AccountTypeWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/BannerWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/ApiImageLabel.h
+<<<<<<< HEAD
     ${CMAKE_CURRENT_LIST_DIR}/TabSelector.h
+=======
+    ${CMAKE_CURRENT_LIST_DIR}/SideBarTab.h
+    ${CMAKE_CURRENT_LIST_DIR}/SearchLineEdit.h
+>>>>>>> 84ea7cf39 (Some changes to make it better)
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NodeNameSetterDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NewFolderDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/RenameNodeDialog.h
@@ -69,7 +74,6 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelector.h
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorLoadingDelegate.h
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/SearchLineEdit.h
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorSpecializations.h
     ${CMAKE_CURRENT_LIST_DIR}/qml/QmlClipboard.h
     ${CMAKE_CURRENT_LIST_DIR}/qml/QmlDialog.h
@@ -203,7 +207,12 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/AccountTypeWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/BannerWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ApiImageLabel.cpp
+<<<<<<< HEAD
     ${CMAKE_CURRENT_LIST_DIR}/TabSelector.cpp
+=======
+    ${CMAKE_CURRENT_LIST_DIR}/SideBarTab.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/SearchLineEdit.cpp
+>>>>>>> 84ea7cf39 (Some changes to make it better)
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NewFolderDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/RenameNodeDialog.cpp
@@ -218,7 +227,6 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.cpp
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelector.cpp
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorLoadingDelegate.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/SearchLineEdit.cpp
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorSpecializations.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qml/QmlClipboard.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qml/QmlDialog.cpp
@@ -558,7 +566,7 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoteItemUi.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/BannerWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/TabSelector.ui
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/ui/SearchLineEdit.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/SearchLineEdit.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
