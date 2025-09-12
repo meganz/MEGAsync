@@ -1,5 +1,6 @@
 #include "ServiceUrls.h"
 
+#include "AppState.h"
 #include "mega/types.h"
 #include "megaapi.h"
 #include "Platform.h"
@@ -20,11 +21,12 @@ std::shared_ptr<ServiceUrls> ServiceUrls::instance()
 
 void ServiceUrls::reset(mega::MegaApi* api)
 {
+    mMegaListener.reset();
+    mMegaApi = api;
     mDataReady = false;
     mDataPending = false;
-    if (api)
+    if (mMegaApi)
     {
-        mMegaApi = api;
         mMegaListener = std::make_unique<mega::QTMegaListener>(mMegaApi, this);
         mMegaApi->addListener(mMegaListener.get());
         updateWithDomainFromSdk();
@@ -487,7 +489,6 @@ void ServiceUrls::baseUrlOverride(const QString& url)
 {
     const QUrl newUrl(url);
     reset();
-    mMegaListener.reset();
     mDataReady = true;
     mDataPending = false;
     mDomains[DOMAIN_OVERRIDE] = newUrl.host();
@@ -518,6 +519,12 @@ ServiceUrls::ServiceUrls():
         "ServiceUrls",
         QLatin1String("Warning ServiceUrls: not allowed to be instantiated"));
     QmlManager::instance()->setRootContextProperty(QLatin1String("serviceUrlsAccess"), this);
+
+    // Monitor App State
+    connect(AppState::instance().get(),
+            &AppState::appStateChanged,
+            this,
+            &ServiceUrls::onAppStateChanged);
 }
 
 void ServiceUrls::fetchData()
@@ -627,4 +634,14 @@ bool ServiceUrls::isLink(const QString& link, const QStringList& paths) const
         }
     }
     return false;
+}
+
+void ServiceUrls::onAppStateChanged(AppState::AppStates oldAppState,
+                                    AppState::AppStates newAppState)
+{
+    Q_UNUSED(oldAppState);
+    if (newAppState == AppState::FINISHED)
+    {
+        reset();
+    }
 }

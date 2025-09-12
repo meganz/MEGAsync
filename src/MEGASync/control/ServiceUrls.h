@@ -1,6 +1,7 @@
 #ifndef SERVICEURLS_H
 #define SERVICEURLS_H
 
+#include "AppState.h"
 #include "mega/bindings/qt/QTMegaListener.h"
 #include "megaapi.h"
 
@@ -121,6 +122,9 @@ private:
     ServiceDomain mWebsiteDomainIndex;
     bool mDataReady;
     bool mDataPending;
+
+private slots:
+    void onAppStateChanged(AppState::AppStates oldAppState, AppState::AppStates newAppState);
 };
 
 #endif // SERVICEURL_H
