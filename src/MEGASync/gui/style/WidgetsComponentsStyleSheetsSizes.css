@@ -352,18 +352,19 @@ border-style: solid;
 QPushButton[type="outline"][dimension=small]
 {
 height: 22px;
-
+width: 22px;
 }
 
 QPushButton[type="outline"][dimension=medium]
 {
 height: 32px;
-
+width: 32px;
 }
 
 QPushButton[type="outline"][dimension=large]
 {
-height: 42px;
+height: 44px;
+width: 44px;
 }
 
 /*

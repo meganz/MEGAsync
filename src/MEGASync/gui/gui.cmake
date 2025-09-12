@@ -100,6 +100,11 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions/SyncExclusions.h
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenParserWidgetManager.h
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/IconTokenizer.h
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/ButtonTokensByType.h
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/TokenizableButtons.h
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/TokenizableItems.h
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/IconLabel.h
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/TokenPropertyNames.h
     ${CMAKE_CURRENT_LIST_DIR}/backups/BackupCandidatesComponent.h
     ${CMAKE_CURRENT_LIST_DIR}/backups/BackupsController.h
     ${CMAKE_CURRENT_LIST_DIR}/backups/BackupCandidatesModel.h
@@ -241,6 +246,10 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions/SyncExclusions.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenParserWidgetManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/IconTokenizer.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/ButtonTokensByType.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/TokenizableButtons.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/TokenizableItems.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/IconLabel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/backups/BackupCandidatesComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/backups/BackupsController.cpp
     ${CMAKE_CURRENT_LIST_DIR}/backups/BackupCandidatesModel.cpp

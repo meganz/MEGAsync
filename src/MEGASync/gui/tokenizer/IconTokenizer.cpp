@@ -55,28 +55,6 @@ void IconTokenizer::process(QWidget* widget, const QString& mode, const QString&
 
         for (auto childWidget : widgets)
         {
-            auto button = dynamic_cast<QAbstractButton*>(childWidget);
-            if (button == nullptr)
-            {
-                qWarning() << __func__ << " Error dynamic cast failed for Widget* to QAbstractButton* : " << targetElementId;
-                return;
-            }
-
-            QIcon buttonIcons = button->icon();
-            if (buttonIcons.isNull())
-            {
-                qWarning() << __func__ << " Error button icon is null : " << targetElementId;
-                return;
-            }
-
-            auto pixmap =
-                buttonIcons.pixmap(button->iconSize(), iconMode.value(), iconState.value());
-            if (pixmap.isNull())
-            {
-                qWarning() << __func__ << " Error default pixmap for icon is null : " << targetElementId;
-                return;
-            }
-
             if (!colorTokens.contains(tokenId))
             {
                 qWarning() << __func__ << " Error token id not found : " << tokenId;
@@ -85,13 +63,7 @@ void IconTokenizer::process(QWidget* widget, const QString& mode, const QString&
 
             QColor toColor(colorTokens.value(tokenId));
 
-            auto tintedPixmap = changePixmapColor(pixmap, toColor);
-
-            if (tintedPixmap.has_value())
-            {
-                buttonIcons.addPixmap(tintedPixmap.value(), iconMode.value(), iconState.value());
-                button->setIcon(buttonIcons);
-            }
+            tokenizeButtonIcon(childWidget, iconMode.value(), iconState.value(), toColor);
         }
     }
     else if (targetElementProperty == CustomId)
@@ -145,6 +117,43 @@ void IconTokenizer::process(QWidget* widget, const QString& mode, const QString&
                 childWidget->setProperty("icon", icons);
             }
         }
+    }
+}
+
+void IconTokenizer::tokenizeButtonIcon(QWidget* widget,
+                                       const QIcon::Mode& mode,
+                                       const QIcon::State& state,
+                                       const QColor& toColor)
+{
+    auto button = dynamic_cast<QAbstractButton*>(widget);
+    if (button == nullptr)
+    {
+        qWarning() << __func__ << " Error dynamic cast failed for Widget* to QAbstractButton* : "
+                   << widget->objectName();
+        return;
+    }
+
+    QIcon buttonIcons = button->icon();
+    if (buttonIcons.isNull())
+    {
+        qWarning() << __func__ << " Error button icon is null : " << widget->objectName();
+        return;
+    }
+
+    auto pixmap = buttonIcons.pixmap(button->iconSize(), mode, state);
+    if (pixmap.isNull())
+    {
+        qWarning() << __func__
+                   << " Error default pixmap for icon is null : " << widget->objectName();
+        return;
+    }
+
+    auto tintedPixmap = changePixmapColor(pixmap, toColor);
+
+    if (tintedPixmap.has_value())
+    {
+        buttonIcons.addPixmap(tintedPixmap.value(), mode, state);
+        button->setIcon(buttonIcons);
     }
 }
 
