@@ -30,7 +30,6 @@ SearchLineEdit::SearchLineEdit(QWidget* parent):
     ui->customWidget->setGraphicsEffect(new QGraphicsOpacityEffect());
 
     ui->leSearchField->installEventFilter(this);
-    parentWidget()->installEventFilter(this);
 
 #ifdef Q_OS_MACOS
     ui->leSearchField->setAttribute(Qt::WA_MacShowFocusRect, 0);
@@ -52,12 +51,14 @@ SearchLineEdit::~SearchLineEdit()
 
 void SearchLineEdit::setText(const QString& text)
 {
+    ui->leSearchField->setVisible(!text.isEmpty());
     ui->leSearchField->setText(text);
 }
 
-void SearchLineEdit::showTextEntry(bool state)
+void SearchLineEdit::showTextEntry(bool state, bool force)
 {
-    if ((state && ui->leSearchField->isVisible()) || (!state && !ui->leSearchField->isVisible()))
+    if (!force &&
+        ((state && ui->leSearchField->isVisible()) || (!state && !ui->leSearchField->isVisible())))
     {
         return;
     }
@@ -191,10 +192,10 @@ bool SearchLineEdit::eventFilter(QObject* obj, QEvent* evnt)
             }
         }
     }
-    else if (obj == ui->leSearchField && ui->leSearchField->isVisible() &&
-             evnt->type() == QEvent::FocusOut && ui->leSearchField->text().isEmpty())
+    else if (obj == ui->leSearchField && evnt->type() == QEvent::FocusOut &&
+             ui->leSearchField->text().isEmpty())
     {
-        showTextEntry(false);
+        showTextEntry(false, true);
     }
 
     return QFrame::eventFilter(obj, evnt);

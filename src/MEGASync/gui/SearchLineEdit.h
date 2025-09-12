@@ -24,7 +24,7 @@ public:
     ~SearchLineEdit();
     void setIcon(const QIcon& icon);
     void setText(const QString& text);
-    void showTextEntry(bool state);
+    void showTextEntry(bool state, bool force = false);
 
     void addCustomWidget(QWidget* widget);
 
