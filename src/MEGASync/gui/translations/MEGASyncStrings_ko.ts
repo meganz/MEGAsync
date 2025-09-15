@@ -3806,7 +3806,7 @@ https://mega.co.nz/#sync</source>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
         <translation>당신의 계정이 MEGA의 이용 약관 위반으로 삭제되었습니다.
-저장된 데이터에 대한 접근 또는 새 MEGA 계정을 등록하는 것이 금지됩니다.</translation>
+저장된 데이터에 대한 접근 또는 새 MEGA 계정에 가입하는 것이 금지됩니다.</translation>
     </message>
     <message>
         <source>Your local storage is full</source>
@@ -5979,7 +5979,8 @@ Enter a different name</source>
         <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
         <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- 이 업데이트는 전반적인 성능 향상을 위한 수많은 핵심 향상과 수정이 포함되어 있습니다.
+</translation>
     </message>
 </context>
 <context>
@@ -6920,7 +6921,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>MEGA-RECOVERYKEY</source>
         <translatorcomment>File name of file exported containing the recovery key.</translatorcomment>
-        <translation>MEGA-복구키</translation>
+        <translation>MEGA-RECOVERYKEY</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -7040,7 +7041,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
-        <translation>SyncDebris (MEGA)</translation>
+        <translation>SyncDebris (MEGA 내)</translation>
     </message>
     <message>
         <source>Synchronizations and backups will stop working.</source>

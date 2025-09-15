@@ -3821,12 +3821,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Alert</source>
         <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>警报</translation>
     </message>
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]检测到错误[/B][BR]加载应用程序资源时出现错误，该应用程序需要关闭。请从 [A]mega.io/desktop[/A] 重新安装程序来解决这个问题。如果重新安装后问题仍然存在，请联系客服部门寻求进一步帮助。</translation>
     </message>
 </context>
 <context>
@@ -5977,7 +5977,8 @@ Enter a different name</source>
         <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
         <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- 此更新包括多项核心改进和修复，以提升整体性能。
+</translation>
     </message>
 </context>
 <context>
@@ -6532,22 +6533,22 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>从 MEGA 中删除文件夹</translation>
     </message>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>该文件夹将从 MEGA 中删除，但不会从您的设备中删除。此操作无法撤消。</translation>
     </message>
     <message>
         <source>Move folder</source>
         <translatorcomment>Radio button option label</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>将文件夹移至云盘</translation>
     </message>
     <message>
         <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
         <translatorcomment>Radio button description</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>将此文件夹移至您的云盘即可完全访问您的数据。它将不再被备份。</translation>
     </message>
     <message>
         <source>Move to:</source>
@@ -6567,7 +6568,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>To stop backing up this folder, you need to either move it or delete it.</source>
         <translatorcomment>Backup removal title description</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>要停止备份此文件夹，您需要将其移动或删除</translation>
     </message>
 </context>
 <context>

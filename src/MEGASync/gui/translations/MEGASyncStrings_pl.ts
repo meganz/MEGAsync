@@ -5980,7 +5980,8 @@ Wprowadź inną nazwę.</translation>
         <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
         <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ta aktualizacja zawiera liczne ulepszenia rdzenia i poprawki, które mają na celu zwiększenie ogólnej wydajności.
+</translation>
     </message>
 </context>
 <context>
