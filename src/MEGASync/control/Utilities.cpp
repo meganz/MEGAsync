@@ -1445,6 +1445,14 @@ QPair<QString, QString> Utilities::getFilenameBasenameAndSuffix(const QString& f
         result = qMakePair<QString, QString>(fileName.left(list.last().first - 1), fileName.mid(list.last().first - 1));
 #endif
     }
+    else
+    {
+        QFileInfo fi(fileName);
+        QString suffix(fi.completeSuffix());
+        result = qMakePair<QString, QString>(
+            fi.baseName(),
+            !suffix.isEmpty() ? suffix.prepend(QChar::fromLatin1('.')) : QString());
+    }
 
     return result;
 }
