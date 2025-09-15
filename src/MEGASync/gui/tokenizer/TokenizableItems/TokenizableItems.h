@@ -25,10 +25,20 @@ public:
         return mNormalOff;
     }
 
+    void setNormalOff(const QString& newNormalOff)
+    {
+        mNormalOff = newNormalOff;
+    }
+
     // normal_on
     QString getNormalOnToken() const
     {
         return mNormalOn;
+    }
+
+    void setNormalOn(const QString& newNormalOn)
+    {
+        mNormalOn = newNormalOn;
     }
 
     // disabled_off
@@ -37,10 +47,20 @@ public:
         return mDisabledOff;
     }
 
+    void setDisabledOff(const QString& newDisabledOff)
+    {
+        mDisabledOff = newDisabledOff;
+    }
+
     // disabled_on
     QString getDisabledOnToken() const
     {
         return mDisabledOn;
+    }
+
+    void setDisabledOn(const QString& newDisabledOn)
+    {
+        mDisabledOn = newDisabledOn;
     }
 
 private:

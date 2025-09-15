@@ -24,10 +24,20 @@ public:
         return mHoverOff;
     }
 
+    void setHoverOff(const QString& newHoverOff)
+    {
+        mHoverOff = newHoverOff;
+    }
+
     // hover_on
     QString getHoverOnToken() const
     {
         return mHoverOn;
+    }
+
+    void setHoverOn(const QString& newHoverOn)
+    {
+        mHoverOn = newHoverOn;
     }
 
     // pressed_off
@@ -36,10 +46,20 @@ public:
         return mPressedOff;
     }
 
+    void setPressedOff(const QString& newPressedOff)
+    {
+        mHoverOff = newPressedOff;
+    }
+
     // pressed_on
     QString getPressedOnToken() const
     {
         return mPressedOn;
+    }
+
+    void setPressedOn(const QString& newPressedOn)
+    {
+        mPressedOn = newPressedOn;
     }
 
 private:

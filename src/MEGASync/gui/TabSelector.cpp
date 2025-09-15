@@ -1,5 +1,6 @@
 #include "TabSelector.h"
 
+#include "TokenizableItems/TokenPropertySetter.h"
 #include "ui_TabSelector.h"
 #include "Utilities.h"
 
@@ -21,21 +22,20 @@ TabSelector::TabSelector(QWidget* parent):
 {
     ui->setupUi(this);
 
+    setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+
     // By default the counter and the close button are hidden
     ui->lCounter->hide();
     ui->lClose->hide();
 
     connect(ui->lClose,
-            &QToolButton::clicked,
+            &QPushButton::clicked,
             this,
             [this]()
             {
                 hide();
                 emit hidden();
             });
-
-    ui->lIcon->setAttribute(Qt::WA_TransparentForMouseEvents);
-    ui->lCounter->setAttribute(Qt::WA_TransparentForMouseEvents);
 
     setAttribute(Qt::WA_StyledBackground, true);
 
@@ -131,6 +131,40 @@ bool TabSelector::event(QEvent* event)
     }
 
     return QWidget::event(event);
+}
+
+QList<TabSelector*> TabSelector::getTabSelectorByParent(QWidget* parent)
+{
+    return parent->findChildren<TabSelector*>();
+}
+
+void TabSelector::setCloseButtonTokens(
+    const std::shared_ptr<TokenPropertySetter>& newCloseButtonTokens)
+{
+    if (newCloseButtonTokens)
+    {
+        mCloseButtonTokens = newCloseButtonTokens;
+        mCloseButtonTokens->applyTokens(ui->lClose);
+    }
+}
+
+void TabSelector::setIconTokens(const std::shared_ptr<TokenPropertySetter>& newIconTokens)
+{
+    mIconTokens = newIconTokens;
+    mIconTokens->applyTokens(ui->lIcon);
+}
+
+void TabSelector::applyTokens(QWidget* parent,
+                              std::shared_ptr<TokenPropertySetter> iconTokensSetter,
+                              std::shared_ptr<TokenPropertySetter> closeTokensSetter)
+{
+    auto tabs = getTabSelectorByParent(parent);
+
+    for (auto& tab: tabs)
+    {
+        tab->setIconTokens(iconTokensSetter);
+        tab->setCloseButtonTokens(closeTokensSetter);
+    }
 }
 
 void TabSelector::toggleOffSiblings()

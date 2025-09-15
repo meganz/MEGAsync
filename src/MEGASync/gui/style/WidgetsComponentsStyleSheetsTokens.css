@@ -679,22 +679,22 @@ background-color: #fff3f4f4; /*colorToken.surface-2*/
     TabSelector
 */
 
-TabSelector[type="sidebar"][selected=true]
+TabSelector.sidebar[selected=true]
 {
 background-color: #FFFFFF; /*colorToken.page-background*/
 }
 
-TabSelector[type="sidebar"][selected=false]
+TabSelector.sidebar[selected=false]
 {
 background-color:  transparent;
 }
 
-TabSelector[type="chip"][selected=true]
+TabSelector.chip[selected=true]
 {
 background-color: #F234334D; /*colorToken.brand-container-default*/
 }
 
-TabSelector[type="chip"][selected=false]
+TabSelector.chip[selected=false]
 {
 background-color: #6163661A; /*colorToken.button-secondary*/
 }

@@ -10,6 +10,8 @@ namespace Ui
 class TabSelector;
 }
 
+class TokenPropertySetter;
+
 class TabSelector: public QWidget
 {
     Q_OBJECT
@@ -38,6 +40,14 @@ public:
     void setSelected(bool state);
     void toggleOffSiblings();
 
+    void setIconTokens(const std::shared_ptr<TokenPropertySetter>& newIconTokens);
+    void setCloseButtonTokens(const std::shared_ptr<TokenPropertySetter>& newCloseButtonTokens);
+
+    // Convenient method to set tokens
+    static void applyTokens(QWidget* parent,
+                            std::shared_ptr<TokenPropertySetter> iconTokensSetter,
+                            std::shared_ptr<TokenPropertySetter> closeTokensSetter = nullptr);
+
 signals:
     void clicked();
     void hidden();
@@ -46,8 +56,12 @@ protected:
     bool event(QEvent* event) override;
 
 private:
+    static QList<TabSelector*> getTabSelectorByParent(QWidget* parent);
+
     Ui::TabSelector* ui;
     QPointer<QWidget> mTabSelectorGroupParent;
+    std::shared_ptr<TokenPropertySetter> mIconTokens;
+    std::shared_ptr<TokenPropertySetter> mCloseButtonTokens;
 };
 
 #endif // TABSELECTOR_H
