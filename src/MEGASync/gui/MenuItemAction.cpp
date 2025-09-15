@@ -31,6 +31,7 @@ MenuItemAction::MenuItemAction(const QString& title, const QString& iconName,
         QImageReader reader(iconName);
         if(reader.canRead())
         {
+            iconSize = reader.size().boundedTo(iconSize);
             icon = QIcon(iconName);
         }
     }
