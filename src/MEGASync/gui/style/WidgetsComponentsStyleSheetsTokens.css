@@ -250,12 +250,12 @@ color: #ff797c80; /*colorToken.text-disabled*/
 QProgressBar
 {
 /* TODO: surface-2 should be replaced by --color-indicator-background */
-background-color: #fff3f4f4; /*colorToken.surface-2*/
+background-color: #E4E4E5; /*colorToken.surface-3*/
 }
 
 QProgressBar::chunk
 {
-background-color: #ff09bf5b; /*colorToken.indicator-green*/
+background-color: #09BF5B; /*colorToken.indicator-green*/
 }
 
 /*

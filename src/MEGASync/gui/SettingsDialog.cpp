@@ -416,7 +416,8 @@ void SettingsDialog::loadSettings()
     mUi->lEmail->setText(mPreferences->email());
     auto fullName(
         (mPreferences->firstName() + QStringLiteral(" ") + mPreferences->lastName()).trimmed());
-    mUi->lName->setText(fullName);
+    mUi->lName->setText(mUi->lName->fontMetrics().elidedText(fullName,Qt::ElideMiddle,mUi->lName->maximumWidth()));
+
 
     // Update name in case it changes
     auto FullNameRequest = UserAttributes::FullName::requestFullName();
@@ -425,7 +426,7 @@ void SettingsDialog::loadSettings()
             this,
             [this](const QString& fullName)
             {
-                mUi->lName->setText(fullName);
+                mUi->lName->setText(mUi->lName->fontMetrics().elidedText(fullName,Qt::ElideMiddle,mUi->lName->maximumWidth()));
             });
 
     // Avatar

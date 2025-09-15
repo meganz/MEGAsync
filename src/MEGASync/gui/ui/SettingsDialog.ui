@@ -83,6 +83,12 @@ image: url(:/images/themed/light/arrow-down-circle.svg); /*replaceThemeToken*/
 image: url(:/images/themed/light/arrow-up-circle.svg); /*replaceThemeToken*/
 }
 
+
+#SettingsDialog #pStorageQuota, #SettingsDialog #pTransferQuota
+{
+background-color:  #E4E4E5; /*colorToken.surface-3*/
+}
+
 #SettingsDialog[storageState=&quot;ok&quot;] #pStorageQuota::chunk
 {
 background-color: #ff09bf5b; /*colorToken.indicator-green*/
@@ -1344,6 +1350,12 @@ margin-bottom: 3px;
                <layout class="QHBoxLayout" name="horizontalLayout_3">
                 <item>
                  <widget class="QLabel" name="lName">
+                  <property name="maximumSize">
+                   <size>
+                    <width>270</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
                   <property name="textFormat">
                    <enum>Qt::PlainText</enum>
                   </property>
