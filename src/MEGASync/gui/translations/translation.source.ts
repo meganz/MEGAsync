@@ -7880,11 +7880,6 @@ Refresh the list.</translation>
 <context>
     <name>StreamingFromMegaDialog</name>
     <message>
-        <source>Are you sure that you want to stop the streaming?</source>
-        <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation>Are you sure that you want to stop the streaming?</translation>
-    </message>
-    <message>
         <source>Choose application</source>
         <translatorcomment>Text of the button to open a streaming link with a custom application</translatorcomment>
         <translation>Choose application</translation>

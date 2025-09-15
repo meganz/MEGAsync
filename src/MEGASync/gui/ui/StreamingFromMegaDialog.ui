@@ -19,7 +19,7 @@
   <property name="minimumSize">
    <size>
     <width>460</width>
-    <height>0</height>
+    <height>368</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -32,31 +32,12 @@
    <string>Stream from MEGA</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#lFileType, #lState, #toolButtonError, #bCopyLink
-{
-border: none;
-}
-
-#StreamingFromMegaDialog
+   <string notr="true">#StreamingFromMegaDialog
 {
 background-color: #FFFFFF;  /*colorToken.page-background*/
 }
 
-#lStreamResourceDesc, #lFileInfoDesc, #lOpenWithDesc
-{
-  font-family: &quot;Inter&quot;;
-  font-size: 12px;
-  color: #303233; /*colorToken.text-primary*/
-}
-
-#lFileSize, #labelError
-{
-  font-family: &quot;Lato&quot;;
-  font-size: 12px;
-  color: #666666;
-}
-
-#lFileName
+#lFileName, #lStreamResourceDesc, #lFileInfoDesc, #lOpenWithDesc
 {
   font-family: &quot;Inter&quot;;
   font-size: 12px;
@@ -83,6 +64,8 @@ border-radius: 8px;
 }
 
 #labelError {
+font-family: &quot;Inter&quot;;
+font-size: 12px;
 color: #E31B57; /*colorToken.text-error*/
 }
 </string>
@@ -104,10 +87,16 @@ color: #E31B57; /*colorToken.text-error*/
     <number>24</number>
    </property>
    <property name="bottomMargin">
-    <number>11</number>
+    <number>13</number>
    </property>
    <item>
     <widget class="QWidget" name="wStreamResource" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -255,7 +244,7 @@ color: #E31B57; /*colorToken.text-error*/
             <string notr="true">small</string>
            </property>
            <property name="type" stdset="0">
-            <string notr="true">secondary</string>
+            <string notr="true">outline</string>
            </property>
           </widget>
          </item>
@@ -281,13 +270,19 @@ color: #E31B57; /*colorToken.text-error*/
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>15</number>
+       <number>0</number>
       </property>
       <item>
        <widget class="QWidget" name="wStatus" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <property name="spacing">
-          <number>0</number>
+          <number>-1</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -340,13 +335,13 @@ color: #E31B57; /*colorToken.text-error*/
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>60</height>
+             <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
              <width>16777215</width>
-             <height>60</height>
+             <height>16777215</height>
             </size>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -403,17 +398,17 @@ color: #E31B57; /*colorToken.text-error*/
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QPushButton" name="lFileType">
+                 <widget class="IconLabel" name="lFileType">
                   <property name="minimumSize">
                    <size>
-                    <width>48</width>
-                    <height>48</height>
+                    <width>24</width>
+                    <height>24</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>48</width>
-                    <height>48</height>
+                    <width>24</width>
+                    <height>24</height>
                    </size>
                   </property>
                   <property name="styleSheet">
@@ -424,8 +419,8 @@ color: #E31B57; /*colorToken.text-error*/
                   </property>
                   <property name="iconSize">
                    <size>
-                    <width>48</width>
-                    <height>48</height>
+                    <width>24</width>
+                    <height>24</height>
                    </size>
                   </property>
                  </widget>
@@ -498,7 +493,7 @@ color: #E31B57; /*colorToken.text-error*/
                        </widget>
                       </item>
                       <item>
-                       <widget class="QPushButton" name="lState">
+                       <widget class="QToolButton" name="lState">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                           <horstretch>0</horstretch>
@@ -522,6 +517,9 @@ color: #E31B57; /*colorToken.text-error*/
                         </property>
                         <property name="text">
                          <string/>
+                        </property>
+                        <property name="class" stdset="0">
+                         <string notr="true">icon-label</string>
                         </property>
                        </widget>
                       </item>
@@ -825,17 +823,17 @@ color: #E31B57; /*colorToken.text-error*/
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="bCopyLink">
+             <widget class="IconOnlyButton" name="bCopyLink">
               <property name="minimumSize">
                <size>
-                <width>26</width>
-                <height>26</height>
+                <width>0</width>
+                <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>26</width>
-                <height>26</height>
+                <width>16777215</width>
+                <height>16777215</height>
                </size>
               </property>
               <property name="cursor">
@@ -854,6 +852,9 @@ color: #E31B57; /*colorToken.text-error*/
               <property name="type" stdset="0">
                <string notr="true">ghost</string>
               </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">small</string>
+              </property>
              </widget>
             </item>
            </layout>
@@ -864,6 +865,12 @@ color: #E31B57; /*colorToken.text-error*/
       </item>
       <item>
        <widget class="QWidget" name="wOpenWith" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -1146,6 +1153,18 @@ color: #E31B57; /*colorToken.text-error*/
   <zorder>wContainer</zorder>
   <zorder>wErrorOQ</zorder>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>IconOnlyButton</class>
+   <extends>QPushButton</extends>
+   <header>TokenizableItems/TokenizableButtons.h</header>
+  </customwidget>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>TokenizableItems/IconLabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../Resources_common.qrc"/>
  </resources>
