@@ -110,7 +110,7 @@ public slots:
 signals:
     void okBtnClicked();
     void cancelBtnClicked();
-    void onCustomBottomButtonClicked(uint id);
+    void onCustomButtonClicked(uint id);
     void viewReady();
 
 protected:
@@ -192,10 +192,6 @@ private slots:
     void onItemsMoved();
     void onNodesAdded(const QList<QPointer<NodeSelectorModelItem>>& itemsAdded);
 
-    // Action buttons
-    void onOpenLinksClicked();
-    void onSettingsClicked();
-
 private:
     bool mManuallyResizedColumn;
 
@@ -208,7 +204,7 @@ private:
     QModelIndex getIndexFromHandle(const mega::MegaHandle& handle);
     void checkButtonsVisibility();
     void checkOkCancelButtonsVisibility();
-    void addCustomBottomButtons(NodeSelectorTreeViewWidget* wdg);
+    void addCustomButtons(NodeSelectorTreeViewWidget* wdg);
     virtual QString getRootText() = 0;
     virtual std::unique_ptr<NodeSelectorProxyModel> createProxyModel();
     virtual std::unique_ptr<NodeSelectorModel> createModel() = 0;
@@ -326,17 +322,26 @@ public:
         Q_UNUSED(wdg)
     }
 
-    virtual QMap<uint, QPushButton*> addCustomBottomButtons(NodeSelectorTreeViewWidget*)
+    virtual QMap<uint, QPushButton*> addCustomButtons(NodeSelectorTreeViewWidget*)
     {
         return QMap<uint, QPushButton*>();
     }
 
-    virtual void updateCustomBottomButtonsText(NodeSelectorTreeViewWidget*) {}
+    virtual void updateCustomButtonsText(NodeSelectorTreeViewWidget*) {}
 
     virtual NodeSelectorModelItemSearch::Types allowedTypes() = 0;
 
+    virtual bool footerVisible() const
+    {
+        return true;
+    }
+
 protected:
     bool cloudDriveIsCurrentRootIndex(NodeSelectorTreeViewWidget* wdg);
+
+    QPushButton* createCustomButton(const QString& type,
+                                    const QString& text,
+                                    const QString& iconFile);
 };
 
 class DownloadType: public SelectType
@@ -396,16 +401,17 @@ public:
     void init(NodeSelectorTreeViewWidget* wdg) override;
     void selectionHasChanged(NodeSelectorTreeViewWidget* wdg) override;
     void okCancelButtonsVisibility(NodeSelectorTreeViewWidget* wdg) override;
-    QMap<uint, QPushButton*> addCustomBottomButtons(NodeSelectorTreeViewWidget* wdg) override;
-    void updateCustomBottomButtonsText(NodeSelectorTreeViewWidget* wdg) override;
+    QMap<uint, QPushButton*> addCustomButtons(NodeSelectorTreeViewWidget* wdg) override;
+    void updateCustomButtonsText(NodeSelectorTreeViewWidget* wdg) override;
 
     bool okButtonEnabled(NodeSelectorTreeViewWidget*, const QModelIndexList& selected) override;
     NodeSelectorModelItemSearch::Types allowedTypes() override;
+    bool footerVisible() const override;
 
 private:
-    QString getCustomBottomButtonText(uint buttonId) const;
+    QString getCustomButtonText(uint buttonId) const;
 
-    QMap<QWidget*, QMap<uint, QPushButton*>> mCustomBottomButtons;
+    QMap<QWidget*, QMap<uint, QPushButton*>> mCustomButtons;
 };
 
 class MoveBackupType: public UploadType

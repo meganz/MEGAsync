@@ -12,6 +12,7 @@
 #include "ViewLoadingScene.h"
 
 #include <QApplication>
+#include <QFont>
 #include <QToolTip>
 
 const char* INDEX_PROPERTY = "INDEX";
@@ -788,15 +789,9 @@ QVariant NodeSelectorModel::data(const QModelIndex& index, int role) const
                 {
                     return QSize(0, ROW_HEIGHT);
                 }
-                case Qt::TextAlignmentRole:
+                case Qt::SizeHintRole:
                 {
-                    if (index.column() == STATUS || index.column() == USER ||
-                        index.column() == ACCESS)
-                    {
-                        return QVariant::fromValue<Qt::Alignment>(Qt::AlignHCenter |
-                                                                  Qt::AlignCenter);
-                    }
-                    break;
+                    return QSize(0, ROW_HEIGHT);
                 }
                 case Qt::ToolTipRole:
                 {
@@ -1753,7 +1748,6 @@ QVariant NodeSelectorModel::headerData(int section, Qt::Orientation orientation,
         {
             switch (section)
             {
-                case STATUS:
                 case USER:
                 {
                     return QLatin1String();
@@ -1769,6 +1763,28 @@ QVariant NodeSelectorModel::headerData(int section, Qt::Orientation orientation,
                 case NODE:
                 {
                     return tr("Name");
+                }
+            }
+        }
+        else if (role == Qt::ToolTipRole)
+        {
+            switch (section)
+            {
+                case USER:
+                {
+                    return tr("Sort by owner name");
+                }
+                case ACCESS:
+                {
+                    return tr("Sort by access");
+                }
+                case DATE:
+                {
+                    return tr("Sort by date");
+                }
+                case NODE:
+                {
+                    return tr("Sort by name");
                 }
             }
         }
@@ -1803,10 +1819,6 @@ QVariant NodeSelectorModel::headerData(int section, Qt::Orientation orientation,
             if (section == USER)
             {
                 return QIcon(QLatin1String("://images/node_selector/icon_small_user.png"));
-            }
-            else if (section == STATUS)
-            {
-                return QIcon(QLatin1String("://images/node_selector/icon-small-MEGA.png"));
             }
         }
     }
@@ -2440,10 +2452,6 @@ QVariant NodeSelectorModel::getIcon(const QModelIndex& index, NodeSelectorModelI
         case COLUMN::USER:
         {
             return QVariant::fromValue<QIcon>(item->getOwnerIcon());
-        }
-        case COLUMN::STATUS:
-        {
-            return QVariant::fromValue<QIcon>(item->getStatusIcons());
         }
         default:
             break;

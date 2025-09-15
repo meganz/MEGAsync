@@ -224,7 +224,6 @@ public:
     enum COLUMN
     {
         NODE = 0,
-        STATUS,
         USER,
         ACCESS,
         DATE,

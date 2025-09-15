@@ -332,7 +332,7 @@ void CloudDriveNodeSelector::sendStats()
     }
 }
 
-void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint id)
+void CloudDriveNodeSelector::onCustomButtonClicked(uint id)
 {
     if (id == CloudDriveType::Upload)
     {
@@ -531,7 +531,7 @@ void CloudDriveNodeSelector::performMergeAction(
 
 void CloudDriveNodeSelector::onOkButtonClicked()
 {
-    onCustomBottomButtonClicked(CloudDriveType::Download);
+    onCustomButtonClicked(CloudDriveType::Download);
 }
 
 void CloudDriveNodeSelector::checkMovingItems(const QList<mega::MegaHandle>& handles,

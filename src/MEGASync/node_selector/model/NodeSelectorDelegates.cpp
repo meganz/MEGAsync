@@ -2,6 +2,7 @@
 
 #include "NodeSelectorModel.h"
 #include "NodeSelectorTreeView.h"
+#include "TokenParserWidgetManager.h"
 
 #include <QAbstractItemView>
 #include <QApplication>
@@ -15,6 +16,78 @@ NodeSelectorDelegate::NodeSelectorDelegate(QObject* parent):
     QStyledItemDelegate(parent),
     mMainDevice(nullptr)
 {}
+
+void NodeSelectorDelegate::paint(QPainter* painter,
+                                 const QStyleOptionViewItem& option,
+                                 const QModelIndex& index) const
+{
+    QStyleOptionViewItem auxOpt(option);
+    auxOpt.state.setFlag(QStyle::State_Selected, false);
+
+    if (!index.data(toInt(NodeSelectorModelRoles::EXTRA_ROW_ROLE)).toBool())
+    {
+        auto pen(painter->pen());
+        pen.setWidth(1);
+
+        // Selector
+        if (option.state & QStyle::State_Selected)
+        {
+            if (index.column() == 0)
+            {
+                painter->save();
+                painter->setPen(pen);
+                painter->setRenderHint(QPainter::RenderHint::Antialiasing, true);
+
+                auto view = dynamic_cast<NodeSelectorTreeView*>(parent());
+                if (view)
+                {
+                    painter->fillRect(QRect(0,
+                                            option.rect.y(),
+                                            view->viewport()->width(),
+                                            option.rect.y() + option.rect.height()),
+                                      option.palette.color(QPalette::Normal, QPalette::Window));
+
+                    int leftY = option.rect.y() + 3;
+                    int leftX = 0;
+                    int rightX = view->viewport()->width() - 10;
+                    int rightY = leftY + 40;
+
+                    QRect rect(QPoint(leftX, leftY), QPoint(rightX, rightY));
+
+                    QPainterPath path;
+                    path.addRoundedRect(rect, 4, 4);
+                    painter->fillPath(
+                        path,
+                        TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-2")));
+
+                    painter->restore();
+                }
+            }
+        }
+
+        // Separator
+        {
+            painter->save();
+            painter->setPen(pen);
+            painter->setBrush(
+                TokenParserWidgetManager::instance()->getColor(QLatin1String("border-strong")));
+
+            int y = option.rect.bottomLeft().y();
+            int leftX = index.column() == 0 ? leftX = 0 : leftX = option.rect.x();
+            int rightX = option.rect.x();
+            rightX += index.column() == index.model()->columnCount() - 1 ?
+                          (option.rect.width() - 10) :
+                          option.rect.width();
+
+            auto line = QLine(QPoint(leftX, y), QPoint(rightX, y));
+
+            painter->drawLine(line);
+            painter->restore();
+        }
+    }
+
+    QStyledItemDelegate::paint(painter, auxOpt, index);
+}
 
 void NodeSelectorDelegate::setPaintDevice(QPainter* painter, const QModelIndex& index) const
 {
@@ -177,6 +250,13 @@ bool NodeRowDelegate::helpEvent(QHelpEvent* event,
     }
 
     return QStyledItemDelegate::helpEvent(event, view, option, index);
+}
+
+QSize NodeRowDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+    auto size = NodeSelectorDelegate::sizeHint(option, index);
+    size.setHeight(49); // 48 + 1 border pixel
+    return size;
 }
 
 void NodeRowDelegate::initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index) const

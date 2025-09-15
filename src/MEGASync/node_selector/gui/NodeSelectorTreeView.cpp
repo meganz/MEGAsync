@@ -970,7 +970,7 @@ void NodeSelectorTreeViewHeaderView::paintSection(QPainter* painter,
     painter->save();
     QHeaderView::paintSection(painter, rect, logicalIndex);
     painter->restore();
-    if (logicalIndex == NodeSelectorModel::USER || logicalIndex == NodeSelectorModel::STATUS)
+    if (logicalIndex == NodeSelectorModel::USER)
     {
         QRect iconRect(QPoint(rect.topLeft()), QSize(18, 18));
         iconRect.moveCenter(rect.center());

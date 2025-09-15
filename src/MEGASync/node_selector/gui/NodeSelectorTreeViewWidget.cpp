@@ -55,14 +55,6 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
             &QCheckBox::stateChanged,
             this,
             &NodeSelectorTreeViewWidget::oncbAlwaysUploadToLocationChanged);
-    connect(ui->bOpenLinks,
-            &QPushButton::clicked,
-            this,
-            &NodeSelectorTreeViewWidget::onOpenLinksClicked);
-    connect(ui->bSettings,
-            &QPushButton::clicked,
-            this,
-            &NodeSelectorTreeViewWidget::onSettingsClicked);
 
     auto sizePolicy = ui->bNewFolder->sizePolicy();
     sizePolicy.setRetainSizeWhenHidden(true);
@@ -70,7 +62,7 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
 
     checkBackForwardButtons();
     checkOkCancelButtonsVisibility();
-    addCustomBottomButtons(this);
+    addCustomButtons(this);
 
     connect(&ui->tMegaFolders->loadingView(),
             &ViewLoadingSceneBase::sceneVisibilityChange,
@@ -88,6 +80,8 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
     ui->backupsSearch->setProperty("title", MegaNodeNames::getBackupsName());
     ui->incomingSharesSearch->setProperty("title", MegaNodeNames::getIncomingSharesName());
     ui->rubbishSearch->setProperty("title", MegaNodeNames::getRubbishName());
+
+    ui->footer->setVisible(mSelectType->footerVisible());
 }
 
 NodeSelectorTreeViewWidget::~NodeSelectorTreeViewWidget()
@@ -107,7 +101,7 @@ bool NodeSelectorTreeViewWidget::event(QEvent* event)
 
         if (mSelectType)
         {
-            mSelectType->updateCustomBottomButtonsText(this);
+            mSelectType->updateCustomButtonsText(this);
         }
     }
     return QWidget::event(event);
@@ -390,8 +384,6 @@ void NodeSelectorTreeViewWidget::onExpandReady()
         ui->tMegaFolders->setExpandsOnDoubleClick(false);
         ui->tMegaFolders->setHeader(new NodeSelectorTreeViewHeaderView(Qt::Horizontal));
         ui->tMegaFolders->setItemDelegate(new NodeRowDelegate(ui->tMegaFolders));
-        ui->tMegaFolders->setItemDelegateForColumn(NodeSelectorModel::STATUS,
-                                                   new IconDelegate(ui->tMegaFolders));
         ui->tMegaFolders->setItemDelegateForColumn(NodeSelectorModel::USER,
                                                    new IconDelegate(ui->tMegaFolders));
         ui->tMegaFolders->setItemDelegateForColumn(NodeSelectorModel::DATE,
@@ -405,9 +397,6 @@ void NodeSelectorTreeViewWidget::onExpandReady()
 
         ui->tMegaFolders->header()->setVisible(true);
         ui->tMegaFolders->header()->setFixedHeight(NodeSelectorModel::ROW_HEIGHT);
-        ui->tMegaFolders->header()->moveSection(NodeSelectorModel::STATUS, NodeSelectorModel::NODE);
-        ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::STATUS,
-                                         NodeSelectorModel::ROW_HEIGHT * 2);
         ui->tMegaFolders->header()->setProperty("HeaderIconCenter", true);
         showEvent(nullptr);
 
@@ -457,6 +446,8 @@ void NodeSelectorTreeViewWidget::onExpandReady()
         makeCustomConnections();
 
         setRootIndex(QModelIndex());
+
+        setStyleSheet(styleSheet());
     }
 }
 
@@ -640,21 +631,21 @@ void NodeSelectorTreeViewWidget::checkOkCancelButtonsVisibility()
     mSelectType->okCancelButtonsVisibility(this);
 }
 
-void NodeSelectorTreeViewWidget::addCustomBottomButtons(NodeSelectorTreeViewWidget* wdg)
+void NodeSelectorTreeViewWidget::addCustomButtons(NodeSelectorTreeViewWidget* wdg)
 {
-    auto buttonsMap = mSelectType->addCustomBottomButtons(wdg);
+    auto buttonsMap = mSelectType->addCustomButtons(wdg);
     foreach(auto id, buttonsMap.keys())
     {
         auto button = buttonsMap.value(id);
         if (button)
         {
-            ui->customBottomButtonsLayout->addWidget(button);
+            ui->customButtonsLayout->addWidget(button);
             connect(button,
                     &QPushButton::clicked,
                     this,
                     [this, id]()
                     {
-                        emit onCustomBottomButtonClicked(id);
+                        emit onCustomButtonClicked(id);
                     });
         }
     }
@@ -667,6 +658,10 @@ std::unique_ptr<NodeSelectorProxyModel> NodeSelectorTreeViewWidget::createProxyM
 
 void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool blockUi)
 {
+    if (mSelectType->footerVisible())
+    {
+        ui->footer->setVisible(!blockUi);
+    }
     ui->tMegaFolders->loadingView().toggleLoadingScene(blockUi);
 
     if (!blockUi)
@@ -1307,16 +1302,6 @@ void NodeSelectorTreeViewWidget::onNodesAdded(
     }
 }
 
-void NodeSelectorTreeViewWidget::onOpenLinksClicked()
-{
-    MegaSyncApp->importLinks();
-}
-
-void NodeSelectorTreeViewWidget::onSettingsClicked()
-{
-    MegaSyncApp->openSettings();
-}
-
 void NodeSelectorTreeViewWidget::removeItemByHandle(mega::MegaHandle handle)
 {
     auto index = mModel->findIndexByNodeHandle(handle, QModelIndex());
@@ -1611,20 +1596,21 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex& proxy_idx)
         return;
     }
 
-    // Taking the sync icon
-    auto status_column_idx = proxy_idx.sibling(proxy_idx.row(), NodeSelectorModel::COLUMN::STATUS);
-    QIcon syncIcon = qvariant_cast<QIcon>(status_column_idx.data(Qt::DecorationRole));
+    // //Taking the sync icon
+    // auto status_column_idx = proxy_idx.sibling(proxy_idx.row(),
+    // NodeSelectorModel::COLUMN::STATUS); QIcon syncIcon =
+    // qvariant_cast<QIcon>(status_column_idx.data(Qt::DecorationRole));
 
-    if (!syncIcon.isNull())
-    {
-        ui->lSyncIcon->setIcon(syncIcon);
-        ui->syncSpacer->spacerItem()->changeSize(10, 0);
-    }
-    else
-    {
-        ui->lSyncIcon->setIcon(QIcon());
-        ui->syncSpacer->spacerItem()->changeSize(0, 0);
-    }
+    // if(!syncIcon.isNull())
+    // {
+    //     ui->lSyncIcon->setIcon(syncIcon);
+    //     ui->syncSpacer->spacerItem()->changeSize(10, 0);
+    // }
+    // else
+    // {
+    //     ui->lSyncIcon->setIcon(QIcon());
+    //     ui->syncSpacer->spacerItem()->changeSize(0, 0);
+    // }
 
     auto item = NodeSelectorModel::getItemByIndex(node_column_idx);
     if (!item)
@@ -1762,6 +1748,19 @@ bool SelectType::cloudDriveIsCurrentRootIndex(NodeSelectorTreeViewWidget* wdg)
     return rootItem && rootItem->isCloudDrive();
 }
 
+QPushButton* SelectType::createCustomButton(const QString& type,
+                                            const QString& text,
+                                            const QString& iconFile)
+{
+    auto button(new TokenizableButton());
+    button->setText(text);
+    QIcon icon;
+    icon.addFile(iconFile, QSize(16, 16), QIcon::Mode::Normal, QIcon::State::Off);
+    button->setIcon(icon);
+    button->setProperty("type", type);
+    return button;
+}
+
 void DownloadType::init(NodeSelectorTreeViewWidget* wdg)
 {
     wdg->ui->bNewFolder->hide();
@@ -1881,6 +1880,11 @@ NodeSelectorModelItemSearch::Types CloudDriveType::allowedTypes()
            NodeSelectorModelItemSearch::Type::BACKUP | NodeSelectorModelItemSearch::Type::RUBBISH;
 }
 
+bool CloudDriveType::footerVisible() const
+{
+    return false;
+}
+
 bool CloudDriveType::okButtonEnabled(NodeSelectorTreeViewWidget*, const QModelIndexList& selected)
 {
     return false;
@@ -1892,26 +1896,31 @@ void CloudDriveType::okCancelButtonsVisibility(NodeSelectorTreeViewWidget* wdg)
     wdg->ui->bCancel->setVisible(false);
 }
 
-QMap<uint, QPushButton*> CloudDriveType::addCustomBottomButtons(NodeSelectorTreeViewWidget* wdg)
+QMap<uint, QPushButton*> CloudDriveType::addCustomButtons(NodeSelectorTreeViewWidget* wdg)
 {
-    auto& buttons = mCustomBottomButtons[wdg];
+    auto& buttons = mCustomButtons[wdg];
     if (buttons.isEmpty())
     {
-        auto uploadButton(new QPushButton(
-            QIcon(QString::fromUtf8(
-                "://images/transfer_manager/toolbar/upload_toolbar_ico_default.png")),
-            getCustomBottomButtonText(ButtonId::Upload)));
+        auto uploadButton =
+            createCustomButton(QLatin1String("ghost"),
+                               getCustomButtonText(ButtonId::Upload),
+                               Utilities::getPixmapName(QLatin1String("upload_small_thin_outline"),
+                                                        Utilities::AttributeType::NONE));
+
         buttons.insert(ButtonId::Upload, uploadButton);
 
-        auto downloadButton(new QPushButton(
-            QIcon(QString::fromUtf8(
-                "://images/transfer_manager/toolbar/download_toolbar_ico_default.png")),
-            getCustomBottomButtonText(ButtonId::Download)));
+        auto downloadButton = createCustomButton(
+            QLatin1String("ghost"),
+            getCustomButtonText(ButtonId::Download),
+            Utilities::getPixmapName(QLatin1String("download_small_thin_outline"),
+                                     Utilities::AttributeType::NONE));
         buttons.insert(ButtonId::Download, downloadButton);
 
-        auto clearRubbishButton(new QPushButton(
-            QIcon(QString::fromUtf8("://images/transfer_manager/sidebar/cancel_all_ico_hover.png")),
-            getCustomBottomButtonText(ButtonId::ClearRubbish)));
+        auto clearRubbishButton =
+            createCustomButton(QLatin1String("ghost"),
+                               getCustomButtonText(ButtonId::ClearRubbish),
+                               Utilities::getPixmapName(QLatin1String("x_small_thin_outline"),
+                                                        Utilities::AttributeType::NONE));
         buttons.insert(ButtonId::ClearRubbish, clearRubbishButton);
         clearRubbishButton->hide();
     }
@@ -1919,19 +1928,19 @@ QMap<uint, QPushButton*> CloudDriveType::addCustomBottomButtons(NodeSelectorTree
     return buttons;
 }
 
-void CloudDriveType::updateCustomBottomButtonsText(NodeSelectorTreeViewWidget* wdg)
+void CloudDriveType::updateCustomButtonsText(NodeSelectorTreeViewWidget* wdg)
 {
-    auto& buttons = mCustomBottomButtons[wdg];
+    auto& buttons = mCustomButtons[wdg];
     if (!buttons.isEmpty())
     {
         for (auto it = buttons.keyValueBegin(); it != buttons.keyValueEnd(); ++it)
         {
-            it->second->setText(getCustomBottomButtonText(it->first));
+            it->second->setText(getCustomButtonText(it->first));
         }
     }
 }
 
-QString CloudDriveType::getCustomBottomButtonText(uint buttonId) const
+QString CloudDriveType::getCustomButtonText(uint buttonId) const
 {
     switch (buttonId)
     {
@@ -1956,7 +1965,7 @@ QString CloudDriveType::getCustomBottomButtonText(uint buttonId) const
 
 void CloudDriveType::selectionHasChanged(NodeSelectorTreeViewWidget* wdg)
 {
-    auto buttons = mCustomBottomButtons.value(wdg);
+    auto buttons = mCustomButtons.value(wdg);
 
     auto rubbishWidget = dynamic_cast<NodeSelectorTreeViewWidgetRubbish*>(wdg);
 

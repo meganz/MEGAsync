@@ -150,13 +150,6 @@ bool NodeSelectorProxyModel::lessThan(const QModelIndex& left, const QModelIndex
             int lStatus(0);
             int rStatus(0);
 
-            if (left.column() == NodeSelectorModel::STATUS &&
-                right.column() == NodeSelectorModel::STATUS)
-            {
-                lStatus = left.data(toInt(NodeSelectorModelRoles::STATUS_ROLE)).toInt();
-                rStatus = right.data(toInt(NodeSelectorModelRoles::STATUS_ROLE)).toInt();
-            }
-
             if (lStatus != rStatus)
             {
                 result = lStatus < rStatus;

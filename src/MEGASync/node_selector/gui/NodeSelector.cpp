@@ -69,11 +69,7 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
         iconTokens.setNormalOn(QLatin1String("icon-primary"));
         auto iconTokenSetter = std::make_shared<TokenPropertySetter>(iconTokens);
 
-        BaseTokens closeTokens;
-        closeTokens.setNormalOff(QLatin1String("icon-primary"));
-        auto closeTokenSetter = std::make_shared<TokenPropertySetter>(closeTokens);
-
-        TabSelector::applyTokens(ui->wStorage, iconTokenSetter, closeTokenSetter);
+        TabSelector::applyTokens(ui->wStorage, iconTokenSetter);
     }
 }
 
@@ -462,9 +458,9 @@ void NodeSelector::initSpecialisedWidgets()
         {
             viewContainer->init();
             connect(viewContainer,
-                    &NodeSelectorTreeViewWidget::onCustomBottomButtonClicked,
+                    &NodeSelectorTreeViewWidget::onCustomButtonClicked,
                     this,
-                    &NodeSelector::onCustomBottomButtonClicked,
+                    &NodeSelector::onCustomButtonClicked,
                     Qt::UniqueConnection);
             connect(viewContainer,
                     &NodeSelectorTreeViewWidget::okBtnClicked,

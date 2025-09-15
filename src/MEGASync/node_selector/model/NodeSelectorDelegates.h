@@ -9,6 +9,10 @@ class NodeSelectorDelegate: public QStyledItemDelegate
 public:
     NodeSelectorDelegate(QObject* parent);
 
+    void paint(QPainter* painter,
+               const QStyleOptionViewItem& option,
+               const QModelIndex& index) const override;
+
 protected:
     void setPaintDevice(QPainter* painter, const QModelIndex& index) const;
     bool isPaintingDrag(QPainter* painter) const;
@@ -49,6 +53,8 @@ public:
                    QAbstractItemView* view,
                    const QStyleOptionViewItem& option,
                    const QModelIndex& index) override;
+
+    QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 
 private:
     void initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index) const override;

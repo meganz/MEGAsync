@@ -76,7 +76,7 @@ protected:
     void createSpecialisedWidgets() override;
 
 protected slots:
-    void onCustomBottomButtonClicked(uint id) override;
+    void onCustomButtonClicked(uint id) override;
     void onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles, int type) override;
     void onItemsAboutToBeMovedFailed(const QList<mega::MegaHandle>& handles, int type) override;
     void onItemsAboutToBeRestored(const QSet<mega::MegaHandle>& targetHandles) override;

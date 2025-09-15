@@ -114,7 +114,7 @@ protected:
 
 protected slots:
 
-    virtual void onCustomBottomButtonClicked(uint id)
+    virtual void onCustomButtonClicked(uint id)
     {
         Q_UNUSED(id)
     }
