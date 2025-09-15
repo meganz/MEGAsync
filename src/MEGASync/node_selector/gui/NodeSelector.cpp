@@ -10,6 +10,7 @@
 #include "NodeSelectorProxyModel.h"
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
 #include "TabSelector.h"
+#include "TokenizableItems/TokenPropertySetter.h"
 #include "ui_NodeSelector.h"
 #include "Utilities.h"
 #include "ViewLoadingScene.h"
@@ -60,6 +61,20 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
 
     updateNodeSelectorTabs();
     onOptionSelected(CLOUD_DRIVE);
+
+    // Left pane tokens
+    {
+        BaseTokens iconTokens;
+        iconTokens.setNormalOff(QLatin1String("icon-secondary"));
+        iconTokens.setNormalOn(QLatin1String("icon-primary"));
+        auto iconTokenSetter = std::make_shared<TokenPropertySetter>(iconTokens);
+
+        BaseTokens closeTokens;
+        closeTokens.setNormalOff(QLatin1String("icon-primary"));
+        auto closeTokenSetter = std::make_shared<TokenPropertySetter>(closeTokens);
+
+        TabSelector::applyTokens(ui->wStorage, iconTokenSetter, closeTokenSetter);
+    }
 }
 
 NodeSelector::~NodeSelector()

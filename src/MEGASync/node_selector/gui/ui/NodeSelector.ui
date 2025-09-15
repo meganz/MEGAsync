@@ -188,12 +188,18 @@ background-color: #FFFFFF; /*colorToken.page-background*/
              <height>0</height>
             </size>
            </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="icon" stdset="0">
             <iconset resource="../../../gui/Resources_common.qrc">
              <normaloff>:/cloud_off</normaloff>
              <normalon>:/cloud_on</normalon>:/cloud_off</iconset>
            </property>
-           <property name="type" stdset="0">
+           <property name="class" stdset="0">
             <string notr="true">sidebar</string>
            </property>
           </widget>
@@ -223,7 +229,7 @@ background-color: #FFFFFF; /*colorToken.page-background*/
              <normaloff>:/folder-users_off</normaloff>
              <normalon>:/folder-users_on</normalon>:/folder-users_off</iconset>
            </property>
-           <property name="type" stdset="0">
+           <property name="class" stdset="0">
             <string notr="true">sidebar</string>
            </property>
           </widget>
@@ -236,30 +242,60 @@ background-color: #FFFFFF; /*colorToken.page-background*/
              <height>0</height>
             </size>
            </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="icon" stdset="0">
             <iconset resource="../../../gui/Resources_common.qrc">
              <normaloff>:/devices_off</normaloff>
              <normalon>:/devices_on</normalon>:/devices_off</iconset>
            </property>
-           <property name="type" stdset="0">
+           <property name="class" stdset="0">
             <string notr="true">sidebar</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="TabSelector" name="fRubbish" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="icon" stdset="0">
             <iconset resource="../../../gui/Resources_common.qrc">
              <normaloff>:/trash_off</normaloff>
              <normalon>:/trash_on</normalon>:/trash_off</iconset>
            </property>
-           <property name="type" stdset="0">
+           <property name="class" stdset="0">
             <string notr="true">sidebar</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="TabSelector" name="fSearch" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="icon" stdset="0">
             <iconset resource="../../../gui/Resources_common.qrc">
              <normaloff>:/search_outline_small</normaloff>
@@ -268,7 +304,7 @@ background-color: #FFFFFF; /*colorToken.page-background*/
            <property name="closeButtonVisible" stdset="0">
             <bool>true</bool>
            </property>
-           <property name="type" stdset="0">
+           <property name="class" stdset="0">
             <string notr="true">sidebar</string>
            </property>
           </widget>

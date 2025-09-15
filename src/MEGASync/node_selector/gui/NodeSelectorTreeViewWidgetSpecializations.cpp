@@ -236,37 +236,37 @@ NodeSelectorTreeViewWidgetSearch::NodeSelectorTreeViewWidgetSearch(SelectTypeSPt
     mHasRows(false)
 
 {
-    setTitleText(tr("Searching:"));
     ui->bBack->hide();
     ui->bForward->hide();
     connect(ui->cloudDriveSearch,
-            &QToolButton::clicked,
+            &TabSelector::clicked,
             this,
             &NodeSelectorTreeViewWidgetSearch::onCloudDriveSearchClicked);
     connect(ui->incomingSharesSearch,
-            &QToolButton::clicked,
+            &TabSelector::clicked,
             this,
             &NodeSelectorTreeViewWidgetSearch::onIncomingSharesSearchClicked);
     connect(ui->backupsSearch,
-            &QToolButton::clicked,
+            &TabSelector::clicked,
             this,
             &NodeSelectorTreeViewWidgetSearch::onBackupsSearchClicked);
     connect(ui->rubbishSearch,
-            &QToolButton::clicked,
+            &TabSelector::clicked,
             this,
             &NodeSelectorTreeViewWidgetSearch::onRubbishSearchClicked);
 }
 
 void NodeSelectorTreeViewWidgetSearch::search(const QString& text)
 {
+    mSearchStr = text;
+
     changeButtonsWidgetSizePolicy(true);
     ui->stackedWidget->setCurrentWidget(ui->treeViewPage);
     ui->searchButtonsWidget->setVisible(false);
     auto search_model = static_cast<NodeSelectorModelSearch*>(mModel.get());
     search_model->searchByText(text);
-    ui->searchingText->setText(text);
+
     ui->searchNotFoundText->setText(text);
-    ui->searchingText->setVisible(true);
 }
 
 void NodeSelectorTreeViewWidgetSearch::stopSearch()
@@ -288,6 +288,7 @@ std::unique_ptr<NodeSelectorProxyModel> NodeSelectorTreeViewWidgetSearch::create
             &NodeSelectorProxyModelSearch::modeEmpty,
             this,
             &NodeSelectorTreeViewWidget::checkViewOnModelChange);
+
     return proxy;
 }
 
@@ -324,7 +325,7 @@ void NodeSelectorTreeViewWidgetSearch::checkSearchButtonsVisibility()
 bool NodeSelectorTreeViewWidgetSearch::isNodeCompatibleWithModel(mega::MegaNode* node)
 {
     auto nodeName(QString::fromUtf8(node->getName()));
-    auto containsText = nodeName.contains(ui->searchingText->text(), Qt::CaseInsensitive);
+    auto containsText = nodeName.contains(mSearchStr, Qt::CaseInsensitive);
     return containsText;
 }
 
@@ -411,7 +412,9 @@ void NodeSelectorTreeViewWidgetSearch::changeButtonsWidgetSizePolicy(bool state)
 
 QString NodeSelectorTreeViewWidgetSearch::getRootText()
 {
-    return tr("Searching:");
+    auto resultNumber(mModel->rowCount());
+    QString resultString(tr("%n result found", "", resultNumber));
+    return resultString;
 }
 
 std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetSearch::createModel()
@@ -425,6 +428,22 @@ std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetSearch::createModel
             &NodeSelectorTreeViewWidgetSearch::modelLoaded);
 
     mRestoreManager = std::make_shared<RestoreNodeManager>(model.get(), this);
+
+    // Detect if the row count changed
+    connect(model.get(),
+            &QAbstractItemModel::rowsInserted,
+            this,
+            &NodeSelectorTreeViewWidgetSearch::updateRootTitle);
+
+    connect(model.get(),
+            &QAbstractItemModel::rowsRemoved,
+            this,
+            &NodeSelectorTreeViewWidgetSearch::updateRootTitle);
+
+    connect(model.get(),
+            &QAbstractItemModel::modelReset,
+            this,
+            &NodeSelectorTreeViewWidgetSearch::updateRootTitle);
 
     return model;
 }

@@ -12,6 +12,7 @@
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
 #include "RenameNodeDialog.h"
 #include "RequestListenerManager.h"
+#include "TokenizableItems/TokenPropertySetter.h"
 #include "ui_NodeSelectorTreeViewWidget.h"
 
 const int NodeSelectorTreeViewWidget::LOADING_VIEW_THRESSHOLD = 500;
@@ -39,7 +40,6 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
     ui->bOk->setDefault(true);
     ui->bOk->setEnabled(false);
     ui->searchButtonsWidget->setVisible(false);
-    ui->searchingText->setVisible(false);
     ui->lAccess->setVisible(false);
 
     connect(ui->bNewFolder,
@@ -77,11 +77,17 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
             this,
             &NodeSelectorTreeViewWidget::onUiBlocked);
 
-    foreach(auto& button, ui->searchButtonsWidget->findChildren<QAbstractButton*>())
-    {
-        button->setProperty(ButtonIconManager::CHANGE_LATER, true);
-        mButtonIconManager.addButton(button);
-    }
+    // Chip selector configuration
+    BaseTokens iconTokens;
+    iconTokens.setNormalOff(QLatin1String("icon-primary"));
+    iconTokens.setNormalOn(QLatin1String("brand-on-container"));
+    auto iconTokensSetter = std::make_shared<TokenPropertySetter>(iconTokens);
+    TabSelector::applyTokens(ui->searchButtonsWidget, iconTokensSetter);
+
+    ui->cloudDriveSearch->setProperty("title", MegaNodeNames::getCloudDriveName());
+    ui->backupsSearch->setProperty("title", MegaNodeNames::getBackupsName());
+    ui->incomingSharesSearch->setProperty("title", MegaNodeNames::getIncomingSharesName());
+    ui->rubbishSearch->setProperty("title", MegaNodeNames::getRubbishName());
 }
 
 NodeSelectorTreeViewWidget::~NodeSelectorTreeViewWidget()
@@ -95,7 +101,7 @@ bool NodeSelectorTreeViewWidget::event(QEvent* event)
     {
         if (!ui->tMegaFolders->rootIndex().isValid())
         {
-            ui->lFolderName->setText(getRootText());
+            updateRootTitle();
         }
         ui->retranslateUi(this);
 
@@ -1115,6 +1121,11 @@ bool NodeSelectorTreeViewWidget::areThereNodesToUpdate()
            !mMergeSourceFolderRemoved.isEmpty();
 }
 
+void NodeSelectorTreeViewWidget::updateRootTitle()
+{
+    ui->lFolderName->setText(getRootText());
+}
+
 void NodeSelectorTreeViewWidget::expandPendingIndexes()
 {
     auto indexesToBeExpanded = mModel->needsToBeExpanded();
@@ -1590,7 +1601,7 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex& proxy_idx)
 
     if (!node_column_idx.isValid())
     {
-        setTitleText(getRootText());
+        updateRootTitle();
 
         ui->lOwnerIcon->setIcon(QIcon());
         ui->lAccess->hide();

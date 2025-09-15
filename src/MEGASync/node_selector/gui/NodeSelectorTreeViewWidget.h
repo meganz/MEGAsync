@@ -167,6 +167,10 @@ protected:
     Navigation mNavigationInfo;
     mega::MegaApi* mMegaApi;
 
+protected slots:
+    // Title
+    void updateRootTitle();
+
 private slots:
     void onbNewFolderClicked();
     void oncbAlwaysUploadToLocationChanged(bool value);

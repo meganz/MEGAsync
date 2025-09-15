@@ -116,6 +116,7 @@ public slots:
 
 signals:
     void nodeDoubleClicked(std::shared_ptr<mega::MegaNode> node, bool goToInit);
+    void searchCounterChanged();
 
 protected:
     bool isNodeCompatibleWithModel(mega::MegaNode* node) override;
@@ -146,6 +147,7 @@ private:
     }
 
     bool mHasRows;
+    QString mSearchStr;
 
     std::shared_ptr<RestoreNodeManager> mRestoreManager;
 };
