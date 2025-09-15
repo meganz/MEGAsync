@@ -6,7 +6,9 @@
 /********************/
 TokenizableButton::TokenizableButton(QWidget* parent):
     QPushButton(parent)
-{}
+{
+    setCursor(Qt::PointingHandCursor);
+}
 
 void TokenizableButton::clear()
 {

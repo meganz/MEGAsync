@@ -91,6 +91,8 @@ protected:
     virtual void init(QAbstractButton* button);
 
 private:
+    bool specificStateHasChanged(const QStyle::State& state, const QStyleOption& option);
+
     BaseTokens mBaseTokens;
     QStyleOption mCurrentOption;
     bool mInit;

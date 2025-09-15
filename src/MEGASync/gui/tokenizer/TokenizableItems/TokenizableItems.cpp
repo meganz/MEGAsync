@@ -28,7 +28,11 @@ bool TokenizableItem::stateHasChanged(const QStyleOption& option)
         result = true;
     }
 
-    if (option.state != mCurrentOption.state)
+    if (specificStateHasChanged(QStyle::State_Enabled, option) ||
+        specificStateHasChanged(QStyle::State_Sunken, option) ||
+        specificStateHasChanged(QStyle::State_MouseOver, option) ||
+        specificStateHasChanged(QStyle::State_Off, option) ||
+        specificStateHasChanged(QStyle::State_On, option))
     {
         mCurrentOption = option;
         result = true;
@@ -126,4 +130,10 @@ void TokenizableItem::init(QAbstractButton* button)
     }
 
     mInit = true;
+}
+
+bool TokenizableItem::specificStateHasChanged(const QStyle::State& state,
+                                              const QStyleOption& option)
+{
+    return ((option.state & state) != (mCurrentOption.state & state));
 }
