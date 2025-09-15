@@ -33,7 +33,6 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
     mInitialised(false),
     mDuplicatedType(std::nullopt),
     mDuplicatedModel(nullptr),
-    mSourceWid(nullptr),
     mTargetWid(nullptr)
 {
     ui->setupUi(this);
@@ -254,16 +253,8 @@ void NodeSelector::performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
         return;
     }
 
-    if (mTargetWid)
-    {
-        disconnect(mTargetWid->getProxyModel()->getMegaModel(),
-                   &NodeSelectorModel::itemsMoved,
-                   mSearchWidget,
-                   &NodeSelectorTreeViewWidgetSearch::resetMovingNumber);
-    }
-
     mTargetWid = nullptr;
-    mSourceWid = nullptr;
+    mSourceWids.clear();
 
     // IF we want to block the source or target, set values to false in order to look for them
     bool foundSource(!blockSource);
@@ -286,12 +277,11 @@ void NodeSelector::performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
         }
     };
 
-    auto findSource = [this, handles, &foundSource](NodeSelectorTreeViewWidget* wid)
+    auto findSource = [this, handles](NodeSelectorTreeViewWidget* wid)
     {
-        if (!foundSource && wid->areItemsAboutToBeMovedFromHere(handles.first()))
+        if (wid->areItemsAboutToBeMovedFromHere(handles.first()))
         {
-            foundSource = true;
-            mSourceWid = wid;
+            mSourceWids.append(wid);
         }
     };
 
@@ -310,27 +300,17 @@ void NodeSelector::performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
             {
                 findSource(wid);
             }
-
-            if (foundSource && foundTarget)
-            {
-                break;
-            }
         }
     }
 
     targetOrSourceFound(mTargetWid, handles.size());
 
-    if (mTargetWid != mSourceWid)
+    for (auto& wid: mSourceWids)
     {
-        targetOrSourceFound(mSourceWid, handles.size());
-    }
-
-    if (mTargetWid && mSourceWid == mSearchWidget)
-    {
-        connect(mTargetWid->getProxyModel()->getMegaModel(),
-                &NodeSelectorModel::itemsMoved,
-                mSearchWidget,
-                &NodeSelectorTreeViewWidgetSearch::resetMovingNumber);
+        if (wid != mTargetWid)
+        {
+            targetOrSourceFound(wid, handles.size());
+        }
     }
 }
 
