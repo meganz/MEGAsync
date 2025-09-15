@@ -8863,11 +8863,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Documents</translation>
     </message>
     <message>
-        <source>Download</source>
-        <translatorcomment>Label of the button to start a new download</translatorcomment>
-        <translation>Download</translation>
-    </message>
-    <message>
         <source>Downloads</source>
         <translatorcomment>Label of tab to access all active downloads</translatorcomment>
         <translation>Downloads</translation>

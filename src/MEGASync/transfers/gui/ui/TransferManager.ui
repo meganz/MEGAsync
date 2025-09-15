@@ -417,11 +417,6 @@ QToolButton
   padding-left: 2px;
 }
 
-#sTransfers QToolButton
-{
-  qProperty-iconSize: 240px;
-}
-
 #pStatusHeader  QToolButton
 {
   border-radius: 16px;
@@ -439,9 +434,9 @@ QToolButton
 
 #wNoDownloads QLabel, #wNoUploads QLabel,  #wNoTransfers QLabel, #wNoFinished QLabel, #wNoResults QLabel
 {
-    color: #333333;
-    font-size: 24px;
+    font-size: 16px;
     font-weight: 400;
+	line-height: 24px;  
 }
 
 /* 
@@ -1951,7 +1946,7 @@ QToolButton
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="bOpenLinks">
+             <widget class="TokenizableButton" name="bOpenLinks">
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -1977,7 +1972,7 @@ QToolButton
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="bUpload">
+             <widget class="TokenizableButton" name="bUpload">
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -1997,21 +1992,7 @@ QToolButton
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="bDownload">
-              <property name="cursor">
-               <cursorShape>PointingHandCursor</cursorShape>
-              </property>
-              <property name="text">
-               <string>Download</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../../../gui/Resources_common.qrc">
-                <normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="tCogWheel">
+             <widget class="IconOnlyButton" name="tCogWheel">
               <property name="maximumSize">
                <size>
                 <width>26</width>
@@ -2411,17 +2392,35 @@ QToolButton
           <property name="bottomMargin">
            <number>20</number>
           </property>
-          <property name="spacing">
+          <property name="horizontalSpacing">
            <number>0</number>
           </property>
+          <property name="verticalSpacing">
+           <number>20</number>
+          </property>
           <item row="1" column="0">
-           <widget class="QToolButton" name="tNoUploads">
+           <widget class="IconLabel" name="tNoUploads">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string/>
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_common.qrc">
-              <normaloff>:/images/transfer_manager/empty_categories/no_uploads.png</normaloff>:/images/transfer_manager/empty_categories/no_uploads.png</iconset>
+              <normaloff>:/arrow-up-circle_small_thin_outline</normaloff>:/arrow-up-circle_small_thin_outline</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>96</width>
+              <height>96</height>
+             </size>
+            </property>
+            <property name="normal_off" stdset="0">
+             <string notr="true">icon-secondary</string>
             </property>
            </widget>
           </item>
@@ -2459,6 +2458,9 @@ QToolButton
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
+            <property name="type" stdset="0">
+             <string notr="true">secondary</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -2471,8 +2473,11 @@ QToolButton
           <property name="bottomMargin">
            <number>20</number>
           </property>
-          <property name="spacing">
+          <property name="horizontalSpacing">
            <number>0</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>20</number>
           </property>
           <item row="3" column="0">
            <spacer name="verticalSpacer_3">
@@ -2501,13 +2506,28 @@ QToolButton
            </spacer>
           </item>
           <item row="1" column="0">
-           <widget class="QToolButton" name="tNoDownloads">
+           <widget class="IconLabel" name="tNoDownloads">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string/>
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_common.qrc">
-              <normaloff>:/images/transfer_manager/empty_categories/no_downloads.png</normaloff>:/images/transfer_manager/empty_categories/no_downloads.png</iconset>
+              <normaloff>:/arrow-down-circle_small_thin_outline</normaloff>:/arrow-down-circle_small_thin_outline</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>96</width>
+              <height>96</height>
+             </size>
+            </property>
+            <property name="normal_off" stdset="0">
+             <string notr="true">icon-secondary</string>
             </property>
            </widget>
           </item>
@@ -2518,6 +2538,12 @@ QToolButton
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
+            </property>
+            <property name="font-size" stdset="0">
+             <string notr="true">label-2</string>
+            </property>
+            <property name="type" stdset="0">
+             <string notr="true">secondary</string>
             </property>
            </widget>
           </item>
@@ -2531,8 +2557,11 @@ QToolButton
           <property name="bottomMargin">
            <number>20</number>
           </property>
-          <property name="spacing">
+          <property name="horizontalSpacing">
            <number>0</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>20</number>
           </property>
           <item row="3" column="0">
            <spacer name="verticalSpacer_9">
@@ -2548,13 +2577,28 @@ QToolButton
            </spacer>
           </item>
           <item row="1" column="0">
-           <widget class="QToolButton" name="tNoTransfers">
+           <widget class="IconLabel" name="tNoTransfers">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string/>
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_common.qrc">
-              <normaloff>:/images/transfer_manager/empty_categories/no_transfers.png</normaloff>:/images/transfer_manager/empty_categories/no_transfers.png</iconset>
+              <normaloff>:/arrows-up-down-circle_small_thin_outline</normaloff>:/arrows-up-down-circle_small_thin_outline</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>96</width>
+              <height>96</height>
+             </size>
+            </property>
+            <property name="normal_off" stdset="0">
+             <string notr="true">icon-secondary</string>
             </property>
            </widget>
           </item>
@@ -2579,6 +2623,9 @@ QToolButton
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
+            <property name="type" stdset="0">
+             <string notr="true">secondary</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -2591,17 +2638,35 @@ QToolButton
           <property name="bottomMargin">
            <number>20</number>
           </property>
-          <property name="spacing">
+          <property name="horizontalSpacing">
            <number>0</number>
           </property>
+          <property name="verticalSpacing">
+           <number>20</number>
+          </property>
           <item row="1" column="0">
-           <widget class="QToolButton" name="tNoResults">
+           <widget class="IconLabel" name="tNoResults">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string/>
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_common.qrc">
-              <normaloff>:/images/transfer_manager/empty_categories/no_search_results.png</normaloff>:/images/transfer_manager/empty_categories/no_search_results.png</iconset>
+              <normaloff>:/search-large_small_thin_outline</normaloff>:/search-large_small_thin_outline</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>96</width>
+              <height>96</height>
+             </size>
+            </property>
+            <property name="normal_off" stdset="0">
+             <string notr="true">icon-secondary</string>
             </property>
            </widget>
           </item>
@@ -2639,6 +2704,9 @@ QToolButton
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
+            <property name="type" stdset="0">
+             <string notr="true">secondary</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -2651,8 +2719,11 @@ QToolButton
           <property name="bottomMargin">
            <number>20</number>
           </property>
-          <property name="spacing">
+          <property name="horizontalSpacing">
            <number>0</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>20</number>
           </property>
           <item row="0" column="0">
            <spacer name="verticalSpacer_4">
@@ -2668,13 +2739,31 @@ QToolButton
            </spacer>
           </item>
           <item row="1" column="0">
-           <widget class="QToolButton" name="tNoFinished">
+           <widget class="IconLabel" name="tNoFinished">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
             <property name="text">
-             <string/>
+             <string notr="true"/>
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_common.qrc">
-              <normaloff>:/images/transfer_manager/empty_categories/Completed_transfers.png</normaloff>:/images/transfer_manager/empty_categories/Completed_transfers.png</iconset>
+              <normaloff>:/check-circle_small_thin_outline</normaloff>:/check-circle_small_thin_outline</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>96</width>
+              <height>96</height>
+             </size>
+            </property>
+            <property name="normal_off" stdset="0">
+             <string notr="true">icon-secondary</string>
             </property>
            </widget>
           </item>
@@ -2698,6 +2787,9 @@ QToolButton
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
+            </property>
+            <property name="type" stdset="0">
+             <string notr="true">secondary</string>
             </property>
            </widget>
           </item>
@@ -2747,6 +2839,21 @@ QToolButton
    <header>TransferManagerStatusHeaderWidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TokenizableButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
+  </customwidget>
+  <customwidget>
+   <class>IconOnlyButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>bPause</tabstop>
@@ -2758,7 +2865,6 @@ QToolButton
   <tabstop>tFailed</tabstop>
   <tabstop>bOpenLinks</tabstop>
   <tabstop>bUpload</tabstop>
-  <tabstop>bDownload</tabstop>
   <tabstop>tCogWheel</tabstop>
   <tabstop>wAllResults</tabstop>
   <tabstop>wDlResults</tabstop>

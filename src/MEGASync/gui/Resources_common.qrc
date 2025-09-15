@@ -1299,5 +1299,9 @@
         <file alias="remove_small_thin_outline">images/themed/tokenizable/remove_small_thin_outline.svg</file>
         <file alias="rescan_small_thin_outline">images/themed/tokenizable/rescan_small_thin_outline.svg</file>
         <file alias="link_01_small_thin_outline">images/themed/tokenizable/link_01_small_thin_outline.svg</file>
+        <file alias="arrow-up-circle_small_thin_outline">images/themed/tokenizable/arrow-up-circle_small_thin_outline.svg</file>
+        <file alias="arrow-down-circle_small_thin_outline">images/themed/tokenizable/arrow-down-circle_small_thin_outline.svg</file>
+        <file alias="arrows-up-down-circle_small_thin_outline">images/themed/tokenizable/arrows-up-down-circle_small_thin_outline.svg</file>
+        <file alias="search-large_small_thin_outline">images/themed/tokenizable/search-large_small_thin_outline.svg</file>
     </qresource>
 </RCC>
