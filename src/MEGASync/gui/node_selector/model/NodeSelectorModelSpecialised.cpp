@@ -507,8 +507,11 @@ bool NodeSelectorModelSearch::rootNodeUpdated(mega::MegaNode* node)
                     searchItem->setType(newType);
                     updateRow(index);
                     emit nodeTypeHasChanged();
-                    // The loading view is set, so reduce by one the processed move
-                    moveProcessedByNumber(1);
+                    if (isMovingNodes())
+                    {
+                        // The loading view is set, so reduce by one the processed move
+                        moveProcessedByNumber(1);
+                    }
                     return true;
                 }
             }

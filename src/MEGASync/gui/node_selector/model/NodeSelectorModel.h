@@ -398,7 +398,6 @@ signals:
     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
     void showMessageBox(MessageDialogInfo info) const;
     void showDuplicatedNodeDialog(std::shared_ptr<ConflictTypes> conflicts, MoveActionType type);
-    void allNodeRequestsFinished();
     void modelIsBeingModifiedChanged(bool status);
     void modelModified();
     void itemsMoved();

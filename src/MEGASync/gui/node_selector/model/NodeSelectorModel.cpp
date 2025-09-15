@@ -1442,6 +1442,22 @@ bool NodeSelectorModel::showFiles() const
     return mNodeRequesterWorker->showFiles();
 }
 
+bool NodeSelectorModel::increaseMovingNodes(int number)
+{
+    if (mMoveRequestsCounter == 0)
+    {
+        mIsProcessingMoves = true;
+        mMoveRequestsCounter = number;
+        sendBlockUiSignal(true);
+        return true;
+    }
+    else
+    {
+        mMoveRequestsCounter += number;
+        return false;
+    }
+}
+
 void NodeSelectorModel::resetMoveProcessing()
 {
     mMoveRequestsCounter = 0;
@@ -1522,22 +1538,6 @@ bool NodeSelectorModel::canCopyNodes() const
     return true;
 }
 
-bool NodeSelectorModel::increaseMovingNodes(int number)
-{
-    if (mMoveRequestsCounter == 0)
-    {
-        mIsProcessingMoves = true;
-        mMoveRequestsCounter = number;
-        sendBlockUiSignal(true);
-        return true;
-    }
-    else
-    {
-        mMoveRequestsCounter += number;
-        return false;
-    }
-}
-
 void NodeSelectorModel::sendBlockUiSignal(bool state)
 {
     emit blockUi(state, QPrivateSignal());
@@ -1556,6 +1556,12 @@ void NodeSelectorModel::onStartBeginRemoveRowsAsync(const mega::MegaHandle& hand
         if (index.isValid())
         {
             deleteNodeFromModel(index);
+
+            // If the loading view is set, decrease the moving number by 1
+            if (isMovingNodes())
+            {
+                moveProcessedByNumber(1);
+            }
         }
     }
 }
@@ -2313,7 +2319,6 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
 
             // Reset values for next move action
             mMovedItemsType = MovedItemsType::NONE;
-            emit allNodeRequestsFinished();
         }
     }
 
