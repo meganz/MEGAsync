@@ -115,7 +115,7 @@
     <message>
         <source>Contact Established</source>
         <translatorcomment>Notification label that indicates the user has established a new contact relationship</translatorcomment>
-        <translation>Kişi ilişkisi kuruldu</translation>
+        <translation>Kişiyle bağlantı kuruldu</translation>
     </message>
     <message>
         <source>Contact Updated</source>
@@ -734,7 +734,7 @@
     <message>
         <source>[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3[/A]</source>
         <translatorcomment>QT copyright notice shown at changelog dialog. [A][/A] placeholders used to provide ui style and [C] placeholder will be replaced by copyright symbol.</translatorcomment>
-        <translation>[A]Bu yazılım, GNU Kısıtlı Genel Kamu Lisansı Sürüm 3 kapsamında olan Qt&apos;yi ([C] 2018 The Qt Company Ltd) kullanır[/A]</translation>
+        <translation>[A]Bu yazılım, GNU Kısıtlı Genel Kamu Lisansı Sürüm 3 kapsamında olan Qt’yi ([C] 2018 The Qt Company Ltd) kullanır[/A]</translation>
     </message>
 </context>
 <context>
@@ -892,7 +892,7 @@
     <message>
         <source>The file %1 is unavailable because it was reported to contain content in breach of [A]MEGA’s Terms of Service[/A].</source>
         <translatorcomment>Title for the header widget sync stall that occurs when a file is blocked by ToS infringement. %1 is the file name. [A] is for links.SAT-1209</translatorcomment>
-        <translation>%1 dosyası, [A]MEGA’nın Hizmet Şartları[/A]&apos;nı ihlal eden içerik barındırdığı bildirildiği için kullanılamıyor.</translation>
+        <translation>%1 dosyası, [A]MEGA’nın Hizmet Şartları[/A]’nı ihlal eden içerik barındırdığı bildirildiği için kullanılamıyor.</translation>
     </message>
 </context>
 <context>
@@ -905,7 +905,7 @@
     <message>
         <source>Remote Copy</source>
         <translatorcomment>Title of the choosen version of the remote local conflict.SNC-2565</translatorcomment>
-        <translation>MEGA&apos;da kopyala</translation>
+        <translation>MEGA’da kopyala</translation>
     </message>
 </context>
 <context>
@@ -1021,7 +1021,7 @@
     <message>
         <source>You can help us to improve MEGA by sending this error report to the Helpdesk.</source>
         <translatorcomment>Body for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
-        <translation>Bu hata raporunu Yardım Masasına göndererek MEGA&apos;yı geliştirmemize yardımcı olabilirsiniz.</translation>
+        <translation>Bu hata raporunu Yardım Masasına göndererek MEGA’yı geliştirmemize yardımcı olabilirsiniz.</translation>
     </message>
 </context>
 <context>
@@ -1111,7 +1111,7 @@
     <message>
         <source>Get Pro</source>
         <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
-        <translation>Pro&apos;ya geçin</translation>
+        <translation>Pro’ya geçin</translation>
     </message>
     <message>
         <source>New Contact Established</source>
@@ -1196,7 +1196,7 @@
     <message>
         <source>Show in MEGA</source>
         <translatorcomment>Notification button to redirect the user to remote location. It will open webclient at specific location.</translatorcomment>
-        <translation>MEGA&apos;da göster</translation>
+        <translation>MEGA’da göster</translation>
     </message>
     <message>
         <source>Sync</source>
@@ -1329,7 +1329,7 @@
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to retrieve a file/folder from MEGA.(MAX 20 characters)</translatorcomment>
-        <translation>MEGA&apos;dan indir</translation>
+        <translation>MEGA’dan indir</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -2011,7 +2011,7 @@
     <message>
         <source>View on MEGA</source>
         <translatorcomment>Finder context menu option to view a synced file through web browser within your MEGA account</translatorcomment>
-        <translation>MEGA&apos;da görüntüle</translation>
+        <translation>MEGA’da görüntüle</translation>
     </message>
     <message>
         <source>View previous versions</source>
@@ -2070,7 +2070,7 @@
     <message>
         <source>Log in or sign up to MEGA</source>
         <translatorcomment>Label that indicates to the user that he should login or register in order to proceed CON-465</translatorcomment>
-        <translation>MEGA&apos;ya giriş yapın veya kaydolun</translation>
+        <translation>MEGA’ya giriş yapın veya kaydolun</translation>
     </message>
     <message>
         <source>Log out</source>
@@ -2291,7 +2291,7 @@ Hesabınızın kilidini açma talimatları ve bunun tekrar olmasını önlemeye 
     <message>
         <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
         <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
-        <translation>Bu hesapta aktarım kotanızın %90&apos;ını kullandığınız için indirme işlemi kesintiye uğrayabilir. İndirmeye devam etmek için yeni bir plan satın alın veya MEGA ile yinelenen bir aboneliğiniz varsa planınızın yenilenmesini bekleyebilirsiniz.</translation>
+        <translation>Bu hesapta aktarım kotanızın %90’ını kullandığınız için indirme işlemi kesintiye uğrayabilir. İndirmeye devam etmek için yeni bir plan satın alın veya MEGA ile yinelenen bir aboneliğiniz varsa planınızın yenilenmesini bekleyebilirsiniz.</translation>
     </message>
     <message>
         <source>I will wait</source>
@@ -2431,12 +2431,12 @@ Hesabınızın kilidini açma talimatları ve bunun tekrar olmasını önlemeye 
     <message>
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
         <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
-        <translation>Hesabınız dolmadan ve MEGA&apos;ya yüklemeleriniz durmadan hemen yükseltin.</translation>
+        <translation>Hesabınız dolmadan ve MEGA’ya yüklemeleriniz durmadan hemen yükseltin.</translation>
     </message>
     <message>
         <source>Upload to MEGA now</source>
         <translatorcomment>Label shown at main dialog when the user is already logged in to inform that he can start uploading files to MEGA</translatorcomment>
-        <translation>Hemen MEGA&apos;ya yükleyin</translation>
+        <translation>Hemen MEGA’ya yükleyin</translation>
     </message>
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
@@ -2594,7 +2594,7 @@ Hesabınızın kilidini açma talimatları ve bunun tekrar olmasını önlemeye 
         <source>For a better experience on Fedora with GNOME, we recommend you enable the notification area icon.
 Would you like to install the necessary components now?</source>
         <translatorcomment>This is the text of a notification message displayed to users on Fedora with GNOME, advising them to consider activating the Notification Area Icon for an optimized experience. It also inquires if they wish to proceed with the installation of the required components for enabling the Notification Area Icon. SNC-2270</translatorcomment>
-        <translation>GNOME ile Fedora&apos;da daha iyi bir deneyim için bildirim alanı simgesini etkinleştirmenizi öneririz.
+        <translation>GNOME ile Fedora’da daha iyi bir deneyim için bildirim alanı simgesini etkinleştirmenizi öneririz.
 Gerekli bileşenleri şimdi yüklemek ister misiniz?</translation>
     </message>
     <message>
@@ -2676,7 +2676,7 @@ gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</translation>
     <message>
         <source>This file has been changed both in MEGA and locally since it it was last synced.</source>
         <translatorcomment>Subtitle for the header widget of sync stall that occurs when the file being synced changed oth locally and remotely.SNC-2565</translatorcomment>
-        <translation>Bu dosya, son senkronize edildiğinden beri hem MEGA&apos;da hem de yerel olarak değiştirildi</translation>
+        <translation>Bu dosya, son senkronize edildiğinden beri hem MEGA’da hem de yerel olarak değiştirildi</translation>
     </message>
 </context>
 <context>
@@ -2709,17 +2709,17 @@ gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</translation>
     <message>
         <source>Are you sure you want to keep the [B]remote file[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>MEGA&apos;daki [B]%1[/B] dosyası korunsun mu?</translation>
+        <translation>MEGA’daki [B]%1[/B] dosyası korunsun mu?</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>MEGA&apos;da zaten depolanmış olan [B]%1[/B] klasörü korunsun mu?</translation>
+        <translation>MEGA’da zaten depolanmış olan [B]%1[/B] klasörü korunsun mu?</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>MEGA&apos;da zaten depolanmış olan [B]%1[/B] öğesi korunsun mu?</translation>
+        <translation>MEGA’da zaten depolanmış olan [B]%1[/B] öğesi korunsun mu?</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2769,17 +2769,17 @@ gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</translation>
     <message>
         <source>Keep the [B]remote files[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Zaten [B]MEGA&apos;da[/B] depolanmış dosyalar korunsun mu?</translation>
+        <translation>Zaten [B]MEGA’da[/B] depolanmış dosyalar korunsun mu?</translation>
     </message>
     <message>
         <source>Keep the [B]remote folders[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Zaten [B]MEGA&apos;da[/B] depolanmış klasörler korunsun mu?</translation>
+        <translation>Zaten [B]MEGA’da[/B] depolanmış klasörler korunsun mu?</translation>
     </message>
     <message>
         <source>Keep the [B]remote items[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Zaten [B]MEGA&apos;da[/B] depolanmış öğeler korunsun mu?</translation>
+        <translation>Zaten [B]MEGA’da[/B] depolanmış öğeler korunsun mu?</translation>
     </message>
     <message>
         <source>Please select which version you want to keep</source>
@@ -2795,12 +2795,12 @@ gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</translation>
         <source>The [B]local file[/B] %1 will be uploaded to MEGA and added as a version to the remote file.
 Please wait for the upload to complete.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local version, %1 is a placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]%1[/B] yerel dosyası MEGA&apos;ya yüklenecek ve zaten MEGA&apos;da bulunan dosyanın bir sürümü olarak eklenecektir.</translation>
+        <translation>[B]%1[/B] yerel dosyası MEGA’ya yüklenecek ve zaten MEGA’da bulunan dosyanın bir sürümü olarak eklenecektir.</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be uploaded to MEGA and replace the current file, which will be moved to the SyncDebris folder in your MEGA Rubbish bin.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the remote file (with versioning disabled), %1 is a placeholder for file name,[B] is for bold.SAT-800</translatorcomment>
-        <translation>[B]%1[/B] yerel dosyası MEGA&apos;ya yüklenecek ve MEGA Çöp Kutunuzdaki SyncDebris klasörüne taşınacak olan mevcut dosyanın yerini alacaktır.</translation>
+        <translation>[B]%1[/B] yerel dosyası MEGA’ya yüklenecek ve MEGA Çöp Kutunuzdaki SyncDebris klasörüne taşınacak olan mevcut dosyanın yerini alacaktır.</translation>
     </message>
     <message>
         <source>The [B]local files[/B] will be moved to the sync debris folder</source>
@@ -2811,13 +2811,13 @@ Please wait for the upload to complete.</source>
         <source>The [B]local files[/B] will be uploaded to MEGA and added as a version to the remote files.
 Please wait for the upload to complete.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]Yerel[/B] dosyalar MEGA&apos;ya yüklenecek ve hâlihazırda MEGA&apos;da bulunan dosyalara bir sürüm olarak eklenecektir.
+        <translation>[B]Yerel[/B] dosyalar MEGA’ya yüklenecek ve hâlihazırda MEGA’da bulunan dosyalara bir sürüm olarak eklenecektir.
 Yüklemenin tamamlanmasını bekleyin.</translation>
     </message>
     <message>
         <source>The [B]local files[/B] will be uploaded to MEGA and replace the current files, which will be moved to the SyncDebris folder in your MEGA Rubbish bin.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the remote files (with versioning disabled),[B] is for bold.SAT-800</translatorcomment>
-        <translation>[B]Yerel[/B] dosyalar MEGA&apos;ya yüklenecek ve MEGA Çöp Kutunuzdaki SyncDebris klasörüne taşınacak olan mevcut dosyaların yerini alacaktır.</translation>
+        <translation>[B]Yerel[/B] dosyalar MEGA’ya yüklenecek ve MEGA Çöp Kutunuzdaki SyncDebris klasörüne taşınacak olan mevcut dosyaların yerini alacaktır.</translation>
     </message>
     <message>
         <source>The [B]local folder[/B] %1 will be moved to the sync debris folder</source>
@@ -2832,22 +2832,22 @@ Yüklemenin tamamlanmasını bekleyin.</translation>
     <message numerus="yes">
         <source>The [B]remote file[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>MEGA&apos;daki dosyaya (1) gibi bir son ek eklenecektir.</numerusform><numerusform>MEGA&apos;da zaten depolanmış olan dosyalara (1) gibi bir son ek eklenecektir.</numerusform></translation>
+        <translation><numerusform>MEGA’daki dosyaya (1) gibi bir son ek eklenecektir.</numerusform><numerusform>MEGA’da zaten depolanmış olan dosyalara (1) gibi bir son ek eklenecektir.</numerusform></translation>
     </message>
     <message>
         <source>The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
         <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for folder name, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>MEGA&apos;daki [B]%1[/B] klasörü MEGA Çöp Kutusuna taşınacaktır.[BR]Klasörü oradan kurtarabilirsiniz.</translation>
+        <translation>MEGA’daki [B]%1[/B] klasörü MEGA Çöp Kutusuna taşınacaktır.[BR]Klasörü oradan kurtarabilirsiniz.</translation>
     </message>
     <message numerus="yes">
         <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>MEGA&apos;da zaten depolanmış olan klasöre (1) gibi bir son ek eklenecektir.</numerusform><numerusform>MEGA&apos;da zaten depolanmış olan klasörlere (1) gibi bir son ek eklenecektir.</numerusform></translation>
+        <translation><numerusform>MEGA’da zaten depolanmış olan klasöre (1) gibi bir son ek eklenecektir.</numerusform><numerusform>MEGA’da zaten depolanmış olan klasörlere (1) gibi bir son ek eklenecektir.</numerusform></translation>
     </message>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
         <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>MEGA&apos;da zaten depolanmış olan klasörler MEGA Çöp Kutunuza taşınacaktır.[BR]Klasörleri oradan kurtarabilirsiniz.</translation>
+        <translation>MEGA’da zaten depolanmış olan klasörler MEGA Çöp Kutunuza taşınacaktır.[BR]Klasörleri oradan kurtarabilirsiniz.</translation>
     </message>
     <message>
         <source>The backup will be disabled in order to protect the local file %1</source>
@@ -2877,17 +2877,17 @@ Yüklemenin tamamlanmasını bekleyin.</translation>
     <message>
         <source>This action will choose the remote side</source>
         <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>Bu işlemle, zaten MEGA&apos;da depolanmış olan öğe seçilecektir.</translation>
+        <translation>Bu işlemle, zaten MEGA’da depolanmış olan öğe seçilecektir.</translation>
     </message>
     <message>
         <source>Unable to remove the file stored in MEGA</source>
         <translatorcomment>Local/Remote conflict stall issue. User chose to keep the local file, but removing the MEGA file failed. Used in a tooltip. SAT-1110</translatorcomment>
-        <translation>MEGA&apos;da depolanan dosya silinemiyor</translation>
+        <translation>MEGA’da depolanan dosya silinemiyor</translation>
     </message>
     <message>
         <source>Unable to remove the folder stored in MEGA</source>
         <translatorcomment>Local/Remote conflict stall issue. User chose to keep the local folder, but removing the MEGA folder failed. Used in a tooltip. SAT-1110</translatorcomment>
-        <translation>MEGA&apos;da depolanan klasör silinemiyor</translation>
+        <translation>MEGA’da depolanan klasör silinemiyor</translation>
     </message>
     <message>
         <source>Unable to remove the local file</source>
@@ -2922,7 +2922,7 @@ Yüklemenin tamamlanmasını bekleyin.</translation>
     <message>
         <source>[B]Keep last modified[/B] (remote)</source>
         <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]Son değiştirileni koru[/B] (MEGA&apos;da)</translation>
+        <translation>[B]Son değiştirileni koru[/B] (MEGA’da)</translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
@@ -2935,7 +2935,7 @@ Yüklemenin tamamlanmasını bekleyin.</translation>
     <message>
         <source>Click Rename to resolve this issue, or click the folders below to make adjustments in the local filesystem or in MEGA</source>
         <translatorcomment>Label descriping the way to solve a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation>Bu sorunu çözmek için Yeniden adlandır&apos;a tıklayın veya yerel dosya sisteminde ya da MEGA&apos;da ayarlamalar yapmak için aşağıdaki klasörlere tıklayın</translation>
+        <translation>Bu sorunu çözmek için Yeniden adlandır’a tıklayın veya yerel dosya sisteminde ya da MEGA’da ayarlamalar yapmak için aşağıdaki klasörlere tıklayın</translation>
     </message>
 </context>
 <context>
@@ -3307,7 +3307,7 @@ Yüklemenin tamamlanmasını bekleyin.</translation>
     <message>
         <source>One or more backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation>Bir veya daha fazla yedekleme devre dışı bırakıldı. Bunları yeniden etkinleştirmek için Ayarlar&apos;a gidin.</translation>
+        <translation>Bir veya daha fazla yedekleme devre dışı bırakıldı. Bunları yeniden etkinleştirmek için Ayarlar’a gidin.</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled</source>
@@ -3317,7 +3317,7 @@ Yüklemenin tamamlanmasını bekleyin.</translation>
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation>Bir veya daha fazla senkronizasyon devre dışı bırakıldı. Bunları yeniden etkinleştirmek için Ayarlar&apos;a gidin.</translation>
+        <translation>Bir veya daha fazla senkronizasyon devre dışı bırakıldı. Bunları yeniden etkinleştirmek için Ayarlar’a gidin.</translation>
     </message>
     <message>
         <source>Open links</source>
@@ -3377,7 +3377,7 @@ Yüklemenin tamamlanmasını bekleyin.</translation>
     <message>
         <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation>Bazı senkronizasyonlar ve yedeklemeler devre dışı bırakıldı. Bunları yeniden etkinleştirmek için Ayarlar&apos;a gidin.</translation>
+        <translation>Bazı senkronizasyonlar ve yedeklemeler devre dışı bırakıldı. Bunları yeniden etkinleştirmek için Ayarlar’a gidin.</translation>
     </message>
     <message>
         <source>Stalled</source>
@@ -3516,7 +3516,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
         <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
-        <translation>Hesabınızın güvenliği şimdi yükseltiliyor. Bu yalnızca bir kez gerçekleşecek. Bu hesap için bu mesajı daha önce gördüyseniz İptal&apos;e tıklayın.</translation>
+        <translation>Hesabınızın güvenliği şimdi yükseltiliyor. Bu yalnızca bir kez gerçekleşecek. Bu hesap için bu mesajı daha önce gördüyseniz İptal’e tıklayın.</translation>
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
@@ -3729,7 +3729,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Restart MEGA</source>
         <translatorcomment>Label of the button used to restart the app to try to resolve a fatal error - CON-844</translatorcomment>
-        <translation>MEGA&apos;yı yeniden başlat</translation>
+        <translation>MEGA’yı yeniden başlat</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
@@ -3764,7 +3764,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>The app has detected an error in your sync configuration data. You need to log out of MEGA to resolve this issue. If the problem persists after logging back in, report the issue to our Support team.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: JSCD atribute missing - CON-1023</translatorcomment>
-        <translation>Uygulama, senkronizasyon yapılandırma verilerinizde bir hata algıladı. Bu sorunu çözmek için MEGA&apos;dan çıkış yapmanız gerekir. Tekrar giriş yaptıktan sonra sorun devam ederse sorunu Destek ekibimize bildirin.</translation>
+        <translation>Uygulama, senkronizasyon yapılandırma verilerinizde bir hata algıladı. Bu sorunu çözmek için MEGA’dan çıkış yapmanız gerekir. Tekrar giriş yaptıktan sonra sorun devam ederse sorunu Destek ekibimize bildirin.</translation>
     </message>
     <message>
         <source>Too many concurrent connections or transfers</source>
@@ -3789,7 +3789,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>You need to make more space available in your local storage to be able to run MEGA.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
-        <translation>MEGA&apos;yı çalıştırabilmek için yerel depolama alanınızda daha fazla boş alan açmanız gerekir.</translation>
+        <translation>MEGA’yı çalıştırabilmek için yerel depolama alanınızda daha fazla boş alan açmanız gerekir.</translation>
     </message>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
@@ -3806,7 +3806,7 @@ Karşı bildirimde bulunma hakkında daha fazla bilgi için e-posta gelen kutunu
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
-        <translation>Hesabınız MEGA&apos;nın Hizmet Şartlarının ihlali nedeniyle sonlandırıldı.
+        <translation>Hesabınız MEGA’nın Hizmet Şartlarının ihlali nedeniyle sonlandırıldı.
 Depolanan verilerinize yeniden erişemeyecek veya yeni bir MEGA hesabına kaydolma yetkiniz olmayacaktır.</translation>
     </message>
     <message>
@@ -3891,7 +3891,7 @@ Depolanan verilerinize yeniden erişemeyecek veya yeni bir MEGA hesabına kaydol
     <message>
         <source>Backup externally modified</source>
         <translatorcomment>SDK error to inform the user that the backup was modified using another client. CON-537</translatorcomment>
-        <translation>MEGA klasöründeki değişiklikler nedeniyle bu klasörü senkronize etme veya yedeklemede sorun yaşanıyor. Senkronizasyonu veya yedeklemeyi durdurun ve Ayarlar&apos;da yeniden kurmayı deneyin ya da Destek ile iletişime geçin.</translation>
+        <translation>MEGA klasöründeki değişiklikler nedeniyle bu klasörü senkronize etme veya yedeklemede sorun yaşanıyor. Senkronizasyonu veya yedeklemeyi durdurun ve Ayarlar’da yeniden kurmayı deneyin ya da Destek ile iletişime geçin.</translation>
     </message>
     <message>
         <source>Could not get the filesystem&apos;s ID.</source>
@@ -3946,7 +3946,7 @@ Depolanan verilerinize yeniden erişemeyecek veya yeni bir MEGA hesabına kaydol
     <message>
         <source>Local filesystem mismatch</source>
         <translatorcomment>SDK error to inform the user that there is a mismatch in the filesystem. CON-537</translatorcomment>
-        <translation>Bu klasördeki dosyalar senkronize edilemez veya yedeklenemez. Senkronizasyonu veya yedeklemeyi Ayarlar&apos;dan yeniden etkinleştirmeniz gerekecektir.</translation>
+        <translation>Bu klasördeki dosyalar senkronize edilemez veya yedeklenemez. Senkronizasyonu veya yedeklemeyi Ayarlar’dan yeniden etkinleştirmeniz gerekecektir.</translation>
     </message>
     <message>
         <source>Local path collides with an existing sync</source>
@@ -3971,7 +3971,7 @@ Depolanan verilerinize yeniden erişemeyecek veya yeni bir MEGA hesabına kaydol
     <message>
         <source>Mismatch on sync root FSID.</source>
         <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
-        <translation>Yerel klasördeki değişiklikler nedeniyle bu klasörü senkronize etme veya yedeklemede sorun yaşanıyor. Senkronizasyonu veya yedeklemeyi durdurun ve Ayarlar&apos;da yeniden kurmayı deneyin ya da Destek ile iletişime geçin.</translation>
+        <translation>Yerel klasördeki değişiklikler nedeniyle bu klasörü senkronize etme veya yedeklemede sorun yaşanıyor. Senkronizasyonu veya yedeklemeyi durdurun ve Ayarlar’da yeniden kurmayı deneyin ya da Destek ile iletişime geçin.</translation>
     </message>
     <message>
         <source>No error</source>
@@ -3981,7 +3981,7 @@ Depolanan verilerinize yeniden erişemeyecek veya yeni bir MEGA hesabına kaydol
     <message>
         <source>Put nodes error</source>
         <translatorcomment>SDK error label shown when a put nodes fails.</translatorcomment>
-        <translation>MEGA&apos;da yeni öğeler oluşturulurken hata oluştu</translation>
+        <translation>MEGA’da yeni öğeler oluşturulurken hata oluştu</translation>
     </message>
     <message>
         <source>Reached storage quota limit</source>
@@ -3996,7 +3996,7 @@ Depolanan verilerinize yeniden erişemeyecek veya yeni bir MEGA hesabına kaydol
     <message>
         <source>Remote node is inside Rubbish Bin</source>
         <translatorcomment>SDK error label shown when remote node is inside Rubbish bin.</translatorcomment>
-        <translation>MEGA&apos;daki klasör Çöp kutunuzda</translation>
+        <translation>MEGA’daki klasör Çöp kutunuzda</translation>
     </message>
     <message>
         <source>Remote node is not valid</source>
@@ -4006,7 +4006,7 @@ Depolanan verilerinize yeniden erişemeyecek veya yeni bir MEGA hesabına kaydol
     <message>
         <source>Remote node moved to Rubbish Bin</source>
         <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
-        <translation>MEGA&apos;daki klasör Çöp kutusuna taşındı</translation>
+        <translation>MEGA’daki klasör Çöp kutusuna taşındı</translation>
     </message>
     <message>
         <source>Remote node not found</source>
@@ -4021,12 +4021,12 @@ Depolanan verilerinize yeniden erişemeyecek veya yeni bir MEGA hesabına kaydol
     <message>
         <source>Session closed</source>
         <translatorcomment>SDK error to inform the user that local state of a sync is invalid due to the session was closed. CON-537</translatorcomment>
-        <translation>Çıkış yaptığınız için senkronizasyon veya yedekleme durduruldu. Senkronizasyona devam etmek için Ayarlar&apos;dan senkronizasyonu veya yedeklemeyi yeniden etkinleştirin.</translation>
+        <translation>Çıkış yaptığınız için senkronizasyon veya yedekleme durduruldu. Senkronizasyona devam etmek için Ayarlar’dan senkronizasyonu veya yedeklemeyi yeniden etkinleştirin.</translation>
     </message>
     <message>
         <source>Share without full access</source>
         <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
-        <translation>MEGA&apos;daki paylaşılan klasöre tam erişiminiz yok</translation>
+        <translation>MEGA’daki paylaşılan klasöre tam erişiminiz yok</translation>
     </message>
     <message>
         <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</source>
@@ -4051,7 +4051,7 @@ Depolanan verilerinize yeniden erişemeyecek veya yeni bir MEGA hesabına kaydol
     <message>
         <source>Unable to open state cache database.</source>
         <translatorcomment>SDK error indicating that state cache chouldn´t be opened. CON-537</translatorcomment>
-        <translation>Bu klasör senkronize edilirken veya yedeklenirken sorun oluştu. Senkronizasyonu veya yedeklemeyi durdurun ve Ayarlar&apos;da yeniden kurmayı deneyin ya da Destek ile iletişime geçin.</translation>
+        <translation>Bu klasör senkronize edilirken veya yedeklenirken sorun oluştu. Senkronizasyonu veya yedeklemeyi durdurun ve Ayarlar’da yeniden kurmayı deneyin ya da Destek ile iletişime geçin.</translation>
     </message>
     <message>
         <source>Unable to read sync configs from disk.</source>
@@ -4287,7 +4287,7 @@ Tamamlanan tüm aktarımlarınız temizlenecektir.</translation>
     <message>
         <source>Open in MEGA</source>
         <translatorcomment>Context menu action to open the transfer in MEGA webclient</translatorcomment>
-        <translation>MEGA&apos;da aç</translation>
+        <translation>MEGA’da aç</translation>
     </message>
     <message numerus="yes">
         <source>Pause transfer</source>
@@ -4395,12 +4395,12 @@ Görünümü yenileyin.</translation>
     <message>
         <source>Are you sure you want to remove the remote file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
-        <translation>MEGA&apos;da zaten depolanmış olan [B]%1[/B] dosyası değiştirilsin mi?</translation>
+        <translation>MEGA’da zaten depolanmış olan [B]%1[/B] dosyası değiştirilsin mi?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
-        <translation>MEGA&apos;da zaten depolanmış olan [B]%1[/B] klasörü değiştirilsin mi?</translation>
+        <translation>MEGA’da zaten depolanmış olan [B]%1[/B] klasörü değiştirilsin mi?</translation>
     </message>
     <message>
         <source>It will be moved to the SyncDebris folder on the MEGA Rubbish Bin along with its versions.[BR]You will be able to retrieve the file and its versions from there.[/BR]</source>
@@ -5229,7 +5229,7 @@ Farklı bir ad girin.</translation>
     <message>
         <source>Automatically update your files from your computers to MEGA cloud. Backup items in MEGA cloud can&apos;t be modified or deleted from MEGA cloud.</source>
         <translatorcomment>Final page go to backup button description CON-468</translatorcomment>
-        <translation>Dosyalarınızı bilgisayarlarınızdan MEGA&apos;ya otomatik olarak güncelleyin. MEGA&apos;daki yedeklerinizi silmeyi seçerseniz yerel dosyalarınız kaldırılmaz.</translation>
+        <translation>Dosyalarınızı bilgisayarlarınızdan MEGA’ya otomatik olarak güncelleyin. MEGA’daki yedeklerinizi silmeyi seçerseniz yerel dosyalarınız kaldırılmaz.</translation>
     </message>
     <message>
         <source>Back up</source>
@@ -5334,7 +5334,7 @@ Farklı bir ad girin.</translation>
     <message>
         <source>Data from your device will automatically and consistently back up to MEGA in real-time. Files deleted from your computer will be deleted from MEGA.</source>
         <translatorcomment>Button description, on click it goes to the backups section CON-1268</translatorcomment>
-        <translation>Cihazınızdaki veriler gerçek zamanlı olarak otomatik ve tutarlı bir şekilde MEGA&apos;ya yedeklenir. Bilgisayarınızdan silinen dosyalar MEGA&apos;dan da silinir.</translation>
+        <translation>Cihazınızdaki veriler gerçek zamanlı olarak otomatik ve tutarlı bir şekilde MEGA’ya yedeklenir. Bilgisayarınızdan silinen dosyalar MEGA’dan da silinir.</translation>
     </message>
     <message>
         <source>Device name</source>
@@ -5379,7 +5379,7 @@ Farklı bir ad girin.</translation>
     <message>
         <source>Enter the new email address and click Resend. We will then send the verification email to this new email address for you to activate your account.</source>
         <translatorcomment>Text indicating the user what he has to do in order to change the email addres CON-466</translatorcomment>
-        <translation>Yeni e-posta adresini girin ve Yeniden gönder&apos;e tıklayın. Ardından, hesabınızı etkinleştirmeniz için doğrulama e-postasını bu yeni e-posta adresine göndereceğiz.</translation>
+        <translation>Yeni e-posta adresini girin ve Yeniden gönder’e tıklayın. Ardından, hesabınızı etkinleştirmeniz için doğrulama e-postasını bu yeni e-posta adresine göndereceğiz.</translation>
     </message>
     <message>
         <source>Enter your email address</source>
@@ -5414,7 +5414,7 @@ Farklı bir ad girin.</translation>
     <message>
         <source>I agree with MEGA&apos;s [B][A]Terms of service[/A][/B]</source>
         <translatorcomment>Label shown in the right of a checkbox to accept terms of servcice [B] is for bold and [A] is for link to the terms of service page in the web CON-466</translatorcomment>
-        <translation>MEGA&apos;nın [B][A]Hizmet Şartları[/A][/B]&apos;nı okudum ve kabul ediyorum</translation>
+        <translation>MEGA’nın [B][A]Hizmet Şartları[/A][/B]’nı okudum ve kabul ediyorum</translation>
     </message>
     <message>
         <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
@@ -5544,7 +5544,7 @@ Farklı bir ad girin.</translation>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>Seçilen klasörler, masaüstü uygulaması çalışırken MEGA&apos;ya salt okunur klasörler olarak otomatik olarak yedeklenir. Değişiklikler yalnızca yerel cihazınızdaki yedeklemelerde yapılabilir.</translation>
+        <translation>Seçilen klasörler, masaüstü uygulaması çalışırken MEGA’ya salt okunur klasörler olarak otomatik olarak yedeklenir. Değişiklikler yalnızca yerel cihazınızdaki yedeklemelerde yapılabilir.</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -5554,7 +5554,7 @@ Farklı bir ad girin.</translation>
     <message>
         <source>Set up MEGA</source>
         <translatorcomment>Onboarding window title CON-467</translatorcomment>
-        <translation>MEGA&apos;yı yapılandır</translation>
+        <translation>MEGA’yı yapılandır</translation>
     </message>
     <message>
         <source>Setup options</source>
@@ -5589,7 +5589,7 @@ Farklı bir ad girin.</translation>
     <message>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
-        <translation>MEGA Bulut depolamanızdaki seçili klasörleri yerel cihazınızla senkronize edin. Klasörler, yerel olarak veya MEGA&apos;da yapılan düzenlemelerle güncel kalacaktır.</translation>
+        <translation>MEGA Bulut depolamanızdaki seçili klasörleri yerel cihazınızla senkronize edin. Klasörler, yerel olarak veya MEGA’da yapılan düzenlemelerle güncel kalacaktır.</translation>
     </message>
     <message>
         <source>Sync set up</source>
@@ -5629,12 +5629,12 @@ Farklı bir ad girin.</translation>
     <message>
         <source>View in Settings</source>
         <translatorcomment>Button text that opens the settings dialog CON-467</translatorcomment>
-        <translation>Ayarlar&apos;da Görüntüle</translation>
+        <translation>Ayarlar’da Görüntüle</translation>
     </message>
     <message>
         <source>Welcome to MEGA</source>
         <translatorcomment>Label wellcoming the user to MEGA CON-467</translatorcomment>
-        <translation>MEGA&apos;ya hoş geldiniz</translation>
+        <translation>MEGA’ya hoş geldiniz</translation>
     </message>
     <message>
         <source>What else do you want to do?</source>
@@ -5644,7 +5644,7 @@ Farklı bir ad girin.</translation>
     <message>
         <source>You can view your backups and their statuses under the Backup tab in Settings.</source>
         <translatorcomment>Text indicating that the user can view the backups in settings' backups tab CON-738</translatorcomment>
-        <translation>Yedeklemelerinizi ve durumlarını Ayarlar&apos;daki Yedekleme sekmesi altında görüntüleyebilirsiniz.</translation>
+        <translation>Yedeklemelerinizi ve durumlarını Ayarlar’daki Yedekleme sekmesi altında görüntüleyebilirsiniz.</translation>
     </message>
     <message>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running.</source>
@@ -5692,7 +5692,7 @@ Farklı bir ad girin.</translation>
     <message>
         <source>View in MEGA</source>
         <translatorcomment>Button in settings to open the backups folder in the cloud.SNC-2565</translatorcomment>
-        <translation>MEGA&apos;da görüntüle</translation>
+        <translation>MEGA’da görüntüle</translation>
     </message>
 </context>
 <context>
@@ -5959,12 +5959,12 @@ Farklı bir ad girin.</translation>
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation>Dosya Gezgini&apos;nde göster</translation>
+        <translation>Dosya Gezgini’nde göster</translation>
     </message>
     <message>
         <source>Show in Finder</source>
         <translatorcomment>Label to indicate the &quot;Show in Finder&quot; option to open local folder of a sync (macOS). Keep Finder name as it is the app name of file explorer on macOS.</translatorcomment>
-        <translation>Finder&apos;da Göster</translation>
+        <translation>Finder’da Göster</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -5978,7 +5978,8 @@ Farklı bir ad girin.</translation>
         <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
         <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Bu güncelleme, genel performansı artırmak için çok sayıda temel iyileştirme ve düzeltme içermektedir.
+</translation>
     </message>
 </context>
 <context>
@@ -6515,7 +6516,7 @@ Yine de silmek istiyor musunuz?</translation>
     <message>
         <source>Remote</source>
         <translatorcomment>Title in the choosing widget used to offer the user the option to choose remote version when conflicts occur. SAT-973</translatorcomment>
-        <translation>MEGA&apos;da</translation>
+        <translation>MEGA’da</translation>
     </message>
 </context>
 <context>
@@ -6533,12 +6534,12 @@ Yine de silmek istiyor musunuz?</translation>
     <message>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
-        <translation>Klasörü MEGA&apos;dan sil</translation>
+        <translation>Klasörü MEGA’dan sil</translation>
     </message>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation>Klasör MEGA&apos;dan silinecek ancak cihazınızdan silinmeyecektir. Bu işlem geri alınamaz.</translation>
+        <translation>Klasör MEGA’dan silinecek ancak cihazınızdan silinmeyecektir. Bu işlem geri alınamaz.</translation>
     </message>
     <message>
         <source>Move folder</source>
@@ -6591,7 +6592,7 @@ Yine de silmek istiyor musunuz?</translation>
     <message>
         <source>The data on your computer and in MEGA will not be removed, but the folders will no longer sync with each other.</source>
         <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
-        <translation>Bilgisayarınızdaki ve MEGA&apos;daki veriler kaldırılmaz ancak klasörler artık birbiriyle senkronize edilmez.</translation>
+        <translation>Bilgisayarınızdaki ve MEGA’daki veriler kaldırılmaz ancak klasörler artık birbiriyle senkronize edilmez.</translation>
     </message>
 </context>
 <context>
@@ -6729,7 +6730,7 @@ Yine de silmek istiyor musunuz?</translation>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation>Senkronize edilen dosyalarınızın önceki sürümlerinin yedekleri MEGA&apos;dan kalıcı olarak silinecektir. Devam etmeden önce kurtarmanız gereken bir şey olup olmadığını görmek için MEGA hesabınızın Çöp kutusundaki [A] klasörünü kontrol edin.</translation>
+        <translation>Senkronize edilen dosyalarınızın önceki sürümlerinin yedekleri MEGA’dan kalıcı olarak silinecektir. Devam etmeden önce kurtarmanız gereken bir şey olup olmadığını görmek için MEGA hesabınızın Çöp kutusundaki [A] klasörünü kontrol edin.</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
@@ -6864,7 +6865,7 @@ Yine de silmek istiyor musunuz?</translation>
     <message>
         <source>Folder in MEGA with a backup of files deleted in the local computer</source>
         <translatorcomment>Tooltip shown when hovering remote SyncDebris label.</translatorcomment>
-        <translation>MEGA&apos;da, yerel bilgisayarda silinen dosyaların yedeğini içeren bir klasör</translation>
+        <translation>MEGA’da, yerel bilgisayarda silinen dosyaların yedeğini içeren bir klasör</translation>
     </message>
     <message>
         <source>Folders</source>
@@ -6909,7 +6910,7 @@ Yine de silmek istiyor musunuz?</translation>
     <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
-        <translation>MEGA&apos;da silinen dosyaların yedeğini içeren bir yerel klasör</translation>
+        <translation>MEGA’da silinen dosyaların yedeğini içeren bir yerel klasör</translation>
     </message>
     <message>
         <source>Log out</source>
@@ -7039,7 +7040,7 @@ Yine de silmek istiyor musunuz?</translation>
     <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
-        <translation>SyncDebris (MEGA&apos;da)</translation>
+        <translation>SyncDebris (MEGA’da)</translation>
     </message>
     <message>
         <source>Synchronizations and backups will stop working.</source>
@@ -7318,12 +7319,12 @@ Yine de silmek istiyor musunuz?</translation>
     <message>
         <source>Deleted by user.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud node is deleted by the user.SNC-2565</translatorcomment>
-        <translation>MEGA&apos;da silindi</translation>
+        <translation>MEGA’da silindi</translation>
     </message>
     <message>
         <source>Deleted or moved by user.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud node is moved or deleted by the user.SNC-2565</translatorcomment>
-        <translation>Öğe, MEGA&apos;da silindi veya taşındı</translation>
+        <translation>Öğe, MEGA’da silindi veya taşındı</translation>
     </message>
     <message>
         <source>Detected Sym link.</source>
@@ -7413,7 +7414,7 @@ Yine de silmek istiyor musunuz?</translation>
     <message>
         <source>Source was moved elsewhere.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud version was move.SNC-2565</translatorcomment>
-        <translation>MEGA&apos;daki dosya veya klasör başka bir yere taşındı</translation>
+        <translation>MEGA’daki dosya veya klasör başka bir yere taşındı</translation>
     </message>
     <message>
         <source>The folder could not be found. Ensure that the path is correct and try again.</source>
@@ -7438,7 +7439,7 @@ Yine de silmek istiyor musunuz?</translation>
     <message>
         <source>on MEGA:</source>
         <translatorcomment>Label descriping where the sync stall is originating.SNC-2565</translatorcomment>
-        <translation>MEGA&apos;da:</translation>
+        <translation>MEGA’da:</translation>
     </message>
 </context>
 <context>
@@ -7777,7 +7778,7 @@ Listeyi yenileyin.</translation>
     <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Title of the dialog to stream files from MEGA</translatorcomment>
-        <translation>MEGA&apos;dan yayınla</translation>
+        <translation>MEGA’dan yayınla</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
@@ -7888,7 +7889,7 @@ Listeyi yenileyin.</translation>
     <message>
         <source>You’re helping to improve MEGA for you and everyone who uses it</source>
         <translatorcomment>Description text of the final view after sending the survey responses. CON-942</translatorcomment>
-        <translation>MEGA&apos;yı kendiniz ve onu kullanan herkes için geliştirmeye yardımcı oluyorsunuz</translation>
+        <translation>MEGA’yı kendiniz ve onu kullanan herkes için geliştirmeye yardımcı oluyorsunuz</translation>
     </message>
 </context>
 <context>
@@ -8128,12 +8129,12 @@ Listeyi yenileyin.</translation>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>“%1” adlı senkronizasyonunuz, MEGA&apos;daki klasör Çöp Kutusunda olduğu için devre dışı bırakıldı</translation>
+        <translation>“%1” adlı senkronizasyonunuz, MEGA’daki klasör Çöp Kutusunda olduğu için devre dışı bırakıldı</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>“%1” adlı senkronizasyonunuz, MEGA&apos;nın VirtualBox klasörlerini senkronize edememesi veya yedekleyememesi nedeniyle devre dışı bırakıldı.</translation>
+        <translation>“%1” adlı senkronizasyonunuz, MEGA’nın VirtualBox klasörlerini senkronize edememesi veya yedekleyememesi nedeniyle devre dışı bırakıldı.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
@@ -8143,7 +8144,7 @@ Listeyi yenileyin.</translation>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>“%1” adlı senkronizasyonunuz devre dışı bırakıldı. MEGA&apos;daki klasöre (veya bir kısmına) tam erişiminiz yok.</translation>
+        <translation>“%1” adlı senkronizasyonunuz devre dışı bırakıldı. MEGA’daki klasöre (veya bir kısmına) tam erişiminiz yok.</translation>
     </message>
     <message>
         <source>Your syncs and backups have been disabled: %1</source>
@@ -8397,7 +8398,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Let MEGA solve sync issues automatically</source>
         <translatorcomment>Description for smart solve mode of stalled issues.SNC-2565</translatorcomment>
-        <translation>MEGA&apos;nın senkronizasyon sorunlarını otomatik olarak çözmesine izin verin</translation>
+        <translation>MEGA’nın senkronizasyon sorunlarını otomatik olarak çözmesine izin verin</translation>
     </message>
     <message>
         <source>Smart</source>
@@ -8415,7 +8416,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Open in MEGA</source>
         <translatorcomment>Context menu option that opens the folder in MEGA webclient.SNC-2565</translatorcomment>
-        <translation>MEGA&apos;da aç</translation>
+        <translation>MEGA’da aç</translation>
     </message>
     <message>
         <source>Pause</source>
@@ -8494,7 +8495,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Changes made to synced folders in MEGA or on your device will automatically update in both directions.</source>
         <translatorcomment>Page description to add syncs. CON-1268</translatorcomment>
-        <translation>MEGA&apos;da veya cihazınızda senkronize edilmiş klasörlerde yapılan değişiklikler her iki yönde de otomatik olarak güncellenir.</translation>
+        <translation>MEGA’da veya cihazınızda senkronize edilmiş klasörlerde yapılan değişiklikler her iki yönde de otomatik olarak güncellenir.</translation>
     </message>
     <message>
         <source>Select folders</source>
@@ -8643,7 +8644,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Images</source>
         <translatorcomment>Categories for image type transfers</translatorcomment>
-        <translation>Görüntüler</translation>
+        <translation>Fotoğraflar</translation>
     </message>
     <message numerus="yes">
         <source>Issue found</source>
@@ -8891,7 +8892,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show in MEGA</source>
         <translatorcomment>Notification button to see the file on the webclient. CON-223</translatorcomment>
-        <translation>MEGA&apos;da göster</translation>
+        <translation>MEGA’da göster</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -8916,7 +8917,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>You logged out of MEGA so your upload has stopped. You can resume the upload after logging back in.</source>
         <translatorcomment>Notification message displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
-        <translation><numerusform>MEGA&apos;dan çıkış yaptığınız için yüklemeniz durdu. Tekrar giriş yaptıktan sonra yüklemeye devam edebilirsiniz.</numerusform><numerusform>MEGA&apos;dan çıkış yaptığınız için yüklemeleriniz durdu. Tekrar giriş yaptıktan sonra yüklemelere devam edebilirsiniz.</numerusform></translation>
+        <translation><numerusform>MEGA’dan çıkış yaptığınız için yüklemeniz durdu. Tekrar giriş yaptıktan sonra yüklemeye devam edebilirsiniz.</numerusform><numerusform>MEGA’dan çıkış yaptığınız için yüklemeleriniz durdu. Tekrar giriş yaptıktan sonra yüklemelere devam edebilirsiniz.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -9014,7 +9015,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Message displayed when the user is trying to cancel a sync transfer.</translatorcomment>
-        <translation>Senkronizasyon aktarımları iptal edilemez. Senkronizasyonu kaldırmak için masaüstü uygulamasında Ayarlar&apos;a gidin ve senkronize edilmiş klasörü silin.</translation>
+        <translation>Senkronizasyon aktarımları iptal edilemez. Senkronizasyonu kaldırmak için masaüstü uygulamasında Ayarlar’a gidin ve senkronize edilmiş klasörü silin.</translation>
     </message>
 </context>
 <context>
@@ -9052,7 +9053,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel all images</source>
         <translatorcomment>Tooltip for cancel button when the user is in the images category</translatorcomment>
-        <translation>Görüntülerdeki tüm aktarımları iptal et</translation>
+        <translation>Fotoğraflardaki tüm aktarımları iptal et</translation>
     </message>
     <message>
         <source>Cancel all search results</source>
@@ -9092,7 +9093,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel and clear all images</source>
         <translatorcomment>Tooltip for cancel button when the user is in the images category and there are completed transfers</translatorcomment>
-        <translation>Tüm görüntüleri iptal et ve temizle</translation>
+        <translation>Tüm fotoğrafları iptal et ve temizle</translation>
     </message>
     <message>
         <source>Cancel and clear all search results</source>
@@ -9132,7 +9133,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Clear all images</source>
         <translatorcomment>Tooltip for clear button when the user is in the images category</translatorcomment>
-        <translation>Görüntülerdeki tüm aktarımları temizle</translation>
+        <translation>Fotoğraflardaki tüm aktarımları temizle</translation>
     </message>
     <message>
         <source>Clear all search results</source>
@@ -9182,7 +9183,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Pause all images</source>
         <translatorcomment>Tooltip for Pause button when the user is in the images category</translatorcomment>
-        <translation>Tüm görüntüleri duraklat</translation>
+        <translation>Tüm fotoğrafları duraklat</translation>
     </message>
     <message>
         <source>Pause all search results</source>
@@ -9227,7 +9228,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Resume all images</source>
         <translatorcomment>Tooltip for Resume button when the user is in the images category</translatorcomment>
-        <translation>Tüm görüntülere devam et</translation>
+        <translation>Tüm fotoğraflara devam et</translation>
     </message>
     <message>
         <source>Resume all search results</source>
@@ -9385,7 +9386,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to upload a file/folder to MEGA.(MAX 20 characters)</translatorcomment>
-        <translation>MEGA&apos;ya yükle</translation>
+        <translation>MEGA’ya yükle</translation>
     </message>
 </context>
 <context>
@@ -9443,7 +9444,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
         <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Daha fazla depolama alanına mı ihtiyacınız var?[BR][B][A]Pro Flexi&apos;yi deneyin[/A][/B]</translation>
+        <translation>Daha fazla depolama alanına mı ihtiyacınız var?[BR][B][A]Pro Flexi’yi deneyin[/A][/B]</translation>
     </message>
     <message>
         <source>Recommended</source>
@@ -9453,7 +9454,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Save up to %1% with yearly billing</source>
         <translatorcomment>Label with information about the discount of the annual subscription compared to the monthly subscription for the plan selected in the window. The placeholder %1 shall be replaced by the discount percentage. CON-945</translatorcomment>
-        <translation>Yıllık ödemeyle %%1&apos;ya varan oranda tasarruf edin</translation>
+        <translation>Yıllık ödemeyle %%1’ya varan oranda tasarruf edin</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
@@ -9504,7 +9505,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
-        <translation><numerusform>%3 alanın %1&apos;si (%%2) kadarı kullanılıyor</numerusform><numerusform>%3 alanın %1&apos;si (%%2) kadarı kullanılıyor</numerusform></translation>
+        <translation><numerusform>%3 alanın %1’si (%%2) kadarı kullanılıyor</numerusform><numerusform>%3 alanın %1’si (%%2) kadarı kullanılıyor</numerusform></translation>
     </message>
     <message>
         <source>%1 [A]d[/A]</source>
@@ -9529,7 +9530,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to indicate the amount of used and total space available. Keep %1 (used space) and %2 (total space) substitution placeholders because they will be filled with the required amounts of storage space dynamically including the unit (e.g. 1KB, 5MB, 8GB...). CON-944</translatorcomment>
-        <translation>%2 alanın %1&apos;si kullanılıyor</translation>
+        <translation>%2 alanın %1’si kullanılıyor</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
@@ -9755,7 +9756,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>What&apos;s new in MEGA</source>
         <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.SAT-1670</translatorcomment>
-        <translation>MEGA&apos;daki yenilikler</translation>
+        <translation>MEGA’daki yenilikler</translation>
     </message>
 </context>
 <context>

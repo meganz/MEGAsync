@@ -5976,7 +5976,8 @@ Nhập một tên khác.</translation>
         <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
         <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Bản cập nhật này bao gồm nhiều cải tiến cốt lõi và bản sửa lỗi để nâng cao hiệu suất tổng thể.
+</translation>
     </message>
 </context>
 <context>

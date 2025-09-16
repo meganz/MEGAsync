@@ -5977,7 +5977,8 @@ Enter a different name</source>
         <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
         <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- 此更新包括許多核心改進和修復，提高整體效能。
+</translation>
     </message>
 </context>
 <context>
