@@ -1470,7 +1470,9 @@ void MegaApplication::onLoginFinished()
                 this, &MegaApplication::onScheduledExecution);
     }
 
+    // Init desktop integration
     ThemeManager::instance()->init();
+    Platform::getInstance()->disableContextMenu(Preferences::instance()->contextMenuDisabled());
     Platform::getInstance()->unHideTrayIcon();
 }
 
@@ -3150,7 +3152,10 @@ void MegaApplication::unlink(bool keepLogs)
     }
     megaApiFolders->setAccountAuth(nullptr);
     DialogOpener::closeAllDialogs();
+
+    // Reset desktop integration
     Platform::getInstance()->notifyAllSyncFoldersRemoved();
+    Platform::getInstance()->disableContextMenu(false);
 
     AccountDetailsManager::instance()->reset();
 

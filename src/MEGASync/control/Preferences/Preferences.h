@@ -420,6 +420,8 @@ public:
     void disableOverlayIcons(bool value);
     bool leftPaneIconsDisabled();
     void disableLeftPaneIcons(bool value);
+    bool contextMenuDisabled();
+    void disableContextMenu(bool value);
     bool error();
 
     QString getDataPath();
@@ -764,6 +766,7 @@ protected:
     static const QString disableOverlayIconsKey;
     static const QString disableFileVersioningKey;
     static const QString disableLeftPaneIconsKey;
+    static const QString disableContextMenuKey;
     static const QString sessionKey;
     static const QString ephemeralSessionKey;
     static const QString firstStartDoneKey;

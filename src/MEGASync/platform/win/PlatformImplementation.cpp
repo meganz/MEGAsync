@@ -681,6 +681,40 @@ void PlatformImplementation::removeAllSyncsFromLeftPane()
     }
 }
 
+void PlatformImplementation::disableContextMenu(bool isDisabled)
+{
+    // Set a reg entry that will be read by the extension
+    // No entry means that the context menu is enabled.
+    static auto kRegPath =
+        QString::fromLatin1("HKEY_CURRENT_USER\\Software\\%1\\%2")
+            .arg(QCoreApplication::organizationName(), QCoreApplication::applicationName());
+    static auto kValueName = QString::fromLatin1("ShellExtensionDisabled"); // DWORD 0/1
+
+    QSettings s(kRegPath, QSettings::NativeFormat);
+
+    if (isDisabled)
+    {
+        s.setValue(kValueName, 1);
+    }
+    else
+    {
+        s.remove(kValueName);
+    }
+    s.sync();
+    if (s.status() == QSettings::NoError)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "ShellExt context menu toggle: success");
+    }
+    else
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                     QString::fromLatin1("ShellExt context menu toggle: error %1")
+                         .arg(s.status())
+                         .toUtf8()
+                         .constData());
+    }
+}
+
 bool PlatformImplementation::makePubliclyReadable(const QString& fileName)
 {
     auto winFilename = (LPTSTR)fileName.utf16();
@@ -864,8 +898,8 @@ void PlatformImplementation::stopShellDispatcher()
     {
         shellDispatcherTask->exitTask();
         shellDispatcherTask->wait();
-        delete shellDispatcherTask;
-        shellDispatcherTask = NULL;
+        shellDispatcherTask->deleteLater();
+        shellDispatcherTask = nullptr;
     }
 }
 

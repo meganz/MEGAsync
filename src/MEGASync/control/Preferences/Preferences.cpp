@@ -230,6 +230,7 @@ const QString Preferences::lastExitKey              = QString::fromLatin1("lastE
 const QString Preferences::disableOverlayIconsKey   = QString::fromLatin1("disableOverlayIcons");
 const QString Preferences::disableFileVersioningKey = QString::fromLatin1("disableFileVersioning");
 const QString Preferences::disableLeftPaneIconsKey  = QString::fromLatin1("disableLeftPaneIcons");
+const QString Preferences::disableContextMenuKey = QString::fromLatin1("disableContextMenu");
 const QString Preferences::sessionKey               = QString::fromLatin1("session");
 const QString Preferences::ephemeralSessionKey      = QString::fromLatin1("ephemeralSession");
 const QString Preferences::firstStartDoneKey        = QString::fromLatin1("firstStartDone");
@@ -2564,6 +2565,19 @@ bool Preferences::leftPaneIconsDisabled()
 void Preferences::disableLeftPaneIcons(bool value)
 {
     setValueConcurrently(disableLeftPaneIconsKey, value);
+}
+
+bool Preferences::contextMenuDisabled()
+{
+    mutex.lock();
+    bool result = getValue(disableContextMenuKey, false);
+    mutex.unlock();
+    return result;
+}
+
+void Preferences::disableContextMenu(bool value)
+{
+    setValueConcurrently(disableContextMenuKey, value);
 }
 
 bool Preferences::error()
