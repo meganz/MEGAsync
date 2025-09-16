@@ -25,6 +25,13 @@
   <property name="cursor">
    <cursorShape>PointingHandCursor</cursorShape>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#columnTitle
+{
+	line-height: 16px;
+	color: #FFF3F4F4; /*colorToken.text-primary*/
+}</string>
+  </property>
   <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0">
    <property name="spacing">
     <number>5</number>
@@ -75,6 +82,9 @@
         </property>
         <property name="text">
          <string/>
+        </property>
+        <property name="font-size" stdset="0">
+         <string notr="true">caption</string>
         </property>
        </widget>
       </item>
@@ -134,8 +144,7 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background: #EEEEEE;
-</string>
+      <string notr="true"/>
      </property>
      <property name="frameShadow">
       <enum>QFrame::Sunken</enum>

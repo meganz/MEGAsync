@@ -32,31 +32,8 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#tvTransfers
+   <string notr="true">#wTableHeader QPushButton
 {
-    background-color: white;
-    paint-alternating-row-colors-for-empty-area: false;
-}
-
-#sWidget, #wTableHeader
-{
-    background-color: white;
-}
-
-#wPauseResumeVisible
-{
-    width: 16px;
-    min-width:16px;
-    max-width: 16px;
-    height: 16px;
-    min-height:16px;
-    max-height: 16px;
-}
-
-#wTableHeader QPushButton
-{
-    color: #666666;
-    font-size: 12px;
     text-align: left;
     border: none;
     margin-right: 0;
@@ -65,8 +42,6 @@
 
 TransferWidgetHeaderItem  QLabel
 {
-   color: #666666;
-   font-size: 12px;
    text-align: left;
    border: none;
    margin-left: 0;
@@ -141,6 +116,7 @@ QMenu::item:disabled
     background-color: #ffffff;
     color: rgba(119,119,119,0.3);
 }
+
 
 QMenu::item:default
 {
@@ -243,12 +219,12 @@ QMenu::item:default
            <height>28</height>
           </size>
          </property>
-         <layout class="QHBoxLayout" name="wTableHeaderLayout" stretch="0,0,0,0,0,0,0,0,0,0">
+         <layout class="QHBoxLayout" name="wTableHeaderLayout" stretch="0,0,0,0,0,0,0,0,0">
           <property name="spacing">
            <number>0</number>
           </property>
           <property name="leftMargin">
-           <number>24</number>
+           <number>20</number>
           </property>
           <property name="topMargin">
            <number>0</number>
@@ -269,23 +245,7 @@ QMenu::item:default
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>48</width>
-              <height>0</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>8</width>
+              <width>1</width>
               <height>0</height>
              </size>
             </property>
@@ -462,7 +422,7 @@ QMenu::item:default
               <number>0</number>
              </property>
              <item>
-              <widget class="QPushButton" name="tPauseResumeVisible">
+              <widget class="IconOnlyButton" name="tPauseResumeVisible">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -491,8 +451,9 @@ QMenu::item:default
                 <string notr="true"/>
                </property>
                <property name="icon">
-                <iconset resource="../../../gui/Resources.qrc">
-                 <normaloff>:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</iconset>
+                <iconset resource="../../../gui/Resources_common.qrc">
+                 <normaloff>:/pause-square_small_thin_outline</normaloff>
+                 <normalon>:/play-square_small_thin_outline</normalon>:/pause-square_small_thin_outline</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -506,8 +467,11 @@ QMenu::item:default
                <property name="hover_selected" stdset="0">
                 <bool>true</bool>
                </property>
-               <property name="default_icon" stdset="0">
-                <string notr="true">qrc:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</string>
+               <property name="normal_off" stdset="0">
+                <string notr="true">icon-secondary</string>
+               </property>
+               <property name="normal_on" stdset="0">
+                <string notr="true">icon-secondary</string>
                </property>
               </widget>
              </item>
@@ -551,7 +515,7 @@ QMenu::item:default
               <number>0</number>
              </property>
              <item>
-              <widget class="QPushButton" name="tCancelClearVisible">
+              <widget class="IconOnlyButton" name="tCancelClearVisible">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -580,8 +544,8 @@ QMenu::item:default
                 <string notr="true"/>
                </property>
                <property name="icon">
-                <iconset resource="../../../gui/Resources.qrc">
-                 <normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</iconset>
+                <iconset resource="../../../gui/Resources_common.qrc">
+                 <normaloff>:/x-square_small_thin_outline</normaloff>:/x-square_small_thin_outline</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -592,8 +556,8 @@ QMenu::item:default
                <property name="checkable">
                 <bool>false</bool>
                </property>
-               <property name="default_icon" stdset="0">
-                <string notr="true">qrc:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</string>
+               <property name="normal_off" stdset="0">
+                <string notr="true">icon-secondary</string>
                </property>
               </widget>
              </item>
@@ -706,6 +670,11 @@ QMenu::item:default
  </widget>
  <customwidgets>
   <customwidget>
+   <class>IconOnlyButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
+  </customwidget>
+  <customwidget>
    <class>MegaTransferView</class>
    <extends>QTreeView</extends>
    <header>MegaTransferView.h</header>
@@ -718,7 +687,7 @@ QMenu::item:default
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../gui/Resources.qrc"/>
+  <include location="../../../gui/Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>

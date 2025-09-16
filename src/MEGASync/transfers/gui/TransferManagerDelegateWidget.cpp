@@ -6,6 +6,7 @@
 #include "TransferWidgetColumnsManager.h"
 #include "ui_TransferManagerDelegateWidget.h"
 #include "Utilities.h"
+#include <TokenParserWidgetManager.h>
 
 #include <QMouseEvent>
 #include <QPainterPath>
@@ -41,6 +42,9 @@ TransferManagerDelegateWidget::TransferManagerDelegateWidget(QWidget *parent) :
     mUi->lDone->installEventFilter(this);
     mUi->lTotal->installEventFilter(this);
     mUi->sStatus->installEventFilter(this);
+
+    setProperty("TOKENIZED", true);
+    TokenParserWidgetManager::instance()->polish(this);
 }
 
 TransferManagerDelegateWidget::~TransferManagerDelegateWidget()

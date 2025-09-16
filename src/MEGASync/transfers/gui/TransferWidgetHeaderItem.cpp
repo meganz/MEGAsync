@@ -109,10 +109,12 @@ bool TransferWidgetHeaderItem::eventFilter(QObject *watched, QEvent *event)
 
 void TransferWidgetHeaderItem::updateChevronIcon()
 {
-   QIcon icon = mCurrentSortOrder == Qt::DescendingOrder ? Utilities::getCachedPixmap(QString::fromLatin1(":/images/chevron-down-ico.png"))
-                                                         : Utilities::getCachedPixmap(QString::fromLatin1(":/images/chevron-up-ico.png"));
-   ui->chevron->setPixmap(icon.pixmap(ui->chevron->size()));
-   ui->chevron->setVisible(true);
+    QIcon icon =
+        mCurrentSortOrder == Qt::DescendingOrder ?
+            Utilities::getCachedPixmap(QString::fromLatin1(":/chevron-down_small_thin_outline")) :
+            Utilities::getCachedPixmap(QString::fromLatin1(":/chevron-up_small_thin_outline"));
+    ui->chevron->setPixmap(icon.pixmap(ui->chevron->size()));
+    ui->chevron->setVisible(true);
 }
 
 void TransferWidgetHeaderItem::turnOffSiblings()

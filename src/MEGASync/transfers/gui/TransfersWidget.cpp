@@ -202,12 +202,11 @@ void TransfersWidget::onCheckCancelClearButton()
     }
 
     if (mCurrentTab == TransfersWidget::COMPLETED_TAB)
-    {        
+    {
         mCancelClearInfo.clearAction = true;
-
     }
     else if ((mCurrentTab > TransfersWidget::TYPES_TAB_BASE && mCurrentTab < TransfersWidget::TYPES_LAST) || mCurrentTab == TransfersWidget::SEARCH_TAB)
-    {        
+    {
         bool showClear(false);
 
         if(areAllTransfersCompleted)
@@ -236,13 +235,27 @@ void TransfersWidget::onCheckCancelClearButton()
     {
         if(mCancelClearInfo.clearAction)
         {
-            ui->tCancelClearVisible->setProperty("default_icon",
-                                                 QString::fromStdString("qrc:/images/transfer_manager/transfers_actions/lists_minus_all_ico_default.png"));
+            if (mCurrentTab == TransfersWidget::SEARCH_TAB)
+            {
+                ui->tCancelClearVisible->setProperty(TOKEN_PROPERTIES::normalOff,
+                                                     QLatin1String("support-warning"));
+                ui->tCancelClearVisible->setIcon(Utilities::getCachedPixmap(
+                    QString::fromUtf8(":/minus-square_small_thin_solid")));
+            }
+            else
+            {
+                ui->tCancelClearVisible->setProperty(TOKEN_PROPERTIES::normalOff,
+                                                     QLatin1String("icon-secondary"));
+                ui->tCancelClearVisible->setIcon(
+                    Utilities::getCachedPixmap(QString::fromUtf8(":/eraser_small_thin_outline")));
+            }
         }
         else
         {
-            ui->tCancelClearVisible->setProperty("default_icon",
-                                                 QString::fromStdString("qrc:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png"));
+            ui->tCancelClearVisible->setProperty(TOKEN_PROPERTIES::normalOff,
+                                                 QLatin1String("icon-secondary"));
+            ui->tCancelClearVisible->setIcon(
+                Utilities::getCachedPixmap(QString::fromUtf8(":/x-square_small_thin_outline")));
         }
     }
 }

@@ -133,8 +133,8 @@ TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QM
         {
             item = mProxyModel->createTransferManagerItem(mView);
             TokenParserWidgetManager::instance()->applyCurrentTheme(item);
-            item->style()->unpolish(item);
-            item->style()->polish(item);
+            TokenParserWidgetManager::instance()->polish(item);
+
             mTransferItems.append(item);
         }
         else

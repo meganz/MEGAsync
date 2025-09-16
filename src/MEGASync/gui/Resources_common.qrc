@@ -1303,5 +1303,12 @@
         <file alias="arrow-down-circle_small_thin_outline">images/themed/tokenizable/arrow-down-circle_small_thin_outline.svg</file>
         <file alias="arrows-up-down-circle_small_thin_outline">images/themed/tokenizable/arrows-up-down-circle_small_thin_outline.svg</file>
         <file alias="search-large_small_thin_outline">images/themed/tokenizable/search-large_small_thin_outline.svg</file>
+        <file alias="pause-square_small_thin_outline">images/themed/tokenizable/pause-square_small_thin_outline.svg</file>
+        <file alias="x-square_small_thin_outline">images/themed/tokenizable/x-square_small_thin_outline.svg</file>
+        <file alias="play-square_small_thin_outline">images/themed/tokenizable/play-square_small_thin_outline.svg</file>
+        <file alias="eraser_small_thin_outline">images/themed/tokenizable/eraser_small_thin_outline.svg</file>
+        <file alias="chevron-down_small_thin_outline">images/themed/tokenizable/chevron-down_small_thin_outline.svg</file>
+        <file alias="chevron-up_small_thin_outline">images/themed/tokenizable/chevron-up_small_thin_outline.svg</file>
+        <file alias="minus-square_small_thin_solid">images/themed/tokenizable/minus-square_small_thin_solid.svg</file>
     </qresource>
 </RCC>
