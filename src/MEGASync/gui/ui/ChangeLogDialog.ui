@@ -154,7 +154,7 @@ border-bottom: 1px solid #FFFFFF; /*colorToken.border-strong*/
             </spacer>
            </item>
            <item>
-            <widget class="QToolButton" name="bMEGAlogo">
+            <widget class="IconLabel" name="bMEGAlogo">
              <property name="minimumSize">
               <size>
                <width>80</width>
@@ -613,6 +613,11 @@ border-bottom: 1px solid #FFFFFF; /*colorToken.border-strong*/
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>TokenizableItems/IconLabel.h</header>
+  </customwidget>
   <customwidget>
    <class>ClickableLabel</class>
    <extends>QLabel</extends>
