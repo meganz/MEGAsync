@@ -5979,7 +5979,8 @@ Introdu un alt nume.</translation>
         <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
         <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Această actualizare include numeroase îmbunătățiri de bază și remedieri pentru a îmbunătăți performanța generală.
+</translation>
     </message>
 </context>
 <context>
