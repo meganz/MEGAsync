@@ -41,12 +41,9 @@ public:
     void toggleOffSiblings();
 
     void setIconTokens(const std::shared_ptr<TokenPropertySetter>& newIconTokens);
-    void setCloseButtonTokens(const std::shared_ptr<TokenPropertySetter>& newCloseButtonTokens);
 
     // Convenient method to set tokens
-    static void applyTokens(QWidget* parent,
-                            std::shared_ptr<TokenPropertySetter> iconTokensSetter,
-                            std::shared_ptr<TokenPropertySetter> closeTokensSetter = nullptr);
+    static void applyTokens(QWidget* parent, std::shared_ptr<TokenPropertySetter> iconTokensSetter);
 
 signals:
     void clicked();

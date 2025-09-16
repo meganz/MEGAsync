@@ -138,16 +138,6 @@ QList<TabSelector*> TabSelector::getTabSelectorByParent(QWidget* parent)
     return parent->findChildren<TabSelector*>();
 }
 
-void TabSelector::setCloseButtonTokens(
-    const std::shared_ptr<TokenPropertySetter>& newCloseButtonTokens)
-{
-    if (newCloseButtonTokens)
-    {
-        mCloseButtonTokens = newCloseButtonTokens;
-        mCloseButtonTokens->applyTokens(ui->lClose);
-    }
-}
-
 void TabSelector::setIconTokens(const std::shared_ptr<TokenPropertySetter>& newIconTokens)
 {
     mIconTokens = newIconTokens;
@@ -155,15 +145,13 @@ void TabSelector::setIconTokens(const std::shared_ptr<TokenPropertySetter>& newI
 }
 
 void TabSelector::applyTokens(QWidget* parent,
-                              std::shared_ptr<TokenPropertySetter> iconTokensSetter,
-                              std::shared_ptr<TokenPropertySetter> closeTokensSetter)
+                              std::shared_ptr<TokenPropertySetter> iconTokensSetter)
 {
     auto tabs = getTabSelectorByParent(parent);
 
     for (auto& tab: tabs)
     {
         tab->setIconTokens(iconTokensSetter);
-        tab->setCloseButtonTokens(closeTokensSetter);
     }
 }
 

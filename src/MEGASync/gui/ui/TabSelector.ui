@@ -37,11 +37,6 @@
   <property name="windowTitle">
    <string notr="true"/>
   </property>
-  <property name="styleSheet">
-   <string notr="true">/*ColorTokenIcon;Button;lClose;normal;off;colorToken.icon-primary*/
-
-</string>
-  </property>
   <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1,0,0">
    <property name="spacing">
     <number>8</number>
@@ -147,6 +142,9 @@
      <property name="icon">
       <iconset resource="../Resources_common.qrc">
        <normaloff>:/x_solid_small</normaloff>:/x_solid_small</iconset>
+     </property>
+     <property name="type" stdset="0">
+      <string notr="true">ghost</string>
      </property>
     </widget>
    </item>
