@@ -29,7 +29,6 @@ private:
     ThemeManager();
 
     Preferences::ThemeType mCurrentTheme;
-    static const QMap<Preferences::ThemeType, QString> mThemesMap;
 };
 
 #endif
