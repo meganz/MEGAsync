@@ -69,6 +69,11 @@ image: url(:/images/themed/light/checkbox_off_disabled.svg); /*replaceThemeToken
     QScrollBar
 */
 
+QScrollBar
+{
+background: transparent;
+}
+
 QScrollBar::handle:vertical
 {
 background: #ff04101E; /*colorToken.button-primary*/

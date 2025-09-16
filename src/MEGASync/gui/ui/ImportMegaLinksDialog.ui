@@ -26,7 +26,8 @@
    <string>Open links</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#ImportMegaLinksDialog {
+   <string notr="true">#ImportMegaLinksDialog 
+{
 background-color: #FFFFFF; /*colorToken.page-background*/
 }
 
@@ -50,19 +51,6 @@ background: transparent;
 #linkList::item:selected:!active 
 {
 background: transparent;
-}
-
-#eLocalFolder, #eMegaFolder
-{
-background-color: #D8D9DB;/*colorToken.page-background*/
-border: 1px solid #D8D9DB; /*colorToken.border-strong*/
-border-radius: 8px;
-height: 36px;
-font-size: 14px;
-color: #616366; /*colorToken.text-placeholder*/
-padding-right: 10px;
-padding-left: 10px;
-border-style: solid;
 }
 
 #cDownload, #cImport
@@ -91,7 +79,7 @@ color: #F3F4F4; /*colorToken.text-primary*/
     <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>10</number>
+    <number>7</number>
    </property>
    <item>
     <widget class="QListWidget" name="linkList">
@@ -207,6 +195,12 @@ color: #F3F4F4; /*colorToken.text-primary*/
              <property name="readOnly">
               <bool>true</bool>
              </property>
+             <property name="type" stdset="0">
+              <string notr="true">mega</string>
+             </property>
+             <property name="dimension" stdset="0">
+              <string notr="true">medium</string>
+             </property>
             </widget>
            </item>
            <item>
@@ -321,6 +315,12 @@ color: #F3F4F4; /*colorToken.text-primary*/
              </property>
              <property name="readOnly">
               <bool>true</bool>
+             </property>
+             <property name="type" stdset="0">
+              <string notr="true">mega</string>
+             </property>
+             <property name="dimension" stdset="0">
+              <string notr="true">medium</string>
              </property>
             </widget>
            </item>

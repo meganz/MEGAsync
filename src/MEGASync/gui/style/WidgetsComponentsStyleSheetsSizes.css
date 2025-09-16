@@ -392,6 +392,17 @@ font-weight:400
 /*
     QLineEdit
 */
+
+QLineEdit[type="mega"][dimension=small]
+{
+height: 26px;
+}
+
+QLineEdit[type="mega"][dimension=medium]
+{
+height: 36px;
+}
+
 QLineEdit[type="mega"], QTextEdit[type="mega"]
 {
 padding-right: 10px;
@@ -399,7 +410,6 @@ padding-left: 10px;
 border-radius: 8px;
 border-style: solid;
 border-width: 1px;
-height: 26px;
 /* Regular and Body-2 (inherited by general rule)*/
 }
 

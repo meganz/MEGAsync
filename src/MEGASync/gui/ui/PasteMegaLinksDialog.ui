@@ -37,13 +37,12 @@ background-color: #ffffff; /*colorToken.page-background*/
 border: 1px solid #D8D9DB; /*colorToken.border-strong*/
 border-radius: 8px;
 color: #616366; /*colorToken.text-placeholder*/
-padding-right: 5px;
+padding: 5px;
 }
 
 #lHeader
 {
 color: #303233; /*colorToken.color-text-primary*/
-font-size: 12px;
 }
 
 </string>
@@ -80,6 +79,9 @@ font-size: 12px;
      </property>
      <property name="semibold" stdset="0">
       <bool>true</bool>
+     </property>
+     <property name="font-size" stdset="0">
+      <string notr="true">body-2</string>
      </property>
     </widget>
    </item>
