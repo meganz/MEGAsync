@@ -3917,7 +3917,7 @@ No podrás recuperar el acceso a tus datos almacenados ni estás autorizado a re
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Error detectado[/B][BR]Se ha producido un error al cargar los recursos de la aplicación y es necesario cerrarla. Vuelve a instalarla desde [A]mega.io/desktop[/A] para resolver este problema. Si el error persiste tras la reinstalación, contacta con el servicio de soporte para obtener ayuda.</translation>
     </message>
 </context>
 <context>
@@ -5699,7 +5699,7 @@ Introduzca un nombre diferente.</translation>
     <message>
         <source>Sign up</source>
         <translatorcomment>Sign up button text CON-465</translatorcomment>
-        <translation>Registrarse</translation>
+        <translation>Crear cuenta</translation>
     </message>
     <message>
         <source>Stop Loggin in</source>
@@ -6116,7 +6116,7 @@ Introduzca un nombre diferente.</translation>
         <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
         <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Esta actualización incluye numerosas mejoras y correcciones para mejorar el rendimiento general.</translation>
     </message>
 </context>
 <context>
@@ -9687,7 +9687,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Save up to %1% with yearly billing</source>
         <translatorcomment>Label with information about the discount of the annual subscription compared to the monthly subscription for the plan selected in the window. The placeholder %1 shall be replaced by the discount percentage. CON-945</translatorcomment>
-        <translation>Ahorra hasta un %1 con el cobro anual</translation>
+        <translation>Ahorra hasta un %1% con el cobro anual</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>

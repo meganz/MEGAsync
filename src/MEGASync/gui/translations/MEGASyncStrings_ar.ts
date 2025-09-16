@@ -5982,7 +5982,8 @@ Enter a different name</source>
         <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
         <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- يتضمن هذا التحديث العديد من التحسينات والإصلاحات الأساسية لتحسين الأداء العام.
+</translation>
     </message>
 </context>
 <context>

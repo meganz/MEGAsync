@@ -5975,7 +5975,7 @@ Enter a different name</source>
         <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
         <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ー本アップデートでは、システム全体のパフォーマンスを最適化するための基盤的な改善と不具合修正を多数実施しました。</translation>
     </message>
 </context>
 <context>
