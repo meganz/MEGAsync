@@ -118,12 +118,12 @@ padding-right: 6px;
 */
 QComboBox[type="mega"][dimension=small]
 {
-height: 26px;
+height: 22px; /* 26 - 2 * 2 (border size) */
 }
 
 QComboBox[type="mega"][dimension=medium]
 {
-height: 36px;
+height: 32px; /* 36 - 2 * 2 (border size) */
 }
 
 QComboBox[type="mega"]
@@ -131,7 +131,7 @@ QComboBox[type="mega"]
 border-width: 2px;
 border-style: solid;
 border-radius: 6px;
-padding: 4px 5px 4px 8px;
+padding-left: 8px;
 /* Semi-bold*/
 font-weight: 400;
 }

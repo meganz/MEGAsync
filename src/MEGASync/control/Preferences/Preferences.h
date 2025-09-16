@@ -433,6 +433,7 @@ public:
     {
         LIGHT_THEME = 0,
         DARK_THEME = 1,
+        SYSTEM_DEFAULT = 2,
         LAST
     };
     Q_ENUM(ThemeType)

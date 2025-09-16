@@ -7,9 +7,9 @@
 #include "Utilities.h"
 
 const QMap<Preferences::ThemeType, QString> ThemeManager::mThemesMap = {
-    {Preferences::ThemeType::LIGHT_THEME,  QLatin1String("Light")},
-    {Preferences::ThemeType::DARK_THEME,  QLatin1String("Dark")}
-};
+    {Preferences::ThemeType::SYSTEM_DEFAULT, QLatin1String("System default")},
+    {Preferences::ThemeType::LIGHT_THEME, QLatin1String("Light")},
+    {Preferences::ThemeType::DARK_THEME, QLatin1String("Dark")}};
 
 ThemeManager::ThemeManager():
     QObject(nullptr),
