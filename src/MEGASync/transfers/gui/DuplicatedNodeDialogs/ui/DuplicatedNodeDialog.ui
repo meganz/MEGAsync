@@ -87,7 +87,7 @@ background-color: #FFFFFF; /*colorToken.page-background*/
        <number>24</number>
       </property>
       <item>
-       <widget class="QToolButton" name="lIcon">
+       <widget class="IconLabel" name="lIcon">
         <property name="minimumSize">
          <size>
           <width>24</width>
@@ -112,9 +112,6 @@ background-color: #FFFFFF; /*colorToken.page-background*/
           <width>24</width>
           <height>24</height>
          </size>
-        </property>
-        <property name="class" stdset="0">
-         <string notr="true">icon-label</string>
         </property>
        </widget>
       </item>
@@ -247,6 +244,13 @@ background-color: #FFFFFF; /*colorToken.page-background*/
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>TokenizableItems/IconLabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../../../gui/Resources_common.qrc"/>
  </resources>

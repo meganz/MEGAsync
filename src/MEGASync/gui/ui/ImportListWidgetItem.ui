@@ -38,7 +38,7 @@ background: transparent;
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <property name="spacing">
-    <number>5</number>
+    <number>0</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -89,7 +89,7 @@ background: transparent;
       <number>12</number>
      </property>
      <item>
-      <widget class="QPushButton" name="lImage">
+      <widget class="IconLabel" name="lImage">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -124,9 +124,6 @@ padding-left: 6px;</string>
          <width>24</width>
          <height>24</height>
         </size>
-       </property>
-       <property name="flat">
-        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -183,7 +180,7 @@ padding-left: 6px;</string>
     </spacer>
    </item>
    <item>
-    <widget class="QToolButton" name="lState">
+    <widget class="IconLabel" name="lState">
      <property name="minimumSize">
       <size>
        <width>16</width>
@@ -227,6 +224,13 @@ padding-right: -2px;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>TokenizableItems/IconLabel.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>cSelected</tabstop>
   <tabstop>lImage</tabstop>

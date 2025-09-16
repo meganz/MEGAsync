@@ -89,7 +89,7 @@ void DuplicatedNodeItem::fillUi()
             QIcon(Utilities::getFolderPixmapName(Utilities::FolderType::TYPE_NORMAL,
                                                  Utilities::AttributeType::MEDIUM));
 
-    ui->lIcon->setPixmap(icon.pixmap(ui->lIcon->size()));
+    ui->lIcon->setIcon(icon);
 }
 
 void DuplicatedNodeItem::setModifiedTime(const QDateTime& dateTime)

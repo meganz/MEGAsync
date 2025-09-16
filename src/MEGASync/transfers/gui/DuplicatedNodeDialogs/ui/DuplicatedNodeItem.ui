@@ -43,11 +43,6 @@
     color: #616366; /*colorToken.text-secondary*/
 }
 
-#lIcon
-{
-   background-color: transparent;
-}
-
 #point
 {
     border-radius: 2px;
@@ -65,12 +60,6 @@
   text-decoration: underline;
   color: #2C5BEB; /*colorToken.link-primary*/
 }
-
-#lDescription {
-font-family: Inter;
-color: #ff616366; /*colorToken.text-secondary*/
-}
-
 </string>
   </property>
   <property name="TOKENIZED" stdset="0">
@@ -145,8 +134,11 @@ color: #ff616366; /*colorToken.text-secondary*/
            <property name="text">
             <string notr="true"/>
            </property>
-           <property name="type" stdset="0">
-            <string notr="true">title</string>
+           <property name="semibold" stdset="0">
+            <string notr="true"/>
+           </property>
+           <property name="font-size" stdset="0">
+            <string notr="true">label-2</string>
            </property>
           </widget>
          </item>
@@ -154,6 +146,9 @@ color: #ff616366; /*colorToken.text-secondary*/
           <widget class="WordWrapLabel" name="lDescription">
            <property name="text">
             <string/>
+           </property>
+           <property name="type" stdset="0">
+            <string notr="true">secondary</string>
            </property>
           </widget>
          </item>
@@ -225,7 +220,7 @@ color: #ff616366; /*colorToken.text-secondary*/
           <number>4</number>
          </property>
          <item>
-          <widget class="QLabel" name="lIcon">
+          <widget class="IconLabel" name="lIcon">
            <property name="minimumSize">
             <size>
              <width>48</width>
@@ -240,6 +235,12 @@ color: #ff616366; /*colorToken.text-secondary*/
            </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>48</width>
+             <height>48</height>
+            </size>
            </property>
           </widget>
          </item>
@@ -445,6 +446,11 @@ color: #ff616366; /*colorToken.text-secondary*/
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>TokenizableItems/IconLabel.h</header>
+  </customwidget>
   <customwidget>
    <class>WordWrapLabel</class>
    <extends>QLabel</extends>
