@@ -237,25 +237,16 @@ void TransfersWidget::onCheckCancelClearButton()
         {
             if (mCurrentTab == TransfersWidget::SEARCH_TAB)
             {
-                ui->tCancelClearVisible->setProperty(TOKEN_PROPERTIES::normalOff,
-                                                     QLatin1String("support-warning"));
-                ui->tCancelClearVisible->setIcon(Utilities::getCachedPixmap(
-                    QString::fromUtf8(":/minus-square_small_thin_solid")));
+                ui->tCancelClearVisible->setProperty("state", QLatin1String("minus"));
             }
             else
             {
-                ui->tCancelClearVisible->setProperty(TOKEN_PROPERTIES::normalOff,
-                                                     QLatin1String("icon-secondary"));
-                ui->tCancelClearVisible->setIcon(
-                    Utilities::getCachedPixmap(QString::fromUtf8(":/eraser_small_thin_outline")));
+                ui->tCancelClearVisible->setProperty("state", QLatin1String("eraser"));
             }
         }
         else
         {
-            ui->tCancelClearVisible->setProperty(TOKEN_PROPERTIES::normalOff,
-                                                 QLatin1String("icon-secondary"));
-            ui->tCancelClearVisible->setIcon(
-                Utilities::getCachedPixmap(QString::fromUtf8(":/x-square_small_thin_outline")));
+            ui->tCancelClearVisible->setProperty("state", QLatin1String("x"));
         }
     }
 }
