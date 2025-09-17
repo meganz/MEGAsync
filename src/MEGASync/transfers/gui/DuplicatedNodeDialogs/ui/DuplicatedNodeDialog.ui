@@ -43,7 +43,7 @@ background-color: #FFFFFF; /*colorToken.page-background*/
 
 #cbApplyToAll
 {
-    color: #3D3D3D;/*colorToken.text-primary*/
+ color: #3D3D3D;/*colorToken.text-primary*/
 }</string>
   </property>
   <property name="TOKENIZED" stdset="0">
@@ -104,7 +104,7 @@ background-color: #FFFFFF; /*colorToken.page-background*/
          <string notr="true"/>
         </property>
         <property name="icon">
-         <iconset resource="../../../../gui/Resources_common.qrc">
+         <iconset>
           <normaloff>:/images/alert_triangle.svg</normaloff>:/images/alert_triangle.svg</iconset>
         </property>
         <property name="iconSize">
@@ -251,8 +251,6 @@ background-color: #FFFFFF; /*colorToken.page-background*/
    <header>TokenizableItems/IconLabel.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../../../../gui/Resources_common.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

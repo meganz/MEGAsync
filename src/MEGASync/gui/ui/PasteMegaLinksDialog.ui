@@ -103,17 +103,7 @@ color: #303233; /*colorToken.color-text-primary*/
       <enum>QPlainTextEdit::WidgetWidth</enum>
      </property>
      <property name="plainText">
-      <string>https://mega.nz/file/XgRAlLLQ#QC1nLTVoR6uWBsfKCbZGrHiF8-uVjr6VFMH_d1SVRIs
-https://mega.nz/file/upxRjbAR#2JvZrG8yRt5LdqXceMrF-vh0NTDZHXfvIbff0LP2EDo
-https://mega.nz/file/n5xRlY7I#nUlNf98MatTTGDuF0bdwJ_nKN8qbga-T9491qXNaRGo
-https://mega.nz/file/29BhgBKR#-vaVuCSOrq70dSlymLaHPBoYmOa6E99rsGnqOP3tUpo
-https://mega.nz/file/ughB0RSJ#Nf5zQ1FJoQ0pruWzghxu8yitxWUyV-GXvdIS3SYreg8
-https://mega.nz/file/XoBXyRoB#E5VKdOWWrsFBtIj-ZmZBLey1SwPJ9Kz5izPX1Ny7tVA
-https://mega.nz/file/uohWxZYD#FjQZ3UFODyWPsnprLoYVGppNXWI3fSCgwqlSoEiQlGk
-https://mega.nz/file/2xIzQIiK#lfwKZzh1GSdRAYe3i3Wz-OLJIgAvU7rYAcVTlvtnd1I
-https://mega.nz/file/asoSRCjZ#7ZvnR--UJgSKXi4KJ0ZdxGIwi9XzbTzFZy_tz13D07U
-https://mega.nz/file/eppBQSqb#jrhrPVKYwTxYPud39vEcb-BwdJ0kXoKP6wEnRTImC9w
-https://mega.nz/file/bo4lBZjL#-2pR965_J3muFW_lk23qEaHlxxDHwXZ1BiRYbvF-vyM</string>
+      <string/>
      </property>
      <property name="centerOnScroll">
       <bool>false</bool>
