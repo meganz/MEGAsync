@@ -510,7 +510,7 @@ color: grey;
         <number>0</number>
        </property>
        <item row="0" column="0">
-        <widget class="QToolButton" name="emptyIcon">
+        <widget class="IconLabel" name="emptyIcon">
          <property name="text">
           <string notr="true">...</string>
          </property>
@@ -520,8 +520,8 @@ color: grey;
            <height>96</height>
           </size>
          </property>
-         <property name="class" stdset="0">
-          <string notr="true">icon-label</string>
+         <property name="normal_off" stdset="0">
+          <string notr="true">icon-primary</string>
          </property>
         </widget>
        </item>
@@ -571,7 +571,7 @@ color: grey;
        <number>0</number>
       </property>
       <item>
-       <widget class="QPushButton" name="HelpButton">
+       <widget class="TokenizableButton" name="HelpButton">
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
         </property>
@@ -647,6 +647,11 @@ color: grey;
  </widget>
  <customwidgets>
   <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>TokenizableItems/IconLabel.h</header>
+  </customwidget>
+  <customwidget>
    <class>TabSelector</class>
    <extends>QWidget</extends>
    <header>TabSelector.h</header>
@@ -661,6 +666,11 @@ color: grey;
    <class>StalledIssuesView</class>
    <extends>QTreeView</extends>
    <header>StalledIssuesView.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TokenizableButton</class>
+   <extends>QPushButton</extends>
+   <header>TokenizableItems/TokenizableButtons.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
