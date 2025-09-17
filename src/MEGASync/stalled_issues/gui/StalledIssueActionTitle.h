@@ -41,6 +41,7 @@ public:
     virtual void showIcon();
     void setMessage(const QString& message,
                     const QString& pixmapName = QString(),
+                    const QString& iconToken = QString(),
                     const QString& tooltip = QString());
 
     void setFailed(bool state, const QString& errorTooltip);

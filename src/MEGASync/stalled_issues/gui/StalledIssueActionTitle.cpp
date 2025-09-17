@@ -4,6 +4,8 @@
 #include "StalledIssuesModel.h"
 #include "StalledIssuesUtilities.h"
 #include "ThemeManager.h"
+#include "TokenizableItems/TokenizableButtons.h"
+#include "TokenizableItems/TokenPropertyNames.h"
 #include "TokenParserWidgetManager.h"
 #include "ui_StalledIssueActionTitle.h"
 #include "Utilities.h"
@@ -101,19 +103,22 @@ void StalledIssueActionTitle::addActionButton(const QIcon& icon,
                                               const QString& type)
 {
     //Update existing buttons
-    auto buttons = ui->actionContainer->findChildren<QPushButton*>();
+    auto buttons = ui->actionContainer->findChildren<TokenizableButton*>();
     foreach(auto& button, buttons)
     {
         if(button->property(BUTTON_ID).toInt() == id)
         {
             button->setIcon(icon);
             button->setText(text);
+            button->setProperty("type", type);
+            button->setProperty(MAIN_BUTTON, mainButton);
             return;;
         }
     }
 
-    auto button = new QPushButton(icon, text, this);
-
+    auto button = new TokenizableButton(this);
+    button->setIcon(icon);
+    button->setText(text);
     button->setProperty(BUTTON_ID, id);
     button->setProperty(MAIN_BUTTON,mainButton);
     if (!type.isEmpty())
@@ -122,16 +127,23 @@ void StalledIssueActionTitle::addActionButton(const QIcon& icon,
     }
     button->setProperty("dimension", QLatin1String("small"));
     button->setCursor(Qt::PointingHandCursor);
-    button->setFixedHeight(26);
 
-    connect(button, &QPushButton::clicked, this, [this]()
-    {
-        QApplication::postEvent(this, new QMouseEvent(QEvent::MouseButtonPress, QPointF(), Qt::LeftButton, Qt::NoButton, Qt::KeyboardModifier::AltModifier));
-        qApp->processEvents();
-        emit actionClicked(sender()->property(BUTTON_ID).toInt());
-    });
+    connect(button,
+            &TokenizableButton::clicked,
+            this,
+            [this]()
+            {
+                QApplication::postEvent(this,
+                                        new QMouseEvent(QEvent::MouseButtonPress,
+                                                        QPointF(),
+                                                        Qt::LeftButton,
+                                                        Qt::NoButton,
+                                                        Qt::KeyboardModifier::AltModifier));
+                qApp->processEvents();
+                emit actionClicked(sender()->property(BUTTON_ID).toInt());
+            });
 
-    ui->actionLayout->addWidget(button);
+    ui->actionLayout->addWidget(button, 0, Qt::AlignRight);
 
     if(!icon.isNull())
     {
@@ -194,6 +206,7 @@ void StalledIssueActionTitle::showIcon()
 
 void StalledIssueActionTitle::setMessage(const QString& message,
                                          const QString& pixmapName,
+                                         const QString& iconToken,
                                          const QString& tooltip)
 {
     updateSizeHints();
@@ -201,6 +214,7 @@ void StalledIssueActionTitle::setMessage(const QString& message,
     ui->messageContainer->installEventFilter(this);
     ui->messageContainer->setToolTip(tooltip);
 
+    ui->iconLabel->setProperty(TOKEN_PROPERTIES::normalOff, iconToken);
     ui->iconLabel->setIcon(QIcon(pixmapName));
 
     ui->messageLabel->setText(ui->messageLabel->fontMetrics().elidedText(message, Qt::ElideMiddle, ui->contents->width()/3));
@@ -212,14 +226,12 @@ void StalledIssueActionTitle::addExtraInfo(AttributeType type, const QString& ti
     ui->extraInfoContainer->show();
 
     auto titleLabel = new QLabel(title, this);
-    titleLabel->setProperty("type", QLatin1String("secondary"));
-    titleLabel->setProperty("dimension", QLatin1String("small"));
+    titleLabel->setProperty("font-size", QLatin1String("caption"));
 
     auto infoLabel = new QLabel(info, this);
     infoLabel->setProperty(MESSAGE_TEXT, info);
     infoLabel->setProperty(EXTRAINFO_INFO, true);
-    infoLabel->setProperty("type", QLatin1String("secondary"));
-    infoLabel->setProperty("dimension", QLatin1String("small"));
+    infoLabel->setProperty("font-size", QLatin1String("caption"));
 
     mTitleLabels[type] = titleLabel;
     mUpdateLabels[type] = infoLabel;

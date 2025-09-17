@@ -57,8 +57,11 @@ void FolderMatchedAgainstFileWidget::refreshUi()
 
     if (issue->isSolved())
     {
-        QString successIconName(Utilities::getPixmapName(QLatin1String("check_support_success"),
-                                                         Utilities::AttributeType::NONE));
+        auto iconName = Utilities::getPixmapName(QLatin1String("check"),
+                                                 Utilities::AttributeType::SMALL |
+                                                     Utilities::AttributeType::THIN |
+                                                     Utilities::AttributeType::OUTLINE);
+        auto iconToken = QLatin1String("support-success");
 
         switch (result.sideRenamed)
         {
@@ -67,7 +70,8 @@ void FolderMatchedAgainstFileWidget::refreshUi()
                 ui->remoteCopy->setMessage(
                     QApplication::translate("NameConflict", "Renamed to \"%1\"")
                         .arg(result.newName),
-                    successIconName);
+                    iconName,
+                    iconToken);
                 break;
             }
             case StalledIssuesUtilities::KeepBothSidesState::LOCAL:
@@ -75,7 +79,8 @@ void FolderMatchedAgainstFileWidget::refreshUi()
                 ui->localCopy->setMessage(
                     QApplication::translate("NameConflict", "Renamed to \"%1\"")
                         .arg(result.newName),
-                    successIconName);
+                    iconName,
+                    iconToken);
                 break;
             }
             default:

@@ -1233,8 +1233,19 @@
         <file alias="help-circle">images/themed/common/help-circle.svg</file>
         <file alias="arrows-up-down-circle">images/themed/tokenizable/arrows-up-down-circle.svg</file>
         <file alias="chevron-left_default">images/themed/tokenizable/chevron-left_default.svg</file>
-        <file alias="alert-triangle">images/themed/tokenizable/Stalled Issues/Header/alert-triangle.svg</file>
-        <file alias="info">images/themed/tokenizable/info.svg</file>
-        <file alias="refresh">images/themed/tokenizable/Stalled Issues/refresh.svg</file>
+        <file alias="check_small_thin_outline">images/themed/tokenizable/check_small_thin_outline.svg</file>
+        <file alias="cross_small_thin_outline">images/themed/tokenizable/cross_small_thin_outline.svg</file>
+        <file alias="magic_wand_small_thin_outline">images/themed/tokenizable/magic_wand_small_thin_outline.svg</file>
+        <file alias="minus_circle_small_thin_outline">images/themed/tokenizable/minus_circle_small_thin_outline.svg</file>
+        <file alias="MEGA_small_thin_outline">images/themed/tokenizable/MEGA_small_thin_outline.svg</file>
+        <file alias="monitor_small_thin_outline">images/themed/tokenizable/monitor_small_thin_outline.svg</file>
+        <file alias="rotate-ccw_small_thin_outline">images/themed/tokenizable/rotate-ccw_small_thin_outline.svg</file>
+        <file alias="pen-2_small_thin_outline">images/themed/tokenizable/pen-2_small_thin_outline.svg</file>
+        <file alias="info_small_thin_solid">images/themed/tokenizable/info_small_thin_solid.svg</file>
+        <file alias="clock_small_thin_outline">images/themed/tokenizable/clock_small_thin_outline.svg</file>
+        <file alias="keep-both_small_thin_outline">images/themed/tokenizable/keep-both_small_thin_outline.svg</file>
+        <file alias="help-circle_small_thin_solid">images/themed/tokenizable/help-circle_small_thin_solid.svg</file>
+        <file alias="refresh-01_medium_thin_outline">images/themed/tokenizable/refresh-01_medium_thin_outline.svg</file>
+        <file alias="alert-triangle_small_thin_outline">images/themed/tokenizable/alert-triangle_small_thin_outline.svg</file>
     </qresource>
 </RCC>

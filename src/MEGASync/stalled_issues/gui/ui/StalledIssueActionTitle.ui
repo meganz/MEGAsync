@@ -22,12 +22,6 @@
     <height>0</height>
    </size>
   </property>
-  <property name="maximumSize">
-   <size>
-    <width>16777215</width>
-    <height>16777215</height>
-   </size>
-  </property>
   <property name="windowTitle">
    <string notr="true"/>
   </property>
@@ -90,13 +84,19 @@ border-radius: 4px;
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item>
+   <item alignment="Qt::AlignVCenter">
     <widget class="QWidget" name="backgroundWidget" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>40</height>
+      </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
       <property name="spacing">
@@ -106,15 +106,15 @@ border-radius: 4px;
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>4</number>
       </property>
       <property name="rightMargin">
        <number>4</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>4</number>
       </property>
-      <item>
+      <item alignment="Qt::AlignVCenter">
        <widget class="QWidget" name="generalContainer" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -187,7 +187,7 @@ border-radius: 4px;
                 <number>0</number>
                </property>
                <item>
-                <widget class="QToolButton" name="icon">
+                <widget class="IconLabel" name="icon">
                  <property name="minimumSize">
                   <size>
                    <width>24</width>
@@ -212,9 +212,6 @@ border-radius: 4px;
                    <height>24</height>
                   </size>
                  </property>
-                 <property name="class" stdset="0">
-                  <string notr="true">icon-label</string>
-                 </property>
                 </widget>
                </item>
                <item alignment="Qt::AlignVCenter">
@@ -231,8 +228,11 @@ border-radius: 4px;
                    <bold>true</bold>
                   </font>
                  </property>
-                 <property name="type" stdset="0">
-                  <string notr="true">primary</string>
+                 <property name="font-size" stdset="0">
+                  <string notr="true">body-2</string>
+                 </property>
+                 <property name="semibold" stdset="0">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>
@@ -292,7 +292,7 @@ border-radius: 4px;
                 <number>0</number>
                </property>
                <item>
-                <widget class="QToolButton" name="iconLabel">
+                <widget class="IconLabel" name="iconLabel">
                  <property name="minimumSize">
                   <size>
                    <width>16</width>
@@ -311,9 +311,6 @@ border-radius: 4px;
                  <property name="text">
                   <string notr="true"/>
                  </property>
-                 <property name="class" stdset="0">
-                  <string notr="true">icon-label</string>
-                 </property>
                 </widget>
                </item>
                <item>
@@ -321,8 +318,8 @@ border-radius: 4px;
                  <property name="text">
                   <string/>
                  </property>
-                 <property name="type" stdset="0">
-                  <string notr="true">secondary</string>
+                 <property name="font-size" stdset="0">
+                  <string notr="true">body-2</string>
                  </property>
                 </widget>
                </item>
@@ -354,7 +351,7 @@ border-radius: 4px;
              <number>0</number>
             </property>
             <property name="bottomMargin">
-             <number>4</number>
+             <number>0</number>
             </property>
            </layout>
           </widget>
@@ -362,11 +359,11 @@ border-radius: 4px;
         </layout>
        </widget>
       </item>
-      <item>
+      <item alignment="Qt::AlignRight|Qt::AlignVCenter">
        <widget class="QWidget" name="actionContainer" native="true">
         <layout class="QHBoxLayout" name="actionLayout">
          <property name="spacing">
-          <number>8</number>
+          <number>0</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -389,6 +386,11 @@ border-radius: 4px;
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>TokenizableItems/IconLabel.h</header>
+  </customwidget>
   <customwidget>
    <class>WordWrapLabel</class>
    <extends>QTextEdit</extends>

@@ -35,15 +35,21 @@ void MoveOrRenameCannotOccurChooseWidget::updateUi(
         {
             ui->chooseTitle->setMessage(
                 chosenString(),
-                Utilities::getPixmapName(QLatin1String("check_support_success"),
-                                         Utilities::AttributeType::NONE));
+                Utilities::getPixmapName(QLatin1String("check"),
+                                         Utilities::AttributeType::SMALL |
+                                             Utilities::AttributeType::THIN |
+                                             Utilities::AttributeType::OUTLINE),
+                QLatin1String("support-success"));
         }
         else
         {
             ui->chooseTitle->setMessage(
                 tr("Changes Undone"),
-                Utilities::getPixmapName(QLatin1String("rotate_arrow_support_error"),
-                                         Utilities::AttributeType::NONE));
+                Utilities::getPixmapName(QLatin1String("rotate-ccw"),
+                                         Utilities::AttributeType::SMALL |
+                                             Utilities::AttributeType::THIN |
+                                             Utilities::AttributeType::OUTLINE),
+                QLatin1String("support-error"));
         }
     }
 
@@ -63,10 +69,11 @@ LocalMoveOrRenameCannotOccurChooseWidget::LocalMoveOrRenameCannotOccurChooseWidg
 void LocalMoveOrRenameCannotOccurChooseWidget::updateUi(
     std::shared_ptr<const MoveOrRenameCannotOccurIssue> issue)
 {
-    MoveOrRenameCannotOccurChooseWidget::updateUi(issue);
     ui->chooseTitle->setHTML(tr("Local"));
+    ui->chooseTitle->setIsCloud(false);
     ui->name->setIsCloud(false);
 
+    MoveOrRenameCannotOccurChooseWidget::updateUi(issue);
 
     if(!issue->isUnsolved() && issue->getChosenSide() != MoveOrRenameIssueChosenSide::NONE)
     {
@@ -101,10 +108,11 @@ RemoteMoveOrRenameCannotOccurChooseWidget::RemoteMoveOrRenameCannotOccurChooseWi
 void RemoteMoveOrRenameCannotOccurChooseWidget::updateUi(
     std::shared_ptr<const MoveOrRenameCannotOccurIssue> issue)
 {
-    MoveOrRenameCannotOccurChooseWidget::updateUi(issue);
     ui->chooseTitle->setHTML(tr("Remote"));
+    ui->chooseTitle->setIsCloud(true);
     ui->name->setIsCloud(true);
 
+    MoveOrRenameCannotOccurChooseWidget::updateUi(issue);
 
     if(!issue->isUnsolved() && issue->getChosenSide() != MoveOrRenameIssueChosenSide::NONE)
     {

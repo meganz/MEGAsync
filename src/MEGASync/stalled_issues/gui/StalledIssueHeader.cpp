@@ -9,6 +9,7 @@
 #include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
 #include "ThemeManager.h"
+#include "TokenizableItems/TokenPropertyNames.h"
 #include "TokenParserWidgetManager.h"
 #include "Utilities.h"
 
@@ -42,8 +43,6 @@ StalledIssueHeader::StalledIssueHeader(QWidget* parent):
     QSizePolicy sp_retain = ui->arrow->sizePolicy();
     sp_retain.setRetainSizeWhenHidden(true);
     ui->arrow->setSizePolicy(sp_retain);
-    ui->arrow->setAttribute(Qt::WA_TransparentForMouseEvents, true);
-    ui->fileTypeIcon->setAttribute(Qt::WA_TransparentForMouseEvents, true);
 }
 
 StalledIssueHeader::~StalledIssueHeader()
@@ -55,13 +54,7 @@ void StalledIssueHeader::expand(bool state)
 {
     if(mIsExpandable)
     {
-        QString arrow(state ? QLatin1String("chevron-down_default") :
-                              QLatin1String("chevron-left_default"));
-
-        ui->arrow->setIcon(QIcon(Utilities::getColoredPixmap(arrow,
-                                                             Utilities::AttributeType::NONE,
-                                                             QLatin1String("icon-secondary"),
-                                                             ui->arrow->size())));
+        ui->arrow->setChecked(state);
     }
 }
 
@@ -214,7 +207,9 @@ void StalledIssueHeader::onMultipleActionClicked()
     }
 }
 
-void StalledIssueHeader::showMessage(const QString& message, const QString& icon)
+void StalledIssueHeader::showMessage(const QString& message,
+                                     const QString& icon,
+                                     QString& iconToken)
 {
     ui->actionContainer->show();
     if (!message.isEmpty() || !icon.isEmpty())
@@ -228,6 +223,7 @@ void StalledIssueHeader::showMessage(const QString& message, const QString& icon
     {
         ui->actionMessageIcon->show();
         ui->actionMessageIcon->setIcon(QIcon(icon));
+        ui->actionMessageIcon->setProperty(TOKEN_PROPERTIES::normalOff, iconToken);
     }
     else
     {
@@ -239,6 +235,7 @@ void StalledIssueHeader::updateIssueState()
 {
     StalledIssue::SolveType type(StalledIssue::SolveType::UNSOLVED);
     QString iconName;
+    QString iconToken;
     QString message;
 
     if (getData().consultData()->hasCustomMessage())
@@ -281,8 +278,12 @@ void StalledIssueHeader::updateIssueState()
             {
                 ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("ignored"));
 
-                iconName = Utilities::getPixmapName(QLatin1String("minus_circle_support_warning"),
-                                                    Utilities::AttributeType::NONE);
+                iconName = Utilities::getPixmapName(QLatin1String("minus_circle"),
+                                                    Utilities::AttributeType::SMALL |
+                                                        Utilities::AttributeType::THIN |
+                                                        Utilities::AttributeType::OUTLINE);
+                iconToken = QLatin1String("support_warning");
+
                 if (message.isEmpty())
                 {
                     message = tr("Ignored");
@@ -294,8 +295,12 @@ void StalledIssueHeader::updateIssueState()
 
                 if(getData().consultData()->wasAutoResolutionApplied())
                 {
-                    iconName = Utilities::getPixmapName(QLatin1String("magic_wand_support_success"),
-                                                        Utilities::AttributeType::NONE);
+                    iconName = Utilities::getPixmapName(QLatin1String("magic_wand"),
+                                                        Utilities::AttributeType::SMALL |
+                                                            Utilities::AttributeType::THIN |
+                                                            Utilities::AttributeType::OUTLINE);
+                    iconToken = QLatin1String("support_sucess");
+
                     if (message.isEmpty())
                     {
                         message = tr("Auto-solved");
@@ -303,8 +308,12 @@ void StalledIssueHeader::updateIssueState()
                 }
                 else
                 {
-                    iconName = Utilities::getPixmapName(QLatin1String("check_support_success"),
-                                                        Utilities::AttributeType::NONE);
+                    iconName = Utilities::getPixmapName(QLatin1String("check"),
+                                                        Utilities::AttributeType::SMALL |
+                                                            Utilities::AttributeType::THIN |
+                                                            Utilities::AttributeType::OUTLINE);
+                    iconToken = QLatin1String("support_success");
+
                     if (message.isEmpty())
                     {
                         message = tr("Solved");
@@ -317,8 +326,12 @@ void StalledIssueHeader::updateIssueState()
         case StalledIssue::SolveType::FAILED:
         {
             ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("failed"));
-            iconName = Utilities::getPixmapName(QLatin1String("cross_support_error"),
-                                                Utilities::AttributeType::NONE);
+            iconName = Utilities::getPixmapName(QLatin1String("cross"),
+                                                Utilities::AttributeType::SMALL |
+                                                    Utilities::AttributeType::THIN |
+                                                    Utilities::AttributeType::OUTLINE);
+            iconToken = QLatin1String("support_error");
+
             if (message.isEmpty())
             {
                 message = tr("Failed");
@@ -341,7 +354,7 @@ void StalledIssueHeader::updateIssueState()
         }
     }
 
-    showMessage(message, iconName);
+    showMessage(message, iconName, iconToken);
     ui->actionMessageContainer->setStyleSheet(ui->actionMessageContainer->styleSheet());
 }
 

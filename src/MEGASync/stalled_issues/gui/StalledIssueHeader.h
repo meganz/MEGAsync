@@ -54,7 +54,7 @@ public:
     void showActions(const QString& actionButtonText, const QList<ActionInfo>& actions);
     void hideAction();
 
-    void showMessage(const QString& message, const QString& icon);
+    void showMessage(const QString& message, const QString& icon, QString& iconToken);
     void updateIssueState();
 
     void setText(const QString& text, const QString& tooltip = QString());

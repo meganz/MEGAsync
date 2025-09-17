@@ -38,9 +38,7 @@ QString StalledIssuesUtilities::getLocalFileIcon(const QFileInfo& fileInfo)
     return getIcon(isFile, fileInfo);
 }
 
-QString StalledIssuesUtilities::getRemoteFileIcon(mega::MegaNode* node,
-                                                  const QFileInfo& fileInfo,
-                                                  bool hasProblem)
+QString StalledIssuesUtilities::getRemoteFileIcon(mega::MegaNode* node, const QFileInfo& fileInfo)
 {
     if (node)
     {
@@ -48,9 +46,10 @@ QString StalledIssuesUtilities::getRemoteFileIcon(mega::MegaNode* node,
     }
     else
     {
-        return Utilities::getPixmapName(QLatin1String("help-circle_inverse_accent"),
-                                        hasProblem ? Utilities::AttributeType::INVERSE :
-                                                     Utilities::AttributeType::NONE);
+        return Utilities::getPixmapName(QLatin1String("help-circle"),
+                                        Utilities::AttributeType::SMALL |
+                                            Utilities::AttributeType::THIN |
+                                            Utilities::AttributeType::SOLID);
     }
 }
 

@@ -38,9 +38,10 @@ void StalledIssueChooseWidget::setActionButtonVisibility(bool state)
 
 void StalledIssueChooseWidget::setMessage(const QString& string,
                                           const QString& pixmapName,
+                                          const QString& iconToken,
                                           const QString& tooltip)
 {
-    ui->chooseTitle->setMessage(string, pixmapName, tooltip);
+    ui->chooseTitle->setMessage(string, pixmapName, iconToken, tooltip);
 }
 
 void StalledIssueChooseWidget::setFailed(bool state, const QString& tooltip)
@@ -110,11 +111,14 @@ QString GenericChooseWidget::solvedString() const
 
 void GenericChooseWidget::setSolved(bool isSolved, bool isSelected)
 {
-    if(isSelected)
+    if (isSelected)
     {
         ui->chooseTitle->setMessage(mInfo.solvedText,
-                                    Utilities::getPixmapName(QLatin1String("check_support_success"),
-                                                             Utilities::AttributeType::NONE));
+                                    Utilities::getPixmapName(QLatin1String("check"),
+                                                             Utilities::AttributeType::SMALL |
+                                                                 Utilities::AttributeType::THIN |
+                                                                 Utilities::AttributeType::OUTLINE),
+                                    QLatin1String("support-success"));
     }
     else
     {

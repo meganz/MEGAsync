@@ -1,5 +1,6 @@
 #include "StalledIssueChooseTitle.h"
 
+#include "TokenizableItems/TokenPropertyNames.h"
 #include "ui_StalledIssueActionTitle.h"
 #include "Utilities.h"
 
@@ -15,16 +16,21 @@ void StalledIssueChooseTitle::showIcon()
     if(mIsCloud)
     {
         pixmapName = Utilities::getPixmapName(QLatin1String("MEGA"),
-                                              isFailed() ? Utilities::AttributeType::INVERSE :
-                                                           Utilities::AttributeType::NONE);
+                                              Utilities::AttributeType::SMALL |
+                                                  Utilities::AttributeType::THIN |
+                                                  Utilities::AttributeType::OUTLINE);
     }
     else
     {
         pixmapName = Utilities::getPixmapName(QLatin1String("monitor"),
-                                              isFailed() ? Utilities::AttributeType::INVERSE :
-                                                           Utilities::AttributeType::NONE);
+                                              Utilities::AttributeType::SMALL |
+                                                  Utilities::AttributeType::THIN |
+                                                  Utilities::AttributeType::OUTLINE);
     }
 
+    ui->icon->setProperty(TOKEN_PROPERTIES::normalOff,
+                          isFailed() ? QLatin1String("icon-inverse-accent") :
+                                       QLatin1String("icon-primary"));
     ui->icon->setIcon(QIcon(pixmapName));
     ui->icon->show();
 }

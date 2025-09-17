@@ -12,6 +12,8 @@ namespace Ui {
 class StalledIssueFilePath;
 }
 
+class IconLabel;
+
 class StalledIssueFilePath : public QWidget
 {
     Q_OBJECT
@@ -33,7 +35,7 @@ private slots:
     void onHelpIconClicked();
 
 private:
-    void showHoverAction(QEvent::Type type, QLabel *actionWidget, const QString &path);
+    void showHoverAction(QEvent::Type type, IconLabel* actionWidget, const QString& path);
     void updateFileIcons();
     void updateMoveFileIcons();
     void updateCornerArrows();

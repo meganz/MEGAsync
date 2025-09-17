@@ -29,19 +29,12 @@
    <string notr="true">/*ColorTokenIcon;Button;pathProblemIcon;normal;off;colorToken.icon-primary*/
 /*ColorTokenIcon;Button;movePathProblemIcon;normal;off;colorToken.icon-primary*/
 
-WordWrapLabel
-{
-font-size: 10px;
-font-weight: 400;
-}
-
 #moveFilePathContainer[hasProblem=false], #filePathContainer[hasProblem=false]
 {
   height: 24px;
   border-radius: 4px;
   background-color: #222324; /*colorToken.surface-1*/
 }
-
 
 #moveFilePathContainer[hasProblem=true], #filePathContainer[hasProblem=true]
 {
@@ -60,8 +53,13 @@ font-weight: 400;
   min-height: 24px;
   max-height: 24px;
   border-radius: 4px;
-  background-color: #2A2B2C; /*colorToken.surface-1*/
+  background-color: #2A2B2C; /*colorToken.background-inverse*/
   border: none;
+}
+
+#pathProblemMessage, #movePathProblemMessage
+{
+  color: #FAFAFA; /*colorToken.text-inverse*/
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -78,7 +76,7 @@ font-weight: 400;
     <number>10</number>
    </property>
    <property name="horizontalSpacing">
-    <number>5</number>
+    <number>8</number>
    </property>
    <property name="verticalSpacing">
     <number>0</number>
@@ -138,7 +136,7 @@ font-weight: 400;
           <number>6</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="topMargin">
           <number>2</number>
@@ -150,7 +148,7 @@ font-weight: 400;
           <number>2</number>
          </property>
          <item>
-          <widget class="QLabel" name="filePathIcon">
+          <widget class="IconLabel" name="filePathIcon">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -172,9 +170,6 @@ font-weight: 400;
            <property name="text">
             <string/>
            </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
           </widget>
          </item>
          <item alignment="Qt::AlignVCenter">
@@ -185,13 +180,13 @@ font-weight: 400;
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="type" stdset="0">
-            <string notr="true">secondary</string>
+           <property name="font-size" stdset="0">
+            <string notr="true">caption</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="filePathAction">
+          <widget class="IconLabel" name="filePathAction">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -220,9 +215,15 @@ font-weight: 400;
       </item>
       <item row="1" column="1">
        <widget class="QWidget" name="pathProblemContainer" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout_7">
          <property name="spacing">
-          <number>0</number>
+          <number>5</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -249,7 +250,7 @@ font-weight: 400;
              <number>6</number>
             </property>
             <property name="leftMargin">
-             <number>0</number>
+             <number>4</number>
             </property>
             <property name="topMargin">
              <number>0</number>
@@ -261,7 +262,7 @@ font-weight: 400;
              <number>0</number>
             </property>
             <item>
-             <widget class="QToolButton" name="pathProblemIcon">
+             <widget class="IconLabel" name="pathProblemIcon">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -288,7 +289,7 @@ font-weight: 400;
               </property>
               <property name="icon">
                <iconset resource="../../../gui/Resources_common.qrc">
-                <normaloff>:/info</normaloff>:/info</iconset>
+                <normaloff>:/info_small_thin_solid</normaloff>:/info_small_thin_solid</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -296,8 +297,8 @@ font-weight: 400;
                 <height>16</height>
                </size>
               </property>
-              <property name="class" stdset="0">
-               <string notr="true">icon-label</string>
+              <property name="normal_off" stdset="0">
+               <string notr="true">icon-inverse</string>
               </property>
              </widget>
             </item>
@@ -306,13 +307,16 @@ font-weight: 400;
               <property name="text">
                <string/>
               </property>
+              <property name="font-size" stdset="0">
+               <string notr="true">caption</string>
+              </property>
              </widget>
             </item>
            </layout>
           </widget>
          </item>
          <item>
-          <widget class="QToolButton" name="helpIcon">
+          <widget class="IconLabel" name="helpIcon">
            <property name="minimumSize">
             <size>
              <width>24</width>
@@ -334,12 +338,9 @@ font-weight: 400;
            </property>
            <property name="iconSize">
             <size>
-             <width>24</width>
-             <height>24</height>
+             <width>16</width>
+             <height>16</height>
             </size>
-           </property>
-           <property name="class" stdset="0">
-            <string notr="true">icon-label</string>
            </property>
           </widget>
          </item>
@@ -396,7 +397,7 @@ font-weight: 400;
           <number>0</number>
          </property>
          <item alignment="Qt::AlignRight">
-          <widget class="QLabel" name="pathArrow">
+          <widget class="IconLabel" name="pathArrow">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -457,7 +458,7 @@ font-weight: 400;
           <number>0</number>
          </property>
          <item>
-          <widget class="QToolButton" name="problemArrow">
+          <widget class="IconLabel" name="problemArrow">
            <property name="minimumSize">
             <size>
              <width>16</width>
@@ -475,9 +476,6 @@ font-weight: 400;
            </property>
            <property name="text">
             <string notr="true"/>
-           </property>
-           <property name="class" stdset="0">
-            <string notr="true">icon-label</string>
            </property>
           </widget>
          </item>
@@ -530,7 +528,7 @@ font-weight: 400;
           <number>4</number>
          </property>
          <item>
-          <widget class="QLabel" name="moveLines">
+          <widget class="IconLabel" name="moveLines">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -555,6 +553,12 @@ font-weight: 400;
           <widget class="QLabel" name="moveLabel">
            <property name="text">
             <string>move</string>
+           </property>
+           <property name="font-size" stdset="0">
+            <string notr="true">body-2</string>
+           </property>
+           <property name="semibold" stdset="0">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -593,7 +597,7 @@ font-weight: 400;
           <number>6</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="topMargin">
           <number>2</number>
@@ -605,7 +609,7 @@ font-weight: 400;
           <number>2</number>
          </property>
          <item>
-          <widget class="QLabel" name="moveFilePathIcon">
+          <widget class="IconLabel" name="moveFilePathIcon">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -627,9 +631,6 @@ font-weight: 400;
            <property name="text">
             <string/>
            </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
           </widget>
          </item>
          <item>
@@ -640,13 +641,13 @@ font-weight: 400;
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="type" stdset="0">
-            <string notr="true">secondary</string>
+           <property name="font-size" stdset="0">
+            <string notr="true">caption</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="moveFilePathAction">
+          <widget class="IconLabel" name="moveFilePathAction">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -691,6 +692,12 @@ font-weight: 400;
       </item>
       <item row="3" column="1">
        <widget class="QWidget" name="movePathProblemContainer" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout_6">
          <property name="spacing">
           <number>0</number>
@@ -714,7 +721,7 @@ font-weight: 400;
              <number>6</number>
             </property>
             <property name="leftMargin">
-             <number>0</number>
+             <number>4</number>
             </property>
             <property name="topMargin">
              <number>0</number>
@@ -726,7 +733,7 @@ font-weight: 400;
              <number>0</number>
             </property>
             <item>
-             <widget class="QToolButton" name="movePathProblemIcon">
+             <widget class="IconLabel" name="movePathProblemIcon">
               <property name="minimumSize">
                <size>
                 <width>24</width>
@@ -747,7 +754,7 @@ font-weight: 400;
               </property>
               <property name="icon">
                <iconset resource="../../../gui/Resources_common.qrc">
-                <normaloff>:/info</normaloff>:/info</iconset>
+                <normaloff>:/info_small_thin_solid</normaloff>:/info_small_thin_solid</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -755,8 +762,8 @@ font-weight: 400;
                 <height>16</height>
                </size>
               </property>
-              <property name="class" stdset="0">
-               <string notr="true">icon-label</string>
+              <property name="normal_off" stdset="0">
+               <string notr="true">icon-inverse</string>
               </property>
              </widget>
             </item>
@@ -764,6 +771,9 @@ font-weight: 400;
              <widget class="QLabel" name="movePathProblemMessage">
               <property name="text">
                <string/>
+              </property>
+              <property name="font-size" stdset="0">
+               <string notr="true">caption</string>
               </property>
              </widget>
             </item>
@@ -817,7 +827,7 @@ font-weight: 400;
           <number>0</number>
          </property>
          <item alignment="Qt::AlignRight">
-          <widget class="QLabel" name="movePathArrow">
+          <widget class="IconLabel" name="movePathArrow">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -872,7 +882,7 @@ font-weight: 400;
           <number>0</number>
          </property>
          <item>
-          <widget class="QToolButton" name="movePathProblemArrow">
+          <widget class="IconLabel" name="movePathProblemArrow">
            <property name="minimumSize">
             <size>
              <width>16</width>
@@ -891,9 +901,6 @@ font-weight: 400;
            <property name="text">
             <string notr="true"/>
            </property>
-           <property name="class" stdset="0">
-            <string notr="true">icon-label</string>
-           </property>
           </widget>
          </item>
         </layout>
@@ -903,7 +910,7 @@ font-weight: 400;
     </widget>
    </item>
    <item row="0" column="1" alignment="Qt::AlignVCenter">
-    <widget class="QToolButton" name="LocalOrRemoteIcon">
+    <widget class="IconLabel" name="LocalOrRemoteIcon">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -924,9 +931,6 @@ font-weight: 400;
      </property>
      <property name="text">
       <string/>
-     </property>
-     <property name="class" stdset="0">
-      <string notr="true">icon-label</string>
      </property>
     </widget>
    </item>
@@ -963,17 +967,19 @@ font-weight: 400;
      <property name="text">
       <string/>
      </property>
-     <property name="type" stdset="0">
-      <string notr="true">secondary</string>
-     </property>
-     <property name="dimension" stdset="0">
-      <string notr="true">small</string>
+     <property name="font-size" stdset="0">
+      <string notr="true">caption</string>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>TokenizableItems/IconLabel.h</header>
+  </customwidget>
   <customwidget>
    <class>WordWrapLabel</class>
    <extends>QTextEdit</extends>

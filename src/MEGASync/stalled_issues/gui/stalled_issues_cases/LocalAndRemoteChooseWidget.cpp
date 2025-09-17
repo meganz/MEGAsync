@@ -48,6 +48,14 @@ void LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(StalledIssueDataPtr da
             {
                 ui->chooseTitle->setMessage(
                     chosenString(),
+                    Utilities::getPixmapName(QLatin1String("check"),
+                                             Utilities::AttributeType::SMALL |
+                                                 Utilities::AttributeType::THIN |
+                                                 Utilities::AttributeType::OUTLINE),
+                    QLatin1String("support-success"));
+
+                ui->chooseTitle->setMessage(
+                    chosenString(),
                     Utilities::getPixmapName(QLatin1String("check_support_success"),
                                              Utilities::AttributeType::NONE));
             }
@@ -55,8 +63,11 @@ void LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(StalledIssueDataPtr da
             {
                 ui->chooseTitle->setMessage(
                     solvedString(),
-                    Utilities::getPixmapName(QLatin1String("cross_support_error"),
-                                             Utilities::AttributeType::NONE));
+                    Utilities::getPixmapName(QLatin1String("cross"),
+                                             Utilities::AttributeType::SMALL |
+                                                 Utilities::AttributeType::THIN |
+                                                 Utilities::AttributeType::OUTLINE),
+                    QLatin1String("support-error"));
             }
         }
         else if(side == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LOCAL)
@@ -65,16 +76,22 @@ void LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(StalledIssueDataPtr da
             {
                 ui->chooseTitle->setMessage(
                     solvedString(),
-                    Utilities::getPixmapName(QLatin1String("cross_support_error"),
-                                             Utilities::AttributeType::NONE));
+                    Utilities::getPixmapName(QLatin1String("cross"),
+                                             Utilities::AttributeType::SMALL |
+                                                 Utilities::AttributeType::THIN |
+                                                 Utilities::AttributeType::OUTLINE),
+                    QLatin1String("support-error"));
             }
             else
             {
                 ui->chooseTitle->setMessage(
                     QApplication::translate("StalledIssueChooseWidget",
                                             "Local file is being uploaded"),
-                    Utilities::getPixmapName(QLatin1String("check_support_success"),
-                                             Utilities::AttributeType::NONE));
+                    Utilities::getPixmapName(QLatin1String("check"),
+                                             Utilities::AttributeType::SMALL |
+                                                 Utilities::AttributeType::THIN |
+                                                 Utilities::AttributeType::OUTLINE),
+                    QLatin1String("support-success"));
             }
         }
         else if(side == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::BOTH)
@@ -84,8 +101,11 @@ void LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(StalledIssueDataPtr da
                 ui->chooseTitle->setMessage(
                     QApplication::translate("NameConflict", "Renamed to \"%1\"")
                         .arg(data->renamedFileName()),
-                    Utilities::getPixmapName(QLatin1String("check_support_success"),
-                                             Utilities::AttributeType::NONE));
+                    Utilities::getPixmapName(QLatin1String("check"),
+                                             Utilities::AttributeType::SMALL |
+                                                 Utilities::AttributeType::THIN |
+                                                 Utilities::AttributeType::OUTLINE),
+                    QLatin1String("support-success"));
             }
             else
             {

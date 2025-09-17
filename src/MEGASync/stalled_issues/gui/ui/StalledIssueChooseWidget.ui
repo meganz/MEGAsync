@@ -141,7 +141,7 @@
        <widget class="QWidget" name="pathContainer" native="true">
         <layout class="QHBoxLayout" name="horizontalLayout">
          <property name="leftMargin">
-          <number>0</number>
+          <number>8</number>
          </property>
          <property name="topMargin">
           <number>0</number>

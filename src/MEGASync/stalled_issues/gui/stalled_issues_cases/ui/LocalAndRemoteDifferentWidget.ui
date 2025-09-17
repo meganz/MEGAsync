@@ -34,7 +34,7 @@
      <property name="font">
       <font>
        <family>Lato 13</family>
-       <bold>true</bold>
+       <bold>false</bold>
       </font>
      </property>
      <property name="text">
@@ -43,8 +43,11 @@
      <property name="indent">
       <number>0</number>
      </property>
-     <property name="type" stdset="0">
-      <string notr="true">primary</string>
+     <property name="font-size" stdset="0">
+      <string notr="true">body-2</string>
+     </property>
+     <property name="semibold" stdset="0">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

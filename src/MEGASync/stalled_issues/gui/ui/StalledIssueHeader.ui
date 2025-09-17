@@ -153,7 +153,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QToolButton" name="arrow">
+       <widget class="IconLabel" name="arrow">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -178,13 +178,24 @@
         <property name="text">
          <string notr="true"/>
         </property>
-        <property name="class" stdset="0">
-         <string notr="true">icon-label</string>
+        <property name="icon">
+         <iconset resource="../../../gui/Resources_common.qrc">
+          <normaloff>:/chevron-left_default</normaloff>
+          <normalon>:/chevron-down_default</normalon>:/chevron-left_default</iconset>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="normal_off" stdset="0">
+         <string notr="true">icon-primary</string>
+        </property>
+        <property name="normal_on" stdset="0">
+         <string notr="true">icon-primary</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="fileTypeIcon">
+       <widget class="IconLabel" name="fileTypeIcon">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -214,9 +225,6 @@
           <width>48</width>
           <height>48</height>
          </size>
-        </property>
-        <property name="class" stdset="0">
-         <string notr="true">icon-label</string>
         </property>
        </widget>
       </item>
@@ -281,7 +289,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QToolButton" name="errorTitleIcon">
+             <widget class="IconLabel" name="errorTitleIcon">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -306,8 +314,12 @@
               <property name="text">
                <string notr="true"/>
               </property>
-              <property name="class" stdset="0">
-               <string notr="true">icon-label</string>
+              <property name="icon">
+               <iconset resource="../../../gui/Resources_common.qrc">
+                <normaloff>:/alert-triangle_small_thin_outline</normaloff>:/alert-triangle_small_thin_outline</iconset>
+              </property>
+              <property name="normal_off" stdset="0">
+               <string notr="true">support-warning</string>
               </property>
              </widget>
             </item>
@@ -319,8 +331,8 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="type" stdset="0">
-               <string notr="true">secondary</string>
+              <property name="font-size" stdset="0">
+               <string notr="true">body-2</string>
               </property>
              </widget>
             </item>
@@ -365,8 +377,8 @@
               <property name="type" stdset="0">
                <string notr="true">secondary</string>
               </property>
-              <property name="dimension" stdset="0">
-               <string notr="true">small</string>
+              <property name="font-size" stdset="0">
+               <string notr="true">caption</string>
               </property>
              </widget>
             </item>
@@ -475,7 +487,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QToolButton" name="actionMessageIcon">
+          <widget class="IconLabel" name="actionMessageIcon">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -500,9 +512,6 @@
            <property name="text">
             <string notr="true"/>
            </property>
-           <property name="class" stdset="0">
-            <string notr="true">icon-label</string>
-           </property>
           </widget>
          </item>
          <item>
@@ -525,9 +534,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>WordWrapLabel</class>
-   <extends>QTextEdit</extends>
-   <header>WordWrapLabel.h</header>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>TokenizableItems/IconLabel.h</header>
   </customwidget>
   <customwidget>
    <class>WaitingSpinnerWidget</class>
@@ -535,7 +544,14 @@
    <header>gui/WaitingSpinnerWidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>WordWrapLabel</class>
+   <extends>QTextEdit</extends>
+   <header>WordWrapLabel.h</header>
+  </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../../gui/Resources_common.qrc"/>
+ </resources>
  <connections/>
 </ui>

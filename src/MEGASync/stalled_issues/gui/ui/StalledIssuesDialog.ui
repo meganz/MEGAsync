@@ -26,14 +26,7 @@
    <string>Stalled Issues</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">/**********  TOKENIZABLE BUTTONS **********/
-/*ColorTokenIcon;Button;settingsButton;normal;off;colorToken.button-primary*/
-/*ColorTokenIcon;Button;refreshButton;normal;off;colorToken.button-primary*/
-/*ColorTokenIcon;Button;refreshButton;disabled;off;colorToken.icon-disabled*/
-/**********  TOKENIZABLE BUTTONS **********/
-
-
-QStackedWidget
+   <string notr="true">QStackedWidget
 {
     border-top: 0px;
     border-bottom: 0px;
@@ -182,7 +175,7 @@ color: grey;
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="refreshButton">
+          <widget class="IconOnlyButton" name="refreshButton">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -217,9 +210,6 @@ color: grey;
              <height>24</height>
             </size>
            </property>
-           <property name="class" stdset="0">
-            <string notr="true">icon-button</string>
-           </property>
            <property name="type" stdset="0">
             <string notr="true">ghost</string>
            </property>
@@ -229,7 +219,7 @@ color: grey;
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="SettingsButton">
+          <widget class="IconOnlyButton" name="SettingsButton">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -266,9 +256,6 @@ color: grey;
            </property>
            <property name="flat">
             <bool>false</bool>
-           </property>
-           <property name="class" stdset="0">
-            <string notr="true">icon-button</string>
            </property>
            <property name="dimension" stdset="0">
             <string notr="true">medium</string>
@@ -680,6 +667,11 @@ color: grey;
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>IconOnlyButton</class>
+   <extends>QPushButton</extends>
+   <header>TokenizableItems/TokenizableButtons.h</header>
+  </customwidget>
   <customwidget>
    <class>StalledIssuesView</class>
    <extends>QTreeView</extends>

@@ -337,10 +337,12 @@ public:
         NONE = 0x0,
         SMALL = 0x1,
         MEDIUM = 0x2,
-        DISABLED = 0x4,
-        SOLID = 0x8,
-        OUTLINE = 0x10,
-        INVERSE = 0x20
+        LARGE = 0x4,
+        THIN = 0x8,
+        REGULAR = 0x10,
+        OUTLINE = 0x20,
+        SOLID = 0x40,
+        INVERSE = 0x80
     };
     Q_DECLARE_FLAGS(AttributeTypes, AttributeType)
     Q_ENUM(AttributeType)

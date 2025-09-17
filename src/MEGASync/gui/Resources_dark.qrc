@@ -186,21 +186,6 @@
         <file alias="tab_resolved_outline">images/themed/dark/Stalled Issues/Tabs/tab_resolved_outline.svg</file>
         <file alias="tab_resolved_solid">images/themed/dark/Stalled Issues/Tabs/tab_resolved_solid.svg</file>
         <file alias="settings">images/themed/dark/settings.svg</file>
-        <file alias="MEGA">images/themed/dark/MEGA.svg</file>
-        <file alias="monitor">images/themed/dark/monitor.svg</file>
         <file alias="arrow_corner_right">images/themed/dark/Stalled Issues/Path/arrow_corner_right.svg</file>
-        <file alias="pen_rename">images/themed/dark/pen_rename.svg</file>
-        <file alias="keep_both">images/themed/dark/Stalled Issues/Cases/keep_both.svg</file>
-        <file alias="keep_last_modified">images/themed/dark/Stalled Issues/Cases/keep_last_modified.svg</file>
-        <file alias="check_support_success">images/themed/dark/check_support_success.svg</file>
-        <file alias="cross_support_error">images/themed/dark/cross_support_error.svg</file>
-        <file alias="magic_wand_support_success">images/themed/dark/magic_wand_support_success.svg</file>
-        <file alias="minus_circle_support_warning">images/themed/dark/minus_circle_support_warning.svg</file>
-        <file alias="rotate_arrow_support_error">images/themed/dark/rotate_arrow_support_error.svg</file>
-        <file alias="cross_button_primary">images/themed/dark/cross_button_primary.svg</file>
-        <file alias="MEGA_inverse">images/themed/dark/MEGA_inverse.svg</file>
-        <file alias="monitor_inverse">images/themed/dark/monitor_inverse.svg</file>
-        <file alias="help-circle_inverse_accent_inverse">images/themed/dark/help-circle_inverse_accent_inverse.svg</file>
-        <file alias="help-circle_inverse_accent">images/themed/dark/help-circle_inverse_accent.svg</file>
     </qresource>
 </RCC>
