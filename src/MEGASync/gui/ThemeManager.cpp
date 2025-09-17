@@ -50,6 +50,11 @@ QStringList ThemeManager::themesAvailable() const
 
 void ThemeManager::setTheme(Preferences::ThemeType theme)
 {
+    if (theme == Preferences::ThemeType::SYSTEM_DEFAULT)
+    {
+        theme = Platform::getInstance()->getCurrentTheme();
+    }
+
     if (mCurrentTheme != theme)
     {
         mCurrentTheme = theme;

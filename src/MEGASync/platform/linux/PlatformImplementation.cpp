@@ -911,3 +911,27 @@ void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, i
     QString otherInfo = QString::fromUtf8("dialog rect = %1, posx = %2, posy = %3").arg(rectToString(rect)).arg(*posx).arg(*posy);
     logInfoDialogCoordinates("Final", screenGeometry, otherInfo);
 }
+
+Preferences::ThemeType PlatformImplementation::getCurrentTheme() const
+{
+    const QString GNOME_DESKTOP_CONFIG_CMD = QString::fromLatin1("gsettings");
+    const QString GNOME_DESKTOP_DARK_ID = QString::fromLatin1("dark");
+    const QStringList GET_CURRENT_COLOR_SCHEME_ID =
+        QString::fromLatin1("get org.gnome.desktop.interface color-scheme").split(QChar::Space);
+    const int PROCESS_TIMEOUT_MS = 1500;
+
+    QProcess process;
+    process.start(GNOME_DESKTOP_CONFIG_CMD, GET_CURRENT_COLOR_SCHEME_ID);
+    bool gnomeConfigCommandAvailable =
+        process.waitForFinished(PROCESS_TIMEOUT_MS) && process.exitCode() == 0;
+    if (gnomeConfigCommandAvailable)
+    {
+        QString output = QString::fromUtf8(process.readAllStandardOutput());
+        if (output.contains(GNOME_DESKTOP_DARK_ID))
+        {
+            return Preferences::ThemeType::DARK_THEME;
+        }
+    }
+
+    return Preferences::ThemeType::LIGHT_THEME; // default theme on ubuntu.
+}

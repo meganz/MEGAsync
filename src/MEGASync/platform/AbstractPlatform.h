@@ -111,6 +111,8 @@ public:
         return {};
     }
 
+    virtual Preferences::ThemeType getCurrentTheme() const;
+
 protected:
     std::shared_ptr<AbstractShellNotifier> mShellNotifier = nullptr;
 
