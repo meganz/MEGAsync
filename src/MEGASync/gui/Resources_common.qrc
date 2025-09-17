@@ -1247,5 +1247,17 @@
         <file alias="help-circle_small_thin_solid">images/themed/tokenizable/help-circle_small_thin_solid.svg</file>
         <file alias="refresh-01_medium_thin_outline">images/themed/tokenizable/refresh-01_medium_thin_outline.svg</file>
         <file alias="alert-triangle_small_thin_outline">images/themed/tokenizable/alert-triangle_small_thin_outline.svg</file>
+        <file alias="alert-circle_small_thin_solid">images/themed/tokenizable/alert-circle_small_thin_solid.svg</file>
+        <file alias="alert-circle_small_thin_outline">images/themed/tokenizable/alert-circle_small_thin_outline.svg</file>
+        <file alias="check-circle_small_thin_outline">images/themed/tokenizable/check-circle_small_thin_outline.svg</file>
+        <file alias="check-circle_small_thin_solid">images/themed/tokenizable/check-circle_small_thin_solid.svg</file>
+        <file alias="edit_small_thin_outline">images/themed/tokenizable/edit_small_thin_outline.svg</file>
+        <file alias="edit_small_thin_solid">images/themed/tokenizable/edit_small_thin_solid.svg</file>
+        <file alias="folder_small_thin_outline">images/themed/tokenizable/folder_small_thin_outline.svg</file>
+        <file alias="folder_small_thin_solid">images/themed/tokenizable/folder_small_thin_solid.svg</file>
+        <file alias="more-horizontal-circle_small_thin_outline">images/themed/tokenizable/more-horizontal-circle_small_thin_outline.svg</file>
+        <file alias="more-horizontal-circle_small_thin_solid">images/themed/tokenizable/more-horizontal-circle_small_thin_solid.svg</file>
+        <file alias="x-circle_small_thin_outline">images/themed/tokenizable/x-circle_small_thin_outline.svg</file>
+        <file alias="x-circle_small_thin_solid">images/themed/tokenizable/x-circle_small_thin_solid.svg</file>
     </qresource>
 </RCC>
