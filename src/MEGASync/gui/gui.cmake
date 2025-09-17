@@ -54,7 +54,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/AccountTypeWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/BannerWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/ApiImageLabel.h
-    ${CMAKE_CURRENT_LIST_DIR}/SideBarTab.h
+    ${CMAKE_CURRENT_LIST_DIR}/TabSelector.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NodeNameSetterDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NewFolderDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/RenameNodeDialog.h
@@ -105,6 +105,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/TokenizableItems.h
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/IconLabel.h
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/TokenPropertyNames.h
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/TokenPropertySetter.h
     ${CMAKE_CURRENT_LIST_DIR}/backups/BackupCandidatesComponent.h
     ${CMAKE_CURRENT_LIST_DIR}/backups/BackupsController.h
     ${CMAKE_CURRENT_LIST_DIR}/backups/BackupCandidatesModel.h
@@ -202,7 +203,7 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/AccountTypeWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/BannerWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ApiImageLabel.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/SideBarTab.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/TabSelector.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NewFolderDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/RenameNodeDialog.cpp
@@ -249,6 +250,7 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/ButtonTokensByType.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/TokenizableButtons.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/TokenizableItems.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/TokenPropertySetter.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/IconLabel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/backups/BackupCandidatesComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/backups/BackupsController.cpp
@@ -558,7 +560,7 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/ProgressIndicatorDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoteItemUi.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/BannerWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/SideBarTab.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/TabSelector.ui
 )
 
 target_sources_conditional(${ExecutableTarget}

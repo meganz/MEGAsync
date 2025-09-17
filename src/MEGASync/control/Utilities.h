@@ -15,6 +15,7 @@
 #include <QLabel>
 #include <QMetaEnum>
 #include <QPixmap>
+#include <QPointer>
 #include <QProgressDialog>
 #include <QQueue>
 #include <QString>
@@ -484,8 +485,54 @@ public:
             {
                 return classParent;
             }
+
             parent = parent->parentWidget();
         }
+
+        return nullptr;
+    }
+
+    static QPointer<QWidget> getParent(QWidget* widget, int level)
+    {
+        if (!widget || level < 0)
+        {
+            return nullptr;
+        }
+
+        int parentCounter(0);
+        QWidget* parent = widget->parentWidget();
+        while (parent)
+        {
+            if (parentCounter == level)
+            {
+                return parent;
+            }
+
+            parentCounter++;
+            parent = parent->parentWidget();
+        }
+
+        return nullptr;
+    }
+
+    static QPointer<QWidget> getParent(QWidget* widget, std::function<bool(QWidget*)> checkFunc)
+    {
+        if (!widget || !checkFunc)
+        {
+            return nullptr;
+        }
+
+        QWidget* parent = widget->parentWidget();
+        while (parent)
+        {
+            if (checkFunc(parent))
+            {
+                return parent;
+            }
+
+            parent = parent->parentWidget();
+        }
+
         return nullptr;
     }
 

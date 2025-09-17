@@ -1,5 +1,5 @@
-#ifndef SIDEBARTAB_H
-#define SIDEBARTAB_H
+#ifndef TABSELECTOR_H
+#define TABSELECTOR_H
 
 #include <QEvent>
 #include <QPointer>
@@ -7,16 +7,18 @@
 
 namespace Ui
 {
-class SideBarTab;
+class TabSelector;
 }
 
-class SideBarTab: public QWidget
+class TokenPropertySetter;
+
+class TabSelector: public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit SideBarTab(QWidget* parent = nullptr);
-    ~SideBarTab();
+    explicit TabSelector(QWidget* parent = nullptr);
+    ~TabSelector();
 
     Q_PROPERTY(QString title WRITE setTitle READ getTitle)
     void setTitle(const QString& title);
@@ -38,6 +40,11 @@ public:
     void setSelected(bool state);
     void toggleOffSiblings();
 
+    void setIconTokens(const std::shared_ptr<TokenPropertySetter>& newIconTokens);
+
+    // Convenient method to set tokens
+    static void applyTokens(QWidget* parent, std::shared_ptr<TokenPropertySetter> iconTokensSetter);
+
 signals:
     void clicked();
     void hidden();
@@ -46,8 +53,12 @@ protected:
     bool event(QEvent* event) override;
 
 private:
-    Ui::SideBarTab* ui;
-    QPointer<QDialog> mSideBarsTopParent;
+    static QList<TabSelector*> getTabSelectorByParent(QWidget* parent);
+
+    Ui::TabSelector* ui;
+    QPointer<QWidget> mTabSelectorGroupParent;
+    std::shared_ptr<TokenPropertySetter> mIconTokens;
+    std::shared_ptr<TokenPropertySetter> mCloseButtonTokens;
 };
 
-#endif // SIDEBARTAB_H
+#endif // TABSELECTOR_H
