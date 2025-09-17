@@ -18,8 +18,8 @@ TokenizableItem::~TokenizableItem() {}
 
 bool TokenizableItem::stateHasChanged(const QStyleOption& option)
 {
-    auto result(false);
-
+    auto result(mTokenChanged);
+    mTokenChanged = false;
     int currentThemeType = static_cast<int>(Preferences::instance()->getThemeType());
 
     if (mThemeType != currentThemeType)

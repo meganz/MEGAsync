@@ -61,5 +61,6 @@ void ButtonTokensByType::setDefaultTokens(QAbstractButton* button)
 
 bool ButtonTokensByType::propertyEmpty(QAbstractButton* button, const char* propertyName)
 {
-    return !button->property(propertyName).isValid();
+    auto value = button->property(propertyName);
+    return !value.isValid() || value.toString().isEmpty();
 }

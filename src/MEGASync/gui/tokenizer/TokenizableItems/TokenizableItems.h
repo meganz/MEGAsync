@@ -98,6 +98,7 @@ private:
     QStyleOption mCurrentOption;
     bool mInit;
     int mThemeType;
+    bool mTokenChanged;
 };
 
 #endif // TOKENIZABLEITEMS_H
