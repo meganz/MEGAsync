@@ -39,21 +39,18 @@ background-color: #FFFFFF;  /*colorToken.page-background*/
 
 #lFileName, #lStreamResourceDesc, #lFileInfoDesc, #lOpenWithDesc
 {
-  font-family: &quot;Inter&quot;;
   font-size: 12px;
   color: #303233; /*colorToken.text-primary*/
 }
 
 #lFileSize
 {
-  font-family: &quot;Inter&quot;;
   font-size: 10px;
   color: #303233; /*colorToken.text-secondary*/
 }
 
 #lNothingSelected, #WaitingForFileInfoLabel
 {
-  font-family: &quot;Inter&quot;;
   font-size: 12px;
   color: #303233; /*colorToken.text-on-color-disabled*/
 }
@@ -64,7 +61,6 @@ border-radius: 8px;
 }
 
 #labelError {
-font-family: &quot;Inter&quot;;
 font-size: 12px;
 color: #E31B57; /*colorToken.text-error*/
 }
@@ -1155,14 +1151,14 @@ color: #E31B57; /*colorToken.text-error*/
  </widget>
  <customwidgets>
   <customwidget>
-   <class>IconOnlyButton</class>
-   <extends>QPushButton</extends>
-   <header>TokenizableItems/TokenizableButtons.h</header>
-  </customwidget>
-  <customwidget>
    <class>IconLabel</class>
    <extends>QToolButton</extends>
    <header>TokenizableItems/IconLabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>IconOnlyButton</class>
+   <extends>QPushButton</extends>
+   <header>TokenizableItems/TokenizableButtons.h</header>
   </customwidget>
  </customwidgets>
  <resources>
