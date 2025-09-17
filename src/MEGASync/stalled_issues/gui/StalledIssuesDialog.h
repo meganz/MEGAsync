@@ -11,7 +11,6 @@ namespace Ui {
 class StalledIssuesDialog;
 }
 
-class StalledIssueTab;
 class StalledIssuesProxyModel;
 class StalledIssueDelegate;
 class SyncSettings;
