@@ -417,13 +417,21 @@ void MegaApplication::initStyleAndResources()
 {
     ThemeManager::instance()->init();
 
+#ifdef Q_OS_MAC
+    setObjectName(QLatin1String("osx"));
+#elif defined(Q_OS_WIN)
+    setObjectName("win");
+#else
+    setObjectName("linux");
+#endif
+
     setStyle(new MegaProxyStyle());
     QFile file(QLatin1String(":/style/WidgetsComponentsStyleSheetsSizes.css"));
     if (file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         QString sourceStandardComponentsStyleSheet = QString::fromLatin1(file.readAll());
         file.close();
-        setStyleSheet(sourceStandardComponentsStyleSheet);
+        setStyleSheet(Utilities::getPlatformProps(sourceStandardComponentsStyleSheet));
     }
     else
     {

@@ -432,6 +432,7 @@ public:
     static void openBackupCenter();
 
     static QString getCommonPath(const QString& path1, const QString& path2, bool cloudPaths);
+    static const QString getPlatformProps(const QString sourceStyleSheet);
 
     static bool isIncommingShare(mega::MegaNode* node);
     static int getNodeAccess(mega::MegaHandle handle);
