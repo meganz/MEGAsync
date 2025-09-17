@@ -185,6 +185,25 @@ bool isDarkModeActive()
     return isColorLight(foreground);
 }
 
+bool isContextMenuDisabled()
+{
+    bool isMenuDisabled = false;
+    HKEY hKey;
+    if (RegOpenKeyExW(HKEY_CURRENT_USER,
+        L"Software\\Mega Limited\\MEGAsync", 0, KEY_QUERY_VALUE, &hKey) == ERROR_SUCCESS)
+    {
+        DWORD val = 0, cb = sizeof(val);
+        if (RegQueryValueExW(hKey, L"ShellExtensionDisabled", nullptr, nullptr,
+                             reinterpret_cast<LPBYTE>(&val), &cb) == ERROR_SUCCESS)
+        {
+            isMenuDisabled = val == 1;
+        }
+        RegCloseKey(hKey);
+    }
+
+    return isMenuDisabled;
+}
+
 void updateExplorer()
 {
     SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0);

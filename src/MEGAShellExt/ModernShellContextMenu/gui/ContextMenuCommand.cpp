@@ -1,5 +1,7 @@
 #include "ContextMenuCommand.h"
 
+#include "Utilities.h"
+
 static const std::wstring ICON = L"mega.ico";
 
 ContextMenuCommand::ContextMenuCommand():
@@ -49,7 +51,7 @@ HRESULT ContextMenuCommand::EnumSubCommands(IEnumExplorerCommand** ppEnum)
 
 EXPCMDSTATE ContextMenuCommand::GetState(IShellItemArray* psiItemArray)
 {
-    if (!psiItemArray)
+    if (!psiItemArray || Utilities::isContextMenuDisabled())
     {
         return ECS_HIDDEN;
     }

@@ -31,6 +31,7 @@ WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 #include "MEGAinterface.h"
 #include "resource.h"
+#include "Utilities.h"
 #include <Shlwapi.h>
 
 #include <strsafe.h>
@@ -420,7 +421,8 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(HMENU hMenu,
     __try
     {
         // If uFlags include CMF_DEFAULTONLY then we should not do anything.
-        if (CMF_DEFAULTONLY & uFlags)
+        // Check that the context menu has not been disabled form the app
+        if (CMF_DEFAULTONLY & uFlags || Utilities::isContextMenuDisabled())
         {
             return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(0));
         }
