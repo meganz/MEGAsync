@@ -6,13 +6,7 @@
 #include "TextDecorator.h"
 #include "Utilities.h"
 
-struct Theme
-{
-    Preferences::ThemeType id;
-    QString name;
-};
-
-static const QVector<Theme> mThemes = {
+const QMap<Preferences::ThemeType, QString> ThemeManager::mThemesMap = {
     {Preferences::ThemeType::SYSTEM_DEFAULT, QLatin1String("System default")},
     {Preferences::ThemeType::LIGHT_THEME, QLatin1String("Light")},
     {Preferences::ThemeType::DARK_THEME, QLatin1String("Dark")}};
@@ -29,26 +23,12 @@ Preferences::ThemeType ThemeManager::getSelectedTheme() const
 
 QString ThemeManager::getSelectedThemeString() const
 {
-    return getThemeString(mCurrentTheme);
+    return mThemesMap.value(mCurrentTheme, QLatin1String("Light"));
 }
 
 QString ThemeManager::getThemeString(Preferences::ThemeType themeId) const
 {
-    auto itFound = std::find_if(mThemes.constBegin(),
-                                mThemes.constEnd(),
-                                [themeId](Theme theme)
-                                {
-                                    return theme.id == themeId;
-                                });
-
-    if (itFound != mThemes.constEnd())
-    {
-        return itFound->name;
-    }
-    else
-    {
-        return QLatin1String("Light");
-    }
+    return mThemesMap.value(themeId, QLatin1String("Light"));
 }
 
 ThemeManager* ThemeManager::instance()
@@ -65,16 +45,7 @@ void ThemeManager::init()
 
 QStringList ThemeManager::themesAvailable() const
 {
-    QStringList themes;
-
-    std::for_each(mThemes.constBegin(),
-                  mThemes.constEnd(),
-                  [&themes](auto theme)
-                  {
-                      themes << theme.name;
-                  });
-
-    return themes;
+    return mThemesMap.values();
 }
 
 void ThemeManager::setTheme(Preferences::ThemeType theme)

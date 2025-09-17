@@ -431,9 +431,9 @@ public:
 
     enum class ThemeType
     {
-        LIGHT_THEME = 0,
-        DARK_THEME = 1,
-        SYSTEM_DEFAULT = 2,
+        SYSTEM_DEFAULT = 0,
+        LIGHT_THEME = 1,
+        DARK_THEME = 2,
         LAST
     };
     Q_ENUM(ThemeType)
