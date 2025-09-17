@@ -37,7 +37,6 @@ background-color: #FFFFFF; /*colorToken.page-background*/
  #tChangelog {
 background-color: #FFFFFF; /*colorToken.page-background*/
 height: 200px;
-font-family: &quot;Inter&quot;;
 font-size: 12px;
 color: #333333; /*colorToken.text-secondary*/
 border: none;
@@ -45,14 +44,12 @@ border-bottom: 1px solid #FFFFFF; /*colorToken.border-strong*/
 }
 #lVersion, #lSDKVersion, #labelArchitecture, #lLGPL
 {
-  font-family: &quot;Inter&quot;;
   font-size: 12px;
   color: #333333; /*colorToken.text-secondary*/
 }
 
 #lCopyright, #labelAllRightsReserved
 {
-  font-family: &quot;Inter&quot;;
   font-size: 12px;
   color: #333333; /*colorToken.text-primary*/
 }
@@ -60,7 +57,6 @@ border-bottom: 1px solid #FFFFFF; /*colorToken.border-strong*/
 
 #bPolicy, #bTerms, #bAck
 {
-  font-family: &quot;Inter&quot;;
   font-size: 12px;
   color: #333333; /*colorToken.link-primary*/
   text-decoration: underline;
