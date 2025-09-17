@@ -318,7 +318,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/win/ScanningWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/CancelConfirmWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/NodeNameSetterDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/LowDiskSpaceDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/ViewLoadingScene.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/ViewLoadingMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/NotificationItem.ui
@@ -350,7 +349,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/macx/ScanningWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/CancelConfirmWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/NodeNameSetterDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/LowDiskSpaceDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/ViewLoadingScene.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/ViewLoadingMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/NotificationItem.ui
@@ -384,7 +382,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/linux/CancelConfirmWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/ScanningWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/NodeNameSetterDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/LowDiskSpaceDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/ViewLoadingScene.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/ViewLoadingMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/NotificationItem.ui
@@ -556,6 +553,7 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/ProgressIndicatorDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoteItemUi.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/BannerWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/LowDiskSpaceDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/StreamingFromMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/MegaInputDialog.ui
 

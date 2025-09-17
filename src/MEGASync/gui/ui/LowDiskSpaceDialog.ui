@@ -6,43 +6,69 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>515</width>
-    <height>200</height>
+    <width>500</width>
+    <height>220</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>500</width>
+    <height>220</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>500</width>
+    <height>220</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Low disk space</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">*{
-  font-family: &quot;Segoe UI&quot;; font-size: 14px; font-weight: 400;
+   <string notr="true">#LowDiskSpaceDialog 
+{
+background-color: #ffffff; /*colorToken.page-background*/
 }
 
-QPushButton {
-  padding-top: 5px; padding-bottom: 5px; padding-left: 20px; padding-right: 20px;
-  border-style: solid; border-width: 1px; border-color: #d7d6d5; border-radius: 4px;
+#lExplanation, #lDiskName, #lFreeSpace, #lTotalSize
+{
+color: #303233; /*colorToken.color-text-primary*/
 }
-
-
 </string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
+  </property>
+  <property name="bool" stdset="0">
+   <bool>false</bool>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_4">
    <property name="leftMargin">
-    <number>20</number>
+    <number>24</number>
    </property>
    <property name="topMargin">
     <number>25</number>
    </property>
    <property name="rightMargin">
-    <number>20</number>
+    <number>24</number>
    </property>
    <property name="bottomMargin">
-    <number>20</number>
+    <number>24</number>
    </property>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <property name="spacing">
       <number>0</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetFixedSize</enum>
      </property>
      <property name="topMargin">
       <number>0</number>
@@ -75,28 +101,47 @@ QPushButton {
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetFixedSize</enum>
+       </property>
        <item>
-        <widget class="QLabel" name="lDriveIcon">
+        <widget class="IconLabel" name="lDriveIcon">
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>72</width>
+           <height>72</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>72</width>
+           <height>72</height>
           </size>
          </property>
          <property name="text">
           <string notr="true"/>
          </property>
-         <property name="pixmap">
-          <pixmap resource="../Resources_common.qrc">:/images/drive-low-space.svg</pixmap>
+         <property name="icon">
+          <iconset resource="../Resources_common.qrc">
+           <normaloff>:/external_drive_solid_medium.svg</normaloff>:/external_drive_solid_medium.svg</iconset>
          </property>
-         <property name="scaledContents">
+         <property name="iconSize">
+          <size>
+           <width>72</width>
+           <height>72</height>
+          </size>
+         </property>
+         <property name="pixmap" stdset="0">
+          <pixmap>:/drive-low-space</pixmap>
+         </property>
+         <property name="scaledContents" stdset="0">
           <bool>true</bool>
+         </property>
+         <property name="normal_on" stdset="0">
+          <string notr="true">icon-primary</string>
+         </property>
+         <property name="normal_off" stdset="0">
+          <string notr="true">icon-primary</string>
          </property>
         </widget>
        </item>
@@ -124,10 +169,16 @@ QPushButton {
          <item>
           <widget class="QLabel" name="lDiskName">
            <property name="styleSheet">
-            <string notr="true">font: 700</string>
+            <string notr="true"/>
            </property>
            <property name="text">
             <string notr="true">Local Disk</string>
+           </property>
+           <property name="font-size" stdset="0">
+            <string notr="true">body-1</string>
+           </property>
+           <property name="bold" stdset="0">
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -177,6 +228,9 @@ QPushButton {
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetFixedSize</enum>
+       </property>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <property name="spacing">
@@ -189,51 +243,53 @@ QPushButton {
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>40</width>
+             <width>20</width>
              <height>20</height>
             </size>
            </property>
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="bTryAgain">
-           <property name="minimumSize">
-            <size>
-             <width>105</width>
-             <height>30</height>
-            </size>
+          <widget class="QPushButton" name="bCancel">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
            <property name="styleSheet">
-            <string notr="true">QPushButton {
-  background-color : rgb(0, 95, 184);
-  color : #FFFFFF;
-}
-QPushButton:hover { background-color: #0081f9; }
-QPushButton:pressed { background-color: #004c93; }</string>
+            <string notr="true"/>
            </property>
            <property name="text">
-            <string>Try Again</string>
+            <string>Cancel</string>
+           </property>
+           <property name="type" stdset="0">
+            <string notr="true">outline</string>
+           </property>
+           <property name="dimension" stdset="0">
+            <string notr="true">small</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="bCancel">
-           <property name="minimumSize">
-            <size>
-             <width>105</width>
-             <height>30</height>
-            </size>
+          <widget class="QPushButton" name="bTryAgain">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
            <property name="styleSheet">
-            <string notr="true">QPushButton {
-  background-color : #FCFCFC;
-  color : #000000;
-}
-QPushButton:hover { background-color: #fdfdfd; }
-QPushButton:pressed { background-color: #cacaca; }</string>
+            <string notr="true"/>
            </property>
            <property name="text">
-            <string>Cancel</string>
+            <string>Try Again</string>
+           </property>
+           <property name="type" stdset="0">
+            <string notr="true">primary</string>
+           </property>
+           <property name="dimension" stdset="0">
+            <string notr="true">small</string>
            </property>
           </widget>
          </item>
@@ -245,6 +301,15 @@ QPushButton:pressed { background-color: #cacaca; }</string>
    </item>
   </layout>
  </widget>
- <resources/>
+ <customwidgets>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>TokenizableItems/IconLabel.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../Resources_common.qrc"/>
+ </resources>
  <connections/>
 </ui>
