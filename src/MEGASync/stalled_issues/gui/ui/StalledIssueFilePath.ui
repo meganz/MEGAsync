@@ -339,6 +339,9 @@
              <height>16</height>
             </size>
            </property>
+           <property name="normal_off" stdset="0">
+            <string notr="true">link-primary</string>
+           </property>
           </widget>
          </item>
          <item>
