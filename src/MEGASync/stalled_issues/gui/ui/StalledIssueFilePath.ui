@@ -26,10 +26,7 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">/*ColorTokenIcon;Button;pathProblemIcon;normal;off;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;movePathProblemIcon;normal;off;colorToken.icon-primary*/
-
-#moveFilePathContainer[hasProblem=false], #filePathContainer[hasProblem=false]
+   <string notr="true">#moveFilePathContainer[hasProblem=false], #filePathContainer[hasProblem=false]
 {
   height: 24px;
   border-radius: 4px;

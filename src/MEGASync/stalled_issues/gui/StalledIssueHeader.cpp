@@ -282,7 +282,7 @@ void StalledIssueHeader::updateIssueState()
                                                     Utilities::AttributeType::SMALL |
                                                         Utilities::AttributeType::THIN |
                                                         Utilities::AttributeType::OUTLINE);
-                iconToken = QLatin1String("support_warning");
+                iconToken = QLatin1String("support-warning");
 
                 if (message.isEmpty())
                 {
@@ -299,7 +299,7 @@ void StalledIssueHeader::updateIssueState()
                                                         Utilities::AttributeType::SMALL |
                                                             Utilities::AttributeType::THIN |
                                                             Utilities::AttributeType::OUTLINE);
-                    iconToken = QLatin1String("support_sucess");
+                    iconToken = QLatin1String("support-success");
 
                     if (message.isEmpty())
                     {
@@ -312,7 +312,7 @@ void StalledIssueHeader::updateIssueState()
                                                         Utilities::AttributeType::SMALL |
                                                             Utilities::AttributeType::THIN |
                                                             Utilities::AttributeType::OUTLINE);
-                    iconToken = QLatin1String("support_success");
+                    iconToken = QLatin1String("support-success");
 
                     if (message.isEmpty())
                     {
@@ -330,7 +330,7 @@ void StalledIssueHeader::updateIssueState()
                                                 Utilities::AttributeType::SMALL |
                                                     Utilities::AttributeType::THIN |
                                                     Utilities::AttributeType::OUTLINE);
-            iconToken = QLatin1String("support_error");
+            iconToken = QLatin1String("support-error");
 
             if (message.isEmpty())
             {
@@ -467,11 +467,6 @@ bool StalledIssueHeader::event(QEvent* event)
 
 void StalledIssueHeader::refreshUi()
 {
-    ui->errorTitleIcon->setIcon(QIcon(Utilities::getColoredPixmap(QLatin1String("alert-triangle"),
-                                                                  Utilities::AttributeType::NONE,
-                                                                  QLatin1String("support-warning"),
-                                                                  ui->errorTitleIcon->size())));
-
     QIcon fileTypeIcon;
     QFileInfo fileInfo;
 

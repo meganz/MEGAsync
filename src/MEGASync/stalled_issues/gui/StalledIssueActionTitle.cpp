@@ -63,23 +63,28 @@ void StalledIssueActionTitle::removeBackgroundColor()
     setStyleSheet(styleSheet());
 }
 
-void StalledIssueActionTitle::setHTML(const QString& title, const QString& iconPath)
+void StalledIssueActionTitle::setHTML(const QString& title,
+                                      const QString& iconPath,
+                                      const QString& iconToken)
 {
     auto font(ui->titleLabel->font());
     font.setBold(false);
     ui->titleLabel->setFont(font);
     ui->titleLabel->setTextFormat(Qt::AutoText);
 
-    setTitle(title, iconPath);
+    setTitle(title, iconPath, iconToken);
 }
 
-void StalledIssueActionTitle::setTitle(const QString& title, const QString& iconPath)
+void StalledIssueActionTitle::setTitle(const QString& title,
+                                       const QString& iconPath,
+                                       const QString& iconToken)
 {
     updateSizeHints();
 
     ui->titleLabel->setText(title);
 
     mIconPath = iconPath;
+    mIconToken = iconToken;
 
     updateIcon();
 }
@@ -570,6 +575,7 @@ void StalledIssueActionTitle::updateIcon()
     {
         ui->icon->setIcon(QIcon(mIconPath));
         ui->icon->setIconSize(QSize(16, 16));
+        ui->icon->setProperty(TOKEN_PROPERTIES::normalOff, mIconToken);
         ui->icon->show();
     }
 }

@@ -3,7 +3,6 @@ set(DESKTOP_APP_STALLED_ISSUES_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/gui/StalledIssueChooseTitle.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/StalledIssueActionTitle.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/StalledIssueLoadingItem.h
-    ${CMAKE_CURRENT_LIST_DIR}/gui/StalledIssueTab.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/StalledIssueChooseWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/StalledIssueBaseDelegateWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/StalledIssueDelegate.h
@@ -39,7 +38,6 @@ set(DESKTOP_APP_STALLED_ISSUES_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/gui/StalledIssueChooseTitle.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/StalledIssueActionTitle.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/StalledIssueLoadingItem.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/gui/StalledIssueTab.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/StalledIssueChooseWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/StalledIssueBaseDelegateWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/StalledIssueDelegate.cpp
@@ -76,7 +74,6 @@ set(DESKTOP_APP_STALLED_ISSUES_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/StalledIssueChooseWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/StalledIssuesDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/StalledIssueFilePath.ui
-    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/StalledIssueTab.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/StalledIssueLoadingItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/StalledIssueActionTitle.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases/ui/LocalAndRemoteDifferentWidget.ui

@@ -84,6 +84,7 @@ void LocalAndRemoteDifferentWidget::refreshUi()
                                                  Utilities::AttributeType::SMALL |
                                                      Utilities::AttributeType::THIN |
                                                      Utilities::AttributeType::OUTLINE);
+        bothInfo.iconToken = QLatin1String("icon-primary");
         bothInfo.solvedText = ui->keepBothOption->chosenString();
         ui->keepBothOption->setInfo(bothInfo);
 
@@ -105,6 +106,7 @@ void LocalAndRemoteDifferentWidget::refreshUi()
                                                          Utilities::AttributeType::SMALL |
                                                              Utilities::AttributeType::THIN |
                                                              Utilities::AttributeType::OUTLINE);
+        lastModifiedInfo.iconToken = QLatin1String("icon-primary");
         lastModifiedInfo.solvedText = ui->keepLastModifiedOption->chosenString();
         ui->keepLastModifiedOption->setInfo(lastModifiedInfo);
     }

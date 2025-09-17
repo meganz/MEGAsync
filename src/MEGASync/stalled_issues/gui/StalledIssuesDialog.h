@@ -38,7 +38,7 @@ private slots:
     void onSyncRootChanged(std::shared_ptr<SyncSettings> sync);
     void onGlobalSyncStateChanged(bool);
 
-    void onTabToggled(StalledIssueFilterCriterion filterCriterion);
+    void onTabToggled();
     bool toggleTabAndScroll(StalledIssueFilterCriterion filterCriterion, const QModelIndex& sourceIndex);
 
     void onUiBlocked();
@@ -50,10 +50,14 @@ private slots:
 
     void onScrollRangeChanged(int, int max);
 
+    void createTabTitles();
+
 private:
     void showView();
     void setScrollMode(bool state);
     void initEmptyIcon();
+
+    int getFilterCriterionFromChip(QWidget* tab);
 
     Ui::StalledIssuesDialog *ui;
     MegaDelegateHoverManager mViewHoverManager;

@@ -25,8 +25,12 @@ public:
 
     void removeBackgroundColor();
 
-    void setHTML(const QString& title, const QString& iconPath = QString());
-    void setTitle(const QString& title, const QString& iconPath = QString());
+    void setHTML(const QString& title,
+                 const QString& iconPath = QString(),
+                 const QString& iconToken = QString());
+    void setTitle(const QString& title,
+                  const QString& iconPath = QString(),
+                  const QString& iconToken = QString());
     QString title() const;
 
     void setHyperLinkMode();
@@ -88,6 +92,7 @@ protected:
     bool mIsCloud;
     QString mPath;
     QString mIconPath;
+    QString mIconToken;
     bool mIsFile;
     std::unique_ptr<mega::MegaNode> mNode;
 

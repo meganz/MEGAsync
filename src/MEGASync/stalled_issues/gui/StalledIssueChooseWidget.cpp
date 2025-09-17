@@ -133,6 +133,6 @@ void GenericChooseWidget::setInfo(const GenericInfo &info)
 {
     mInfo = info;
 
-    ui->chooseTitle->setHTML(info.title, info.icon);
+    ui->chooseTitle->setHTML(info.title, info.icon, info.iconToken);
     ui->chooseTitle->addActionButton(QIcon(), info.buttonText, BUTTON_ID, true);
 }

@@ -202,7 +202,7 @@ color: grey;
            </property>
            <property name="icon">
             <iconset resource="../../../gui/Resources_common.qrc">
-             <normaloff>:/refresh</normaloff>:/refresh</iconset>
+             <normaloff>:/refresh-01_medium_thin_outline</normaloff>:/refresh-01_medium_thin_outline</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -296,113 +296,92 @@ color: grey;
           <number>0</number>
          </property>
          <item>
-          <widget class="StalledIssueTab" name="allIssuesTab">
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <property name="title" stdset="0">
-            <string/>
+          <widget class="TabSelector" name="allIssuesTab" native="true">
+           <property name="class" stdset="0">
+            <string notr="true">chip</string>
            </property>
            <property name="filterCriterion" stdset="0">
             <number>0</number>
            </property>
-           <property name="iconName" stdset="0">
-            <string notr="true">tab_all_issues</string>
+           <property name="icon" stdset="0">
+            <iconset resource="../../../gui/Resources_common.qrc">
+             <normaloff>:/alert-circle_small_thin_outline</normaloff>
+             <normalon>:/alert-circle_small_thin_solid</normalon>:/alert-circle_small_thin_outline</iconset>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="StalledIssueTab" name="nameConflictsTab">
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <property name="title" stdset="0">
-            <string/>
+          <widget class="TabSelector" name="nameConflictsTab" native="true">
+           <property name="class" stdset="0">
+            <string notr="true">chip</string>
            </property>
            <property name="filterCriterion" stdset="0">
             <number>1</number>
            </property>
-           <property name="iconName" stdset="0">
-            <string notr="true">tab_name_conflicts</string>
+           <property name="icon" stdset="0">
+            <iconset resource="../../../gui/Resources_common.qrc">
+             <normaloff>:/edit_small_thin_outline</normaloff>
+             <normalon>:/edit_small_thin_solid</normalon>:/edit_small_thin_outline</iconset>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="StalledIssueTab" name="itemTypeTab">
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <property name="title" stdset="0">
-            <string/>
+          <widget class="TabSelector" name="itemTypeTab" native="true">
+           <property name="class" stdset="0">
+            <string notr="true">chip</string>
            </property>
            <property name="filterCriterion" stdset="0">
             <number>2</number>
            </property>
-           <property name="iconName" stdset="0">
-            <string notr="true">tab_item_type_conflicts</string>
+           <property name="icon" stdset="0">
+            <iconset resource="../../../gui/Resources_common.qrc">
+             <normaloff>:/folder_small_thin_outline</normaloff>
+             <normalon>:/folder_small_thin_solid</normalon>:/folder_small_thin_outline</iconset>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="StalledIssueTab" name="otherTab">
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <property name="title" stdset="0">
-            <string/>
+          <widget class="TabSelector" name="otherTab" native="true">
+           <property name="class" stdset="0">
+            <string notr="true">chip</string>
            </property>
            <property name="filterCriterion" stdset="0">
-            <number>3</number>
+            <string notr="true">3</string>
            </property>
-           <property name="iconName" stdset="0">
-            <string notr="true">tab_others</string>
+           <property name="icon" stdset="0">
+            <iconset resource="../../../gui/Resources_common.qrc">
+             <normaloff>:/more-horizontal-circle_small_thin_outline</normaloff>
+             <normalon>:/more-horizontal-circle_small_thin_solid</normalon>:/more-horizontal-circle_small_thin_outline</iconset>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="StalledIssueTab" name="failedTab">
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="title" stdset="0">
-            <string/>
+          <widget class="TabSelector" name="failedTab" native="true">
+           <property name="class" stdset="0">
+            <string notr="true">chip</string>
            </property>
            <property name="filterCriterion" stdset="0">
-            <UInt>4</UInt>
+            <number>4</number>
            </property>
-           <property name="iconName" stdset="0">
-            <string notr="true">tab_failed</string>
+           <property name="icon" stdset="0">
+            <iconset resource="../../../gui/Resources_common.qrc">
+             <normaloff>:/x-circle_small_thin_outline</normaloff>
+             <normalon>:/x-circle_small_thin_solid</normalon>:/x-circle_small_thin_outline</iconset>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="StalledIssueTab" name="solvedIssuesTab">
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <property name="title" stdset="0">
-            <string/>
+          <widget class="TabSelector" name="solvedIssuesTab" native="true">
+           <property name="class" stdset="0">
+            <string notr="true">chip</string>
            </property>
            <property name="filterCriterion" stdset="0">
-            <UInt>5</UInt>
+            <number>5</number>
            </property>
-           <property name="iconName" stdset="0">
-            <string notr="true">tab_resolved</string>
+           <property name="icon" stdset="0">
+            <iconset resource="../../../gui/Resources_common.qrc">
+             <normaloff>:/check-circle_small_thin_outline</normaloff>
+             <normalon>:/check-circle_small_thin_solid</normalon>:/check-circle_small_thin_outline</iconset>
            </property>
           </widget>
          </item>
@@ -668,6 +647,12 @@ color: grey;
  </widget>
  <customwidgets>
   <customwidget>
+   <class>TabSelector</class>
+   <extends>QWidget</extends>
+   <header>TabSelector.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>IconOnlyButton</class>
    <extends>QPushButton</extends>
    <header>TokenizableItems/TokenizableButtons.h</header>
@@ -676,12 +661,6 @@ color: grey;
    <class>StalledIssuesView</class>
    <extends>QTreeView</extends>
    <header>StalledIssuesView.h</header>
-  </customwidget>
-  <customwidget>
-   <class>StalledIssueTab</class>
-   <extends>QFrame</extends>
-   <header>StalledIssueTab.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>

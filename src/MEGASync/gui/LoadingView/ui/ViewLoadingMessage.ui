@@ -148,8 +148,11 @@ QProgressBar::chunk
            <property name="wordWrap">
             <bool>true</bool>
            </property>
-           <property name="type" stdset="0">
-            <string notr="true">sub-title</string>
+           <property name="font-size" stdset="0">
+            <string notr="true">body-1</string>
+           </property>
+           <property name="semibold" stdset="0">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -177,8 +180,11 @@ QProgressBar::chunk
          </item>
          <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
           <widget class="QLabel" name="lProgressLabel">
-           <property name="type" stdset="0">
-            <string notr="true">sub-title</string>
+           <property name="font-size" stdset="0">
+            <string notr="true">body-2</string>
+           </property>
+           <property name="semibold" stdset="0">
+            <bool>true</bool>
            </property>
           </widget>
          </item>

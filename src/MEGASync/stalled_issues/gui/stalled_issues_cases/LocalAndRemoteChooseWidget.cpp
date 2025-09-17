@@ -53,11 +53,6 @@ void LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(StalledIssueDataPtr da
                                                  Utilities::AttributeType::THIN |
                                                  Utilities::AttributeType::OUTLINE),
                     QLatin1String("support-success"));
-
-                ui->chooseTitle->setMessage(
-                    chosenString(),
-                    Utilities::getPixmapName(QLatin1String("check_support_success"),
-                                             Utilities::AttributeType::NONE));
             }
             else
             {

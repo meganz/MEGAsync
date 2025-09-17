@@ -45,6 +45,12 @@ public:
     // Convenient method to set tokens
     static void applyTokens(QWidget* parent, std::shared_ptr<TokenPropertySetter> iconTokensSetter);
 
+    // Convenient method to select tab
+    static void selectTabIf(QWidget* parent, const char* property, const QVariant& value);
+
+    // Convenient method to get the tabs
+    static QList<TabSelector*> getTabSelectorByParent(QWidget* parent);
+
 signals:
     void clicked();
     void hidden();
@@ -53,8 +59,6 @@ protected:
     bool event(QEvent* event) override;
 
 private:
-    static QList<TabSelector*> getTabSelectorByParent(QWidget* parent);
-
     Ui::TabSelector* ui;
     QPointer<QWidget> mTabSelectorGroupParent;
     std::shared_ptr<TokenPropertySetter> mIconTokens;

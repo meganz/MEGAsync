@@ -155,6 +155,19 @@ void TabSelector::applyTokens(QWidget* parent,
     }
 }
 
+void TabSelector::selectTabIf(QWidget* parent, const char* property, const QVariant& value)
+{
+    auto tabs = getTabSelectorByParent(parent);
+
+    for (auto& tab: tabs)
+    {
+        if (tab->property(property) == value)
+        {
+            tab->setSelected(true);
+        }
+    }
+}
+
 void TabSelector::toggleOffSiblings()
 {
     if (!mTabSelectorGroupParent)

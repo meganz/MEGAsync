@@ -63,6 +63,7 @@ public:
     struct GenericInfo
     {
         QString icon;
+        QString iconToken;
         QString title;
         QString buttonText;
         QString solvedText;

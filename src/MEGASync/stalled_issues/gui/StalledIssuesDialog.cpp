@@ -44,13 +44,21 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
             &StalledIssuesDialog::onStalledIssuesLoaded);
 
     // Init all categories
-    auto tabs = ui->header->findChildren<StalledIssueTab*>();
-    foreach(auto tab, tabs)
+    ui->allIssuesTab->setSelected(true);
+
+    // connect all tabs
+    auto tabs = TabSelector::getTabSelectorByParent(ui->header);
+    for (auto& tab: tabs)
     {
-        connect(tab, &StalledIssueTab::tabToggled, this, &StalledIssuesDialog::onTabToggled);
+        connect(tab, &TabSelector::clicked, this, &StalledIssuesDialog::onTabToggled);
     }
 
-    ui->allIssuesTab->setIsSelected(true);
+    createTabTitles();
+
+    connect(MegaSyncApp->getStalledIssuesModel(),
+            &StalledIssuesModel::stalledIssuesCountChanged,
+            this,
+            &StalledIssuesDialog::createTabTitles);
 
     mProxyModel = new StalledIssuesProxyModel(this);
     mProxyModel->setSourceModel(MegaSyncApp->getStalledIssuesModel());
@@ -245,14 +253,21 @@ void StalledIssuesDialog::onSyncRootChanged(std::shared_ptr<SyncSettings> sync)
     }
 }
 
-void StalledIssuesDialog::onTabToggled(StalledIssueFilterCriterion filterCriterion)
+void StalledIssuesDialog::onTabToggled()
 {
-  if(auto proxyModel = dynamic_cast<StalledIssuesProxyModel*>(ui->stalledIssuesTree->model()))
-  {
-      //Show the view to show the loading view
-      ui->TreeViewContainer->setCurrentWidget(ui->TreeViewContainerPage);
-      proxyModel->filter(filterCriterion);
-  }
+    if (sender())
+    {
+        if (auto proxyModel =
+                dynamic_cast<StalledIssuesProxyModel*>(ui->stalledIssuesTree->model()))
+        {
+            // Show the view to show the loading view
+            ui->TreeViewContainer->setCurrentWidget(ui->TreeViewContainerPage);
+
+            auto filterCriterion = static_cast<StalledIssueFilterCriterion>(
+                sender()->property("filterCriterion").toInt());
+            proxyModel->filter(filterCriterion);
+        }
+    }
 }
 
 bool StalledIssuesDialog::toggleTabAndScroll(
@@ -266,15 +281,9 @@ bool StalledIssuesDialog::toggleTabAndScroll(
             ui->TreeViewContainer->setCurrentWidget(ui->TreeViewContainerPage);
             proxyModel->filter(filterCriterion);
 
-            auto tabs = ui->header->findChildren<StalledIssueTab*>();
-            auto foundTab = std::find_if(tabs.begin(),
-                tabs.end(),
-                [filterCriterion](const StalledIssueTab* tabToCheck)
-                { return tabToCheck->filterCriterion() == static_cast<int>(filterCriterion); });
-            if(foundTab != tabs.end())
-            {
-                (*foundTab)->toggleTab();
-            }
+            TabSelector::selectTabIf(ui->header,
+                                     "filterCriterion",
+                                     static_cast<int>(filterCriterion));
 
             if(sourceIndex.isValid())
             {
@@ -330,6 +339,8 @@ void StalledIssuesDialog::onModelFiltered()
         ui->stalledIssuesTree->setModel(mProxyModel);
         mViewHoverManager.setView(ui->stalledIssuesTree);
     }
+
+    createTabTitles();
 }
 
 void StalledIssuesDialog::onLoadingSceneVisibilityChange(bool state)
@@ -371,6 +382,41 @@ void StalledIssuesDialog::initEmptyIcon()
                                                              Utilities::AttributeType::NONE,
                                                              QLatin1String("icon-secondary"),
                                                              ui->emptyIcon->size())));
+}
+
+int StalledIssuesDialog::getFilterCriterionFromChip(QWidget* tab)
+{
+    return MegaSyncApp->getStalledIssuesModel()->getCountByFilterCriterion(
+        static_cast<StalledIssueFilterCriterion>(tab->property("filterCriterion").toInt()));
+}
+
+void StalledIssuesDialog::createTabTitles()
+{
+    ui->allIssuesTab->setTitle(
+        QApplication::translate("StalledIssueTab", "All issues: %1")
+            .arg(MegaSyncApp->getStalledIssuesModel()->getCountByFilterCriterion(
+                static_cast<StalledIssueFilterCriterion>(
+                    ui->allIssuesTab->property("filterCriterion").toInt()))));
+
+    int nameConflictsCount = getFilterCriterionFromChip(ui->nameConflictsTab);
+    ui->nameConflictsTab->setTitle(
+        QApplication::translate("StalledIssueTab", "Name conflict: %n", "", nameConflictsCount));
+
+    int itemTypeCount = getFilterCriterionFromChip(ui->itemTypeTab);
+    ui->itemTypeTab->setTitle(
+        QApplication::translate("StalledIssueTab", "Item type conflict: %n", "", itemTypeCount));
+
+    int otherTypeCount = getFilterCriterionFromChip(ui->otherTab);
+    ui->otherTab->setTitle(
+        QApplication::translate("StalledIssueTab", "Other: %n", "", otherTypeCount));
+
+    int failedCount = getFilterCriterionFromChip(ui->failedTab);
+    ui->failedTab->setTitle(
+        QApplication::translate("StalledIssueTab", "Failed: %n", "", failedCount));
+
+    int solveCount = getFilterCriterionFromChip(ui->solvedIssuesTab);
+    ui->solvedIssuesTab->setTitle(
+        QApplication::translate("StalledIssueTab", "Resolved: %n", "", solveCount));
 }
 
 void StalledIssuesDialog::onGlobalSyncStateChanged(bool)
