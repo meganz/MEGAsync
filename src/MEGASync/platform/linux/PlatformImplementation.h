@@ -8,8 +8,10 @@
 #include <xcb/xcb.h>
 #include <xcb/xproto.h>
 
-class PlatformImplementation : public AbstractPlatform
+class PlatformImplementation: public AbstractPlatform
 {
+    Q_OBJECT
+
 public:
     PlatformImplementation();
 
@@ -54,20 +56,24 @@ public:
 #endif
 
     Preferences::ThemeType getCurrentTheme() const override;
+    void startThemeMonitor() override;
+    void stopThemeMonitor() override;
 
 private:
-    static xcb_atom_t getAtom(xcb_connection_t * const connection, const char *name);
+    static xcb_atom_t getAtom(xcb_connection_t* const connection, const char* name);
     bool isFedoraWithGnome();
     void promptFedoraGnomeUser();
     bool installAppIndicatorForFedoraGnome();
     int parseDnfOutput(const QString& dnfOutput);
     bool verifyAndEnableAppIndicatorExtension();
+    Preferences::ThemeType identifyCurrentTheme(const QString& processOutPut) const;
 
-    ExtServer *ext_server = nullptr;
+    ExtServer* ext_server = nullptr;
     NotifyServer *notify_server = nullptr;
     QString autostart_dir;
     QString desktop_file;
     QString custom_icon;
+    QProcess mThemeMonitor;
 };
 
 #endif // LINUXPLATFORM_H

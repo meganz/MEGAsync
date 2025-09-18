@@ -53,8 +53,32 @@ void ThemeManager::setTheme(Preferences::ThemeType theme)
     if (theme == Preferences::ThemeType::SYSTEM_DEFAULT)
     {
         theme = Platform::getInstance()->getCurrentTheme();
+
+        Platform::getInstance()->startThemeMonitor();
+        connect(Platform::getInstance(),
+                &AbstractPlatform::themeChanged,
+                this,
+                &ThemeManager::onOperatingSystemThemeChanged);
+    }
+    else
+    {
+        Platform::getInstance()->stopThemeMonitor();
+        disconnect(Platform::getInstance(),
+                   &AbstractPlatform::themeChanged,
+                   this,
+                   &ThemeManager::onOperatingSystemThemeChanged);
     }
 
+    applyTheme(theme);
+}
+
+void ThemeManager::onOperatingSystemThemeChanged()
+{
+    applyTheme(Platform::getInstance()->getCurrentTheme());
+}
+
+void ThemeManager::applyTheme(Preferences::ThemeType theme)
+{
     if (mCurrentTheme != theme)
     {
         mCurrentTheme = theme;

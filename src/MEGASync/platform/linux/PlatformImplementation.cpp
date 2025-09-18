@@ -5,6 +5,7 @@
 #include "NautilusFileManager.h"
 
 #include <QHostInfo>
+#include <QObject>
 #include <QProgressBar>
 #include <QScreen>
 #include <QSet>
@@ -934,4 +935,23 @@ Preferences::ThemeType PlatformImplementation::getCurrentTheme() const
     }
 
     return Preferences::ThemeType::LIGHT_THEME; // default theme on ubuntu.
+}
+
+void PlatformImplementation::startThemeMonitor()
+{
+    const QString GNOME_DESKTOP_CONFIG_CMD = QString::fromLatin1("gsettings");
+    const QStringList MONITOR_CURRENT_COLOR_SCHEME_ID =
+        QString::fromLatin1("monitor org.gnome.desktop.interface color-scheme").split(QChar::Space);
+
+    mThemeMonitor.start(GNOME_DESKTOP_CONFIG_CMD, MONITOR_CURRENT_COLOR_SCHEME_ID);
+
+    QObject::connect(&mThemeMonitor,
+                     &QProcess::readyReadStandardOutput,
+                     this,
+                     &AbstractPlatform::themeChanged);
+}
+
+void PlatformImplementation::stopThemeMonitor()
+{
+    mThemeMonitor.close();
 }

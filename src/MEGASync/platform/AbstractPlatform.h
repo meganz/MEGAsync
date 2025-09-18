@@ -29,8 +29,10 @@ struct SelectorInfo
     {}
 };
 
-class AbstractPlatform
+class AbstractPlatform: public QObject
 {
+    Q_OBJECT
+
 public:
     AbstractPlatform() = default;
     virtual ~AbstractPlatform() = default;
@@ -112,6 +114,11 @@ public:
     }
 
     virtual Preferences::ThemeType getCurrentTheme() const;
+    virtual void startThemeMonitor(){};
+    virtual void stopThemeMonitor(){};
+
+signals:
+    void themeChanged();
 
 protected:
     std::shared_ptr<AbstractShellNotifier> mShellNotifier = nullptr;

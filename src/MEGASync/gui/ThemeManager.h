@@ -21,12 +21,14 @@ public:
     QString getSelectedThemeString() const;
     QString getThemeString(Preferences::ThemeType theme) const;
     void setTheme(Preferences::ThemeType theme);
+    void applyTheme(Preferences::ThemeType theme);
 
 signals:
     void themeChanged(Preferences::ThemeType theme);
 
 private:
     ThemeManager();
+    void onOperatingSystemThemeChanged();
 
     Preferences::ThemeType mCurrentTheme;
     static const QMap<Preferences::ThemeType, QString> mThemesMap;
