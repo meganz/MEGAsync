@@ -46,31 +46,34 @@ QStringList ThemeManager::themesAvailable() const
 
 void ThemeManager::setTheme(Preferences::ThemeType theme)
 {
-    mCurrentTheme = theme;
-
-    if (theme == Preferences::ThemeType::SYSTEM_DEFAULT)
+    if (mCurrentTheme != theme)
     {
-        auto soTheme = Platform::getInstance()->getCurrentTheme();
-        applyTheme(soTheme);
+        mCurrentTheme = theme;
 
-        Platform::getInstance()->startThemeMonitor();
-        connect(Platform::getInstance(),
-                &AbstractPlatform::themeChanged,
-                this,
-                &ThemeManager::onOperatingSystemThemeChanged);
+        if (theme == Preferences::ThemeType::SYSTEM_DEFAULT)
+        {
+            auto soTheme = Platform::getInstance()->getCurrentTheme();
+            applyTheme(soTheme);
+
+            Platform::getInstance()->startThemeMonitor();
+            connect(Platform::getInstance(),
+                    &AbstractPlatform::themeChanged,
+                    this,
+                    &ThemeManager::onOperatingSystemThemeChanged);
+        }
+        else
+        {
+            Platform::getInstance()->stopThemeMonitor();
+            disconnect(Platform::getInstance(),
+                       &AbstractPlatform::themeChanged,
+                       this,
+                       &ThemeManager::onOperatingSystemThemeChanged);
+
+            applyTheme(theme);
+        }
+
+        Preferences::instance()->setThemeType(mCurrentTheme);
     }
-    else
-    {
-        Platform::getInstance()->stopThemeMonitor();
-        disconnect(Platform::getInstance(),
-                   &AbstractPlatform::themeChanged,
-                   this,
-                   &ThemeManager::onOperatingSystemThemeChanged);
-
-        applyTheme(theme);
-    }
-
-    Preferences::instance()->setThemeType(mCurrentTheme);
 }
 
 void ThemeManager::onOperatingSystemThemeChanged()
