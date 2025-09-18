@@ -21,7 +21,7 @@ QString QmlTheme::getTheme() const
 {
     QString returnValue;
 
-    returnValue = ThemeManager::instance()->getSelectedThemeString();
+    returnValue = ThemeManager::instance()->getSelectedColorSchemaString();
 
     return returnValue.toLower();
 }

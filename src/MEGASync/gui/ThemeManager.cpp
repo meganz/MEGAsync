@@ -13,20 +13,16 @@ const QMap<Preferences::ThemeType, QString> ThemeManager::mThemesMap = {
 
 ThemeManager::ThemeManager():
     QObject(nullptr),
-    mCurrentTheme(Preferences::ThemeType::LAST)
+    mCurrentTheme(Preferences::ThemeType::LAST),
+    mCurrentColorScheme(Preferences::ThemeType::LAST)
 {}
 
-Preferences::ThemeType ThemeManager::getSelectedTheme() const
+QString ThemeManager::getSelectedColorSchemaString() const
 {
-    return mCurrentTheme;
+    return getColorSchemaString(mCurrentColorScheme);
 }
 
-QString ThemeManager::getSelectedThemeString() const
-{
-    return mThemesMap.value(mCurrentTheme, QLatin1String("Light"));
-}
-
-QString ThemeManager::getThemeString(Preferences::ThemeType themeId) const
+QString ThemeManager::getColorSchemaString(Preferences::ThemeType themeId) const
 {
     return mThemesMap.value(themeId, QLatin1String("Light"));
 }
@@ -50,9 +46,12 @@ QStringList ThemeManager::themesAvailable() const
 
 void ThemeManager::setTheme(Preferences::ThemeType theme)
 {
+    mCurrentTheme = theme;
+
     if (theme == Preferences::ThemeType::SYSTEM_DEFAULT)
     {
-        theme = Platform::getInstance()->getCurrentTheme();
+        auto soTheme = Platform::getInstance()->getCurrentTheme();
+        applyTheme(soTheme);
 
         Platform::getInstance()->startThemeMonitor();
         connect(Platform::getInstance(),
@@ -67,9 +66,11 @@ void ThemeManager::setTheme(Preferences::ThemeType theme)
                    &AbstractPlatform::themeChanged,
                    this,
                    &ThemeManager::onOperatingSystemThemeChanged);
+
+        applyTheme(theme);
     }
 
-    applyTheme(theme);
+    Preferences::instance()->setThemeType(mCurrentTheme);
 }
 
 void ThemeManager::onOperatingSystemThemeChanged()
@@ -79,11 +80,11 @@ void ThemeManager::onOperatingSystemThemeChanged()
 
 void ThemeManager::applyTheme(Preferences::ThemeType theme)
 {
-    if (mCurrentTheme != theme)
+    if (mCurrentColorScheme != theme)
     {
-        mCurrentTheme = theme;
+        mCurrentColorScheme = theme;
 
-        if (!Platform::getInstance()->loadThemeResource(getThemeString(theme)))
+        if (!Platform::getInstance()->loadThemeResource(getColorSchemaString(theme)))
         {
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, "Error loading resource files.");
             auto desktopAppInstallerUrl = ServiceUrls::getDesktopAppUrl();
@@ -100,8 +101,6 @@ void ThemeManager::applyTheme(Preferences::ThemeType theme)
             QMessageBox::warning(nullptr, title, msg, QMessageBox::Ok);
             ::exit(0);
         }
-
-        Preferences::instance()->setThemeType(mCurrentTheme);
 
         emit themeChanged(theme);
         Utilities::propagateCustomEvent(ThemeChanged);

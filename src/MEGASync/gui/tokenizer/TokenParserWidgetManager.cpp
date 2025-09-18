@@ -205,7 +205,7 @@ QColor TokenParserWidgetManager::getColor(const QString& colorToken)
 {
     QString color;
 
-    auto currentTheme = ThemeManager::instance()->getSelectedThemeString();
+    auto currentTheme = ThemeManager::instance()->getSelectedColorSchemaString();
 
     if (!mColorThemedTokens.contains(currentTheme))
     {
@@ -235,7 +235,7 @@ QColor TokenParserWidgetManager::getColor(const QString& colorToken)
 
 void TokenParserWidgetManager::applyTheme(QWidget* widget)
 {
-    auto currentTheme = ThemeManager::instance()->getSelectedThemeString();
+    auto currentTheme = ThemeManager::instance()->getSelectedColorSchemaString();
 
     QString widgetStyleSheet;
     if (mWidgetsStyleSheets.contains(widget->objectName()))
