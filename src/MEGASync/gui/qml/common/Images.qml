@@ -64,6 +64,11 @@ QtObject {
     readonly property url playCircle: imagesQmlPath + "play-circle.svg"
     readonly property url power: imagesQmlPath + "power.svg"
 
+    readonly property url dialogMessageQuestion: imagesQmlPath + "dialog_message_question.svg"
+    readonly property url dialogMessageInformation: imagesQmlPath + "dialog_message_information.svg"
+    readonly property url dialogMessageWarning: imagesQmlPath + "dialog_message_warning.svg"
+    readonly property url dialogMessageCritical: imagesQmlPath + "dialog_message_critical.svg"
+
     readonly property url database: imagesOnboardingPath + "database.svg"
     readonly property url edit: imagesOnboardingPath + "edit.svg"
     readonly property url folder: imagesOnboardingPath + "folder.svg"

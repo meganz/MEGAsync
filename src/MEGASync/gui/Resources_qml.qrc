@@ -129,5 +129,9 @@
         <file alias="images/qml/onboarding/backup@2x.png">images/qml/onboarding/backup@2x.png</file>
         <file alias="images/qml/onboarding/backup.png">images/qml/onboarding/backup.png</file>
         <file alias="images/qml/onboarding/sync.png">images/qml/onboarding/sync.png</file>
+        <file alias="images/qml/dialog_message_warning.svg">images/qml/dialog_message_warning.svg</file>
+        <file alias="images/qml/dialog_message_question.svg">images/qml/dialog_message_question.svg</file>
+        <file alias="images/qml/dialog_message_information.svg">images/qml/dialog_message_information.svg</file>
+        <file alias="images/qml/dialog_message_critical.svg">images/qml/dialog_message_critical.svg</file>
     </qresource>
 </RCC>

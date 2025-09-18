@@ -12,10 +12,6 @@ const QLatin1String BUTTON_VARIANT_LIST_TEXT("text");
 const QLatin1String BUTTON_VARIANT_LIST_TYPE("type");
 const QLatin1String BUTTON_VARIANT_LIST_STYLE("style");
 const QLatin1String BUTTON_VARIANT_LIST_ICON("iconUrl");
-const QUrl IMAGE_OK(QStringLiteral("qrc:/images/qml/ok.png"));
-const QUrl IMAGE_WARNING(QStringLiteral("qrc:/images/qml/warning.png"));
-const QUrl IMAGE_QUESTION(QStringLiteral("qrc:/images/qml/question.png"));
-const QUrl IMAGE_ERROR(QStringLiteral("qrc:/images/qml/error.png"));
 }
 
 // =================================================================================================
@@ -145,7 +141,7 @@ MessageDialogData::MessageDialogData(Type type, MessageDialogInfo info, QObject*
 
 MessageDialogData::Type MessageDialogData::getType() const
 {
-    return mType.value();
+    return mType;
 }
 
 QWidget* MessageDialogData::getParentWidget() const
@@ -156,11 +152,6 @@ QWidget* MessageDialogData::getParentWidget() const
 QString MessageDialogData::getTitle() const
 {
     return mInfo.getDialogTitle();
-}
-
-QUrl MessageDialogData::getImageUrl() const
-{
-    return mInfo.imageUrl;
 }
 
 MessageDialogTextInfo MessageDialogData::getTitleTextInfo() const
@@ -232,17 +223,6 @@ void MessageDialogData::buttonClicked(QMessageBox::StandardButton type)
 
     mResult->setChecked(mInfo.checkboxChecked);
     mResult->setButton(type);
-}
-
-void MessageDialogData::setImageUrl(const QUrl& url)
-{
-    if (mInfo.imageUrl == url)
-    {
-        return;
-    }
-
-    mInfo.imageUrl = url;
-    emit imageChanged();
 }
 
 std::function<void(QPointer<MessageDialogResult>)> MessageDialogData::getFinishFunction() const
@@ -333,26 +313,21 @@ void MessageDialogData::updateButtonsByDefault(QMessageBox::StandardButtons butt
 
 void MessageDialogData::updateWidgetsByType()
 {
-    QUrl imageUrl;
-
     // Set default values based on the type.
-    switch (mType.value())
+    switch (mType)
     {
         case Type::INFORMATION:
         {
-            imageUrl = IMAGE_OK;
             updateButtonsByDefault(QMessageBox::StandardButton::Ok);
             break;
         }
         case Type::WARNING:
         {
-            imageUrl = IMAGE_WARNING;
             updateButtonsByDefault(QMessageBox::StandardButton::Ok);
             break;
         }
         case Type::QUESTION:
         {
-            imageUrl = IMAGE_QUESTION;
             updateButtonsByDefault(QMessageBox::StandardButton::Yes |
                                        QMessageBox::StandardButton::No,
                                    QMessageBox::StandardButton::No);
@@ -360,7 +335,6 @@ void MessageDialogData::updateWidgetsByType()
         }
         case Type::CRITICAL:
         {
-            imageUrl = IMAGE_ERROR;
             updateButtonsByDefault(QMessageBox::StandardButton::Ok);
             break;
         }
@@ -368,11 +342,6 @@ void MessageDialogData::updateWidgetsByType()
         {
             break;
         }
-    }
-
-    if (mInfo.imageUrl.isEmpty())
-    {
-        setImageUrl(imageUrl);
     }
 }
 

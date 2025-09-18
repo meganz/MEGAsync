@@ -5,9 +5,11 @@ import common 1.0
 import components.texts 1.0 as Texts
 import components.buttons 1.0
 import components.checkBoxes 1.0
+import components.images 1.0
 
 import QmlDialog 1.0
 import MessageDialogButtonInfo 1.0
+import MessageDialogData 1.0
 
 QmlDialog {
     id: window
@@ -35,6 +37,40 @@ QmlDialog {
     title: messageDialogDataAccess ? messageDialogDataAccess.title : ""
     visible: false
 
+    onVisibleChanged:
+    {
+        if (window.visible) {
+            setMessageDialogImageProperties();
+        }
+    }
+
+    function setMessageDialogImageProperties()
+    {
+        if (messageDialogDataAccess !== null)
+        {
+            if (messageDialogDataAccess.type === MessageDialogData.Type.QUESTION)
+            {
+                imageItem.source = Images.dialogMessageQuestion;
+                imageItem.color = ColorTheme.supportInfo;
+            }
+            else if (messageDialogDataAccess.type === MessageDialogData.Type.INFORMATION)
+            {
+                imageItem.source = Images.dialogMessageInformation;
+                imageItem.color = ColorTheme.supportInfo;
+            }
+            else if (messageDialogDataAccess.type === MessageDialogData.Type.WARNING)
+            {
+                imageItem.source = Images.dialogMessageWarning;
+                imageItem.color = ColorTheme.supportWarning;
+            }
+            else if (messageDialogDataAccess.type === MessageDialogData.Type.CRITICAL)
+            {
+                imageItem.source = Images.dialogMessageCritical;
+                imageItem.color = ColorTheme.supportError;
+            }
+        }
+    }
+
     Column {
         id: contentColum
 
@@ -56,12 +92,11 @@ QmlDialog {
             width: imageItem.width + topContentRow.spacing + textColumn.width
             spacing: sizes.topContentRowSpacing
 
-            Image {
+            SvgImage {
                 id: imageItem
 
                 width: sizes.iconSize
                 height: sizes.iconSize
-                source: messageDialogDataAccess ? messageDialogDataAccess.imageUrl : ""
                 sourceSize: Qt.size(sizes.iconSize, sizes.iconSize)
                 visible: imageItem.source !== ""
             }
