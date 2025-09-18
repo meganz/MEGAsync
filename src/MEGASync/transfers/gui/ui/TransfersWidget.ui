@@ -123,6 +123,45 @@ QMenu::item:default
   color: #F46265;
 }
 
+#tCancelClearVisible[state=&quot;minus&quot;]
+{
+qproperty-icon: url(:/minus-square_small_thin_solid);
+qproperty-normal_off: &quot;support-warning&quot;;
+qproperty-pressed_off: &quot;support-warning&quot;;
+qproperty-pressed_on: &quot;support-warning&quot;;
+qproperty-hover_off: &quot;support-warning&quot;;
+qproperty-hover_on: &quot;support-warning&quot;;
+}
+
+#tCancelClearVisible, #tCancelClearVisible[state=&quot;x&quot;]
+{
+qproperty-icon: url(:/x-square_small_thin_outline);
+qproperty-normal_off: &quot;icon-secondary&quot;;
+qproperty-normal_on: &quot;icon-secondary&quot;;
+qproperty-pressed_off: &quot;icon-secondary&quot;;
+qproperty-pressed_on: &quot;icon-secondary&quot;;
+qproperty-hover_off: &quot;icon-secondary&quot;;
+qproperty-hover_on: &quot;icon-secondary&quot;;
+}
+#tCancelClearVisible[state=&quot;eraser&quot;]
+{
+qproperty-icon: url(:/eraser_small_thin_outline);
+qproperty-normal_off: &quot;indicator-blue&quot;;
+qproperty-normal_on: &quot;indicator-blue&quot;;
+qproperty-pressed_off: &quot;indicator-blue&quot;;
+qproperty-pressed_on: &quot;indicator-blue&quot;;
+qproperty-hover_off: &quot;indicator-blue&quot;;
+qproperty-hover_on: &quot;indicator-blue&quot;;
+}
+#tPauseResumeVisible
+{
+qproperty-normal_off: &quot;icon-secondary&quot;;
+qproperty-normal_on: &quot;icon-secondary&quot;;
+qproperty-pressed_off: &quot;icon-secondary&quot;;
+qproperty-pressed_on: &quot;icon-secondary&quot;;
+qproperty-hover_off: &quot;icon-secondary&quot;;
+qproperty-hover_on: &quot;icon-secondary&quot;;
+}
 </string>
   </property>
   <layout class="QGridLayout" name="TransfersWidgetLayout">
@@ -464,14 +503,8 @@ QMenu::item:default
                <property name="checkable">
                 <bool>true</bool>
                </property>
-               <property name="hover_selected" stdset="0">
-                <bool>true</bool>
-               </property>
-               <property name="normal_off" stdset="0">
-                <string notr="true">icon-secondary</string>
-               </property>
-               <property name="normal_on" stdset="0">
-                <string notr="true">icon-secondary</string>
+               <property name="type" stdset="0">
+                <string notr="true">ghost</string>
                </property>
               </widget>
              </item>
@@ -555,9 +588,6 @@ QMenu::item:default
                </property>
                <property name="checkable">
                 <bool>false</bool>
-               </property>
-               <property name="normal_off" stdset="0">
-                <string notr="true">icon-secondary</string>
                </property>
               </widget>
              </item>
