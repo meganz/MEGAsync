@@ -14,6 +14,7 @@
 #include <QMetaEnum>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QPainterPath>
 
 QList<mega::MegaHandle> NodeSelectorTreeView::mCopiedHandles = QList<mega::MegaHandle>();
 
@@ -101,25 +102,82 @@ void NodeSelectorTreeView::drawBranches(QPainter* painter,
                                         const QRect& rect,
                                         const QModelIndex& index) const
 {
-    QStyleOptionViewItem opt = viewOptions();
-    opt.rect = rect;
-
     auto item = qvariant_cast<NodeSelectorModelItem*>(
         index.data(toInt(NodeSelectorModelRoles::MODEL_ITEM_ROLE)));
     if (item && (item->isCloudDrive() || item->isVault() || item->isRubbishBin()))
     {
-        if (!selectionModel())
-        {
-            return;
-        }
-        if (selectionModel()->isSelected(index))
-        {
-            opt.state |= QStyle::State_Selected;
-        }
-        style()->drawPrimitive(QStyle::PE_IndicatorBranch, &opt, painter, this);
         return;
     }
-    QTreeView::drawBranches(painter, rect, index);
+
+    QStyleOptionViewItem opt = viewOptions();
+    QSize iconSize(16, 16);
+
+    opt.rect = rect;
+    opt.rect.setHeight(iconSize.width());
+    opt.rect.moveCenter(rect.center());
+    opt.rect.setLeft(opt.rect.width() - iconSize.width());
+
+    if (model()->hasChildren(index))
+    {
+        QString icon;
+        if (isExpanded(index))
+        {
+            icon = QLatin1String("chevron_down");
+        }
+        else
+        {
+            icon = QLatin1String("chevron-right");
+        }
+
+        painter->drawPixmap(opt.rect,
+                            Utilities::getColoredPixmap(icon,
+                                                        Utilities::AttributeType::SMALL |
+                                                            Utilities::AttributeType::THIN |
+                                                            Utilities::AttributeType::OUTLINE,
+                                                        QLatin1String("icon-secondary"),
+                                                        iconSize));
+    }
+}
+
+void NodeSelectorTreeView::drawRow(QPainter* painter,
+                                   const QStyleOptionViewItem& option,
+                                   const QModelIndex& index) const
+{
+    if (!selectionModel())
+    {
+        return;
+    }
+
+    if (selectionModel()->isSelected(index))
+    {
+        painter->save();
+        auto pen(painter->pen());
+        painter->setPen(pen);
+        painter->setRenderHint(QPainter::RenderHint::Antialiasing, true);
+
+        QPainterPath path;
+        auto rect(option.rect);
+        rect.setRight(option.rect.right() - 10);
+        rect.setTop(option.rect.top() + 3);
+        rect.setBottom(option.rect.bottom() - 5);
+        path.addRoundedRect(rect, 4, 4);
+        painter->fillPath(
+            path,
+            TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-2")));
+
+        painter->restore();
+    }
+
+    QStyleOptionViewItem auxOpt(option);
+    auxOpt.state.setFlag(QStyle::State_Selected, false);
+    auxOpt.palette.setColor(QPalette::ColorGroup::Active,
+                            QPalette::ColorRole::Highlight,
+                            Qt::transparent);
+    auxOpt.palette.setColor(QPalette::ColorGroup::Inactive,
+                            QPalette::ColorRole::Highlight,
+                            Qt::transparent);
+
+    QTreeView::drawRow(painter, auxOpt, index);
 }
 
 void NodeSelectorTreeView::mousePressEvent(QMouseEvent* event)

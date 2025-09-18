@@ -22,58 +22,38 @@ void NodeSelectorDelegate::paint(QPainter* painter,
                                  const QModelIndex& index) const
 {
     QStyleOptionViewItem auxOpt(option);
-    auxOpt.state.setFlag(QStyle::State_Selected, false);
 
     if (!index.data(toInt(NodeSelectorModelRoles::EXTRA_ROW_ROLE)).toBool())
     {
         auto pen(painter->pen());
         pen.setWidth(1);
 
-        // Selector
-        if (option.state & QStyle::State_Selected)
+        // Text color
+        if (!index.flags().testFlag(Qt::ItemIsEnabled))
         {
-            if (index.column() == 0)
-            {
-                painter->save();
-                painter->setPen(pen);
-                painter->setRenderHint(QPainter::RenderHint::Antialiasing, true);
-
-                auto view = dynamic_cast<NodeSelectorTreeView*>(parent());
-                if (view)
-                {
-                    painter->fillRect(QRect(0,
-                                            option.rect.y(),
-                                            view->viewport()->width(),
-                                            option.rect.y() + option.rect.height()),
-                                      option.palette.color(QPalette::Normal, QPalette::Window));
-
-                    int leftY = option.rect.y() + 3;
-                    int leftX = 0;
-                    int rightX = view->viewport()->width() - 10;
-                    int rightY = leftY + 40;
-
-                    QRect rect(QPoint(leftX, leftY), QPoint(rightX, rightY));
-
-                    QPainterPath path;
-                    path.addRoundedRect(rect, 4, 4);
-                    painter->fillPath(
-                        path,
-                        TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-2")));
-
-                    painter->restore();
-                }
-            }
+            auxOpt.palette.setBrush(
+                QPalette::ColorRole::Text,
+                TokenParserWidgetManager::instance()->getColor(QLatin1String("text-disabled")));
+        }
+        else
+        {
+            auxOpt.palette.setBrush(
+                QPalette::ColorRole::Text,
+                TokenParserWidgetManager::instance()->getColor(QLatin1String("text-primary")));
+            auxOpt.palette.setBrush(
+                QPalette::ColorRole::HighlightedText,
+                TokenParserWidgetManager::instance()->getColor(QLatin1String("text-primary")));
         }
 
         // Separator
         {
             painter->save();
+            pen.setColor(
+                TokenParserWidgetManager::instance()->getColor(QLatin1String("border-subtle")));
             painter->setPen(pen);
-            painter->setBrush(
-                TokenParserWidgetManager::instance()->getColor(QLatin1String("border-strong")));
 
             int y = option.rect.bottomLeft().y();
-            int leftX = index.column() == 0 ? leftX = 0 : leftX = option.rect.x();
+            int leftX = index.column() == 0 ? 0 : leftX = option.rect.x();
             int rightX = option.rect.x();
             rightX += index.column() == index.model()->columnCount() - 1 ?
                           (option.rect.width() - 10) :
@@ -284,19 +264,7 @@ void TextColumnDelegate::paint(QPainter* painter,
     {
         NodeSelectorDelegate::paint(painter, opt, index);
         painter->save();
-        QPalette::ColorGroup cg = QPalette::Normal;
-        if (!index.flags().testFlag(Qt::ItemIsEnabled))
-        {
-            cg = QPalette::Disabled;
-        }
-        if (opt.state & QStyle::State_Selected)
-        {
-            painter->setPen(opt.palette.color(cg, QPalette::HighlightedText));
-        }
-        else
-        {
-            painter->setPen(opt.palette.color(cg, QPalette::Text));
-        }
+
         QRect rect = opt.rect;
         rect.adjust(10, 0, -5, 0);
         QString elideText = opt.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(),

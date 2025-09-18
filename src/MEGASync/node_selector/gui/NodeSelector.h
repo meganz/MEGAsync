@@ -71,7 +71,6 @@ protected:
     bool event(QEvent* event) override;
     void keyPressEvent(QKeyEvent* e) override;
     void mousePressEvent(QMouseEvent* event) override;
-    void showEvent(QShowEvent*) override;
     void addBackupsView();
     std::shared_ptr<mega::MegaNode> getSelectedNode();
     void initSpecialisedWidgets();

@@ -1280,5 +1280,6 @@
         <file alias="chevron-right_medium_thin_outline">images/themed/tokenizable/chevron-right_medium_thin_outline.svg</file>
         <file alias="download_small_thin_outline">images/themed/tokenizable/download_small_thin_outline.svg</file>
         <file alias="x_small_thin_outline">images/themed/tokenizable/x_small_thin_outline.svg</file>
+        <file alias="chevron_down_small_thin_outline">images/themed/tokenizable/chevron_down_small_thin_outline.svg</file>
     </qresource>
 </RCC>

@@ -308,23 +308,6 @@ background-color: #F7F7F7; /*colorToken.surface-1*/
        </widget>
       </item>
       <item>
-       <widget class="IconOnlyButton" name="pushButton">
-        <property name="text">
-         <string notr="true"/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../../gui/Resources_common.qrc">
-          <normaloff>:/aftereffects_medium</normaloff>:/aftereffects_medium</iconset>
-        </property>
-        <property name="type" stdset="0">
-         <string notr="true">primary</string>
-        </property>
-        <property name="dimension" stdset="0">
-         <string notr="true">large</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -357,21 +340,16 @@ background-color: #F7F7F7; /*colorToken.surface-1*/
  </widget>
  <customwidgets>
   <customwidget>
-   <class>SearchLineEdit</class>
-   <extends>QFrame</extends>
-   <header>node_selector/gui/SearchLineEdit.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>TabSelector</class>
    <extends>QWidget</extends>
    <header>TabSelector.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>IconOnlyButton</class>
-   <extends>QPushButton</extends>
-   <header>TokenizableItems/TokenizableButtons.h</header>
+   <class>SearchLineEdit</class>
+   <extends>QFrame</extends>
+   <header>node_selector/gui/SearchLineEdit.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

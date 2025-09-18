@@ -455,6 +455,7 @@ struct IconCache
             auto pair = mIcons.emplace(resourceName, QIcon());
             i = pair.first;
             i->second.addFile(resourceName, QSize(), QIcon::Normal, QIcon::Off);
+            i->second.addFile(resourceName, QSize(), QIcon::Selected, QIcon::Off);
         }
         return i->second;
     }

@@ -137,6 +137,19 @@ bool NodeSelector::event(QEvent* event)
         ui->retranslateUi(this);
         updateNodeSelectorTabs();
     }
+    // Add the special widgets as soon as we have the stack widget ready
+    else if (event->type() == QEvent::ChildAdded && ui->stackedWidget)
+    {
+        if (!mInitialised)
+        {
+            createSpecialisedWidgets();
+            addSearch();
+            initSpecialisedWidgets();
+
+            mInitialised = true;
+        }
+    }
+
     return QDialog::event(event);
 }
 
@@ -167,18 +180,6 @@ void NodeSelector::mousePressEvent(QMouseEvent* event)
     }
 
     QDialog::mousePressEvent(event);
-}
-
-void NodeSelector::showEvent(QShowEvent*)
-{
-    if (!mInitialised)
-    {
-        createSpecialisedWidgets();
-        addSearch();
-        initSpecialisedWidgets();
-
-        mInitialised = true;
-    }
 }
 
 void NodeSelector::onbOkClicked()

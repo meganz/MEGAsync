@@ -59,6 +59,10 @@ protected:
                       const QRect& rect,
                       const QModelIndex& index) const override;
 
+    void drawRow(QPainter* painter,
+                 const QStyleOptionViewItem& option,
+                 const QModelIndex& index) const override;
+
     void mouseDoubleClickEvent(QMouseEvent* event) override;
     void mousePressEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
