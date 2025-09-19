@@ -3139,7 +3139,11 @@ margin-top: 0px;
            </spacer>
           </item>
           <item>
-           <widget class="WaitingSpinnerWidget" name="wWaitingSpinner" native="true"/>
+           <widget class="WaitingSpinnerWidget" name="wWaitingSpinner" native="true">
+            <property name="colorToken" stdset="0">
+             <string notr="true">icon-primary</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QLabel" name="lOverlayProcessing">
@@ -3386,6 +3390,12 @@ margin-top: 0px;
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
+   <class>WaitingSpinnerWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/WaitingSpinnerWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>AvatarWidget</class>
    <extends>QWidget</extends>
    <header>AvatarWidget.h</header>
@@ -3395,12 +3405,6 @@ margin-top: 0px;
    <class>NotificationsSettings</class>
    <extends>QWidget</extends>
    <header>NotificationsSettings.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>WaitingSpinnerWidget</class>
-   <extends>QWidget</extends>
-   <header>gui/WaitingSpinnerWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

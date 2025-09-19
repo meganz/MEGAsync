@@ -50,6 +50,9 @@ public slots:
     void stop();
 
 public:
+    Q_PROPERTY(QString colorToken MEMBER _colorToken WRITE setColorToken)
+    void setColorToken(const QString& colorToken);
+
     void setColor(QColor color);
     void setRoundness(qreal roundness);
     void setMinimumTrailOpacity(qreal minimumTrailOpacity);
@@ -82,7 +85,8 @@ private slots:
     void rotate();
 
 protected:
-    void paintEvent(QPaintEvent *paintEvent);
+    void paintEvent(QPaintEvent* paintEvent) override;
+    bool event(QEvent* event) override;
 
 private:
     static int lineCountDistanceFromPrimary(int current, int primary,
@@ -98,6 +102,7 @@ private:
 
 private:
     QColor  _color;
+    QString _colorToken;
     qreal   _roundness; // 0..100
     qreal   _minimumTrailOpacity;
     qreal   _trailFadePercentage;
