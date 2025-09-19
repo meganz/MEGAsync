@@ -39,7 +39,7 @@ IF NOT "%1" == "" (
 )
 
 IF [%MEGA_QTPATH%]==[] (
-	SET MEGA_QTPATH=C:\Qt\5.15.16\x64
+	SET MEGA_QTPATH=C:\Qt\5.15.17\x64
 )
 
 echo "Info: QT PATH SET to %MEGA_QTPATH%"
@@ -120,6 +120,6 @@ echo 	- Cores: the number of cores to build the project, or 0 for default value 
 echo 	- Sign: True if you want to sign some of the compilation artifacts. Default is False. [OPTIONAL]
 echo 	- Suffix for installer: The installer will add this suffix to the version. If you want to use this argument, please set the Sign argument to false [OPTIONAL]
 echo MEGA_VCPKGPATH environment variable should be set to the root of the 3rd party dir.
-echo MEGA_QTPATH environment variable should be set to the Qt install dir. Defaults to C:\Qt\5.15.16\x64
+echo MEGA_QTPATH environment variable should be set to the Qt install dir. Defaults to C:\Qt\5.15.17\x64
 echo MEGA_WIN_KITVER environment variable can be used to set the Windows sdk to use. Value defaults to "10.0.19041.0". Set to "." to use the Universal Kit
 exit /B

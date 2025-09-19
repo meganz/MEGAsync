@@ -1,5 +1,5 @@
 Name:		qt-mega
-Version:	5.15.16
+Version:	5.15.17
 Release:	%(cat MEGA_BUILD_ID || echo "1").1
 Summary:	Qt5 LTS
 License:	TODO

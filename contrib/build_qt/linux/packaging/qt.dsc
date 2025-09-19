@@ -3,7 +3,7 @@ Source: qt-mega
 Binary: qt-mega
 Standards-Version: 3.6.1
 Architecture: any
-Version: 5.15.16
+Version: 5.15.17
 DEBTRANSFORM-RELEASE: 1
 Maintainer: MEGA Linux Team <linux@mega.io>
 Homepage: https://mega.io/desktop

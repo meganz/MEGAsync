@@ -3,7 +3,7 @@ setlocal enabledelayedexpansion
 
 SET MEGA_QT_MAJ_VER=5
 SET MEGA_QT_MIN_VER=15
-SET MEGA_QT_DOT_VER=16
+SET MEGA_QT_DOT_VER=17
 SET MEGA_QT_VER=%MEGA_QT_MAJ_VER%.%MEGA_QT_MIN_VER%.%MEGA_QT_DOT_VER%
 
 SET MEGA_QT_BASEURRL=https://download.qt.io/development_releases/prebuilt/llvmpipe/windows

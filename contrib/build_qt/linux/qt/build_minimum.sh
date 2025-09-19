@@ -41,7 +41,7 @@ ENV_ROOT=`pwd`
 
 echo "#### Qt build ####"
 
-ver=5.15.16
+ver=5.15.17
 mainver=`echo $ver | awk -F"." '{print $1"."$2}'`
 SRC_ARCHIVE="qt-everywhere-opensource-src-$ver.tar.xz"
 
@@ -51,11 +51,10 @@ wget -c "https://download.qt.io/official_releases/qt/$mainver/$ver/single/$SRC_A
 # Get patches
 mkdir -p patches
 for p in \
-0001-CVE-2023-51714-qtbase-5.15.diff \
-0002-CVE-2023-51714-qtbase-5.15.diff \
-CVE-2024-25580-qtbase-5.15.diff \
-CVE-2024-36048-qtnetworkauth-5.15.diff \
-CVE-2024-39936-qtbase-5.15.patch
+CVE-2024-39936-qtbase-5.15.patch \
+CVE-2025-30348-qtbase-5.15.diff \
+CVE-2025-4211-qtbase-5.15.diff \
+CVE-2025-5455-qtbase-5.15.patch
 do
   wget -c "https://download.qt.io/official_releases/qt/$mainver/$p" -O "patches/$p"
 done
@@ -63,13 +62,12 @@ done
 # Verify checksums
 [ $download_only -eq 1 ] && exit 0
 echo "CHECKSUM ... "
-if ! echo efa99827027782974356aceff8a52bd3d2a8a93a54dd0db4cca41b5e35f1041c "$SRC_ARCHIVE" | sha256sum -c - \
-|| ! echo 2129058a5e24d98ee80a776c49a58c2671e06c338dffa7fc0154e82eef96c9d4 patches/0001-CVE-2023-51714-qtbase-5.15.diff | sha256sum -c - \
-|| ! echo 99d5d32527e767d6ab081ee090d92e0b11f27702619a4af8966b711db4f23e42 patches/0002-CVE-2023-51714-qtbase-5.15.diff | sha256sum -c - \
-|| ! echo 7cc9bf74f696de8ec5386bb80ce7a2fed5aa3870ac0e2c7db4628621c5c1a731 patches/CVE-2024-25580-qtbase-5.15.diff | sha256sum -c - \
-|| ! echo e5d385d636b5241b59ac16c4a75359e21e510506b26839a4e2033891245f33f9 patches/CVE-2024-36048-qtnetworkauth-5.15.diff | sha256sum -c - \
-|| ! echo 2cc23afba9d7e48f8faf8664b4c0324a9ac31a4191da3f18bd0accac5c7704de patches/CVE-2024-39936-qtbase-5.15.patch | sha256sum -c -
-
+if ! echo 85eb566333d6ba59be3a97c9445a6e52f2af1b52fc3c54b8a2e7f9ea040a7de4 "$SRC_ARCHIVE" | sha256sum -c - \
+|| ! echo 2cc23afba9d7e48f8faf8664b4c0324a9ac31a4191da3f18bd0accac5c7704de patches/CVE-2024-39936-qtbase-5.15.patch | sha256sum -c - \
+|| ! echo 7bc92fb0423f25195fcc59a851570a2f944cfeecbd843540f0e80f09b6b0e822 patches/CVE-2025-4211-qtbase-5.15.diff | sha256sum -c - \
+|| ! echo 967fe137ee358f60ac3338f658624ae2663ec77552c38bcbd94c6f2eff107506 patches/CVE-2025-5455-qtbase-5.15.patch | sha256sum -c - \
+|| ! echo fcd011754040d961fec1b48fe9828b2c8d501f2d9c30f0f475487a590de6d3c8 patches/CVE-2025-30348-qtbase-5.15.diff | sha256sum -c -
+# || ! echo 967fe137ee358f60ac3338f658624ae2663ec77552c38bcbd94c6f2eff107506 CVE-2025-23050-qtconnectivity-5.15.diff | sha256sum -c -
 
 then
 exit 1
@@ -83,10 +81,10 @@ mkdir -p src && tar xf "$SRC_ARCHIVE" -C src --strip-components=1
 # Apply patches
 echo "APPLY PATCHES ... "
 for p in \
-0001-CVE-2023-51714-qtbase-5.15.diff \
-0002-CVE-2023-51714-qtbase-5.15.diff \
-CVE-2024-25580-qtbase-5.15.diff \
-CVE-2024-39936-qtbase-5.15.patch
+CVE-2024-39936-qtbase-5.15.patch \
+CVE-2025-30348-qtbase-5.15.diff \
+CVE-2025-4211-qtbase-5.15.diff \
+CVE-2025-5455-qtbase-5.15.patch
 do
   echo "Applying patch: patches/$p"
   if ! patch -f --verbose -p1 -d src/qtbase < patches/$p ; then
@@ -94,14 +92,14 @@ do
   fi
 done
 
-for p in \
-CVE-2024-36048-qtnetworkauth-5.15.diff
-do
-  echo "Applying patch: patches/$p"
-  if ! patch -f --verbose -p1 -d src/qtnetworkauth < patches/$p ; then
-    exit 1
-  fi
-done
+# for p in \
+# CVE-2025-23050-qtconnectivity-5.15.diff
+# do
+#   echo "Applying patch: patches/$p"
+#   if ! patch -f --verbose -p1 -d src/qtconnectivity < patches/$p ; then
+#     exit 1
+#   fi
+# done
 
 # Build
 echo "BUILD ... "
