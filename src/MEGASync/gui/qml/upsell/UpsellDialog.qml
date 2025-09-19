@@ -27,6 +27,7 @@ UpsellQmlDialog {
     maximumHeight: window.totalHeight
     minimumWidth: window.totalWidth
     minimumHeight: window.totalHeight
+    color: ColorTheme.surface1
 
     Component.onCompleted: {
         header.forceActiveFocus();
