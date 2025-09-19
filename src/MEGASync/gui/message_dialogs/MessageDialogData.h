@@ -33,7 +33,9 @@ public:
     ButtonStyle style = ButtonStyle::OUTLINE;
 
     MessageDialogButtonInfo() = default;
-    MessageDialogButtonInfo(const QString& buttonText, QMessageBox::StandardButton buttonType);
+    MessageDialogButtonInfo(const QString& buttonText,
+                            QMessageBox::StandardButton buttonType,
+                            ButtonStyle buttonStyle);
 };
 
 struct MessageDialogCheckboxInfo
@@ -190,6 +192,7 @@ private:
     void buildButtons();
     void processButtonInfo(QMessageBox::StandardButtons buttons,
                            QMessageBox::StandardButton type,
+                           MessageDialogButtonInfo::ButtonStyle buttonStyle,
                            QString defaultText = QString());
     void updateButtonsByDefault(QMessageBox::StandardButtons buttons,
                                 QMessageBox::StandardButton defaultButton = QMessageBox::Ok);
