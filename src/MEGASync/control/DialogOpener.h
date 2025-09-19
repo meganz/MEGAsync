@@ -472,6 +472,8 @@ private:
 
             TokenParserWidgetManager::instance()->applyCurrentTheme(dialog);
 
+            // Use to reload the widget stylesheet. Without this line, the new stylesheet is not
+            // correctly applied.
             dialog->setParent(dialog->parentWidget(), Qt::Sheet);
 
             auto geoInfo = mSavedGeometries.value(classType, GeometryInfo());
