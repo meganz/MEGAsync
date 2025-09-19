@@ -55,6 +55,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/BannerWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/ApiImageLabel.h
     ${CMAKE_CURRENT_LIST_DIR}/TabSelector.h
+    ${CMAKE_CURRENT_LIST_DIR}/SearchLineEdit.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NodeNameSetterDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NewFolderDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/RenameNodeDialog.h
@@ -69,7 +70,6 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelector.h
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorLoadingDelegate.h
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/SearchLineEdit.h
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorSpecializations.h
     ${CMAKE_CURRENT_LIST_DIR}/qml/QmlClipboard.h
     ${CMAKE_CURRENT_LIST_DIR}/qml/QmlDialog.h
@@ -204,6 +204,7 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/BannerWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ApiImageLabel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/TabSelector.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/SearchLineEdit.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NewFolderDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/RenameNodeDialog.cpp
@@ -218,7 +219,6 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.cpp
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelector.cpp
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorLoadingDelegate.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/SearchLineEdit.cpp
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorSpecializations.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qml/QmlClipboard.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qml/QmlDialog.cpp
@@ -325,7 +325,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelectorTreeViewWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelectorLoadingDelegate.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelector.ui
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/SearchLineEdit.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
@@ -358,7 +357,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelector.ui
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/SearchLineEdit.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/AccountTypeWidget.ui
 )
@@ -395,7 +393,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelector.ui
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/SearchLineEdit.ui
 )
 
 # Resources and platform-specific additions
@@ -561,6 +558,7 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoteItemUi.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/BannerWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/TabSelector.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/SearchLineEdit.ui
 )
 
 target_sources_conditional(${ExecutableTarget}

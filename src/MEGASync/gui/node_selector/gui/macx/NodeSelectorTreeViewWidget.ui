@@ -90,29 +90,14 @@ background-color: #FFFFFF;
           <property name="minimumSize">
            <size>
             <width>155</width>
-            <height>34</height>
+            <height>32</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>155</width>
-            <height>16777215</height>
+            <height>32</height>
            </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QFrame{
-border-radius:6px;
-border-width:1px 1px 1px 1px;
-border-style:solid;
-border-color:rgba(0,0,0,0.1);
-min-height:32px;
-}</string>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
           </property>
          </widget>
         </item>
@@ -1176,7 +1161,7 @@ color:#FFFFFF;
   <customwidget>
    <class>SearchLineEdit</class>
    <extends>QFrame</extends>
-   <header>gui/node_selector/gui/SearchLineEdit.h</header>
+   <header>SearchLineEdit.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
