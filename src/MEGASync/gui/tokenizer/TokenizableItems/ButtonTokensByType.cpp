@@ -46,6 +46,11 @@ void ButtonTokensByType::setDefaultTokens(QAbstractButton* button)
         {
             button->setProperty(TOKEN_PROPERTIES::normalOff, QLatin1String("link-primary"));
         }
+
+        if (propertyEmpty(button, TOKEN_PROPERTIES::disabledOff))
+        {
+            button->setProperty(TOKEN_PROPERTIES::disabledOff, QLatin1String("button-disabled"));
+        }
     }
 }
 

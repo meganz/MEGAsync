@@ -43,19 +43,6 @@ background-color: #FFFFFFFF; /*colorToken.page-background*/
 border:none;
 }
 
-/**********  Footer **********/
-
-#HelpButton {
-border: none;
-border-color: transparent;
-color: #FF0078D7;/*colorToken.link-primary*/
-}
-
-#HelpButton QPushButton::!enabled {
-color: grey;
-}
-/**********  Footer **********/
-
 /**********  Header **********/
 
 #header
@@ -647,11 +634,6 @@ color: grey;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>IconLabel</class>
-   <extends>QToolButton</extends>
-   <header>TokenizableItems/IconLabel.h</header>
-  </customwidget>
-  <customwidget>
    <class>TabSelector</class>
    <extends>QWidget</extends>
    <header>TabSelector.h</header>
@@ -661,6 +643,11 @@ color: grey;
    <class>IconOnlyButton</class>
    <extends>QPushButton</extends>
    <header>TokenizableItems/TokenizableButtons.h</header>
+  </customwidget>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>TokenizableItems/IconLabel.h</header>
   </customwidget>
   <customwidget>
    <class>StalledIssuesView</class>

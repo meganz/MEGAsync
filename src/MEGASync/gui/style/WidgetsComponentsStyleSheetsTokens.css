@@ -516,6 +516,11 @@ background-color: transparent;
 color: #2C5BEB; /*colorToken.link-primary*/
 }
 
+QPushButton:disabled[type="link"]
+{
+color: #C1C2C4; /*colorToken.text-disabled*/
+}
+
 /*
     QLineEdit
 */
