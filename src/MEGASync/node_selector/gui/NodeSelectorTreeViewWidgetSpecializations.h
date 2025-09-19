@@ -13,6 +13,7 @@
 class NodeSelectorProxyModel;
 class NodeSelectorModel;
 class RestoreNodeManager;
+class TabSelector;
 
 class NodeSelectorTreeViewWidgetCloudDrive: public NodeSelectorTreeViewWidget
 {
@@ -135,7 +136,7 @@ private slots:
 
 private:
     void checkSearchButtonsVisibility();
-    void checkAndClick(QToolButton* button);
+    void checkAndClick(TabSelector* tab);
     void changeButtonsWidgetSizePolicy(bool state);
     QString getRootText() override;
     std::unique_ptr<NodeSelectorModel> createModel() override;

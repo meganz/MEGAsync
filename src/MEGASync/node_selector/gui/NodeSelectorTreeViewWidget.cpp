@@ -446,6 +446,8 @@ void NodeSelectorTreeViewWidget::onExpandReady()
         makeCustomConnections();
 
         setRootIndex(QModelIndex());
+
+        setStyleSheet(styleSheet());
     }
 }
 

@@ -56,7 +56,7 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
 
     ui->leSearch->addCustomWidget(ui->title);
 
-    ui->fSearch->hide();
+    ui->wSearch->hide();
     ui->fRubbish->hide();
 
     updateNodeSelectorTabs();
@@ -69,7 +69,7 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
         iconTokens.setNormalOn(QLatin1String("icon-primary"));
         auto iconTokenSetter = std::make_shared<TokenPropertySetter>(iconTokens);
 
-        TabSelector::applyTokens(ui->wStorage, iconTokenSetter);
+        TabSelector::applyTokens(ui->wLeftPaneNS, iconTokenSetter);
     }
 }
 
@@ -94,6 +94,7 @@ void NodeSelector::updateNodeSelectorTabs()
 
 void NodeSelector::onSearch(const QString& text)
 {
+    ui->wSearch->show();
     ui->fSearch->setTitle(text);
     ui->fSearch->setSelected(true);
 
@@ -198,6 +199,7 @@ void NodeSelector::onbOkClicked()
 
 void NodeSelector::onfShowSearchHidden()
 {
+    ui->wSearch->hide();
     ui->fSearch->setTitle(QString());
     ui->leSearch->onClearClicked();
     mSearchWidget->stopSearch();

@@ -1,6 +1,7 @@
 #include "TabSelector.h"
 
 #include "TokenizableItems/TokenPropertySetter.h"
+#include "TokenParserWidgetManager.h"
 #include "ui_TabSelector.h"
 #include "Utilities.h"
 
@@ -125,6 +126,11 @@ void TabSelector::setSelected(bool state)
             emit clicked();
         }
     }
+}
+
+bool TabSelector::isSelected() const
+{
+    return property(SELECTED).toBool();
 }
 
 bool TabSelector::event(QEvent* event)

@@ -579,10 +579,13 @@ font-weight: 700;
           <item>
            <widget class="QFrame" name="frame">
             <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
+             <enum>QFrame::NoFrame</enum>
             </property>
             <property name="frameShadow">
              <enum>QFrame::Plain</enum>
+            </property>
+            <property name="lineWidth">
+             <number>0</number>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout">
              <property name="spacing">
@@ -630,14 +633,7 @@ font-weight: 700;
                 <item alignment="Qt::AlignRight">
                  <widget class="QLabel" name="textLabel">
                   <property name="text">
-                   <string>No results for:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item alignment="Qt::AlignLeft">
-                 <widget class="QLabel" name="searchNotFoundText">
-                  <property name="text">
-                   <string notr="true">TextLabel</string>
+                   <string>No search results</string>
                   </property>
                  </widget>
                 </item>

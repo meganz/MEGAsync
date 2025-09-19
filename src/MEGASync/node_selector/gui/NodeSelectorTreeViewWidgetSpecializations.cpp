@@ -265,8 +265,6 @@ void NodeSelectorTreeViewWidgetSearch::search(const QString& text)
     ui->searchButtonsWidget->setVisible(false);
     auto search_model = static_cast<NodeSelectorModelSearch*>(mModel.get());
     search_model->searchByText(text);
-
-    ui->searchNotFoundText->setText(text);
 }
 
 void NodeSelectorTreeViewWidgetSearch::stopSearch()
@@ -465,23 +463,23 @@ void NodeSelectorTreeViewWidgetSearch::modelLoaded()
 
     checkSearchButtonsVisibility();
 
-    QToolButton* buttonToCheck(nullptr);
+    TabSelector* tabToCheck(nullptr);
 
-    auto buttons = ui->searchButtonsWidget->findChildren<QToolButton*>();
-    foreach(auto& button, buttons)
+    auto tabs = ui->searchButtonsWidget->findChildren<TabSelector*>();
+    foreach(auto& tab, tabs)
     {
-        if (button->isVisible() && button->isChecked())
+        if (tab->isVisible() && tab->isSelected())
         {
-            buttonToCheck = button;
+            tabToCheck = tab;
             break;
         }
-        else if (!buttonToCheck && button->isVisible())
+        else if (!tabToCheck && tab->isVisible())
         {
-            buttonToCheck = button;
+            tabToCheck = tab;
         }
     }
 
-    checkAndClick(buttonToCheck);
+    checkAndClick(tabToCheck);
 
     if (ui->tMegaFolders->model())
     {
@@ -495,12 +493,11 @@ void NodeSelectorTreeViewWidgetSearch::modelLoaded()
     ui->stackedWidget->setCurrentWidget(ui->treeViewPage);
 }
 
-void NodeSelectorTreeViewWidgetSearch::checkAndClick(QToolButton* button)
+void NodeSelectorTreeViewWidgetSearch::checkAndClick(TabSelector* tab)
 {
-    if (button && button->isVisible())
+    if (tab && tab->isVisible())
     {
-        button->setChecked(true);
-        emit button->clicked(true);
+        tab->setSelected(true);
     }
 }
 

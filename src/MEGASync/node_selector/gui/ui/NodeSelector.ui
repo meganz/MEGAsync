@@ -26,20 +26,7 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">/********** LEFT MENU **********/
-/*ColorTokenIcon;Custom;fCloudDrive;normal;off;colorToken.icon-secondary*/
-/*ColorTokenIcon;Custom;fCloudDrive;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Custom;fIncomingShares;normal;off;colorToken.icon-secondary*/
-/*ColorTokenIcon;Custom;fIncomingShares;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Custom;fBackups;normal;off;colorToken.icon-secondary*/
-/*ColorTokenIcon;Custom;fBackups;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Custom;fRubbish;normal;off;colorToken.icon-secondary*/
-/*ColorTokenIcon;Custom;fRubbish;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Custom;fSearch;normal;off;colorToken.icon-secondary*/
-/*ColorTokenIcon;Custom;fSearch;normal;on;colorToken.icon-primary*/
-/********** LEFT MENU **********/ 
-
-#wStorage 
+   <string notr="true">#wStorage, #wSearch
 {
 border:none;
 }
@@ -88,7 +75,13 @@ background-color: #F7F7F7; /*colorToken.surface-1*/
        <height>16777215</height>
       </size>
      </property>
+     <property name="tabselector_group" stdset="0">
+      <bool>true</bool>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>16</number>
+      </property>
       <property name="topMargin">
        <number>24</number>
       </property>
@@ -156,8 +149,8 @@ background-color: #F7F7F7; /*colorToken.surface-1*/
       </item>
       <item>
        <widget class="QGroupBox" name="wStorage">
-        <property name="sidebar_parent" stdset="0">
-         <bool>true</bool>
+        <property name="title">
+         <string notr="true"/>
         </property>
         <layout class="QVBoxLayout" name="wSearchLayout_2">
          <property name="spacing">
@@ -167,7 +160,7 @@ background-color: #F7F7F7; /*colorToken.surface-1*/
           <number>4</number>
          </property>
          <property name="topMargin">
-          <number>24</number>
+          <number>0</number>
          </property>
          <property name="rightMargin">
           <number>4</number>
@@ -277,6 +270,33 @@ background-color: #F7F7F7; /*colorToken.surface-1*/
            </property>
           </widget>
          </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="wSearch">
+        <property name="title">
+         <string>Search</string>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">mega</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>4</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>4</number>
+         </property>
+         <property name="bottomMargin">
+          <number>4</number>
+         </property>
          <item>
           <widget class="TabSelector" name="fSearch" native="true">
            <property name="minimumSize">
