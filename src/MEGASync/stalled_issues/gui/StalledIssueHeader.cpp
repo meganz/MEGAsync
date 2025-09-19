@@ -18,10 +18,10 @@
 #include <QFile>
 #include <QMouseEvent>
 
-const int StalledIssueHeader::ARROW_INDENT = 6 + 16; //Left margin + arrow;
-const int StalledIssueHeader::ICON_INDENT = 8 + 48; // fileIcon + spacer;
+const int StalledIssueHeader::ARROW_INDENT = 20 + 16; // Left margin + arrow;
+const int StalledIssueHeader::ICON_INDENT = 8 * 2 + 48; // fileIcon + spacer (by 2);
 const int StalledIssueHeader::BODY_INDENT = StalledIssueHeader::ARROW_INDENT + StalledIssueHeader::ICON_INDENT; // full indent;
-const int StalledIssueHeader::GROUPBOX_INDENT = BODY_INDENT - 9;// Following the InVision mockups
+const int StalledIssueHeader::GROUPBOX_INDENT = BODY_INDENT - 8; // Following the InVision mockups
 const int StalledIssueHeader::GROUPBOX_CONTENTS_INDENT = 9;// Following the InVision mockups
 const int StalledIssueHeader::HEIGHT = 60;
 
