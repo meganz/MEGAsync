@@ -503,6 +503,8 @@ void StalledIssueHeader::refreshUi()
     {
         setIsExpandable(getData().consultData()->isExpandable());
     }
+
+    ui->errorTitleIcon->setVisible(!getData().consultData()->isSolved());
 }
 
 void StalledIssueHeader::resetSolvingWidgets()

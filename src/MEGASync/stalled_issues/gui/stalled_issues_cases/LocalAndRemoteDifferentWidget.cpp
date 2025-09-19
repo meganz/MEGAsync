@@ -117,6 +117,8 @@ void LocalAndRemoteDifferentWidget::refreshUi()
         ui->keepLastModifiedOption->hide();
     }
 
+    ui->selectLabel->setVisible(!issue->isSolved());
+
     if (issue->isSolved())
     {
         unSetFailedChooseWidget();
@@ -129,9 +131,8 @@ void LocalAndRemoteDifferentWidget::refreshUi()
             ui->chooseLocalCopy->setActionButtonVisibility(false);
             ui->chooseRemoteCopy->setActionButtonVisibility(false);
         }
-
     }
-    else if(issue->isFailed())
+    else if (issue->isFailed())
     {
         ui->keepBothOption->setSolved(false, false);
         ui->keepLastModifiedOption->show();
@@ -140,27 +141,31 @@ void LocalAndRemoteDifferentWidget::refreshUi()
 
         unSetFailedChooseWidget();
 
-        switch(issue->getChosenSide())
+        switch (issue->getChosenSide())
         {
             case LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::REMOTE:
             {
-                auto errorStr = issue->consultLocalData()->isFile() ? tr("Unable to remove the local file") : tr("Unable to remove the local folder");
+                auto errorStr = issue->consultLocalData()->isFile() ?
+                                    tr("Unable to remove the local file") :
+                                    tr("Unable to remove the local folder");
                 ui->chooseRemoteCopy->setFailed(true, errorStr);
                 mFailedItem = ui->chooseRemoteCopy;
                 break;
             }
             case LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LOCAL:
             {
-                auto errorStr = issue->consultLocalData()->isFile() ? tr("Unable to remove the file stored in MEGA")
-                                                                    : tr("Unable to remove the folder stored in MEGA");
+                auto errorStr = issue->consultLocalData()->isFile() ?
+                                    tr("Unable to remove the file stored in MEGA") :
+                                    tr("Unable to remove the folder stored in MEGA");
                 ui->chooseLocalCopy->setFailed(true, errorStr);
                 mFailedItem = ui->chooseLocalCopy;
                 break;
             }
             case LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::BOTH:
             {
-                auto errorStr = issue->consultLocalData()->isFile() ? tr("Unable to update both local and MEGA files")
-                                                                    : tr("Unable to update both local and MEGA folders");
+                auto errorStr = issue->consultLocalData()->isFile() ?
+                                    tr("Unable to update both local and MEGA files") :
+                                    tr("Unable to update both local and MEGA folders");
                 ui->keepBothOption->setFailed(true, errorStr);
                 mFailedItem = ui->keepBothOption;
                 break;
@@ -170,7 +175,6 @@ void LocalAndRemoteDifferentWidget::refreshUi()
                 break;
             }
         }
-
     }
 
     updateSizeHint();
