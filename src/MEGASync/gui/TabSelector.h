@@ -20,7 +20,7 @@ public:
     explicit TabSelector(QWidget* parent = nullptr);
     ~TabSelector();
 
-    Q_PROPERTY(QString title WRITE setTitle READ getTitle)
+    Q_PROPERTY(QString title MEMBER mTitle WRITE setTitle READ getTitle)
     void setTitle(const QString& title);
     QString getTitle() const;
 
@@ -57,12 +57,14 @@ signals:
 
 protected:
     bool event(QEvent* event) override;
+    bool eventFilter(QObject* watched, QEvent* event) override;
 
 private:
     Ui::TabSelector* ui;
     QPointer<QWidget> mTabSelectorGroupParent;
     std::shared_ptr<TokenPropertySetter> mIconTokens;
     std::shared_ptr<TokenPropertySetter> mCloseButtonTokens;
+    QString mTitle;
 };
 
 #endif // TABSELECTOR_H

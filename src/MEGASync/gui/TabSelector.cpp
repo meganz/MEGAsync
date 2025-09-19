@@ -6,6 +6,7 @@
 
 #include <QDebug>
 #include <QMouseEvent>
+#include <QPainter>
 
 const char* SELECTED = "selected";
 const char* TAB_SELECTOR_GROUP = "tabselector_group";
@@ -27,6 +28,8 @@ TabSelector::TabSelector(QWidget* parent):
     // By default the counter and the close button are hidden
     ui->lCounter->hide();
     ui->lClose->hide();
+
+    ui->lTitle->installEventFilter(this);
 
     connect(ui->lClose,
             &QPushButton::clicked,
@@ -63,7 +66,8 @@ TabSelector::~TabSelector()
 
 void TabSelector::setTitle(const QString& title)
 {
-    ui->lTitle->setText(title);
+    mTitle = title;
+    ui->lTitle->setText(mTitle);
 }
 
 QString TabSelector::getTitle() const
@@ -131,6 +135,24 @@ bool TabSelector::event(QEvent* event)
     }
 
     return QWidget::event(event);
+}
+
+bool TabSelector::eventFilter(QObject* watched, QEvent* event)
+{
+    if (event->type() == QEvent::Paint)
+    {
+        if (watched == ui->lTitle && event->type() == QEvent::Paint)
+        {
+            QPainter painter(ui->lTitle);
+            QRect rect = ui->lTitle->contentsRect();
+            QString elidedText =
+                ui->lTitle->fontMetrics().elidedText(mTitle, Qt::ElideMiddle, rect.width());
+            painter.drawText(rect, Qt::AlignVCenter, elidedText);
+            return true;
+        }
+    }
+
+    return QWidget::eventFilter(watched, event);
 }
 
 QList<TabSelector*> TabSelector::getTabSelectorByParent(QWidget* parent)
