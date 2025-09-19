@@ -54,7 +54,7 @@ font-weight: 600;
     <number>24</number>
    </property>
    <property name="bottomMargin">
-    <number>24</number>
+    <number>17</number>
    </property>
    <item>
     <widget class="QLabel" name="infoLabel">
@@ -101,6 +101,9 @@ font-weight: 600;
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>8</number>
+       </property>
        <item>
         <widget class="QLineEdit" name="eFolderPath">
          <property name="enabled">
@@ -228,7 +231,7 @@ font-weight: 600;
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">
-       <number>6</number>
+       <number>8</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
