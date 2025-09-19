@@ -24,6 +24,8 @@ public:
 
 private:
     Ui::MegaInputDialog* ui;
+    QString descText;
+    QString inputText;
 
 protected:
     bool event(QEvent* event) override;

@@ -17,6 +17,7 @@ MegaInputDialog::~MegaInputDialog()
 
 void MegaInputDialog::setTextValue(const QString& text)
 {
+    inputText = text;
     ui->leMegaLink->setText(text);
 }
 
@@ -27,6 +28,7 @@ QString MegaInputDialog::textValue() const
 
 void MegaInputDialog::setLabelText(const QString& text)
 {
+    descText = text;
     ui->lDesc->setText(text);
 }
 
@@ -40,6 +42,8 @@ bool MegaInputDialog::event(QEvent* event)
     if (event->type() == QEvent::LanguageChange || event->type() == ThemeManager::ThemeChanged)
     {
         ui->retranslateUi(this);
+        setLabelText(descText);
+        setTextValue(inputText);
     }
     return QDialog::event(event);
 }
