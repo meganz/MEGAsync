@@ -470,13 +470,11 @@ private:
                 return nullptr;
             }
 
-            if(changeWindowModality)
-            {
-                if(dialog->parent())
-                {
-                    dialog->setWindowModality(Qt::WindowModal);
-                }
-            }
+            TokenParserWidgetManager::instance()->applyCurrentTheme(dialog);
+
+            // Use to reload the widget stylesheet. Without this line, the new stylesheet is not
+            // correctly applied.
+            dialog->setParent(dialog->parentWidget(), Qt::Sheet);
 
             auto geoInfo = mSavedGeometries.value(classType, GeometryInfo());
             if(!geoInfo.isEmpty())
@@ -510,8 +508,6 @@ private:
             }
 
             info->raise(true);
-
-            TokenParserWidgetManager::instance()->applyCurrentTheme(dialog);
 
             return info;
         }
