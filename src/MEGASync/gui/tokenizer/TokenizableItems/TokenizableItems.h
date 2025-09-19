@@ -76,6 +76,8 @@ public:
     TokenizableItem();
     ~TokenizableItem();
 
+    virtual void clear();
+
 protected:
     bool stateHasChanged(const QStyleOption& option);
 
@@ -89,7 +91,7 @@ protected:
     virtual void init(QAbstractButton* button);
 
 private:
-    BaseTokens baseTokens;
+    BaseTokens mBaseTokens;
     QStyleOption mCurrentOption;
     bool mInit;
     int mThemeType;
