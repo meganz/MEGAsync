@@ -47,16 +47,15 @@ BuildRequires:  kf6-kio-devel
 # Disabling -debugsource for rhel to avoid "Empty %files debugsourcefiles.list"
 %global _enable_debugsource 0
 BuildRequires:  gcc-c++
-BuildRequires:  cmake
 BuildRequires:  extra-cmake-modules
 BuildRequires:  redhat-rpm-config
-BuildRequires:  qt5-qtbase-devel
 %if 0%{?rhel} >= 10
-BuildRequires: kf6-kio-devel
+BuildRequires:  kf6-rpm-macros
+BuildRequires:  kf6-kio-devel
 %else
-BuildRequires: kf5-kio-devel
+BuildRequires:  kf5-rpm-macros
+BuildRequires:  kf5-kio-devel
 %endif
-%{?!_qt5_plugindir:%global _qt5_plugindir %{_libdir}/qt5/plugins}
 %endif
 
 Requires:       megasync >= 5.3.0
@@ -98,10 +97,13 @@ fi
 %kf6_build
 %endif
 
+#RHEL
 %if 0%{?rhel}
-%cmake -DKF_VER=5 \
-       -DKDE_INSTALL_PLUGINDIR=%{_qt5_plugindir} \
-       -DKDE_INSTALL_ICONDIR=%{_datadir}/icons
+%if 0%{?rhel} >= 10
+    %cmake_kf6 -DKF_VER=6
+%else
+    %cmake_kf5 -DKF_VER=5
+%endif
 %cmake_build
 %endif
 
@@ -115,12 +117,10 @@ fi
 %if 0%{?is_opensuse} && 0%{?suse_version} >= 1600
 %kf6_install
 %endif
+#RHEL
 %if 0%{?rhel}
 %cmake_install
-echo "== INSTALLED TREE =="
-find %{buildroot} -type f | sort
 %endif
-
 
 %clean
 echo cleaning
@@ -170,15 +170,27 @@ echo cleaning
 %{_kf6_plugindir}/kf6/overlayicon/megasync-overlay-plugin.so
 %{_kf6_plugindir}/kf6/kfileitemaction/megasync-plugin.so
 %endif
+#RHEL
 %if 0%{?rhel}
-%{_datadir}/icons/hicolor/32x32/emblems/mega-dolphin-pending.png
-%{_datadir}/icons/hicolor/32x32/emblems/mega-dolphin-synced.png
-%{_datadir}/icons/hicolor/32x32/emblems/mega-dolphin-syncing.png
-%{_datadir}/icons/hicolor/64x64/emblems/mega-dolphin-pending.png
-%{_datadir}/icons/hicolor/64x64/emblems/mega-dolphin-synced.png
-%{_datadir}/icons/hicolor/64x64/emblems/mega-dolphin-syncing.png
-%{_qt5_plugindir}/kf5/kfileitemaction/megasync-plugin.so
-%{_qt5_plugindir}/kf5/overlayicon/megasync-overlay-plugin.so
+%if 0%{?rhel} >= 10
+%{_kf6_datadir}/icons/hicolor/32x32/emblems/mega-dolphin-pending.png
+%{_kf6_datadir}/icons/hicolor/32x32/emblems/mega-dolphin-synced.png
+%{_kf6_datadir}/icons/hicolor/32x32/emblems/mega-dolphin-syncing.png
+%{_kf6_datadir}/icons/hicolor/64x64/emblems/mega-dolphin-pending.png
+%{_kf6_datadir}/icons/hicolor/64x64/emblems/mega-dolphin-synced.png
+%{_kf6_datadir}/icons/hicolor/64x64/emblems/mega-dolphin-syncing.png
+%{_kf6_plugindir}/overlayicon/megasync-overlay-plugin.so
+%{_kf6_plugindir}/kfileitemaction/megasync-plugin.so
+%else
+%{_kf5_datadir}/icons/hicolor/32x32/emblems/mega-dolphin-pending.png
+%{_kf5_datadir}/icons/hicolor/32x32/emblems/mega-dolphin-synced.png
+%{_kf5_datadir}/icons/hicolor/32x32/emblems/mega-dolphin-syncing.png
+%{_kf5_datadir}/icons/hicolor/64x64/emblems/mega-dolphin-pending.png
+%{_kf5_datadir}/icons/hicolor/64x64/emblems/mega-dolphin-synced.png
+%{_kf5_datadir}/icons/hicolor/64x64/emblems/mega-dolphin-syncing.png
+%{_kf5_plugindir}/overlayicon/megasync-overlay-plugin.so
+%{_kf5_plugindir}/kfileitemaction/megasync-plugin.so
+%endif
 %endif
 
 %changelog
