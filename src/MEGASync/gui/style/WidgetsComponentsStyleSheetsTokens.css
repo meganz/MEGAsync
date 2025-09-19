@@ -142,7 +142,7 @@ border-color: #ff04101E; /*colorToken.button-outline*/
 QComboBox:disabled[type="mega"]
 {
 color: #ff797c80; /*colorToken.text-disabled*/
-border-color: #ff797c80; /*colorToken.button-disabled*/
+border-color: #ffdcdddd; /*colorToken.button-disabled*/
 }
 
 QComboBox::drop-down[type="mega"]
