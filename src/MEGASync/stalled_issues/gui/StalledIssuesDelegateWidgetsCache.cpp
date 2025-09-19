@@ -64,7 +64,6 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
     {
         header = new StalledIssueHeader(parent);
         header->setDelegate(mDelegate);
-        header->init();
     }
 
     if(needsUpdate)
@@ -84,8 +83,7 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
 
     if(isNew)
     {
-        header->show();
-        header->hide();
+        header->init();
     }
 
     if(needsUpdate)
@@ -120,13 +118,10 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
         }
 
         item = createBodyWidget(parent, issue);
-        item->resize(QSize(size.width(), item->size().height()));
-        item->show();
-        item->hide();
-        item->updateUi(sourceIndex, issue);
         item->setDelegate(mDelegate);
-
-        TokenParserWidgetManager::instance()->applyCurrentTheme(item);
+        item->resize(QSize(size.width(), item->size().height()));
+        item->updateUi(sourceIndex, issue);
+        item->init();
 
         itemsByRowMap.insert(row, item);
     }
@@ -197,11 +192,6 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
             item = new OtherSideMissingOrBlocked(parent);
             break;
         }
-    }
-
-    if (item)
-    {
-        item->init();
     }
 
     return item;

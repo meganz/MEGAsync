@@ -46,6 +46,11 @@
 	background-color: #F3F4F4; /*colorToken.surface-2*/
 }
 
+#actionMessageContainer[STATE=&quot;being solved&quot;] QLabel
+{
+    color: #616366; /*colorToken.text-secondary*/
+}
+
 #actionMessageContainer[STATE=&quot;solved&quot;]
 {
 	background-color: #CFFCDB; /*colorToken.notification-success*/
@@ -484,6 +489,9 @@
              <height>16</height>
             </size>
            </property>
+           <property name="colorToken" stdset="0">
+            <string notr="true">icon-primary</string>
+           </property>
           </widget>
          </item>
          <item>
@@ -519,8 +527,8 @@
            <property name="text">
             <string/>
            </property>
-           <property name="type" stdset="0">
-            <string notr="true">secondary</string>
+           <property name="font-size" stdset="0">
+            <string notr="true">body-2</string>
            </property>
           </widget>
          </item>
@@ -539,15 +547,15 @@
    <header>TokenizableItems/IconLabel.h</header>
   </customwidget>
   <customwidget>
+   <class>WordWrapLabel</class>
+   <extends>QTextEdit</extends>
+   <header>WordWrapLabel.h</header>
+  </customwidget>
+  <customwidget>
    <class>WaitingSpinnerWidget</class>
    <extends>QWidget</extends>
    <header>gui/WaitingSpinnerWidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>WordWrapLabel</class>
-   <extends>QTextEdit</extends>
-   <header>WordWrapLabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>

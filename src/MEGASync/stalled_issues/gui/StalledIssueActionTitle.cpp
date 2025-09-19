@@ -219,6 +219,7 @@ void StalledIssueActionTitle::setMessage(const QString& message,
     ui->messageContainer->installEventFilter(this);
     ui->messageContainer->setToolTip(tooltip);
 
+    ui->iconLabel->clear();
     ui->iconLabel->setProperty(TOKEN_PROPERTIES::normalOff, iconToken);
     ui->iconLabel->setIcon(QIcon(pixmapName));
 
@@ -573,6 +574,7 @@ void StalledIssueActionTitle::updateIcon()
 {
     if (!mIconPath.isEmpty())
     {
+        ui->icon->clear();
         ui->icon->setIcon(QIcon(mIconPath));
         ui->icon->setIconSize(QSize(16, 16));
         ui->icon->setProperty(TOKEN_PROPERTIES::normalOff, mIconToken);

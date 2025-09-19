@@ -27,7 +27,14 @@ void StalledIssueBaseDelegateWidget::init()
     setStyleSheet(styleS);
 
     TokenParserWidgetManager::instance()->applyCurrentTheme(this);
+
+    // Setting again its own parent will tell the widget that the stylesheet needs to be reloaded
+    setParent(parentWidget(), windowFlags());
+
+    // Refresh completely the widget
+    show();
     TokenParserWidgetManager::instance()->polish(this);
+    hide();
 }
 
 void StalledIssueBaseDelegateWidget::updateIndex()

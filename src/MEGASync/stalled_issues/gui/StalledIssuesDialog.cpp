@@ -120,7 +120,6 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
             this,
             &StalledIssuesDialog::onScrollRangeChanged);
 
-    initEmptyIcon();
     showView();
 
     if(MegaSyncApp->getStalledIssuesModel()->issuesRequested())
@@ -376,14 +375,6 @@ void StalledIssuesDialog::setScrollMode(bool state)
     ui->footer->setStyleSheet(ui->footer->styleSheet());
 }
 
-void StalledIssuesDialog::initEmptyIcon()
-{
-    ui->emptyIcon->setIcon(QIcon(Utilities::getColoredPixmap(QLatin1String("arrows-up-down-circle"),
-                                                             Utilities::AttributeType::NONE,
-                                                             QLatin1String("icon-secondary"),
-                                                             ui->emptyIcon->size())));
-}
-
 int StalledIssuesDialog::getFilterCriterionFromChip(QWidget* tab)
 {
     return MegaSyncApp->getStalledIssuesModel()->getCountByFilterCriterion(
@@ -431,6 +422,7 @@ bool StalledIssuesDialog::event(QEvent* event)
         ui->retranslateUi(this);
         MegaSyncApp->getStalledIssuesModel()->languageChanged();
         ui->stalledIssuesTree->update();
+        createTabTitles();
     }
 
     return QDialog::event(event);

@@ -54,8 +54,6 @@ private slots:
 private:
     void showView();
     void setScrollMode(bool state);
-    void initEmptyIcon();
-
     int getFilterCriterionFromChip(QWidget* tab);
 
     Ui::StalledIssuesDialog *ui;

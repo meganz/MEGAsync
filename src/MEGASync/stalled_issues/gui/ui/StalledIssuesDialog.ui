@@ -269,7 +269,7 @@ border:none;
           <height>0</height>
          </size>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0,0,0,0,1">
          <property name="spacing">
           <number>8</number>
          </property>
@@ -501,14 +501,15 @@ border:none;
          <property name="text">
           <string notr="true">...</string>
          </property>
+         <property name="icon">
+          <iconset resource="../../../gui/Resources_qml.qrc">
+           <normaloff>:/images/qml/guest/guest.png</normaloff>:/images/qml/guest/guest.png</iconset>
+         </property>
          <property name="iconSize">
           <size>
-           <width>96</width>
-           <height>96</height>
+           <width>200</width>
+           <height>200</height>
           </size>
-         </property>
-         <property name="normal_off" stdset="0">
-          <string notr="true">icon-primary</string>
          </property>
         </widget>
        </item>
@@ -669,6 +670,7 @@ border:none;
  </tabstops>
  <resources>
   <include location="../../../gui/Resources_common.qrc"/>
+  <include location="../../../gui/Resources_qml.qrc"/>
   <include location="../../../gui/Resources_light.qrc"/>
  </resources>
  <connections/>

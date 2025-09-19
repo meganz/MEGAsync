@@ -221,6 +221,7 @@ void StalledIssueHeader::showMessage(const QString& message,
 
     if (!icon.isEmpty())
     {
+        ui->actionMessageIcon->clear();
         ui->actionMessageIcon->show();
         ui->actionMessageIcon->setIcon(QIcon(icon));
         ui->actionMessageIcon->setProperty(TOKEN_PROPERTIES::normalOff, iconToken);
@@ -253,8 +254,6 @@ void StalledIssueHeader::updateIssueState()
     if(type == StalledIssue::SolveType::BEING_SOLVED)
     {
         ui->actionWaitingSpinner->start();
-        ui->actionWaitingSpinner->setColor(
-            TokenParserWidgetManager::instance()->getColor(QLatin1String("icon-primary")));
     }
     else
     {
@@ -355,7 +354,7 @@ void StalledIssueHeader::updateIssueState()
     }
 
     showMessage(message, iconName, iconToken);
-    ui->actionMessageContainer->setStyleSheet(ui->actionMessageContainer->styleSheet());
+    setStyleSheet(styleSheet());
 }
 
 void StalledIssueHeader::setText(const QString &text, const QString& tooltip)

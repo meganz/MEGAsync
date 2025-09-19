@@ -237,13 +237,7 @@ border-radius: 4px;
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="hoverIcon">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
+                <widget class="IconLabel" name="hoverIcon">
                  <property name="minimumSize">
                   <size>
                    <width>16</width>
@@ -257,10 +251,14 @@ border-radius: 4px;
                   </size>
                  </property>
                  <property name="text">
-                  <string/>
+                  <string notr="true"/>
                  </property>
-                 <property name="pixmap">
-                  <pixmap resource="../../../gui/Resources_common.qrc">:/images/StalledIssues/ic-open-outside.png</pixmap>
+                 <property name="icon">
+                  <iconset resource="../../../gui/Resources_common.qrc">
+                   <normaloff>:/external_link_small_thin_outline</normaloff>:/external_link_small_thin_outline</iconset>
+                 </property>
+                 <property name="normal_off" stdset="0">
+                  <string notr="true">icon-secondary</string>
                  </property>
                 </widget>
                </item>

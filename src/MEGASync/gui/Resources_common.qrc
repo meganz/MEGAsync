@@ -1259,5 +1259,6 @@
         <file alias="more-horizontal-circle_small_thin_solid">images/themed/tokenizable/more-horizontal-circle_small_thin_solid.svg</file>
         <file alias="x-circle_small_thin_outline">images/themed/tokenizable/x-circle_small_thin_outline.svg</file>
         <file alias="x-circle_small_thin_solid">images/themed/tokenizable/x-circle_small_thin_solid.svg</file>
+        <file alias="external_link_small_thin_outline">images/themed/tokenizable/external_link_small_thin_outline.svg</file>
     </qresource>
 </RCC>

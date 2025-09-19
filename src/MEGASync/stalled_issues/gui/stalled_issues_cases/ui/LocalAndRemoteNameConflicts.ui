@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
-    <number>0</number>
+    <number>8</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -68,7 +68,7 @@
     <widget class="QWidget" name="nameContainer" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="spacing">
-       <number>24</number>
+       <number>16</number>
       </property>
       <property name="leftMargin">
        <number>0</number>

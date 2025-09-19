@@ -35,7 +35,7 @@ private slots:
     void onHelpIconClicked();
 
 private:
-    void showHoverAction(QEvent::Type type, IconLabel* actionWidget, const QString& path);
+    void showHoverAction(QEvent::Type type, QWidget* actionWidget, const QString& path);
     void updateFileIcons();
     void updateMoveFileIcons();
     void updateCornerArrows();
@@ -57,7 +57,6 @@ private:
     Ui::StalledIssueFilePath *ui;
     StalledIssueDataPtr mData;
     bool mShowFullPath;
-    QIcon mOpenIcon;
 };
 
 #endif // STALLEDISSUEFILEPATH_H

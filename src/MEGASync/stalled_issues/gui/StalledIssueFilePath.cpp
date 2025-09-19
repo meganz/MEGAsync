@@ -20,7 +20,9 @@ StalledIssueFilePath::StalledIssueFilePath(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    mOpenIcon = Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/ic-open-outside.png"));
+    // hover action button are by default invisible
+    ui->filePathAction->hide();
+    ui->moveFilePathAction->hide();
 
     connect(ui->helpIcon, &QPushButton::clicked, this, &StalledIssueFilePath::onHelpIconClicked);
 }
@@ -250,21 +252,22 @@ void StalledIssueFilePath::updateFileIcons()
         {
             iconSize = QSize(16,16);
         }
-        // Has a problem
-        if (mData->getPath().pathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem)
-        {
-            ui->filePathIcon->setProperty(TOKEN_PROPERTIES::normalOff,
-                                          QLatin1String("icon-inverse-accent"));
-        }
-        else
-        {
-            ui->filePathIcon->setProperty(TOKEN_PROPERTIES::normalOff,
-                                          QLatin1String("icon-primary"));
-        }
     }
     else
     {
         fileTypeIcon = StalledIssuesUtilities::getLocalFileIcon(fileInfo);
+        if (!fileInfo.exists())
+        {
+            iconSize = QSize(16, 16);
+        }
+    }
+
+    // Has a problem
+    ui->filePathIcon->clear();
+    if (mData->getPath().pathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem)
+    {
+        ui->filePathIcon->setProperty(TOKEN_PROPERTIES::normalOff,
+                                      QLatin1String("icon-inverse-accent"));
     }
 
     ui->filePathIcon->setIconSize(iconSize);
@@ -287,22 +290,22 @@ void StalledIssueFilePath::updateMoveFileIcons()
         {
             iconSize = QSize(16,16);
         }
-
-        // Has a problem
-        if (mData->getMovePath().pathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem)
-        {
-            ui->moveFilePathIcon->setProperty(TOKEN_PROPERTIES::normalOff,
-                                              QLatin1String("icon-inverse-accent"));
-        }
-        else
-        {
-            ui->moveFilePathIcon->setProperty(TOKEN_PROPERTIES::normalOff,
-                                              QLatin1String("icon-primary"));
-        }
     }
     else
     {
         fileTypeIcon = StalledIssuesUtilities::getLocalFileIcon(fileInfo);
+        if (!fileInfo.exists())
+        {
+            iconSize = QSize(16, 16);
+        }
+    }
+
+    // Has a problem
+    ui->moveFilePathIcon->clear();
+    if (mData->getMovePath().pathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem)
+    {
+        ui->moveFilePathIcon->setProperty(TOKEN_PROPERTIES::normalOff,
+                                          QLatin1String("icon-inverse-accent"));
     }
 
     ui->moveFilePathIcon->setIconSize(iconSize);
@@ -332,13 +335,6 @@ void StalledIssueFilePath::updateCornerArrows()
         {
             ui->problemArrow->setIcon(QIcon());
         }
-    }
-
-    // ui->moveLines
-    {
-        QIcon icon(Utilities::getIcon(QLatin1String("arrow_corner_right"),
-                                      Utilities::AttributeType::NONE));
-        ui->moveLines->setIcon(icon);
     }
 
     // ui->movePathArrow
@@ -386,6 +382,7 @@ void StalledIssueFilePath::updateLocalOrMegaTitle()
         ui->LocalOrRemoteText->setText(tr("Local:"));
     }
 
+    ui->LocalOrRemoteIcon->clear();
     ui->LocalOrRemoteIcon->setProperty(TOKEN_PROPERTIES::normalOff, QLatin1String("icon-primary"));
     ui->LocalOrRemoteIcon->setIcon(icon);
 }
@@ -423,18 +420,18 @@ void StalledIssueFilePath::onHelpIconClicked()
 }
 
 void StalledIssueFilePath::showHoverAction(QEvent::Type type,
-                                           IconLabel* actionWidget,
+                                           QWidget* actionWidget,
                                            const QString& path)
 {
     if(type == QEvent::Enter)
     {
-        actionWidget->setIcon(mOpenIcon);
+        actionWidget->show();
         actionWidget->parent()->setProperty(ITS_HOVER, true);
         setStyleSheet(styleSheet());
     }
     else if(type == QEvent::Leave)
     {
-        actionWidget->setIcon(QIcon());
+        actionWidget->hide();
         actionWidget->parent()->setProperty(ITS_HOVER, false);
         setStyleSheet(styleSheet());
     }

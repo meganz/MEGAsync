@@ -28,6 +28,7 @@ void StalledIssueChooseTitle::showIcon()
                                                   Utilities::AttributeType::OUTLINE);
     }
 
+    ui->icon->clear();
     ui->icon->setProperty(TOKEN_PROPERTIES::normalOff,
                           isFailed() ? QLatin1String("icon-inverse-accent") :
                                        QLatin1String("icon-primary"));
