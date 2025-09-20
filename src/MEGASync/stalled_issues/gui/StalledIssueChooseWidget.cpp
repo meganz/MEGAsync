@@ -97,10 +97,11 @@ GenericChooseWidget::GenericChooseWidget(QWidget* parent)
     ui->pathContainer->hide();
     ui->nameContainer->hide();
 
-    auto margins(ui->titleContainer->layout()->contentsMargins());
-    margins.setTop(4);
-    margins.setBottom(4);
-    ui->titleContainer->layout()->setContentsMargins(margins);
+    auto margins(ui->frame->layout()->contentsMargins());
+    margins.setTop(1);
+    margins.setBottom(1);
+    ui->frame->layout()->setContentsMargins(margins);
+
     ui->chooseTitle->removeBackgroundColor();
 }
 
