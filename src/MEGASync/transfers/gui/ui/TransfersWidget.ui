@@ -32,7 +32,11 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#wTableHeader QPushButton
+   <string notr="true">QTreeView
+{
+background-color: transparent;
+}
+#wTableHeader QPushButton
 {
     text-align: left;
     border: none;
@@ -48,28 +52,6 @@ TransferWidgetHeaderItem  QLabel
    padding: 0;
 }
 
-QScrollBar:vertical
-{
-    background: #f6f6f6;
-    width: 15px;
-    border-left: 1px solid #E4E4E4;
-}
-
-QScrollBar::sub-line:vertical, QScrollBar::add-line:vertical
-{
-    border: none;
-    background: none;
-    width:0px;
-    height:0px;
-}
-
-QScrollBar::handle:vertical
-{
-    background: #c0c0c0;
-    min-height: 20px;
-    border-radius: 4px;
-    margin: 3px 4px 3px 2px;
-}
 
 QMenu
 {
@@ -146,12 +128,12 @@ qproperty-hover_on: &quot;icon-secondary&quot;;
 #tCancelClearVisible[state=&quot;eraser&quot;]
 {
 qproperty-icon: url(:/eraser_small_thin_outline);
-qproperty-normal_off: &quot;indicator-blue&quot;;
-qproperty-normal_on: &quot;indicator-blue&quot;;
-qproperty-pressed_off: &quot;indicator-blue&quot;;
-qproperty-pressed_on: &quot;indicator-blue&quot;;
-qproperty-hover_off: &quot;indicator-blue&quot;;
-qproperty-hover_on: &quot;indicator-blue&quot;;
+qproperty-normal_off: &quot;icon-secondary&quot;;
+qproperty-normal_on: &quot;icon-secondary&quot;;
+qproperty-pressed_off: &quot;icon-secondary&quot;;
+qproperty-pressed_on: &quot;icon-secondary&quot;;
+qproperty-hover_off: &quot;icon-secondary&quot;;
+qproperty-hover_on: &quot;icon-secondary&quot;;
 }
 #tPauseResumeVisible
 {
@@ -224,9 +206,6 @@ qproperty-hover_on: &quot;icon-secondary&quot;;
         <width>16777215</width>
         <height>16777215</height>
        </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
       </property>
       <layout class="QVBoxLayout" name="pTransfersLayout">
        <property name="spacing">

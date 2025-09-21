@@ -2054,7 +2054,7 @@ QToolButton
             </size>
            </property>
            <property name="currentIndex">
-            <number>1</number>
+            <number>0</number>
            </property>
            <widget class="TransferManagerStatusHeaderWidget" name="pStatusHeaderInfo">
             <property name="sizePolicy">
@@ -2846,6 +2846,11 @@ QToolButton
    <container>1</container>
   </customwidget>
   <customwidget>
+   <class>IconOnlyButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
+  </customwidget>
+  <customwidget>
    <class>IconLabel</class>
    <extends>QToolButton</extends>
    <header>tokenizer/TokenizableItems/IconLabel.h</header>
@@ -2854,11 +2859,6 @@ QToolButton
    <class>TokenizableButton</class>
    <extends>QPushButton</extends>
    <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
-  </customwidget>
-  <customwidget>
-   <class>IconOnlyButton</class>
-   <extends>QPushButton</extends>
-   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
   </customwidget>
  </customwidgets>
  <tabstops>

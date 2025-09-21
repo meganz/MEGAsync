@@ -35,11 +35,7 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">*
-{
-  font-family: &quot;Lato&quot;;
-}
-
+   <string notr="true">
 TransferManagerDelegateWidget
 {
     background-color: transparent;
@@ -51,14 +47,13 @@ TransferManagerDelegateWidget
     min-height: 1px;
     max-height: 1px;
     border: none;
-    background: #EEEEEE;
-	margin-left: 24px;
-	margin-right: 24px;
+    background: #FFB0B1B31A; /*colorToken.border-subtle*/
+	margin-left: 16px;
+	margin-right: 16px;
 }
 
 #tFileType
 {
-    qProperty-iconSize: 48px;
     background: transparent;
 }
 
@@ -76,8 +71,6 @@ QPushButton
 
 #lTransferName
 {
-    color: #333333;
-    font-size: 14px;
     qProperty-alignment: 'AlignLeft | AlignBottom';
 }
 
@@ -97,29 +90,17 @@ QProgressBar::chunk
 
 #lDone, #lTotal
 {
-  font-size: 12px;
-  font-weight: bold;
+ qProperty-alignment: 'AlignLeft';
   padding: 0;
   margin: 0;
 }
-
-#lDone
-{
-  color: #999999;
-  qProperty-alignment: 'AlignLeft';
-}
-
 #lTotal
 {
-  color: #333333;
- qProperty-alignment: 'AlignLeft';
+  font-weight: bold;
 }
-
 #bItemSpeed
 {
-  color: #333333;
-  font-size: 12px;
-  font-weight: bold;
+  color:  #ff303233; /*colorToken.text-primary*/
   text-align: left;
   qProperty-iconSize: 16px;
 }
@@ -155,22 +136,17 @@ QProgressBar::chunk
 
 #lItemStatus
 {
-  color: #00D26D;
-}
-
-#lItemQueued, #lItemPausedQueued_2
-{
-  color: #666666;
+  color: #FF007C3E;/*colorToken.text-success*/
 }
 
 #lItemPaused,#lItemPausedQueued_1
 {
-  color: #FFA053;
+  color: #FFB55407;/*colorToken.text-warning*/
 }
 
 #lItemFailed
 {
-  color: #F88183;
+  color: #FFE31B57;/*colorToken.text-error*/
 }
 
 #lRetryMsg
@@ -210,6 +186,9 @@ QProgressBar::chunk
     padding-left: 0px;
     margin-right: 0px;
     border: none;}</string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="TransferManagerItemLayout">
    <property name="spacing">
@@ -251,13 +230,13 @@ QProgressBar::chunk
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>63</height>
+       <height>64</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>63</height>
+       <height>64</height>
       </size>
      </property>
      <property name="currentIndex">
@@ -287,7 +266,7 @@ QProgressBar::chunk
         <number>0</number>
        </property>
        <property name="leftMargin">
-        <number>24</number>
+        <number>28</number>
        </property>
        <property name="topMargin">
         <number>0</number>
@@ -302,11 +281,17 @@ QProgressBar::chunk
         <widget class="QToolButton" name="tFileType">
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>24</width>
+           <height>24</height>
           </size>
          </property>
          <property name="maximumSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="iconSize">
           <size>
            <width>48</width>
            <height>48</height>
@@ -509,13 +494,13 @@ QProgressBar::chunk
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>4</height>
+                 <height>2</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>4</height>
+                 <height>2</height>
                 </size>
                </property>
                <property name="maximum">
@@ -716,7 +701,7 @@ QProgressBar::chunk
           </size>
          </property>
          <property name="currentIndex">
-          <number>4</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="pActive">
           <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -1190,7 +1175,7 @@ QProgressBar::chunk
              </size>
             </property>
             <property name="icon">
-             <iconset resource="../../../gui/Resources_linux.qrc">
+             <iconset resource="../../../gui/Resources_common.qrc">
               <normaloff>:/images/transfer_manager/transfers_actions/lists_pause_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_pause_ico_default.png</iconset>
             </property>
            </widget>
@@ -1249,7 +1234,7 @@ QProgressBar::chunk
              </size>
             </property>
             <property name="icon">
-             <iconset resource="../Resources.qrc">
+             <iconset resource="../../../gui/Resources_common.qrc">
               <normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_ico_default.png</iconset>
             </property>
            </widget>
@@ -1264,7 +1249,7 @@ QProgressBar::chunk
   </layout>
  </widget>
  <resources>
-  <include location="../Resources.qrc"/>
+  <include location="../../../gui/Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>

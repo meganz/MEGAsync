@@ -59,8 +59,8 @@ signals:
     void retryTransfer();
 
 protected:
-    bool setActionTransferIcon(QToolButton* button, const QString& iconName);
-    bool isMouseHoverInAction(QToolButton* button, const QPoint &mousePos);
+    bool setActionTransferIcon(QAbstractButton* button, const QString& iconName);
+    bool isMouseHoverInAction(QAbstractButton* button, const QPoint& mousePos);
     void onRetryTransfer();
 
     bool isDataStillValid();

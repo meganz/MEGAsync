@@ -92,7 +92,8 @@
 
 #wContent[type=&quot;info&quot;] #lIcon
 {
-	image: url(:/images/banner/info.svg);
+	qproperty-icon: url(:/info_small_thin_outline);
+	qproperty-normal_off: &quot;text-info&quot;;
 }
 </string>
   </property>
@@ -167,7 +168,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="lIcon">
+          <widget class="IconLabel" name="lIcon">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -188,12 +189,6 @@
            </property>
            <property name="text">
             <string notr="true"/>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-           </property>
-           <property name="textInteractionFlags">
-            <set>Qt::NoTextInteraction</set>
            </property>
           </widget>
          </item>
@@ -244,6 +239,11 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
+  </customwidget>
   <customwidget>
    <class>WordWrapLabel</class>
    <extends>QLabel</extends>
