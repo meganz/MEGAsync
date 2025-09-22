@@ -46,10 +46,10 @@ done
 #include license as copyright file
 echo "Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/" > MEGAsync/MEGAsync/debian.copyright
 echo "Upstream-Name: megasync" >> MEGAsync/MEGAsync/debian.copyright
-echo "Upstream-Contact: <support@mega.nz>" >> MEGAsync/MEGAsync/debian.copyright
+echo "Upstream-Contact: <support@mega.io>" >> MEGAsync/MEGAsync/debian.copyright
 echo "Source: https://github.com/meganz/MEGAsync" >> MEGAsync/MEGAsync/debian.copyright
 echo "Files: *" >> MEGAsync/MEGAsync/debian.copyright
-echo "Copyright: 2013, Mega Limited" >> MEGAsync/MEGAsync/debian.copyright
+echo "Copyright: 2025, Mega Limited" >> MEGAsync/MEGAsync/debian.copyright
 echo -n "License:" >> MEGAsync/MEGAsync/debian.copyright # Some software (e.g: gnome-software) would only recognized these licenses: http://spdx.org/licenses/
 cat ../LICENCE.md | sed 's#^\s*$#\.#g' | sed 's#^# #' >> MEGAsync/MEGAsync/debian.copyright
 cat ../LICENCE.md | sed 's#^\s*$#\.#g' | sed 's#^# #' >> MEGAsync/MEGAShellExtDolphin/debian.copyright
@@ -199,7 +199,7 @@ sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNemo/nemo-megasync.s
 sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNemo/nemo-megasync.dsc > MEGAsync/MEGAShellExtNemo/nemo-megasync_$EXT_VERSION.dsc
 sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNemo/PKGBUILD > MEGAsync/MEGAShellExtNemo/PKGBUILD
 
-for dist in xUbuntu_{1,2}{0,1,2,3,4,5,6,7,8,9}.{04,10} Debian_{{7,8,9,10,11,12}.0,testing} Raspbian_{11,12}; do
+for dist in xUbuntu_{1,2}{0,1,2,3,4,5,6,7,8,9}.{04,10} Debian_{{7,8,9,10,11,12,13}.0,testing,trixie} Raspbian_{11,12}; do
 if [ -f templates/MEGAShellExtNemo/nemo-megasync-$dist.dsc ]; then
 	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNemo/nemo-megasync-$dist.dsc > MEGAsync/MEGAShellExtNemo/nemo-megasync-$dist.dsc
 else
@@ -258,7 +258,7 @@ rm -fr MEGAsync/MEGAShellExtThunar/thunar-megasync_*.dsc
 sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtThunar/thunar-megasync.spec > MEGAsync/MEGAShellExtThunar/thunar-megasync.spec
 sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtThunar/PKGBUILD > MEGAsync/MEGAShellExtThunar/PKGBUILD
 
-for dist in xUbuntu_{1,2}{0,1,2,3,4,5,6,7,8,9}.{04,10} Debian_{{7,8,9,10,11,12}.0,testing} Raspbian_{11,12}; do
+for dist in xUbuntu_{1,2}{0,1,2,3,4,5,6,7,8,9}.{04,10} Debian_{{7,8,9,10,11,12,13}.0,testing,trixie} Raspbian_{11,12}; do
 if [ -f templates/MEGAShellExtThunar/thunar-megasync-$dist.dsc ]; then
 	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtThunar/thunar-megasync-$dist.dsc > MEGAsync/MEGAShellExtThunar/thunar-megasync-$dist.dsc
 else
@@ -315,7 +315,7 @@ rm -fr MEGAsync/MEGAShellExtDolphin/dolphin-megasync_*.dsc
 sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync.spec > MEGAsync/MEGAShellExtDolphin/dolphin-megasync.spec
 #sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync.dsc > MEGAsync/MEGAShellExtDolphin/dolphin-megasync_$EXT_VERSION.dsc
 
-for dist in xUbuntu_{1,2}{0,1,2,3,4,5,6,7,8,9}.{04,10} Debian_{{7,8,9,10,11,12}.0,testing} Raspbian_{11,12}; do
+for dist in xUbuntu_{1,2}{0,1,2,3,4,5,6,7,8,9}.{04,10} Debian_{{7,8,9,10,11,12,13}.0,testing,trixie} Raspbian_{11,12}; do
 if [ -f templates/MEGAShellExtDolphin/dolphin-megasync-$dist.dsc ]; then
 	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync-$dist.dsc > MEGAsync/MEGAShellExtDolphin/dolphin-megasync-$dist.dsc
 else

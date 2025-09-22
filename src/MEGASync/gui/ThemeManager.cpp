@@ -2,6 +2,7 @@
 
 #include "Platform.h"
 #include "Preferences/Preferences.h"
+#include "ServiceUrls.h"
 #include "TextDecorator.h"
 #include "Utilities.h"
 
@@ -56,23 +57,16 @@ void ThemeManager::setTheme(Preferences::ThemeType theme)
         if (!Platform::getInstance()->loadThemeResource(getThemeString(theme)))
         {
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, "Error loading resource files.");
-
+            auto desktopAppInstallerUrl = ServiceUrls::getDesktopAppUrl();
             auto title = QCoreApplication::translate("MegaError", "Alert");
+            // URL handled through translations. TODO use placeholder
             auto msg = QCoreApplication::translate(
                 "MegaError",
-                "[B]Error detected[/B][BR]An error has occurred loading application "
-                "resources, and the app needs to close. Please reinstall the app from "
-                "[A]mega.io/desktop[/A] to resolve this issue. If the problem persists after "
-                "reinstalling, contact support for further assistance.");
-
-            const Text::Bold boldDecorator;
-            boldDecorator.process(msg);
-
-            const Text::NewLine newLineDecorator;
-            newLineDecorator.process(msg);
-
-            const Text::Link linkDecorator(Utilities::DESKTOP_APP_URL);
-            linkDecorator.process(msg);
+                "[B]Error detected[/B][BR]An error has occurred loading application resources, and "
+                "the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to "
+                "resolve this issue. If the problem persists after reinstalling, contact support "
+                "for further assistance.");
+            Text::RichText(desktopAppInstallerUrl.toString()).process(msg);
 
             QMessageBox::warning(nullptr, title, msg, QMessageBox::Ok);
             ::exit(0);

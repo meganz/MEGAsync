@@ -4,8 +4,8 @@ Source: nautilus-megasync
 Binary: nautilus-megasync
 Architecture: any
 Version: EXT_VERSION
-Maintainer: MEGA Linux Team <linux@mega.co.nz>
-Homepage: https://mega.nz/#sync
+Maintainer: MEGA Linux Team <linux@mega.io>
+Homepage: https://mega.io/desktop
 Build-Depends: debhelper, cdbs, cmake, libnautilus-extension-dev (>= 2.16.0)
 Depends: megasync (>= 5.3.0)
 Package-List:

@@ -107,7 +107,8 @@ bool IgnoredStalledIssue::isHardLink() const
 
 bool IgnoredStalledIssue::isExpandable() const
 {
-    return false;
+    // if it is not any of these types, let the user expand it
+    return !(isSymLink() || isSpecialLink() || isHardLink());
 }
 
 bool IgnoredStalledIssue::checkForExternalChanges()

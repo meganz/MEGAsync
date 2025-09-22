@@ -562,7 +562,7 @@
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Masalah anda tidak dapat diunggah karena kesalahan. Coba lagi nanti atau hubungi tim dukungan kami melalui [A]support@mega.nz[/A] jika masalah berlanjut.</translation>
+        <translation>Masalah anda tidak dapat diunggah karena kesalahan. Coba lagi nanti atau hubungi tim dukungan kami melalui [A]support@mega.io[/A] jika masalah berlanjut.</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
@@ -607,7 +607,7 @@
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation>Silakan coba lagi nanti atau hubungi tim dukungan kami melalui [A]support@mega.nz[/A] jika masalah berlanjut.</translation>
+        <translation>Silakan coba lagi nanti atau hubungi tim dukungan kami melalui [A]support@mega.io[/A] jika masalah berlanjut.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -3071,7 +3071,7 @@ Tunggu hingga unggahan selesai.</translation>
     <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation>Anda telah keluar. Kontak [A]support@mega.nz[/A] jika masalah ini berlanjut.</translation>
+        <translation>Anda telah keluar. Kontak [A]support@mega.io[/A] jika masalah ini berlanjut.</translation>
     </message>
 </context>
 <context>
@@ -5974,11 +5974,11 @@ Masukkan nama yang berbeda.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Error messages are now clearer, making it easier to understand when things go wrong.
-- We’ve fixed bugs and made the app more reliable.
+        <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
-        <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
+        <translation>- Pembaruan ini mencakup banyak perbaikan inti dan perbaikan untuk meningkatkan kinerja secara keseluruhan.
+</translation>
     </message>
 </context>
 <context>
@@ -8163,7 +8163,7 @@ Muat ulang daftar.</translation>
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
         <translation>Target terlalu dalam di struktur folder anda. Hentikan sinkronisasi, pindahkan folder ke lokasi yang kedalaman kurang dari 64 folder, dan buat ulang sinkronisasi anda.
-Jika ini tidak menyelesaikan masalah, hubungi support@mega.nz.</translation>
+Jika ini tidak menyelesaikan masalah, hubungi support@mega.io.</translation>
     </message>
     <message>
         <source>Unable to sync [B]%1[/B]</source>

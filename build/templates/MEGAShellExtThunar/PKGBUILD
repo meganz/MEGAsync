@@ -25,7 +25,7 @@ pkgrel=`cat MEGA_BUILD_ID || echo "1"`
 epoch=
 pkgdesc="MEGA Desktop App plugin for Thunar"
 arch=('i686' 'x86_64')
-url="http://mega.nz/#sync"
+url="https://mega.io/desktop"
 license=() #TODO
 depends=('thunar' 'megasync>=5.3.0')
 makedepends=('ca-certificates' 'qt5-tools' 'thunar')

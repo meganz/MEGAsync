@@ -562,7 +562,7 @@
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Ваше сообщение не удаётся отправить из-за ошибки. Повторите попытку позже или напишите в нашу команду поддержки на [A]support@mega.nz[/A], если проблема не исчезнет.</translation>
+        <translation>Ваше сообщение не удаётся отправить из-за ошибки. Повторите попытку позже или напишите в нашу команду поддержки на [A]support@mega.io[/A], если проблема не исчезнет.</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
@@ -607,7 +607,7 @@
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation>Пожалуйста, повторите попытку позже или напишите в нашу команду поддержки на [A]support@mega.nz[/A], если проблема не исчезнет.</translation>
+        <translation>Пожалуйста, повторите попытку позже или напишите в нашу команду поддержки на [A]support@mega.io[/A], если проблема не исчезнет.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -3071,7 +3071,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation>Вы вышли из системы. Напишите на [A]support@mega.nz[/A], если эта проблема не исчезнет.</translation>
+        <translation>Вы вышли из системы. Напишите на [A]support@mega.io[/A], если эта проблема не исчезнет.</translation>
     </message>
 </context>
 <context>
@@ -3824,12 +3824,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Alert</source>
         <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Предупреждение</translation>
     </message>
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Обнаружена ошибка[/B][BR]При загрузке ресурсов приложения произошла ошибка, и приложение необходимо закрыть. Пожалуйста, попробуйте переустановить его с [A]mega.io/desktop[/A]. Если проблема сохраняется после переустановки, обратитесь в службу поддержки за помощью.</translation>
     </message>
 </context>
 <context>
@@ -5977,11 +5977,11 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Error messages are now clearer, making it easier to understand when things go wrong.
-- We’ve fixed bugs and made the app more reliable.
+        <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
-        <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
+        <translation>- Это обновление включает множество базовых улучшений и исправлений для повышения общей производительности.
+</translation>
     </message>
 </context>
 <context>
@@ -6536,22 +6536,22 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Удалить папку из MEGA</translation>
     </message>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Папка будет удалена из MEGA, но не с вашего устройства. Это действие нельзя отменить.</translation>
     </message>
     <message>
         <source>Move folder</source>
         <translatorcomment>Radio button option label</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Переместить папку на Облачный диск</translation>
     </message>
     <message>
         <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
         <translatorcomment>Radio button description</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Переместите эту папку на Облачный диск, чтобы получить полный доступ к данным. Резервное копирование прекратится.</translation>
     </message>
     <message>
         <source>Move to:</source>
@@ -6571,7 +6571,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>To stop backing up this folder, you need to either move it or delete it.</source>
         <translatorcomment>Backup removal title description</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Чтобы прекратить резервное копирование этой папки, её нужно либо переместить, либо удалить</translation>
     </message>
 </context>
 <context>
@@ -8166,7 +8166,7 @@ Please, refresh the list.</source>
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
         <translation>Целевой объект находится слишком глубоко в структуре ваших папок. Остановите синхронизацию, переместите папку в расположение с глубиной менее 64 папок и заново создайте синхронизацию.
-Если это не решит проблему, напишите на support@mega.nz.</translation>
+Если это не решит проблему, напишите на support@mega.io.</translation>
     </message>
     <message>
         <source>Unable to sync [B]%1[/B]</source>

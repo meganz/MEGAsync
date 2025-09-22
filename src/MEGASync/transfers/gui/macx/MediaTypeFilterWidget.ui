@@ -231,7 +231,7 @@ QGroupBox
             <string notr="true"/>
            </property>
            <property name="icon">
-            <iconset theme="compressed" resource="../../../gui/Resources_macx.qrc">
+            <iconset theme="compressed" resource="../../../gui/Resources_common.qrc">
              <normaloff>:/images/transfer_manager/sidebar/compressed_default.png</normaloff>:/images/transfer_manager/sidebar/compressed_default.png</iconset>
            </property>
            <property name="checkable">
@@ -315,7 +315,7 @@ QGroupBox
             <string notr="true"/>
            </property>
            <property name="icon">
-            <iconset theme="text" resource="../../../gui/Resources_macx.qrc">
+            <iconset theme="text" resource="../../../gui/Resources_common.qrc">
              <normaloff>:/images/transfer_manager/sidebar/text_default.png</normaloff>:/images/transfer_manager/sidebar/text_default.png</iconset>
            </property>
            <property name="checkable">
@@ -396,7 +396,7 @@ QGroupBox
             <string notr="true"/>
            </property>
            <property name="icon">
-            <iconset theme="image" resource="../../../gui/Resources_macx.qrc">
+            <iconset theme="image" resource="../../../gui/Resources_common.qrc">
              <normaloff>:/images/transfer_manager/sidebar/image_default.png</normaloff>:/images/transfer_manager/sidebar/image_default.png</iconset>
            </property>
            <property name="checkable">
@@ -477,7 +477,7 @@ QGroupBox
             <string notr="true"/>
            </property>
            <property name="icon">
-            <iconset theme="video" resource="../../../gui/Resources_macx.qrc">
+            <iconset theme="video" resource="../../../gui/Resources_common.qrc">
              <normaloff>:/images/transfer_manager/sidebar/video_default.png</normaloff>:/images/transfer_manager/sidebar/video_default.png</iconset>
            </property>
            <property name="checkable">
@@ -558,7 +558,7 @@ QGroupBox
             <string notr="true"/>
            </property>
            <property name="icon">
-            <iconset theme="audio" resource="../../../gui/Resources_macx.qrc">
+            <iconset theme="audio" resource="../../../gui/Resources_common.qrc">
              <normaloff>:/images/transfer_manager/sidebar/audio_default.png</normaloff>:/images/transfer_manager/sidebar/audio_default.png</iconset>
            </property>
            <property name="checkable">
@@ -639,7 +639,7 @@ QGroupBox
             <string notr="true"/>
            </property>
            <property name="icon">
-            <iconset theme="generic" resource="../../../gui/Resources_macx.qrc">
+            <iconset theme="generic" resource="../../../gui/Resources_common.qrc">
              <normaloff>:/images/transfer_manager/sidebar/generic_default.png</normaloff>:/images/transfer_manager/sidebar/generic_default.png</iconset>
            </property>
            <property name="checkable">
@@ -687,7 +687,7 @@ QGroupBox
   </layout>
  </widget>
  <resources>
-  <include location="../../../gui/Resources_macx.qrc"/>
+  <include location="../../../gui/Resources_common.qrc"/>
   <include location="../../../gui/Resources.qrc"/>
  </resources>
  <connections/>

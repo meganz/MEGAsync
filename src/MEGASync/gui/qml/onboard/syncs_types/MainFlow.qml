@@ -12,6 +12,8 @@ import onboard.syncs_types.backups 1.0
 import LoginController 1.0
 import SettingsDialog 1.0
 
+import ServiceUrls 1.0
+
 Rectangle {
     id: root
 
@@ -38,7 +40,7 @@ Rectangle {
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.step1DeviceName;
-                helpButtonLink: Links.installAppsDesktop;
+                helpButtonLink: serviceUrlsAccess.getDesktopAppHelpUrl();
             }
         },
         State {
@@ -49,7 +51,7 @@ Rectangle {
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.step2InstallationType;
-                helpButtonLink: Links.installAppsDesktop;
+                helpButtonLink: serviceUrlsAccess.getDesktopAppHelpUrl();
             }
         },
         State {
@@ -63,7 +65,7 @@ Rectangle {
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.step3;
-                helpButtonLink: Links.setUpSyncs;
+                helpButtonLink: serviceUrlsAccess.getCreateSyncHelpUrl();
             }
         },
         State {
@@ -77,7 +79,7 @@ Rectangle {
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.step3;
-                helpButtonLink: Links.createBackup;
+                helpButtonLink: serviceUrlsAccess.getCreateBackupHelpUrl();
             }
         },
         State {
@@ -122,11 +124,11 @@ Rectangle {
                 helpButtonLink: {
                     switch(root.navInfo.typeSelected) {
                         case Constants.SyncType.SYNC:
-                            return Links.setUpSyncs;
+                            return serviceUrlsAccess.getCreateSyncHelpUrl();
                         case Constants.SyncType.BACKUP:
-                            return Links.createBackup;
+                            return serviceUrlsAccess.getCreateBackupHelpUrl();
                         default:
-                            return Links.installAppsDesktop;
+                            return serviceUrlsAccess.getDesktopAppHelpUrl();
                     }
                 }
             }

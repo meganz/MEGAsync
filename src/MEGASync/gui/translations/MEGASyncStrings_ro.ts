@@ -562,7 +562,7 @@
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Problema dvs. nu a putut fi încărcată din cauza unei erori. Încercați din nou mai târziu sau contactați echipa noastră de asistență prin [A]support@mega.nz[/A] dacă problema persistă.</translation>
+        <translation>Problema dvs. nu a putut fi încărcată din cauza unei erori. Încercați din nou mai târziu sau contactați echipa noastră de asistență prin [A]support@mega.io[/A] dacă problema persistă.</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
@@ -607,7 +607,7 @@
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation>Vă rugăm să încercați din nou mai târziu sau contactați echipa noastră de asistență prin [A]support@mega.nz[/A] dacă problema persistă.</translation>
+        <translation>Vă rugăm să încercați din nou mai târziu sau contactați echipa noastră de asistență prin [A]support@mega.io[/A] dacă problema persistă.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -3071,7 +3071,7 @@ Așteptați finalizarea încărcării.</translation>
     <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation>Ați fost deconectat. Contactați [A]support@mega.nz[/A] dacă această problemă persistă.</translation>
+        <translation>Ați fost deconectat. Contactați [A]support@mega.io[/A] dacă această problemă persistă.</translation>
     </message>
 </context>
 <context>
@@ -3823,12 +3823,12 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
     <message>
         <source>Alert</source>
         <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alertă</translation>
     </message>
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Eroare detectată[/B][BR]A apărut o eroare la încărcarea resurselor aplicației, iar aplicația trebuie să se închidă. Vă rugăm să îl reinstalați din [A]mega.io/desktop[/A] pentru a rezolva această problemă. Dacă această problemă persistă după reinstalare, contactați asistența pentru asistență suplimentară.</translation>
     </message>
 </context>
 <context>
@@ -5976,11 +5976,11 @@ Introdu un alt nume.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Error messages are now clearer, making it easier to understand when things go wrong.
-- We’ve fixed bugs and made the app more reliable.
+        <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
-        <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
+        <translation>- Această actualizare include numeroase îmbunătățiri de bază și remedieri pentru a îmbunătăți performanța generală.
+</translation>
     </message>
 </context>
 <context>
@@ -8165,7 +8165,7 @@ Actualizați lista.</translation>
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
         <translation>Ținta se află prea adânc în structura folderelor. Opriți sincronizarea, mutați folderul într-o locație mai mică de 64 de foldere și reluați sincronizarea.
-Dacă problema persistă, contactați support@mega.nz</translation>
+Dacă problema persistă, contactați support@mega.io</translation>
     </message>
     <message>
         <source>Unable to sync [B]%1[/B]</source>

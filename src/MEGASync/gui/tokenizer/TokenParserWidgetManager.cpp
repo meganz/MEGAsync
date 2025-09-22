@@ -173,6 +173,14 @@ void TokenParserWidgetManager::registerWidgetForTheming(QWidget* dialog)
                          mRegisteredWidgets.remove(dialog);
                      });
     mRegisteredWidgets.insert(dialog);
+    applyCurrentTheme(dialog);
+}
+
+void TokenParserWidgetManager::polish(QWidget* widget)
+{
+    widget->style()->unpolish(widget);
+    widget->style()->polish(widget);
+    widget->update();
 }
 
 bool TokenParserWidgetManager::isTokenized(QWidget* widget)
@@ -193,9 +201,9 @@ void TokenParserWidgetManager::applyCurrentTheme()
     }
 }
 
-QColor TokenParserWidgetManager::getColor(const QString& colorToken, const QString& defaultValue)
+QColor TokenParserWidgetManager::getColor(const QString& colorToken)
 {
-    QString color = defaultValue;
+    QString color;
 
     auto currentTheme = ThemeManager::instance()->getSelectedThemeString();
 
@@ -208,7 +216,13 @@ QColor TokenParserWidgetManager::getColor(const QString& colorToken, const QStri
         const auto& colorTokens = mColorThemedTokens.value(currentTheme);
         if (!colorTokens.contains(colorToken))
         {
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
+                               QString::fromUtf8("Color token not found: %1.")
+                                   .arg(colorToken)
+                                   .toUtf8()
+                                   .constData());
             qWarning() << __func__ << " Error color token not found : " << colorToken;
+            Q_ASSERT(false);
         }
         else
         {

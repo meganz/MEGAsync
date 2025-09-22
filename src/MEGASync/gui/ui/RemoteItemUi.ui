@@ -194,7 +194,7 @@ background-color: transparent;
             <string>Add</string>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_win.qrc">
+            <iconset resource="../Resources_common.qrc">
              <normaloff>:/images/plus.svg</normaloff>:/images/plus.svg</iconset>
            </property>
            <property name="autoDefault">
@@ -217,7 +217,7 @@ background-color: transparent;
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>

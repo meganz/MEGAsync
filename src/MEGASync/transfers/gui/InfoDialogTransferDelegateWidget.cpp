@@ -153,7 +153,7 @@ void InfoDialogTransferDelegateWidget::setFileNameAndType()
     mUi->lFileNameCompleted->setToolTip(getData()->mFilename.toHtmlEscaped());
     mUi->lFileNameCompleted->adjustSize();
 
-    QIcon icon = Utilities::getExtensionPixmapMedium(getData()->mFilename);
+    QIcon icon = Utilities::getExtensionPixmap(getData()->mFilename, Utilities::AttributeType::MEDIUM);
     mUi->lFileType->setIcon(icon);
     mUi->lFileType->setIconSize(QSize(48, 48));
     mUi->lFileTypeCompleted->setIcon(icon);

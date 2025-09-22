@@ -7,6 +7,7 @@
 #include "MegaApplication.h"
 #include "QmlDialogWrapper.h"
 #include "QmlUtils.h"
+#include "ServiceUrls.h"
 #include "StalledIssuesModel.h"
 #include "SyncController.h"
 #include "SyncExclusions.h"
@@ -428,7 +429,7 @@ bool DeviceCentre::deviceNameAlreadyExists(const QString& name) const
 
 void DeviceCentre::learnMore() const
 {
-    Utilities::openUrl(QUrl(Utilities::SYNC_SUPPORT_URL));
+    Utilities::openUrl(ServiceUrls::getContactSupportUrl());
 }
 
 void DeviceCentre::applyPreviousExclusionRules() const

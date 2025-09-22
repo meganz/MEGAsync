@@ -233,6 +233,17 @@ std::string PlatformImplementation::toLocalEncodedPath(const QString& path) cons
     return {data, data + path.size() * sizeof(wchar_t)};
 }
 
+QString PlatformImplementation::getArchUpdateString() const
+{
+    QString platformPath;
+#ifdef _WIN64
+    platformPath = QLatin1String("wsync64");
+#else
+    platformPath = QLatin1String("wsync");
+#endif
+    return platformPath;
+}
+
 void PlatformImplementation::notifyItemChange(const QString& path, int)
 {
     notifyItemChange(path, mShellNotifier);
@@ -1013,9 +1024,7 @@ bool PlatformImplementation::loadThemeResource(const QString& theme)
 
     QStringList rccFiles =
         QStringList()
-        << QCoreApplication::applicationDirPath() + QString::fromUtf8("/Resources_macx.rcc")
-        << QCoreApplication::applicationDirPath() + QString::fromUtf8("/Resources_win.rcc")
-        << QCoreApplication::applicationDirPath() + QString::fromUtf8("/Resources_linux.rcc")
+        << QCoreApplication::applicationDirPath() + QString::fromUtf8("/Resources_common.rcc")
         << QCoreApplication::applicationDirPath() + QString::fromUtf8("/Resources_qml.rcc")
         << QCoreApplication::applicationDirPath() + QString::fromUtf8("/qml.rcc")
         << QCoreApplication::applicationDirPath() +

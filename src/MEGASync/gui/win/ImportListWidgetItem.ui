@@ -107,7 +107,7 @@ font-size: 12px;
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../Resources_win.qrc">:/images/small_photoshop.png</pixmap>
+      <pixmap resource="../Resources_common.qrc">:/images/small_photoshop.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>false</bool>
@@ -190,7 +190,7 @@ font-size: 12px;
   <tabstop>lState</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>

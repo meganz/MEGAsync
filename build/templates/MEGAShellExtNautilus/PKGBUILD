@@ -19,14 +19,14 @@
  # program.
 ##
 
-# Maintainer: Pablo Martin <pm@mega.nz>
+# Maintainer: MEGA Linux Team <linux@mega.io>
 pkgname=nautilus-megasync
 pkgver=EXT_VERSION
 pkgrel=`cat MEGA_BUILD_ID || echo "1"`
 epoch=
 pkgdesc="MEGA Desktop App plugin for Nautilus"
 arch=('i686' 'x86_64')
-url=""
+url="https://mega.io/desktop"
 license=() #TODO
 groups=()
 depends=('ca-certificates' 'megasync>=5.3.0' 'nautilus')

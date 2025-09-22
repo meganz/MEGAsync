@@ -477,7 +477,7 @@ QMenu::item:default
                 <string notr="true"/>
                </property>
                <property name="icon">
-                <iconset resource="../../../gui/Resources_win.qrc">
+                <iconset resource="../../../gui/Resources_common.qrc">
                  <normaloff>:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</iconset>
                </property>
                <property name="iconSize">
@@ -557,7 +557,7 @@ QMenu::item:default
                 <string notr="true"/>
                </property>
                <property name="icon">
-                <iconset resource="../../../gui/Resources_win.qrc">
+                <iconset resource="../../../gui/Resources_common.qrc">
                  <normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</iconset>
                </property>
                <property name="iconSize">
@@ -692,7 +692,7 @@ QMenu::item:default
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../gui/Resources_win.qrc"/>
+  <include location="../../../gui/Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>

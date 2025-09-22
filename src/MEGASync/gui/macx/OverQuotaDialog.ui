@@ -105,7 +105,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
+         <iconset resource="../Resources_common.qrc">
           <normaloff>:/images/icon_warning_36.png</normaloff>:/images/icon_warning_36.png</iconset>
         </property>
         <property name="iconSize">
@@ -254,7 +254,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_macx.qrc">
+          <iconset resource="../Resources_common.qrc">
            <normaloff>:/images/storage_full_100.png</normaloff>:/images/storage_full_100.png</iconset>
          </property>
          <property name="iconSize">
@@ -305,7 +305,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_macx.qrc">
+          <iconset resource="../Resources_common.qrc">
            <normaloff>:/images/transfer_empty_100.png</normaloff>:/images/transfer_empty_100.png</iconset>
          </property>
          <property name="iconSize">
@@ -484,7 +484,7 @@ background-color: #00BFA5;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>

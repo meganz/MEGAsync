@@ -88,7 +88,7 @@ QPushButton {
           <string notr="true"/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../Resources_macx.qrc">:/images/drive-low-space.svg</pixmap>
+          <pixmap resource="../Resources_common.qrc">:/drive-low-space</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -228,6 +228,8 @@ QPushButton:pressed { background-color: #0a58e6; }</string>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../Resources_common.qrc"/>
+ </resources>
  <connections/>
 </ui>

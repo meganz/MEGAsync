@@ -424,6 +424,7 @@ void NodeRequester::removeRootItem(NodeSelectorModelItem* item)
     QMutexLocker lock(&mDataMutex);
     item->deleteLater();
     mRootItems.removeOne(item);
+    emit rootItemsDeleted();
 }
 
 void NodeRequester::removeRootItem(std::shared_ptr<mega::MegaNode> node)
@@ -535,6 +536,7 @@ NodeSelectorModel::NodeSelectorModel(QObject* parent):
     mAcceptDragAndDrop(false),
     mMoveRequestsCounter(0),
     mAddNodesQueue(this),
+    mRemoveNodesQueue(this),
     mExtraSpaceAdded(false),
     mExtraSpaceRemoved(false),
     mRemovingPreviousExtraSpace(false)
@@ -561,8 +563,11 @@ NodeSelectorModel::NodeSelectorModel(QObject* parent):
     connect(mNodeRequesterWorker, &NodeRequester::nodesReady, this, &NodeSelectorModel::onChildNodesReady, Qt::QueuedConnection);
     connect(mNodeRequesterWorker, &NodeRequester::nodesAdded, this, &NodeSelectorModel::onNodesAdded, Qt::QueuedConnection);
 
-    connect(mNodeRequesterWorker, &NodeRequester::rootItemsAdded, this, &NodeSelectorModel::onRootItemAdded, Qt::QueuedConnection);
-    connect(mNodeRequesterWorker, &NodeRequester::rootItemsDeleted, this, &NodeSelectorModel::onRootItemDeleted, Qt::QueuedConnection);
+    connect(mNodeRequesterWorker,
+            &NodeRequester::rootItemsAdded,
+            this,
+            &NodeSelectorModel::onRootItemAdded,
+            Qt::QueuedConnection);
 
     connect(mNodeRequesterWorker, &NodeRequester::updateLoadingMessage, this, &NodeSelectorModel::updateLoadingMessage, Qt::DirectConnection);
 
@@ -586,6 +591,11 @@ NodeSelectorModel::NodeSelectorModel(QObject* parent):
     protectModelWhenPerformingActions();
 
     mListener = RequestListenerManager::instance().registerAndGetFinishListener(this, false);
+
+    connect(&mRemoveNodesQueue,
+            &RemoveNodesQueue::startBeginRemoveRows,
+            this,
+            &NodeSelectorModel::onStartBeginRemoveRowsAsync);
 }
 
 NodeSelectorModel::~NodeSelectorModel()
@@ -1432,6 +1442,22 @@ bool NodeSelectorModel::showFiles() const
     return mNodeRequesterWorker->showFiles();
 }
 
+bool NodeSelectorModel::increaseMovingNodes(int number)
+{
+    if (mMoveRequestsCounter == 0)
+    {
+        mIsProcessingMoves = true;
+        mMoveRequestsCounter = number;
+        sendBlockUiSignal(true);
+        return true;
+    }
+    else
+    {
+        mMoveRequestsCounter += number;
+        return false;
+    }
+}
+
 void NodeSelectorModel::resetMoveProcessing()
 {
     mMoveRequestsCounter = 0;
@@ -1512,25 +1538,32 @@ bool NodeSelectorModel::canCopyNodes() const
     return true;
 }
 
-bool NodeSelectorModel::increaseMovingNodes(int number)
-{
-    if (mMoveRequestsCounter == 0)
-    {
-        mIsProcessingMoves = true;
-        mMoveRequestsCounter = number;
-        sendBlockUiSignal(true);
-        return true;
-    }
-    else
-    {
-        mMoveRequestsCounter += number;
-        return false;
-    }
-}
-
 void NodeSelectorModel::sendBlockUiSignal(bool state)
 {
     emit blockUi(state, QPrivateSignal());
+}
+
+void NodeSelectorModel::beginRemoveRowsAsync(const mega::MegaHandle& handle)
+{
+    mRemoveNodesQueue.addStep(handle);
+}
+
+void NodeSelectorModel::onStartBeginRemoveRowsAsync(const mega::MegaHandle& handle)
+{
+    if (handle != mega::INVALID_HANDLE)
+    {
+        auto index = findIndexByNodeHandle(handle, QModelIndex());
+        if (index.isValid())
+        {
+            deleteNodeFromModel(index);
+
+            // If the loading view is set, decrease the moving number by 1
+            if (isMovingNodes())
+            {
+                moveProcessedByNumber(1);
+            }
+        }
+    }
 }
 
 QModelIndex NodeSelectorModel::index(int row, int column, const QModelIndex &parent) const
@@ -1816,11 +1849,6 @@ void NodeSelectorModel::onSyncStateChanged(std::shared_ptr<SyncSettings> sync)
 void NodeSelectorModel::onRootItemAdded()
 {
     endInsertRows();
-}
-
-void NodeSelectorModel::onRootItemDeleted()
-{
-    endRemoveRows();
 }
 
 bool NodeSelectorModel::addToLoadingList(const std::shared_ptr<mega::MegaNode> node)
@@ -2291,7 +2319,6 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
 
             // Reset values for next move action
             mMovedItemsType = MovedItemsType::NONE;
-            emit allNodeRequestsFinished();
         }
     }
 
@@ -2733,31 +2760,23 @@ QIcon NodeSelectorModel::getFolderIcon(NodeSelectorModelItem *item) const
                 if(node->getHandle() == mCameraFolderAttribute->getCameraUploadFolderHandle()
                         || node->getHandle() == mCameraFolderAttribute->getCameraUploadFolderSecondaryHandle())
                 {
-                    QIcon icon;
-                    icon.addFile(QLatin1String("://images/icons/folder/small-camera-sync.png"), QSize(), QIcon::Normal);
-                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-camera-sync-disabled.png"), QSize(), QIcon::Disabled);
-                    return icon;;
+                    return Utilities::getFolderPixmap(Utilities::FolderType::TYPE_CAMERA_UPLOADS,
+                                                      Utilities::AttributeType::SMALL);
                 }
                 else if(node->getHandle() == mMyChatFilesFolderAttribute->getMyChatFilesFolderHandle())
                 {
-                    QIcon icon;
-                    icon.addFile(QLatin1String("://images/icons/folder/small-chat-files.png"), QSize(), QIcon::Normal);
-                    icon.addFile(QLatin1String("://images/icons/folder/small-chat-files-disabled.png"), QSize(), QIcon::Disabled);
-                    return icon;
+                    return Utilities::getFolderPixmap(Utilities::FolderType::TYPE_CHAT,
+                                                      Utilities::AttributeType::SMALL);
                 }
                 else if (node->isInShare())
                 {
-                    QIcon icon;
-                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-incoming.png"), QSize(), QIcon::Normal);
-                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-incoming-disabled.png"), QSize(), QIcon::Disabled);
-                    return icon;
+                    return Utilities::getFolderPixmap(Utilities::FolderType::TYPE_INCOMING_SHARE,
+                                                      Utilities::AttributeType::SMALL);
                 }
                 else if (node->isOutShare())
                 {
-                    QIcon icon;
-                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing.png"), QSize(), QIcon::Normal);
-                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing-disabled.png"), QSize(), QIcon::Disabled);
-                    return icon;
+                    return Utilities::getFolderPixmap(Utilities::FolderType::TYPE_OUTGOING_SHARE,
+                                                      Utilities::AttributeType::SMALL);
                 }
                 else if (item->isCloudDrive())
                 {
@@ -2798,15 +2817,14 @@ QIcon NodeSelectorModel::getFolderIcon(NodeSelectorModelItem *item) const
                         }
                         return QIcon(QLatin1String("://images/icons/pc/pc_24.png"));
                     }
-                    QIcon icon;
-                    icon.addFile(QLatin1String("://images/icons/folder/small-folder.png"), QSize(), QIcon::Normal);
-                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-disabled.png"), QSize(), QIcon::Disabled);
-                    return icon;
+                    return Utilities::getFolderPixmap(Utilities::FolderType::TYPE_NORMAL,
+                                                      Utilities::AttributeType::SMALL);
                 }
             }
             else
             {
-                return Utilities::getExtensionPixmapSmall(QString::fromUtf8(node->getName()));
+                return Utilities::getExtensionPixmap(QString::fromUtf8(node->getName()),
+                                                     Utilities::AttributeType::SMALL);
             }
         }
     }
@@ -2840,5 +2858,38 @@ void AddNodesQueue::onNodesAdded(bool state)
     {
         auto info(mSteps.dequeue());
         mModel->addNodes(info.nodesToAdd, info.parentIndex);
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+/// Remove nodes queue (To avoid calling beginRemoveRows more than once at the same time)
+RemoveNodesQueue::RemoveNodesQueue(NodeSelectorModel* model):
+    mModel(model)
+{
+    connect(mModel, &NodeSelectorModel::rowsRemoved, this, &RemoveNodesQueue::onRowsRemoved);
+}
+
+void RemoveNodesQueue::addStep(const mega::MegaHandle& handle)
+{
+    mSteps.enqueue(handle);
+
+    if (mSteps.size() == 1)
+    {
+        emit startBeginRemoveRows(handle);
+    }
+}
+
+void RemoveNodesQueue::onRowsRemoved()
+{
+    if (!mSteps.isEmpty())
+    {
+        // Remove the previously used
+        mSteps.dequeue();
+
+        if (!mSteps.isEmpty())
+        {
+            auto nextStepHandle(mSteps.head());
+            emit startBeginRemoveRows(nextStepHandle);
+        }
     }
 }

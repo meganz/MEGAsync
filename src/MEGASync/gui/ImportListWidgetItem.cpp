@@ -49,7 +49,9 @@ void ImportListWidgetItem::updateGui()
     ui->lName->ensurePolished();
     ui->lName->setText(ui->lName->fontMetrics().elidedText(name, Qt::ElideMiddle,ui->lName->width()));
 
-    QIcon typeIcon = Utilities::getExtensionPixmapSmall(isFolder ? fileName.append(QString::fromUtf8(".folder")): fileName);
+    QIcon typeIcon = Utilities::getExtensionPixmap(
+        isFolder ? fileName.append(QString::fromUtf8(".folder")) : fileName,
+        Utilities::AttributeType::SMALL);
 
 #ifdef __APPLE__
     ui->lImage->setIcon(typeIcon);

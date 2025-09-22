@@ -1,9 +1,3 @@
-QWidget
-{
-background-color: #FFFFFFFF; /*colorToken.page-background*/
-color: #ff303233; /*colorToken.text-primary*/
-}
-
 QWidget[type="notification"]
 {
 background-color: #ffdff4fe;/*colorToken.notification-info*/
@@ -76,6 +70,11 @@ image: url(:/images/themed/light/checkbox_off_disabled.svg); /*replaceThemeToken
 */
 
 QScrollBar::handle:vertical
+{
+background: #ff04101e; /*colorToken.selection-control*/
+}
+
+QScrollBar::handle:horizontal
 {
 background: #ff04101e; /*colorToken.selection-control*/
 }
@@ -236,12 +235,12 @@ color: #ff797c80; /*colorToken.text-disabled*/
 QProgressBar
 {
 /* TODO: surface-2 should be replaced by --color-indicator-background */
-background-color: #fff3f4f4; /*colorToken.surface-2*/
+background-color: #E4E4E5; /*colorToken.surface-3*/
 }
 
 QProgressBar::chunk
 {
-background-color: #ff09bf5b; /*colorToken.indicator-green*/
+background-color: #09BF5B; /*colorToken.indicator-green*/
 }
 
 /*
@@ -370,7 +369,49 @@ color: #ff797c80; /*colorToken.icon-disabled*/
 }
 
 /*
-    Outline button.
+    class = icon-label
+*/
+QToolButton.icon-label
+{
+background-color: transparent;
+}
+
+/*
+    Buttons
+    Valid for both button classes:
+    1) Normal buttons (text or text+icon) > NO property class needed
+    2) Only-Icon buttons > class = "icon-label"
+*/
+
+/*
+    type = primary
+*/
+QPushButton[type="primary"]
+{
+background-color: #ff04101E; /*colorToken.button-primary*/
+color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
+}
+
+QPushButton:hover[type="primary"]
+{
+color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
+background-color: #ff39424E; /*colorToken.button-primary-hover*/
+}
+
+QPushButton:pressed[type="primary"]
+{
+color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
+background-color: #ff535B65; /*colorToken.button-primary-pressed*/
+}
+
+QPushButton:disabled[type="primary"]
+{
+color: #ffC1C2C4; /*colorToken.text-disabled*/
+background-color: #ff797c80; /*colorToken.button-disabled*/
+}
+
+/*
+    type = outline
 */
 QPushButton[type="outline"]
 {
@@ -398,59 +439,61 @@ border-color: #ff494a4d; /*colorToken.border-disabled*/
 }
 
 /*
-    Primary button.
-*/
-QPushButton[type="primary"]
-{
-background-color: #ff04101E; /*colorToken.button-primary*/
-color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
-}
-
-QPushButton:hover[type="primary"]
-{
-color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
-background-color: #ff39424E; /*colorToken.button-primary-hover*/
-}
-
-QPushButton:pressed[type="primary"]
-{
-color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
-background-color: #ff535B65; /*colorToken.button-primary-pressed*/
-}
-
-QPushButton:disabled[type="primary"]
-{
-color: #ffC1C2C4; /*colorToken.text-disabled*/
-background-color: #ff797c80; /*colorToken.button-disabled*/
-}
-
-/*
-    Secondary button.
+    type = secondary
 */
 QPushButton[type="secondary"]
 {
 background-color: #ff04101E; /*colorToken.button-secondary*/
 color: #ffFAFAFB; /*colorToken.text-secondary*/
-border-color: #ff04101E; /*colorToken.button-secondary*/
 }
 
 QPushButton:hover[type="secondary"]
 {
 background-color: #ff39424E; /*colorToken.button-secondary-hover*/
-border-color: #ff39424E; /*colorToken.button-secondary-hover*/
 }
 
 QPushButton:pressed[type="secondary"]
 {
 background-color: #ff535B65; /*colorToken.button-secondary-pressed*/
-border-color: #ff535B65; /*colorToken.button-secondary-pressed*/
 }
 
 QPushButton:disabled[type="secondary"]
 {
 color: #ffC1C2C4; /*colorToken.text-disabled*/
 background-color: #ff797c80; /*colorToken.button-disabled*/
-border-color: transparent;
+}
+
+/*
+    type = ghost
+*/
+QPushButton[type="ghost"]
+{
+background-color: transparent;
+color: #04101E; /*colorToken.button-outline*/
+}
+
+QPushButton:hover[type="ghost"]
+{
+color: #39424E; /*colorToken.button-outline-hover*/
+}
+
+QPushButton:pressed[type="ghost"]
+{
+color: #535B65; /*colorToken.button-outline-pressed*/
+}
+
+QPushButton:disabled[type="ghost"]
+{
+color: #C1C2C4; /*colorToken.text-disabled*/
+}
+
+/*
+    type = link
+*/
+QPushButton[type="link"]
+{
+background-color: transparent;
+color: #2C5BEB; /*colorToken.link-primary*/
 }
 
 /*
@@ -521,6 +564,36 @@ background-color: transparent;
 }
 
 /*
+    WordWrapLabel
+*/
+
+WordWrapLabel
+{
+/*By default, WordWrapLabel don´t have a background color*/
+background-color: transparent;
+}
+
+WordWrapLabel[type="primary"]
+{
+color: #ff303233; /*colorToken.text-primary*/
+}
+
+WordWrapLabel[type="secondary"]
+{
+color: #ff616366; /*colorToken.text-secondary*/
+}
+
+/*
+    Tooltip
+*/
+QToolTip
+{
+       color: #FAFAFA;                 /*colorToken.text-inverse*/
+       background-color: #2A2B2C;     /*colorToken.background-inverse*/
+       border: 1px solid #2A2B2C;     /*colorToken.background-inverse*/
+}
+
+/*
     SwitchButton
     In the constructor of the class we assign the object name switch
 */
@@ -573,4 +646,16 @@ qproperty-eyeRevealImage: url(:/images/themed/light/eye_default.svg); /*replaceT
 qproperty-eyeRevealDisabledImage: url(:/images/themed/light/eye_disabled.svg); /*replaceThemeToken*/
 qproperty-eyeClosedImage: url(:/images/themed/light/eye-off_default.svg); /*replaceThemeToken*/
 qproperty-eyeClosedDisabledImage: url(:/images/themed/light/eye-off_disabled.svg); /*replaceThemeToken*/
+}
+/*
+    QMenu
+*/
+QMenu.MegaMenu
+{
+background-color: #FFFFFFFF; /*colorToken.page-background*/
+border-color: #ff494a4d; /*colorToken.border-disabled*/
+}
+QMenu.MegaMenu::separator
+{
+background-color: #fff3f4f4; /*colorToken.surface-2*/
 }

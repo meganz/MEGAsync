@@ -241,11 +241,7 @@ bool PlatformImplementation::loadThemeResource(const QString& theme)
     QStringList rccFiles =
         QStringList()
         << QCoreApplication::applicationDirPath() +
-               QString::fromUtf8("/../Resources/Resources_macx.rcc")
-        << QCoreApplication::applicationDirPath() +
-               QString::fromUtf8("/../Resources/Resources_win.rcc")
-        << QCoreApplication::applicationDirPath() +
-               QString::fromUtf8("/../Resources/Resources_linux.rcc")
+               QString::fromUtf8("/../Resources/Resources_common.rcc")
         << QCoreApplication::applicationDirPath() +
                QString::fromUtf8("/../Resources/Resources_qml.rcc")
         << QCoreApplication::applicationDirPath() + QString::fromUtf8("/../Resources/qml.rcc")
@@ -261,6 +257,18 @@ bool PlatformImplementation::loadThemeResource(const QString& theme)
     }
 
     return allLoaded;
+}
+
+QString PlatformImplementation::getArchUpdateString() const
+{
+    QString platformPath;
+#if defined(__arm64__)
+    platformPath = QLatin1String("msyncarm64");
+#else
+    // Using msyncv2 to serve new updates and avoid keeping loader leftovers
+    platformPath = QLatin1String("msyncv2");
+#endif
+    return platformPath;
 }
 
 bool PlatformImplementation::showInFolder(QString pathIn)

@@ -1,8 +1,8 @@
 Source: dolphin-megasync
 Section: kde
 Priority: optional
-Maintainer: MEGA Linux Team <linux@mega.co.nz>
-Homepage: https://mega.nz/#sync
+Maintainer: MEGA Linux Team <linux@mega.io>
+Homepage: https://mega.io/desktop
 Build-Depends: debhelper, cmake, libglib2.0-0, extra-cmake-modules, libkf6kio-dev|libkf5kio-dev, qt6-tools-dev-tools|qttools5-dev
 
 Package: dolphin-megasync

@@ -1,5 +1,6 @@
 #include "MegaIgnoreRules.h"
 
+#include "EnumConverters.h"
 #include "Platform.h"
 #include "Utilities.h"
 

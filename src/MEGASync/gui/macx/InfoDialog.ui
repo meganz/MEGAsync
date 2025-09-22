@@ -377,7 +377,7 @@ background-color: #F4F6F8;
                   <string notr="true"/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_macx.qrc">
+                  <iconset resource="../Resources_common.qrc">
                    <normaloff>:/images/icon_plus.svg</normaloff>:/images/icon_plus.svg</iconset>
                  </property>
                  <property name="flat">
@@ -428,7 +428,7 @@ background-color: #F4F6F8;
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_macx.qrc">
+                  <iconset resource="../Resources_common.qrc">
                    <normaloff>:/images/more_settings.png</normaloff>:/images/more_settings.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -1423,7 +1423,7 @@ background-color: transparent;
                                <string/>
                               </property>
                               <property name="icon">
-                               <iconset resource="../Resources_macx.qrc">
+                               <iconset resource="../Resources_common.qrc">
                                 <normaloff>:/images/upload_to_mega.png</normaloff>:/images/upload_to_mega.png</iconset>
                               </property>
                               <property name="iconSize">
@@ -2644,7 +2644,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                 <string/>
                                </property>
                                <property name="icon">
-                                <iconset resource="../Resources_macx.qrc">
+                                <iconset resource="../Resources_common.qrc">
                                  <normaloff>:/images/icons/infodialog/warning-disabled-backups.png</normaloff>:/images/icons/infodialog/warning-disabled-backups.png</iconset>
                                </property>
                                <property name="iconSize">
@@ -3782,7 +3782,7 @@ background-color: #F4F6F8;
   <tabstop>bSettings</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>

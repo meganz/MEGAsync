@@ -2,13 +2,16 @@
 
 #include "EventUpdater.h"
 #include "mega/types.h"
+#include "MegaApiSynchronizedRequest.h"
 #include "MegaApplication.h"
 #include "MegaTransferView.h"
 #include "MessageDialogOpener.h"
 #include "Platform.h"
 #include "PowerOptions.h"
+#include "ServiceUrls.h"
 #include "SettingsDialog.h"
 #include "StatsEventHandler.h"
+#include "ThreadPool.h"
 #include "TransferItem.h"
 #include "TransferMetaData.h"
 #include "Utilities.h"
@@ -17,6 +20,7 @@
 #include <QSharedData>
 
 #include <algorithm>
+#include <functional>
 
 using namespace mega;
 
@@ -246,7 +250,7 @@ void TransferThread::onTransferStart(MegaApi *, MegaTransfer *transfer)
             if(!isTemp)
             {
                 QMutexLocker counterLock(&mCountersMutex);
-                auto fileType = Utilities::getFileType(QString::fromStdString(transfer->getFileName()), QString());
+                auto fileType = Utilities::getFileType(QString::fromStdString(transfer->getFileName()), Utilities::AttributeType::NONE);
                 mTransfersCount.transfersByType[fileType]++;
 
                 if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
@@ -382,7 +386,7 @@ void TransferThread::onTransferFinish(MegaApi* megaApi, MegaTransfer *transfer, 
                     QMutexLocker counterLock(&mCountersMutex);
                     auto fileType =
                         Utilities::getFileType(QString::fromStdString(transfer->getFileName()),
-                                               QString());
+                                               Utilities::AttributeType::NONE);
 
                     if (transfer->getState() == MegaTransfer::STATE_CANCELLED ||
                         (transfer->getState() == MegaTransfer::STATE_FAILED &&
@@ -882,8 +886,7 @@ TransfersModel::TransfersModel():
     mUiBlockedByCounter(0),
     mCancelledFrom(nullptr),
     mSyncsInRowsToCancel(false),
-    mIgnoreMoveSignal(false),
-    mInverseMoveSignal(false)
+    mIgnoreMoveSignal(false)
 {
     qRegisterMetaType<QList<QPersistentModelIndex>>("QList<QPersistentModelIndex>");
     qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
@@ -1458,12 +1461,14 @@ void TransfersModel::getLinks(const QList<int> &rows)
             else if (node)
             {
                 std::unique_ptr<char[]> handle(node->getBase64Handle());
-                std::unique_ptr<char[]>key(node->getBase64Key());
+                std::unique_ptr<char[]> key(node->getBase64Key());
                 if (handle && key)
                 {
-                    QString link = Preferences::BASE_URL + QString::fromUtf8("/#!%1!%2")
-                            .arg(QString::fromUtf8(handle.get()), QString::fromUtf8(key.get()));
-                    if(!linkList.contains(link))
+                    auto link = ServiceUrls::instance()
+                                    ->getRemoteNodeLinkUrl(QString::fromUtf8(handle.get()),
+                                                           QString::fromUtf8(key.get()))
+                                    .toString();
+                    if (!linkList.contains(link))
                     {
                         linkList.push_back(link);
                     }
@@ -1482,7 +1487,7 @@ void TransfersModel::openInMEGA(const QList<int> &rows)
     if (!rows.isEmpty())
     {
         QMutexLocker lock(&mModelMutex);
-        QStringList urlsOpened;
+        QSet<QUrl> urlsOpened;
         for (auto row : rows)
         {
             auto node = getParentNodeToOpenByRow(row);
@@ -1493,7 +1498,7 @@ void TransfersModel::openInMEGA(const QList<int> &rows)
                 std::unique_ptr<char[]> key(node->getBase64Key());
                 if (handle && key)
                 {
-                    QString url;
+                    QUrl url;
                     std::unique_ptr<MegaError> err(
                         MegaSyncApp->getMegaApi()->isNodeSyncableWithError(node.get()));
                     if (err->getSyncError() == SyncError::ACTIVE_SYNC_SAME_PATH ||
@@ -1501,17 +1506,17 @@ void TransfersModel::openInMEGA(const QList<int> &rows)
                         err->getSyncError() == SyncError::ACTIVE_SYNC_ABOVE_PATH)
                     {
                         auto deviceID = QString::fromUtf8(MegaSyncApp->getMegaApi()->getDeviceId());
-                        url = QString::fromUtf8("mega://#fm/device-centre/") + deviceID +
-                              QString::fromUtf8("/") + QString::fromUtf8(handle.get());
+                        url = ServiceUrls::getOpenInMegaUrl(deviceID,
+                                                            QString::fromUtf8(handle.get()));
                     }
                     else
                     {
-                        url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle.get());
+                        url = ServiceUrls::getNodeUrl(QString::fromUtf8(handle.get()));
                     }
                     if (!urlsOpened.contains(url))
                     {
-                        urlsOpened.append(url);
-                        Utilities::openUrl(QUrl(url));
+                        urlsOpened << url;
+                        Utilities::openUrl(url);
                     }
                 }
             }
@@ -2750,13 +2755,10 @@ void TransfersModel::ignoreMoveRowsSignal(bool state)
     mIgnoreMoveSignal = state;
 }
 
-void TransfersModel::inverseMoveRowsSignal(bool state)
-{
-    mInverseMoveSignal = state;
-}
-
-bool TransfersModel::moveTransferPriority(const QModelIndex &sourceParent, const QList<int>& rows,
-                              const QModelIndex &destinationParent, int destinationChild)
+bool TransfersModel::moveTransferPriorityByDrag(const QModelIndex& sourceParent,
+                                                const QList<int>& rows,
+                                                const QModelIndex& destinationParent,
+                                                int destinationChild)
 {
     bool result(false);
 
@@ -2767,8 +2769,8 @@ bool TransfersModel::moveTransferPriority(const QModelIndex &sourceParent, const
             //TODO MOVE TO TOP THE SECOND ITEM
             int lastRow (sourceRow);
 
-            if (sourceParent == destinationParent
-                    && (destinationChild < sourceRow || destinationChild > lastRow))
+            if (sourceParent == destinationParent &&
+                (destinationChild < sourceRow || destinationChild > lastRow))
             {
                 // To keep order, do from first to last if destination is before first,
                 // and from last to first if destination is after last.
@@ -2813,16 +2815,11 @@ bool TransfersModel::moveTransferPriority(const QModelIndex &sourceParent, const
                         if(target)
                         {
                             mMegaApi->moveTransferBeforeByTag(tag, target->mTag);
-
-                            if(!mIgnoreMoveSignal && mInverseMoveSignal)
-                            {
-                                emit rowsAboutToBeMoved(target->mTag);
-                            }
                         }
                     }
 
-                    if(!mIgnoreMoveSignal && !mInverseMoveSignal)
-                    {  
+                    if (!mIgnoreMoveSignal)
+                    {
                         emit rowsAboutToBeMoved(tag);
                     }
                 }
@@ -2833,6 +2830,83 @@ bool TransfersModel::moveTransferPriority(const QModelIndex &sourceParent, const
     }
 
     return result;
+}
+
+void TransfersModel::moveTransferPriorityUp(const QModelIndexList& sourceIndexes)
+{
+    moveTransferPriority(sourceIndexes,
+                         true,
+                         [this](QExplicitlySharedDataPointer<TransferData> transfer,
+                                mega::MegaRequestListener* listener)
+                         {
+                             mMegaApi->moveTransferUpByTag(transfer->mTag, listener);
+                         });
+}
+
+void TransfersModel::moveTransferPriorityDown(const QModelIndexList& sourceIndexes)
+{
+    moveTransferPriority(sourceIndexes,
+                         false,
+                         [this](QExplicitlySharedDataPointer<TransferData> transfer,
+                                mega::MegaRequestListener* listener)
+                         {
+                             mMegaApi->moveTransferDownByTag(transfer->mTag, listener);
+                         });
+}
+
+void TransfersModel::moveTransferPriorityToTop(const QModelIndexList& sourceIndexes)
+{
+    moveTransferPriority(sourceIndexes,
+                         false,
+                         [this](QExplicitlySharedDataPointer<TransferData> transfer,
+                                mega::MegaRequestListener* listener)
+                         {
+                             mMegaApi->moveTransferToFirstByTag(transfer->mTag, listener);
+                         });
+}
+
+void TransfersModel::moveTransferPriorityToBottom(const QModelIndexList& sourceIndexes)
+{
+    moveTransferPriority(sourceIndexes,
+                         true,
+                         [this](QExplicitlySharedDataPointer<TransferData> transfer,
+                                mega::MegaRequestListener* listener)
+                         {
+                             mMegaApi->moveTransferToLastByTag(transfer->mTag, listener);
+                         });
+}
+
+void TransfersModel::moveTransferPriority(
+    const QModelIndexList& sourceIndexes,
+    bool processByAscPrio,
+    const std::function<void(QExplicitlySharedDataPointer<TransferData>,
+                             mega::MegaRequestListener*)>& func)
+{
+    ThreadPoolSingleton::getInstance()->push(
+        [this, sourceIndexes, processByAscPrio, func]()
+        {
+            auto auxList(sourceIndexes);
+            std::sort(auxList.begin(),
+                      auxList.end(),
+                      [this, processByAscPrio](QModelIndex check1, QModelIndex check2)
+                      {
+                          auto transfer1(getTransfer(check1.row()));
+                          auto transfer2(getTransfer(check2.row()));
+                          return processByAscPrio ? transfer1->mPriority < transfer2->mPriority :
+                                                    transfer1->mPriority > transfer2->mPriority;
+                      });
+
+            for (const auto index: auxList)
+            {
+                auto transfer(getTransfer(index.row()));
+                MegaApiSynchronizedRequest::runRequestLambda(func, mMegaApi, transfer);
+
+                if (!mIgnoreMoveSignal)
+                {
+                    emit rowsAboutToBeMoved(transfer->mTag);
+                }
+            }
+        });
 }
 
 void TransfersModel::resetModel()
@@ -2921,7 +2995,7 @@ bool TransfersModel::dropMimeData(const QMimeData* data, Qt::DropAction action, 
     {
         QList<int> rows = getDragAndDropRows(data);
 
-        moveTransferPriority(parent, rows, parent, destRow);
+        moveTransferPriorityByDrag(parent, rows, parent, destRow);
     }
 
     // Return false to avoid row deletion...dirty!

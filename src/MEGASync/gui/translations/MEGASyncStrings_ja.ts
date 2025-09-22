@@ -562,7 +562,7 @@
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>エラーのため、問題をアップロードできませんでした。後でもう一度お試しいただくか、問題が解決しない場合は[A]support@mega.nz[/A]経由で当社サポートチームにご連絡ください。</translation>
+        <translation>エラーのため、問題をアップロードできませんでした。後でもう一度お試しいただくか、問題が解決しない場合は[A]support@mega.io[/A]経由で当社サポートチームにご連絡ください。</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
@@ -607,7 +607,7 @@
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation>後でもう一度お試しになるか、問題が解決しない場合は[A]support@mega.nz[/A]から当社サポートチームにご連絡ください。</translation>
+        <translation>後でもう一度お試しになるか、問題が解決しない場合は[A]support@mega.io[/A]から当社サポートチームにご連絡ください。</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -3070,7 +3070,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation>ログアウトされました。この問題が解決しない場合は、[A]support@mega.nz[/A]までご連絡ください。</translation>
+        <translation>ログアウトされました。この問題が解決しない場合は、[A]support@mega.io[/A]までご連絡ください。</translation>
     </message>
 </context>
 <context>
@@ -3825,7 +3825,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]エラーが検出されました[/B][BR]アプリケーションリソースの読み込み中にエラーが発生しました。アプリを終了してください。この問題を解決するには、[A]mega.io/desktop[/A]からアプリを再インストールしてください。再インストール後もこの問題が解決しない場合は、サポートにご連絡ください。</translation>
     </message>
 </context>
 <context>
@@ -5972,13 +5972,10 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Error messages are now clearer, making it easier to understand when things go wrong.
-- We’ve fixed bugs and made the app more reliable.
+        <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
-        <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
-        <translation>－エラーメッセージがより明確になり、問題が発生した際に分かりやすくなりました。
-－バグを修正し、アプリの信頼性を向上させました。
-</translation>
+        <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
+        <translation>ー本アップデートでは、システム全体のパフォーマンスを最適化するための基盤的な改善と不具合修正を多数実施しました。</translation>
     </message>
 </context>
 <context>
@@ -8163,7 +8160,7 @@ Please, refresh the list.</source>
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
         <translation>ターゲットがフォルダ構造の深すぎる場所にあります。同期を停止し、フォルダの深さが64個未満の場所にフォルダを移動し、同期を再作成してください。
-それでも問題が解決しない場合は、support@mega.nzにご連絡ください。</translation>
+それでも問題が解決しない場合は、support@mega.ioにご連絡ください。</translation>
     </message>
     <message>
         <source>Unable to sync [B]%1[/B]</source>

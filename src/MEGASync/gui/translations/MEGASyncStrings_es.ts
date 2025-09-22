@@ -583,7 +583,7 @@
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Ha habido un error al subir el reporte. Vuelve a intentarlo más tarde o ponte en contacto con [A]support@mega.nz[/A] si el problema persiste.</translation>
+        <translation>Ha habido un error al subir el reporte. Vuelve a intentarlo más tarde o ponte en contacto con [A]support@mega.io[/A] si el problema persiste.</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
@@ -628,7 +628,7 @@
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation>Vuelve a intentarlo más tarde o ponte en contacto con nuestro equipo de soporte a través de [A]support@mega.nz[/A] si el problema persiste</translation>
+        <translation>Vuelve a intentarlo más tarde o ponte en contacto con nuestro equipo de soporte a través de [A]support@mega.io[/A] si el problema persiste</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -3155,7 +3155,7 @@ Espera a que se complete la subida.</translation>
     <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation>Se ha cerrado la sesión. Contacta con [A]support@mega.nz[/A] si el problema persiste.</translation>
+        <translation>Se ha cerrado la sesión. Contacta con [A]support@mega.io[/A] si el problema persiste.</translation>
     </message>
 </context>
 <context>
@@ -3917,7 +3917,7 @@ No podrás recuperar el acceso a tus datos almacenados ni estás autorizado a re
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Error detectado[/B][BR]Se ha producido un error al cargar los recursos de la aplicación y es necesario cerrarla. Vuelve a instalarla desde [A]mega.io/desktop[/A] para resolver este problema. Si el error persiste tras la reinstalación, contacta con el servicio de soporte para obtener ayuda.</translation>
     </message>
 </context>
 <context>
@@ -5699,7 +5699,7 @@ Introduzca un nombre diferente.</translation>
     <message>
         <source>Sign up</source>
         <translatorcomment>Sign up button text CON-465</translatorcomment>
-        <translation>Registrarse</translation>
+        <translation>Crear cuenta</translation>
     </message>
     <message>
         <source>Stop Loggin in</source>
@@ -6113,13 +6113,10 @@ Introduzca un nombre diferente.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Error messages are now clearer, making it easier to understand when things go wrong.
-- We’ve fixed bugs and made the app more reliable.
+        <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
-        <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
-        <translation>- Los mensajes de error ahora son más claros, lo que facilita la comprensión cuando las cosas van mal.
-- Hemos corregido errores y hemos hecho que la aplicación sea más fiable.
-</translation>
+        <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
+        <translation>- Esta actualización incluye numerosas mejoras y correcciones para mejorar el rendimiento general.</translation>
     </message>
 </context>
 <context>
@@ -8352,7 +8349,7 @@ Actualiza la lista.</translation>
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
         <translation>La carpeta de destino se encuentra demasiado adentrada en la estructura de carpetas. Detén la sincronización, mueve la carpeta a una ubicación que tenga menos de 64 carpetas de profundidad y vuelve a crear la sincronización. 
-Si esto no resuelve el problema, contacta con support@mega.nz.</translation>
+Si esto no resuelve el problema, contacta con support@mega.io.</translation>
     </message>
     <message>
         <source>Unable to sync [B]%1[/B]</source>
@@ -9690,7 +9687,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Save up to %1% with yearly billing</source>
         <translatorcomment>Label with information about the discount of the annual subscription compared to the monthly subscription for the plan selected in the window. The placeholder %1 shall be replaced by the discount percentage. CON-945</translatorcomment>
-        <translation>Ahorra hasta un %1 con el cobro anual</translation>
+        <translation>Ahorra hasta un %1% con el cobro anual</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>

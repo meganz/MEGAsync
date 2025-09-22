@@ -5,6 +5,7 @@
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "RequestListenerManager.h"
+#include "ServiceUrls.h"
 #include "SyncsData.h"
 #include "TextDecorator.h"
 
@@ -429,12 +430,10 @@ QString Syncs::getRemoteError() const
 
         case RemoteErrors::CANT_ADD_SYNC:
         {
-            Text::Link link(Utilities::SUPPORT_URL);
-            Text::Decorator dec(&link);
             QString msg =
                 mSyncController.getErrorString(mRemoteMegaError.error, mRemoteMegaError.syncError);
-            dec.process(msg);
-
+            const auto link = ServiceUrls::getContactSupportUrl().toString();
+            Text::RichText(link).process(msg);
             return msg;
         }
     }

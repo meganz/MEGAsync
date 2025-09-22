@@ -14,11 +14,11 @@ class IconTokenizer : public QObject
 
 public:
     static void process(QWidget* widget, const QString& mode, const QString& state, const ColorTokens& colorTokens, const QString& targetElementId, const QString& targetElementProperty, const QString& tokenId);
+    static std::optional<QPixmap> changePixmapColor(const QPixmap& pixmap, QColor toColor);
 
 private:
     explicit IconTokenizer(QObject *parent = nullptr);
 
-    static std::optional<QPixmap> changePixmapColor(const QPixmap& pixmap, QColor toColor);
     static std::optional<QIcon::Mode> getIconMode(const QString& mode);
     static std::optional<QIcon::State> getIconState(const QString& state);
 };

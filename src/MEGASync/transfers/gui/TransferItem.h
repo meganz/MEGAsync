@@ -22,6 +22,7 @@ static const QColor UPLOAD_TRANSFER_COLOR = QColor("#2BA6DE");
 static const QColor DOWNLOAD_TRANSFER_COLOR = QColor("#31B500");
 
 typedef int TransferTag;
+Q_DECLARE_METATYPE(TransferTag)
 
 class TransferData : public QSharedData
 {
@@ -59,7 +60,12 @@ public:
 
     static const TransferTypes TYPE_MASK;
 
-    TransferData(mega::MegaTransfer* transfer = nullptr){update(transfer);}
+    TransferData(mega::MegaTransfer* transfer = nullptr)
+    {
+        qRegisterMetaType<TransferTag>("TransferTag");
+        update(transfer);
+    }
+
     ~TransferData(){}
 
     TransferData(TransferData const* dr) :

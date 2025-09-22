@@ -171,6 +171,16 @@ ThemedColorData DesignAssetsRepoManager::parseTheme(QFile& designTokensFile,
                               return;
                           }
 
+                            //Due to issues with alpha on borders, a custom set of props has to be used.
+                            // Once border issues are fixed, please remove this section
+                            colorData.insert("border-brand", theme == "Light" ? "#ffdd1405" : "#fff23433");
+                            colorData.insert("border-disabled", theme == "Light" ? "#ffd8d9db" : "#ff494a4d");
+                            colorData.insert("border-strong", theme == "Light" ? "#ffdcdddd" : "#ff535455");
+                            colorData.insert("border-strong-selected", theme == "Light" ? "#ff04101e" : "#fff4f4f5");
+                            colorData.insert("border-subtle", theme == "Light" ? "#fff6f6f7" : "#ff252626");
+                            colorData.insert("border-subtle-selected", theme == "Light" ? "#ff04101e" : "#fff4f4f5");
+
+
                           themedColorData.insert(theme, colorData);
                       }
                   });
@@ -289,7 +299,17 @@ void DesignAssetsRepoManager::parseCategory(const QString& categoryName, const Q
     for (const auto& token: tokenKeys)
     {
         QJsonObject tokenObject = categoryObject[token].toObject();
-        processToken(categoryName, token, tokenObject, coreData, colorData);
+
+        // Skip Border props due to they are fixed overwritting during parsing
+        if (!categoryName.compare("Border"))
+        {
+            continue;
+        }
+        else
+        {
+            processToken(categoryName, token, tokenObject, coreData, colorData);
+
+        }
     }
 }
 

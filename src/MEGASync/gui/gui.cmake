@@ -54,6 +54,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/AccountTypeWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/BannerWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/ApiImageLabel.h
+    ${CMAKE_CURRENT_LIST_DIR}/SideBarTab.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NodeNameSetterDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NewFolderDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/RenameNodeDialog.h
@@ -196,6 +197,7 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/AccountTypeWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/BannerWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ApiImageLabel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/SideBarTab.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NewFolderDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/RenameNodeDialog.cpp
@@ -460,24 +462,18 @@ if (NOT DontUseResources)
     # Load functions to process qrcs and create aliases
     include(desktopapp_resources_processing)
 
-    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_win.qrc")
-    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_macx.qrc")
-    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_linux.qrc")
+    process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_common.qrc")
     process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_qml.qrc")
     process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_light.qrc")
     process_resources_file("${CMAKE_CURRENT_LIST_DIR}/Resources_dark.qrc")
 
-    qt5_add_binary_resources(Resources_win "${CMAKE_CURRENT_LIST_DIR}/Resources_win.qrc")
-    qt5_add_binary_resources(Resources_macx "${CMAKE_CURRENT_LIST_DIR}/Resources_macx.qrc")
-    qt5_add_binary_resources(Resources_linux "${CMAKE_CURRENT_LIST_DIR}/Resources_linux.qrc")
+    qt5_add_binary_resources(Resources_common "${CMAKE_CURRENT_LIST_DIR}/Resources_common.qrc")
     qt5_add_binary_resources(Resources_qml "${CMAKE_CURRENT_LIST_DIR}/Resources_qml.qrc")
     qt5_add_binary_resources(Resources_light "${CMAKE_CURRENT_LIST_DIR}/Resources_light.qrc")
     qt5_add_binary_resources(Resources_dark "${CMAKE_CURRENT_LIST_DIR}/Resources_dark.qrc")
     qt5_add_binary_resources(qml "${CMAKE_CURRENT_LIST_DIR}/qml/qml.qrc")
 
-    add_dependencies(MEGAsync Resources_win)
-    add_dependencies(MEGAsync Resources_macx)
-    add_dependencies(MEGAsync Resources_linux)
+    add_dependencies(MEGAsync Resources_common)
     add_dependencies(MEGAsync Resources_qml)
     add_dependencies(MEGAsync Resources_light)
     add_dependencies(MEGAsync Resources_dark)
@@ -486,23 +482,9 @@ if (NOT DontUseResources)
 if (NOT APPLE)
     add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                ${CMAKE_CURRENT_BINARY_DIR}/Resources_win.rcc
+                ${CMAKE_CURRENT_BINARY_DIR}/Resources_common.rcc
                 $<TARGET_FILE_DIR:MEGAsync>
-        COMMENT "Copying Resources_win.rcc to target output directory"
-    )
-
-    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                ${CMAKE_CURRENT_BINARY_DIR}/Resources_macx.rcc
-                $<TARGET_FILE_DIR:MEGAsync>
-        COMMENT "Copying Resources_macx.rcc to target output directory"
-    )
-
-    add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                ${CMAKE_CURRENT_BINARY_DIR}/Resources_linux.rcc
-                $<TARGET_FILE_DIR:MEGAsync>
-        COMMENT "Copying Resources_linux.rcc to target output directory"
+        COMMENT "Copying Resources_common.rcc to target output directory"
     )
 
     add_custom_command(TARGET ${ExecutableTarget} POST_BUILD
@@ -540,9 +522,7 @@ endif()
 
 #Review to load only the resource file per platform and not all of them
 set(DESKTOP_APP_GUI_RESOURCES
-    ${CMAKE_CURRENT_LIST_DIR}/Resources_macx.qrc
-    ${CMAKE_CURRENT_LIST_DIR}/Resources_win.qrc
-    ${CMAKE_CURRENT_LIST_DIR}/Resources_linux.qrc
+    ${CMAKE_CURRENT_LIST_DIR}/Resources_common.qrc
     ${CMAKE_CURRENT_LIST_DIR}/Resources_qml.qrc
     ${CMAKE_CURRENT_LIST_DIR}/Resources_light.qrc
     ${CMAKE_CURRENT_LIST_DIR}/Resources_dark.qrc
@@ -569,6 +549,7 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/ProgressIndicatorDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoteItemUi.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/BannerWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/SideBarTab.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
@@ -654,15 +635,7 @@ if (UNIX AND NOT APPLE)
     )
 
     # rcc files
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_win.rcc"
-        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
-    )
-
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_linux.rcc"
-        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
-    )
-
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_macx.rcc"
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Resources_common.rcc"
         DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/megasync/resources"
     )
 

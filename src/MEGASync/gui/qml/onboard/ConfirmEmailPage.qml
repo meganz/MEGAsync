@@ -2,6 +2,8 @@ import QtQuick 2.15
 
 import LoginController 1.0
 
+import ServiceUrls 1.0
+
 ConfirmEmailPageForm {
     id: root
 

@@ -78,6 +78,8 @@ public:
 
     std::string toLocalEncodedPath(const QString& path) const override;
 
+    QString getArchUpdateString() const override;
+
 private:
     void removeSyncFromLeftPane(QString syncPath, QString syncName, QString uuid);
 

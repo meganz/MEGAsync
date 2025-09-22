@@ -56,6 +56,8 @@ public:
     void processSymLinks() override;
     bool loadThemeResource(const QString& theme) override;
 
+    QString getArchUpdateString() const override;
+
 private:
     void disableSignalHandler();
     bool isFileManagerExtensionEnabled();

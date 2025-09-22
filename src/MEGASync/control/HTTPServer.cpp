@@ -2,6 +2,7 @@
 
 #include "MegaApplication.h"
 #include "Preferences.h"
+#include "ServiceUrls.h"
 #include "StatsEventHandler.h"
 #include "Utilities.h"
 
@@ -12,7 +13,6 @@
 using namespace mega;
 
 const unsigned int HTTPServer::MAX_REQUEST_TIME_SECS = 1800;
-const QString PUBLIC_LINK_START = QString::fromUtf8("https://mega.nz/collection/");
 
 bool ts_comparator(RequestData* i, RequestData *j)
 {
@@ -209,7 +209,7 @@ void HTTPServer::readClient()
             return;
         }
 
-        if (Preferences::HTTPS_ORIGIN_CHECK_ENABLED && !Preferences::HTTPS_ALLOWED_ORIGINS.isEmpty())
+        if (Preferences::HTTPS_ORIGIN_CHECK_ENABLED)
         {
             QString foundOrigin = findCorrespondingAllowedOrigin(headers);
             if (!foundOrigin.isEmpty())
@@ -405,9 +405,9 @@ void HTTPServer::openLinkRequest(QString &response, const HTTPRequest& request)
 
     if (handle.size() == 8 && key.size() == 43)
     {
-        QString link = Preferences::BASE_URL + QString::fromUtf8("/#!%1!%2").arg(handle, key);
+        QString link = ServiceUrls::instance()->getRemoteNodeLinkUrl(handle, key).toString();
         emit onLinkReceived(link, auth);
-        response = QString::fromUtf8("0");
+        response = QLatin1String("0");
 
         auto preferences = Preferences::instance();
         QString defaultPath = preferences->downloadFolder();
@@ -594,37 +594,34 @@ void HTTPServer::externalDownloadSetRequest(QString &response, const HTTPRequest
 {
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "ExternalDownloadSet command received from the webclient");
 
-    //! Example command: 'megasync.megaSyncRequest({ a: 'ds', auth: "Y7VXFI6b", k: "2e4l7O_oI4qGxDY5eJCojg", e:["4lIlbGvSCBE", "wgILwZTk1T8", "omKB2C-vuEo", "Hj2JPpIgu1I", "QM8IK0MWN9s", "Lutj3MIgxuI"]})'
+    //! Example command: 'megasync.megaSyncRequest({ a: 'ds', auth: "Y7VXFI6b", k:
+    //! "2e4l7O_oI4qGxDY5eJCojg", e:["4lIlbGvSCBE", "wgILwZTk1T8", "omKB2C-vuEo", "Hj2JPpIgu1I",
+    //! "QM8IK0MWN9s", "Lutj3MIgxuI"]})'
     //!     'auth' contains set_ph (set public handle)
     //!     'k' contains public key
-    //! => Reconstruct link by concatenating:
-    //!     "https://mega.nz/collection/" + auth" + "#" + k
-    //! eg:
-    //!     "https://mega.nz/collection/" + "Y7VXFI6b" + "#" + "2e4l7O_oI4qGxDY5eJCojg"
-    QString auth = Utilities::extractJSONString(request.data, QString::fromUtf8("auth"));
-    QString k = Utilities::extractJSONString(request.data, QString::fromUtf8("k"));
+
+    QString auth = Utilities::extractJSONString(request.data, QLatin1String("auth"));
+    QString k = Utilities::extractJSONString(request.data, QLatin1String("k"));
     if (auth.isEmpty() || k.isEmpty())
     {
         response = QString::number(MegaError::API_EARGS);
         return;
     }
 
-    QString publicLink = PUBLIC_LINK_START + auth + QString::fromUtf8("#") + k;
+    auto publicLink = ServiceUrls::instance()->getRemoteSetLinkUrl(auth, k).toString();
 
     // Get Element IDs
-    QStringList e = Utilities::extractJSONStringList(request.data, QString::fromUtf8("e"));
+    const auto e = Utilities::extractJSONStringList(request.data, QLatin1String("e"));
 
     QList<mega::MegaHandle> handleList;
-    for(const QString& eId : qAsConst(e))
+    for (const auto& eId: e)
     {
-        QByteArray ba = eId.toLocal8Bit();
-        const char *c_str2 = ba.data();
-        size_t size = static_cast<size_t>(megaApi->getSetElementHandleSize());
-        unsigned char* result;
-        megaApi->base64ToBinary(c_str2, &result, &size);
-        const mega::MegaHandle* myHandlePtr = reinterpret_cast<mega::MegaHandle*>(result);
+        auto size = static_cast<size_t>(mega::MegaApi::getSetElementHandleSize());
+        unsigned char* result = nullptr;
+        mega::MegaApi::base64ToBinary(eId.toUtf8().constData(), &result, &size);
+        const auto* myHandlePtr = reinterpret_cast<mega::MegaHandle*>(result);
         handleList.append(*myHandlePtr);
-        delete result;
+        delete[] result;
     }
 
     emit onExternalDownloadSetRequested(publicLink, handleList);
@@ -1017,7 +1014,8 @@ HTTPServer::RequestType HTTPServer::GetRequestType(const HTTPRequest &request)
 
 QString HTTPServer::findCorrespondingAllowedOrigin(const QStringList& headers)
 {
-    for (const QString& allowedOrigin : qAsConst(Preferences::HTTPS_ALLOWED_ORIGINS))
+    const auto allowedOrigins = ServiceUrls::instance()->getHttpAllowedOrigins();
+    for (const QString& allowedOrigin: allowedOrigins)
     {
         QRegExp check = QRegExp(QString::fromUtf8("Origin: %1").arg(allowedOrigin),
                                 Qt::CaseSensitive, QRegExp::Wildcard);

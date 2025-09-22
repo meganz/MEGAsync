@@ -119,9 +119,11 @@ void WordWrapLabel::onAdaptHeight(bool parentConstrained)
         QSize docSize = document()->size().toSize();
         if(docSize.isValid() && docSize.height() > MINIMUM_DOC_HEIGHT)
         {
-            if((docSize.height() + MINIMUM_DOC_HEIGHT) != (height()))
+            if ((docSize.height()) != (height()))
             {
-                setFixedHeight(docSize.height() + MINIMUM_DOC_HEIGHT);
+                auto textHeight(docSize.height());
+                sanitizeHeight(textHeight);
+                setFixedHeight(textHeight);
                 qApp->postEvent(this, new QEvent(HeightAdapted));
             }
         }
@@ -202,6 +204,9 @@ void WordWrapLabel::onAdaptHeight(bool parentConstrained)
 
         QSize docSize = document()->size().toSize();
         int textHeight = lineCounter * fontHeight;
+
+        sanitizeHeight(textHeight);
+
         if (textHeight  != 0 && docSize.height() != height())
         {
             setFixedHeight(textHeight);
@@ -275,6 +280,15 @@ void WordWrapLabel::setCursor(const QCursor& cursor)
 {
     QTextEdit::setCursor(cursor);
     viewport()->setCursor(cursor);
+}
+
+void WordWrapLabel::sanitizeHeight(int& height)
+{
+    // We don´t want odd numbers
+    if (height % 2 != 0)
+    {
+        height += 1;
+    }
 }
 
 void WordWrapLabel::setAutoManageUrl(bool newValue)

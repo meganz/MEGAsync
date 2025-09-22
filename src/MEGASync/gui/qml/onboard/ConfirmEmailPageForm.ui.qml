@@ -6,6 +6,8 @@ import common 1.0
 import components.texts 1.0 as Texts
 import components.images 1.0
 
+import ServiceUrls 1.0
+
 import onboard 1.0
 
 StackViewPage {
@@ -50,7 +52,7 @@ StackViewPage {
 
             rawText: OnboardingStrings.confirmEmailBodyText2
             font.pixelSize: Texts.Text.Size.MEDIUM
-            url: Links.contact
+            url: serviceUrlsAccess.getContactSupportUrl()
             manageMouse: true
             Layout.preferredWidth: layout.width
             KeyNavigation.tab: changeEmailLinkTextItem
@@ -97,6 +99,7 @@ StackViewPage {
             manageMouse: true
             Layout.preferredWidth: layout.width
             KeyNavigation.tab: bodyText2Item
+            manageClick: true
         }
     }
 }

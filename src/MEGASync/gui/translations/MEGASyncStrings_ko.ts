@@ -562,7 +562,7 @@
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>오류로 인해 문제를 업로드할 수 없습니다. 나중에 다시 시도하거나 문제가 지속될 경우 [A]support@mega.nz[/A]를 통해 지원 팀에 연락하세요.</translation>
+        <translation>오류로 인해 문제를 업로드할 수 없습니다. 나중에 다시 시도하거나 문제가 지속될 경우 [A]support@mega.io[/A]를 통해 지원 팀에 연락하세요.</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
@@ -607,7 +607,7 @@
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation>문제가 계속 되면 나중에 다시 시도하거나 [A]support@mega.nz[/A]를 통해 지원 팀으로 연락하세요.</translation>
+        <translation>문제가 계속 되면 나중에 다시 시도하거나 [A]support@mega.io[/A]를 통해 지원 팀으로 연락하세요.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -3071,7 +3071,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation>로그아웃 되었습니다. 문제가 계속 되면 [A]support@mega.nz[/A]로 연락주세요.</translation>
+        <translation>로그아웃 되었습니다. 문제가 계속 되면 [A]support@mega.io[/A]로 연락주세요.</translation>
     </message>
 </context>
 <context>
@@ -3806,7 +3806,7 @@ https://mega.co.nz/#sync</source>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
         <translation>당신의 계정이 MEGA의 이용 약관 위반으로 삭제되었습니다.
-저장된 데이터에 대한 접근 또는 새 MEGA 계정을 등록하는 것이 금지됩니다.</translation>
+저장된 데이터에 대한 접근 또는 새 MEGA 계정에 가입하는 것이 금지됩니다.</translation>
     </message>
     <message>
         <source>Your local storage is full</source>
@@ -3821,12 +3821,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Alert</source>
         <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>경고</translation>
     </message>
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]오류가 감지되었습니다[/B][BR]애플리케이션 리소스를 불러오던 중 오류가 발생하였고, 앱을 닫아야 합니다. 문제를 해결하려면 [A]mega.io/desktop[/A]에서 앱을 다시 설치하세요. 문제가 계속 되면 추가적인 도움을 받기 위해 지원으로 연락하세요.</translation>
     </message>
 </context>
 <context>
@@ -5976,11 +5976,11 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Error messages are now clearer, making it easier to understand when things go wrong.
-- We’ve fixed bugs and made the app more reliable.
+        <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
-        <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
+        <translation>- 이 업데이트는 전반적인 성능 향상을 위한 수많은 핵심 향상과 수정이 포함되어 있습니다.
+</translation>
     </message>
 </context>
 <context>
@@ -6535,22 +6535,22 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA에서 폴더 삭제</translation>
     </message>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA에서 폴더가 삭제되지만, 당신의 장치에서는 삭제되지 않습니다. 이 행동은 되돌릴 수 없습니다.</translation>
     </message>
     <message>
         <source>Move folder</source>
         <translatorcomment>Radio button option label</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>클라우드 드라이브로 폴더 이동</translation>
     </message>
     <message>
         <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
         <translatorcomment>Radio button description</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>당신의 데이터에 대한 전체 접근 권한을 받으려면 이 폴더를 클라우드 드라이브로 옮기세요. 앞으로는 백업되지 않습니다.</translation>
     </message>
     <message>
         <source>Move to:</source>
@@ -6570,7 +6570,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>To stop backing up this folder, you need to either move it or delete it.</source>
         <translatorcomment>Backup removal title description</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>이 폴더의 백업을 중단하시려면, 폴더를 이동하거나 삭제해야 합니다</translation>
     </message>
 </context>
 <context>
@@ -6921,7 +6921,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>MEGA-RECOVERYKEY</source>
         <translatorcomment>File name of file exported containing the recovery key.</translatorcomment>
-        <translation>MEGA-복구키</translation>
+        <translation>MEGA-RECOVERYKEY</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -7041,7 +7041,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
-        <translation>SyncDebris (MEGA)</translation>
+        <translation>SyncDebris (MEGA 내)</translation>
     </message>
     <message>
         <source>Synchronizations and backups will stop working.</source>
@@ -8165,7 +8165,7 @@ Please, refresh the list.</source>
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
         <translation>대상이 폴더 구조의 너무 깊은 곳에 있습니다. 동기화를 정지하고, 폴더를 64단계보다 얕은 곳으로 이동한 뒤 동기화를 다시 만드세요.
-이렇게 해서 문제가 해결되지 않는다면, support@mega.nz로 연락주세요.</translation>
+이렇게 해서 문제가 해결되지 않는다면, support@mega.io로 연락주세요.</translation>
     </message>
     <message>
         <source>Unable to sync [B]%1[/B]</source>

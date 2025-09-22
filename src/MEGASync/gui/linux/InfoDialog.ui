@@ -372,7 +372,7 @@ border: none;
                   <string notr="true"/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_linux.qrc">
+                  <iconset resource="../Resources_common.qrc">
                    <normaloff>:/images/icon_plus.svg</normaloff>:/images/icon_plus.svg</iconset>
                  </property>
                  <property name="flat">
@@ -423,7 +423,7 @@ border: none;
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_linux.qrc">
+                  <iconset resource="../Resources_common.qrc">
                    <normaloff>:/images/more_settings.png</normaloff>:/images/more_settings.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -1418,7 +1418,7 @@ background-color: transparent;
                                <string/>
                               </property>
                               <property name="icon">
-                               <iconset resource="../Resources_linux.qrc">
+                               <iconset resource="../Resources_common.qrc">
                                 <normaloff>:/images/upload_to_mega.png</normaloff>:/images/upload_to_mega.png</iconset>
                               </property>
                               <property name="iconSize">
@@ -2642,7 +2642,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                 <string/>
                                </property>
                                <property name="icon">
-                                <iconset resource="../Resources_linux.qrc">
+                                <iconset resource="../Resources_common.qrc">
                                  <normaloff>:/images/icons/infodialog/warning-disabled-backups.png</normaloff>:/images/icons/infodialog/warning-disabled-backups.png</iconset>
                                </property>
                                <property name="iconSize">
@@ -3781,7 +3781,7 @@ border: none;
   <tabstop>bSettings</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>

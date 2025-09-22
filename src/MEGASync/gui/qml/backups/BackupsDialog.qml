@@ -7,6 +7,7 @@ import components.steps 1.0
 
 import QmlDialog 1.0
 import SyncInfo 1.0
+import ServiceUrls 1.0
 
 QmlDialog {
     id: window
@@ -34,7 +35,7 @@ QmlDialog {
             width: parent.width
             step1String: BackupsStrings.selectFolders;
             step2String: BackupsStrings.confirmFolders;
-            helpUrl: Links.createBackup
+            helpUrl: serviceUrlsAccess.getCreateBackupHelpUrl()
         }
 
         Rectangle {

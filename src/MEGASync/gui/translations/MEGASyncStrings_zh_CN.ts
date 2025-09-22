@@ -562,7 +562,7 @@
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>由于发生错误，您的问题无法上传。如果问题仍然存在，请稍后再试或联系我们的客服团队[A]support@mega.nz[/A]获取帮助。</translation>
+        <translation>由于发生错误，您的问题无法上传。如果问题仍然存在，请稍后再试或联系我们的客服团队[A]support@mega.io[/A]获取帮助。</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
@@ -607,7 +607,7 @@
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation>如果问题仍然存在，请稍后重试或通过[A]support@mega.nz[/A]联系我们的客服团队。</translation>
+        <translation>如果问题仍然存在，请稍后重试或通过[A]support@mega.io[/A]联系我们的客服团队。</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -3071,7 +3071,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation>您已登出。如果此问题仍然存在，请联系[A]support@mega.nz[/A] 。</translation>
+        <translation>您已登出。如果此问题仍然存在，请联系[A]support@mega.io[/A] 。</translation>
     </message>
 </context>
 <context>
@@ -3821,12 +3821,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Alert</source>
         <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>警报</translation>
     </message>
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]检测到错误[/B][BR]加载应用程序资源时出现错误，该应用程序需要关闭。请从 [A]mega.io/desktop[/A] 重新安装程序来解决这个问题。如果重新安装后问题仍然存在，请联系客服部门寻求进一步帮助。</translation>
     </message>
 </context>
 <context>
@@ -5974,11 +5974,11 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Error messages are now clearer, making it easier to understand when things go wrong.
-- We’ve fixed bugs and made the app more reliable.
+        <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
-        <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
+        <translation>- 此更新包括多项核心改进和修复，以提升整体性能。
+</translation>
     </message>
 </context>
 <context>
@@ -6533,22 +6533,22 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>从 MEGA 中删除文件夹</translation>
     </message>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>该文件夹将从 MEGA 中删除，但不会从您的设备中删除。此操作无法撤消。</translation>
     </message>
     <message>
         <source>Move folder</source>
         <translatorcomment>Radio button option label</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>将文件夹移至云盘</translation>
     </message>
     <message>
         <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
         <translatorcomment>Radio button description</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>将此文件夹移至您的云盘即可完全访问您的数据。它将不再被备份。</translation>
     </message>
     <message>
         <source>Move to:</source>
@@ -6568,7 +6568,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>To stop backing up this folder, you need to either move it or delete it.</source>
         <translatorcomment>Backup removal title description</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>要停止备份此文件夹，您需要将其移动或删除</translation>
     </message>
 </context>
 <context>
@@ -8163,7 +8163,7 @@ Please, refresh the list.</source>
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
         <translation>目标在您的文件夹结构中太深。停止同步，将文件夹移至深度少于64个文件夹的位置，然后重新创建同步。
-如果这不能解决问题，请联系support@mega.nz。</translation>
+如果这不能解决问题，请联系support@mega.io。</translation>
     </message>
     <message>
         <source>Unable to sync [B]%1[/B]</source>

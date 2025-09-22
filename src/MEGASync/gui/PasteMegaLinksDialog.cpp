@@ -1,9 +1,11 @@
 #include "PasteMegaLinksDialog.h"
 
 #include "MessageDialogOpener.h"
+#include "ServiceUrls.h"
 #include "ui_PasteMegaLinksDialog.h"
 
 #include <QClipboard>
+#include <QRegularExpression>
 #include <QUrl>
 
 using namespace std;
@@ -14,9 +16,8 @@ PasteMegaLinksDialog::PasteMegaLinksDialog(QWidget *parent)
 {
     ui->setupUi(this);
 
-    const QClipboard *clipboard = QApplication::clipboard();
-    QString text = clipboard->text();
-    if (extractLinks(text).size() != 0)
+    const auto text = QApplication::clipboard()->text();
+    if (!extractLinks(text).isEmpty())
     {
         ui->eLinks->setPlainText(text);
     }
@@ -71,25 +72,22 @@ bool PasteMegaLinksDialog::event(QEvent* event)
     return QDialog::event(event);
 }
 
-QStringList PasteMegaLinksDialog::extractLinks(QString text)
+QStringList PasteMegaLinksDialog::extractLinks(const QString& text)
 {
+    const auto supportedUrls = ServiceUrls::instance()->getSupportedLinksUrls();
+    const auto splitRules = QRegularExpression(supportedUrls.join(QLatin1Char('|')));
+    const auto tempLinks = text.split(splitRules, Qt::SkipEmptyParts);
+
     QStringList finalLinks;
-    QString separator;
-    separator.append(QString::fromLatin1("mega://").append(QString::fromUtf8("|")));
-    separator.append(QString::fromLatin1("https://mega.co.nz/").append(QString::fromUtf8("|")));
-    separator.append(QString::fromLatin1("https://mega.nz/").append(QString::fromUtf8("|")));
-    separator.append(QString::fromLatin1("http://mega.co.nz/").append(QString::fromUtf8("|")));
-    separator.append(QString::fromLatin1("http://mega.nz/"));
-
-    QStringList tempLinks = text.split(QRegExp(separator));
-    tempLinks.removeAt(0);
-
-    for (int i = 0; i < tempLinks.size(); i++)
+    if (!tempLinks.isEmpty() && text != tempLinks.first())
     {
-        QString link = checkLink(tempLinks[i]);
-        if (!link.isNull())
+        foreach(auto tempLink, tempLinks)
         {
-            finalLinks.append(link);
+            auto link = checkLink(tempLink);
+            if (!link.isEmpty())
+            {
+                finalLinks.append(link);
+            }
         }
     }
 
@@ -99,9 +97,9 @@ QStringList PasteMegaLinksDialog::extractLinks(QString text)
 QString PasteMegaLinksDialog::checkLink(QString link)
 {
     link = QUrl::fromPercentEncoding(link.toUtf8());
-    link.replace(QChar::fromLatin1(' '), QChar::fromLatin1('+'));
+    link.replace(QLatin1Char(' '), QLatin1Char('+'));
 
-    QString urlLink = QString::fromUtf8("https://mega.nz/");
+    auto urlLink = ServiceUrls::instance()->getLinkBaseUrl().toString() + QLatin1Char('/');
 
     if (rxHeaderFolderSubfolder.indexIn(link) != -1)
     {
@@ -149,5 +147,5 @@ QString PasteMegaLinksDialog::checkLink(QString link)
         return urlLink.append(link);
     }
 
-    return QString();
+    return {};
 }

@@ -4,6 +4,7 @@
 #include "MegaApplication.h"
 #include "Preferences.h"
 #include "RequestListenerManager.h"
+#include "ServiceUrls.h"
 
 #include <QDir>
 
@@ -352,8 +353,7 @@ void LinkProcessor::requestLinkInfo()
     if (!isValidIndex(mLinkList, mCurrentIndex)) { return; }
 
     const QString link = mLinkList[mCurrentIndex];
-    if (link.startsWith(Preferences::BASE_URL + QString::fromUtf8("/#F!")) ||
-        link.startsWith(Preferences::BASE_URL + QString::fromUtf8("/folder/")))
+    if (ServiceUrls::instance()->isFolderLink(link))
     {
         std::unique_ptr<char []> authToken(mMegaApi->getAccountAuth());
         if (authToken)
@@ -363,7 +363,7 @@ void LinkProcessor::requestLinkInfo()
 
         mMegaApiFolders->loginToFolder(link.toUtf8().constData(), mDelegateListener.get());
     }
-    else if (link.startsWith(Preferences::BASE_URL + QString::fromUtf8("/collection/")))
+    else if (ServiceUrls::instance()->isSetLink(link))
     {
         emit requestFetchSetFromLink(link);
     }

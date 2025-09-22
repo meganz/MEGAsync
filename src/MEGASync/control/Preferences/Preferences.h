@@ -463,7 +463,9 @@ public:
         GIGA_BYTE_UNIT = 3
     };
 
-    enum AccountType {
+    // These values must be kept in sync with mega::AccountType
+    enum AccountType
+    {
         ACCOUNT_TYPE_FREE = 0,
         ACCOUNT_TYPE_PROI = 1,
         ACCOUNT_TYPE_PROII = 2,
@@ -473,8 +475,9 @@ public:
         ACCOUNT_TYPE_BASIC = 12,
         ACCOUNT_TYPE_ESSENTIAL = 13,
         ACCOUNT_TYPE_BUSINESS = 100,
-        ACCOUNT_TYPE_PRO_FLEXI = 101
+        ACCOUNT_TYPE_PRO_FLEXI = 101,
     };
+    Q_ENUM(AccountType)
 
     enum {
         ONE_TIME_ACTION_DEPRECATED_OPERATING_SYSTEM = 0,
@@ -551,10 +554,8 @@ public:
 #endif
 
     static const QString UPDATE_CHECK_URL;
-    static const QString CRASH_REPORT_URL;
     static const QString UPDATE_FOLDER_NAME;
     static const QString UPDATE_BACKUP_FOLDER_NAME;
-    static const QString PROXY_TEST_URL;
     static const QString PROXY_TEST_SUBSTRING;
     static const char UPDATE_PUBLIC_KEY[];
 
@@ -570,14 +571,9 @@ public:
     static const QString TRANSLATION_PREFIX;
     static const unsigned short HTTP_PORT;
 
-    static const QStringList HTTPS_ALLOWED_ORIGINS;
     static bool HTTPS_ORIGIN_CHECK_ENABLED;
     static const QString FINDER_EXT_BUNDLE_ID;
-    static QString BASE_URL;
-    static QString BASE_MEGA_IO_URL;
-    static QString BASE_MEGA_HELP_URL;
 
-    static void setBaseUrl(const QString &value);
     template<typename T>
     static void overridePreference(const QSettings &settings, QString &&name, T &value);
     static void overridePreferences(const QSettings &settings);

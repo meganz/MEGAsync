@@ -72,16 +72,45 @@ pipeline {
             matrix {
                 axes {
                     axis {
-                        name 'ARCHITECTURE'
-                        values 'amd64'
+                        name 'ARCHITECTURE';
+                        values 'amd64','armhf'
                     }
                     axis {
-                        name 'DISTRO'
-                        values  'xUbuntu_25.04','xUbuntu_24.10','xUbuntu_24.04', 'xUbuntu_22.04', 'xUbuntu_20.04',
-                                'Debian_11','Debian_12','Debian_testing',
+                        name 'DISTRO';
+                        values  'xUbuntu_25.10','xUbuntu_25.04','xUbuntu_24.04', 'xUbuntu_22.04',
+                                'Debian_11','Debian_12','Debian_13','Debian_testing',
                                 'DEB_Arch_Extra',
-                                'Fedora_40','Fedora_41','Fedora_42',
-                                'openSUSE_Leap_15.6','openSUSE_Tumbleweed'
+                                'Raspbian_12',
+                                'Fedora_42',
+                                'AlmaLinux_9','CentOS_Stream_9',
+                                'openSUSE_Leap_15.6', 'openSUSE_Tumbleweed'
+                    }
+                }
+                excludes {
+                    exclude {
+                        axis {
+                            name 'ARCHITECTURE';
+                            values 'armhf'
+                        }
+                        axis {
+                            name 'DISTRO';
+                            values  'xUbuntu_25.10','xUbuntu_25.04','xUbuntu_24.04', 'xUbuntu_22.04',
+                                    'Debian_11','Debian_12','Debian_13','Debian_testing',
+                                    'DEB_Arch_Extra',
+                                    'Fedora_42',
+                                    'AlmaLinux_9','CentOS_Stream_9',
+                                    'openSUSE_Leap_15.6', 'openSUSE_Tumbleweed'
+                        }
+                    }
+                    exclude {
+                        axis {
+                            name 'ARCHITECTURE';
+                            values 'amd64'
+                        }
+                        axis {
+                            name 'DISTRO';
+                            values  'Raspbian_12'
+                        }
                     }
                 }
                 stages {

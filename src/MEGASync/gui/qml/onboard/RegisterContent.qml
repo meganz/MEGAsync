@@ -5,6 +5,8 @@ import common 1.0
 import components.checkBoxes 1.0
 import components.textFields 1.0
 
+import ServiceUrls 1.0
+
 Column {
     id: root
 
@@ -190,7 +192,7 @@ Column {
 
         anchors.left: root.left
         anchors.leftMargin: Constants.focusAdjustment
-        url: Links.terms
+        url: serviceUrlsAccess.getServiceTermsUrl()
         text: OnboardingStrings.agreeTerms
         KeyNavigation.tab: contentItem
         nextTabItem: loginButton

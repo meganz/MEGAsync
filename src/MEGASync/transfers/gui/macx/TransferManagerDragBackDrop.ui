@@ -72,7 +72,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="../../../gui/Resources_macx.qrc">:/images/upload_to_mega.png</pixmap>
+        <pixmap resource="../../../gui/Resources_common.qrc">:/images/upload_to_mega.png</pixmap>
        </property>
       </widget>
      </item>
@@ -161,7 +161,7 @@ font-size: 16px;
   </layout>
  </widget>
  <resources>
-  <include location="../../../gui/Resources_macx.qrc"/>
+  <include location="../../../gui/Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>

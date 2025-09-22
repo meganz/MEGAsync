@@ -27,7 +27,7 @@ VIAddVersionKey "LegalCopyright" "MEGA Limited 2025"
 VIAddVersionKey "ProductName" "MEGAsync"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
-!define PRODUCT_WEB_SITE "http://www.mega.nz"
+!define PRODUCT_WEB_SITE "https://mega.io"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\MEGAsync.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
@@ -120,8 +120,6 @@ VIAddVersionKey "ProductVersion" "${Expv_1}.${Expv_2}.${Expv_3}.${Expv_4}"
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "${PRODUCT_STARTMENU_REGVAL}"
 !define MUI_FINISHPAGE_RUN ;"$INSTDIR\MEGASync.exe"
 !define MUI_FINISHPAGE_RUN_FUNCTION RunFunction
-
-;!define MUI_FINISHPAGE_NOAUTOCLOSE
 
 var APP_NAME
 var ICONS_GROUP
@@ -388,7 +386,7 @@ Function .onInit
   !ifdef BUILD_X64_VERSION
   ${If} ${RunningX64}
   ${Else}
-    MessageBox MB_OK "This is an installer for 64-bit MEGA Desktop App, but you are using a 32-bit Windows. Please, download the 32-bit MEGA Desktop App version from https://mega.nz/desktop."
+    MessageBox MB_OK "This is an installer for 64-bit MEGA Desktop App, but you are using a 32-bit Windows. Please, download the 32-bit MEGA Desktop App version from https://mega.io/desktop."
     Quit
   ${EndIf}
   !endif
@@ -568,7 +566,13 @@ modeselected:
   !undef LIBRARY_SHELL_EXTENSION
   !undef LIBRARY_IGNORE_VERSION
 
-  !ifdef BUILD_X64_VERSION
+  Delete "$INSTDIR\Resources_macx.rcc"
+  Delete "$INSTDIR\Resources_linux.rcc"
+  Delete "$INSTDIR\Resources_win.rcc"
+
+  Delete $INSTDIR\ShellExtX32.msix
+  Delete $INSTDIR\ShellExtX64.msix  
+!ifdef BUILD_X64_VERSION
     !insertmacro Install3264DLL "${VcRedist64Path}\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
     !insertmacro Install3264DLL "${VcRedist64Path}\vcruntime140_1.dll" "$INSTDIR\vcruntime140_1.dll"
     !insertmacro Install3264DLL "${VcRedist64Path}\msvcp140.dll" "$INSTDIR\msvcp140.dll"
@@ -706,18 +710,10 @@ modeselected:
   File "installer\qt.conf"
   AccessControl::SetFileOwner "$INSTDIR\qt.conf" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\qt.conf" "$USERNAME" "GenericRead + GenericWrite"
-  
-  File "${SRCDIR_MEGASYNC}\Resources_macx.rcc"
-  AccessControl::SetFileOwner "$INSTDIR\Resources_macx.rcc" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\Resources_macx.rcc" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\Resources_linux.rcc"
-  AccessControl::SetFileOwner "$INSTDIR\Resources_linux.rcc" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\Resources_linux.rcc" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${SRCDIR_MEGASYNC}\Resources_win.rcc"
-  AccessControl::SetFileOwner "$INSTDIR\Resources_win.rcc" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\Resources_win.rcc" "$USERNAME" "GenericRead + GenericWrite"
+  File "${SRCDIR_MEGASYNC}\Resources_common.rcc"
+  AccessControl::SetFileOwner "$INSTDIR\Resources_common.rcc" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\Resources_common.rcc" "$USERNAME" "GenericRead + GenericWrite"
 
   File "${SRCDIR_MEGASYNC}\Resources_light.rcc"
   AccessControl::SetFileOwner "$INSTDIR\Resources_light.rcc" "$USERNAME"
@@ -786,23 +782,34 @@ modeselected:
   !define LIBRARY_SHELL_EXTENSION
   !define LIBRARY_IGNORE_VERSION
 
-  !ifndef BUILD_X64_VERSION
-  DetailPrint "Install ShellExt 64"
-  !insertmacro InstallLib DLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.msix" "$INSTDIR\ShellExtX32.msix" "$INSTDIR"
-  !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
-
-  AccessControl::SetFileOwner "$INSTDIR\ShellExtX32.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\ShellExtX32.dll" "$USERNAME" "GenericRead + GenericWrite"
-  !endif
-
   ${If} ${RunningX64}
     !define LIBRARY_X64
     DetailPrint "Install ShellExt 64"
-    !insertmacro InstallLib DLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.msix" "$INSTDIR\ShellExtX64.msix" "$INSTDIR"
+    File "/oname=$INSTDIR\ShellExtX64.msix" "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.msix"
+    AccessControl::SetFileOwner "$INSTDIR\ShellExtX64.msix" "$USERNAME"
+    AccessControl::GrantOnFile "$INSTDIR\ShellExtX64.msix" "$USERNAME" "GenericRead + GenericWrite"
     !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.dll" "$INSTDIR\ShellExtX64.dll" "$INSTDIR"
+    ${If} ${Errors}
+        DetailPrint "Install ShellExt 64 failed"
+        ClearErrors
+    ${endIf}
     AccessControl::SetFileOwner "$INSTDIR\ShellExtX64.dll" "$USERNAME"
     AccessControl::GrantOnFile "$INSTDIR\ShellExtX64.dll" "$USERNAME" "GenericRead + GenericWrite"
     !undef LIBRARY_X64
+!ifndef BUILD_X64_VERSION
+    File "/oname=$INSTDIR\ShellExtX32.dll" "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll"
+    AccessControl::SetFileOwner "$INSTDIR\ShellExtX32.dll" "$USERNAME"
+    AccessControl::GrantOnFile "$INSTDIR\ShellExtX32.dll" "$USERNAME" "GenericRead + GenericWrite"
+  ${Else}
+    DetailPrint "Install ShellExt 32"
+    !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
+    ${If} ${Errors}
+        DetailPrint "Install ShellExt 32 failed"
+        ClearErrors
+    ${endIf}
+    AccessControl::SetFileOwner "$INSTDIR\ShellExtX32.dll" "$USERNAME"
+    AccessControl::GrantOnFile "$INSTDIR\ShellExtX32.dll" "$USERNAME" "GenericRead + GenericWrite"
+!endif
   ${EndIf}
 
   !undef LIBRARY_COM
@@ -917,6 +924,8 @@ Section Uninstall
   ${EndIf}
   !undef LIBRARY_COM
   !undef LIBRARY_SHELL_EXTENSION
+  Delete "$INSTDIR\ShellExtX64.msix"
+  Delete "$INSTDIR\ShellExtX32.msix"
 
   ;QT4 files
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\QtNetwork4.dll"
@@ -1032,13 +1041,14 @@ Section Uninstall
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\cares.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\libuv.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\qt.conf"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\Resources_macx.rcc"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\Resources_linux.rcc"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\Resources_win.rcc"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\Resources_light.rcc"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\Resources_dark.rcc"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\Resources_qml.rcc"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\qml.rcc"
+  Delete "$INSTDIR\Resources_common.rcc"
+  Delete "$INSTDIR\Resources_macx.rcc"
+  Delete "$INSTDIR\Resources_linux.rcc"
+  Delete "$INSTDIR\Resources_win.rcc"
+  Delete "$INSTDIR\Resources_light.rcc"
+  Delete "$INSTDIR\Resources_dark.rcc"
+  Delete "$INSTDIR\Resources_qml.rcc"
+  Delete "$INSTDIR\qml.rcc"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\NSIS.Library.RegTool*.exe"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\avcodec-59.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\avformat-59.dll"

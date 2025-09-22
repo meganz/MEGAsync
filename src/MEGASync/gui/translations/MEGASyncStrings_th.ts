@@ -562,7 +562,7 @@
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>ไม่สามารถอัปโหลดรายงานข้อบกพร่องของคุณได้เนื่องจากเกิดข้อผิดพลาด ลองอีกครั้งภายหลัง หรือติดต่อทีมสนับสนุนของเราทางอีเมล [A]support@mega.nz[/A] หากปัญหายังคงมีอยู่</translation>
+        <translation>ไม่สามารถอัปโหลดรายงานข้อบกพร่องของคุณได้เนื่องจากเกิดข้อผิดพลาด ลองอีกครั้งภายหลัง หรือติดต่อทีมสนับสนุนของเราทางอีเมล [A]support@mega.io[/A] หากปัญหายังคงมีอยู่</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
@@ -607,7 +607,7 @@
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation>กรุณาลองอีกครั้งในภายหลังหรือติดต่อทีมสนับสนุนของเราผ่านทาง [A]support@mega.nz[/A] หากคุณยังประสบปัญหาอยู่</translation>
+        <translation>กรุณาลองอีกครั้งในภายหลังหรือติดต่อทีมสนับสนุนของเราผ่านทาง [A]support@mega.io[/A] หากคุณยังประสบปัญหาอยู่</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -3070,7 +3070,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation>คุณออกจากระบบแล้ว ติดต่อ [A]support@mega.nz[/A] หากยังประสบปัญหานี้อยู่</translation>
+        <translation>คุณออกจากระบบแล้ว ติดต่อ [A]support@mega.io[/A] หากยังประสบปัญหานี้อยู่</translation>
     </message>
 </context>
 <context>
@@ -3825,7 +3825,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]พบข้อผิดพลาด[/B][BR]เกิดข้อผิดพลาดขณะโหลดทรัพยากรของแอป ทำให้แอปจำเป็นต้องปิดตัวลง กรุณาติดตั้งแอปใหม่อีกครั้งจาก [A]mega.io/desktop[/A] เพื่อแก้ปัญหานี้ หากติดตั้งใหม่แล้วปัญหายังไม่หายไป กรุณาติดต่อทีมสนับสนุนเพื่อขอความช่วยเหลือต่อไป</translation>
     </message>
 </context>
 <context>
@@ -5971,13 +5971,10 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Error messages are now clearer, making it easier to understand when things go wrong.
-- We’ve fixed bugs and made the app more reliable.
+        <source>- This update includes numerous core improvements and fixes to enhance overall performance.
 </source>
-        <translatorcomment>Change log for version 5.15.0. CON-1433</translatorcomment>
-        <translation>- ข้อความแจ้งข้อผิดพลาดชัดเจนขึ้น ทำให้เข้าใจได้ง่ายเมื่อมีปัญหา
-- เราแก้ไขข้อผิดพลาดและทำให้แอปมีความเสถียรมากขึ้น
-</translation>
+        <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
+        <translation>- การอัปเดตนี้มีการปรับปรุงและแก้ไขส่วนหลักหลายรายการ เพื่อเพิ่มประสิทธิภาพการทำงานให้ดียิ่งขึ้น</translation>
     </message>
 </context>
 <context>
@@ -8162,7 +8159,7 @@ Please, refresh the list.</source>
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
         <translation>เป้าหมายอยู่ในโครงสร้างโฟลเดอร์ที่ลึกเกินไป ให้หยุดการซิงค์ แล้วย้ายโฟลเดอร์ไปยังตำแหน่งที่ลึกไม่เกิน 64 โฟลเดอร์ จากนั้นเริ่มต้นการซิงค์ใหม่ 
-หากยังไม่สามารถแก้ไขปัญหาได้ ติดต่อ support@mega.nz</translation>
+หากยังไม่สามารถแก้ไขปัญหาได้ ติดต่อ support@mega.io</translation>
     </message>
     <message>
         <source>Unable to sync [B]%1[/B]</source>

@@ -34,7 +34,14 @@ border-style: none;
 */
 QScrollBar:vertical
 {
-width: 10px;
+width: 15px;
+padding: 1px;
+}
+
+QScrollBar:horizontal
+{
+height: 15px;
+padding: 1px;
 }
 
 QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical, QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical
@@ -46,6 +53,21 @@ QScrollBar::handle:vertical
 {
 border-style: none;
 border-radius: 5px;
+min-height: 20px;
+border-radius: 4px;
+}
+
+QScrollBar::handle:horizontal
+{
+border-style: none;
+border-radius: 5px;
+min-width: 20px;
+border-radius: 4px;
+}
+
+QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal, QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal
+{
+border-style: none;
 }
 
 /*
@@ -214,134 +236,156 @@ font-size: 16px;
 font-weight: 600;
 }
 
-QLabel[type="secondary"]
+QLabel[dimension="small"]
 {
-font-size: 12px;
-font-weight: 400;
+font-size: 10px;
 }
 
 QLabel[semibold]
 {
 font-weight: 600;
 }
+
 /*
-    Outline button.
+    class = icon-label
+    Icon labels > QToolButtons with class icon-label
+    Represents an only-icon label without hover, pressed...states.
+    We use QToolButton to update the icon when the theme changes, but it is not used as a button, it is just an icon label (no mouse events)
+    QPushButton is not used to avoid strange resize events and because it is heavier than QToolButton.
+*/
+QToolButton.icon-label
+{
+border: none;
+margin:0px;
+padding:0px;
+min-width: 0px;
+}
+
+/*
+    Buttons
+    We have 2 classes of buttons:
+    1) Normal buttons (text or text+icon) > by default all QPushButton will be normal buttons. Ex. NO property class needed
+    2) Only-Icon buttons > class = "icon-label"
+
+    Every button (normal or only-icon) can have 5 different types: primary, secondary, outline, ghost and link. Ex. property type = "primary"
+
+    Every button (normal or only-icon) can have 3 different dimensions: small, medium and large. Ex. property dimension = "small"
+    The only-icon button have a fixed size depending on the dimension.
+    The Normal buttons have a fixed height and a min-width depending on the dimension
+    Both types have the same icon (if any) size
+*/
+QPushButton[dimension=small], QPushButton[dimension=medium], QPushButton[dimension=large]
+{
+padding-top: 0px;
+padding-bottom: 0px;
+font-weight: 600;
+}
+
+QPushButton[dimension=small]
+{
+border-radius: 6px;
+height: 26px;
+min-width: 44px; /*min width = 44px + padding-left(8px) + padding-righ(8px) = 60px*/
+font-size: 12px;
+padding-left: 8px;
+padding-right: 8px;
+qproperty-iconSize:16px;
+}
+
+QPushButton[dimension=medium]
+{
+border-radius: 6px;
+height: 36px;
+min-width: 48px; /*min width = 48px + padding-left(16px) + padding-righ(16px) = 80px*/
+font-size: 14px;
+padding-left: 16px;
+padding-right: 16px;
+qproperty-iconSize:24px;
+}
+u
+QPushButton[dimension=large]
+{
+border-radius: 8px;
+height: 46px;
+min-width: 52px; /*min width = 52px + padding-left(24px) + padding-righ(24px) = 100px*/
+font-size: 16px;
+padding-left: 24px;
+padding-right: 24px;
+qproperty-iconSize:24px;
+}
+
+/*
+    class = icon-button
+    We need to override and reset some common properties for buttons
+*/
+
+QPushButton.icon-button
+{
+margin:0px;
+padding:0px;
+min-width: 0px;
+}
+
+QPushButton.icon-button[dimension=small]
+{
+height: 26px;
+width: 26px;
+}
+
+QPushButton.icon-button[dimension=medium]
+{
+height: 36px;
+width: 36px;
+}
+
+QPushButton.icon-button[dimension=large]
+{
+height: 48px;
+width: 48px;
+}
+
+/*
+    type = outline. Due to box model paiting we need to substract the border from the width to maintain at its expected height (4px)
 */
 QPushButton[type="outline"]
 {
 border-width: 2px;
 border-style: solid;
-font-weight: 600;
 }
+
+/*  */
 
 QPushButton[type="outline"][dimension=small]
 {
-border-radius: 6px;
-font-size: 12px;
-padding-left: 8px;
-padding-right: 8px;
-padding-top: 4px;
-padding-bottom: 4px;
+height: 22px;
+
 }
 
 QPushButton[type="outline"][dimension=medium]
 {
-border-radius: 6px;
-font-size: 14px;
-padding-left: 16px;
-padding-right: 16px;
-padding-top: 8px;
-padding-bottom: 8px;
+height: 32px;
+
 }
 
 QPushButton[type="outline"][dimension=large]
 {
-border-radius: 8px;
-font-size: 16px;
-padding-left: 24px;
-padding-right: 24px;
-padding-top: 12px;
-padding-bottom: 12px;
+height: 42px;
 }
 
 /*
-    Primary button.
+    All types except outline have no borders
 */
-QPushButton[type="primary"]
+QPushButton[type = "primary"], QPushButton[type = "secondary"], QPushButton[type = "ghost"], QPushButton[type = "link"]
 {
-border-width: 2px;
-border-style: solid;
-font-weight: 600;
-}
-
-QPushButton[type="primary"][dimension=small]
-{
-border-radius: 6px;
-font-size: 12px;
-padding-left: 8px;
-padding-right: 8px;
-padding-top: 4px;
-padding-bottom: 4px;
-}
-
-QPushButton[type="primary"][dimension=medium]
-{
-border-radius: 6px;
-font-size: 14px;
-padding-left: 16px;
-padding-right: 16px;
-padding-top: 8px;
-padding-bottom: 8px;
-}
-
-QPushButton[type="primary"][dimension=large]
-{
-border-radius: 8px;
-font-size: 16px;
-padding-left: 24px;
-padding-right: 24px;
-padding-top: 12px;
-padding-bottom: 12px;
+border:none;
 }
 
 /*
-    Secondary button.
+    type = ghost and type = link buttons are not semibold by default
 */
-QPushButton[type="secondary"]
+QPushButton[type = "ghost"], QPushButton[type = "link"]
 {
-border-width: 2px;
-border-style: solid;
-font-weight: 600;
-}
-
-QPushButton[type="secondary"][dimension=small]
-{
-border-radius: 6px;
-font-size: 12px;
-padding-left: 8px;
-padding-right: 8px;
-padding-top: 4px;
-padding-bottom: 4px;
-}
-
-QPushButton[type="secondary"][dimension=medium]
-{
-border-radius: 6px;
-font-size: 14px;
-padding-left: 16px;
-padding-right: 16px;
-padding-top: 8px;
-padding-bottom: 8px;
-}
-
-QPushButton[type="secondary"][dimension=large]
-{
-border-radius: 8px;
-font-size: 16px;
-padding-left: 24px;
-padding-right: 24px;
-padding-top: 12px;
-padding-bottom: 12px;
+font-weight:400
 }
 
 /*
@@ -384,6 +428,30 @@ subcontrol-position: bottom right;
 padding-right: 4px;
 padding-bottom: 4px;
 }
+
+/*
+    WordWrapLabel
+*/
+WordWrapLabel[type="primary"]
+{
+font-weight: 600;
+}
+
+WordWrapLabel[type="secondary"]
+{
+font-weight: 400;
+}
+
+WordWrapLabel[dimension="small"]
+{
+font-size: 10px;
+}
+
+WordWrapLabel[dimension="medium"]
+{
+font-size: 12px;
+}
+
 /*
     SwitchButton
     In the constructor of the class we assign the object name switch
@@ -398,4 +466,17 @@ border-style: none;
 border-style: none;
 width: 40px;
 height: 19px;
+}
+/*
+    QMenu
+*/
+QMenu.MegaMenu
+{
+border-radius: 8px;
+border: 1px solid;
+padding: 4px;
+}
+QMenu.MegaMenu::separator
+{
+height: 1px
 }

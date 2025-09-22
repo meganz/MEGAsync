@@ -4,6 +4,7 @@
 #include "GuiUtilities.h"
 #include "MessageDialogOpener.h"
 #include "Preferences.h"
+#include "ServiceUrls.h"
 #include "SyncInfo.h"
 #include "SyncSettings.h"
 #include "TextDecorator.h"
@@ -41,6 +42,7 @@ public:
 
     void insertUIElement(QWidget* widget, int position);
 
+    void onSyncStateChanged(std::shared_ptr<SyncSettings> sc = nullptr);
     void onSavingSyncsCompleted(SyncStateInformation value);
     void syncsStateInformation(SyncStateInformation state);
 
@@ -167,17 +169,14 @@ public:
                     {
                         if (errorCode != mega::MegaError::API_OK)
                         {
-                            Text::Link link(QString::fromUtf8("https://mega.nz/contact"));
-                            Text::Decorator dec(&link);
-                            QString msg =
-                                Controller::instance().getErrorString(errorCode, syncErrorCode);
-                            dec.process(msg);
-
                             MessageDialogInfo msgInfo;
                             msgInfo.parent = this;
                             msgInfo.titleText = title;
-                            msgInfo.descriptionText = msg;
                             msgInfo.textFormat = Qt::RichText;
+                            msgInfo.descriptionText =
+                                Controller::instance().getErrorString(errorCode, syncErrorCode);
+                            const auto link = ServiceUrls::getContactSupportUrl().toString();
+                            Text::RichText(link).process(msgInfo.descriptionText);
                             MessageDialogOpener::warning(msgInfo);
                         }
                     }

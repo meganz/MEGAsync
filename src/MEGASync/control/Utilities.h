@@ -326,9 +326,25 @@ struct TimeInterval
     bool useSecondPrecision;
 };
 
-class Utilities
+class Utilities : public QObject
 {
+    Q_OBJECT
+
 public:
+    enum class AttributeType
+    {
+        NONE = 0x0,
+        SMALL = 0x1,
+        MEDIUM = 0x2,
+        DISABLED = 0x4,
+        SOLID = 0x8,
+        OUTLINE = 0x10,
+        INVERSE = 0x20
+    };
+    Q_DECLARE_FLAGS(AttributeTypes, AttributeType)
+    Q_ENUM(AttributeType)
+    Q_ENUM(AttributeTypes)
+
     enum class FileType
     {
         TYPE_OTHER    = 0x01,
@@ -339,10 +355,21 @@ public:
         TYPE_IMAGE    = 0x20,
     };
     Q_DECLARE_FLAGS(FileTypes, FileType)
-    static const QString SUPPORT_URL;
-    static const QString BACKUP_CENTER_URL;
-    static const QString SYNC_SUPPORT_URL;
-    static const QString DESKTOP_APP_URL;
+
+    enum class FolderType
+    {
+        TYPE_NORMAL,
+        TYPE_BACKUP_1,
+        TYPE_BACKUP_2,
+        TYPE_CAMERA_UPLOADS,
+        TYPE_CHAT,
+        TYPE_DROP,
+        TYPE_INCOMING_SHARE,
+        TYPE_OUTGOING_SHARE,
+        TYPE_REQUEST,
+        TYPE_SYNC,
+        TYPE_USERS
+    };
 
     static QString getSizeString(long long bytes);
     static QString getSizeStringLocalized(qint64 bytes);
@@ -367,7 +394,6 @@ public:
     static QStringList extractJSONStringList(const QString& json, const QString& name);
     static long long extractJSONNumber(QString json, QString name);
     static QString getDefaultBasePath();
-    static void getPROurlWithParameters(QString &url);
     static QString joinLogZipFiles(mega::MegaApi *megaApi, const QDateTime *timestampSince = nullptr, QString appendHashReference = QString());
 
     static void adjustToScreenFunc(QPoint position, QWidget* what);
@@ -443,15 +469,35 @@ public:
                             mega::MegaApi* megaApi,
                             std::function<void(mega::MegaRequest*, mega::MegaError*)> finishFunc);
 
+    template<class parentType>
+    static QPointer<parentType> getTopParent(QWidget* widget)
+    {
+        if (!widget)
+        {
+            return nullptr;
+        }
+
+        QWidget* parent = widget->parentWidget();
+        while (parent)
+        {
+            if (parentType* classParent = qobject_cast<parentType*>(parent))
+            {
+                return classParent;
+            }
+            parent = parent->parentWidget();
+        }
+        return nullptr;
+    }
+
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;
+    static QMap<FolderType, QString> folderIcons;
     static QHash<QString, FileType> fileTypes;
     static QHash<QString, QString> languageNames;
     static void initializeExtensions();
     static void initializeFileTypes();
-    static QString getExtensionPixmapNameSmall(QString fileName);
-    static QString getExtensionPixmapNameMedium(QString fileName);
+    static void initializeFolderTypes();
     static double toDoubleInUnit(unsigned long long bytes, unsigned long long unit);
     static QString getTimeFormat(const TimeInterval& interval);
     static QString filledTimeString(const QString& timeFormat, const TimeInterval& interval, bool color);
@@ -480,11 +526,20 @@ public:
     static qreal getDevicePixelRatio();
 
     static QIcon getCachedPixmap(QString fileName);
-    static QIcon getExtensionPixmapSmall(QString fileName);
-    static QIcon getExtensionPixmapMedium(QString fileName);
-    static QString getExtensionPixmapName(QString fileName, QString prefix);
+    static QIcon getIcon(const QString& iconName, AttributeTypes attribute);
+    static QPixmap getColoredPixmap(const QString& iconName,
+                                    AttributeTypes attributes,
+                                    const QString& token,
+                                    const QSize& size);
+    static QPixmap getPixmap(const QString& iconName, AttributeTypes attribute, const QSize& size);
+    static QString getPixmapName(const QString& iconName, AttributeTypes attribute);
+    static QIcon getExtensionPixmap(QString fileName, AttributeTypes attribute);
+    static QString getExtensionPixmapName(QString fileName, AttributeTypes attribute);
+    static QString getUndecryptedPixmapName(AttributeTypes attribute);
+    static QIcon getFolderPixmap(FolderType type, AttributeTypes attribute);
+    static QString getFolderPixmapName(FolderType type, AttributeTypes attribute);
     static void clearIconCache();
-    static FileType getFileType(QString fileName, QString prefix);
+    static FileType getFileType(QString fileName, AttributeTypes prefix);
 
     static long long getSystemsAvailableMemory();
 
@@ -511,29 +566,7 @@ public:
 
 Q_DECLARE_METATYPE(Utilities::FileType)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Utilities::FileTypes)
-
-template <class EnumType>
-class EnumConversions
-{
-public:
-    EnumConversions()
-        : mMetaEnum(QMetaEnum::fromType<EnumType>())
-    {
-    }
-
-    QString getString(EnumType type)
-    {
-        return QString::fromUtf8(mMetaEnum.valueToKey(static_cast<int>(type)));
-    }
-
-    EnumType  getEnum(const QString& typeAsString)
-    {
-        return static_cast<EnumType>(mMetaEnum.keyToValue(typeAsString.toUtf8().constData()));
-    }
-
-private:
-    QMetaEnum mMetaEnum;
-};
+Q_DECLARE_OPERATORS_FOR_FLAGS(Utilities::AttributeTypes)
 
 // This class encapsulates a MEGA node and adds useful information, like the origin
 // of the transfer.

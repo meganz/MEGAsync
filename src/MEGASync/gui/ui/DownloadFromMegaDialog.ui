@@ -147,7 +147,7 @@ font-weight: 600;
           <string notr="true">secondary</string>
          </property>
          <property name="dimension" stdset="0">
-          <string notr="true">medium</string>
+          <string notr="true">small</string>
          </property>
         </widget>
        </item>
@@ -215,14 +215,14 @@ font-weight: 600;
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
-          <height>36</height>
+          <width>0</width>
+          <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>36</height>
+          <height>16777215</height>
          </size>
         </property>
         <property name="cursor">
@@ -235,7 +235,7 @@ font-weight: 600;
          <string notr="true">outline</string>
         </property>
         <property name="dimension" stdset="0">
-         <string notr="true">medium</string>
+         <string notr="true">small</string>
         </property>
        </widget>
       </item>
@@ -249,14 +249,14 @@ font-weight: 600;
         </property>
         <property name="minimumSize">
          <size>
-          <width>80</width>
-          <height>36</height>
+          <width>0</width>
+          <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>36</height>
+          <height>16777215</height>
          </size>
         </property>
         <property name="cursor">
@@ -269,7 +269,7 @@ font-weight: 600;
          <string notr="true">primary</string>
         </property>
         <property name="dimension" stdset="0">
-         <string notr="true">medium</string>
+         <string notr="true">small</string>
         </property>
        </widget>
       </item>

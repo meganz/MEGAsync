@@ -293,7 +293,7 @@ QPushButton[main=true]
                   <string/>
                  </property>
                  <property name="pixmap">
-                  <pixmap resource="../../../gui/Resources_macx.qrc">:/images/StalledIssues/ic-open-outside.png</pixmap>
+                  <pixmap resource="../../../gui/Resources_common.qrc">:/images/StalledIssues/ic-open-outside.png</pixmap>
                  </property>
                 </widget>
                </item>

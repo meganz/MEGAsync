@@ -8,6 +8,7 @@
 #include "Preferences.h"
 #include "QmlDialogManager.h"
 #include "RequestListenerManager.h"
+#include "ServiceUrls.h"
 #include "StatsEventHandler.h"
 #include "TextDecorator.h"
 
@@ -890,7 +891,8 @@ void LoginController::runConnectivityCheck()
         }
     }
 
-    ConnectivityChecker *connectivityChecker = new ConnectivityChecker(Preferences::PROXY_TEST_URL);
+    ConnectivityChecker* connectivityChecker =
+        new ConnectivityChecker(ServiceUrls::getProxyTestUrl());
     connectivityChecker->setProxy(proxy);
     connectivityChecker->setTestString(Preferences::PROXY_TEST_SUBSTRING);
     connectivityChecker->setTimeout(Preferences::PROXY_TEST_TIMEOUT_MS);
@@ -1096,8 +1098,10 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
             }
             else
             {
-                Text::Link link(QString::fromLatin1("mailto:support@mega.nz"));
-                QString text = tr("You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.");
+                // URL handled through translations. TODO use placeholder
+                QString text = tr("You have been logged out. Please contact [A]support@mega.nz[/A] "
+                                  "if this issue persists.");
+                Text::Link link(ServiceUrls::getSupportEmail().toString());
                 link.process(text);
                 msgInfo.descriptionText = text;
                 msgInfo.textFormat = Qt::RichText;
@@ -1108,7 +1112,7 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
         MegaSyncApp->unlink();
     }
 
-           //Check for any sync disabled by logout to warn user on next login with user&password
+    // Check for any sync disabled by logout to warn user on next login with user&password
     const auto syncSettings (SyncInfo::instance()->getAllSyncSettings());
     auto isErrorLoggedOut = [](const std::shared_ptr<SyncSettings> s) {return s->getError() == mega::MegaSync::LOGGED_OUT;};
     if (std::any_of(syncSettings.cbegin(), syncSettings.cend(), isErrorLoggedOut))

@@ -100,7 +100,7 @@ padding-left: 6px;</string>
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../Resources_macx.qrc">
+      <iconset resource="../Resources_common.qrc">
        <normaloff>:/images/small_text.png</normaloff>:/images/small_text.png</iconset>
      </property>
      <property name="iconSize">
@@ -191,7 +191,7 @@ padding-right: -2px;</string>
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../Resources_macx.qrc">
+      <iconset resource="../Resources_common.qrc">
        <normaloff>:/images/import_ok_icon.png</normaloff>:/images/import_ok_icon.png</iconset>
      </property>
      <property name="iconSize">
@@ -213,7 +213,7 @@ padding-right: -2px;</string>
   <tabstop>lName</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>

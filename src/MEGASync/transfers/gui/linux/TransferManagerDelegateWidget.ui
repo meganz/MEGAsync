@@ -1190,7 +1190,7 @@ QProgressBar::chunk
              </size>
             </property>
             <property name="icon">
-             <iconset resource="../../../gui/Resources_linux.qrc">
+             <iconset resource="../../../gui/Resources_common.qrc">
               <normaloff>:/images/transfer_manager/transfers_actions/lists_pause_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_pause_ico_default.png</iconset>
             </property>
            </widget>
@@ -1249,7 +1249,7 @@ QProgressBar::chunk
              </size>
             </property>
             <property name="icon">
-             <iconset resource="../../../gui/Resources_linux.qrc">
+             <iconset resource="../../../gui/Resources_common.qrc">
               <normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_ico_default.png</iconset>
             </property>
            </widget>
@@ -1264,7 +1264,7 @@ QProgressBar::chunk
   </layout>
  </widget>
  <resources>
-  <include location="../../../gui/Resources_linux.qrc"/>
+  <include location="../../../gui/Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>
