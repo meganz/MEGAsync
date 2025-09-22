@@ -441,6 +441,8 @@ public:
     static int getNodeAccess(mega::MegaNode* handle);
     static QString getNodeStringAccess(mega::MegaNode* handle);
     static QString getNodeStringAccess(mega::MegaHandle handle);
+    static QIcon getNodeAccessIcon(mega::MegaHandle handle);
+    static QIcon getNodeAccessIcon(mega::MegaNode* node);
 
     enum HandlesType
     {

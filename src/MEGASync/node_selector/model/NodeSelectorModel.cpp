@@ -1,6 +1,7 @@
 #include "NodeSelectorModel.h"
 
 #include "CameraUploadFolder.h"
+#include "IconTokenizer.h"
 #include "MegaApiSynchronizedRequest.h"
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
@@ -551,7 +552,6 @@ void NodeRequester::onSearchItemTypeChanged(NodeSelectorModelItemSearch::Types t
 
 /* ------------------- MODEL ------------------------- */
 
-const int NodeSelectorModel::ROW_HEIGHT = 25;
 const QString MIME_DATA_INTERNAL_MOVE = QLatin1String("application/node_move");
 
 NodeSelectorModel::NodeSelectorModel(QObject* parent):
@@ -777,21 +777,24 @@ QVariant NodeSelectorModel::data(const QModelIndex& index, int role) const
         {
             switch (role)
             {
-                case Qt::DecorationRole:
-                {
-                    return getIcon(index, item);
-                }
                 case Qt::DisplayRole:
                 {
                     return getText(index, item);
                 }
-                case Qt::SizeHintRole:
+                case Qt::DecorationRole:
                 {
-                    return QSize(0, ROW_HEIGHT);
+                    return getIcon(index, item);
                 }
-                case Qt::SizeHintRole:
+                case Qt::FontRole:
                 {
-                    return QSize(0, ROW_HEIGHT);
+                    if (index.column() == NODE)
+                    {
+                        return QFont(QLatin1String("Lato"), 12, 400);
+                    }
+                    else
+                    {
+                        return QFont(QLatin1String("Lato"), 10, 400);
+                    }
                 }
                 case Qt::ToolTipRole:
                 {
@@ -848,18 +851,24 @@ QVariant NodeSelectorModel::data(const QModelIndex& index, int role) const
                 {
                     return QVariant::fromValue(item->getNode());
                 }
-                case toInt(NodeRowDelegateRoles::INDENT_ROLE):
-                {
-                    return item->isCloudDrive() || item->isVault() || item->isRubbishBin() ? -10 :
-                                                                                             0;
-                }
-                case toInt(NodeRowDelegateRoles::SMALL_ICON_ROLE):
-                {
-                    return item->isCloudDrive() || item->isVault() ? true : false;
-                }
                 case toInt(NodeRowDelegateRoles::INIT_ROLE):
                 {
                     return item->areChildrenInitialized();
+                }
+                case toInt(NodeSelectorModelRoles::ICON_SIZE_ROLE):
+                {
+                    if (index.column() == USER)
+                    {
+                        return QSize(20, 20);
+                    }
+                    else if (index.column() == NODE)
+                    {
+                        return QSize(24, 24);
+                    }
+                    else
+                    {
+                        return QSize(16, 16);
+                    }
                 }
                 default:
                 {
@@ -1748,21 +1757,25 @@ QVariant NodeSelectorModel::headerData(int section, Qt::Orientation orientation,
         {
             switch (section)
             {
+                case NODE:
+                {
+                    return tr("Name");
+                }
                 case USER:
                 {
-                    return QLatin1String();
+                    return tr("Owner");
                 }
                 case ACCESS:
                 {
                     return tr("Access");
                 }
-                case DATE:
+                case ADDED_DATE:
                 {
-                    return tr("Recently used");
+                    return tr("Date added");
                 }
-                case NODE:
+                case LAST_MODIFIED_DATE:
                 {
-                    return tr("Name");
+                    return tr("Last modified");
                 }
             }
         }
@@ -1778,9 +1791,13 @@ QVariant NodeSelectorModel::headerData(int section, Qt::Orientation orientation,
                 {
                     return tr("Sort by access");
                 }
-                case DATE:
+                case ADDED_DATE:
                 {
-                    return tr("Sort by date");
+                    return tr("Sort by date added");
+                }
+                case LAST_MODIFIED_DATE:
+                {
+                    return tr("Sort by last modified date");
                 }
                 case NODE:
                 {
@@ -2439,19 +2456,48 @@ void NodeSelectorModel::showReadOnlyFolders(bool show)
 
 QVariant NodeSelectorModel::getIcon(const QModelIndex& index, NodeSelectorModelItem* item) const
 {
+    auto isDisabled(!(index.flags() & Qt::ItemIsEnabled));
+    auto disabledToken = QLatin1String("icon-disabled");
+
     switch (index.column())
     {
         case COLUMN::NODE:
         {
-            return QVariant::fromValue<QIcon>(getFolderIcon(item));
+            auto iconSize(data(index, toInt(NodeSelectorModelRoles::ICON_SIZE_ROLE)).toSize());
+            auto info = getFolderIcon(item);
+            auto pixmap = info.first.pixmap(iconSize);
+            if (!info.second.isEmpty() || isDisabled)
+            {
+                pixmap =
+                    IconTokenizer::changePixmapColor(pixmap,
+                                                     TokenParserWidgetManager::instance()->getColor(
+                                                         isDisabled ? disabledToken : info.second))
+                        .value_or(QPixmap());
+            }
+            return QVariant::fromValue<QPixmap>(pixmap);
         }
-        case COLUMN::DATE:
+        case COLUMN::ADDED_DATE:
+        case COLUMN::LAST_MODIFIED_DATE:
         {
             break;
         }
         case COLUMN::USER:
         {
-            return QVariant::fromValue<QIcon>(item->getOwnerIcon());
+            return QVariant::fromValue<QPixmap>(item->getOwnerIcon());
+        }
+        case COLUMN::ACCESS:
+        {
+            if (showAccess(item->getNode().get()))
+            {
+                auto icon = Utilities::getNodeAccessIcon(item->getNode().get());
+                return QVariant::fromValue<QPixmap>(
+                    IconTokenizer::changePixmapColor(
+                        icon.pixmap(
+                            data(index, toInt(NodeSelectorModelRoles::ICON_SIZE_ROLE)).toSize()),
+                        TokenParserWidgetManager::instance()->getColor(
+                            isDisabled ? disabledToken : QLatin1String("icon-primary")))
+                        .value_or(QPixmap()));
+            }
         }
         default:
             break;
@@ -2480,7 +2526,7 @@ QVariant NodeSelectorModel::getText(const QModelIndex& index, NodeSelectorModelI
                 return MegaNodeNames::getNodeName(item->getNode().get());
             }
         }
-        case COLUMN::DATE:
+        case COLUMN::ADDED_DATE:
         {
             if (item->isCloudDrive() || item->isVault())
             {
@@ -2491,12 +2537,32 @@ QVariant NodeSelectorModel::getText(const QModelIndex& index, NodeSelectorModelI
             return MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime,
                                                                   QLocale::FormatType::ShortFormat);
         }
+        case COLUMN::LAST_MODIFIED_DATE:
+        {
+            if (item->isCloudDrive() || item->isVault() || (item->getNode()->isFolder()))
+            {
+                return QVariant();
+            }
+
+            QDateTime dateTime =
+                dateTime.fromSecsSinceEpoch(item->getNode()->getModificationTime());
+            return MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime,
+                                                                  QLocale::FormatType::ShortFormat);
+        }
         case COLUMN::ACCESS:
         {
             // Only for the top parent inshare
             if (showAccess(item->getNode().get()))
             {
                 return Utilities::getNodeStringAccess(item->getNode().get());
+            }
+        }
+        case COLUMN::USER:
+        {
+            // Only for the top parent inshare
+            if (showAccess(item->getNode().get()))
+            {
+                return item->getOwnerName();
             }
         }
         default:
@@ -2836,8 +2902,11 @@ void NodeSelectorModel::updateRow(const QModelIndex& indexToUpdate)
     emit dataChanged(firstColumnIndex, lastColumnIndex);
 }
 
-QIcon NodeSelectorModel::getFolderIcon(NodeSelectorModelItem* item) const
+QPair<QIcon, QString> NodeSelectorModel::getFolderIcon(NodeSelectorModelItem* item) const
 {
+    QIcon icon;
+    QString token;
+
     if (item)
     {
         auto node = item->getNode();
@@ -2850,46 +2919,31 @@ QIcon NodeSelectorModel::getFolderIcon(NodeSelectorModelItem* item) const
                     node->getHandle() ==
                         mCameraFolderAttribute->getCameraUploadFolderSecondaryHandle())
                 {
-                    return Utilities::getFolderPixmap(Utilities::FolderType::TYPE_CAMERA_UPLOADS,
-                                                      Utilities::AttributeType::SMALL);
+                    icon = Utilities::getFolderPixmap(Utilities::FolderType::TYPE_CAMERA_UPLOADS,
+                                                      Utilities::AttributeType::MEDIUM);
                 }
                 else if (node->getHandle() ==
                          mMyChatFilesFolderAttribute->getMyChatFilesFolderHandle())
                 {
-                    return Utilities::getFolderPixmap(Utilities::FolderType::TYPE_CHAT,
-                                                      Utilities::AttributeType::SMALL);
+                    icon = Utilities::getFolderPixmap(Utilities::FolderType::TYPE_CHAT,
+                                                      Utilities::AttributeType::MEDIUM);
                 }
                 else if (node->isInShare())
                 {
-                    return Utilities::getFolderPixmap(Utilities::FolderType::TYPE_INCOMING_SHARE,
-                                                      Utilities::AttributeType::SMALL);
+                    icon = Utilities::getFolderPixmap(Utilities::FolderType::TYPE_INCOMING_SHARE,
+                                                      Utilities::AttributeType::MEDIUM);
                 }
                 else if (node->isOutShare())
                 {
-                    return Utilities::getFolderPixmap(Utilities::FolderType::TYPE_OUTGOING_SHARE,
-                                                      Utilities::AttributeType::SMALL);
+                    icon = Utilities::getFolderPixmap(Utilities::FolderType::TYPE_OUTGOING_SHARE,
+                                                      Utilities::AttributeType::MEDIUM);
                 }
-                else if (item->isCloudDrive())
+                else if (item->getStatus() == NodeSelectorModelItem::Status::SYNC)
                 {
-                    QIcon icon;
-                    icon.addFile(QLatin1String("://images/ico-cloud-drive.png"), QSize(16, 16));
-                    return icon;
+                    icon = Utilities::getFolderPixmap(Utilities::FolderType::TYPE_SYNC,
+                                                      Utilities::AttributeType::MEDIUM);
                 }
-                else if (item->isRubbishBin())
-                {
-                    QIcon icon;
-                    icon.addFile(QLatin1String("://images/node_selector/view/trash.png"),
-                                 QSize(16, 16));
-                    return icon;
-                }
-                else if (item->isVault())
-                {
-                    QIcon icon;
-                    icon.addFile(QLatin1String("://images/node_selector/Backups_small_ico.png"),
-                                 QSize(16, 16));
-                    return icon;
-                }
-                else
+                else if (item->getStatus() == NodeSelectorModelItem::Status::BACKUP)
                 {
                     QString nodeDeviceId(QString::fromUtf8(node->getDeviceId()));
                     if (!nodeDeviceId.isEmpty())
@@ -2899,33 +2953,48 @@ QIcon NodeSelectorModel::getFolderIcon(NodeSelectorModelItem* item) const
                             QString::fromUtf8(MegaSyncApp->getMegaApi()->getDeviceId()))
                         {
 #ifdef Q_OS_WINDOWS
-                            const QIcon thisDeviceIcon(
-                                QLatin1String("://images/icons/pc/pc-win_24.png"));
+                            icon = Utilities::getIcon(QLatin1String("pc-windows-dark"),
+                                                      Utilities::AttributeType::MEDIUM |
+                                                          Utilities::AttributeType::SOLID);
 #elif defined(Q_OS_MACOS)
-                            const QIcon thisDeviceIcon(
-                                QLatin1String("://images/icons/pc/pc-mac_24.png"));
+                            icon = Utilities::getIcon(QLatin1String("pc-mac-dark"),
+                                                      Utilities::AttributeType::MEDIUM |
+                                                          Utilities::AttributeType::SOLID);
 #elif defined(Q_OS_LINUX)
-                            const QIcon thisDeviceIcon(
-                                QLatin1String("://images/icons/pc/pc-linux_24.png"));
+                            icon = Utilities::getIcon(QLatin1String("pc-linux-dark"),
+                                                      Utilities::AttributeType::MEDIUM |
+                                                          Utilities::AttributeType::SOLID);
 #endif
-                            return thisDeviceIcon;
                         }
-                        return QIcon(QLatin1String("://images/icons/pc/pc_24.png"));
+                        else
+                        {
+                            icon = Utilities::getIcon(QLatin1String("pc-dark"),
+                                                      Utilities::AttributeType::MEDIUM |
+                                                          Utilities::AttributeType::SOLID);
+                        }
+                        token = QLatin1String("background-inverse");
                     }
-
-                    return Utilities::getFolderPixmap(Utilities::FolderType::TYPE_NORMAL,
+                    else
+                    {
+                        icon = Utilities::getFolderPixmap(Utilities::FolderType::TYPE_BACKUP_2,
+                                                          Utilities::AttributeType::MEDIUM);
+                    }
+                }
+                else
+                {
+                    icon = Utilities::getFolderPixmap(Utilities::FolderType::TYPE_NORMAL,
                                                       Utilities::AttributeType::SMALL);
                 }
             }
             else
             {
-                return Utilities::getExtensionPixmap(QString::fromUtf8(node->getName()),
+                icon = Utilities::getExtensionPixmap(QString::fromUtf8(node->getName()),
                                                      Utilities::AttributeType::SMALL);
             }
         }
     }
 
-    return QIcon();
+    return qMakePair(icon, token);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////

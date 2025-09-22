@@ -1278,5 +1278,12 @@
         <file alias="folder-users_small_thin_solid">images/themed/tokenizable/folder-users_small_thin_solid.svg</file>
         <file alias="trash_small_thin_outline">images/themed/tokenizable/trash_small_thin_outline.svg</file>
         <file alias="trash_small_thin_solid">images/themed/tokenizable/trash_small_thin_solid.svg</file>
+        <file alias="edit_small_thin_outline">images/themed/tokenizable/edit_small_thin_outline.svg</file>
+        <file alias="eye_small_thin_outline">images/themed/tokenizable/eye_small_thin_outline.svg</file>
+        <file alias="star_small_thin_outline">images/themed/tokenizable/star_small_thin_outline.svg</file>
+        <file alias="pc-linux-dark_medium_solid">images/themed/tokenizable/pc-linux-dark_medium_solid.svg</file>
+        <file alias="pc-mac-dark_medium_solid">images/themed/tokenizable/pc-mac-dark_medium_solid.svg</file>
+        <file alias="pc-windows-dark_medium_solid">images/themed/tokenizable/pc-windows-dark_medium_solid.svg</file>
+        <file alias="pc-dark_medium_solid">images/themed/tokenizable/pc-dark_medium_solid.svg</file>
     </qresource>
 </RCC>

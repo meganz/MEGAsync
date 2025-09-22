@@ -114,7 +114,6 @@ signals:
     void viewReady();
 
 protected:
-    void showEvent(QShowEvent*) override;
     void resizeEvent(QResizeEvent*) override;
     void mousePressEvent(QMouseEvent* event) override;
     bool event(QEvent* event) override;
@@ -142,6 +141,7 @@ protected:
         return false;
     }
 
+    virtual void onRootIndexChanged(const QModelIndex& source_idx);
     virtual QModelIndex getAddedNodeParent(mega::MegaHandle parentHandle);
     QModelIndex getRootIndexFromIndex(const QModelIndex& index);
     void selectIndex(const QModelIndex& index, bool setCurrent, bool exclusiveSelect = false);
@@ -161,11 +161,20 @@ protected:
 
     virtual NodeState getNodeOnModelState(const QModelIndex& index, mega::MegaNode* node);
 
+    struct EmptyLabelInfo
+    {
+        QString title;
+        QString description;
+    };
+
+    virtual EmptyLabelInfo getEmptyLabel();
+
     Ui::NodeSelectorTreeViewWidget* ui;
     std::unique_ptr<NodeSelectorProxyModel> mProxyModel;
     std::unique_ptr<NodeSelectorModel> mModel;
     Navigation mNavigationInfo;
     mega::MegaApi* mMegaApi;
+    SelectTypeSPtr mSelectType;
 
 protected slots:
     // Title
@@ -200,7 +209,6 @@ private:
     void setRootIndex(const QModelIndex& proxy_idx);
     virtual QIcon getEmptyIcon();
 
-    virtual void onRootIndexChanged(const QModelIndex& source_idx){Q_UNUSED(source_idx)};
     QModelIndex getIndexFromHandle(const mega::MegaHandle& handle);
     void checkButtonsVisibility();
     void checkOkCancelButtonsVisibility();
@@ -241,10 +249,16 @@ private:
     void expandPendingIndexes();
     void resetMoveNodesToSelect();
 
+    // Empty messages
+    void initEmptyMessages();
+
+    // Column width
+    QList<int> mVisibleColumns;
+    void updateColumnsWidth(bool updateVisibleColumnCounter);
+
     ButtonIconManager mButtonIconManager;
     bool first;
     bool mUiBlocked;
-    SelectTypeSPtr mSelectType;
 
     struct UpdateNodesInfo
     {

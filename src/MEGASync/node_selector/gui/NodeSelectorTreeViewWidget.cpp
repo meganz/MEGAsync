@@ -27,10 +27,10 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
     mProxyModel(nullptr),
     mModel(nullptr),
     mMegaApi(MegaSyncApp->getMegaApi()),
+    mSelectType(mode),
     mManuallyResizedColumn(false),
     first(true),
     mUiBlocked(false),
-    mSelectType(mode),
     mNewFolderHandle(mega::INVALID_HANDLE),
     mNewFolderAdded(false)
 {
@@ -103,6 +103,8 @@ bool NodeSelectorTreeViewWidget::event(QEvent* event)
         {
             mSelectType->updateCustomButtonsText(this);
         }
+
+        initEmptyMessages();
     }
     return QWidget::event(event);
 }
@@ -156,6 +158,10 @@ bool NodeSelectorTreeViewWidget::eventFilter(QObject* watched, QEvent* event)
             }
         }
     }
+    else if (event->type() == QEvent::Resize && watched == ui->tMegaFolders->viewport())
+    {
+        updateColumnsWidth(false);
+    }
 
     return QWidget::eventFilter(watched, event);
 }
@@ -167,11 +173,15 @@ void NodeSelectorTreeViewWidget::init()
     // Regardless the type of treeviewwidget, the empty icon always use icon-secondary token
     ui->emptyIcon->setProperty(TOKEN_PROPERTIES::normalOff, QLatin1String("icon-secondary"));
     ui->emptyIcon->setIcon(getEmptyIcon());
+
+    initEmptyMessages();
+
     ui->emptyPage->installEventFilter(this);
     mSelectType->init(this);
 
     ui->tMegaFolders->setSortingEnabled(true);
     ui->tMegaFolders->setAllowContextMenu(mSelectType->isContextMenuAllowed());
+    ui->tMegaFolders->viewport()->installEventFilter(this);
     mProxyModel->setSourceModel(mModel.get());
 
     connect(mProxyModel.get(),
@@ -220,6 +230,23 @@ void NodeSelectorTreeViewWidget::init()
             this,
             &NodeSelectorTreeViewWidget::processCachedNodesUpdated);
     mNodesUpdateTimer.start(CHECK_UPDATED_NODES_INTERVAL);
+}
+
+void NodeSelectorTreeViewWidget::initEmptyMessages()
+{
+    auto emptyLabelInfo(getEmptyLabel());
+    ui->descriptionEmptyLabel->hide();
+    ui->titleEmptyLabel->hide();
+    if (!emptyLabelInfo.description.isEmpty())
+    {
+        ui->descriptionEmptyLabel->show();
+        ui->descriptionEmptyLabel->setText(emptyLabelInfo.description);
+    }
+    if (!emptyLabelInfo.title.isEmpty())
+    {
+        ui->titleEmptyLabel->show();
+        ui->titleEmptyLabel->setText(emptyLabelInfo.title);
+    }
 }
 
 void NodeSelectorTreeViewWidget::showDefaultUploadOption(bool show)
@@ -321,27 +348,60 @@ void NodeSelectorTreeViewWidget::mousePressEvent(QMouseEvent* event)
     }
 }
 
-void NodeSelectorTreeViewWidget::showEvent(QShowEvent*)
+void NodeSelectorTreeViewWidget::onRootIndexChanged(const QModelIndex& source_idx)
 {
-    if (!mManuallyResizedColumn)
+    updateColumnsWidth(true);
+}
+
+void NodeSelectorTreeViewWidget::updateColumnsWidth(bool updateVisibleColumnCounter)
+{
+    if (updateVisibleColumnCounter)
     {
-        ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::NODE,
-                                         qRound(ui->stackedWidget->width() * 0.50));
-        ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::ACCESS,
-                                         qRound(ui->stackedWidget->width() * 0.12));
+        mVisibleColumns.clear();
+
+        for (int column = 0; column < ui->tMegaFolders->header()->count(); ++column)
+        {
+            if (!ui->tMegaFolders->header()->isSectionHidden(column))
+            {
+                mVisibleColumns.append(column);
+            }
+        }
+    }
+
+    if (!mVisibleColumns.isEmpty() && !mManuallyResizedColumn)
+    {
+        int widthTotal(0);
+        int minWidth(100);
+        int maxSecondaryColumnWidth(200);
+        double secondaryColumnProportion(0.2);
+
+        for (QList<int>::const_reverse_iterator column = mVisibleColumns.crbegin();
+             column != mVisibleColumns.crend();
+             ++column)
+        {
+            int width(0);
+
+            if ((*column) == NodeSelectorModel::COLUMN::NODE)
+            {
+                // Total minus the rest of columns
+                width = std::max(ui->tMegaFolders->viewport()->width() - widthTotal, minWidth * 2);
+            }
+            else
+            {
+                width =
+                    std::max(std::min(qRound(ui->tMegaFolders->width() * secondaryColumnProportion),
+                                      maxSecondaryColumnWidth),
+                             minWidth);
+                widthTotal += width;
+            }
+
+            ui->tMegaFolders->setColumnWidth((*column), width);
+        }
     }
 }
 
 void NodeSelectorTreeViewWidget::resizeEvent(QResizeEvent*)
 {
-    if (!mManuallyResizedColumn)
-    {
-        ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::NODE,
-                                         qRound(ui->stackedWidget->width() * 0.50));
-        ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::ACCESS,
-                                         qRound(ui->stackedWidget->width() * 0.12));
-    }
-
     setTitleText(ui->lFolderName->property(FULL_NAME_PROPERTY).toString());
 }
 
@@ -384,23 +444,16 @@ void NodeSelectorTreeViewWidget::onExpandReady()
     {
         ui->tMegaFolders->setContextMenuPolicy(Qt::DefaultContextMenu);
         ui->tMegaFolders->setExpandsOnDoubleClick(false);
-        ui->tMegaFolders->setHeader(new NodeSelectorTreeViewHeaderView(Qt::Horizontal));
+        ui->tMegaFolders->header()->setDefaultAlignment(Qt::AlignLeft);
+        ui->tMegaFolders->header()->setDefaultSectionSize(35);
         ui->tMegaFolders->setItemDelegate(new NodeRowDelegate(ui->tMegaFolders));
-        ui->tMegaFolders->setItemDelegateForColumn(NodeSelectorModel::USER,
-                                                   new IconDelegate(ui->tMegaFolders));
-        ui->tMegaFolders->setItemDelegateForColumn(NodeSelectorModel::DATE,
-                                                   new TextColumnDelegate(ui->tMegaFolders));
-        ui->tMegaFolders->setItemDelegateForColumn(NodeSelectorModel::ACCESS,
-                                                   new TextColumnDelegate(ui->tMegaFolders));
         ui->tMegaFolders->setTextElideMode(Qt::ElideMiddle);
 
         ui->tMegaFolders->sortByColumn(NodeSelectorModel::NODE, Qt::AscendingOrder);
         ui->tMegaFolders->setModel(mProxyModel.get());
 
         ui->tMegaFolders->header()->setVisible(true);
-        ui->tMegaFolders->header()->setFixedHeight(NodeSelectorModel::ROW_HEIGHT);
         ui->tMegaFolders->header()->setProperty("HeaderIconCenter", true);
-        showEvent(nullptr);
 
         // those connects needs to be done after the model is set, do not move them
 
@@ -447,7 +500,7 @@ void NodeSelectorTreeViewWidget::onExpandReady()
 
         makeCustomConnections();
 
-        setRootIndex(QModelIndex());
+        setRootIndex(mModel->hasTopRootIndex() ? mProxyModel->index(0, 0) : QModelIndex());
 
         setStyleSheet(styleSheet());
     }
@@ -1556,6 +1609,10 @@ QModelIndexList NodeSelectorTreeViewWidget::getSelectedIndexes() const
 
 void NodeSelectorTreeViewWidget::checkBackForwardButtons()
 {
+    ui->bBack->setVisible(!mNavigationInfo.backwardHandles.isEmpty() ||
+                          !mNavigationInfo.forwardHandles.isEmpty());
+    ui->bForward->setVisible(!mNavigationInfo.backwardHandles.isEmpty() ||
+                             !mNavigationInfo.forwardHandles.isEmpty());
     ui->bBack->setEnabled(!mNavigationInfo.backwardHandles.isEmpty());
     ui->bForward->setEnabled(!mNavigationInfo.forwardHandles.isEmpty());
 }
@@ -1630,6 +1687,11 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex& proxy_idx)
 QIcon NodeSelectorTreeViewWidget::getEmptyIcon()
 {
     return QIcon();
+}
+
+NodeSelectorTreeViewWidget::EmptyLabelInfo NodeSelectorTreeViewWidget::getEmptyLabel()
+{
+    return EmptyLabelInfo();
 }
 
 QModelIndex NodeSelectorTreeViewWidget::getParentIncomingShareByIndex(QModelIndex idx)

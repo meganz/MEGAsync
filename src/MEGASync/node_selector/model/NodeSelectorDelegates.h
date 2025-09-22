@@ -27,22 +27,6 @@ private:
     static QModelIndex mLastHoverRow;
 };
 
-class IconDelegate: public NodeSelectorDelegate
-{
-    static const int ICON_HEIGHT;
-
-public:
-    explicit IconDelegate(QObject* parent = nullptr);
-    ~IconDelegate();
-
-    void paint(QPainter* painter,
-               const QStyleOptionViewItem& option,
-               const QModelIndex& index) const override;
-
-private:
-    void initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index) const override;
-};
-
 class NodeRowDelegate: public NodeSelectorDelegate
 {
 public:
@@ -61,22 +45,6 @@ public:
                    const QModelIndex& index) override;
 
     QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
-
-private:
-    void initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index) const override;
-};
-
-class TextColumnDelegate: public NodeSelectorDelegate
-{
-public:
-    explicit TextColumnDelegate(QObject* parent = nullptr);
-    void paint(QPainter* painter,
-               const QStyleOptionViewItem& option,
-               const QModelIndex& index) const override;
-    bool helpEvent(QHelpEvent* event,
-                   QAbstractItemView* view,
-                   const QStyleOptionViewItem& option,
-                   const QModelIndex& index) override;
 
 private:
     void initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index) const override;

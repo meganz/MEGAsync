@@ -15,7 +15,6 @@ NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(Selec
     NodeSelectorTreeViewWidget(mode, parent)
 {
     setTitle(MegaNodeNames::getCloudDriveName());
-    ui->searchEmptyInfoWidget->hide();
 }
 
 void NodeSelectorTreeViewWidgetCloudDrive::setShowEmptyView(bool newShowEmptyView)
@@ -58,6 +57,13 @@ QIcon NodeSelectorTreeViewWidgetCloudDrive::getEmptyIcon()
                                   Utilities::AttributeType::OUTLINE);
 }
 
+NodeSelectorTreeViewWidget::EmptyLabelInfo NodeSelectorTreeViewWidgetCloudDrive::getEmptyLabel()
+{
+    EmptyLabelInfo info;
+    info.description = tr("Cloud drive is empty");
+    return info;
+}
+
 bool NodeSelectorTreeViewWidgetCloudDrive::isCurrentRootIndexReadOnly()
 {
     return false;
@@ -86,6 +92,8 @@ void NodeSelectorTreeViewWidgetCloudDrive::onRootIndexChanged(const QModelIndex&
     Q_UNUSED(source_idx)
     ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::USER);
     ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::ACCESS);
+
+    NodeSelectorTreeViewWidget::onRootIndexChanged(source_idx);
 }
 
 /////////////////////////////////////////////////////////////////
@@ -95,7 +103,6 @@ NodeSelectorTreeViewWidgetIncomingShares::NodeSelectorTreeViewWidgetIncomingShar
     NodeSelectorTreeViewWidget(mode, parent)
 {
     setTitle(MegaNodeNames::getIncomingSharesName());
-    ui->searchEmptyInfoWidget->hide();
 }
 
 bool NodeSelectorTreeViewWidgetIncomingShares::isNodeCompatibleWithModel(mega::MegaNode* node)
@@ -146,6 +153,10 @@ void NodeSelectorTreeViewWidgetIncomingShares::onRootIndexChanged(const QModelIn
         ui->tMegaFolders->header()->showSection(NodeSelectorModel::COLUMN::USER);
         ui->tMegaFolders->header()->showSection(NodeSelectorModel::COLUMN::ACCESS);
     }
+
+    ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::ADDED_DATE);
+
+    NodeSelectorTreeViewWidget::onRootIndexChanged(idx);
 }
 
 bool NodeSelectorTreeViewWidgetIncomingShares::isCurrentRootIndexReadOnly()
@@ -201,13 +212,28 @@ QIcon NodeSelectorTreeViewWidgetIncomingShares::getEmptyIcon()
                                   Utilities::AttributeType::OUTLINE);
 }
 
+NodeSelectorTreeViewWidget::EmptyLabelInfo NodeSelectorTreeViewWidgetIncomingShares::getEmptyLabel()
+{
+    EmptyLabelInfo info;
+    if (std::dynamic_pointer_cast<SyncType>(mSelectType))
+    {
+        info.title = tr("No incoming shares you can sync");
+        info.description = tr("You can only sync a shared folder if you’ve been given full access");
+    }
+    else
+    {
+        info.description = tr("No incoming shares");
+    }
+
+    return info;
+}
+
 /////////////////////////////////////////////////////////////////
 NodeSelectorTreeViewWidgetBackups::NodeSelectorTreeViewWidgetBackups(SelectTypeSPtr mode,
                                                                      QWidget* parent):
     NodeSelectorTreeViewWidget(mode, parent)
 {
     setTitle(MegaNodeNames::getBackupsName());
-    ui->searchEmptyInfoWidget->hide();
 }
 
 QString NodeSelectorTreeViewWidgetBackups::getRootText()
@@ -232,6 +258,8 @@ void NodeSelectorTreeViewWidgetBackups::onRootIndexChanged(const QModelIndex& id
     Q_UNUSED(idx)
     ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::USER);
     ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::ACCESS);
+
+    NodeSelectorTreeViewWidget::onRootIndexChanged(idx);
 }
 
 /////////////////////////////////////////////////////////////////
@@ -242,8 +270,6 @@ NodeSelectorTreeViewWidgetSearch::NodeSelectorTreeViewWidgetSearch(SelectTypeSPt
     mHasRows(false)
 
 {
-    ui->bBack->hide();
-    ui->bForward->hide();
     connect(ui->cloudDriveSearch,
             &TabSelector::clicked,
             this,
@@ -374,6 +400,9 @@ void NodeSelectorTreeViewWidgetSearch::onBackupsSearchClicked()
     proxy_model->setMode(NodeSelectorModelItemSearch::Type::BACKUP);
     ui->tMegaFolders->setColumnHidden(NodeSelectorModel::USER, true);
     ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ACCESS, true);
+    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ADDED_DATE, false);
+
+    onRootIndexChanged(QModelIndex());
 }
 
 void NodeSelectorTreeViewWidgetSearch::onRubbishSearchClicked()
@@ -382,6 +411,9 @@ void NodeSelectorTreeViewWidgetSearch::onRubbishSearchClicked()
     proxy_model->setMode(NodeSelectorModelItemSearch::Type::RUBBISH);
     ui->tMegaFolders->setColumnHidden(NodeSelectorModel::USER, true);
     ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ACCESS, true);
+    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ADDED_DATE, true);
+
+    onRootIndexChanged(QModelIndex());
 }
 
 void NodeSelectorTreeViewWidgetSearch::onIncomingSharesSearchClicked()
@@ -390,6 +422,9 @@ void NodeSelectorTreeViewWidgetSearch::onIncomingSharesSearchClicked()
     proxy_model->setMode(NodeSelectorModelItemSearch::Type::INCOMING_SHARE);
     ui->tMegaFolders->setColumnHidden(NodeSelectorModel::USER, false);
     ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ACCESS, false);
+    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ADDED_DATE, true);
+
+    onRootIndexChanged(QModelIndex());
 }
 
 void NodeSelectorTreeViewWidgetSearch::onCloudDriveSearchClicked()
@@ -398,6 +433,9 @@ void NodeSelectorTreeViewWidgetSearch::onCloudDriveSearchClicked()
     proxy_model->setMode(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE);
     ui->tMegaFolders->setColumnHidden(NodeSelectorModel::USER, true);
     ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ACCESS, true);
+    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ADDED_DATE, false);
+
+    onRootIndexChanged(QModelIndex());
 }
 
 void NodeSelectorTreeViewWidgetSearch::onItemDoubleClick(const QModelIndex& index)
@@ -459,6 +497,13 @@ QIcon NodeSelectorTreeViewWidgetSearch::getEmptyIcon()
                                   Utilities::AttributeType::OUTLINE);
 }
 
+NodeSelectorTreeViewWidget::EmptyLabelInfo NodeSelectorTreeViewWidgetSearch::getEmptyLabel()
+{
+    EmptyLabelInfo info;
+    info.description = tr("No search results");
+    return info;
+}
+
 void NodeSelectorTreeViewWidgetSearch::modelLoaded()
 {
     if (!mModel)
@@ -515,7 +560,6 @@ NodeSelectorTreeViewWidgetRubbish::NodeSelectorTreeViewWidgetRubbish(SelectTypeS
     NodeSelectorTreeViewWidget(mode, parent)
 {
     setTitle(MegaNodeNames::getRubbishName());
-    ui->searchEmptyInfoWidget->hide();
 }
 
 void NodeSelectorTreeViewWidgetRubbish::setShowEmptyView(bool newShowEmptyView)
@@ -579,9 +623,18 @@ QIcon NodeSelectorTreeViewWidgetRubbish::getEmptyIcon()
                                   Utilities::AttributeType::OUTLINE);
 }
 
+NodeSelectorTreeViewWidget::EmptyLabelInfo NodeSelectorTreeViewWidgetRubbish::getEmptyLabel()
+{
+    EmptyLabelInfo info;
+    info.description = tr("The Rubbish bin is empty");
+    return info;
+}
+
 void NodeSelectorTreeViewWidgetRubbish::onRootIndexChanged(const QModelIndex& source_idx)
 {
     Q_UNUSED(source_idx)
     ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::USER);
     ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::ACCESS);
+
+    NodeSelectorTreeViewWidget::onRootIndexChanged(source_idx);
 }

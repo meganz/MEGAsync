@@ -36,16 +36,15 @@ enum class NodeSelectorModelRoles
     HANDLE_ROLE,
     MODEL_ITEM_ROLE,
     NODE_ROLE,
+    ICON_SIZE_ROLE,
     EXTRA_ROW_ROLE,
     last
 };
 
 enum class NodeRowDelegateRoles
 {
-    INDENT_ROLE = toInt(NodeSelectorModelRoles::last), // ALWAYS use last enum value from previous
-                                                       // enum class for new enums
-    SMALL_ICON_ROLE,
-    INIT_ROLE,
+    INIT_ROLE = toInt(NodeSelectorModelRoles::last), // ALWAYS use last enum value from previous
+                                                     // enum class for new enums
     last
 };
 
@@ -226,7 +225,8 @@ public:
         NODE = 0,
         USER,
         ACCESS,
-        DATE,
+        ADDED_DATE,
+        LAST_MODIFIED_DATE,
         last
     };
 
@@ -335,6 +335,11 @@ public:
 
     virtual void firstLoad() = 0;
     void rootItemsLoaded();
+
+    virtual bool hasTopRootIndex()
+    {
+        return true;
+    }
 
     virtual void proxyInvalidateFinished() {}
 
@@ -484,7 +489,7 @@ private:
     void executeRemoveExtraSpaceLogic(const QModelIndex& previousIndex);
     void executeAddExtraSpaceLogic(const QModelIndex& currentIndex);
 
-    QIcon getFolderIcon(NodeSelectorModelItem* item) const;
+    QPair<QIcon, QString> getFolderIcon(NodeSelectorModelItem* item) const;
     bool fetchMoreRecursively(const QModelIndex& parentIndex);
 
     std::shared_ptr<const UserAttributes::CameraUploadFolder> mCameraFolderAttribute;

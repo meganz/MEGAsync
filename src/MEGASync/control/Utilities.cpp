@@ -1696,6 +1696,12 @@ int Utilities::getNodeAccess(MegaNode* node)
     }
 }
 
+QString Utilities::getNodeStringAccess(MegaHandle handle)
+{
+    auto node = std::unique_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+    return getNodeStringAccess(node.get());
+}
+
 QString Utilities::getNodeStringAccess(MegaNode* node)
 {
     auto access(getNodeAccess(node));
@@ -1724,10 +1730,38 @@ QString Utilities::getNodeStringAccess(MegaNode* node)
     }
 }
 
-QString Utilities::getNodeStringAccess(MegaHandle handle)
+QIcon Utilities::getNodeAccessIcon(MegaHandle handle)
 {
     auto node = std::unique_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
-    return getNodeStringAccess(node.get());
+    return getNodeAccessIcon(node.get());
+}
+
+QIcon Utilities::getNodeAccessIcon(MegaNode* node)
+{
+    auto access(getNodeAccess(node));
+    switch (access)
+    {
+        case MegaShare::ACCESS_READ:
+        {
+            return getIcon(QLatin1String("eye"),
+                           AttributeType::SMALL | AttributeType::THIN | AttributeType::OUTLINE);
+        }
+        case MegaShare::ACCESS_READWRITE:
+        {
+            return getIcon(QLatin1String("edit"),
+                           AttributeType::SMALL | AttributeType::THIN | AttributeType::OUTLINE);
+        }
+        case MegaShare::ACCESS_FULL:
+        {
+            return getIcon(QLatin1String("star"),
+                           AttributeType::SMALL | AttributeType::THIN | AttributeType::OUTLINE);
+        }
+        case MegaShare::ACCESS_OWNER:
+        default:
+        {
+            return QIcon();
+        }
+    }
 }
 
 Utilities::HandlesTypes Utilities::getHandlesType(const QList<MegaHandle>& handles)

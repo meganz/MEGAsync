@@ -1028,37 +1028,3 @@ bool NodeSelectorTreeView::handleStandardMouseEvent(QMouseEvent* event)
 
     return false;
 }
-
-NodeSelectorTreeViewHeaderView::NodeSelectorTreeViewHeaderView(Qt::Orientation orientation,
-                                                               QWidget* parent):
-    QHeaderView(orientation, parent)
-{
-    setDefaultAlignment(Qt::AlignLeft);
-    setStretchLastSection(true);
-    setDefaultSectionSize(35);
-}
-
-void NodeSelectorTreeViewHeaderView::paintSection(QPainter* painter,
-                                                  const QRect& rect,
-                                                  int logicalIndex) const
-{
-    painter->save();
-    QHeaderView::paintSection(painter, rect, logicalIndex);
-    painter->restore();
-    if (logicalIndex == NodeSelectorModel::USER)
-    {
-        QRect iconRect(QPoint(rect.topLeft()), QSize(18, 18));
-        iconRect.moveCenter(rect.center());
-        QIcon icon = model()
-                         ->headerData(logicalIndex,
-                                      Qt::Orientation::Horizontal,
-                                      toInt(HeaderRoles::ICON_ROLE))
-                         .value<QIcon>();
-        if (!icon.isNull())
-        {
-            painter->setRenderHint(QPainter::Antialiasing, true);
-            painter->setRenderHint(QPainter::SmoothPixmapTransform, true);
-            icon.paint(painter, iconRect, Qt::AlignVCenter | Qt::AlignHCenter);
-        }
-    }
-}

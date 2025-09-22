@@ -73,6 +73,11 @@ public slots:
 protected:
     void ignoreDuplicatedNodeOptions(std::shared_ptr<mega::MegaNode> targetNode) override;
 
+    bool hasTopRootIndex() override
+    {
+        return false;
+    }
+
 signals:
     void requestIncomingSharesRootCreation(std::shared_ptr<mega::MegaNodeList> nodes);
     void addIncomingSharesRoot(std::shared_ptr<mega::MegaNode> node);
@@ -151,6 +156,11 @@ public:
 
     const NodeSelectorModelItemSearch::Types& searchedTypes() const;
     static NodeSelectorModelItemSearch::Types calculateSearchType(mega::MegaNode* node);
+
+    bool hasTopRootIndex() override
+    {
+        return false;
+    }
 
 protected:
     void proxyInvalidateFinished() override;

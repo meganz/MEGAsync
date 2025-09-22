@@ -464,20 +464,6 @@ QVariant NodeSelectorModelSearch::data(const QModelIndex& index, int role) const
     {
         return QVariant();
     }
-    if (index.column() == NODE)
-    {
-        switch (role)
-        {
-            case toInt(NodeRowDelegateRoles::INDENT_ROLE):
-            {
-                return -15;
-            }
-            case toInt(NodeRowDelegateRoles::SMALL_ICON_ROLE):
-            {
-                return false;
-            }
-        }
-    }
     return NodeSelectorModel::data(index, role);
 }
 

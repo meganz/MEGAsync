@@ -140,7 +140,10 @@ bool NodeSelectorProxyModel::lessThan(const QModelIndex& left, const QModelIndex
     }
     else
     {
-        if (left.column() == NodeSelectorModel::DATE && right.column() == NodeSelectorModel::DATE)
+        if ((left.column() == NodeSelectorModel::ADDED_DATE &&
+             right.column() == NodeSelectorModel::ADDED_DATE) ||
+            (left.column() == NodeSelectorModel::LAST_MODIFIED_DATE &&
+             right.column() == NodeSelectorModel::LAST_MODIFIED_DATE))
         {
             result = left.data(toInt(NodeSelectorModelRoles::DATE_ROLE)).value<int64_t>() <
                      right.data(toInt(NodeSelectorModelRoles::DATE_ROLE)).value<int64_t>();

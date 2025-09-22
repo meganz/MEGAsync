@@ -33,12 +33,12 @@ private:
     std::unique_ptr<NodeSelectorModel> createModel() override;
     void modelLoaded() override;
     QIcon getEmptyIcon() override;
+    EmptyLabelInfo getEmptyLabel() override;
 
     bool showEmptyView() override
     {
         return mShowEmptyView;
     }
-
     bool isCurrentRootIndexReadOnly() override;
 
     mega::MegaHandle findMergedSibling(std::shared_ptr<mega::MegaNode> node);
@@ -66,6 +66,7 @@ private:
     bool isSelectionReadOnly(const QModelIndexList& selection) override;
     bool isCurrentSelectionReadOnly() override;
     QIcon getEmptyIcon() override;
+    EmptyLabelInfo getEmptyLabel() override;
 };
 
 class NodeSelectorTreeViewWidgetBackups: public NodeSelectorTreeViewWidget
@@ -141,12 +142,12 @@ private:
     QString getRootText() override;
     std::unique_ptr<NodeSelectorModel> createModel() override;
     QIcon getEmptyIcon() override;
+    EmptyLabelInfo getEmptyLabel() override;
 
     bool newFolderBtnCanBeVisisble() override
     {
         return false;
     }
-
     bool mHasRows;
     QString mSearchStr;
 
@@ -172,6 +173,7 @@ private:
     std::unique_ptr<NodeSelectorModel> createModel() override;
     void modelLoaded() override;
     QIcon getEmptyIcon() override;
+    EmptyLabelInfo getEmptyLabel() override;
 
     bool showEmptyView() override
     {
