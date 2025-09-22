@@ -13,6 +13,7 @@
 
 class NodeSelectorProxyModel;
 class NodeSelectorModel;
+class MegaDelegateHoverManager;
 
 using namespace mega;
 
@@ -144,6 +145,9 @@ private:
     static QList<mega::MegaHandle> mCopiedHandles;
 
     MegaApi* mMegaApi;
+
+    // Hover event
+    std::unique_ptr<MegaDelegateHoverManager> mHoverManager;
 };
 
 class NodeSelectorTreeViewHeaderView: public QHeaderView

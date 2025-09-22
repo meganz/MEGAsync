@@ -77,15 +77,17 @@ void MegaDelegateHoverManager::sendEvent(QEvent::Type eventType, const QPoint &p
         {
             delegate = mView->itemDelegate();
         }
+
         if(delegate)
         {
             auto hoverEvent = new MegaDelegateHoverEvent(eventType);
             hoverEvent->setIndex(mCurrentIndex);
             hoverEvent->setRect(mView->visualRect(mCurrentIndex));
-            if(!point.isNull())
+            if (!point.isNull())
             {
                 hoverEvent->setMousePos(point - hoverEvent->rect().topLeft());
             }
+
             QApplication::postEvent(delegate, hoverEvent);
         }
     }

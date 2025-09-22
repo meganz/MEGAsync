@@ -1,5 +1,6 @@
 #include "NodeSelectorDelegates.h"
 
+#include "MegaDelegateHoverManager.h"
 #include "NodeSelectorModel.h"
 #include "NodeSelectorTreeView.h"
 #include "TokenParserWidgetManager.h"
@@ -11,6 +12,8 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QToolTip>
+
+QModelIndex NodeSelectorDelegate::mLastHoverRow = QModelIndex();
 
 NodeSelectorDelegate::NodeSelectorDelegate(QObject* parent):
     QStyledItemDelegate(parent),
@@ -53,7 +56,7 @@ void NodeSelectorDelegate::paint(QPainter* painter,
             painter->setPen(pen);
 
             int y = option.rect.bottomLeft().y();
-            int leftX = index.column() == 0 ? 0 : leftX = option.rect.x();
+            int leftX = index.column() == 0 ? 0 : option.rect.x();
             int rightX = option.rect.x();
             rightX += index.column() == index.model()->columnCount() - 1 ?
                           (option.rect.width() - 10) :
@@ -67,6 +70,11 @@ void NodeSelectorDelegate::paint(QPainter* painter,
     }
 
     QStyledItemDelegate::paint(painter, auxOpt, index);
+}
+
+bool NodeSelectorDelegate::isHoverStateSet(const QModelIndex& index)
+{
+    return mLastHoverRow.parent() == index.parent() && mLastHoverRow.row() == index.row();
 }
 
 void NodeSelectorDelegate::setPaintDevice(QPainter* painter, const QModelIndex& index) const
@@ -103,6 +111,32 @@ bool NodeSelectorDelegate::isPaintingDrag(QPainter* painter) const
     }
 
     return false;
+}
+
+bool NodeSelectorDelegate::event(QEvent* event)
+{
+    if (auto hoverEvent = dynamic_cast<MegaDelegateHoverEvent*>(event))
+    {
+        switch (hoverEvent->type())
+        {
+            case QEvent::Enter:
+            {
+                mLastHoverRow = hoverEvent->index();
+                break;
+            }
+            case QEvent::Leave:
+            {
+                mLastHoverRow = QModelIndex();
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
+    }
+
+    return QStyledItemDelegate::event(event);
 }
 
 ////////////////////////////////////////////////////////////////////////7
@@ -266,7 +300,7 @@ void TextColumnDelegate::paint(QPainter* painter,
         painter->save();
 
         QRect rect = opt.rect;
-        rect.adjust(10, 0, -5, 0);
+        rect.adjust(7, 0, -5, 0);
         QString elideText = opt.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(),
                                                        Qt::ElideMiddle,
                                                        rect.width());

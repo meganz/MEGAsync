@@ -3,6 +3,7 @@
 #include "CreateRemoveSyncsManager.h"
 #include "DialogOpener.h"
 #include "MegaApplication.h"
+#include "MegaDelegateHoverManager.h"
 #include "NodeSelector.h"
 #include "NodeSelectorDelegates.h"
 #include "NodeSelectorModel.h"
@@ -37,6 +38,9 @@ NodeSelectorTreeView::NodeSelectorTreeView(QWidget* parent):
             &QShortcut::activated,
             this,
             &NodeSelectorTreeView::onPasteShortcutActivated);
+
+    mHoverManager = std::make_unique<MegaDelegateHoverManager>();
+    mHoverManager->setView(this);
 }
 
 NodeSelectorTreeView::~NodeSelectorTreeView()
@@ -148,24 +152,37 @@ void NodeSelectorTreeView::drawRow(QPainter* painter,
         return;
     }
 
-    if (selectionModel()->isSelected(index))
+    auto delegate(itemDelegate());
+
+    if (auto nodeSelectorDelegate = qobject_cast<NodeSelectorDelegate*>(delegate))
     {
-        painter->save();
-        auto pen(painter->pen());
-        painter->setPen(pen);
-        painter->setRenderHint(QPainter::RenderHint::Antialiasing, true);
+        QString token;
+        if (selectionModel()->isSelected(index))
+        {
+            token = QLatin1String("surface-2");
+        }
+        else if (nodeSelectorDelegate->isHoverStateSet(index))
+        {
+            token = QLatin1String("surface-1");
+        }
 
-        QPainterPath path;
-        auto rect(option.rect);
-        rect.setRight(option.rect.right() - 10);
-        rect.setTop(option.rect.top() + 3);
-        rect.setBottom(option.rect.bottom() - 5);
-        path.addRoundedRect(rect, 4, 4);
-        painter->fillPath(
-            path,
-            TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-2")));
+        if (!token.isEmpty())
+        {
+            painter->save();
+            auto pen(painter->pen());
+            painter->setPen(pen);
+            painter->setRenderHint(QPainter::RenderHint::Antialiasing, true);
 
-        painter->restore();
+            QPainterPath path;
+            auto rect(option.rect);
+            rect.setRight(option.rect.right() - 10);
+            rect.setTop(option.rect.top() + 3);
+            rect.setBottom(option.rect.bottom() - 5);
+            path.addRoundedRect(rect, 4, 4);
+            painter->fillPath(path, TokenParserWidgetManager::instance()->getColor(token));
+
+            painter->restore();
+        }
     }
 
     QStyleOptionViewItem auxOpt(option);

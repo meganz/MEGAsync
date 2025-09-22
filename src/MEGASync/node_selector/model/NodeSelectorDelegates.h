@@ -6,6 +6,8 @@
 
 class NodeSelectorDelegate: public QStyledItemDelegate
 {
+    Q_OBJECT
+
 public:
     NodeSelectorDelegate(QObject* parent);
 
@@ -13,12 +15,16 @@ public:
                const QStyleOptionViewItem& option,
                const QModelIndex& index) const override;
 
+    bool isHoverStateSet(const QModelIndex& index);
+
 protected:
     void setPaintDevice(QPainter* painter, const QModelIndex& index) const;
     bool isPaintingDrag(QPainter* painter) const;
+    bool event(QEvent* event) override;
 
 private:
     mutable QPaintDevice* mMainDevice;
+    static QModelIndex mLastHoverRow;
 };
 
 class IconDelegate: public NodeSelectorDelegate
