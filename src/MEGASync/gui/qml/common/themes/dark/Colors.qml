@@ -21,7 +21,7 @@ QtObject {
 	readonly property color buttonBrand: "#F23433"
 	readonly property color buttonBrandHover: "#FB6361"
 	readonly property color buttonBrandPressed: "#FD9997"
-	readonly property color buttonDisabled: "#FF424346"
+	readonly property color buttonDisabled: "#FF2C2D2D"
 	readonly property color buttonError: "#F63D6B"
 	readonly property color buttonErrorHover: "#FD6F90"
 	readonly property color buttonErrorPressed: "#FEA3B5"
