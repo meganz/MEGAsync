@@ -164,6 +164,8 @@ void NodeSelectorTreeViewWidget::init()
 {
     mProxyModel = createProxyModel();
     mModel = createModel();
+    // Regardless the type of treeviewwidget, the empty icon always use icon-secondary token
+    ui->emptyIcon->setProperty(TOKEN_PROPERTIES::normalOff, QLatin1String("icon-secondary"));
     ui->emptyIcon->setIcon(getEmptyIcon());
     ui->emptyPage->installEventFilter(this);
     mSelectType->init(this);
@@ -304,7 +306,7 @@ bool NodeSelectorTreeViewWidget::getDefaultUploadOption()
 
 void NodeSelectorTreeViewWidget::setTitle(const QString& title)
 {
-    ui->lFolderName->setText(title);
+    setTitleText(title);
 }
 
 void NodeSelectorTreeViewWidget::mousePressEvent(QMouseEvent* event)
@@ -1118,7 +1120,7 @@ bool NodeSelectorTreeViewWidget::areThereNodesToUpdate()
 
 void NodeSelectorTreeViewWidget::updateRootTitle()
 {
-    ui->lFolderName->setText(getRootText());
+    setTitleText(getRootText());
 }
 
 void NodeSelectorTreeViewWidget::expandPendingIndexes()

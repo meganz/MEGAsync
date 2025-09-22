@@ -53,7 +53,9 @@ void NodeSelectorTreeViewWidgetCloudDrive::modelLoaded()
 
 QIcon NodeSelectorTreeViewWidgetCloudDrive::getEmptyIcon()
 {
-    return QIcon(QString::fromUtf8("://images/node_selector/view/cloud.png"));
+    return Utilities::getIcon(QLatin1String("cloud"),
+                              Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                                  Utilities::AttributeType::OUTLINE);
 }
 
 bool NodeSelectorTreeViewWidgetCloudDrive::isCurrentRootIndexReadOnly()
@@ -194,7 +196,9 @@ bool NodeSelectorTreeViewWidgetIncomingShares::isCurrentSelectionReadOnly()
 
 QIcon NodeSelectorTreeViewWidgetIncomingShares::getEmptyIcon()
 {
-    return QIcon(QString::fromUtf8("://images/node_selector/view/folder_share.png"));
+    return Utilities::getIcon(QLatin1String("folder-users"),
+                              Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                                  Utilities::AttributeType::OUTLINE);
 }
 
 /////////////////////////////////////////////////////////////////
@@ -218,7 +222,9 @@ std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetBackups::createMode
 
 QIcon NodeSelectorTreeViewWidgetBackups::getEmptyIcon()
 {
-    return QIcon(QString::fromUtf8("://images/node_selector/view/database.png"));
+    return Utilities::getIcon(QLatin1String("devices"),
+                              Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                                  Utilities::AttributeType::OUTLINE);
 }
 
 void NodeSelectorTreeViewWidgetBackups::onRootIndexChanged(const QModelIndex& idx)
@@ -448,7 +454,9 @@ std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetSearch::createModel
 
 QIcon NodeSelectorTreeViewWidgetSearch::getEmptyIcon()
 {
-    return QIcon(QString::fromUtf8("://images/node_selector/view/search.png"));
+    return Utilities::getIcon(QLatin1String("search"),
+                              Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                                  Utilities::AttributeType::OUTLINE);
 }
 
 void NodeSelectorTreeViewWidgetSearch::modelLoaded()
@@ -566,7 +574,9 @@ void NodeSelectorTreeViewWidgetRubbish::modelLoaded()
 
 QIcon NodeSelectorTreeViewWidgetRubbish::getEmptyIcon()
 {
-    return QIcon(QString::fromUtf8("://images/node_selector/view/rubbish_empty.png"));
+    return Utilities::getIcon(QLatin1String("trash"),
+                              Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                                  Utilities::AttributeType::OUTLINE);
 }
 
 void NodeSelectorTreeViewWidgetRubbish::onRootIndexChanged(const QModelIndex& source_idx)

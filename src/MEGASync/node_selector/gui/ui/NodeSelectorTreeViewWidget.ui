@@ -24,19 +24,6 @@ NodeSelectorTreeView
 background-color: #FFFFFF; /*colorToken.page-background*/
 color: #303233; /*colorToken.text-primary*/
 border: none;
-}
-
-NodeSelectorTreeView::item::selected
-{
-background-color: transparent;
-}
-
-
-#searchEmptyInfoWidget
-{
-color:#3D3D3D;
-font-size:16px;
-font-weight: 700;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -232,8 +219,8 @@ font-weight: 700;
              </property>
              <property name="icon" stdset="0">
               <iconset resource="../../../gui/Resources_common.qrc">
-               <normaloff>:/cloud_off</normaloff>
-               <normalon>:/cloud_on</normalon>:/cloud_off</iconset>
+               <normaloff>:/cloud_small_thin_outline</normaloff>
+               <normalon>:/cloud_small_thin_solid</normalon>:/cloud_small_thin_outline</iconset>
              </property>
             </widget>
            </item>
@@ -256,8 +243,8 @@ font-weight: 700;
              </property>
              <property name="icon" stdset="0">
               <iconset resource="../../../gui/Resources_common.qrc">
-               <normaloff>:/devices_off</normaloff>
-               <normalon>:/devices_on</normalon>:/devices_off</iconset>
+               <normaloff>:/devices_small_thin_outline</normaloff>
+               <normalon>:/devices_small_thin_solid</normalon>:/devices_small_thin_outline</iconset>
              </property>
             </widget>
            </item>
@@ -274,8 +261,8 @@ font-weight: 700;
              </property>
              <property name="icon" stdset="0">
               <iconset resource="../../../gui/Resources_common.qrc">
-               <normaloff>:/folder-users_off</normaloff>
-               <normalon>:/folder-users_on</normalon>:/folder-users_off</iconset>
+               <normaloff>:/folder-users_small_thin_outline</normaloff>
+               <normalon>:/folder-users_small_thin_solid</normalon>:/folder-users_small_thin_outline</iconset>
              </property>
             </widget>
            </item>
@@ -292,8 +279,8 @@ font-weight: 700;
              </property>
              <property name="icon" stdset="0">
               <iconset resource="../../../gui/Resources_common.qrc">
-               <normaloff>:/search_outline_small</normaloff>
-               <normalon>:/search_solid_small</normalon>:/search_outline_small</iconset>
+               <normaloff>:/trash_small_thin_outline</normaloff>
+               <normalon>:/trash_small_thin_solid</normalon>:/trash_small_thin_outline</iconset>
              </property>
             </widget>
            </item>
@@ -589,6 +576,18 @@ font-weight: 700;
             </property>
             <layout class="QVBoxLayout" name="verticalLayout">
              <property name="spacing">
+              <number>20</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
@@ -605,19 +604,34 @@ font-weight: 700;
               </spacer>
              </item>
              <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-              <widget class="QToolButton" name="emptyIcon">
+              <widget class="IconLabel" name="emptyIcon">
+               <property name="minimumSize">
+                <size>
+                 <width>96</width>
+                 <height>96</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>96</width>
+                 <height>96</height>
+                </size>
+               </property>
                <property name="text">
                 <string notr="true"/>
                </property>
                <property name="icon">
                 <iconset resource="../../../gui/Resources_common.qrc">
-                 <normaloff>:/images/node_selector/view/cloud.png</normaloff>:/images/node_selector/view/cloud.png</iconset>
+                 <normaloff>:/search_small_thin_outline</normaloff>:/search_small_thin_outline</iconset>
                </property>
                <property name="iconSize">
                 <size>
-                 <width>48</width>
-                 <height>48</height>
+                 <width>96</width>
+                 <height>96</height>
                 </size>
+               </property>
+               <property name="normal_off" stdset="0">
+                <string notr="true">icon-secondary</string>
                </property>
               </widget>
              </item>
@@ -630,10 +644,31 @@ font-weight: 700;
                 </size>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
                 <item alignment="Qt::AlignRight">
                  <widget class="QLabel" name="textLabel">
                   <property name="text">
                    <string>No search results</string>
+                  </property>
+                  <property name="type" stdset="0">
+                   <string notr="true">secondary</string>
+                  </property>
+                  <property name="font-size" stdset="0">
+                   <string notr="true">label-2</string>
                   </property>
                  </widget>
                 </item>
@@ -795,6 +830,11 @@ font-weight: 700;
    <class>NodeSelectorTreeView</class>
    <extends>QTreeView</extends>
    <header>node_selector/gui/NodeSelectorTreeView.h</header>
+  </customwidget>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>TokenizableItems/IconLabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>

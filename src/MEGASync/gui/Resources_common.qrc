@@ -1222,8 +1222,6 @@
         <file alias="export-small-regular-outline">images/themed/common/export-small-regular-outline.svg</file>
         <file alias="x_solid_small">images/themed/tokenizable/x_solid_small.svg</file>
         <file alias="external_drive_solid_medium.svg">images/themed/tokenizable/external_drive_solid_medium.svg</file>
-        <file alias="search_solid_small">images/themed/tokenizable/search_solid_small.svg</file>
-        <file alias="search_small_thin_outline">images/themed/tokenizable/search_small_thin_outline.svg</file>
         <file alias="x-circle_small_thin_outline">images/themed/tokenizable/x-circle_small_thin_outline.svg</file>
         <file alias="play-circle_medium_thin_outline">images/themed/tokenizable/play-circle_medium_thin_outline.svg</file>
         <file alias="pause-circle_medium_thin_outline">images/themed/tokenizable/pause-circle_medium_thin_outline.svg</file>
@@ -1260,18 +1258,9 @@
         <file alias="x-circle_small_thin_outline">images/themed/tokenizable/x-circle_small_thin_outline.svg</file>
         <file alias="x-circle_small_thin_solid">images/themed/tokenizable/x-circle_small_thin_solid.svg</file>
         <file alias="external_link_small_thin_outline">images/themed/tokenizable/external_link_small_thin_outline.svg</file>
-        <file alias="cloud_on">images/themed/tokenizable/Node Selector/Tabs ON/cloud_on.svg</file>
-        <file alias="devices_on">images/themed/tokenizable/Node Selector/Tabs ON/devices_on.svg</file>
-        <file alias="folder-users_on">images/themed/tokenizable/Node Selector/Tabs ON/folder-users_on.svg</file>
-        <file alias="trash_on">images/themed/tokenizable/Node Selector/Tabs ON/trash_on.svg</file>
-        <file alias="cloud_off">images/themed/tokenizable/Node Selector/Tabs OFF/cloud_off.svg</file>
-        <file alias="devices_off">images/themed/tokenizable/Node Selector/Tabs OFF/devices_off.svg</file>
-        <file alias="folder-users_off">images/themed/tokenizable/Node Selector/Tabs OFF/folder-users_off.svg</file>
-        <file alias="trash_off">images/themed/tokenizable/Node Selector/Tabs OFF/trash_off.svg</file>
         <file alias="x_solid_small">images/themed/tokenizable/x_solid_small.svg</file>
-        <file alias="search_outline_small">images/themed/tokenizable/search_outline_small.svg</file>
-        <file alias="search_solid_small">images/themed/tokenizable/search_solid_small.svg</file>
-        <file alias="x_circle_outline_small">images/themed/tokenizable/x_circle_outline_small.svg</file>
+        <file alias="search_small_thin_outline">images/themed/tokenizable/search_small_thin_outline.svg</file>
+        <file alias="search_small_thin_solid">images/themed/tokenizable/search_small_thin_solid.svg</file>
         <file alias="link-01_small_thin_outline">images/themed/tokenizable/link-01_small_thin_outline.svg</file>
         <file alias="upload_small_thin_outline">images/themed/tokenizable/upload_small_thin_outline.svg</file>
         <file alias="chevron-left_small_thin_outline">images/themed/tokenizable/chevron-left_small_thin_outline.svg</file>
@@ -1281,5 +1270,13 @@
         <file alias="download_small_thin_outline">images/themed/tokenizable/download_small_thin_outline.svg</file>
         <file alias="x_small_thin_outline">images/themed/tokenizable/x_small_thin_outline.svg</file>
         <file alias="chevron_down_small_thin_outline">images/themed/tokenizable/chevron_down_small_thin_outline.svg</file>
+        <file alias="cloud_small_thin_outline">images/themed/tokenizable/cloud_small_thin_outline.svg</file>
+        <file alias="cloud_small_thin_solid">images/themed/tokenizable/cloud_small_thin_solid.svg</file>
+        <file alias="devices_small_thin_outline">images/themed/tokenizable/devices_small_thin_outline.svg</file>
+        <file alias="devices_small_thin_solid">images/themed/tokenizable/devices_small_thin_solid.svg</file>
+        <file alias="folder-users_small_thin_outline">images/themed/tokenizable/folder-users_small_thin_outline.svg</file>
+        <file alias="folder-users_small_thin_solid">images/themed/tokenizable/folder-users_small_thin_solid.svg</file>
+        <file alias="trash_small_thin_outline">images/themed/tokenizable/trash_small_thin_outline.svg</file>
+        <file alias="trash_small_thin_solid">images/themed/tokenizable/trash_small_thin_solid.svg</file>
     </qresource>
 </RCC>
