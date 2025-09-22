@@ -52,18 +52,15 @@ void ThemeManager::setTheme(Preferences::ThemeType theme)
 
         if (theme == Preferences::ThemeType::SYSTEM_DEFAULT)
         {
-            auto soTheme = Platform::getInstance()->getCurrentTheme();
-            applyTheme(soTheme);
-
-            Platform::getInstance()->startThemeMonitor();
             connect(Platform::getInstance(),
                     &AbstractPlatform::themeChanged,
                     this,
                     &ThemeManager::onOperatingSystemThemeChanged);
+
+            applyTheme(Platform::getInstance()->getCurrentTheme());
         }
         else
         {
-            Platform::getInstance()->stopThemeMonitor();
             disconnect(Platform::getInstance(),
                        &AbstractPlatform::themeChanged,
                        this,

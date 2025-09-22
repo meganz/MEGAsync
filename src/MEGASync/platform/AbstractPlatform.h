@@ -114,8 +114,6 @@ public:
     }
 
     virtual Preferences::ThemeType getCurrentTheme() const;
-    virtual void startThemeMonitor(){};
-    virtual void stopThemeMonitor(){};
 
 signals:
     void themeChanged();
@@ -126,6 +124,8 @@ protected:
     void logInfoDialogCoordinates(const char *message, const QRect &screenGeometry, const QString &otherInformation);
     QString rectToString(const QRect &rect);
     bool loadRccResources(const QStringList& rccFiles);
+    virtual void startThemeMonitor(){};
+    virtual void stopThemeMonitor(){};
 };
 
 #endif // ABSTRACTPLATFORM_H

@@ -30,6 +30,7 @@ PlatformImplementation::PlatformImplementation()
 void PlatformImplementation::initialize(int /*argc*/, char** /*argv*/)
 {
     mShellNotifier = std::make_shared<SignalShellNotifier>();
+    startThemeMonitor();
 }
 
 void PlatformImplementation::notifyItemChange(const QString& path, int)

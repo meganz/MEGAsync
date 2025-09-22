@@ -314,7 +314,7 @@ const bool  Preferences::defaultNeverCreateLink   = false;
 const bool  Preferences::defaultImportMegaLinksEnabled = true;
 const bool  Preferences::defaultDownloadMegaLinksEnabled = true;
 const bool Preferences::defaultSystemTrayPromptSuppressed = false;
-const Preferences::ThemeType Preferences::defaultTheme = Preferences::ThemeType::LIGHT_THEME;
+const Preferences::ThemeType Preferences::defaultTheme = Preferences::ThemeType::SYSTEM_DEFAULT;
 const bool Preferences::defaultAskOnExclusionRemove = true;
 
 const int Preferences::minSyncStateChangeProcessingIntervalMs = 200;

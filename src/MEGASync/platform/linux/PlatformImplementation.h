@@ -56,8 +56,6 @@ public:
 #endif
 
     Preferences::ThemeType getCurrentTheme() const override;
-    void startThemeMonitor() override;
-    void stopThemeMonitor() override;
 
 private:
     static xcb_atom_t getAtom(xcb_connection_t* const connection, const char* name);
@@ -67,6 +65,8 @@ private:
     int parseDnfOutput(const QString& dnfOutput);
     bool verifyAndEnableAppIndicatorExtension();
     Preferences::ThemeType identifyCurrentTheme(const QString& processOutPut) const;
+    void startThemeMonitor() override;
+    void stopThemeMonitor() override;
 
     ExtServer* ext_server = nullptr;
     NotifyServer *notify_server = nullptr;

@@ -1470,6 +1470,7 @@ void MegaApplication::onLoginFinished()
                 this, &MegaApplication::onScheduledExecution);
     }
 
+    ThemeManager::instance()->init();
     Platform::getInstance()->unHideTrayIcon();
 }
 
@@ -1533,6 +1534,7 @@ void MegaApplication::onLogout()
                 removeSyncsAndBackupsMenus();
                 start();
                 periodicTasks();
+                ThemeManager::instance()->init();
             }
         });
     });
