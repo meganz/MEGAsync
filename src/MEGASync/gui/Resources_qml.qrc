@@ -33,9 +33,6 @@
         <file alias="images/qml/device_center/status-stopped.svg">images/qml/device_center/status-stopped.svg</file>
         <file alias="images/qml/device_center/status-updating.svg">images/qml/device_center/status-updating.svg</file>
         <file alias="images/qml/device_center/status-uptodate.svg">images/qml/device_center/status-uptodate.svg</file>
-        <file alias="images/qml/ok.png">images/qml/ok.png</file>
-        <file alias="images/qml/ok@2x.png">images/qml/ok@2x.png</file>
-        <file alias="images/qml/ok@3x.png">images/qml/ok@3x.png</file>
         <file alias="images/qml/mega.svg">images/qml/mega.svg</file>
         <file alias="images/qml/mega_outline.svg">images/qml/mega_outline.svg</file>
         <file alias="images/qml/guest/exit.svg">images/qml/guest/exit.svg</file>
@@ -46,15 +43,9 @@
         <file alias="images/qml/guest/settings.svg">images/qml/guest/settings.svg</file>
         <file alias="images/qml/small_check.svg">images/qml/small_check.svg</file>
         <file alias="images/qml/check_circle.svg">images/qml/check_circle.svg</file>
-        <file alias="images/qml/error.png">images/qml/error.png</file>
-        <file alias="images/qml/error@2x.png">images/qml/error@2x.png</file>
-        <file alias="images/qml/error@3x.png">images/qml/error@3x.png</file>
         <file alias="images/qml/lock.png">images/qml/lock.png</file>
         <file alias="images/qml/lock@2x.png">images/qml/lock@2x.png</file>
         <file alias="images/qml/lock@3x.png">images/qml/lock@3x.png</file>
-        <file alias="images/qml/warning.png">images/qml/warning.png</file>
-        <file alias="images/qml/warning@2x.png">images/qml/warning@2x.png</file>
-        <file alias="images/qml/warning@3x.png">images/qml/warning@3x.png</file>
         <file alias="images/qml/guest/warning.png">images/qml/guest/warning.png</file>
         <file alias="images/qml/guest/warning@2x.png">images/qml/guest/warning@2x.png</file>
         <file alias="images/qml/guest/warning@3x.png">images/qml/guest/warning@3x.png</file>
@@ -116,9 +107,6 @@
         <file alias="images/icons/rotate_ccw.svg">images/icons/rotate_ccw.svg</file>
         <file alias="images/icons/log-out-01.svg">images/icons/log-out-01.svg</file>
         <file alias="images/qml/sync_exclusions/folder-file.svg">images/qml/sync_exclusions/folder-file.svg</file>
-        <file alias="images/qml/question.png">images/qml/question.png</file>
-        <file alias="images/qml/question@2x.png">images/qml/question@2x.png</file>
-        <file alias="images/qml/question@3x.png">images/qml/question@3x.png</file>
         <file alias="images/icon_plus.svg">images/icon_plus.svg</file>
         <file alias="images/qml/onboarding/multidevices@3x.png">images/qml/onboarding/multidevices@3x.png</file>
         <file alias="images/qml/onboarding/multidevices@2x.png">images/qml/onboarding/multidevices@2x.png</file>
@@ -129,9 +117,9 @@
         <file alias="images/qml/onboarding/backup@2x.png">images/qml/onboarding/backup@2x.png</file>
         <file alias="images/qml/onboarding/backup.png">images/qml/onboarding/backup.png</file>
         <file alias="images/qml/onboarding/sync.png">images/qml/onboarding/sync.png</file>
-        <file alias="images/qml/dialog_message_warning.svg">images/qml/dialog_message_warning.svg</file>
-        <file alias="images/qml/dialog_message_question.svg">images/qml/dialog_message_question.svg</file>
-        <file alias="images/qml/dialog_message_information.svg">images/qml/dialog_message_information.svg</file>
         <file alias="images/qml/dialog_message_critical.svg">images/qml/dialog_message_critical.svg</file>
+        <file alias="images/qml/dialog_message_information.svg">images/qml/dialog_message_information.svg</file>
+        <file alias="images/qml/dialog_message_question.svg">images/qml/dialog_message_question.svg</file>
+        <file alias="images/qml/dialog_message_warning.svg">images/qml/dialog_message_warning.svg</file>
     </qresource>
 </RCC>
