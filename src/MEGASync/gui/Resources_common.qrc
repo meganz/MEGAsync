@@ -1397,7 +1397,6 @@
         <file alias="export-small-regular-outline">images/themed/common/export-small-regular-outline.svg</file>
         <file alias="x_solid_small">images/themed/tokenizable/x_solid_small.svg</file>
         <file alias="external_drive_solid_medium.svg">images/themed/tokenizable/external_drive_solid_medium.svg</file>
-        <file alias="drive-low-space">images/drive-low-space.svg</file>
         <file alias="search_solid_small">images/themed/tokenizable/search_solid_small.svg</file>
         <file alias="search_small_thin_outline">images/themed/tokenizable/search_small_thin_outline.svg</file>
         <file alias="x-circle_small_thin_outline">images/themed/tokenizable/x-circle_small_thin_outline.svg</file>

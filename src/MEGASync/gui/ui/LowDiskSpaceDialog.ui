@@ -37,10 +37,6 @@
 background-color: #ffffff; /*colorToken.page-background*/
 }
 
-#lExplanation, #lDiskName, #lFreeSpace, #lTotalSize
-{
-color: #303233; /*colorToken.color-text-primary*/
-}
 </string>
   </property>
   <property name="TOKENIZED" stdset="0">
@@ -122,7 +118,7 @@ color: #303233; /*colorToken.color-text-primary*/
           <string notr="true"/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_common.qrc">
+          <iconset>
            <normaloff>:/external_drive_solid_medium.svg</normaloff>:/external_drive_solid_medium.svg</iconset>
          </property>
          <property name="iconSize">
@@ -308,8 +304,6 @@ color: #303233; /*colorToken.color-text-primary*/
    <header>TokenizableItems/IconLabel.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../Resources_common.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
