@@ -39,14 +39,16 @@ public:
     {
         RESTORE = 0,
         SEPARATOR_1,
+        DOWNLOAD,
+        SEPARATOR_2,
         MEGA_LINK,
         SYNC,
         UNSYNC,
-        SEPARATOR_2,
+        SEPARATOR_3,
         RENAME,
         COPY,
         PASTE,
-        SEPARATOR_3,
+        SEPARATOR_4,
         DELETE_RUBBISH,
         DELETE_PERMANENTLY,
         LEAVE_SHARE
@@ -118,6 +120,8 @@ private:
     void addRestoreMenuAction(QMap<int, QAction*>& actions,
                               const QModelIndexList& selectedIndexes,
                               const QList<mega::MegaHandle>& selectionHandles);
+    void addDownloadMenuAction(QMap<int, QAction*>& actions,
+                               const QList<mega::MegaHandle>& selectionHandles);
     void addRenameMenuAction(QMap<int, QAction*>& actions, const QModelIndex& index);
     void addSyncMenuActions(QMap<int, QAction*>& actions,
                             const QModelIndex& index,

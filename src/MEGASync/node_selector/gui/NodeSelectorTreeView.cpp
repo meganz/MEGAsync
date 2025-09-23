@@ -394,6 +394,20 @@ void NodeSelectorTreeView::addPasteMenuAction(QMap<int, QAction*>& actions,
     }
 }
 
+void NodeSelectorTreeView::addDownloadMenuAction(QMap<int, QAction*>& actions,
+                                                 const QList<MegaHandle>& selectionHandles)
+{
+    auto downloadAction(new QAction(tr("Download")));
+    connect(downloadAction,
+            &QAction::triggered,
+            this,
+            [selectionHandles]()
+            {
+                MegaSyncApp->downloadACtionClickedWithHandles(selectionHandles);
+            });
+    actions.insert(ActionsOrder::DOWNLOAD, downloadAction);
+}
+
 void NodeSelectorTreeView::addRestoreMenuAction(QMap<int, QAction*>& actions,
                                                 const QModelIndexList& selectedIndexes,
                                                 const QList<MegaHandle>& selectionHandles)
@@ -646,6 +660,7 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent* event)
         actions.insert(ActionsOrder::COPY, copyAction);
     }
 
+    addDownloadMenuAction(actions, selectionHandles);
     addPasteMenuAction(actions, selectedIndexes);
 
     if (!selectedIndexes.isEmpty())

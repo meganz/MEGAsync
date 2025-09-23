@@ -78,8 +78,17 @@ void NodeSelectorDelegate::paint(QPainter* painter,
 
 bool NodeSelectorDelegate::isHoverStateSet(const QModelIndex& index)
 {
-    return mLastHoverRow.isValid() &&
-           (mLastHoverRow.parent() == index.parent() && mLastHoverRow.row() == index.row());
+    if (!mLastHoverRow.isValid())
+    {
+        return false;
+    }
+
+    if (mLastHoverRow.data(toInt(NodeSelectorModelRoles::EXTRA_ROW_ROLE)).toBool())
+    {
+        return false;
+    }
+
+    return (mLastHoverRow.parent() == index.parent() && mLastHoverRow.row() == index.row());
 }
 
 void NodeSelectorDelegate::setPaintDevice(QPainter* painter, const QModelIndex& index) const

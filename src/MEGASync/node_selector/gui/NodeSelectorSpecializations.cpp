@@ -346,10 +346,6 @@ void CloudDriveNodeSelector::onCustomButtonClicked(uint id)
             showNotFoundNodeMessageBox();
         }
     }
-    else if (id == CloudDriveType::Download)
-    {
-        MegaSyncApp->downloadACtionClickedWithHandles(getMultiSelectionNodeHandle());
-    }
     else if (id == CloudDriveType::ClearRubbish)
     {
         MessageDialogInfo msgInfo;
@@ -527,11 +523,6 @@ void CloudDriveNodeSelector::performMergeAction(
             }
         }
     }
-}
-
-void CloudDriveNodeSelector::onOkButtonClicked()
-{
-    onCustomButtonClicked(CloudDriveType::Download);
 }
 
 void CloudDriveNodeSelector::checkMovingItems(const QList<mega::MegaHandle>& handles,

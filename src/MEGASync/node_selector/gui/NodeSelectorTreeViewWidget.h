@@ -329,7 +329,7 @@ public:
 
     virtual void selectionHasChanged(NodeSelectorTreeViewWidget*) {}
 
-    void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg);
+    virtual void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg);
 
     virtual void okCancelButtonsVisibility(NodeSelectorTreeViewWidget* wdg)
     {
@@ -401,7 +401,6 @@ public:
     enum ButtonId : uint
     {
         Upload,
-        Download,
         ClearRubbish
     };
 
@@ -417,6 +416,7 @@ public:
     void okCancelButtonsVisibility(NodeSelectorTreeViewWidget* wdg) override;
     QMap<uint, QPushButton*> addCustomButtons(NodeSelectorTreeViewWidget* wdg) override;
     void updateCustomButtonsText(NodeSelectorTreeViewWidget* wdg) override;
+    void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg) override;
 
     bool okButtonEnabled(NodeSelectorTreeViewWidget*, const QModelIndexList& selected) override;
     NodeSelectorModelItemSearch::Types allowedTypes() override;

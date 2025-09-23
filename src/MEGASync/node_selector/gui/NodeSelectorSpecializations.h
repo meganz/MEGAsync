@@ -94,7 +94,6 @@ private:
     void performMergeAction(const QList<std::shared_ptr<NodeSelectorMergeInfo>>& mergesInfo,
                             int actionType,
                             NodeSelector::IncreaseOrDecrease type);
-    void onOkButtonClicked() override;
     void checkMovingItems(const QList<mega::MegaHandle>& handles,
                           int moveType,
                           NodeSelector::IncreaseOrDecrease type);

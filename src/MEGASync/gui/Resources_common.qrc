@@ -1285,5 +1285,6 @@
         <file alias="pc-mac-dark_medium_solid">images/themed/tokenizable/pc-mac-dark_medium_solid.svg</file>
         <file alias="pc-windows-dark_medium_solid">images/themed/tokenizable/pc-windows-dark_medium_solid.svg</file>
         <file alias="pc-dark_medium_solid">images/themed/tokenizable/pc-dark_medium_solid.svg</file>
+        <file alias="folder-plus-01_small_thin_outline">images/themed/tokenizable/folder-plus-01_small_thin_outline.svg</file>
     </qresource>
 </RCC>

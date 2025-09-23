@@ -513,7 +513,7 @@ color: #007C3E; /*colorToken.text-success*/
           <widget class="QWidget" name="customButtonsContainer" native="true">
            <layout class="QHBoxLayout" name="customButtonsLayout">
             <property name="spacing">
-             <number>10</number>
+             <number>24</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -1001,7 +1001,7 @@ color: #007C3E; /*colorToken.text-success*/
               </property>
               <property name="icon">
                <iconset resource="../../../gui/Resources_common.qrc">
-                <normaloff>:/images/plus.svg</normaloff>:/images/plus.svg</iconset>
+                <normaloff>:/folder-plus-01_small_thin_outline</normaloff>:/folder-plus-01_small_thin_outline</iconset>
               </property>
               <property name="iconSize">
                <size>

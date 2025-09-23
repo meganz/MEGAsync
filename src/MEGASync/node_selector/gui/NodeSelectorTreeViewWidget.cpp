@@ -689,7 +689,7 @@ void NodeSelectorTreeViewWidget::checkOkCancelButtonsVisibility()
 void NodeSelectorTreeViewWidget::addCustomButtons(NodeSelectorTreeViewWidget* wdg)
 {
     auto buttonsMap = mSelectType->addCustomButtons(wdg);
-    foreach(auto id, buttonsMap.keys())
+    foreach(auto& id, buttonsMap.keys())
     {
         auto button = buttonsMap.value(id);
         if (button)
@@ -1949,13 +1949,6 @@ QMap<uint, QPushButton*> CloudDriveType::addCustomButtons(NodeSelectorTreeViewWi
 
         buttons.insert(ButtonId::Upload, uploadButton);
 
-        auto downloadButton = createCustomButton(
-            QLatin1String("ghost"),
-            getCustomButtonText(ButtonId::Download),
-            Utilities::getPixmapName(QLatin1String("download_small_thin_outline"),
-                                     Utilities::AttributeType::NONE));
-        buttons.insert(ButtonId::Download, downloadButton);
-
         auto clearRubbishButton =
             createCustomButton(QLatin1String("ghost"),
                                getCustomButtonText(ButtonId::ClearRubbish),
@@ -1980,6 +1973,16 @@ void CloudDriveType::updateCustomButtonsText(NodeSelectorTreeViewWidget* wdg)
     }
 }
 
+void CloudDriveType::newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg)
+{
+    // First time, move the button to the header
+    if (wdg->ui->bNewFolder->parent() != wdg->ui->customButtonsContainer)
+    {
+        wdg->ui->customButtonsLayout->addWidget(wdg->ui->bNewFolder);
+    }
+    SelectType::newFolderButtonVisibility(wdg);
+}
+
 QString CloudDriveType::getCustomButtonText(uint buttonId) const
 {
     switch (buttonId)
@@ -1987,10 +1990,6 @@ QString CloudDriveType::getCustomButtonText(uint buttonId) const
         case ButtonId::Upload:
         {
             return MegaApplication::tr("Upload");
-        }
-        case ButtonId::Download:
-        {
-            return MegaApplication::tr("Download");
         }
         case ButtonId::ClearRubbish:
         {
@@ -2011,7 +2010,6 @@ void CloudDriveType::selectionHasChanged(NodeSelectorTreeViewWidget* wdg)
 
     if (rubbishWidget)
     {
-        buttons.value(ButtonId::Download)->setVisible(false);
         buttons.value(ButtonId::Upload)->setVisible(false);
         buttons.value(ButtonId::ClearRubbish)->setVisible(!rubbishWidget->isEmpty());
     }
@@ -2025,16 +2023,11 @@ void CloudDriveType::selectionHasChanged(NodeSelectorTreeViewWidget* wdg)
 
         if (!selected.isEmpty())
         {
-            buttons.value(ButtonId::Download)->setVisible(true);
             if (selected.size() == 1)
             {
                 uploadEnabled =
                     !selected.first().data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)).toBool();
             }
-        }
-        else
-        {
-            buttons.value(ButtonId::Download)->setVisible(false);
         }
 
         buttons.value(ButtonId::Upload)
