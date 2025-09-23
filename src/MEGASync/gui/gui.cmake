@@ -539,6 +539,8 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/ScanningWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/CancelConfirmWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/OverQuotaDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/TabSelector.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/SearchLineEdit.ui
 )
 
 target_sources_conditional(${ExecutableTarget}

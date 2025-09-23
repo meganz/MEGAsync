@@ -60,6 +60,7 @@ public:
 signals:
     void clicked();
     void hovered();
+    void leave();
     void pressed();
 
 protected:

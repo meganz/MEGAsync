@@ -202,6 +202,7 @@ void MegaMenuItem::leaveEvent(QEvent* event)
         m_hovered = false;
         m_pressed = false;
         updateStyleSheet();
+        emit leave();
     }
     QWidget::leaveEvent(event);
 }

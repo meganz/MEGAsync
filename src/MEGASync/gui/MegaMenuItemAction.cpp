@@ -27,6 +27,22 @@ MegaMenuItemAction::MegaMenuItemAction(const QString& text,
 QWidget* MegaMenuItemAction::createWidget(QWidget* parent)
 {
     m_item = new MegaMenuItem(m_text, m_iconName, m_treeDepth, hasSubmenu(), parent);
+    QTimer* hoverTimer = new QTimer(m_item);
+    hoverTimer->setSingleShot(true);
+    hoverTimer->setInterval(300); // 300ms delay
+    connect(m_item, &MegaMenuItem::hovered, hoverTimer, QOverload<>::of(&QTimer::start));
+    connect(hoverTimer,
+            &QTimer::timeout,
+            this,
+            [this]()
+            {
+                if (hasSubmenu())
+                {
+                    QPoint pos = m_item->mapToGlobal(QPoint(m_item->width(), 0));
+                    m_submenu->popup(pos);
+                }
+            });
+    connect(m_item, &MegaMenuItem::leave, hoverTimer, &QTimer::stop);
 
     // Apply all spacing settings
     m_item->setIconSpacing(m_iconSpacing);
