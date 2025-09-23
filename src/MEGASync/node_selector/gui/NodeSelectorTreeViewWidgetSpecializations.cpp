@@ -143,6 +143,33 @@ void NodeSelectorTreeViewWidgetIncomingShares::onRootIndexChanged(const QModelIn
     ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::ADDED_DATE);
 
     NodeSelectorTreeViewWidget::onRootIndexChanged(idx);
+
+    // Fill Incoming info
+    QModelIndex in_share_idx = getParentIncomingShareByIndex(idx);
+    auto item(NodeSelectorModel::getItemByIndex(in_share_idx));
+    if (in_share_idx.isValid() && item)
+    {
+        in_share_idx = in_share_idx.sibling(in_share_idx.row(), NodeSelectorModel::COLUMN::USER);
+        QPixmap folderPixmap = qvariant_cast<QPixmap>(idx.data(Qt::DecorationRole));
+        QPixmap pm = qvariant_cast<QPixmap>(in_share_idx.data(Qt::DecorationRole));
+        ui->sh_folderIcon->setIcon(folderPixmap);
+        ui->sh_userIcon->setIcon(pm);
+
+        in_share_idx = in_share_idx.sibling(in_share_idx.row(), NodeSelectorModel::COLUMN::ACCESS);
+        QPixmap accessPixmap = qvariant_cast<QPixmap>(in_share_idx.data(Qt::DecorationRole));
+        ui->sh_accessIcon->setIcon(accessPixmap);
+        ui->sh_accessLabel->setText(in_share_idx.data(Qt::DisplayRole).toString());
+
+        ui->sh_folderName->setText(idx.data(Qt::DisplayRole).toString());
+        ui->sh_userEmail->setText(item->getOwnerEmail());
+        ui->sh_userName->setText(item->getOwnerName());
+        ui->incomingInfo->setVisible(true);
+        ui->lFolderName->setVisible(false);
+    }
+    else
+    {
+        ui->incomingInfo->setVisible(false);
+    }
 }
 
 bool NodeSelectorTreeViewWidgetIncomingShares::isCurrentRootIndexReadOnly()

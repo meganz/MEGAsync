@@ -81,6 +81,7 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
     ui->rubbishSearch->setProperty("title", MegaNodeNames::getRubbishName());
 
     ui->footer->setVisible(mSelectType->footerVisible());
+    ui->incomingInfo->setVisible(false);
 }
 
 NodeSelectorTreeViewWidget::~NodeSelectorTreeViewWidget()
@@ -347,7 +348,7 @@ void NodeSelectorTreeViewWidget::mousePressEvent(QMouseEvent* event)
     }
 }
 
-void NodeSelectorTreeViewWidget::onRootIndexChanged(const QModelIndex& source_idx)
+void NodeSelectorTreeViewWidget::onRootIndexChanged(const QModelIndex&)
 {
     updateColumnsWidth(true);
 }
@@ -1608,10 +1609,8 @@ QModelIndexList NodeSelectorTreeViewWidget::getSelectedIndexes() const
 
 void NodeSelectorTreeViewWidget::checkBackForwardButtons()
 {
-    ui->bBack->setVisible(!mNavigationInfo.backwardHandles.isEmpty() ||
-                          !mNavigationInfo.forwardHandles.isEmpty());
-    ui->bForward->setVisible(!mNavigationInfo.backwardHandles.isEmpty() ||
-                             !mNavigationInfo.forwardHandles.isEmpty());
+    ui->navigationButtons->setVisible(!mNavigationInfo.backwardHandles.isEmpty() ||
+                                      !mNavigationInfo.forwardHandles.isEmpty());
     ui->bBack->setEnabled(!mNavigationInfo.backwardHandles.isEmpty());
     ui->bForward->setEnabled(!mNavigationInfo.forwardHandles.isEmpty());
 }
