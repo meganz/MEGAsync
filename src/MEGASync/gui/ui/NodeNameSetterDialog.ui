@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>293</width>
-    <height>185</height>
+    <width>388</width>
+    <height>159</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,9 +21,6 @@ background-color: #FFFFFF; /*colorToken.page-background*/
 
 #errorLabel {
 color: #E31B57; /*colorToken.text-error*/
-background-color: #FFE4E8; /*colorToken.notification-error*/
-border-radius: 8px; 
-padding: 12px;
 }</string>
   </property>
   <property name="TOKENIZED" stdset="0">
@@ -77,30 +74,52 @@ padding: 12px;
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="errorLabel">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="text">
-         <string>The following characters are not allowed:
-%1</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-        <property name="font-size" stdset="0">
-         <string notr="true">body-2</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QLineEdit" name="lineEdit">
         <property name="type" stdset="0">
          <string notr="true">mega</string>
         </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="errorContainer" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="spacing">
+          <number>8</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="IconLabel" name="errorIcon">
+           <property name="text">
+            <string>...</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../Resources_common.qrc">
+             <normaloff>:/alert-triangle_small_regular_outline</normaloff>:/alert-triangle_small_regular_outline</iconset>
+           </property>
+           <property name="normal_off" stdset="0">
+            <string notr="true">text-error</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="errorLabel">
+           <property name="text">
+            <string>The following characters are not allowed:  / : “ * &lt; &gt; ? |</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
@@ -177,6 +196,15 @@ padding: 12px;
    </item>
   </layout>
  </widget>
- <resources/>
+ <customwidgets>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>TokenizableItems/IconLabel.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../Resources_common.qrc"/>
+ </resources>
  <connections/>
 </ui>
