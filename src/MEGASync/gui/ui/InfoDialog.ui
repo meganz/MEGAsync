@@ -1412,120 +1412,57 @@ background-color: transparent;
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
-                         <layout class="QVBoxLayout" name="verticalLayout_8">
-                          <property name="spacing">
-                           <number>0</number>
-                          </property>
-                          <property name="leftMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="topMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="rightMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="bottomMargin">
-                           <number>0</number>
-                          </property>
+                         <layout class="QHBoxLayout" name="horizontalLayout_9">
                           <item>
-                           <layout class="QHBoxLayout" name="horizontalLayout_9">
-                            <property name="spacing">
-                             <number>0</number>
+                           <spacer name="horizontalSpacer_9">
+                            <property name="orientation">
+                             <enum>Qt::Horizontal</enum>
                             </property>
-                            <property name="bottomMargin">
-                             <number>5</number>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>3</width>
+                              <height>13</height>
+                             </size>
                             </property>
-                            <item>
-                             <spacer name="horizontalSpacer_9">
-                              <property name="orientation">
-                               <enum>Qt::Horizontal</enum>
-                              </property>
-                              <property name="sizeHint" stdset="0">
-                               <size>
-                                <width>0</width>
-                                <height>0</height>
-                               </size>
-                              </property>
-                             </spacer>
-                            </item>
-                            <item>
-                             <widget class="QPushButton" name="lUploadToMega">
-                              <property name="minimumSize">
-                               <size>
-                                <width>352</width>
-                                <height>234</height>
-                               </size>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>352</width>
-                                <height>234</height>
-                               </size>
-                              </property>
-                              <property name="text">
-                               <string/>
-                              </property>
-                              <property name="icon">
-                               <iconset resource="../Resources_light.qrc">
-                                <normaloff>:/upload-to-mega.png</normaloff>:/upload-to-mega.png</iconset>
-                              </property>
-                              <property name="iconSize">
-                               <size>
-                                <width>128</width>
-                                <height>128</height>
-                               </size>
-                              </property>
-                              <property name="default">
-                               <bool>false</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item>
-                             <spacer name="horizontalSpacer_10">
-                              <property name="orientation">
-                               <enum>Qt::Horizontal</enum>
-                              </property>
-                              <property name="sizeHint" stdset="0">
-                               <size>
-                                <width>0</width>
-                                <height>0</height>
-                               </size>
-                              </property>
-                             </spacer>
-                            </item>
-                           </layout>
+                           </spacer>
                           </item>
                           <item>
-                           <widget class="QLabel" name="lUploadToMegaDesc">
-                            <property name="sizePolicy">
-                             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                              <horstretch>0</horstretch>
-                              <verstretch>0</verstretch>
-                             </sizepolicy>
-                            </property>
+                           <widget class="QToolButton" name="lUploadToMega">
                             <property name="minimumSize">
                              <size>
-                              <width>400</width>
-                              <height>60</height>
+                              <width>352</width>
+                              <height>168</height>
                              </size>
                             </property>
                             <property name="maximumSize">
                              <size>
-                              <width>16777215</width>
-                              <height>60</height>
+                              <width>352</width>
+                              <height>168</height>
                              </size>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">spacing: 0px;</string>
                             </property>
                             <property name="text">
                              <string>Upload to MEGA now</string>
                             </property>
-                            <property name="alignment">
-                             <set>Qt::AlignCenter</set>
+                            <property name="icon">
+                             <iconset resource="../Resources_light.qrc">
+                              <normaloff>:/upload-to-mega.png</normaloff>:/upload-to-mega.png</iconset>
                             </property>
-                            <property name="wordWrap">
-                             <bool>true</bool>
+                            <property name="iconSize">
+                             <size>
+                              <width>128</width>
+                              <height>128</height>
+                             </size>
                             </property>
-                            <property name="openExternalLinks">
+                            <property name="toolButtonStyle">
+                             <enum>Qt::ToolButtonTextUnderIcon</enum>
+                            </property>
+                            <property name="font-size" stdset="0">
+                             <string notr="true">label-1</string>
+                            </property>
+                            <property name="semibold" stdset="0">
                              <bool>true</bool>
                             </property>
                            </widget>
@@ -1539,6 +1476,19 @@ background-color: transparent;
                              <size>
                               <width>0</width>
                               <height>0</height>
+                             </size>
+                            </property>
+                           </spacer>
+                          </item>
+                          <item>
+                           <spacer name="horizontalSpacer_10">
+                            <property name="orientation">
+                             <enum>Qt::Horizontal</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>3</width>
+                              <height>13</height>
                              </size>
                             </property>
                            </spacer>

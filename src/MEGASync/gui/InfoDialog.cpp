@@ -42,8 +42,8 @@ using namespace mega;
 using namespace std::chrono;
 
 static constexpr int DEFAULT_MIN_PERCENTAGE{1};
-static constexpr int FONT_SIZE_BUSINESS_PX{20};
-static constexpr int FONT_SIZE_NO_BUSINESS_PX{14};
+static constexpr int FONT_SIZE_BUSINESS_PX{12};
+static constexpr int FONT_SIZE_NO_BUSINESS_PX{12};
 
 void InfoDialog::pauseResumeClicked()
 {
@@ -1304,8 +1304,7 @@ void InfoDialog::animateStates(bool opt)
     if (opt) //Enable animation for scanning/waiting states
     {
         ui->lUploadToMega->setIcon(Utilities::getCachedPixmap(QString::fromUtf8("://images/init_scanning.png")));
-        ui->lUploadToMega->setIconSize(QSize(352,234));
-        ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
+        ui->lUploadToMega->setIconSize(QSize(128, 128));
 
         if (!opacityEffect)
         {
@@ -1333,7 +1332,7 @@ void InfoDialog::animateStates(bool opt)
         ui->lUploadToMega->setIcon(
             Utilities::getCachedPixmap(QString::fromUtf8(":/upload-to-mega.png")));
         ui->lUploadToMega->setIconSize(QSize(128, 128));
-        ui->lUploadToMegaDesc->setText(tr("Upload to MEGA now"));
+        ui->lUploadToMega->setText(tr("Upload to MEGA now"));
 
         if (animation)
         {
