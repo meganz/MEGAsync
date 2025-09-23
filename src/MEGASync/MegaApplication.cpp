@@ -420,9 +420,9 @@ void MegaApplication::initStyleAndResources()
 #ifdef Q_OS_MAC
     setObjectName(QLatin1String("osx"));
 #elif defined(Q_OS_WIN)
-    setObjectName("win");
+    setObjectName(QLatin1String("win"));
 #else
-    setObjectName("linux");
+    setObjectName(QLatin1String("linux"));
 #endif
 
     setStyle(new MegaProxyStyle());
