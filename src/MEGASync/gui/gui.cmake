@@ -311,7 +311,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/win/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/VerifyLockMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/NodeNameSetterDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/AccountTypeWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelectorTreeViewWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelectorLoadingDelegate.ui
@@ -325,7 +324,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/macx/MegaProgressCustomDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/VerifyLockMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/NodeNameSetterDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelector.ui
@@ -341,7 +339,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/linux/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/VerifyLockMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/NodeNameSetterDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/AccountTypeWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui
@@ -532,6 +529,7 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/OverQuotaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ui/ViewLoadingScene.ui
     ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ui/ViewLoadingMessage.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/NodeNameSetterDialog.ui
 )
 
 target_sources_conditional(${ExecutableTarget}

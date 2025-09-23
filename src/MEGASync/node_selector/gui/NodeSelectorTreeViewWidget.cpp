@@ -40,7 +40,6 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
     ui->bOk->setDefault(true);
     ui->bOk->setEnabled(false);
     ui->searchButtonsWidget->setVisible(false);
-    ui->lAccess->setVisible(false);
 
     connect(ui->bNewFolder,
             &QPushButton::clicked,
@@ -1646,30 +1645,8 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex& proxy_idx)
     if (!node_column_idx.isValid())
     {
         updateRootTitle();
-
-        ui->lOwnerIcon->setIcon(QIcon());
-        ui->lAccess->hide();
-        ui->avatarSpacer->spacerItem()->changeSize(0, 0);
-        ui->lSyncIcon->setIcon(QIcon());
-        ui->syncSpacer->spacerItem()->changeSize(0, 0);
         return;
     }
-
-    // //Taking the sync icon
-    // auto status_column_idx = proxy_idx.sibling(proxy_idx.row(),
-    // NodeSelectorModel::COLUMN::STATUS); QIcon syncIcon =
-    // qvariant_cast<QIcon>(status_column_idx.data(Qt::DecorationRole));
-
-    // if(!syncIcon.isNull())
-    // {
-    //     ui->lSyncIcon->setIcon(syncIcon);
-    //     ui->syncSpacer->spacerItem()->changeSize(10, 0);
-    // }
-    // else
-    // {
-    //     ui->lSyncIcon->setIcon(QIcon());
-    //     ui->syncSpacer->spacerItem()->changeSize(0, 0);
-    // }
 
     auto item = NodeSelectorModel::getItemByIndex(node_column_idx);
     if (!item)

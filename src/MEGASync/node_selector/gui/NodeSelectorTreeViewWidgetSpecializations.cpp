@@ -131,25 +131,11 @@ void NodeSelectorTreeViewWidgetIncomingShares::onRootIndexChanged(const QModelIn
 {
     if (idx.isValid())
     {
-        QModelIndex in_share_idx = getParentIncomingShareByIndex(idx);
-        in_share_idx = in_share_idx.sibling(in_share_idx.row(), NodeSelectorModel::COLUMN::USER);
-        QIcon pm = qvariant_cast<QIcon>(in_share_idx.data(Qt::DecorationRole));
-        QString tooltip = in_share_idx.data(Qt::ToolTipRole).toString();
-        ui->lOwnerIcon->setToolTip(tooltip);
-        ui->lOwnerIcon->setIcon(pm);
-        auto item(NodeSelectorModel::getItemByIndex(idx));
-        if (item)
-        {
-            ui->lAccess->show();
-            ui->lAccess->setText(Utilities::getNodeStringAccess(item->getNode().get()));
-        }
-        ui->avatarSpacer->spacerItem()->changeSize(10, 0);
         ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::USER);
         ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::ACCESS);
     }
     else
     {
-        ui->lAccess->hide();
         ui->tMegaFolders->header()->showSection(NodeSelectorModel::COLUMN::USER);
         ui->tMegaFolders->header()->showSection(NodeSelectorModel::COLUMN::ACCESS);
     }
