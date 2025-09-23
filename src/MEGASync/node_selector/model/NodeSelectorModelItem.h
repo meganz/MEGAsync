@@ -48,7 +48,7 @@ public:
 
     bool canFetchMore();
 
-    QPointer<NodeSelectorModelItem> getParent();
+    QPointer<NodeSelectorModelItem> getParent() const;
     QPointer<NodeSelectorModelItem> getChild(int i);
     virtual int getNumChildren();
     int indexOf(NodeSelectorModelItem* item);
@@ -154,6 +154,7 @@ public:
     bool isSyncable() override;
     bool isVault() const override;
     bool isVaultDevice() const override;
+    bool isVaultTopIndex() const;
 
 private:
     NodeSelectorModelItem* createModelItem(std::unique_ptr<mega::MegaNode> node,

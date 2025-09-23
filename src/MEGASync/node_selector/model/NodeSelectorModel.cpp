@@ -2945,42 +2945,49 @@ QPair<QIcon, QString> NodeSelectorModel::getFolderIcon(NodeSelectorModelItem* it
                 }
                 else if (item->getStatus() == NodeSelectorModelItem::Status::BACKUP)
                 {
-                    QString nodeDeviceId(QString::fromUtf8(node->getDeviceId()));
-                    if (!nodeDeviceId.isEmpty())
+                    if (auto backupItem = dynamic_cast<NodeSelectorModelItemBackup*>(item))
                     {
-                        // TODO, future: choose icon according to host OS
-                        if (nodeDeviceId ==
-                            QString::fromUtf8(MegaSyncApp->getMegaApi()->getDeviceId()))
+                        if (backupItem->isVaultDevice())
                         {
+                            QString nodeDeviceId(QString::fromUtf8(node->getDeviceId()));
+                            if (!nodeDeviceId.isEmpty())
+                            {
+                                // TODO, future: choose icon according to host OS
+                                if (nodeDeviceId ==
+                                    QString::fromUtf8(MegaSyncApp->getMegaApi()->getDeviceId()))
+                                {
 #ifdef Q_OS_WINDOWS
-                            icon = Utilities::getIcon(QLatin1String("pc-windows-dark"),
-                                                      Utilities::AttributeType::MEDIUM |
-                                                          Utilities::AttributeType::SOLID);
+                                    icon = Utilities::getIcon(QLatin1String("pc-windows-dark"),
+                                                              Utilities::AttributeType::MEDIUM |
+                                                                  Utilities::AttributeType::SOLID);
 #elif defined(Q_OS_MACOS)
-                            icon = Utilities::getIcon(QLatin1String("pc-mac-dark"),
-                                                      Utilities::AttributeType::MEDIUM |
-                                                          Utilities::AttributeType::SOLID);
+                                    icon = Utilities::getIcon(QLatin1String("pc-mac-dark"),
+                                                              Utilities::AttributeType::MEDIUM |
+                                                                  Utilities::AttributeType::SOLID);
 #elif defined(Q_OS_LINUX)
-                            icon = Utilities::getIcon(QLatin1String("pc-linux-dark"),
-                                                      Utilities::AttributeType::MEDIUM |
-                                                          Utilities::AttributeType::SOLID);
+                                    icon = Utilities::getIcon(QLatin1String("pc-linux-dark"),
+                                                              Utilities::AttributeType::MEDIUM |
+                                                                  Utilities::AttributeType::SOLID);
 #endif
+                                }
+                                else
+                                {
+                                    icon = Utilities::getIcon(QLatin1String("pc-dark"),
+                                                              Utilities::AttributeType::MEDIUM |
+                                                                  Utilities::AttributeType::SOLID);
+                                }
+                                token = QLatin1String("background-inverse");
+                            }
                         }
-                        else
+                        else if (backupItem->isVaultTopIndex())
                         {
-                            icon = Utilities::getIcon(QLatin1String("pc-dark"),
-                                                      Utilities::AttributeType::MEDIUM |
-                                                          Utilities::AttributeType::SOLID);
+                            icon = Utilities::getFolderPixmap(Utilities::FolderType::TYPE_BACKUP_2,
+                                                              Utilities::AttributeType::MEDIUM);
                         }
-                        token = QLatin1String("background-inverse");
-                    }
-                    else
-                    {
-                        icon = Utilities::getFolderPixmap(Utilities::FolderType::TYPE_BACKUP_2,
-                                                          Utilities::AttributeType::MEDIUM);
                     }
                 }
-                else
+
+                if (icon.isNull())
                 {
                     icon = Utilities::getFolderPixmap(Utilities::FolderType::TYPE_NORMAL,
                                                       Utilities::AttributeType::SMALL);

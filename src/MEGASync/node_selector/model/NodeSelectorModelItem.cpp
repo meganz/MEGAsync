@@ -158,7 +158,7 @@ int NodeSelectorModelItem::getNodeAccess() const
     return mNodeAccess;
 }
 
-QPointer<NodeSelectorModelItem> NodeSelectorModelItem::getParent()
+QPointer<NodeSelectorModelItem> NodeSelectorModelItem::getParent() const
 {
     return dynamic_cast<NodeSelectorModelItem*>(parent());
 }
@@ -573,6 +573,12 @@ bool NodeSelectorModelItemBackup::isVault() const
 bool NodeSelectorModelItemBackup::isVaultDevice() const
 {
     return parent() && parent()->parent() == nullptr;
+}
+
+bool NodeSelectorModelItemBackup::isVaultTopIndex() const
+{
+    auto parentItem = getParent();
+    return parentItem && parentItem->isVaultDevice();
 }
 
 NodeSelectorModelItem*
