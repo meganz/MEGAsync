@@ -72,6 +72,8 @@ protected:
     void keyPressEvent(QKeyEvent* event) override;
     void contextMenuEvent(QContextMenuEvent* event) override;
 
+    void startDrag(Qt::DropActions supportedActions) override;
+
 signals:
     void deleteNodeClicked(const QList<MegaHandle>& handles, bool permanently);
     void leaveShareClicked(const QList<MegaHandle>& handles);

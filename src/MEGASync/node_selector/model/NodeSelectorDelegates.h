@@ -1,6 +1,7 @@
 #ifndef NODESELECTORDELEGATES_H
 #define NODESELECTORDELEGATES_H
 
+#include <QAbstractItemView>
 #include <QHelpEvent>
 #include <QStyledItemDelegate>
 
@@ -18,12 +19,9 @@ public:
     bool isHoverStateSet(const QModelIndex& index);
 
 protected:
-    void setPaintDevice(QPainter* painter, const QModelIndex& index) const;
-    bool isPaintingDrag(QPainter* painter) const;
     bool event(QEvent* event) override;
 
 private:
-    mutable QPaintDevice* mMainDevice;
     static QModelIndex mLastHoverRow;
 };
 
@@ -38,6 +36,7 @@ public:
     void paint(QPainter* painter,
                const QStyleOptionViewItem& option,
                const QModelIndex& index) const override;
+    QPixmap paintForDrag(const QModelIndex& index, QAbstractItemView* view) const;
 
     bool helpEvent(QHelpEvent* event,
                    QAbstractItemView* view,

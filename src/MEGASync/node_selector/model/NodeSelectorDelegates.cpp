@@ -17,8 +17,7 @@
 QModelIndex NodeSelectorDelegate::mLastHoverRow = QModelIndex();
 
 NodeSelectorDelegate::NodeSelectorDelegate(QObject* parent):
-    QStyledItemDelegate(parent),
-    mMainDevice(nullptr)
+    QStyledItemDelegate(parent)
 {}
 
 void NodeSelectorDelegate::paint(QPainter* painter,
@@ -91,42 +90,6 @@ bool NodeSelectorDelegate::isHoverStateSet(const QModelIndex& index)
     return (mLastHoverRow.parent() == index.parent() && mLastHoverRow.row() == index.row());
 }
 
-void NodeSelectorDelegate::setPaintDevice(QPainter* painter, const QModelIndex& index) const
-{
-    if ((index.row() != 0 && index.column() != 0) || index.parent().isValid())
-    {
-        return;
-    }
-
-#ifndef Q_OS_MACOS
-    // On Linux/Windows the main device is not permanent, it may change
-    auto view = dynamic_cast<NodeSelectorTreeView*>(parent());
-    if (mMainDevice != painter->device() && view->state() == NodeSelectorTreeView::NoState)
-    {
-        mMainDevice = painter->device();
-    }
-#else
-    // First time the row is painted, we get the main paint device
-    // in order to compare with other paint devices, as the use by the dragging action
-    if (!mMainDevice)
-    {
-        mMainDevice = painter->device();
-    }
-#endif
-}
-
-bool NodeSelectorDelegate::isPaintingDrag(QPainter* painter) const
-{
-    auto view = dynamic_cast<NodeSelectorTreeView*>(parent());
-    if (view)
-    {
-        return view->state() == NodeSelectorTreeView::DraggingState &&
-               painter->device() != mMainDevice;
-    }
-
-    return false;
-}
-
 bool NodeSelectorDelegate::event(QEvent* event)
 {
     if (auto hoverEvent = dynamic_cast<MegaDelegateHoverEvent*>(event))
@@ -167,26 +130,40 @@ void NodeRowDelegate::paint(QPainter* painter,
 {
     QStyleOptionViewItem opt(option);
 
-    NodeSelectorDelegate::setPaintDevice(painter, index);
-
+    opt.displayAlignment = Qt::AlignVCenter | Qt::AlignLeft;
     opt.decorationAlignment = Qt::AlignVCenter | Qt::AlignLeft;
     opt.decorationSize = index.data(toInt(NodeSelectorModelRoles::ICON_SIZE_ROLE)).toSize();
 
-    if (isPaintingDrag(painter))
-    {
-        QPainterPath selectedPath;
-        selectedPath
-            .addRoundedRect(opt.rect.x(), opt.rect.y(), opt.rect.width(), opt.rect.height(), 4, 4);
-        painter->save();
-        painter->setPen(Qt::NoPen);
-        painter->setBrush(opt.palette.highlight());
-        painter->drawPath(selectedPath);
-        painter->restore();
-
-        opt.state.setFlag(QStyle::State_Selected, false);
-    }
-
     NodeSelectorDelegate::paint(painter, opt, index);
+}
+
+QPixmap NodeRowDelegate::paintForDrag(const QModelIndex& index, QAbstractItemView* view) const
+{
+    QRect rect = view->visualRect(index);
+    // Limit the width to 400px max
+    rect.setWidth(std::min(rect.width(), 400));
+    QPixmap pixmap(rect.size());
+    pixmap.fill(Qt::transparent);
+
+    QStyleOptionViewItem option;
+    option.initFrom(view);
+    option.rect = QRect(0, 0, rect.width(), rect.height());
+
+    QPainter painter(&pixmap);
+
+    QPainterPath path;
+    auto backgroundRect(option.rect);
+    backgroundRect.setRight(option.rect.right() - 10);
+    backgroundRect.setTop(option.rect.top() + 3);
+    backgroundRect.setBottom(option.rect.bottom() - 5);
+    path.addRoundedRect(backgroundRect, 4, 4);
+    painter.fillPath(path,
+                     TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-2")));
+
+    paint(&painter, option, index);
+    painter.end();
+
+    return pixmap;
 }
 
 bool NodeRowDelegate::helpEvent(QHelpEvent* event,

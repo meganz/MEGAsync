@@ -11,6 +11,7 @@
 #include "NodeSelectorProxyModel.h"
 #include "Platform.h"
 
+#include <QDrag>
 #include <QMenu>
 #include <QMetaEnum>
 #include <QMouseEvent>
@@ -722,6 +723,31 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent* event)
     {
         customMenu.exec(mapToGlobal(event->pos()));
     }
+}
+
+void NodeSelectorTreeView::startDrag(Qt::DropActions supportedActions)
+{
+    QModelIndexList indexes = selectedIndexes();
+    if (indexes.isEmpty())
+    {
+        return;
+    }
+
+    auto delegate(dynamic_cast<NodeRowDelegate*>(itemDelegate()));
+    if (!delegate)
+    {
+        return;
+    }
+
+    // Paint only the first column cell
+    QModelIndex index = indexes.first().sibling(indexes.first().row(), 0);
+    auto pixmap(delegate->paintForDrag(index, this));
+
+    QDrag* drag = new QDrag(this);
+    QMimeData* mimeData = model()->mimeData(indexes);
+    drag->setMimeData(mimeData);
+    drag->setPixmap(pixmap);
+    drag->exec(supportedActions);
 }
 
 void NodeSelectorTreeView::dragEnterEvent(QDragEnterEvent* event)
