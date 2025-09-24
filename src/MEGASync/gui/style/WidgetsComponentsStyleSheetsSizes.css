@@ -1,6 +1,5 @@
 *
 {
-font-family: Lato;
 /* Regular */
 font-weight: 400;
 /* Body-2 */
@@ -349,19 +348,19 @@ border-style: solid;
 
 /*  */
 
-QPushButton[type="outline"][dimension=small]
+QPushButton.icon-button[type="outline"][dimension=small]
 {
 height: 22px;
 width: 22px;
 }
 
-QPushButton[type="outline"][dimension=medium]
+QPushButton.icon-button[type="outline"][dimension=medium]
 {
 height: 32px;
 width: 32px;
 }
 
-QPushButton[type="outline"][dimension=large]
+QPushButton.icon-button[type="outline"][dimension=large]
 {
 height: 44px;
 width: 44px;

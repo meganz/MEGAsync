@@ -12,25 +12,23 @@ LowDiskSpaceDialog::LowDiskSpaceDialog(long long neededSize,
                                        const QString& driveName,
                                        QWidget* parent):
     QDialog(parent),
-    ui(new Ui::LowDiskSpaceDialog)
+    mUi(new Ui::LowDiskSpaceDialog),
+    mneededSize(neededSize),
+    mfreeSize(freeSize),
+    mdriveSize(driveSize),
+    mdriveName(driveName)
 {
-    ui->setupUi(this);
-    setupShadowEffect();
+    mUi->setupUi(this);
 
-    auto message = tr("There is not enough space on %1. You need an additional %2 to download these files.");
-    ui->lExplanation->setText(message.arg(driveName, toString(neededSize - freeSize)));
+    updateStrings();
 
-    ui->lDiskName->setText(driveName);
-    ui->lFreeSpace->setText(tr("Free space: %1").arg(toString(freeSize)));
-    ui->lTotalSize->setText(tr("Total size: %1").arg(toString(driveSize)));
-
-    connect(ui->bTryAgain, &QPushButton::clicked, this, &QDialog::accept);
-    connect(ui->bCancel, &QPushButton::clicked, this, &QDialog::reject);
+    connect(mUi->bTryAgain, &QPushButton::clicked, this, &QDialog::accept);
+    connect(mUi->bCancel, &QPushButton::clicked, this, &QDialog::reject);
 }
 
 LowDiskSpaceDialog::~LowDiskSpaceDialog()
 {
-    delete ui;
+    delete mUi;
 }
 
 QString LowDiskSpaceDialog::toString(long long bytes)
@@ -38,11 +36,24 @@ QString LowDiskSpaceDialog::toString(long long bytes)
     return Utilities::getSizeString((bytes > 0) ? bytes : 0);
 }
 
-void LowDiskSpaceDialog::setupShadowEffect()
+void LowDiskSpaceDialog::updateStrings()
 {
-#ifndef _WIN32
-    ui->bTryAgain->setGraphicsEffect(CreateBlurredShadowEffect(QColor(54, 122, 246, 64), 1.0));
-    ui->bCancel->setGraphicsEffect(CreateBlurredShadowEffect(1.0));
-#endif
+    auto message =
+        tr("There is not enough space on %1. You need an additional %2 to download these files.");
+    mUi->lExplanation->setText(message.arg(mdriveName, toString(mneededSize - mfreeSize)));
+
+    mUi->lDiskName->setText(mdriveName);
+    mUi->lFreeSpace->setText(tr("Free space: %1").arg(toString(mfreeSize)));
+    mUi->lTotalSize->setText(tr("Total size: %1").arg(toString(mdriveSize)));
+}
+
+bool LowDiskSpaceDialog::event(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        mUi->retranslateUi(this);
+        updateStrings();
+    }
+    return QDialog::event(event);
 }
 

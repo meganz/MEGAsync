@@ -423,7 +423,7 @@ void MegaApplication::initStyleAndResources()
     {
         QString sourceStandardComponentsStyleSheet = QString::fromLatin1(file.readAll());
         file.close();
-        setStyleSheet(sourceStandardComponentsStyleSheet);
+        setStyleSheet(Utilities::getPlatformProps(sourceStandardComponentsStyleSheet));
     }
     else
     {
