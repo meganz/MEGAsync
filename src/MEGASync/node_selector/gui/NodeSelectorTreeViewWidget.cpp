@@ -55,10 +55,6 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
             this,
             &NodeSelectorTreeViewWidget::oncbAlwaysUploadToLocationChanged);
 
-    auto sizePolicy = ui->bNewFolder->sizePolicy();
-    sizePolicy.setRetainSizeWhenHidden(true);
-    ui->bNewFolder->setSizePolicy(sizePolicy);
-
     checkBackForwardButtons();
     checkOkCancelButtonsVisibility();
     addCustomButtons(this);
@@ -111,26 +107,7 @@ bool NodeSelectorTreeViewWidget::event(QEvent* event)
 
 bool NodeSelectorTreeViewWidget::eventFilter(QObject* watched, QEvent* event)
 {
-    if (event->type() == QEvent::Drop)
-    {
-        if (auto dropEvent = static_cast<QDropEvent*>(event))
-        {
-            if (!dropEvent->mimeData()->urls().isEmpty())
-            {
-                ui->tMegaFolders->dropEvent(dropEvent);
-                dropEvent->acceptProposedAction();
-            }
-            else if (mModel->dropMimeData(dropEvent->mimeData(),
-                                          Qt::MoveAction,
-                                          -1,
-                                          -1,
-                                          mModel->index(0, 0, QModelIndex())))
-            {
-                dropEvent->acceptProposedAction();
-            }
-        }
-    }
-    else if (event->type() == QEvent::DragEnter)
+    if (event->type() == QEvent::DragEnter)
     {
         if (auto dropEvent = static_cast<QDragEnterEvent*>(event))
         {

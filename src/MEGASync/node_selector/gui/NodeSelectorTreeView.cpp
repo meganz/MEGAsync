@@ -620,12 +620,24 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent* event)
     auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
 
     QList<mega::MegaHandle> selectionHandles;
-    mega::MegaHandle clickedHandle;
+    mega::MegaHandle clickedHandle(mega::INVALID_HANDLE);
 
     auto indexClicked = indexAt(event->pos());
     if (indexClicked.isValid())
     {
         clickedHandle = proxyModel->getHandle(indexClicked);
+    }
+
+    // You just may click the extra row or an empty folder
+    if (clickedHandle == mega::INVALID_HANDLE)
+    {
+        clickedHandle = proxyModel->getHandle(rootIndex());
+    }
+
+    // If it is still invalid, don´t show anything
+    if (clickedHandle == mega::INVALID_HANDLE)
+    {
+        return;
     }
 
     QModelIndexList selectedIndexes = selectedRows();

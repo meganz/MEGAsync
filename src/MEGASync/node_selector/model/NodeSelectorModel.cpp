@@ -1007,6 +1007,11 @@ bool NodeSelectorModel::startProcessingNodes(const QMimeData* data,
 {
     auto targetIndex(parent.isValid() ? parent : index(0, 0, QModelIndex()));
 
+    if (targetIndex.data(toInt(NodeSelectorModelRoles::EXTRA_ROW_ROLE)).toBool())
+    {
+        targetIndex = mCurrentRootIndex;
+    }
+
     if (targetIndex.isValid())
     {
         if (NodeSelectorModelItem* chkItem =
