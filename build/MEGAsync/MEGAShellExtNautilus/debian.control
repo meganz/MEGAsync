@@ -5,15 +5,15 @@ Maintainer: MEGA Linux Team <linux@mega.io>
 Homepage: https://mega.io/desktop
 Build-Depends:  debhelper,
                 cmake,
-                libnautilus-extension-dev (>= 2.16.0),
-                cdbs
+                dh-cmake,
+                libnautilus-extension-dev (>= 2.16.0)
 
 Package: nautilus-megasync
 Architecture: any
 Depends: ${shlibs:Depends},
-         ${misc:Depends},
-         megasync
-Recommends: nautilus (>= 2.16.0)
+         ${misc:Depends}
+Recommends: nautilus (>= 2.16.0),
+            megasync (>= 5.3.0)
 Description: MEGA Desktop App plugin for Nautilus
   - Easily see and track your sync statuses.
   - Send files and folders to MEGA.
