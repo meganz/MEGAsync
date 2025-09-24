@@ -36,6 +36,9 @@ private:
     long long fileSize;
     QString link;
     int id;
+
+protected:
+    void resizeEvent(QResizeEvent* e) override;
 };
 
 #endif // IMPORTLISTWIDGETITEM_H

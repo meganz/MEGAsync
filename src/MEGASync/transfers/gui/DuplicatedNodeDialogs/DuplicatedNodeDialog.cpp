@@ -24,10 +24,7 @@ DuplicatedNodeDialog::DuplicatedNodeDialog(QWidget* parent) :
 #endif
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 
-    QIcon warningIcon(QString::fromLatin1(":/images/icon_warning.png"));
-    ui->lIcon->setPixmap(warningIcon.pixmap(ui->lIcon->size()));
-
-    ui->lDescription->installEventFilter(this);
+    ui->lDescriptionFileExists->installEventFilter(this);
 
     qRegisterMetaType<QList<std::shared_ptr<DuplicatedNodeInfo>>>("QList<std::shared_ptr<DuplicatedNodeInfo>");
 
@@ -237,23 +234,28 @@ void DuplicatedNodeDialog::updateHeader()
     auto headerText(mHeaderBaseName);
 
     QString placeholder(QLatin1String("[A]"));
-    auto textBoundingRect = ui->lDescription->fontMetrics().boundingRect(mHeaderBaseName).width();
-    auto NameBoundingRect = ui->lDescription->fontMetrics().boundingRect(placeholder).width();
+    auto textBoundingRect =
+        ui->lDescriptionFileExists->fontMetrics().boundingRect(mHeaderBaseName).width();
+    auto NameBoundingRect =
+        ui->lDescriptionFileExists->fontMetrics().boundingRect(placeholder).width();
 
     //The node name goes in bold type, that´s why the font needs to be set to bold to get the correct fontMetrics
-    auto boldFont = ui->lDescription->font();
+    auto boldFont = ui->lDescriptionFileExists->font();
     boldFont.setBold(true);
     QFontMetrics boldMetrics(boldFont);
-    auto elidedName = boldMetrics.elidedText(mCurrentNodeName, Qt::ElideMiddle, (ui->lDescription->width() - (textBoundingRect - NameBoundingRect - 1)));
+    auto elidedName = boldMetrics.elidedText(
+        mCurrentNodeName,
+        Qt::ElideMiddle,
+        (ui->lDescriptionFileExists->width() - (textBoundingRect - NameBoundingRect - 1)));
     auto boldName = QString(QLatin1String("<b>%1</b>")).arg(elidedName);
 
     headerText = headerText.replace(placeholder, boldName);
 
-    ui->lDescription->setText(headerText);
+    ui->lDescriptionFileExists->setText(headerText);
 
     if (elidedName != mCurrentNodeName)
     {
-        ui->lDescription->setToolTip(mCurrentNodeName);
+        ui->lDescriptionFileExists->setToolTip(mCurrentNodeName);
     }
 }
 
@@ -307,7 +309,7 @@ void DuplicatedNodeDialog::setDialogTitle(const QString &title)
 
 bool DuplicatedNodeDialog::eventFilter(QObject* watched, QEvent* event)
 {
-    if(watched == ui->lDescription && event->type() == QEvent::Resize)
+    if (watched == ui->lDescriptionFileExists && event->type() == QEvent::Resize)
     {
         updateHeader();
     }

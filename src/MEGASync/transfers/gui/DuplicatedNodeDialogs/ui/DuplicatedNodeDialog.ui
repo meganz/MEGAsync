@@ -32,48 +32,22 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#DuplicatedNodeDialog{
-background-color: white;
+   <string notr="true">#DuplicatedNodeDialog {
+background-color: #FFFFFF; /*colorToken.page-background*/
 }
 
-#wTitleHeader QLabel
+#lDescriptionFileExists
 {
-    font-family: Lato;
-    font-size: 13px;
-    line-height: 16;
-    color: #333333;
-    font-weight: 400;
-}
-
-#lwNodeItems
-{
-    background-color: transparent;
-}
-
-#lDescription
-{
-    font-family: Lato;
-    font-size: 16 px;
-    color: #666666;
-    font-weight: 600;
-}
-
-#lActionDescription
-{
-    font-family: Lato;
-    font-size: 16 px;
-    color: #333333;
-    font-weight: 600;
+ color: #303233; /*colorToken.text-primary*/
 }
 
 #cbApplyToAll
 {
-    font-family: Lato;
-    font-size: 13px;
-    line-height: 16px;
-    font-weight: 400;
-    color: #3D3D3D;
+ color: #3D3D3D;/*colorToken.text-primary*/
 }</string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -113,7 +87,7 @@ background-color: white;
        <number>24</number>
       </property>
       <item>
-       <widget class="QLabel" name="lIcon">
+       <widget class="IconLabel" name="lIcon">
         <property name="minimumSize">
          <size>
           <width>24</width>
@@ -129,10 +103,20 @@ background-color: white;
         <property name="text">
          <string notr="true"/>
         </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>:/images/alert_triangle.svg</normaloff>:/images/alert_triangle.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="lDescription">
+       <widget class="QLabel" name="lDescriptionFileExists">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -250,6 +234,9 @@ background-color: white;
         <property name="checked">
          <bool>true</bool>
         </property>
+        <property name="type" stdset="0">
+         <string notr="true">mega</string>
+        </property>
        </widget>
       </item>
      </layout>
@@ -257,6 +244,13 @@ background-color: white;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>TokenizableItems/IconLabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
