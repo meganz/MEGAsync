@@ -217,20 +217,3 @@ void StatusInfo::setPropertyAndPropagateToChildren(const char* name, const QVari
     style()->unpolish(this);
     style()->polish(this);
 }
-
-void StatusInfo::setRecursiveProperty(const char* name, const QVariant& value)
-{
-    setProperty(name, value);
-    auto children = this->children();
-    for (auto child: children)
-    {
-        if (auto widget = dynamic_cast<QWidget*>(child))
-        {
-            widget->setProperty(name, value);
-            widget->style()->unpolish(widget);
-            widget->style()->polish(widget);
-        }
-    }
-    style()->unpolish(this);
-    style()->polish(this);
-}
