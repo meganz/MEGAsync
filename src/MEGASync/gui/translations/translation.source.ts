@@ -960,13 +960,6 @@
         <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
         <translation>Pro membership plan expiring soon</translation>
     </message>
-    <message>
-        <source>The following characters are not allowed:
-%1</source>
-        <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder)</translatorcomment>
-        <translation>The following characters are not allowed:
-%1</translation>
-    </message>
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
@@ -987,6 +980,11 @@
         <source>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</source>
         <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. Max 140 characters. SNC-3019, SNC-3934 and CON-435</translatorcomment>
         <translation>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</translation>
+    </message>
+    <message>
+        <source>The following characters are not allowed: %1</source>
+        <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder). SNC-5804</translatorcomment>
+        <translation type="unfinished">The following characters are not allowed: %1</translation>
     </message>
 </context>
 <context>
@@ -4714,11 +4712,14 @@ Enter a different name</source>
 Enter a different name.</translation>
     </message>
     <message>
-        <source>The following characters are not allowed:
-%1</source>
-        <translatorcomment>Message shown when the user has entered a not allowed character</translatorcomment>
-        <translation>The following characters are not allowed:
-%1</translation>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button. Keep capital letter. SNC.5804</translatorcomment>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for ok button. Keep capital letter. SNC.5804</translatorcomment>
+        <translation type="unfinished">OK</translation>
     </message>
 </context>
 <context>
@@ -4732,6 +4733,16 @@ Enter a different name.</translation>
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
         <translation>The item you selected has been removed. To reselect, close this window and try again.</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translatorcomment>Sidebar title. SNC.5804</translatorcomment>
+        <translation type="unfinished">Files</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translatorcomment>Groupbox title for search coincidences. SNC.5804</translatorcomment>
+        <translation type="unfinished">Search</translation>
     </message>
 </context>
 <context>
@@ -4862,19 +4873,9 @@ Enter a different name.</translation>
         <translation>Name</translation>
     </message>
     <message>
-        <source>Recently used</source>
-        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation>Last modified</translation>
-    </message>
-    <message>
         <source>Sort by access</source>
         <translatorcomment>Access column tooltip. Sorts the order of the column by incoming shared folder access.CON-1266</translatorcomment>
         <translation>Sort by access</translation>
-    </message>
-    <message>
-        <source>Sort by date</source>
-        <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>Sort by date</translation>
     </message>
     <message>
         <source>Sort by name</source>
@@ -4885,11 +4886,6 @@ Enter a different name.</translation>
         <source>Sort by owner name</source>
         <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
         <translation>Sort by owner name</translation>
-    </message>
-    <message>
-        <source>Sort by status</source>
-        <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
-        <translation>Sort by status</translation>
     </message>
     <message>
         <source>The file %1 couldn’t be copied. Try again later</source>
@@ -4991,6 +4987,31 @@ Enter a different name.</translation>
         <translatorcomment>Secondary text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>The items couldn’t be restored. Try again later.</translation>
     </message>
+    <message>
+        <source>Date added</source>
+        <translatorcomment>Table header title for node date added info. SNC.5804</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last modified</source>
+        <translatorcomment>Table header title for node last modified date info. SNC.5804</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort by date added</source>
+        <translatorcomment>Table header tooltip for Date added column. SNC.5804</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort by last modified date</source>
+        <translatorcomment>Table header tooltip for last modified column. SNC.5804</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Owner</source>
+        <translatorcomment>Table header title for incoming shared owner info. SNC.5804</translatorcomment>
+        <translation type="unfinished">Owner</translation>
+    </message>
 </context>
 <context>
     <name>NodeSelectorTreeView</name>
@@ -5044,6 +5065,11 @@ Enter a different name.</translation>
         <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It creates a sync in the selected folder. SAT-426</translatorcomment>
         <translation>Sync</translation>
     </message>
+    <message>
+        <source>Download</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a node on node selector. It downloads the selected nodes. SNC-5804</translatorcomment>
+        <translation type="unfinished">Download</translation>
+    </message>
 </context>
 <context>
     <name>NodeSelectorTreeViewWidget</name>
@@ -5058,19 +5084,9 @@ Enter a different name.</translation>
         <translation>Any shared files or folders will no longer be accessible to the people you shared them with. You can still access these items in the Rubbish bin, restore, and share them.</translation>
     </message>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Button to filter search results from backups</translatorcomment>
-        <translation>Backups</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Cloud drive</source>
-        <translatorcomment>Button to filter search results from cloud drive</translatorcomment>
-        <translation>Cloud drive</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -5099,11 +5115,6 @@ Enter a different name.</translation>
             <numerusform>If you leave the folder, you will not be able to see it again.</numerusform>
             <numerusform>If you leave these folders, you will not be able to see them again.</numerusform>
         </translation>
-    </message>
-    <message>
-        <source>Incoming Shares</source>
-        <translatorcomment>Button to filter search results from incoming shares</translatorcomment>
-        <translation>Incoming shares</translation>
     </message>
     <message>
         <source>Leave</source>
@@ -5142,19 +5153,9 @@ Enter a different name.</translation>
         <translation>New folder</translation>
     </message>
     <message>
-        <source>No results for:</source>
-        <translatorcomment>Label indicating that there are no results for the current search, searched text will be following this label.</translatorcomment>
-        <translation>No results for:</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translatorcomment>Button text to accept and close the dialog</translatorcomment>
         <translation>OK</translation>
-    </message>
-    <message>
-        <source>Rubbish bin</source>
-        <translatorcomment>Button to filter search results from rubbish bin</translatorcomment>
-        <translation>Rubbish bin</translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
@@ -5185,13 +5186,59 @@ Enter a different name.</translation>
         <translatorcomment>Second part of the messagebox text when the user is about to remove permanently a node. SAT-426</translatorcomment>
         <translation>You cannot undo this action</translation>
     </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetCloudDrive</name>
+    <message>
+        <source>Cloud drive is empty</source>
+        <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetIncomingShares</name>
+    <message>
+        <source>No incoming shares you can sync</source>
+        <translatorcomment>Title message on the view when there are no items in the Sync view. SNC-5804</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can only sync a shared folder if you’ve been given full access</source>
+        <translatorcomment>Description message on the view when there are no items in the sync view. It says you don´t have shared folders with the needed rights. SNC-5804</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No incoming shares</source>
+        <translatorcomment>Title message on the view when there are no items in the normal view. SNC-5804</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetRubbish</name>
+    <message>
+        <source>The Rubbish bin is empty</source>
+        <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NodeSelectorTreeViewWidgetSearch</name>
+    <message numerus="yes">
+        <source>%n result found</source>
+        <translatorcomment>Search tab subtitle that shows the number of coincidences found. %n is the number of found nodes. SNC-5804</translatorcomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
     <message>
-        <source>Searching:</source>
-        <translatorcomment>Label indicating the current search, searched text will be following this label.</translatorcomment>
-        <translation>Searching:</translation>
+        <source>No search results</source>
+        <translatorcomment>Message on the view when the search did not find any coincidence. SNC-5804</translatorcomment>
+        <translation type="unfinished">No search results</translation>
     </message>
 </context>
 <context>

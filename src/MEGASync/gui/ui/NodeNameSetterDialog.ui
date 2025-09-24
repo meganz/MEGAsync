@@ -101,7 +101,7 @@ color: #E31B57; /*colorToken.text-error*/
          <item>
           <widget class="IconLabel" name="errorIcon">
            <property name="text">
-            <string>...</string>
+            <string notr="true"/>
            </property>
            <property name="icon">
             <iconset resource="../Resources_common.qrc">
@@ -115,7 +115,7 @@ color: #E31B57; /*colorToken.text-error*/
          <item>
           <widget class="QLabel" name="errorLabel">
            <property name="text">
-            <string>The following characters are not allowed:  / : “ * &lt; &gt; ? |</string>
+            <string/>
            </property>
           </widget>
          </item>
