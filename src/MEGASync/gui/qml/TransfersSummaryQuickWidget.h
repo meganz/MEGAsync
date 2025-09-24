@@ -15,8 +15,8 @@ public:
     void setTransfersCount(uint completedTransfers, uint totalTransfers);
     void setTopTransferDirection(bool upload);
     void setPaused(bool paused);
-    void setPauseEnabled(bool);
-    void setOngoingTransfers(int);
+    void setPauseEnabled(bool pauseEnabled);
+    void setOngoingTransfers(int count);
 
 signals:
     void transferManagerClicked();

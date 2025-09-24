@@ -33,7 +33,7 @@ public:
 
     TRANSFERS_STATES getState();
     void setOverQuotaState(bool oq);
-    void setRecursiveProperty(const char* name, const QVariant& value);
+    void setPropertyAndPropagateToChildren(const char* name, const QVariant& value);
     static QIcon scanningIcon(int index);
 
 protected:

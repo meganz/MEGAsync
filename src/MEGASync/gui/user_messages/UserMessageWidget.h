@@ -1,8 +1,6 @@
 #ifndef USER_MESSAGE_WIDGET_H
 #define USER_MESSAGE_WIDGET_H
 
-#include "ThemeManager.h"
-#include "TokenParserWidgetManager.h"
 #include "UserMessage.h"
 
 #include <QWidget>

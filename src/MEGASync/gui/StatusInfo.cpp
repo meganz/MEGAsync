@@ -201,7 +201,7 @@ bool StatusInfo::event(QEvent* event)
     return QWidget::event(event);
 }
 
-void StatusInfo::setRecursiveProperty(const char* name, const QVariant& value)
+void StatusInfo::setPropertyAndPropagateToChildren(const char* name, const QVariant& value)
 {
     setProperty(name, value);
     auto children = this->children();

@@ -134,16 +134,19 @@ bool FilterAlertWidget::eventFilter(QObject* obj, QEvent* event)
     {
         return QObject::eventFilter(obj, event);
     }
+
     QWidget* widget = qobject_cast<QWidget*>(obj);
     if (!widget)
     {
         return QObject::eventFilter(obj, event);
     }
+
     if (!(widget == mUi->wContactsNotifications || widget == mUi->wSharesNotifications ||
           widget == mUi->wPaymentNotifications || widget == mUi->wAllNotifications))
     {
         widget = widget->parentWidget();
     }
+
     if (!widget)
     {
         return QObject::eventFilter(obj, event);

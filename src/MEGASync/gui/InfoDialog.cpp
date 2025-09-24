@@ -1793,6 +1793,6 @@ void InfoDialog::setFooterState()
     ui->wBottom->style()->unpolish(ui->wBottom);
     ui->wBottom->style()->polish(ui->wBottom);
     ui->wBottom->update();
-    ui->wStatus->setRecursiveProperty("hasTransfers", hasTransfers);
+    ui->wStatus->setPropertyAndPropagateToChildren("hasTransfers", hasTransfers);
     ui->wSeparator->setVisible(hasTransfers);
 }

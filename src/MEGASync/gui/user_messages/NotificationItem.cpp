@@ -3,6 +3,7 @@
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "StatsEventHandler.h"
+#include "TokenParserWidgetManager.h"
 #include "ui_NotificationItem.h"
 #include "UserNotification.h"
 

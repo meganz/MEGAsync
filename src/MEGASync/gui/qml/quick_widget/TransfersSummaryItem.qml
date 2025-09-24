@@ -1,6 +1,8 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
+
 import common 1.0
+
 import components.images 1.0
 import components.texts 1.0 as Texts
 import components.buttons 1.0 as MegaButtons
@@ -12,6 +14,8 @@ Rectangle {
     readonly property int componentRadius: 24
     readonly property int iconSize: 16
     readonly property int buttonIconSize: 24
+    readonly property int contentLeftMargin: 8
+    readonly property int contentRighttMargin: 4
 
     color: "transparent"
     width:  transfersRect.width
@@ -31,10 +35,11 @@ Rectangle {
 
     Rectangle {
         id: transfersRect
+
         color: areThereTransfers? ColorTheme.surface3 : "transparent"
         radius: componentRadius
 
-        width: layout.implicitWidth +12
+        width: layout.implicitWidth + root.contentLeftMargin + root.contentRighttMargin
         height: componentHeight
 
         MouseArea {
@@ -44,8 +49,6 @@ Rectangle {
                 root.transferManagerClicked();
             }
         }
-
-        property bool expanded: false
 
         Behavior on width {
             NumberAnimation {
@@ -69,6 +72,7 @@ Rectangle {
                 spacing: 4
                 SvgImage {
                     id: directionIcon
+
                     Layout.alignment: Qt.AlignVCenter
                     source: isTopTransferUpload? Images.upArrow : Images.downArrow
                     sourceSize: Qt.size(root.iconSize, root.iconSize)
@@ -86,6 +90,7 @@ Rectangle {
 
                 Texts.Text {
                     id: transferText
+
                     Layout.alignment: Qt.AlignVCenter
                     visible: areThereTransfers
                     text: (ongoingTransfers + completedTransfers) + "/" + totalTransfers
@@ -147,6 +152,7 @@ Rectangle {
 
             SvgImage {
                 id: transferManagerButton
+
                 Layout.alignment: Qt.AlignVCenter
                 source: Images.arrowUpDown
                 sourceSize: Qt.size(root.buttonIconSize, root.buttonIconSize)
