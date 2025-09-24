@@ -32,8 +32,7 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, int itemIndent, QWidget* par
                                                                       SYNC_ADD_ICON),
         0,
         mMenu);
-    connect(mAddAction, &MenuItemAction::triggered,
-            this, &SyncsMenu::onAddSync);
+    connect(mAddAction, &MegaMenuItemAction::triggered, this, &SyncsMenu::onAddSync);
 
     mMenuAction = new MegaMenuItemAction(
         type == mega::MegaSync::SyncType::TYPE_BACKUP ? BACKUPS : SYNCS,

@@ -38,6 +38,10 @@ QWidget* MegaMenuItemAction::createWidget(QWidget* parent)
             {
                 if (hasSubmenu())
                 {
+                    if (m_item)
+                    {
+                        m_item->resetPressedState();
+                    }
                     QPoint pos = m_item->mapToGlobal(QPoint(m_item->width(), 0));
                     m_submenu->popup(pos);
                 }

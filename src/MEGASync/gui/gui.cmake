@@ -528,7 +528,6 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/PasteMegaLinksDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/SearchLineEdit.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/TabSelector.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/SyncAccountFullMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/InfoDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/StatusInfo.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/PSAwidget.ui
@@ -539,12 +538,6 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/ScanningWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/CancelConfirmWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/OverQuotaDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/TabSelector.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/SearchLineEdit.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/LowDiskSpaceDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/StreamingFromMegaDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/MegaInputDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/ChangeLogDialog.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
