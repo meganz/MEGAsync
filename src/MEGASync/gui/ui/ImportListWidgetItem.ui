@@ -31,6 +31,16 @@
 border: none;
 background: transparent;
 }
+
+#lImage 
+{
+padding-left: 6px;
+}
+
+#lState 
+{
+padding-right: -2px;
+}
 </string>
   </property>
   <property name="TOKENIZED" stdset="0">
@@ -65,9 +75,6 @@ background: transparent;
        <width>16777215</width>
        <height>16777215</height>
       </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
      </property>
      <property name="text">
       <string/>
@@ -109,15 +116,10 @@ background: transparent;
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">border: none;
-padding-left: 6px;</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string/>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>:/images/small_text.png</normaloff>:/images/small_text.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -152,9 +154,6 @@ padding-left: 6px;</string>
        </property>
        <property name="focusPolicy">
         <enum>Qt::StrongFocus</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
        </property>
        <property name="text">
         <string/>
@@ -197,8 +196,7 @@ padding-left: 6px;</string>
       <enum>Qt::NoFocus</enum>
      </property>
      <property name="styleSheet">
-      <string notr="true">border: none;
-padding-right: -2px;
+      <string notr="true">
 </string>
      </property>
      <property name="text">

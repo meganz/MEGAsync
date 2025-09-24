@@ -301,9 +301,6 @@ target_sources_conditional(${ExecutableTarget}
     PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/win/InfoDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/UploadToMegaDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/PasteMegaLinksDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/ImportMegaLinksDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/ImportListWidgetItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/MegaProgressCustomDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/StatusInfo.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/PSAwidget.ui
@@ -332,9 +329,6 @@ target_sources_conditional(${ExecutableTarget}
    PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/macx/InfoDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/UploadToMegaDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/PasteMegaLinksDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/ImportMegaLinksDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/ImportListWidgetItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/MegaProgressCustomDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/StatusInfo.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/PSAwidget.ui
@@ -363,9 +357,6 @@ target_sources_conditional(${ExecutableTarget}
     PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/linux/InfoDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/UploadToMegaDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/PasteMegaLinksDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/ImportMegaLinksDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/ImportListWidgetItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/MegaProgressCustomDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/StatusInfo.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/PSAwidget.ui
@@ -554,6 +545,9 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/StreamingFromMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/MegaInputDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/ChangeLogDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/ImportListWidgetItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/ImportMegaLinksDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/PasteMegaLinksDialog.ui
 
 
     ${CMAKE_CURRENT_LIST_DIR}/ui/TabSelector.ui
