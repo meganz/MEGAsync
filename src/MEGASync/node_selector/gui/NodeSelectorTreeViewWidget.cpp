@@ -29,6 +29,7 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
     mMegaApi(MegaSyncApp->getMegaApi()),
     mSelectType(mode),
     mManuallyResizedColumn(false),
+    mResizeEventsReceived(0),
     first(true),
     mUiBlocked(false),
     mNewFolderHandle(mega::INVALID_HANDLE),
@@ -78,6 +79,21 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
 
     ui->footer->setVisible(mSelectType->footerVisible());
     ui->incomingInfo->setVisible(false);
+
+    mResizeEventsTimer.setSingleShot(true);
+    mResizeEventsTimer.setInterval(10);
+    connect(&mResizeEventsTimer,
+            &QTimer::timeout,
+            this,
+            [this]()
+            {
+                if (mResizeEventsReceived > 3)
+                {
+                    mManuallyResizedColumn = true;
+                }
+
+                mResizeEventsReceived = 0;
+            });
 }
 
 NodeSelectorTreeViewWidget::~NodeSelectorTreeViewWidget()
@@ -387,7 +403,14 @@ void NodeSelectorTreeViewWidget::onSectionResized()
     if (!mManuallyResizedColumn && ui->tMegaFolders->header()->rect().contains(
                                        ui->tMegaFolders->mapFromGlobal(QCursor::pos())))
     {
-        mManuallyResizedColumn = true;
+        mResizeEventsReceived++;
+
+        // Protect against clicking on the header to show the sort indicator.
+        // Only if the event is received 3 times in an span of 10ms, it is a real resize
+        if (!mResizeEventsTimer.isActive())
+        {
+            mResizeEventsTimer.start();
+        }
     }
 }
 

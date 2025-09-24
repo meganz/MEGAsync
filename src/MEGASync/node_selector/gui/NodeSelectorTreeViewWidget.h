@@ -203,6 +203,8 @@ private slots:
 
 private:
     bool mManuallyResizedColumn;
+    int mResizeEventsReceived;
+    QTimer mResizeEventsTimer;
 
     virtual bool isAllowedToEnterInIndex(const QModelIndex& idx);
     void checkBackForwardButtons();

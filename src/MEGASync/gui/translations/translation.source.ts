@@ -5186,10 +5186,6 @@ Enter a different name.</translation>
         <translatorcomment>Second part of the messagebox text when the user is about to remove permanently a node. SAT-426</translatorcomment>
         <translation>You cannot undo this action</translation>
     </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>NodeSelectorTreeViewWidgetCloudDrive</name>
