@@ -78,6 +78,9 @@ color: #E31B57; /*colorToken.text-error*/
         <property name="type" stdset="0">
          <string notr="true">mega</string>
         </property>
+        <property name="dimension" stdset="0">
+         <string notr="true">small</string>
+        </property>
        </widget>
       </item>
       <item>

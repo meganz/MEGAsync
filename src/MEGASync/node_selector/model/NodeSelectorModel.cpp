@@ -1810,32 +1810,6 @@ QVariant NodeSelectorModel::headerData(int section, Qt::Orientation orientation,
                 }
             }
         }
-        else if (role == Qt::ToolTipRole)
-        {
-            switch (section)
-            {
-                case STATUS:
-                {
-                    return tr("Sort by status");
-                }
-                case USER:
-                {
-                    return tr("Sort by owner name");
-                }
-                case ACCESS:
-                {
-                    return tr("Sort by access");
-                }
-                case DATE:
-                {
-                    return tr("Sort by date");
-                }
-                case NODE:
-                {
-                    return tr("Sort by name");
-                }
-            }
-        }
         else if (role == toInt(HeaderRoles::ICON_ROLE))
         {
             if (section == USER)
