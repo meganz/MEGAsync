@@ -1287,5 +1287,9 @@
         <file alias="pc-dark_medium_solid">images/themed/tokenizable/pc-dark_medium_solid.svg</file>
         <file alias="folder-plus-01_small_thin_outline">images/themed/tokenizable/folder-plus-01_small_thin_outline.svg</file>
         <file alias="alert-triangle_small_regular_outline">images/themed/tokenizable/alert-triangle_small_regular_outline.svg</file>
+        <file alias="arrow-down-circle_small_thin_outline">images/themed/tokenizable/arrow-down-circle_small_thin_outline.svg</file>
+        <file alias="clock-rotate_small_thin_outline">images/themed/tokenizable/clock-rotate_small_thin_outline.svg</file>
+        <file alias="copy-02_small_thin_outline">images/themed/tokenizable/copy-02_small_thin_outline.svg</file>
+        <file alias="pen-2_small_thin_outline">images/themed/tokenizable/pen-2_small_thin_outline.svg</file>
     </qresource>
 </RCC>
