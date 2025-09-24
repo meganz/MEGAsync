@@ -1,13 +1,16 @@
 import QtQuick 2.15
+import QtQuick.Layouts 1.15
 
 import common 1.0
 
 import components.texts 1.0 as Texts
 import components.buttons 1.0
 import components.checkBoxes 1.0
+import components.images 1.0
 
 import QmlDialog 1.0
 import MessageDialogButtonInfo 1.0
+import MessageDialogData 1.0
 
 QmlDialog {
     id: window
@@ -17,10 +20,9 @@ QmlDialog {
 
     property MessageDialogMediumSizes sizes: MessageDialogMediumSizes {}
 
-    property real totalWidth: Math.max(sizes.defaultMinimumWidth,
-                                       contentColum.width + sizes.numberOfMargins * sizes.contentMargin)
-    property real totalHeight: Math.max(sizes.defaultMinimumHeight,
-                                        contentColum.height + sizes.numberOfMargins * sizes.contentMargin + Constants.focusAdjustment)
+    property real totalWidth: Math.max(sizes.defaultMinimumWidth, contentColum.implicitWidth + sizes.numberOfMargins * sizes.contentMargin)
+    property real totalHeight: Math.max(sizes.defaultMinimumHeight, contentColum.implicitHeight + sizes.numberOfMargins * sizes.contentMargin)
+
     width: window.totalWidth
     height: window.totalHeight
     flags: OS.isWindows() ? Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint | Qt.WindowTitleHint | Qt.WindowCloseButtonHint : Qt.Dialog;
@@ -35,202 +37,218 @@ QmlDialog {
     title: messageDialogDataAccess ? messageDialogDataAccess.title : ""
     visible: false
 
-    Column {
+    onVisibleChanged:
+    {
+        if (window.visible) {
+            setMessageDialogImageProperties();
+        }
+    }
+
+    function setMessageDialogImageProperties()
+    {
+        if (messageDialogDataAccess !== null)
+        {
+            if (messageDialogDataAccess.type === MessageDialogData.Type.QUESTION)
+            {
+                imageItem.source = Images.dialogMessageQuestion;
+                imageItem.color = ColorTheme.supportInfo;
+            }
+            else if (messageDialogDataAccess.type === MessageDialogData.Type.INFORMATION)
+            {
+                imageItem.source = Images.dialogMessageInformation;
+                imageItem.color = ColorTheme.supportInfo;
+            }
+            else if (messageDialogDataAccess.type === MessageDialogData.Type.WARNING)
+            {
+                imageItem.source = Images.dialogMessageWarning;
+                imageItem.color = ColorTheme.supportWarning;
+            }
+            else if (messageDialogDataAccess.type === MessageDialogData.Type.CRITICAL)
+            {
+                imageItem.source = Images.dialogMessageCritical;
+                imageItem.color = ColorTheme.supportError;
+            }
+        }
+    }
+
+    ColumnLayout {
         id: contentColum
 
         anchors {
             left: parent.left
+            right: parent.right
             top: parent.top
-            topMargin: sizes.contentMargin
-            leftMargin: sizes.contentMargin
-            rightMargin: sizes.contentMargin
-            bottomMargin: sizes.contentMargin + Constants.focusAdjustment
+            margins: sizes.contentMargin
         }
-        width: topContentRow.width
-        height: topContentRow.height + contentColum.spacing + bottomButtonsRow.height
+
         spacing: sizes.defaultSpacing
 
-        Row {
+        RowLayout {
             id: topContentRow
 
-            width: imageItem.width + topContentRow.spacing + textColumn.width
+            Layout.fillWidth: true
+            Layout.fillHeight: true
             spacing: sizes.topContentRowSpacing
 
-            Image {
+            SvgImage {
                 id: imageItem
 
                 width: sizes.iconSize
                 height: sizes.iconSize
-                source: messageDialogDataAccess ? messageDialogDataAccess.imageUrl : ""
+                Layout.preferredHeight: height
+                Layout.preferredWidth: width
                 sourceSize: Qt.size(sizes.iconSize, sizes.iconSize)
                 visible: imageItem.source !== ""
             }
 
-            Item {
-                width: sizes.rightContentWidth
-                height: Math.max(imageItem.height, textColumn.height)
+            Column {
+                id: textColumn
 
-                Column {
-                    id: textColumn
+                Layout.fillWidth: true
+                spacing: sizes.textColumnSpacing
 
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: parent.width
-                    spacing: sizes.textColumnSpacing
+                TextLoader {
+                    id: title
 
-                    TextLoader {
-                        textInfo: messageDialogDataAccess ? messageDialogDataAccess.titleTextInfo : null
-                        textLineHeight: sizes.titleTextLineHeight
-                        textPixelSize: Texts.Text.Size.MEDIUM_LARGE
-                        textWeight: Font.DemiBold
-                    }
-
-                    TextLoader {
-                        textInfo: messageDialogDataAccess ? messageDialogDataAccess.descriptionTextInfo : null
-                        textLineHeight: sizes.descriptionTextLineHeight
-                        textPixelSize: Texts.Text.Size.NORMAL
-                        textWeight: Font.Normal
-                    }
-
-                    CheckBox {
-                        id: checkBoxItem
-                        leftPadding: 0
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                        }
-                        text: messageDialogDataAccess ? messageDialogDataAccess.checkbox.text : ""
-                        checked: messageDialogDataAccess ? messageDialogDataAccess.checkbox.checked : false
-                        visible: checkBoxItem.text !== ""
-                        onCheckedChanged: {
-                            messageDialogComponentAccess.setChecked(checkBoxItem.checked);
-                        }
-                    }
+                    textInfo: messageDialogDataAccess ? messageDialogDataAccess.titleTextInfo : null
+                    textLineHeight: sizes.titleTextLineHeight
+                    textPixelSize: Texts.Text.Size.MEDIUM_LARGE
+                    textWeight: Font.DemiBold
                 }
 
-            }
+                TextLoader {
+                    id: description
 
-        } // Row: topContentRow
-
-        Item {
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            height: bottomButtonsRow.height
-
-            Row {
-                id: bottomButtonsRow
-
-                anchors {
-                    right: parent.right
-                    rightMargin: Constants.focusAdjustment
+                    textInfo: messageDialogDataAccess ? messageDialogDataAccess.descriptionTextInfo : null
+                    textLineHeight: sizes.descriptionTextLineHeight
+                    textPixelSize: Texts.Text.Size.NORMAL
+                    textWeight: Font.Normal
                 }
-                spacing: sizes.bottomButtonsRowSpacing
 
-                Repeater {
-                    model: messageDialogDataAccess ? messageDialogDataAccess.buttons : []
+                CheckBox {
+                    id: checkBoxItem
 
-                    Loader {
-                        id: buttonLoader
+                    leftPadding: 0
+                    anchors.left: parent.left
+                    text: messageDialogDataAccess ? messageDialogDataAccess.checkbox.text : ""
+                    checked: messageDialogDataAccess ? messageDialogDataAccess.checkbox.checked : false
+                    visible: checkBoxItem.text !== ""
+                    onCheckedChanged: {
+                        messageDialogComponentAccess.setChecked(checkBoxItem.checked);
+                    }
+                }
+            }
+        }
 
-                        property string buttonText: model.modelData ? model.modelData.text : ""
-                        property url buttonIcon: model.modelData ? model.modelData.iconUrl : ""
-                        property var onClicked: () => {
-                            if (model.modelData) {
-                                messageDialogComponentAccess.buttonClicked(model.modelData.type);
-                            }
-                            window.accept();
+        Row {
+            id: bottomButtonsRow
+
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            spacing: sizes.bottomButtonsRowSpacing
+            layoutDirection: Qt.RightToLeft
+
+            Repeater {
+                model: messageDialogDataAccess ? messageDialogDataAccess.buttons : []
+
+                Loader {
+                    id: buttonLoader
+
+                    property string buttonText: model.modelData ? model.modelData.text : ""
+                    property url buttonIcon: model.modelData ? model.modelData.iconUrl : ""
+                    property var onClicked: () => {
+                        if (model.modelData) {
+                            messageDialogComponentAccess.buttonClicked(model.modelData.type);
                         }
+                        window.accept();
+                    }
 
-                        sourceComponent: {
-                            switch(model.modelData.style) {
-                                case MessageDialogButtonInfo.ButtonStyle.PRIMARY:
-                                    return primaryButtonComponent;
-                                case MessageDialogButtonInfo.ButtonStyle.SECONDARY:
-                                    return secondaryButtonComponent;
-                                case MessageDialogButtonInfo.ButtonStyle.LINK:
-                                    return linkButtonComponent;
-                                case MessageDialogButtonInfo.ButtonStyle.TEXT:
-                                    return textButtonComponent;
-                                case MessageDialogButtonInfo.ButtonStyle.OUTLINE:
-                                default:
-                                    return outlineButtonComponent;
-                            }
+                    sourceComponent: {
+                        switch(model.modelData.style) {
+                            case MessageDialogButtonInfo.ButtonStyle.PRIMARY:
+                                return primaryButtonComponent;
+                            case MessageDialogButtonInfo.ButtonStyle.SECONDARY:
+                                return secondaryButtonComponent;
+                            case MessageDialogButtonInfo.ButtonStyle.LINK:
+                                return linkButtonComponent;
+                            case MessageDialogButtonInfo.ButtonStyle.TEXT:
+                                return textButtonComponent;
+                            case MessageDialogButtonInfo.ButtonStyle.OUTLINE:
+                            default:
+                                return outlineButtonComponent;
                         }
+                    }
 
-                        Component {
-                            id: primaryButtonComponent
+                    Component {
+                        id: primaryButtonComponent
 
-                            PrimaryButton {
-                                text: buttonLoader.buttonText
-                                icons {
-                                    source: buttonLoader.buttonIcon
-                                    position: Icon.Position.LEFT
-                                }
-                                onClicked: buttonLoader.onClicked()
+                        PrimaryButton {
+                            text: buttonLoader.buttonText
+                            icons {
+                                source: buttonLoader.buttonIcon
+                                position: Icon.Position.LEFT
                             }
+                            onClicked: buttonLoader.onClicked()
                         }
+                    }
 
-                        Component {
-                            id: outlineButtonComponent
+                    Component {
+                        id: outlineButtonComponent
 
-                            OutlineButton {
-                                text: buttonLoader.buttonText
-                                icons {
-                                    source: buttonLoader.buttonIcon
-                                    position: Icon.Position.LEFT
-                                }
-                                onClicked: buttonLoader.onClicked()
+                        OutlineButton {
+                            text: buttonLoader.buttonText
+                            icons {
+                                source: buttonLoader.buttonIcon
+                                position: Icon.Position.LEFT
                             }
+                            onClicked: buttonLoader.onClicked()
                         }
+                    }
 
-                        Component {
-                            id: secondaryButtonComponent
+                    Component {
+                        id: secondaryButtonComponent
 
-                            SecondaryButton {
-                                text: buttonLoader.buttonText
-                                icons {
-                                    source: buttonLoader.buttonIcon
-                                    position: Icon.Position.LEFT
-                                }
-                                onClicked: buttonLoader.onClicked()
+                        SecondaryButton {
+                            text: buttonLoader.buttonText
+                            icons {
+                                source: buttonLoader.buttonIcon
+                                position: Icon.Position.LEFT
                             }
+                            onClicked: buttonLoader.onClicked()
                         }
+                    }
 
-                        Component {
-                            id: linkButtonComponent
+                    Component {
+                        id: linkButtonComponent
 
-                            LinkButton {
-                                text: buttonLoader.buttonText
-                                icons {
-                                    source: buttonLoader.buttonIcon
-                                    position: Icon.Position.LEFT
-                                }
-                                onClicked: buttonLoader.onClicked()
+                        LinkButton {
+                            text: buttonLoader.buttonText
+                            icons {
+                                source: buttonLoader.buttonIcon
+                                position: Icon.Position.LEFT
                             }
+                            onClicked: buttonLoader.onClicked()
                         }
+                    }
 
-                        Component {
-                            id: textButtonComponent
+                    Component {
+                        id: textButtonComponent
 
-                            TextButton {
-                                text: buttonLoader.buttonText
-                                icons {
-                                    source: buttonLoader.buttonIcon
-                                    position: Icon.Position.LEFT
-                                }
-                                onClicked: buttonLoader.onClicked()
+                        TextButton {
+                            text: buttonLoader.buttonText
+                            icons {
+                                source: buttonLoader.buttonIcon
+                                position: Icon.Position.LEFT
                             }
+                            onClicked: buttonLoader.onClicked()
                         }
+                    }
 
-                    } // Loader: buttonLoader
+                } // Loader: buttonLoader
 
-                } // Repeater
+            } // Repeater
 
-            } // Row: bottomButtonsRow
-
-        } // Item
+        } // Row: bottomButtonsRow
 
     } // Column: contentColum
-
 }

@@ -9,7 +9,6 @@
 #include <QUrl>
 
 #include <functional>
-#include <optional>
 
 class MessageDialogComponent;
 
@@ -115,7 +114,6 @@ struct MessageDialogInfo
     QMap<QMessageBox::StandardButton, QString> buttonsText;
     QMap<QMessageBox::StandardButton, QUrl> buttonsIcons;
     Qt::TextFormat textFormat;
-    QUrl imageUrl;
     bool enqueue;
     bool hideCloseButton;
     QString checkboxText;
@@ -139,7 +137,7 @@ class MessageDialogData: public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString title READ getTitle CONSTANT)
-    Q_PROPERTY(QUrl imageUrl READ getImageUrl NOTIFY imageChanged)
+    Q_PROPERTY(Type type READ getType NOTIFY typeChanged)
     Q_PROPERTY(MessageDialogTextInfo titleTextInfo READ getTitleTextInfo CONSTANT)
     Q_PROPERTY(MessageDialogTextInfo descriptionTextInfo READ getDescriptionTextInfo CONSTANT)
     Q_PROPERTY(QVariantList buttons READ getButtons NOTIFY buttonsChanged)
@@ -153,6 +151,7 @@ public:
         QUESTION = 3,
         CRITICAL = 4,
     };
+    Q_ENUM(Type)
 
     explicit MessageDialogData(Type type, MessageDialogInfo info, QObject* parent = nullptr);
     virtual ~MessageDialogData() = default;
@@ -160,7 +159,6 @@ public:
     Type getType() const;
     QWidget* getParentWidget() const;
     QString getTitle() const;
-    QUrl getImageUrl() const;
     MessageDialogTextInfo getTitleTextInfo() const;
     MessageDialogTextInfo getDescriptionTextInfo() const;
     QVariantList getButtons() const;
@@ -173,12 +171,11 @@ public:
 
 signals:
     void typeChanged();
-    void imageChanged();
     void buttonsChanged();
     void checkboxChanged();
 
 private:
-    std::optional<Type> mType;
+    Type mType;
     MessageDialogInfo mInfo;
     QPointer<MessageDialogResult> mResult;
     QMap<QMessageBox::StandardButton, MessageDialogButtonInfo> mButtons;
