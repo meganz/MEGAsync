@@ -10,7 +10,6 @@ set(DESKTOP_APP_NODE_SELECTOR_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/gui/NodeSelectorTreeViewWidgetSpecializations.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/NodeSelector.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/NodeSelectorLoadingDelegate.h
-    ${CMAKE_CURRENT_LIST_DIR}/gui/SearchLineEdit.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/NodeSelectorSpecializations.h
 )
 
@@ -26,7 +25,6 @@ set(DESKTOP_APP_NODE_SELECTOR_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/gui/NodeSelectorTreeViewWidgetSpecializations.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/NodeSelector.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/NodeSelectorLoadingDelegate.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/gui/SearchLineEdit.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/NodeSelectorSpecializations.cpp
 )
 
@@ -34,7 +32,6 @@ set(DESKTOP_APP_NODE_SELECTOR_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/NodeSelectorTreeViewWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/NodeSelectorLoadingDelegate.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/NodeSelector.ui
-    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/SearchLineEdit.ui
 )
 
 set_property(TARGET ${ExecutableTarget}

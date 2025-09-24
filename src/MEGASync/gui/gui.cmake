@@ -62,18 +62,6 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NodeNameSetterDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NewFolderDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/RenameNodeDialog.h
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorDelegates.h
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorProxyModel.h
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorModel.h
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorModelSpecialised.h
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorModelItem.h
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/RestoreNodeManager.h
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeView.h
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeViewWidget.h
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelector.h
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorLoadingDelegate.h
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorSpecializations.h
     ${CMAKE_CURRENT_LIST_DIR}/qml/QmlClipboard.h
     ${CMAKE_CURRENT_LIST_DIR}/qml/QmlDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/qml/QmlDialogWrapper.h
@@ -216,18 +204,6 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NewFolderDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/RenameNodeDialog.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorDelegates.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorProxyModel.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorModel.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorModelSpecialised.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/NodeSelectorModelItem.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model/RestoreNodeManager.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeView.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeViewWidget.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelector.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorLoadingDelegate.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/NodeSelectorSpecializations.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qml/QmlClipboard.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qml/QmlDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qml/QmlDialogWrapper.cpp
@@ -312,9 +288,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/win/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/VerifyLockMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/AccountTypeWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelectorTreeViewWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelectorLoadingDelegate.ui
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelector.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
@@ -324,9 +297,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/macx/MegaProgressCustomDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/VerifyLockMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelector.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/AccountTypeWidget.ui
 )
@@ -340,9 +310,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/linux/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/VerifyLockMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/AccountTypeWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui
-    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelector.ui
 )
 
 # Resources and platform-specific additions
