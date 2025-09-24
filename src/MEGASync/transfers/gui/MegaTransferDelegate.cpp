@@ -30,8 +30,8 @@ MegaTransferDelegate::~MegaTransferDelegate()
 }
 
 void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
-{   
-    auto row (index.row());
+{
+    auto row(index.row());
 
     if (index.isValid())
     {
@@ -132,15 +132,15 @@ TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QM
         if(row >= mTransferItems.size())
         {
             item = mProxyModel->createTransferManagerItem(mView);
-            TokenParserWidgetManager::instance()->applyCurrentTheme(item);
-            TokenParserWidgetManager::instance()->polish(item);
-
             mTransferItems.append(item);
         }
         else
         {
             item = mTransferItems.at(row);
         }
+
+        TokenParserWidgetManager::instance()->applyCurrentTheme(item);
+        TokenParserWidgetManager::instance()->polish(item);
 
         item->setCurrentIndex(index);
     }

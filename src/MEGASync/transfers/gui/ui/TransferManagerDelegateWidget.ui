@@ -71,6 +71,9 @@ QPushButton
 
 #lTransferName
 {
+    color: #ff303233; /*colorToken.text-primary*/
+    font-weight: 400;
+    font-size: 12px;
     qProperty-alignment: 'AlignLeft | AlignBottom';
 }
 
@@ -78,25 +81,28 @@ QProgressBar
 {
     border:0px;
     border-radius: 2px;
-    background-color: #EEEEEE;
+    background-color: #ffd8d9db; /*colorToken.border-strong*/
+    height: 2px;
 }
 
 QProgressBar::chunk
 {
-  background-color: #6FD7FF;
+  background-color: #ff09bf5b; /*colorToken.indicator-green*/
   border-radius: 2px;
   border:0px;
 }
 
 #lDone, #lTotal
 {
- qProperty-alignment: 'AlignLeft';
+  color:  #ff303233; /*colorToken.text-primary*/
+  qProperty-alignment: 'AlignLeft';
+  font-size: 12px;
   padding: 0;
   margin: 0;
 }
 #lTotal
 {
-  font-weight: bold;
+  font-weight: 600;
 }
 #bItemSpeed
 {
@@ -156,10 +162,13 @@ QProgressBar::chunk
 
 #lItemTime
 {
-    color: #333333;
-    font-size: 12px;
-    font-weight: bold;
-    padding: 0;
+    color: #ff303233; /*colorToken.text-primary*/
+    font-size: 10px;
+    font-weight: 400;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
     margin: 0;
 }
 
@@ -337,7 +346,7 @@ QProgressBar::chunk
          </property>
          <layout class="QVBoxLayout" name="wNameLayout">
           <property name="spacing">
-           <number>0</number>
+           <number>8</number>
           </property>
           <property name="leftMargin">
            <number>0</number>

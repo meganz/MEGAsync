@@ -242,7 +242,7 @@ qproperty-hover_on: &quot;icon-secondary&quot;;
            <number>0</number>
           </property>
           <property name="leftMargin">
-           <number>20</number>
+           <number>0</number>
           </property>
           <property name="topMargin">
            <number>0</number>
@@ -263,7 +263,23 @@ qproperty-hover_on: &quot;icon-secondary&quot;;
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>1</width>
+              <width>24</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>8</width>
               <height>0</height>
              </size>
             </property>

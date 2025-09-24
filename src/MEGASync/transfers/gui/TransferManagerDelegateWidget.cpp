@@ -312,8 +312,8 @@ void TransferManagerDelegateWidget::updateTransferState()
 
     auto sizes = Utilities::getProgressSizes(transferedB, totalB);
 
-    mUi->lDone->setText(sizes.transferredBytes + QLatin1String("/"));
-    mUi->lTotal->setText(sizes.totalBytes + QLatin1String(" ") + sizes.units);
+    mUi->lDone->setText(sizes.transferredBytes + QLatin1String(" ") + QLatin1String("/"));
+    mUi->lTotal->setText(QLatin1String(" ") + sizes.totalBytes + QLatin1String(" ") + sizes.units);
 
     // Progress bar
     int permil = getData()->getState() & (TransferData::TRANSFER_COMPLETED | TransferData::TRANSFER_COMPLETING) ?
