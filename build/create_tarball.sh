@@ -159,7 +159,7 @@ ln -s ../../src/MEGAShellExtNautilus/MEGAShellExt.c $EXT_NAME/MEGAShellExt.c
 ln -s ../../src/MEGAShellExtNautilus/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
 ln -s ../../src/MEGAShellExtNautilus/CMakeLists.txt $EXT_NAME/CMakeLists.txt
 ln -s ../../src/MEGAShellExtNautilus/data $EXT_NAME/data
-ln -s ../MEGAsync/MEGAsync/debian.copyright $EXT_NAME/debian.copyright
+#ln -s ../MEGAsync/MEGAsync/debian.copyright $EXT_NAME/debian.copyright
 
 export GZIP=-9
 tar czfh $EXT_NAME.tar.gz --exclude Makefile --exclude '*.o' $EXT_NAME

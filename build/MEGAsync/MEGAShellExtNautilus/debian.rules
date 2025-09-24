@@ -1,16 +1,8 @@
 #!/usr/bin/make -f
-DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 25\|Questing Quokka\|Plucky Puffin\|Ubuntu 24\|Oracular Oriole\|Noble Numbat\|Ubuntu 23\|Mantic Minotaur\|Lunar Lobster\|Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
-
 export DH_VERBOSE=1
 
-MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
+%:
+	dh $@
 
-build:
-	sed -i -E "0,/nautilus-megasync \(([0-9.]*)[^\)]*\)/s//nautilus-megasync \(\1-$(MEGA_BUILD_ID).1)/" debian.changelog || :
-
-common-configure-impl::; 
-
-include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/class/cmake.mk
-
-DEB_DH_BUILDDEB_ARGS += $(DPKGXZ)
+override_dh_builddeb:
+	dh_builddeb -- -Zxz
