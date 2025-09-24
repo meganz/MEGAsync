@@ -307,7 +307,6 @@ void NodeSelectorTreeViewWidgetSearch::search(const QString& text)
 
     changeButtonsWidgetSizePolicy(true);
     ui->stackedWidget->setCurrentWidget(ui->treeViewPage);
-    ui->searchButtonsWidget->setVisible(false);
     auto search_model = static_cast<NodeSelectorModelSearch*>(mModel.get());
     search_model->searchByText(text);
 }
