@@ -41,6 +41,13 @@ bool TokenizableItem::stateHasChanged(const QStyleOption& option)
     return result;
 }
 
+bool TokenizableItem::themeHasChanged() const
+{
+    int currentThemeType = static_cast<int>(Preferences::instance()->getThemeType());
+
+    return mThemeType != currentThemeType;
+}
+
 void TokenizableItem::applyDefaultPixmap(QAbstractButton* button)
 {
     QIcon::State state = button->isChecked() ? QIcon::State::On : QIcon::State::Off;
@@ -95,6 +102,11 @@ void TokenizableItem::init(QAbstractButton* button)
     {
         mBaseTokens.fillTokens(button);
 
+        mInit = true;
+    }
+
+    if (themeHasChanged())
+    {
         // Init QIcon::Mode::Active and QIcon::Mode::Disabled
         if (!mBaseTokens.getNormalOffToken().isEmpty())
         {
@@ -128,8 +140,6 @@ void TokenizableItem::init(QAbstractButton* button)
             }
         }
     }
-
-    mInit = true;
 }
 
 bool TokenizableItem::specificStateHasChanged(const QStyle::State& state,

@@ -80,6 +80,7 @@ public:
 
 protected:
     bool stateHasChanged(const QStyleOption& option);
+    bool themeHasChanged() const;
 
     void applyDefaultPixmap(QAbstractButton* button);
     void applyPixmap(QAbstractButton* button,
