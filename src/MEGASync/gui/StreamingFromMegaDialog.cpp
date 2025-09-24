@@ -1,18 +1,19 @@
 #include "StreamingFromMegaDialog.h"
 
 #include "DialogOpener.h"
+#include "MegaInputDialog.h"
 #include "MegaNodeNames.h"
 #include "MessageDialogOpener.h"
 #include "NodeSelectorSpecializations.h"
 #include "Platform.h"
 #include "QTMegaApiManager.h"
 #include "ServiceUrls.h"
+#include "StatsEventHandler.h"
 #include "ui_StreamingFromMegaDialog.h"
 #include "Utilities.h"
 
 #include <QCloseEvent>
 #include <QFileDialog>
-#include <QInputDialog>
 #include <QtConcurrent/QtConcurrent>
 
 #include <regex>
@@ -47,9 +48,8 @@ StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, mega::M
     }
 
     setWindowTitle(tr("Stream from MEGA"));
-    ui->bCopyLink->setEnabled(false);
     ui->sFileInfo->setCurrentWidget(ui->pNothingSelected);
-    ui->bCopyLink->setDisabled(true);
+    ui->bCopyLink->hide();
     delegateTransferListener = std::make_unique<QTMegaTransferListener>(this->megaApi, this);
     megaApi->addTransferListener(delegateTransferListener.get());
     hideStreamingError();
@@ -85,19 +85,7 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
     }
 
     event->ignore();
-
-    MessageDialogInfo msgInfo;
-    msgInfo.titleText = tr("Stream from MEGA");
-    msgInfo.descriptionText = tr("Are you sure that you want to stop the streaming?");
-    msgInfo.parent = this;
-    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
-    {
-        if(msg->result() == QMessageBox::Yes)
-        {
-            accept();
-        }
-    };
-    MessageDialogOpener::question(msgInfo);
+    accept();
 }
 
 void StreamingFromMegaDialog::on_bFromCloud_clicked()
@@ -118,27 +106,29 @@ void StreamingFromMegaDialog::on_bFromCloud_clicked()
 
 void StreamingFromMegaDialog::on_bFromPublicLink_clicked()
 {
-    const QPointer<QInputDialog> inputDialog = new QInputDialog(this);
+    const QPointer<MegaInputDialog> inputDialog = new MegaInputDialog(this);
     inputDialog->setWindowTitle(tr("Open link"));
     inputDialog->setLabelText(tr("Enter a MEGA file link:"));
     inputDialog->resize(470, inputDialog->height());
 
-    DialogOpener::showDialog<QInputDialog>(inputDialog, [inputDialog, this]()
-    {
-        if (inputDialog->result() == QDialog::Accepted)
+    DialogOpener::showDialog<MegaInputDialog>(
+        inputDialog,
+        [inputDialog, this]()
         {
-            const auto link = inputDialog->textValue();
-            if (ServiceUrls::instance()->isFolderLink(link))
+            if (inputDialog->result() == QDialog::Accepted)
             {
-                showErrorMessage(tr("Folder links can't be streamed"));
+                const auto link = inputDialog->textValue();
+                if (ServiceUrls::instance()->isFolderLink(link))
+                {
+                    showErrorMessage(tr("Folder links can't be streamed"));
+                }
+                else
+                {
+                    mPublicLink = link;
+                    requestNodeToLinkProcessor();
+                }
             }
-            else
-            {
-                mPublicLink = link;
-                requestNodeToLinkProcessor();
-            }
-        }
-    });
+        });
 }
 
 void StreamingFromMegaDialog::requestNodeToLinkProcessor()
@@ -160,7 +150,11 @@ void StreamingFromMegaDialog::showErrorMessage(const QString& message)
 {
     MessageDialogInfo msgInfo;
     msgInfo.descriptionText = message;
+    QMap<QMessageBox::Button, QString> textsByButton;
+    textsByButton.insert(QMessageBox::Ok, tr("Close"));
+    msgInfo.buttonsText = textsByButton;
     msgInfo.parent = this;
+
     MessageDialogOpener::warning(msgInfo);
 }
 
@@ -195,7 +189,7 @@ void StreamingFromMegaDialog::onLinkInfoAvailable()
             //This deletes the LinkProcess
             ui->sFileInfo->setCurrentWidget(ui->pNothingSelected);
             streamURL.clear();
-            ui->bCopyLink->setDisabled(true);
+            ui->bCopyLink->hide();
         };
         MessageDialogOpener::warning(msgInfo);
     }
@@ -218,18 +212,7 @@ void StreamingFromMegaDialog::on_bClose_clicked()
         return;
     }
 
-    MessageDialogInfo msgInfo;
-    msgInfo.titleText = tr("Stream from MEGA");
-    msgInfo.descriptionText = tr("Are you sure that you want to stop the streaming?");
-    msgInfo.parent = this;
-    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
-    {
-        if(msg->result() == QMessageBox::Yes)
-        {
-            done(QDialog::Accepted);
-        }
-    };
-    MessageDialogOpener::question(msgInfo);
+    done(QDialog::Accepted);
 }
 
 void StreamingFromMegaDialog::on_bOpenDefault_clicked()
@@ -340,14 +323,14 @@ void StreamingFromMegaDialog::openStreamWithApp(QString app)
 
 void StreamingFromMegaDialog::showStreamingError()
 {
-    ui->toolButtonError->setVisible(true);
-    ui->labelError->setVisible(true);
+    ui->wErrorOQ->setVisible(true);
+    adjustSize();
 }
 
 void StreamingFromMegaDialog::hideStreamingError()
 {
-    ui->toolButtonError->setVisible(false);
-    ui->labelError->setVisible(false);
+    ui->wErrorOQ->setVisible(false);
+    adjustSize();
 }
 
 void StreamingFromMegaDialog::updateFileInfoFromNode(MegaNode *node)
@@ -390,9 +373,7 @@ void StreamingFromMegaDialog::updateFileInfo(QString fileName, LinkStatus status
         ui->lFileSize->setText(Utilities::getSizeString(mSelectedMegaNode->getSize()));
 
         QIcon typeIcon = Utilities::getExtensionPixmap(fileName, Utilities::AttributeType::MEDIUM);
-
         ui->lFileType->setIcon(typeIcon);
-        ui->lFileType->setIconSize(QSize(48, 48));
 
         QIcon statusIcon;
 
@@ -401,32 +382,26 @@ void StreamingFromMegaDialog::updateFileInfo(QString fileName, LinkStatus status
             statusIcon.addFile(QString::fromUtf8(":/images/streaming_on_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
             ui->bOpenDefault->setEnabled(true);
             ui->bOpenOther->setEnabled(true);
-            ui->bCopyLink->setEnabled(true);
-            ui->bCopyLink->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
-                                                           "stop: 0 rgb(246,247,250), stop: 1 rgb(232,233,235));"));
+            ui->bCopyLink->show();
         }
         else if(LinkStatus::TRANSFER_OVER_QUOTA == status)
         {
            statusIcon.addFile(QString::fromUtf8(":/images/streaming_error_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
             ui->bOpenDefault->setEnabled(true);
             ui->bOpenOther->setEnabled(true);
-            ui->bCopyLink->setEnabled(true);
-            ui->bCopyLink->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
-                                                           "stop: 0 rgb(246,247,250), stop: 1 rgb(232,233,235));"));
+            ui->bCopyLink->show();
         }
         else
         {
             statusIcon.addFile(QString::fromUtf8(":/images/streaming_off_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
             ui->bOpenDefault->setEnabled(false);
             ui->bOpenOther->setEnabled(false);
-            ui->bCopyLink->setEnabled(false);
-            ui->bCopyLink->setStyleSheet(QString());
+            ui->bCopyLink->hide();
         }
 
         ui->lState->setIcon(statusIcon);
         ui->lState->setIconSize(QSize(8, 8));
         ui->sFileInfo->setCurrentWidget(ui->pFileInfo);
-        ui->bCopyLink->setEnabled(true);
     }
 }
 

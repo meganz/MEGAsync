@@ -27,6 +27,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/ChangeLogDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/StreamingFromMegaDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/MegaProgressCustomDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/MegaInputDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/AvatarWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/MenuItemAction.h
     ${CMAKE_CURRENT_LIST_DIR}/StatusInfo.h
@@ -177,6 +178,7 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/ChangeLogDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/StreamingFromMegaDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/MegaProgressCustomDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MegaInputDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/AvatarWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/MenuItemAction.cpp
     ${CMAKE_CURRENT_LIST_DIR}/StatusInfo.cpp
@@ -303,7 +305,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/win/ImportMegaLinksDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/ImportListWidgetItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/ChangeLogDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/StreamingFromMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/MegaProgressCustomDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/StatusInfo.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/PSAwidget.ui
@@ -337,7 +338,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/macx/ImportMegaLinksDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/ImportListWidgetItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/ChangeLogDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/StreamingFromMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/MegaProgressCustomDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/StatusInfo.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/PSAwidget.ui
@@ -371,7 +371,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/linux/ImportMegaLinksDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/ImportListWidgetItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/ChangeLogDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/StreamingFromMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/MegaProgressCustomDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/StatusInfo.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/PSAwidget.ui
@@ -557,6 +556,10 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/ProgressIndicatorDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoteItemUi.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/BannerWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/StreamingFromMegaDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/MegaInputDialog.ui
+
+
     ${CMAKE_CURRENT_LIST_DIR}/ui/TabSelector.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/SearchLineEdit.ui
 )
