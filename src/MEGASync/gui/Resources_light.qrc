@@ -88,5 +88,6 @@
         <file alias="images/icons/tray/windows/open_links.svg">images/icons/tray/windows/open_links.svg</file>
         <file alias="images/icons/tray/macos/exit.svg">images/icons/tray/macos/exit.svg</file>
         <file alias="images/icons/tray/macos/settings.svg">images/icons/tray/macos/settings.svg</file>
+        <file alias="app-icon">images/themed/light/app-icon.svg</file>
     </qresource>
 </RCC>
