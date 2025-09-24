@@ -326,7 +326,6 @@ void InfoDialog::showEvent(QShowEvent *event)
 {
     emit ui->sTabs->currentChanged(ui->sTabs->currentIndex());
     isShown = true;
-    mTransferScanCancelUi->update();
 
     app->getNotificationController()->requestNotifications();
 

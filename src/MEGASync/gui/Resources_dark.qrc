@@ -171,5 +171,6 @@
         <file alias="arrow-down-small-thin-outline-support-success.svg">images/themed/dark/arrow-down-small-thin-outline-support-success.svg</file>
         <file alias="arrow-up-small-thin-outline-support-success.svg">images/themed/dark/arrow-up-small-thin-outline-support-success.svg</file>
         <file alias="app-icon">images/themed/dark/app-icon.svg</file>
+        <file alias="scanning_icon">images/themed/dark/scanning_icon.svg</file>
     </qresource>
 </RCC>

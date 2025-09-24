@@ -19,7 +19,6 @@ public:
     void hide(bool fromCancellation);
     void disableCancelling();
     void setInCancellingStage();
-    void update();
     bool isActive();
     void onFolderTransferUpdate(const FolderTransferUpdateEvent& event);
 

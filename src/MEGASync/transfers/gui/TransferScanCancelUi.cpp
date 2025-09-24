@@ -47,14 +47,6 @@ void TransferScanCancelUi::setInCancellingStage()
     }
 }
 
-void TransferScanCancelUi::update()
-{
-    if (mContainer->currentWidget() == mBlockingWidget)
-    {
-        mBlockingWidget->updateAnimation();
-    }
-}
-
 bool TransferScanCancelUi::isActive()
 {
     return (mContainer->currentWidget() == mBlockingWidget) ||
