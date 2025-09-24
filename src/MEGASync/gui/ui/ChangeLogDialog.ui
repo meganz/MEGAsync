@@ -42,23 +42,9 @@ color: #333333; /*colorToken.text-secondary*/
 border: none;
 border-bottom: 1px solid #FFFFFF; /*colorToken.border-strong*/
 }
-#lVersion, #lSDKVersion, #labelArchitecture, #lLGPL
-{
-  font-size: 12px;
-  color: #333333; /*colorToken.text-secondary*/
-}
-
-#lCopyright, #labelAllRightsReserved
-{
-  font-size: 12px;
-  color: #333333; /*colorToken.text-primary*/
-}
-
 
 #bPolicy, #bTerms, #bAck
 {
-  font-size: 12px;
-  color: #333333; /*colorToken.link-primary*/
   text-decoration: underline;
 }
 
@@ -269,6 +255,9 @@ border-bottom: 1px solid #FFFFFF; /*colorToken.border-strong*/
            <property name="text">
             <string notr="true">4.3.4</string>
            </property>
+           <property name="type" stdset="0">
+            <string notr="true">secondary</string>
+           </property>
           </widget>
          </item>
          <item>
@@ -282,6 +271,9 @@ border-bottom: 1px solid #FFFFFF; /*colorToken.border-strong*/
            <property name="text">
             <string notr="true">-x86</string>
            </property>
+           <property name="type" stdset="0">
+            <string notr="true">secondary</string>
+           </property>
           </widget>
          </item>
          <item>
@@ -294,6 +286,9 @@ border-bottom: 1px solid #FFFFFF; /*colorToken.border-strong*/
            </property>
            <property name="text">
             <string notr="true">(SDK)</string>
+           </property>
+           <property name="type" stdset="0">
+            <string notr="true">secondary</string>
            </property>
           </widget>
          </item>
@@ -519,6 +514,9 @@ border-bottom: 1px solid #FFFFFF; /*colorToken.border-strong*/
            </property>
            <property name="wordWrap">
             <bool>true</bool>
+           </property>
+           <property name="type" stdset="0">
+            <string notr="true">secondary</string>
            </property>
           </widget>
          </item>
