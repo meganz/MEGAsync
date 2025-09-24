@@ -30,7 +30,34 @@
 {
 	line-height: 16px;
 	color: #FFF3F4F4; /*colorToken.text-primary*/
-}</string>
+}
+
+#chevron[state=&quot;up&quot;]
+{
+qproperty-icon: url(:/chevron-up_small_thin_outline);
+qproperty-normal_off: &quot;icon-secondary&quot;;
+qproperty-normal_on: &quot;icon-secondary&quot;;
+qproperty-pressed_off: &quot;icon-secondary&quot;;
+qproperty-pressed_on: &quot;icon-secondary&quot;;
+qproperty-hover_off: &quot;icon-secondary&quot;;
+qproperty-hover_on: &quot;icon-secondary&quot;;
+}
+
+#chevron[state=&quot;down&quot;]
+{
+qproperty-icon: url(:/chevron-down_small_thin_outline);
+qproperty-normal_off: &quot;icon-secondary&quot;;
+qproperty-normal_on: &quot;icon-secondary&quot;;
+qproperty-pressed_off: &quot;icon-secondary&quot;;
+qproperty-pressed_on: &quot;icon-secondary&quot;;
+qproperty-hover_off: &quot;icon-secondary&quot;;
+qproperty-hover_on: &quot;icon-secondary&quot;;
+}
+
+</string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0">
    <property name="spacing">
@@ -105,7 +132,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="chevron">
+    <widget class="IconOnlyButton" name="chevron">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -156,6 +183,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>IconOnlyButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

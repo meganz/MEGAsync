@@ -329,6 +329,10 @@ void TransferManagerDelegateWidget::updateTransferState()
     mUi->lItemTime->setText(timeString);
     mUi->lItemTime->setToolTip(timeTooltip);
 
+    mUi->bItemSpeed->setVisible(mColumnManager->getCurrentTab() !=
+                                TransfersWidget::TM_TAB::FAILED_TAB);
+    mUi->lItemTime->setVisible(mColumnManager->getCurrentTab() !=
+                               TransfersWidget::TM_TAB::FAILED_TAB);
 
     mUi->lSyncIcon->setVisible(getData()->isSyncTransfer());
     if(getData()->isSyncTransfer())
@@ -577,7 +581,7 @@ bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
         // its original size)
         else if (watched == mUi->sStatus)
         {
-            mUi->pFailed->setFixedWidth(mUi->sStatus->width());
+            mUi->pFailed->setFixedWidth(mUi->sStatus->width() + 235);
         }
         else if(auto label = dynamic_cast<QWidget*>(watched))
         {

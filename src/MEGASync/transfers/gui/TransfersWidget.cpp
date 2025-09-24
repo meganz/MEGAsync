@@ -249,6 +249,8 @@ void TransfersWidget::onCheckCancelClearButton()
             ui->tCancelClearVisible->setProperty("state", QLatin1String("x"));
         }
     }
+
+    TokenParserWidgetManager::instance()->polish(ui->tCancelClearVisible);
 }
 
 void TransfersWidget::updateCancelClearButtonTooltip()

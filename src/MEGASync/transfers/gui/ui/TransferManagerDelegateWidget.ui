@@ -174,9 +174,8 @@ QProgressBar::chunk
 
 #tItemRetry
 {
-    border-radius: 10px;
-    background-color: #FFEDCC;
-    color: #333333;
+    background-color: #ff303233; /*colorToken.button-primary*/
+    color: #ff303233; /*colorToken.text-inverse-accent*/
     font-size: 12px;
     font-weight: bold;
     padding-left: 3px;
@@ -1054,7 +1053,7 @@ QProgressBar::chunk
                </widget>
               </item>
               <item>
-               <widget class="QToolButton" name="tItemRetry">
+               <widget class="QPushButton" name="tItemRetry">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -1075,6 +1074,12 @@ QProgressBar::chunk
                 </property>
                 <property name="text">
                  <string/>
+                </property>
+                <property name="type" stdset="0">
+                 <string notr="true">primary</string>
+                </property>
+                <property name="dimension" stdset="0">
+                 <string notr="true">small</string>
                 </property>
                </widget>
               </item>
