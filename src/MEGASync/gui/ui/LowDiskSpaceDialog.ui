@@ -128,13 +128,10 @@ background-color: #ffffff; /*colorToken.page-background*/
           </size>
          </property>
          <property name="pixmap" stdset="0">
-          <pixmap>:/drive-low-space</pixmap>
+          <pixmap/>
          </property>
          <property name="scaledContents" stdset="0">
           <bool>true</bool>
-         </property>
-         <property name="normal_on" stdset="0">
-          <string notr="true">icon-primary</string>
          </property>
          <property name="normal_off" stdset="0">
           <string notr="true">icon-primary</string>

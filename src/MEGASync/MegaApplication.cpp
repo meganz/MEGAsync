@@ -417,14 +417,6 @@ void MegaApplication::initStyleAndResources()
 {
     ThemeManager::instance()->init();
 
-#ifdef Q_OS_MAC
-    setObjectName(QLatin1String("osx"));
-#elif defined(Q_OS_WIN)
-    setObjectName(QLatin1String("win"));
-#else
-    setObjectName(QLatin1String("linux"));
-#endif
-
     setStyle(new MegaProxyStyle());
     QFile file(QLatin1String(":/style/WidgetsComponentsStyleSheetsSizes.css"));
     if (file.open(QIODevice::ReadOnly | QIODevice::Text))
