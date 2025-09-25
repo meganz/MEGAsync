@@ -307,7 +307,6 @@ target_sources_conditional(${ExecutableTarget}
     FLAG WIN32
     QT_AWARE
     PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/win/UploadToMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/MegaProgressCustomDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/LockedPopOver.ui
@@ -325,7 +324,6 @@ target_sources_conditional(${ExecutableTarget}
    FLAG APPLE
    QT_AWARE
    PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/macx/UploadToMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/MegaProgressCustomDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/VerifyLockMessage.ui
@@ -343,7 +341,6 @@ target_sources_conditional(${ExecutableTarget}
     FLAG UNIX AND NOT APPLE
     QT_AWARE
     PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/linux/UploadToMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/MegaProgressCustomDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/LockedPopOver.ui
@@ -510,6 +507,7 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveSyncConfirmationDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/BandwidthSettings.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/DownloadFromMegaDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/UploadToMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/PermissionsDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/PermissionsWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/ProxySettings.ui
