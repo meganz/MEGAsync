@@ -328,10 +328,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/macx/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/VerifyLockMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/NodeNameSetterDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/ViewLoadingScene.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/ViewLoadingMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/LowDiskSpaceDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/NotificationItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelector.ui
@@ -349,10 +345,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/linux/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/VerifyLockMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/NodeNameSetterDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/ViewLoadingScene.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/ViewLoadingMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/LowDiskSpaceDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/NotificationItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/AccountTypeWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui

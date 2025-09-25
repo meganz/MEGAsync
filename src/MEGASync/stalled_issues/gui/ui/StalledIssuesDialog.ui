@@ -651,14 +651,14 @@ border:none;
    <header>TokenizableItems/IconLabel.h</header>
   </customwidget>
   <customwidget>
-   <class>StalledIssuesView</class>
-   <extends>QTreeView</extends>
-   <header>StalledIssuesView.h</header>
-  </customwidget>
-  <customwidget>
    <class>TokenizableButton</class>
    <extends>QPushButton</extends>
    <header>TokenizableItems/TokenizableButtons.h</header>
+  </customwidget>
+  <customwidget>
+   <class>StalledIssuesView</class>
+   <extends>QTreeView</extends>
+   <header>StalledIssuesView.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

@@ -59,8 +59,6 @@ StalledIssueHeaderCase::SelectionInfo StalledIssueHeaderCase::getSelectionInfo(
     info.hasBeenExternallyChanged = header->checkForExternalChanges(info.selection.size() == 1);
 
     info.msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-    info.msgInfo.imageUrl = QLatin1String("qrc:/alert-circle");
-    info.msgInfo.imageSize = QSize(64, 64);
     info.msgInfo.textFormat = Qt::RichText;
     info.msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
     info.msgInfo.buttonsText.insert(

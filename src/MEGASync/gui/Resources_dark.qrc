@@ -172,7 +172,6 @@
         <file alias="arrow-up-small-thin-outline-support-success.svg">images/themed/dark/arrow-up-small-thin-outline-support-success.svg</file>
         <file alias="app-icon">images/themed/dark/app-icon.svg</file>
         <file alias="scanning_icon">images/themed/dark/scanning_icon.svg</file>
-        <file alias="alert-triangle">images/themed/dark/Stalled Issues/Header/alert-triangle.svg</file>
         <file alias="settings">images/themed/dark/settings.svg</file>
         <file alias="arrow_corner_right">images/themed/dark/Stalled Issues/Path/arrow_corner_right.svg</file>
     </qresource>
