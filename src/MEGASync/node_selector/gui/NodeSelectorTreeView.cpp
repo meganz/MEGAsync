@@ -10,6 +10,7 @@
 #include "NodeSelectorModelItem.h"
 #include "NodeSelectorProxyModel.h"
 #include "Platform.h"
+#include "ThemeManager.h"
 
 #include <QDrag>
 #include <QMenu>
@@ -124,23 +125,56 @@ void NodeSelectorTreeView::drawBranches(QPainter* painter,
 
     if (model()->hasChildren(index))
     {
+        bool expanded(isExpanded(index));
+
         QString icon;
-        if (isExpanded(index))
+        QPixmap pixmap;
+
+        // Get the cached pixmap. If not available, create new ones
+
+        if (expanded)
         {
-            icon = QLatin1String("chevron_down");
+            if (!mDownChevron.isNull())
+            {
+                pixmap = mDownChevron;
+            }
+            else
+            {
+                icon = QLatin1String("chevron_down");
+            }
         }
         else
         {
-            icon = QLatin1String("chevron-right");
+            if (!mRightChevron.isNull())
+            {
+                pixmap = mRightChevron;
+            }
+            else
+            {
+                icon = QLatin1String("chevron-right");
+            }
         }
 
-        painter->drawPixmap(opt.rect,
-                            Utilities::getColoredPixmap(icon,
-                                                        Utilities::AttributeType::SMALL |
-                                                            Utilities::AttributeType::THIN |
-                                                            Utilities::AttributeType::OUTLINE,
-                                                        QLatin1String("icon-secondary"),
-                                                        iconSize));
+        if (pixmap.isNull())
+        {
+            pixmap = Utilities::getColoredPixmap(icon,
+                                                 Utilities::AttributeType::SMALL |
+                                                     Utilities::AttributeType::THIN |
+                                                     Utilities::AttributeType::OUTLINE,
+                                                 QLatin1String("icon-secondary"),
+                                                 iconSize);
+
+            if (expanded)
+            {
+                mDownChevron = pixmap;
+            }
+            else
+            {
+                mRightChevron = pixmap;
+            }
+        }
+
+        painter->drawPixmap(opt.rect, pixmap);
     }
 }
 
@@ -723,6 +757,17 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent* event)
     {
         customMenu.exec(mapToGlobal(event->pos()));
     }
+}
+
+bool NodeSelectorTreeView::event(QEvent* event)
+{
+    if (event->type() == ThemeManager::ThemeChanged)
+    {
+        mDownChevron = QPixmap();
+        mRightChevron = QPixmap();
+    }
+
+    return LoadingSceneView::event(event);
 }
 
 void NodeSelectorTreeView::startDrag(Qt::DropActions supportedActions)

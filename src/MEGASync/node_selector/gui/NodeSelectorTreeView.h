@@ -74,6 +74,8 @@ protected:
 
     void startDrag(Qt::DropActions supportedActions) override;
 
+    bool event(QEvent* event) override;
+
 signals:
     void deleteNodeClicked(const QList<MegaHandle>& handles, bool permanently);
     void leaveShareClicked(const QList<MegaHandle>& handles);
@@ -154,6 +156,10 @@ private:
 
     // Hover event
     std::unique_ptr<MegaDelegateHoverManager> mHoverManager;
+
+    // Branch pixmaps
+    mutable QPixmap mRightChevron;
+    mutable QPixmap mDownChevron;
 };
 
 #endif // NODESELECTORTREEVIEW_H
