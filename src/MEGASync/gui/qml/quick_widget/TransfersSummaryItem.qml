@@ -172,13 +172,16 @@ Rectangle {
                     }
 
                     onReleased: {
-                        // When released, check if mouse is still hovering
                         if (containsMouse) {
                             transferManagerButton.color = ColorTheme.buttonOutlineHover
                         } else {
-                            transferManagerButton.color = ColorTheme.buttonOutline
+                            // Restore the original binding
+                            transferManagerButton.color = Qt.binding(function() {
+                                return ColorTheme.buttonOutline
+                            })
                         }
                     }
+
 
                     onEntered: {
                         // Only change to hover color if not currently pressed
@@ -188,9 +191,11 @@ Rectangle {
                     }
 
                     onExited: {
-                        // Only change to normal if not currently pressed
                         if (!pressed) {
-                            transferManagerButton.color = ColorTheme.buttonOutline
+                            // Restore the original binding
+                            transferManagerButton.color = Qt.binding(function() {
+                                return ColorTheme.buttonOutline
+                            })
                         }
                     }
                 }
