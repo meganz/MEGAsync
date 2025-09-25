@@ -97,8 +97,9 @@ private slots:
 private:
     friend class NodeSelectorDelegate;
 
-    bool mousePressorReleaseEvent(QMouseEvent* event);
-    bool handleStandardMouseEvent(QMouseEvent* event);
+    void expandWithMouseReleaseEvent(QMouseEvent* event);
+    void selectFromMouseReleaseEvent(const QModelIndex& index, Qt::KeyboardModifiers modifiers);
+
     QModelIndex getIndexFromSourceModel(const QModelIndex& index) const;
     NodeSelectorProxyModel* proxyModel() const;
     std::shared_ptr<MegaNode> getDropNode(const QModelIndex& dropIndex);

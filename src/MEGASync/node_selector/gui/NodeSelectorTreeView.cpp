@@ -234,39 +234,25 @@ void NodeSelectorTreeView::drawRow(QPainter* painter,
 
 void NodeSelectorTreeView::mousePressEvent(QMouseEvent* event)
 {
-    bool accept = true;
-    if (style()->styleHint(QStyle::SH_ListViewExpand_SelectMouseType, 0, this) ==
-        QEvent::MouseButtonPress)
-    {
-        accept = mousePressorReleaseEvent(event);
-    }
-
-    if (accept)
-    {
-        QTreeView::mousePressEvent(event);
-    }
+    QTreeView::mousePressEvent(event);
 }
 
 void NodeSelectorTreeView::mouseReleaseEvent(QMouseEvent* event)
 {
-    bool accept = true;
     if (style()->styleHint(QStyle::SH_ListViewExpand_SelectMouseType, 0, this) ==
         QEvent::MouseButtonRelease)
     {
-        accept = mousePressorReleaseEvent(event);
+        expandWithMouseReleaseEvent(event);
     }
 
-    if (accept)
-    {
-        QTreeView::mouseReleaseEvent(event);
-    }
+    QTreeView::mouseReleaseEvent(event);
 }
 
 void NodeSelectorTreeView::mouseDoubleClickEvent(QMouseEvent* event)
 {
     if (event->button() != Qt::RightButton)
     {
-        QTreeView::mouseDoubleClickEvent(event);
+        QAbstractItemView::mouseDoubleClickEvent(event);
     }
 }
 
@@ -1065,64 +1051,62 @@ void NodeSelectorTreeView::onNavigateReady(const QModelIndex& index)
     }
 }
 
-bool NodeSelectorTreeView::mousePressorReleaseEvent(QMouseEvent* event)
+void NodeSelectorTreeView::expandWithMouseReleaseEvent(QMouseEvent* event)
 {
     QPoint pos = event->pos();
     QModelIndex index = indexAt(pos);
     if (!index.isValid())
     {
-        return false;
+        return;
     }
 
-    auto item = qvariant_cast<NodeSelectorModelItem*>(
-        index.data(toInt(NodeSelectorModelRoles::MODEL_ITEM_ROLE)));
-    if (item && item->isCloudDrive())
-    { // this line avoid to cloud drive being collapsed and at same time it allows to select it.
-        return handleStandardMouseEvent(event);
-    }
-    else
+    if (!index.data(toInt(NodeRowDelegateRoles::INIT_ROLE)).toBool())
     {
-        if (!index.data(toInt(NodeRowDelegateRoles::INIT_ROLE)).toBool())
+        int position = columnViewportPosition(0);
+        QModelIndex idx = index.parent();
+        while (rootIndex() != idx)
         {
-            int position = columnViewportPosition(0);
-            QModelIndex idx = index.parent();
-            while (rootIndex() != idx)
-            {
-                position += indentation();
-                idx = idx.parent();
-            }
-            QRect rect(position, event->pos().y(), indentation(), rowHeight(index));
+            position += indentation();
+            idx = idx.parent();
+        }
+        QRect rect(position, event->pos().y(), indentation(), rowHeight(index));
 
-            if (rect.contains(event->pos()))
+        if (rect.contains(event->pos()))
+        {
+            if (!isExpanded(index))
             {
-                if (!isExpanded(index))
+                auto sourceIndexToExpand = proxyModel()->mapToSource(index);
+                if (proxyModel()->sourceModel()->canFetchMore(sourceIndexToExpand))
                 {
-                    auto sourceIndexToExpand = proxyModel()->mapToSource(index);
-                    if (proxyModel()->sourceModel()->canFetchMore(sourceIndexToExpand))
-                    {
-                        proxyModel()->setExpandMapped(true);
-                        proxyModel()->sourceModel()->fetchMore(sourceIndexToExpand);
-                        setExpanded(index, true);
-                    }
-
-                    return handleStandardMouseEvent(event);
+                    proxyModel()->setExpandMapped(true);
+                    proxyModel()->sourceModel()->fetchMore(sourceIndexToExpand);
+                    // Simulate another press event to select the row
+                    selectFromMouseReleaseEvent(index, event->modifiers());
                 }
             }
         }
     }
-    return true;
 }
 
-bool NodeSelectorTreeView::handleStandardMouseEvent(QMouseEvent* event)
+void NodeSelectorTreeView::selectFromMouseReleaseEvent(const QModelIndex& index,
+                                                       Qt::KeyboardModifiers modifiers)
 {
-    if (event->type() == QMouseEvent::MouseButtonPress)
+    QItemSelectionModel* sel = selectionModel();
+
+    if (modifiers & Qt::ControlModifier)
     {
-        QAbstractItemView::mousePressEvent(event);
+        sel->select(index, QItemSelectionModel::Toggle | QItemSelectionModel::Rows);
     }
-    else if (event->type() == QMouseEvent::MouseButtonRelease)
+    else if (modifiers & Qt::ShiftModifier)
     {
-        QAbstractItemView::mouseReleaseEvent(event);
+        QModelIndex current = sel->currentIndex();
+        QItemSelection selection(current, index);
+        sel->select(selection, QItemSelectionModel::Select | QItemSelectionModel::Rows);
+    }
+    else
+    {
+        sel->select(index, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
     }
 
-    return false;
+    sel->setCurrentIndex(index, QItemSelectionModel::NoUpdate);
 }
