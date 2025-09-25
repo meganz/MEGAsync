@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>StatusInfo</class>
+ <widget class="QWidget" name="StatusInfo">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>121</width>
+    <height>31</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>31</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="mouseTracking">
+   <bool>false</bool>
+  </property>
+  <property name="windowTitle">
+   <string notr="true"/>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+#bIconState
+{
+border: none;
+margin-top: 4px;
+qproperty-iconSize: 16px 16px;
+}
+#bIconState[hasTransfers=&quot;true&quot;]
+{
+ background-color: #fffafafa; /*colorToken.surface-1*/
+}
+#lStatusDesc[hasTransfers=&quot;true&quot;]
+{
+background-color: #fffafafa; /*colorToken.surface-1*/
+}
+#bIconState[state=&quot;paused&quot;]
+{
+qproperty-icon: url(:/pause.svg);
+qproperty-iconSize: 16px 16px;
+}
+#bIconState[state=&quot;over_quota&quot;]
+{
+qproperty-icon: url(:/alert-circle.svg); 
+qproperty-iconSize: 16px 16px;
+}
+#bIconState[state=&quot;updated&quot;]
+{
+qproperty-icon:  url(:/check-circle.svg); 
+qproperty-iconSize: 16px 16px;
+}
+#bIconState[state=&quot;failed&quot;]
+{
+qproperty-icon: url(:/x-circle.svg);
+qproperty-iconSize: 16px 16px;
+}
+#bIconState[state=&quot;syncing&quot;],
+#bIconState[state=&quot;waiting&quot;], 
+#bIconState[state=&quot;indexing&quot;],
+#bIconState[state=&quot;transferring&quot;]
+{
+qproperty-icon: none;
+qproperty-iconSize: 16px 16px;
+}
+
+</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
+   <property name="spacing">
+    <number>4</number>
+   </property>
+   <property name="leftMargin">
+    <number>1</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QPushButton" name="bIconState">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>31</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="ElidedLabel" name="lStatusDesc">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
+     <property name="singleline" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="text" stdset="0">
+      <string>Starting</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ElidedLabel</class>
+   <extends>QFrame</extends>
+   <header location="global">ElidedLabel.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

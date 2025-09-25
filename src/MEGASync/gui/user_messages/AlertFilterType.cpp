@@ -26,21 +26,23 @@ void AlertFilterType::setActualFilter(MessageType type)
     {
         case MessageType::ALERT_CONTACTS:
         {
-            ui->liconType->setIcon(QIcon(QString::fromUtf8(":/images/contacts.png")).pixmap(6.0, 6.0));
+            ui->liconType->setIcon(QIcon(QString::fromUtf8(":/users.svg")).pixmap(16.0, 16.0));
             ui->wIconType->show();
             ui->lFilterActive->setText(tr("Contacts"));
             break;
         }
         case MessageType::ALERT_PAYMENTS:
         {
-            ui->liconType->setIcon(QIcon(QString::fromUtf8(":/images/payments.png")).pixmap(6.0, 6.0));
+            ui->liconType->setIcon(
+                QIcon(QString::fromUtf8(":/currency-dollar.svg")).pixmap(16.0, 16.0));
             ui->wIconType->show();
             ui->lFilterActive->setText(tr("Payment"));
             break;
         }
         case MessageType::ALERT_SHARES:
         {
-            ui->liconType->setIcon(QIcon(QString::fromUtf8(":/images/incoming_share.png")).pixmap(6.0, 6.0));
+            ui->liconType->setIcon(
+                QIcon(QString::fromUtf8(":/folder-users.svg")).pixmap(16.0, 16.0));
             ui->wIconType->show();
             ui->lFilterActive->setText(tr("Incoming Shares"));
             break;
@@ -50,6 +52,8 @@ void AlertFilterType::setActualFilter(MessageType type)
         default:
         {
             ui->wIconType->hide();
+            ui->liconType->setIcon(QIcon(QString::fromUtf8(":/bell.svg")).pixmap(16.0, 16.0));
+
             ui->lFilterActive->setText(tr("All notifications"));
             mAllFilterHasBeenSelected = true;
             break;

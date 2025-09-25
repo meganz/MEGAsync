@@ -23,6 +23,7 @@ QtObject {
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     readonly property url alertCircle: imagesQmlPath + "alert_circle.svg"
+    readonly property url arrowUpDown: imagesQmlPath + "arrows-up-down-circle.svg"
     readonly property url alertCircleFilled: imagesQmlPath + "alert_circle_filled.svg"
     readonly property url alertTriangle: imagesQmlPath + "alert_triangle.svg"
     readonly property url alertTrianglePng: imagesQmlPath + "alert-triangle.png"
@@ -63,6 +64,8 @@ QtObject {
     readonly property url slashCircle: imagesQmlPath + "slash-circle.svg"
     readonly property url playCircle: imagesQmlPath + "play-circle.svg"
     readonly property url power: imagesQmlPath + "power.svg"
+    readonly property url upArrow: imagesQmlPath + "up-arrow.svg"
+    readonly property url downArrow: imagesQmlPath + "down-arrow.svg"
 
     readonly property url dialogMessageQuestion: imagesQmlPath + "dialog_message_question.svg"
     readonly property url dialogMessageInformation: imagesQmlPath + "dialog_message_information.svg"
@@ -116,6 +119,8 @@ QtObject {
     readonly property url starEmpty: imagesSurveysPath + "star_empty.svg"
 
     readonly property url plus: imagesPath + "icon_plus.svg"
+    readonly property url pause_circle_medium_thin_outline: "qrc:/pause-circle_medium_thin_outline"
+    readonly property url play_circle_medium_thin_outline: "qrc:/play-circle_medium_thin_outline"
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Standard Icons

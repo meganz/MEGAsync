@@ -21,6 +21,7 @@
 
 #include <algorithm>
 #include <functional>
+#include <optional>
 
 using namespace mega;
 
@@ -3020,4 +3021,20 @@ QList<int> TransfersModel::getDragAndDropRows(const QMimeData *data)
     }
 
     return rows;
+}
+
+std::optional<TransferData::TransferTypes> TransfersModel::getTopTransferType()
+{
+    if (!rowCount())
+    {
+        return std::nullopt;
+    }
+
+    auto transfer = getTransfer(0);
+    if (!transfer)
+    {
+        return std::nullopt;
+    }
+
+    return transfer.data()->mType;
 }

@@ -23,8 +23,6 @@ set(DESKTOP_APP_TRANSFERS_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/gui/TransferManager.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/TransferManagerDelegateWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/TransferManagerLoadingItem.h
-    ${CMAKE_CURRENT_LIST_DIR}/gui/TransfersStatusWidget.h
-    ${CMAKE_CURRENT_LIST_DIR}/gui/TransfersSummaryWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/TransferScanCancelUi.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/TransferWidgetHeaderItem.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/TransfersWidget.h
@@ -55,8 +53,6 @@ set(DESKTOP_APP_TRANSFERS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/gui/TransferManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/TransferManagerDelegateWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/TransferManagerLoadingItem.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/gui/TransfersStatusWidget.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/gui/TransfersSummaryWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/TransferScanCancelUi.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/TransferWidgetHeaderItem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/TransfersWidget.cpp
@@ -75,12 +71,7 @@ target_sources_conditional(${ExecutableTarget}
    ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransfersWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransferManagerLoadingItem.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransferManagerDragBackDrop.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/InfoDialogTransfersWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/InfoDialogTransferDelegateWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/win/InfoDialogTransferLoadingItem.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransfersStatusWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransfersSummaryWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/SomeIssuesOccurredMessage.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/win/TransfersAccountInfoWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/win/MediaTypeFilterWidget.ui
 )
@@ -95,12 +86,7 @@ target_sources_conditional(${ExecutableTarget}
    ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransfersWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransferManagerLoadingItem.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransferManagerDragBackDrop.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/InfoDialogTransfersWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/InfoDialogTransferDelegateWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/macx/InfoDialogTransferLoadingItem.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransfersStatusWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransfersSummaryWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/SomeIssuesOccurredMessage.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/macx/TransfersAccountInfoWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/macx/MediaTypeFilterWidget.ui
 )
@@ -115,12 +101,7 @@ target_sources_conditional(${ExecutableTarget}
    ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransfersWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransferManagerLoadingItem.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransferManagerDragBackDrop.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/InfoDialogTransfersWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/InfoDialogTransferDelegateWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/linux/InfoDialogTransferLoadingItem.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransfersStatusWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransfersSummaryWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/SomeIssuesOccurredMessage.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/linux/TransfersAccountInfoWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/linux/MediaTypeFilterWidget.ui
 
@@ -154,6 +135,9 @@ set (DESKTOP_APP_TRANSFERS_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransferManagerStatusHeaderWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/ui/DuplicatedNodeDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/ui/DuplicatedNodeItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/SomeIssuesOccurredMessage.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/InfoDialogTransferDelegateWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/InfoDialogTransfersWidget.ui
 )
 
 target_sources(${ExecutableTarget}

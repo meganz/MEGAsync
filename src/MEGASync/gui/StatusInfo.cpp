@@ -1,5 +1,6 @@
 #include "StatusInfo.h"
 
+#include "ThemeManager.h"
 #include "ui_StatusInfo.h"
 #include "Utilities.h"
 #include <MegaApplication.h>
@@ -39,8 +40,9 @@ void StatusInfo::setState(TRANSFERS_STATES state)
             const QString statusText{tr("Paused")};
             ui->lStatusDesc->setToolTip(statusText);
             ui->lStatusDesc->setText(statusText);
-            ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/images/ico_pause_transfers_state.png")));
-            ui->bIconState->setIconSize(QSize(24, 24));
+            ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/pause.svg")));
+            ui->bIconState->setIconSize(QSize(16, 16));
+
             break;
         }
         case TRANSFERS_STATES::STATE_UPDATED:
@@ -55,16 +57,18 @@ void StatusInfo::setState(TRANSFERS_STATES state)
                 const QString statusText{tr("Account full")};
                 ui->lStatusDesc->setToolTip(statusText);
                 ui->lStatusDesc->setText(statusText);
-                ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/images/ico_menu_full.png")));
-                ui->bIconState->setIconSize(QSize(24, 24));
+                ui->bIconState->setIcon(
+                    Utilities::getCachedPixmap(QString::fromUtf8(":/alert-circle.svg")));
+                ui->bIconState->setIconSize(QSize(16, 16));
             }
             else
             {
                 const QString statusText{tr("Up to date")};
                 ui->lStatusDesc->setToolTip(statusText);
                 ui->lStatusDesc->setText(statusText);
-                ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/images/ico_menu_uptodate_state.png")));
-                ui->bIconState->setIconSize(QSize(24, 24));
+                ui->bIconState->setIcon(Utilities::getCachedPixmap(
+                    QString::fromUtf8(":/check-circle-indicator-green")));
+                ui->bIconState->setIconSize(QSize(16, 16));
             }
 
             break;
@@ -129,13 +133,15 @@ void StatusInfo::setState(TRANSFERS_STATES state)
             }
 
             setFailedText();
-            ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/images/transfer_manager/sidebar/cancel_all_ico_default.png")));
-            ui->bIconState->setIconSize(QSize(24, 24));
+            ui->bIconState->setIcon(
+                Utilities::getCachedPixmap(QString::fromUtf8(":/x-circle.svg")));
+            ui->bIconState->setIconSize(QSize(16, 16));
             break;
         }
         default:
             break;
     }
+    ui->bIconState->style()->polish(ui->bIconState);
 }
 
 void StatusInfo::update()
@@ -163,18 +169,17 @@ void StatusInfo::setOverQuotaState(bool oq)
     setState(mState);
 }
 
-QIcon StatusInfo::scanningIcon(int& index)
+QIcon StatusInfo::scanningIcon(int index)
 {
-    index = index%12;
-    index++;
-    return Utilities::getCachedPixmap(
-                                QString::fromUtf8(":/images/ico_menu_scanning_%1.png").arg(index));
+    return Utilities::getCachedPixmap(QString::fromUtf8(":/activity_indicator_%1.svg").arg(index));
 }
 
 void StatusInfo::scanningAnimationStep()
 {
+    const auto scanningIconImages = 30;
+    mScanningAnimationIndex = mScanningAnimationIndex % scanningIconImages;
+    ++mScanningAnimationIndex;
     ui->bIconState->setIcon(scanningIcon(mScanningAnimationIndex));
-    ui->bIconState->setIconSize(QSize(24, 24));
 }
 
 void StatusInfo::setFailedText()
@@ -194,4 +199,21 @@ bool StatusInfo::event(QEvent* event)
         setState(mState);
     }
     return QWidget::event(event);
+}
+
+void StatusInfo::setPropertyAndPropagateToChildren(const char* name, const QVariant& value)
+{
+    setProperty(name, value);
+    auto children = this->children();
+    for (auto child: children)
+    {
+        if (auto widget = dynamic_cast<QWidget*>(child))
+        {
+            widget->setProperty(name, value);
+            widget->style()->unpolish(widget);
+            widget->style()->polish(widget);
+        }
+    }
+    style()->unpolish(this);
+    style()->polish(this);
 }

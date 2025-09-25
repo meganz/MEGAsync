@@ -11,6 +11,8 @@
 #include "ServiceUrls.h"
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
+#include "ThemeManager.h"
+#include "TokenParserWidgetManager.h"
 #include "TransferManager.h"
 #include "TransferQuota.h"
 #include "ui_InfoDialog.h"
@@ -19,6 +21,7 @@
 #include "UserMessageDelegate.h"
 #include "Utilities.h"
 
+#include <QColor>
 #include <QDesktopServices>
 #include <QDesktopWidget>
 #include <QEvent>
@@ -39,8 +42,8 @@ using namespace mega;
 using namespace std::chrono;
 
 static constexpr int DEFAULT_MIN_PERCENTAGE{1};
-static constexpr int FONT_SIZE_BUSINESS_PX{20};
-static constexpr int FONT_SIZE_NO_BUSINESS_PX{14};
+static constexpr int FONT_SIZE_BUSINESS_PX{12};
+static constexpr int FONT_SIZE_NO_BUSINESS_PX{12};
 
 void InfoDialog::pauseResumeClicked()
 {
@@ -50,16 +53,6 @@ void InfoDialog::pauseResumeClicked()
 void InfoDialog::generalAreaClicked()
 {
     app->transferManagerActionClicked(TransfersWidget::ALL_TRANSFERS_TAB);
-}
-
-void InfoDialog::dlAreaClicked()
-{
-    app->transferManagerActionClicked(TransfersWidget::DOWNLOADS_TAB);
-}
-
-void InfoDialog::upAreaClicked()
-{
-    app->transferManagerActionClicked(TransfersWidget::UPLOADS_TAB);
 }
 
 void InfoDialog::pauseResumeHovered(QMouseEvent *event)
@@ -101,7 +94,6 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
     qtBugFixer(this)
 {
     ui->setupUi(this);
-
     connect(AppState::instance().get(),
             &AppState::appStateChanged,
             this,
@@ -117,36 +109,36 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
             });
 
     filterMenu = new FilterAlertWidget(this);
-    connect(filterMenu, SIGNAL(filterClicked(MessageType)),
-            this, SLOT(applyFilterOption(MessageType)));
+    connect(filterMenu,
+            SIGNAL(filterClicked(MessageType)),
+            this,
+            SLOT(applyFilterOption(MessageType)));
 
     setUnseenNotifications(0);
 
-    QSizePolicy sp_retain = ui->bNumberUnseenNotifications->sizePolicy();
-    sp_retain.setRetainSizeWhenHidden(true);
-    ui->bNumberUnseenNotifications->setSizePolicy(sp_retain);
-
     connect(ui->bTransferManager, SIGNAL(pauseResumeClicked()), this, SLOT(pauseResumeClicked()));
-    connect(ui->bTransferManager, SIGNAL(generalAreaClicked()), this, SLOT(generalAreaClicked()));
-    connect(ui->bTransferManager, SIGNAL(upAreaClicked()), this, SLOT(upAreaClicked()));
-    connect(ui->bTransferManager, SIGNAL(dlAreaClicked()), this, SLOT(dlAreaClicked()));
-
-    connect(ui->bTransferManager, SIGNAL(pauseResumeHovered(QMouseEvent *)), this, SLOT(pauseResumeHovered(QMouseEvent *)));
-    connect(ui->bTransferManager, SIGNAL(generalAreaHovered(QMouseEvent *)), this, SLOT(generalAreaHovered(QMouseEvent *)));
-    connect(ui->bTransferManager, SIGNAL(upAreaHovered(QMouseEvent *)), this, SLOT(upAreaHovered(QMouseEvent*)));
-    connect(ui->bTransferManager, SIGNAL(dlAreaHovered(QMouseEvent *)), this, SLOT(dlAreaHovered(QMouseEvent *)));
+    connect(ui->bTransferManager,
+            SIGNAL(transferManagerClicked()),
+            this,
+            SLOT(generalAreaClicked()));
 
     connect(ui->wSortNotifications, SIGNAL(clicked()), this, SLOT(onActualFilterClicked()));
 
-    connect(app->getTransfersModel(), &TransfersModel::transfersCountUpdated, this, &InfoDialog::updateTransfersCount);
-    connect(app->getTransfersModel(), &TransfersModel::transfersProcessChanged, this, &InfoDialog::onTransfersStateChanged);
+    connect(app->getTransfersModel(),
+            &TransfersModel::transfersCountUpdated,
+            this,
+            &InfoDialog::updateTransfersCount);
+    connect(app->getTransfersModel(),
+            &TransfersModel::transfersProcessChanged,
+            this,
+            &InfoDialog::onTransfersStateChanged);
 
     connect(mPreferences.get(),
             &Preferences::valueChanged,
             this,
             [this](const QString& key)
             {
-                if(key == Preferences::wasPausedKey)
+                if (key == Preferences::wasPausedKey)
                 {
                     ui->bTransferManager->setPaused(mPreferences->getGlobalPaused());
                 }
@@ -240,7 +232,6 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
 
     mState = StatusInfo::TRANSFERS_STATES::STATE_STARTING;
     ui->wStatus->setState(mState);
-
     megaApi = app->getMegaApi();
 
     actualAccountType = -1;
@@ -294,10 +285,6 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
     connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
             this, &InfoDialog::cancelScanning);
 
-    mResetTransferSummaryWidget.setInterval(2000);
-    mResetTransferSummaryWidget.setSingleShot(true);
-    connect(&mResetTransferSummaryWidget, &QTimer::timeout, this, &InfoDialog::onResetTransfersSummaryWidget);
-
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesChanged,
             this,  &InfoDialog::onStalledIssuesChanged);
     onStalledIssuesChanged();
@@ -338,12 +325,7 @@ PSA_info *InfoDialog::getPSAdata()
 void InfoDialog::showEvent(QShowEvent *event)
 {
     emit ui->sTabs->currentChanged(ui->sTabs->currentIndex());
-    if (ui->bTransferManager->alwaysAnimateOnShow || ui->bTransferManager->neverPainted )
-    {
-        ui->bTransferManager->showAnimated();
-    }
     isShown = true;
-    mTransferScanCancelUi->update();
 
     app->getNotificationController()->requestNotifications();
 
@@ -407,12 +389,7 @@ void InfoDialog::hideEvent(QHideEvent *event)
         }
     });
 
-
     isShown = false;
-    if (ui->bTransferManager->alwaysAnimateOnShow || ui->bTransferManager->neverPainted )
-    {
-        ui->bTransferManager->shrink();
-    }
     QDialog::hideEvent(event);
 
 #ifdef _WIN32
@@ -440,6 +417,8 @@ void InfoDialog::setUsage()
     auto accType = mPreferences->accountType();
 
     QString quotaStringFormat = QString::fromLatin1("<span style='color:%1; font-size:%2px;'>%3</span>");
+    QString quotaStringFormatNonColored =
+        QString::fromLatin1("<span style='font-size:%1px;'>%2</span>");
     // Get font to adapt size to widget if needed
     // Getting font from lUsedStorage considering both
     // lUsedStorage and lUsedTransfer use the same font.
@@ -456,12 +435,15 @@ void InfoDialog::setUsage()
     QString usedStorageString = Utilities::getSizeString(usedStorage);
     QString totalStorageString;
     QString storageUsageStringFormatted (usedStorageString);
-
+    auto textPrimaryColor =
+        TokenParserWidgetManager::instance()->getColor(QLatin1String("text-primary"));
+    auto textSecondaryColor =
+        TokenParserWidgetManager::instance()->getColor(QLatin1String("text-secondary"));
     if (Utilities::isBusinessAccount())
     {
         ui->sStorage->setCurrentWidget(ui->wBusinessStorage);
         ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_OK);
-        usageColorS = QString::fromLatin1("#333333");
+        usageColorS = textSecondaryColor.name(QColor::HexArgb);
         font.setPixelSize(FONT_SIZE_BUSINESS_PX);
     }
     else
@@ -477,13 +459,17 @@ void InfoDialog::setUsage()
                 case MegaApi::STORAGE_STATE_RED:
                 {
                     ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_OVER);
-                    usageColorS = QString::fromLatin1("#D90007");
+                    usageColorS = TokenParserWidgetManager::instance()
+                                      ->getColor(QLatin1String("text-error"))
+                                      .name(QColor::HexArgb);
                     break;
                 }
                 case MegaApi::STORAGE_STATE_ORANGE:
                 {
                     ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_WARNING);
-                    usageColorS = QString::fromLatin1("#F98400");
+                    usageColorS = TokenParserWidgetManager::instance()
+                                      ->getColor(QLatin1String("text-warning"))
+                                      .name(QColor::HexArgb);
                     break;
                 }
                 case MegaApi::STORAGE_STATE_UNKNOWN:
@@ -493,7 +479,7 @@ void InfoDialog::setUsage()
                 default:
                 {
                     ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_OK);
-                    usageColorS = QString::fromLatin1("#666666");
+                    usageColorS = textPrimaryColor.name(QColor::HexArgb);
                     break;
                 }
             }
@@ -523,14 +509,14 @@ void InfoDialog::setUsage()
     auto usedTransfer(mPreferences->usedBandwidth());
 
     QString usageColorT;
-    QString usedTransferString (Utilities::getSizeString(usedTransfer));
+    QString usedTransferString(Utilities::getSizeString(usedTransfer));
     QString totalTransferString;
-    QString transferUsageStringFormatted (usedTransferString);
+    QString transferUsageStringFormatted(usedTransferString);
 
     if (Utilities::isBusinessAccount())
     {
         ui->sQuota->setCurrentWidget(ui->wBusinessQuota);
-        usageColorT = QString::fromLatin1("#333333");
+        usageColorT = textSecondaryColor.name(QColor::HexArgb);
         ui->wCircularStorage->setTotalValueUnknown();
     }
     else
@@ -541,13 +527,16 @@ void InfoDialog::setUsage()
             case QuotaState::OK:
             {
                 ui->wCircularQuota->setState(CircularUsageProgressBar::STATE_OK);
-                usageColorT = QString::fromLatin1("#666666");
+                usageColorT = textPrimaryColor.name(QColor::HexArgb);
+
                 break;
             }
             case QuotaState::WARNING:
             {
                 ui->wCircularQuota->setState(CircularUsageProgressBar::STATE_WARNING);
-                usageColorT = QString::fromLatin1("#F98400");
+                usageColorS = TokenParserWidgetManager::instance()
+                                  ->getColor(QLatin1String("text-warning"))
+                                  .name(QColor::HexArgb);
                 break;
             }
             case QuotaState::OVERQUOTA:
@@ -555,7 +544,9 @@ void InfoDialog::setUsage()
             case QuotaState::FULL:
             {
                 ui->wCircularQuota->setState(CircularUsageProgressBar::STATE_OVER);
-                usageColorT = QString::fromLatin1("#D90007");
+                usageColorS = TokenParserWidgetManager::instance()
+                                  ->getColor(QLatin1String("text-error"))
+                                  .name(QColor::HexArgb);
                 break;
             }
             default:
@@ -600,7 +591,6 @@ void InfoDialog::setUsage()
 
     // Now compute the font size and set usage strings
     // Find correct font size so that the string does not overflow
-    auto defaultColor = QString::fromLatin1("#999999");
 
     auto contentsMargins = ui->lUsedStorage->contentsMargins();
     auto margin = contentsMargins.left() + contentsMargins.right() + 2 * ui->lUsedStorage->margin();
@@ -632,9 +622,9 @@ void InfoDialog::setUsage()
         storageUsageStringFormatted = Utilities::getTranslatedSeparatorTemplate().arg(
             usedStorageStringFormatted,
             totalStorageString);
-        storageUsageStringFormatted = quotaStringFormat.arg(defaultColor,
-                                                            QString::number(font.pixelSize()),
-                                                            storageUsageStringFormatted);
+        storageUsageStringFormatted =
+            quotaStringFormatNonColored.arg(QString::number(font.pixelSize()),
+                                            storageUsageStringFormatted);
     }
 
     ui->lUsedStorage->setText(storageUsageStringFormatted);
@@ -652,9 +642,9 @@ void InfoDialog::setUsage()
         transferUsageStringFormatted = Utilities::getTranslatedSeparatorTemplate().arg(
             usedTransferStringFormatted,
             totalTransferString);
-        transferUsageStringFormatted = quotaStringFormat.arg(defaultColor,
-                                                            QString::number(font.pixelSize()),
-                                                            transferUsageStringFormatted);
+        transferUsageStringFormatted =
+            quotaStringFormatNonColored.arg(QString::number(font.pixelSize()),
+                                            transferUsageStringFormatted);
     }
 
     ui->lUsedQuota->setText(transferUsageStringFormatted);
@@ -662,15 +652,21 @@ void InfoDialog::setUsage()
 
 void InfoDialog::updateTransfersCount()
 {
-    if(app->getTransfersModel())
+    if (auto transferModel = app->getTransfersModel())
     {
-        auto transfersCountUpdated = app->getTransfersModel()->getLastTransfersCount();
-
-        ui->bTransferManager->setDownloads(transfersCountUpdated.completedDownloads(), transfersCountUpdated.totalDownloads);
-        ui->bTransferManager->setUploads(transfersCountUpdated.completedUploads(), transfersCountUpdated.totalUploads);
-
-        ui->bTransferManager->setPercentUploads(transfersCountUpdated.completedUploadBytes, transfersCountUpdated.totalUploadBytes);
-        ui->bTransferManager->setPercentDownloads(transfersCountUpdated.completedDownloadBytes, transfersCountUpdated.totalDownloadBytes);
+        auto transfersCountUpdated = transferModel->getLastTransfersCount();
+        int ongoingTransfers =
+            (transfersCountUpdated.totalDownloads != transfersCountUpdated.completedDownloads()) +
+            (transfersCountUpdated.totalUploads != transfersCountUpdated.completedUploads());
+        auto totalTransfers =
+            transfersCountUpdated.totalDownloads + transfersCountUpdated.totalUploads;
+        auto completedTransfers =
+            transfersCountUpdated.completedDownloads() + transfersCountUpdated.completedUploads();
+        ui->bTransferManager->setTransfersCount(completedTransfers, totalTransfers);
+        auto topTransferType = transferModel->getTopTransferType();
+        ui->bTransferManager->setTopTransferDirection(topTransferType ==
+                                                      TransferData::TransferType::TRANSFER_UPLOAD);
+        ui->bTransferManager->setOngoingTransfers(ongoingTransfers);
     }
 }
 
@@ -686,12 +682,6 @@ void InfoDialog::onTransfersStateChanged()
             {
                 updateDialogState();
             }
-
-            mResetTransferSummaryWidget.start();
-        }
-        else
-        {
-            mResetTransferSummaryWidget.stop();
         }
 
         ui->wStatus->update();
@@ -710,11 +700,6 @@ void InfoDialog::onStalledIssuesChanged()
     }
 
     updateState();
-}
-
-void InfoDialog::onResetTransfersSummaryWidget()
-{
-    ui->bTransferManager->reset();
 }
 
 void InfoDialog::setIndexing(bool indexing)
@@ -820,8 +805,8 @@ bool InfoDialog::checkFailedState()
 {
     auto isFailed(false);
 
-    if((app->getTransfersModel() && app->getTransfersModel()->failedTransfers()) 
-    || (app->getStalledIssuesModel() && !app->getStalledIssuesModel()->isEmpty()))
+    if ((app->getTransfersModel() && app->getTransfersModel()->failedTransfers()) ||
+        (app->getStalledIssuesModel() && !app->getStalledIssuesModel()->isEmpty()))
     {
         changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_FAILED);
         isFailed = true;
@@ -861,8 +846,9 @@ void InfoDialog::onAddBackup()
 void InfoDialog::updateDialogState()
 {
     updateState();
-    const bool transferOverQuotaEnabled{(transferQuotaState == QuotaState::FULL || transferQuotaState == QuotaState::OVERQUOTA)
-                && transferOverquotaAlertEnabled};
+    const bool transferOverQuotaEnabled{
+        (transferQuotaState == QuotaState::FULL || transferQuotaState == QuotaState::OVERQUOTA) &&
+        transferOverquotaAlertEnabled};
 
     if (storageState == Preferences::STATE_PAYWALL)
     {
@@ -874,21 +860,21 @@ void InfoDialog::updateDialogState()
             long long numFiles{mPreferences->cloudDriveFiles() + mPreferences->vaultFiles() +
                                mPreferences->rubbishFiles()};
             QString contactMessage =
-                tr("We have contacted you by email to [A] on [B] but you still have %n file taking "
+                tr("We have contacted you by email to [A] on [B] but you still "
+                   "have "
+                   "%n file taking "
                    "up [D] in your MEGA account, which requires you to have [E].",
                    "",
                    static_cast<int>(numFiles));
 
             QString overDiskText =
-                QString::fromUtf8("<p style='line-height: 20px;'>") +
                 contactMessage.replace(QString::fromUtf8("[A]"), QString::fromUtf8(email))
                     .replace(QString::fromUtf8("[B]"),
                              Utilities::getReadableStringFromTs(tsWarnings))
                     .replace(QString::fromUtf8("[D]"),
                              Utilities::getSizeString(mPreferences->usedStorage()))
                     .replace(QString::fromUtf8("[E]"),
-                             mUpsellController->getMinProPlanNeeded(mPreferences->usedStorage())) +
-                QString::fromUtf8("</p>");
+                             mUpsellController->getMinProPlanNeeded(mPreferences->usedStorage()));
             ui->lOverDiskQuotaLabel->setText(overDiskText);
 
             int64_t remainDaysOut(0);
@@ -898,31 +884,19 @@ void InfoDialog::updateDialogState()
                                                   remainHoursOut);
             if (remainDaysOut > 0)
             {
-                QString descriptionDays = tr("You have [A]%n day[/A] left to upgrade. After that, "
+                QString descriptionDays = tr("You have %n day left to upgrade. After that, "
                                              "your data is subject to deletion.",
                                              "",
                                              static_cast<int>(remainDaysOut));
-                ui->lWarningOverDiskQuota->setText(
-                    QString::fromUtf8("<p style='line-height: 20px;'>") +
-                    descriptionDays
-                        .replace(QString::fromUtf8("[A]"),
-                                 QString::fromUtf8("<span style='color: #FF6F00;'>"))
-                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) +
-                    QString::fromUtf8("</p>"));
+                ui->lWarningOverDiskQuota->setText(descriptionDays);
             }
             else if (remainDaysOut == 0 && remainHoursOut > 0)
             {
-                QString descriptionHours = tr("You have [A]%n hour[/A] left to upgrade. After "
+                QString descriptionHours = tr("You have %n hour left to upgrade. After "
                                               "that, your data is subject to deletion.",
                                               "",
                                               static_cast<int>(remainHoursOut));
-                ui->lWarningOverDiskQuota->setText(
-                    QString::fromUtf8("<p style='line-height: 20px;'>") +
-                    descriptionHours
-                        .replace(QString::fromUtf8("[A]"),
-                                 QString::fromUtf8("<span style='color: #FF6F00;'>"))
-                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) +
-                    QString::fromUtf8("</p>"));
+                ui->lWarningOverDiskQuota->setText(descriptionHours);
             }
             else
             {
@@ -938,78 +912,86 @@ void InfoDialog::updateDialogState()
             ui->wPSA->hidePSA();
         }
     }
-    else if(storageState == Preferences::STATE_OVER_STORAGE)
+    else if (storageState == Preferences::STATE_OVER_STORAGE)
     {
-        const bool transferIsOverQuota{transferQuotaState == QuotaState::FULL || transferQuotaState == QuotaState::OVERQUOTA};
-        const bool userIsFree{mPreferences->accountType() == Preferences::Preferences::ACCOUNT_TYPE_FREE};
-        if(transferIsOverQuota && userIsFree)
+        const bool transferIsOverQuota{transferQuotaState == QuotaState::FULL ||
+                                       transferQuotaState == QuotaState::OVERQUOTA};
+        const bool userIsFree{mPreferences->accountType() ==
+                              Preferences::Preferences::ACCOUNT_TYPE_FREE};
+        if (transferIsOverQuota && userIsFree)
         {
-            ui->bOQIcon->setIcon(QIcon(QString::fromLatin1("://images/storage_transfer_full_FREE.png")));
-            ui->bOQIcon->setIconSize(QSize(96,96));
+            ui->bOQIcon->setIcon(
+                QIcon(QString::fromLatin1("://images/storage_transfer_full_FREE.png")));
+            ui->bOQIcon->setIconSize(QSize(96, 96));
         }
-        else if(transferIsOverQuota && !userIsFree)
+        else if (transferIsOverQuota && !userIsFree)
         {
-            ui->bOQIcon->setIcon(QIcon(QString::fromLatin1("://images/storage_transfer_full_PRO.png")));
-            ui->bOQIcon->setIconSize(QSize(96,96));
+            ui->bOQIcon->setIcon(
+                QIcon(QString::fromLatin1("://images/storage_transfer_full_PRO.png")));
+            ui->bOQIcon->setIconSize(QSize(96, 96));
         }
         else
         {
             ui->bOQIcon->setIcon(QIcon(QString::fromLatin1("://images/storage_full.png")));
-            ui->bOQIcon->setIconSize(QSize(64,64));
+            ui->bOQIcon->setIconSize(QSize(64, 64));
         }
         ui->lOQTitle->setText(tr("Your MEGA account is full."));
-        ui->lOQDesc->setText(tr("All file uploads are currently disabled.")
-                                + QString::fromUtf8("<br>")
-                                + tr("Please upgrade to PRO."));
+        ui->lOQDesc->setText(tr("All file uploads are currently disabled.") +
+                             QString::fromUtf8("<br>") + tr("Please upgrade to PRO."));
         ui->bBuyQuota->setText(tr("Buy more space"));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
-    else if(transferOverQuotaEnabled)
+    else if (transferOverQuotaEnabled)
     {
         ui->lOQTitle->setText(tr("Transfer quota exceeded"));
 
-        if(mPreferences->accountType() == Preferences::ACCOUNT_TYPE_FREE)
+        if (mPreferences->accountType() == Preferences::ACCOUNT_TYPE_FREE)
         {
-            ui->lOQDesc->setText(tr("Your queued transfers exceed the current quota available for your IP address."));
+            ui->lOQDesc->setText(tr("Your queued transfers exceed the current quota "
+                                    "available for your IP address."));
             ui->bBuyQuota->setText(tr("Upgrade Account"));
             ui->bDiscard->setText(tr("I will wait"));
         }
         else
         {
-
-            ui->lOQDesc->setText(tr("You can't continue downloading as you don't have enough transfer quota left on this account. "
-                                    "To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, "
-                                    "you can wait for your plan to renew."));
+            ui->lOQDesc->setText(
+                tr("You can't continue downloading as you don't have enough transfer "
+                   "quota left on this account. "
+                   "To continue downloading, purchase a new plan, or if you have a "
+                   "recurring subscription with MEGA, "
+                   "you can wait for your plan to renew."));
             ui->bBuyQuota->setText(tr("Buy new plan"));
             ui->bDiscard->setText(tr("Dismiss"));
         }
         ui->bOQIcon->setIcon(QIcon(QString::fromLatin1(":/images/transfer_empty_64.png")));
-        ui->bOQIcon->setIconSize(QSize(64,64));
+        ui->bOQIcon->setIconSize(QSize(64, 64));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
-    else if(storageState == Preferences::STATE_ALMOST_OVER_STORAGE)
+    else if (storageState == Preferences::STATE_ALMOST_OVER_STORAGE)
     {
         ui->bOQIcon->setIcon(QIcon(QString::fromLatin1("://images/storage_almost_full.png")));
-        ui->bOQIcon->setIconSize(QSize(64,64));
+        ui->bOQIcon->setIconSize(QSize(64, 64));
         ui->lOQTitle->setText(tr("You're running out of storage space."));
-        ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full and your uploads to MEGA stop."));
+        ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full "
+                                "and your uploads to MEGA stop."));
         ui->bBuyQuota->setText(tr("Buy more space"));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
-    else if(transferQuotaState == QuotaState::WARNING &&
-            transferAlmostOverquotaAlertEnabled)
+    else if (transferQuotaState == QuotaState::WARNING && transferAlmostOverquotaAlertEnabled)
     {
         ui->bOQIcon->setIcon(QIcon(QString::fromLatin1(":/images/transfer_empty_64.png")));
-        ui->bOQIcon->setIconSize(QSize(64,64));
+        ui->bOQIcon->setIconSize(QSize(64, 64));
         ui->lOQTitle->setText(tr("Limited available transfer quota"));
-        ui->lOQDesc->setText(tr("Downloading may be interrupted as you have used 90% of your transfer quota on this "
-                                "account. To continue downloading, purchase a new plan, or if you have a recurring "
+        ui->lOQDesc->setText(tr("Downloading may be interrupted as you have used 90% of your "
+                                "transfer quota on this "
+                                "account. To continue downloading, purchase a new plan, or if you "
+                                "have a recurring "
                                 "subscription with MEGA, you can wait for your plan to renew. "));
         ui->bBuyQuota->setText(tr("Buy new plan"));
 
@@ -1017,10 +999,11 @@ void InfoDialog::updateDialogState()
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
-    else if (mSyncInfo->hasUnattendedDisabledSyncs({mega::MegaSync::TYPE_TWOWAY, mega::MegaSync::TYPE_BACKUP}))
+    else if (mSyncInfo->hasUnattendedDisabledSyncs(
+                 {mega::MegaSync::TYPE_TWOWAY, mega::MegaSync::TYPE_BACKUP}))
     {
-        if (mSyncInfo->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY)
-            && mSyncInfo->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP))
+        if (mSyncInfo->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY) &&
+            mSyncInfo->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP))
         {
             ui->sActiveTransfers->setCurrentWidget(ui->pAllSyncsDisabled);
         }
@@ -1037,12 +1020,12 @@ void InfoDialog::updateDialogState()
     }
     else
     {
-        if(app->getTransfersModel())
+        if (app->getTransfersModel())
         {
             auto transfersCount = app->getTransfersModel()->getTransfersCount();
 
-            if (transfersCount.totalDownloads || transfersCount.totalUploads
-                    || ui->wPSA->isPSAready())
+            if (transfersCount.totalDownloads || transfersCount.totalUploads ||
+                ui->wPSA->isPSAready())
             {
                 overlay->setVisible(false);
                 ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
@@ -1063,6 +1046,7 @@ void InfoDialog::updateDialogState()
             }
         }
     }
+    setFooterState();
     updateBlockedState();
 }
 
@@ -1176,8 +1160,6 @@ void InfoDialog::reset()
     ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
     ui->wSortNotifications->setActualFilter(MessageType::ALL);
 
-    ui->bTransferManager->reset();
-
     hideSomeIssues();
 
     setUnseenNotifications(0);
@@ -1236,6 +1218,10 @@ bool InfoDialog::event(QEvent* event)
         ui->retranslateUi(this);
         updateUpgradeButtonText();
         updateCreateSyncButtonText();
+    }
+    else if (event->type() == ThemeManager::ThemeChanged)
+    {
+        setUsage();
     }
     return QDialog::event(event);
 }
@@ -1317,8 +1303,7 @@ void InfoDialog::animateStates(bool opt)
     if (opt) //Enable animation for scanning/waiting states
     {
         ui->lUploadToMega->setIcon(Utilities::getCachedPixmap(QString::fromUtf8("://images/init_scanning.png")));
-        ui->lUploadToMega->setIconSize(QSize(352,234));
-        ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
+        ui->lUploadToMega->setIconSize(QSize(128, 128));
 
         if (!opacityEffect)
         {
@@ -1343,10 +1328,10 @@ void InfoDialog::animateStates(bool opt)
     }
     else //Disable animation
     {
-        ui->lUploadToMega->setIcon(Utilities::getCachedPixmap(QString::fromUtf8("://images/upload_to_mega.png")));
-        ui->lUploadToMega->setIconSize(QSize(352,234));
-        ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 18px;"));
-        ui->lUploadToMegaDesc->setText(tr("Upload to MEGA now"));
+        ui->lUploadToMega->setIcon(
+            Utilities::getCachedPixmap(QString::fromUtf8(":/upload-to-mega.png")));
+        ui->lUploadToMega->setIconSize(QSize(128, 128));
+        ui->lUploadToMega->setText(tr("Upload to MEGA now"));
 
         if (animation)
         {
@@ -1370,31 +1355,58 @@ void InfoDialog::resetLoggedInMode()
 
 void InfoDialog::on_tTransfers_clicked()
 {
-    ui->lTransfers->setStyleSheet(QString::fromUtf8("background-color: #3C434D;"));
-    ui->lRecents->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
+    ui->tTransfers->setProperty("class", QString::fromUtf8("button-brand"));
+    ui->tTransfers->style()->unpolish(ui->tTransfers);
+    ui->tTransfers->style()->polish(ui->tTransfers);
 
-    ui->tTransfers->setStyleSheet(QString::fromUtf8("color : #1D1D1D;"));
-    ui->tNotifications->setStyleSheet(QString::fromUtf8("color : #989899;"));
+    // Deselct the other tab
+    ui->tNotifications->setProperty("class", QString());
+    ui->tNotifications->style()->unpolish(ui->tNotifications);
+    ui->tNotifications->style()->polish(ui->tNotifications);
+
+    ui->lTransfers->setProperty("state", QString::fromUtf8("selected"));
+    ui->lTransfers->style()->unpolish(ui->lTransfers);
+    ui->lTransfers->style()->polish(ui->lTransfers);
+
+    ui->lRecents->setProperty("state", QString::fromUtf8("normal"));
+    ui->lRecents->style()->unpolish(ui->lRecents);
+    ui->lRecents->style()->polish(ui->lRecents);
 
     ui->sTabs->setCurrentWidget(ui->pTransfersTab);
+    setFooterState();
 
     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::TRANSFER_TAB_CLICKED,
                                                           sender(), ui->tTransfers, true);
+    ui->tNotifications->setCursor(Qt::PointingHandCursor);
+    ui->tTransfers->setCursor(Qt::ArrowCursor);
 }
 
 void InfoDialog::on_tNotifications_clicked()
 {
+    ui->tNotifications->setProperty("class", QString::fromUtf8("button-brand"));
+    ui->tNotifications->style()->unpolish(ui->tNotifications);
+    ui->tNotifications->style()->polish(ui->tNotifications);
+
+    // Deselect the other tab
+    ui->tTransfers->setProperty("class", QString());
+    ui->tTransfers->style()->unpolish(ui->tTransfers);
+    ui->tTransfers->style()->polish(ui->tTransfers);
+
     app->getNotificationController()->requestNotifications();
+    ui->lRecents->setProperty("state", QString::fromUtf8("selected"));
+    ui->lRecents->style()->unpolish(ui->lRecents);
+    ui->lRecents->style()->polish(ui->lRecents);
+    ui->lTransfers->setProperty("state", QString::fromUtf8("normal"));
 
-    ui->lTransfers->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
-    ui->lRecents->setStyleSheet(QString::fromUtf8("background-color: #3C434D;"));
-
-    ui->tNotifications->setStyleSheet(QString::fromUtf8("color : #1D1D1D;"));
-    ui->tTransfers->setStyleSheet(QString::fromUtf8("color : #989899;"));
+    ui->lTransfers->style()->unpolish(ui->lTransfers);
+    ui->lTransfers->style()->polish(ui->lTransfers);
 
     ui->sTabs->setCurrentWidget(ui->pNotificationsTab);
+    setFooterState();
 
     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::NOTIFICATION_TAB_CLICKED, true);
+    ui->tTransfers->setCursor(Qt::PointingHandCursor);
+    ui->tNotifications->setCursor(Qt::ArrowCursor);
 }
 
 void InfoDialog::onActualFilterClicked()
@@ -1758,6 +1770,28 @@ void InfoDialog::applyNotificationFilter(MessageType opt)
             break;
         }
     }
-
+    setFooterState();
     app->getNotificationController()->applyFilter(opt);
+}
+
+void InfoDialog::setFooterState()
+{
+    bool hasTransfers = false;
+    auto currentTab = ui->sTabs->currentWidget();
+    if (currentTab == ui->pNotificationsTab)
+    {
+        hasTransfers = ui->sNotifications->currentWidget() == ui->pNotifications;
+    }
+    else
+    {
+        auto transfersCount = app->getTransfersModel()->getTransfersCount();
+        hasTransfers = (ui->sActiveTransfers->currentWidget() == ui->pTransfers &&
+                        (transfersCount.totalDownloads || transfersCount.totalUploads));
+    }
+    ui->wBottom->setProperty("hasTransfers", hasTransfers);
+    ui->wBottom->style()->unpolish(ui->wBottom);
+    ui->wBottom->style()->polish(ui->wBottom);
+    ui->wBottom->update();
+    ui->wStatus->setPropertyAndPropagateToChildren("hasTransfers", hasTransfers);
+    ui->wSeparator->setVisible(hasTransfers);
 }

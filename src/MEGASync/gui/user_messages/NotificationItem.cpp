@@ -3,6 +3,7 @@
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "StatsEventHandler.h"
+#include "TokenParserWidgetManager.h"
 #include "ui_NotificationItem.h"
 #include "UserNotification.h"
 
@@ -10,10 +11,6 @@
 
 namespace
 {
-const QLatin1String DESCRIPTION_HTML_START("<html><head/><body><p style=\"line-height:22px;\">");
-const QLatin1String DESCRIPTION_HTML_END("</p></body></html>");
-const QLatin1String NON_EXPIRED_TIME_COLOR("color: #777777;");
-const QLatin1String EXPIRED_SOON_COLOR("color: #D64446;");
 constexpr int SPACING_WITHOUT_SMALL_IMAGE = 0;
 constexpr int HEIGHT_WITHOUT_IMAGE = 219;
 constexpr int HEIGHT_WITH_IMAGE = 346;
@@ -29,6 +26,9 @@ NotificationItem::NotificationItem(QWidget* parent):
     mDisplayEventSent(false)
 {
     mUi->setupUi(this);
+    TokenParserWidgetManager::instance()->applyCurrentTheme(this);
+    this->style()->unpolish(this);
+    this->style()->polish(this);
 }
 
 NotificationItem::~NotificationItem()
@@ -171,12 +171,10 @@ void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
                            .arg(timeInterval.minutes)
                            .arg(timeInterval.seconds);
         }
-        mUi->lTime->setStyleSheet(EXPIRED_SOON_COLOR);
     }
     else if (timeInterval.seconds > 0)
     {
         timeText = tr("Offer expires in %n second", "", timeInterval.seconds);
-        mUi->lTime->setStyleSheet(EXPIRED_SOON_COLOR);
     }
     mUi->lTime->setText(timeText);
 }
@@ -239,7 +237,6 @@ void NotificationItem::updateNotificationData(UserNotification* newNotificationD
 
     // Since the notifications can be reused,
     // we need to reset the expiration time color
-    mUi->lTime->setStyleSheet(NON_EXPIRED_TIME_COLOR);
     updateExpirationText();
 }
 
@@ -247,10 +244,7 @@ void NotificationItem::updateNotificationData(bool downloadImage, bool downloadI
 {
     mUi->lTitle->setText(mNotificationData->getTitle());
 
-    QString labelText(DESCRIPTION_HTML_START);
-    labelText += mNotificationData->getDescription();
-    labelText += DESCRIPTION_HTML_END;
-    mUi->lDescription->setText(labelText);
+    mUi->lDescription->setText(mNotificationData->getDescription());
 
     // If there is no action text, the button is not shown
     bool showButton = !mNotificationData->getActionText().isEmpty();
@@ -315,7 +309,6 @@ bool NotificationItem::updateExpiredTimeAndClicks(int64_t remainingTimeSecs)
         if (remainingTimeSecs == 1)
         {
             mUi->lTime->setText(tr("Offer expired"));
-            mUi->lTime->setStyleSheet(EXPIRED_SOON_COLOR);
             mUi->bCTA->setEnabled(false);
             this->setCursor(Qt::ArrowCursor);
             this->setAttribute(Qt::WA_TransparentForMouseEvents);

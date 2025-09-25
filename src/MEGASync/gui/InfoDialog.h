@@ -110,8 +110,6 @@ public slots:
 
     void pauseResumeClicked();
     void generalAreaClicked();
-    void dlAreaClicked();
-    void upAreaClicked();
 
     void pauseResumeHovered(QMouseEvent *event);
     void generalAreaHovered(QMouseEvent *event);
@@ -162,7 +160,6 @@ private slots:
 
     void updateTransfersCount();
 
-    void onResetTransfersSummaryWidget();
     void onTransfersStateChanged();
 
     void onStalledIssuesChanged();
@@ -245,7 +242,6 @@ protected:
     QTimer downloadsFinishedTimer;
     QTimer uploadsFinishedTimer;
     QTimer transfersFinishedTimer;
-    QTimer mResetTransferSummaryWidget;
     MegaApplication* app;
     std::shared_ptr<Preferences> mPreferences;
     SyncInfo* mSyncInfo;
@@ -262,6 +258,7 @@ private:
     void repositionInfoDialog();
     void initNotificationArea();
     void applyNotificationFilter(MessageType opt);
+    void setFooterState();
 
     TransferScanCancelUi* mTransferScanCancelUi = nullptr;
     QtPositioningBugFixer qtBugFixer;

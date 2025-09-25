@@ -33,8 +33,8 @@ public:
 
     TRANSFERS_STATES getState();
     void setOverQuotaState(bool oq);
-
-    static QIcon scanningIcon(int &index);
+    void setPropertyAndPropagateToChildren(const char* name, const QVariant& value);
+    static QIcon scanningIcon(int index);
 
 protected:
     bool event(QEvent* event) override;

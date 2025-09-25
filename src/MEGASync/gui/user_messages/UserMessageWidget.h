@@ -12,8 +12,7 @@ class UserMessageWidget : public QWidget
 public:
     explicit UserMessageWidget(QWidget* parent = nullptr):
         QWidget(parent)
-    {
-    }
+    {}
     virtual ~UserMessageWidget() = default;
 
     virtual void setData(UserMessage* data) = 0;

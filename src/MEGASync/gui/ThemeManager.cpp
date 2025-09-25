@@ -78,4 +78,3 @@ void ThemeManager::setTheme(Preferences::ThemeType theme)
         Utilities::propagateCustomEvent(ThemeChanged);
     }
 }
-

@@ -30,6 +30,8 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/MegaInputDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/AvatarWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/MenuItemAction.h
+    ${CMAKE_CURRENT_LIST_DIR}/MegaMenuItem.h
+    ${CMAKE_CURRENT_LIST_DIR}/MegaMenuItemAction.h
     ${CMAKE_CURRENT_LIST_DIR}/StatusInfo.h
     ${CMAKE_CURRENT_LIST_DIR}/PSAwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/ElidedLabel.h
@@ -92,6 +94,8 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/qml/WhatsNewController.h
     ${CMAKE_CURRENT_LIST_DIR}/qml/UpdatesModel.h
     ${CMAKE_CURRENT_LIST_DIR}/qml/QmlUtils.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/MegaQuickWidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/TransfersSummaryQuickWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/Onboarding.h
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/PasswordStrengthChecker.h
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/GuestQmlDialog.h
@@ -181,6 +185,8 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/MegaInputDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/AvatarWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/MenuItemAction.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MegaMenuItem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MegaMenuItemAction.cpp
     ${CMAKE_CURRENT_LIST_DIR}/StatusInfo.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ChangePassword.cpp
     ${CMAKE_CURRENT_LIST_DIR}/PSAwidget.cpp
@@ -240,6 +246,8 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/qml/WhatsNewController.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qml/UpdatesModel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qml/QmlUtils.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/MegaQuickWidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/TransfersSummaryQuickWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/Onboarding.cpp
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/PasswordStrengthChecker.cpp
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/GuestQmlDialog.cpp
@@ -299,24 +307,14 @@ target_sources_conditional(${ExecutableTarget}
     FLAG WIN32
     QT_AWARE
     PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/win/InfoDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/UploadToMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/MegaProgressCustomDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/StatusInfo.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/PSAwidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/Login2FA.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/AlertItem.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/FilterAlertWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/AlertFilterType.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/VerifyLockMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/OverQuotaDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/ScanningWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/CancelConfirmWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/NodeNameSetterDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/ViewLoadingScene.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/ViewLoadingMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/NotificationItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/AccountTypeWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelectorTreeViewWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelectorLoadingDelegate.ui
@@ -327,23 +325,13 @@ target_sources_conditional(${ExecutableTarget}
    FLAG APPLE
    QT_AWARE
    PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/macx/InfoDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/UploadToMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/MegaProgressCustomDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/StatusInfo.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/PSAwidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/Login2FA.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/AlertItem.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/FilterAlertWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/AlertFilterType.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/VerifyLockMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/OverQuotaDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/ScanningWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/CancelConfirmWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/NodeNameSetterDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/ViewLoadingScene.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/ViewLoadingMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/NotificationItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelector.ui
@@ -355,24 +343,14 @@ target_sources_conditional(${ExecutableTarget}
     FLAG UNIX AND NOT APPLE
     QT_AWARE
     PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/linux/InfoDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/UploadToMegaDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/MegaProgressCustomDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/StatusInfo.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/PSAwidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/Login2FA.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/AlertItem.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/FilterAlertWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/AlertFilterType.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/VerifyLockMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/OverQuotaDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/CancelConfirmWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/ScanningWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/NodeNameSetterDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/ViewLoadingScene.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/ViewLoadingMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/NotificationItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/AccountTypeWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui
@@ -548,10 +526,18 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/ImportListWidgetItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/ImportMegaLinksDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/PasteMegaLinksDialog.ui
-
-
-    ${CMAKE_CURRENT_LIST_DIR}/ui/TabSelector.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/SearchLineEdit.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/TabSelector.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/InfoDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/StatusInfo.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/PSAwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/AlertFilterType.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/FilterAlertWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/AlertItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/NotificationItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/ScanningWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/CancelConfirmWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/OverQuotaDialog.ui
 )
 
 target_sources_conditional(${ExecutableTarget}

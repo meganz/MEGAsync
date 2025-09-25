@@ -6,6 +6,7 @@
 #include "MegaNodeNames.h"
 #include "ServiceUrls.h"
 #include "ThemeManager.h"
+#include "TokenParserWidgetManager.h"
 #include "ui_AlertItem.h"
 #include "UserAlert.h"
 
@@ -22,6 +23,9 @@ AlertItem::AlertItem(QWidget *parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
 {
     mUi->setupUi(this);
+    TokenParserWidgetManager::instance()->applyCurrentTheme(this);
+    this->style()->unpolish(this);
+    this->style()->polish(this);
 
     mUi->sIconWidget->hide();
     mUi->wNotificationIcon->hide();
@@ -143,7 +147,6 @@ void AlertItem::updateAlertType()
     }
 
     QString notificationTitle;
-    QString notificationColor;
     switch (mAlertData->getType())
     {
         case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
@@ -160,7 +163,6 @@ void AlertItem::updateAlertType()
         case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED:
         {
             notificationTitle = tr("Contacts").toUpper();
-            notificationColor = QString::fromUtf8("#1CB5A0");
             break;
         }
         case MegaUserAlert::TYPE_NEWSHARE:
@@ -169,20 +171,17 @@ void AlertItem::updateAlertType()
         case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
         case MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
         {
-            mUi->bSharedFolder->setIcon(
-                QIcon(Utilities::getFolderPixmapName(Utilities::FolderType::TYPE_NORMAL,
-                                                     Utilities::AttributeType::SMALL)));
-
-            mUi->bSharedFolder->setDisabled(mAlertData->getType() ==
-                                            MegaUserAlert::TYPE_DELETEDSHARE);
-
-            mUi->bNotificationIcon->setMinimumSize(QSize(10, 8));
-            mUi->bNotificationIcon->setMaximumSize(QSize(10, 8));
-            mUi->bNotificationIcon->setIconSize(QSize(10, 8));
-            mUi->bNotificationIcon->setIcon(QIcon(QString::fromLatin1("://images/share_arrow.png")));
-            mUi->wNotificationIcon->show();
+            if (mAlertData->getType() == MegaUserAlert::TYPE_DELETEDSHARE)
+            {
+                mUi->bSharedFolder->setIcon(
+                    QIcon(QString::fromUtf8(":/folder-user-disabled.svg")).pixmap(24.0, 24.0));
+            }
+            else
+            {
+                mUi->bSharedFolder->setIcon(
+                    QIcon(QString::fromUtf8(":/folder-users-yellow.svg")).pixmap(24.0, 24.0));
+            }
             notificationTitle = tr("Incoming Shares").toUpper();
-            notificationColor = QString::fromUtf8("#F2C249");
             break;
         }
         case MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
@@ -190,20 +189,17 @@ void AlertItem::updateAlertType()
         case MegaUserAlert::TYPE_PAYMENTREMINDER:
         {
             notificationTitle = tr("Payment").toUpper();
-            notificationColor = QString::fromUtf8("#FFA502");
             break;
         }
         case MegaUserAlert::TYPE_TAKEDOWN:
         case MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
         {
             notificationTitle = tr("Takedown notice").toUpper();
-            notificationColor = QString::fromUtf8("#D64446");
             break;
         }
         default:
         {
             notificationTitle = QString::fromUtf8("");
-            notificationColor = QString::fromUtf8("#FFFFFF");
             mUi->bNotificationIcon->setMinimumSize(QSize(16, 16));
             mUi->bNotificationIcon->setMaximumSize(QSize(16, 16));
             mUi->bNotificationIcon->setIconSize(QSize(16, 16));
@@ -212,9 +208,6 @@ void AlertItem::updateAlertType()
             break;
         }
     }
-
-    mUi->lTitle->setStyleSheet(QString::fromLatin1("#lTitle { font-family: Lato; font-weight: 900; font-size: 10px; color: %1; } ")
-                                   .arg(notificationColor));
     mUi->lTitle->setText(notificationTitle);
 }
 
@@ -776,8 +769,12 @@ bool AlertItem::event(QEvent* event)
 
 QString AlertItem::formatRichString(const QString& str)
 {
-    return QString::fromUtf8("<span style='color:#333333; font-family: Lato; font-size: 14px; font-weight: bold; text-decoration:none;'>%1</span>")
-            .arg(str);
+    auto textPrimaryColor = TokenParserWidgetManager::instance()
+                                ->getColor(QLatin1String("text-primary"))
+                                .name(QColor::HexArgb);
+    return QString::fromUtf8("<span style='color:%1; font-size: 14px; line-height: "
+                             "20px;font-weight: 400; text-decoration:none;'>%2</span>")
+        .arg(textPrimaryColor, str);
 }
 
 QString AlertItem::getUserFullName()

@@ -27,10 +27,7 @@ CircularUsageProgressBar::CircularUsageProgressBar(QWidget* parent):
     mBgColor(Qt::transparent),
     mOkStateTextColor(DEFAULT_TEXT_COLOR),
     mPbGradient(&mOkPbGradient),
-    mMarkWarning(QStringLiteral(":/images/icon_warning_24.png")),
-    mMarkFull(QStringLiteral(":/images/icon_error_24.png")),
-    mDynTrsfOk(QStringLiteral(":/images/dynamic_transfer_icon_32.png")),
-    mDynTrsfFull(QStringLiteral(":/images/dynamic_transfer_overquota_icon.png")),
+    mDynTrsfOk(QStringLiteral(":/atom.svg")),
     mNoTotalValue(true)
 {
     // Init Gradients
@@ -96,12 +93,12 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent*)
 
     if (mNoTotalValue)
     {
-        constexpr QSize dynamicIconNativeSizePixels (32, 32);
+        constexpr QSize dynamicIconNativeSizePixels(16, 16);
 
         QRectF dynamicIconRect(QPoint(0, 0), dynamicIconNativeSizePixels);
         dynamicIconRect.moveCenter(innerRect.center());
 
-        const QIcon& dynamicQuotaIcon (mState == STATE_OVER ? mDynTrsfFull : mDynTrsfOk);
+        const QIcon& dynamicQuotaIcon(mDynTrsfOk);
 
         painter.drawPixmap(dynamicIconRect.toRect(),
                            dynamicQuotaIcon.pixmap(dynamicIconNativeSizePixels));
@@ -109,27 +106,6 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent*)
     else
     {
         drawText(painter, innerRect, innerRadius, mPbValue);
-    }
-
-    // If value higher than warning threshold show warning image
-    if (mState != STATE_OK)
-    {
-        constexpr double nativeOuterRadius (48.);
-        constexpr int    iconSizePixels    (24);
-        constexpr int    iconPaddingX      (3);
-        constexpr int    iconPaddingY      (4);
-
-        const double pixmapTotalSideLength ((mOuterRadius / nativeOuterRadius) * iconSizePixels);
-
-        const int x (static_cast<int>(mOuterRadius - (pixmapTotalSideLength / 2.) - iconPaddingX));
-        const int y (padingPixels / 2 - iconPaddingY);
-
-        const int sideLength(static_cast<int>(pixmapTotalSideLength));
-
-        const QIcon&  icon   (mState == STATE_OVER ? mMarkFull : mMarkWarning);
-        const QPixmap pixmap (icon.pixmap(iconSizePixels, iconSizePixels));
-
-        painter.drawPixmap(x, y, sideLength, sideLength, pixmap);
     }
 }
 
