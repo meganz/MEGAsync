@@ -1,13 +1,13 @@
 #include "StalledIssuesDialog.h"
 
 #include "DialogOpener.h"
-#include "IconTokenizer.h"
 #include "MegaApplication.h"
 #include "ServiceUrls.h"
 #include "StalledIssue.h"
 #include "StalledIssueDelegate.h"
 #include "StalledIssuesModel.h"
 #include "StalledIssuesProxyModel.h"
+#include "TokenizableItems/TokenPropertySetter.h"
 #include "ui_StalledIssuesDialog.h"
 #include "Utilities.h"
 
@@ -126,6 +126,12 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     {
         onUiBlocked();
     }
+
+    BaseTokens iconTokens;
+    iconTokens.setNormalOff(QLatin1String("icon-secondary"));
+    iconTokens.setNormalOn(QLatin1String("brand-on-container"));
+    auto iconTokensSetter = std::make_shared<TokenPropertySetter>(iconTokens);
+    TabSelector::applyTokens(ui->categories, iconTokensSetter);
 }
 
 StalledIssuesDialog::~StalledIssuesDialog()
