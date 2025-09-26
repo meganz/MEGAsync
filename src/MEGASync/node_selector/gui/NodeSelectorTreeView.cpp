@@ -4,6 +4,7 @@
 #include "DialogOpener.h"
 #include "MegaApplication.h"
 #include "MegaDelegateHoverManager.h"
+#include "MegaMenuItemAction.h"
 #include "NodeSelector.h"
 #include "NodeSelectorDelegates.h"
 #include "NodeSelectorModel.h"
@@ -397,7 +398,13 @@ void NodeSelectorTreeView::addShareLinkMenuAction(QMap<int, QAction*>& actions,
 {
     if (areAllEligibleForLinkShare(selectedIndexes))
     {
-        auto megaLinkAction(new QAction(tr("Share link")));
+        auto megaLinkAction(
+            new MegaMenuItemAction(tr("Share link"),
+                                   Utilities::getPixmapName(QLatin1String("link-01"),
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false)));
         connect(megaLinkAction,
                 &QAction::triggered,
                 this,
@@ -420,7 +427,13 @@ void NodeSelectorTreeView::addPasteMenuAction(QMap<int, QAction*>& actions,
                                              mCopiedHandles,
                                              proxyModel->mapToSource(selectedIndexes.first())))
         {
-            auto pasteAction(new QAction(tr("Paste")));
+            auto pasteAction(new MegaMenuItemAction(
+                tr("Paste"),
+                Utilities::getPixmapName(QLatin1String(""),
+                                         Utilities::AttributeType::SMALL |
+                                             Utilities::AttributeType::THIN |
+                                             Utilities::AttributeType::OUTLINE,
+                                         false)));
             connect(pasteAction,
                     &QAction::triggered,
                     this,
@@ -436,7 +449,12 @@ void NodeSelectorTreeView::addPasteMenuAction(QMap<int, QAction*>& actions,
 void NodeSelectorTreeView::addDownloadMenuAction(QMap<int, QAction*>& actions,
                                                  const QList<MegaHandle>& selectionHandles)
 {
-    auto downloadAction(new QAction(tr("Download")));
+    auto downloadAction(new MegaMenuItemAction(
+        tr("Download"),
+        Utilities::getPixmapName(QLatin1String("arrow-down-circle"),
+                                 Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                                     Utilities::AttributeType::OUTLINE,
+                                 false)));
     connect(downloadAction,
             &QAction::triggered,
             this,
@@ -453,7 +471,13 @@ void NodeSelectorTreeView::addRestoreMenuAction(QMap<int, QAction*>& actions,
 {
     if (areAllEligibleForRestore(selectedIndexes))
     {
-        auto restoreAction(new QAction(tr("Restore")));
+        auto restoreAction(
+            new MegaMenuItemAction(tr("Restore"),
+                                   Utilities::getPixmapName(QLatin1String("clock-rotate"),
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false)));
         connect(restoreAction,
                 &QAction::triggered,
                 this,
@@ -474,7 +498,12 @@ void NodeSelectorTreeView::addRenameMenuAction(QMap<int, QAction*>& actions,
         return;
     }
 
-    auto renameAction(new QAction(tr("Rename")));
+    auto renameAction(new MegaMenuItemAction(
+        tr("Rename"),
+        Utilities::getPixmapName(QLatin1String("pen-2"),
+                                 Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                                     Utilities::AttributeType::OUTLINE,
+                                 false)));
     connect(renameAction,
             &QAction::triggered,
             this,
@@ -499,7 +528,13 @@ void NodeSelectorTreeView::addSyncMenuActions(QMap<int, QAction*>& actions,
 
     if (itemStatus == NodeSelectorModelItem::Status::NONE && item->isSyncable())
     {
-        auto syncAction(new QAction(tr("Sync")));
+        auto syncAction(
+            new MegaMenuItemAction(tr("Sync"),
+                                   Utilities::getPixmapName(QLatin1String(""),
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false)));
         connect(syncAction,
                 &QAction::triggered,
                 this,
@@ -513,7 +548,13 @@ void NodeSelectorTreeView::addSyncMenuActions(QMap<int, QAction*>& actions,
     }
     else if (itemStatus == NodeSelectorModelItem::Status::SYNC)
     {
-        auto unsyncAction(new QAction(tr("Stop syncing")));
+        auto unsyncAction(
+            new MegaMenuItemAction(tr("Stop syncing"),
+                                   Utilities::getPixmapName(QLatin1String(""),
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false)));
         connect(unsyncAction,
                 &QAction::triggered,
                 this,
@@ -533,7 +574,12 @@ void NodeSelectorTreeView::setAllowContextMenu(bool newAllowContextMenu)
 void NodeSelectorTreeView::addDeleteMenuAction(QMap<int, QAction*>& actions,
                                                QList<MegaHandle> selectionHandles)
 {
-    auto deleteAction(new QAction(tr("Move to Rubbish bin")));
+    auto deleteAction(new MegaMenuItemAction(
+        tr("Move to Rubbish bin"),
+        Utilities::getPixmapName(QLatin1String("trash"),
+                                 Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                                     Utilities::AttributeType::OUTLINE,
+                                 false)));
     connect(deleteAction,
             &QAction::triggered,
             this,
@@ -547,7 +593,12 @@ void NodeSelectorTreeView::addDeleteMenuAction(QMap<int, QAction*>& actions,
 void NodeSelectorTreeView::addDeletePermanently(QMap<int, QAction*>& actions,
                                                 QList<MegaHandle> selectionHandles)
 {
-    auto deletePermanentlyAction(new QAction(tr("Permanently delete")));
+    auto deletePermanentlyAction(new MegaMenuItemAction(
+        tr("Permanently delete"),
+        Utilities::getPixmapName(QLatin1String("trash"),
+                                 Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                                     Utilities::AttributeType::OUTLINE,
+                                 false)));
     connect(deletePermanentlyAction,
             &QAction::triggered,
             this,
@@ -561,7 +612,12 @@ void NodeSelectorTreeView::addDeletePermanently(QMap<int, QAction*>& actions,
 void NodeSelectorTreeView::addLeaveInshare(QMap<int, QAction*>& actions,
                                            const QList<MegaHandle>& selectionHandles)
 {
-    auto leaveShareAction(new QAction(tr("Leave folder")));
+    auto leaveShareAction(new MegaMenuItemAction(
+        tr("Leave folder"),
+        Utilities::getPixmapName(QLatin1String(""),
+                                 Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                                     Utilities::AttributeType::OUTLINE,
+                                 false)));
     connect(leaveShareAction,
             &QAction::triggered,
             this,
@@ -648,8 +704,9 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent* event)
         return;
     }
 
-    QMenu customMenu;
-    Platform::getInstance()->initMenu(&customMenu, "CustomMenu");
+    QMenu customMenu(this);
+    customMenu.setProperty("icon-token", QLatin1String("icon-primary"));
+    customMenu.setProperty("class", QLatin1String("MegaMenu"));
 
     if (!selectionModel())
     {
@@ -701,7 +758,13 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent* event)
 
     if (areAllEligibleForCopy(selectedIndexes))
     {
-        auto copyAction(new QAction(tr("Copy")));
+        auto copyAction(
+            new MegaMenuItemAction(tr("Copy"),
+                                   Utilities::getPixmapName(QLatin1String("copy-02"),
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false)));
         connect(copyAction,
                 &QAction::triggered,
                 [selectionHandles]()

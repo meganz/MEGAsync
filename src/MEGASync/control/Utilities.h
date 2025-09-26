@@ -584,7 +584,9 @@ public:
                                     const QString& token,
                                     const QSize& size);
     static QPixmap getPixmap(const QString& iconName, AttributeTypes attribute, const QSize& size);
-    static QString getPixmapName(const QString& iconName, AttributeTypes attribute);
+    static QString getPixmapName(const QString& iconName,
+                                 AttributeTypes attribute,
+                                 bool addResourcePrefix = true);
     static QIcon getExtensionPixmap(QString fileName, AttributeTypes attribute);
     static QString getExtensionPixmapName(QString fileName, AttributeTypes attribute);
     static QString getUndecryptedPixmapName(AttributeTypes attribute);

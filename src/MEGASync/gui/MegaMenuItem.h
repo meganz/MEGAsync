@@ -1,6 +1,8 @@
 #ifndef MENUITEM_H
 #define MENUITEM_H
 
+#include "TokenizableItems/IconLabel.h"
+
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QMouseEvent>
@@ -80,7 +82,7 @@ private:
 
 private:
     QHBoxLayout* m_layout;
-    QLabel* m_iconLabel;
+    IconLabel* m_iconLabel;
     QLabel* m_textLabel;
     QLabel* m_arrowLabel; // Right arrow for submenus
 

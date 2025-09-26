@@ -26,8 +26,7 @@ MegaMenuItem::MegaMenuItem(const QString& text,
     m_layout->setSpacing(0);
     m_layout->setContentsMargins(0, 0, 0, 0);
     // Create icon label
-    m_iconLabel = new QLabel(this);
-    m_iconLabel->setAlignment(Qt::AlignCenter);
+    m_iconLabel = new IconLabel(this);
     m_iconLabel->setFixedSize(DEFAULT_ICON_SIZE,
                               DEFAULT_ICON_SIZE); // Default icon size
 
@@ -68,8 +67,18 @@ void MegaMenuItem::updateLayout()
     // Add icon if present
     if (!m_iconName.isEmpty())
     {
-        QPixmap pixmap = QIcon(m_iconName).pixmap(DEFAULT_ICON_SIZE, DEFAULT_ICON_SIZE);
-        m_iconLabel->setPixmap(pixmap);
+        auto token = parent()->property("icon-token").toString();
+
+        if (token.isEmpty())
+        {
+            m_iconLabel->setIcon(QIcon(m_iconName).pixmap(DEFAULT_ICON_SIZE, DEFAULT_ICON_SIZE));
+        }
+        else
+        {
+            m_iconLabel->setIcon(Utilities::getIcon(m_iconName, Utilities::AttributeType::NONE));
+            m_iconLabel->setProperty("normal_off", token);
+        }
+
         m_layout->addWidget(m_iconLabel);
 
         // Add spacing between icon and text

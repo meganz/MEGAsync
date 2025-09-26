@@ -310,9 +310,15 @@ qreal Utilities::getDevicePixelRatio()
     return qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? qApp->devicePixelRatio() : 1.0;
 }
 
-QString Utilities::getPixmapName(const QString& iconName, AttributeTypes attribute)
+QString Utilities::getPixmapName(const QString& iconName,
+                                 AttributeTypes attribute,
+                                 bool addResourcePrefix)
 {
-    QString name(QLatin1String(":%1").arg(iconName));
+    QString name(iconName);
+    if (addResourcePrefix)
+    {
+        name.prepend(QLatin1String(":"));
+    }
 
     if (!attribute.testFlag(AttributeType::NONE))
     {
