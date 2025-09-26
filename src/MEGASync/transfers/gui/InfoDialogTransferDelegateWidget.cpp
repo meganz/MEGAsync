@@ -388,7 +388,7 @@ bool InfoDialogTransferDelegateWidget::eventFilter(QObject *watched, QEvent *eve
     if((watched == mUi->lFileName || watched == mUi->lFileNameCompleted) && event->type() == QEvent::Resize)
     {
         auto nameLabel = dynamic_cast<QLabel*>(watched);
-        if(nameLabel)
+        if (nameLabel && getData())
         {
             auto availableSize(0);
             if(watched == mUi->lFileName)

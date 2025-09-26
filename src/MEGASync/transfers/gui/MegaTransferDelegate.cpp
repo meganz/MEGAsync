@@ -117,7 +117,7 @@ bool MegaTransferDelegate::event(QEvent *event)
 }
 
 TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QModelIndex& index, const QSize& size) const
-{ 
+{
     TransferBaseDelegateWidget* item(nullptr);
     
     if(index.isValid())
@@ -132,15 +132,22 @@ TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QM
         if(row >= mTransferItems.size())
         {
             item = mProxyModel->createTransferManagerItem(mView);
+            TokenParserWidgetManager::instance()->applyCurrentTheme(item);
+            // Setting again its own parent will tell the widget that the stylesheet needs to be
+            // reloaded
+            item->setParent(item->parentWidget(), item->windowFlags());
+
+            // Refresh completely the widget
+            item->show();
+            TokenParserWidgetManager::instance()->polish(item);
+            item->hide();
+
             mTransferItems.append(item);
         }
         else
         {
             item = mTransferItems.at(row);
         }
-
-        TokenParserWidgetManager::instance()->applyCurrentTheme(item);
-        TokenParserWidgetManager::instance()->polish(item);
 
         item->setCurrentIndex(index);
     }

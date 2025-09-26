@@ -554,7 +554,7 @@ void TransferManagerDelegateWidget::mouseDoubleClickEvent(QMouseEvent *event)
 
 bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
 {
-    if(event->type() == QEvent::Resize)
+    if (event->type() == QEvent::Resize && getData())
     {
         if(watched == mUi->wTransferName)
         {
