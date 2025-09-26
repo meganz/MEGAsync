@@ -8,6 +8,10 @@
 class MegaDelegateHoverEvent : public QEvent
 {
 public:
+    static constexpr QEvent::Type Enter = static_cast<QEvent::Type>(QEvent::User);
+    static constexpr QEvent::Type Leave = static_cast<QEvent::Type>(QEvent::User + 1);
+    static constexpr QEvent::Type MouseMove = static_cast<QEvent::Type>(QEvent::User + 2);
+
     MegaDelegateHoverEvent(QEvent::Type type):QEvent(type) {}
 
     QModelIndex index() const{return mIndex;}

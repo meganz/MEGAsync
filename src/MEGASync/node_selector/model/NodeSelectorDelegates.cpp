@@ -94,14 +94,14 @@ bool NodeSelectorDelegate::event(QEvent* event)
 {
     if (auto hoverEvent = dynamic_cast<MegaDelegateHoverEvent*>(event))
     {
-        switch (hoverEvent->type())
+        switch (static_cast<int>(hoverEvent->type()))
         {
-            case QEvent::Enter:
+            case MegaDelegateHoverEvent::Enter:
             {
                 mLastHoverRow = hoverEvent->index();
                 break;
             }
-            case QEvent::Leave:
+            case MegaDelegateHoverEvent::Leave:
             {
                 mLastHoverRow = QModelIndex();
                 break;

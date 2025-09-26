@@ -2535,6 +2535,8 @@ QVariant NodeSelectorModel::getText(const QModelIndex& index, NodeSelectorModelI
             {
                 return Utilities::getNodeStringAccess(item->getNode().get());
             }
+
+            return QString();
         }
         case COLUMN::USER:
         {
@@ -2543,6 +2545,8 @@ QVariant NodeSelectorModel::getText(const QModelIndex& index, NodeSelectorModelI
             {
                 return item->getOwnerName();
             }
+
+            return QString();
         }
         default:
             break;

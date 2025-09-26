@@ -21,7 +21,6 @@ void MegaDelegateHoverManager::setView(QAbstractItemView *view)
 
 bool MegaDelegateHoverManager::eventFilter(QObject *watched, QEvent *event)
 {
-
     if (event)
     {
         if(auto mouseEvent = dynamic_cast<QMouseEvent*>(event))
@@ -31,12 +30,12 @@ bool MegaDelegateHoverManager::eventFilter(QObject *watched, QEvent *event)
             if(mCurrentIndex.row() != index.row()
                     || mCurrentIndex.parent() != index.parent())
             {
-                sendEvent(QEvent::Leave);
+                sendEvent(MegaDelegateHoverEvent::Leave);
                 mCurrentIndex = index;
-                sendEvent(QEvent::Enter);
+                sendEvent(MegaDelegateHoverEvent::Enter);
             }
 
-            sendEvent(QEvent::MouseMove, mouseEvent->pos());
+            sendEvent(MegaDelegateHoverEvent::MouseMove, mouseEvent->pos());
         }
         else
         {
@@ -45,12 +44,12 @@ bool MegaDelegateHoverManager::eventFilter(QObject *watched, QEvent *event)
                 if(auto enterEvent = dynamic_cast<QEnterEvent*>(event))
                 {
                     mCurrentIndex = mView->indexAt(enterEvent->pos());
-                    sendEvent(QEvent::Enter);
+                    sendEvent(MegaDelegateHoverEvent::Enter);
                 }
             }
             else if(event->type() == QEvent::Leave || event->type() == QEvent::Wheel)
             {
-                sendEvent(QEvent::Leave);
+                sendEvent(MegaDelegateHoverEvent::Leave);
                 mCurrentIndex = QModelIndex();
             }
             else if(event->type() == QEvent::ChildAdded)
@@ -68,7 +67,7 @@ bool MegaDelegateHoverManager::eventFilter(QObject *watched, QEvent *event)
     return QObject::eventFilter(watched, event);
 }
 
-void MegaDelegateHoverManager::sendEvent(QEvent::Type eventType, const QPoint &point)
+void MegaDelegateHoverManager::sendEvent(QEvent::Type eventType, const QPoint& point)
 {
     if(mCurrentIndex.row() >= 0)
     {
