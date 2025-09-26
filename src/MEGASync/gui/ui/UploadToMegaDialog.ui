@@ -32,10 +32,17 @@
    <string>Upload to MEGA</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#label_2
+   <string notr="true">#UploadToMegaDialog
 {
-font-weight: 600;
-}</string>
+background-color: #ffffff; /*colorToken.page-background*/
+}
+
+
+#cDefaultPath
+{
+color: #F3F4F4; /*colorToken.text-primary*/
+}
+</string>
   </property>
   <property name="TOKENIZED" stdset="0">
    <bool>true</bool>
@@ -87,7 +94,7 @@ font-weight: 600;
       <number>0</number>
      </property>
      <item>
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="lFolderMEGA">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -96,6 +103,9 @@ font-weight: 600;
        </property>
        <property name="text">
         <string>MEGA folder:</string>
+       </property>
+       <property name="semibold" stdset="0">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
