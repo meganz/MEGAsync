@@ -28,8 +28,6 @@ signals:
 private:
     ThemeManager();
     void onOperatingSystemThemeChanged();
-    void recomputeAndApply();
-
     void applyTheme(Preferences::ThemeAppeareance appearance);
 
     Preferences::ThemeType mCurrentTheme;
