@@ -581,7 +581,7 @@ bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
         // its original size)
         else if (watched == mUi->sStatus)
         {
-            mUi->pFailed->setFixedWidth(mUi->sStatus->width() + 235);
+            mUi->pFailed->setFixedWidth(mUi->sStatus->width());
         }
         else if(auto label = dynamic_cast<QWidget*>(watched))
         {

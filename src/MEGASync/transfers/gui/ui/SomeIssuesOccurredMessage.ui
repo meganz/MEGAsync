@@ -52,11 +52,11 @@
        border-radius:3px;
    }
 
-   #issuesInfoLabel
-   {
-       color: #DA3135;
-       font-size: 13px;
-   }
+#issuesInfoLabel
+{
+    color: #FFE31B57; /*colorToken.text-error*/
+    background-color:transparent;
+}
 
    #issueContainer
    {

@@ -122,7 +122,6 @@ private:
     void showDownloadResults();
     void showUploadResults();
 
-    void updateCurrentSearchText();
     void updateCurrentCategoryTitle();
 
     void filterByTab(TransfersWidget::TM_TAB tab);

@@ -238,7 +238,6 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
     mUi->wDlResults->installEventFilter(this);
     mUi->wUlResults->installEventFilter(this);
 
-    mUi->lTextSearch->installEventFilter(this);
     mUi->leSearchField->installEventFilter(this);
 
 #ifdef Q_OS_MACOS
@@ -310,16 +309,6 @@ void TransferManager::onFolderTransferUpdate(const FolderTransferUpdateEvent &ev
 void TransferManager::onPauseStateChangedByTransferResume()
 {
     onUpdatePauseState(false);
-}
-
-void TransferManager::updateCurrentSearchText()
-{
-    auto text = mUi->bSearchString->property(SEARCH_TEXT).toString();
-    mUi->bSearchString->setText(text);
-    mUi->lTextSearch->setText(mUi->lTextSearch->fontMetrics()
-                              .elidedText(text,
-                                          Qt::ElideMiddle,
-                                          mUi->lTextSearch->width()-1));
 }
 
 void TransferManager::updateCurrentCategoryTitle()
@@ -846,10 +835,7 @@ void TransferManager::refreshSearchStats()
         else
         {
             int intNbAll = static_cast<int>(nbAll);
-            mUi->lNbResults->setText(QString(tr("%1 result found","", intNbAll)).arg(nbAll));
-            mUi->lNbResults->setProperty("results", static_cast<bool>(nbAll));
-            mUi->lNbResults->style()->unpolish(mUi->lNbResults);
-            mUi->lNbResults->style()->polish(mUi->lNbResults);
+            mUi->lNbResults->setText(QString(tr("%1 result found", "", intNbAll)).arg(nbAll));
             mUi->lNbResults->setVisible(true);
             mUi->searchByTextTypeSelector->setVisible(false);
         }
@@ -943,10 +929,6 @@ void TransferManager::on_tSearchIcon_clicked()
 
 void TransferManager::applyTextSearch(const QString& text)
 {
-    mUi->lTextSearch->setText(mUi->lTextSearch->fontMetrics()
-                              .elidedText(text,
-                                          Qt::ElideMiddle,
-                                          mUi->lTextSearch->width()));
     // Add number of found results
     mUi->wAllResults->setProperty(SEARCH_BUTTON_SELECTED, true);
     mUi->wDlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
@@ -1256,17 +1238,7 @@ void TransferManager::checkActionAndMediaVisibility()
 
 bool TransferManager::eventFilter(QObject *obj, QEvent *event)
 {
-    if (obj == mUi->lTextSearch
-            && event->type() == QEvent::Resize
-            && mUi->sCurrentContent->currentWidget() == mUi->pSearchHeader)
-    {
-        auto newWidth (static_cast<QResizeEvent*>(event)->size().width());
-        mUi->lTextSearch->setText(mUi->lTextSearch->fontMetrics()
-                                  .elidedText(mUi->leSearchField->text(),
-                                              Qt::ElideMiddle,
-                                              newWidth - 24));
-    }
-    else if(obj == mUi->leSearchField && event->type() == QEvent::KeyPress)
+    if (obj == mUi->leSearchField && event->type() == QEvent::KeyPress)
     {
         auto keyEvent = dynamic_cast<QKeyEvent*>(event);
         if(keyEvent && keyEvent->key() == Qt::Key_Escape)
@@ -1360,7 +1332,6 @@ bool TransferManager::event(QEvent* event)
     {
         mUi->retranslateUi(this);
         updateCurrentCategoryTitle();
-        updateCurrentSearchText();
         onUpdatePauseState(mUi->wTransfers->getProxyModel()->getPausedTransfers());
     }
     return QDialog::event(event);

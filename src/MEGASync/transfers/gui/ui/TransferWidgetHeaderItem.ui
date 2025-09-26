@@ -34,24 +34,12 @@
 
 #chevron[state=&quot;up&quot;]
 {
-qproperty-icon: url(:/chevron-up_small_thin_outline);
-qproperty-normal_off: &quot;icon-secondary&quot;;
-qproperty-normal_on: &quot;icon-secondary&quot;;
-qproperty-pressed_off: &quot;icon-secondary&quot;;
-qproperty-pressed_on: &quot;icon-secondary&quot;;
-qproperty-hover_off: &quot;icon-secondary&quot;;
-qproperty-hover_on: &quot;icon-secondary&quot;;
+qproperty-icon: url(:/chevron_up_small_thin_outline_secondary);
 }
 
 #chevron[state=&quot;down&quot;]
 {
-qproperty-icon: url(:/chevron-down_small_thin_outline);
-qproperty-normal_off: &quot;icon-secondary&quot;;
-qproperty-normal_on: &quot;icon-secondary&quot;;
-qproperty-pressed_off: &quot;icon-secondary&quot;;
-qproperty-pressed_on: &quot;icon-secondary&quot;;
-qproperty-hover_off: &quot;icon-secondary&quot;;
-qproperty-hover_on: &quot;icon-secondary&quot;;
+qproperty-icon: url(:/chevron_down_small_thin_outline_secondary);
 }
 
 </string>
@@ -132,7 +120,7 @@ qproperty-hover_on: &quot;icon-secondary&quot;;
     </widget>
    </item>
    <item>
-    <widget class="IconOnlyButton" name="chevron">
+    <widget class="QToolButton" name="chevron">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -153,6 +141,9 @@ qproperty-hover_on: &quot;icon-secondary&quot;;
      </property>
      <property name="text">
       <string notr="true"/>
+     </property>
+     <property name="class" stdset="0">
+      <string notr="true">icon-label</string>
      </property>
     </widget>
    </item>
@@ -183,13 +174,6 @@ qproperty-hover_on: &quot;icon-secondary&quot;;
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>IconOnlyButton</class>
-   <extends>QPushButton</extends>
-   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -207,5 +207,10 @@
         <file alias="video_selected">images/themed/light/video_selected.svg</file>
         <file alias="cancel">images/themed/light/cancel.svg</file>
         <file alias="x">images/themed/light/x.svg</file>
+        <file alias="x_square_small_thin_outline_secondary">images/themed/light/x_square_small_thin_outline_secondary.svg</file>
+        <file alias="pause_square_small_thin_outline_secondary">images/themed/light/pause_square_small_thin_outline_secondary.svg</file>
+        <file alias="play_square_small_thin_outline_secondary">images/themed/light/play_square_small_thin_outline_secondary.svg</file>
+        <file alias="chevron_down_small_thin_outline_secondary">images/themed/light/chevron_down_small_thin_outline_secondary.svg</file>
+        <file alias="chevron_up_small_thin_outline_secondary">images/themed/light/chevron_up_small_thin_outline_secondary.svg</file>
     </qresource>
 </RCC>

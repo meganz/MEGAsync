@@ -373,33 +373,9 @@ font-weight:700;
     qproperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
-#lTransferOverQuotaMoreAbout
-{
-  color: #333333;
-  font-size: 12px;
-  font-weight: 400;
-  padding-left: 2px;
-}
-
 QToolButton
 {
   border: none;
-}
-
-#lPaused, #lNbResults
-{
-  color: #FF9E4F;
-  font-size: 12px;
-  font-weight: bold;
-  padding-left: 14px;
-}
-
-#lNbResults[results=true]
-{
-  color: #2BA6DE;
-  font-size: 12px;
-  font-weight: bold;
-  padding-left: 14px;
 }
 
 #lTransferOverQuota
@@ -408,28 +384,6 @@ QToolButton
   font-size: 12px;
   font-weight: bold;
   padding-left: 2px;
-}
-
-#lTransferOverQuotaInfo
-{
-   color: #777777;
-  font-size: 12px;
-  padding-left: 2px;
-}
-
-#pStatusHeader  QToolButton
-{
-  border-radius: 16px;
-  padding-left: 20px;
-  padding-right: 20px;
-  color: #FFFFFF;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-#tSeePlans
-{
-  background-color: #3ACC86;
 }
 
 #wNoDownloads QLabel, #wNoUploads QLabel,  #wNoTransfers QLabel, #wNoFinished QLabel, #wNoResults QLabel
@@ -1763,12 +1717,12 @@ QToolButton
               <number>0</number>
              </property>
              <item>
-              <layout class="QHBoxLayout" name="searchTextHeaderLayout" stretch="0,1">
+              <layout class="QHBoxLayout" name="searchTextHeaderLayout" stretch="0">
                <property name="spacing">
                 <number>0</number>
                </property>
-               <item alignment="Qt::AlignLeft">
-                <widget class="QLabel" name="lSearch">
+               <item>
+                <widget class="QLabel" name="lNbResults">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -1782,35 +1736,13 @@ QToolButton
                   </size>
                  </property>
                  <property name="text">
-                  <string>Search:</string>
+                  <string/>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                  </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="lTextSearch">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string notr="true"/>
+                 <property name="semibold" stdset="0">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>
@@ -2054,7 +1986,7 @@ QToolButton
             </size>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>1</number>
            </property>
            <widget class="TransferManagerStatusHeaderWidget" name="pStatusHeaderInfo">
             <property name="sizePolicy">
@@ -2113,31 +2045,6 @@ QToolButton
              <property name="bottomMargin">
               <number>5</number>
              </property>
-             <item alignment="Qt::AlignTop">
-              <widget class="QLabel" name="lNbResults">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
              <item alignment="Qt::AlignTop">
               <widget class="QWidget" name="searchByTextTypeSelector" native="true">
                <property name="sizePolicy">

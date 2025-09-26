@@ -14,17 +14,18 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgba(255, 255, 255, 229);
-   #lUploadToMegaDesc
-   {
-   margin-top: 10px;
-   margin-left: 20px;
-   margin-right: 20px;
-   color: #666;
-   font-family: &quot;Lato&quot;;
-   font-size: 16px;
-   }
-</string>
+   <string notr="true">
+#lUploadToMega
+{
+line-height: 24px;
+color: #FFFFFFFF;/*colorToken.text-primary*/
+}
+*{
+background-color: #lUploadToMega; /*colorToken.page-background*/
+}</string>
+  </property>
+  <property name="class" stdset="0">
+   <string notr="true">icon-label</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -62,27 +63,40 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="lUploadToMega">
+      <widget class="QToolButton" name="lUploadToMega">
        <property name="minimumSize">
         <size>
-         <width>352</width>
-         <height>234</height>
+         <width>128</width>
+         <height>172</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>352</width>
-         <height>234</height>
+         <width>128</width>
+         <height>172</height>
         </size>
        </property>
        <property name="styleSheet">
         <string notr="true">border: none;</string>
        </property>
        <property name="text">
-        <string/>
+        <string>Drop to Upload</string>
        </property>
-       <property name="pixmap">
-        <pixmap resource="../Resources.qrc">:/images/upload_to_mega.png</pixmap>
+       <property name="icon">
+        <iconset resource="../../../gui/Resources_light.qrc">
+         <normaloff>:/upload-to-mega.png</normaloff>:/upload-to-mega.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>128</width>
+         <height>128</height>
+        </size>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextUnderIcon</enum>
+       </property>
+       <property name="font-size" stdset="0">
+        <string notr="true">label-2</string>
        </property>
       </widget>
      </item>
@@ -102,52 +116,6 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="lUploadToMegaDesc_2">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>400</width>
-       <height>60</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>60</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <family>Lato</family>
-       <pointsize>12</pointsize>
-       <weight>50</weight>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">
-</string>
-     </property>
-     <property name="text">
-      <string>Drop to Upload</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-     <property name="openExternalLinks">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
     <spacer name="verticalSpacer_3">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -163,7 +131,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../Resources.qrc"/>
+  <include location="../../../gui/Resources_light.qrc"/>
  </resources>
  <connections/>
 </ui>

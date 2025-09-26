@@ -117,32 +117,11 @@ qproperty-hover_on: &quot;support-warning&quot;;
 
 #tCancelClearVisible, #tCancelClearVisible[state=&quot;x&quot;]
 {
-qproperty-icon: url(:/x-square_small_thin_outline);
-qproperty-normal_off: &quot;icon-secondary&quot;;
-qproperty-normal_on: &quot;icon-secondary&quot;;
-qproperty-pressed_off: &quot;icon-secondary&quot;;
-qproperty-pressed_on: &quot;icon-secondary&quot;;
-qproperty-hover_off: &quot;icon-secondary&quot;;
-qproperty-hover_on: &quot;icon-secondary&quot;;
+qproperty-icon: url(:/x_square_small_thin_outline_secondary);
 }
 #tCancelClearVisible[state=&quot;eraser&quot;]
 {
 qproperty-icon: url(:/eraser_small_thin_outline);
-qproperty-normal_off: &quot;icon-secondary&quot;;
-qproperty-normal_on: &quot;icon-secondary&quot;;
-qproperty-pressed_off: &quot;icon-secondary&quot;;
-qproperty-pressed_on: &quot;icon-secondary&quot;;
-qproperty-hover_off: &quot;icon-secondary&quot;;
-qproperty-hover_on: &quot;icon-secondary&quot;;
-}
-#tPauseResumeVisible
-{
-qproperty-normal_off: &quot;icon-secondary&quot;;
-qproperty-normal_on: &quot;icon-secondary&quot;;
-qproperty-pressed_off: &quot;icon-secondary&quot;;
-qproperty-pressed_on: &quot;icon-secondary&quot;;
-qproperty-hover_off: &quot;icon-secondary&quot;;
-qproperty-hover_on: &quot;icon-secondary&quot;;
 }
 </string>
   </property>
@@ -237,7 +216,7 @@ qproperty-hover_on: &quot;icon-secondary&quot;;
            <height>28</height>
           </size>
          </property>
-         <layout class="QHBoxLayout" name="wTableHeaderLayout" stretch="0,0,0,0,0,0,0,0,0">
+         <layout class="QHBoxLayout" name="wTableHeaderLayout" stretch="0,0,0,0,0,0,0,0,0,0">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -456,7 +435,7 @@ qproperty-hover_on: &quot;icon-secondary&quot;;
               <number>0</number>
              </property>
              <item>
-              <widget class="IconOnlyButton" name="tPauseResumeVisible">
+              <widget class="QPushButton" name="tPauseResumeVisible">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -485,9 +464,9 @@ qproperty-hover_on: &quot;icon-secondary&quot;;
                 <string notr="true"/>
                </property>
                <property name="icon">
-                <iconset resource="../../../gui/Resources_common.qrc">
-                 <normaloff>:/pause-square_small_thin_outline</normaloff>
-                 <normalon>:/play-square_small_thin_outline</normalon>:/pause-square_small_thin_outline</iconset>
+                <iconset resource="../../../gui/Resources_light.qrc">
+                 <normaloff>:/pause_square_small_thin_outline_secondary</normaloff>
+                 <normalon>:/play_square_small_thin_outline_secondary</normalon>:/pause_square_small_thin_outline_secondary</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -543,7 +522,7 @@ qproperty-hover_on: &quot;icon-secondary&quot;;
               <number>0</number>
              </property>
              <item>
-              <widget class="IconOnlyButton" name="tCancelClearVisible">
+              <widget class="QPushButton" name="tCancelClearVisible">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -572,8 +551,8 @@ qproperty-hover_on: &quot;icon-secondary&quot;;
                 <string notr="true"/>
                </property>
                <property name="icon">
-                <iconset resource="../../../gui/Resources_common.qrc">
-                 <normaloff>:/x-square_small_thin_outline</normaloff>:/x-square_small_thin_outline</iconset>
+                <iconset resource="../../../gui/Resources_light.qrc">
+                 <normaloff>:/x_square_small_thin_outline_secondary</normaloff>:/x_square_small_thin_outline_secondary</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -695,11 +674,6 @@ qproperty-hover_on: &quot;icon-secondary&quot;;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>IconOnlyButton</class>
-   <extends>QPushButton</extends>
-   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
-  </customwidget>
-  <customwidget>
    <class>MegaTransferView</class>
    <extends>QTreeView</extends>
    <header>MegaTransferView.h</header>
@@ -712,7 +686,7 @@ qproperty-hover_on: &quot;icon-secondary&quot;;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../gui/Resources_common.qrc"/>
+  <include location="../../../gui/Resources_light.qrc"/>
  </resources>
  <connections/>
 </ui>

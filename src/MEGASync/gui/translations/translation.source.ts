@@ -8951,11 +8951,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Search</translation>
     </message>
     <message>
-        <source>Search:</source>
-        <translatorcomment>Title to show the text used to search</translatorcomment>
-        <translation>Search:</translation>
-    </message>
-    <message>
         <source>Transfer Manager</source>
         <translatorcomment>Title of the dialog of Transfer Manager</translatorcomment>
         <translation>Transfer manager</translation>
