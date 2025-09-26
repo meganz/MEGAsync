@@ -1,6 +1,5 @@
 #include "NodeSelectorDelegates.h"
 
-#include "IconTokenizer.h"
 #include "MegaDelegateHoverManager.h"
 #include "NodeSelectorModel.h"
 #include "NodeSelectorTreeView.h"
@@ -71,6 +70,9 @@ void NodeSelectorDelegate::paint(QPainter* painter,
         // Adjust the content to align it with the header
         auxOpt.rect.adjust(7, 0, -5, 0);
     }
+
+    auxOpt.state.setFlag(QStyle::State_MouseOver, false);
+    auxOpt.state.setFlag(QStyle::State_Selected, false);
 
     QStyledItemDelegate::paint(painter, auxOpt, index);
 }

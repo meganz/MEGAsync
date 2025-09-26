@@ -151,6 +151,7 @@ ChooseRemoteFolder::ChooseRemoteFolder(QObject *parent)
 void ChooseRemoteFolder::openFolderSelector()
 {
     QPointer<SyncNodeSelector> nodeSelector = new SyncNodeSelector();
+    nodeSelector->init();
 
     if(mFolderHandle != mega::INVALID_HANDLE)
     {

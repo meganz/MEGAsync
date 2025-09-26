@@ -52,8 +52,10 @@ public:
     Q_ENUM(TabItem)
 
     explicit NodeSelector(SelectTypeSPtr selectType, QWidget* parent = 0);
-
     ~NodeSelector();
+
+    void init();
+
     void showDefaultUploadOption(bool show = true);
     void setDefaultUploadOption(bool value);
     bool getDefaultUploadOption();

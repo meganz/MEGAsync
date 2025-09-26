@@ -160,6 +160,7 @@ void ImportMegaLinksDialog::onLocalFolderSet(const QString& path)
 void ImportMegaLinksDialog::on_bMegaFolder_clicked()
 {
     UploadNodeSelector* nodeSelector = new UploadNodeSelector(this);
+    nodeSelector->init();
     DialogOpener::showDialog<NodeSelector>(nodeSelector,[this, nodeSelector](){
         if (nodeSelector->result() == QDialog::Accepted)
         {

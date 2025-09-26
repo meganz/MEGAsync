@@ -98,14 +98,7 @@ bool TokenizableItem::isInitialized() const
 
 void TokenizableItem::init(QAbstractButton* button)
 {
-    if (!isInitialized())
-    {
-        mBaseTokens.fillTokens(button);
-
-        mInit = true;
-    }
-
-    if (themeHasChanged())
+    if (!isInitialized() || themeHasChanged())
     {
         // Init QIcon::Mode::Active and QIcon::Mode::Disabled
         if (!mBaseTokens.getNormalOffToken().isEmpty())
@@ -139,6 +132,13 @@ void TokenizableItem::init(QAbstractButton* button)
                             QIcon::State::On);
             }
         }
+    }
+
+    if (!isInitialized())
+    {
+        baseTokens.fillTokens(button);
+
+        mInit = true;
     }
 }
 

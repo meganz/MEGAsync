@@ -84,6 +84,15 @@ NodeSelector::~NodeSelector()
     delete ui;
 }
 
+void NodeSelector::init()
+{
+    createSpecialisedWidgets();
+    addSearch();
+    initSpecialisedWidgets();
+
+    mInitialised = true;
+}
+
 void NodeSelector::updateNodeSelectorTabs()
 {
     ui->fCloudDrive->setTitle(MegaNodeNames::getCloudDriveName());
@@ -137,18 +146,6 @@ bool NodeSelector::event(QEvent* event)
     {
         ui->retranslateUi(this);
         updateNodeSelectorTabs();
-    }
-    // Add the special widgets as soon as we have the stack widget ready
-    else if (event->type() == QEvent::ChildAdded && ui->stackedWidget)
-    {
-        if (!mInitialised)
-        {
-            createSpecialisedWidgets();
-            addSearch();
-            initSpecialisedWidgets();
-
-            mInitialised = true;
-        }
     }
 
     return QDialog::event(event);

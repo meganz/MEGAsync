@@ -234,18 +234,36 @@ void NodeSelectorTreeView::drawRow(QPainter* painter,
 
 void NodeSelectorTreeView::mousePressEvent(QMouseEvent* event)
 {
+#ifndef Q_OS_MACOS
+    auto index = indexAt(event->pos());
+    auto expanded(isExpanded(index));
+#endif
+
     QTreeView::mousePressEvent(event);
+
+#ifndef Q_OS_MACOS
+    if (expanded != isExpanded(index))
+    {
+        selectFromMouseEvent(index, event->modifiers());
+    }
+#endif
 }
 
 void NodeSelectorTreeView::mouseReleaseEvent(QMouseEvent* event)
 {
-    if (style()->styleHint(QStyle::SH_ListViewExpand_SelectMouseType, 0, this) ==
-        QEvent::MouseButtonRelease)
-    {
-        expandWithMouseReleaseEvent(event);
-    }
+#ifdef Q_OS_MACOS
+    auto index = indexAt(event->pos());
+    auto expanded(isExpanded(index));
+#endif
 
     QTreeView::mouseReleaseEvent(event);
+
+#ifdef Q_OS_MACOS
+    if (expanded != isExpanded(index))
+    {
+        selectFromMouseEvent(index, event->modifiers());
+    }
+#endif
 }
 
 void NodeSelectorTreeView::mouseDoubleClickEvent(QMouseEvent* event)
@@ -1051,45 +1069,8 @@ void NodeSelectorTreeView::onNavigateReady(const QModelIndex& index)
     }
 }
 
-void NodeSelectorTreeView::expandWithMouseReleaseEvent(QMouseEvent* event)
-{
-    QPoint pos = event->pos();
-    QModelIndex index = indexAt(pos);
-    if (!index.isValid())
-    {
-        return;
-    }
-
-    if (!index.data(toInt(NodeRowDelegateRoles::INIT_ROLE)).toBool())
-    {
-        int position = columnViewportPosition(0);
-        QModelIndex idx = index.parent();
-        while (rootIndex() != idx)
-        {
-            position += indentation();
-            idx = idx.parent();
-        }
-        QRect rect(position, event->pos().y(), indentation(), rowHeight(index));
-
-        if (rect.contains(event->pos()))
-        {
-            if (!isExpanded(index))
-            {
-                auto sourceIndexToExpand = proxyModel()->mapToSource(index);
-                if (proxyModel()->sourceModel()->canFetchMore(sourceIndexToExpand))
-                {
-                    proxyModel()->setExpandMapped(true);
-                    proxyModel()->sourceModel()->fetchMore(sourceIndexToExpand);
-                    // Simulate another press event to select the row
-                    selectFromMouseReleaseEvent(index, event->modifiers());
-                }
-            }
-        }
-    }
-}
-
-void NodeSelectorTreeView::selectFromMouseReleaseEvent(const QModelIndex& index,
-                                                       Qt::KeyboardModifiers modifiers)
+void NodeSelectorTreeView::selectFromMouseEvent(const QModelIndex& index,
+                                                Qt::KeyboardModifiers modifiers)
 {
     QItemSelectionModel* sel = selectionModel();
 

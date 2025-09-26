@@ -97,8 +97,7 @@ private slots:
 private:
     friend class NodeSelectorDelegate;
 
-    void expandWithMouseReleaseEvent(QMouseEvent* event);
-    void selectFromMouseReleaseEvent(const QModelIndex& index, Qt::KeyboardModifiers modifiers);
+    void selectFromMouseEvent(const QModelIndex& index, Qt::KeyboardModifiers modifiers);
 
     QModelIndex getIndexFromSourceModel(const QModelIndex& index) const;
     NodeSelectorProxyModel* proxyModel() const;
