@@ -13,8 +13,6 @@
 #include <QPainterPath>
 #include <QToolTip>
 
-QModelIndex NodeSelectorDelegate::mLastHoverRow = QModelIndex();
-
 NodeSelectorDelegate::NodeSelectorDelegate(QObject* parent):
     QStyledItemDelegate(parent)
 {}

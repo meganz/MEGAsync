@@ -251,8 +251,6 @@ CloudDriveNodeSelector::CloudDriveNodeSelector(QWidget* parent):
     mDragBackDrop->hide();
 
     ui->fRubbish->show();
-    resize(1280, 800);
-    setMinimumSize(700, 400);
     setAcceptDrops(true);
 
 #ifndef Q_OS_MACOS

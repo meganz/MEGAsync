@@ -22,7 +22,7 @@ protected:
     bool event(QEvent* event) override;
 
 private:
-    static QModelIndex mLastHoverRow;
+    QModelIndex mLastHoverRow;
 };
 
 class NodeRowDelegate: public NodeSelectorDelegate

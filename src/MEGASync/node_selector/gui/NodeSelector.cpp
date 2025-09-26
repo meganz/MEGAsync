@@ -71,6 +71,9 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
 
         TabSelector::applyTokens(ui->wLeftPaneNS, iconTokenSetter);
     }
+
+    resize(1280, 800);
+    setMinimumSize(700, 400);
 }
 
 NodeSelector::~NodeSelector()
@@ -449,8 +452,6 @@ void NodeSelector::initSpecialisedWidgets()
 {
     NodeSelectorModel* model(nullptr);
 
-    auto selectedTab = selectedNodeTab();
-
     for (int page = 0; page < ui->stackedWidget->count(); ++page)
     {
         auto viewContainer = getTreeViewWidget(page);
@@ -473,13 +474,10 @@ void NodeSelector::initSpecialisedWidgets()
                     &NodeSelector::reject,
                     Qt::UniqueConnection);
 
-            if (selectedTab.has_value() && selectedTab.value() == page)
-            {
-                connect(viewContainer,
-                        &NodeSelectorTreeViewWidget::viewReady,
-                        this,
-                        &NodeSelector::performNodeSelection);
-            }
+            connect(viewContainer,
+                    &NodeSelectorTreeViewWidget::viewReady,
+                    this,
+                    &NodeSelector::performNodeSelection);
 
             model = viewContainer->getProxyModel()->getMegaModel();
 
@@ -569,10 +567,6 @@ bool NodeSelector::eventFilter(QObject* obj, QEvent* event)
 void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
 {
     mNodeToBeSelected = node;
-    if (mInitialised)
-    {
-        performNodeSelection();
-    }
 }
 
 void NodeSelector::performNodeSelection()
@@ -591,6 +585,22 @@ void NodeSelector::performNodeSelection()
             else
             {
                 onOptionSelected(optionValue);
+            }
+        }
+
+        // Disconnect all connections as soon as the node was selected
+        if (!mNodeToBeSelected)
+        {
+            for (int index = 0; index < ui->stackedWidget->count(); ++index)
+            {
+                if (auto wid =
+                        dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(index)))
+                {
+                    disconnect(wid,
+                               &NodeSelectorTreeViewWidget::viewReady,
+                               this,
+                               &NodeSelector::performNodeSelection);
+                }
             }
         }
     }
