@@ -71,6 +71,7 @@ void NodeSelectorDelegate::paint(QPainter* painter,
 
     auxOpt.state.setFlag(QStyle::State_MouseOver, false);
     auxOpt.state.setFlag(QStyle::State_Selected, false);
+    auxOpt.state.setFlag(QStyle::State_HasFocus, false);
 
     QStyledItemDelegate::paint(painter, auxOpt, index);
 }
