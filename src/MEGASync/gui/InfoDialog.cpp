@@ -1219,7 +1219,7 @@ bool InfoDialog::event(QEvent* event)
         updateUpgradeButtonText();
         updateCreateSyncButtonText();
     }
-    else if (event->type() == ThemeManager::ThemeChanged)
+    else if (event->type() == ThemeManager::ThemeChanged && mPreferences->logged())
     {
         setUsage();
     }
