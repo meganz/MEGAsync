@@ -113,7 +113,7 @@ public:
         return {};
     }
 
-    virtual Preferences::ThemeType getCurrentTheme() const;
+    virtual Preferences::ThemeAppeareance getCurrentThemeAppearance() const;
 
 signals:
     void themeChanged();

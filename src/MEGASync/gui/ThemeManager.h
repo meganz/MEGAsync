@@ -18,20 +18,24 @@ public:
     void init();
     QStringList themesAvailable() const;
     QString getSelectedColorSchemaString() const;
-    QString getColorSchemaString(Preferences::ThemeType theme) const;
+    QString getColorSchemaString(Preferences::ThemeAppeareance theme) const;
     void setTheme(Preferences::ThemeType theme);
-    void applyTheme(Preferences::ThemeType theme);
+    void onSystemAppearanceChanged(Preferences::ThemeAppeareance app);
 
 signals:
-    void themeChanged(Preferences::ThemeType theme);
+    void themeChanged();
 
 private:
     ThemeManager();
     void onOperatingSystemThemeChanged();
+    void recomputeAndApply();
+
+    void applyTheme(Preferences::ThemeAppeareance appearance);
 
     Preferences::ThemeType mCurrentTheme;
-    Preferences::ThemeType mCurrentColorScheme;
-    static const QMap<Preferences::ThemeType, QString> mThemesMap;
+    Preferences::ThemeAppeareance mCurrentColorScheme;
+    static const QMap<Preferences::ThemeAppeareance, QString> mAppearance;
+    static const QStringList mThemesList;
 };
 
 #endif

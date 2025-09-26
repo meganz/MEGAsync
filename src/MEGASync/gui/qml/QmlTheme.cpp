@@ -10,10 +10,8 @@ QmlTheme::QmlTheme(QObject *parent)
     connect(ThemeManager::instance(), &ThemeManager::themeChanged, this, &QmlTheme::onThemeChanged);
 }
 
-void QmlTheme::onThemeChanged(Preferences::ThemeType theme)
+void QmlTheme::onThemeChanged()
 {
-    Q_UNUSED(theme);
-
     emit themeChanged(getTheme());
 }
 

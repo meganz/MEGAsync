@@ -406,10 +406,8 @@ std::shared_ptr<TokenParserWidgetManager> TokenParserWidgetManager::instance()
     return manager;
 }
 
-void TokenParserWidgetManager::onThemeChanged(Preferences::ThemeType theme)
+void TokenParserWidgetManager::onThemeChanged()
 {
-    Q_UNUSED(theme)
-
     applyCurrentTheme();
 }
 

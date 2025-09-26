@@ -1,5 +1,8 @@
 #include "PlatformImplementation.h"
 
+#include "platform/macx/MacThemeWatcher.h"
+#include "ThemeManager.h"
+
 #include <QHostInfo>
 #include <QScreen>
 
@@ -20,6 +23,9 @@ void PlatformImplementation::initialize(int /*argc*/, char *[] /*argv*/)
 {
     setMacXActivationPolicy();
     mShellNotifier = std::make_shared<SignalShellNotifier>();
+    watcher = new MacThemeWatcher(this);
+
+    startThemeMonitor();
 }
 
 void PlatformImplementation::fileSelector(const SelectorInfo& info)
@@ -110,6 +116,37 @@ bool PlatformImplementation::isFileManagerExtensionEnabled()
     }
 
     return true;
+}
+
+void PlatformImplementation::startThemeMonitor()
+{
+    QObject::connect(watcher,
+                     &MacThemeWatcher::systemThemeChanged,
+                     this,
+                     [](bool dark)
+                     {
+                         Preferences::ThemeAppeareance selection;
+                         if (dark)
+                         {
+                             selection = Preferences::ThemeAppeareance::DARK;
+                         }
+                         else
+                         {
+                             selection = Preferences::ThemeAppeareance::LIGHT;
+                         }
+                         ThemeManager::instance()->onSystemAppearanceChanged(selection);
+                     });
+}
+
+Preferences::ThemeAppeareance PlatformImplementation::getCurrentThemeAppearance() const
+{
+    const bool isDark = watcher->getCurrentTheme();
+    if (isDark)
+    {
+        return Preferences::ThemeAppeareance::DARK;
+    }
+
+    return Preferences::ThemeAppeareance::LIGHT;
 }
 
 void PlatformImplementation::runPostAutoUpdateStep()

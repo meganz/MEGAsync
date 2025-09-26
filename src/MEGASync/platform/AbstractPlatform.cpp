@@ -352,7 +352,7 @@ void AbstractPlatform::logInfoDialogCoordinates(const char *message, const QRect
                        .toUtf8().constData());
 }
 
-Preferences::ThemeType AbstractPlatform::getCurrentTheme() const
+Preferences::ThemeAppeareance AbstractPlatform::getCurrentThemeAppearance() const
 {
-    return Preferences::ThemeType::LIGHT_THEME;
+    return Preferences::ThemeAppeareance::LIGHT;
 }

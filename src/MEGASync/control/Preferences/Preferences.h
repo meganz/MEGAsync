@@ -431,12 +431,21 @@ public:
 
     enum class ThemeType
     {
+        UNINITIALIZED = -1,
         SYSTEM_DEFAULT = 0,
-        LIGHT_THEME = 1,
-        DARK_THEME = 2,
+        DARK_THEME = 1,
+        LIGHT_THEME = 2,
         LAST
     };
     Q_ENUM(ThemeType)
+
+    enum class ThemeAppeareance
+    {
+        UNINITIALIZED = -1,
+        DARK = 0,
+        LIGHT = 1
+    };
+    Q_ENUM(ThemeAppeareance)
 
     void setThemeType(ThemeType theme);
     ThemeType getThemeType();
