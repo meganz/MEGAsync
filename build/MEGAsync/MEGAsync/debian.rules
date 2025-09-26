@@ -1,7 +1,6 @@
 #!/usr/bin/make -f
 NJOBS := $(shell echo ${DEB_BUILD_OPTIONS} | sed -rn 's/.*parallel=([0-9]*).*/\1/p')
 VCPKG_ROOT := $(shell [ -f /opt/vcpkg.tar.gz ] && echo "-DVCPKG_ROOT=vcpkg" || echo "")
-DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 25\|Questing Quokka\|Plucky Puffin\|Ubuntu 24\|Ubuntu 23\|Ubuntu 22" >/dev/null && echo "-- -Zxz" || echo "")
 EXTRADEFINES := $(shell cat /etc/issue | grep "Ubuntu 1[23456789]\|Ubuntu 20\|Ubuntu 21\|Ubuntu 22.10\|Ubuntu 23\|Ubuntu 24.10\|Debian.* [789]" >/dev/null && echo "-DMEGASYNC_DEPRECATED_OS" || echo "")
 QTINSTALL := $(shell cat /etc/issue | grep "Ubuntu 20.04" >/dev/null && echo "-DDEPLOY_QT_LIBRARIES=ON -DCMAKE_PREFIX_PATH=/opt/mega" || echo "")
 QTDEFINES := $(shell [ -f /opt/mega/bin/qmake ] && echo "${QTINSTALL}" || echo "" )
@@ -19,7 +18,6 @@ build: build-stamp
 build-stamp:
 	dh_testdir
 	sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1$(MEGA_BUILD_ID)/g" src/MEGASync/control/Version.h
-	sed -i -E "0,/megasync \(([0-9.]*)[^\)]*\)/s//megasync \(\1-$(MEGA_BUILD_ID).1)/" debian/changelog || :
 
 	if [ -f /opt/vcpkg.tar.gz ]; then           \
 		tar xzf /opt/vcpkg.tar.gz;              \
@@ -42,9 +40,19 @@ build-stamp:
 	fi
 
 	cmake --version
-	$(EXPORT_VCPKG_FORCE_SYSTEM_BINARIES) cmake $(VCPKG_ROOT) -DENABLE_DESKTOP_UPDATE_GEN=OFF -DENABLE_DESIGN_TOKENS_IMPORTER=OFF -DENABLE_DESKTOP_APP_TESTS=OFF $(QTDEFINES) -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -S $(CURDIR) -B $(CURDIR)/build_dir
-	cmake --build $(CURDIR)/build_dir -j$(NJOBS)
-	cmake --install $(CURDIR)/build_dir --prefix $(CURDIR)/install_dir
+	$(EXPORT_VCPKG_FORCE_SYSTEM_BINARIES) cmake $(VCPKG_ROOT) \
+	                                            -DENABLE_DESKTOP_UPDATE_GEN=OFF \
+	                                            -DENABLE_DESIGN_TOKENS_IMPORTER=OFF \
+	                                            -DENABLE_DESKTOP_APP_TESTS=OFF \
+	                                            $(QTDEFINES) \
+	                                            -DCMAKE_VERBOSE_MAKEFILE=ON \
+	                                            -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	                                            -S $(CURDIR) \
+	                                            -B $(CURDIR)/build_dir
+	cmake --build $(CURDIR)/build_dir \
+	              -j$(NJOBS)
+	cmake --install $(CURDIR)/build_dir \
+	                --prefix $(CURDIR)/install_dir
 
 	echo "fs.inotify.max_user_watches = 524288" > 99-megasync-inotify-limit.conf
 	echo "SUBSYSTEM==\"block\", ATTRS{idDevtype}==\"partition\"" > 99-megasync-udev.rules
@@ -100,7 +108,7 @@ binary-arch: build install
 	dh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info
 	dh_gencontrol
 	dh_md5sums
-	dh_builddeb $(DPKGXZ)
+	dh_builddeb -- -Zxz
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install
