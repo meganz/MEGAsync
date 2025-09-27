@@ -35,37 +35,37 @@ QGroupBox
 
 #bArchives
 {
-    qproperty-icon: url(:/images/themed/light/archives.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/archives); 
     qproperty-iconSize: 16px;
 }
 
 #bAudio
 {
-    qproperty-icon: url(:/images/themed/light/audio.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/audio); 
     qproperty-iconSize: 16px;
 }
 
 #bDocuments
 {
-    qproperty-icon: url(:/images/themed/light/documents.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/documents); 
     qproperty-iconSize: 16px;
 }
 
 #bImages
 {
-    qproperty-icon: url(:/images/themed/light/images.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/images); 
     qproperty-iconSize: 16px;
 }
 
 #bVideos
 {
-    qproperty-icon: url(:/images/themed/light/video.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/video); 
     qproperty-iconSize: 16px;
 }
 
 #bOther
 {
-    qproperty-icon: url(:/images/themed/light/other.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/other); 
     qproperty-iconSize: 16px;
 }
 
@@ -171,73 +171,73 @@ QGroupBox
 
 #gbMediaType QFrame[itsOn=false] &gt; #bArchives
 {
-    qproperty-icon: url(:/images/themed/light/archives.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/archives); 
     qproperty-iconSize: 16px;
 }
 
 #gbMediaType QFrame[itsOn=true] &gt; #bArchives
 {
-    qproperty-icon: url(:/images/themed/light/archives_selected.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/archives_selected); 
     qproperty-iconSize: 16px;
 }
 
 #gbMediaType QFrame[itsOn=false] &gt; #bAudio
 {
-    qproperty-icon: url(:/images/themed/light/audio.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/audio); 
     qproperty-iconSize: 16px;
 }
 
 #gbMediaType QFrame[itsOn=true] &gt; #bAudio
 {
-    qproperty-icon: url(:/images/themed/light/audio_selected.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/audio_selected); 
     qproperty-iconSize: 16px;
 }
 
 #gbMediaType QFrame[itsOn=false] &gt; #bDocuments
 {
-    qproperty-icon: url(:/images/themed/light/documents.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/documents); 
     qproperty-iconSize: 16px;
 }
 
 #gbMediaType QFrame[itsOn=true] &gt; #bDocuments
 {
-    qproperty-icon: url(:/images/themed/light/documents_selected.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/documents_selected); 
     qproperty-iconSize: 16px;
 }
 
 #gbMediaType QFrame[itsOn=false] &gt; #bImages
 {
-    qproperty-icon: url(:/images/themed/light/images.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/transfer_manager_images); 
     qproperty-iconSize: 16px;
 }
 
 #gbMediaType QFrame[itsOn=true] &gt; #bImages
 {
-    qproperty-icon: url(:/images/themed/light/images_selected.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/images_selected); 
     qproperty-iconSize: 16px;
 }
 
 #gbMediaType QFrame[itsOn=false] &gt; #bOther
 {
-    qproperty-icon: url(:/images/themed/light/other.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/other); 
     qproperty-iconSize: 16px;
 }
 
 #gbMediaType QFrame[itsOn=true] &gt; #bOther
 {
-    qproperty-icon: url(:/images/themed/light/other_selected.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/other_selected);
     qproperty-iconSize: 16px;
 }
 
 #gbMediaType QFrame[itsOn=false] &gt; #bVideos
 {
-    qproperty-icon: url(:/images/themed/light/video.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/video); 
     qproperty-iconSize: 16px;
 }
 
 #gbMediaType QFrame[itsOn=true] &gt; #bVideos
 {
-    qproperty-icon: url(:/images/themed/light/video_selected.svg); /*replaceThemeToken*/
+    qproperty-icon: url(:/video_selected); 
     qproperty-iconSize: 16px;
 }
 </string>
@@ -281,7 +281,7 @@ QGroupBox
         <string notr="true"/>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="../../../gui/Resources_light.qrc">
          <normaloff>:/images/themed/light/chevron-down_default.svg</normaloff>:/images/themed/light/chevron-down_default.svg</iconset>
        </property>
        <property name="checkable">
@@ -815,6 +815,8 @@ QGroupBox
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../../gui/Resources_light.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -118,14 +118,11 @@ private:
     void checkPauseButtonVisibilityIfPossible();
     void showTransferQuotaBanner(bool state);
 
-    void showAllResults();
-    void showDownloadResults();
-    void showUploadResults();
-
     void updateCurrentCategoryTitle();
 
     void filterByTab(TransfersWidget::TM_TAB tab);
     void startRequestTaskbarPinningTimer();
+    void createSearchChips();
 
 private slots:
     void on_tCompleted_clicked();
@@ -177,6 +174,10 @@ private slots:
 
     void onSortCriterionChanged(int sortBy, Qt::SortOrder order);
     void onRequestTaskbarPinningTimeout();
+
+    void showAllResults();
+    void showDownloadResults();
+    void showUploadResults();
 };
 
 #endif // TRANSFERMANAGER_H

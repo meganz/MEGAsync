@@ -301,8 +301,6 @@ icon: url(:/play);
     qproperty-icon: url(:/x.svg);
 }
 
-/* tokenized to here */
-
 #sStatus
 {
     height: 36px;
@@ -317,7 +315,7 @@ icon: url(:/play);
     min-height: 36px;
     max-height: 36px;
     border: none;
-    color: #333333;
+    color: #FF303233; /*colorToken.text-primary*/
     font-size: 14px;
     qProperty-iconSize: 24px;
     text-align: left;
@@ -329,7 +327,6 @@ icon: url(:/play);
     min-height: 24px;
     max-height: 24px;
     border: none;
-    color: #333333;
     font-size: 14px;
     qProperty-iconSize: 24px;
     text-align: left;
@@ -337,40 +334,10 @@ icon: url(:/play);
 
 /* right pane */
 
-#wTransfers
-{
-    background-color: white;
-}
-
-#lSearch
-{
-    color: #333333;
-    font-size: 20px;
-    font-weight: 600;
-    padding-left: 12px;
-    qproperty-alignment: 'AlignLeft | AlignVCenter';
-}
-
-#lTextSearch
-{
-    color: #666666;
-    font-size: 20px;
-    font-weight: 600;
-    padding-left: 12px;
-    qproperty-alignment: 'AlignLeft | AlignVCenter';
-}
 
 #lCurrentContent
 {
 font-weight:700;
-}
-
-#lTransfering, #lMediaType
-{
-    color: #666666;
-    font-size: 12px;
-    padding-left: 12px;
-    qproperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
 QToolButton
@@ -378,72 +345,10 @@ QToolButton
   border: none;
 }
 
-#lTransferOverQuota
-{
-   color: #F46265;
-  font-size: 12px;
-  font-weight: bold;
-  padding-left: 2px;
-}
-
 #wNoDownloads QLabel, #wNoUploads QLabel,  #wNoTransfers QLabel, #wNoFinished QLabel, #wNoResults QLabel
 {
-    font-size: 16px;
-    font-weight: 400;
 	line-height: 24px;  
 }
-
-/* 
-* Storage OQ text
-*/
-
-#lStorageOverQuota
-{
-	font-size: 10px;
-	font-weight: 600;
-	margin-left: 16px;
-	border-radius: 4px;
-	padding: 4px 8px;
-}
-
-#lStorageOverQuota[state=&quot;almostfull&quot;]
-{
-	background-color: #FEF4C6; /*colorToken.notification-warning*/
-	color: #B55407; /*colorToken.text-warning*/
-}
-
-#lStorageOverQuota[state=&quot;full&quot;]
-{
-	background-color: #FFE4E8; /*colorToken.notification-error*/
-	color: #E31B57; /*colorToken.text-error*/
-}
-
-#wAllResults, #wDlResults, #wUlResults
-{
-   height: 24px;
-   border-radius: 12px;
-   background-color: #EEEEEE;
-}
-
-#wAllResults QLabel, #wDlResults QLabel, #wUlResults QLabel
-{
-   font-size: 12px;
-   color: #777777;
-   font-weight: bold;
-}
-
-#wAllResults[selected = true], #wDlResults[selected=true], #wUlResults[selected=true]
-{
-  height: 24px;
-  border-radius: 12px;
-  background-color: #2BA6DE;
-}
-
-#wAllResults[selected = true] QLabel, #wDlResults[selected=true] QLabel, #wUlResults[selected=true] QLabel
-{
-  color: #FFFFFF;
-}
-
 </string>
   </property>
   <property name="TOKENIZED" stdset="0">
@@ -1241,7 +1146,7 @@ QToolButton
            <string notr="true"/>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>3</number>
           </property>
           <widget class="QWidget" name="pSpeedAndClear">
            <layout class="QHBoxLayout" name="pSpeedAndClearLayout" stretch="0,0,0,1">
@@ -2070,162 +1975,42 @@ QToolButton
                  <number>10</number>
                 </property>
                 <item>
-                 <widget class="QWidget" name="wAllResults" native="true">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>24</height>
-                   </size>
+                 <widget class="TabSelector" name="wAllResults" native="true">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>24</height>
-                   </size>
+                  <property name="class" stdset="0">
+                   <string notr="true">chip</string>
                   </property>
-                  <property name="cursor">
-                   <cursorShape>PointingHandCursor</cursorShape>
-                  </property>
-                  <property name="focusPolicy">
-                   <enum>Qt::StrongFocus</enum>
-                  </property>
-                  <layout class="QHBoxLayout" name="horizontalLayout_18">
-                   <property name="spacing">
-                    <number>12</number>
-                   </property>
-                   <property name="leftMargin">
-                    <number>12</number>
-                   </property>
-                   <property name="topMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>12</number>
-                   </property>
-                   <property name="bottomMargin">
-                    <number>0</number>
-                   </property>
-                   <item alignment="Qt::AlignLeft">
-                    <widget class="QLabel" name="lAllResults">
-                     <property name="text">
-                      <string>All</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item alignment="Qt::AlignRight">
-                    <widget class="QLabel" name="lAllResultsCounter">
-                     <property name="text">
-                      <string notr="true"/>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QWidget" name="wDlResults" native="true">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>24</height>
-                   </size>
+                 <widget class="TabSelector" name="wDlResults" native="true">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>24</height>
-                   </size>
+                  <property name="class" stdset="0">
+                   <string notr="true">chip</string>
                   </property>
-                  <property name="cursor">
-                   <cursorShape>PointingHandCursor</cursorShape>
-                  </property>
-                  <property name="focusPolicy">
-                   <enum>Qt::StrongFocus</enum>
-                  </property>
-                  <layout class="QHBoxLayout" name="horizontalLayout_19">
-                   <property name="spacing">
-                    <number>12</number>
-                   </property>
-                   <property name="leftMargin">
-                    <number>12</number>
-                   </property>
-                   <property name="topMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>12</number>
-                   </property>
-                   <property name="bottomMargin">
-                    <number>0</number>
-                   </property>
-                   <item alignment="Qt::AlignLeft">
-                    <widget class="QLabel" name="lDlResults">
-                     <property name="text">
-                      <string>Downloads</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item alignment="Qt::AlignRight">
-                    <widget class="QLabel" name="lDlResultsCounter">
-                     <property name="text">
-                      <string notr="true"/>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QWidget" name="wUlResults" native="true">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>24</height>
-                   </size>
+                 <widget class="TabSelector" name="wUlResults" native="true">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>24</height>
-                   </size>
+                  <property name="class" stdset="0">
+                   <string notr="true">chip</string>
                   </property>
-                  <property name="cursor">
-                   <cursorShape>PointingHandCursor</cursorShape>
-                  </property>
-                  <property name="focusPolicy">
-                   <enum>Qt::StrongFocus</enum>
-                  </property>
-                  <layout class="QHBoxLayout" name="horizontalLayout_20">
-                   <property name="spacing">
-                    <number>12</number>
-                   </property>
-                   <property name="leftMargin">
-                    <number>12</number>
-                   </property>
-                   <property name="topMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>12</number>
-                   </property>
-                   <property name="bottomMargin">
-                    <number>0</number>
-                   </property>
-                   <item alignment="Qt::AlignLeft">
-                    <widget class="QLabel" name="lUlResults">
-                     <property name="text">
-                      <string>Uploads</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item alignment="Qt::AlignRight">
-                    <widget class="QLabel" name="lUlResultsCounter">
-                     <property name="text">
-                      <string notr="true"/>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
                  </widget>
                 </item>
                 <item>
@@ -2373,6 +2158,9 @@ QToolButton
             </property>
             <property name="type" stdset="0">
              <string notr="true">secondary</string>
+            </property>
+            <property name="font-size" stdset="0">
+             <string notr="true">label-2</string>
             </property>
            </widget>
           </item>
@@ -2539,6 +2327,9 @@ QToolButton
             <property name="type" stdset="0">
              <string notr="true">secondary</string>
             </property>
+            <property name="font-size" stdset="0">
+             <string notr="true">label-2</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -2619,6 +2410,9 @@ QToolButton
             </property>
             <property name="type" stdset="0">
              <string notr="true">secondary</string>
+            </property>
+            <property name="font-size" stdset="0">
+             <string notr="true">label-2</string>
             </property>
            </widget>
           </item>
@@ -2704,6 +2498,9 @@ QToolButton
             <property name="type" stdset="0">
              <string notr="true">secondary</string>
             </property>
+            <property name="font-size" stdset="0">
+             <string notr="true">label-2</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -2767,6 +2564,12 @@ QToolButton
    <extends>QPushButton</extends>
    <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
   </customwidget>
+  <customwidget>
+   <class>TabSelector</class>
+   <extends>QWidget</extends>
+   <header>TabSelector.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>bPause</tabstop>
@@ -2779,9 +2582,6 @@ QToolButton
   <tabstop>bOpenLinks</tabstop>
   <tabstop>bUpload</tabstop>
   <tabstop>tCogWheel</tabstop>
-  <tabstop>wAllResults</tabstop>
-  <tabstop>wDlResults</tabstop>
-  <tabstop>wUlResults</tabstop>
   <tabstop>tNoUploads</tabstop>
   <tabstop>tActionButton</tabstop>
   <tabstop>fSearchString</tabstop>

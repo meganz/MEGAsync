@@ -53,6 +53,7 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
     mFoundStalledIssues(false)
 {
     mUi->setupUi(this);
+    createSearchChips();
 
     mDragBackDrop = new QWidget(this);
     mUiDragBackDrop->setupUi(mDragBackDrop);
@@ -233,10 +234,6 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
     mTransferScanCancelUi = new TransferScanCancelUi(mUi->sTransfers, mTabNoItem[TransfersWidget::ALL_TRANSFERS_TAB]);
     connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
             this, &TransferManager::cancelScanning);
-
-    mUi->wAllResults->installEventFilter(this);
-    mUi->wDlResults->installEventFilter(this);
-    mUi->wUlResults->installEventFilter(this);
 
     mUi->leSearchField->installEventFilter(this);
 
@@ -814,18 +811,9 @@ void TransferManager::refreshSearchStats()
         int nbDl (proxy->getNumberOfItems(TransferData::TRANSFER_DOWNLOAD));
         int nbUl (proxy->getNumberOfItems(TransferData::TRANSFER_UPLOAD));
         int nbAll (nbDl + nbUl);
-
-        if(mUi->lDlResultsCounter->text().toLongLong() != nbDl)
-        {
-            mUi->lDlResultsCounter->setText(QString::number(nbDl));
-        }
-
-        if(mUi->lUlResultsCounter->text().toLongLong() != nbUl)
-        {
-            mUi->lUlResultsCounter->setText(QString::number(nbUl));
-        }
-
-        mUi->lAllResultsCounter->setText(QString::number(nbAll));
+        mUi->wAllResults->setCounter(nbAll);
+        mUi->wDlResults->setCounter(nbDl);
+        mUi->wUlResults->setCounter(nbUl);
 
         if(nbDl != 0 && nbUl != 0)
         {
@@ -841,10 +829,10 @@ void TransferManager::refreshSearchStats()
         }
 
         bool showTypeFilters (mUi->wTransfers->getCurrentTab() == TransfersWidget::SEARCH_TAB);
+
+        mUi->wAllResults->setVisible(showTypeFilters);
         mUi->wDlResults->setVisible(showTypeFilters);
         mUi->wUlResults->setVisible(showTypeFilters);
-        mUi->wAllResults->setVisible(showTypeFilters);
-
         QWidget* widgetToShow (mUi->wTransfers);
 
         if (nbAll == 0)
@@ -929,14 +917,11 @@ void TransferManager::on_tSearchIcon_clicked()
 
 void TransferManager::applyTextSearch(const QString& text)
 {
-    // Add number of found results
-    mUi->wAllResults->setProperty(SEARCH_BUTTON_SELECTED, true);
-    mUi->wDlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
-    mUi->wUlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
-
+    mUi->wAllResults->setSelected(true);
     mUi->wAllResults->hide();
     mUi->wDlResults->hide();
     mUi->wUlResults->hide();
+
     mUi->wSearch->show();
 
     //This is done to refresh the stylesheet as depends on the object properties
@@ -981,35 +966,17 @@ void TransferManager::on_tClearSearchResult_clicked()
 
 void TransferManager::showAllResults()
 {
-    mUi->wAllResults->setProperty(SEARCH_BUTTON_SELECTED, true);
-    mUi->wDlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
-    mUi->wUlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
-
-    mUi->pSearchHeaderInfo->setStyleSheet(mUi->pSearchHeaderInfo->styleSheet());
-
     mUi->wTransfers->textFilterTypeChanged({});
 }
 
 void TransferManager::showDownloadResults()
 {
-    mUi->wAllResults->setProperty(SEARCH_BUTTON_SELECTED, false);
-    mUi->wDlResults->setProperty(SEARCH_BUTTON_SELECTED, true);
-    mUi->wUlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
-
-    mUi->pSearchHeaderInfo->setStyleSheet(mUi->pSearchHeaderInfo->styleSheet());
-
     mUi->wTransfers->textFilterTypeChanged(TransferData::TRANSFER_DOWNLOAD
                                     | TransferData::TRANSFER_LTCPDOWNLOAD);
 }
 
 void TransferManager::showUploadResults()
 {
-    mUi->wAllResults->setProperty(SEARCH_BUTTON_SELECTED, false);
-    mUi->wDlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
-    mUi->wUlResults->setProperty(SEARCH_BUTTON_SELECTED, true);
-
-    mUi->pSearchHeaderInfo->setStyleSheet(mUi->pSearchHeaderInfo->styleSheet());
-
     mUi->wTransfers->textFilterTypeChanged(TransferData::TRANSFER_UPLOAD);
 }
 
@@ -1253,57 +1220,6 @@ bool TransferManager::eventFilter(QObject *obj, QEvent *event)
             mSearchFieldReturnPressed = true;
         }
     }
-    else if (obj == mUi->wAllResults || obj == mUi->wDlResults || obj == mUi->wUlResults)
-    {
-        if (event->type() == QEvent::MouseButtonRelease)
-        {
-            if (obj == mUi->wAllResults)
-            {
-                showAllResults();
-            }
-            else if (obj == mUi->wDlResults)
-            {
-                showDownloadResults();
-            }
-            else if (obj == mUi->wUlResults)
-            {
-                showUploadResults();
-            }
-        }
-        else if (event->type() == QEvent::KeyRelease)
-        {
-            auto widget = dynamic_cast<QWidget*>(obj);
-            if (widget)
-            {
-                auto keyEvent = dynamic_cast<QKeyEvent*>(event);
-                if (keyEvent && widget->hasFocus())
-                {
-                    if (keyEvent->key() == Qt::Key_Space)
-                    {
-                        QApplication::postEvent(widget, new QEvent(QEvent::MouseButtonRelease));
-                    }
-                }
-            }
-        }
-        else if (event->type() == QEvent::Paint)
-        {
-            auto widget = dynamic_cast<QWidget*>(obj);
-            if (widget && widget->hasFocus())
-            {
-                QPainter painter(widget);
-                QStyleOptionFocusRect option;
-                if ((option.state |= QStyle::State_KeyboardFocusChange))
-                {
-                    option.init(widget);
-                    option.backgroundColor = palette().color(QPalette::Window);
-
-                    style()->drawPrimitive(QStyle::PE_FrameFocusRect, &option, &painter, this);
-                    return true;
-                }
-            }
-        }
-    }
-
     return QDialog::eventFilter(obj, event);
 }
 
@@ -1454,4 +1370,28 @@ void TransferManager::onRequestTaskbarPinningTimeout()
 {
     mTaskbarPinningRequestTimer->stop();
     Platform::getInstance()->pinOnTaskbar();
+}
+
+void TransferManager::createSearchChips()
+{
+    mUi->wAllResults->setTitle(tr("All"));
+    mUi->wDlResults->setTitle(tr("Downloads"));
+    mUi->wUlResults->setTitle(tr("Uploads"));
+
+    mUi->wAllResults->hideIcon();
+    mUi->wDlResults->hideIcon();
+    mUi->wUlResults->hideIcon();
+
+    QObject::connect(mUi->wAllResults,
+                     &TabSelector::clicked,
+                     this,
+                     &TransferManager::showAllResults);
+    QObject::connect(mUi->wDlResults,
+                     &TabSelector::clicked,
+                     this,
+                     &TransferManager::showDownloadResults);
+    QObject::connect(mUi->wUlResults,
+                     &TabSelector::clicked,
+                     this,
+                     &TransferManager::showUploadResults);
 }
