@@ -55,55 +55,39 @@ TransferWidgetHeaderItem  QLabel
 
 QMenu
 {
-    border: 1px solid #B8B8B8;
-   border-radius: 8px;
-    background: #ffffff;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    padding-left: 8px;
-    padding-right: 8px;
+    border: 1px solid;
+    border-color: #D8D9DB;/*colorToken.border-disabled*/
+    border-radius: 8px;
+    background: #ffffff;/*colorToken.page-background*/
+    padding: 4px;
 }
 
 QMenu::item
 {
   font-size: 14px;
-  color: #333333;
-background: transparent;
-margin-top: 3px;
-margin-bottom: 3px;
-    padding-left: 16px;
-    padding-right: 16px;
-    margin-left: 16px;
-    margin-right: 16px;
+  line-height: 20px;
+  height: 40px;
+  color: #303233;/*colorToken.text-primary*/
+  background: transparent;
 }
 
 QMenu::item:selected
 {
-     font-weight: bold;
+     background: #F7F7F7;/*colorToken.surface-1*/
+
 }
 
 QMenu::separator
 {
     height: 1px;
-        width: 164px;
-        min-width: 164px;
-        max-width: 164px;
-    background-color: #EEEEEE;
-    margin-top: 9px;
-    margin-bottom: 9px;
+    background-color: #EFEFF0;/*colorToken.surface-2*/
 }
 
 QMenu::item:disabled
 {
-    background-color: #ffffff;
-    color: rgba(119,119,119,0.3);
+    color: #C1C2C4;/*colorToken.text-disabled*/
 }
 
-
-QMenu::item:default
-{
-  color: #F46265;
-}
 
 #tCancelClearVisible[state=&quot;minus&quot;]
 {
@@ -604,9 +588,6 @@ qproperty-icon: url(:/eraser_small_thin_solid_secondary);
          </property>
          <property name="focusPolicy">
           <enum>Qt::StrongFocus</enum>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
          </property>
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
