@@ -19,7 +19,10 @@ void TokenizableButton::paintEvent(QPaintEvent* event)
 {
     QStyleOptionButton option;
     initStyleOption(&option);
-
+    if (mForcedState != QStyle::State_None)
+    {
+        option.state |= mForcedState;
+    }
     // The first time the button is painted
     init(this);
 
@@ -64,6 +67,21 @@ void TokenizableButton::init(QAbstractButton*)
     }
 
     TokenizableItem::init(this);
+}
+
+void TokenizableButton::forcePress()
+{
+    mForcedState = QStyle::State_Sunken;
+}
+
+void TokenizableButton::forceMouseOver()
+{
+    mForcedState = QStyle::State_MouseOver;
+}
+
+void TokenizableButton::resetForcedState()
+{
+    mForcedState = QStyle::State_None;
 }
 
 /*************** ONLY_ICON_BUTTON ***************/

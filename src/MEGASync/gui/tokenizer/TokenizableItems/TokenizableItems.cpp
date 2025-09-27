@@ -11,15 +11,16 @@
 
 TokenizableItem::TokenizableItem():
     mInit(false),
-    mThemeType(static_cast<int>(Preferences::instance()->getThemeType()))
+    mThemeType(static_cast<int>(Preferences::instance()->getThemeType())),
+    mNeedUpdate(true)
 {}
 
 TokenizableItem::~TokenizableItem() {}
 
 bool TokenizableItem::stateHasChanged(const QStyleOption& option)
 {
-    auto result(mTokenChanged);
-    mTokenChanged = false;
+    auto result(mNeedUpdate);
+    mNeedUpdate = false;
     int currentThemeType = static_cast<int>(Preferences::instance()->getThemeType());
 
     if (mThemeType != currentThemeType)

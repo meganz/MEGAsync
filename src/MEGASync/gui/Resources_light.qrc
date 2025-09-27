@@ -212,5 +212,13 @@
         <file alias="play_square_small_thin_outline_secondary">images/themed/light/play_square_small_thin_outline_secondary.svg</file>
         <file alias="chevron_down_small_thin_outline_secondary">images/themed/light/chevron_down_small_thin_outline_secondary.svg</file>
         <file alias="chevron_up_small_thin_outline_secondary">images/themed/light/chevron_up_small_thin_outline_secondary.svg</file>
+        <file alias="x_small_thin_outline_button_outline">images/themed/light/x_small_thin_outline_button_outline.svg</file>
+        <file alias="pause_small_thin_outline_button_outline">images/themed/light/pause_small_thin_outline_button_outline.svg</file>
+        <file alias="eraser_small_thin_solid_secondary">images/themed/light/eraser_small_thin_solid_secondary.svg</file>
+        <file alias="minus_square_small_thin_solid_support_warning">images/themed/light/minus_square_small_thin_solid_support_warning.svg</file>
+        <file alias="pause_small_thin_outline_button_outline_hover">images/themed/light/pause_small_thin_outline_button_outline_hover.svg</file>
+        <file alias="x_small_thin_outline_button_outline_hover">images/themed/light/x_small_thin_outline_button_outline_hover.svg</file>
+        <file alias="play_small_thin_outline_button_outline">images/themed/light/play_small_thin_outline_button_outline.svg</file>
+        <file alias="play_small_thin_outline_button_outline_hover">images/themed/light/play_small_thin_outline_button_outline_hover.svg</file>
     </qresource>
 </RCC>

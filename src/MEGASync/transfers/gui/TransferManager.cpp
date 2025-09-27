@@ -1241,65 +1241,63 @@ bool TransferManager::eventFilter(QObject *obj, QEvent *event)
     if (obj == mUi->leSearchField && event->type() == QEvent::KeyPress)
     {
         auto keyEvent = dynamic_cast<QKeyEvent*>(event);
-        if(keyEvent && keyEvent->key() == Qt::Key_Escape)
+        if (keyEvent && keyEvent->key() == Qt::Key_Escape)
         {
             event->accept();
             on_tSearchCancel_clicked();
             focusNextChild();
             return true;
         }
-        else if(keyEvent && keyEvent->key() == Qt::Key_Return)
+        else if (keyEvent && keyEvent->key() == Qt::Key_Return)
         {
             mSearchFieldReturnPressed = true;
         }
     }
-    else if(obj == mUi->wAllResults || obj == mUi->wDlResults || obj == mUi->wUlResults)
+    else if (obj == mUi->wAllResults || obj == mUi->wDlResults || obj == mUi->wUlResults)
     {
-        if(event->type() == QEvent::MouseButtonRelease)
+        if (event->type() == QEvent::MouseButtonRelease)
         {
-            if(obj == mUi->wAllResults)
+            if (obj == mUi->wAllResults)
             {
                 showAllResults();
             }
-            else if(obj == mUi->wDlResults)
+            else if (obj == mUi->wDlResults)
             {
-
                 showDownloadResults();
             }
-            else if(obj == mUi->wUlResults)
+            else if (obj == mUi->wUlResults)
             {
                 showUploadResults();
             }
         }
-        else if(event->type() == QEvent::KeyRelease)
+        else if (event->type() == QEvent::KeyRelease)
         {
             auto widget = dynamic_cast<QWidget*>(obj);
-            if(widget)
+            if (widget)
             {
                 auto keyEvent = dynamic_cast<QKeyEvent*>(event);
-                if(keyEvent && widget->hasFocus())
+                if (keyEvent && widget->hasFocus())
                 {
-                    if(keyEvent->key() == Qt::Key_Space)
+                    if (keyEvent->key() == Qt::Key_Space)
                     {
                         QApplication::postEvent(widget, new QEvent(QEvent::MouseButtonRelease));
                     }
                 }
             }
         }
-        else if(event->type() == QEvent::Paint)
+        else if (event->type() == QEvent::Paint)
         {
             auto widget = dynamic_cast<QWidget*>(obj);
-            if(widget && widget->hasFocus())
+            if (widget && widget->hasFocus())
             {
                 QPainter painter(widget);
                 QStyleOptionFocusRect option;
-                if((option.state |= QStyle::State_KeyboardFocusChange))
+                if ((option.state |= QStyle::State_KeyboardFocusChange))
                 {
                     option.init(widget);
                     option.backgroundColor = palette().color(QPalette::Window);
 
-                    style()->drawPrimitive(QStyle::PE_FrameFocusRect, &option, &painter,
-                                           this);
+                    style()->drawPrimitive(QStyle::PE_FrameFocusRect, &option, &painter, this);
                     return true;
                 }
             }

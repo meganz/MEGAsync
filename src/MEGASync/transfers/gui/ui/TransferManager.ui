@@ -192,13 +192,13 @@ QFrame[itsOn=true] &gt; #tFailed
 #bPause
 {
 icon-size: 16px;
-icon: url(:/play);
+icon: url(:/pause);
 }
 
 #bPause:checked
 {
 icon-size: 16px;
-icon: url(:/pause);
+icon: url(:/play);
 }
 
 #bSearch
@@ -2717,6 +2717,11 @@ QToolButton
  </widget>
  <customwidgets>
   <customwidget>
+   <class>IconOnlyButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
+  </customwidget>
+  <customwidget>
    <class>SomeIssuesOccurredMessage</class>
    <extends>QWidget</extends>
    <header>SomeIssuesOccurredMessage.h</header>
@@ -2751,11 +2756,6 @@ QToolButton
    <extends>QWidget</extends>
    <header>TransferManagerStatusHeaderWidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>IconOnlyButton</class>
-   <extends>QPushButton</extends>
-   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
   </customwidget>
   <customwidget>
    <class>IconLabel</class>

@@ -209,6 +209,10 @@ signals:
 
 public:
     TokenizableButton(QWidget* parent = nullptr);
+    
+    void forcePress();
+    void forceMouseOver();
+    void resetForcedState();
 
     void clear() override;
 
@@ -218,6 +222,7 @@ protected:
 
 private:
     ButtonTokens mButtonTokens;
+    QStyle::State mForcedState;
 };
 
 class IconOnlyButton: public TokenizableButton

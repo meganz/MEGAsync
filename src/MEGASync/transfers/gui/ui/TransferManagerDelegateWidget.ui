@@ -709,7 +709,7 @@ QProgressBar::chunk
           </size>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>5</number>
          </property>
          <widget class="QWidget" name="pActive">
           <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -1188,9 +1188,8 @@ QProgressBar::chunk
               <height>16</height>
              </size>
             </property>
-            <property name="icon">
-             <iconset resource="../../../gui/Resources_common.qrc">
-              <normaloff>:/images/transfer_manager/transfers_actions/lists_pause_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_pause_ico_default.png</iconset>
+            <property name="type" stdset="0">
+             <string/>
             </property>
            </widget>
           </item>
@@ -1247,9 +1246,11 @@ QProgressBar::chunk
               <height>16</height>
              </size>
             </property>
-            <property name="icon">
-             <iconset resource="../../../gui/Resources_common.qrc">
-              <normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_ico_default.png</iconset>
+            <property name="type" stdset="0">
+             <string notr="true">ghost</string>
+            </property>
+            <property name="dimension" stdset="0">
+             <string notr="true">small</string>
             </property>
            </widget>
           </item>
@@ -1262,8 +1263,6 @@ QProgressBar::chunk
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../../../gui/Resources_common.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

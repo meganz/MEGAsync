@@ -107,12 +107,7 @@ QMenu::item:default
 
 #tCancelClearVisible[state=&quot;minus&quot;]
 {
-qproperty-icon: url(:/minus-square_small_thin_solid);
-qproperty-normal_off: &quot;support-warning&quot;;
-qproperty-pressed_off: &quot;support-warning&quot;;
-qproperty-pressed_on: &quot;support-warning&quot;;
-qproperty-hover_off: &quot;support-warning&quot;;
-qproperty-hover_on: &quot;support-warning&quot;;
+qproperty-icon: url(:/minus_square_small_thin_solid_support_warning);
 }
 
 #tCancelClearVisible, #tCancelClearVisible[state=&quot;x&quot;]
@@ -121,7 +116,7 @@ qproperty-icon: url(:/x_square_small_thin_outline_secondary);
 }
 #tCancelClearVisible[state=&quot;eraser&quot;]
 {
-qproperty-icon: url(:/eraser_small_thin_outline);
+qproperty-icon: url(:/eraser_small_thin_solid_secondary);
 }
 </string>
   </property>

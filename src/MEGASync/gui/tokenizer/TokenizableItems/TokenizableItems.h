@@ -78,6 +78,12 @@ public:
 
     virtual void clear();
 
+    // Utility to be called when you set a new icon.
+    void forceUpdate()
+    {
+        mNeedUpdate = true;
+    }
+
 protected:
     bool stateHasChanged(const QStyleOption& option);
     bool themeHasChanged() const;
@@ -98,7 +104,7 @@ private:
     QStyleOption mCurrentOption;
     bool mInit;
     int mThemeType;
-    bool mTokenChanged;
+    bool mNeedUpdate;
 };
 
 #endif // TOKENIZABLEITEMS_H
