@@ -146,7 +146,7 @@ MessageDialogData::Type MessageDialogData::getType() const
     return mType;
 }
 
-QWidget* MessageDialogData::getParentWidget() const
+QWidget* MessageDialogData::getParentDialog() const
 {
     if (mInfo.parent)
     {

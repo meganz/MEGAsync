@@ -159,7 +159,7 @@ public:
     virtual ~MessageDialogData() = default;
 
     Type getType() const;
-    QWidget* getParentWidget() const;
+    QWidget* getParentDialog() const;
     QString getTitle() const;
     MessageDialogTextInfo getTitleTextInfo() const;
     MessageDialogTextInfo getDescriptionTextInfo() const;

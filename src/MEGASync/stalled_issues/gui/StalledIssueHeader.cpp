@@ -4,6 +4,7 @@
 #include "IconTokenizer.h"
 #include "IgnoredStalledIssue.h"
 #include "MegaApplication.h"
+#include "MegaMenuItemAction.h"
 #include "MessageDialogOpener.h"
 #include "StalledIssuesCaseHeaders.h"
 #include "StalledIssuesDialog.h"
@@ -184,18 +185,21 @@ void StalledIssueHeader::onMultipleActionClicked()
         else
         {
             QMenu *menu(new QMenu(ui->multipleActionButton));
-            Platform::getInstance()->initMenu(menu, "MultipleActionStalledIssues");
+            menu->setProperty("class", QLatin1String("MegaMenu"));
             menu->setAttribute(Qt::WA_DeleteOnClose);
 
             foreach(auto action, actions)
             {
                 // Show in system file explorer action
-                auto actionItem (new MenuItemAction(action.actionText, QString()));
+                auto actionItem(new MegaMenuItemAction(action.actionText, QString()));
                 auto id(action.id);
-                connect(actionItem, &MenuItemAction::triggered, this, [this, id]()
-                {
-                    mHeaderCase->onMultipleActionButtonOptionSelected(this, id);
-                });
+                connect(actionItem,
+                        &MegaMenuItemAction::triggered,
+                        this,
+                        [this, id]()
+                        {
+                            mHeaderCase->onMultipleActionButtonOptionSelected(this, id);
+                        });
                 actionItem->setParent(menu);
                 menu->addAction(actionItem);
             }

@@ -634,7 +634,7 @@ StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(
     return item;
 }
 
-void StalledIssueDelegate::updateColors() const
+void StalledIssueDelegate::updateColors()
 {
     mActiveColor = TokenParserWidgetManager::instance()->getColor(QLatin1String("page-background"));
     mSelectedColor = TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-1"));
