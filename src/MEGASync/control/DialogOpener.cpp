@@ -109,6 +109,14 @@ void DialogOpener::showMessageDialog(QPointer<QmlMessageDialogWrapper> wrapper,
             auto dialog = showDialogImpl(wrapper, false, false);
             dialog->setIgnoreCloseAllAction(msgInfo->ignoreCloseAll());
         }
+
+        if (msgInfo->getParentDialog())
+        {
+            QPoint parentCenter = msgInfo->getParentDialog()->geometry().center();
+            QSize dialogSize = wrapper->size();
+            wrapper->move(QPoint((parentCenter.x() - dialogSize.width() / 2),
+                                 (parentCenter.y() - dialogSize.height() / 2)));
+        }
     }
 }
 

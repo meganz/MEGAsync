@@ -43,8 +43,8 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/BugReportDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/ProgressIndicatorDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/VerifyLockMessage.h
-    ${CMAKE_CURRENT_LIST_DIR}/ViewLoadingScene.h
-    ${CMAKE_CURRENT_LIST_DIR}/ViewLoadingMessage.h
+    ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ViewLoadingScene.h
+    ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ViewLoadingMessage.h
     ${CMAKE_CURRENT_LIST_DIR}/WaitingSpinnerWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/ProxySettings.h
     ${CMAKE_CURRENT_LIST_DIR}/BandwidthSettings.h
@@ -197,8 +197,8 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/BugReportDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ProgressIndicatorDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/VerifyLockMessage.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/ViewLoadingScene.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/ViewLoadingMessage.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ViewLoadingScene.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ViewLoadingMessage.cpp
     ${CMAKE_CURRENT_LIST_DIR}/WaitingSpinnerWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ProxySettings.cpp
     ${CMAKE_CURRENT_LIST_DIR}/BandwidthSettings.cpp
@@ -313,8 +313,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/win/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/VerifyLockMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/NodeNameSetterDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/ViewLoadingScene.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/ViewLoadingMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/AccountTypeWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelectorTreeViewWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win/NodeSelectorLoadingDelegate.ui
@@ -330,8 +328,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/macx/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/VerifyLockMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/NodeNameSetterDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/ViewLoadingScene.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/ViewLoadingMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx/NodeSelector.ui
@@ -349,8 +345,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/linux/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/VerifyLockMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/NodeNameSetterDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/ViewLoadingScene.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/ViewLoadingMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/AccountTypeWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui
@@ -388,17 +382,17 @@ target_sources_conditional(${ExecutableTarget}
 if (WIN32)
     set_property(TARGET ${ExecutableTarget}
         PROPERTY AUTOUIC_SEARCH_PATHS
-        ${CMAKE_CURRENT_LIST_DIR}/win ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win ${CMAKE_CURRENT_LIST_DIR}/ui
+        ${CMAKE_CURRENT_LIST_DIR}/win ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/win ${CMAKE_CURRENT_LIST_DIR}/ui ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ui
     )
 elseif (APPLE)
     set_property(TARGET ${ExecutableTarget}
         PROPERTY AUTOUIC_SEARCH_PATHS
-        ${CMAKE_CURRENT_LIST_DIR}/macx ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx ${CMAKE_CURRENT_LIST_DIR}/ui
+        ${CMAKE_CURRENT_LIST_DIR}/macx ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/macx ${CMAKE_CURRENT_LIST_DIR}/ui ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ui
     )
     elseif(UNIX)
         set_property(TARGET ${ExecutableTarget}
             PROPERTY AUTOUIC_SEARCH_PATHS
-            ${CMAKE_CURRENT_LIST_DIR}/linux ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux ${CMAKE_CURRENT_LIST_DIR}/ui
+            ${CMAKE_CURRENT_LIST_DIR}/linux ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui/linux ${CMAKE_CURRENT_LIST_DIR}/ui ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ui
         )
 endif()
 
@@ -538,6 +532,8 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/ScanningWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/CancelConfirmWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/OverQuotaDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ui/ViewLoadingScene.ui
+    ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ui/ViewLoadingMessage.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
@@ -573,6 +569,8 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/user_messages
     ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer
+    ${CMAKE_CURRENT_LIST_DIR}/LoadingView
+    ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ui
 )
 target_include_directories(${ExecutableTarget} PRIVATE ${INCLUDE_DIRECTORIES})
 

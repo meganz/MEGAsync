@@ -33,7 +33,9 @@ public:
     ButtonStyle style = ButtonStyle::OUTLINE;
 
     MessageDialogButtonInfo() = default;
-    MessageDialogButtonInfo(const QString& buttonText, QMessageBox::StandardButton buttonType);
+    MessageDialogButtonInfo(const QString& buttonText,
+                            QMessageBox::StandardButton buttonType,
+                            ButtonStyle buttonStyle);
 };
 
 struct MessageDialogCheckboxInfo
@@ -157,7 +159,7 @@ public:
     virtual ~MessageDialogData() = default;
 
     Type getType() const;
-    QWidget* getParentWidget() const;
+    QWidget* getParentDialog() const;
     QString getTitle() const;
     MessageDialogTextInfo getTitleTextInfo() const;
     MessageDialogTextInfo getDescriptionTextInfo() const;
@@ -186,9 +188,11 @@ private:
     void buttonClicked(QMessageBox::StandardButton type);
 
     void setImageUrl(const QUrl& url);
+    void setImageSize(const QSize& size);
     void buildButtons();
     void processButtonInfo(QMessageBox::StandardButtons buttons,
                            QMessageBox::StandardButton type,
+                           MessageDialogButtonInfo::ButtonStyle buttonStyle,
                            QString defaultText = QString());
     void updateButtonsByDefault(QMessageBox::StandardButtons buttons,
                                 QMessageBox::StandardButton defaultButton = QMessageBox::Ok);

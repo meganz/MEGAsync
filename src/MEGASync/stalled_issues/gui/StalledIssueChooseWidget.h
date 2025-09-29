@@ -21,7 +21,10 @@ public:
     virtual ~StalledIssueChooseWidget();
 
     void setActionButtonVisibility(bool state);
-    void setMessage(const QString& string, const QPixmap& pixmap, const QString& tooltip);
+    void setMessage(const QString& string,
+                    const QString& pixmapName,
+                    const QString& iconToken,
+                    const QString& tooltip = QString());
     void setFailed(bool state, const QString& tooltip = QString());
 
     void addDefaultButton();
@@ -60,6 +63,7 @@ public:
     struct GenericInfo
     {
         QString icon;
+        QString iconToken;
         QString title;
         QString buttonText;
         QString solvedText;

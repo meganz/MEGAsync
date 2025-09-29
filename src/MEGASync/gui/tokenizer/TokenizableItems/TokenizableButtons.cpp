@@ -8,6 +8,11 @@ TokenizableButton::TokenizableButton(QWidget* parent):
     QPushButton(parent)
 {}
 
+void TokenizableButton::clear()
+{
+    mButtonTokens = ButtonTokens();
+}
+
 void TokenizableButton::paintEvent(QPaintEvent* event)
 {
     QStyleOptionButton option;
@@ -27,14 +32,14 @@ void TokenizableButton::paintEvent(QPaintEvent* event)
         // button
         if (option.state.testFlag(QStyle::State_Sunken))
         {
-            auto token = state == QIcon::State::Off ? buttonTokens.getPressedOffToken() :
-                                                      buttonTokens.getPressedOnToken();
+            auto token = state == QIcon::State::Off ? mButtonTokens.getPressedOffToken() :
+                                                      mButtonTokens.getPressedOnToken();
             applyPixmap(this, token, mode, state);
         }
         else if (option.state.testFlag(QStyle::State_MouseOver))
         {
-            auto token = state == QIcon::State::Off ? buttonTokens.getHoverOffToken() :
-                                                      buttonTokens.getHoverOnToken();
+            auto token = state == QIcon::State::Off ? mButtonTokens.getHoverOffToken() :
+                                                      mButtonTokens.getHoverOnToken();
             applyPixmap(this, token, mode, state);
         }
         else
@@ -53,7 +58,7 @@ void TokenizableButton::init(QAbstractButton*)
         // If no dynamic properties were added, add the default button properties
         ButtonTokensByType::setDefaultTokens(this);
 
-        buttonTokens.fillTokens(this);
+        mButtonTokens.fillTokens(this);
 
         TokenizableItem::init(this);
     }

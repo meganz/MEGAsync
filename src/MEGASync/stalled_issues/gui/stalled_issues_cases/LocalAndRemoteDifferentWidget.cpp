@@ -80,7 +80,11 @@ void LocalAndRemoteDifferentWidget::refreshUi()
         QString bothInfoTitle = tr("[B]Keep both[/B]");
         StalledIssuesBoldTextDecorator::boldTextDecorator.process(bothInfoTitle);
         bothInfo.title = bothInfoTitle;
-        bothInfo.icon = QLatin1String(":/images/copy.png");
+        bothInfo.icon = Utilities::getPixmapName(QLatin1String("keep-both"),
+                                                 Utilities::AttributeType::SMALL |
+                                                     Utilities::AttributeType::THIN |
+                                                     Utilities::AttributeType::OUTLINE);
+        bothInfo.iconToken = QLatin1String("icon-primary");
         bothInfo.solvedText = ui->keepBothOption->chosenString();
         ui->keepBothOption->setInfo(bothInfo);
 
@@ -98,7 +102,11 @@ void LocalAndRemoteDifferentWidget::refreshUi()
 
         StalledIssuesBoldTextDecorator::boldTextDecorator.process(lastModifiedInfoTitle);
         lastModifiedInfo.title = lastModifiedInfoTitle;
-        lastModifiedInfo.icon = QLatin1String(":/images/clock_ico.png");
+        lastModifiedInfo.icon = Utilities::getPixmapName(QLatin1String("clock"),
+                                                         Utilities::AttributeType::SMALL |
+                                                             Utilities::AttributeType::THIN |
+                                                             Utilities::AttributeType::OUTLINE);
+        lastModifiedInfo.iconToken = QLatin1String("icon-primary");
         lastModifiedInfo.solvedText = ui->keepLastModifiedOption->chosenString();
         ui->keepLastModifiedOption->setInfo(lastModifiedInfo);
     }
@@ -108,6 +116,8 @@ void LocalAndRemoteDifferentWidget::refreshUi()
         ui->keepBothOption->hide();
         ui->keepLastModifiedOption->hide();
     }
+
+    ui->selectLabel->setVisible(!issue->isSolved());
 
     if (issue->isSolved())
     {
@@ -121,9 +131,8 @@ void LocalAndRemoteDifferentWidget::refreshUi()
             ui->chooseLocalCopy->setActionButtonVisibility(false);
             ui->chooseRemoteCopy->setActionButtonVisibility(false);
         }
-
     }
-    else if(issue->isFailed())
+    else if (issue->isFailed())
     {
         ui->keepBothOption->setSolved(false, false);
         ui->keepLastModifiedOption->show();
@@ -132,27 +141,31 @@ void LocalAndRemoteDifferentWidget::refreshUi()
 
         unSetFailedChooseWidget();
 
-        switch(issue->getChosenSide())
+        switch (issue->getChosenSide())
         {
             case LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::REMOTE:
             {
-                auto errorStr = issue->consultLocalData()->isFile() ? tr("Unable to remove the local file") : tr("Unable to remove the local folder");
+                auto errorStr = issue->consultLocalData()->isFile() ?
+                                    tr("Unable to remove the local file") :
+                                    tr("Unable to remove the local folder");
                 ui->chooseRemoteCopy->setFailed(true, errorStr);
                 mFailedItem = ui->chooseRemoteCopy;
                 break;
             }
             case LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LOCAL:
             {
-                auto errorStr = issue->consultLocalData()->isFile() ? tr("Unable to remove the file stored in MEGA")
-                                                                    : tr("Unable to remove the folder stored in MEGA");
+                auto errorStr = issue->consultLocalData()->isFile() ?
+                                    tr("Unable to remove the file stored in MEGA") :
+                                    tr("Unable to remove the folder stored in MEGA");
                 ui->chooseLocalCopy->setFailed(true, errorStr);
                 mFailedItem = ui->chooseLocalCopy;
                 break;
             }
             case LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::BOTH:
             {
-                auto errorStr = issue->consultLocalData()->isFile() ? tr("Unable to update both local and MEGA files")
-                                                                    : tr("Unable to update both local and MEGA folders");
+                auto errorStr = issue->consultLocalData()->isFile() ?
+                                    tr("Unable to update both local and MEGA files") :
+                                    tr("Unable to update both local and MEGA folders");
                 ui->keepBothOption->setFailed(true, errorStr);
                 mFailedItem = ui->keepBothOption;
                 break;
@@ -162,7 +175,6 @@ void LocalAndRemoteDifferentWidget::refreshUi()
                 break;
             }
         }
-
     }
 
     updateSizeHint();

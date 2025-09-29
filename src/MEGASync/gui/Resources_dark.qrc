@@ -55,10 +55,10 @@
         <file alias="images/themed/dark/eye_hover.svg">images/themed/dark/eye_hover.svg</file>
         <file alias="images/themed/dark/eye_disabled.svg">images/themed/dark/eye_disabled.svg</file>
         <file alias="images/themed/dark/eye_default.svg">images/themed/dark/eye_default.svg</file>
-        <file alias="images/themed/dark/chevron-down_press.svg">images/themed/dark/chevron-down_press.svg</file>
-        <file alias="images/themed/dark/chevron-down_hover.svg">images/themed/dark/chevron-down_hover.svg</file>
-        <file alias="images/themed/dark/chevron-down_disabled.svg">images/themed/dark/chevron-down_disabled.svg</file>
-        <file alias="images/themed/dark/chevron-down_default.svg">images/themed/dark/chevron-down_default.svg</file>
+        <file alias="chevron-down_press">images/themed/dark/chevron-down_press.svg</file>
+        <file alias="chevron-down_hover">images/themed/dark/chevron-down_hover.svg</file>
+        <file alias="chevron-down_disabled">images/themed/dark/chevron-down_disabled.svg</file>
+        <file alias="chevron-down_default">images/themed/dark/chevron-down_default.svg</file>
         <file alias="images/lock.png">images/lock.png</file>
         <file alias="images/lock@2x.png">images/lock@2x.png</file>
         <file alias="images/lock@3x.png">images/lock@3x.png</file>
@@ -172,5 +172,7 @@
         <file alias="arrow-up-small-thin-outline-support-success.svg">images/themed/dark/arrow-up-small-thin-outline-support-success.svg</file>
         <file alias="app-icon">images/themed/dark/app-icon.svg</file>
         <file alias="scanning_icon">images/themed/dark/scanning_icon.svg</file>
+        <file alias="settings">images/themed/dark/settings.svg</file>
+        <file alias="arrow_corner_right">images/themed/dark/Stalled Issues/Path/arrow_corner_right.svg</file>
     </qresource>
 </RCC>

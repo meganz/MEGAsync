@@ -57,10 +57,10 @@
         <file alias="images/themed/light/eye_hover.svg">images/themed/light/eye_hover.svg</file>
         <file alias="images/themed/light/eye_disabled.svg">images/themed/light/eye_disabled.svg</file>
         <file alias="images/themed/light/eye_default.svg">images/themed/light/eye_default.svg</file>
-        <file alias="images/themed/light/chevron-down_press.svg">images/themed/light/chevron-down_press.svg</file>
-        <file alias="images/themed/light/chevron-down_hover.svg">images/themed/light/chevron-down_hover.svg</file>
-        <file alias="images/themed/light/chevron-down_disabled.svg">images/themed/light/chevron-down_disabled.svg</file>
-        <file alias="images/themed/light/chevron-down_default.svg">images/themed/light/chevron-down_default.svg</file>
+        <file alias="chevron-down_press">images/themed/light/chevron-down_press.svg</file>
+        <file alias="chevron-down_hover">images/themed/light/chevron-down_hover.svg</file>
+        <file alias="chevron-down_disabled">images/themed/light/chevron-down_disabled.svg</file>
+        <file alias="chevron-down_default">images/themed/light/chevron-down_default.svg</file>
         <file alias="images/themed/light/arrow-up-circle.svg">images/themed/light/arrow-up-circle.svg</file>
         <file alias="images/themed/light/arrow-down-circle.svg">images/themed/light/arrow-down-circle.svg</file>
         <file alias="images/lock.png">images/lock.png</file>
@@ -164,7 +164,6 @@
         <file alias="folder.svg">images/themed/light/folder.svg</file>
         <file alias="database.svg">images/themed/light/database.svg</file>
         <file alias="sync-01.svg">images/themed/light/sync-01.svg</file>
-        <file alias="monitor.svg">images/themed/light/monitor.svg</file>
         <file alias="alert-circle-support-warning.svg">images/themed/light/alert-circle-support-warning.svg</file>
         <file alias="atom.svg">images/themed/light/atom.svg</file>
         <file alias="radial-speedometer.svg">images/themed/light/radial-speedometer.svg</file>
@@ -176,5 +175,7 @@
         <file alias="arrow-up-small-thin-outline-support-success.svg">images/themed/light/arrow-up-small-thin-outline-support-success.svg</file>
         <file alias="app-icon">images/themed/light/app-icon.svg</file>
         <file alias="scanning_icon">images/themed/light/scanning_icon.svg</file>
+        <file alias="settings">images/themed/light/settings.svg</file>
+        <file alias="arrow_corner_right">images/themed/light/Stalled Issues/Path/arrow_corner_right.svg</file>
     </qresource>
 </RCC>

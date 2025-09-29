@@ -45,6 +45,8 @@ void MoveOrRenameCannotOccur::refreshUi()
 
     ui->chooseRemoteCopy->updateUi(issue);
     ui->chooseRemoteCopy->show();
+
+    ui->selectLabel->setVisible(!issue->isSolved());
 }
 
 void MoveOrRenameCannotOccur::onLocalButtonClicked()

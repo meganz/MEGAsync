@@ -43,8 +43,8 @@ void TokenizableItem::applyDefaultPixmap(QAbstractButton* button)
 
     if (button->isEnabled())
     {
-        auto token = state == QIcon::State::Off ? baseTokens.getNormalOffToken() :
-                                                  baseTokens.getNormalOnToken();
+        auto token = state == QIcon::State::Off ? mBaseTokens.getNormalOffToken() :
+                                                  mBaseTokens.getNormalOnToken();
 
         QIcon::Mode mode = button->hasFocus() ? QIcon::Active : QIcon::Normal;
 
@@ -52,8 +52,8 @@ void TokenizableItem::applyDefaultPixmap(QAbstractButton* button)
     }
     else
     {
-        auto token = state == QIcon::State::Off ? baseTokens.getDisabledOffToken() :
-                                                  baseTokens.getDisabledOnToken();
+        auto token = state == QIcon::State::Off ? mBaseTokens.getDisabledOffToken() :
+                                                  mBaseTokens.getDisabledOnToken();
         applyPixmap(button, token, QIcon::Disabled, state);
     }
 }
@@ -72,6 +72,14 @@ void TokenizableItem::applyPixmap(QAbstractButton* button,
     }
 }
 
+void TokenizableItem::clear()
+{
+    mInit = false;
+    mBaseTokens = BaseTokens();
+    mCurrentOption = QStyleOptionButton();
+    mThemeType = -1;
+}
+
 bool TokenizableItem::isInitialized() const
 {
     return mInit;
@@ -81,36 +89,36 @@ void TokenizableItem::init(QAbstractButton* button)
 {
     if (!isInitialized())
     {
-        baseTokens.fillTokens(button);
+        mBaseTokens.fillTokens(button);
 
         // Init QIcon::Mode::Active and QIcon::Mode::Disabled
-        if (!baseTokens.getNormalOffToken().isEmpty())
+        if (!mBaseTokens.getNormalOffToken().isEmpty())
         {
             applyPixmap(button,
-                        baseTokens.getNormalOffToken(),
+                        mBaseTokens.getNormalOffToken(),
                         QIcon::Mode::Active,
                         QIcon::State::Off);
 
-            if (baseTokens.getDisabledOffToken().isEmpty())
+            if (mBaseTokens.getDisabledOffToken().isEmpty())
             {
                 applyPixmap(button,
-                            baseTokens.getNormalOffToken(),
+                            mBaseTokens.getNormalOffToken(),
                             QIcon::Mode::Disabled,
                             QIcon::State::Off);
             }
         }
 
-        if (!baseTokens.getNormalOnToken().isEmpty())
+        if (!mBaseTokens.getNormalOnToken().isEmpty())
         {
             applyPixmap(button,
-                        baseTokens.getNormalOnToken(),
+                        mBaseTokens.getNormalOnToken(),
                         QIcon::Mode::Active,
                         QIcon::State::On);
 
-            if (!baseTokens.getNormalOnToken().isEmpty())
+            if (!mBaseTokens.getNormalOnToken().isEmpty())
             {
                 applyPixmap(button,
-                            baseTokens.getNormalOnToken(),
+                            mBaseTokens.getNormalOnToken(),
                             QIcon::Mode::Disabled,
                             QIcon::State::On);
             }

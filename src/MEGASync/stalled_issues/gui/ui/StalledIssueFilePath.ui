@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>339</width>
-    <height>275</height>
+    <height>347</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -26,62 +26,23 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">*
-{
-	background-color: transparent;
-}
-
-#moveFilePathContainer[hasProblem=false][itsHover=false], #filePathContainer[hasProblem=false][itsHover=false]
+   <string notr="true">#moveFilePathContainer[hasProblem=false], #filePathContainer[hasProblem=false]
 {
   height: 24px;
   border-radius: 4px;
-  background-color: rgba(0,0,0,0.04);
-}
-
-#moveFilePathContainer[hasProblem=false][itsHover=true], #filePathContainer[hasProblem=false][itsHover=true]
-{
-  height: 24px;
-  border-radius: 4px;
-  background-color: rgba(0,0,0,0.1);
-}
-#moveFilePathContainer[hasProblem=true] QLabel, #filePathContainer[hasProblem=true] QLabel
-{
-    font-family: Lato Regular;
-    font-size: 12px;
-    line-height: 20px;
-    color: #FFFFFF;
-}
-
-#moveFilePathContainer[hasProblem=true] QTextEdit, #filePathContainer[hasProblem=true] QTextEdit
-{
-    font-family: Lato Regular;
-    font-size: 12px;
-    line-height: 20px;
-    color: #FFFFFF;
-}
-
-#moveFilePathContainer[hasProblem=false] QLabel, #filePathContainer[hasProblem=false] QLabel
-{
-    font-family: Lato;
-    font-size: 12px;
-    line-height: 20px;
-    color: #333333;
-}
-
-#moveFilePathContainer[hasProblem=false] QTextEdit, #filePathContainer[hasProblem=false] QTextEdit
-{
-    font-family: Lato;
-    font-size: 12px;
-    line-height: 20px;
-    color: #333333;
+  background-color: #222324; /*colorToken.surface-1*/
 }
 
 #moveFilePathContainer[hasProblem=true], #filePathContainer[hasProblem=true]
 {
   height: 24px;
   border-radius: 4px;
-  background-color: #F4484B;
-  color: #FFFFFF;
+  background-color: #E31B57; /*colorToken.support-error*/
+}
+
+#moveFilePathContainer[hasProblem=true] WordWrapLabel, #filePathContainer[hasProblem=true] WordWrapLabel
+{
+  color: #FAFAFB; /*colorToken.text-inverse-accent*/
 }
 
 #pathProblem, #movePathProblem
@@ -89,48 +50,13 @@
   min-height: 24px;
   max-height: 24px;
   border-radius: 4px;
-  background-color: #333333;
+  background-color: #2A2B2C; /*colorToken.background-inverse*/
   border: none;
 }
 
 #pathProblemMessage, #movePathProblemMessage
 {
-  font-family: Lato;
-  font-size: 12px;
-  line-height: 20px;
-  color: #FFFFFF;
-}
-
-#filePath, #filePathIcon, #moveFilePath, #moveFilePathIcon
-{
-   background-color: &quot;transparent&quot;;
-}
-
-QPushButton
-{
-    border: none;
-}
-
-#lines, #moveLines, #movePathProblemLines
-{
-   min-width: 24px;
-   max-width: 24px;
-}
-
-#LocalOrRemoteText
-{
-    font-family: Lato;
-    font-size: 12px;
-    line-height: 15px;
-    color: #666666;
-}
-
-#moveLabel
-{
-    font-family: Lato;
-    font-size: 12px;
-    line-height: 20px;
-    color: #999999;
+  color: #FAFAFA; /*colorToken.text-inverse*/
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -147,75 +73,12 @@ QPushButton
     <number>10</number>
    </property>
    <property name="horizontalSpacing">
-    <number>5</number>
+    <number>8</number>
    </property>
    <property name="verticalSpacing">
     <number>0</number>
    </property>
-   <item row="0" column="1" alignment="Qt::AlignTop">
-    <widget class="QLabel" name="LocalOrRemoteIcon">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <spacer name="indent">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>0</width>
-       <height>0</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="0" column="2" alignment="Qt::AlignLeft|Qt::AlignTop">
-    <widget class="QLabel" name="LocalOrRemoteText">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>24</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>24</height>
-      </size>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1" colspan="2" alignment="Qt::AlignTop">
+   <item row="2" column="1" colspan="2" alignment="Qt::AlignTop">
     <widget class="QWidget" name="file" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -223,7 +86,7 @@ QPushButton
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <layout class="QGridLayout" name="gridLayout_3">
+     <layout class="QGridLayout" name="gridLayout_3" rowstretch="0,0" columnstretch="0,0">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -236,10 +99,7 @@ QPushButton
       <property name="bottomMargin">
        <number>0</number>
       </property>
-      <property name="horizontalSpacing">
-       <number>0</number>
-      </property>
-      <property name="verticalSpacing">
+      <property name="spacing">
        <number>4</number>
       </property>
       <item row="0" column="1">
@@ -273,19 +133,19 @@ QPushButton
           <number>6</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="topMargin">
-          <number>0</number>
+          <number>2</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="bottomMargin">
-          <number>0</number>
+          <number>2</number>
          </property>
          <item>
-          <widget class="QLabel" name="filePathIcon">
+          <widget class="IconLabel" name="filePathIcon">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -307,12 +167,9 @@ QPushButton
            <property name="text">
             <string/>
            </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
           </widget>
          </item>
-         <item>
+         <item alignment="Qt::AlignVCenter">
           <widget class="WordWrapLabel" name="filePathEdit">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -320,10 +177,13 @@ QPushButton
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="font-size" stdset="0">
+            <string notr="true">caption</string>
+           </property>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="filePathAction">
+          <widget class="IconLabel" name="filePathAction">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -344,6 +204,13 @@ QPushButton
            </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../gui/Resources_common.qrc">
+             <normaloff>:/external_link_small_thin_outline</normaloff>:/external_link_small_thin_outline</iconset>
+           </property>
+           <property name="normal_off" stdset="0">
+            <string notr="true">icon-secondary</string>
            </property>
           </widget>
          </item>
@@ -352,9 +219,15 @@ QPushButton
       </item>
       <item row="1" column="1">
        <widget class="QWidget" name="pathProblemContainer" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout_7">
          <property name="spacing">
-          <number>0</number>
+          <number>5</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -381,7 +254,7 @@ QPushButton
              <number>6</number>
             </property>
             <property name="leftMargin">
-             <number>0</number>
+             <number>4</number>
             </property>
             <property name="topMargin">
              <number>0</number>
@@ -393,7 +266,7 @@ QPushButton
              <number>0</number>
             </property>
             <item>
-             <widget class="QPushButton" name="pathProblemIcon">
+             <widget class="IconLabel" name="pathProblemIcon">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -412,18 +285,24 @@ QPushButton
                 <height>24</height>
                </size>
               </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
               <property name="text">
                <string/>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>:/images/StalledIssues/alert_circle_small_default.png</normaloff>:/images/StalledIssues/alert_circle_small_default.png</iconset>
+               <iconset resource="../../../gui/Resources_common.qrc">
+                <normaloff>:/info_small_thin_solid</normaloff>:/info_small_thin_solid</iconset>
               </property>
               <property name="iconSize">
                <size>
                 <width>16</width>
                 <height>16</height>
                </size>
+              </property>
+              <property name="normal_off" stdset="0">
+               <string notr="true">icon-inverse</string>
               </property>
              </widget>
             </item>
@@ -432,13 +311,16 @@ QPushButton
               <property name="text">
                <string/>
               </property>
+              <property name="font-size" stdset="0">
+               <string notr="true">caption</string>
+              </property>
              </widget>
             </item>
            </layout>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="helpIcon">
+          <widget class="IconLabel" name="helpIcon">
            <property name="minimumSize">
             <size>
              <width>24</width>
@@ -455,14 +337,17 @@ QPushButton
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
+            <iconset resource="../../../gui/Resources_common.qrc">
+             <normaloff>:/help-circle</normaloff>:/help-circle</iconset>
            </property>
            <property name="iconSize">
             <size>
-             <width>24</width>
-             <height>24</height>
+             <width>16</width>
+             <height>16</height>
             </size>
+           </property>
+           <property name="normal_off" stdset="0">
+            <string notr="true">link-primary</string>
            </property>
           </widget>
          </item>
@@ -482,8 +367,8 @@ QPushButton
         </layout>
        </widget>
       </item>
-      <item row="0" column="0" rowspan="2">
-       <widget class="QWidget" name="linesContainer" native="true">
+      <item row="0" column="0">
+       <widget class="QWidget" name="filePathArrowContainer" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -492,13 +377,13 @@ QPushButton
         </property>
         <property name="minimumSize">
          <size>
-          <width>26</width>
+          <width>16</width>
           <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>26</width>
+          <width>16</width>
           <height>16777215</height>
          </size>
         </property>
@@ -513,13 +398,13 @@ QPushButton
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>2</number>
+          <number>0</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
          </property>
-         <item alignment="Qt::AlignLeft">
-          <widget class="QLabel" name="lines">
+         <item alignment="Qt::AlignRight">
+          <widget class="IconLabel" name="pathArrow">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -528,14 +413,14 @@ QPushButton
            </property>
            <property name="minimumSize">
             <size>
-             <width>24</width>
-             <height>0</height>
+             <width>16</width>
+             <height>16</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>24</width>
-             <height>16777215</height>
+             <width>16</width>
+             <height>16</height>
             </size>
            </property>
           </widget>
@@ -543,38 +428,29 @@ QPushButton
         </layout>
        </widget>
       </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="4" column="1" colspan="2" alignment="Qt::AlignTop">
-    <widget class="QWidget" name="moveFile" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <item row="0" column="1">
-       <widget class="QWidget" name="moveHeader" native="true">
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item row="1" column="0">
+       <widget class="QWidget" name="pathProblemArrowContainer" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>16</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_9">
          <property name="spacing">
-          <number>3</number>
+          <number>0</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -589,31 +465,85 @@ QPushButton
           <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="moveLines">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
+          <widget class="IconLabel" name="problemArrow">
            <property name="minimumSize">
             <size>
-             <width>24</width>
-             <height>24</height>
+             <width>16</width>
+             <height>16</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>24</width>
-             <height>24</height>
+             <width>16</width>
+             <height>16</height>
             </size>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string notr="true"/>
            </property>
           </widget>
          </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="1" colspan="2" alignment="Qt::AlignTop">
+    <widget class="QWidget" name="moveFile" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>4</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="spacing">
+       <number>4</number>
+      </property>
+      <item row="0" column="1">
+       <widget class="QWidget" name="moveHeader" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+         <property name="leftMargin">
+          <number>30</number>
+         </property>
+         <property name="topMargin">
+          <number>4</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>4</number>
+         </property>
          <item>
           <widget class="QLabel" name="moveLabel">
            <property name="text">
             <string>move</string>
+           </property>
+           <property name="font-size" stdset="0">
+            <string notr="true">body-2</string>
+           </property>
+           <property name="semibold" stdset="0">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -652,19 +582,19 @@ QPushButton
           <number>6</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="topMargin">
-          <number>0</number>
+          <number>2</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="bottomMargin">
-          <number>0</number>
+          <number>2</number>
          </property>
          <item>
-          <widget class="QLabel" name="moveFilePathIcon">
+          <widget class="IconLabel" name="moveFilePathIcon">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -685,9 +615,6 @@ QPushButton
            </property>
            <property name="text">
             <string/>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>
@@ -699,10 +626,13 @@ QPushButton
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="font-size" stdset="0">
+            <string notr="true">caption</string>
+           </property>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="moveFilePathAction">
+          <widget class="IconLabel" name="moveFilePathAction">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -722,7 +652,14 @@ QPushButton
             </size>
            </property>
            <property name="text">
-            <string/>
+            <string notr="true"/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../gui/Resources_common.qrc">
+             <normaloff>:/external_link_small_thin_outline</normaloff>:/external_link_small_thin_outline</iconset>
+           </property>
+           <property name="normal_off" stdset="0">
+            <string notr="true">icon-secondary</string>
            </property>
           </widget>
          </item>
@@ -747,6 +684,12 @@ QPushButton
       </item>
       <item row="3" column="1">
        <widget class="QWidget" name="movePathProblemContainer" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout_6">
          <property name="spacing">
           <number>0</number>
@@ -770,7 +713,7 @@ QPushButton
              <number>6</number>
             </property>
             <property name="leftMargin">
-             <number>0</number>
+             <number>4</number>
             </property>
             <property name="topMargin">
              <number>0</number>
@@ -782,7 +725,7 @@ QPushButton
              <number>0</number>
             </property>
             <item>
-             <widget class="QPushButton" name="movePathProblemIcon">
+             <widget class="IconLabel" name="movePathProblemIcon">
               <property name="minimumSize">
                <size>
                 <width>24</width>
@@ -795,12 +738,15 @@ QPushButton
                 <height>24</height>
                </size>
               </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
               <property name="text">
                <string/>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>:/images/StalledIssues/alert_circle_small_default.png</normaloff>:/images/StalledIssues/alert_circle_small_default.png</iconset>
+               <iconset resource="../../../gui/Resources_common.qrc">
+                <normaloff>:/info_small_thin_solid</normaloff>:/info_small_thin_solid</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -808,12 +754,18 @@ QPushButton
                 <height>16</height>
                </size>
               </property>
+              <property name="normal_off" stdset="0">
+               <string notr="true">icon-inverse</string>
+              </property>
              </widget>
             </item>
             <item>
              <widget class="QLabel" name="movePathProblemMessage">
               <property name="text">
                <string/>
+              </property>
+              <property name="font-size" stdset="0">
+               <string notr="true">caption</string>
               </property>
              </widget>
             </item>
@@ -836,26 +788,26 @@ QPushButton
         </layout>
        </widget>
       </item>
-      <item row="1" column="0" rowspan="3">
-       <widget class="QWidget" name="movePathProblemLinesContainer" native="true">
+      <item row="1" column="0">
+       <widget class="QWidget" name="moveFilePathArrowContainer" native="true">
         <property name="minimumSize">
          <size>
-          <width>26</width>
+          <width>16</width>
           <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>26</width>
+          <width>16</width>
           <height>16777215</height>
          </size>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
+        <layout class="QVBoxLayout" name="verticalLayout_1">
          <property name="spacing">
           <number>0</number>
          </property>
          <property name="leftMargin">
-          <number>2</number>
+          <number>0</number>
          </property>
          <property name="topMargin">
           <number>0</number>
@@ -867,7 +819,7 @@ QPushButton
           <number>0</number>
          </property>
          <item alignment="Qt::AlignRight">
-          <widget class="QLabel" name="movePathProblemLines">
+          <widget class="IconLabel" name="movePathArrow">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -876,18 +828,70 @@ QPushButton
            </property>
            <property name="minimumSize">
             <size>
-             <width>24</width>
-             <height>0</height>
+             <width>16</width>
+             <height>16</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>24</width>
-             <height>16777215</height>
+             <width>16</width>
+             <height>16</height>
             </size>
            </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QWidget" name="movePathProblemArrowContainer" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>16</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="IconLabel" name="movePathProblemArrow">
+           <property name="minimumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="text">
-            <string/>
+            <string notr="true"/>
            </property>
           </widget>
          </item>
@@ -897,10 +901,35 @@ QPushButton
      </layout>
     </widget>
    </item>
-   <item row="1" column="1">
-    <spacer name="verticalSpacer">
+   <item row="0" column="1" alignment="Qt::AlignVCenter">
+    <widget class="IconLabel" name="LocalOrRemoteIcon">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <spacer name="indent">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Horizontal</enum>
      </property>
      <property name="sizeType">
       <enum>QSizePolicy::Fixed</enum>
@@ -908,20 +937,49 @@ QPushButton
      <property name="sizeHint" stdset="0">
       <size>
        <width>0</width>
-       <height>4</height>
+       <height>0</height>
       </size>
      </property>
     </spacer>
    </item>
+   <item row="0" column="2" alignment="Qt::AlignLeft|Qt::AlignVCenter">
+    <widget class="QLabel" name="LocalOrRemoteText">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>24</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>24</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="font-size" stdset="0">
+      <string notr="true">caption</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>TokenizableItems/IconLabel.h</header>
+  </customwidget>
   <customwidget>
    <class>WordWrapLabel</class>
    <extends>QTextEdit</extends>
    <header>WordWrapLabel.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../../gui/Resources_common.qrc"/>
+ </resources>
  <connections/>
 </ui>

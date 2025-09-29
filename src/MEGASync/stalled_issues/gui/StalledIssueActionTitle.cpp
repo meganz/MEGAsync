@@ -3,6 +3,10 @@
 #include "MegaApplication.h"
 #include "StalledIssuesModel.h"
 #include "StalledIssuesUtilities.h"
+#include "ThemeManager.h"
+#include "TokenizableItems/TokenizableButtons.h"
+#include "TokenizableItems/TokenPropertyNames.h"
+#include "TokenParserWidgetManager.h"
 #include "ui_StalledIssueActionTitle.h"
 #include "Utilities.h"
 
@@ -16,7 +20,6 @@
 #include <QSpacerItem>
 
 const char* BUTTON_ID = "button_id";
-const char* ONLY_ICON = "onlyIcon";
 const char* MAIN_BUTTON = "main";
 const char* DISCARDED = "discarded";
 const char* FAILED_BACKGROUND = "failed";
@@ -44,6 +47,9 @@ StalledIssueActionTitle::StalledIssueActionTitle(QWidget* parent) :
     ui->backgroundWidget->setProperty(DISABLE_BACKGROUND, false);
     ui->backgroundWidget->setProperty(DISCARDED,false);
     ui->backgroundWidget->setProperty(FAILED_BACKGROUND, false);
+
+    setAttribute(Qt::WA_StyledBackground, true);
+    ui->backgroundWidget->setAttribute(Qt::WA_StyledBackground, true);
 }
 
 StalledIssueActionTitle::~StalledIssueActionTitle()
@@ -57,27 +63,30 @@ void StalledIssueActionTitle::removeBackgroundColor()
     setStyleSheet(styleSheet());
 }
 
-void StalledIssueActionTitle::setHTML(const QString& title, const QPixmap& icon)
+void StalledIssueActionTitle::setHTML(const QString& title,
+                                      const QString& iconPath,
+                                      const QString& iconToken)
 {
     auto font(ui->titleLabel->font());
     font.setBold(false);
     ui->titleLabel->setFont(font);
     ui->titleLabel->setTextFormat(Qt::AutoText);
 
-    setTitle(title, icon);
+    setTitle(title, iconPath, iconToken);
 }
 
-void StalledIssueActionTitle::setTitle(const QString& title, const QPixmap& icon)
+void StalledIssueActionTitle::setTitle(const QString& title,
+                                       const QString& iconPath,
+                                       const QString& iconToken)
 {
     updateSizeHints();
 
     ui->titleLabel->setText(title);
-    if(!icon.isNull())
-    {
-        ui->icon->setFixedSize(icon.size());
-        ui->icon->setPixmap(icon);
-        ui->icon->show();
-    }
+
+    mIconPath = iconPath;
+    mIconToken = iconToken;
+
+    updateIcon();
 }
 
 QString StalledIssueActionTitle::title() const
@@ -92,46 +101,65 @@ void StalledIssueActionTitle::setHyperLinkMode()
     ui->titleContainer->setMouseTracking(true);
 }
 
-void StalledIssueActionTitle::addActionButton(const QIcon& icon,const QString& text, int id, bool mainButton)
+void StalledIssueActionTitle::addActionButton(const QIcon& icon,
+                                              const QString& text,
+                                              int id,
+                                              bool mainButton,
+                                              const QString& type)
 {
     //Update existing buttons
-    auto buttons = ui->actionContainer->findChildren<QPushButton*>();
+    auto buttons = ui->actionContainer->findChildren<TokenizableButton*>();
     foreach(auto& button, buttons)
     {
         if(button->property(BUTTON_ID).toInt() == id)
         {
             button->setIcon(icon);
             button->setText(text);
+            button->setProperty("type", type);
+            button->setProperty(MAIN_BUTTON, mainButton);
             return;;
         }
     }
 
-    auto button = new QPushButton(icon, text, this);
-
+    auto button = new TokenizableButton(this);
+    button->setIcon(icon);
+    button->setText(text);
     button->setProperty(BUTTON_ID, id);
-    button->setProperty(ONLY_ICON, false);
     button->setProperty(MAIN_BUTTON,mainButton);
-    button->setCursor(Qt::PointingHandCursor);
-    connect(button, &QPushButton::clicked, this, [this]()
+    if (!type.isEmpty())
     {
-        QApplication::postEvent(this, new QMouseEvent(QEvent::MouseButtonPress, QPointF(), Qt::LeftButton, Qt::NoButton, Qt::KeyboardModifier::AltModifier));
-        qApp->processEvents();
-        emit actionClicked(sender()->property(BUTTON_ID).toInt());
-    });
+        button->setProperty("type", type);
+    }
+    button->setProperty("dimension", QLatin1String("small"));
+    button->setCursor(Qt::PointingHandCursor);
 
-    ui->actionLayout->addWidget(button);
+    connect(button,
+            &TokenizableButton::clicked,
+            this,
+            [this]()
+            {
+                QApplication::postEvent(this,
+                                        new QMouseEvent(QEvent::MouseButtonPress,
+                                                        QPointF(),
+                                                        Qt::LeftButton,
+                                                        Qt::NoButton,
+                                                        Qt::KeyboardModifier::AltModifier));
+                qApp->processEvents();
+                emit actionClicked(sender()->property(BUTTON_ID).toInt());
+            });
+
+    ui->actionLayout->addWidget(button, 0, Qt::AlignRight);
 
     if(!icon.isNull())
     {
-        button->setIconSize(QSize(24,24));
+        button->setIconSize(QSize(16, 16));
 
         if(text.isEmpty())
         {
-            button->setProperty(ONLY_ICON, true);
+            button->setFixedSize(QSize(24, 24));
         }
     }
 
-    ui->actionContainer->setStyleSheet(ui->actionContainer->styleSheet());
     ui->actionContainer->show();
 }
 
@@ -147,7 +175,7 @@ void StalledIssueActionTitle::setActionButtonVisibility(int id, bool state)
             button->setVisible(state);
             if(state)
             {
-                setMessage(QString(), QPixmap());
+                setMessage(QString());
                 allHidden = false;
             }
         }
@@ -171,23 +199,29 @@ void StalledIssueActionTitle::showIcon()
 {
     QFileInfo fileInfo(mPath);
 
-    QIcon fileTypeIcon = StalledIssuesUtilities::getIcon(mIsFile, fileInfo, false);
+    QString fileTypeIcon = StalledIssuesUtilities::getIcon(mIsFile, fileInfo);
 
     if(!fileTypeIcon.isNull())
     {
-        ui->icon->setPixmap(fileTypeIcon.pixmap(ui->icon->size()));
+        ui->icon->setIcon(QIcon(fileTypeIcon));
+        ui->icon->setIconSize(QSize(24, 24));
         ui->icon->show();
     }
 }
 
-void StalledIssueActionTitle::setMessage(const QString& message, const QPixmap& pixmap, const QString& tooltip)
+void StalledIssueActionTitle::setMessage(const QString& message,
+                                         const QString& pixmapName,
+                                         const QString& iconToken,
+                                         const QString& tooltip)
 {
     updateSizeHints();
     ui->messageContainer->show();
     ui->messageContainer->installEventFilter(this);
     ui->messageContainer->setToolTip(tooltip);
 
-    ui->iconLabel->setPixmap(pixmap);
+    ui->iconLabel->clear();
+    ui->iconLabel->setProperty(TOKEN_PROPERTIES::normalOff, iconToken);
+    ui->iconLabel->setIcon(QIcon(pixmapName));
 
     ui->messageLabel->setText(ui->messageLabel->fontMetrics().elidedText(message, Qt::ElideMiddle, ui->contents->width()/3));
     ui->messageLabel->setProperty(MESSAGE_TEXT, message);
@@ -198,9 +232,12 @@ void StalledIssueActionTitle::addExtraInfo(AttributeType type, const QString& ti
     ui->extraInfoContainer->show();
 
     auto titleLabel = new QLabel(title, this);
+    titleLabel->setProperty("font-size", QLatin1String("caption"));
+
     auto infoLabel = new QLabel(info, this);
     infoLabel->setProperty(MESSAGE_TEXT, info);
     infoLabel->setProperty(EXTRAINFO_INFO, true);
+    infoLabel->setProperty("font-size", QLatin1String("caption"));
 
     mTitleLabels[type] = titleLabel;
     mUpdateLabels[type] = infoLabel;
@@ -238,36 +275,19 @@ void StalledIssueActionTitle::setFailed(bool state, const QString& errorTooltip)
 
 void StalledIssueActionTitle::setDisable(bool state)
 {
-    ui->backgroundWidget->setProperty(DISCARDED,state);
-
+    ui->backgroundWidget->setProperty(DISCARDED, state);
+    ui->icon->setDisabled(state);
     setStyleSheet(styleSheet());
-
-    if(state)
-    {
-        if(!ui->titleContainer->graphicsEffect())
-        {
-            auto titleEffect = new QGraphicsOpacityEffect(this);
-            titleEffect->setOpacity(0.3);
-            ui->titleContainer->setGraphicsEffect(titleEffect);
-        }
-
-        if(!ui->extraInfoContainer->graphicsEffect())
-        {
-            auto extraInfoDisableEffect = new QGraphicsOpacityEffect(this);
-            extraInfoDisableEffect->setOpacity(0.3);
-            ui->extraInfoContainer->setGraphicsEffect(extraInfoDisableEffect);
-        }
-    }
-    else
-    {
-        ui->titleContainer->setGraphicsEffect(nullptr);
-        ui->extraInfoContainer->setGraphicsEffect(nullptr);
-    }
 }
 
 bool StalledIssueActionTitle::isSolved() const
 {
     return ui->backgroundWidget->property(DISCARDED).toBool();
+}
+
+bool StalledIssueActionTitle::isFailed() const
+{
+    return ui->backgroundWidget->property(FAILED_BACKGROUND).toBool();
 }
 
 void StalledIssueActionTitle::setIsCloud(bool state)
@@ -548,6 +568,18 @@ void StalledIssueActionTitle::updateLabel(QLabel *label, const QString &text)
     }
 
     label->setProperty(MESSAGE_TEXT, text);
+}
+
+void StalledIssueActionTitle::updateIcon()
+{
+    if (!mIconPath.isEmpty())
+    {
+        ui->icon->clear();
+        ui->icon->setIcon(QIcon(mIconPath));
+        ui->icon->setIconSize(QSize(16, 16));
+        ui->icon->setProperty(TOKEN_PROPERTIES::normalOff, mIconToken);
+        ui->icon->show();
+    }
 }
 
 void StalledIssueActionTitle::updateExtraInfoLayout()

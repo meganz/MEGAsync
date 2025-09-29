@@ -54,7 +54,7 @@ public:
     void showActions(const QString& actionButtonText, const QList<ActionInfo>& actions);
     void hideAction();
 
-    void showMessage(const QString& message, const QPixmap &pixmap);
+    void showMessage(const QString& message, const QString& icon, QString& iconToken);
     void updateIssueState();
 
     void setText(const QString& text, const QString& tooltip = QString());
@@ -71,6 +71,8 @@ public:
 protected:
     QString fileName();
 
+    bool event(QEvent* event) override;
+
 private slots:
     void onMultipleActionClicked();
 
@@ -83,6 +85,10 @@ private:
 
     void refreshUi() override;
     void resetSolvingWidgets();
+
+    void updateMultipleActionButtonIcon();
+
+    QList<ActionInfo> getActions();
 
     Ui::StalledIssueHeader *ui;
     QPointer<StalledIssueHeaderCase> mHeaderCase;

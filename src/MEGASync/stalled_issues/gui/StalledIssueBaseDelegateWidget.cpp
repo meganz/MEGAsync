@@ -6,9 +6,6 @@
 #include "StalledIssuesDialog.h"
 #include "WordWrapLabel.h"
 
-#include <QFile>
-#include <QtConcurrent/QtConcurrent>
-
 StalledIssueBaseDelegateWidget::StalledIssueBaseDelegateWidget(QWidget *parent)
     : QWidget(parent),
       mDelegate(nullptr)
@@ -18,6 +15,26 @@ StalledIssueBaseDelegateWidget::StalledIssueBaseDelegateWidget(QWidget *parent)
     });
     mResizeNeedTimer.setInterval(50);
     mResizeNeedTimer.setSingleShot(true);
+}
+
+void StalledIssueBaseDelegateWidget::init()
+{
+    setProperty("TOKENIZED", true);
+
+    // By default the view widgets have transparent background
+    QString styleS(styleSheet());
+    styleS.prepend(QLatin1String("#%1\n{\nbackground-color: transparent;\n}\n").arg(objectName()));
+    setStyleSheet(styleS);
+
+    TokenParserWidgetManager::instance()->applyCurrentTheme(this);
+
+    // Setting again its own parent will tell the widget that the stylesheet needs to be reloaded
+    setParent(parentWidget(), windowFlags());
+
+    // Refresh completely the widget
+    show();
+    TokenParserWidgetManager::instance()->polish(this);
+    hide();
 }
 
 void StalledIssueBaseDelegateWidget::updateIndex()

@@ -76,12 +76,14 @@ class TokenizableButton: public QPushButton, public TokenizableItem
 public:
     TokenizableButton(QWidget* parent);
 
+    void clear() override;
+
 protected:
     void paintEvent(QPaintEvent* event) override;
     void init(QAbstractButton*) override;
 
 private:
-    ButtonTokens buttonTokens;
+    ButtonTokens mButtonTokens;
 };
 
 class IconOnlyButton: public TokenizableButton

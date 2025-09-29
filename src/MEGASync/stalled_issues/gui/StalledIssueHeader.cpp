@@ -1,12 +1,17 @@
 #include "StalledIssueHeader.h"
 
 #include "DialogOpener.h"
+#include "IconTokenizer.h"
 #include "IgnoredStalledIssue.h"
 #include "MegaApplication.h"
+#include "MegaMenuItemAction.h"
 #include "MessageDialogOpener.h"
 #include "StalledIssuesCaseHeaders.h"
 #include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
+#include "ThemeManager.h"
+#include "TokenizableItems/TokenPropertyNames.h"
+#include "TokenParserWidgetManager.h"
 #include "Utilities.h"
 
 #include <QCheckBox>
@@ -14,10 +19,10 @@
 #include <QFile>
 #include <QMouseEvent>
 
-const int StalledIssueHeader::ARROW_INDENT = 6 + 16; //Left margin + arrow;
-const int StalledIssueHeader::ICON_INDENT = 8 + 48; // fileIcon + spacer;
+const int StalledIssueHeader::ARROW_INDENT = 20 + 16; // Left margin + arrow;
+const int StalledIssueHeader::ICON_INDENT = 8 * 2 + 48; // fileIcon + spacer (by 2);
 const int StalledIssueHeader::BODY_INDENT = StalledIssueHeader::ARROW_INDENT + StalledIssueHeader::ICON_INDENT; // full indent;
-const int StalledIssueHeader::GROUPBOX_INDENT = BODY_INDENT - 9;// Following the InVision mockups
+const int StalledIssueHeader::GROUPBOX_INDENT = BODY_INDENT - 8; // Following the InVision mockups
 const int StalledIssueHeader::GROUPBOX_CONTENTS_INDENT = 9;// Following the InVision mockups
 const int StalledIssueHeader::HEIGHT = 60;
 
@@ -26,7 +31,7 @@ const char* FILENAME_PROPERTY = "FILENAME_PROPERTY";
 const char* MULTIPLE_ACTIONS_PROPERTY = "ACTIONS_PROPERTY";
 const char* ISSUE_STATE = "STATE";
 
-StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
+StalledIssueHeader::StalledIssueHeader(QWidget* parent):
     StalledIssueBaseDelegateWidget(parent),
     ui(new Ui::StalledIssueHeader),
     mIsExpandable(true)
@@ -50,10 +55,7 @@ void StalledIssueHeader::expand(bool state)
 {
     if(mIsExpandable)
     {
-        auto arrowIcon = Utilities::getCachedPixmap(
-            state ? QLatin1String(":/images/node_selector/Icon-Small-Arrow-Down.png")
-                  : QLatin1String(":/images/node_selector/Icon-Small-Arrow-Left.png"));
-        ui->arrow->setPixmap(arrowIcon.pixmap(ui->arrow->size()));
+        ui->arrow->setChecked(state);
     }
 }
 
@@ -138,27 +140,23 @@ void StalledIssueHeader::showAction(const ActionInfo& action)
 
 void StalledIssueHeader::showActions(const QString &actionButtonText, const QList<ActionInfo>& actions)
 {
+    bool hasMultipleActions = actions.size() > 1;
+
     ui->actionContainer->show();
     ui->multipleActionButton->setVisible(true);
-    if(actions.size() == 1)
+
+    if (hasMultipleActions)
     {
-        ui->multipleActionButton->setText(actions.first().actionText);
-        if(!ui->multipleActionButton->icon().isNull())
-        {
-            ui->multipleActionButton->setProperty(MULTIACTION_ICON, QVariant::fromValue<QIcon>(ui->multipleActionButton->icon()));
-            ui->multipleActionButton->setIcon(QIcon());
-        }
+        ui->multipleActionButton->setText(actionButtonText);
     }
     else
     {
-        ui->multipleActionButton->setText(actionButtonText);
-        if(ui->multipleActionButton->icon().isNull())
-        {
-            ui->multipleActionButton->setIcon(ui->multipleActionButton->property(MULTIACTION_ICON).value<QIcon>());
-        }
+        ui->multipleActionButton->setText(actions.first().actionText);
     }
 
     ui->multipleActionButton->setProperty(MULTIPLE_ACTIONS_PROPERTY, QVariant::fromValue<QList<ActionInfo>>(actions));
+
+    updateMultipleActionButtonIcon();
 }
 
 void StalledIssueHeader::hideAction()
@@ -170,7 +168,7 @@ void StalledIssueHeader::onMultipleActionClicked()
 {
     propagateButtonClick();
 
-    auto actions(ui->multipleActionButton->property(MULTIPLE_ACTIONS_PROPERTY).value<QList<ActionInfo>>());
+    auto actions(getActions());
     if(!actions.isEmpty())
     {
         if(actions.size() == 1)
@@ -187,18 +185,21 @@ void StalledIssueHeader::onMultipleActionClicked()
         else
         {
             QMenu *menu(new QMenu(ui->multipleActionButton));
-            Platform::getInstance()->initMenu(menu, "MultipleActionStalledIssues");
+            menu->setProperty("class", QLatin1String("MegaMenu"));
             menu->setAttribute(Qt::WA_DeleteOnClose);
 
             foreach(auto action, actions)
             {
                 // Show in system file explorer action
-                auto actionItem (new MenuItemAction(action.actionText, QString()));
+                auto actionItem(new MegaMenuItemAction(action.actionText, QString()));
                 auto id(action.id);
-                connect(actionItem, &MenuItemAction::triggered, this, [this, id]()
-                {
-                    mHeaderCase->onMultipleActionButtonOptionSelected(this, id);
-                });
+                connect(actionItem,
+                        &MegaMenuItemAction::triggered,
+                        this,
+                        [this, id]()
+                        {
+                            mHeaderCase->onMultipleActionButtonOptionSelected(this, id);
+                        });
                 actionItem->setParent(menu);
                 menu->addAction(actionItem);
             }
@@ -210,20 +211,24 @@ void StalledIssueHeader::onMultipleActionClicked()
     }
 }
 
-void StalledIssueHeader::showMessage(const QString &message, const QPixmap& pixmap)
+void StalledIssueHeader::showMessage(const QString& message,
+                                     const QString& icon,
+                                     QString& iconToken)
 {
     ui->actionContainer->show();
-    if(!message.isEmpty() || !pixmap.isNull())
+    if (!message.isEmpty() || !icon.isEmpty())
     {
         ui->actionMessageContainer->setVisible(true);
     }
 
     ui->actionMessage->setText(message);
 
-    if(!pixmap.isNull())
+    if (!icon.isEmpty())
     {
+        ui->actionMessageIcon->clear();
         ui->actionMessageIcon->show();
-        ui->actionMessageIcon->setPixmap(pixmap);
+        ui->actionMessageIcon->setIcon(QIcon(icon));
+        ui->actionMessageIcon->setProperty(TOKEN_PROPERTIES::normalOff, iconToken);
     }
     else
     {
@@ -234,7 +239,8 @@ void StalledIssueHeader::showMessage(const QString &message, const QPixmap& pixm
 void StalledIssueHeader::updateIssueState()
 {
     StalledIssue::SolveType type(StalledIssue::SolveType::UNSOLVED);
-    QIcon icon;
+    QString iconName;
+    QString iconToken;
     QString message;
 
     if (getData().consultData()->hasCustomMessage())
@@ -271,10 +277,16 @@ void StalledIssueHeader::updateIssueState()
         }
         case StalledIssue::SolveType::SOLVED:
         {
-            ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("solved"));
             if(getData().convert<IgnoredStalledIssue>())
             {
-                icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/solved_state.png"));
+                ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("ignored"));
+
+                iconName = Utilities::getPixmapName(QLatin1String("minus_circle"),
+                                                    Utilities::AttributeType::SMALL |
+                                                        Utilities::AttributeType::THIN |
+                                                        Utilities::AttributeType::OUTLINE);
+                iconToken = QLatin1String("support-warning");
+
                 if (message.isEmpty())
                 {
                     message = tr("Ignored");
@@ -282,9 +294,16 @@ void StalledIssueHeader::updateIssueState()
             }
             else
             {
+                ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("solved"));
+
                 if(getData().consultData()->wasAutoResolutionApplied())
                 {
-                    icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/auto_solved_state.png"));
+                    iconName = Utilities::getPixmapName(QLatin1String("magic_wand"),
+                                                        Utilities::AttributeType::SMALL |
+                                                            Utilities::AttributeType::THIN |
+                                                            Utilities::AttributeType::OUTLINE);
+                    iconToken = QLatin1String("support-success");
+
                     if (message.isEmpty())
                     {
                         message = tr("Auto-solved");
@@ -292,7 +311,12 @@ void StalledIssueHeader::updateIssueState()
                 }
                 else
                 {
-                    icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/solved_state.png"));
+                    iconName = Utilities::getPixmapName(QLatin1String("check"),
+                                                        Utilities::AttributeType::SMALL |
+                                                            Utilities::AttributeType::THIN |
+                                                            Utilities::AttributeType::OUTLINE);
+                    iconToken = QLatin1String("support-success");
+
                     if (message.isEmpty())
                     {
                         message = tr("Solved");
@@ -305,7 +329,12 @@ void StalledIssueHeader::updateIssueState()
         case StalledIssue::SolveType::FAILED:
         {
             ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("failed"));
-            icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/failed_state.png"));
+            iconName = Utilities::getPixmapName(QLatin1String("cross"),
+                                                Utilities::AttributeType::SMALL |
+                                                    Utilities::AttributeType::THIN |
+                                                    Utilities::AttributeType::OUTLINE);
+            iconToken = QLatin1String("support-error");
+
             if (message.isEmpty())
             {
                 message = tr("Failed");
@@ -328,8 +357,8 @@ void StalledIssueHeader::updateIssueState()
         }
     }
 
-    showMessage(message, icon.pixmap(16, 16));
-    ui->actionMessageContainer->setStyleSheet(ui->actionMessageContainer->styleSheet());
+    showMessage(message, iconName, iconToken);
+    setStyleSheet(styleSheet());
 }
 
 void StalledIssueHeader::setText(const QString &text, const QString& tooltip)
@@ -419,9 +448,6 @@ void StalledIssueHeader::updateHeaderSizes()
         ui->errorTitle->layout()->activate();
         ui->errorTitle->updateGeometry();
 
-        ui->errorTitleTextContainer->layout()->activate();
-        ui->errorTitleTextContainer->updateGeometry();
-
         ui->fileNameTitle->updateGeometry();
         ui->errorDescriptionText->updateGeometry();
     }
@@ -432,11 +458,18 @@ QString StalledIssueHeader::fileName()
     return QString();
 }
 
+bool StalledIssueHeader::event(QEvent* event)
+{
+    if (event->type() == ThemeManager::ThemeChanged)
+    {
+        updateMultipleActionButtonIcon();
+    }
+
+    return StalledIssueBaseDelegateWidget::event(event);
+}
+
 void StalledIssueHeader::refreshUi()
 {
-    auto errorTitleIcon = Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/ico_menu_full.png"));
-    ui->errorTitleIcon->setPixmap(errorTitleIcon.pixmap(ui->errorTitleIcon->size()));
-
     QIcon fileTypeIcon;
     QFileInfo fileInfo;
 
@@ -458,10 +491,11 @@ void StalledIssueHeader::refreshUi()
     }
     else
     {
-        fileTypeIcon = Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/folder_orange_default@2x.png"));
+        fileTypeIcon = Utilities::getFolderPixmap(Utilities::FolderType::TYPE_NORMAL,
+                                                  Utilities::AttributeType::MEDIUM);
     }
 
-    ui->fileTypeIcon->setPixmap(fileTypeIcon.pixmap(ui->fileTypeIcon->size()));
+    ui->fileTypeIcon->setIcon(fileTypeIcon);
 
     resetSolvingWidgets();
 
@@ -472,10 +506,35 @@ void StalledIssueHeader::refreshUi()
     {
         setIsExpandable(getData().consultData()->isExpandable());
     }
+
+    ui->errorTitleIcon->setVisible(!getData().consultData()->isSolved());
 }
 
 void StalledIssueHeader::resetSolvingWidgets()
 {
     ui->multipleActionButton->hide();
     ui->actionMessageContainer->hide();
+}
+
+void StalledIssueHeader::updateMultipleActionButtonIcon()
+{
+    bool hasMultipleActions(getActions().size() > 1);
+
+    if (hasMultipleActions && ui->multipleActionButton->icon().isNull())
+    {
+        ui->multipleActionButton->setIcon(
+            ui->multipleActionButton->property(MULTIACTION_ICON).value<QIcon>());
+    }
+    else if (!hasMultipleActions && !ui->multipleActionButton->icon().isNull())
+    {
+        ui->multipleActionButton->setProperty(
+            MULTIACTION_ICON,
+            QVariant::fromValue<QIcon>(ui->multipleActionButton->icon()));
+        ui->multipleActionButton->setIcon(QIcon());
+    }
+}
+
+QList<StalledIssueHeader::ActionInfo> StalledIssueHeader::getActions()
+{
+    return ui->multipleActionButton->property(MULTIPLE_ACTIONS_PROPERTY).value<QList<ActionInfo>>();
 }

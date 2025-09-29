@@ -11,7 +11,6 @@ namespace Ui {
 class StalledIssuesDialog;
 }
 
-class StalledIssueTab;
 class StalledIssuesProxyModel;
 class StalledIssueDelegate;
 class SyncSettings;
@@ -38,7 +37,7 @@ private slots:
     void onSyncRootChanged(std::shared_ptr<SyncSettings> sync);
     void onGlobalSyncStateChanged(bool);
 
-    void onTabToggled(StalledIssueFilterCriterion filterCriterion);
+    void onTabToggled();
     bool toggleTabAndScroll(StalledIssueFilterCriterion filterCriterion, const QModelIndex& sourceIndex);
 
     void onUiBlocked();
@@ -48,8 +47,14 @@ private slots:
     void onModelFiltered();
     void onLoadingSceneVisibilityChange(bool state);
 
+    void onScrollRangeChanged(int, int max);
+
+    void createTabTitles();
+
 private:
     void showView();
+    void setScrollMode(bool state);
+    int getFilterCriterionFromChip(QWidget* tab);
 
     Ui::StalledIssuesDialog *ui;
     MegaDelegateHoverManager mViewHoverManager;

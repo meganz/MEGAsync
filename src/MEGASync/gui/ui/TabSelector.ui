@@ -105,7 +105,7 @@
    <item alignment="Qt::AlignVCenter">
     <widget class="QLabel" name="lTitle">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -152,14 +152,14 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>IconLabel</class>
-   <extends>QToolButton</extends>
-   <header>TokenizableItems/IconLabel.h</header>
-  </customwidget>
-  <customwidget>
    <class>IconOnlyButton</class>
    <extends>QPushButton</extends>
    <header>TokenizableItems/TokenizableButtons.h</header>
+  </customwidget>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>TokenizableItems/IconLabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>

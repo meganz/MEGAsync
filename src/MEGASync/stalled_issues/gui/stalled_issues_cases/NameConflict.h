@@ -22,7 +22,7 @@ public:
     }
 
 protected:
-    void paintEvent(QPaintEvent *) override;
+    void paintEvent(QPaintEvent* event) override;
 };
 
 class NameConflict : public QWidget

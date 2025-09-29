@@ -19,9 +19,11 @@ const QLatin1String BUTTON_VARIANT_LIST_ICON("iconUrl");
 // =================================================================================================
 
 MessageDialogButtonInfo::MessageDialogButtonInfo(const QString& buttonText,
-                                                 QMessageBox::StandardButton buttonType):
+                                                 QMessageBox::StandardButton buttonType,
+                                                 ButtonStyle buttonStyle):
     text(buttonText),
-    type(buttonType)
+    type(buttonType),
+    style(buttonStyle)
 {}
 
 // =================================================================================================
@@ -144,8 +146,29 @@ MessageDialogData::Type MessageDialogData::getType() const
     return mType;
 }
 
-QWidget* MessageDialogData::getParentWidget() const
+QWidget* MessageDialogData::getParentDialog() const
 {
+    if (mInfo.parent)
+    {
+        auto isDialog = qobject_cast<QDialog*>(mInfo.parent) != nullptr;
+
+        if (!isDialog)
+        {
+            QWidget* currentParent(mInfo.parent->parentWidget());
+            QDialog* parentDialog(nullptr);
+            while (!parentDialog && currentParent)
+            {
+                parentDialog = qobject_cast<QDialog*>(currentParent);
+                currentParent = currentParent->parentWidget();
+            }
+
+            if (parentDialog)
+            {
+                return parentDialog;
+            }
+        }
+    }
+
     return mInfo.parent;
 }
 
@@ -250,21 +273,20 @@ void MessageDialogData::buildButtons()
 
     processButtonInfo(mInfo.buttons,
                       QMessageBox::StandardButton::Ok,
+                      MessageDialogButtonInfo::ButtonStyle::PRIMARY,
                       QCoreApplication::translate("QDialogButtonBox", "&OK"));
     processButtonInfo(mInfo.buttons,
                       QMessageBox::StandardButton::Yes,
+                      MessageDialogButtonInfo::ButtonStyle::PRIMARY,
                       QApplication::translate("QDialogButtonBox", "&Yes"));
     processButtonInfo(mInfo.buttons,
                       QMessageBox::StandardButton::No,
+                      MessageDialogButtonInfo::ButtonStyle::SECONDARY,
                       QApplication::translate("QDialogButtonBox", "&No"));
     processButtonInfo(mInfo.buttons,
                       QMessageBox::StandardButton::Cancel,
+                      MessageDialogButtonInfo::ButtonStyle::SECONDARY,
                       QApplication::translate("QDialogButtonBox", "&Cancel"));
-
-    if (mButtons.contains(mInfo.defaultButton))
-    {
-        mButtons[mInfo.defaultButton].style = MessageDialogButtonInfo::ButtonStyle::PRIMARY;
-    }
 
     for (auto it = mInfo.buttonsIcons.constBegin(); it != mInfo.buttonsIcons.constEnd(); ++it)
     {
@@ -279,6 +301,7 @@ void MessageDialogData::buildButtons()
 
 void MessageDialogData::processButtonInfo(QMessageBox::StandardButtons buttons,
                                           QMessageBox::StandardButton type,
+                                          MessageDialogButtonInfo::ButtonStyle buttonStyle,
                                           QString defaultText)
 {
     if (buttons.testFlag(type))
@@ -294,7 +317,7 @@ void MessageDialogData::processButtonInfo(QMessageBox::StandardButtons buttons,
         QString buttonText(mInfo.buttonsText.contains(type) ? mInfo.buttonsText[type] :
                                                               defaultText);
 
-        mButtons.insert(type, MessageDialogButtonInfo(buttonText, type));
+        mButtons.insert(type, MessageDialogButtonInfo(buttonText, type, buttonStyle));
     }
 }
 

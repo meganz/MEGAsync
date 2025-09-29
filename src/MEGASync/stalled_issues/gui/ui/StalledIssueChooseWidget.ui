@@ -14,8 +14,8 @@
    <string notr="true">#frame
 {
     border-radius: 6px;
-    border: 1px solid #D6D6D6;
-    background-color: #FFFFFF;
+    border: 1px solid #5254570D; /*colorToken.border-subtle*/
+    background-color: #FFFFFFFF; /*colorToken.page-background*/
 }</string>
   </property>
   <property name="frameShape">
@@ -59,13 +59,13 @@
        <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>8</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>8</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>8</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -77,13 +77,13 @@
           <number>0</number>
          </property>
          <property name="leftMargin">
-          <number>4</number>
+          <number>0</number>
          </property>
          <property name="topMargin">
-          <number>4</number>
+          <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>4</number>
+          <number>0</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
@@ -141,7 +141,7 @@
        <widget class="QWidget" name="pathContainer" native="true">
         <layout class="QHBoxLayout" name="horizontalLayout">
          <property name="leftMargin">
-          <number>0</number>
+          <number>8</number>
          </property>
          <property name="topMargin">
           <number>0</number>

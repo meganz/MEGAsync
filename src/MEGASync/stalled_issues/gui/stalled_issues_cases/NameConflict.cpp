@@ -23,7 +23,7 @@ const char* TITLE_FILENAME = "TITLE_FILENAME";
 const char* TITLE_INDEX = "TITLE_INDEX";
 
 //NAME DUPLICATED
-void NameDuplicatedContainer::paintEvent(QPaintEvent*)
+void NameDuplicatedContainer::paintEvent(QPaintEvent* event)
 {
     QPainter painter(this);
 
@@ -48,6 +48,8 @@ void NameDuplicatedContainer::paintEvent(QPaintEvent*)
 
     QRect horRect2(0, height() - 7, 10, 2);
     painter.fillRect(horRect2, Qt::gray);
+
+    QWidget::paintEvent(event);
 }
 
 //NAME CONFLICT
@@ -161,40 +163,66 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
             title->setActionButtonVisibility(RENAME_ID, false);
             title->setActionButtonVisibility(REMOVE_ID, false);
 
-            QIcon icon;
+            QString iconName;
+            QString iconToken;
             QString titleText;
 
             if (info->getSolvedType() == NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::REMOVE)
             {
-                icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
+                iconName = Utilities::getPixmapName(QLatin1String("cross"),
+                                                    Utilities::AttributeType::SMALL |
+                                                        Utilities::AttributeType::THIN |
+                                                        Utilities::AttributeType::OUTLINE);
+                iconToken = QLatin1String("support-error");
+
                 titleText = tr("Removed");
             }
             else if (info->getSolvedType() ==
                      NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::RENAME)
             {
-                icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+                iconName = Utilities::getPixmapName(QLatin1String("check"),
+                                                    Utilities::AttributeType::SMALL |
+                                                        Utilities::AttributeType::THIN |
+                                                        Utilities::AttributeType::OUTLINE);
+                iconToken = QLatin1String("support-success");
+
                 titleText = tr("Renamed to \"%1\"").arg(info->mRenameTo);
             }
             else if (info->getSolvedType() ==
                      NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::MERGED)
             {
-                icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+                iconName = Utilities::getPixmapName(QLatin1String("check"),
+                                                    Utilities::AttributeType::SMALL |
+                                                        Utilities::AttributeType::THIN |
+                                                        Utilities::AttributeType::OUTLINE);
+                iconToken = QLatin1String("support-success");
+
                 titleText = tr("Merged");
             }
             else if (info->getSolvedType() ==
                      NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::CHANGED_EXTERNALLY)
             {
-                icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+                iconName = Utilities::getPixmapName(QLatin1String("check"),
+                                                    Utilities::AttributeType::SMALL |
+                                                        Utilities::AttributeType::THIN |
+                                                        Utilities::AttributeType::OUTLINE);
+                iconToken = QLatin1String("support-success");
+
                 titleText = tr("Modified externally");
             }
             else
             {
-                icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+                iconName = Utilities::getPixmapName(QLatin1String("check"),
+                                                    Utilities::AttributeType::SMALL |
+                                                        Utilities::AttributeType::THIN |
+                                                        Utilities::AttributeType::OUTLINE);
+                iconToken = QLatin1String("support-success");
+
                 titleText = tr("No action needed");
             }
 
             titleLayout->activate();
-            title->setMessage(titleText, icon.pixmap(16, 16));
+            title->setMessage(titleText, iconName, iconToken);
         }
         else if(info->isFailed())
         {
@@ -251,10 +279,16 @@ void NameConflict::initTitle(StalledIssueActionTitle* title, int index, const QS
 
 void NameConflict::initActionButtons(StalledIssueActionTitle* title)
 {
-    QIcon renameIcon(QString::fromUtf8("://images/StalledIssues/rename_node_default.png"));
-    QIcon removeIcon(QString::fromUtf8("://images/StalledIssues/remove_default.png"));
-    title->addActionButton(renameIcon, tr("Rename"), RENAME_ID, false);
-    title->addActionButton(removeIcon, QString(), REMOVE_ID, false);
+    QIcon renameIcon(Utilities::getIcon(QLatin1String("pen-2"),
+                                        Utilities::AttributeType::SMALL |
+                                            Utilities::AttributeType::THIN |
+                                            Utilities::AttributeType::OUTLINE));
+    QIcon removeIcon(Utilities::getIcon(QLatin1String("cross"),
+                                        Utilities::AttributeType::SMALL |
+                                            Utilities::AttributeType::THIN |
+                                            Utilities::AttributeType::OUTLINE));
+    title->addActionButton(renameIcon, tr("Rename"), RENAME_ID, false, QLatin1String("secondary"));
+    title->addActionButton(removeIcon, QString(), REMOVE_ID, false, QLatin1String("ghost"));
 }
 
 void NameConflict::onRawInfoChecked()

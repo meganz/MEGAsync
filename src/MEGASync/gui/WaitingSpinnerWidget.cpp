@@ -23,6 +23,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // Own includes
 #include "WaitingSpinnerWidget.h"
 
+#include "ThemeManager.h"
+#include "TokenParserWidgetManager.h"
+
 // Standard includes
 #include <cmath>
 #include <algorithm>
@@ -110,6 +113,16 @@ void WaitingSpinnerWidget::paintEvent(QPaintEvent *) {
                     _roundness, Qt::RelativeSize);
         painter.restore();
     }
+}
+
+bool WaitingSpinnerWidget::event(QEvent* event)
+{
+    if (event->type() == ThemeManager::ThemeChanged && !_colorToken.isEmpty())
+    {
+        _color = TokenParserWidgetManager::instance()->getColor(_colorToken);
+    }
+
+    return QWidget::event(event);
 }
 
 void WaitingSpinnerWidget::start() {
@@ -220,6 +233,11 @@ void WaitingSpinnerWidget::setRoundness(qreal roundness) {
 
 void WaitingSpinnerWidget::setColor(QColor color) {
     _color = color;
+}
+
+void WaitingSpinnerWidget::setColorToken(const QString& colorToken)
+{
+    _colorToken = colorToken;
 }
 
 void WaitingSpinnerWidget::setRevolutionsPerSecond(qreal revolutionsPerSecond) {

@@ -20,7 +20,7 @@ public:
     explicit TabSelector(QWidget* parent = nullptr);
     ~TabSelector();
 
-    Q_PROPERTY(QString title WRITE setTitle READ getTitle)
+    Q_PROPERTY(QString title MEMBER mTitle WRITE setTitle READ getTitle)
     void setTitle(const QString& title);
     QString getTitle() const;
 
@@ -45,20 +45,26 @@ public:
     // Convenient method to set tokens
     static void applyTokens(QWidget* parent, std::shared_ptr<TokenPropertySetter> iconTokensSetter);
 
+    // Convenient method to select tab
+    static void selectTabIf(QWidget* parent, const char* property, const QVariant& value);
+
+    // Convenient method to get the tabs
+    static QList<TabSelector*> getTabSelectorByParent(QWidget* parent);
+
 signals:
     void clicked();
     void hidden();
 
 protected:
     bool event(QEvent* event) override;
+    bool eventFilter(QObject* watched, QEvent* event) override;
 
 private:
-    static QList<TabSelector*> getTabSelectorByParent(QWidget* parent);
-
     Ui::TabSelector* ui;
     QPointer<QWidget> mTabSelectorGroupParent;
     std::shared_ptr<TokenPropertySetter> mIconTokens;
     std::shared_ptr<TokenPropertySetter> mCloseButtonTokens;
+    QString mTitle;
 };
 
 #endif // TABSELECTOR_H

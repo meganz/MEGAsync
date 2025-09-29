@@ -57,30 +57,50 @@ void FolderMatchedAgainstFileWidget::refreshUi()
 
     if (issue->isSolved())
     {
-        QIcon icon;
-        icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+        auto iconName = Utilities::getPixmapName(QLatin1String("check"),
+                                                 Utilities::AttributeType::SMALL |
+                                                     Utilities::AttributeType::THIN |
+                                                     Utilities::AttributeType::OUTLINE);
+        auto iconToken = QLatin1String("support-success");
 
-        switch(result.sideRenamed)
+        switch (result.sideRenamed)
         {
             case StalledIssuesUtilities::KeepBothSidesState::REMOTE:
             {
-                ui->remoteCopy->setMessage(QApplication::translate("NameConflict", "Renamed to \"%1\"").arg(result.newName), icon.pixmap(16,16), QString());
+                ui->remoteCopy->setMessage(
+                    QApplication::translate("NameConflict", "Renamed to \"%1\"")
+                        .arg(result.newName),
+                    iconName,
+                    iconToken);
                 break;
             }
             case StalledIssuesUtilities::KeepBothSidesState::LOCAL:
             {
-                ui->localCopy->setMessage(QApplication::translate("NameConflict", "Renamed to \"%1\"").arg(result.newName), icon.pixmap(16,16), QString());
+                ui->localCopy->setMessage(
+                    QApplication::translate("NameConflict", "Renamed to \"%1\"")
+                        .arg(result.newName),
+                    iconName,
+                    iconToken);
                 break;
             }
             default:
             {
+                break;
             }
         }
     }
     else if(issue->isFailed())
     {
-        ui->remoteCopy->setFailed(true, RenameRemoteNodeDialog::renamedFailedErrorString(result.error.get(), issue->consultCloudData()->getNode()->isFile()));
-        ui->localCopy->setFailed(true, RenameLocalNodeDialog::renamedFailedErrorString(issue->consultLocalData()->isFile()));
+        if (result.error)
+        {
+            ui->remoteCopy->setFailed(true,
+                                      RenameRemoteNodeDialog::renamedFailedErrorString(
+                                          result.error.get(),
+                                          issue->consultCloudData()->getNode()->isFile()));
+        }
+        ui->localCopy->setFailed(
+            true,
+            RenameLocalNodeDialog::renamedFailedErrorString(issue->consultLocalData()->isFile()));
     }
 
     updateSizeHint();

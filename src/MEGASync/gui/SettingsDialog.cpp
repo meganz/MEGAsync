@@ -167,7 +167,7 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     }
 #endif
 
-    // mUi->gThemeSelector->hide();
+    mUi->gThemeSelector->hide();
 
 #ifdef Q_OS_MACOS
     this->setWindowTitle(tr("Settings"));

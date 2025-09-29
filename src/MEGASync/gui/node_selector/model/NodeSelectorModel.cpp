@@ -2817,6 +2817,7 @@ QIcon NodeSelectorModel::getFolderIcon(NodeSelectorModelItem *item) const
                         }
                         return QIcon(QLatin1String("://images/icons/pc/pc_24.png"));
                     }
+
                     return Utilities::getFolderPixmap(Utilities::FolderType::TYPE_NORMAL,
                                                       Utilities::AttributeType::SMALL);
                 }
