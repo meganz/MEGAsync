@@ -123,19 +123,7 @@ void PlatformImplementation::startThemeMonitor()
     QObject::connect(watcher,
                      &MacThemeWatcher::systemThemeChanged,
                      this,
-                     [](bool dark)
-                     {
-                         Preferences::ThemeAppeareance selection;
-                         if (dark)
-                         {
-                             selection = Preferences::ThemeAppeareance::DARK;
-                         }
-                         else
-                         {
-                             selection = Preferences::ThemeAppeareance::LIGHT;
-                         }
-                         ThemeManager::instance()->onSystemAppearanceChanged(selection);
-                     });
+                     &PlatformImplementation::themeChanged);
 }
 
 Preferences::ThemeAppeareance PlatformImplementation::getCurrentThemeAppearance() const

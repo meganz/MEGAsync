@@ -1,4 +1,6 @@
 #pragma once
+#include "Preferences.h"
+
 #include <QObject>
 
 class MacThemeWatcher: public QObject
@@ -12,7 +14,7 @@ public:
     bool getCurrentTheme() const;
 
 signals:
-    void systemThemeChanged(bool dark);
+    void systemThemeChanged(Preferences::ThemeAppeareance);
 
 private:
     void* handle = nullptr;

@@ -32,7 +32,13 @@ ThemeManager::ThemeManager():
     QObject(nullptr),
     mCurrentTheme(Preferences::ThemeType::UNINITIALIZED),
     mCurrentColorScheme(Preferences::ThemeAppeareance::UNINITIALIZED)
-{}
+{
+    connect(Platform::getInstance(),
+            &AbstractPlatform::themeChanged,
+            this,
+            &ThemeManager::onSystemAppearanceChanged,
+            Qt::UniqueConnection);
+}
 
 QString ThemeManager::getSelectedColorSchemaString() const
 {

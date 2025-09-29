@@ -29,6 +29,16 @@ bool MacThemeWatcher::getCurrentTheme() const
 
 void MacThemeWatcher::StaticCallback(bool isDark)
 {
+    Preferences::ThemeAppeareance selection;
+    if (isDark)
+    {
+        selection = Preferences::ThemeAppeareance::DARK;
+    }
+    else
+    {
+        selection = Preferences::ThemeAppeareance::LIGHT;
+    }
+
     // Switch to Qt's main thread to avoid issues between cocoa and Qt ui thread
     if (g_instance)
     {
@@ -36,7 +46,7 @@ void MacThemeWatcher::StaticCallback(bool isDark)
             g_instance,
             [=]()
             {
-                Q_EMIT g_instance->systemThemeChanged(isDark);
+                Q_EMIT g_instance->systemThemeChanged(selection);
             },
             Qt::QueuedConnection);
     }

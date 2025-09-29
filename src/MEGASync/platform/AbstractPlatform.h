@@ -116,7 +116,7 @@ public:
     virtual Preferences::ThemeAppeareance getCurrentThemeAppearance() const;
 
 signals:
-    void themeChanged();
+    void themeChanged(Preferences::ThemeAppeareance theme);
 
 protected:
     std::shared_ptr<AbstractShellNotifier> mShellNotifier = nullptr;
