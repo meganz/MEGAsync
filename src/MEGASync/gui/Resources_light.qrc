@@ -250,5 +250,7 @@
         <file alias="x_small_thin_outline_button_outline_hover">images/themed/light/x_small_thin_outline_button_outline_hover.svg</file>
         <file alias="play_small_thin_outline_button_outline">images/themed/light/play_small_thin_outline_button_outline.svg</file>
         <file alias="play_small_thin_outline_button_outline_hover">images/themed/light/play_small_thin_outline_button_outline_hover.svg</file>
+        <file alias="info_small_thin_outline_text_info">images/themed/light/info_small_thin_outline_text_info.svg</file>
+        <file alias="x_circle_small_thin_outline_text_error">images/themed/light/x_circle_small_thin_outline_text_error.svg</file>
     </qresource>
 </RCC>

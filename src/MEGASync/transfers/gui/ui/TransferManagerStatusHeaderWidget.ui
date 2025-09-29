@@ -37,62 +37,6 @@
 	border-radius: 8px;
 }
 
-#lText
-{
-	font-size: 12px;
-	font-weight: 400;
-}
-
-/* Warning */
-
-#wContent[type=&quot;warning&quot;]
-{
-	background-color: #FEF4C6; /*colorToken.notification-warning*/
-}
-
-#wContent[type=&quot;warning&quot;] #lText
-{
-	color: #B55407; /*colorToken.text-warning*/
-}
-
-#wContent[type=&quot;warning&quot;] #lIcon
-{
-	image: url(:/images/banner/warning.svg);
-}
-
-/* Error */
-
-#wContent[type=&quot;error&quot;]
-{
-	background-color: #FFE4E8; /*colorToken.notification-error*/
-}
-
-#wContent[type=&quot;error&quot;] #lText
-{
-	color: #E31B57; /*colorToken.text-error*/
-}
-
-#wContent[type=&quot;error&quot;] #lIcon
-{
-	image: url(:/images/banner/error.svg);
-}
-
-/* Info */
-
-#wContent[type=&quot;info&quot;]
-{
-	background-color: #DFF4FE; /*colorToken.notification-info*/
-}
-
-#wContent[type=&quot;info&quot;] #lText
-{
-	color: #0078A4; /*colorToken.text-info*/
-}
-
-#wContent[type=&quot;info&quot;] #lIcon
-{
-	image: url(:/images/banner/info.svg);
-}
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
