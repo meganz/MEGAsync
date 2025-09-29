@@ -914,7 +914,7 @@ void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, i
     logInfoDialogCoordinates("Final", screenGeometry, otherInfo);
 }
 
-Preferences::ThemeType PlatformImplementation::getCurrentTheme() const
+Preferences::ThemeAppeareance PlatformImplementation::getCurrentTheme() const
 {
     const QString GNOME_DESKTOP_CONFIG_CMD = QString::fromLatin1("gsettings");
     const QString GNOME_DESKTOP_DARK_ID = QString::fromLatin1("dark");
