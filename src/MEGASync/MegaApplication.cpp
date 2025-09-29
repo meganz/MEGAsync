@@ -4432,8 +4432,6 @@ void MegaApplication::processUploads()
 
     auto uploadFolderSelector = new UploadToMegaDialog(megaApi);
     uploadFolderSelector->setDefaultFolder(preferences->uploadFolder());
-    TokenParserWidgetManager::instance()->applyCurrentTheme(uploadFolderSelector);
-    TokenParserWidgetManager::instance()->registerWidgetForTheming(uploadFolderSelector);
 
     DialogOpener::showDialog<UploadToMegaDialog, TransferManager>(uploadFolderSelector, false, [this, uploadFolderSelector]()
     {

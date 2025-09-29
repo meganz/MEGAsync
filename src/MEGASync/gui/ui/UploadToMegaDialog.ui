@@ -36,12 +36,6 @@
 {
 background-color: #ffffff; /*colorToken.page-background*/
 }
-
-
-#cDefaultPath
-{
-color: #F3F4F4; /*colorToken.text-primary*/
-}
 </string>
   </property>
   <property name="TOKENIZED" stdset="0">
