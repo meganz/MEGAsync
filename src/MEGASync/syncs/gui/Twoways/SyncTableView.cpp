@@ -165,6 +165,7 @@ void SyncTableView::showContextMenu(const QPoint& pos, const QModelIndex index)
 {
     QMenu* menu = new QMenu(this);
     menu->setProperty("class", QLatin1String("MegaMenu"));
+    menu->setProperty("icon-token", QLatin1String("icon-primary"));
     menu->setAttribute(Qt::WA_DeleteOnClose);
     menu->setAttribute(Qt::WA_TranslucentBackground);
 
@@ -180,6 +181,19 @@ void SyncTableView::showContextMenu(const QPoint& pos, const QModelIndex index)
                                    QLatin1String("://images/sync_context_menu/folder-small.png"),
                                    0,
                                    menu);
+
+        /*
+        showLocalAction =
+            new MegaMenuItemAction(PlatformStrings::fileExplorer(),
+                                   Utilities::getPixmapName(QLatin1String("folder"),
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false),
+                                   0,
+                                   menu);
+        */
+
         connect(showLocalAction,
                 &MegaMenuItemAction::triggered,
                 this,
@@ -195,6 +209,18 @@ void SyncTableView::showContextMenu(const QPoint& pos, const QModelIndex index)
                                QLatin1String("://images/sync_context_menu/MEGA-small.png"),
                                0,
                                menu));
+
+    /*
+    auto showRemoteAction(new MegaMenuItemAction(
+        QCoreApplication::translate("SyncTableView", "Open in MEGA"),
+        Utilities::getPixmapName(QLatin1String("mega"),
+                                 Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                                     Utilities::AttributeType::OUTLINE,
+                                 false),
+        0,
+        menu));
+    */
+
     connect(showRemoteAction,
             &MegaMenuItemAction::triggered,
             this,
@@ -209,6 +235,18 @@ void SyncTableView::showContextMenu(const QPoint& pos, const QModelIndex index)
                                QLatin1String("://images/sync_context_menu/minus-circle.png"),
                                0,
                                menu));
+
+    /*
+    auto delAction = new MegaMenuItemAction(
+        getRemoveActionString(),
+        Utilities::getPixmapName(QLatin1String("remove"),
+                                 Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                                     Utilities::AttributeType::OUTLINE,
+                                 false),
+        0,
+        menu);
+*/
+
     connect(delAction,
             &MegaMenuItemAction::triggered,
             this,
@@ -254,6 +292,19 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
                                    QLatin1String("://images/sync_context_menu/play-circle.png"),
                                    0,
                                    menu));
+
+        /*
+        auto syncRun(
+            new MegaMenuItemAction(QCoreApplication::translate("SyncTableView", "Run"),
+                                   Utilities::getPixmapName(QLatin1String("play"),
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false),
+                                   0,
+                                   menu));
+        */
+
         connect(syncRun,
                 &MegaMenuItemAction::triggered,
                 this,
@@ -278,6 +329,19 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
                                        QLatin1String("://images/sync_states/pause-circle.png"),
                                        0,
                                        menu));
+
+            /*
+            auto syncSuspend(new MegaMenuItemAction(
+                QCoreApplication::translate("SyncTableView", "Pause"),
+                Utilities::getPixmapName(QLatin1String("pause"),
+                                         Utilities::AttributeType::SMALL |
+                                             Utilities::AttributeType::THIN |
+                                             Utilities::AttributeType::OUTLINE,
+                                         false),
+                0,
+                menu));
+            */
+
             connect(syncSuspend,
                     &MegaMenuItemAction::triggered,
                     this,
@@ -301,6 +365,19 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
             QLatin1String("://images/sync_context_menu/slash-circle.png"),
             0,
             menu));
+
+        /*
+        auto addExclusions(new MegaMenuItemAction(
+            QCoreApplication::translate("ExclusionsStrings", "Manage exclusions"),
+            Utilities::getPixmapName(QLatin1String("manage"),
+                                     Utilities::AttributeType::SMALL |
+                                         Utilities::AttributeType::THIN |
+                                         Utilities::AttributeType::OUTLINE,
+                                     false),
+            0,
+            menu));
+        */
+
         connect(addExclusions,
                 &MegaMenuItemAction::triggered,
                 this,
@@ -320,6 +397,19 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
                                    QLatin1String("://images/sync_context_menu/search-small.png"),
                                    0,
                                    menu));
+
+        /*
+        auto rescanDeep(
+            new MegaMenuItemAction(QCoreApplication::translate("SyncTableView", "Rescan"),
+                                   Utilities::getPixmapName(QLatin1String("rescan"),
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false),
+                                   0,
+                                   menu));
+        */
+
         connect(rescanDeep,
                 &MegaMenuItemAction::triggered,
                 this,
@@ -334,6 +424,20 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
                                            QLatin1String("://images/qml/power.svg"),
                                            0,
                                            menu));
+
+        /*
+        auto reboot(new MegaMenuItemAction(
+            sync->getType() == mega::MegaSync::TYPE_TWOWAY ? tr("Reboot sync") :
+                                                             tr("Reboot backup"),
+            Utilities::getPixmapName(QLatin1String("reboot"),
+                                     Utilities::AttributeType::SMALL |
+                                         Utilities::AttributeType::THIN |
+                                         Utilities::AttributeType::OUTLINE,
+                                     false),
+            0,
+            menu));
+        */
+
         connect(reboot,
                 &MegaMenuItemAction::triggered,
                 this,
