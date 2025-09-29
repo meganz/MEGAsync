@@ -112,11 +112,15 @@ void WinThemeWatcher::run()
     RegCloseKey(hKey);
 }
 
-bool WinThemeWatcher::getCurrentTheme() const
+Preferences::ThemeAppeareance WinThemeWatcher::getCurrentTheme() const
 {
     QSettings settings(
         QLatin1String("HKEY_CURRENT_"
                       "USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"),
         QSettings::NativeFormat);
-    return !settings.value(QLatin1String("AppsUseLightTheme"), true).toBool();
+
+    bool isDark = !settings.value(QLatin1String("AppsUseLightTheme"), true).toBool();
+
+    return Preferences::toTheme(isDark);
+    ;
 }

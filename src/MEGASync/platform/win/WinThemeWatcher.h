@@ -1,6 +1,8 @@
 #ifndef WINTHEMEWATCHER_H
 #define WINTHEMEWATCHER_H
 
+#include "Preferences.h"
+
 #include <QThread>
 
 #include <windows.h>
@@ -13,10 +15,10 @@ public:
     explicit WinThemeWatcher(QObject* parent = nullptr);
     ~WinThemeWatcher() override;
 
-    bool getCurrentTheme() const;
+    Preferences::ThemeAppeareance getCurrentTheme() const;
 
 signals:
-    void systemThemeChanged(bool dark);
+    void systemThemeChanged(Preferences::ThemeAppeareance);
 
 protected:
     void run() override;

@@ -2,7 +2,6 @@
 
 #include "DesktopManager.h"
 #include "RecursiveShellNotifier.h"
-#include "ThemeManager.h"
 #include "ThreadedQueueShellNotifier.h"
 #include "WinAPIShell.h"
 #include "WinShellDispatcherTask.h"
@@ -525,19 +524,7 @@ void PlatformImplementation::startThemeMonitor()
     QObject::connect(watcher,
                      &WinThemeWatcher::systemThemeChanged,
                      this,
-                     [](bool dark)
-                     {
-                         Preferences::ThemeAppeareance selection;
-                         if (dark)
-                         {
-                             selection = Preferences::ThemeAppeareance::DARK;
-                         }
-                         else
-                         {
-                             selection = Preferences::ThemeAppeareance::LIGHT;
-                         }
-                         ThemeManager::instance()->onSystemAppearanceChanged(selection);
-                     });
+                     &PlatformImplementation::themeChanged);
 }
 
 Preferences::ThemeAppeareance PlatformImplementation::getCurrentThemeAppearance() const

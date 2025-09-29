@@ -11,7 +11,7 @@ public:
     explicit MacThemeWatcher(QObject* parent = nullptr);
     ~MacThemeWatcher();
 
-    bool getCurrentTheme() const;
+    Preferences::ThemeAppeareance getCurrentTheme() const;
 
 signals:
     void systemThemeChanged(Preferences::ThemeAppeareance);

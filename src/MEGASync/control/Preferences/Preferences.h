@@ -450,6 +450,11 @@ public:
     void setThemeType(ThemeType theme);
     ThemeType getThemeType();
 
+    static constexpr Preferences::ThemeAppeareance toTheme(bool dark) noexcept
+    {
+        return dark ? Preferences::ThemeAppeareance::DARK : Preferences::ThemeAppeareance::LIGHT;
+    }
+
 #if defined(ENABLE_SDK_ISOLATED_GFX)
     void setGfxWorkerEndpointInGeneral(const QString& endpoint);
     QString getGfxWorkerEndpointInGeneral();
