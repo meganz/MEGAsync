@@ -36,7 +36,7 @@ const char* ITS_ON = "itsOn";
 const char* SEARCH_TEXT = "searchText";
 const char* SEARCH_BUTTON_SELECTED = "selected";
 
-TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) :
+TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi* megaApi):
     QDialog(nullptr),
     mUi(new Ui::TransferManager),
     mMegaApi(megaApi),
@@ -44,7 +44,6 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
     mPreferences(Preferences::instance()),
     mModel(nullptr),
     mSearchFieldReturnPressed(false),
-    mShadowTab (new QGraphicsDropShadowEffect(nullptr)),
     mSpeedRefreshTimer(new QTimer(this)),
     mStatsRefreshTimer(new QTimer(this)),
     mUiDragBackDrop(new Ui::TransferManagerDragBackDrop),
@@ -70,14 +69,6 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
     mUi->fCompleted->hide();
 
     mUi->sStatus->setCurrentWidget(mUi->pUpToDate);
-
-    QColor shadowColor (188, 188, 188);
-    mShadowTab->setParent(mUi->wTransferring);
-    mShadowTab->setBlurRadius(10.);
-    mShadowTab->setXOffset(0.);
-    mShadowTab->setYOffset(0.);
-    mShadowTab->setColor(shadowColor);
-    mShadowTab->setEnabled(true);
 
     mTabFramesToggleGroup[TransfersWidget::ALL_TRANSFERS_TAB] = mUi->fAllTransfers;
     mTabFramesToggleGroup[TransfersWidget::DOWNLOADS_TAB]     = mUi->fDownloads;
@@ -206,14 +197,6 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
     connect(mSpeedRefreshTimer, &QTimer::timeout,
             this, &TransferManager::refreshSpeed);
 
-    auto sizePolicy = mUi->wDownSpeed->sizePolicy();
-    sizePolicy.setRetainSizeWhenHidden(true);
-    mUi->wDownSpeed->setSizePolicy(sizePolicy);
-
-    sizePolicy = mUi->wUpSpeed->sizePolicy();
-    sizePolicy.setRetainSizeWhenHidden(true);
-    mUi->wUpSpeed->setSizePolicy(sizePolicy);
-
     // Connect to storage quota signals
     connect(MegaSyncApp, &MegaApplication::storageStateChanged,
             this, &TransferManager::onStorageStateChanged,
@@ -254,7 +237,6 @@ TransferManager::~TransferManager()
     disconnect(findChild<MegaTransferView*>(), &MegaTransferView::verticalScrollBarVisibilityChanged,
             this, &TransferManager::onVerticalScrollBarVisibilityChanged);
 
-    mShadowTab->deleteLater();
     delete mUi;
     delete mTransferScanCancelUi;
 }
@@ -606,11 +588,6 @@ void TransferManager::refreshStateStats()
         if(mTransferScanCancelUi && mTransferScanCancelUi->isActive())
         {
             leftFooterWidget = mUi->pScanning;
-        }
-        else if(failedNumber != 0 || !MegaSyncApp->getStalledIssuesModel()->isEmpty())
-        {
-            leftFooterWidget = mUi->pSomeIssues;
-            mUi->bSomeIssues->setText(tr("Issue found", "", static_cast<int>(failedNumber)));
         }
         else if(processedNumber != 0)
         {
@@ -1077,7 +1054,6 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
 
         // Activate new tab frame
         mTabFramesToggleGroup[newTab]->setProperty(ITS_ON, true);
-        mTabFramesToggleGroup[newTab]->setGraphicsEffect(mShadowTab);
 
         // Reload QSS because it is glitchy
         mUi->wLeftPane->setStyleSheet(mUi->wLeftPane->styleSheet());

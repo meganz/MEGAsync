@@ -91,7 +91,6 @@ private:
 
     bool mSearchFieldReturnPressed;
 
-    QGraphicsDropShadowEffect* mShadowTab;
     QSet<Utilities::FileType> mFileTypesFilter;
     QTimer* mSpeedRefreshTimer;
     QTimer* mStatsRefreshTimer;

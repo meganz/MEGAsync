@@ -50,11 +50,6 @@ QGroupBox::title
     font-size: 10px;
 }
 
-#wLeftPane
-{
-background-color: #fff7f7f7; /*colorToken.surface-1*/
-}
-
 #wLeftPane QFrame &gt; QLabel
 {
     text-align: right;
@@ -306,10 +301,9 @@ icon: url(:/play);
     height: 36px;
     min-height: 36px;
     max-height: 36px;
-    padding-left: 10px;
 }
 
-#bUpToDate, #bSomeIssues
+#bUpToDate
 {
     height: 36px;
     min-height: 36px;
@@ -1146,7 +1140,7 @@ QToolButton
            <string notr="true"/>
           </property>
           <property name="currentIndex">
-           <number>3</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="pSpeedAndClear">
            <layout class="QHBoxLayout" name="pSpeedAndClearLayout" stretch="0,0,0,1">
@@ -1154,7 +1148,7 @@ QToolButton
              <number>0</number>
             </property>
             <property name="leftMargin">
-             <number>12</number>
+             <number>0</number>
             </property>
             <property name="topMargin">
              <number>0</number>
@@ -1175,28 +1169,28 @@ QToolButton
               </property>
               <property name="minimumSize">
                <size>
-                <width>88</width>
+                <width>0</width>
                 <height>24</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>88</width>
+                <width>16777215</width>
                 <height>24</height>
                </size>
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_16">
                <property name="spacing">
-                <number>0</number>
+                <number>8</number>
                </property>
                <property name="leftMargin">
-                <number>4</number>
+                <number>8</number>
                </property>
                <property name="topMargin">
                 <number>0</number>
                </property>
                <property name="rightMargin">
-                <number>4</number>
+                <number>8</number>
                </property>
                <property name="bottomMargin">
                 <number>0</number>
@@ -1276,35 +1270,35 @@ QToolButton
             <item>
              <widget class="QWidget" name="wUpSpeed" native="true">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
               <property name="minimumSize">
                <size>
-                <width>88</width>
+                <width>0</width>
                 <height>24</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>88</width>
+                <width>16777215</width>
                 <height>24</height>
                </size>
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_17">
                <property name="spacing">
-                <number>0</number>
+                <number>8</number>
                </property>
                <property name="leftMargin">
-                <number>4</number>
+                <number>8</number>
                </property>
                <property name="topMargin">
                 <number>0</number>
                </property>
                <property name="rightMargin">
-                <number>4</number>
+                <number>8</number>
                </property>
                <property name="bottomMargin">
                 <number>0</number>
@@ -1397,57 +1391,6 @@ QToolButton
             <property name="bottomMargin">
              <number>0</number>
             </property>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="pSomeIssues">
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QPushButton" name="bSomeIssues">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>36</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>36</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="../../../gui/Resources_common.qrc">
-                <normaloff>:/images/transfer_manager/sidebar/cancel_all_ico_default.png</normaloff>:/images/transfer_manager/sidebar/cancel_all_ico_default.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>24</width>
-                <height>24</height>
-               </size>
-              </property>
-              <property name="ignore_button_manager" stdset="0">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
            </layout>
           </widget>
           <widget class="QWidget" name="pScanning">
@@ -1891,7 +1834,7 @@ QToolButton
             </size>
            </property>
            <property name="currentIndex">
-            <number>1</number>
+            <number>2</number>
            </property>
            <widget class="TransferManagerStatusHeaderWidget" name="pStatusHeaderInfo">
             <property name="sizePolicy">
@@ -2033,34 +1976,14 @@ QToolButton
            </widget>
            <widget class="QWidget" name="pStalledIssuesHeaderInfo">
             <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
-              <spacer name="horizontalSpacer_16">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
+             <property name="leftMargin">
+              <number>20</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
              <item>
               <widget class="SomeIssuesOccurredMessage" name="stalledIssuesContainer" native="true"/>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_17">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
              </item>
             </layout>
            </widget>
@@ -2592,7 +2515,6 @@ QToolButton
   <tabstop>tNoResults</tabstop>
   <tabstop>tNoFinished</tabstop>
   <tabstop>bSearchString</tabstop>
-  <tabstop>bSomeIssues</tabstop>
   <tabstop>tSearchIcon</tabstop>
   <tabstop>leSearchField</tabstop>
   <tabstop>tSearchCancel</tabstop>
