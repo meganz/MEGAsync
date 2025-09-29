@@ -35,7 +35,10 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">
+   <string notr="true">#TransferManagerLoadingItem
+{
+background-color: #FFFFFF;/*colorToken.page-background*/
+}
 
 #itemSepLine
 {
@@ -43,7 +46,7 @@
     min-height: 1px;
     max-height: 1px;
     border: none;
-    background: #B0B1B31A;/*colorToken.border-subtle*/
+    background: #5254570D;/*colorToken.border-subtle*/
 	margin-left: 24px;
 	margin-right: 24px;
 }
@@ -318,10 +321,6 @@ background-color: #EFEFF0;/*colorToken.surface-2*/
              <width>16777215</width>
              <height>8</height>
             </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(200, 200, 200);
-border-radius:4px;</string>
            </property>
            <property name="text">
             <string/>

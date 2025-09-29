@@ -20,8 +20,8 @@
 line-height: 24px;
 color: #FFFFFFFF;/*colorToken.text-primary*/
 }
-*{
-background-color: #lUploadToMega; /*colorToken.page-background*/
+#TransferManagerDragBackDrop{
+background-color: #FFFFFFFF; /*colorToken.page-background*/
 }</string>
   </property>
   <property name="class" stdset="0">

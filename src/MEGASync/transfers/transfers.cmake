@@ -64,27 +64,21 @@ target_sources_conditional(${ExecutableTarget}
    FLAG WIN32
    QT_AWARE
    PRIVATE
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/InfoDialogTransfersWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/win/InfoDialogTransferDelegateWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/InfoDialogTransferLoadingItem.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
    FLAG APPLE
    QT_AWARE
    PRIVATE
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/InfoDialogTransfersWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/macx/InfoDialogTransferDelegateWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/InfoDialogTransferLoadingItem.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
    FLAG UNIX AND NOT APPLE
    QT_AWARE
    PRIVATE
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/InfoDialogTransfersWidget.ui
    ${CMAKE_CURRENT_LIST_DIR}/gui/linux/InfoDialogTransferDelegateWidget.ui
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/InfoDialogTransferLoadingItem.ui
 )
 
 if (WIN32)
@@ -120,6 +114,8 @@ target_sources(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/MediaTypeFilterWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/ui/DuplicatedNodeDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/ui/DuplicatedNodeItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/InfoDialogTransferLoadingItem.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/InfoDialogTransfersWidget.ui
 )
 
 set_property(TARGET ${ExecutableTarget}
