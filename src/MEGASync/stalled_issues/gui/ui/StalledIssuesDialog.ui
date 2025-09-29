@@ -585,6 +585,9 @@ border:none;
         <property name="dimension" stdset="0">
          <string notr="true">small</string>
         </property>
+        <property name="semibold" stdset="0">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item>
@@ -635,25 +638,25 @@ border:none;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>TabSelector</class>
-   <extends>QWidget</extends>
-   <header>TabSelector.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>IconOnlyButton</class>
    <extends>QPushButton</extends>
-   <header>TokenizableItems/TokenizableButtons.h</header>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
   </customwidget>
   <customwidget>
    <class>IconLabel</class>
    <extends>QToolButton</extends>
-   <header>TokenizableItems/IconLabel.h</header>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
   </customwidget>
   <customwidget>
    <class>TokenizableButton</class>
    <extends>QPushButton</extends>
-   <header>TokenizableItems/TokenizableButtons.h</header>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TabSelector</class>
+   <extends>QWidget</extends>
+   <header>TabSelector.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>StalledIssuesView</class>
