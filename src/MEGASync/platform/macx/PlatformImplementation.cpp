@@ -1,7 +1,6 @@
 #include "PlatformImplementation.h"
 
 #include "platform/macx/MacThemeWatcher.h"
-#include "ThemeManager.h"
 
 #include <QHostInfo>
 #include <QScreen>
