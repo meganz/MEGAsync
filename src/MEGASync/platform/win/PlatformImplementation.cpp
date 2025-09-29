@@ -529,13 +529,7 @@ void PlatformImplementation::startThemeMonitor()
 
 Preferences::ThemeAppeareance PlatformImplementation::getCurrentThemeAppearance() const
 {
-    const bool isDark = watcher->getCurrentTheme();
-    if (isDark)
-    {
-        return Preferences::ThemeAppeareance::DARK;
-    }
-
-    return Preferences::ThemeAppeareance::LIGHT;
+    return watcher->getCurrentTheme();
 }
 
 void PlatformImplementation::removeSyncFromLeftPane(QString syncPath)
