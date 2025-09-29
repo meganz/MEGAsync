@@ -213,7 +213,7 @@ void SyncTableView::showContextMenu(const QPoint& pos, const QModelIndex index)
     /*
     auto showRemoteAction(new MegaMenuItemAction(
         QCoreApplication::translate("SyncTableView", "Open in MEGA"),
-        Utilities::getPixmapName(QLatin1String("mega"),
+        Utilities::getPixmapName(QLatin1String("MEGA"),
                                  Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
                                      Utilities::AttributeType::OUTLINE,
                                  false),
