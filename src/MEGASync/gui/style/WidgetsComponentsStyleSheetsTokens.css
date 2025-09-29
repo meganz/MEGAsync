@@ -267,6 +267,11 @@ background-color: #09BF5B; /*colorToken.indicator-green*/
     QCheckBox
 */
 
+QCheckBox[type="mega"]
+{
+color: #F3F4F4; /*colorToken.text-primary*/
+}
+
 QCheckBox[type="mega"][error="true"]
 {
 color: #ffe31b57; /*colorToken.text-error*/
