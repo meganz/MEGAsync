@@ -19,7 +19,7 @@
 background-color: #FFFFFF; /*colorToken.page-background*/
 }
 
-NodeSelectorTreeView
+QTreeView
 {
 background-color: #FFFFFF; /*colorToken.page-background*/
 color: #303233; /*colorToken.text-primary*/
@@ -35,6 +35,11 @@ border-radius: 4px;
 #sh_accessLabel
 {
 color: #007C3E; /*colorToken.text-success*/
+}
+
+#treeViewPage
+{
+background-color: transparent;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -1087,10 +1092,9 @@ color: #007C3E; /*colorToken.text-success*/
  </widget>
  <customwidgets>
   <customwidget>
-   <class>TabSelector</class>
-   <extends>QWidget</extends>
-   <header>TabSelector.h</header>
-   <container>1</container>
+   <class>TokenizableButton</class>
+   <extends>QPushButton</extends>
+   <header>TokenizableItems/TokenizableButtons.h</header>
   </customwidget>
   <customwidget>
    <class>IconOnlyButton</class>
@@ -1098,19 +1102,20 @@ color: #007C3E; /*colorToken.text-success*/
    <header>TokenizableItems/TokenizableButtons.h</header>
   </customwidget>
   <customwidget>
-   <class>NodeSelectorTreeView</class>
-   <extends>QTreeView</extends>
-   <header>node_selector/gui/NodeSelectorTreeView.h</header>
-  </customwidget>
-  <customwidget>
    <class>IconLabel</class>
    <extends>QToolButton</extends>
    <header>TokenizableItems/IconLabel.h</header>
   </customwidget>
   <customwidget>
-   <class>TokenizableButton</class>
-   <extends>QPushButton</extends>
-   <header>TokenizableItems/TokenizableButtons.h</header>
+   <class>TabSelector</class>
+   <extends>QWidget</extends>
+   <header>TabSelector.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NodeSelectorTreeView</class>
+   <extends>QTreeView</extends>
+   <header>node_selector/gui/NodeSelectorTreeView.h</header>
   </customwidget>
  </customwidgets>
  <resources>

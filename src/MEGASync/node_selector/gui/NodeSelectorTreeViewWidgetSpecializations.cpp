@@ -299,6 +299,8 @@ NodeSelectorTreeViewWidgetSearch::NodeSelectorTreeViewWidgetSearch(SelectTypeSPt
             &TabSelector::clicked,
             this,
             &NodeSelectorTreeViewWidgetSearch::onRubbishSearchClicked);
+
+    ui->tMegaFolders->loadingView().setDelayTimeToShowInMs(0);
 }
 
 void NodeSelectorTreeViewWidgetSearch::search(const QString& text)
@@ -307,6 +309,8 @@ void NodeSelectorTreeViewWidgetSearch::search(const QString& text)
 
     changeButtonsWidgetSizePolicy(true);
     ui->stackedWidget->setCurrentWidget(ui->treeViewPage);
+    setStyleSheet(styleSheet());
+
     auto search_model = static_cast<NodeSelectorModelSearch*>(mModel.get());
     search_model->searchByText(text);
 }

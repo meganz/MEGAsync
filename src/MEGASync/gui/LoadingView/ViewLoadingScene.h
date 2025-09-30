@@ -196,9 +196,17 @@ private:
         if (row >= mLoadingItems.size())
         {
             item = new DelegateWidget(getView());
-            item->hide();
+
             TokenParserWidgetManager::instance()->applyCurrentTheme(item);
+
+            // Setting again its own parent will tell the widget that the stylesheet needs to be
+            // reloaded
+            item->setParent(item->parentWidget(), item->windowFlags());
+
+            // Refresh completely the widget
+            item->show();
             TokenParserWidgetManager::instance()->polish(item);
+            item->hide();
             mLoadingItems.append(item);
         }
         else
@@ -426,7 +434,6 @@ public:
             mLoadingView = new ViewType(mLoadingSceneUI);
             mLoadingView->setObjectName(QString::fromStdString("Loading View"));
             mLoadingView->setContentsMargins(mView->contentsMargins());
-            mLoadingView->setStyleSheet(mView->styleSheet());
             mLoadingView->header()->setStretchLastSection(true);
             mLoadingView->header()->hide();
             mLoadingView->setSizePolicy(mView->sizePolicy());
