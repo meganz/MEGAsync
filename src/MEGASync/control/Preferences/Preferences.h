@@ -431,14 +431,29 @@ public:
 
     enum class ThemeType
     {
-        LIGHT_THEME = 0,
+        UNINITIALIZED = -1,
+        SYSTEM_DEFAULT = 0,
         DARK_THEME = 1,
+        LIGHT_THEME = 2,
         LAST
     };
     Q_ENUM(ThemeType)
 
+    enum class ThemeAppeareance
+    {
+        UNINITIALIZED = -1,
+        DARK = 0,
+        LIGHT = 1
+    };
+    Q_ENUM(ThemeAppeareance)
+
     void setThemeType(ThemeType theme);
     ThemeType getThemeType();
+
+    static constexpr Preferences::ThemeAppeareance toTheme(bool dark) noexcept
+    {
+        return dark ? Preferences::ThemeAppeareance::DARK : Preferences::ThemeAppeareance::LIGHT;
+    }
 
 #if defined(ENABLE_SDK_ISOLATED_GFX)
     void setGfxWorkerEndpointInGeneral(const QString& endpoint);

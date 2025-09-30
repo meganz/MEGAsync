@@ -25,7 +25,7 @@ private:
     explicit TokenParserWidgetManager(QObject *parent = nullptr);
     void loadColorThemeJson();
     void loadStandardStyleSheetComponents();
-    void onThemeChanged(Preferences::ThemeType theme);
+    void onThemeChanged();
     void onUpdateRequested();
     void applyTheme(QWidget* widget);
     void replaceThemeTokens(QString& styleSheet, const QString& currentTheme);

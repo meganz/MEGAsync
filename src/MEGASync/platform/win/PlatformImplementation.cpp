@@ -59,6 +59,10 @@ void PlatformImplementation::initialize(int, char *[])
 
     //In order to show dialogs when the application is inactive (for example, from the webclient)
     QWindowsWindowFunctions::setWindowActivationBehavior(QWindowsWindowFunctions::AlwaysActivateWindow);
+
+    watcher = new WinThemeWatcher(this);
+
+    startThemeMonitor();
 }
 
 void PlatformImplementation::prepareForSync()
@@ -513,6 +517,19 @@ bool CheckLeftPaneIcon(wchar_t *path, bool remove)
     }
     RegCloseKey(hKey);
     return false;
+}
+
+void PlatformImplementation::startThemeMonitor()
+{
+    QObject::connect(watcher,
+                     &WinThemeWatcher::systemThemeChanged,
+                     this,
+                     &PlatformImplementation::themeChanged);
+}
+
+Preferences::ThemeAppeareance PlatformImplementation::getCurrentThemeAppearance() const
+{
+    return watcher->getCurrentTheme();
 }
 
 void PlatformImplementation::removeSyncFromLeftPane(QString syncPath)

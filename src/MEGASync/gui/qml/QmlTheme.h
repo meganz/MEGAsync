@@ -20,7 +20,7 @@ signals:
 private:
     static QMap<Preferences::ThemeType, QString> mThemesQmlMap;
 
-    void onThemeChanged(Preferences::ThemeType theme);
+    void onThemeChanged();
 };
 
 #endif // QMLTHEME_H

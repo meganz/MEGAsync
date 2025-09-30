@@ -11,7 +11,7 @@ pipeline {
         string(name: 'RELEASE_CANDIDATE_NAME', defaultValue: '', description: 'i.e: RC2, RC3 (only needed if IS_RELEASE_CANDIDATE is true)')
         booleanParam(name: 'CUSTOM_BUILD', defaultValue: true, description: 'If true, will use DISTRO_TO_BUILD. If false, will build all distributions')
         choice(name: 'ARCH_TO_BUILD', choices: ['amd64', 'armhf','arm64'], description: 'Only used if CUSTOM_BUILD is true') 
-        string(name: 'DISTRO_TO_BUILD', defaultValue: 'xUbuntu_22.04', description: 'Only used if CUSTOM_BUILD is true')
+        string(name: 'DISTRO_TO_BUILD', defaultValue: 'xUbuntu_24.04', description: 'Only used if CUSTOM_BUILD is true')
         string(name: 'MEGASYNC_BRANCH', defaultValue: "${env.BRANCH_NAME}", description: 'Which version of MEGAsync should we build? Default is current branch.')
         string(name: 'SDK_BRANCH', defaultValue: ' ', description: 'Optionally, define a custom SDK branch.')
     }
@@ -157,6 +157,7 @@ pipeline {
                                     'Debian_11','Debian_12','Debian_13','Debian_testing',
                                     'DEB_Arch_Extra',
                                     'Fedora_42',
+                                    'AlmaLinux_9','CentOS_Stream_9',
                                     'openSUSE_Leap_15.6', 'openSUSE_Tumbleweed'
                         }
                     }

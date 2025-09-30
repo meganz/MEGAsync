@@ -20,6 +20,9 @@ void PlatformImplementation::initialize(int /*argc*/, char *[] /*argv*/)
 {
     setMacXActivationPolicy();
     mShellNotifier = std::make_shared<SignalShellNotifier>();
+    watcher = new MacThemeWatcher(this);
+
+    startThemeMonitor();
 }
 
 void PlatformImplementation::fileSelector(const SelectorInfo& info)
@@ -110,6 +113,19 @@ bool PlatformImplementation::isFileManagerExtensionEnabled()
     }
 
     return true;
+}
+
+void PlatformImplementation::startThemeMonitor()
+{
+    QObject::connect(watcher,
+                     &MacThemeWatcher::systemThemeChanged,
+                     this,
+                     &PlatformImplementation::themeChanged);
+}
+
+Preferences::ThemeAppeareance PlatformImplementation::getCurrentThemeAppearance() const
+{
+    return watcher->getCurrentTheme();
 }
 
 void PlatformImplementation::runPostAutoUpdateStep()

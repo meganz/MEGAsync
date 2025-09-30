@@ -29,8 +29,10 @@ struct SelectorInfo
     {}
 };
 
-class AbstractPlatform
+class AbstractPlatform: public QObject
 {
+    Q_OBJECT
+
 public:
     AbstractPlatform() = default;
     virtual ~AbstractPlatform() = default;
@@ -111,12 +113,19 @@ public:
         return {};
     }
 
+    virtual Preferences::ThemeAppeareance getCurrentThemeAppearance() const;
+
+signals:
+    void themeChanged(Preferences::ThemeAppeareance theme);
+
 protected:
     std::shared_ptr<AbstractShellNotifier> mShellNotifier = nullptr;
 
     void logInfoDialogCoordinates(const char *message, const QRect &screenGeometry, const QString &otherInformation);
     QString rectToString(const QRect &rect);
     bool loadRccResources(const QStringList& rccFiles);
+    virtual void startThemeMonitor(){};
+    virtual void stopThemeMonitor(){};
 };
 
 #endif // ABSTRACTPLATFORM_H

@@ -2,10 +2,10 @@
 #define MACXPLATFORM_H
 
 #include "AbstractPlatform.h"
-
+#include "macx/MacThemeWatcher.h"
+#include "MacXExtServerService.h"
 #include "MacXFunctions.h"
 #include "MacXSystemServiceTask.h"
-#include "MacXExtServerService.h"
 
 class PlatformImplementation : public AbstractPlatform
 {
@@ -58,14 +58,19 @@ public:
 
     QString getArchUpdateString() const override;
 
+    Preferences::ThemeAppeareance getCurrentThemeAppearance() const override;
+
 private:
     void disableSignalHandler();
     bool isFileManagerExtensionEnabled();
+    void startThemeMonitor() override;
 
     double getUpTime();
 
     MacXSystemServiceTask *systemServiceTask = nullptr;
     QPointer<MacXExtServerService> extService = nullptr;
+
+    QPointer<MacThemeWatcher> watcher;
 };
 
 #endif // MACXPLATFORM_H

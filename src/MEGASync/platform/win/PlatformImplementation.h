@@ -2,6 +2,7 @@
 #define WINDOWSPLATFORM_H
 
 #include "AbstractPlatform.h"
+#include "win/WinThemeWatcher.h"
 
 #include <QApplication>
 #include <QDir>
@@ -9,6 +10,7 @@
 #include <QHash>
 #include <QMenu>
 #include <QPixmap>
+#include <QPointer>
 #include <QProcess>
 #include <QString>
 #include <QThread>
@@ -80,10 +82,14 @@ public:
 
     QString getArchUpdateString() const override;
 
+    Preferences::ThemeAppeareance getCurrentThemeAppearance() const override;
+
 private:
     void removeSyncFromLeftPane(QString syncPath, QString syncName, QString uuid);
 
     void notifyItemChange(const QString& localPath, std::shared_ptr<AbstractShellNotifier> notifier);
+
+    void startThemeMonitor() override;
 
     QString findMimeType(const QString& extensionWithDot);
     QString findAssociatedExecutable(const QString& extensionWithDot);
@@ -105,6 +111,8 @@ private:
 
     WinShellDispatcherTask *shellDispatcherTask = nullptr;
     std::shared_ptr<AbstractShellNotifier> mSyncFileNotifier = nullptr;
+
+    QPointer<WinThemeWatcher> watcher;
 };
 
 #endif // WINDOWSPLATFORM_H

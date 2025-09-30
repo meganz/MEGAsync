@@ -314,7 +314,7 @@ const bool  Preferences::defaultNeverCreateLink   = false;
 const bool  Preferences::defaultImportMegaLinksEnabled = true;
 const bool  Preferences::defaultDownloadMegaLinksEnabled = true;
 const bool Preferences::defaultSystemTrayPromptSuppressed = false;
-const Preferences::ThemeType Preferences::defaultTheme = Preferences::ThemeType::LIGHT_THEME;
+const Preferences::ThemeType Preferences::defaultTheme = Preferences::ThemeType::SYSTEM_DEFAULT;
 const bool Preferences::defaultAskOnExclusionRemove = true;
 
 const int Preferences::minSyncStateChangeProcessingIntervalMs = 200;
@@ -411,6 +411,7 @@ Preferences::Preferences() :
     diffTimeWithSDK(0),
     lastTransferNotification(0)
 {
+    qRegisterMetaType<Preferences::ThemeAppeareance>("Preferences::ThemeAppeareance");
     clearTemporalBandwidth();
 }
 
@@ -2625,6 +2626,7 @@ void Preferences::setThemeType(ThemeType theme)
     if (theme != currentValue)
     {
         setValueConcurrently(themeKey, static_cast<int>(theme));
+        sync();
     }
 }
 

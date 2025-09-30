@@ -8,10 +8,20 @@
 #include <xcb/xcb.h>
 #include <xcb/xproto.h>
 
-class PlatformImplementation : public AbstractPlatform
+#ifndef QT_NO_DBUS
+#include <QDBusConnection>
+#include <QDBusInterface>
+#include <QDBusMessage>
+#include <QDBusVariant>
+#endif
+
+class PlatformImplementation: public AbstractPlatform
 {
+    Q_OBJECT
+
 public:
     PlatformImplementation();
+    ~PlatformImplementation();
 
     void initialize(int argc, char *argv[]) override;
     void notifyItemChange(const QString& path, int newState) override;
@@ -53,19 +63,52 @@ public:
     QString getGfxProviderPath() override;
 #endif
 
+    Preferences::ThemeAppeareance getCurrentThemeAppearance() const override;
+
 private:
-    static xcb_atom_t getAtom(xcb_connection_t * const connection, const char *name);
+    static xcb_atom_t getAtom(xcb_connection_t* const connection, const char* name);
     bool isFedoraWithGnome();
     void promptFedoraGnomeUser();
     bool installAppIndicatorForFedoraGnome();
     int parseDnfOutput(const QString& dnfOutput);
     bool verifyAndEnableAppIndicatorExtension();
 
-    ExtServer *ext_server = nullptr;
+    void startThemeMonitor() override;
+    void stopThemeMonitor() override;
+    static Preferences::ThemeAppeareance themeFromColorSchemeString(const QString& schemeStr);
+    static Preferences::ThemeAppeareance themeFromGtkThemeString(const QString& themeStr);
+    Preferences::ThemeAppeareance effectiveTheme() const;
+    void maybeEmitTheme();
+    void setupGSettingsThemeCli();
+
+    ExtServer* ext_server = nullptr;
     NotifyServer *notify_server = nullptr;
     QString autostart_dir;
     QString desktop_file;
     QString custom_icon;
+    QProcess mThemeMonitor;
+
+#ifndef QT_NO_DBUS
+    void setupSettingsPortalMonitor();
+    static Preferences::ThemeAppeareance themeFromDBusVariant(const QDBusVariant& var);
+    Preferences::ThemeAppeareance readSettingsPortal();
+    QPointer<QDBusInterface> mSettingsPortal;
+#endif
+
+    bool mIsSettingsPortalActive = false;
+    Preferences::ThemeAppeareance mCurrentPortalTheme =
+        Preferences::ThemeAppeareance::UNINITIALIZED;
+    bool mHaveGSettingsTheme = false;
+    bool mUseGtkTheme = false;
+    Preferences::ThemeAppeareance mCurrentGSettingsTheme =
+        Preferences::ThemeAppeareance::UNINITIALIZED;
+    Preferences::ThemeAppeareance mLastEmittedTheme = Preferences::ThemeAppeareance::UNINITIALIZED;
+
+private slots:
+    void onGsettingsThemeReadyRead();
+#ifndef QT_NO_DBUS
+    void onSettingsPortalChanged(const QString& ns, const QString& key, const QDBusVariant& value);
+#endif
 };
 
 #endif // LINUXPLATFORM_H

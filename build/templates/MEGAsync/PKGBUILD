@@ -29,10 +29,17 @@ arch=('i686' 'x86_64')
 url="https://mega.io/desktop"
 license=() #TODO
 groups=()
-depends=('glibc>=2.33' 'gcc-libs>=10.2.0' 'qt5-base>=5.15' 'qt5-tools>=5.15' 'icu>=69.1' 'sqlite' 'openssl>=3.0.0' 'zlib' 'qt5-svg>=5.15' 'qt5-x11extras' 'bzip2' 'xz' 'libraw' 'double-conversion>=3.1.5' 'systemd' 'qt5-graphicaleffects' 'qt5-quickcontrols2' 'qt5-quickcontrols')
-makedepends=('unzip' 'wget' 'ca-certificates' 'qt5-tools' 'bzip2' 'xz' 'qt5-declarative' 'cmake' 'zip' 'python3' 'autoconf-archive' 'nasm')
+depends=('glibc>=2.33' 'gcc-libs>=10.2.0' systemd 'qt5-base>=5.15' qt5-svg qt5-x11extras qt5-graphicaleffects qt5-declarative qt5-quickcontrols2 qt5-quickcontrols)
+makedepends=(unzip zip tar cmake python3 autoconf-archive nasm qt5-tools qt5-declarative qt5-graphicaleffects 'qt5-base>=5.15')
 checkdepends=()
-optdepends=('sni-qt: fix systray issue on KDE and LXQt', 'nautilus-megasync: for integration with nautilus')
+optdepends=(
+  'xdg-desktop-portal: to follow the desktop’s color scheme (using dbus)'
+  'glib2: to follow the desktop’s color scheme (using gsettings)'
+  'nautilus-megasync: integration with nautilus'
+  'dolphin-megasync: integration with dolphin'
+  'thunar-megasync: integration with thunar'
+  'nemo-megasync: integration with nemo'
+)
 provides=("megasync=${pkgver}")
 conflicts=('megatools')
 replaces=()
@@ -67,8 +74,15 @@ build() {
 		vcpkg_root="-DVCPKG_ROOT=${megasrcdir}/vcpkg"
 	fi
 
-	cmake ${vcpkg_root} -DENABLE_DESKTOP_UPDATE_GEN=OFF -DENABLE_DESIGN_TOKENS_IMPORTER=OFF -DENABLE_DESKTOP_APP_TESTS=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -S "${megasrcdir}" -B "${megabuilddir}"
-	cmake --build "${megasrcdir}"/build_dir ${BUILD_PARALLEL_JOBS}
+	cmake ${vcpkg_root} \
+	      -DENABLE_DESKTOP_UPDATE_GEN=OFF \
+	      -DENABLE_DESIGN_TOKENS_IMPORTER=OFF \
+	      -DENABLE_DESKTOP_APP_TESTS=OFF \
+	      -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	      -S "${megasrcdir}" \
+	      -B "${megabuilddir}"
+	cmake --build "${megasrcdir}"/build_dir \
+	              ${BUILD_PARALLEL_JOBS}
 }
 
 check() {

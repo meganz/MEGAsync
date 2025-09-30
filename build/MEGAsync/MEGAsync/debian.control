@@ -2,31 +2,36 @@ Source: megasync
 Section: Tools
 Priority: normal
 Maintainer: MEGA Linux Team <linux@mega.co.nz>
-Build-Depends:  debhelper,
-                libqt4-dev | qtbase5-dev | qt-mega,
-                libcrypto++-dev,
-                libc-ares-dev,
-                libssl-dev,
-                libsqlite3-dev,
-                libraw-dev,
-                zlib1g-dev,
-                libudev-dev,
-                libicu-dev,
-                wget,
-                libtool,
+Build-Depends:  python3,
+                perl,
+                zip,
+                unzip,
+                nasm,
+                cmake,
+                debhelper,
                 dh-autoreconf,
-                cdbs,
-                libqt4-dbus | libqt5dbus5 | qt-mega,
+                libtool,
+                autoconf,
+                autoconf-archive,
+                pkg-config,
+                libudev-dev,
+                qtbase5-dev | qt-mega,
+                libqt5dbus5 | qt-mega,
                 qtdeclarative5-dev | qt-mega,
                 qttools5-dev | qt-mega,
-                autoconf, autoconf-archive, nasm, cmake
+                libqt5x11extras5 | qt-mega
 
 Package: megasync
 Architecture: any
-Depends: ${shlibs:Depends}, libc-ares2, apt-transport-https, gpg,
+Depends: ${shlibs:Depends},
          qml-module-qtquick-dialogs,
          qml-module-qtquick-controls,
          qml-module-qtquick-controls2
+Recommends: xdg-desktop-portal | libglib2.0-bin
+Suggests: nautilus-megasync,
+          dolphin-megasync,
+          thunar-megasync,
+          nemo-megasync
 Description: Get more control over your data
   - Sync your entire MEGA Cloud or selected folders with your computer so your MEGA stays up to date with the changes you make to your data on your computer and vice versa.
   - Back up your computer with MEGA to automatically copy data to MEGA in real time and eliminate the risk of accidental data loss.

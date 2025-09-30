@@ -19,7 +19,7 @@
     <key>LSUIElement</key>
     <string>1</string>
     <key>NSRequiresAquaSystemAppearance</key>
-    <true/>
+    <false/>
     <key>LSMinimumSystemVersion</key>
     <string>10.15</string>
     <key>NSHighResolutionCapable</key>
