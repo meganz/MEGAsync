@@ -32,10 +32,12 @@
    <string>Download from MEGA</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#label_2
+   <string notr="true">#DownloadFromMegaDialog
 {
-font-weight: 600;
-}</string>
+background-color: #ffffff; /*colorToken.page-background*/
+}
+
+</string>
   </property>
   <property name="TOKENIZED" stdset="0">
    <bool>true</bool>
@@ -96,6 +98,9 @@ font-weight: 600;
        </property>
        <property name="text">
         <string>Local folder:</string>
+       </property>
+       <property name="semibold" stdset="0">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
