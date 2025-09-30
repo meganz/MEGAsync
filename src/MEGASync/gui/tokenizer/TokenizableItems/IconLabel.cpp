@@ -26,9 +26,3 @@ void IconLabel::paintEvent(QPaintEvent* event)
 
     QToolButton::paintEvent(event);
 }
-
-void IconLabel::setIcon(const QIcon& icon)
-{
-    QToolButton::setIcon(icon);
-    forceUpdate();
-}

@@ -1,6 +1,7 @@
 #ifndef ICONLABEL_H
 #define ICONLABEL_H
 
+#include "IconProperty.h"
 #include "TokenizableItems.h"
 
 #include <QToolButton>
@@ -14,11 +15,8 @@ class IconLabel: public QToolButton, public TokenizableItem
     Q_OBJECT
 
 public:
-    Q_PROPERTY(QIcon icon WRITE setIcon)
-
     IconLabel(QWidget* parent);
-
-    void setIcon(const QIcon& icon);
+    DEFINE_ICON_PROPERTY()
 
 protected:
     void paintEvent(QPaintEvent* event) override;

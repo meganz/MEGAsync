@@ -10,11 +10,6 @@ TokenizableButton::TokenizableButton(QWidget* parent):
     setCursor(Qt::PointingHandCursor);
 }
 
-void TokenizableButton::forceUpdate()
-{
-    TokenizableItem::forceUpdate();
-}
-
 void TokenizableButton::paintEvent(QPaintEvent* event)
 {
     QStyleOptionButton option;
@@ -88,12 +83,6 @@ void TokenizableButton::forceMouseOver()
 void TokenizableButton::resetForcedState()
 {
     mForcedState = QStyle::State_None;
-}
-
-void TokenizableButton::setIcon(const QIcon& icon)
-{
-    QPushButton::setIcon(icon);
-    forceUpdate();
 }
 
 /*************** ONLY_ICON_BUTTON ***************/

@@ -99,8 +99,7 @@ void TokenizableItem::init(QAbstractButton* button)
     mBaseTokens.fillTokens(button);
     if (mBaseTokens.anyTokenHasChanged())
     {
-        mInit = false;
-        mCurrentOption = QStyleOptionButton();
+        forceUpdate();
     }
 
     if (!isInitialized() || themeHasChanged())

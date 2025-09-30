@@ -99,6 +99,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/IconLabel.h
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/TokenPropertyNames.h
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/TokenPropertySetter.h
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/IconProperty.h
     ${CMAKE_CURRENT_LIST_DIR}/backups/BackupCandidatesComponent.h
     ${CMAKE_CURRENT_LIST_DIR}/backups/BackupsController.h
     ${CMAKE_CURRENT_LIST_DIR}/backups/BackupCandidatesModel.h

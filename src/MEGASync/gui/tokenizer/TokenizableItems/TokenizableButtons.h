@@ -1,6 +1,7 @@
 #ifndef TOKENIZABLEBUTTONS_H
 #define TOKENIZABLEBUTTONS_H
 
+#include "IconProperty.h"
 #include "TokenizableItems.h"
 
 #include <QPushButton>
@@ -74,17 +75,13 @@ class TokenizableButton: public QPushButton, public TokenizableItem
     Q_OBJECT
 
 public:
-    Q_PROPERTY(QIcon icon WRITE setIcon)
-
     TokenizableButton(QWidget* parent = nullptr);
     
     void forcePress();
     void forceMouseOver();
     void resetForcedState();
 
-    void setIcon(const QIcon& icon);
-
-    void forceUpdate() override;
+    DEFINE_ICON_PROPERTY()
 
 protected:
     void paintEvent(QPaintEvent* event) override;

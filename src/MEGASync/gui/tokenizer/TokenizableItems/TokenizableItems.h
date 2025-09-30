@@ -106,7 +106,7 @@ public:
     TokenizableItem();
     ~TokenizableItem();
 
-    virtual void forceUpdate();
+    void forceUpdate();
 
 protected:
     bool stateHasChanged(const QStyleOption& option);
