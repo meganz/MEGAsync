@@ -25,7 +25,7 @@ pipeline {
                             env.BUILD_OPTIONS = sh(script: 'echo "$gitlabTriggerPhrase" | grep BUILD_OPTIONS | awk -F "BUILD_OPTIONS="  \'{print \$2}\' | cut -d"\\"" -f2 || :', returnStdout: true).trim()
                             env.DISTRIBUTION = sh(script: 'echo "$gitlabTriggerPhrase" | grep DISTRIBUTION | awk -F "DISTRIBUTION="  \'{print \$2}\' | cut -d\\" -f2', returnStdout: true).trim()
                             if (env.DISTRIBUTION == "")
-                                { env.DISTRIBUTION = "xUbuntu_22.04" }
+                                { env.DISTRIBUTION = "xUbuntu_24.04" }
                             println BUILD_OPTIONS
                             println DISTRIBUTION
                             println ARCHITECTURE
