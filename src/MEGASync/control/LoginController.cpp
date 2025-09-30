@@ -968,13 +968,13 @@ FastLoginController::FastLoginController(QObject *parent)
 
 bool FastLoginController::fastLogin()
 {
-    QString session = mPreferences->getSession();
-    if(session.size())
+    const auto session = mPreferences->getSession();
+    const bool hasSession = !session.isEmpty();
+    if (hasSession)
     {
         mMegaApi->fastLogin(session.toUtf8().constData());
-        return true;
     }
-    return false;
+    return hasSession;
 }
 
 void FastLoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e)

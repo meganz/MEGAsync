@@ -83,8 +83,8 @@ void ContextMenuData::processPath(const std::wstring& path)
         }
     }
 
-    int state = MegaInterface::getPathState(longPath, false);
-    mSelectedPaths.push_back(longPath);
+    const auto state = MegaInterface::getPathState(longPath, false);
+    mSelectedPaths.emplace_back(longPath);
     mPathStates.push_back(state);
     mPathTypes.push_back(type);
 
@@ -120,7 +120,7 @@ void ContextMenuData::processPath(const std::wstring& path)
     }
 
     if ((type == MegaInterface::TYPE_FOLDER || type == MegaInterface::TYPE_NOTFOUND) &&
-        !mInLeftPane.size())
+        mInLeftPane.empty())
     {
         if (CheckLeftPaneIcon(const_cast<wchar_t*>(longPath), false))
         {
@@ -172,7 +172,7 @@ bool ContextMenuData::canRequestGetLinks() const
 // Only if the item are in the left pane
 bool ContextMenuData::canRemoveFromLeftPane() const
 {
-    return mInLeftPane.size() && mSelectedPaths.size() == 1;
+    return !mInLeftPane.empty() && mSelectedPaths.size() == 1;
 }
 
 // Only for synced folders
@@ -221,14 +221,14 @@ bool ContextMenuData::isUnsynced(int state)
             state == MegaInterface::FILE_NOTFOUND_SYNCABLE);
 }
 
-bool ContextMenuData::isMEGASyncOpen() const
+bool ContextMenuData::isMEGASyncOpen()
 {
     return MegaInterface::isMEGASyncOpen();
 }
 
 void ContextMenuData::requestUpload()
 {
-    for (auto fileIndex = 0u; fileIndex < mSelectedPaths.size(); ++fileIndex)
+    for (auto fileIndex = 0U; fileIndex < mSelectedPaths.size(); ++fileIndex)
     {
         if (isUnsynced(mPathStates[fileIndex]))
         {
@@ -241,7 +241,7 @@ void ContextMenuData::requestUpload()
 
 void ContextMenuData::requestGetLinks()
 {
-    for (auto fileIndex = 0u; fileIndex < mSelectedPaths.size(); ++fileIndex)
+    for (auto fileIndex = 0U; fileIndex < mSelectedPaths.size(); ++fileIndex)
     {
         if (isSynced(mPathTypes[fileIndex], mPathStates[fileIndex]))
         {
@@ -263,7 +263,7 @@ void ContextMenuData::removeFromLeftPane()
 
 void ContextMenuData::viewOnMEGA()
 {
-    if (mSelectedPaths.size())
+    if (!mSelectedPaths.empty())
     {
         MegaInterface::viewOnMEGA(mSelectedPaths[0].data());
         MegaInterface::endRequest();
@@ -272,7 +272,7 @@ void ContextMenuData::viewOnMEGA()
 
 void ContextMenuData::viewVersions()
 {
-    if (mSelectedPaths.size())
+    if (!mSelectedPaths.empty())
     {
         MegaInterface::viewVersions(mSelectedPaths[0].data());
         MegaInterface::endRequest();
@@ -281,7 +281,7 @@ void ContextMenuData::viewVersions()
 
 void ContextMenuData::requestSync(MegaInterface::SyncType type)
 {
-    if (mSelectedPaths.size() > 0)
+    if (!mSelectedPaths.empty())
     {
         MegaInterface::sync(mSelectedPaths, type);
         MegaInterface::endRequest();

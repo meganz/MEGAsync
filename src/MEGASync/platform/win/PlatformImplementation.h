@@ -58,6 +58,9 @@ public:
     void addSyncToLeftPane(QString syncPath, QString syncName, QString uuid) override;
     void removeSyncFromLeftPane(QString syncPath) override;
     void removeAllSyncsFromLeftPane() override;
+
+    void disableContextMenu(bool isDisabled) override;
+
     bool makePubliclyReadable(const QString &fileName) override;
 
     void streamWithApp(const QString& app, const QString& url) override;

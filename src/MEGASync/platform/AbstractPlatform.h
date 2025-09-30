@@ -82,6 +82,9 @@ public:
     virtual void addSyncToLeftPane(QString syncPath, QString syncName, QString uuid);
     virtual void removeSyncFromLeftPane(QString syncPath);
     virtual void removeAllSyncsFromLeftPane();
+
+    virtual void disableContextMenu(bool isDisabled) {}
+
     virtual bool makePubliclyReadable(const QString& fileName);
 
     virtual void addFileManagerExtensionToSystem() {}

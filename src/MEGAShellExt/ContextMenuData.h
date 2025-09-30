@@ -20,7 +20,7 @@ public:
     bool canViewOnMEGA() const;
     bool canViewVersions() const;
     bool canSync(MegaInterface::SyncType type) const;
-    bool isMEGASyncOpen() const;
+    static bool isMEGASyncOpen();
 
     void requestUpload();
     void requestGetLinks();
@@ -37,8 +37,8 @@ public:
     bool hasAnyOptionAvailable() const;
 
 protected:
-    bool isSynced(int type, int state);
-    bool isUnsynced(int state);
+    static bool isSynced(int type, int state);
+    static bool isUnsynced(int state);
     void processPath(const std::wstring& path);
 
     std::wstring mInLeftPane;

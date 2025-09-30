@@ -807,7 +807,7 @@ margin-bottom: 3px;
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="cFinderIcons">
+             <widget class="QCheckBox" name="cDesktopIntegration">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>

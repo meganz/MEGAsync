@@ -128,7 +128,7 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mUi->cAutoUpdate->hide();
 #endif
 
-    mUi->cFinderIcons->hide();
+    mUi->cDesktopIntegration->hide();
 #ifdef Q_OS_WINDOWS
     typedef LONG MEGANTSTATUS;
 
@@ -161,7 +161,7 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
             RtlGetVersion(&version);
             if (version.dwMajorVersion >= 10)
             {
-                mUi->cFinderIcons->show();
+                mUi->cDesktopIntegration->show();
             }
         }
     }
@@ -433,7 +433,7 @@ void SettingsDialog::loadSettings()
     updateDownloadFolder();
 
 #ifdef Q_OS_WINDOWS
-    mUi->cFinderIcons->setChecked(!mPreferences->leftPaneIconsDisabled());
+    mUi->cDesktopIntegration->setChecked(!mPreferences->leftPaneIconsDisabled());
 #endif
 
     updateNetworkTab();
@@ -826,11 +826,15 @@ void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
 }
 
 #ifdef Q_OS_WINDOWS
-void SettingsDialog::on_cFinderIcons_toggled(bool checked)
+// This settings toggles 2 integrations:
+// 1. Shortcut to synced folders in the explorer (left pane)
+// 2. Shell extension's context menu
+void SettingsDialog::on_cDesktopIntegration_toggled(bool checked)
 {
     if (mLoadingSettings)
         return;
 
+    // 1. Toggle left pane sync shortcuts in the explorer
     if (checked)
     {
         for (auto syncSetting: mModel->getAllSyncSettings())
@@ -845,6 +849,11 @@ void SettingsDialog::on_cFinderIcons_toggled(bool checked)
         Platform::getInstance()->removeAllSyncsFromLeftPane();
     }
     mPreferences->disableLeftPaneIcons(!checked);
+
+    // 2. Toggle shell extension's context menu
+
+    Platform::getInstance()->disableContextMenu(!checked);
+    mPreferences->disableContextMenu(!checked);
 }
 #endif
 
