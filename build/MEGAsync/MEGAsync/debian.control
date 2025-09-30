@@ -20,6 +20,7 @@ Build-Depends:  python3,
                 qtdeclarative5-dev | qt-mega,
                 qttools5-dev | qt-mega,
                 libqt5x11extras5 | qt-mega
+
 Package: megasync
 Architecture: any
 Depends: ${shlibs:Depends},
