@@ -136,7 +136,7 @@ void TokenizableItem::init(QAbstractButton* button)
 
     if (!isInitialized())
     {
-        baseTokens.fillTokens(button);
+        mBaseTokens.fillTokens(button);
 
         mInit = true;
     }
