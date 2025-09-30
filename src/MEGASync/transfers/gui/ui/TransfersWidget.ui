@@ -36,56 +36,10 @@
 {
 background-color: transparent;
 }
-#wTableHeader QPushButton
-{
-    text-align: left;
-    border: none;
-    margin-right: 0;
-    padding: 0;
-}
 
 TransferWidgetHeaderItem  QLabel
 {
    text-align: left;
-   border: none;
-   margin-left: 0;
-   padding: 0;
-}
-
-
-QMenu
-{
-    border: 1px solid;
-    border-color: #D8D9DB;/*colorToken.border-disabled*/
-    border-radius: 8px;
-    background: #ffffff;/*colorToken.page-background*/
-    padding: 4px;
-}
-
-QMenu::item
-{
-  font-size: 14px;
-  line-height: 20px;
-  height: 40px;
-  color: #303233;/*colorToken.text-primary*/
-  background: transparent;
-}
-
-QMenu::item:selected
-{
-     background: #F7F7F7;/*colorToken.surface-1*/
-
-}
-
-QMenu::separator
-{
-    height: 1px;
-    background-color: #EFEFF0;/*colorToken.surface-2*/
-}
-
-QMenu::item:disabled
-{
-    color: #C1C2C4;/*colorToken.text-disabled*/
 }
 
 
@@ -414,7 +368,7 @@ qproperty-icon: url(:/eraser_small_thin_solid_secondary);
               <number>0</number>
              </property>
              <item>
-              <widget class="QPushButton" name="tPauseResumeVisible">
+              <widget class="IconOnlyButton" name="tPauseResumeVisible">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -501,7 +455,7 @@ qproperty-icon: url(:/eraser_small_thin_solid_secondary);
               <number>0</number>
              </property>
              <item>
-              <widget class="QPushButton" name="tCancelClearVisible">
+              <widget class="IconOnlyButton" name="tCancelClearVisible">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -541,6 +495,9 @@ qproperty-icon: url(:/eraser_small_thin_solid_secondary);
                </property>
                <property name="checkable">
                 <bool>false</bool>
+               </property>
+               <property name="type" stdset="0">
+                <string notr="true">ghost</string>
                </property>
               </widget>
              </item>
@@ -659,6 +616,11 @@ qproperty-icon: url(:/eraser_small_thin_solid_secondary);
    <extends>QWidget</extends>
    <header>TransferWidgetHeaderItem.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>IconOnlyButton</class>
+   <extends>QPushButton</extends>
+   <header>TokenizableItems/TokenizableButtons.h</header>
   </customwidget>
  </customwidgets>
  <resources>

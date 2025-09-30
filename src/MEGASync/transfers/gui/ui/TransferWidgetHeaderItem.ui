@@ -120,7 +120,7 @@ qproperty-icon: url(:/chevron_down_small_thin_outline_secondary);
     </widget>
    </item>
    <item>
-    <widget class="QToolButton" name="chevron">
+    <widget class="IconLabel" name="chevron">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -141,9 +141,6 @@ qproperty-icon: url(:/chevron_down_small_thin_outline_secondary);
      </property>
      <property name="text">
       <string notr="true"/>
-     </property>
-     <property name="class" stdset="0">
-      <string notr="true">icon-label</string>
      </property>
     </widget>
    </item>
@@ -174,6 +171,13 @@ qproperty-icon: url(:/chevron_down_small_thin_outline_secondary);
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>TokenizableItems/IconLabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
