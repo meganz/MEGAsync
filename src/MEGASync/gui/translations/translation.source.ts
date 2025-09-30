@@ -8712,14 +8712,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <name>ThemeManager</name>
     <message>
         <source>Dark</source>
+        <translatorcomment>Name of the dark color scheme, it can be selected by the user to customize the interface colors. SNC-5799</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Light</source>
+        <translatorcomment>Name of the light color scheme, it can be selected by the user to customize the interface colors. SNC-5799</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>System default</source>
+        <translatorcomment>The user request the aplication color scheme to follow the operating system active theme. SNC-5799</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
