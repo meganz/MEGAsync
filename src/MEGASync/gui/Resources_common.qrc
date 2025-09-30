@@ -1291,5 +1291,8 @@
         <file alias="clock-rotate_small_thin_outline">images/themed/tokenizable/clock-rotate_small_thin_outline.svg</file>
         <file alias="copy-02_small_thin_outline">images/themed/tokenizable/copy-02_small_thin_outline.svg</file>
         <file alias="pen-2_small_thin_outline">images/themed/tokenizable/pen-2_small_thin_outline.svg</file>
+        <file alias="clipboard_small_thin_outline">images/themed/tokenizable/clipboard_small_thin_outline.svg</file>
+        <file alias="log-out-02_small_thin_outline">images/themed/tokenizable/log-out-02_small_thin_outline.svg</file>
+        <file alias="sync-01_small_thin_outline">images/themed/tokenizable/sync-01_small_thin_outline.svg</file>
     </qresource>
 </RCC>

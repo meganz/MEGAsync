@@ -429,7 +429,7 @@ void NodeSelectorTreeView::addPasteMenuAction(QMap<int, QAction*>& actions,
         {
             auto pasteAction(new MegaMenuItemAction(
                 tr("Paste"),
-                Utilities::getPixmapName(QLatin1String(""),
+                Utilities::getPixmapName(QLatin1String("clipboard"),
                                          Utilities::AttributeType::SMALL |
                                              Utilities::AttributeType::THIN |
                                              Utilities::AttributeType::OUTLINE,
@@ -530,7 +530,7 @@ void NodeSelectorTreeView::addSyncMenuActions(QMap<int, QAction*>& actions,
     {
         auto syncAction(
             new MegaMenuItemAction(tr("Sync"),
-                                   Utilities::getPixmapName(QLatin1String(""),
+                                   Utilities::getPixmapName(QLatin1String("sync-01"),
                                                             Utilities::AttributeType::SMALL |
                                                                 Utilities::AttributeType::THIN |
                                                                 Utilities::AttributeType::OUTLINE,
@@ -550,7 +550,7 @@ void NodeSelectorTreeView::addSyncMenuActions(QMap<int, QAction*>& actions,
     {
         auto unsyncAction(
             new MegaMenuItemAction(tr("Stop syncing"),
-                                   Utilities::getPixmapName(QLatin1String(""),
+                                   Utilities::getPixmapName(QLatin1String("x"),
                                                             Utilities::AttributeType::SMALL |
                                                                 Utilities::AttributeType::THIN |
                                                                 Utilities::AttributeType::OUTLINE,
@@ -614,7 +614,7 @@ void NodeSelectorTreeView::addLeaveInshare(QMap<int, QAction*>& actions,
 {
     auto leaveShareAction(new MegaMenuItemAction(
         tr("Leave folder"),
-        Utilities::getPixmapName(QLatin1String(""),
+        Utilities::getPixmapName(QLatin1String("log-out-02"),
                                  Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
                                      Utilities::AttributeType::OUTLINE,
                                  false)));
