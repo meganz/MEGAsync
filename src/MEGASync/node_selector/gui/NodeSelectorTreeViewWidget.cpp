@@ -1944,16 +1944,20 @@ QMap<uint, QPushButton*> CloudDriveType::addCustomButtons(NodeSelectorTreeViewWi
         auto uploadButton =
             createCustomButton(QLatin1String("ghost"),
                                getCustomButtonText(ButtonId::Upload),
-                               Utilities::getPixmapName(QLatin1String("upload_small_thin_outline"),
-                                                        Utilities::AttributeType::NONE));
+                               Utilities::getPixmapName(QLatin1String("upload"),
+                                                        Utilities::AttributeType::SMALL |
+                                                            Utilities::AttributeType::THIN |
+                                                            Utilities::AttributeType::OUTLINE));
 
         buttons.insert(ButtonId::Upload, uploadButton);
 
         auto clearRubbishButton =
             createCustomButton(QLatin1String("ghost"),
                                getCustomButtonText(ButtonId::ClearRubbish),
-                               Utilities::getPixmapName(QLatin1String("x_small_thin_outline"),
-                                                        Utilities::AttributeType::NONE));
+                               Utilities::getPixmapName(QLatin1String("x"),
+                                                        Utilities::AttributeType::SMALL |
+                                                            Utilities::AttributeType::THIN |
+                                                            Utilities::AttributeType::OUTLINE));
         buttons.insert(ButtonId::ClearRubbish, clearRubbishButton);
         clearRubbishButton->hide();
     }
