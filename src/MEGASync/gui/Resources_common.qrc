@@ -1294,5 +1294,12 @@
         <file alias="clipboard_small_thin_outline">images/themed/tokenizable/clipboard_small_thin_outline.svg</file>
         <file alias="log-out-02_small_thin_outline">images/themed/tokenizable/log-out-02_small_thin_outline.svg</file>
         <file alias="sync-01_small_thin_outline">images/themed/tokenizable/sync-01_small_thin_outline.svg</file>
+        <file alias="folder_small_thin_outline">images/themed/tokenizable/folder_small_thin_outline.svg</file>
+        <file alias="manage_small_thin_outline">images/themed/tokenizable/manage_small_thin_outline.svg</file>
+        <file alias="pause_small_thin_outline">images/themed/tokenizable/pause_small_thin_outline.svg</file>
+        <file alias="play_small_thin_outline">images/themed/tokenizable/play_small_thin_outline.svg</file>
+        <file alias="reboot_small_thin_outline">images/themed/tokenizable/reboot_small_thin_outline.svg</file>
+        <file alias="remove_small_thin_outline">images/themed/tokenizable/remove_small_thin_outline.svg</file>
+        <file alias="rescan_small_thin_outline">images/themed/tokenizable/rescan_small_thin_outline.svg</file>
     </qresource>
 </RCC>

@@ -178,13 +178,6 @@ void SyncTableView::showContextMenu(const QPoint& pos, const QModelIndex index)
     {
         showLocalAction =
             new MegaMenuItemAction(PlatformStrings::fileExplorer(),
-                                   QLatin1String("://images/sync_context_menu/folder-small.png"),
-                                   0,
-                                   menu);
-
-        /*
-        showLocalAction =
-            new MegaMenuItemAction(PlatformStrings::fileExplorer(),
                                    Utilities::getPixmapName(QLatin1String("folder"),
                                                             Utilities::AttributeType::SMALL |
                                                                 Utilities::AttributeType::THIN |
@@ -192,7 +185,6 @@ void SyncTableView::showContextMenu(const QPoint& pos, const QModelIndex index)
                                                             false),
                                    0,
                                    menu);
-        */
 
         connect(showLocalAction,
                 &MegaMenuItemAction::triggered,
@@ -203,14 +195,6 @@ void SyncTableView::showContextMenu(const QPoint& pos, const QModelIndex index)
                 });
     }
 
-    // Show in Mega web action
-    auto showRemoteAction(
-        new MegaMenuItemAction(QCoreApplication::translate("SyncTableView", "Open in MEGA"),
-                               QLatin1String("://images/sync_context_menu/MEGA-small.png"),
-                               0,
-                               menu));
-
-    /*
     auto showRemoteAction(new MegaMenuItemAction(
         QCoreApplication::translate("SyncTableView", "Open in MEGA"),
         Utilities::getPixmapName(QLatin1String("MEGA"),
@@ -219,7 +203,6 @@ void SyncTableView::showContextMenu(const QPoint& pos, const QModelIndex index)
                                  false),
         0,
         menu));
-    */
 
     connect(showRemoteAction,
             &MegaMenuItemAction::triggered,
@@ -229,14 +212,6 @@ void SyncTableView::showContextMenu(const QPoint& pos, const QModelIndex index)
                 Utilities::openInMega(sync->getMegaHandle());
             });
 
-    // Remove Sync action
-    auto delAction(
-        new MegaMenuItemAction(getRemoveActionString(),
-                               QLatin1String("://images/sync_context_menu/minus-circle.png"),
-                               0,
-                               menu));
-
-    /*
     auto delAction = new MegaMenuItemAction(
         getRemoveActionString(),
         Utilities::getPixmapName(QLatin1String("remove"),
@@ -245,7 +220,6 @@ void SyncTableView::showContextMenu(const QPoint& pos, const QModelIndex index)
                                  false),
         0,
         menu);
-*/
 
     connect(delAction,
             &MegaMenuItemAction::triggered,
@@ -289,13 +263,6 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
     {
         auto syncRun(
             new MegaMenuItemAction(QCoreApplication::translate("SyncTableView", "Run"),
-                                   QLatin1String("://images/sync_context_menu/play-circle.png"),
-                                   0,
-                                   menu));
-
-        /*
-        auto syncRun(
-            new MegaMenuItemAction(QCoreApplication::translate("SyncTableView", "Run"),
                                    Utilities::getPixmapName(QLatin1String("play"),
                                                             Utilities::AttributeType::SMALL |
                                                                 Utilities::AttributeType::THIN |
@@ -303,7 +270,6 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
                                                             false),
                                    0,
                                    menu));
-        */
 
         connect(syncRun,
                 &MegaMenuItemAction::triggered,
@@ -324,13 +290,6 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
         if (sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_DISABLED &&
             sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_SUSPENDED)
         {
-            auto syncSuspend(
-                new MegaMenuItemAction(QCoreApplication::translate("SyncTableView", "Pause"),
-                                       QLatin1String("://images/sync_states/pause-circle.png"),
-                                       0,
-                                       menu));
-
-            /*
             auto syncSuspend(new MegaMenuItemAction(
                 QCoreApplication::translate("SyncTableView", "Pause"),
                 Utilities::getPixmapName(QLatin1String("pause"),
@@ -340,7 +299,6 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
                                          false),
                 0,
                 menu));
-            */
 
             connect(syncSuspend,
                     &MegaMenuItemAction::triggered,
@@ -362,13 +320,6 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
     {
         auto addExclusions(new MegaMenuItemAction(
             QCoreApplication::translate("ExclusionsStrings", "Manage exclusions"),
-            QLatin1String("://images/sync_context_menu/slash-circle.png"),
-            0,
-            menu));
-
-        /*
-        auto addExclusions(new MegaMenuItemAction(
-            QCoreApplication::translate("ExclusionsStrings", "Manage exclusions"),
             Utilities::getPixmapName(QLatin1String("manage"),
                                      Utilities::AttributeType::SMALL |
                                          Utilities::AttributeType::THIN |
@@ -376,7 +327,6 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
                                      false),
             0,
             menu));
-        */
 
         connect(addExclusions,
                 &MegaMenuItemAction::triggered,
@@ -394,13 +344,6 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
     {
         auto rescanDeep(
             new MegaMenuItemAction(QCoreApplication::translate("SyncTableView", "Rescan"),
-                                   QLatin1String("://images/sync_context_menu/search-small.png"),
-                                   0,
-                                   menu));
-
-        /*
-        auto rescanDeep(
-            new MegaMenuItemAction(QCoreApplication::translate("SyncTableView", "Rescan"),
                                    Utilities::getPixmapName(QLatin1String("rescan"),
                                                             Utilities::AttributeType::SMALL |
                                                                 Utilities::AttributeType::THIN |
@@ -408,7 +351,6 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
                                                             false),
                                    0,
                                    menu));
-        */
 
         connect(rescanDeep,
                 &MegaMenuItemAction::triggered,
@@ -418,14 +360,6 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
                     emit signalRescanDeep(sync);
                 });
 
-        auto reboot(new MegaMenuItemAction(sync->getType() == mega::MegaSync::TYPE_TWOWAY ?
-                                               tr("Reboot sync") :
-                                               tr("Reboot backup"),
-                                           QLatin1String("://images/qml/power.svg"),
-                                           0,
-                                           menu));
-
-        /*
         auto reboot(new MegaMenuItemAction(
             sync->getType() == mega::MegaSync::TYPE_TWOWAY ? tr("Reboot sync") :
                                                              tr("Reboot backup"),
@@ -436,7 +370,6 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
                                      false),
             0,
             menu));
-        */
 
         connect(reboot,
                 &MegaMenuItemAction::triggered,
