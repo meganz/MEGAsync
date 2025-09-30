@@ -13,6 +13,8 @@ TokenizableButton::TokenizableButton(QWidget* parent):
 void TokenizableButton::clear()
 {
     mButtonTokens = ButtonTokens();
+
+    TokenizableItem::clear();
 }
 
 void TokenizableButton::paintEvent(QPaintEvent* event)
@@ -62,9 +64,9 @@ void TokenizableButton::init(QAbstractButton*)
     {
         // If no dynamic properties were added, add the default button properties
         ButtonTokensByType::setDefaultTokens(this);
-
-        mButtonTokens.fillTokens(this);
     }
+
+    mButtonTokens.fillTokens(this);
 
     TokenizableItem::init(this);
 }
