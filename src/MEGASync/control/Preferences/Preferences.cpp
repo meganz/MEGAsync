@@ -2626,6 +2626,7 @@ void Preferences::setThemeType(ThemeType theme)
     if (theme != currentValue)
     {
         setValueConcurrently(themeKey, static_cast<int>(theme));
+        sync();
     }
 }
 

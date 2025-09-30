@@ -60,6 +60,10 @@ void ThemeManager::init()
 
 QStringList ThemeManager::themesAvailable() const
 {
+    // Note: the order here is important and should follow Preferences::ThemeType
+    // "System default"
+    // "Dark"
+    // "Light"
     return {tr("System default"), tr("Dark"), tr("Light")};
 }
 

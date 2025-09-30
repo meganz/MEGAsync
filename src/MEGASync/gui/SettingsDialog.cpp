@@ -401,14 +401,8 @@ void SettingsDialog::loadSettings()
     mUi->cLanguage->addItems(languages);
     mUi->cLanguage->setCurrentIndex(currentIndex);
 
-    mUi->cbTheme->clear();
-    mUi->cbTheme->addItems(ThemeManager::instance()->themesAvailable());
-
-    auto themeIndex = static_cast<int>(mPreferences->getThemeType());
-    if (themeIndex < mUi->cbTheme->count())
-    {
-        mUi->cbTheme->setCurrentIndex(themeIndex);
-    }
+    // Color theme
+    initColorTheme();
 
     //Account
     mUi->lEmail->setText(mPreferences->email());
@@ -525,7 +519,7 @@ bool SettingsDialog::event(QEvent* event)
         updateUploadFolder();
         updateDownloadFolder();
 
-        ThemeManager::instance()->themesAvailable();
+        initColorTheme();
     }
 
     return QDialog::event(event);
@@ -1708,6 +1702,33 @@ void SettingsDialog::startRequestTaskbarPinningTimer()
                 &SettingsDialog::onRequestTaskbarPinningTimeout);
 
         mTaskbarPinningRequestTimer->start(500ms);
+    }
+}
+
+void SettingsDialog::initColorTheme()
+{
+    const auto themes = ThemeManager::instance()->themesAvailable();
+
+    // Init
+    if (mUi->cbTheme->count() == 0)
+    {
+        mUi->cbTheme->addItems(themes);
+        if (mPreferences)
+        {
+            auto themeIndex = static_cast<int>(mPreferences->getThemeType());
+            if (themeIndex < mUi->cbTheme->count())
+            {
+                mUi->cbTheme->setCurrentIndex(themeIndex);
+            }
+        }
+    }
+    // Re-translate
+    else if (mUi->cbTheme->count() == themes.size())
+    {
+        for (int i = 0; i < themes.size(); ++i)
+        {
+            mUi->cbTheme->setItemText(i, themes[i]);
+        }
     }
 }
 

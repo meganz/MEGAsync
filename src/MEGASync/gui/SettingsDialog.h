@@ -152,6 +152,7 @@ private:
     void setOverlayCheckboxEnabled(const bool enabled, const bool checked);
     void setProgressState(const QString& stateName);
     void startRequestTaskbarPinningTimer();
+    void initColorTheme();
 
     Ui::SettingsDialog* mUi;
     MegaApplication* mApp;
