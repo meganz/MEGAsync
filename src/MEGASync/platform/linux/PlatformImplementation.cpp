@@ -9,6 +9,7 @@
 #include <QProgressBar>
 #include <QScreen>
 #include <QSet>
+#include <QVariantMap>
 #include <QX11Info>
 #include <sys/statvfs.h>
 
@@ -954,17 +955,13 @@ void PlatformImplementation::setupSettingsPortalMonitor()
     const QString DBUS_SERVICE = QLatin1String("org.freedesktop.portal.Desktop");
     const QString DBUS_PATH = QLatin1String("/org/freedesktop/portal/desktop");
     const QString DBUS_CONNECTION = QLatin1String("org.freedesktop.portal.Settings");
+    const QString DBUS_NAME = QLatin1String("SettingChanged");
 
-    // Setup portal monitoring
-    mSettingsPortal = new QDBusInterface(DBUS_SERVICE, DBUS_PATH, DBUS_CONNECTION);
-
-    mIsSettingsPortalActive = QDBusConnection::sessionBus().interface()->isServiceRegistered(
-        QStringLiteral("org.freedesktop.portal.Desktop"));
+    mIsSettingsPortalActive =
+        QDBusConnection::sessionBus().interface()->isServiceRegistered(DBUS_SERVICE);
 
     if (mIsSettingsPortalActive)
     {
-        const QString DBUS_NAME = QLatin1String("SettingChanged");
-
         mIsSettingsPortalActive = QDBusConnection::sessionBus().connect(
             DBUS_SERVICE,
             DBUS_PATH,
@@ -975,6 +972,8 @@ void PlatformImplementation::setupSettingsPortalMonitor()
 
         if (mIsSettingsPortalActive)
         {
+            // Setup portal monitoring
+            mSettingsPortal = new QDBusInterface(DBUS_SERVICE, DBUS_PATH, DBUS_CONNECTION);
             mCurrentPortalTheme = readSettingsPortal();
         }
     }
@@ -1003,9 +1002,9 @@ Preferences::ThemeAppeareance PlatformImplementation::themeFromDBusVariant(const
                 break;
             }
             case PORTAL_LIGHT:
-            // Fallback
+                [[fallthrough]];
             case PORTAL_NO_PREFERENCE:
-            // Fallback
+                [[fallthrough]];
             default:
             {
                 // Default to light theme
@@ -1019,10 +1018,13 @@ Preferences::ThemeAppeareance PlatformImplementation::themeFromDBusVariant(const
 
 Preferences::ThemeAppeareance PlatformImplementation::readSettingsPortal()
 {
+    const QString DBUS_NS = QLatin1String("org.freedesktop.appearance");
+    const QString DBUS_KEY = QLatin1String("color-scheme");
+
     // Prefer ReadOne(ns, key); fall back to Read(ns, [keys])
-    QDBusMessage dbusMsg = mSettingsPortal->call(QStringLiteral("ReadOne"),
-                                                 QStringLiteral("org.freedesktop.appearance"),
-                                                 QStringLiteral("color-scheme"));
+    QString DBUS_CMD = QLatin1String("ReadOne");
+    QDBusMessage dbusMsg = mSettingsPortal->call(DBUS_CMD, DBUS_NS, DBUS_KEY);
+
     QVariant var;
     if (dbusMsg.type() == QDBusMessage::ReplyMessage && !dbusMsg.arguments().isEmpty())
     {
@@ -1030,15 +1032,15 @@ Preferences::ThemeAppeareance PlatformImplementation::readSettingsPortal()
     }
     else
     {
-        dbusMsg = mSettingsPortal->call(QStringLiteral("Read"),
-                                        QStringLiteral("org.freedesktop.appearance"),
-                                        QStringList{QStringLiteral("color-scheme")});
+        DBUS_CMD = QLatin1String("Read");
+        dbusMsg = mSettingsPortal->call(DBUS_CMD, DBUS_NS, QStringList{DBUS_KEY});
+
         if (dbusMsg.type() == QDBusMessage::ReplyMessage && !dbusMsg.arguments().isEmpty())
         {
             var = dbusMsg.arguments().at(0);
             if (var.canConvert<QVariantMap>())
             {
-                var = var.toMap().value(QStringLiteral("color-scheme"));
+                var = var.toMap().value(DBUS_KEY);
             }
         }
     }
@@ -1056,7 +1058,10 @@ void PlatformImplementation::onSettingsPortalChanged(const QString& ns,
                                                      const QString& key,
                                                      const QDBusVariant& value)
 {
-    if (ns == QLatin1String("org.freedesktop.appearance") && key == QLatin1String("color-scheme"))
+    const QString DBUS_NS = QLatin1String("org.freedesktop.appearance");
+    const QString DBUS_KEY = QLatin1String("color-scheme");
+
+    if (ns == DBUS_NS && key == DBUS_KEY)
     {
         mCurrentPortalTheme = themeFromDBusVariant(value);
         maybeEmitTheme();

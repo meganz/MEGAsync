@@ -75,11 +75,6 @@ void ThemeManager::setTheme(Preferences::ThemeType theme)
 
         if (theme == Preferences::ThemeType::SYSTEM_DEFAULT)
         {
-            connect(Platform::getInstance(),
-                    &AbstractPlatform::themeChanged,
-                    this,
-                    &ThemeManager::onSystemAppearanceChanged,
-                    Qt::UniqueConnection);
             applyTheme(Platform::getInstance()->getCurrentThemeAppearance());
         }
         else
@@ -93,7 +88,7 @@ void ThemeManager::setTheme(Preferences::ThemeType theme)
 
 void ThemeManager::onSystemAppearanceChanged(Preferences::ThemeAppeareance app)
 {
-    if (mCurrentColorScheme != app && mCurrentTheme == Preferences::ThemeType::SYSTEM_DEFAULT)
+    if (mCurrentTheme == Preferences::ThemeType::SYSTEM_DEFAULT && mCurrentColorScheme != app)
     {
         applyTheme(app);
     }
