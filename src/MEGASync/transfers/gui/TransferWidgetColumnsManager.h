@@ -11,6 +11,8 @@
 
 class TransferWidgetColumnsManager: public QObject
 {
+    Q_OBJECT
+
 public:
     enum class Columns
     {
@@ -26,6 +28,7 @@ public:
     TransferWidgetColumnsManager();
 
     using ColumnsWidget = QMap<Columns, QWidget*>;
+    void addHeaderWidget(const ColumnsWidget& info);
     void addColumnsWidget(QWidget* widget, const ColumnsWidget& info);
 
     struct ColumnsInfo
@@ -40,11 +43,17 @@ public:
 
     int getCurrentTab() const;
 
+protected:
+    bool eventFilter(QObject* watched, QEvent* event) override;
+
 private slots:
     void removeColumnsWidget(QObject* widget);
 
 private:
-    QMap<QWidget*, ColumnsWidget> mColumnsByWidget;
+    void applyProperty(QObject* object, std::function<void(QWidget*, QWidget*)> func);
+
+    ColumnsWidget mHeaderColumns;
+    QMap<QWidget*, ColumnsWidget> mDelegateColumns;
     ColumnsInfo mColumnsVisibility;
 };
 

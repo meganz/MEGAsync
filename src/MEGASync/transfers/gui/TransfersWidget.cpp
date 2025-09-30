@@ -117,7 +117,7 @@ void TransfersWidget::configureTransferView()
     info.insert(TransferWidgetColumnsManager::Columns::CLEAR_CANCEL, ui->wCancelClear);
     info.insert(TransferWidgetColumnsManager::Columns::PAUSE_RESUME, ui->wPauseResume);
 
-    mColumnManager->addColumnsWidget(this, info);
+    mColumnManager->addHeaderWidget(info);
 }
 
 TransfersModel* TransfersWidget::getModel()

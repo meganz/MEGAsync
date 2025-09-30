@@ -3,8 +3,9 @@
 
 #include "TransfersModel.h"
 
-#include <QStyledItemDelegate>
+#include <QAbstractButton>
 #include <QAbstractItemView>
+#include <QStyledItemDelegate>
 
 class TransfersSortFilterProxyBaseModel;
 class TransferBaseDelegateWidget;
@@ -33,6 +34,7 @@ protected slots:
 private:
     TransferBaseDelegateWidget* getTransferItemWidget(const QModelIndex& index,
                                                       const QSize& size) const;
+    QAbstractButton* isButton(TransferBaseDelegateWidget* row, const QPoint& pos);
 
     TransfersSortFilterProxyBaseModel* mProxyModel;
     TransfersModel* mSourceModel;

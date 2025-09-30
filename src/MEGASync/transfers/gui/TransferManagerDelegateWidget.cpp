@@ -13,6 +13,7 @@
 #include <QPainterPath>
 
 constexpr uint PB_PRECISION = 1000;
+const char* ACTION_BUTTONS_VISIBILITY = "action_visible";
 
 using namespace mega;
 
@@ -289,7 +290,7 @@ void TransferManagerDelegateWidget::updateTransferState()
             mUi->tPauseResumeTransfer->setIcon(icon);
             mUi->tPauseResumeTransfer->setToolTip(pauseResumeTooltip);
         }
-        mUi->tPauseResumeTransfer->setVisible(showTPauseResume);
+        mUi->tPauseResumeTransfer->setProperty(ACTION_BUTTONS_VISIBILITY, showTPauseResume);
 
         // Cancel/Clear Button
         if ((getData()->mType & TransferData::TRANSFER_SYNC)
@@ -301,7 +302,7 @@ void TransferManagerDelegateWidget::updateTransferState()
         {
             mUi->tCancelClearTransfer->setToolTip(cancelClearTooltip);
         }
-        mUi->tCancelClearTransfer->setVisible(showTCancelClear);
+        mUi->tCancelClearTransfer->setProperty(ACTION_BUTTONS_VISIBILITY, showTCancelClear);
 
         mUi->lDone->setVisible(!(getData()->getState() & TransferData::FINISHED_STATES_MASK));
 
@@ -342,11 +343,6 @@ void TransferManagerDelegateWidget::updateTransferState()
                                TransfersWidget::TM_TAB::FAILED_TAB);
 
     mUi->lSyncIcon->setVisible(getData()->isSyncTransfer());
-    if(getData()->isSyncTransfer())
-    {
-        auto syncIcon = Utilities::getCachedPixmap(QLatin1String(":/images/transfer_manager/transfers_states/synching_ico.png"));
-        mUi->lSyncIcon->setPixmap(syncIcon.pixmap(mUi->lSyncIcon->size()));
-    }
 }
 
 void TransferManagerDelegateWidget::setFileNameAndType()
@@ -365,20 +361,21 @@ void TransferManagerDelegateWidget::setFileNameAndType()
 
 void TransferManagerDelegateWidget::setType()
 {
-    QIcon icon;
+    QString icon;
 
     auto transferType = getData()->mType;
 
     if(transferType & TransferData::TRANSFER_DOWNLOAD || transferType & TransferData::TRANSFER_LTCPDOWNLOAD)
     {
-        icon = Utilities::getCachedPixmap(QLatin1String(":/down_arrow"));
+        icon =
+            Utilities::getPixmapName(QLatin1String("down_arrow"), Utilities::AttributeType::NONE);
     }
     else if(transferType & TransferData::TRANSFER_UPLOAD)
     {
-        icon = Utilities::getCachedPixmap(QLatin1String(":/up_arrow"));
+        icon = Utilities::getPixmapName(QLatin1String("up_arrow"), Utilities::AttributeType::NONE);
     }
 
-    mUi->bItemSpeed->setIcon(icon);
+    mUi->bItemSpeed->setIcon(QIcon(icon));
 }
 
 void TransferManagerDelegateWidget::adjustFileName()
@@ -557,8 +554,11 @@ void TransferManagerDelegateWidget::render(const QStyleOptionViewItem& option,
             painter->drawPath(path);
         }
     }
-    mUi->tCancelClearTransfer->setVisible(showButtons);
-    mUi->tPauseResumeTransfer->setVisible(showButtons);
+
+    mUi->tCancelClearTransfer->setVisible(
+        showButtons && mUi->tCancelClearTransfer->property(ACTION_BUTTONS_VISIBILITY).toBool());
+    mUi->tPauseResumeTransfer->setVisible(
+        showButtons && mUi->tPauseResumeTransfer->property(ACTION_BUTTONS_VISIBILITY).toBool());
 
     TransferBaseDelegateWidget::render(option, painter, sourceRegion);
 }

@@ -41,6 +41,13 @@ TransferManagerDelegateWidget
     background-color: transparent;
 }
 
+#bItemSpeed
+{
+background-color: transparent;
+border:none;
+color: #303233; /*colorToken.text-primary*/
+}
+
 #itemSepLine
 {
     height: 1px;
@@ -52,92 +59,15 @@ TransferManagerDelegateWidget
 	margin-right: 16px;
 }
 
-#tFileType
-{
-    background: transparent;
-}
-
-QPushButton, QToolButton
-{
-    border: none;
-    padding: 0;
-    margin: 0;
-}
-
-QPushButton
-{
-    background: transparent;
-}
-
-#lTransferName
-{
-    color: #ff303233; /*colorToken.text-primary*/
-    font-weight: 400;
-    font-size: 12px;
-    qProperty-alignment: 'AlignLeft | AlignBottom';
-}
-
 QProgressBar
 {
-    border:0px;
     border-radius: 2px;
-    background-color: #ffd8d9db; /*colorToken.border-strong*/
     height: 2px;
-}
-
-QProgressBar::chunk
-{
-  background-color: #ff09bf5b; /*colorToken.indicator-green*/
-  border-radius: 2px;
-  border:0px;
-}
-
-#lDone, #lTotal
-{
-  color:  #ff303233; /*colorToken.text-primary*/
-  qProperty-alignment: 'AlignLeft';
-  font-size: 12px;
-  padding: 0;
-  margin: 0;
-}
-#lTotal
-{
-  font-weight: 600;
-}
-#bItemSpeed
-{
-  color:  #ff303233; /*colorToken.text-primary*/
-  text-align: left;
-  qProperty-iconSize: 16px;
-}
-
-#sStatus
-{
-    width: 125px;
-    min-width: 125px;
-    max-width: 125px;
-    height: 63px;
-    min-height: 63px;
-    max-height: 63px;
-}
-
-#pRetry, #pQueued, #pPausedQueued, #pPaused, #pFailed, #pActive
-{
-	width: 125px;
-    min-width: 125px;
-    max-width: 125px;
-    height: 63px;
-    min-height: 63px;
-    max-height: 63px;
 }
 
 #sStatus QLabel
 {
-    font-size: 12px;
-    font-weight: bold;
     qProperty-alignment: 'AlignLeft | AlignVCenter';
-    padding: 0;
-    margin: 0;
 }
 
 #lItemStatus
@@ -160,40 +90,11 @@ QProgressBar::chunk
   color: #F46265;
 }
 
-#lItemTime
-{
-    color: #ff303233; /*colorToken.text-primary*/
-    font-size: 10px;
-    font-weight: 400;
-    padding-left: 8px;
-    padding-right: 8px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    margin: 0;
-}
-
 #tItemRetry
 {
     background-color: #ff303233; /*colorToken.button-primary*/
     color: #ff303233; /*colorToken.text-inverse-accent*/
-    font-size: 12px;
-    font-weight: bold;
-    padding-left: 3px;
-    padding-right: 3px;
-}
-
-#tPauseResumeTransfer, #tCancelClearTransfer
-{
-    width: 16px;
-    min-width: 16px;
-    max-width: 16px;
-    height: 16px;
-    min-height: 16px;
-    max-height: 16px;
-    qProperty-iconSize: 16px;
-    padding-left: 0px;
-    margin-right: 0px;
-    border: none;}</string>
+}</string>
   </property>
   <property name="TOKENIZED" stdset="0">
    <bool>true</bool>
@@ -259,14 +160,14 @@ QProgressBar::chunk
       </property>
       <property name="minimumSize">
        <size>
-        <width>702</width>
-        <height>63</height>
+        <width>0</width>
+        <height>0</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>63</height>
+        <height>16777215</height>
        </size>
       </property>
       <layout class="QHBoxLayout" name="stateActiveLayout">
@@ -286,7 +187,7 @@ QProgressBar::chunk
         <number>0</number>
        </property>
        <item>
-        <widget class="QToolButton" name="tFileType">
+        <widget class="IconLabel" name="tFileType">
          <property name="minimumSize">
           <size>
            <width>24</width>
@@ -326,14 +227,14 @@ QProgressBar::chunk
        <item>
         <widget class="QWidget" name="wName" native="true">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>105</width>
+           <width>0</width>
            <height>36</height>
           </size>
          </property>
@@ -400,13 +301,13 @@ QProgressBar::chunk
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>20</height>
+                 <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>20</height>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="text">
@@ -415,10 +316,13 @@ QProgressBar::chunk
                <property name="textFormat">
                 <enum>Qt::PlainText</enum>
                </property>
+               <property name="font-size" stdset="0">
+                <string notr="true">body-2</string>
+               </property>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="lSyncIcon">
+              <widget class="IconLabel" name="lSyncIcon">
                <property name="minimumSize">
                 <size>
                  <width>16</width>
@@ -433,6 +337,13 @@ QProgressBar::chunk
                </property>
                <property name="text">
                 <string notr="true"/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../gui/Resources_light.qrc">
+                 <normaloff>:/sync-01.svg</normaloff>:/sync-01.svg</iconset>
+               </property>
+               <property name="normal_off" stdset="0">
+                <string notr="true">icon-primary</string>
                </property>
               </widget>
              </item>
@@ -544,14 +455,14 @@ QProgressBar::chunk
          </property>
          <property name="minimumSize">
           <size>
-           <width>110</width>
-           <height>63</height>
+           <width>0</width>
+           <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>110</width>
-           <height>63</height>
+           <width>16777215</width>
+           <height>16777215</height>
           </size>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -587,6 +498,9 @@ QProgressBar::chunk
             <property name="text">
              <string/>
             </property>
+            <property name="font-size" stdset="0">
+             <string notr="true">caption</string>
+            </property>
            </widget>
           </item>
           <item alignment="Qt::AlignVCenter">
@@ -605,6 +519,12 @@ QProgressBar::chunk
             </property>
             <property name="text">
              <string/>
+            </property>
+            <property name="semibold" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="font-size" stdset="0">
+             <string notr="true">caption</string>
             </property>
            </widget>
           </item>
@@ -634,14 +554,14 @@ QProgressBar::chunk
          </property>
          <property name="minimumSize">
           <size>
-           <width>100</width>
-           <height>63</height>
+           <width>0</width>
+           <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>100</width>
-           <height>63</height>
+           <width>16777215</width>
+           <height>16777215</height>
           </size>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_10">
@@ -660,8 +580,8 @@ QProgressBar::chunk
           <property name="bottomMargin">
            <number>0</number>
           </property>
-          <item>
-           <widget class="QPushButton" name="bItemSpeed">
+          <item alignment="Qt::AlignLeft">
+           <widget class="TokenizableButton" name="bItemSpeed">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -681,7 +601,7 @@ QProgressBar::chunk
              </size>
             </property>
             <property name="text">
-             <string/>
+             <string notr="true"/>
             </property>
             <property name="iconSize">
              <size>
@@ -689,7 +609,29 @@ QProgressBar::chunk
               <height>16</height>
              </size>
             </property>
+            <property name="normal_off" stdset="0">
+             <string notr="true">icon-primary</string>
+            </property>
+            <property name="font-size" stdset="0">
+             <string notr="true">caption</string>
+            </property>
+            <property name="semibold" stdset="0">
+             <bool>true</bool>
+            </property>
            </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_11">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>
@@ -698,14 +640,14 @@ QProgressBar::chunk
         <widget class="QStackedWidget" name="sStatus">
          <property name="minimumSize">
           <size>
-           <width>125</width>
-           <height>63</height>
+           <width>0</width>
+           <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>125</width>
-           <height>63</height>
+           <width>16777215</width>
+           <height>16777215</height>
           </size>
          </property>
          <property name="currentIndex">
@@ -728,10 +670,13 @@ QProgressBar::chunk
            <property name="bottomMargin">
             <number>0</number>
            </property>
-           <item>
+           <item alignment="Qt::AlignVCenter">
             <widget class="QLabel" name="lItemStatus">
              <property name="wordWrap">
               <bool>true</bool>
+             </property>
+             <property name="font-size" stdset="0">
+              <string notr="true">caption</string>
              </property>
             </widget>
            </item>
@@ -767,10 +712,13 @@ QProgressBar::chunk
            <property name="bottomMargin">
             <number>0</number>
            </property>
-           <item>
+           <item alignment="Qt::AlignVCenter">
             <widget class="QLabel" name="lItemQueued">
              <property name="text">
               <string/>
+             </property>
+             <property name="font-size" stdset="0">
+              <string notr="true">caption</string>
              </property>
             </widget>
            </item>
@@ -806,7 +754,7 @@ QProgressBar::chunk
            <property name="bottomMargin">
             <number>0</number>
            </property>
-           <item>
+           <item alignment="Qt::AlignVCenter">
             <widget class="QLabel" name="lRetryMsg">
              <property name="minimumSize">
               <size>
@@ -825,6 +773,9 @@ QProgressBar::chunk
              </property>
              <property name="wordWrap">
               <bool>true</bool>
+             </property>
+             <property name="font-size" stdset="0">
+              <string notr="true">caption</string>
              </property>
             </widget>
            </item>
@@ -860,10 +811,13 @@ QProgressBar::chunk
            <property name="bottomMargin">
             <number>0</number>
            </property>
-           <item>
+           <item alignment="Qt::AlignVCenter">
             <widget class="QLabel" name="lItemPaused">
              <property name="text">
               <string/>
+             </property>
+             <property name="font-size" stdset="0">
+              <string notr="true">caption</string>
              </property>
             </widget>
            </item>
@@ -899,7 +853,7 @@ QProgressBar::chunk
            <property name="bottomMargin">
             <number>0</number>
            </property>
-           <item>
+           <item alignment="Qt::AlignVCenter">
             <widget class="QWidget" name="cPausedQueued" native="true">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -923,46 +877,52 @@ QProgressBar::chunk
               <property name="bottomMargin">
                <number>0</number>
               </property>
-              <item>
+              <item alignment="Qt::AlignVCenter">
                <widget class="QLabel" name="lItemPausedQueued_1">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>63</height>
+                  <height>0</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>63</height>
+                  <height>16777215</height>
                  </size>
                 </property>
                 <property name="text">
                  <string/>
                 </property>
+                <property name="font-size" stdset="0">
+                 <string notr="true">caption</string>
+                </property>
                </widget>
               </item>
-              <item>
+              <item alignment="Qt::AlignVCenter">
                <widget class="QLabel" name="lItemPausedQueued_2">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>63</height>
+                  <height>0</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>63</height>
+                  <height>16777215</height>
                  </size>
                 </property>
                 <property name="text">
                  <string/>
                 </property>
+                <property name="font-size" stdset="0">
+                 <string notr="true">caption</string>
+                </property>
                </widget>
               </item>
               <item>
-               <spacer name="horizontalSpacer_11">
+               <spacer name="horizontalSpacer_5">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -1019,7 +979,7 @@ QProgressBar::chunk
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_5">
               <property name="spacing">
-               <number>5</number>
+               <number>8</number>
               </property>
               <property name="leftMargin">
                <number>0</number>
@@ -1033,27 +993,30 @@ QProgressBar::chunk
               <property name="bottomMargin">
                <number>0</number>
               </property>
-              <item>
+              <item alignment="Qt::AlignVCenter">
                <widget class="QLabel" name="lItemFailed">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>63</height>
+                  <height>0</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>63</height>
+                  <height>16777215</height>
                  </size>
                 </property>
                 <property name="text">
                  <string/>
                 </property>
+                <property name="font-size" stdset="0">
+                 <string notr="true">caption</string>
+                </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="tItemRetry">
+               <widget class="TokenizableButton" name="tItemRetry">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -1063,13 +1026,13 @@ QProgressBar::chunk
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>24</height>
+                  <height>0</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>24</height>
+                  <height>16777215</height>
                  </size>
                 </property>
                 <property name="text">
@@ -1080,6 +1043,9 @@ QProgressBar::chunk
                 </property>
                 <property name="dimension" stdset="0">
                  <string notr="true">small</string>
+                </property>
+                <property name="semibold" stdset="0">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -1126,15 +1092,18 @@ QProgressBar::chunk
          </property>
          <property name="minimumSize">
           <size>
-           <width>150</width>
-           <height>63</height>
+           <width>0</width>
+           <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>150</width>
-           <height>63</height>
+           <width>16777215</width>
+           <height>16777215</height>
           </size>
+         </property>
+         <property name="font-size" stdset="0">
+          <string notr="true">caption</string>
          </property>
         </widget>
        </item>
@@ -1148,13 +1117,13 @@ QProgressBar::chunk
          </property>
          <property name="minimumSize">
           <size>
-           <width>24</width>
+           <width>16</width>
            <height>63</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>24</width>
+           <width>16</width>
            <height>63</height>
           </size>
          </property>
@@ -1175,7 +1144,7 @@ QProgressBar::chunk
            <number>0</number>
           </property>
           <item>
-           <widget class="QToolButton" name="tPauseResumeTransfer">
+           <widget class="IconOnlyButton" name="tPauseResumeTransfer">
             <property name="minimumSize">
              <size>
               <width>16</width>
@@ -1189,7 +1158,7 @@ QProgressBar::chunk
              </size>
             </property>
             <property name="type" stdset="0">
-             <string/>
+             <string notr="true">ghost</string>
             </property>
            </widget>
           </item>
@@ -1206,13 +1175,13 @@ QProgressBar::chunk
          </property>
          <property name="minimumSize">
           <size>
-           <width>24</width>
+           <width>16</width>
            <height>63</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>24</width>
+           <width>16</width>
            <height>63</height>
           </size>
          </property>
@@ -1233,7 +1202,7 @@ QProgressBar::chunk
            <number>0</number>
           </property>
           <item>
-           <widget class="QToolButton" name="tCancelClearTransfer">
+           <widget class="IconOnlyButton" name="tCancelClearTransfer">
             <property name="minimumSize">
              <size>
               <width>16</width>
@@ -1249,9 +1218,6 @@ QProgressBar::chunk
             <property name="type" stdset="0">
              <string notr="true">ghost</string>
             </property>
-            <property name="dimension" stdset="0">
-             <string notr="true">small</string>
-            </property>
            </widget>
           </item>
          </layout>
@@ -1263,6 +1229,25 @@ QProgressBar::chunk
    </item>
   </layout>
  </widget>
- <resources/>
+ <customwidgets>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>TokenizableItems/IconLabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TokenizableButton</class>
+   <extends>QPushButton</extends>
+   <header>TokenizableItems/TokenizableButtons.h</header>
+  </customwidget>
+  <customwidget>
+   <class>IconOnlyButton</class>
+   <extends>QPushButton</extends>
+   <header>TokenizableItems/TokenizableButtons.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../../../gui/Resources_light.qrc"/>
+ </resources>
  <connections/>
 </ui>
