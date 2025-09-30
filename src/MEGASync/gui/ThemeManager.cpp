@@ -10,8 +10,6 @@ const QMap<Preferences::ThemeAppeareance, QString> ThemeManager::mAppearance = {
     {Preferences::ThemeAppeareance::LIGHT, QLatin1String("Light")},
     {Preferences::ThemeAppeareance::DARK, QLatin1String("Dark")}};
 
-const QStringList ThemeManager::mThemesList = {tr("System default"), tr("Dark"), tr("Light")};
-
 inline Preferences::ThemeAppeareance toAppearance(Preferences::ThemeType type)
 {
     switch (type)
@@ -62,7 +60,7 @@ void ThemeManager::init()
 
 QStringList ThemeManager::themesAvailable() const
 {
-    return mThemesList;
+    return {tr("System default"), tr("Dark"), tr("Light")};
 }
 
 void ThemeManager::setTheme(Preferences::ThemeType theme)

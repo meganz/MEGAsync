@@ -8711,15 +8711,15 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>ThemeManager</name>
     <message>
-        <source>System default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Dark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Light</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>System default</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

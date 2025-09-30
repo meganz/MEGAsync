@@ -524,6 +524,8 @@ bool SettingsDialog::event(QEvent* event)
 
         updateUploadFolder();
         updateDownloadFolder();
+
+        ThemeManager::instance()->themesAvailable();
     }
 
     return QDialog::event(event);
