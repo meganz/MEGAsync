@@ -2569,9 +2569,8 @@ void Preferences::disableLeftPaneIcons(bool value)
 
 bool Preferences::contextMenuDisabled()
 {
-    mutex.lock();
+    QMutexLocker locker(&mutex);
     bool result = getValue(disableContextMenuKey, false);
-    mutex.unlock();
     return result;
 }
 

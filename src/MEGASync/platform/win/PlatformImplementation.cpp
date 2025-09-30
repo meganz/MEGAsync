@@ -690,18 +690,18 @@ void PlatformImplementation::disableContextMenu(bool isDisabled)
             .arg(QCoreApplication::organizationName(), QCoreApplication::applicationName());
     static auto kValueName = QString::fromLatin1("ShellExtensionDisabled"); // DWORD 0/1
 
-    QSettings s(kRegPath, QSettings::NativeFormat);
+    QSettings appRegistryEntry(kRegPath, QSettings::NativeFormat);
 
     if (isDisabled)
     {
-        s.setValue(kValueName, 1);
+        appRegistryEntry.setValue(kValueName, 1);
     }
     else
     {
-        s.remove(kValueName);
+        appRegistryEntry.remove(kValueName);
     }
-    s.sync();
-    if (s.status() == QSettings::NoError)
+    appRegistryEntry.sync();
+    if (appRegistryEntry.status() == QSettings::NoError)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "ShellExt context menu toggle: success");
     }
@@ -709,7 +709,7 @@ void PlatformImplementation::disableContextMenu(bool isDisabled)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
                      QString::fromLatin1("ShellExt context menu toggle: error %1")
-                         .arg(s.status())
+                         .arg(appRegistryEntry.status())
                          .toUtf8()
                          .constData());
     }
