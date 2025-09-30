@@ -283,6 +283,8 @@ void DuplicatedNodeDialog::setConflicts(std::shared_ptr<ConflictTypes> newConfli
     connect(mConflicts->mFileCheck, &DuplicatedUploadBase::selectionDone, this, [this](){
         onConflictProcessed();
     });
+    // Show folders conflicts
+    startWithNewCategoryOfConflicts();
 }
 
 const QList<std::shared_ptr<DuplicatedNodeInfo> > &DuplicatedNodeDialog::getResolvedConflicts()
@@ -297,8 +299,6 @@ bool DuplicatedNodeDialog::isEmpty() const
 
 void DuplicatedNodeDialog::show()
 {
-    //Show folders conflicts
-    startWithNewCategoryOfConflicts();
     QDialog::show();
 }
 
