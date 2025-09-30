@@ -225,7 +225,6 @@ void StalledIssueHeader::showMessage(const QString& message,
 
     if (!icon.isEmpty())
     {
-        ui->actionMessageIcon->clear();
         ui->actionMessageIcon->show();
         ui->actionMessageIcon->setIcon(QIcon(icon));
         ui->actionMessageIcon->setProperty(TOKEN_PROPERTIES::normalOff, iconToken);

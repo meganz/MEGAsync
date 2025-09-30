@@ -6,17 +6,47 @@
 #include <QAbstractButton>
 #include <QStyleOptionButton>
 
-class BaseTokens
+class TokenUtilities
+{
+public:
+    TokenUtilities() = default;
+    ~TokenUtilities() = default;
+
+    bool anyTokenHasChanged() const
+    {
+        return mTokenHasChanged;
+    }
+
+protected:
+    void fillToken(QString& token, const char* propertyName, QAbstractButton* button)
+    {
+        QString propertyValue(button->property(propertyName).toString());
+        if (!propertyValue.isEmpty() && propertyValue != token)
+        {
+            if (!token.isEmpty())
+            {
+                mTokenHasChanged = true;
+            }
+
+            token = propertyValue;
+        }
+    }
+
+private:
+    bool mTokenHasChanged = false;
+};
+
+class BaseTokens: public TokenUtilities
 {
 public:
     BaseTokens() = default;
 
     virtual void fillTokens(QAbstractButton* button)
     {
-        mNormalOff = button->property(TOKEN_PROPERTIES::normalOff).toString();
-        mNormalOn = button->property(TOKEN_PROPERTIES::normalOn).toString();
-        mDisabledOff = button->property(TOKEN_PROPERTIES::disabledOff).toString();
-        mDisabledOn = button->property(TOKEN_PROPERTIES::disabledOn).toString();
+        fillToken(mNormalOff, TOKEN_PROPERTIES::normalOff, button);
+        fillToken(mNormalOn, TOKEN_PROPERTIES::normalOn, button);
+        fillToken(mDisabledOff, TOKEN_PROPERTIES::disabledOff, button);
+        fillToken(mDisabledOn, TOKEN_PROPERTIES::disabledOn, button);
     }
 
     // normal_off
@@ -76,7 +106,7 @@ public:
     TokenizableItem();
     ~TokenizableItem();
 
-    virtual void clear();
+    virtual void forceUpdate();
 
 protected:
     bool stateHasChanged(const QStyleOption& option);
@@ -91,10 +121,11 @@ protected:
     bool isInitialized() const;
     virtual void init(QAbstractButton* button);
 
+    BaseTokens mBaseTokens;
+
 private:
     bool specificStateHasChanged(const QStyle::State& state, const QStyleOption& option);
 
-    BaseTokens mBaseTokens;
     QStyleOption mCurrentOption;
     bool mInit;
     int mThemeType;

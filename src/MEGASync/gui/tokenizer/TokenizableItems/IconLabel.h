@@ -14,7 +14,11 @@ class IconLabel: public QToolButton, public TokenizableItem
     Q_OBJECT
 
 public:
+    Q_PROPERTY(QIcon icon WRITE setIcon)
+
     IconLabel(QWidget* parent);
+
+    void setIcon(const QIcon& icon);
 
 protected:
     void paintEvent(QPaintEvent* event) override;

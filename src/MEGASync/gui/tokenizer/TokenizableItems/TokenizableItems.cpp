@@ -82,10 +82,9 @@ void TokenizableItem::applyPixmap(QAbstractButton* button,
     }
 }
 
-void TokenizableItem::clear()
+void TokenizableItem::forceUpdate()
 {
     mInit = false;
-    mBaseTokens = BaseTokens();
     mCurrentOption = QStyleOptionButton();
     mThemeType = -1;
 }
@@ -98,6 +97,11 @@ bool TokenizableItem::isInitialized() const
 void TokenizableItem::init(QAbstractButton* button)
 {
     mBaseTokens.fillTokens(button);
+    if (mBaseTokens.anyTokenHasChanged())
+    {
+        mInit = false;
+        mCurrentOption = QStyleOptionButton();
+    }
 
     if (!isInitialized() || themeHasChanged())
     {

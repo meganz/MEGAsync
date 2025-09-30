@@ -19,10 +19,16 @@ void IconLabel::paintEvent(QPaintEvent* event)
     // The first time the button is painted
     init(this);
 
-    if (stateHasChanged(option))
+    if (stateHasChanged(option) || mBaseTokens.anyTokenHasChanged())
     {
         applyDefaultPixmap(this);
     }
 
     QToolButton::paintEvent(event);
+}
+
+void IconLabel::setIcon(const QIcon& icon)
+{
+    QToolButton::setIcon(icon);
+    forceUpdate();
 }
