@@ -52,23 +52,19 @@ background-color: #fffafafa; /*colorToken.surface-1*/
 }
 #bIconState[state=&quot;paused&quot;]
 {
-qproperty-icon: url(:/pause.svg);
-qproperty-iconSize: 16px 16px;
+qproperty-icon: url(:/pause-circle_small_thin_outline);
 }
 #bIconState[state=&quot;over_quota&quot;]
 {
-qproperty-icon: url(:/alert-circle.svg); 
-qproperty-iconSize: 16px 16px;
+qproperty-icon: url(:/alert-circle_small_thin_outline); 
 }
-#bIconState[state=&quot;updated&quot;]
+#bIconState[state=&quot;up_to_date&quot;]
 {
-qproperty-icon:  url(:/check-circle.svg); 
-qproperty-iconSize: 16px 16px;
+qproperty-icon: url(:/check-circle_small_thin_outline);
 }
 #bIconState[state=&quot;failed&quot;]
 {
-qproperty-icon: url(:/x-circle.svg);
-qproperty-iconSize: 16px 16px;
+qproperty-icon: url(:/x-circle_small_thin_outline);
 }
 #bIconState[state=&quot;syncing&quot;],
 #bIconState[state=&quot;waiting&quot;], 
@@ -76,7 +72,6 @@ qproperty-iconSize: 16px 16px;
 #bIconState[state=&quot;transferring&quot;]
 {
 qproperty-icon: none;
-qproperty-iconSize: 16px 16px;
 }
 
 </string>
@@ -98,7 +93,7 @@ qproperty-iconSize: 16px 16px;
     <number>0</number>
    </property>
    <item>
-    <widget class="QPushButton" name="bIconState">
+    <widget class="IconOnlyButton" name="bIconState">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -159,6 +154,11 @@ qproperty-iconSize: 16px 16px;
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>IconOnlyButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
+  </customwidget>
   <customwidget>
    <class>ElidedLabel</class>
    <extends>QFrame</extends>
