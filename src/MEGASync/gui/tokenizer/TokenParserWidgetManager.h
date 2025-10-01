@@ -18,6 +18,7 @@ public:
     void registerWidgetForTheming(QWidget* dialog);
     void polish(QWidget* widget);
     QColor getColor(const QString& colorToken);
+    QColor getColor(const QString& colorToken, const QString& currentColorSchema);
 
 private:
     using ColorTokens = QMap<QString, QString>;

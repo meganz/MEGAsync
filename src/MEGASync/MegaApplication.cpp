@@ -20,6 +20,7 @@
 #include "FatalEventHandler.h"
 #include "FullName.h"
 #include "GuiUtilities.h"
+#include "IconTokenizer.h"
 #include "ImportMegaLinksDialog.h"
 #include "IntervalExecutioner.h"
 #include "LoginController.h"
@@ -742,6 +743,13 @@ void MegaApplication::initialize()
     createUserMessageController();
 
     TokenParserWidgetManager::instance();
+
+#ifdef Q_OS_LINUX
+    connect(Platform::getInstance(),
+            &AbstractPlatform::themeChanged,
+            this,
+            &MegaApplication::onOperatingSystemThemeChanged);
+#endif
 }
 
 QString MegaApplication::applicationFilePath()
@@ -5493,6 +5501,10 @@ void MegaApplication::createTrayIconMenus()
 
     initialTrayMenu->insertAction(guestSettingsAction, showStatusAction);
 #endif
+
+#ifdef Q_OS_LINUX
+    onOperatingSystemThemeChanged(Platform::getInstance()->getCurrentThemeAppearance());
+#endif
 }
 
 void MegaApplication::createInfoDialogMenus()
@@ -6638,3 +6650,35 @@ void MegaApplication::startCrashReportingDialog()
     }
 #endif
 }
+
+// clang-format off
+void MegaApplication::onOperatingSystemThemeChanged(Preferences::ThemeAppeareance theme)
+{
+#ifdef Q_OS_LINUX
+    constexpr QSize iconSize(256, 256);
+
+    auto applyTokenToIconAction = [&](const QPointer<QMenu>& menu)
+    {
+        if (!menu.isNull() && menu.data() != nullptr)
+        {
+            foreach(auto action, menu->actions())
+            {
+                auto coloredPixmap = IconTokenizer::changePixmapColor(
+                    action->icon().pixmap(iconSize),
+                    TokenParserWidgetManager::instance()->getColor(
+                        QStringLiteral("icon-primary"),
+                        ThemeManager::instance()->getColorSchemaString(theme)));
+
+                if (coloredPixmap.has_value())
+                {
+                    action->setIcon(coloredPixmap.value());
+                }
+            }
+        }
+    };
+
+    applyTokenToIconAction(initialTrayMenu);
+#endif
+}
+
+// clang-format on

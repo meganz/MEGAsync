@@ -623,6 +623,7 @@ private slots:
     void onNotificationProcessed();
     void onScheduledExecution();
     void onCopyLinkError(const QString& nodeName, const int errorCode);
+    void onOperatingSystemThemeChanged(Preferences::ThemeAppeareance theme);
 };
 
 #endif // MEGAAPPLICATION_H
