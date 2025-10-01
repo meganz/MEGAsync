@@ -6,7 +6,9 @@
 /********************/
 TokenizableButton::TokenizableButton(QWidget* parent):
     QPushButton(parent)
-{}
+{
+    setCursor(Qt::PointingHandCursor);
+}
 
 void TokenizableButton::clear()
 {
@@ -59,9 +61,9 @@ void TokenizableButton::init(QAbstractButton*)
         ButtonTokensByType::setDefaultTokens(this);
 
         mButtonTokens.fillTokens(this);
-
-        TokenizableItem::init(this);
     }
+
+    TokenizableItem::init(this);
 }
 
 /*************** ONLY_ICON_BUTTON ***************/

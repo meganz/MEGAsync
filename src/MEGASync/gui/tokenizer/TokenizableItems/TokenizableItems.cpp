@@ -28,13 +28,24 @@ bool TokenizableItem::stateHasChanged(const QStyleOption& option)
         result = true;
     }
 
-    if (option.state != mCurrentOption.state)
+    if (specificStateHasChanged(QStyle::State_Enabled, option) ||
+        specificStateHasChanged(QStyle::State_Sunken, option) ||
+        specificStateHasChanged(QStyle::State_MouseOver, option) ||
+        specificStateHasChanged(QStyle::State_Off, option) ||
+        specificStateHasChanged(QStyle::State_On, option))
     {
         mCurrentOption = option;
         result = true;
     }
 
     return result;
+}
+
+bool TokenizableItem::themeHasChanged() const
+{
+    int currentThemeType = static_cast<int>(Preferences::instance()->getThemeType());
+
+    return mThemeType != currentThemeType;
 }
 
 void TokenizableItem::applyDefaultPixmap(QAbstractButton* button)
@@ -87,10 +98,8 @@ bool TokenizableItem::isInitialized() const
 
 void TokenizableItem::init(QAbstractButton* button)
 {
-    if (!isInitialized())
+    if (!isInitialized() || themeHasChanged())
     {
-        mBaseTokens.fillTokens(button);
-
         // Init QIcon::Mode::Active and QIcon::Mode::Disabled
         if (!mBaseTokens.getNormalOffToken().isEmpty())
         {
@@ -125,5 +134,16 @@ void TokenizableItem::init(QAbstractButton* button)
         }
     }
 
-    mInit = true;
+    if (!isInitialized())
+    {
+        mBaseTokens.fillTokens(button);
+
+        mInit = true;
+    }
+}
+
+bool TokenizableItem::specificStateHasChanged(const QStyle::State& state,
+                                              const QStyleOption& option)
+{
+    return ((option.state & state) != (mCurrentOption.state & state));
 }

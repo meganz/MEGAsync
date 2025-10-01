@@ -74,7 +74,7 @@ class TokenizableButton: public QPushButton, public TokenizableItem
     Q_OBJECT
 
 public:
-    TokenizableButton(QWidget* parent);
+    TokenizableButton(QWidget* parent = nullptr);
 
     void clear() override;
 

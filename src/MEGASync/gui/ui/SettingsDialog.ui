@@ -57,7 +57,7 @@
 
 /*ColorTokenIcon;Button;bAdd;normal;off;colorToken.text-inverse-accent*/
 
-QWidget
+SettingsDialog
 {
 background-color: #FFFFFFFF; /*colorToken.page-background*/
 color: #ff303233; /*colorToken.text-primary*/

@@ -1455,8 +1455,7 @@ void SettingsDialog::on_bFolders_clicked()
 void SettingsDialog::on_bUploadFolder_clicked()
 {
     UploadNodeSelector* nodeSelector = new UploadNodeSelector(this);
-    // Temporary
-    nodeSelector->setProperty("TOKENIZED", true);
+    nodeSelector->init();
     std::shared_ptr<mega::MegaNode> defaultNode(
         mMegaApi->getNodeByPath(mUi->eUploadFolder->text().toStdString().c_str()));
     nodeSelector->setSelectedNodeHandle(defaultNode);

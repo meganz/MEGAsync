@@ -701,22 +701,38 @@ background-color: #fff3f4f4; /*colorToken.surface-2*/
     TabSelector
 */
 
-TabSelector.sidebar[selected=true]
-{
-background-color: #FFFFFF; /*colorToken.page-background*/
-}
-
-TabSelector.sidebar[selected=false]
+TabSelector.sidebar[selected = false]
 {
 background-color:  transparent;
 }
 
-TabSelector.chip[selected=true]
+TabSelector.sidebar[selected = true]
 {
-background-color: #F234334D; /*colorToken.brand-container-default*/
+background-color: #FFFFFF;/*colorToken.page-background*/
 }
 
-TabSelector.chip[selected=false]
+TabSelector.sidebar[selected = false] QLabel {
+color:#616366; /*colorToken.text-secondary*/
+}
+
+TabSelector.sidebar[selected = true] QLabel {
+color:#303233; /*colorToken.icon-primary*/
+}
+
+TabSelector.chip[selected = false]
 {
-background-color: #6163661A; /*colorToken.button-secondary*/
+background-color: #6163661A;/*colorToken.button-secondary*/
+}
+
+TabSelector.chip[selected = true]
+{
+background-color: #DD14051A;/*colorToken.brand-container-default*/
+}
+
+TabSelector.chip[selected = false] QLabel {
+color:#303233; /*colorToken.text-primary*/
+}
+
+TabSelector.chip[selected = true] QLabel {
+color:#7B2118; /*colorToken.brand-on-container*/
 }

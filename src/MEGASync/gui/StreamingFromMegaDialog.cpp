@@ -91,6 +91,7 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
 void StreamingFromMegaDialog::on_bFromCloud_clicked()
 {
     StreamNodeSelector* nodeSelector = new StreamNodeSelector(this);
+    nodeSelector->init();
     nodeSelector->setWindowTitle(tr("Select items"));
     nodeSelector->setSelectedNodeHandle(mSelectedMegaNode);
 

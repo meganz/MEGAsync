@@ -37,6 +37,9 @@
   <property name="windowTitle">
    <string notr="true"/>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1,0,0">
    <property name="spacing">
     <number>8</number>
@@ -111,7 +114,10 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string/>
+      <string notr="true"/>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::PlainText</enum>
      </property>
     </widget>
    </item>
@@ -119,6 +125,9 @@
     <widget class="QLabel" name="lCounter">
      <property name="text">
       <string notr="true"/>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::PlainText</enum>
      </property>
     </widget>
    </item>

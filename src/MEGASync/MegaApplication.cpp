@@ -3933,6 +3933,7 @@ void MegaApplication::goToFiles()
     if (infoDialog)
     {
         CloudDriveNodeSelector* nodeSelector = new CloudDriveNodeSelector();
+        nodeSelector->init();
         DialogOpener::showGeometryRetainerDialog<NodeSelector>(nodeSelector);
 
         mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::CLOUD_DRIVE_OPENED,
@@ -4205,6 +4206,7 @@ void MegaApplication::downloadActionClicked()
         if(result == QDialog::Rejected)
         {
             auto downloadNodeSelector = new DownloadNodeSelector();
+            downloadNodeSelector->init();
             downloadNodeSelector->setSelectedNodeHandle();
 
             DialogOpener::showDialog<NodeSelector, TransferManager>(downloadNodeSelector, false, [this, downloadNodeSelector]()

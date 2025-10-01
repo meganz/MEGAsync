@@ -91,19 +91,19 @@ bool MegaTransferDelegate::event(QEvent *event)
 {
     if(auto hoverEvent = dynamic_cast<MegaDelegateHoverEvent*>(event))
     {
-        switch(hoverEvent->type())
+        switch (static_cast<int>(hoverEvent->type()))
         {
-            case QEvent::MouseMove:
+            case MegaDelegateHoverEvent::MouseMove:
             {
                 onHoverMove(hoverEvent->index(), hoverEvent->rect(), hoverEvent->mousePos());
                 break;
             }
-            case QEvent::Leave:
+            case MegaDelegateHoverEvent::Leave:
             {
                 onHoverLeave(hoverEvent->index(),hoverEvent->rect());
                 break;
             }
-            case QEvent::Enter:
+            case MegaDelegateHoverEvent::Enter:
             {
                 onHoverEnter(hoverEvent->index(), hoverEvent->rect());
                 break;

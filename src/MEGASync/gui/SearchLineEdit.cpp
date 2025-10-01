@@ -146,6 +146,8 @@ void SearchLineEdit::showTextEntry(bool state, bool force)
 
             runGeometryAnimation(ui->tSearchIcon, startRect, endRect, QEasingCurve::Linear);
         }
+
+        ui->leSearchField->setFocus();
     }
 }
 

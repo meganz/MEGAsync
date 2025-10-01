@@ -26,7 +26,12 @@
    <string>Bug report</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#leTitleBug
+   <string notr="true">#BugReportDialog
+{
+background-color: #FFFFFF; /*colorToken.page-background*/
+}
+
+#leTitleBug
 {
 padding-left: 10px;
 height: 36px;

@@ -121,15 +121,15 @@ bool UserMessageDelegate::event(QEvent* event)
 {
     if(auto hoverEvent = dynamic_cast<MegaDelegateHoverEvent*>(event))
     {
-        switch (hoverEvent->type())
+        switch (static_cast<int>(hoverEvent->type()))
         {
-            case QEvent::Enter:
-            case QEvent::MouseMove:
+            case MegaDelegateHoverEvent::Enter:
+            case MegaDelegateHoverEvent::MouseMove:
             {
                 onHoverEnter(hoverEvent->index());
                 break;
             }
-            case QEvent::Leave:
+            case MegaDelegateHoverEvent::Leave:
             {
                 onHoverLeave(hoverEvent->index());
                 break;

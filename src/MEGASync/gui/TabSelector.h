@@ -38,11 +38,12 @@ public:
     void setCounter(int count);
 
     void setSelected(bool state);
+    bool isSelected() const;
     void toggleOffSiblings();
 
     void setIconTokens(const std::shared_ptr<TokenPropertySetter>& newIconTokens);
 
-    // Convenient method to set tokens
+    // Convenient method to set to all selectors
     static void applyTokens(QWidget* parent, std::shared_ptr<TokenPropertySetter> iconTokensSetter);
 
     // Convenient method to select tab

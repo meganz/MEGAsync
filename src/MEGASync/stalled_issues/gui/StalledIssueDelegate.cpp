@@ -436,7 +436,7 @@ bool StalledIssueDelegate::event(QEvent *event)
     {
         if (auto hoverEvent = dynamic_cast<MegaDelegateHoverEvent*>(event))
         {
-            if (hoverEvent->type() == QEvent::Enter)
+            if (hoverEvent->type() == MegaDelegateHoverEvent::Enter)
             {
                 auto headerIndex(getHeaderIndex(hoverEvent->index()));
                 auto relativeIndex(getRelativeIndex(hoverEvent->index()));
@@ -451,11 +451,11 @@ bool StalledIssueDelegate::event(QEvent *event)
 
                 onHoverEnter(hoverEvent->index());
             }
-            else if (hoverEvent->type() == QEvent::MouseMove)
+            else if (hoverEvent->type() == MegaDelegateHoverEvent::MouseMove)
             {
                 onHoverEnter(hoverEvent->index());
             }
-            else if (hoverEvent->type() == QEvent::Leave)
+            else if (hoverEvent->type() == MegaDelegateHoverEvent::Leave)
             {
                 auto headerIndex(getHeaderIndex(hoverEvent->index()));
                 if (mLastHoverIndex == headerIndex)

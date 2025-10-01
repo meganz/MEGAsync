@@ -26,25 +26,37 @@
    <string>Remove this sync?</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">/*ColorTokenIcon;Button;bRemove;normal;off;colorToken.text-inverse-accent*/
-/*ColorTokenIcon;Button;bRemove;disabled;off;colorToken.text-inverse-accent*/
-/*ColorTokenIcon;Button;bRemove;active;off;colorToken.text-inverse-accent*/
-/*ColorTokenIcon;Button;bRemove;selected;off;colorToken.text-inverse-accent*/
-
-#labelFolderIcon
+   <string notr="true">#RemoveSyncConfirmationDialog
 {
-border-image: url(&quot;:/images/icons/folder/synced-folder.png&quot;);
-max-width: 96px;
-max-height: 96px;
+background-color: #FFFFFF;/*colorToken.page-background*/
 }
+
 </string>
   </property>
   <property name="TOKENIZED" stdset="0">
    <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>24</number>
+   </property>
+   <property name="topMargin">
+    <number>24</number>
+   </property>
+   <property name="rightMargin">
+    <number>24</number>
+   </property>
+   <property name="bottomMargin">
+    <number>24</number>
+   </property>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1">
+     <property name="spacing">
+      <number>24</number>
+     </property>
      <item>
       <widget class="QLabel" name="labelFolderIcon">
        <property name="minimumSize">
@@ -53,20 +65,29 @@ max-height: 96px;
          <height>96</height>
         </size>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>96</width>
+         <height>96</height>
+        </size>
+       </property>
        <property name="text">
         <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="../Resources_common.qrc">:/images/icons/folder/synced-folder.png</pixmap>
        </property>
       </widget>
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
        <property name="spacing">
-        <number>0</number>
+        <number>8</number>
        </property>
        <property name="topMargin">
-        <number>20</number>
+        <number>0</number>
        </property>
-       <item>
+       <item alignment="Qt::AlignTop">
         <widget class="QLabel" name="labelHeader">
          <property name="styleSheet">
           <string notr="true"/>
@@ -82,13 +103,16 @@ max-height: 96px;
          </property>
         </widget>
        </item>
-       <item>
+       <item alignment="Qt::AlignTop">
         <widget class="QLabel" name="labelMessage">
          <property name="text">
           <string>The data on your computer and in MEGA will not be removed, but the folders will no longer sync with each other.</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
+         </property>
+         <property name="font-size" stdset="0">
+          <string notr="true">body-2</string>
          </property>
         </widget>
        </item>
@@ -98,6 +122,9 @@ max-height: 96px;
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,0">
+     <property name="spacing">
+      <number>8</number>
+     </property>
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
@@ -112,7 +139,7 @@ max-height: 96px;
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="bCancel">
+      <widget class="TokenizableButton" name="bCancel">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -152,7 +179,7 @@ max-height: 96px;
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="bRemove">
+      <widget class="TokenizableButton" name="bRemove">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -193,7 +220,15 @@ max-height: 96px;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TokenizableButton</class>
+   <extends>QPushButton</extends>
+   <header>TokenizableItems/TokenizableButtons.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
+  <include location="../Resources_common.qrc"/>
   <include location="../Resources_light.qrc"/>
  </resources>
  <connections>
