@@ -37,7 +37,6 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
 {
     ui->setupUi(this);
     setFocusProxy(ui->tMegaFolders);
-    ui->cbAlwaysUploadToLocation->hide();
     ui->bOk->setDefault(true);
     ui->bOk->setEnabled(false);
     ui->searchButtonsWidget->setVisible(false);
@@ -51,10 +50,6 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
             &QPushButton::clicked,
             this,
             &NodeSelectorTreeViewWidget::cancelBtnClicked);
-    connect(ui->cbAlwaysUploadToLocation,
-            &QCheckBox::stateChanged,
-            this,
-            &NodeSelectorTreeViewWidget::oncbAlwaysUploadToLocationChanged);
 
     checkBackForwardButtons();
     checkOkCancelButtonsVisibility();
@@ -242,11 +237,6 @@ void NodeSelectorTreeViewWidget::initEmptyMessages()
     }
 }
 
-void NodeSelectorTreeViewWidget::showDefaultUploadOption(bool show)
-{
-    ui->cbAlwaysUploadToLocation->setVisible(show);
-}
-
 void NodeSelectorTreeViewWidget::setTitleText(const QString& nodeName)
 {
     ui->lFolderName->setProperty(FULL_NAME_PROPERTY, nodeName);
@@ -312,16 +302,6 @@ void NodeSelectorTreeViewWidget::enableDragAndDrop(bool enable)
     ui->tMegaFolders->setDropIndicatorShown(enable);
     ui->tMegaFolders->setDragDropMode(enable ? QAbstractItemView::DragDrop :
                                                QAbstractItemView::NoDragDrop);
-}
-
-void NodeSelectorTreeViewWidget::setDefaultUploadOption(bool value)
-{
-    ui->cbAlwaysUploadToLocation->setChecked(value);
-}
-
-bool NodeSelectorTreeViewWidget::getDefaultUploadOption()
-{
-    return ui->cbAlwaysUploadToLocation->isChecked();
 }
 
 void NodeSelectorTreeViewWidget::setTitle(const QString& title)
@@ -635,20 +615,6 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
                                      ui->tMegaFolders->setFocus();
                                  }
                              });
-}
-
-void NodeSelectorTreeViewWidget::oncbAlwaysUploadToLocationChanged(bool value)
-{
-    foreach(auto& child, parent()->children())
-    {
-        if (auto tvw = qobject_cast<NodeSelectorTreeViewWidget*>(child))
-        {
-            if (tvw != sender())
-            {
-                tvw->setDefaultUploadOption(value);
-            }
-        }
-    }
 }
 
 bool NodeSelectorTreeViewWidget::isAllowedToEnterInIndex(const QModelIndex& idx)

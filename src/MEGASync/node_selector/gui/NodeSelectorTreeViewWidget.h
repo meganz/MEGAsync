@@ -70,10 +70,6 @@ public:
 
     void selectPendingIndexes();
 
-    void setDefaultUploadOption(bool value);
-    bool getDefaultUploadOption();
-    void showDefaultUploadOption(bool show);
-
     void setTitleText(const QString& nodeName);
 
     void clearSelection();
@@ -182,7 +178,6 @@ protected slots:
 
 private slots:
     void onbNewFolderClicked();
-    void oncbAlwaysUploadToLocationChanged(bool value);
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
     void onModelModified();
     void onDeleteClicked(const QList<mega::MegaHandle>& handles, bool permanently);

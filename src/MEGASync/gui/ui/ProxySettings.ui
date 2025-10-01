@@ -35,7 +35,12 @@
    <string>Proxies</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#lErrorIcon[type=&quot;error&quot;] 
+   <string notr="true">#ProxySettings
+{
+background-color: #FFFFFF; /*colorToken.page-background*/
+}
+
+#lErrorIcon[type=&quot;error&quot;] 
 {
 	image: url(:/images/banner/error.svg);
 }</string>

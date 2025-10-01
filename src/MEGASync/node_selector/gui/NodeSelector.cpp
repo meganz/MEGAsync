@@ -38,6 +38,7 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
     mTargetWid(nullptr)
 {
     ui->setupUi(this);
+    ui->cbAlwaysUploadToLocation->hide();
 
     mMegaApi->addListener(mDelegateListener.get());
 
@@ -116,31 +117,17 @@ void NodeSelector::onSearch(const QString& text)
 
 void NodeSelector::showDefaultUploadOption(bool show)
 {
-    for (int page = 0; page < ui->stackedWidget->count(); ++page)
-    {
-        auto viewContainer = getTreeViewWidget(page);
-        if (viewContainer)
-        {
-            viewContainer->showDefaultUploadOption(show);
-        }
-    }
+    ui->cbAlwaysUploadToLocation->setVisible(show);
 }
 
 void NodeSelector::setDefaultUploadOption(bool value)
 {
-    for (int page = 0; page < ui->stackedWidget->count(); ++page)
-    {
-        auto viewContainer = getTreeViewWidget(page);
-        if (viewContainer)
-        {
-            viewContainer->setDefaultUploadOption(value);
-        }
-    }
+    ui->cbAlwaysUploadToLocation->setChecked(value);
 }
 
 bool NodeSelector::getDefaultUploadOption()
 {
-    return mCloudDriveWidget->getDefaultUploadOption();
+    return ui->cbAlwaysUploadToLocation->isChecked();
 }
 
 bool NodeSelector::event(QEvent* event)

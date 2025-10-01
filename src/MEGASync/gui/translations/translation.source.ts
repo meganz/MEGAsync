@@ -4744,6 +4744,11 @@ Enter a different name.</translation>
         <translatorcomment>Groupbox title for search coincidences. SNC.5804</translatorcomment>
         <translation type="unfinished">Search</translation>
     </message>
+    <message>
+        <source>Always upload to this destination</source>
+        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox. SNC-5804</translatorcomment>
+        <translation type="unfinished">Always upload to this destination</translation>
+    </message>
 </context>
 <context>
     <name>NodeSelectorModel</name>
@@ -5073,11 +5078,6 @@ Enter a different name.</translation>
 </context>
 <context>
     <name>NodeSelectorTreeViewWidget</name>
-    <message>
-        <source>Always upload to this destination</source>
-        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
-        <translation>Always upload to this destination</translation>
-    </message>
     <message>
         <source>Any shared files or folders will no longer be accessible to the people you shared them with. You can still access these items in the Rubbish bin, restore, and share them.</source>
         <translatorcomment>Informative text about the potential issues of removing the nodes. CON-334</translatorcomment>

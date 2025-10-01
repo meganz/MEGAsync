@@ -957,16 +957,6 @@ background-color: transparent;
           <number>21</number>
          </property>
          <item>
-          <widget class="QCheckBox" name="cbAlwaysUploadToLocation">
-           <property name="text">
-            <string>Always upload to this destination</string>
-           </property>
-           <property name="type" stdset="0">
-            <string notr="true">mega</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QWidget" name="bLayout" native="true">
            <property name="maximumSize">
             <size>
@@ -1092,19 +1082,19 @@ background-color: transparent;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>TokenizableButton</class>
-   <extends>QPushButton</extends>
-   <header>TokenizableItems/TokenizableButtons.h</header>
-  </customwidget>
-  <customwidget>
    <class>IconOnlyButton</class>
    <extends>QPushButton</extends>
-   <header>TokenizableItems/TokenizableButtons.h</header>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
   </customwidget>
   <customwidget>
    <class>IconLabel</class>
    <extends>QToolButton</extends>
-   <header>TokenizableItems/IconLabel.h</header>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TokenizableButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
   </customwidget>
   <customwidget>
    <class>TabSelector</class>

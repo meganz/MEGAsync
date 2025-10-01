@@ -85,6 +85,9 @@ background-color: #F7F7F7; /*colorToken.surface-1*/
       <property name="topMargin">
        <number>24</number>
       </property>
+      <property name="bottomMargin">
+       <number>24</number>
+      </property>
       <item>
        <widget class="QWidget" name="wTop" native="true">
         <property name="minimumSize">
@@ -339,6 +342,37 @@ background-color: #F7F7F7; /*colorToken.surface-1*/
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <widget class="QWidget" name="cbContainer" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>4</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>4</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QCheckBox" name="cbAlwaysUploadToLocation">
+           <property name="text">
+            <string>Always upload to this destination</string>
+           </property>
+           <property name="type" stdset="0">
+            <string notr="true">mega</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </item>
      </layout>
     </widget>
