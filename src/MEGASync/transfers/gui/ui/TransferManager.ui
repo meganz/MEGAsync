@@ -1781,6 +1781,23 @@ QToolButton
              </widget>
             </item>
             <item>
+             <widget class="TokenizableButton" name="bDownload">
+              <property name="text">
+               <string>Download</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../gui/Resources_common.qrc">
+                <normaloff>:/download_small_thin_outline</normaloff>:/download_small_thin_outline</iconset>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">ghost</string>
+              </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">small</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="IconOnlyButton" name="tCogWheel">
               <property name="maximumSize">
                <size>

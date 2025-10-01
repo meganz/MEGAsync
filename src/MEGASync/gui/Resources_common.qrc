@@ -1312,5 +1312,6 @@
         <file alias="minus-square_small_thin_solid">images/themed/tokenizable/minus-square_small_thin_solid.svg</file>
         <file alias="info_small_thin_outline">images/themed/tokenizable/info_small_thin_outline.svg</file>
         <file alias="pause-circle_small_thin_outline">images/themed/tokenizable/pause-circle_small_thin_outline.svg</file>
+        <file alias="download_small_thin_outline">images/themed/tokenizable/download_small_thin_outline.svg</file>
     </qresource>
 </RCC>

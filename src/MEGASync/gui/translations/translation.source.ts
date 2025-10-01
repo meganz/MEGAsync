@@ -8972,6 +8972,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Categories for video type transfers</translatorcomment>
         <translation>Videos</translation>
     </message>
+    <message>
+       <source>Download</source>
+        <translatorcomment>Label of the button to start a new download</translatorcomment>
+        <translation>Download</translation>
+    </message>
 </context>
 <context>
     <name>TransferManagerDragBackDrop</name>
