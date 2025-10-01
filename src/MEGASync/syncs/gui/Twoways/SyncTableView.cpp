@@ -167,7 +167,6 @@ void SyncTableView::showContextMenu(const QPoint& pos, const QModelIndex index)
     menu->setProperty("class", QLatin1String("MegaMenu"));
     menu->setProperty("icon-token", QLatin1String("icon-primary"));
     menu->setAttribute(Qt::WA_DeleteOnClose);
-    menu->setAttribute(Qt::WA_TranslucentBackground);
 
     auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
 

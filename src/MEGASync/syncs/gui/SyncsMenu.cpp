@@ -39,8 +39,6 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, int itemIndent, QWidget* par
         QLatin1String(type == mega::MegaSync::SyncType::TYPE_BACKUP ? BACKUPC_ICON : SYNC_ICON),
         0);
     mMenuAction->setSubmenu(mMenu);
-    mMenu->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint);
-    mMenu->setAttribute(Qt::WA_TranslucentBackground);
 
     mMenu->setToolTipsVisible(true);
     mMenu->installEventFilter(this);
