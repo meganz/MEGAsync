@@ -8973,7 +8973,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Videos</translation>
     </message>
     <message>
-       <source>Download</source>
+        <source>Download</source>
         <translatorcomment>Label of the button to start a new download</translatorcomment>
         <translation>Download</translation>
     </message>

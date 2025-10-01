@@ -151,9 +151,3 @@ bool TokenizableItem::specificStateHasChanged(const QStyle::State& state,
 {
     return ((option.state & state) != (mCurrentOption.state & state));
 }
-
-bool TokenizableItem::specificStateHasChanged(const QStyle::State& state,
-                                              const QStyleOption& option)
-{
-    return ((option.state & state) != (mCurrentOption.state & state));
-}
