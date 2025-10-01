@@ -19,7 +19,6 @@ TokenizableItem::~TokenizableItem() {}
 bool TokenizableItem::stateHasChanged(const QStyleOption& option)
 {
     auto result(false);
-
     int currentThemeType = static_cast<int>(Preferences::instance()->getThemeType());
 
     if (mThemeType != currentThemeType)
@@ -83,10 +82,9 @@ void TokenizableItem::applyPixmap(QAbstractButton* button,
     }
 }
 
-void TokenizableItem::clear()
+void TokenizableItem::forceUpdate()
 {
     mInit = false;
-    mBaseTokens = BaseTokens();
     mCurrentOption = QStyleOptionButton();
     mThemeType = -1;
 }
@@ -98,6 +96,12 @@ bool TokenizableItem::isInitialized() const
 
 void TokenizableItem::init(QAbstractButton* button)
 {
+    mBaseTokens.fillTokens(button);
+    if (mBaseTokens.anyTokenHasChanged())
+    {
+        forceUpdate();
+    }
+
     if (!isInitialized() || themeHasChanged())
     {
         // Init QIcon::Mode::Active and QIcon::Mode::Disabled

@@ -42,6 +42,7 @@ public:
     void toggleOffSiblings();
 
     void setIconTokens(const std::shared_ptr<TokenPropertySetter>& newIconTokens);
+    void hideIcon();
 
     // Convenient method to set to all selectors
     static void applyTokens(QWidget* parent, std::shared_ptr<TokenPropertySetter> iconTokensSetter);

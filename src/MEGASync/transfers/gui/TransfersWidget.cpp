@@ -117,7 +117,7 @@ void TransfersWidget::configureTransferView()
     info.insert(TransferWidgetColumnsManager::Columns::CLEAR_CANCEL, ui->wCancelClear);
     info.insert(TransferWidgetColumnsManager::Columns::PAUSE_RESUME, ui->wPauseResume);
 
-    mColumnManager->addColumnsWidget(this, info);
+    mColumnManager->addHeaderWidget(info);
 }
 
 TransfersModel* TransfersWidget::getModel()
@@ -202,12 +202,11 @@ void TransfersWidget::onCheckCancelClearButton()
     }
 
     if (mCurrentTab == TransfersWidget::COMPLETED_TAB)
-    {        
+    {
         mCancelClearInfo.clearAction = true;
-
     }
     else if ((mCurrentTab > TransfersWidget::TYPES_TAB_BASE && mCurrentTab < TransfersWidget::TYPES_LAST) || mCurrentTab == TransfersWidget::SEARCH_TAB)
-    {        
+    {
         bool showClear(false);
 
         if(areAllTransfersCompleted)
@@ -236,15 +235,22 @@ void TransfersWidget::onCheckCancelClearButton()
     {
         if(mCancelClearInfo.clearAction)
         {
-            ui->tCancelClearVisible->setProperty("default_icon",
-                                                 QString::fromStdString("qrc:/images/transfer_manager/transfers_actions/lists_minus_all_ico_default.png"));
+            if (mCurrentTab == TransfersWidget::SEARCH_TAB)
+            {
+                ui->tCancelClearVisible->setProperty("state", QLatin1String("minus"));
+            }
+            else
+            {
+                ui->tCancelClearVisible->setProperty("state", QLatin1String("eraser"));
+            }
         }
         else
         {
-            ui->tCancelClearVisible->setProperty("default_icon",
-                                                 QString::fromStdString("qrc:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png"));
+            ui->tCancelClearVisible->setProperty("state", QLatin1String("x"));
         }
     }
+
+    TokenParserWidgetManager::instance()->polish(ui->tCancelClearVisible);
 }
 
 void TransfersWidget::updateCancelClearButtonTooltip()

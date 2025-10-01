@@ -241,9 +241,10 @@ void TransfersManagerSortFilterProxyModel::resetTransfersStateCounters()
     mPermanentFailedTransfers.clear();
 }
 
-TransferBaseDelegateWidget *TransfersManagerSortFilterProxyModel::createTransferManagerItem(QWidget*)
+TransferBaseDelegateWidget*
+    TransfersManagerSortFilterProxyModel::createTransferManagerItem(QWidget* view)
 {
-    auto item = new TransferManagerDelegateWidget(nullptr);
+    auto item = new TransferManagerDelegateWidget(view);
     if (mColumnManager)
     {
         item->setColumnManager(mColumnManager);

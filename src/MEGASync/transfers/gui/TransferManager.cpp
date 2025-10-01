@@ -36,7 +36,7 @@ const char* ITS_ON = "itsOn";
 const char* SEARCH_TEXT = "searchText";
 const char* SEARCH_BUTTON_SELECTED = "selected";
 
-TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) :
+TransferManager::TransferManager(MegaApi* megaApi):
     QDialog(nullptr),
     mUi(new Ui::TransferManager),
     mMegaApi(megaApi),
@@ -44,7 +44,6 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
     mPreferences(Preferences::instance()),
     mModel(nullptr),
     mSearchFieldReturnPressed(false),
-    mShadowTab (new QGraphicsDropShadowEffect(nullptr)),
     mSpeedRefreshTimer(new QTimer(this)),
     mStatsRefreshTimer(new QTimer(this)),
     mUiDragBackDrop(new Ui::TransferManagerDragBackDrop),
@@ -53,6 +52,7 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
     mFoundStalledIssues(false)
 {
     mUi->setupUi(this);
+    createSearchChips();
 
     mDragBackDrop = new QWidget(this);
     mUiDragBackDrop->setupUi(mDragBackDrop);
@@ -69,14 +69,6 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
     mUi->fCompleted->hide();
 
     mUi->sStatus->setCurrentWidget(mUi->pUpToDate);
-
-    QColor shadowColor (188, 188, 188);
-    mShadowTab->setParent(mUi->wTransferring);
-    mShadowTab->setBlurRadius(10.);
-    mShadowTab->setXOffset(0.);
-    mShadowTab->setYOffset(0.);
-    mShadowTab->setColor(shadowColor);
-    mShadowTab->setEnabled(true);
 
     mTabFramesToggleGroup[TransfersWidget::ALL_TRANSFERS_TAB] = mUi->fAllTransfers;
     mTabFramesToggleGroup[TransfersWidget::DOWNLOADS_TAB]     = mUi->fDownloads;
@@ -152,13 +144,7 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
         }
     }
 
-    auto managedButtons = mUi->wLeftPane->findChildren<QAbstractButton*>();
-    foreach(auto& button, managedButtons)
-    {
-        mButtonIconManager.addButton(button);
-    }
-
-    managedButtons = mUi->wRightPaneHeader->findChildren<QAbstractButton*>();
+    auto managedButtons = mUi->wRightPaneHeader->findChildren<QAbstractButton*>();
     foreach(auto& button, managedButtons)
     {
         mButtonIconManager.addButton(button);
@@ -211,14 +197,6 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
     connect(mSpeedRefreshTimer, &QTimer::timeout,
             this, &TransferManager::refreshSpeed);
 
-    auto sizePolicy = mUi->wDownSpeed->sizePolicy();
-    sizePolicy.setRetainSizeWhenHidden(true);
-    mUi->wDownSpeed->setSizePolicy(sizePolicy);
-
-    sizePolicy = mUi->wUpSpeed->sizePolicy();
-    sizePolicy.setRetainSizeWhenHidden(true);
-    mUi->wUpSpeed->setSizePolicy(sizePolicy);
-
     // Connect to storage quota signals
     connect(MegaSyncApp, &MegaApplication::storageStateChanged,
             this, &TransferManager::onStorageStateChanged,
@@ -234,18 +212,10 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
 
     onUpdatePauseState(mPreferences->getGlobalPaused());
 
-    toggleTab(tab);
-
     mTransferScanCancelUi = new TransferScanCancelUi(mUi->sTransfers, mTabNoItem[TransfersWidget::ALL_TRANSFERS_TAB]);
     connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
             this, &TransferManager::cancelScanning);
 
-    mUi->wAllResults->installEventFilter(this);
-    mUi->wDlResults->installEventFilter(this);
-    mUi->wUlResults->installEventFilter(this);
-    mUi->wLeftPane->installEventFilter(this);
-
-    mUi->lTextSearch->installEventFilter(this);
     mUi->leSearchField->installEventFilter(this);
 
 #ifdef Q_OS_MACOS
@@ -265,7 +235,6 @@ TransferManager::~TransferManager()
     disconnect(findChild<MegaTransferView*>(), &MegaTransferView::verticalScrollBarVisibilityChanged,
             this, &TransferManager::onVerticalScrollBarVisibilityChanged);
 
-    mShadowTab->deleteLater();
     delete mUi;
     delete mTransferScanCancelUi;
 }
@@ -317,16 +286,6 @@ void TransferManager::onFolderTransferUpdate(const FolderTransferUpdateEvent &ev
 void TransferManager::onPauseStateChangedByTransferResume()
 {
     onUpdatePauseState(false);
-}
-
-void TransferManager::updateCurrentSearchText()
-{
-    auto text = mUi->bSearchString->property(SEARCH_TEXT).toString();
-    mUi->bSearchString->setText(text);
-    mUi->lTextSearch->setText(mUi->lTextSearch->fontMetrics()
-                              .elidedText(text,
-                                          Qt::ElideMiddle,
-                                          mUi->lTextSearch->width()-1));
 }
 
 void TransferManager::updateCurrentCategoryTitle()
@@ -628,11 +587,6 @@ void TransferManager::refreshStateStats()
         {
             leftFooterWidget = mUi->pScanning;
         }
-        else if(failedNumber != 0 || !MegaSyncApp->getStalledIssuesModel()->isEmpty())
-        {
-            leftFooterWidget = mUi->pSomeIssues;
-            mUi->bSomeIssues->setText(tr("Issue found", "", static_cast<int>(failedNumber)));
-        }
         else if(processedNumber != 0)
         {
             leftFooterWidget = mUi->pSpeedAndClear;
@@ -832,18 +786,9 @@ void TransferManager::refreshSearchStats()
         int nbDl (proxy->getNumberOfItems(TransferData::TRANSFER_DOWNLOAD));
         int nbUl (proxy->getNumberOfItems(TransferData::TRANSFER_UPLOAD));
         int nbAll (nbDl + nbUl);
-
-        if(mUi->lDlResultsCounter->text().toLongLong() != nbDl)
-        {
-            mUi->lDlResultsCounter->setText(QString::number(nbDl));
-        }
-
-        if(mUi->lUlResultsCounter->text().toLongLong() != nbUl)
-        {
-            mUi->lUlResultsCounter->setText(QString::number(nbUl));
-        }
-
-        mUi->lAllResultsCounter->setText(QString::number(nbAll));
+        mUi->wAllResults->setCounter(nbAll);
+        mUi->wDlResults->setCounter(nbDl);
+        mUi->wUlResults->setCounter(nbUl);
 
         if(nbDl != 0 && nbUl != 0)
         {
@@ -853,19 +798,16 @@ void TransferManager::refreshSearchStats()
         else
         {
             int intNbAll = static_cast<int>(nbAll);
-            mUi->lNbResults->setText(QString(tr("%1 result found","", intNbAll)).arg(nbAll));
-            mUi->lNbResults->setProperty("results", static_cast<bool>(nbAll));
-            mUi->lNbResults->style()->unpolish(mUi->lNbResults);
-            mUi->lNbResults->style()->polish(mUi->lNbResults);
+            mUi->lNbResults->setText(QString(tr("%1 result found", "", intNbAll)).arg(nbAll));
             mUi->lNbResults->setVisible(true);
             mUi->searchByTextTypeSelector->setVisible(false);
         }
 
         bool showTypeFilters (mUi->wTransfers->getCurrentTab() == TransfersWidget::SEARCH_TAB);
+
+        mUi->wAllResults->setVisible(showTypeFilters);
         mUi->wDlResults->setVisible(showTypeFilters);
         mUi->wUlResults->setVisible(showTypeFilters);
-        mUi->wAllResults->setVisible(showTypeFilters);
-
         QWidget* widgetToShow (mUi->wTransfers);
 
         if (nbAll == 0)
@@ -950,18 +892,11 @@ void TransferManager::on_tSearchIcon_clicked()
 
 void TransferManager::applyTextSearch(const QString& text)
 {
-    mUi->lTextSearch->setText(mUi->lTextSearch->fontMetrics()
-                              .elidedText(text,
-                                          Qt::ElideMiddle,
-                                          mUi->lTextSearch->width()));
-    // Add number of found results
-    mUi->wAllResults->setProperty(SEARCH_BUTTON_SELECTED, true);
-    mUi->wDlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
-    mUi->wUlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
-
+    mUi->wAllResults->setSelected(true);
     mUi->wAllResults->hide();
     mUi->wDlResults->hide();
     mUi->wUlResults->hide();
+
     mUi->wSearch->show();
 
     //This is done to refresh the stylesheet as depends on the object properties
@@ -1006,35 +941,17 @@ void TransferManager::on_tClearSearchResult_clicked()
 
 void TransferManager::showAllResults()
 {
-    mUi->wAllResults->setProperty(SEARCH_BUTTON_SELECTED, true);
-    mUi->wDlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
-    mUi->wUlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
-
-    mUi->pSearchHeaderInfo->setStyleSheet(mUi->pSearchHeaderInfo->styleSheet());
-
     mUi->wTransfers->textFilterTypeChanged({});
 }
 
 void TransferManager::showDownloadResults()
 {
-    mUi->wAllResults->setProperty(SEARCH_BUTTON_SELECTED, false);
-    mUi->wDlResults->setProperty(SEARCH_BUTTON_SELECTED, true);
-    mUi->wUlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
-
-    mUi->pSearchHeaderInfo->setStyleSheet(mUi->pSearchHeaderInfo->styleSheet());
-
     mUi->wTransfers->textFilterTypeChanged(TransferData::TRANSFER_DOWNLOAD
                                     | TransferData::TRANSFER_LTCPDOWNLOAD);
 }
 
 void TransferManager::showUploadResults()
 {
-    mUi->wAllResults->setProperty(SEARCH_BUTTON_SELECTED, false);
-    mUi->wDlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
-    mUi->wUlResults->setProperty(SEARCH_BUTTON_SELECTED, true);
-
-    mUi->pSearchHeaderInfo->setStyleSheet(mUi->pSearchHeaderInfo->styleSheet());
-
     mUi->wTransfers->textFilterTypeChanged(TransferData::TRANSFER_UPLOAD);
 }
 
@@ -1135,7 +1052,6 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
 
         // Activate new tab frame
         mTabFramesToggleGroup[newTab]->setProperty(ITS_ON, true);
-        mTabFramesToggleGroup[newTab]->setGraphicsEffect(mShadowTab);
 
         // Reload QSS because it is glitchy
         mUi->wLeftPane->setStyleSheet(mUi->wLeftPane->styleSheet());
@@ -1263,89 +1179,21 @@ void TransferManager::checkActionAndMediaVisibility()
 
 bool TransferManager::eventFilter(QObject *obj, QEvent *event)
 {
-    if (obj == mUi->lTextSearch
-            && event->type() == QEvent::Resize
-            && mUi->sCurrentContent->currentWidget() == mUi->pSearchHeader)
-    {
-        auto newWidth (static_cast<QResizeEvent*>(event)->size().width());
-        mUi->lTextSearch->setText(mUi->lTextSearch->fontMetrics()
-                                  .elidedText(mUi->leSearchField->text(),
-                                              Qt::ElideMiddle,
-                                              newWidth - 24));
-    }
-    else if(obj == mUi->leSearchField && event->type() == QEvent::KeyPress)
+    if (obj == mUi->leSearchField && event->type() == QEvent::KeyPress)
     {
         auto keyEvent = dynamic_cast<QKeyEvent*>(event);
-        if(keyEvent && keyEvent->key() == Qt::Key_Escape)
+        if (keyEvent && keyEvent->key() == Qt::Key_Escape)
         {
             event->accept();
             on_tSearchCancel_clicked();
             focusNextChild();
             return true;
         }
-        else if(keyEvent && keyEvent->key() == Qt::Key_Return)
+        else if (keyEvent && keyEvent->key() == Qt::Key_Return)
         {
             mSearchFieldReturnPressed = true;
         }
     }
-    else if(obj == mUi->wAllResults || obj == mUi->wDlResults || obj == mUi->wUlResults)
-    {
-        if(event->type() == QEvent::MouseButtonRelease)
-        {
-            if(obj == mUi->wAllResults)
-            {
-                showAllResults();
-            }
-            else if(obj == mUi->wDlResults)
-            {
-
-                showDownloadResults();
-            }
-            else if(obj == mUi->wUlResults)
-            {
-                showUploadResults();
-            }
-        }
-        else if(event->type() == QEvent::KeyRelease)
-        {
-            auto widget = dynamic_cast<QWidget*>(obj);
-            if(widget)
-            {
-                auto keyEvent = dynamic_cast<QKeyEvent*>(event);
-                if(keyEvent && widget->hasFocus())
-                {
-                    if(keyEvent->key() == Qt::Key_Space)
-                    {
-                        QApplication::postEvent(widget, new QEvent(QEvent::MouseButtonRelease));
-                    }
-                }
-            }
-        }
-        else if(event->type() == QEvent::Paint)
-        {
-            auto widget = dynamic_cast<QWidget*>(obj);
-            if(widget && widget->hasFocus())
-            {
-                QPainter painter(widget);
-                QStyleOptionFocusRect option;
-                if((option.state |= QStyle::State_KeyboardFocusChange))
-                {
-                    option.init(widget);
-                    option.backgroundColor = palette().color(QPalette::Window);
-
-                    style()->drawPrimitive(QStyle::PE_FrameFocusRect, &option, &painter,
-                                           this);
-                    return true;
-                }
-            }
-        }
-    }
-    else if(obj == mUi->wLeftPane && event->type() == QEvent::Polish)
-    {
-        //Set the style for the first time as you need to update it as it depends on properties
-        mUi->wLeftPane->setStyleSheet(mUi->wLeftPane->styleSheet());
-    }
-
     return QDialog::eventFilter(obj, event);
 }
 
@@ -1372,7 +1220,6 @@ bool TransferManager::event(QEvent* event)
     {
         mUi->retranslateUi(this);
         updateCurrentCategoryTitle();
-        updateCurrentSearchText();
         onUpdatePauseState(mUi->wTransfers->getProxyModel()->getPausedTransfers());
     }
     return QDialog::event(event);
@@ -1497,4 +1344,28 @@ void TransferManager::onRequestTaskbarPinningTimeout()
 {
     mTaskbarPinningRequestTimer->stop();
     Platform::getInstance()->pinOnTaskbar();
+}
+
+void TransferManager::createSearchChips()
+{
+    mUi->wAllResults->setTitle(tr("All"));
+    mUi->wDlResults->setTitle(tr("Downloads"));
+    mUi->wUlResults->setTitle(tr("Uploads"));
+
+    mUi->wAllResults->hideIcon();
+    mUi->wDlResults->hideIcon();
+    mUi->wUlResults->hideIcon();
+
+    QObject::connect(mUi->wAllResults,
+                     &TabSelector::clicked,
+                     this,
+                     &TransferManager::showAllResults);
+    QObject::connect(mUi->wDlResults,
+                     &TabSelector::clicked,
+                     this,
+                     &TransferManager::showDownloadResults);
+    QObject::connect(mUi->wUlResults,
+                     &TabSelector::clicked,
+                     this,
+                     &TransferManager::showUploadResults);
 }

@@ -29,7 +29,7 @@ class TransferManager : public QDialog
     Q_OBJECT
 
 public:
-    explicit TransferManager(TransfersWidget::TM_TAB tab, mega::MegaApi *megaApi);
+    explicit TransferManager(mega::MegaApi* megaApi);
     ~TransferManager();
 
     void pauseModel(bool state);
@@ -91,7 +91,6 @@ private:
 
     bool mSearchFieldReturnPressed;
 
-    QGraphicsDropShadowEffect* mShadowTab;
     QSet<Utilities::FileType> mFileTypesFilter;
     QTimer* mSpeedRefreshTimer;
     QTimer* mStatsRefreshTimer;
@@ -118,15 +117,11 @@ private:
     void checkPauseButtonVisibilityIfPossible();
     void showTransferQuotaBanner(bool state);
 
-    void showAllResults();
-    void showDownloadResults();
-    void showUploadResults();
-
-    void updateCurrentSearchText();
     void updateCurrentCategoryTitle();
 
     void filterByTab(TransfersWidget::TM_TAB tab);
     void startRequestTaskbarPinningTimer();
+    void createSearchChips();
 
 private slots:
     void on_tCompleted_clicked();
@@ -178,6 +173,10 @@ private slots:
 
     void onSortCriterionChanged(int sortBy, Qt::SortOrder order);
     void onRequestTaskbarPinningTimeout();
+
+    void showAllResults();
+    void showDownloadResults();
+    void showUploadResults();
 };
 
 #endif // TRANSFERMANAGER_H

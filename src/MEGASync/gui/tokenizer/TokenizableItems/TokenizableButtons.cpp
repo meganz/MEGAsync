@@ -10,15 +10,14 @@ TokenizableButton::TokenizableButton(QWidget* parent):
     setCursor(Qt::PointingHandCursor);
 }
 
-void TokenizableButton::clear()
-{
-    mButtonTokens = ButtonTokens();
-}
-
 void TokenizableButton::paintEvent(QPaintEvent* event)
 {
     QStyleOptionButton option;
     initStyleOption(&option);
+    if (mForcedState != QStyle::State_None)
+    {
+        option.state |= mForcedState;
+    }
 
     // The first time the button is painted
     init(this);
@@ -55,15 +54,35 @@ void TokenizableButton::paintEvent(QPaintEvent* event)
 
 void TokenizableButton::init(QAbstractButton*)
 {
+    mButtonTokens.fillTokens(this);
+
     if (!isInitialized())
     {
         // If no dynamic properties were added, add the default button properties
         ButtonTokensByType::setDefaultTokens(this);
+    }
 
-        mButtonTokens.fillTokens(this);
+    if (mButtonTokens.anyTokenHasChanged())
+    {
+        forceUpdate();
     }
 
     TokenizableItem::init(this);
+}
+
+void TokenizableButton::forcePress()
+{
+    mForcedState = QStyle::State_Sunken;
+}
+
+void TokenizableButton::forceMouseOver()
+{
+    mForcedState = QStyle::State_MouseOver;
+}
+
+void TokenizableButton::resetForcedState()
+{
+    mForcedState = QStyle::State_None;
 }
 
 /*************** ONLY_ICON_BUTTON ***************/

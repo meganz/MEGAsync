@@ -58,7 +58,7 @@
 
 #wContent[type=&quot;warning&quot;] #lIcon
 {
-	image: url(:/images/banner/warning.svg);
+	image: url(:/alert-triangle.svg);
 }
 
 /* Error */
@@ -75,7 +75,7 @@
 
 #wContent[type=&quot;error&quot;] #lIcon
 {
-	image: url(:/images/banner/error.svg);
+	image: url(:/x_circle_small_thin_outline_text_error);
 }
 
 /* Info */
@@ -92,7 +92,7 @@
 
 #wContent[type=&quot;info&quot;] #lIcon
 {
-	image: url(:/images/banner/info.svg);
+	qproperty-icon: url(:/info_small_thin_outline_text_info);
 }
 </string>
   </property>
@@ -167,7 +167,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="lIcon">
+          <widget class="QToolButton" name="lIcon">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -188,12 +188,6 @@
            </property>
            <property name="text">
             <string notr="true"/>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-           </property>
-           <property name="textInteractionFlags">
-            <set>Qt::NoTextInteraction</set>
            </property>
           </widget>
          </item>

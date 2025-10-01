@@ -17,6 +17,8 @@ StatusInfo::StatusInfo(QWidget *parent) :
     mScanningTimer.setInterval(60);
     mScanningAnimationIndex = 1;
     connect(&mScanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
+
+    setProperty("TOKENIZED", true);
 }
 
 StatusInfo::~StatusInfo()
@@ -40,8 +42,8 @@ void StatusInfo::setState(TRANSFERS_STATES state)
             const QString statusText{tr("Paused")};
             ui->lStatusDesc->setToolTip(statusText);
             ui->lStatusDesc->setText(statusText);
-            ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/pause.svg")));
-            ui->bIconState->setIconSize(QSize(16, 16));
+
+            ui->bIconState->setProperty("state", QString::fromUtf8("paused"));
 
             break;
         }
@@ -57,18 +59,18 @@ void StatusInfo::setState(TRANSFERS_STATES state)
                 const QString statusText{tr("Account full")};
                 ui->lStatusDesc->setToolTip(statusText);
                 ui->lStatusDesc->setText(statusText);
-                ui->bIconState->setIcon(
-                    Utilities::getCachedPixmap(QString::fromUtf8(":/alert-circle.svg")));
-                ui->bIconState->setIconSize(QSize(16, 16));
+
+                ui->bIconState->setProperty("state", QString::fromUtf8("over_quota"));
+                ui->bIconState->setProperty("normal_off", QString::fromUtf8("support-error"));
             }
             else
             {
                 const QString statusText{tr("Up to date")};
                 ui->lStatusDesc->setToolTip(statusText);
                 ui->lStatusDesc->setText(statusText);
-                ui->bIconState->setIcon(Utilities::getCachedPixmap(
-                    QString::fromUtf8(":/check-circle-indicator-green")));
-                ui->bIconState->setIconSize(QSize(16, 16));
+
+                ui->bIconState->setProperty("state", QString::fromUtf8("up_to_date"));
+                ui->bIconState->setProperty("normal_off", QString::fromUtf8("indicator-green"));
             }
 
             break;
@@ -133,9 +135,9 @@ void StatusInfo::setState(TRANSFERS_STATES state)
             }
 
             setFailedText();
-            ui->bIconState->setIcon(
-                Utilities::getCachedPixmap(QString::fromUtf8(":/x-circle.svg")));
-            ui->bIconState->setIconSize(QSize(16, 16));
+            ui->bIconState->setProperty("state", QString::fromUtf8("failed"));
+            ui->bIconState->setProperty("normal_off", QString::fromUtf8("indicator-pink"));
+
             break;
         }
         default:
@@ -179,6 +181,8 @@ void StatusInfo::scanningAnimationStep()
     const auto scanningIconImages = 30;
     mScanningAnimationIndex = mScanningAnimationIndex % scanningIconImages;
     ++mScanningAnimationIndex;
+    ui->bIconState->setProperty("normal_off", QString::fromUtf8("icon-primary"));
+    ui->bIconState->setProperty("state", QVariant());
     ui->bIconState->setIcon(scanningIcon(mScanningAnimationIndex));
 }
 

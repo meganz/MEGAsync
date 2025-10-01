@@ -99,6 +99,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/IconLabel.h
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/TokenPropertyNames.h
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/TokenPropertySetter.h
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/IconProperty.h
     ${CMAKE_CURRENT_LIST_DIR}/backups/BackupCandidatesComponent.h
     ${CMAKE_CURRENT_LIST_DIR}/backups/BackupsController.h
     ${CMAKE_CURRENT_LIST_DIR}/backups/BackupCandidatesModel.h
@@ -287,7 +288,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/win/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/win/VerifyLockMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/AccountTypeWidget.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
@@ -298,7 +298,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/macx/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/VerifyLockMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/macx/LockedPopOver.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/AccountTypeWidget.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
@@ -309,7 +308,6 @@ target_sources_conditional(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/linux/Login2FA.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/linux/VerifyLockMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/AccountTypeWidget.ui
 )
 
 # Resources and platform-specific additions
@@ -497,6 +495,7 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ui/ViewLoadingScene.ui
     ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ui/ViewLoadingMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/NodeNameSetterDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/AccountTypeWidget.ui
 )
 
 target_sources_conditional(${ExecutableTarget}

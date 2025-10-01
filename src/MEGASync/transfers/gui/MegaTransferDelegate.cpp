@@ -30,8 +30,8 @@ MegaTransferDelegate::~MegaTransferDelegate()
 }
 
 void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
-{   
-    auto row (index.row());
+{
+    auto row(index.row());
 
     if (index.isValid())
     {
@@ -117,7 +117,7 @@ bool MegaTransferDelegate::event(QEvent *event)
 }
 
 TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QModelIndex& index, const QSize& size) const
-{ 
+{
     TransferBaseDelegateWidget* item(nullptr);
     
     if(index.isValid())
@@ -133,8 +133,15 @@ TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QM
         {
             item = mProxyModel->createTransferManagerItem(mView);
             TokenParserWidgetManager::instance()->applyCurrentTheme(item);
-            item->style()->unpolish(item);
-            item->style()->polish(item);
+            // Setting again its own parent will tell the widget that the stylesheet needs to be
+            // reloaded
+            item->setParent(item->parentWidget(), item->windowFlags());
+
+            // Refresh completely the widget
+            item->show();
+            TokenParserWidgetManager::instance()->polish(item);
+            item->hide();
+
             mTransferItems.append(item);
         }
         else
@@ -146,6 +153,17 @@ TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QM
     }
     
     return item;
+}
+
+QAbstractButton* MegaTransferDelegate::isButton(TransferBaseDelegateWidget* row, const QPoint& pos)
+{
+    auto w(row->childAt(pos));
+    if (w)
+    {
+        return qobject_cast<QAbstractButton*>(w);
+    }
+
+    return nullptr;
 }
 
 bool MegaTransferDelegate::editorEvent(QEvent* event, QAbstractItemModel*,
@@ -163,19 +181,15 @@ bool MegaTransferDelegate::editorEvent(QEvent* event, QAbstractItemModel*,
             case QEvent::MouseButtonRelease:
             {
                 QMouseEvent* me = static_cast<QMouseEvent*>(event);
-                if( me->button() == Qt::LeftButton )
+                if (me->button() == Qt::LeftButton)
                 {
-                    TransferBaseDelegateWidget* currentRow (getTransferItemWidget(index, option.rect.size()));
+                    TransferBaseDelegateWidget* currentRow(
+                        getTransferItemWidget(index, option.rect.size()));
                     if (currentRow)
                     {
-                        auto w(currentRow->childAt(me->pos() - currentRow->pos()));
-                        if (w)
+                        if (auto button = isButton(currentRow, me->pos() - currentRow->pos()))
                         {
-                            auto t(qobject_cast<QToolButton*>(w));
-                            if (t)
-                            {
-                                t->click();
-                            }
+                            button->click();
                         }
                     }
                 }
@@ -253,7 +267,10 @@ void MegaTransferDelegate::onHoverMove(const QModelIndex &index, const QRect &re
         {
             if(hoverType == TransferBaseDelegateWidget::ActionHoverType::HOVER_ENTER)
             {
-               mView->setCursor(Qt::PointingHandCursor);
+                if (isButton(currentRow, pos))
+                {
+                    mView->setCursor(Qt::PointingHandCursor);
+                }
             }
             else
             {

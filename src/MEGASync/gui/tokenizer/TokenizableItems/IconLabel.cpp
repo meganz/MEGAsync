@@ -19,7 +19,7 @@ void IconLabel::paintEvent(QPaintEvent* event)
     // The first time the button is painted
     init(this);
 
-    if (stateHasChanged(option))
+    if (stateHasChanged(option) || mBaseTokens.anyTokenHasChanged())
     {
         applyDefaultPixmap(this);
     }

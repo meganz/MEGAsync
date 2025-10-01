@@ -1,21 +1,22 @@
 #ifndef TOKENIZABLEBUTTONS_H
 #define TOKENIZABLEBUTTONS_H
 
+#include "IconProperty.h"
 #include "TokenizableItems.h"
 
 #include <QPushButton>
 
-class ButtonTokens
+class ButtonTokens: public TokenUtilities
 {
 public:
     ButtonTokens() = default;
 
     void fillTokens(QAbstractButton* button)
     {
-        mPressedOff = button->property(TOKEN_PROPERTIES::pressedOff).toString();
-        mPressedOn = button->property(TOKEN_PROPERTIES::pressedOn).toString();
-        mHoverOff = button->property(TOKEN_PROPERTIES::hoverOff).toString();
-        mHoverOn = button->property(TOKEN_PROPERTIES::hoverOn).toString();
+        fillToken(mPressedOff, TOKEN_PROPERTIES::pressedOff, button);
+        fillToken(mPressedOn, TOKEN_PROPERTIES::pressedOn, button);
+        fillToken(mHoverOff, TOKEN_PROPERTIES::hoverOff, button);
+        fillToken(mHoverOn, TOKEN_PROPERTIES::hoverOn, button);
     }
 
     // hover_off
@@ -75,8 +76,12 @@ class TokenizableButton: public QPushButton, public TokenizableItem
 
 public:
     TokenizableButton(QWidget* parent = nullptr);
+    
+    void forcePress();
+    void forceMouseOver();
+    void resetForcedState();
 
-    void clear() override;
+    DEFINE_ICON_PROPERTY()
 
 protected:
     void paintEvent(QPaintEvent* event) override;
@@ -84,6 +89,7 @@ protected:
 
 private:
     ButtonTokens mButtonTokens;
+    QStyle::State mForcedState;
 };
 
 class IconOnlyButton: public TokenizableButton

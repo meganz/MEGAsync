@@ -124,13 +124,14 @@ Rectangle {
                     onPressed: {
                         pauseResumeButton.color = ColorTheme.buttonOutlinePressed
                     }
-
                     onReleased: {
-                        // When released, check if mouse is still hovering
                         if (containsMouse) {
                             pauseResumeButton.color = ColorTheme.buttonOutlineHover
                         } else {
-                            pauseResumeButton.color = ColorTheme.buttonOutline
+                            // Restore the original binding
+                            pauseResumeButton.color = Qt.binding(function() {
+                                return ColorTheme.buttonOutline
+                            })
                         }
                     }
 
@@ -142,9 +143,11 @@ Rectangle {
                     }
 
                     onExited: {
-                        // Only change to normal if not currently pressed
                         if (!pressed) {
-                            pauseResumeButton.color = ColorTheme.buttonOutline
+                            // Restore the original binding
+                            pauseResumeButton.color = Qt.binding(function() {
+                                return ColorTheme.buttonOutline
+                            })
                         }
                     }
                 }

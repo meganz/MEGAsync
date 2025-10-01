@@ -219,3 +219,8 @@ void TabSelector::toggleOffSiblings()
         }
     }
 }
+
+void TabSelector::hideIcon()
+{
+    ui->lIcon->setVisible(false);
+}

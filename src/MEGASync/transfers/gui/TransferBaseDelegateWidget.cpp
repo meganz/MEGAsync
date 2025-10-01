@@ -60,7 +60,8 @@ void TransferBaseDelegateWidget::render(const QStyleOptionViewItem&, QPainter *p
     QWidget::render(painter,QPoint(0,0),sourceRegion);
 }
 
-bool TransferBaseDelegateWidget::setActionTransferIcon(QToolButton *button, const QString &iconName)
+bool TransferBaseDelegateWidget::setActionTransferIcon(QAbstractButton* button,
+                                                       const QString& iconName)
 {
     bool update(false);
 
@@ -77,7 +78,8 @@ bool TransferBaseDelegateWidget::setActionTransferIcon(QToolButton *button, cons
     return update;
 }
 
-bool TransferBaseDelegateWidget::isMouseHoverInAction(QToolButton *button, const QPoint& mousePos)
+bool TransferBaseDelegateWidget::isMouseHoverInAction(QAbstractButton* button,
+                                                      const QPoint& mousePos)
 {   
     if(button->testAttribute(Qt::WA_WState_Hidden))
     {

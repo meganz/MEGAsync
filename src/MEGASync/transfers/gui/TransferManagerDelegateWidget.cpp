@@ -3,20 +3,17 @@
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "MegaTransferView.h"
+#include "ThemeManager.h"
 #include "TransferWidgetColumnsManager.h"
 #include "ui_TransferManagerDelegateWidget.h"
 #include "Utilities.h"
+#include <TokenParserWidgetManager.h>
 
 #include <QMouseEvent>
 #include <QPainterPath>
 
 constexpr uint PB_PRECISION = 1000;
-#ifdef Q_OS_MACOS
-const QColor HOVER_COLOR = QColor("#F7F7F7");
-#else
-const QColor HOVER_COLOR = QColor("#FAFAFA");
-#endif
-const QColor SELECTED_BORDER_COLOR = QColor("#E9E9E9");
+const char* ACTION_BUTTONS_VISIBILITY = "action_visible";
 
 using namespace mega;
 
@@ -41,6 +38,9 @@ TransferManagerDelegateWidget::TransferManagerDelegateWidget(QWidget *parent) :
     mUi->lDone->installEventFilter(this);
     mUi->lTotal->installEventFilter(this);
     mUi->sStatus->installEventFilter(this);
+
+    setProperty("TOKENIZED", true);
+    TokenParserWidgetManager::instance()->polish(this);
 }
 
 TransferManagerDelegateWidget::~TransferManagerDelegateWidget()
@@ -96,9 +96,10 @@ void TransferManagerDelegateWidget::updateTransferState()
 
             if(stateHasChanged())
             {
-                mPauseResumeTransferDefaultIconName = QLatin1String(":images/transfer_manager/transfers_actions/lists_pause_ico_default.png");
-                pauseResumeTooltip = MegaTransferView::pauseActionText(1); //Use singular form
-                cancelClearTooltip = MegaTransferView::cancelActionText(1); //Use singular form
+                mPauseResumeTransferDefaultIconName =
+                    QLatin1String(":/pause_small_thin_outline_button_outline");
+                pauseResumeTooltip = MegaTransferView::pauseActionText(1); // Use singular form
+                cancelClearTooltip = MegaTransferView::cancelActionText(1); // Use singular form
                 mUi->wProgressBar->setVisible(true);
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
@@ -123,12 +124,13 @@ void TransferManagerDelegateWidget::updateTransferState()
         {
             if(stateHasChanged())
             {
-                mPauseResumeTransferDefaultIconName = QLatin1String(":images/transfer_manager/transfers_actions/lists_pause_ico_selected.png");
-                pauseResumeTooltip = MegaTransferView::resumeActionText(1); //Use singular form
-                cancelClearTooltip = MegaTransferView::cancelActionText(1); //Use singular form
+                mPauseResumeTransferDefaultIconName =
+                    QLatin1String(":/play_small_thin_outline_button_outline");
+                pauseResumeTooltip = MegaTransferView::resumeActionText(1); // Use singular form
+                cancelClearTooltip = MegaTransferView::cancelActionText(1); // Use singular form
                 mUi->wProgressBar->setVisible(true);
 
-                if(getData()->mTransferredBytes != 0)
+                if (getData()->mTransferredBytes != 0)
                 {
                     mUi->lItemPaused->setText(getState(TRANSFER_STATES::STATE_PAUSED));
                     mUi->lItemPaused->setToolTip(getState(TRANSFER_STATES::STATE_PAUSED));
@@ -137,9 +139,11 @@ void TransferManagerDelegateWidget::updateTransferState()
                 else
                 {
                     mUi->lItemPausedQueued_1->setText(getState(TRANSFER_STATES::STATE_PAUSED));
-                    mUi->lItemPausedQueued_2->setText(getState(TRANSFER_STATES::STATE_INQUEUE_PARENTHESIS));
+                    mUi->lItemPausedQueued_2->setText(
+                        getState(TRANSFER_STATES::STATE_INQUEUE_PARENTHESIS));
                     mUi->lItemPausedQueued_1->setToolTip(getState(TRANSFER_STATES::STATE_PAUSED));
-                    mUi->lItemPausedQueued_2->setToolTip(getState(TRANSFER_STATES::STATE_INQUEUE_PARENTHESIS));
+                    mUi->lItemPausedQueued_2->setToolTip(
+                        getState(TRANSFER_STATES::STATE_INQUEUE_PARENTHESIS));
                     mUi->sStatus->setCurrentWidget(mUi->pPausedQueued);
                 }
             }
@@ -152,16 +156,18 @@ void TransferManagerDelegateWidget::updateTransferState()
         {
             if(stateHasChanged())
             {
-                mPauseResumeTransferDefaultIconName = QLatin1String(":images/transfer_manager/transfers_actions/lists_pause_ico_default.png");
-                pauseResumeTooltip = MegaTransferView::pauseActionText(1); //Use singular form
-                cancelClearTooltip = MegaTransferView::cancelActionText(1); //Use singular form
+                mPauseResumeTransferDefaultIconName =
+                    QLatin1String(":/pause_small_thin_outline_button_outline");
+                pauseResumeTooltip = MegaTransferView::pauseActionText(1); // Use singular form
+                cancelClearTooltip = MegaTransferView::cancelActionText(1); // Use singular form
                 mUi->wProgressBar->setVisible(true);
                 mUi->sStatus->setCurrentWidget(mUi->pQueued);
 
-                if(getData()->mErrorCode == MegaError::API_EOVERQUOTA)
+                if (getData()->mErrorCode == MegaError::API_EOVERQUOTA)
                 {
-                    QString retryMsg (getData()->mErrorValue ? getState(TRANSFER_STATES::STATE_OUT_OF_TRANSFER_QUOTA)
-                                                        : getState(TRANSFER_STATES::STATE_OUT_OF_STORAGE_SPACE));
+                    QString retryMsg(getData()->mErrorValue ?
+                                         getState(TRANSFER_STATES::STATE_OUT_OF_TRANSFER_QUOTA) :
+                                         getState(TRANSFER_STATES::STATE_OUT_OF_STORAGE_SPACE));
                     mUi->lRetryMsg->setText(retryMsg);
                     mUi->lRetryMsg->setToolTip(retryMsg);
                     mUi->sStatus->setCurrentWidget(mUi->pRetry);
@@ -233,9 +239,10 @@ void TransferManagerDelegateWidget::updateTransferState()
 
             if(stateHasChanged())
             {
-                mPauseResumeTransferDefaultIconName = QLatin1String(":images/transfer_manager/transfers_actions/lists_pause_ico_default.png");
-                pauseResumeTooltip = MegaTransferView::pauseActionText(1); //Use singular form
-                cancelClearTooltip = MegaTransferView::cancelActionText(1); //Use singular form
+                mPauseResumeTransferDefaultIconName =
+                    QLatin1String(":/pause_small_thin_outline_button_outline");
+                pauseResumeTooltip = MegaTransferView::pauseActionText(1); // Use singular form
+                cancelClearTooltip = MegaTransferView::cancelActionText(1); // Use singular form
                 mUi->lItemStatus->setToolTip(getErrorText());
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
@@ -283,7 +290,7 @@ void TransferManagerDelegateWidget::updateTransferState()
             mUi->tPauseResumeTransfer->setIcon(icon);
             mUi->tPauseResumeTransfer->setToolTip(pauseResumeTooltip);
         }
-        mUi->tPauseResumeTransfer->setVisible(showTPauseResume);
+        mUi->tPauseResumeTransfer->setProperty(ACTION_BUTTONS_VISIBILITY, showTPauseResume);
 
         // Cancel/Clear Button
         if ((getData()->mType & TransferData::TRANSFER_SYNC)
@@ -295,7 +302,7 @@ void TransferManagerDelegateWidget::updateTransferState()
         {
             mUi->tCancelClearTransfer->setToolTip(cancelClearTooltip);
         }
-        mUi->tCancelClearTransfer->setVisible(showTCancelClear);
+        mUi->tCancelClearTransfer->setProperty(ACTION_BUTTONS_VISIBILITY, showTCancelClear);
 
         mUi->lDone->setVisible(!(getData()->getState() & TransferData::FINISHED_STATES_MASK));
 
@@ -313,8 +320,8 @@ void TransferManagerDelegateWidget::updateTransferState()
 
     auto sizes = Utilities::getProgressSizes(transferedB, totalB);
 
-    mUi->lDone->setText(sizes.transferredBytes + QLatin1String("/"));
-    mUi->lTotal->setText(sizes.totalBytes + QLatin1String(" ") + sizes.units);
+    mUi->lDone->setText(sizes.transferredBytes + QLatin1String(" ") + QLatin1String("/"));
+    mUi->lTotal->setText(QLatin1String(" ") + sizes.totalBytes + QLatin1String(" ") + sizes.units);
 
     // Progress bar
     int permil = getData()->getState() & (TransferData::TRANSFER_COMPLETED | TransferData::TRANSFER_COMPLETING) ?
@@ -330,13 +337,12 @@ void TransferManagerDelegateWidget::updateTransferState()
     mUi->lItemTime->setText(timeString);
     mUi->lItemTime->setToolTip(timeTooltip);
 
+    mUi->bItemSpeed->setVisible(mColumnManager->getCurrentTab() !=
+                                TransfersWidget::TM_TAB::FAILED_TAB);
+    mUi->lItemTime->setVisible(mColumnManager->getCurrentTab() !=
+                               TransfersWidget::TM_TAB::FAILED_TAB);
 
     mUi->lSyncIcon->setVisible(getData()->isSyncTransfer());
-    if(getData()->isSyncTransfer())
-    {
-        auto syncIcon = Utilities::getCachedPixmap(QLatin1String(":/images/transfer_manager/transfers_states/synching_ico.png"));
-        mUi->lSyncIcon->setPixmap(syncIcon.pixmap(mUi->lSyncIcon->size()));
-    }
 }
 
 void TransferManagerDelegateWidget::setFileNameAndType()
@@ -355,20 +361,21 @@ void TransferManagerDelegateWidget::setFileNameAndType()
 
 void TransferManagerDelegateWidget::setType()
 {
-    QIcon icon;
+    QString icon;
 
     auto transferType = getData()->mType;
 
     if(transferType & TransferData::TRANSFER_DOWNLOAD || transferType & TransferData::TRANSFER_LTCPDOWNLOAD)
     {
-        icon = Utilities::getCachedPixmap(QLatin1String(":/images/transfer_manager/transfers_states/arrow_download_ico.png"));
+        icon =
+            Utilities::getPixmapName(QLatin1String("down_arrow"), Utilities::AttributeType::NONE);
     }
     else if(transferType & TransferData::TRANSFER_UPLOAD)
     {
-        icon = Utilities::getCachedPixmap(QLatin1String(":/images/transfer_manager/transfers_states/arrow_upload_ico.png"));
+        icon = Utilities::getPixmapName(QLatin1String("up_arrow"), Utilities::AttributeType::NONE);
     }
 
-    mUi->bItemSpeed->setIcon(icon);
+    mUi->bItemSpeed->setIcon(QIcon(icon));
 }
 
 void TransferManagerDelegateWidget::adjustFileName()
@@ -415,13 +422,17 @@ TransferBaseDelegateWidget::ActionHoverType TransferManagerDelegateWidget::mouse
 
         if(isCompleted)
         {
-            update = setActionTransferIcon(mUi->tCancelClearTransfer, inCancelClear ? QString::fromLatin1("://images/transfer_manager/transfers_actions/lists_minus_ico_hover.png")
-                                                            : QString::fromLatin1("://images/transfer_manager/transfers_actions/lists_minus_ico_default.png"));
+            update = setActionTransferIcon(
+                mUi->tCancelClearTransfer,
+                inCancelClear ? QString::fromLatin1(":/x_small_thin_outline_button_outline_hover") :
+                                QString::fromLatin1(":/x_small_thin_outline_button_outline"));
         }
         else
         {
-            update = setActionTransferIcon(mUi->tCancelClearTransfer, inCancelClear ? QString::fromLatin1("://images/transfer_manager/transfers_actions/lists_cancel_ico_hover.png")
-                                                                : QString::fromLatin1("://images/transfer_manager/transfers_actions/lists_cancel_ico_default.png"));
+            update = setActionTransferIcon(
+                mUi->tCancelClearTransfer,
+                inCancelClear ? QString::fromLatin1(":/x_small_thin_outline_button_outline_hover") :
+                                QString::fromLatin1(":/x_small_thin_outline_button_outline"));
         }
 
         bool inPauseResume = isMouseHoverInAction(mUi->tPauseResumeTransfer, pos);
@@ -429,10 +440,13 @@ TransferBaseDelegateWidget::ActionHoverType TransferManagerDelegateWidget::mouse
 
         if(getData())
         {
-            auto hoverPauseResume = getData()->getState() == TransferData::TransferState::TRANSFER_PAUSED ? QString::fromLatin1("://images/transfer_manager/transfers_actions/lists_pause_ico_hover_selected.png") :
-                                                                                                    QString::fromLatin1("://images/transfer_manager/transfers_actions/lists_pause_ico_hover.png");
-            update |= setActionTransferIcon(mUi->tPauseResumeTransfer, inPauseResume ? hoverPauseResume
-                                                                : mPauseResumeTransferDefaultIconName);
+            auto hoverPauseResume =
+                getData()->getState() == TransferData::TransferState::TRANSFER_PAUSED ?
+                    QString::fromLatin1(":/play_small_thin_outline_button_outline_hover") :
+                    QString::fromLatin1(":/pause_small_thin_outline_button_outline_hover");
+            update |= setActionTransferIcon(mUi->tPauseResumeTransfer,
+                                            inPauseResume ? hoverPauseResume :
+                                                            mPauseResumeTransferDefaultIconName);
         }
 
         if(inCancelClear || inPauseResume || inRetry)
@@ -448,11 +462,15 @@ TransferBaseDelegateWidget::ActionHoverType TransferManagerDelegateWidget::mouse
     {
         if(isCompleted)
         {
-            update = setActionTransferIcon(mUi->tCancelClearTransfer, QString::fromLatin1("://images/transfer_manager/transfers_actions/lists_minus_ico_default.png"));
+            update =
+                setActionTransferIcon(mUi->tCancelClearTransfer,
+                                      QString::fromLatin1(":/x_small_thin_outline_button_outline"));
         }
         else
         {
-            update = setActionTransferIcon(mUi->tCancelClearTransfer, QString::fromLatin1("://images/transfer_manager/transfers_actions/lists_cancel_ico_default.png"));
+            update =
+                setActionTransferIcon(mUi->tCancelClearTransfer,
+                                      QString::fromLatin1(":/x_small_thin_outline_button_outline"));
         }
         update |= setActionTransferIcon(mUi->tPauseResumeTransfer, mPauseResumeTransferDefaultIconName);
 
@@ -465,63 +483,82 @@ TransferBaseDelegateWidget::ActionHoverType TransferManagerDelegateWidget::mouse
     return hoverType;
 }
 
-void TransferManagerDelegateWidget::render(const QStyleOptionViewItem &option, QPainter *painter, const QRegion &sourceRegion)
+void TransferManagerDelegateWidget::render(const QStyleOptionViewItem& option,
+                                           QPainter* painter,
+                                           const QRegion& sourceRegion)
 {
     bool isDragging(false);
-
+    static QColor hoverColor =
+        TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-1"));
+    static QColor selectColor =
+        TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-2"));
+    static auto theme = Preferences::instance()->getThemeType();
+    if (theme != Preferences::instance()->getThemeType())
+    {
+        theme = Preferences::instance()->getThemeType();
+        hoverColor = TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-1"));
+        selectColor = TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-2"));
+    }
+    bool showButtons = false;
     auto view = dynamic_cast<MegaTransferView*>(parent());
-    if(view)
+    if (view)
     {
         isDragging = view->state() == MegaTransferView::DraggingState;
     }
 
-    if(option.state & (QStyle::State_MouseOver | QStyle::State_Selected))
+    if (option.state & (QStyle::State_MouseOver | QStyle::State_Selected))
     {
         QPainterPath path;
-        path.addRoundedRect(QRectF(12.0,
-                                   4.0,
-                                   option.rect.width() - 20.0,
-                                   option.rect.height() - 7.0),
-                            10, 10);
+        painter->setRenderHint(QPainter::Antialiasing, true);
+        path.addRoundedRect(
+            QRectF(12.0, 4.0, option.rect.width() - 24.0, option.rect.height() - 8.0),
+            4,
+            4);
 
         QPen pen;
 
-        if(option.state & QStyle::State_MouseOver && option.state & QStyle::State_Selected)
+        if (option.state & QStyle::State_Selected)
         {
-            pen.setColor(SELECTED_BORDER_COLOR);
-            pen.setWidth(2);
-            painter->fillPath(path, HOVER_COLOR);
+            pen.setColor(selectColor);
+            painter->fillPath(path, selectColor);
+            showButtons = true;
         }
         else
         {
-            if(option.state & QStyle::State_MouseOver)
+            if (option.state & QStyle::State_MouseOver)
             {
-                pen.setColor(HOVER_COLOR);
-                painter->fillPath(path, HOVER_COLOR);
+                pen.setColor(hoverColor);
+                painter->fillPath(path, hoverColor);
+                showButtons = true;
             }
             else if (option.state & QStyle::State_Selected)
             {
+                showButtons = true;
                 auto painterWidget = dynamic_cast<QWidget*>(painter->device());
 
-                if(isDragging && painterWidget)
+                if (isDragging && painterWidget)
                 {
                     painter->setOpacity(0.25);
                 }
                 else
                 {
-                    pen.setColor(SELECTED_BORDER_COLOR);
-                    pen.setWidth(2);
-                    painter->fillPath(path, Qt::white);
+                    pen.setColor(hoverColor);
+                    painter->fillPath(path, selectColor);
                 }
             }
         }
 
-        if(pen != QPen())
+        if (pen != QPen())
         {
             painter->setPen(pen);
             painter->drawPath(path);
         }
     }
+
+    mUi->tCancelClearTransfer->setVisible(
+        showButtons && mUi->tCancelClearTransfer->property(ACTION_BUTTONS_VISIBILITY).toBool());
+    mUi->tPauseResumeTransfer->setVisible(
+        showButtons && mUi->tPauseResumeTransfer->property(ACTION_BUTTONS_VISIBILITY).toBool());
 
     TransferBaseDelegateWidget::render(option, painter, sourceRegion);
 }
@@ -535,7 +572,7 @@ void TransferManagerDelegateWidget::mouseDoubleClickEvent(QMouseEvent *event)
 
 bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
 {
-    if(event->type() == QEvent::Resize)
+    if (event->type() == QEvent::Resize && getData())
     {
         if(watched == mUi->wTransferName)
         {

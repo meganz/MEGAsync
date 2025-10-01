@@ -263,7 +263,6 @@ void StalledIssueFilePath::updateFileIcons()
     }
 
     // Has a problem
-    ui->filePathIcon->clear();
     if (mData->getPath().pathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem)
     {
         ui->filePathIcon->setProperty(TOKEN_PROPERTIES::normalOff,
@@ -301,7 +300,6 @@ void StalledIssueFilePath::updateMoveFileIcons()
     }
 
     // Has a problem
-    ui->moveFilePathIcon->clear();
     if (mData->getMovePath().pathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem)
     {
         ui->moveFilePathIcon->setProperty(TOKEN_PROPERTIES::normalOff,
@@ -382,7 +380,6 @@ void StalledIssueFilePath::updateLocalOrMegaTitle()
         ui->LocalOrRemoteText->setText(tr("Local:"));
     }
 
-    ui->LocalOrRemoteIcon->clear();
     ui->LocalOrRemoteIcon->setProperty(TOKEN_PROPERTIES::normalOff, QLatin1String("icon-primary"));
     ui->LocalOrRemoteIcon->setIcon(icon);
 }

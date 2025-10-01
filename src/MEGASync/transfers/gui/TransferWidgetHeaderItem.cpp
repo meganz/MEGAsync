@@ -1,5 +1,6 @@
 #include "TransferWidgetHeaderItem.h"
 
+#include "TokenParserWidgetManager.h"
 #include "ui_TransferWidgetHeaderItem.h"
 #include "Utilities.h"
 
@@ -109,10 +110,12 @@ bool TransferWidgetHeaderItem::eventFilter(QObject *watched, QEvent *event)
 
 void TransferWidgetHeaderItem::updateChevronIcon()
 {
-   QIcon icon = mCurrentSortOrder == Qt::DescendingOrder ? Utilities::getCachedPixmap(QString::fromLatin1(":/images/chevron-down-ico.png"))
-                                                         : Utilities::getCachedPixmap(QString::fromLatin1(":/images/chevron-up-ico.png"));
-   ui->chevron->setPixmap(icon.pixmap(ui->chevron->size()));
-   ui->chevron->setVisible(true);
+    ui->chevron->setVisible(true);
+    ui->chevron->setProperty("state",
+                             mCurrentSortOrder == Qt::DescendingOrder ? QLatin1String("down") :
+                                                                        QLatin1String("up"));
+
+    TokenParserWidgetManager::instance()->polish(ui->chevron);
 }
 
 void TransferWidgetHeaderItem::turnOffSiblings()

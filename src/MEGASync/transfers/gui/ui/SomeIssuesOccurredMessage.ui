@@ -41,10 +41,10 @@
    background-color:transparent
 }
 
-
 #issuesInfoLabel
 {
     color: #FFE31B57; /*colorToken.text-error*/
+    background-color:transparent;
 }
 
 #issueContainer
@@ -91,13 +91,13 @@
        <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>5</number>
+       <number>12</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>5</number>
+       <number>12</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -108,14 +108,13 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset>
-          <normalon>:/images/icon_error.png</normalon>
-         </iconset>
+         <iconset resource="../../../gui/Resources_light.qrc">
+          <normaloff>:/x_circle_small_thin_outline_text_error</normaloff>:/x_circle_small_thin_outline_text_error</iconset>
         </property>
         <property name="iconSize">
          <size>
-          <width>24</width>
-          <height>24</height>
+          <width>16</width>
+          <height>16</height>
          </size>
         </property>
        </widget>
@@ -130,7 +129,7 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>20</width>
+          <width>8</width>
           <height>11</height>
          </size>
         </property>
@@ -161,6 +160,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="viewIssuesButton">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>24</height>
+         </size>
+        </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
         </property>
@@ -180,6 +185,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../../gui/Resources_light.qrc"/>
+ </resources>
  <connections/>
 </ui>
