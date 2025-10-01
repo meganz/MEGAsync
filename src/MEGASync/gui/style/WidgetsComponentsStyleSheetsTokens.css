@@ -13,6 +13,7 @@ background-color: #ffffe4e8;/*colorToken.notification-error*/
 */
 QTableView
 {
+color: #ff303233; /*colorToken.text-primary*/
 background-color: transparent;
 border: 1px solid #ff18191A; /*colorToken.page-background*/
 selection-color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
