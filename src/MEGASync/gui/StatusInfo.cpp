@@ -44,7 +44,6 @@ void StatusInfo::setState(TRANSFERS_STATES state)
             ui->lStatusDesc->setText(statusText);
 
             ui->bIconState->setProperty("state", QString::fromUtf8("paused"));
-            ui->bIconState->setProperty("normal_off", QString::fromUtf8("icon-primary"));
 
             break;
         }
@@ -182,9 +181,8 @@ void StatusInfo::scanningAnimationStep()
     const auto scanningIconImages = 30;
     mScanningAnimationIndex = mScanningAnimationIndex % scanningIconImages;
     ++mScanningAnimationIndex;
-
+    ui->bIconState->setProperty("normal_off", QString::fromUtf8("icon-primary"));
     ui->bIconState->setProperty("state", QVariant());
-    ui->bIconState->setProperty("normal_off", QVariant());
     ui->bIconState->setIcon(scanningIcon(mScanningAnimationIndex));
 }
 
