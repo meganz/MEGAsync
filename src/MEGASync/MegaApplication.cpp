@@ -6678,7 +6678,6 @@ void MegaApplication::onOperatingSystemThemeChanged(Preferences::ThemeAppeareanc
     };
 
     applyTokenToIconAction(initialTrayMenu);
-    applyTokenToIconAction(guestMenu);
 #endif
 }
 
