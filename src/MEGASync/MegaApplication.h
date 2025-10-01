@@ -333,7 +333,7 @@ protected:
     void processDownloadQueue(QString path);
     void disableSyncs();
     void restoreSyncs();
-    void createTransferManagerDialog(TransfersWidget::TM_TAB tab);
+    void createTransferManagerDialog();
     void deleteMenu(QMenu* menu);
     void clearMenu(QMenu* menu, bool deleteAction = false);
     void startHttpServer();

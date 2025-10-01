@@ -36,7 +36,7 @@ const char* ITS_ON = "itsOn";
 const char* SEARCH_TEXT = "searchText";
 const char* SEARCH_BUTTON_SELECTED = "selected";
 
-TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi* megaApi):
+TransferManager::TransferManager(MegaApi* megaApi):
     QDialog(nullptr),
     mUi(new Ui::TransferManager),
     mMegaApi(megaApi),
@@ -211,8 +211,6 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi* megaApi):
     onTransferQuotaStateChanged(transferQuotaState);
 
     onUpdatePauseState(mPreferences->getGlobalPaused());
-
-    toggleTab(tab);
 
     mTransferScanCancelUi = new TransferScanCancelUi(mUi->sTransfers, mTabNoItem[TransfersWidget::ALL_TRANSFERS_TAB]);
     connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,

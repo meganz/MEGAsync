@@ -1772,9 +1772,9 @@ void MegaApplication::processDownloadQueue(QString path)
     downloader->processDownloadQueue(info);
 }
 
-void MegaApplication::createTransferManagerDialog(TransfersWidget::TM_TAB tab)
+void MegaApplication::createTransferManagerDialog()
 {
-    mTransferManager = new TransferManager(tab, megaApi);
+    mTransferManager = new TransferManager(megaApi);
     infoDialog->setTransferManager(mTransferManager);
 
     // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
@@ -4274,14 +4274,11 @@ void MegaApplication::transferManagerActionClicked(int tab)
 
     if(!mTransferManager)
     {
-        createTransferManagerDialog(static_cast<TransfersWidget::TM_TAB>(tab));
-    }
-    else
-    {
-        mTransferManager->toggleTab(tab);
+        createTransferManagerDialog();
     }
 
     DialogOpener::showGeometryRetainerDialog(mTransferManager);
+    mTransferManager->toggleTab(tab);
 }
 
 void MegaApplication::changeState()

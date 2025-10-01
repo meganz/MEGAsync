@@ -63,6 +63,9 @@ border-radius: 4px;
 background-color: #EFEFF0;/*colorToken.surface-2*/
 }</string>
   </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
+  </property>
   <layout class="QVBoxLayout" name="TransferManagerItemLayout">
    <property name="spacing">
     <number>0</number>
