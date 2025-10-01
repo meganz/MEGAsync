@@ -203,17 +203,21 @@ void TokenParserWidgetManager::applyCurrentTheme()
 
 QColor TokenParserWidgetManager::getColor(const QString& colorToken)
 {
+    return getColor(colorToken, ThemeManager::instance()->getSelectedColorSchemaString());
+}
+
+QColor TokenParserWidgetManager::getColor(const QString& colorToken,
+                                          const QString& currentColorSchema)
+{
     QString color;
 
-    auto currentTheme = ThemeManager::instance()->getSelectedColorSchemaString();
-
-    if (!mColorThemedTokens.contains(currentTheme))
+    if (!mColorThemedTokens.contains(currentColorSchema))
     {
-        qWarning() << __func__ << " Error theme not found : " << currentTheme;
+        qWarning() << __func__ << " Error theme not found : " << currentColorSchema;
     }
     else
     {
-        const auto& colorTokens = mColorThemedTokens.value(currentTheme);
+        const auto& colorTokens = mColorThemedTokens.value(currentColorSchema);
         if (!colorTokens.contains(colorToken))
         {
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
