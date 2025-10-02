@@ -412,7 +412,7 @@ Preferences::Preferences() :
     diffTimeWithSDK(0),
     lastTransferNotification(0)
 {
-    qRegisterMetaType<Preferences::ThemeAppeareance>("Preferences::ThemeAppeareance");
+    qRegisterMetaType<Preferences::SystemColorScheme>("Preferences::SystemColorScheme");
     clearTemporalBandwidth();
 }
 

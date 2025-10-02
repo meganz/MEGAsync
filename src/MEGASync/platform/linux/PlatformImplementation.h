@@ -63,7 +63,7 @@ public:
     QString getGfxProviderPath() override;
 #endif
 
-    Preferences::ThemeAppeareance getCurrentThemeAppearance() const override;
+    Preferences::SystemColorScheme getCurrentThemeAppearance() const override;
 
 private:
     static xcb_atom_t getAtom(xcb_connection_t* const connection, const char* name);

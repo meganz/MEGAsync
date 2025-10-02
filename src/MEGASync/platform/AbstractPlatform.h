@@ -116,10 +116,10 @@ public:
         return {};
     }
 
-    virtual Preferences::ThemeAppeareance getCurrentThemeAppearance() const;
+    virtual Preferences::SystemColorScheme getCurrentThemeAppearance() const;
 
 signals:
-    void themeChanged(Preferences::ThemeAppeareance theme);
+    void themeChanged(Preferences::SystemColorScheme theme);
 
 protected:
     std::shared_ptr<AbstractShellNotifier> mShellNotifier = nullptr;
@@ -127,8 +127,10 @@ protected:
     void logInfoDialogCoordinates(const char *message, const QRect &screenGeometry, const QString &otherInformation);
     QString rectToString(const QRect &rect);
     bool loadRccResources(const QStringList& rccFiles);
-    virtual void startThemeMonitor(){};
-    virtual void stopThemeMonitor(){};
+
+    virtual void startThemeMonitor() {}
+
+    virtual void stopThemeMonitor() {}
 };
 
 #endif // ABSTRACTPLATFORM_H

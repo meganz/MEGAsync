@@ -112,15 +112,30 @@ void WinThemeWatcher::run()
     RegCloseKey(hKey);
 }
 
-Preferences::ThemeAppeareance WinThemeWatcher::getCurrentTheme() const
+Preferences::SystemColorScheme WinThemeWatcher::getCurrentTheme() const
 {
-    QSettings settings(
+    const QSettings settings(
         QLatin1String("HKEY_CURRENT_"
                       "USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"),
         QSettings::NativeFormat);
 
-    bool isDark = !settings.value(QLatin1String("AppsUseLightTheme"), true).toBool();
+    Preferences::SystemColorScheme scheme;
 
-    return Preferences::toTheme(isDark);
-    ;
+    // Get Applications appearence setting
+    const auto appsUseLightTheme = settings.value(QLatin1String("AppsUseLightTheme"), QVariant());
+    if (appsUseLightTheme.isValid())
+    {
+        const bool isDark = !appsUseLightTheme.toBool();
+        scheme.appsScheme = Preferences::toTheme(isDark);
+    }
+
+    // Get System appearence setting
+    const auto systemUsesLightTheme =
+        settings.value(QLatin1String("SystemUsesLightTheme"), QVariant());
+    if (systemUsesLightTheme.isValid())
+    {
+        const bool isDark = !systemUsesLightTheme.toBool();
+        scheme.systemScheme = Preferences::toTheme(isDark);
+    }
+    return scheme;
 }

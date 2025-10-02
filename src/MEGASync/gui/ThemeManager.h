@@ -21,7 +21,7 @@ public:
     QString getSelectedColorSchemaString() const;
     static QString getColorSchemaString(Preferences::ThemeAppeareance theme);
     void setTheme(Preferences::ThemeType theme);
-    void onSystemAppearanceChanged(Preferences::ThemeAppeareance app);
+    void onSystemAppearanceChanged(const Preferences::SystemColorScheme& systemScheme);
 
     Preferences::ThemeAppeareance currentColorScheme() const;
 

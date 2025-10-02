@@ -6651,7 +6651,7 @@ void MegaApplication::startCrashReportingDialog()
 }
 
 // clang-format off
-void MegaApplication::onOperatingSystemThemeChanged(Preferences::ThemeAppeareance theme)
+void MegaApplication::onOperatingSystemThemeChanged(const Preferences::SystemColorScheme& theme)
 {
 #ifdef Q_OS_LINUX
     constexpr QSize iconSize(256, 256);
@@ -6666,7 +6666,7 @@ void MegaApplication::onOperatingSystemThemeChanged(Preferences::ThemeAppeareanc
                     action->icon().pixmap(iconSize),
                     TokenParserWidgetManager::instance()->getColor(
                         QStringLiteral("icon-primary"),
-                        ThemeManager::instance()->getColorSchemaString(theme)));
+                        ThemeManager::instance()->getColorSchemaString(theme.systemScheme)));
 
                 if (coloredPixmap.has_value())
                 {

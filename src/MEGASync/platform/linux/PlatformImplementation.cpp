@@ -924,9 +924,10 @@ void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, i
     logInfoDialogCoordinates("Final", screenGeometry, otherInfo);
 }
 
-Preferences::ThemeAppeareance PlatformImplementation::getCurrentThemeAppearance() const
+Preferences::SystemColorScheme PlatformImplementation::getCurrentThemeAppearance() const
 {
-    return effectiveTheme();
+    const auto theme = effectiveTheme();
+    return {theme, theme};
 }
 
 void PlatformImplementation::startThemeMonitor()
@@ -1133,7 +1134,7 @@ void PlatformImplementation::maybeEmitTheme()
     if (effTheme != mLastEmittedTheme)
     {
         mLastEmittedTheme = effTheme;
-        emit themeChanged(effTheme);
+        emit themeChanged({effTheme, effTheme});
     }
 }
 

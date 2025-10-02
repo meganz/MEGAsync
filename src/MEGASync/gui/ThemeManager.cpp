@@ -57,7 +57,7 @@ ThemeManager* ThemeManager::instance()
 void ThemeManager::init()
 {
     auto theme = Preferences::instance()->getThemeType();
-    const auto desktopTheme = Platform::getInstance()->getCurrentThemeAppearance();
+    const auto desktopTheme = Platform::getInstance()->getCurrentThemeAppearance().appsScheme;
 
     // If the desktop scheme is not available, fallback to Light theme
     if (desktopTheme == Preferences::ThemeAppeareance::UNINITIALIZED)
@@ -86,7 +86,7 @@ QMap<Preferences::ThemeType, QString> ThemeManager::getAvailableThemes()
 {
     mAvailableThemes.clear();
 
-    if (Platform::getInstance()->getCurrentThemeAppearance() !=
+    if (Platform::getInstance()->getCurrentThemeAppearance().appsScheme !=
         Preferences::ThemeAppeareance::UNINITIALIZED)
     {
         mAvailableThemes.insert(Preferences::ThemeType::SYSTEM_DEFAULT, tr("System default"));
@@ -105,7 +105,7 @@ void ThemeManager::setTheme(Preferences::ThemeType theme)
 
         if (theme == Preferences::ThemeType::SYSTEM_DEFAULT)
         {
-            applyTheme(Platform::getInstance()->getCurrentThemeAppearance());
+            applyTheme(Platform::getInstance()->getCurrentThemeAppearance().appsScheme);
         }
         else
         {
@@ -116,13 +116,15 @@ void ThemeManager::setTheme(Preferences::ThemeType theme)
     }
 }
 
-void ThemeManager::onSystemAppearanceChanged(Preferences::ThemeAppeareance app)
+void ThemeManager::onSystemAppearanceChanged(const Preferences::SystemColorScheme& systemScheme)
 {
-    if (mCurrentColorScheme != app && app != Preferences::ThemeAppeareance::UNINITIALIZED &&
+    const auto appsScheme = systemScheme.appsScheme;
+    if (mCurrentColorScheme != appsScheme &&
+        appsScheme != Preferences::ThemeAppeareance::UNINITIALIZED &&
         (mCurrentTheme == Preferences::ThemeType::SYSTEM_DEFAULT ||
          Preferences::instance()->getThemeType() == Preferences::ThemeType::UNINITIALIZED))
     {
-        applyTheme(app);
+        applyTheme(appsScheme);
     }
 }
 

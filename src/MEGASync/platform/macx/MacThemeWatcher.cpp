@@ -20,12 +20,14 @@ MacThemeWatcher::~MacThemeWatcher()
     g_instance = nullptr;
 }
 
-Preferences::ThemeAppeareance MacThemeWatcher::getCurrentTheme() const
+Preferences::SystemColorScheme MacThemeWatcher::getCurrentTheme() const
 {
     bool d = false;
     MacTheme_GetCurrentAppearance(&d);
 
-    return Preferences::toTheme(d);
+    const auto theme = Preferences::toTheme(d);
+
+    return {theme, theme};
 }
 
 void MacThemeWatcher::StaticCallback(bool isDark)
@@ -39,7 +41,7 @@ void MacThemeWatcher::StaticCallback(bool isDark)
             g_instance,
             [=]()
             {
-                Q_EMIT g_instance->systemThemeChanged(selection);
+                Q_EMIT g_instance->systemThemeChanged({selection, selection});
             },
             Qt::QueuedConnection);
     }
