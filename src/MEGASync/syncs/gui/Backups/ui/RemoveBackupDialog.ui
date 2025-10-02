@@ -25,6 +25,11 @@
 /*ColorTokenIcon;Button;bConfirm;active;off;colorToken.text-inverse-accent*/
 /*ColorTokenIcon;Button;bConfirm;selected;off;colorToken.text-inverse-accent*/
 
+#RemoveBackupDialog
+{
+background-color: #ffffff; /*colorToken.page-background*/
+}
+
 #lTitle
 {
 font-weight: 600;
@@ -55,22 +60,19 @@ padding-left: 10px;
 #lTarget::enabled
 {
 border-color: #ffD8D9DB; /*colorToken.border-strong*/
+color: #ff303233; /*colorToken.text-primary*/
 }
 
 #lTarget::disabled
 {
 border-color: #ffD8D9DB; /*colorToken.border-disabled*/
+color: #ffC1C2C4; /*colorToken.text-disabled*/
 }
 
 #lMoveTo
 {
 font-weight: 600;
-font-size:12px;
-}
-
-#moveToContainer *::disabled
-{
-color: rgba(0, 0, 0, 0.2)
+font-size: 12px;
 }</string>
   </property>
   <property name="TOKENIZED" stdset="0">
@@ -392,7 +394,7 @@ color: rgba(0, 0, 0, 0.2)
         <string>Stop backup</string>
        </property>
        <property name="icon">
-        <iconset resource="../Resources.qrc">
+        <iconset resource="../../../../gui/Resources_light.qrc">
          <normaloff>:/images/minus-circle.svg</normaloff>:/images/minus-circle.svg</iconset>
        </property>
        <property name="default">
@@ -414,7 +416,7 @@ color: rgba(0, 0, 0, 0.2)
   </layout>
  </widget>
  <resources>
-  <include location="../Resources.qrc"/>
+  <include location="../../../../gui/Resources_light.qrc"/>
  </resources>
  <connections/>
 </ui>
