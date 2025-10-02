@@ -98,7 +98,6 @@ private:
     bool mIsSettingsPortalActive = false;
     Preferences::ThemeAppeareance mCurrentPortalTheme =
         Preferences::ThemeAppeareance::UNINITIALIZED;
-    bool mHaveGSettingsTheme = false;
     bool mUseGtkTheme = false;
     Preferences::ThemeAppeareance mCurrentGSettingsTheme =
         Preferences::ThemeAppeareance::UNINITIALIZED;

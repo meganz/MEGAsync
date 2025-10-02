@@ -1114,14 +1114,13 @@ Preferences::ThemeAppeareance
 Preferences::ThemeAppeareance PlatformImplementation::effectiveTheme() const
 {
     auto theme = Preferences::ThemeAppeareance::UNINITIALIZED;
-    // Portal wins when it specifies Dark/Light; otherwise use GSettings if available.
-    if (mCurrentPortalTheme == Preferences::ThemeAppeareance::DARK ||
-        mCurrentPortalTheme == Preferences::ThemeAppeareance::LIGHT)
+    // Portal wins when it is initialized; otherwise use GSettings if initialized.
+    if (mCurrentPortalTheme != theme)
     {
         theme = mCurrentPortalTheme;
     }
     // Use fallback
-    else if (mHaveGSettingsTheme)
+    else if (mCurrentGSettingsTheme != theme)
     {
         theme = mCurrentGSettingsTheme;
     }
@@ -1176,9 +1175,7 @@ void PlatformImplementation::setupGSettingsThemeCli()
         }
     }
 
-    mHaveGSettingsTheme = (mCurrentGSettingsTheme != Preferences::ThemeAppeareance::UNINITIALIZED);
-
-    if (mHaveGSettingsTheme)
+    if (mCurrentGSettingsTheme != Preferences::ThemeAppeareance::UNINITIALIZED)
     {
         mThemeMonitor.start(GSETTINGS_BIN,
                             {GSETTINGS_MONITOR_CMD,
@@ -1213,7 +1210,6 @@ void PlatformImplementation::onGsettingsThemeReadyRead()
             const QString val = match.captured(1);
             mCurrentGSettingsTheme =
                 mUseGtkTheme ? themeFromGtkThemeString(val) : themeFromColorSchemeString(val);
-            mHaveGSettingsTheme = true;
             maybeEmitTheme();
         }
     }
