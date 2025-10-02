@@ -368,15 +368,6 @@
         <file alias="images/icons/infodialog/warning-disabled-syncs.png">images/icons/infodialog/warning-disabled-syncs.png</file>
         <file alias="images/icons/infodialog/warning-disabled-syncs@2x.png">images/icons/infodialog/warning-disabled-syncs@2x.png</file>
         <file alias="images/icons/infodialog/warning-disabled-syncs@3x.png">images/icons/infodialog/warning-disabled-syncs@3x.png</file>
-        <file alias="images/icons/options_dots/options-hover.png">images/icons/options_dots/options-hover.png</file>
-        <file alias="images/icons/options_dots/options-hover@2x.png">images/icons/options_dots/options-hover@2x.png</file>
-        <file alias="images/icons/options_dots/options-hover@3x.png">images/icons/options_dots/options-hover@3x.png</file>
-        <file alias="images/icons/options_dots/options-press.png">images/icons/options_dots/options-press.png</file>
-        <file alias="images/icons/options_dots/options-press@2x.png">images/icons/options_dots/options-press@2x.png</file>
-        <file alias="images/icons/options_dots/options-press@3x.png">images/icons/options_dots/options-press@3x.png</file>
-        <file alias="images/icons/options_dots/options-rest.png">images/icons/options_dots/options-rest.png</file>
-        <file alias="images/icons/options_dots/options-rest@2x.png">images/icons/options_dots/options-rest@2x.png</file>
-        <file alias="images/icons/options_dots/options-rest@3x.png">images/icons/options_dots/options-rest@3x.png</file>
         <file alias="images/icons/pc/pc-linux_24.png">images/icons/pc/pc-linux_24.png</file>
         <file alias="images/icons/pc/pc-linux_24@2x.png">images/icons/pc/pc-linux_24@2x.png</file>
         <file alias="images/icons/pc/pc-linux_24@3x.png">images/icons/pc/pc-linux_24@3x.png</file>
@@ -1309,5 +1300,7 @@
         <file alias="settings-shield">images/themed/tokenizable/settings-shield.svg</file>
         <file alias="settings-sync-warn">images/themed/tokenizable/settings-sync-warn.svg</file>
         <file alias="settings-sync">images/themed/tokenizable/settings-sync.svg</file>
+        <file alias="download_small_thin_outline">images/themed/tokenizable/download_small_thin_outline.svg</file>
+        <file alias="three_dot">images/themed/tokenizable/three_dot.svg</file>
     </qresource>
 </RCC>
