@@ -82,42 +82,42 @@ QGroupBox
 
 #bTitle:enabled:checked
 {
-    icon: url(:/images/themed/light/chevron-down_default.svg); /*replaceThemeToken*/
+    icon: url(:/chevron-down_default);
 }
 
 #bTitle:enabled:!checked
 {
-    icon: url(:/images/themed/light/chevron-up_default.svg); /*replaceThemeToken*/
+    icon: url(:/chevron-up_default);
 }
 
 #bTitle:enabled:hover:checked
 {
-    icon: url(:/images/themed/light/chevron-down_hover.svg); /*replaceThemeToken*/
+    icon: url(:/chevron-down_hover);
 }
 
 #bTitle:enabled:hover:!checked
 {
-    icon: url(:/images/themed/light/chevron-up_hover.svg); /*replaceThemeToken*/
+    icon: url(:/chevron-up_hover);
 }
 
 #bTitle:enabled:pressed:checked
 {
-    icon: url(:/images/themed/light/chevron-down_press.svg); /*replaceThemeToken*/
+    icon: url(:/chevron-down_press);
 }
 
 #bTitle:enabled:pressed:!checked
 {
-   icon: url(:/images/themed/light/chevron-up_press.svg); /*replaceThemeToken*/
+   icon: url(:/chevron-up_press);
 }
 
 #bTitle:!enabled:checked
 {
-    icon: url(:/images/themed/light/chevron-down_disabled.svg); /*replaceThemeToken*/
+    icon: url(:/chevron-down_disabled.);
 }
 
 #bTitle:!enabled:!checked
 {
-    icon: url(:/images/themed/light/chevron-up_disabled.svg); /*replaceThemeToken*/
+    icon: url(:/chevron-up_disabled);
 }
 
 #gbMediaType QFrame

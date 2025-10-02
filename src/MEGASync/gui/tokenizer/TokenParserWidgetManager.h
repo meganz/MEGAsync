@@ -29,7 +29,6 @@ private:
     void onThemeChanged();
     void onUpdateRequested();
     void applyTheme(QWidget* widget);
-    void replaceThemeTokens(QString& styleSheet, const QString& currentTheme);
     void replaceIconColorTokens(QWidget* widget,
                                 QString& styleSheet,
                                 const ColorTokens& colorTokens);
