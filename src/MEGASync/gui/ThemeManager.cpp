@@ -19,6 +19,7 @@ inline Preferences::ThemeAppeareance toAppearance(Preferences::ThemeType type)
         case Preferences::ThemeType::LIGHT_THEME:
             return Preferences::ThemeAppeareance::LIGHT;
         case Preferences::ThemeType::SYSTEM_DEFAULT:
+            [[fallthrough]];
         default:
             return Preferences::ThemeAppeareance::LIGHT;
     }
@@ -41,7 +42,7 @@ QString ThemeManager::getSelectedColorSchemaString() const
     return getColorSchemaString(mCurrentColorScheme);
 }
 
-QString ThemeManager::getColorSchemaString(Preferences::ThemeAppeareance themeId) const
+QString ThemeManager::getColorSchemaString(Preferences::ThemeAppeareance themeId)
 {
     return mAppearance.value(themeId, QLatin1String("Light"));
 }
@@ -55,7 +56,30 @@ ThemeManager* ThemeManager::instance()
 
 void ThemeManager::init()
 {
-    setTheme(Preferences::instance()->getThemeType());
+    auto theme = Preferences::instance()->getThemeType();
+    const auto desktopTheme = Platform::getInstance()->getCurrentThemeAppearance();
+
+    // If the desktop scheme is not available, fallback to Light theme
+    if (desktopTheme == Preferences::ThemeAppeareance::UNINITIALIZED)
+    {
+        if (theme == Preferences::ThemeType::SYSTEM_DEFAULT ||
+            theme == Preferences::ThemeType::UNINITIALIZED)
+        {
+            theme = Preferences::ThemeType::LIGHT_THEME;
+        }
+    }
+    // If it is available and theme in Preferences is not initialized, use System Default
+    else if (theme == Preferences::ThemeType::UNINITIALIZED)
+    {
+        theme = Preferences::ThemeType::SYSTEM_DEFAULT;
+    }
+
+    setTheme(theme);
+}
+
+Preferences::ThemeType ThemeManager::getCurrentTheme() const
+{
+    return mCurrentTheme;
 }
 
 QMap<Preferences::ThemeType, QString> ThemeManager::getAvailableThemes()
@@ -94,7 +118,9 @@ void ThemeManager::setTheme(Preferences::ThemeType theme)
 
 void ThemeManager::onSystemAppearanceChanged(Preferences::ThemeAppeareance app)
 {
-    if (mCurrentTheme == Preferences::ThemeType::SYSTEM_DEFAULT && mCurrentColorScheme != app)
+    if (mCurrentColorScheme != app && app != Preferences::ThemeAppeareance::UNINITIALIZED &&
+        (mCurrentTheme == Preferences::ThemeType::SYSTEM_DEFAULT ||
+         Preferences::instance()->getThemeType() == Preferences::ThemeType::UNINITIALIZED))
     {
         applyTheme(app);
     }

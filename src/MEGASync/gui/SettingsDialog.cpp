@@ -1720,22 +1720,22 @@ void SettingsDialog::initColorTheme()
     // Init
     if (mUi->cbTheme->count() == 0)
     {
+        // Add available themes
         for (auto theme = themes.constKeyValueBegin(); theme != themes.constKeyValueEnd(); ++theme)
         {
             mUi->cbTheme->addItem(theme->second,
                                   QVariant::fromValue<Preferences::ThemeType>(theme->first));
         }
 
-        if (mPreferences)
-        {
-            auto savedTheme = mPreferences->getThemeType();
-            mUi->cbTheme->setCurrentIndex(
-                mUi->cbTheme->findData(QVariant::fromValue<Preferences::ThemeType>(savedTheme)));
-        }
+        // Set current index to currently used theme
+        const auto currentTheme = ThemeManager::instance()->getCurrentTheme();
+        mUi->cbTheme->setCurrentIndex(
+            mUi->cbTheme->findData(QVariant::fromValue<Preferences::ThemeType>(currentTheme)));
     }
     // Re-translate
     else if (mUi->cbTheme->count() == themes.size())
     {
+        // Update entries with new translation
         for (auto theme = themes.constKeyValueBegin(); theme != themes.constKeyValueEnd(); ++theme)
         {
             const auto themeIndex =
