@@ -16,7 +16,7 @@ public:
 
     static ThemeManager* instance();
     void init();
-    QStringList themesAvailable() const;
+    QMap<Preferences::ThemeType, QString> getAvailableThemes();
     QString getSelectedColorSchemaString() const;
     QString getColorSchemaString(Preferences::ThemeAppeareance theme) const;
     void setTheme(Preferences::ThemeType theme);
@@ -36,6 +36,7 @@ private:
     Preferences::ThemeAppeareance mCurrentColorScheme;
     static const QMap<Preferences::ThemeAppeareance, QString> mAppearance;
     static const QStringList mThemesList;
+    QMap<Preferences::ThemeType, QString> mAvailableThemes;
 };
 
 #endif

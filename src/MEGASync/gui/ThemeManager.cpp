@@ -58,13 +58,19 @@ void ThemeManager::init()
     setTheme(Preferences::instance()->getThemeType());
 }
 
-QStringList ThemeManager::themesAvailable() const
+QMap<Preferences::ThemeType, QString> ThemeManager::getAvailableThemes()
 {
-    // Note: the order here is important and should follow Preferences::ThemeType
-    // "System default"
-    // "Dark"
-    // "Light"
-    return {tr("System default"), tr("Dark"), tr("Light")};
+    mAvailableThemes.clear();
+
+    if (Platform::getInstance()->getCurrentThemeAppearance() !=
+        Preferences::ThemeAppeareance::UNINITIALIZED)
+    {
+        mAvailableThemes.insert(Preferences::ThemeType::SYSTEM_DEFAULT, tr("System default"));
+    }
+    mAvailableThemes.insert(Preferences::ThemeType::DARK_THEME, tr("Dark"));
+    mAvailableThemes.insert(Preferences::ThemeType::LIGHT_THEME, tr("Light"));
+
+    return mAvailableThemes;
 }
 
 void ThemeManager::setTheme(Preferences::ThemeType theme)

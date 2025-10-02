@@ -864,7 +864,7 @@ void SettingsDialog::on_cbTheme_currentIndexChanged(int index)
         return;
     }
 
-    ThemeManager::instance()->setTheme(static_cast<Preferences::ThemeType>(index));
+    ThemeManager::instance()->setTheme(mUi->cbTheme->currentData().value<Preferences::ThemeType>());
 }
 
 void SettingsDialog::on_bUpdate_clicked()
@@ -1715,27 +1715,32 @@ void SettingsDialog::startRequestTaskbarPinningTimer()
 
 void SettingsDialog::initColorTheme()
 {
-    const auto themes = ThemeManager::instance()->themesAvailable();
+    const auto themes = ThemeManager::instance()->getAvailableThemes();
 
     // Init
     if (mUi->cbTheme->count() == 0)
     {
-        mUi->cbTheme->addItems(themes);
+        for (auto theme = themes.constKeyValueBegin(); theme != themes.constKeyValueEnd(); ++theme)
+        {
+            mUi->cbTheme->addItem(theme->second,
+                                  QVariant::fromValue<Preferences::ThemeType>(theme->first));
+        }
+
         if (mPreferences)
         {
-            auto themeIndex = static_cast<int>(mPreferences->getThemeType());
-            if (themeIndex < mUi->cbTheme->count())
-            {
-                mUi->cbTheme->setCurrentIndex(themeIndex);
-            }
+            auto savedTheme = mPreferences->getThemeType();
+            mUi->cbTheme->setCurrentIndex(
+                mUi->cbTheme->findData(QVariant::fromValue<Preferences::ThemeType>(savedTheme)));
         }
     }
     // Re-translate
     else if (mUi->cbTheme->count() == themes.size())
     {
-        for (int i = 0; i < themes.size(); ++i)
+        for (auto theme = themes.constKeyValueBegin(); theme != themes.constKeyValueEnd(); ++theme)
         {
-            mUi->cbTheme->setItemText(i, themes[i]);
+            const auto themeIndex =
+                mUi->cbTheme->findData(QVariant::fromValue<Preferences::ThemeType>(theme->first));
+            mUi->cbTheme->setItemText(themeIndex, theme->second);
         }
     }
 }
