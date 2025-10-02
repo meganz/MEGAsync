@@ -14,18 +14,14 @@
    <string notr="true">MEGA</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">label
+   <string notr="true">#MegaProgressCustomDialog
 {
-  font-size: 13px;
-  text-align: center;
-  font-family: &quot;Lato&quot;;
-
+background-color: #FFFFFF;  /*colorToken.page-background*/
 }
-
-#MegaProgressCustomDialog
-{
-	background-color: #f1f1f1;
-}</string>
+</string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
