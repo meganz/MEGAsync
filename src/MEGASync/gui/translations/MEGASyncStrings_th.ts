@@ -75,8 +75,8 @@
         <translation>แชร์ขาเข้า</translation>
     </message>
     <message>
-        <source>Payment</source>
-        <translatorcomment>Label to indicate that the application is showing only payment notifications</translatorcomment>
+        <source>Payments</source>
+        <translatorcomment>Label to indicate that the application is showing only payment notifications SNC-5953</translatorcomment>
         <translation>ชำระเงิน</translation>
     </message>
 </context>
@@ -738,66 +738,44 @@
     </message>
 </context>
 <context>
-    <name>ChangePassword</name>
+    <name>ChangePasswordController</name>
     <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to close the Change password dialog discarding the information</translatorcomment>
-        <translation>ยกเลิก</translation>
+        <source>Password changed</source>
+        <translatorcomment>Title of the dialog displayed when the change password process finish successful. SNC-5799</translatorcomment>
+        <translation>เปลี่ยนรหัสผ่านแล้ว</translation>
     </message>
     <message>
+        <source>Too many requests. Please wait.</source>
+        <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible). SNC-5799</translatorcomment>
+        <translation>มีคำขอมากเกินไป กรุณารอสักครู่</translation>
+    </message>
+    <message>
+        <source>You have entered your current password, please enter a new password.</source>
+        <translatorcomment>Informative message shown when user is trying to change his password with the current one. SNC-5799</translatorcomment>
+        <translation>คุณกรอกรหัสผ่านปัจจุบัน กรุณากรอกรหัสผ่านใหม่</translation>
+    </message>
+    <message>
+        <source>Your password has been changed.</source>
+        <translatorcomment>Success message shown when the password has been changed. SNC-5799</translatorcomment>
+        <translation>รหัสผ่านของคุณถูกเปลี่ยนแปลงแล้ว</translation>
+    </message>
+</context>
+<context>
+    <name>ChangePasswordStrings</name>
+    <message>
         <source>Change password</source>
-        <translatorcomment>Windows title of the Change password dialog</translatorcomment>
+        <translatorcomment>Windows title of the Change password dialog. SNC-5799</translatorcomment>
         <translation>เปลี่ยนรหัสผ่าน</translation>
     </message>
     <message>
         <source>Confirm new password</source>
-        <translatorcomment>Label displayed next to control where the user can enter the new password confirmation</translatorcomment>
+        <translatorcomment>Label displayed next to control where the user can enter the new password confirmation. SNC-5799</translatorcomment>
         <translation>ยืนยันรหัสผ่านใหม่</translation>
     </message>
     <message>
         <source>New password</source>
-        <translatorcomment>Label displayed next to control where the user can enter the new password</translatorcomment>
+        <translatorcomment>Label displayed next to control where the user can enter the new password. SNC-5799</translatorcomment>
         <translation>รหัสผ่านใหม่</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Button label to close the Change password dialog saving the new information</translatorcomment>
-        <translation>ตกลง</translation>
-    </message>
-    <message>
-        <source>Password changed</source>
-        <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
-        <translation>เปลี่ยนรหัสผ่านแล้ว</translation>
-    </message>
-    <message>
-        <source>Please enter your password</source>
-        <translatorcomment>Error message displayed when an empty password has been provided</translatorcomment>
-        <translation>กรอกรหัสผ่านของคุณ</translation>
-    </message>
-    <message>
-        <source>Please, enter a stronger password</source>
-        <translatorcomment>Error message displayed when an the new password is too weak</translatorcomment>
-        <translation>กรุณากรอกรหัสผ่านที่คาดเดายากกว่านี้</translation>
-    </message>
-    <message>
-        <source>The entered passwords don&apos;t match</source>
-        <translatorcomment>Error message displayed when the new password and its confirmation are not the same</translatorcomment>
-        <translation>รหัสผ่านที่คุณกรอกไม่ตรงกัน</translation>
-    </message>
-    <message>
-        <source>Too many requests. Please wait.</source>
-        <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</translatorcomment>
-        <translation>มีคำขอมากเกินไป กรุณารอ</translation>
-    </message>
-    <message>
-        <source>You have entered your current password, please enter a new password.</source>
-        <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
-        <translation>คุณกรอกรหัสผ่านเดิมที่เคยใช้มาแล้ว กรอกรหัสผ่านใหม่</translation>
-    </message>
-    <message>
-        <source>Your password has been changed.</source>
-        <translatorcomment>Success message shown when the password has been changed</translatorcomment>
-        <translation>รหัสผ่านของคุณได้ถูกเปลี่ยนแล้ว</translation>
     </message>
 </context>
 <context>
@@ -931,11 +909,9 @@
         <translation>แผนสมาชิก Pro จะหมดอายุเร็ว ๆ นี้</translation>
     </message>
     <message>
-        <source>The following characters are not allowed:
-%1</source>
-        <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder)</translatorcomment>
-        <translation>ไม่อนุญาตให้ใช้อักขระต่อไปนี้:
-%1</translation>
+        <source>The following characters are not allowed: %1</source>
+        <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder). SNC-5804</translatorcomment>
+        <translation>ไม่อนุญาตให้ใช้อักขระต่อไปนี้: %1</translation>
     </message>
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
@@ -1976,8 +1952,8 @@
         <translation>แชร์ขาเข้า</translation>
     </message>
     <message>
-        <source>Payment</source>
-        <translatorcomment>Label to indicate that only Payment notifications will be shown.</translatorcomment>
+        <source>Payments</source>
+        <translatorcomment>Label to indicate that only Payment notifications will be shown. SNC-5953</translatorcomment>
         <translation>ชำระเงิน</translation>
     </message>
 </context>
@@ -2369,11 +2345,6 @@ Check your email inbox for instructions on unlocking your account and tips on ho
         <translation>อัปเกรดบัญชีของคุณ</translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translatorcomment>This is the string used to refer to settings for all platforms.</translatorcomment>
-        <translation>ตั้งค่า</translation>
-    </message>
-    <message>
         <source>Show MEGAsync options</source>
         <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
         <translation>แสดงตัวเลือก</translation>
@@ -2449,14 +2420,14 @@ Check your email inbox for instructions on unlocking your account and tips on ho
         <translation>คุณไม่สามารถดาวน์โหลดต่อได้เนื่องจากมีปริมาณการถ่ายโอนคงเหลือไม่เพียงพอสำหรับบัญชีนี้ หากต้องการดาวน์โหลดต่อ ให้สมัครใช้งานแผนใหม่ หรือหากคุณมีการสมัครใช้งาน MEGA ที่ต่ออายุอัตโนมัติอยู่แล้ว คุณสามารถรอจนกว่าจะเริ่มรอบการเรียกเก็บเงินถัดไป</translation>
     </message>
     <message numerus="yes">
-        <source>You have [A]%n day[/A] left to upgrade. After that, your data is subject to deletion.</source>
-        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of days left to upgrade.</translatorcomment>
-        <translation><numerusform>คุณเหลือเวลาอีก [A]%n วัน[/A]ในการอัปเกรด หลังจากนั้นข้อมูลของคุณอาจถูกลบ</numerusform></translation>
+        <source>You have %n day left to upgrade. After that, your data is subject to deletion.</source>
+        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. %n- number of days left to upgrade.</translatorcomment>
+        <translation><numerusform>เหลือเวลาอีก %n วันให้อัปเกรด ไม่เช่นนั้นข้อมูลของคุณจะถูกลบ</numerusform></translation>
     </message>
     <message numerus="yes">
-        <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
-        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
-        <translation><numerusform>คุณเหลือเวลาอีก [A]%n ชั่วโมง[/A]ในการอัปเกรด หลังจากนั้นข้อมูลของคุณอาจถูกลบ</numerusform></translation>
+        <source>You have %n hour left to upgrade. After that, your data is subject to deletion.</source>
+        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: %n- number of hours left to upgrade.</translatorcomment>
+        <translation><numerusform>เหลือเวลาอีก %n ชั่วโมงให้อัปเกรด ไม่เช่นนั้นข้อมูลของคุณจะถูกลบ</numerusform></translation>
     </message>
     <message>
         <source>You must act immediately to save your data</source>
@@ -2583,7 +2554,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>Do not show again</source>
         <translatorcomment>This is a label for a checkbox. When checked by the user, it ensures that the Enable Notification Area Icon notification will not be displayed to them in the future. SNC-2270</translatorcomment>
-        <translation>ไม่ต้องแสดงอีกในครั้งต่อไป</translation>
+        <translation>ไม่ต้องแสดงสิ่งนี้อีก</translation>
     </message>
     <message>
         <source>Failed to install the necessary components.</source>
@@ -2967,62 +2938,6 @@ Please wait for the upload to complete.</source>
     </message>
 </context>
 <context>
-    <name>LockedPopOver</name>
-    <message>
-        <source>Locked Accounts</source>
-        <translatorcomment>Title of informative popover which informs users about the lock situation.</translatorcomment>
-        <translation>บัญชีถูกล็อกแล้ว</translation>
-    </message>
-    <message>
-        <source>[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</source>
-        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
-        <translation>[A]เป็นไปได้ว่าคุณกําลังใช้รหัสผ่านเดียวกันสําหรับบัญชี MEGA ของคุณสําหรับบริการอื่น ๆ และอย่างน้อยหนึ่งบริการอื่น ๆ เหล่านี้ได้รับความเสียหายการละเมิดข้อมูล[/A]</translation>
-    </message>
-    <message>
-        <source>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</source>
-        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation>[A]รหัสผ่านของคุณรั่วไหลและกำลังถูกใช้โดยผู้ไม่หวังดีเพื่อเข้าสู่บัญชีของคุณ รวมไปถึงการไม่จำกัดบัญชี MEGA ของคุณ[/A]</translation>
-    </message>
-</context>
-<context>
-    <name>Login2FA</name>
-    <message>
-        <source>6 digit code:</source>
-        <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation>รหัส 6 หลัก:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button text to cancel 2FA dialog</translatorcomment>
-        <translation>ยกเลิก</translation>
-    </message>
-    <message>
-        <source>Invalid code</source>
-        <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
-        <translation>โค้ดไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Login Verification</source>
-        <translatorcomment>A dialog title for the form which collects the user’s 2FA code for login.</translatorcomment>
-        <translation>ตรวจสอบการเข้าสู่ระบบ</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translatorcomment>Button text to confirm 2FA dialog</translatorcomment>
-        <translation>ต่อไป</translation>
-    </message>
-    <message>
-        <source>Please enter the code generated by your authentication app</source>
-        <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>กรุณากรอกรหัสที่ได้รับจากแอปตัวรับรองความถูกต้องของคุณ</translation>
-    </message>
-    <message>
-        <source>[A]Lost your authenticator device?[/A]</source>
-        <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation>[A]อุปกรณ์ตัวรับรองความถูกต้องสูญหายหรือไม่[/A]</translation>
-    </message>
-</context>
-<context>
     <name>LoginController</name>
     <message>
         <source>Email address already in use.</source>
@@ -3053,9 +2968,14 @@ Please wait for the upload to complete.</source>
 <context>
     <name>LogoutController</name>
     <message>
-        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
-        <translatorcomment>Notification message shown when SSL checks fails. SNC-4122</translatorcomment>
-        <translation>ไม่สามารถยืนยันคีย์ SSL ของเราได้ คุณอาจถูกโจมตีจากการลักลอบดักข้อมูลหรือโปรแกรมป้องกันไวรัสของคุณอาจจะขัดขวางการสื่อสารของคุณและทำให้เกิดปัญหานี้ได้ ปิดโปรแกรมป้องกันไวรัสและลองอีกครั้ง</translation>
+        <source>MEGA couldn’t connect securely.[BR]If you’re on public Wi-Fi, try signing in through your browser first. Your ISP or security software might also be interfering with the connection.[BR][A]Learn more[/A]</source>
+        <translatorcomment>Body for the notification message shown when SSL checks fails. SNC-5610</translatorcomment>
+        <translation>MEGA เชื่อมต่ออย่างปลอดภัยไม่สำเร็จ[BR]หากคุณใช้ Wi-Fi สาธารณะ ลองลงชื่อเข้าใช้ผ่านเบราว์เซอร์ก่อน ผู้ให้บริการอินเทอร์เน็ต (ISP) หรือโปรแกรมรักษาความปลอดภัยอาจกำลังรบกวนการเชื่อมต่อของคุณ[BR][A]เรียนรู้เพิ่มเติม[/A]</translation>
+    </message>
+    <message>
+        <source>Secure connection failed</source>
+        <translatorcomment>Title for the notification message shown when SSL checks fails. SNC-5610</translatorcomment>
+        <translation>เชื่อมต่ออย่างปลอดภัยไม่สำเร็จ</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
@@ -3162,6 +3082,11 @@ Please wait for the upload to complete.</source>
         <source>Dismiss</source>
         <translatorcomment>Button text to discard a notification or message box</translatorcomment>
         <translation>ละทิ้ง</translation>
+    </message>
+    <message>
+        <source>Don’t show me again</source>
+        <translatorcomment>Check box in the link created dialog, to inform the system about user preference. SNC-5975</translatorcomment>
+        <translation>ไม่ต้องแสดงสิ่งนี้อีก</translation>
     </message>
     <message>
         <source>Download</source>
@@ -3555,6 +3480,11 @@ https://mega.co.nz/#sync</source>
         <translation>การเข้าถึงถูกปฏิเสธ</translation>
     </message>
     <message>
+        <source>Alert</source>
+        <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
+        <translation>แจ้งเตือน</translation>
+    </message>
+    <message>
         <source>Already exists</source>
         <translatorcomment>Label to show that an error related with an existent resource occurs during a SDK operation.</translatorcomment>
         <translation>มีอยู่แล้ว</translation>
@@ -3818,14 +3748,22 @@ https://mega.co.nz/#sync</source>
         <translation>การตั้งค่าการซิงค์และการสำรองข้อมูลของคุณเสียหายและถูกรีเซ็ต คุณจะต้องตั้งค่าการซิงค์และการสำรองข้อมูลที่คุณเคยตั้งค่าไว้อีกครั้ง</translation>
     </message>
     <message>
-        <source>Alert</source>
-        <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation>แจ้งเตือน</translation>
-    </message>
-    <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
         <translation>[B]พบข้อผิดพลาด[/B][BR]เกิดข้อผิดพลาดขณะโหลดทรัพยากรของแอป ทำให้แอปจำเป็นต้องปิดตัวลง กรุณาติดตั้งแอปใหม่อีกครั้งจาก [A]mega.io/desktop[/A] เพื่อแก้ปัญหานี้ หากติดตั้งใหม่แล้วปัญหายังไม่หายไป กรุณาติดต่อทีมสนับสนุนเพื่อขอความช่วยเหลือต่อไป</translation>
+    </message>
+</context>
+<context>
+    <name>MegaInputDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for Cancel buttons. SNC-5798.</translatorcomment>
+        <translation>ยกเลิก</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for Ok buttons. SNC-5798.</translatorcomment>
+        <translation>ตกลง</translation>
     </message>
 </context>
 <context>
@@ -3889,7 +3827,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Backup externally modified</source>
         <translatorcomment>SDK error to inform the user that the backup was modified using another client. CON-537</translatorcomment>
-        <translation>มีปัญหาในการซิงค์หรือสำรองข้อมูลในโฟลเดอร์นี้ เนื่องจากมีการเปลี่ยนแปลงในโฟลเดอร์ MEGA คุณสามารถหยุดการซิงค์หรือสำรองข้อมูลและลองตั้งค่าใหม่ในเมนูการตั้งค่าก่อนหรือติดต่อฝ่ายสนับสนุน</translation>
+        <translation>พบปัญหาในระหว่างการซิงค์หรือสำรองข้อมูลในโฟลเดอร์นี้ เนื่องจากมีการเปลี่ยนแปลงในโฟลเดอร์ MEGA คุณสามารถหยุดการซิงค์หรือสำรองข้อมูลและลองตั้งค่าใหม่ในเมนูการตั้งค่าก่อนหรือติดต่อฝ่ายสนับสนุน</translation>
     </message>
     <message>
         <source>Could not get the filesystem&apos;s ID.</source>
@@ -3969,7 +3907,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Mismatch on sync root FSID.</source>
         <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
-        <translation>มีปัญหาในการซิงค์หรือสำรองข้อมูลในโฟลเดอร์นี้ เนื่องจากมีการเปลี่ยนแปลงในโฟลเดอร์บนเครื่อง คุณสามารถหยุดการซิงค์หรือสำรองข้อมูลและลองตั้งค่าใหม่ในเมนูการตั้งค่าก่อนหรือติดต่อฝ่ายสนับสนุน</translation>
+        <translation>พบปัญหาในระหว่างการซิงค์หรือสำรองข้อมูลในโฟลเดอร์นี้ เนื่องจากมีการเปลี่ยนแปลงในโฟลเดอร์บนเครื่อง คุณสามารถหยุดการซิงค์หรือสำรองข้อมูลและลองตั้งค่าใหม่ในเมนูการตั้งค่าก่อนหรือติดต่อฝ่ายสนับสนุน</translation>
     </message>
     <message>
         <source>No error</source>
@@ -4115,6 +4053,46 @@ https://mega.co.nz/#sync</source>
 <context>
     <name>MegaTransferView</name>
     <message>
+        <source>All the selected completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
+        <translation>รายการถ่ายโอนที่เสร็จแล้วที่เลือกทั้งหมดจะถูกล้าง</translation>
+    </message>
+    <message>
+        <source>All your completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
+        <translation>รายการถ่ายโอนที่เสร็จแล้วทั้งหมดในหมวดหมู่นี้จะถูกล้าง</translation>
+    </message>
+    <message>
+        <source>All your completed transfers will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
+        <translation>รายการถ่ายโอนที่เสร็จแล้วทั้งหมดจะถูกล้าง</translation>
+    </message>
+    <message>
+        <source>All your selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers</translatorcomment>
+        <translation>รายการถ่ายโอนที่เลือกทั้งหมดจะถูกยกเลิกและล้างออก</translation>
+    </message>
+    <message>
+        <source>All your selected transfers will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers</translatorcomment>
+        <translation>รายการถ่ายโอนที่เลือกทั้งหมดจะถูกยกเลิก</translation>
+    </message>
+    <message>
+        <source>All your transfers in this category will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>รายการถ่ายโอนทั้งหมดในหมวดหมู่นี้จะถูกยกเลิกและล้างออก</translation>
+    </message>
+    <message>
+        <source>All your transfers in this category will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>รายการถ่ายโอนทั้งหมดในหมวดหมู่นี้จะถูกยกเลิก</translation>
+    </message>
+    <message>
+        <source>All your transfers will be cancelled.</source>
+        <translatorcomment>Messagebox description text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
+        <translation>รายการถ่ายโอนทั้งหมดจะถูกยกเลิก</translation>
+    </message>
+    <message>
         <source>Cancel</source>
         <translatorcomment>Dialog button to do the proposed actions (cancel the transfers). See CON-188.</translatorcomment>
         <translation>ยกเลิก</translation>
@@ -4135,71 +4113,9 @@ https://mega.co.nz/#sync</source>
         <translation>ยกเลิกการถ่ายโอนหรือไม่</translation>
     </message>
     <message>
-        <source>Cancel transfers?
-All your selected transfers will be cancelled and cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers</translatorcomment>
-        <translation>ยกเลิกการถ่ายโอนหรือไม่
-การถ่ายโอนที่คุณเลือกทั้งหมดจะถูกยกเลิกและล้างออก</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-All your selected transfers will be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers</translatorcomment>
-        <translation>ยกเลิกการถ่ายโอนหรือไม่
-การถ่ายโอนที่คุณเลือกทั้งหมดจะถูกยกเลิก</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-All your transfers in this category will be cancelled and cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category</translatorcomment>
-        <translation>ยกเลิกการถ่ายโอนหรือไม่
-การถ่ายโอนทั้งหมดในประเภทนี้จะถูกยกเลิกและล้างออก</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-All your transfers in this category will be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category</translatorcomment>
-        <translation>ยกเลิกการถ่ายโอนหรือไม่
-การถ่ายโอนทั้งหมดในประเภทนี้จะถูกยกเลิก</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-All your transfers will be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
-        <translation>ยกเลิกการถ่ายโอนหรือไม่
-การถ่ายโอนทั้งหมดของคุณจะถูกยกเลิก</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-Your incomplete sync transfers won't be cancelled
-All the other transfers will be cancelled and cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
-        <translation>ยกเลิกการถ่ายโอนหรือไม่
-รายการซิงค์ที่ยังถ่ายโอนไม่เสร็จสมบูรณ์จะไม่ถูกยกเลิก
-การถ่ายโอนอื่น ๆ ทั้งหมดจะถูกยกเลิกและล้างออก</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-Your incomplete sync transfers won&apos;t be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
-        <translation>ยกเลิกการถ่ายโอนหรือไม่
-รายการซิงค์ที่ยังถ่ายโอนไม่เสร็จสมบูรณ์จะไม่ถูกยกเลิก การถ่ายโอนอื่น ๆ ทั้งหมดจะถูกยกเลิก</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-Your selected incomplete sync transfers won't be cancelled
-All the other selected transfers will be cancelled and cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
-        <translation>ยกเลิกการถ่ายโอนหรือไม่
-รายการซิงค์ที่ยังถ่ายโอนไม่เสร็จสมบูรณ์ที่คุณเลือกจะไม่ถูกยกเลิก 
-การถ่ายโอนอื่น ๆ ทั้งหมดจะถูกยกเลิกและล้างออก</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-Your selected incomplete sync transfers won&apos;t be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
-        <translation>ยกเลิกการถ่ายโอนหรือไม่
-รายการซิงค์ที่ยังถ่ายโอนไม่เสร็จสมบูรณ์ที่คุณเลือกจะไม่ถูกยกเลิก การถ่ายโอนอื่น ๆ ทั้งหมดจะถูกยกเลิก</translation>
+        <source>Cancel transfers?</source>
+        <translatorcomment>Messagebox title to confirm if the user wants to cancel multipe selected  transfer</translatorcomment>
+        <translation>ยกเลิกการถ่ายโอนหรือไม่</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -4217,25 +4133,9 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <translation>ล้างการถ่ายโอนหรือไม่</translation>
     </message>
     <message>
-        <source>Clear transfers?
-All the selected completed transfers in this category will be cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
-        <translation>ล้างการถ่ายโอนหรือไม่
-การถ่ายโอนที่เสร็จสมบูรณ์ที่เลือกทั้งหมดในประเภทนี้จะถูกล้างออก</translation>
-    </message>
-    <message>
-        <source>Clear transfers?
-All your completed transfers in this category will be cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in a category other than the completed category</translatorcomment>
-        <translation>ล้างการถ่ายโอนหรือไม่
-การถ่ายโอนที่เสร็จสมบูรณ์ทั้งหมดในประเภทนี้จะถูกล้างออก</translation>
-    </message>
-    <message>
-        <source>Clear transfers?
-All your completed transfers will be cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
-        <translation>ล้างการถ่ายโอนหรือไม่
-การถ่ายโอนที่เสร็จสมบูรณ์ทั้งหมดของคุณจะถูกล้างออก</translation>
+        <source>Clear transfers?</source>
+        <translatorcomment>Messagebox title to confirm if the user wants to clear multipe selected completed transfer</translatorcomment>
+        <translation>ล้างรายการถ่ายโอน</translation>
     </message>
     <message>
         <source>Don&apos;t cancel</source>
@@ -4301,6 +4201,36 @@ All your completed transfers will be cleared.</source>
         <source>Show in folder</source>
         <translatorcomment>Label of context menu option to open the selected completed transfer using the specific file browser</translatorcomment>
         <translation>แสดงในโฟลเดอร์</translation>
+    </message>
+    <message>
+        <source>Your incomplete sync transfers won't be cancelled
+All the other transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>ไม่สามารถยกเลิกการถ่ายโอนข้อมูลที่กำลังซิงค์ได้ แต่รายการถ่ายโอนอื่นทั้งหมดจะถูกยกเลิกและล้าง</translation>
+    </message>
+    <message>
+        <source>Your incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>ไม่สามารถยกเลิกรายการที่กำลังซิงค์ได้</translation>
+    </message>
+    <message>
+        <source>Your selected incomplete sync transfers won't be cancelled
+All the other selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>ไม่สามารถยกเลิกรายการที่กำลังซิงค์ได้ แต่รายการถ่ายโอนอื่นที่เลือกไว้จะถูกยกเลิกและล้างออก</translation>
+    </message>
+    <message>
+        <source>Your selected incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>ไม่สามารถยกเลิกรายการที่กำลังซิงค์ได้</translation>
+    </message>
+</context>
+<context>
+    <name>MessageDialogData</name>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Label for close button. Keep capital letter. SNC-5997</translatorcomment>
+        <translation>ปิด</translation>
     </message>
 </context>
 <context>
@@ -4597,29 +4527,27 @@ Enter a different name</source>
         <translation>มีโฟลเดอร์ชื่อนี้อยู่ในตำแหน่งนี้แล้ว กรอกชื่ออื่น</translation>
     </message>
     <message>
-        <source>The following characters are not allowed:
-%1</source>
-        <translatorcomment>Message shown when the user has entered a not allowed character</translatorcomment>
-        <translation>ไม่อนุญาตให้ใช้อักขระต่อไปนี้:
-%1</translation>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button. Keep capital letter. SNC.5804</translatorcomment>
+        <translation>ยกเลิก</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for ok button. Keep capital letter. SNC.5804</translatorcomment>
+        <translation>ตกลง</translation>
     </message>
 </context>
 <context>
     <name>NodeSelector</name>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Button text to navigate to backups section</translatorcomment>
-        <translation>สำรองข้อมูล</translation>
+        <source>Always upload to this destination</source>
+        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox. SNC-5804</translatorcomment>
+        <translation>อัปโหลดไปยังปลายทางนี้เสมอ</translation>
     </message>
     <message>
-        <source>Cloud Drive</source>
-        <translatorcomment>Button text to navigate to cloud drive section</translatorcomment>
-        <translation>คลาวด์ไดรฟ์</translation>
-    </message>
-    <message>
-        <source>Incoming Shares</source>
-        <translatorcomment>Button text to navigate to incoming shares section</translatorcomment>
-        <translation>แชร์ขาเข้า</translation>
+        <source>Files</source>
+        <translatorcomment>Sidebar title. SNC.5804</translatorcomment>
+        <translation>ไฟล์</translation>
     </message>
     <message>
         <source>Search</source>
@@ -4648,6 +4576,11 @@ Enter a different name</source>
         <source>Close</source>
         <translatorcomment>Cancel button string for failed action in Cloud Drive dialog.SAT-426</translatorcomment>
         <translation>ปิด</translation>
+    </message>
+    <message>
+        <source>Date added</source>
+        <translatorcomment>Table header title for node date added info. SNC.5804</translatorcomment>
+        <translation>วันที่เพิ่ม</translation>
     </message>
     <message>
         <source>Error copying file</source>
@@ -4760,14 +4693,19 @@ Enter a different name</source>
         <translation>ซิงค์เนื้อหาโฟลเดอร์แล้ว</translation>
     </message>
     <message>
+        <source>Last modified</source>
+        <translatorcomment>Table header title for node last modified date info. SNC.5804</translatorcomment>
+        <translation>แก้ไขล่าสุด</translation>
+    </message>
+    <message>
         <source>Name</source>
         <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
         <translation>ชื่อ</translation>
     </message>
     <message>
-        <source>Recently used</source>
-        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation>แก้ไขล่าสุด</translation>
+        <source>Owner</source>
+        <translatorcomment>Table header title for incoming shared owner info. SNC.5804</translatorcomment>
+        <translation>เจ้าของ</translation>
     </message>
     <message>
         <source>Sort by access</source>
@@ -4775,9 +4713,14 @@ Enter a different name</source>
         <translation>เรียงตามการเข้าถึง</translation>
     </message>
     <message>
-        <source>Sort by date</source>
-        <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>เรียงตามวันที่</translation>
+        <source>Sort by date added</source>
+        <translatorcomment>Table header tooltip for Date added column. SNC.5804</translatorcomment>
+        <translation>เรียงตามวันที่เพิ่ม</translation>
+    </message>
+    <message>
+        <source>Sort by last modified date</source>
+        <translatorcomment>Table header tooltip for last modified column. SNC.5804</translatorcomment>
+        <translation>เรียงตามวันที่แก้ไขล่าสุด</translation>
     </message>
     <message>
         <source>Sort by name</source>
@@ -4788,11 +4731,6 @@ Enter a different name</source>
         <source>Sort by owner name</source>
         <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
         <translation>เรียงตามชื่อเจ้าของ</translation>
-    </message>
-    <message>
-        <source>Sort by status</source>
-        <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
-        <translation>เรียงตามสถานะ</translation>
     </message>
     <message>
         <source>The file %1 couldn’t be copied. Try again later</source>
@@ -4903,6 +4841,11 @@ Enter a different name</source>
         <translation>คัดลอก</translation>
     </message>
     <message>
+        <source>Download</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a node on node selector. It downloads the selected nodes. SNC-5804</translatorcomment>
+        <translation>ดาวน์โหลด</translation>
+    </message>
+    <message>
         <source>Leave folder</source>
         <translatorcomment>Contextual menu text that appears when we right click on inshare folder on the incoming shared page on node selector. It leaves an inshared folder. CON-1255</translatorcomment>
         <translation>ออกจากโฟลเดอร์</translation>
@@ -4951,29 +4894,14 @@ Enter a different name</source>
 <context>
     <name>NodeSelectorTreeViewWidget</name>
     <message>
-        <source>Always upload to this destination</source>
-        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
-        <translation>อัปโหลดไปยังปลายทางนี้เสมอ</translation>
-    </message>
-    <message>
         <source>Any shared files or folders will no longer be accessible to the people you shared them with. You can still access these items in the Rubbish bin, restore, and share them.</source>
         <translatorcomment>Informative text about the potential issues of removing the nodes. CON-334</translatorcomment>
         <translation>ไฟล์หรือโฟลเดอร์ที่คุณได้แชร์ไปนั้น จะไม่สามารถเข้าถึงได้สำหรับผู้ที่คุณได้แชร์ให้แล้ว คุณยังคงสามารถเข้าถึงรายการเหล่านี้ได้ในถังขยะ และสามารถกู้คืนหรือแชร์ใหม่ได้ </translation>
     </message>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Button to filter search results from backups</translatorcomment>
-        <translation>สำรองข้อมูล</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>ยกเลิก</translation>
-    </message>
-    <message>
-        <source>Cloud drive</source>
-        <translatorcomment>Button to filter search results from cloud drive</translatorcomment>
-        <translation>คลาวด์ไดรฟ์</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -4999,11 +4927,6 @@ Enter a different name</source>
         <source>If you leave the folder, you will not be able to see it again.</source>
         <translatorcomment>Body of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
         <translation><numerusform>หากคุณออกจากโฟลเดอร์เหล่านี้ คุณจะไม่สามารถมองเห็นได้อีก</numerusform></translation>
-    </message>
-    <message>
-        <source>Incoming Shares</source>
-        <translatorcomment>Button to filter search results from incoming shares</translatorcomment>
-        <translation>แชร์ขาเข้า</translation>
     </message>
     <message>
         <source>Leave</source>
@@ -5036,19 +4959,9 @@ Enter a different name</source>
         <translation>โฟล์เดอร์ใหม่</translation>
     </message>
     <message>
-        <source>No results for:</source>
-        <translatorcomment>Label indicating that there are no results for the current search, searched text will be following this label.</translatorcomment>
-        <translation>ไม่พบรายการค้นหา:</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translatorcomment>Button text to accept and close the dialog</translatorcomment>
         <translation>ตกลง</translation>
-    </message>
-    <message>
-        <source>Rubbish bin</source>
-        <translatorcomment>Button to filter search results from rubbish bin</translatorcomment>
-        <translation>ถังขยะ</translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
@@ -5072,11 +4985,58 @@ Enter a different name</source>
     </message>
 </context>
 <context>
-    <name>NodeSelectorTreeViewWidgetSearch</name>
+    <name>NodeSelectorTreeViewWidgetBackups</name>
     <message>
-        <source>Searching:</source>
-        <translatorcomment>Label indicating the current search, searched text will be following this label.</translatorcomment>
-        <translation>การค้นหา:</translation>
+        <source>No backups</source>
+        <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
+        <translation>ไม่มีข้อมูลสำรอง</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetCloudDrive</name>
+    <message>
+        <source>Cloud drive is empty</source>
+        <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
+        <translation>คลาวด์ไดร์ฟนี้ว่างเปล่า</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetIncomingShares</name>
+    <message>
+        <source>No incoming shares</source>
+        <translatorcomment>Title message on the view when there are no items in the normal view. SNC-5804</translatorcomment>
+        <translation>ไม่มีการแชร์ขาเข้า</translation>
+    </message>
+    <message>
+        <source>No incoming shares you can sync</source>
+        <translatorcomment>Title message on the view when there are no items in the Sync view. SNC-5804</translatorcomment>
+        <translation>ไม่มีรายการแชร์ที่เข้ามาที่คุณซิงค์ได้</translation>
+    </message>
+    <message>
+        <source>You can only sync a shared folder if you’ve been given full access</source>
+        <translatorcomment>Description message on the view when there are no items in the sync view. It says you don´t have shared folders with the needed rights. SNC-5804</translatorcomment>
+        <translation>คุณจะซิงค์โฟลเดอร์ที่แชร์ได้ก็ต่อเมื่อได้รับสิทธิ์การเข้าถึงแบบเต็มที่เท่านั้น</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetRubbish</name>
+    <message>
+        <source>The Rubbish bin is empty</source>
+        <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
+        <translation>ถังขยะนี้ว่างเปล่า</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetSearch</name>
+    <message numerus="yes">
+        <source>%n result found</source>
+        <translatorcomment>Search tab subtitle that shows the number of coincidences found. %n is the number of found nodes. SNC-5804</translatorcomment>
+        <translation><numerusform>พบ %n รายการ</numerusform></translation>
+    </message>
+    <message>
+        <source>No search results</source>
+        <translatorcomment>Message on the view when the search did not find any coincidence. SNC-5804</translatorcomment>
+        <translation>ไม่พบผลลัพธ์การค้นหา</translation>
     </message>
 </context>
 <context>
@@ -6055,12 +6015,12 @@ Enter a different name</source>
     <message>
         <source>We couldn’t connect using your proxy settings. Check your proxy details or try a different network.</source>
         <translatorcomment>Error banner shown when there is an error testing the proxy settings. SNC-5411</translatorcomment>
-        <translation>ไม่สามารถเชื่อมต่อโดยใช้การตั้งค่า proxy ของคุณได้ กรุณาตรวจสอบการตั้งค่าหรือลองใช้เครือข่ายอื่น</translation>
+        <translation>เราไม่สามารถเชื่อมต่อโดยใช้การตั้งค่าพร็อกซีของคุณได้ กรุณาตรวจสอบการตั้งค่าหรือลองใช้เครือข่ายอื่น</translation>
     </message>
     <message>
         <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
         <translatorcomment>Error banner shown when proxy settings is not found in the environment, [B] is for bold . SNC-5411</translatorcomment>
-        <translation>ระบบของคุณไม่มีชุด proxy หากต้องการเชื่อมต่อให้ตั้งค่า [B]http_พร็อกซี[/B] หรือ [B]https_พร็อกซี[/B] ที่ถูกต้องในระบบของคุณ</translation>
+        <translation>ไม่พบการตั้งค่าพร็อกซีในระบบของคุณ กรุณาตั้งค่าตัวแปร [B]http_proxy[/B] หรือ [B]https_proxy[/B] ที่ถูกต้องเพื่อเชื่อมต่อ</translation>
     </message>
 </context>
 <context>
@@ -7635,9 +7595,9 @@ Please, refresh the list.</source>
         <translation>พักแล้ว</translation>
     </message>
     <message>
-        <source>Scanning</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
-        <translation>กำลังสแกน</translation>
+        <source>Scanning…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state. SNC-5938</translatorcomment>
+        <translation>กำลังสแกน…</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -7645,14 +7605,14 @@ Please, refresh the list.</source>
         <translation>กำลังเริ่ม</translation>
     </message>
     <message>
-        <source>Syncing</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
-        <translation>กำลังซิงค์</translation>
+        <source>Syncing…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.  SNC-5938</translatorcomment>
+        <translation>กำลังซิงค์…</translation>
     </message>
     <message>
-        <source>Transferring</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
-        <translation>กำลังถ่ายโอน</translation>
+        <source>Transferring…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers. SNC-5938</translatorcomment>
+        <translation>กำลังถ่ายโอน…</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -7660,9 +7620,9 @@ Please, refresh the list.</source>
         <translation>ล่าสุดแล้ว</translation>
     </message>
     <message>
-        <source>Waiting</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync is at waiting state</translatorcomment>
-        <translation>กำลังรอ</translation>
+        <source>Waiting…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at waiting state. SNC-5938</translatorcomment>
+        <translation>กำลังรอ…</translation>
     </message>
 </context>
 <context>
@@ -7675,11 +7635,6 @@ Please, refresh the list.</source>
 </context>
 <context>
     <name>StreamingFromMegaDialog</name>
-    <message>
-        <source>Are you sure that you want to stop the streaming?</source>
-        <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation>คุณแน่ใจหรือว่าต้องการหยุดการสตรีมมิ่ง</translation>
-    </message>
     <message>
         <source>Choose application</source>
         <translatorcomment>Text of the button to open a streaming link with a custom application</translatorcomment>
@@ -8159,7 +8114,7 @@ Please, refresh the list.</source>
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
         <translation>เป้าหมายอยู่ในโครงสร้างโฟลเดอร์ที่ลึกเกินไป ให้หยุดการซิงค์ แล้วย้ายโฟลเดอร์ไปยังตำแหน่งที่ลึกไม่เกิน 64 โฟลเดอร์ จากนั้นเริ่มต้นการซิงค์ใหม่ 
-หากยังไม่สามารถแก้ไขปัญหาได้ ติดต่อ support@mega.io</translation>
+หากยังไม่สามารถแก้ไขปัญหาได้ กรุณาติดต่อ support@mega.io</translation>
     </message>
     <message>
         <source>Unable to sync [B]%1[/B]</source>
@@ -8512,6 +8467,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>ThemeManager</name>
+    <message>
+        <source>Dark</source>
+        <translatorcomment>Name of the dark color scheme, it can be selected by the user to customize the interface colors. SNC-5799</translatorcomment>
+        <translation>สีเข้ม</translation>
+    </message>
+    <message>
+        <source>Light</source>
+        <translatorcomment>Name of the light color scheme, it can be selected by the user to customize the interface colors. SNC-5799</translatorcomment>
+        <translation>เบา</translation>
+    </message>
+    <message>
+        <source>System default</source>
+        <translatorcomment>The user request the aplication color scheme to follow the operating system active theme. SNC-5799</translatorcomment>
+        <translation>ค่าเริ่มต้นของระบบ</translation>
+    </message>
+</context>
+<context>
     <name>TransferBaseDelegateWidget</name>
     <message>
         <source>(in queue)</source>
@@ -8641,20 +8614,15 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Categories for image type transfers</translatorcomment>
         <translation>รูปภาพ</translation>
     </message>
-    <message numerus="yes">
-        <source>Issue found</source>
-        <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
-        <translation><numerusform>พบปัญหาการซิงค์ข้อมูล</numerusform></translation>
+    <message>
+        <source>Issues with some synced items</source>
+        <translatorcomment>Label that appears when sync stalls are detected. SNC-5970</translatorcomment>
+        <translation>พบปัญหาการซิงค์ข้อมูล</translation>
     </message>
     <message>
         <source>Media type</source>
         <translatorcomment>Title of the groupbox which contains all the media categories</translatorcomment>
         <translation>ประเภทสื่อ</translation>
-    </message>
-    <message>
-        <source>No completed transfers</source>
-        <translatorcomment>Empty window message for completed category</translatorcomment>
-        <translation>ไม่มีรายการถ่ายโอน</translation>
     </message>
     <message>
         <source>No downloads</source>
@@ -8702,19 +8670,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>ลองใหม่ทั้งหมด</translation>
     </message>
     <message>
-        <source>Scanning</source>
-        <translatorcomment>State of the Transfers: Message which shows that a folder is being scanned</translatorcomment>
-        <translation>กำลังสแกน</translation>
-    </message>
-    <message>
         <source>Search</source>
         <translatorcomment>Title for text search window</translatorcomment>
         <translation>ค้นหา</translation>
-    </message>
-    <message>
-        <source>Search:</source>
-        <translatorcomment>Title to show the text used to search</translatorcomment>
-        <translation>ค้นหา:</translation>
     </message>
     <message>
         <source>Transfer Manager</source>
@@ -8732,11 +8690,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>การถ่ายโอน</translation>
     </message>
     <message>
-        <source>Up to date</source>
-        <translatorcomment>All transfers have been finished</translatorcomment>
-        <translation>ล่าสุดแล้ว</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label of the button to start a new upload</translatorcomment>
         <translation>อัปโหลด</translation>
@@ -8750,6 +8703,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Videos</source>
         <translatorcomment>Categories for video type transfers</translatorcomment>
         <translation>วิดีโอ</translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translatorcomment>Button to show the sync stalls. SNC-5970</translatorcomment>
+        <translation>ดู</translation>
     </message>
 </context>
 <context>
@@ -8768,19 +8726,34 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>หยุดการโอนข้อมูลทั้งหมดชั่วคราวแล้ว</translation>
     </message>
     <message>
+        <source>Before your storage becomes full and your uploads, syncs and backups stop.</source>
+        <translatorcomment>Warning description shown when storage quota is almost full</translatorcomment>
+        <translation>กรุณาอัปเกรดก่อนที่พื้นที่เก็บข้อมูลจะเต็ม มิฉะนั้นการอัปโหลด การซิงค์ และการสำรองข้อมูลจะหยุดชะงัก</translation>
+    </message>
+    <message>
+        <source>Storage almost full</source>
+        <translatorcomment>Warning title shown when storage quota is almost full</translatorcomment>
+        <translation>พื้นที่เก็บข้อมูลใกล้เต็ม</translation>
+    </message>
+    <message>
+        <source>Storage full</source>
+        <translatorcomment>Error title indicating that the storage quota is full. CON-1061</translatorcomment>
+        <translation>พื้นที่เก็บข้อมูลเต็มแล้ว</translation>
+    </message>
+    <message>
         <source>Transfer quota exceeded.</source>
         <translatorcomment>Error text indicating that the transfer quota has been exceeded for pro users. CON-1061</translatorcomment>
         <translation>เกินโควต้าการถ่ายโอนแล้ว</translation>
     </message>
     <message>
-        <source>[B]Storage almost full[/B][BR][A]Upgrade now[/A] before your storage becomes full and your uploads, syncs and backups stop.</source>
-        <translatorcomment>Warning text indicating that the storage quota is almost full. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. CON-1061</translatorcomment>
-        <translation>[B]พื้นที่เก็บข้อมูลของคุณใกล้เต็มแล้ว[/B][BR][A]อัปเกรดตอนนี้[/A]ก่อนที่พื้นที่เก็บข้อมูลจะเต็มและการอัปโหลด ซิงค์ และสำรองข้อมูลของคุณจะหยุดทำงาน</translation>
+        <source>Upgrade now</source>
+        <translatorcomment>Text for link shown when the storage quota is almost full.</translatorcomment>
+        <translation>อัปเกรดตอนนี้เลย</translation>
     </message>
     <message>
-        <source>[B]Storage full[/B][BR]Uploads are disabled and sync and backups are paused.</source>
-        <translatorcomment>Error text indicating that the storage quota is full. Please, keep the [BR] placeholder for breaking the line and [B][/B] used for formatting the bold text. CON-1061</translatorcomment>
-        <translation>[B]พื้นที่จัดเก็บเต็มแล้ว[/B][BR]การอัปโหลดไฟล์ใหม่ถูกระงับชั่วคราว และการซิงค์ข้อมูลพร้อมกับการสำรองข้อมูลก็หยุดทำงานไปด้วย</translation>
+        <source>Uploads are disabled and sync and backups are paused.</source>
+        <translatorcomment>Error description shown when storage is full. CON-1061</translatorcomment>
+        <translation>ปิดใช้งานการอัปโหลด และหยุดการซิงค์กับการสำรองข้อมูลไว้ชั่วคราว</translation>
     </message>
     <message>
         <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
@@ -9503,29 +9476,19 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation><numerusform>ใช้ไปแล้ว %1 (%2%) จาก %3</numerusform></translation>
     </message>
     <message>
-        <source>%1 [A]d[/A]</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]ว[/A]</translation>
-    </message>
-    <message>
-        <source>%1 [A]h[/A]</source>
-        <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]ชม.[/A]</translation>
-    </message>
-    <message>
-        <source>%1 [A]m[/A]</source>
-        <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]น.[/A]</translation>
-    </message>
-    <message>
-        <source>%1 [A]s[/A]</source>
-        <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]วิ[/A]</translation>
+        <source>%1 / %2</source>
+        <translatorcomment>This translated separator template with placeholders &quot;%1&quot; and &quot;%2&quot; is used to format the display of two values separated by a slash, with a space on each side of the separator. The placeholders represent dynamic content that will be replaced with actual data. For instance, in French: &quot;15,2 Go / 400 Go&quot;. SNC-5456</translatorcomment>
+        <translation>%1 / %2</translation>
     </message>
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to indicate the amount of used and total space available. Keep %1 (used space) and %2 (total space) substitution placeholders because they will be filled with the required amounts of storage space dynamically including the unit (e.g. 1KB, 5MB, 8GB...). CON-944</translatorcomment>
         <translation>%1 จาก %2</translation>
+    </message>
+    <message>
+        <source>%1 sec</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
@@ -9533,9 +9496,24 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation><numerusform>ใช้ไปแล้ว %1</numerusform></translation>
     </message>
     <message>
-        <source>%1/%2</source>
-        <translatorcomment>This translated separator template with placeholders &quot;%1&quot; and &quot;%2&quot; is used to format the display of two values separated by a slash, without any superfluous spaces, in the UI. The placeholders represent dynamic content that will be replaced with actual data. For instance, in French, the formatted string should appear as &quot;15,2 Go/400 Go&quot;, without any spaces surrounding the slash. Translators should adjust the spaces around the slash according to their language-specific formatting rules, ensuring that the translation adheres to the standard typographical conventions of the target language. SNC-1793</translatorcomment>
-        <translation>%1/%2</translation>
+        <source>%1d</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1h</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1m</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1s</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation>%1 วิ</translation>
     </message>
     <message numerus="yes">
         <source>Added %n day ago</source>
@@ -9681,11 +9659,6 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>VerifyLockMessage</name>
     <message>
-        <source>Email sent</source>
-        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
-        <translation>ส่งอีเมลแล้ว</translation>
-    </message>
-    <message>
         <source>Locked account</source>
         <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
         <translation>บัญชีถูกล็อก</translation>
@@ -9696,18 +9669,8 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>ออกจากระบบ</translation>
     </message>
     <message>
-        <source>Resend email</source>
-        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
-        <translation>ส่งอีเมลอีกครั้ง</translation>
-    </message>
-    <message>
-        <source>Verify your email</source>
-        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
-        <translation>ตรวจสอบกล่องขาเข้าอีเมลของคุณ</translation>
-    </message>
-    <message>
         <source>Why am I seeing this?</source>
-        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translatorcomment>Clickable Label to inform the user about why the account is locked and needs verification (email verification). It redirects to credential-stuffing helpdesk article (SNC-5553) </translatorcomment>
         <translation>ทำไมฉันเห็นสิ่งนี้</translation>
     </message>
 </context>
