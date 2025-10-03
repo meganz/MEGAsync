@@ -1301,6 +1301,6 @@
         <file alias="settings-sync-warn">images/themed/tokenizable/settings-sync-warn.svg</file>
         <file alias="settings-sync">images/themed/tokenizable/settings-sync.svg</file>
         <file alias="download_small_thin_outline">images/themed/tokenizable/download_small_thin_outline.svg</file>
-        <file alias="three_dot">images/themed/tokenizable/three_dot.svg</file>
+        <file alias="more-horizontal">images/themed/tokenizable/more-horizontal.svg</file>
     </qresource>
 </RCC>

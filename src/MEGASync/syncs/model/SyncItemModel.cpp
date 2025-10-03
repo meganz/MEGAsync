@@ -264,14 +264,14 @@ QVariant SyncItemModel::data(const QModelIndex& index, int role) const
                 QIcon dotsMenu;
 
                 QPixmap threeDotPixMapNormal =
-                    Utilities::getColoredPixmap(QLatin1String("three_dot"),
+                    Utilities::getColoredPixmap(QLatin1String("more-horizontal"),
                                                 Utilities::AttributeType::NONE,
                                                 QLatin1String("icon-primary"),
                                                 QSize(ICON_SIZE, ICON_SIZE));
                 dotsMenu.addPixmap(threeDotPixMapNormal, QIcon::Normal);
 
                 QPixmap threeDotPixMapSelected =
-                    Utilities::getColoredPixmap(QLatin1String("three_dot"),
+                    Utilities::getColoredPixmap(QLatin1String("more-horizontal"),
                                                 Utilities::AttributeType::NONE,
                                                 QLatin1String("icon-inverse"),
                                                 QSize(ICON_SIZE, ICON_SIZE));
