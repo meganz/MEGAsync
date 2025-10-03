@@ -36,7 +36,6 @@ private:
     Preferences::ThemeType mCurrentTheme;
     Preferences::ThemeAppeareance mCurrentColorScheme;
     static const QMap<Preferences::ThemeAppeareance, QString> mAppearance;
-    static const QStringList mThemesList;
     QMap<Preferences::ThemeType, QString> mAvailableThemes;
 };
 

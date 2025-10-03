@@ -456,9 +456,8 @@ public:
     // Accent color
     // High contrast
     // ...
-    class SystemColorScheme
+    struct SystemColorScheme
     {
-    public:
         ThemeAppeareance systemScheme = ThemeAppeareance::UNINITIALIZED;
         ThemeAppeareance appsScheme = ThemeAppeareance::UNINITIALIZED;
     };
