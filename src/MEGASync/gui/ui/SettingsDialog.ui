@@ -29,35 +29,7 @@
    <string>Settings</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">/*ColorTokenIcon;Button;bAccount;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bAccount;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bBackup;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bBackup;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bFolders;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bFolders;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bGeneral;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bGeneral;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bNetwork;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bNetwork;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bNotifications;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bNotifications;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bSecurity;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bSecurity;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bSyncs;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bSyncs;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bHelp;normal;off;colorToken.link-primary*/
-
-/*ColorTokenIcon;Button;bAdd;normal;off;colorToken.text-inverse-accent*/
-
-SettingsDialog
+   <string notr="true">SettingsDialog
 {
 background-color: #FFFFFFFF; /*colorToken.page-background*/
 color: #ff303233; /*colorToken.text-primary*/
@@ -166,14 +138,6 @@ background-color: transparent;
 color: #ff333333; /*colorToken.text-primary*/
 font-size: 10px;
 font-weight: 400;
-}
-
-#bHelp
-{
-border: none;
-color: #ff2C5BEB; /*colorToken.link-primary*/
-background-color: transparent;
-font-weight: 600;
 }
 
 #lName
@@ -299,7 +263,7 @@ margin-bottom: 3px;
        </spacer>
       </item>
       <item>
-       <widget class="QToolButton" name="bGeneral">
+       <widget class="TokenizableToolButton" name="bGeneral">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -349,10 +313,16 @@ margin-bottom: 3px;
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
+        <property name="normal_off" stdset="0">
+         <string notr="true">icon-secondary</string>
+        </property>
+        <property name="normal_on" stdset="0">
+         <string notr="true">icon-primary</string>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="bAccount">
+       <widget class="TokenizableToolButton" name="bAccount">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -399,10 +369,16 @@ margin-bottom: 3px;
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
+        <property name="normal_off" stdset="0">
+         <string notr="true">icon-secondary</string>
+        </property>
+        <property name="normal_on" stdset="0">
+         <string notr="true">icon-primary</string>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="bSyncs">
+       <widget class="TokenizableToolButton" name="bSyncs">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -449,10 +425,16 @@ margin-bottom: 3px;
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
+        <property name="normal_off" stdset="0">
+         <string notr="true">icon-secondary</string>
+        </property>
+        <property name="normal_on" stdset="0">
+         <string notr="true">icon-primary</string>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="bBackup">
+       <widget class="TokenizableToolButton" name="bBackup">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -499,10 +481,16 @@ margin-bottom: 3px;
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
+        <property name="normal_off" stdset="0">
+         <string notr="true">icon-secondary</string>
+        </property>
+        <property name="normal_on" stdset="0">
+         <string notr="true">icon-primary</string>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="bSecurity">
+       <widget class="TokenizableToolButton" name="bSecurity">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -549,10 +537,16 @@ margin-bottom: 3px;
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
+        <property name="normal_off" stdset="0">
+         <string notr="true">icon-secondary</string>
+        </property>
+        <property name="normal_on" stdset="0">
+         <string notr="true">icon-primary</string>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="bFolders">
+       <widget class="TokenizableToolButton" name="bFolders">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -599,10 +593,16 @@ margin-bottom: 3px;
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
+        <property name="normal_off" stdset="0">
+         <string notr="true">icon-secondary</string>
+        </property>
+        <property name="normal_on" stdset="0">
+         <string notr="true">icon-primary</string>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="bNetwork">
+       <widget class="TokenizableToolButton" name="bNetwork">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -649,10 +649,16 @@ margin-bottom: 3px;
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
+        <property name="normal_off" stdset="0">
+         <string notr="true">icon-secondary</string>
+        </property>
+        <property name="normal_on" stdset="0">
+         <string notr="true">icon-primary</string>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="bNotifications">
+       <widget class="TokenizableToolButton" name="bNotifications">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -701,6 +707,12 @@ margin-bottom: 3px;
         </property>
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+        <property name="normal_off" stdset="0">
+         <string notr="true">icon-secondary</string>
+        </property>
+        <property name="normal_on" stdset="0">
+         <string notr="true">icon-primary</string>
         </property>
        </widget>
       </item>
@@ -3086,7 +3098,7 @@ margin-top: 0px;
        <number>0</number>
       </property>
       <item>
-       <widget class="QPushButton" name="bHelp">
+       <widget class="TokenizableButton" name="bHelp">
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
         </property>
@@ -3107,6 +3119,15 @@ margin-top: 0px;
          </size>
         </property>
         <property name="flat">
+         <bool>true</bool>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">link</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string notr="true">small</string>
+        </property>
+        <property name="semibold" stdset="0">
          <bool>true</bool>
         </property>
        </widget>
@@ -3424,6 +3445,16 @@ margin-top: 0px;
    <extends>QWidget</extends>
    <header>syncs/gui/Backups/BackupSettingsUI.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TokenizableButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TokenizableToolButton</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
   </customwidget>
  </customwidgets>
  <resources>

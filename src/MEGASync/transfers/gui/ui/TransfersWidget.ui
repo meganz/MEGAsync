@@ -368,7 +368,7 @@ qproperty-icon: url(:/eraser_small_thin_solid_secondary);
               <number>0</number>
              </property>
              <item>
-              <widget class="IconOnlyButton" name="tPauseResumeVisible">
+              <widget class="TokenizableToolButton" name="tPauseResumeVisible">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -455,7 +455,7 @@ qproperty-icon: url(:/eraser_small_thin_solid_secondary);
               <number>0</number>
              </property>
              <item>
-              <widget class="IconOnlyButton" name="tCancelClearVisible">
+              <widget class="TokenizableToolButton" name="tCancelClearVisible">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -607,6 +607,11 @@ qproperty-icon: url(:/eraser_small_thin_solid_secondary);
  </widget>
  <customwidgets>
   <customwidget>
+   <class>TokenizableToolButton</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
+  </customwidget>
+  <customwidget>
    <class>MegaTransferView</class>
    <extends>QTreeView</extends>
    <header>MegaTransferView.h</header>
@@ -616,11 +621,6 @@ qproperty-icon: url(:/eraser_small_thin_solid_secondary);
    <extends>QWidget</extends>
    <header>TransferWidgetHeaderItem.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>IconOnlyButton</class>
-   <extends>QPushButton</extends>
-   <header>TokenizableItems/TokenizableButtons.h</header>
   </customwidget>
  </customwidgets>
  <resources>

@@ -22,6 +22,8 @@ public:
     void setTheme(Preferences::ThemeType theme);
     void onSystemAppearanceChanged(Preferences::ThemeAppeareance app);
 
+    Preferences::ThemeAppeareance currentColorScheme() const;
+
 signals:
     void themeChanged();
 

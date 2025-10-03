@@ -122,3 +122,8 @@ void ThemeManager::applyTheme(Preferences::ThemeAppeareance theme)
         Utilities::propagateCustomEvent(ThemeChanged);
     }
 }
+
+Preferences::ThemeAppeareance ThemeManager::currentColorScheme() const
+{
+    return mCurrentColorScheme;
+}

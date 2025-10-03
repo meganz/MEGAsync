@@ -124,8 +124,8 @@ background-color: transparent;
             <property name="bottomMargin">
              <number>0</number>
             </property>
-            <item alignment="Qt::AlignTop">
-             <widget class="IconOnlyButton" name="bBack">
+            <item>
+             <widget class="TokenizableToolButton" name="bBack">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -154,16 +154,16 @@ background-color: transparent;
                <iconset resource="../../../gui/Resources_common.qrc">
                 <normaloff>:/chevron-left_medium_thin_outline</normaloff>:/chevron-left_medium_thin_outline</iconset>
               </property>
-              <property name="dimension" stdset="0">
-               <string notr="true">medium</string>
-              </property>
               <property name="type" stdset="0">
                <string notr="true">ghost</string>
               </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">medium</string>
+              </property>
              </widget>
             </item>
-            <item alignment="Qt::AlignTop">
-             <widget class="IconOnlyButton" name="bForward">
+            <item>
+             <widget class="TokenizableToolButton" name="bForward">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -186,11 +186,11 @@ background-color: transparent;
                <iconset resource="../../../gui/Resources_common.qrc">
                 <normaloff>:/chevron-right_medium_thin_outline</normaloff>:/chevron-right_medium_thin_outline</iconset>
               </property>
-              <property name="dimension" stdset="0">
-               <string notr="true">medium</string>
-              </property>
               <property name="type" stdset="0">
                <string notr="true">ghost</string>
+              </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">medium</string>
               </property>
              </widget>
             </item>
@@ -1082,11 +1082,6 @@ background-color: transparent;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>IconOnlyButton</class>
-   <extends>QPushButton</extends>
-   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
-  </customwidget>
-  <customwidget>
    <class>IconLabel</class>
    <extends>QToolButton</extends>
    <header>tokenizer/TokenizableItems/IconLabel.h</header>
@@ -1101,6 +1096,11 @@ background-color: transparent;
    <extends>QWidget</extends>
    <header>TabSelector.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TokenizableToolButton</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
   </customwidget>
   <customwidget>
    <class>NodeSelectorTreeView</class>

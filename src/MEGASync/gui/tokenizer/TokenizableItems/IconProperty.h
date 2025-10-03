@@ -3,6 +3,7 @@
 
 #include <QAbstractButton>
 #include <QIcon>
+#include <tokenizer/TokenizedIcon.h>
 
 #define DEFINE_ICON_PROPERTY() \
 \
@@ -12,6 +13,7 @@ public: \
     void setIcon(const QIcon& icon) \
     { \
         QAbstractButton::setIcon(icon); \
+        TokenizedIcon::reset(this); \
         forceUpdate(); \
     }
 

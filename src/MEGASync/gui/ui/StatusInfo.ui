@@ -93,7 +93,7 @@ qproperty-icon: none;
     <number>0</number>
    </property>
    <item>
-    <widget class="IconOnlyButton" name="bIconState">
+    <widget class="TokenizableToolButton" name="bIconState">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -155,8 +155,8 @@ qproperty-icon: none;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>IconOnlyButton</class>
-   <extends>QPushButton</extends>
+   <class>TokenizableToolButton</class>
+   <extends>QToolButton</extends>
    <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
   </customwidget>
   <customwidget>

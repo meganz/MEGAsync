@@ -1,9 +1,11 @@
 #include "IconTokenizer.h"
 
-#include <QDebug>
-#include <QWidget>
+#include "TokenizedIcon.h"
+
 #include <QBitmap>
+#include <QDebug>
 #include <QToolButton>
+#include <QWidget>
 
 static const QString ButtonId = QString::fromUtf8("Button");
 static const QString CustomId = QString::fromUtf8("Custom");
@@ -12,19 +14,25 @@ IconTokenizer::IconTokenizer(QObject* parent)
     : QObject{parent}
 { }
 
-void IconTokenizer::process(QWidget* widget, const QString& mode, const QString& state, const ColorTokens& colorTokens,
-                            const QString& targetElementId, const QString& targetElementProperty, const QString& tokenId)
+void IconTokenizer::process(QWidget* widget,
+                            const QString& mode,
+                            const QString& state,
+                            const QString& targetElementId,
+                            const QString& targetElementProperty,
+                            const QString& tokenId)
 {
-    if (widget == nullptr || mode.isEmpty() || state.isEmpty() || colorTokens.empty()|| targetElementId.isEmpty() || targetElementProperty.isEmpty() || tokenId.isEmpty())
+    if (widget == nullptr || mode.isEmpty() || state.isEmpty() || targetElementId.isEmpty() ||
+        targetElementProperty.isEmpty() || tokenId.isEmpty())
     {
         qWarning() << __func__ << " Error on function arguments :"
-                 << "\n widget is nullptr : " << QVariant(widget == nullptr).toString()
-                 << "\n mode is empty : " << QVariant(mode.isEmpty()).toString()
-                 << "\n state is empty : " << QVariant(state.isEmpty()).toString()
-                 << "\n colorTokens are empty : " << QVariant(colorTokens.isEmpty()).toString()
-                 << "\n targetElementId is empty : " << QVariant(targetElementId.isEmpty()).toString()
-                 << "\n targetElementProperty is empty : " << QVariant(targetElementProperty.isEmpty()).toString()
-                 << "\n tokenId is empty : " << QVariant(tokenId.isEmpty()).toString();
+                   << "\n widget is nullptr : " << QVariant(widget == nullptr).toString()
+                   << "\n mode is empty : " << QVariant(mode.isEmpty()).toString()
+                   << "\n state is empty : " << QVariant(state.isEmpty()).toString()
+                   << "\n targetElementId is empty : "
+                   << QVariant(targetElementId.isEmpty()).toString()
+                   << "\n targetElementProperty is empty : "
+                   << QVariant(targetElementProperty.isEmpty()).toString()
+                   << "\n tokenId is empty : " << QVariant(tokenId.isEmpty()).toString();
 
         return;
     }
@@ -53,69 +61,9 @@ void IconTokenizer::process(QWidget* widget, const QString& mode, const QString&
             return;
         }
 
-        for (auto childWidget : widgets)
+        for (auto& childWidget: widgets)
         {
-            if (!colorTokens.contains(tokenId))
-            {
-                qWarning() << __func__ << " Error token id not found : " << tokenId;
-                return;
-            }
-
-            QColor toColor(colorTokens.value(tokenId));
-
-            tokenizeButtonIcon(childWidget, iconMode.value(), iconState.value(), toColor);
-        }
-    }
-    else if (targetElementProperty == CustomId)
-    {
-        auto iconState = getIconState(state);
-        if (!iconState.has_value())
-        {
-            // error log created on getIconState
-            return;
-        }
-
-        auto iconMode = getIconMode(mode);
-        if (!iconMode.has_value())
-        {
-            // error log created on getIconMode
-            return;
-        }
-
-        for (auto childWidget: widgets)
-        {
-            QIcon icons = childWidget->property("icon").value<QIcon>();
-            if (icons.isNull())
-            {
-                qWarning() << __func__ << " Error Custom Widget icon is null : " << targetElementId;
-                return;
-            }
-
-            auto pixmap = icons.pixmap(childWidget->property("iconSize").toSize(),
-                                       iconMode.value(),
-                                       iconState.value());
-            if (pixmap.isNull())
-            {
-                qWarning() << __func__
-                           << " Error default pixmap for icon is null : " << targetElementId;
-                return;
-            }
-
-            if (!colorTokens.contains(tokenId))
-            {
-                qWarning() << __func__ << " Error token id not found : " << tokenId;
-                return;
-            }
-
-            QColor toColor(colorTokens.value(tokenId));
-
-            auto tintedPixmap = changePixmapColor(pixmap, toColor);
-
-            if (tintedPixmap.has_value())
-            {
-                icons.addPixmap(tintedPixmap.value(), iconMode.value(), iconState.value());
-                childWidget->setProperty("icon", icons);
-            }
+            tokenizeButtonIcon(childWidget, iconMode.value(), iconState.value(), tokenId);
         }
     }
 }
@@ -123,7 +71,7 @@ void IconTokenizer::process(QWidget* widget, const QString& mode, const QString&
 void IconTokenizer::tokenizeButtonIcon(QWidget* widget,
                                        const QIcon::Mode& mode,
                                        const QIcon::State& state,
-                                       const QColor& toColor)
+                                       const QString& token)
 {
     auto button = dynamic_cast<QAbstractButton*>(widget);
     if (button == nullptr)
@@ -133,28 +81,7 @@ void IconTokenizer::tokenizeButtonIcon(QWidget* widget,
         return;
     }
 
-    QIcon buttonIcons = button->icon();
-    if (buttonIcons.isNull())
-    {
-        qWarning() << __func__ << " Error button icon is null : " << widget->objectName();
-        return;
-    }
-
-    auto pixmap = buttonIcons.pixmap(button->iconSize(), mode, state);
-    if (pixmap.isNull())
-    {
-        qWarning() << __func__
-                   << " Error default pixmap for icon is null : " << widget->objectName();
-        return;
-    }
-
-    auto tintedPixmap = changePixmapColor(pixmap, toColor);
-
-    if (tintedPixmap.has_value())
-    {
-        buttonIcons.addPixmap(tintedPixmap.value(), mode, state);
-        button->setIcon(buttonIcons);
-    }
+    TokenizedIcon::addPixmap(button, mode, state, token);
 }
 
 std::optional<QIcon::Mode> IconTokenizer::getIconMode(const QString& mode)

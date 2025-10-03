@@ -19,7 +19,6 @@
         <file alias="images/settings-backup.svg">images/settings-backup.svg</file>
         <file alias="images/settings-backup-warn.svg">images/settings-backup-warn.svg</file>
         <file alias="images/settings-folders.svg">images/settings-folders.svg</file>
-        <file alias="images/settings-general.svg">images/settings-general.svg</file>
         <file alias="images/settings-network.svg">images/settings-network.svg</file>
         <file alias="images/settings-notifications.svg">images/settings-notifications.svg</file>
         <file alias="images/settings-shield.svg">images/settings-shield.svg</file>

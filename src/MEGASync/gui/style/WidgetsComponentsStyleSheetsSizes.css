@@ -311,7 +311,7 @@ qproperty-iconSize:24px;
     We need to override and reset some common properties for buttons
 */
 
-QPushButton.icon-button
+QToolButton.icon-button
 {
 border:none;
 margin:0px;
@@ -319,19 +319,19 @@ padding:0px;
 min-width: 0px;
 }
 
-QPushButton.icon-button[dimension=small]
+QToolButton.icon-button[dimension=small]
 {
 height: 26px;
 width: 26px;
 }
 
-QPushButton.icon-button[dimension=medium]
+QToolButton.icon-button[dimension=medium]
 {
 height: 36px;
 width: 36px;
 }
 
-QPushButton.icon-button[dimension=large]
+QToolButton.icon-button[dimension=large]
 {
 height: 48px;
 width: 48px;
@@ -340,7 +340,7 @@ width: 48px;
 /*
     type = outline. Due to box model paiting we need to substract the border from the width to maintain at its expected height (4px)
 */
-QPushButton[type="outline"]
+QAbstractButton[type="outline"]
 {
 border-width: 2px;
 border-style: solid;
@@ -363,17 +363,17 @@ height: 44px;
 
 /*  */
 
-QPushButton.icon-button[type="outline"][dimension=small]
+QToolButton.icon-button[type="outline"][dimension=small]
 {
 width: 22px;
 }
 
-QPushButton.icon-button[type="outline"][dimension=medium]
+QToolButton.icon-button[type="outline"][dimension=medium]
 {
 width: 32px;
 }
 
-QPushButton.icon-button[type="outline"][dimension=large]
+QToolButton.icon-button[type="outline"][dimension=large]
 {
 width: 44px;
 }

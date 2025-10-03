@@ -1798,15 +1798,18 @@ QToolButton
              </widget>
             </item>
             <item>
-             <widget class="IconOnlyButton" name="tCogWheel">
+             <widget class="TokenizableToolButton" name="tCogWheel">
               <property name="maximumSize">
                <size>
-                <width>26</width>
-                <height>26</height>
+                <width>16777215</width>
+                <height>16777215</height>
                </size>
               </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="text">
+               <string notr="true"/>
               </property>
               <property name="icon">
                <iconset resource="../../../gui/Resources_common.qrc">
@@ -2457,8 +2460,24 @@ QToolButton
  </widget>
  <customwidgets>
   <customwidget>
-   <class>IconOnlyButton</class>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TokenizableButton</class>
    <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TabSelector</class>
+   <extends>QWidget</extends>
+   <header>TabSelector.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TokenizableToolButton</class>
+   <extends>QToolButton</extends>
    <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
   </customwidget>
   <customwidget>
@@ -2495,22 +2514,6 @@ QToolButton
    <class>TransferManagerStatusHeaderWidget</class>
    <extends>QWidget</extends>
    <header>TransferManagerStatusHeaderWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>IconLabel</class>
-   <extends>QToolButton</extends>
-   <header>tokenizer/TokenizableItems/IconLabel.h</header>
-  </customwidget>
-  <customwidget>
-   <class>TokenizableButton</class>
-   <extends>QPushButton</extends>
-   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
-  </customwidget>
-  <customwidget>
-   <class>TabSelector</class>
-   <extends>QWidget</extends>
-   <header>TabSelector.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

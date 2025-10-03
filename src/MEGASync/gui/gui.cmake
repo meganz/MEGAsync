@@ -59,6 +59,8 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/ApiImageLabel.h
     ${CMAKE_CURRENT_LIST_DIR}/TabSelector.h
     ${CMAKE_CURRENT_LIST_DIR}/SearchLineEdit.h
+    ${CMAKE_CURRENT_LIST_DIR}/ComboDelegate.h
+    ${CMAKE_CURRENT_LIST_DIR}/ComboDelegate.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NodeNameSetterDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NewFolderDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/RenameNodeDialog.h
@@ -93,6 +95,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions/SyncExclusions.h
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenParserWidgetManager.h
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/IconTokenizer.h
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizedIcon.h
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/ButtonTokensByType.h
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/TokenizableButtons.h
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/TokenizableItems.h
@@ -234,6 +237,7 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions/SyncExclusions.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenParserWidgetManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/IconTokenizer.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizedIcon.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/ButtonTokensByType.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/TokenizableButtons.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenizableItems/TokenizableItems.cpp

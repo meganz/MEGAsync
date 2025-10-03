@@ -71,7 +71,7 @@ color: #E31B57; /*colorToken.text-error*/
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_6">
    <property name="spacing">
-    <number>-1</number>
+    <number>4</number>
    </property>
    <property name="leftMargin">
     <number>24</number>
@@ -171,7 +171,7 @@ color: #E31B57; /*colorToken.text-error*/
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <property name="spacing">
-          <number>-1</number>
+          <number>4</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -254,7 +254,7 @@ color: #E31B57; /*colorToken.text-error*/
     <widget class="QWidget" name="wContainer" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <property name="spacing">
-       <number>-1</number>
+       <number>4</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -278,7 +278,7 @@ color: #E31B57; /*colorToken.text-error*/
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <property name="spacing">
-          <number>-1</number>
+          <number>4</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -489,7 +489,7 @@ color: #E31B57; /*colorToken.text-error*/
                        </widget>
                       </item>
                       <item>
-                       <widget class="QToolButton" name="lState">
+                       <widget class="IconLabel" name="lState">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                           <horstretch>0</horstretch>
@@ -513,9 +513,6 @@ color: #E31B57; /*colorToken.text-error*/
                         </property>
                         <property name="text">
                          <string/>
-                        </property>
-                        <property name="class" stdset="0">
-                         <string notr="true">icon-label</string>
                         </property>
                        </widget>
                       </item>
@@ -819,7 +816,7 @@ color: #E31B57; /*colorToken.text-error*/
              </widget>
             </item>
             <item>
-             <widget class="IconOnlyButton" name="bCopyLink">
+             <widget class="TokenizableToolButton" name="bCopyLink">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -912,7 +909,7 @@ color: #E31B57; /*colorToken.text-error*/
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_4">
             <property name="spacing">
-             <number>-1</number>
+             <number>4</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -1019,7 +1016,7 @@ color: #E31B57; /*colorToken.text-error*/
        <number>0</number>
       </property>
       <item>
-       <widget class="QToolButton" name="toolButtonError">
+       <widget class="IconLabel" name="toolButtonError">
         <property name="minimumSize">
          <size>
           <width>16</width>
@@ -1047,9 +1044,6 @@ color: #E31B57; /*colorToken.text-error*/
           <width>16</width>
           <height>16</height>
          </size>
-        </property>
-        <property name="class" stdset="0">
-         <string notr="true">icon-label</string>
         </property>
        </widget>
       </item>
@@ -1153,12 +1147,12 @@ color: #E31B57; /*colorToken.text-error*/
   <customwidget>
    <class>IconLabel</class>
    <extends>QToolButton</extends>
-   <header>TokenizableItems/IconLabel.h</header>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
   </customwidget>
   <customwidget>
-   <class>IconOnlyButton</class>
-   <extends>QPushButton</extends>
-   <header>TokenizableItems/TokenizableButtons.h</header>
+   <class>TokenizableToolButton</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
   </customwidget>
  </customwidgets>
  <resources>
