@@ -82,6 +82,11 @@ Preferences::ThemeType ThemeManager::getCurrentTheme() const
     return mCurrentTheme;
 }
 
+Preferences::ThemeAppeareance ThemeManager::getCurrentColorScheme() const
+{
+    return mCurrentColorScheme;
+}
+
 QMap<Preferences::ThemeType, QString> ThemeManager::getAvailableThemes()
 {
     mAvailableThemes.clear();
