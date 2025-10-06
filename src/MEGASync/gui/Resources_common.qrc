@@ -1276,7 +1276,6 @@
         <file alias="folder-users_small_thin_solid">images/themed/tokenizable/folder-users_small_thin_solid.svg</file>
         <file alias="trash_small_thin_outline">images/themed/tokenizable/trash_small_thin_outline.svg</file>
         <file alias="trash_small_thin_solid">images/themed/tokenizable/trash_small_thin_solid.svg</file>
-        <file alias="edit_small_thin_outline">images/themed/tokenizable/edit_small_thin_outline.svg</file>
         <file alias="eye_small_thin_outline">images/themed/tokenizable/eye_small_thin_outline.svg</file>
         <file alias="star_small_thin_outline">images/themed/tokenizable/star_small_thin_outline.svg</file>
         <file alias="pc-linux-dark_medium_solid">images/themed/tokenizable/pc-linux-dark_medium_solid.svg</file>
@@ -1299,7 +1298,6 @@
         <file alias="rescan_small_thin_outline">images/themed/tokenizable/rescan_small_thin_outline.svg</file>
         <file alias="link_01_small_thin_outline">images/themed/tokenizable/link_01_small_thin_outline.svg</file>
         <file alias="arrow-up-circle_small_thin_outline">images/themed/tokenizable/arrow-up-circle_small_thin_outline.svg</file>
-        <file alias="arrow-down-circle_small_thin_outline">images/themed/tokenizable/arrow-down-circle_small_thin_outline.svg</file>
         <file alias="arrows-up-down-circle_small_thin_outline">images/themed/tokenizable/arrows-up-down-circle_small_thin_outline.svg</file>
         <file alias="search-large_small_thin_outline">images/themed/tokenizable/search-large_small_thin_outline.svg</file>
         <file alias="pause-square_small_thin_outline">images/themed/tokenizable/pause-square_small_thin_outline.svg</file>
@@ -1311,6 +1309,5 @@
         <file alias="minus-square_small_thin_solid">images/themed/tokenizable/minus-square_small_thin_solid.svg</file>
         <file alias="info_small_thin_outline">images/themed/tokenizable/info_small_thin_outline.svg</file>
         <file alias="pause-circle_small_thin_outline">images/themed/tokenizable/pause-circle_small_thin_outline.svg</file>
-        <file alias="download_small_thin_outline">images/themed/tokenizable/download_small_thin_outline.svg</file>
     </qresource>
 </RCC>

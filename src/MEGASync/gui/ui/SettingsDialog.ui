@@ -75,14 +75,13 @@ border-radius: 8px;
 
 #downloadIcon
 {
-image: url(:/images/themed/light/arrow-down-circle.svg); /*replaceThemeToken*/
+image: url(:/arrow-down-circle);
 }
 
 #uploadIcon
 {
-image: url(:/images/themed/light/arrow-up-circle.svg); /*replaceThemeToken*/
+image: url(:/arrow-up-circle);
 }
-
 
 #SettingsDialog #pStorageQuota, #SettingsDialog #pTransferQuota
 {
@@ -121,7 +120,7 @@ background-color: #fff63d6b; /*colorToken.indicator-pink*/
 
 #iconDisabledSyncs
 {
-image: url(:/images/themed/light/error_sync_icon.svg); /*replaceThemeToken*/
+image: url(:/error_sync_icon);
 }
 
 #lDisabledSyncs
