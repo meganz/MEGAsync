@@ -143,6 +143,8 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/SyncModel.h
     ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/QmlSyncData.h
     ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/SyncStatus.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordComponent.h
 )
 
 set(DESKTOP_APP_GUI_SOURCES
@@ -279,6 +281,8 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/DeviceModel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/SyncModel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/QmlSyncData.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordComponent.cpp
 )
 
 # UI files additions

@@ -216,5 +216,9 @@
         <file>syncs/ChooseSyncFolder.qml</file>
         <file>quick_widget/TransfersSummaryItem.qml</file>
         <file>quick_widget/qmldir</file>
+        <file>change_password/ChangePassword.qml</file>
+        <file>change_password/ChangePasswordPage.qml</file>
+        <file>change_password/ChangePasswordStrings.qml</file>
+        <file>change_password/qmldir</file>
     </qresource>
 </RCC>
