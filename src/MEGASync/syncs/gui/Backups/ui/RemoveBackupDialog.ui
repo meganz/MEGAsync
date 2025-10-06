@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>536</width>
-    <height>444</height>
+    <width>658</width>
+    <height>558</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -30,63 +30,23 @@
 background-color: #ffffff; /*colorToken.page-background*/
 }
 
-#lTitle
-{
-font-weight: 600;
-font-size:16px;
-}
-
-#rMoveFolder, #rDeleteFolder
-{
-font-weight: 600;
-font-size:14px;
-}
-
-#lDeleteFolder, #lMoveFolder
-{
-font-weight: 400;
-font-size:12px;
-}
-
-#lTarget
-{
-border-radius: 8px;
-border-style: solid;
-border-width: 1px;
-background: #ffFFFFFF; /* colorToken.page-background*/
-padding-left: 10px;
-}
-
-#lTarget::enabled
-{
-border-color: #ffD8D9DB; /*colorToken.border-strong*/
-color: #ff303233; /*colorToken.text-primary*/
-}
-
-#lTarget::disabled
-{
-border-color: #ffD8D9DB; /*colorToken.border-disabled*/
-color: #ffC1C2C4; /*colorToken.text-disabled*/
-}
-
-#lMoveTo
-{
-font-weight: 600;
-font-size: 12px;
-}</string>
+</string>
   </property>
   <property name="TOKENIZED" stdset="0">
    <bool>true</bool>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_7">
    <property name="spacing">
-    <number>10</number>
+    <number>30</number>
+   </property>
+   <property name="sizeConstraint">
+    <enum>QLayout::SetFixedSize</enum>
    </property>
    <property name="leftMargin">
     <number>24</number>
    </property>
    <property name="topMargin">
-    <number>24</number>
+    <number>27</number>
    </property>
    <property name="rightMargin">
     <number>24</number>
@@ -95,240 +55,284 @@ font-size: 12px;
     <number>24</number>
    </property>
    <item>
-    <widget class="QLabel" name="lTitle">
-     <property name="text">
-      <string>Stop backing up folder?</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="lSecondaryText">
-     <property name="text">
-      <string>To stop backing up this folder, you need to either move it or delete it.</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <layout class="QVBoxLayout" name="verticalLayout_4">
      <property name="spacing">
-      <number>4</number>
-     </property>
-     <property name="leftMargin">
-      <number>16</number>
-     </property>
-     <property name="topMargin">
-      <number>15</number>
-     </property>
-     <property name="bottomMargin">
       <number>15</number>
      </property>
      <item>
-      <widget class="QRadioButton" name="rMoveFolder">
-       <property name="cursor">
-        <cursorShape>PointingHandCursor</cursorShape>
+      <widget class="QLabel" name="lTitle">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
-       <property name="text">
-        <string>Move folder</string>
-       </property>
-       <property name="autoExclusive">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <property name="leftMargin">
-        <number>22</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="lMoveFolder">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <widget class="QWidget" name="moveToContainer" native="true">
        <property name="minimumSize">
         <size>
-         <width>0</width>
-         <height>69</height>
-        </size>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <property name="leftMargin">
-         <number>21</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>1</number>
-        </property>
-        <item>
-         <widget class="QLabel" name="lMoveTo">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Move to:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <property name="leftMargin">
-           <number>1</number>
-          </property>
-          <property name="topMargin">
-           <number>1</number>
-          </property>
-          <property name="rightMargin">
-           <number>1</number>
-          </property>
-          <property name="bottomMargin">
-           <number>1</number>
-          </property>
-          <item>
-           <widget class="QLineEdit" name="lTarget">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>35</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>35</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="bChange">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="cursor">
-             <cursorShape>PointingHandCursor</cursorShape>
-            </property>
-            <property name="text">
-             <string>Change</string>
-            </property>
-            <property name="type" stdset="0">
-             <string notr="true">secondary</string>
-            </property>
-            <property name="dimension" stdset="0">
-             <string notr="true">medium</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <spacer name="verticalSpacer">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>10</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="rDeleteFolder">
-       <property name="cursor">
-        <cursorShape>PointingHandCursor</cursorShape>
-       </property>
-       <property name="text">
-        <string>Delete folder permanently</string>
-       </property>
-       <property name="checked">
-        <bool>false</bool>
-       </property>
-       <property name="autoExclusive">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <property name="leftMargin">
-        <number>22</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="lDeleteFolder">
-         <property name="text">
-          <string>Folder will be deleted from MEGA. It won't be deleted from your computer. This action cannot be undone.</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <spacer name="verticalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
+         <width>432</width>
          <height>0</height>
         </size>
        </property>
-      </spacer>
+       <property name="text">
+        <string>Stop backing up folder?</string>
+       </property>
+       <property name="semibold" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="font-size" stdset="0">
+        <string notr="true">label-2</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lSecondaryText">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>432</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>To stop backing up this folder, you need to either move it or delete it.</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_6">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <property name="spacing">
+        <number>16</number>
+       </property>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="spacing">
+          <number>13</number>
+         </property>
+         <item>
+          <widget class="QRadioButton" name="rMoveFolder">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="text">
+            <string>Move folder</string>
+           </property>
+           <property name="autoExclusive">
+            <bool>false</bool>
+           </property>
+           <property name="semibold" stdset="0">
+            <bool>false</bool>
+           </property>
+           <property name="font-size" stdset="0">
+            <string notr="true">body-1</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <property name="leftMargin">
+            <number>22</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="lMoveFolder">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QWidget" name="moveToContainer" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>69</height>
+          </size>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <property name="spacing">
+           <number>4</number>
+          </property>
+          <property name="leftMargin">
+           <number>21</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="lMoveTo">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Move to:</string>
+            </property>
+            <property name="semibold" stdset="0">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <property name="spacing">
+             <number>8</number>
+            </property>
+            <property name="leftMargin">
+             <number>1</number>
+            </property>
+            <property name="topMargin">
+             <number>1</number>
+            </property>
+            <property name="rightMargin">
+             <number>1</number>
+            </property>
+            <property name="bottomMargin">
+             <number>1</number>
+            </property>
+            <item>
+             <widget class="QLineEdit" name="lTarget">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>35</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>35</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">mega</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="bChange">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="text">
+               <string>Change</string>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">secondary</string>
+              </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">medium</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>13</number>
+       </property>
+       <item>
+        <widget class="QRadioButton" name="rDeleteFolder">
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="text">
+          <string>Delete folder permanently</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+         <property name="autoExclusive">
+          <bool>false</bool>
+         </property>
+         <property name="font-size" stdset="0">
+          <string notr="true">body-1</string>
+         </property>
+         <property name="semibold" stdset="0">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <property name="leftMargin">
+          <number>22</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="lDeleteFolder">
+           <property name="text">
+            <string>Folder will be deleted from MEGA. It won't be deleted from your computer. This action cannot be undone.</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <property name="spacing">
-      <number>10</number>
+      <number>8</number>
      </property>
      <property name="bottomMargin">
       <number>0</number>
@@ -404,7 +408,7 @@ font-size: 12px;
         <string>Stop backup</string>
        </property>
        <property name="icon">
-        <iconset resource="../../../../gui/Resources_common.qrc">
+        <iconset>
          <normaloff>:/mega_medium_thin_outline</normaloff>:/mega_medium_thin_outline</iconset>
        </property>
        <property name="default">
@@ -425,8 +429,6 @@ font-size: 12px;
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../../../../gui/Resources_common.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
