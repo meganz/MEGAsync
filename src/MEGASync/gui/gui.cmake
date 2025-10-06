@@ -516,6 +516,7 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer
     ${CMAKE_CURRENT_LIST_DIR}/LoadingView
     ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ui
+    ${CMAKE_CURRENT_LIST_DIR}/qml/change_password
 )
 target_include_directories(${ExecutableTarget} PRIVATE ${INCLUDE_DIRECTORIES})
 
