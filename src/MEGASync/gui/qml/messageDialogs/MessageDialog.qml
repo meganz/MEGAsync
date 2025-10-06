@@ -99,7 +99,6 @@ QmlDialog {
                 Layout.preferredWidth: width
                 sourceSize: Qt.size(sizes.iconSize, sizes.iconSize)
                 visible: imageItem.source !== ""
-                anchors.verticalCenter: parent.verticalCenter
             }
 
             Column {

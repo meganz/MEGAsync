@@ -7,26 +7,31 @@
     <x>0</x>
     <y>0</y>
     <width>480</width>
-    <height>200</height>
+    <height>307</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>480</width>
-    <height>200</height>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>480</width>
-    <height>200</height>
+    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#bWarning
+   <string notr="true">#VerifyLockMessage
+{
+background-color: #ffffff; /*colorToken.page-background*/
+}
+
+#bWarning
 {
 border: none;
 }
@@ -61,18 +66,24 @@ color: #ff0078a4; /*colorToken.text-info*/
 color: #ff0078a4; /*colorToken.text-error*/
 }</string>
   </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
-    <number>0</number>
+    <number>12</number>
    </property>
    <property name="leftMargin">
-    <number>0</number>
+    <number>20</number>
+   </property>
+   <property name="topMargin">
+    <number>15</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>20</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>15</number>
    </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -103,6 +114,19 @@ color: #ff0078a4; /*colorToken.text-error*/
         <property name="bottomMargin">
          <number>0</number>
         </property>
+        <item>
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
         <item>
          <widget class="QToolButton" name="bWarning">
           <property name="minimumSize">
