@@ -59,8 +59,6 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/ApiImageLabel.h
     ${CMAKE_CURRENT_LIST_DIR}/TabSelector.h
     ${CMAKE_CURRENT_LIST_DIR}/SearchLineEdit.h
-    ${CMAKE_CURRENT_LIST_DIR}/ComboDelegate.h
-    ${CMAKE_CURRENT_LIST_DIR}/ComboDelegate.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NodeNameSetterDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NewFolderDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/RenameNodeDialog.h
