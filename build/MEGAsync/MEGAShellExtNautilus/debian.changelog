@@ -1,3 +1,8 @@
+nautilus-megasync (5.4.0) stable; urgency=low
+
+  * Bug fixes
+
+ -- MEGA Team <linux@mega.io>  Wed, 24 Sep 2025 19:52:00 +0200
 nautilus-megasync (5.3.0) stable; urgency=low
 
   * Bug fixes

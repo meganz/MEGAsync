@@ -6,8 +6,8 @@ Architecture: any
 Version: EXT_VERSION
 Maintainer: MEGA Linux Team <linux@mega.io>
 Homepage: https://mega.io/desktop
-Build-Depends: debhelper, cdbs, cmake, libnautilus-extension-dev (>= 2.16.0)
-Depends: megasync (>= 5.3.0)
+Build-Depends: debhelper, cmake, dh-cmake, libnautilus-extension-dev (>= 2.16.0)
+Recommends: megasync (>= 5.3.0)
 Package-List:
   nautilus-megasync deb gnome optional
 Files:
