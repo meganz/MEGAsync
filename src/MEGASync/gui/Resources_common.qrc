@@ -642,16 +642,6 @@
         <file alias="images/selective_sync_ico.png">images/selective_sync_ico.png</file>
         <file alias="images/selective_sync_ico@2x.png">images/selective_sync_ico@2x.png</file>
         <file alias="images/selective_sync_ico@3x.png">images/selective_sync_ico@3x.png</file>
-        <file alias="images/settings-account.svg">images/settings-account.svg</file>
-        <file alias="images/settings-backup-warn.svg">images/settings-backup-warn.svg</file>
-        <file alias="images/settings-backup.svg">images/settings-backup.svg</file>
-        <file alias="images/settings-folders.svg">images/settings-folders.svg</file>
-        <file alias="images/settings-general.svg">images/settings-general.svg</file>
-        <file alias="images/settings-network.svg">images/settings-network.svg</file>
-        <file alias="images/settings-notifications.svg">images/settings-notifications.svg</file>
-        <file alias="images/settings-shield.svg">images/settings-shield.svg</file>
-        <file alias="images/settings-sync-warn.svg">images/settings-sync-warn.svg</file>
-        <file alias="images/settings-sync.svg">images/settings-sync.svg</file>
         <file alias="images/settings_ico@3x.png">images/settings_ico@3x.png</file>
         <file alias="images/settings_ico_white@3x.png">images/settings_ico_white@3x.png</file>
         <file alias="images/setup_step1.png">images/setup_step1.png</file>
@@ -1309,5 +1299,15 @@
         <file alias="minus-square_small_thin_solid">images/themed/tokenizable/minus-square_small_thin_solid.svg</file>
         <file alias="info_small_thin_outline">images/themed/tokenizable/info_small_thin_outline.svg</file>
         <file alias="pause-circle_small_thin_outline">images/themed/tokenizable/pause-circle_small_thin_outline.svg</file>
+        <file alias="settings-account">images/themed/tokenizable/settings-account.svg</file>
+        <file alias="settings-backup-warn">images/themed/tokenizable/settings-backup-warn.svg</file>
+        <file alias="settings-backup">images/themed/tokenizable/settings-backup.svg</file>
+        <file alias="settings-folders">images/themed/tokenizable/settings-folders.svg</file>
+        <file alias="settings-general">images/themed/tokenizable/settings-general.svg</file>
+        <file alias="settings-network">images/themed/tokenizable/settings-network.svg</file>
+        <file alias="settings-notifications">images/themed/tokenizable/settings-notifications.svg</file>
+        <file alias="settings-shield">images/themed/tokenizable/settings-shield.svg</file>
+        <file alias="settings-sync-warn">images/themed/tokenizable/settings-sync-warn.svg</file>
+        <file alias="settings-sync">images/themed/tokenizable/settings-sync.svg</file>
     </qresource>
 </RCC>

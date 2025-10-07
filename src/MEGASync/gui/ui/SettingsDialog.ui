@@ -293,7 +293,7 @@ margin-bottom: 3px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_common.qrc">
-          <normaloff>:/images/settings-general.svg</normaloff>:/images/settings-general.svg</iconset>
+          <normaloff>:/settings-general</normaloff>:/settings-general</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -352,7 +352,7 @@ margin-bottom: 3px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_common.qrc">
-          <normaloff>:/images/settings-account.svg</normaloff>:/images/settings-account.svg</iconset>
+          <normaloff>:/settings-account</normaloff>:/settings-account</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -408,7 +408,7 @@ margin-bottom: 3px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_common.qrc">
-          <normaloff>:/images/settings-sync.svg</normaloff>:/images/settings-sync.svg</iconset>
+          <normaloff>:/settings-sync</normaloff>:/settings-sync</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -464,7 +464,7 @@ margin-bottom: 3px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_common.qrc">
-          <normaloff>:/images/settings-backup.svg</normaloff>:/images/settings-backup.svg</iconset>
+          <normaloff>:/settings-backup</normaloff>:/settings-backup</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -520,7 +520,7 @@ margin-bottom: 3px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_common.qrc">
-          <normaloff>:/images/settings-shield.svg</normaloff>:/images/settings-shield.svg</iconset>
+          <normaloff>:/settings-shield</normaloff>:/settings-shield</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -576,7 +576,7 @@ margin-bottom: 3px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_common.qrc">
-          <normaloff>:/images/settings-folders.svg</normaloff>:/images/settings-folders.svg</iconset>
+          <normaloff>:/settings-folders</normaloff>:/settings-folders</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -632,7 +632,7 @@ margin-bottom: 3px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_common.qrc">
-          <normaloff>:/images/settings-network.svg</normaloff>:/images/settings-network.svg</iconset>
+          <normaloff>:/settings-network</normaloff>:/settings-network</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -688,7 +688,7 @@ margin-bottom: 3px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_common.qrc">
-          <normaloff>:/images/settings-notifications.svg</normaloff>:/images/settings-notifications.svg</iconset>
+          <normaloff>:/settings-notifications</normaloff>:/settings-notifications</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -3417,6 +3417,11 @@ margin-top: 0px;
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
+   <class>TokenizableButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
+  </customwidget>
+  <customwidget>
    <class>WaitingSpinnerWidget</class>
    <extends>QWidget</extends>
    <header>gui/WaitingSpinnerWidget.h</header>
@@ -3445,11 +3450,6 @@ margin-top: 0px;
    <extends>QWidget</extends>
    <header>syncs/gui/Backups/BackupSettingsUI.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>TokenizableButton</class>
-   <extends>QPushButton</extends>
-   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
   </customwidget>
   <customwidget>
    <class>TokenizableToolButton</class>

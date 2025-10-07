@@ -92,6 +92,7 @@ void TokenizedIcon::performAddPixmap(QIcon::Mode mode, QIcon::State state, const
                                .arg(token, mButton->objectName())
                                .toUtf8()
                                .constData());
+        return;
     }
 
     auto untokenPixmap = mOriginalIcon.pixmap(mButton->iconSize(), mode, state);
