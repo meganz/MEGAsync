@@ -97,20 +97,19 @@ void TokenizableButton::paintEvent(QPaintEvent* event)
 }
 
 /*************** TOOL BUTTON ***************/
-TokenizableToolButton::TokenizableToolButton(QWidget* parent)
+TokenizableToolButton::TokenizableToolButton(QWidget* parent):
+    QToolButton(parent)
 {
     setCursor(Qt::PointingHandCursor);
+    setToolButtonStyle(toolButtonStyle());
 }
 
 void TokenizableToolButton::setToolButtonStyle(Qt::ToolButtonStyle style)
 {
     QToolButton::setToolButtonStyle(style);
-    if (style == Qt::ToolButtonIconOnly)
-    {
-        QToolButton::setProperty("class", QLatin1String("icon-button"));
-        setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        setText(QString());
-    }
+    QToolButton::setProperty("class",
+                             style == Qt::ToolButtonIconOnly ? QLatin1String("icon-button") :
+                                                               QVariant());
 }
 
 void TokenizableToolButton::paintEvent(QPaintEvent* event)
