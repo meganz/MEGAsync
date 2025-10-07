@@ -66,15 +66,6 @@ Column {
         return error;
     }
 
-    function clean() {
-        passwordItem.text = "";
-        confirmPasswordItem.text = "";
-        firstNameItem.text = "";
-        lastNameItem.text = "";
-        emailItem.text = "";
-        termsCheckBoxItem.checked = false;
-    }
-
     spacing: contentMargin / 2 + Constants.focusAdjustment
 
     Component.onDestruction: {

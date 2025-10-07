@@ -5,6 +5,7 @@
 #include "BandwidthSettings.h"
 #include "BugReportDialog.h"
 #include "ChangePassword.h"
+#include "ChangePasswordComponent.h"
 #include "CommonMessages.h"
 #include "CreateRemoveSyncsManager.h"
 #include "DialogOpener.h"
@@ -1388,8 +1389,22 @@ void SettingsDialog::on_bChangePassword_clicked()
     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
         AppStatsEvents::EventType::SETTINGS_CHANGE_PASSWORD_CLICKED);
 
-    QPointer<ChangePassword> cPassword = new ChangePassword(this);
-    DialogOpener::showDialog<ChangePassword>(cPassword);
+    ChangePasswordComponent::registerQmlModules();
+    QPointer<QmlDialogWrapper<ChangePasswordComponent>> changePasswordDialog;
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<ChangePasswordComponent>>())
+    {
+        changePasswordDialog = dialog->getDialog();
+    }
+    else
+    {
+        changePasswordDialog = new QmlDialogWrapper<ChangePasswordComponent>(this);
+    }
+
+    DialogOpener::showDialog(changePasswordDialog,
+                             [this]()
+                             {
+                                 deleteLater();
+                             });
 }
 
 void SettingsDialog::on_bSessionHistory_clicked()

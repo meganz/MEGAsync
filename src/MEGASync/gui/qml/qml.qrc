@@ -121,6 +121,7 @@
         <file>onboard/StackViewPage.qml</file>
         <file>onboard/PasswordConditionItem.qml</file>
         <file>onboard/PasswordInfoContent.qml</file>
+        <file>onboard/PasswordChecker.qml</file>
         <file>onboard/PasswordInfoContentForm.ui.qml</file>
         <file>onboard/PasswordInfoPopUp.qml</file>
         <file>onboard/syncs_types/qmldir</file>

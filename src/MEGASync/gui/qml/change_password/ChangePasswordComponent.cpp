@@ -1,6 +1,7 @@
 #include "ChangePasswordComponent.h"
 
 #include "ChangePasswordDialog.h"
+#include "PasswordStrengthChecker.h"
 
 static bool qmlRegistrationDone = false;
 
@@ -28,6 +29,11 @@ void ChangePasswordComponent::registerQmlModules()
                                               1,
                                               0,
                                               "ChangePasswordDialog");
+
+        qmlRegisterType<PasswordStrengthChecker>("PasswordStrengthChecker",
+                                                 1,
+                                                 0,
+                                                 "PasswordStrengthChecker");
 
         qmlRegistrationDone = true;
     }

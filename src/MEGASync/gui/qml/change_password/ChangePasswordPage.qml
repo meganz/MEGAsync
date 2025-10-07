@@ -2,46 +2,141 @@ import QtQuick 2.15
 
 import common 1.0
 
-import components.steps 1.0
+import QtQuick.Layouts 1.15
+import QtQuick.Controls 2.15
 
-import syncs 1.0
-import SyncsComponents 1.0
+import components.texts 1.0 as Texts
+import components.buttons 1.0
+import components.pages 1.0
+import components.textFields 1.0
+import onboard 1.0
 
-SyncsFlow {
+FooterButtonsPage {
     id: root
 
-    required property StepPanel stepPanelRef
-    required property var syncsContentItemRef
+    function error() {
+        var error = false;
 
-    selectiveSyncPageComponent: selectiveSyncPageComponentItem
-    state: root.selectiveSync
+        var valid = passwordItem.text.length >= 8;
+        if (!valid) {
+            error = true;
+            passwordItem.error = true;
+            passwordItem.hint.text = OnboardingStrings.minimum8Chars;
+        }
+        passwordItem.error = !valid;
+        passwordItem.hint.visible = !valid;
 
-    onSyncsFlowMoveToFinal: {
-        syncsContentItemRef.state = syncsContentItemRef.resume;
+        if (confirmPasswordItem.text.length === 0) {
+            error = true;
+            confirmPasswordItem.error = true;
+            confirmPasswordItem.hint.visible = true;
+            confirmPasswordItem.hint.text = OnboardingStrings.errorConfirmPassword;
+        }
+        else if (passwordItem.text !== confirmPasswordItem.text) {
+            error = true;
+            confirmPasswordItem.error = true;
+            confirmPasswordItem.hint.visible = true;
+            confirmPasswordItem.hint.text = OnboardingStrings.errorPasswordsMatch;
+            passwordItem.hint.visible = false;
+            passwordItem.error = true;
+        }
+        else {
+            confirmPasswordItem.error = false;
+            confirmPasswordItem.hint.visible = false;
+        }
+
+        return error;
     }
 
-    Component {
-        id: selectiveSyncPageComponentItem
+    footerButtons {
+        leftPrimary.visible: false
+        rightSecondary {
+            visible: true
+            text: Strings.cancel
 
-        SelectiveSyncPage {
-            id: selectiveSyncPage
+            onClicked: {
+                window.close();
+            }
+        }
 
-            footerButtons {
-                leftPrimary.visible: false
-                leftSecondary {
-                    text: Strings.setExclusions
-                    visible: localFolderChooser.chosenPath.length !== 0
+        rightPrimary {
+            text: Strings.done
+            icons: Icon {}
+
+            enabled: passwordItem.validPassword && confirmPasswordItem.text !== ""
+
+            onClicked: {
+                if (error()) {
+                    return;
                 }
-            }
 
-            onSelectiveSyncMoveToSuccess: {
-                root.syncsFlowMoveToFinal(Constants.SyncType.SELECTIVE_SYNC);
-            }
-
-            onFullSyncMoveToSuccess: {
-                root.syncsFlowMoveToFinal(Constants.SyncType.FULL_SYNC);
+                // request password change.
             }
         }
     }
 
+    Column {
+        id: mainFormLayout
+
+        anchors.fill: parent
+
+        spacing: 24
+
+        PasswordTextField {
+            id: passwordItem
+
+            property bool validPassword: passwordItem.textField.text.length >= 8
+                                            && passChecker.validPassword
+
+            width: parent.width
+            title: OnboardingStrings.password
+            cleanWhenError: false
+
+            textField.onActiveFocusChanged: {
+                if (textField.activeFocus) {
+                    hint.visible = false;
+                }
+                else {
+                    var hintVisible = true;
+                    if (textField.text.length < 8) {
+                        hint.text = OnboardingStrings.minimum8Chars;
+                        hint.textColor = ColorTheme.textError;
+                    }
+                    else {
+                        if (!passChecker.validPassword) {
+                            hint.text = OnboardingStrings.passwordEasilyGuessedError;
+                            hint.textColor = ColorTheme.textError;
+                        }
+                        else if (!passChecker.allChecked) {
+                            hint.text = OnboardingStrings.passwordEasilyGuessed;
+                            hint.textColor = ColorTheme.textWarning;
+                        }
+                        else {
+                            hintVisible = false;
+                        }
+                    }
+                    hint.visible = hintVisible;
+                }
+            }
+
+            PasswordChecker {
+                id: passChecker
+
+                password: passwordItem.textField.text
+            }
+
+        }
+
+        PasswordTextField {
+            id: confirmPasswordItem
+
+            width: parent.width
+            title: OnboardingStrings.confirmPassword
+            hint.icon: Images.key
+            cleanWhenError: false
+        }
+    }
+
 }
+
+

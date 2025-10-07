@@ -13,6 +13,8 @@ PasswordStrengthChecker::PasswordStrengthChecker(QObject* parent)
 void PasswordStrengthChecker::setPassword(const QString& password)
 {
     mPassword = password;
+    emit passwordChanged();
+
     PasswordStrength newStrength =
         static_cast<PasswordStrength>(mMegaApi->getPasswordStrength(mPassword.toUtf8().constData()));
     if(mStrength != newStrength)

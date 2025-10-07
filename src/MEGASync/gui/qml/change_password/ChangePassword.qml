@@ -9,78 +9,71 @@ import ChangePasswordComponents 1.0
 ChangePasswordDialog {
     id: window
 
-    title: ChangePasswordStrings.syncsWindowTitle
+    title: ChangePasswordStrings.title
     visible: true
-    modality: Qt.NonModal
-    width: 640
-    height: 620
+    modality: Qt.WindowModal
+    width: 496
+    height: 320
     maximumHeight: height
     maximumWidth: width
     minimumHeight: height
     minimumWidth: width
 
-    Column {
-        id: contentItem
+    Rectangle {
+        id: changePasswordContentItem
 
         anchors.fill: parent
+        color: ColorTheme.surface1
 
-        Rectangle {
-            id: changePasswordContentItem
+        readonly property string change_password: "change_password"
+        readonly property string two_fa: "two_fa"
 
-            width: parent.width
-            height: parent.height - stepPanelItem.height
-            color: ColorTheme.surface1
-
-            readonly property string change_password: "change_password"
-            readonly property string two_fa: "two_fa"
-
-            state: change_password
-            states: [
-                State {
-                    name: changePasswordContentItem.change_password
-                    StateChangeScript {
-                        script: stackView.replace(changePasswordPage);
-                    }
-                },
-                State {
-                    name: changePasswordContentItem.two_fa
-                    StateChangeScript {
-                        script: stackView.replace(twoFAPage);
-                    }
+        state: change_password
+        states: [
+            State {
+                name: changePasswordContentItem.change_password
+                StateChangeScript {
+                    script: stackView.replace(changePasswordPage);
                 }
-            ]
+            },
+            State {
+                name: changePasswordContentItem.two_fa
+                StateChangeScript {
+                    script: stackView.replace(twoFAPage);
+                }
+            }
+        ]
 
-            StackViewBase {
-                id: stackView
+        StackViewBase {
+            id: stackView
 
-                anchors {
-                    fill: parent
-                    margins: Constants.defaultWindowMargin
+            anchors {
+                fill: parent
+                margins: 48
+            }
+
+            Component {
+                id: changePasswordPage
+
+                ChangePasswordPage {
+                    id: changePasswordItem
+                }
+            }
+
+            Component {
+                id: twoFAPage
+
+                Rectangle{
+
                 }
 
-                Component {
-                    id: changePasswordPage
+                /*
+                TwoFAPage {
+                    id: twoFAItem
 
-                    ChangePasswordPage {
-                        id: changePasswordItem
-                    }
+                    footerButtons.leftPrimary.visible: false
                 }
-
-                Component {
-                    id: twoFAPage
-
-                    Rectangle{
-
-                    }
-
-                    /*
-                    TwoFAPage {
-                        id: twoFAItem
-
-                        footerButtons.leftPrimary.visible: false
-                    }
-                    */
-                }
+                */
             }
         }
     }
