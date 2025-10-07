@@ -64,6 +64,7 @@ public:
 
     void setSyncAddButtonEnabled(bool enabled,
                                  SettingsDialog::Tabs tab = SettingsDialog::Tabs::SYNCS_TAB);
+    void setChangePasswordEnabled(bool enabled);
 
 signals:
     void userActivity();

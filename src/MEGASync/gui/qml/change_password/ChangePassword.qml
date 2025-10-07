@@ -49,7 +49,7 @@ ChangePasswordDialog {
 
             anchors {
                 fill: parent
-                margins: 48
+                margins: Constants.bigWindowMargin
             }
 
             Component {

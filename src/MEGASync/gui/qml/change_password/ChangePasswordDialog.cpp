@@ -1,6 +1,7 @@
 #include "ChangePasswordDialog.h"
 
 #include "DialogOpener.h"
+#include "SettingsDialog.h"
 
 #include <QEvent>
 
@@ -10,8 +11,7 @@ bool ChangePasswordDialog::event(QEvent* event)
     {
         if (auto dialog = DialogOpener::findDialog<SettingsDialog>())
         {
-            // TODO : do we need to do this :???
-            // dialog->getDialog()->setChangePasswordButtonEnabled(event->type() == QEvent::Close);
+            dialog->getDialog()->setChangePasswordEnabled(event->type() == QEvent::Close);
         }
     }
 

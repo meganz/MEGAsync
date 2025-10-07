@@ -1192,6 +1192,11 @@ void SettingsDialog::setEnabledAllControls(const bool enabled)
     mUi->wStackFooter->setEnabled(enabled);
 }
 
+void SettingsDialog::setChangePasswordEnabled(bool enabled)
+{
+    mUi->bChangePassword->setEnabled(enabled);
+}
+
 void SettingsDialog::setSyncAddButtonEnabled(const bool enabled, SettingsDialog::Tabs tab)
 {
     SyncSettingsUIBase* syncSettings = nullptr;
@@ -1401,9 +1406,9 @@ void SettingsDialog::on_bChangePassword_clicked()
     }
 
     DialogOpener::showDialog(changePasswordDialog,
-                             [this]()
+                             [changePasswordDialog]()
                              {
-                                 deleteLater();
+                                 changePasswordDialog->deleteLater();
                              });
 }
 
