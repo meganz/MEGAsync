@@ -124,5 +124,8 @@
         <file alias="images/qml/arrows-up-down-circle.svg">images/qml/arrows-up-down-circle.svg</file>
         <file alias="images/qml/down-arrow.svg">images/qml/down-arrow.svg</file>
         <file alias="images/qml/up-arrow.svg">images/qml/up-arrow.svg</file>
+        <file alias="images/qml/mega_3d_devices.png">images/qml/up-arrow.svg</file>
+        <file alias="images/qml/mega_3d_devices@2x.png">images/qml/mega_3d_devices@2x.png</file>
+        <file alias="images/qml/mega_3d_devices@3x.png">images/qml/mega_3d_devices@3x.png</file>
     </qresource>
 </RCC>

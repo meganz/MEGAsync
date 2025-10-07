@@ -40,7 +40,7 @@ FooterButtonsPage {
         Image {
             id: imageItem
 
-            source: Images.ok
+            source: Images.megaDevices
             sourceSize: Qt.size(120, 120)
         }
 

@@ -53,7 +53,7 @@ QtObject {
     readonly property url megaCloud: imagesQmlPath + "mega-cloud.png"
     readonly property url contols: imagesQmlPath + "controls.png"
     readonly property url deviceCentreUpdate: imagesQmlPath + "device-centre-update.png"
-    readonly property url ok: imagesQmlPath + "ok.png"
+    readonly property url megaDevices: imagesQmlPath + "mega_3d_devices.png"
     readonly property url threeDots: imagesQmlPath + "three_dots.svg"
     readonly property url monitor: imagesQmlPath + "monitor.svg"
     readonly property url folderOpen: imagesQmlPath + "folder-open.svg"
