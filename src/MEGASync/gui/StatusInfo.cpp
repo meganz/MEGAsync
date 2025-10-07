@@ -111,6 +111,7 @@ void StatusInfo::setState(TRANSFERS_STATES state)
             }
 
             const QString statusText{tr("Scanning")+QString::fromUtf8("...")};
+            ui->bIconState->setProperty("normal_off", QString::fromUtf8("icon-primary"));
             ui->lStatusDesc->setToolTip(statusText);
             ui->lStatusDesc->setText(statusText);
             break;
@@ -174,7 +175,7 @@ void StatusInfo::setOverQuotaState(bool oq)
 
 QIcon StatusInfo::scanningIcon(int index)
 {
-    return Utilities::getCachedPixmap(QString::fromUtf8(":/activity_indicator_%1.svg").arg(index));
+    return QIcon(QString::fromUtf8(":/activity_indicator_%1.svg").arg(index));
 }
 
 void StatusInfo::scanningAnimationStep()
@@ -182,7 +183,6 @@ void StatusInfo::scanningAnimationStep()
     const auto scanningIconImages = 30;
     mScanningAnimationIndex = mScanningAnimationIndex % scanningIconImages;
     ++mScanningAnimationIndex;
-    ui->bIconState->setProperty("normal_off", QString::fromUtf8("icon-primary"));
     ui->bIconState->setProperty("state", QVariant());
     ui->bIconState->setIcon(scanningIcon(mScanningAnimationIndex));
 }

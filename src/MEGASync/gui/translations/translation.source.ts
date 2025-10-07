@@ -8849,11 +8849,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Media type</translation>
     </message>
     <message>
-        <source>No completed transfers</source>
-        <translatorcomment>Empty window message for completed category</translatorcomment>
-        <translation>No completed transfers</translation>
-    </message>
-    <message>
         <source>No downloads</source>
         <translatorcomment>Empty window message for download category</translatorcomment>
         <translation>No downloads</translation>
@@ -8897,11 +8892,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Retry all</source>
         <translatorcomment>Button text for retry all button in Failed category</translatorcomment>
         <translation>Retry all</translation>
-    </message>
-    <message>
-        <source>Scanning</source>
-        <translatorcomment>State of the Transfers: Message which shows that a folder is being scanned</translatorcomment>
-        <translation>Scanning…</translation>
     </message>
     <message>
         <source>Search</source>

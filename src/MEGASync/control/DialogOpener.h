@@ -188,8 +188,6 @@ public:
                     dialogInfo->close();
                 }
             }
-
-            qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         }
     }
 

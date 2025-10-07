@@ -76,9 +76,6 @@ private:
     Ui::TransferManager* mUi;
     mega::MegaApi* mMegaApi;
 
-    QTimer mScanningTimer;
-    int mScanningAnimationIndex;
-
     std::shared_ptr<Preferences> mPreferences;
     QPoint mDragPosition;
     QMap<TransfersWidget::TM_TAB, QFrame*> mTabFramesToggleGroup;
@@ -169,7 +166,6 @@ private slots:
     void disableTransferManager(bool state);
 
     void updateTransferWidget(QWidget* widgetToShow);
-    void onScanningAnimationUpdate();
 
     void onSortCriterionChanged(int sortBy, Qt::SortOrder order);
     void onRequestTaskbarPinningTimeout();

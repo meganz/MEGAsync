@@ -40,7 +40,6 @@ TransferManager::TransferManager(MegaApi* megaApi):
     QDialog(nullptr),
     mUi(new Ui::TransferManager),
     mMegaApi(megaApi),
-    mScanningAnimationIndex(1),
     mPreferences(Preferences::instance()),
     mModel(nullptr),
     mSearchFieldReturnPressed(false),
@@ -190,9 +189,6 @@ TransferManager::TransferManager(MegaApi* megaApi):
 
     onStalledIssuesStateChanged();
 
-    mScanningTimer.setInterval(60);
-    connect(&mScanningTimer, &QTimer::timeout, this, &TransferManager::onScanningAnimationUpdate);
-
     mSpeedRefreshTimer->setSingleShot(false);
     connect(mSpeedRefreshTimer, &QTimer::timeout,
             this, &TransferManager::refreshSpeed);
@@ -252,8 +248,6 @@ void TransferManager::enterBlockingState()
     enableUserActions(false);
     mTransferScanCancelUi->show();
     refreshStateStats();
-
-    mScanningTimer.start();
 }
 
 void TransferManager::leaveBlockingState(bool fromCancellation)
@@ -263,9 +257,6 @@ void TransferManager::leaveBlockingState(bool fromCancellation)
     mTransferScanCancelUi->hide(fromCancellation);
     refreshStateStats();
     refreshView();
-
-    mScanningTimer.stop();
-    mScanningAnimationIndex = 1;
 }
 
 void TransferManager::disableCancelling()
@@ -561,11 +552,13 @@ void TransferManager::refreshStateStats()
     {
         if(mTransferScanCancelUi && mTransferScanCancelUi->isActive())
         {
-            leftFooterWidget = mUi->pScanning;
+            leftFooterWidget = mUi->wScanning;
+            mUi->bScanning->setState(StatusInfo::TRANSFERS_STATES::STATE_INDEXING);
         }
         else
         {
             leftFooterWidget = mUi->pUpToDate;
+            mUi->bScanning->setState(StatusInfo::TRANSFERS_STATES::STATE_UPDATED);
         }
 
         mSpeedRefreshTimer->stop();
@@ -585,11 +578,17 @@ void TransferManager::refreshStateStats()
 
         if(mTransferScanCancelUi && mTransferScanCancelUi->isActive())
         {
-            leftFooterWidget = mUi->pScanning;
+            leftFooterWidget = mUi->wScanning;
+            mUi->bScanning->setState(StatusInfo::TRANSFERS_STATES::STATE_INDEXING);
         }
-        else if(processedNumber != 0)
+        else
         {
-            leftFooterWidget = mUi->pSpeedAndClear;
+            mUi->bScanning->setState(StatusInfo::TRANSFERS_STATES::STATE_UPDATED);
+
+            if (processedNumber != 0)
+            {
+                leftFooterWidget = mUi->pSpeedAndClear;
+            }
         }
 
         if(processedNumber != 0)
@@ -912,7 +911,7 @@ void TransferManager::applyTextSearch(const QString& text)
 
 void TransferManager::enableUserActions(bool enabled)
 {
-    mUi->wLeftPane->setEnabled(enabled);
+    mUi->wLeftPaneTop->setEnabled(enabled);
     mUi->wRightPaneHeader->setEnabled(enabled);
 }
 
@@ -1241,24 +1240,10 @@ bool TransferManager::hasOverQuotaErrors()
 
 void TransferManager::setTransferState(const StatusInfo::TRANSFERS_STATES &transferState)
 {
-    if(transferState == StatusInfo::TRANSFERS_STATES::STATE_INDEXING)
+    if (transferState != StatusInfo::TRANSFERS_STATES::STATE_INDEXING)
     {
-        mScanningTimer.start();
-    }
-    else
-    {
-        if(mScanningTimer.isActive())
-        {
-            mScanningTimer.stop();
-            mScanningAnimationIndex = 1;
-        }
         refreshStateStats();
     }
-}
-
-void TransferManager::onScanningAnimationUpdate()
-{
-    mUi->bScanning->setIcon(StatusInfo::scanningIcon(mScanningAnimationIndex));
 }
 
 void TransferManager::dragEnterEvent(QDragEnterEvent *event)
