@@ -131,8 +131,8 @@
      </property>
     </widget>
    </item>
-   <item alignment="Qt::AlignVCenter">
-    <widget class="IconOnlyButton" name="lClose">
+   <item>
+    <widget class="TokenizableToolButton" name="lClose">
      <property name="minimumSize">
       <size>
        <width>16</width>
@@ -161,14 +161,14 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>IconOnlyButton</class>
-   <extends>QPushButton</extends>
-   <header>TokenizableItems/TokenizableButtons.h</header>
-  </customwidget>
-  <customwidget>
    <class>IconLabel</class>
    <extends>QToolButton</extends>
-   <header>TokenizableItems/IconLabel.h</header>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TokenizableToolButton</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
   </customwidget>
  </customwidgets>
  <resources>

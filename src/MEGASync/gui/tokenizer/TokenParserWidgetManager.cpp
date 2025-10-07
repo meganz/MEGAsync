@@ -206,7 +206,7 @@ QColor TokenParserWidgetManager::getColor(const QString& colorToken)
 QColor TokenParserWidgetManager::getColor(const QString& colorToken,
                                           const QString& currentColorSchema)
 {
-    QString color;
+    QColor color;
 
     if (!mColorThemedTokens.contains(currentColorSchema))
     {
@@ -215,7 +215,8 @@ QColor TokenParserWidgetManager::getColor(const QString& colorToken,
     else
     {
         const auto& colorTokens = mColorThemedTokens.value(currentColorSchema);
-        if (!colorTokens.contains(colorToken))
+        color = QColor(colorTokens.value(colorToken, QString()));
+        if (!color.isValid())
         {
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
                                QString::fromUtf8("Color token not found: %1.")
@@ -224,10 +225,6 @@ QColor TokenParserWidgetManager::getColor(const QString& colorToken,
                                    .constData());
             qWarning() << __func__ << " Error color token not found : " << colorToken;
             Q_ASSERT(false);
-        }
-        else
-        {
-            color = colorTokens.value(colorToken);
         }
     }
 
@@ -258,7 +255,7 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
     const auto& colorTokens = mColorThemedTokens.value(currentTheme);
 
     replaceColorTokens(widgetStyleSheet, colorTokens);
-    replaceIconColorTokens(widget, widgetStyleSheet, colorTokens);
+    replaceIconColorTokens(widget, widgetStyleSheet);
     tokenizeChildStyleSheets(widget);
 
     removeFrameOnDialogCombos(widget);
@@ -317,9 +314,7 @@ void TokenParserWidgetManager::replaceColorTokens(QString& styleSheet,
     }
 }
 
-void TokenParserWidgetManager::replaceIconColorTokens(QWidget* widget,
-                                                      QString& styleSheet,
-                                                      const ColorTokens& colorTokens)
+void TokenParserWidgetManager::replaceIconColorTokens(QWidget* widget, QString& styleSheet)
 {
     QRegularExpressionMatchIterator matchIterator =
         ICON_COLOR_TOKEN_REGULAR_EXPRESSION.globalMatch(styleSheet);
@@ -342,7 +337,6 @@ void TokenParserWidgetManager::replaceIconColorTokens(QWidget* widget,
             IconTokenizer::process(widget,
                                    mode,
                                    state,
-                                   colorTokens,
                                    targetElementId,
                                    targetElementProperty,
                                    tokenId);

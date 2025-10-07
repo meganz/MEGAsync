@@ -162,7 +162,7 @@ border:none;
           </spacer>
          </item>
          <item>
-          <widget class="IconOnlyButton" name="refreshButton">
+          <widget class="TokenizableToolButton" name="refreshButton">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -206,7 +206,7 @@ border:none;
           </widget>
          </item>
          <item>
-          <widget class="IconOnlyButton" name="SettingsButton">
+          <widget class="TokenizableToolButton" name="SettingsButton">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -241,14 +241,11 @@ border:none;
              <height>24</height>
             </size>
            </property>
-           <property name="flat">
-            <bool>false</bool>
+           <property name="type" stdset="0">
+            <string notr="true">ghost</string>
            </property>
            <property name="dimension" stdset="0">
             <string notr="true">medium</string>
-           </property>
-           <property name="type" stdset="0">
-            <string notr="true">ghost</string>
            </property>
           </widget>
          </item>
@@ -638,11 +635,6 @@ border:none;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>IconOnlyButton</class>
-   <extends>QPushButton</extends>
-   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
-  </customwidget>
-  <customwidget>
    <class>IconLabel</class>
    <extends>QToolButton</extends>
    <header>tokenizer/TokenizableItems/IconLabel.h</header>
@@ -663,10 +655,14 @@ border:none;
    <extends>QTreeView</extends>
    <header>StalledIssuesView.h</header>
   </customwidget>
+  <customwidget>
+   <class>TokenizableToolButton</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>SettingsButton</tabstop>
-  <tabstop>stalledIssuesTree</tabstop>
   <tabstop>doneButton</tabstop>
   <tabstop>HelpButton</tabstop>
   <tabstop>emptyIcon</tabstop>

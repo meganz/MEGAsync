@@ -6,8 +6,6 @@
 
 #include <QToolButton>
 
-#include <memory>
-
 class TokenizableItem;
 
 class IconLabel: public QToolButton, public TokenizableItem

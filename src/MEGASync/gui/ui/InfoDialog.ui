@@ -529,7 +529,7 @@ background-color: transparent;
                 </spacer>
                </item>
                <item>
-                <widget class="IconOnlyButton" name="bSettings">
+                <widget class="TokenizableToolButton" name="bSettings">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
                    <horstretch>0</horstretch>
@@ -566,9 +566,6 @@ background-color: transparent;
                    <width>24</width>
                    <height>24</height>
                   </size>
-                 </property>
-                 <property name="flat">
-                  <bool>true</bool>
                  </property>
                  <property name="type" stdset="0">
                   <string notr="true">ghost</string>
@@ -3224,7 +3221,7 @@ background-color: transparent;
                        </spacer>
                       </item>
                       <item>
-                       <widget class="IconOnlyButton" name="bNotificationsSettings">
+                       <widget class="TokenizableToolButton" name="bNotificationsSettings">
                         <property name="maximumSize">
                          <size>
                           <width>24</width>
@@ -3246,9 +3243,6 @@ background-color: transparent;
                           <width>16</width>
                           <height>16</height>
                          </size>
-                        </property>
-                        <property name="flat">
-                         <bool>false</bool>
                         </property>
                         <property name="type" stdset="0">
                          <string notr="true">ghost</string>
@@ -3676,20 +3670,20 @@ background-color: transparent;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>SomeIssuesOccurredMessage</class>
-   <extends>QWidget</extends>
-   <header>SomeIssuesOccurredMessage.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>IconOnlyButton</class>
-   <extends>QPushButton</extends>
-   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
-  </customwidget>
-  <customwidget>
    <class>AvatarWidget</class>
    <extends>QWidget</extends>
    <header>AvatarWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TokenizableToolButton</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
+  </customwidget>
+  <customwidget>
+   <class>SomeIssuesOccurredMessage</class>
+   <extends>QWidget</extends>
+   <header>SomeIssuesOccurredMessage.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

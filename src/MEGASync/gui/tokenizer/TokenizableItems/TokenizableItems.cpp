@@ -1,10 +1,8 @@
 #include "TokenizableItems.h"
 
-#include "ButtonTokensByType.h"
-#include "EnumConverters.h"
 #include "IconTokenizer.h"
 #include "Preferences.h"
-#include "TokenParserWidgetManager.h"
+#include "ThemeManager.h"
 
 #include <QDateTime>
 #include <QDebug>
@@ -19,7 +17,7 @@ TokenizableItem::~TokenizableItem() {}
 bool TokenizableItem::stateHasChanged(const QStyleOption& option)
 {
     auto result(false);
-    int currentThemeType = static_cast<int>(Preferences::instance()->getThemeType());
+    int currentThemeType = static_cast<int>(ThemeManager::instance()->currentColorScheme());
 
     if (mThemeType != currentThemeType)
     {
@@ -42,7 +40,7 @@ bool TokenizableItem::stateHasChanged(const QStyleOption& option)
 
 bool TokenizableItem::themeHasChanged() const
 {
-    int currentThemeType = static_cast<int>(Preferences::instance()->getThemeType());
+    int currentThemeType = static_cast<int>(ThemeManager::instance()->currentColorScheme());
 
     return mThemeType != currentThemeType;
 }
@@ -75,10 +73,7 @@ void TokenizableItem::applyPixmap(QAbstractButton* button,
 {
     if (button && !token.isEmpty())
     {
-        IconTokenizer::tokenizeButtonIcon(button,
-                                          mode,
-                                          state,
-                                          TokenParserWidgetManager::instance()->getColor(token));
+        IconTokenizer::tokenizeButtonIcon(button, mode, state, token);
     }
 }
 
@@ -100,42 +95,6 @@ void TokenizableItem::init(QAbstractButton* button)
     if (mBaseTokens.anyTokenHasChanged())
     {
         forceUpdate();
-    }
-
-    if (!isInitialized() || themeHasChanged())
-    {
-        // Init QIcon::Mode::Active and QIcon::Mode::Disabled
-        if (!mBaseTokens.getNormalOffToken().isEmpty())
-        {
-            applyPixmap(button,
-                        mBaseTokens.getNormalOffToken(),
-                        QIcon::Mode::Active,
-                        QIcon::State::Off);
-
-            if (mBaseTokens.getDisabledOffToken().isEmpty())
-            {
-                applyPixmap(button,
-                            mBaseTokens.getNormalOffToken(),
-                            QIcon::Mode::Disabled,
-                            QIcon::State::Off);
-            }
-        }
-
-        if (!mBaseTokens.getNormalOnToken().isEmpty())
-        {
-            applyPixmap(button,
-                        mBaseTokens.getNormalOnToken(),
-                        QIcon::Mode::Active,
-                        QIcon::State::On);
-
-            if (!mBaseTokens.getNormalOnToken().isEmpty())
-            {
-                applyPixmap(button,
-                            mBaseTokens.getNormalOnToken(),
-                            QIcon::Mode::Disabled,
-                            QIcon::State::On);
-            }
-        }
     }
 
     if (!isInitialized())

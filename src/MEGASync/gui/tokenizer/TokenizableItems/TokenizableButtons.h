@@ -5,6 +5,7 @@
 #include "TokenizableItems.h"
 
 #include <QPushButton>
+#include <QToolButton>
 
 class ButtonTokens: public TokenUtilities
 {
@@ -70,32 +71,49 @@ private:
     QString mHoverOn;
 };
 
-class TokenizableButton: public QPushButton, public TokenizableItem
+class TokenizableAbstractButton: public TokenizableItem
 {
-    Q_OBJECT
-
 public:
-    TokenizableButton(QWidget* parent = nullptr);
-    
     void forcePress();
     void forceMouseOver();
     void resetForcedState();
 
-    DEFINE_ICON_PROPERTY()
-
 protected:
-    void paintEvent(QPaintEvent* event) override;
-    void init(QAbstractButton*) override;
+    TokenizableAbstractButton() = default;
+    void applyPixmapsByState(QAbstractButton* button, QStyleOption option);
+    void init(QAbstractButton* button) override;
 
 private:
     ButtonTokens mButtonTokens;
     QStyle::State mForcedState;
 };
 
-class IconOnlyButton: public TokenizableButton
+class TokenizableButton: public QPushButton, public TokenizableAbstractButton
 {
+    Q_OBJECT
+
 public:
-    IconOnlyButton(QWidget* parent);
+    TokenizableButton(QWidget* parent = nullptr);
+
+    DEFINE_ICON_PROPERTY()
+
+protected:
+    void paintEvent(QPaintEvent* event) override;
+};
+
+class TokenizableToolButton: public QToolButton, public TokenizableAbstractButton
+{
+    Q_OBJECT
+
+public:
+    TokenizableToolButton(QWidget* parent = nullptr);
+
+    void setToolButtonStyle(Qt::ToolButtonStyle style);
+
+    DEFINE_ICON_PROPERTY()
+
+protected:
+    void paintEvent(QPaintEvent* event) override;
 };
 
 #endif // TOKENIZABLEBUTTONS_H

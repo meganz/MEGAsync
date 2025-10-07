@@ -1144,7 +1144,7 @@ QProgressBar
            <number>0</number>
           </property>
           <item>
-           <widget class="IconOnlyButton" name="tPauseResumeTransfer">
+           <widget class="TokenizableToolButton" name="tPauseResumeTransfer">
             <property name="minimumSize">
              <size>
               <width>16</width>
@@ -1202,7 +1202,7 @@ QProgressBar
            <number>0</number>
           </property>
           <item>
-           <widget class="IconOnlyButton" name="tCancelClearTransfer">
+           <widget class="TokenizableToolButton" name="tCancelClearTransfer">
             <property name="minimumSize">
              <size>
               <width>16</width>
@@ -1233,17 +1233,17 @@ QProgressBar
   <customwidget>
    <class>IconLabel</class>
    <extends>QToolButton</extends>
-   <header>TokenizableItems/IconLabel.h</header>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
   </customwidget>
   <customwidget>
    <class>TokenizableButton</class>
    <extends>QPushButton</extends>
-   <header>TokenizableItems/TokenizableButtons.h</header>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
   </customwidget>
   <customwidget>
-   <class>IconOnlyButton</class>
-   <extends>QPushButton</extends>
-   <header>TokenizableItems/TokenizableButtons.h</header>
+   <class>TokenizableToolButton</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
   </customwidget>
  </customwidgets>
  <resources>

@@ -16,15 +16,14 @@ public:
     static void process(QWidget* widget,
                         const QString& mode,
                         const QString& state,
-                        const ColorTokens& colorTokens,
                         const QString& targetElementId,
-                        const QString& targetElementProperty,
-                        const QString& tokenId);
+                        const QString& tokenId,
+                        const QString& targetElementProperty);
 
     static void tokenizeButtonIcon(QWidget* widget,
                                    const QIcon::Mode& mode,
                                    const QIcon::State& state,
-                                   const QColor& toColor);
+                                   const QString& token);
 
     static std::optional<QPixmap> changePixmapColor(const QPixmap& pixmap, QColor toColor);
 

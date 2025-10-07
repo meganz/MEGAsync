@@ -15,16 +15,6 @@
         <file alias="switch_off_pressed">images/themed/light/switch_off_pressed.svg</file>
         <file alias="switch_off_hover">images/themed/light/switch_off_hover.svg</file>
         <file alias="switch_off">images/themed/light/switch_off.svg</file>
-        <file alias="images/settings-account.svg">images/settings-account.svg</file>
-        <file alias="images/settings-backup.svg">images/settings-backup.svg</file>
-        <file alias="images/settings-backup-warn.svg">images/settings-backup-warn.svg</file>
-        <file alias="images/settings-folders.svg">images/settings-folders.svg</file>
-        <file alias="images/settings-general.svg">images/settings-general.svg</file>
-        <file alias="images/settings-network.svg">images/settings-network.svg</file>
-        <file alias="images/settings-notifications.svg">images/settings-notifications.svg</file>
-        <file alias="images/settings-shield.svg">images/settings-shield.svg</file>
-        <file alias="images/settings-sync.svg">images/settings-sync.svg</file>
-        <file alias="images/settings-sync-warn.svg">images/settings-sync-warn.svg</file>
         <file alias="images/Small_Free.png">images/Small_Free.png</file>
         <file alias="images/Small_Free@2x.png">images/Small_Free@2x.png</file>
         <file alias="images/Small_Free@3x.png">images/Small_Free@3x.png</file>

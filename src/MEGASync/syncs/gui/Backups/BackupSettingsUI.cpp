@@ -78,12 +78,14 @@ void BackupSettingsUI::removeSync(std::shared_ptr<SyncSettings> backup)
 
 QString BackupSettingsUI::getFinishWarningIconString() const
 {
-    return QString::fromUtf8(":/images/settings-backup-warn.svg");
+    return Utilities::getPixmapName(QLatin1String("settings-backup-warn"),
+                                    Utilities::AttributeType::NONE);
 }
 
 QString BackupSettingsUI::getFinishIconString() const
 {
-    return QString::fromUtf8(":/images/settings-backup.svg");
+    return Utilities::getPixmapName(QLatin1String("settings-backup"),
+                                    Utilities::AttributeType::NONE);
 }
 
 QString BackupSettingsUI::getOperationFailTitle() const

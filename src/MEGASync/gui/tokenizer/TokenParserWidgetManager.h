@@ -29,9 +29,7 @@ private:
     void onThemeChanged();
     void onUpdateRequested();
     void applyTheme(QWidget* widget);
-    void replaceIconColorTokens(QWidget* widget,
-                                QString& styleSheet,
-                                const ColorTokens& colorTokens);
+    void replaceIconColorTokens(QWidget* widget, QString& styleSheet);
     void replaceColorTokens(QString& styleSheet, const ColorTokens& colorTokens);
     void removeFrameOnDialogCombos(QWidget* widget);
     bool isTokenized(QWidget* widget);
