@@ -12,7 +12,7 @@ using namespace mega;
 
 ChangePasswordController::ChangePasswordController(QObject* parent):
     QObject(parent),
-    mMegaApi(((MegaApplication*)qApp)->getMegaApi())
+    mMegaApi(MegaSyncApp->getMegaApi())
 {}
 
 void ChangePasswordController::onRequestFinish(mega::MegaRequest* req, mega::MegaError* e)
@@ -104,30 +104,26 @@ void ChangePasswordController::show2FA(bool invalidCode)
 
 void ChangePasswordController::requestChangePassword(QString password, QString confirmPassword)
 {
-    const bool fieldIsEmpty{password.isEmpty() || confirmPassword.isEmpty()};
-    const bool passwordsAreEqual{!password.compare(confirmPassword)};
-    const bool newAndOldPasswordsAreTheSame{mMegaApi->checkPassword(password.toUtf8())};
-    const bool passwordIsWeak{mMegaApi->getPasswordStrength(password.toUtf8().constData()) ==
-                              MegaApi::PASSWORD_STRENGTH_VERYWEAK};
-
     MessageDialogInfo info;
-    if (fieldIsEmpty)
+
+    if (password.isEmpty() || confirmPassword.isEmpty())
     {
         info.descriptionText = tr("Please enter your password");
         MessageDialogOpener::warning(info);
     }
-    else if (!passwordsAreEqual)
+    else if (password.compare(confirmPassword))
     {
         info.descriptionText = tr("The entered passwords don't match");
         MessageDialogOpener::warning(info);
     }
-    else if (newAndOldPasswordsAreTheSame)
+    else if (mMegaApi->checkPassword(password.toUtf8())) // new and old pass are the equals.
     {
         info.descriptionText = tr("You have entered your current password,"
                                   " please enter a new password.");
         MessageDialogOpener::warning(info);
     }
-    else if (passwordIsWeak)
+    else if (mMegaApi->getPasswordStrength(password.toUtf8().constData()) ==
+             MegaApi::PASSWORD_STRENGTH_VERYWEAK)
     {
         info.descriptionText = tr("Please, enter a stronger password");
         MessageDialogOpener::warning(info);

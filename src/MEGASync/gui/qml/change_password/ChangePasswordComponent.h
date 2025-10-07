@@ -1,6 +1,7 @@
 #ifndef CHANGE_PASSWORD_COMPONENT_H
 #define CHANGE_PASSWORD_COMPONENT_H
 
+#include "ChangePasswordController.h"
 #include "QmlDialogWrapper.h"
 
 class ChangePasswordComponent: public QMLComponent
@@ -14,12 +15,13 @@ public:
 
     static void registerQmlModules();
 
-    Q_INVOKABLE void changePassword(QString pass);
+    Q_INVOKABLE void changePassword(QString password, QString confirmationPassword);
 
 signals:
     void passwordChanged();
 
 private:
+    std::unique_ptr<ChangePasswordController> mChangePasswordController;
 };
 
 #endif

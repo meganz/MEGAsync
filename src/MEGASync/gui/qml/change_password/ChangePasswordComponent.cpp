@@ -6,7 +6,8 @@
 static bool qmlRegistrationDone = false;
 
 ChangePasswordComponent::ChangePasswordComponent(QObject* parent):
-    QMLComponent(parent)
+    QMLComponent(parent),
+    mChangePasswordController(std::make_unique<ChangePasswordController>())
 {
     registerQmlModules();
 
@@ -39,4 +40,7 @@ void ChangePasswordComponent::registerQmlModules()
     }
 }
 
-void ChangePasswordComponent::changePassword(QString password) {}
+void ChangePasswordComponent::changePassword(QString password, QString confirmationPassword)
+{
+    mChangePasswordController->requestChangePassword(password, confirmationPassword);
+}
