@@ -22,7 +22,7 @@ BuildRequires:  kio-devel
 BuildRequires:  libqt5-qtbase-devel
 #%global debug_package %{nil}
 %endif
-%if 0%{?is_opensuse} && 0%{?suse_version} >= 1600
+%if (0%{?sle_version} || 0%{?is_opensuse}) && 0%{?suse_version} >= 1600
 BuildRequires:  kf6-extra-cmake-modules
 BuildRequires:  kf6-kio-devel
 BuildRequires:  qt6-base-devel
@@ -92,7 +92,7 @@ fi
 %make_jobs
 %endif
 
-%if 0%{?is_opensuse} && 0%{?suse_version} >= 1600
+%if (0%{?sle_version} || 0%{?is_opensuse}) && 0%{?suse_version} >= 1600
 %cmake_kf6 -DKF_VER=6
 %kf6_build
 %endif
@@ -114,7 +114,7 @@ fi
 %if 0%{?sle_version} && 0%{?suse_version} < 1600
 %kf5_makeinstall -C build
 %endif
-%if 0%{?is_opensuse} && 0%{?suse_version} >= 1600
+%if (0%{?sle_version} || 0%{?is_opensuse}) && 0%{?suse_version} >= 1600
 %kf6_install
 %endif
 #RHEL
@@ -160,7 +160,7 @@ echo cleaning
 %{_kf5_plugindir}/kf5/overlayicon/megasync-overlay-plugin.so
 %{_kf5_plugindir}/kf5/kfileitemaction/megasync-plugin.so
 %endif
-%if 0%{?is_opensuse} && 0%{?suse_version} >= 1600
+%if (0%{?sle_version} || 0%{?is_opensuse}) && 0%{?suse_version} >= 1600
 %{_kf6_iconsdir}/hicolor/32x32/emblems/mega-dolphin-pending.png
 %{_kf6_iconsdir}/hicolor/32x32/emblems/mega-dolphin-synced.png
 %{_kf6_iconsdir}/hicolor/32x32/emblems/mega-dolphin-syncing.png
