@@ -632,10 +632,12 @@ void CloudDriveNodeSelector::selectTabs(const HandlesByTab& tabsInfo)
     if (!tabsInfo.cloudDriveNodes.isEmpty())
     {
         onbShowCloudDriveClicked();
+        onOptionSelected(NodeSelector::CLOUD_DRIVE);
     }
     else if (!tabsInfo.incomingSharedNodes.isEmpty())
     {
         onbShowIncomingSharesClicked();
+        onOptionSelected(NodeSelector::SHARES);
     }
 }
 

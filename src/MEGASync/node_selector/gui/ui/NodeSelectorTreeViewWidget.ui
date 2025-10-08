@@ -163,6 +163,9 @@ background-color: transparent;
               <property name="type" stdset="0">
                <string notr="true">ghost</string>
               </property>
+              <property name="disabled_off" stdset="0">
+               <string notr="true">icon-disabled</string>
+              </property>
              </widget>
             </item>
             <item>
@@ -203,6 +206,9 @@ background-color: transparent;
               </property>
               <property name="type" stdset="0">
                <string notr="true">ghost</string>
+              </property>
+              <property name="disabled_off" stdset="0">
+               <string notr="true">icon-disabled</string>
               </property>
              </widget>
             </item>
