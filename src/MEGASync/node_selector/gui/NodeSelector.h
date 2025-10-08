@@ -98,6 +98,8 @@ protected:
 
     // Create specialised widgets
     virtual void createSpecialisedWidgets() = 0;
+
+    virtual void onLanguageChangeEvent() {}
     void addCloudDrive();
     NodeSelectorTreeViewWidgetCloudDrive* mCloudDriveWidget;
     void addIncomingShares();

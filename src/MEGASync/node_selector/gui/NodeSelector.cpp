@@ -136,6 +136,7 @@ bool NodeSelector::event(QEvent* event)
     {
         ui->retranslateUi(this);
         updateNodeSelectorTabs();
+        onLanguageChangeEvent();
     }
 
     return QDialog::event(event);
