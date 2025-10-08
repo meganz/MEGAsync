@@ -279,7 +279,7 @@ icon: url(:/play);
     qproperty-icon: url(:/cancel);
 }
 
-#wSearch QPushButton
+#bSearchString
 {
     color: #ffffffff; /*colorToken.page-background*/
     border: none;
@@ -293,7 +293,6 @@ icon: url(:/play);
 #tClearSearchResult
 {
     qproperty-iconSize: 16px;
-    qproperty-icon: url(:/x.svg);
 }
 
 #sStatus
@@ -1106,12 +1105,25 @@ QToolButton
                </widget>
               </item>
               <item>
-               <widget class="QToolButton" name="tClearSearchResult">
+               <widget class="TokenizableToolButton" name="tClearSearchResult">
+                <property name="maximumSize">
+                 <size>
+                  <width>16</width>
+                  <height>16</height>
+                 </size>
+                </property>
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
                 </property>
                 <property name="text">
                  <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../../gui/Resources_common.qrc">
+                  <normaloff>:/x_solid_small</normaloff>:/x_solid_small</iconset>
+                </property>
+                <property name="type" stdset="0">
+                 <string notr="true">ghost</string>
                 </property>
                </widget>
               </item>
@@ -1140,7 +1152,7 @@ QToolButton
            <string notr="true"/>
           </property>
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="pSpeedAndClear">
            <layout class="QHBoxLayout" name="pSpeedAndClearLayout" stretch="0,0,0,1">
@@ -2391,6 +2403,19 @@ QToolButton
             </property>
            </spacer>
           </item>
+          <item row="2" column="0">
+           <spacer name="verticalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
           <item row="1" column="0">
            <widget class="IconLabel" name="tNoFinished">
             <property name="sizePolicy">
@@ -2417,35 +2442,6 @@ QToolButton
             </property>
             <property name="normal_off" stdset="0">
              <string notr="true">icon-secondary</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <spacer name="verticalSpacer_5">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="lNoFinished">
-            <property name="text">
-             <string>No completed transfers</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-            <property name="type" stdset="0">
-             <string notr="true">secondary</string>
-            </property>
-            <property name="font-size" stdset="0">
-             <string notr="true">label-2</string>
             </property>
            </widget>
           </item>
@@ -2559,22 +2555,6 @@ QToolButton
     <hint type="destinationlabel">
      <x>55</x>
      <y>26</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tClearSearchResult</sender>
-   <signal>clicked()</signal>
-   <receiver>wSearch</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>232</x>
-     <y>503</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>127</x>
-     <y>496</y>
     </hint>
    </hints>
   </connection>
