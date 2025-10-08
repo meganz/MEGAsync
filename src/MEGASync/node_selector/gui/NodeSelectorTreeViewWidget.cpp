@@ -96,64 +96,6 @@ NodeSelectorTreeViewWidget::~NodeSelectorTreeViewWidget()
     delete ui;
 }
 
-bool NodeSelectorTreeViewWidget::event(QEvent* event)
-{
-    if (event->type() == QEvent::LanguageChange)
-    {
-        if (!ui->tMegaFolders->rootIndex().isValid())
-        {
-            updateRootTitle();
-        }
-        ui->retranslateUi(this);
-
-        if (mSelectType)
-        {
-            mSelectType->updateCustomButtonsText(this);
-        }
-
-        initEmptyMessages();
-    }
-    return QWidget::event(event);
-}
-
-bool NodeSelectorTreeViewWidget::eventFilter(QObject* watched, QEvent* event)
-{
-    if (event->type() == QEvent::DragEnter)
-    {
-        if (auto dropEvent = static_cast<QDragEnterEvent*>(event))
-        {
-            if (!dropEvent->mimeData()->urls().isEmpty())
-            {
-                ui->tMegaFolders->dragEnterEvent(dropEvent);
-            }
-            else if (mModel->canDropMimeData(dropEvent->mimeData(),
-                                             Qt::MoveAction,
-                                             -1,
-                                             -1,
-                                             mModel->index(0, 0, QModelIndex())))
-            {
-                dropEvent->acceptProposedAction();
-            }
-        }
-    }
-    else if (event->type() == QEvent::DragMove)
-    {
-        if (auto dropEvent = static_cast<QDragEnterEvent*>(event))
-        {
-            if (!dropEvent->mimeData()->urls().isEmpty())
-            {
-                ui->tMegaFolders->dragMoveEvent(dropEvent);
-            }
-        }
-    }
-    else if (event->type() == QEvent::Resize && watched == ui->tMegaFolders->viewport())
-    {
-        updateColumnsWidth(false);
-    }
-
-    return QWidget::eventFilter(watched, event);
-}
-
 void NodeSelectorTreeViewWidget::init()
 {
     mProxyModel = createProxyModel();
@@ -237,20 +179,71 @@ void NodeSelectorTreeViewWidget::initEmptyMessages()
     }
 }
 
+bool NodeSelectorTreeViewWidget::event(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        if (!ui->tMegaFolders->rootIndex().isValid())
+        {
+            updateRootTitle();
+        }
+        ui->retranslateUi(this);
+
+        if (mSelectType)
+        {
+            mSelectType->updateCustomButtonsText(this);
+        }
+
+        initEmptyMessages();
+    }
+    return QWidget::event(event);
+}
+
+bool NodeSelectorTreeViewWidget::eventFilter(QObject* watched, QEvent* event)
+{
+    if (event->type() == QEvent::DragEnter)
+    {
+        if (auto dropEvent = static_cast<QDragEnterEvent*>(event))
+        {
+            if (!dropEvent->mimeData()->urls().isEmpty())
+            {
+                ui->tMegaFolders->dragEnterEvent(dropEvent);
+            }
+            else if (mModel->canDropMimeData(dropEvent->mimeData(),
+                                             Qt::MoveAction,
+                                             -1,
+                                             -1,
+                                             mModel->index(0, 0, QModelIndex())))
+            {
+                dropEvent->acceptProposedAction();
+            }
+        }
+    }
+    else if (event->type() == QEvent::DragMove)
+    {
+        if (auto dropEvent = static_cast<QDragEnterEvent*>(event))
+        {
+            if (!dropEvent->mimeData()->urls().isEmpty())
+            {
+                ui->tMegaFolders->dragMoveEvent(dropEvent);
+            }
+        }
+    }
+    else if (event->type() == QEvent::Resize)
+    {
+        if (watched == ui->tMegaFolders->viewport())
+        {
+            updateColumnsWidth(false);
+        }
+    }
+
+    return QWidget::eventFilter(watched, event);
+}
+
 void NodeSelectorTreeViewWidget::setTitleText(const QString& nodeName)
 {
     ui->lFolderName->setProperty(FULL_NAME_PROPERTY, nodeName);
-
-    QFontMetrics fm = ui->lFolderName->fontMetrics();
-
-    QString elidedText =
-        fm.elidedText(nodeName, Qt::ElideMiddle, ui->tMegaFolders->width() - LABEL_ELIDE_MARGIN);
-    ui->lFolderName->setText(elidedText);
-
-    if (elidedText != nodeName)
-        ui->lFolderName->setToolTip(nodeName);
-    else
-        ui->lFolderName->setToolTip(QString());
+    ui->lFolderName->setText(nodeName);
 }
 
 void NodeSelectorTreeViewWidget::clearSelection()
@@ -371,11 +364,6 @@ void NodeSelectorTreeViewWidget::updateColumnsWidth(bool updateVisibleColumnCoun
             ui->tMegaFolders->setColumnWidth((*column), width);
         }
     }
-}
-
-void NodeSelectorTreeViewWidget::resizeEvent(QResizeEvent*)
-{
-    setTitleText(ui->lFolderName->property(FULL_NAME_PROPERTY).toString());
 }
 
 void NodeSelectorTreeViewWidget::onSectionResized()
