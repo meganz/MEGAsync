@@ -17,7 +17,7 @@ StatusInfo::StatusInfo(QWidget *parent) :
     mScanningTimer.setInterval(60);
     mScanningAnimationIndex = 1;
     connect(&mScanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
-
+    ui->bIconState->setCursor(Qt::ArrowCursor);
     setProperty("TOKENIZED", true);
 }
 
@@ -44,6 +44,7 @@ void StatusInfo::setState(TRANSFERS_STATES state)
             ui->lStatusDesc->setText(statusText);
 
             ui->bIconState->setProperty("state", QString::fromUtf8("paused"));
+            ui->bIconState->setProperty("normal_off", QString::fromUtf8("icon-primary"));
 
             break;
         }

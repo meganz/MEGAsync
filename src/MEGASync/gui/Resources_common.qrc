@@ -1304,5 +1304,6 @@
         <file alias="download_small_thin_outline">images/themed/tokenizable/download_small_thin_outline.svg</file>
         <file alias="more-horizontal">images/themed/tokenizable/more-horizontal.svg</file>
         <file alias="mega_medium_thin_outline">images/mega_medium_thin_outline.svg</file>
+        <file alias="images/themed/tokenizable/mega_medium_thin_solid.svg">images/themed/tokenizable/mega_medium_thin_solid.svg</file>
     </qresource>
 </RCC>

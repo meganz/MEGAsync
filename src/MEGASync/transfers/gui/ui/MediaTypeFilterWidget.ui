@@ -80,46 +80,6 @@ QGroupBox
     font-size: 12px;
 }
 
-#bTitle:enabled:checked
-{
-    icon: url(:/chevron-down_default);
-}
-
-#bTitle:enabled:!checked
-{
-    icon: url(:/chevron-up_default);
-}
-
-#bTitle:enabled:hover:checked
-{
-    icon: url(:/chevron-down_hover);
-}
-
-#bTitle:enabled:hover:!checked
-{
-    icon: url(:/chevron-up_hover);
-}
-
-#bTitle:enabled:pressed:checked
-{
-    icon: url(:/chevron-down_press);
-}
-
-#bTitle:enabled:pressed:!checked
-{
-   icon: url(:/chevron-up_press);
-}
-
-#bTitle:!enabled:checked
-{
-    icon: url(:/chevron-down_disabled.);
-}
-
-#bTitle:!enabled:!checked
-{
-    icon: url(:/chevron-up_disabled);
-}
-
 #gbMediaType QFrame
 {
     padding-right: 6px;
@@ -270,7 +230,7 @@ QGroupBox
       <number>27</number>
      </property>
      <item>
-      <widget class="QPushButton" name="bTitle">
+      <widget class="TokenizableButton" name="bTitle">
        <property name="cursor">
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
@@ -282,7 +242,8 @@ QGroupBox
        </property>
        <property name="icon">
         <iconset resource="../../../gui/Resources_light.qrc">
-         <normaloff>:/images/themed/light/chevron-down_default.svg</normaloff>:/images/themed/light/chevron-down_default.svg</iconset>
+         <normaloff>:/chevron_down_small_thin_outline_secondary</normaloff>
+         <normalon>:/chevron_up_small_thin_outline_secondary</normalon>:/chevron_down_small_thin_outline_secondary</iconset>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -815,6 +776,13 @@ QGroupBox
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TokenizableButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../../gui/Resources_light.qrc"/>
  </resources>
