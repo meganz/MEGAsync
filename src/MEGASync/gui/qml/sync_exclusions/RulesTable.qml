@@ -10,6 +10,7 @@ import components.checkBoxes 1.0
 import components.texts 1.0 as Texts
 import components.images 1.0
 import components.buttons 1.0 as Buttons
+import QtQuick.Controls.Styles 1.4
 
 import WildCardEnum 1.0
 import ExclusionRulesModel 1.0
@@ -227,6 +228,43 @@ Rectangle {
         TableView {
             id: tableView
 
+            style: TableViewStyle {
+                // Scrollbar background (the track)
+                scrollBarBackground: Rectangle {
+                    implicitWidth: 14
+                    implicitHeight: parent.height
+                    color: ColorTheme.surface1
+                    border.color: "transparent"
+                }
+
+                // Scrollbar handle (the thumb)
+                handle: Item {
+                    implicitWidth: 14
+                    implicitHeight: 10
+
+                    Rectangle {
+                        anchors.fill: parent
+                        anchors.leftMargin: 2
+                        anchors.rightMargin: 2
+                        anchors.topMargin: 2
+                        anchors.bottomMargin: 2
+                        color: styleData.pressed ? ColorTheme.buttonPrimaryPressed
+                                                 : (styleData.hovered ? ColorTheme.buttonPrimaryHover
+                                                                      : ColorTheme.buttonPrimary)
+                        radius: 5
+                    }
+                }
+
+                // Up/Left arrow button
+                decrementControl: Rectangle {
+                    visible: false
+                }
+
+                // Down/Right arrow button
+                incrementControl: Rectangle {
+                    visible: false
+                }
+            }
             anchors{
                 fill: parent
             }
@@ -286,6 +324,7 @@ Rectangle {
                         radius: 4
                         iconSource: model? Images.imagesExclusionsPath + model.iconName + '.svg': ""
                         iconSize:  Qt.size(16, 16)
+                        iconColor: ColorTheme.iconPrimary
                         text: model? model.type : ""
                     }
 

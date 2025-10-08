@@ -305,6 +305,8 @@ void AlertItem::setAlertHeading(UserAlert* alert)
         case MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
         case MegaUserAlert::TYPE_PAYMENT_FAILED:
         case MegaUserAlert::TYPE_PAYMENTREMINDER:
+            mUi->sIconWidget->setCurrentWidget(mUi->pPaymentInfo);
+            mUi->sIconWidget->show();
             mNotificationHeading = tr("Payment Info");
             break;
         // Takedown notifications

@@ -14,6 +14,7 @@ Rectangle {
     property alias backgroundColor: mainRect.color
     property alias iconSource: iconImage.source
     property alias iconSize: iconImage.sourceSize
+    property alias iconColor: iconImage.color
     property alias radius: mainRect.radius
 
     property int iconTextSpacing: 4

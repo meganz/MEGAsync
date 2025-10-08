@@ -52,6 +52,11 @@ font-size: 13px;
 border-color: #ff04101E; /*colorToken.button-brand*/
 background-color: transparent;
 color: #ff04101E; /*colorToken.button-brand*/
+}
+#bSharedFolder, #bMega
+{
+border: none;
+background-color: transparent;
 }</string>
   </property>
   <property name="TOKENIZED" stdset="0">
@@ -339,7 +344,7 @@ border: none;
               <number>0</number>
              </property>
              <item>
-              <widget class="QPushButton" name="bSharedFolder">
+              <widget class="IconLabel" name="bSharedFolder">
                <property name="minimumSize">
                 <size>
                  <width>24</width>
@@ -352,14 +357,62 @@ border: none;
                  <height>24</height>
                 </size>
                </property>
-               <property name="styleSheet">
-                <string notr="true">#bSharedFolder
-{
-border: none;
-}</string>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="pPaymentInfo">
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="IconLabel" name="bMega">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
                </property>
                <property name="text">
                 <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../Resources_common.qrc">
+                 <normaloff>:/images/themed/tokenizable/mega_medium_thin_solid.svg</normaloff>:/images/themed/tokenizable/mega_medium_thin_solid.svg</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -473,12 +526,19 @@ font-size: 14px;
  </widget>
  <customwidgets>
   <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
+  </customwidget>
+  <customwidget>
    <class>AvatarWidget</class>
    <extends>QWidget</extends>
    <header>AvatarWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../Resources_common.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -108,8 +108,8 @@ qproperty-icon: none;
      </property>
      <property name="maximumSize">
       <size>
-       <width>31</width>
-       <height>31</height>
+       <width>18</width>
+       <height>18</height>
       </size>
      </property>
      <property name="mouseTracking">
