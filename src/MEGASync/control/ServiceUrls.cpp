@@ -241,6 +241,13 @@ QUrl ServiceUrls::getTransferQuotaHelpUrl()
     return url;
 }
 
+QUrl ServiceUrls::getCredentialStuffingHelpUrl()
+{
+    auto url = getHelpBaseUrl();
+    url.setPath(QLatin1String("/security/data-protection/credential-stuffing"));
+    return url;
+}
+
 QUrl ServiceUrls::getCreateBackupHelpUrl()
 {
     auto url = getDesktopAppHelpUrl();

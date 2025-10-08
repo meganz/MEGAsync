@@ -287,8 +287,6 @@ target_sources_conditional(${ExecutableTarget}
     QT_AWARE
     PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/win/Login2FA.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/LockedPopOver.ui
-    ${CMAKE_CURRENT_LIST_DIR}/win/VerifyLockMessage.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
@@ -296,8 +294,6 @@ target_sources_conditional(${ExecutableTarget}
    QT_AWARE
    PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/macx/Login2FA.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/VerifyLockMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/macx/LockedPopOver.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
@@ -305,24 +301,6 @@ target_sources_conditional(${ExecutableTarget}
     QT_AWARE
     PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/linux/Login2FA.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/LockedPopOver.ui
-    ${CMAKE_CURRENT_LIST_DIR}/linux/VerifyLockMessage.ui
-)
-
-# Resources and platform-specific additions
-target_sources_conditional(${ExecutableTarget}
-    FLAG NOT APPLE
-    QT_AWARE
-    PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/LockedPopOver.h
-    ${CMAKE_CURRENT_LIST_DIR}/LockedPopOver.cpp
-)
-
-target_sources_conditional(${ExecutableTarget}
-   FLAG APPLE
-   QT_AWARE
-   PRIVATE
-   ${CMAKE_CURRENT_LIST_DIR}/macx/LockedPopOver.ui
 )
 
 target_sources_conditional(${ExecutableTarget}
@@ -495,6 +473,7 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ui/ViewLoadingMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/NodeNameSetterDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/AccountTypeWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/VerifyLockMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/MegaProgressCustomDialog.ui
 )
 
