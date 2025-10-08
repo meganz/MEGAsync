@@ -29,13 +29,7 @@
    <string notr="true">#VerifyLockMessage
 {
 background-color: #ffffff; /*colorToken.page-background*/
-}
-
-#lWhySeenThis
-{
-color: #ff2C5BEB; /*colorToken.link-primary*/
-}
-</string>
+}</string>
   </property>
   <property name="TOKENIZED" stdset="0">
    <bool>true</bool>
@@ -175,38 +169,19 @@ color: #ff2C5BEB; /*colorToken.link-primary*/
         <enum>QLayout::SetFixedSize</enum>
        </property>
        <item>
-        <widget class="QLabel" name="lWhySeenThis">
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
+        <widget class="TokenizableButton" name="bWhySeenThis">
+         <property name="layoutDirection">
+          <enum>Qt::RightToLeft</enum>
          </property>
          <property name="text">
           <string>Why am I seeing this?</string>
          </property>
-         <property name="font-size" stdset="0">
-          <string notr="true">body-2</string>
-         </property>
-         <property name="semibold" stdset="0">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="TokenizableToolButton" name="tbOpenLink">
-         <property name="text">
-          <string notr="true"/>
-         </property>
          <property name="icon">
-          <iconset resource="../Resources_light.qrc">
-           <normaloff>:/external-link_small_thin_outline_icon_primary</normaloff>:/external-link_small_thin_outline_icon_primary</iconset>
+          <iconset resource="../Resources_common.qrc">
+           <normaloff>:/external_link_small_thin_outline</normaloff>:/external_link_small_thin_outline</iconset>
          </property>
-         <property name="dimension" stdset="0">
-          <string notr="true">small</string>
-         </property>
-         <property name="outline" stdset="0">
-          <bool>false</bool>
-         </property>
-         <property name="normal_off" stdset="0">
-          <string notr="true">link-primary</string>
+         <property name="type" stdset="0">
+          <string notr="true">link</string>
          </property>
         </widget>
        </item>
@@ -250,9 +225,9 @@ color: #ff2C5BEB; /*colorToken.link-primary*/
  </widget>
  <customwidgets>
   <customwidget>
-   <class>TokenizableToolButton</class>
-   <extends>QToolButton</extends>
-   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
+   <class>TokenizableButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
   </customwidget>
   <customwidget>
    <class>IconLabel</class>
@@ -262,7 +237,6 @@ color: #ff2C5BEB; /*colorToken.link-primary*/
  </customwidgets>
  <resources>
   <include location="../Resources_common.qrc"/>
-  <include location="../Resources_light.qrc"/>
  </resources>
  <connections/>
 </ui>

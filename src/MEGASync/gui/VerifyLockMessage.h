@@ -26,10 +26,9 @@ signals:
 
 private slots:
     void on_bLogout_clicked();
-    void on_tbOpenLink_clicked();
+    void onHelpButtonClicked();
 
 protected:
-    void mousePressEvent(QMouseEvent *event) override;
     bool event(QEvent* event) override;
 
 private:

@@ -17,14 +17,10 @@ VerifyLockMessage::VerifyLockMessage(QWidget *parent) :
 
     regenerateUI();
     connect(static_cast<MegaApplication *>(qApp), SIGNAL(unblocked()), this, SLOT(close()));
-}
-
-void VerifyLockMessage::mousePressEvent(QMouseEvent *event)
-{
-    if (m_ui->lWhySeenThis->rect().contains(m_ui->lWhySeenThis->mapFrom(this, event->pos())))
-    {
-        Utilities::openUrl(ServiceUrls::getCredentialStuffingHelpUrl());
-    }
+    connect(m_ui->bWhySeenThis,
+            &TokenizableToolButton::clicked,
+            this,
+            &VerifyLockMessage::onHelpButtonClicked);
 }
 
 bool VerifyLockMessage::event(QEvent* event)
@@ -52,8 +48,6 @@ void VerifyLockMessage::regenerateUI()
     Text::NewLine decorator;
     decorator.process(msg, 2);
     m_ui->lVerifyEmailDesc->setText(msg);
-    m_ui->lWhySeenThis->setVisible(true);
-
 }
 
 VerifyLockMessage::~VerifyLockMessage()
@@ -67,7 +61,7 @@ void VerifyLockMessage::on_bLogout_clicked()
     emit logout();
 }
 
-void VerifyLockMessage::on_tbOpenLink_clicked()
+void VerifyLockMessage::onHelpButtonClicked()
 {
     Utilities::openUrl(ServiceUrls::getCredentialStuffingHelpUrl());
 }

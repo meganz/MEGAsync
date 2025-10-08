@@ -474,7 +474,6 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/NodeNameSetterDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/AccountTypeWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/VerifyLockMessage.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/LockedPopOver.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/MegaProgressCustomDialog.ui
 )
 
