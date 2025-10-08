@@ -162,7 +162,7 @@ void AccountStatusController::reset()
 
 void AccountStatusController::showVerifyAccountInfo()
 {
-    QPointer<VerifyLockMessage> verifyEmail = new VerifyLockMessage(mBlockedState);
+    QPointer<VerifyLockMessage> verifyEmail = new VerifyLockMessage();
     connect(verifyEmail.data(), SIGNAL(logout()), MegaSyncApp, SLOT(unlink()));
 
     DialogOpener::showDialog(verifyEmail);

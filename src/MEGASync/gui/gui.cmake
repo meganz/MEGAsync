@@ -59,7 +59,6 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/ApiImageLabel.h
     ${CMAKE_CURRENT_LIST_DIR}/TabSelector.h
     ${CMAKE_CURRENT_LIST_DIR}/SearchLineEdit.h
-    ${CMAKE_CURRENT_LIST_DIR}/LockedPopOver.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NodeNameSetterDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NewFolderDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/RenameNodeDialog.h
@@ -204,7 +203,6 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/ApiImageLabel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/TabSelector.cpp
     ${CMAKE_CURRENT_LIST_DIR}/SearchLineEdit.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/LockedPopOver.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NewFolderDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/RenameNodeDialog.cpp

@@ -81,8 +81,6 @@ target_sources_conditional(${ExecutableTarget}
    ${CMAKE_CURRENT_LIST_DIR}/macx/PowerOptions.mm
    ${CMAKE_CURRENT_LIST_DIR}/macx/NativeMacPopover.mm
    ${CMAKE_CURRENT_LIST_DIR}/macx/NativeMacPopoverPrivate.mm
-   ${CMAKE_CURRENT_LIST_DIR}/macx/LockedPopOver.h
-   ${CMAKE_CURRENT_LIST_DIR}/macx/LockedPopOver.mm
    ${CMAKE_CURRENT_LIST_DIR}/macx/MacThemeNotifier.h
    ${CMAKE_CURRENT_LIST_DIR}/macx/MacThemeNotifier.mm
    ${CMAKE_CURRENT_LIST_DIR}/macx/MacThemeWatcher.h

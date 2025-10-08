@@ -97,6 +97,15 @@ void NewLine::process(QString &input) const
     input.replace(QLatin1String("[/BR]"), QLatin1String(""));
 }
 
+void NewLine::process(QString &input, int count) const
+{
+    Decorator::process(input);
+
+    QString brTag = QString::fromUtf8("<br>").repeated(count);
+    input.replace(QLatin1String("[BR]"), brTag);
+    input.replace(QLatin1String("[/BR]"), QLatin1String(""));
+}
+
 RichText::RichText(QObject* parent):
     Decorator(parent),
     mLinkAddresses(QStringList())

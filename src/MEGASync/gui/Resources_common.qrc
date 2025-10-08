@@ -1300,6 +1300,7 @@
         <file alias="settings-shield">images/themed/tokenizable/settings-shield.svg</file>
         <file alias="settings-sync-warn">images/themed/tokenizable/settings-sync-warn.svg</file>
         <file alias="settings-sync">images/themed/tokenizable/settings-sync.svg</file>
+        <file alias="alert-triangle_medium_thin_outline.svg">images/themed/tokenizable/alert-triangle_medium_thin_outline.svg</file>
         <file alias="download_small_thin_outline">images/themed/tokenizable/download_small_thin_outline.svg</file>
         <file alias="more-horizontal">images/themed/tokenizable/more-horizontal.svg</file>
         <file alias="mega_medium_thin_outline">images/mega_medium_thin_outline.svg</file>
