@@ -1,7 +1,6 @@
 #include "ChangePasswordController.h"
 
 #include "MegaApplication.h"
-#include "MessageDialogOpener.h"
 #include "RequestListenerManager.h"
 
 using namespace mega;
@@ -34,12 +33,8 @@ void ChangePasswordController::onRequestFinish(mega::MegaRequest* req, mega::Meg
             }
             else
             {
-                emit passwordChangeFailed();
-
-                MessageDialogInfo info;
-                info.descriptionText =
-                    QCoreApplication::translate("MegaError", e->getErrorString());
-                MessageDialogOpener::critical(info);
+                emit passwordChangeFailed(
+                    QCoreApplication::translate("MegaError", e->getErrorString()));
             }
             break;
         }
@@ -47,12 +42,8 @@ void ChangePasswordController::onRequestFinish(mega::MegaRequest* req, mega::Meg
         {
             if (e->getErrorCode() == MegaError::API_OK)
             {
-                emit passwordChangeSucceed();
-
-                MessageDialogInfo msgInfo;
-                msgInfo.titleText = tr("Password changed");
-                msgInfo.descriptionText = tr("Your password has been changed.");
-                MessageDialogOpener::information(msgInfo);
+                emit passwordChangeSucceed(tr("Password changed"),
+                                           tr("Your password has been changed."));
             }
             else if (e->getErrorCode() == MegaError::API_EFAILED ||
                      e->getErrorCode() == MegaError::API_EEXPIRED)
@@ -61,19 +52,12 @@ void ChangePasswordController::onRequestFinish(mega::MegaRequest* req, mega::Meg
             }
             else if (e->getErrorCode() == MegaError::API_ETOOMANY)
             {
-                MessageDialogInfo info;
-                info.descriptionText = tr("Too many requests. Please wait.");
-                MessageDialogOpener::critical(info);
+                emit passwordChangeFailed(tr("Too many requests. Please wait."));
             }
             else
             {
-                emit passwordChangeFailed();
-
-                MessageDialogInfo info;
-                info.descriptionText =
-                    QCoreApplication::translate("MegaError", e->getErrorString());
-
-                MessageDialogOpener::critical(info);
+                emit passwordChangeFailed(
+                    QCoreApplication::translate("MegaError", e->getErrorString()));
             }
             break;
         }
@@ -91,37 +75,10 @@ void ChangePasswordController::check2FA(QString pin)
 
 void ChangePasswordController::changePassword(QString password, QString confirmPassword)
 {
-    MessageDialogInfo info;
-
-    if (password.isEmpty() || confirmPassword.isEmpty())
+    if (mMegaApi->checkPassword(password.toUtf8()))
     {
-        info.descriptionText = tr("Please enter your password");
-        MessageDialogOpener::warning(info);
-
-        emit passwordChangeFailed();
-    }
-    else if (password.compare(confirmPassword))
-    {
-        info.descriptionText = tr("The entered passwords don't match");
-        MessageDialogOpener::warning(info);
-
-        emit passwordChangeFailed();
-    }
-    else if (mMegaApi->checkPassword(password.toUtf8())) // new and old pass are the equals.
-    {
-        info.descriptionText = tr("You have entered your current password,"
-                                  " please enter a new password.");
-        MessageDialogOpener::warning(info);
-
-        emit passwordChangeFailed();
-    }
-    else if (mMegaApi->getPasswordStrength(password.toUtf8().constData()) ==
-             MegaApi::PASSWORD_STRENGTH_VERYWEAK)
-    {
-        info.descriptionText = tr("Please, enter a stronger password");
-        MessageDialogOpener::warning(info);
-
-        emit passwordChangeFailed();
+        emit passwordCheckFailed(tr("You have entered your current password,"
+                                    " please enter a new password."));
     }
     else
     {

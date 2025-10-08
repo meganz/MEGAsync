@@ -17,9 +17,10 @@ public:
 
 signals:
     void show2FA();
-    void passwordChangeFailed();
-    void passwordChangeSucceed();
+    void passwordChangeFailed(QString message);
+    void passwordChangeSucceed(QString title, QString description);
     void twoFAVerificationFailed();
+    void passwordCheckFailed(QString error);
 
 private:
     QString mPassword;

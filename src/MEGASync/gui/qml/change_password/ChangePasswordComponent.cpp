@@ -1,6 +1,8 @@
 #include "ChangePasswordComponent.h"
 
 #include "ChangePasswordDialog.h"
+#include "MessageDialogData.h"
+#include "MessageDialogOpener.h"
 #include "PasswordStrengthChecker.h"
 
 static bool qmlRegistrationDone = false;
@@ -23,17 +25,51 @@ ChangePasswordComponent::ChangePasswordComponent(QObject* parent):
     connect(mChangePasswordController.get(),
             &ChangePasswordController::passwordChangeFailed,
             this,
-            &ChangePasswordComponent::passwordChangeFailed);
+            &ChangePasswordComponent::onPasswordChangeFailed);
 
     connect(mChangePasswordController.get(),
             &ChangePasswordController::passwordChangeSucceed,
             this,
-            &ChangePasswordComponent::passwordChangeSucceed);
+            &ChangePasswordComponent::onPasswordChangeSucceed);
 
     connect(mChangePasswordController.get(),
             &ChangePasswordController::twoFAVerificationFailed,
             this,
             &ChangePasswordComponent::twoFAVerificationFailed);
+
+    connect(mChangePasswordController.get(),
+            &ChangePasswordController::passwordCheckFailed,
+            this,
+            &ChangePasswordComponent::onPasswordCheckFailed);
+}
+
+void ChangePasswordComponent::onPasswordCheckFailed(QString errorMessage)
+{
+    MessageDialogInfo info;
+    info.descriptionText = errorMessage;
+
+    MessageDialogOpener::critical(info);
+}
+
+void ChangePasswordComponent::onPasswordChangeFailed(QString errorMessage)
+{
+    emit passwordChangeFailed();
+
+    MessageDialogInfo info;
+    info.descriptionText = errorMessage;
+
+    MessageDialogOpener::critical(info);
+}
+
+void ChangePasswordComponent::onPasswordChangeSucceed(QString title, QString description)
+{
+    emit passwordChangeSucceed();
+
+    MessageDialogInfo info;
+    info.titleText = title;
+    info.descriptionText = description;
+
+    MessageDialogOpener::information(info);
 }
 
 QUrl ChangePasswordComponent::getQmlUrl()

@@ -83,18 +83,15 @@ ChangePasswordDialog {
 
             target: changePasswordComponentAccess
 
-            function onShow2FA()
-            {
+            function onShow2FA() {
                 changePasswordContentItem.state = changePasswordContentItem.two_fa;
             }
 
-            function onPasswordChangeFailed()
-            {
+            function onPasswordChangeFailed() {
                 window.close();
             }
 
-            function onPasswordChangeSucceed()
-            {
+            function onPasswordChangeSucceed() {
                 window.close();
             }
         }

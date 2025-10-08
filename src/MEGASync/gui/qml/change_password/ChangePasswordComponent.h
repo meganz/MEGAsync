@@ -26,6 +26,10 @@ signals:
 
 private:
     std::unique_ptr<ChangePasswordController> mChangePasswordController;
+
+    void onPasswordChangeFailed(QString errorMessage);
+    void onPasswordChangeSucceed(QString title, QString description);
+    void onPasswordCheckFailed(QString errorMessage);
 };
 
 #endif
