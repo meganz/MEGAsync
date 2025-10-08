@@ -425,25 +425,25 @@ background-color: transparent;
 /*
     type = primary
 */
-QPushButton[type="primary"]
+QAbstractButton[type="primary"]
 {
 background-color: #ff04101E; /*colorToken.button-primary*/
 color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
 }
 
-QPushButton:hover[type="primary"]
+QAbstractButton:hover[type="primary"]
 {
 color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
 background-color: #ff39424E; /*colorToken.button-primary-hover*/
 }
 
-QPushButton:pressed[type="primary"]
+QAbstractButton:pressed[type="primary"]
 {
 color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
 background-color: #ff535B65; /*colorToken.button-primary-pressed*/
 }
 
-QPushButton:disabled[type="primary"]
+QAbstractButton:disabled[type="primary"]
 {
 color: #ffC1C2C4; /*colorToken.text-disabled*/
 background-color: #ff797c80; /*colorToken.button-disabled*/
@@ -452,26 +452,26 @@ background-color: #ff797c80; /*colorToken.button-disabled*/
 /*
     type = outline
 */
-QPushButton[type="outline"]
+QAbstractButton[type="outline"]
 {
 background-color: transparent;
 color: #ff04101E; /*colorToken.button-outline*/
 border-color: #ff04101E; /*colorToken.button-outline*/
 }
 
-QPushButton:hover[type="outline"]
+QAbstractButton:hover[type="outline"]
 {
 color: #ff39424E; /*colorToken.button-outline-hover*/
 border-color: #ff39424E; /*colorToken.button-outline-hover*/
 }
 
-QPushButton:pressed[type="outline"]
+QAbstractButton:pressed[type="outline"]
 {
 color: #ff535B65; /*colorToken.button-outline-pressed*/
 border-color: #ff535B65; /*colorToken.button-outline-pressed*/
 }
 
-QPushButton:disabled[type="outline"]
+QAbstractButton:disabled[type="outline"]
 {
 color: #ffC1C2C4; /*colorToken.text-disabled*/
 border-color: #ff494a4d; /*colorToken.border-disabled*/
@@ -480,23 +480,23 @@ border-color: #ff494a4d; /*colorToken.border-disabled*/
 /*
     type = secondary
 */
-QPushButton[type="secondary"]
+QAbstractButton[type="secondary"]
 {
 background-color: #ff04101E; /*colorToken.button-secondary*/
 color: #ffFAFAFB; /*colorToken.text-secondary*/
 }
 
-QPushButton:hover[type="secondary"]
+QAbstractButton:hover[type="secondary"]
 {
 background-color: #ff39424E; /*colorToken.button-secondary-hover*/
 }
 
-QPushButton:pressed[type="secondary"]
+QAbstractButton:pressed[type="secondary"]
 {
 background-color: #ff535B65; /*colorToken.button-secondary-pressed*/
 }
 
-QPushButton:disabled[type="secondary"]
+QAbstractButton:disabled[type="secondary"]
 {
 color: #ffC1C2C4; /*colorToken.text-disabled*/
 background-color: #ff797c80; /*colorToken.button-disabled*/
@@ -505,23 +505,23 @@ background-color: #ff797c80; /*colorToken.button-disabled*/
 /*
     type = ghost
 */
-QPushButton[type="ghost"]
+QAbstractButton[type="ghost"]
 {
 background-color: transparent;
 color: #04101E; /*colorToken.button-outline*/
 }
 
-QPushButton:hover[type="ghost"]
+QAbstractButton:hover[type="ghost"]
 {
 color: #39424E; /*colorToken.button-outline-hover*/
 }
 
-QPushButton:pressed[type="ghost"]
+QAbstractButton:pressed[type="ghost"]
 {
 color: #535B65; /*colorToken.button-outline-pressed*/
 }
 
-QPushButton:disabled[type="ghost"]
+QAbstractButton:disabled[type="ghost"]
 {
 color: #C1C2C4; /*colorToken.text-disabled*/
 }
@@ -529,13 +529,13 @@ color: #C1C2C4; /*colorToken.text-disabled*/
 /*
     type = link
 */
-QPushButton[type="link"]
+QAbstractButton[type="link"]
 {
 background-color: transparent;
 color: #2C5BEB; /*colorToken.link-primary*/
 }
 
-QPushButton:disabled[type="link"]
+QAbstractButton:disabled[type="link"]
 {
 color: #C1C2C4; /*colorToken.text-disabled*/
 }
