@@ -743,6 +743,11 @@ TabSelector.chip[selected = true]
 background-color: #DD14051A;/*colorToken.brand-container-default*/
 }
 
+TabSelector.chip[selected = false][hover = true]
+{
+background-color: #61636633;/*colorToken.button-secondary-hover*/
+}
+
 TabSelector.chip[selected = false] QLabel {
 color:#303233; /*colorToken.text-primary*/
 }

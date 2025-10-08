@@ -10,6 +10,7 @@
 #include <QPainter>
 
 const char* SELECTED = "selected";
+const char* HOVER = "hover";
 const char* TAB_SELECTOR_GROUP = "tabselector_group";
 
 /*
@@ -138,6 +139,11 @@ bool TabSelector::event(QEvent* event)
     if (event->type() == QEvent::MouseButtonRelease)
     {
         setSelected(true);
+    }
+    else if (event->type() == QEvent::Enter || event->type() == QEvent::Leave)
+    {
+        setProperty(HOVER, event->type() == QEvent::Enter ? true : false);
+        setStyleSheet(styleSheet());
     }
 
     return QWidget::event(event);
