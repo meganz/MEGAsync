@@ -4,7 +4,6 @@
 #include "AccountDetailsManager.h"
 #include "BandwidthSettings.h"
 #include "BugReportDialog.h"
-#include "ChangePassword.h"
 #include "ChangePasswordComponent.h"
 #include "CommonMessages.h"
 #include "CreateRemoveSyncsManager.h"

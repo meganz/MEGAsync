@@ -35,8 +35,6 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/StatusInfo.h
     ${CMAKE_CURRENT_LIST_DIR}/PSAwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/ElidedLabel.h
-    ${CMAKE_CURRENT_LIST_DIR}/ChangePassword.h
-    ${CMAKE_CURRENT_LIST_DIR}/Login2FA.h
     ${CMAKE_CURRENT_LIST_DIR}/QRWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/CircularUsageProgressBar.h
     ${CMAKE_CURRENT_LIST_DIR}/HighDpiResize.h
@@ -181,10 +179,8 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/MegaMenuItem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/MegaMenuItemAction.cpp
     ${CMAKE_CURRENT_LIST_DIR}/StatusInfo.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/ChangePassword.cpp
     ${CMAKE_CURRENT_LIST_DIR}/PSAwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ElidedLabel.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/Login2FA.cpp
     ${CMAKE_CURRENT_LIST_DIR}/QRWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/CircularUsageProgressBar.cpp
     ${CMAKE_CURRENT_LIST_DIR}/BugReportDialog.cpp
@@ -287,28 +283,6 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordController.cpp
 )
 
-# UI files additions
-target_sources_conditional(${ExecutableTarget}
-    FLAG WIN32
-    QT_AWARE
-    PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/win/Login2FA.ui
-)
-
-target_sources_conditional(${ExecutableTarget}
-   FLAG APPLE
-   QT_AWARE
-   PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/macx/Login2FA.ui
-)
-
-target_sources_conditional(${ExecutableTarget}
-    FLAG UNIX AND NOT APPLE
-    QT_AWARE
-    PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/linux/Login2FA.ui
-)
-
 target_sources_conditional(${ExecutableTarget}
    FLAG UNIX
    QT_AWARE
@@ -318,7 +292,6 @@ target_sources_conditional(${ExecutableTarget}
    ${CMAKE_CURRENT_LIST_DIR}/PermissionsDialog.h
    ${CMAKE_CURRENT_LIST_DIR}/PermissionsWidget.h
 )
-
 
 # Not using expression generator due to autouic not able to resolve them causing errors
 if (WIN32)
@@ -442,7 +415,6 @@ set(QML_IMPORT_PATH ${QML_IMPORT_PATH} CACHE STRING "Qt Creator extra qml import
 set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/AccountDetailsDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/BugReportDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ui/ChangePassword.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveSyncConfirmationDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/BandwidthSettings.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/DownloadFromMegaDialog.ui

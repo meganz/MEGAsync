@@ -6,6 +6,8 @@ import components.views 1.0
 
 import ChangePasswordComponents 1.0
 
+import components.textFields 1.0
+
 ChangePasswordDialog {
     id: window
 
@@ -13,11 +15,14 @@ ChangePasswordDialog {
     visible: true
     modality: Qt.WindowModal
     width: 496
-    height: 320
+    height: passwordChangePageHeigh
     maximumHeight: height
     maximumWidth: width
     minimumHeight: height
     minimumWidth: width
+
+    readonly property int twoFAPageHeigh: 500
+    readonly property int passwordChangePageHeigh: 320
 
     Rectangle {
         id: changePasswordContentItem
@@ -41,6 +46,9 @@ ChangePasswordDialog {
                 StateChangeScript {
                     script: stackView.replace(twoFAPage);
                 }
+                PropertyChanges { target: window; height: twoFAPageHeigh; }
+                PropertyChanges { target: window; maximumHeight: twoFAPageHeigh; }
+                PropertyChanges { target: window; minimumHeight: twoFAPageHeigh; }
             }
         ]
 
@@ -63,17 +71,30 @@ ChangePasswordDialog {
             Component {
                 id: twoFAPage
 
-                Rectangle{
-
-                }
-
-                /*
                 TwoFAPage {
                     id: twoFAItem
-
-                    footerButtons.leftPrimary.visible: false
                 }
-                */
+            }
+        }
+
+        Connections{
+            id: changePassConn
+
+            target: changePasswordComponentAccess
+
+            function onShow2FA()
+            {
+                changePasswordContentItem.state = changePasswordContentItem.two_fa;
+            }
+
+            function onPasswordChangeFailed()
+            {
+                window.close();
+            }
+
+            function onPasswordChangeSucceed()
+            {
+                window.close();
             }
         }
     }

@@ -60,7 +60,7 @@ FooterButtonsPage {
         }
 
         rightPrimary {
-            text: Strings.done
+            text: ChangePasswordStrings.title
             icons: Icon {}
 
             enabled: passwordItem.validPassword && confirmPasswordItem.text !== ""
@@ -70,7 +70,7 @@ FooterButtonsPage {
                     return;
                 }
 
-                // request password change.
+                changePasswordComponentAccess.changePassword(passwordItem.text, confirmPasswordItem.text);
             }
         }
     }
@@ -79,7 +79,6 @@ FooterButtonsPage {
         id: mainFormLayout
 
         anchors.fill: parent
-
         spacing: 24
 
         PasswordTextField {
@@ -89,7 +88,7 @@ FooterButtonsPage {
                                             && passChecker.validPassword
 
             width: parent.width
-            title: OnboardingStrings.password
+            title: ChangePasswordStrings.newPassword
             cleanWhenError: false
 
             textField.onActiveFocusChanged: {
@@ -131,7 +130,7 @@ FooterButtonsPage {
             id: confirmPasswordItem
 
             width: parent.width
-            title: OnboardingStrings.confirmPassword
+            title: ChangePasswordStrings.confirmNewPassword
             hint.icon: Images.key
             cleanWhenError: false
         }

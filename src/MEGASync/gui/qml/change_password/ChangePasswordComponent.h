@@ -16,9 +16,13 @@ public:
     static void registerQmlModules();
 
     Q_INVOKABLE void changePassword(QString password, QString confirmationPassword);
+    Q_INVOKABLE void check2FA(QString pin);
 
 signals:
-    void passwordChanged();
+    void show2FA();
+    void passwordChangeFailed();
+    void passwordChangeSucceed();
+    void twoFAVerificationFailed();
 
 private:
     std::unique_ptr<ChangePasswordController> mChangePasswordController;

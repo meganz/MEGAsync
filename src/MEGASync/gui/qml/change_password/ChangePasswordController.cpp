@@ -1,12 +1,8 @@
 #include "ChangePasswordController.h"
 
-#include "DialogOpener.h"
-#include "Login2FA.h"
 #include "MegaApplication.h"
 #include "MessageDialogOpener.h"
 #include "RequestListenerManager.h"
-
-#include <sys/socket.h>
 
 using namespace mega;
 
@@ -25,7 +21,7 @@ void ChangePasswordController::onRequestFinish(mega::MegaRequest* req, mega::Meg
             {
                 if (req->getFlag()) // 2FA enabled
                 {
-                    show2FA(false);
+                    emit show2FA();
                 }
                 else
                 {
@@ -38,6 +34,8 @@ void ChangePasswordController::onRequestFinish(mega::MegaRequest* req, mega::Meg
             }
             else
             {
+                emit passwordChangeFailed();
+
                 MessageDialogInfo info;
                 info.descriptionText =
                     QCoreApplication::translate("MegaError", e->getErrorString());
@@ -49,6 +47,8 @@ void ChangePasswordController::onRequestFinish(mega::MegaRequest* req, mega::Meg
         {
             if (e->getErrorCode() == MegaError::API_OK)
             {
+                emit passwordChangeSucceed();
+
                 MessageDialogInfo msgInfo;
                 msgInfo.titleText = tr("Password changed");
                 msgInfo.descriptionText = tr("Your password has been changed.");
@@ -57,7 +57,7 @@ void ChangePasswordController::onRequestFinish(mega::MegaRequest* req, mega::Meg
             else if (e->getErrorCode() == MegaError::API_EFAILED ||
                      e->getErrorCode() == MegaError::API_EEXPIRED)
             {
-                show2FA(true);
+                emit twoFAVerificationFailed();
             }
             else if (e->getErrorCode() == MegaError::API_ETOOMANY)
             {
@@ -67,6 +67,8 @@ void ChangePasswordController::onRequestFinish(mega::MegaRequest* req, mega::Meg
             }
             else
             {
+                emit passwordChangeFailed();
+
                 MessageDialogInfo info;
                 info.descriptionText =
                     QCoreApplication::translate("MegaError", e->getErrorString());
@@ -78,31 +80,16 @@ void ChangePasswordController::onRequestFinish(mega::MegaRequest* req, mega::Meg
     }
 }
 
-void ChangePasswordController::show2FA(bool invalidCode)
+void ChangePasswordController::check2FA(QString pin)
 {
-    QPointer<Login2FA> verification = new Login2FA();
-    verification->invalidCode(invalidCode);
-
-    DialogOpener::showDialog<Login2FA>(
-        verification,
-        [verification, this]()
-        {
-            if (verification->result() ==
-                QDialog::Accepted) // need to check if verificaiton is valid??
-            {
-                QString pin = verification->pinCode();
-
-                auto listener =
-                    RequestListenerManager::instance().registerAndGetFinishListener(this, true);
-                mMegaApi->multiFactorAuthChangePassword(nullptr,
-                                                        mPassword.toUtf8().constData(),
-                                                        pin.toUtf8().constData(),
-                                                        listener.get());
-            }
-        });
+    auto listener = RequestListenerManager::instance().registerAndGetFinishListener(this, true);
+    mMegaApi->multiFactorAuthChangePassword(nullptr,
+                                            mPassword.toUtf8().constData(),
+                                            pin.toUtf8().constData(),
+                                            listener.get());
 }
 
-void ChangePasswordController::requestChangePassword(QString password, QString confirmPassword)
+void ChangePasswordController::changePassword(QString password, QString confirmPassword)
 {
     MessageDialogInfo info;
 
@@ -110,23 +97,31 @@ void ChangePasswordController::requestChangePassword(QString password, QString c
     {
         info.descriptionText = tr("Please enter your password");
         MessageDialogOpener::warning(info);
+
+        emit passwordChangeFailed();
     }
     else if (password.compare(confirmPassword))
     {
         info.descriptionText = tr("The entered passwords don't match");
         MessageDialogOpener::warning(info);
+
+        emit passwordChangeFailed();
     }
     else if (mMegaApi->checkPassword(password.toUtf8())) // new and old pass are the equals.
     {
         info.descriptionText = tr("You have entered your current password,"
                                   " please enter a new password.");
         MessageDialogOpener::warning(info);
+
+        emit passwordChangeFailed();
     }
     else if (mMegaApi->getPasswordStrength(password.toUtf8().constData()) ==
              MegaApi::PASSWORD_STRENGTH_VERYWEAK)
     {
         info.descriptionText = tr("Please, enter a stronger password");
         MessageDialogOpener::warning(info);
+
+        emit passwordChangeFailed();
     }
     else
     {
