@@ -75,6 +75,12 @@ QScrollBar
 background: transparent;
 }
 
+QScrollBar::add-page:vertical,
+QScrollBar::sub-page:vertical
+{
+background-color: transparent;
+}
+
 QScrollBar::handle:vertical
 {
 background: #ff04101E; /*colorToken.button-primary*/
@@ -128,16 +134,6 @@ image: url(:/spinbox_down_arrow);
 /*
     QComboBox
 */
-QComboBox::item:selected[type="mega"]
-{
-background-color: #fff3f4f4; /*colorToken.surface-2*/
-}
-
-QComboBox::item[type="mega"]
-{
-background-color: #fffafafa; /*colorToken.surface-1*/;
-}
-
 QComboBox[type="mega"]
 {
 background-color: #ffFFFFFF; /*colorToken.page-background*/
@@ -171,12 +167,29 @@ QComboBox::drop-down:pressed[type="mega"]
 image: url(:/chevron-down_press);
 }
 
+QComboBox::item[type="mega"]
+{
+background-color: #fffafafa; /*colorToken.page-background*/;
+}
+
+/* For macOS hover */
+QComboBox::item:selected[type="mega"]
+{
+background-color: #fff3f4f4; /*colorToken.surface-1*/
+color: #ff333333; /*colorToken.text-primary*/
+outline:none;
+}
+
+/* For Windows hover */
 QComboBox[type="mega"] QAbstractItemView
 {
 border: 2px solid #ff04101E; /*colorToken.button-outline*/
-background-color:  #fffafafa; /*colorToken.surface-1*/
+background-color:  #FFFFFF; /*colorToken.page-background*/
+color: #ff333333; /*colorToken.text-primary*/
+selection-background-color: #fff3f4f4; /*colorToken.surface-1*/
+selection-color: #ff333333; /*colorToken.text-primary*/
+outline: none;
 }
-
 /*
     QRadioButton
 */
