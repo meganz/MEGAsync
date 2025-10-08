@@ -37,6 +37,9 @@ FooterButtonsPage {
         }
     }
 
+    readonly property int mainColumnDesignSpacing : 24;
+    readonly property int titleDescriptionDesignSpacing : 12;
+
     function check2FA() {
         changePasswordComponentAccess.check2FA(twoFAItem.key);
         footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
@@ -52,7 +55,7 @@ FooterButtonsPage {
             top: root.top
             topMargin: 0
         }
-        spacing: 24
+        spacing: mainColumnDesignSpacing
 
         Image {
             id: lock
@@ -65,7 +68,7 @@ FooterButtonsPage {
         HeaderTexts {
             id: headerItem
 
-            spacing: 12
+            spacing: titleDescriptionDesignSpacing
             title: OnboardingStrings.twoFATitle
             titleWrapMode: Text.Wrap
             description: OnboardingStrings.twoFASubtitle

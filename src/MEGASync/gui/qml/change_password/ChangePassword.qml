@@ -11,18 +11,19 @@ import components.textFields 1.0
 ChangePasswordDialog {
     id: window
 
+    readonly property int twoFAPageHeigh: 500
+    readonly property int passwordChangePageHeigh: 320
+    readonly property int passwordChangePageWidth: 496
+
     title: ChangePasswordStrings.title
     visible: true
     modality: Qt.WindowModal
-    width: 496
+    width: passwordChangePageWidth
     height: passwordChangePageHeigh
     maximumHeight: height
     maximumWidth: width
     minimumHeight: height
     minimumWidth: width
-
-    readonly property int twoFAPageHeigh: 500
-    readonly property int passwordChangePageHeigh: 320
 
     Rectangle {
         id: changePasswordContentItem

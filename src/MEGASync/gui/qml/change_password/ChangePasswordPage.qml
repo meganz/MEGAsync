@@ -14,10 +14,13 @@ import onboard 1.0
 FooterButtonsPage {
     id: root
 
+    readonly property int minimumAllowedPasswordLength: 8
+    readonly property int mainColumnDesignSpacing: 24
+
     function error() {
         var error = false;
 
-        var valid = passwordItem.text.length >= 8;
+        var valid = passwordItem.text.length >= minimumAllowedPasswordLength;
         if (!valid) {
             error = true;
             passwordItem.error = true;
@@ -79,12 +82,12 @@ FooterButtonsPage {
         id: mainFormLayout
 
         anchors.fill: parent
-        spacing: 24
+        spacing: mainColumnDesignSpacing
 
         PasswordTextField {
             id: passwordItem
 
-            property bool validPassword: passwordItem.textField.text.length >= 8
+            property bool validPassword: passwordItem.textField.text.length >= minimumAllowedPasswordLength
                                             && passChecker.validPassword
 
             width: parent.width
@@ -97,7 +100,7 @@ FooterButtonsPage {
                 }
                 else {
                     var hintVisible = true;
-                    if (textField.text.length < 8) {
+                    if (textField.text.length < minimumAllowedPasswordLength) {
                         hint.text = OnboardingStrings.minimum8Chars;
                         hint.textColor = ColorTheme.textError;
                     }
