@@ -32,14 +32,16 @@
    <string>Send crash report</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#CrashReportDialog
+   <string notr="true">#CrashReportDialog 
 {
 background-color: #FFFFFF;  /*colorToken.page-background*/
 }
+
 #wNotificationBanner
 {
 border-radius: 8;
-}</string>
+}
+</string>
   </property>
   <property name="TOKENIZED" stdset="0">
    <bool>true</bool>
@@ -63,7 +65,7 @@ border-radius: 8;
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <property name="spacing">
-      <number>0</number>
+      <number>5</number>
      </property>
      <item>
       <widget class="QLabel" name="lTitleInfoBug">
@@ -102,7 +104,7 @@ border-radius: 8;
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <property name="spacing">
-      <number>0</number>
+      <number>5</number>
      </property>
      <item>
       <widget class="QLabel" name="lDescribeBug">
