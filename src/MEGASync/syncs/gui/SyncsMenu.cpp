@@ -12,11 +12,16 @@
 #include <QCoreApplication>
 #include <QUrl>
 
-const QLatin1String DEVICE_ICON("://monitor.svg");
-const QLatin1String SYNC_ICON("://sync-01.svg");
-const QLatin1String SYNC_ADD_ICON("://sync-plus.svg");
-const QLatin1String BACKUPC_ICON("://database.svg");
-const QLatin1String BACKUP_ADD_ICON("://database-plus.svg");
+const QLatin1String DEVICE_ICON("monitor");
+const QLatin1String SYNC_ICON("sync-01");
+const QLatin1String SYNC_ADD_ICON("sync-plus");
+const QLatin1String BACKUP_ICON("database");
+const QLatin1String BACKUP_ADD_ICON("database-plus");
+const QLatin1String FOLDER_ICON("folder");
+const QString ADD_BACKUP = QCoreApplication::translate("BackupSyncsMenu", "Add Backup");
+const QString ADD_SYNC = QCoreApplication::translate("TwoWaySyncsMenu", "Add Sync");
+const QString BACKUPS = QCoreApplication::translate("BackupSyncsMenu", "Backups");
+const QString SYNCS = QCoreApplication::translate("TwoWaySyncsMenu", "Syncs");
 
 SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, int itemIndent, QWidget* parent):
     QObject(parent),
@@ -25,17 +30,25 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, int itemIndent, QWidget* par
     mItemIndent(itemIndent)
 {
     mMenu->setProperty("class", QLatin1String("MegaMenu"));
+    mMenu->setProperty("icon-token", QLatin1String("icon-primary"));
     mAddAction = new MegaMenuItemAction(
         getAddActionText(),
-        QLatin1String(type == mega::MegaSync::SyncType::TYPE_BACKUP ? BACKUP_ADD_ICON :
-                                                                      SYNC_ADD_ICON),
+        Utilities::getPixmapName(type == mega::MegaSync::SyncType::TYPE_BACKUP ? BACKUP_ADD_ICON :
+                                                                                 SYNC_ADD_ICON,
+                                 Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                                     Utilities::AttributeType::OUTLINE,
+                                 false),
         0,
         mMenu);
     connect(mAddAction, &MegaMenuItemAction::triggered, this, &SyncsMenu::onAddSync);
 
     mMenuAction = new MegaMenuItemAction(
         getMenuActionText(),
-        QLatin1String(type == mega::MegaSync::SyncType::TYPE_BACKUP ? BACKUPC_ICON : SYNC_ICON),
+        Utilities::getPixmapName(type == mega::MegaSync::SyncType::TYPE_BACKUP ? BACKUP_ICON :
+                                                                                 SYNC_ICON,
+                                 Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                                     Utilities::AttributeType::OUTLINE,
+                                 false),
         0);
     mMenuAction->setMenu(mMenu);
 
@@ -76,6 +89,7 @@ QPointer<MegaMenuItemAction> SyncsMenu::getAction()
 {
     refresh();
     auto actions = mMenu->actions();
+
     return actions.isEmpty() ? mAddAction : mMenuAction;
 }
 
@@ -138,7 +152,11 @@ void SyncsMenu::refresh()
             activeFolders++;
             auto* action = new MegaMenuItemAction(
                 SyncController::instance().getSyncNameFromPath(syncSetting->getLocalFolder(true)),
-                QLatin1String("://folder.svg"),
+                Utilities::getPixmapName(FOLDER_ICON,
+                                         Utilities::AttributeType::SMALL |
+                                             Utilities::AttributeType::THIN |
+                                             Utilities::AttributeType::OUTLINE,
+                                         false),
                 mItemIndent,
                 mMenu);
 
@@ -259,7 +277,15 @@ void BackupSyncsMenu::refresh()
         // Show device name
         mDevNameAction->deleteLater();
         // Display device name before folders
-        mDevNameAction = new MegaMenuItemAction(QString(), DEVICE_ICON, 0, menu);
+        mDevNameAction =
+            new MegaMenuItemAction(QString(),
+                                   Utilities::getPixmapName(DEVICE_ICON,
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false),
+                                   0,
+                                   menu);
         menu->insertAction(firstBackup, mDevNameAction);
         onDeviceNameSet(mDeviceNameRequest->getDeviceName());
     }

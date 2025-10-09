@@ -1305,5 +1305,16 @@
         <file alias="more-horizontal">images/themed/tokenizable/more-horizontal.svg</file>
         <file alias="mega_medium_thin_outline">images/mega_medium_thin_outline.svg</file>
         <file alias="images/themed/tokenizable/mega_medium_thin_solid.svg">images/themed/tokenizable/mega_medium_thin_solid.svg</file>
+        <file alias="sync-plus_small_thin_outline">images/themed/tokenizable/sync-plus_small_thin_outline.svg</file>
+        <file alias="database-plus_small_thin_outline">images/themed/tokenizable/database-plus_small_thin_outline.svg</file>
+        <file alias="database_small_thin_outline">images/themed/tokenizable/database_small_thin_outline.svg</file>
+        <file alias="globe-01_small_thin_outline">images/themed/tokenizable/globe-01_small_thin_outline.svg</file>
+        <file alias="folder-open_small_thin_outline">images/themed/tokenizable/folder-open_small_thin_outline.svg</file>
+        <file alias="link-01-primary_small_thin_outline">images/themed/tokenizable/link-01-primary_small_thin_outline.svg</file>
+        <file alias="arrow-up-circle-primary_small_thin_outline">images/themed/tokenizable/arrow-up-circle-primary_small_thin_outline.svg</file>
+        <file alias="arrow-down-circle-primary_small_thin_outline">images/themed/tokenizable/arrow-down-circle-primary_small_thin_outline.svg</file>
+        <file alias="stream_small_thin_outline">images/themed/tokenizable/stream_small_thin_outline.svg</file>
+        <file alias="log-out_small_thin_outline">images/themed/tokenizable/log-out_small_thin_outline.svg</file>
+        <file alias="gear-8_small_thin_outline">images/themed/tokenizable/gear-8_small_thin_outline.svg</file>
     </qresource>
 </RCC>

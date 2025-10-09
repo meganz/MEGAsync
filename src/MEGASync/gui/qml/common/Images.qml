@@ -10,13 +10,14 @@ QtObject {
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     readonly property url imagesPath: Qt.resolvedUrl("../../images/")
+    readonly property url imagesTokenizablePath: Qt.resolvedUrl(imagesPath + "themed/tokenizable/")
     readonly property url imagesQmlPath: Qt.resolvedUrl(imagesPath + "qml/")
     readonly property url imagesOnboardingPath: Qt.resolvedUrl(imagesQmlPath + "onboarding/")
     readonly property url imagesSyncsPath: Qt.resolvedUrl(imagesQmlPath + "syncs/")
     readonly property url imagesGuestPath: Qt.resolvedUrl(imagesQmlPath + "guest/")
-    readonly property url imagesExclusionsPath: Qt.resolvedUrl(imagesQmlPath + "/sync_exclusions/")
-    readonly property url imagesDeviceCentrePath: Qt.resolvedUrl(imagesQmlPath + "/device_center/")
-    readonly property url imagesSurveysPath: Qt.resolvedUrl(imagesQmlPath + "/surveys/")
+    readonly property url imagesExclusionsPath: Qt.resolvedUrl(imagesQmlPath + "sync_exclusions/")
+    readonly property url imagesDeviceCentrePath: Qt.resolvedUrl(imagesQmlPath + "device_center/")
+    readonly property url imagesSurveysPath: Qt.resolvedUrl(imagesQmlPath + "surveys/")
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Image paths
@@ -55,7 +56,7 @@ QtObject {
     readonly property url deviceCentreUpdate: imagesQmlPath + "device-centre-update.png"
     readonly property url megaDevices: imagesQmlPath + "mega_3d_devices.png"
     readonly property url threeDots: imagesQmlPath + "three_dots.svg"
-    readonly property url monitor: imagesQmlPath + "monitor.svg"
+    readonly property url monitor: imagesTokenizablePath + "monitor_small_thin_outline.svg"
     readonly property url folderOpen: imagesQmlPath + "folder-open.svg"
     readonly property url pauseCircle: imagesQmlPath + "pause-circle.svg"
     readonly property url searchFilled: imagesQmlPath + "search.svg"
