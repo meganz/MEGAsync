@@ -26,7 +26,12 @@
    <string>Storage full</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#labelTitle
+   <string notr="true">#OverquotaFullDialog
+{
+background-color: #FFFFFF;/*colorToken.page-background*/
+}
+
+#labelTitle
 {
 font-size: 20px;
 line-height: 30px;
