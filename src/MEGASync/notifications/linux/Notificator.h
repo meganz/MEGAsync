@@ -7,8 +7,8 @@
 #include "NotificatorBase.h"
 
 #ifdef USE_DBUS
+#include <QDBusInterface>
 #include <QDBusMessage>
-class QDBusInterface;
 #endif
 
 class DesktopAppNotification : public DesktopAppNotificationBase
