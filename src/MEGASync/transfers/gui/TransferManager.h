@@ -61,7 +61,6 @@ signals:
     void aboutToClose();
 
 protected:
-    bool eventFilter(QObject *obj, QEvent *event) override;
     void closeEvent(QCloseEvent* event) override;
     bool event(QEvent* event) override;
     void dragEnterEvent(QDragEnterEvent* event) override;
@@ -85,8 +84,6 @@ private:
 
     TransfersModel* mModel;
     TransfersCount mTransfersCount;
-
-    bool mSearchFieldReturnPressed;
 
     QSet<Utilities::FileType> mFileTypesFilter;
     QTimer* mSpeedRefreshTimer;
@@ -127,14 +124,12 @@ private slots:
     void on_tAllTransfers_clicked();
     void on_tFailed_clicked();
     void on_tActionButton_clicked();
-    void on_bSearch_clicked();
-    void on_leSearchField_editingFinished();
-    void on_tSearchIcon_clicked();
-    void on_bSearchString_clicked();
-    void on_tSearchCancel_clicked();
-    void on_tClearSearchResult_clicked();
     void on_bPause_toggled();
     void pauseResumeTransfers(bool isPaused);
+
+    void on_tClearSearchResult_clicked();
+    void on_bSearchString_clicked();
+    void onSearch(const QString& text);
 
     void onStalledIssuesStateChanged();
     void checkContentInfo();
@@ -142,7 +137,6 @@ private slots:
     void on_tCogWheel_clicked();
     void on_bDownload_clicked();
     void on_bUpload_clicked();
-    void on_leSearchField_returnPressed();
 
     void on_bArchives_clicked();
     void on_bDocuments_clicked();

@@ -257,14 +257,6 @@ icon: url(:/play);
      height: 32px;
 }
 
-#leSearchField
-{
-    color: #FF616366; /*colorToken.text-secondary*/
-    font-size: 12px;
-    font-weight: 400;
-    background-color: transparent;
-}
-
 #tSearchIcon
 {
     border: none;
@@ -421,29 +413,29 @@ QToolButton
           <number>0</number>
          </property>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
-           <property name="spacing">
-            <number>0</number>
+          <widget class="QWidget" name="TopHeader" native="true">
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
            </property>
-           <property name="leftMargin">
-            <number>20</number>
-           </property>
-           <property name="rightMargin">
-            <number>16</number>
-           </property>
-           <item>
-            <widget class="QStackedWidget" name="wTitleAndSearch">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="currentIndex">
-              <number>0</number>
-             </property>
-             <widget class="QWidget" name="pTransfers">
-              <layout class="QHBoxLayout" name="pTransfersLayout">
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <property name="spacing">
+             <number>8</number>
+            </property>
+            <property name="leftMargin">
+             <number>20</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>16</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QWidget" name="pTransfers" native="true">
+              <layout class="QHBoxLayout" name="horizontalLayout_4">
                <property name="spacing">
                 <number>4</number>
                </property>
@@ -479,7 +471,7 @@ QToolButton
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
-                   <width>40</width>
+                   <width>88</width>
                    <height>20</height>
                   </size>
                  </property>
@@ -522,97 +514,24 @@ QToolButton
                  </property>
                 </widget>
                </item>
-               <item>
-                <widget class="QPushButton" name="bSearch">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>PointingHandCursor</cursorShape>
-                 </property>
-                 <property name="toolTip">
-                  <string>Search</string>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>16</width>
-                   <height>16</height>
-                  </size>
-                 </property>
-                 <property name="flat">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
               </layout>
              </widget>
-             <widget class="QWidget" name="pSearch">
-              <layout class="QHBoxLayout" name="pSearchLayout" stretch="0,0,0">
-               <property name="spacing">
-                <number>0</number>
-               </property>
-               <property name="leftMargin">
-                <number>10</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>10</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QToolButton" name="tSearchIcon">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="leSearchField">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="text">
-                  <string notr="true"/>
-                 </property>
-                 <property name="frame">
-                  <bool>false</bool>
-                 </property>
-                 <property name="placeholderText">
-                  <string>Search</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QToolButton" name="tSearchCancel">
-                 <property name="cursor">
-                  <cursorShape>PointingHandCursor</cursorShape>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+            </item>
+            <item>
+             <widget class="SearchLineEdit" name="leSearch">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::ClickFocus</enum>
+              </property>
              </widget>
-            </widget>
-           </item>
-          </layout>
+            </item>
+           </layout>
+          </widget>
          </item>
          <item>
           <widget class="QGroupBox" name="wTransferring">
@@ -652,6 +571,9 @@ QToolButton
             </property>
             <item>
              <widget class="QFrame" name="fAllTransfers">
+              <property name="focusPolicy">
+               <enum>Qt::ClickFocus</enum>
+              </property>
               <property name="frameShape">
                <enum>QFrame::NoFrame</enum>
               </property>
@@ -744,6 +666,9 @@ QToolButton
             </item>
             <item>
              <widget class="QFrame" name="fDownloads">
+              <property name="focusPolicy">
+               <enum>Qt::ClickFocus</enum>
+              </property>
               <layout class="QHBoxLayout" name="horizontalLayout_11">
                <property name="spacing">
                 <number>5</number>
@@ -815,6 +740,9 @@ QToolButton
             </item>
             <item>
              <widget class="QFrame" name="fUploads">
+              <property name="focusPolicy">
+               <enum>Qt::ClickFocus</enum>
+              </property>
               <layout class="QHBoxLayout" name="horizontalLayout_12">
                <property name="spacing">
                 <number>5</number>
@@ -886,6 +814,9 @@ QToolButton
             </item>
             <item>
              <widget class="QFrame" name="fCompleted">
+              <property name="focusPolicy">
+               <enum>Qt::ClickFocus</enum>
+              </property>
               <layout class="QHBoxLayout" name="horizontalLayout_13">
                <property name="spacing">
                 <number>5</number>
@@ -960,6 +891,9 @@ QToolButton
             </item>
             <item>
              <widget class="QFrame" name="fFailed">
+              <property name="focusPolicy">
+               <enum>Qt::ClickFocus</enum>
+              </property>
               <layout class="QHBoxLayout" name="horizontalLayout_failed">
                <property name="spacing">
                 <number>5</number>
@@ -2516,10 +2450,15 @@ QToolButton
    <header location="global">StatusInfo.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>SearchLineEdit</class>
+   <extends>QFrame</extends>
+   <header>SearchLineEdit.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>bPause</tabstop>
-  <tabstop>bSearch</tabstop>
   <tabstop>tAllTransfers</tabstop>
   <tabstop>tDownloads</tabstop>
   <tabstop>tUploads</tabstop>
@@ -2537,9 +2476,6 @@ QToolButton
   <tabstop>tNoResults</tabstop>
   <tabstop>tNoFinished</tabstop>
   <tabstop>bSearchString</tabstop>
-  <tabstop>tSearchIcon</tabstop>
-  <tabstop>leSearchField</tabstop>
-  <tabstop>tSearchCancel</tabstop>
  </tabstops>
  <resources>
   <include location="../../../gui/Resources_common.qrc"/>
