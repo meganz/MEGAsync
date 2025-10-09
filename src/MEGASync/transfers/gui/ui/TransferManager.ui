@@ -340,7 +340,7 @@ QToolButton
 
 #wNoDownloads QLabel, #wNoUploads QLabel,  #wNoTransfers QLabel, #wNoFinished QLabel, #wNoResults QLabel
 {
-	line-height: 24px;  
+        line-height: 24px;
 }
 </string>
   </property>
@@ -1109,12 +1109,25 @@ QToolButton
                 </widget>
                </item>
                <item>
-                <widget class="QToolButton" name="tClearSearchResult">
+                <widget class="TokenizableToolButton" name="tClearSearchResult">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16</width>
+                   <height>16</height>
+                  </size>
+                 </property>
                  <property name="cursor">
                   <cursorShape>PointingHandCursor</cursorShape>
                  </property>
                  <property name="text">
                   <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../../../gui/Resources_common.qrc">
+                   <normaloff>:/x_solid_small</normaloff>:/x_solid_small</iconset>
+                 </property>
+                 <property name="type" stdset="0">
+                  <string notr="true">ghost</string>
                  </property>
                 </widget>
                </item>
@@ -1400,7 +1413,7 @@ QToolButton
          </layout>
         </widget>
         <widget class="QWidget" name="wScanning">
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -2531,22 +2544,5 @@ QToolButton
  <resources>
   <include location="../../../gui/Resources_common.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>bSearch</sender>
-   <signal>clicked()</signal>
-   <receiver>leSearchField</receiver>
-   <slot>setFocus()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>222</x>
-     <y>28</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>55</x>
-     <y>26</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
