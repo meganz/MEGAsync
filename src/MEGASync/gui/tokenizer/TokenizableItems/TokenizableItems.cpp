@@ -9,7 +9,7 @@
 
 TokenizableItem::TokenizableItem():
     mInit(false),
-    mThemeType(static_cast<int>(Preferences::instance()->getThemeType()))
+    mThemeType(static_cast<int>(ThemeManager::instance()->currentColorScheme()))
 {}
 
 TokenizableItem::~TokenizableItem() {}
