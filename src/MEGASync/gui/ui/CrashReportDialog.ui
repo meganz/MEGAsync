@@ -32,7 +32,16 @@
    <string>Send crash report</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">#CrashReportDialog 
+{
+background-color: #FFFFFF;  /*colorToken.page-background*/
+}
+
+#wNotificationBanner
+{
+border-radius: 8;
+}
+</string>
   </property>
   <property name="TOKENIZED" stdset="0">
    <bool>true</bool>
@@ -56,7 +65,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <property name="spacing">
-      <number>0</number>
+      <number>5</number>
      </property>
      <item>
       <widget class="QLabel" name="lTitleInfoBug">
@@ -95,7 +104,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <property name="spacing">
-      <number>0</number>
+      <number>5</number>
      </property>
      <item>
       <widget class="QLabel" name="lDescribeBug">
@@ -180,9 +189,6 @@
          <height>56</height>
         </size>
        </property>
-       <property name="styleSheet">
-        <string notr="true">border-radius: 8;</string>
-       </property>
        <property name="type" stdset="0">
         <string notr="true">notification</string>
        </property>
@@ -233,8 +239,8 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>219</width>
-          <height>20</height>
+          <width>10</width>
+          <height>10</height>
          </size>
         </property>
        </spacer>
@@ -242,7 +248,7 @@
       <item>
        <widget class="QPushButton" name="bSubmit">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -279,7 +285,7 @@
       <item>
        <widget class="QPushButton" name="bCancel">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
