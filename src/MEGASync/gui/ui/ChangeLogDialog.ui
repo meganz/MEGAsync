@@ -46,6 +46,7 @@ border-bottom: 1px solid #FFFFFF; /*colorToken.border-strong*/
 #bPolicy, #bTerms, #bAck
 {
   text-decoration: underline;
+  color: #2C5BEB; /*colorToken.link-primary*/
 }
 
 </string>
@@ -610,7 +611,7 @@ border-bottom: 1px solid #FFFFFF; /*colorToken.border-strong*/
   <customwidget>
    <class>IconLabel</class>
    <extends>QToolButton</extends>
-   <header>TokenizableItems/IconLabel.h</header>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
   </customwidget>
   <customwidget>
    <class>ClickableLabel</class>
