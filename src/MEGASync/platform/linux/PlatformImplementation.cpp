@@ -14,7 +14,10 @@
 #include <sys/statvfs.h>
 
 #ifndef QT_NO_DBUS
+#include <QDBusConnection>
 #include <QDBusConnectionInterface>
+#include <QDBusInterface>
+#include <QDBusVariant>
 #endif
 
 #include <cstdlib>
@@ -40,6 +43,7 @@ PlatformImplementation::~PlatformImplementation()
 void PlatformImplementation::initialize(int /*argc*/, char** /*argv*/)
 {
     mShellNotifier = std::make_shared<SignalShellNotifier>();
+
     startThemeMonitor();
 }
 
@@ -924,9 +928,10 @@ void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, i
     logInfoDialogCoordinates("Final", screenGeometry, otherInfo);
 }
 
-Preferences::ThemeAppeareance PlatformImplementation::getCurrentThemeAppearance() const
+Preferences::SystemColorScheme PlatformImplementation::getCurrentThemeAppearance() const
 {
-    return effectiveTheme();
+    const auto theme = effectiveTheme();
+    return {theme, theme};
 }
 
 void PlatformImplementation::startThemeMonitor()
@@ -935,17 +940,21 @@ void PlatformImplementation::startThemeMonitor()
     // Setup portal monitoring
     setupSettingsPortalMonitor();
 #endif
-    // Setup gsettings monitoring
-    setupGSettingsThemeCli();
+    if (!mIsSettingsPortalActive)
+    {
+        // Setup gsettings monitoring
+        setupGSettingsThemeCli();
+    }
 }
 
 void PlatformImplementation::stopThemeMonitor()
 {
-#ifndef QT_NO_DBUS
-    mSettingsPortal->deleteLater();
-#endif
     mIsSettingsPortalActive = false;
     mThemeMonitor.close();
+    mCurrentPortalTheme = Preferences::ThemeAppeareance::UNINITIALIZED;
+    mCurrentGSettingsTheme = Preferences::ThemeAppeareance::UNINITIALIZED;
+    mLastEmittedTheme = Preferences::ThemeAppeareance::UNINITIALIZED;
+    mUseGtkTheme = false;
 }
 
 #ifndef QT_NO_DBUS
@@ -956,30 +965,34 @@ void PlatformImplementation::setupSettingsPortalMonitor()
     const QString DBUS_PATH = QLatin1String("/org/freedesktop/portal/desktop");
     const QString DBUS_CONNECTION = QLatin1String("org.freedesktop.portal.Settings");
     const QString DBUS_NAME = QLatin1String("SettingChanged");
+    const QString DBUS_SIG = QLatin1String("ssv");
 
-    mIsSettingsPortalActive =
-        QDBusConnection::sessionBus().interface()->isServiceRegistered(DBUS_SERVICE);
+    auto sessionbus = QDBusConnection::connectToBus(QDBusConnection::BusType::SessionBus,
+                                                    QLatin1String("session"));
 
+    mIsSettingsPortalActive = sessionbus.interface()->isServiceRegistered(DBUS_SERVICE);
     if (mIsSettingsPortalActive)
     {
-        mIsSettingsPortalActive = QDBusConnection::sessionBus().connect(
-            DBUS_SERVICE,
-            DBUS_PATH,
-            DBUS_CONNECTION,
-            DBUS_NAME,
-            this,
-            SLOT(onSettingsPortalChanged(QString, QString, QDBusVariant)));
+        // Connect to setting changed signal.
+        mIsSettingsPortalActive = sessionbus.connect(DBUS_SERVICE,
+                                                     DBUS_PATH,
+                                                     DBUS_CONNECTION,
+                                                     DBUS_NAME,
+                                                     DBUS_SIG,
+                                                     this,
+                                                     SLOT(onSettingsPortalChanged(QDBusMessage)));
 
         if (mIsSettingsPortalActive)
         {
-            // Setup portal monitoring
-            mSettingsPortal = new QDBusInterface(DBUS_SERVICE, DBUS_PATH, DBUS_CONNECTION);
+            // Init value
             mCurrentPortalTheme = readSettingsPortal();
+            mIsSettingsPortalActive =
+                mCurrentPortalTheme != Preferences::ThemeAppeareance::UNINITIALIZED;
         }
     }
 }
 
-Preferences::ThemeAppeareance PlatformImplementation::themeFromDBusVariant(const QDBusVariant& var)
+Preferences::ThemeAppeareance PlatformImplementation::themeFromVariant(const QVariant& var)
 {
     // Documentation:
     // https://flatpak.github.io/xdg-desktop-portal/docs/doc-org.freedesktop.portal.Settings.html
@@ -990,7 +1003,7 @@ Preferences::ThemeAppeareance PlatformImplementation::themeFromDBusVariant(const
     auto theme = Preferences::ThemeAppeareance::UNINITIALIZED;
 
     bool ok = false;
-    auto extractedValue = var.variant().toUInt(&ok);
+    auto extractedValue = var.toUInt(&ok);
 
     if (ok)
     {
@@ -1018,55 +1031,71 @@ Preferences::ThemeAppeareance PlatformImplementation::themeFromDBusVariant(const
 
 Preferences::ThemeAppeareance PlatformImplementation::readSettingsPortal()
 {
+    const QString DBUS_SERVICE = QLatin1String("org.freedesktop.portal.Desktop");
+    const QString DBUS_PATH = QLatin1String("/org/freedesktop/portal/desktop");
+    const QString DBUS_CONNECTION = QLatin1String("org.freedesktop.portal.Settings");
     const QString DBUS_NS = QLatin1String("org.freedesktop.appearance");
     const QString DBUS_KEY = QLatin1String("color-scheme");
 
+    auto settingsPortal = QDBusInterface(DBUS_SERVICE, DBUS_PATH, DBUS_CONNECTION);
+
     // Prefer ReadOne(ns, key); fall back to Read(ns, [keys])
     QString DBUS_CMD = QLatin1String("ReadOne");
-    QDBusMessage dbusMsg = mSettingsPortal->call(DBUS_CMD, DBUS_NS, DBUS_KEY);
+    QDBusMessage dbusMsg = settingsPortal.call(DBUS_CMD, DBUS_NS, DBUS_KEY);
 
-    QVariant var;
+    QVariant val;
     if (dbusMsg.type() == QDBusMessage::ReplyMessage && !dbusMsg.arguments().isEmpty())
     {
-        var = dbusMsg.arguments().at(0);
+        val = dbusMsg.arguments().at(0);
     }
     else
     {
         DBUS_CMD = QLatin1String("Read");
-        dbusMsg = mSettingsPortal->call(DBUS_CMD, DBUS_NS, QStringList{DBUS_KEY});
+        dbusMsg = settingsPortal.call(DBUS_CMD, DBUS_NS, QStringList{DBUS_KEY});
 
         if (dbusMsg.type() == QDBusMessage::ReplyMessage && !dbusMsg.arguments().isEmpty())
         {
-            var = dbusMsg.arguments().at(0);
-            if (var.canConvert<QVariantMap>())
+            val = dbusMsg.arguments().at(0);
+            if (val.canConvert<QVariantMap>())
             {
-                var = var.toMap().value(DBUS_KEY);
+                val = val.toMap().value(DBUS_KEY);
             }
         }
     }
 
-    QDBusVariant dbusVar;
-    if (var.canConvert<QDBusVariant>())
+    if (val.userType() == qMetaTypeId<QDBusVariant>())
     {
-        dbusVar = var.value<QDBusVariant>();
+        val = qvariant_cast<QDBusVariant>(val).variant();
     }
 
-    return themeFromDBusVariant(dbusVar);
+    return themeFromVariant(val);
 }
 
-void PlatformImplementation::onSettingsPortalChanged(const QString& ns,
-                                                     const QString& key,
-                                                     const QDBusVariant& value)
+void PlatformImplementation::onSettingsPortalChanged(const QDBusMessage& msg)
 {
     const QString DBUS_NS = QLatin1String("org.freedesktop.appearance");
     const QString DBUS_KEY = QLatin1String("color-scheme");
 
-    if (ns == DBUS_NS && key == DBUS_KEY)
+    const auto args = msg.arguments();
+    if (args.size() == 3)
     {
-        mCurrentPortalTheme = themeFromDBusVariant(value);
-        maybeEmitTheme();
+        const QString ns = args.at(0).toString();
+        const QString key = args.at(1).toString();
+
+        if (ns == DBUS_NS && key == DBUS_KEY)
+        {
+            QVariant val = args.at(2);
+
+            if (val.userType() == qMetaTypeId<QDBusVariant>())
+            {
+                val = qvariant_cast<QDBusVariant>(val).variant();
+            }
+            mCurrentPortalTheme = themeFromVariant(val);
+            maybeEmitTheme();
+        }
     }
 }
+
 #endif
 
 Preferences::ThemeAppeareance
@@ -1114,14 +1143,13 @@ Preferences::ThemeAppeareance
 Preferences::ThemeAppeareance PlatformImplementation::effectiveTheme() const
 {
     auto theme = Preferences::ThemeAppeareance::UNINITIALIZED;
-    // Portal wins when it specifies Dark/Light; otherwise use GSettings if available.
-    if (mCurrentPortalTheme == Preferences::ThemeAppeareance::DARK ||
-        mCurrentPortalTheme == Preferences::ThemeAppeareance::LIGHT)
+    // Portal wins when it is initialized; otherwise use GSettings if initialized.
+    if (mCurrentPortalTheme != theme)
     {
         theme = mCurrentPortalTheme;
     }
     // Use fallback
-    else if (mHaveGSettingsTheme)
+    else if (mCurrentGSettingsTheme != theme)
     {
         theme = mCurrentGSettingsTheme;
     }
@@ -1134,7 +1162,7 @@ void PlatformImplementation::maybeEmitTheme()
     if (effTheme != mLastEmittedTheme)
     {
         mLastEmittedTheme = effTheme;
-        emit themeChanged(effTheme);
+        emit themeChanged({effTheme, effTheme});
     }
 }
 
@@ -1176,9 +1204,7 @@ void PlatformImplementation::setupGSettingsThemeCli()
         }
     }
 
-    mHaveGSettingsTheme = (mCurrentGSettingsTheme != Preferences::ThemeAppeareance::UNINITIALIZED);
-
-    if (mHaveGSettingsTheme)
+    if (mCurrentGSettingsTheme != Preferences::ThemeAppeareance::UNINITIALIZED)
     {
         mThemeMonitor.start(GSETTINGS_BIN,
                             {GSETTINGS_MONITOR_CMD,
@@ -1213,7 +1239,6 @@ void PlatformImplementation::onGsettingsThemeReadyRead()
             const QString val = match.captured(1);
             mCurrentGSettingsTheme =
                 mUseGtkTheme ? themeFromGtkThemeString(val) : themeFromColorSchemeString(val);
-            mHaveGSettingsTheme = true;
             maybeEmitTheme();
         }
     }

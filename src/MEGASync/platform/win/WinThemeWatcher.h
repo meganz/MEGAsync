@@ -15,10 +15,10 @@ public:
     explicit WinThemeWatcher(QObject* parent = nullptr);
     ~WinThemeWatcher() override;
 
-    Preferences::ThemeAppeareance getCurrentTheme() const;
+    Preferences::SystemColorScheme getCurrentTheme() const;
 
 signals:
-    void systemThemeChanged(Preferences::ThemeAppeareance);
+    void systemThemeChanged(Preferences::SystemColorScheme);
 
 protected:
     void run() override;

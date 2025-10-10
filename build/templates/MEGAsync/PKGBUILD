@@ -29,12 +29,12 @@ arch=('i686' 'x86_64')
 url="https://mega.io/desktop"
 license=() #TODO
 groups=()
-depends=('glibc>=2.33' 'gcc-libs>=10.2.0' systemd 'qt5-base>=5.15' qt5-svg qt5-x11extras qt5-graphicaleffects qt5-declarative qt5-quickcontrols2 qt5-quickcontrols)
+depends=('glibc>=2.33' 'gcc-libs>=10.2.0' 'qt5-base>=5.15' qt5-svg qt5-x11extras qt5-graphicaleffects qt5-declarative qt5-quickcontrols2 qt5-quickcontrols)
 makedepends=(unzip zip tar cmake python3 autoconf-archive nasm qt5-tools qt5-declarative qt5-graphicaleffects 'qt5-base>=5.15')
 checkdepends=()
 optdepends=(
-  'xdg-desktop-portal: to follow the desktop’s color scheme (using dbus)'
-  'glib2: to follow the desktop’s color scheme (using gsettings)'
+  'xdg-desktop-portal: follow the desktop color scheme (using dbus)'
+  'glib2: follow the desktop color scheme (using gsettings)'
   'nautilus-megasync: integration with nautilus'
   'dolphin-megasync: integration with dolphin'
   'thunar-megasync: integration with thunar'

@@ -449,6 +449,19 @@ public:
     };
     Q_ENUM(ThemeAppeareance)
 
+    // To store the different color scheme properties we can get from the system:
+    // System scheme (allowed in Windows)
+    // Apps scheme (All platforms)
+    // TODO future:
+    // Accent color
+    // High contrast
+    // ...
+    struct SystemColorScheme
+    {
+        ThemeAppeareance systemScheme = ThemeAppeareance::UNINITIALIZED;
+        ThemeAppeareance appsScheme = ThemeAppeareance::UNINITIALIZED;
+    };
+
     void setThemeType(ThemeType theme);
     ThemeType getThemeType();
 

@@ -315,7 +315,7 @@ const bool  Preferences::defaultNeverCreateLink   = false;
 const bool  Preferences::defaultImportMegaLinksEnabled = true;
 const bool  Preferences::defaultDownloadMegaLinksEnabled = true;
 const bool Preferences::defaultSystemTrayPromptSuppressed = false;
-const Preferences::ThemeType Preferences::defaultTheme = Preferences::ThemeType::SYSTEM_DEFAULT;
+const Preferences::ThemeType Preferences::defaultTheme = Preferences::ThemeType::UNINITIALIZED;
 const bool Preferences::defaultAskOnExclusionRemove = true;
 
 const int Preferences::minSyncStateChangeProcessingIntervalMs = 200;
@@ -412,7 +412,7 @@ Preferences::Preferences() :
     diffTimeWithSDK(0),
     lastTransferNotification(0)
 {
-    qRegisterMetaType<Preferences::ThemeAppeareance>("Preferences::ThemeAppeareance");
+    qRegisterMetaType<Preferences::SystemColorScheme>("Preferences::SystemColorScheme");
     clearTemporalBandwidth();
 }
 
@@ -2638,15 +2638,17 @@ void Preferences::setThemeType(ThemeType theme)
 
     if (theme != currentValue)
     {
-        setValueConcurrently(themeKey, static_cast<int>(theme));
+        setValueConcurrently(themeKey, QVariant::fromValue<Preferences::ThemeType>(theme).toInt());
         sync();
     }
 }
 
 Preferences::ThemeType Preferences::getThemeType()
 {
-    auto value = getValueConcurrent<int>(themeKey, static_cast<int>(defaultTheme));
-    return static_cast<ThemeType>(value);
+    auto value =
+        getValueConcurrent<int>(themeKey,
+                                QVariant::fromValue<Preferences::ThemeType>(defaultTheme).toInt());
+    return QVariant::fromValue<int>(value).value<Preferences::ThemeType>();
 }
 
 #if defined(ENABLE_SDK_ISOLATED_GFX)

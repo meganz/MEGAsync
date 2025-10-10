@@ -527,7 +527,7 @@ void PlatformImplementation::startThemeMonitor()
                      &PlatformImplementation::themeChanged);
 }
 
-Preferences::ThemeAppeareance PlatformImplementation::getCurrentThemeAppearance() const
+Preferences::SystemColorScheme PlatformImplementation::getCurrentThemeAppearance() const
 {
     return watcher->getCurrentTheme();
 }

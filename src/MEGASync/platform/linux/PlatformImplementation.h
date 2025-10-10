@@ -9,10 +9,7 @@
 #include <xcb/xproto.h>
 
 #ifndef QT_NO_DBUS
-#include <QDBusConnection>
-#include <QDBusInterface>
 #include <QDBusMessage>
-#include <QDBusVariant>
 #endif
 
 class PlatformImplementation: public AbstractPlatform
@@ -63,7 +60,7 @@ public:
     QString getGfxProviderPath() override;
 #endif
 
-    Preferences::ThemeAppeareance getCurrentThemeAppearance() const override;
+    Preferences::SystemColorScheme getCurrentThemeAppearance() const override;
 
 private:
     static xcb_atom_t getAtom(xcb_connection_t* const connection, const char* name);
@@ -90,15 +87,13 @@ private:
 
 #ifndef QT_NO_DBUS
     void setupSettingsPortalMonitor();
-    static Preferences::ThemeAppeareance themeFromDBusVariant(const QDBusVariant& var);
+    static Preferences::ThemeAppeareance themeFromVariant(const QVariant& var);
     Preferences::ThemeAppeareance readSettingsPortal();
-    QPointer<QDBusInterface> mSettingsPortal;
 #endif
 
     bool mIsSettingsPortalActive = false;
     Preferences::ThemeAppeareance mCurrentPortalTheme =
         Preferences::ThemeAppeareance::UNINITIALIZED;
-    bool mHaveGSettingsTheme = false;
     bool mUseGtkTheme = false;
     Preferences::ThemeAppeareance mCurrentGSettingsTheme =
         Preferences::ThemeAppeareance::UNINITIALIZED;
@@ -107,7 +102,7 @@ private:
 private slots:
     void onGsettingsThemeReadyRead();
 #ifndef QT_NO_DBUS
-    void onSettingsPortalChanged(const QString& ns, const QString& key, const QDBusVariant& value);
+    void onSettingsPortalChanged(const QDBusMessage& msg);
 #endif
 };
 

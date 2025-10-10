@@ -11,10 +11,10 @@ public:
     explicit MacThemeWatcher(QObject* parent = nullptr);
     ~MacThemeWatcher();
 
-    Preferences::ThemeAppeareance getCurrentTheme() const;
+    Preferences::SystemColorScheme getCurrentTheme() const;
 
 signals:
-    void systemThemeChanged(Preferences::ThemeAppeareance);
+    void systemThemeChanged(Preferences::SystemColorScheme);
 
 private:
     void* handle = nullptr;

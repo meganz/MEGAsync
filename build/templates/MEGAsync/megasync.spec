@@ -11,7 +11,7 @@ Packager:	MEGA Linux Team <linux@mega.io>
 
 %global __requires_exclude ^lib(avcodec|avformat|avutil|swresample|swscale)\\.so\\.
 
-BuildRequires: autoconf, autoconf-archive, automake, libtool, gcc-c++, pkgconf, systemd-devel
+BuildRequires: autoconf, autoconf-archive, automake, libtool, gcc-c++, pkgconf
 BuildRequires: hicolor-icon-theme, zip, unzip, nasm, cmake, perl
 
 Recommends: xdg-desktop-portal
