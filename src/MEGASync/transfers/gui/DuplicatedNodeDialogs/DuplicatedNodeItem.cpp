@@ -1,6 +1,7 @@
 #include "DuplicatedNodeItem.h"
 
 #include "MegaApplication.h"
+#include "TokenParserWidgetManager.h"
 #include "ui_DuplicatedNodeItem.h"
 #include "Utilities.h"
 
@@ -16,6 +17,7 @@ DuplicatedNodeItem::DuplicatedNodeItem(QWidget* parent):
 {
     ui->setupUi(this);
     ui->lLearnMore->hide();
+    TokenParserWidgetManager::instance()->applyCurrentTheme(this);
 }
 
 DuplicatedNodeItem::~DuplicatedNodeItem()
