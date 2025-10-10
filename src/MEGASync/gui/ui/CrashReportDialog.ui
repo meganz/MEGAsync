@@ -189,9 +189,6 @@ border-radius: 8;
          <height>56</height>
         </size>
        </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
        <property name="type" stdset="0">
         <string notr="true">notification</string>
        </property>
