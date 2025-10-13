@@ -136,14 +136,17 @@ bool TabSelector::isSelected() const
 
 bool TabSelector::event(QEvent* event)
 {
-    if (event->type() == QEvent::MouseButtonRelease)
+    if (isEnabled())
     {
-        setSelected(true);
-    }
-    else if (event->type() == QEvent::Enter || event->type() == QEvent::Leave)
-    {
-        setProperty(HOVER, event->type() == QEvent::Enter ? true : false);
-        setStyleSheet(styleSheet());
+        if (event->type() == QEvent::MouseButtonRelease)
+        {
+            setSelected(true);
+        }
+        else if (event->type() == QEvent::Enter || event->type() == QEvent::Leave)
+        {
+            setProperty(HOVER, event->type() == QEvent::Enter ? true : false);
+            setStyleSheet(styleSheet());
+        }
     }
 
     return QWidget::event(event);
