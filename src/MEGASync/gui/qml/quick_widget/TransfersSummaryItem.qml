@@ -50,13 +50,6 @@ Rectangle {
             }
         }
 
-        Behavior on width {
-            NumberAnimation {
-                duration: 1000
-                easing.type: Easing.InOutBack
-            }
-        }
-
         RowLayout {
             id: layout
 
@@ -92,6 +85,7 @@ Rectangle {
                     id: transferText
 
                     Layout.alignment: Qt.AlignVCenter
+                    Layout.fillWidth: true
                     visible: areThereTransfers
                     text: (ongoingTransfers + completedTransfers) + "/" + totalTransfers
 

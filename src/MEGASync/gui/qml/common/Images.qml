@@ -119,8 +119,8 @@ QtObject {
     readonly property url starEmpty: imagesSurveysPath + "star_empty.svg"
 
     readonly property url plus: imagesPath + "icon_plus.svg"
-    readonly property url pause_circle_medium_thin_outline: "qrc:/pause-circle_medium_thin_outline"
-    readonly property url play_circle_medium_thin_outline: "qrc:/play-circle_medium_thin_outline"
+    readonly property url pause_circle_medium_thin_outline: "qrc:/pause-circle_medium_thin_outline.svg"
+    readonly property url play_circle_medium_thin_outline: "qrc:/play-circle_medium_thin_outline.svg"
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Standard Icons
