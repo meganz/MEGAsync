@@ -5625,12 +5625,6 @@ void MegaApplication::createInfoDialogMenus()
         delete mBackupsMenu;
         delete mSyncs2waysMenu;
         infoDialogMenu = new QMenu(infoDialog);
-
-        //Highlight menu entry on mouse over
-        connect(infoDialogMenu, SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
-
-        //Hide highlighted menu entry when mouse over
-        infoDialogMenu->installEventFilter(this);
     }
 
     recreateMegaMenuAction(&exitAction,
@@ -5650,11 +5644,13 @@ void MegaApplication::createInfoDialogMenus()
             this,
             &MegaApplication::openSettings,
             Qt::QueuedConnection);
+
     recreateMegaMenuAction(&MEGAWebAction,
                            infoDialogMenu,
                            tr("MEGA web"),
                            "://globe-01.svg",
                            &MegaApplication::goToMyCloud);
+
     recreateMegaMenuAction(&filesAction,
                            infoDialogMenu,
                            tr("Files"),

@@ -8849,6 +8849,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Media type</translation>
     </message>
     <message>
+        <source>No completed transfers</source>
+        <translatorcomment>Empty window message for completed category</translatorcomment>
+        <translation>No completed transfers</translation>
+    </message>
+    <message>
         <source>No downloads</source>
         <translatorcomment>Empty window message for download category</translatorcomment>
         <translation>No downloads</translation>

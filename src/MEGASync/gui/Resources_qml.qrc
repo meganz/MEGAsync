@@ -80,7 +80,6 @@
         <file alias="images/qml/device_center/sync_folder.svg">images/qml/device_center/sync_folder.svg</file>
         <file alias="images/qml/three_dots.svg">images/qml/three_dots.svg</file>
         <file alias="images/qml/device_center/devices.svg">images/qml/device_center/devices.svg</file>
-        <file alias="images/qml/monitor.svg">images/qml/monitor.svg</file>
         <file alias="images/qml/folder-open.svg">images/qml/folder-open.svg</file>
         <file alias="images/qml/slash-circle.svg">images/qml/slash-circle.svg</file>
         <file alias="images/qml/search-large.svg">images/qml/search-large.svg</file>
@@ -124,5 +123,8 @@
         <file alias="images/qml/arrows-up-down-circle.svg">images/qml/arrows-up-down-circle.svg</file>
         <file alias="images/qml/down-arrow.svg">images/qml/down-arrow.svg</file>
         <file alias="images/qml/up-arrow.svg">images/qml/up-arrow.svg</file>
+        <file alias="images/qml/mega_3d_devices.png">images/qml/up-arrow.svg</file>
+        <file alias="images/qml/mega_3d_devices@2x.png">images/qml/mega_3d_devices@2x.png</file>
+        <file alias="images/qml/mega_3d_devices@3x.png">images/qml/mega_3d_devices@3x.png</file>
     </qresource>
 </RCC>
