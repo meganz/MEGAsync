@@ -89,6 +89,9 @@ color: #F3F4F4; /*colorToken.text-primary*/
        <height>36</height>
       </size>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
     </widget>
    </item>
    <item>
