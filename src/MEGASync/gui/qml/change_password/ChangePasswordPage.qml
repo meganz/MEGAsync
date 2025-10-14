@@ -26,26 +26,12 @@ FooterButtonsPage {
     function checkError() {
         var error = false;
 
-        var valid = passwordItem.text.length >= minimumAllowedPasswordLength;
-        if (!valid) {
-            error = true;
-            passwordItem.error = true;
-            passwordItem.hint.text = OnboardingStrings.minimum8Chars;
-        }
-        passwordItem.error = !valid;
-        passwordItem.hint.visible = !valid;
-
-        if (confirmPasswordItem.text.length === 0) {
-            error = true;
-            confirmPasswordItem.error = true;
-            confirmPasswordItem.hint.visible = true;
-            confirmPasswordItem.hint.text = OnboardingStrings.errorConfirmPassword;
-        }
-        else if (passwordItem.text !== confirmPasswordItem.text) {
+        if (passwordItem.text !== confirmPasswordItem.text) {
             error = true;
             confirmPasswordItem.error = true;
             confirmPasswordItem.hint.visible = true;
             confirmPasswordItem.hint.text = OnboardingStrings.errorPasswordsMatch;
+
             passwordItem.hint.visible = false;
             passwordItem.error = true;
         }
@@ -75,11 +61,9 @@ FooterButtonsPage {
             enabled: passwordItem.validPassword && confirmPasswordItem.text !== ""
 
             onClicked: {
-                if (checkError()) {
-                    return;
+                if (!checkError()) {
+                    changePasswordComponentAccess.changePassword(passwordItem.text, confirmPasswordItem.text);
                 }
-
-                changePasswordComponentAccess.changePassword(passwordItem.text, confirmPasswordItem.text);
             }
         }
     }
