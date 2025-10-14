@@ -321,12 +321,23 @@ QIcon SyncItemModel::getStateIcon(const std::shared_ptr<SyncSettings>& sync) con
         (sync->getRunState() == mega::MegaSync::RUNSTATE_LOADING ||
          sync->getRunState() == mega::MegaSync::RUNSTATE_PENDING))
     {
-        syncIcon.addFile(QLatin1String(":/images/sync_states/sync-running.png"),
-                         QSize(STATES_ICON_SIZE, STATES_ICON_SIZE),
-                         QIcon::Normal);
-        syncIcon.addFile(QLatin1String(":/images/sync_states/sync-running-selected.png"),
-                         QSize(STATES_ICON_SIZE, STATES_ICON_SIZE),
-                         QIcon::Selected);
+        QPixmap syncNormal = Utilities::getColoredPixmap(QLatin1String("refresh-01"),
+                                                         Utilities::AttributeType::MEDIUM |
+                                                             Utilities::AttributeType::THIN |
+                                                             Utilities::AttributeType::OUTLINE,
+                                                         QLatin1String("icon-primary"),
+                                                         QSize(STATES_ICON_SIZE, STATES_ICON_SIZE));
+
+        syncIcon.addPixmap(syncNormal, QIcon::Normal);
+
+        QPixmap syncSelected = Utilities::getColoredPixmap(
+            QLatin1String("refresh-01"),
+            Utilities::AttributeType::MEDIUM | Utilities::AttributeType::THIN |
+                Utilities::AttributeType::OUTLINE,
+            QLatin1String("icon-inverse"),
+            QSize(STATES_ICON_SIZE, STATES_ICON_SIZE));
+
+        syncIcon.addPixmap(syncSelected, QIcon::Selected);
     }
     else if (sync->getRunState() == mega::MegaSync::RUNSTATE_DISABLED)
     {
@@ -360,12 +371,23 @@ QIcon SyncItemModel::getStateIcon(const std::shared_ptr<SyncSettings>& sync) con
         }
         else
         {
-            syncIcon.addFile(QLatin1String(":/images/sync_states/pause-circle.png"),
-                             QSize(STATES_ICON_SIZE, STATES_ICON_SIZE),
-                             QIcon::Normal);
-            syncIcon.addFile(QLatin1String(":/images/sync_states/pause-circle-selected.png"),
-                             QSize(STATES_ICON_SIZE, STATES_ICON_SIZE),
-                             QIcon::Selected);
+            QPixmap pausedNormal = Utilities::getColoredPixmap(
+                QLatin1String("pause-circle"),
+                Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                    Utilities::AttributeType::OUTLINE,
+                QLatin1String("icon-primary"),
+                QSize(STATES_ICON_SIZE, STATES_ICON_SIZE));
+
+            syncIcon.addPixmap(pausedNormal, QIcon::Normal);
+
+            QPixmap pausedSelected = Utilities::getColoredPixmap(
+                QLatin1String("pause-circle"),
+                Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                    Utilities::AttributeType::OUTLINE,
+                QLatin1String("icon-inverse"),
+                QSize(STATES_ICON_SIZE, STATES_ICON_SIZE));
+
+            syncIcon.addPixmap(pausedSelected, QIcon::Selected);
         }
     }
 
