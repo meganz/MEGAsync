@@ -5630,25 +5630,13 @@ void MegaApplication::createInfoDialogMenus()
     recreateMegaMenuAction(&exitAction,
                            infoDialogMenu,
                            PlatformStrings::exit(),
-                           Utilities::getPixmapName(QLatin1String("log-out"),
-                                                    Utilities::AttributeType::SMALL |
-                                                        Utilities::AttributeType::THIN |
-                                                        Utilities::AttributeType::OUTLINE,
-                                                    false)
-                               .toStdString()
-                               .c_str(),
+                           "://log-out.svg",
                            &MegaApplication::tryExitApplication);
 
     recreateMegaMenuAction(&settingsAction,
                            infoDialogMenu,
                            tr("Settings"),
-                           Utilities::getPixmapName(QLatin1String("gear-8"),
-                                                    Utilities::AttributeType::SMALL |
-                                                        Utilities::AttributeType::THIN |
-                                                        Utilities::AttributeType::OUTLINE,
-                                                    false)
-                               .toStdString()
-                               .c_str(),
+                           "://gear-8.svg",
                            &MegaApplication::openSettings);
 
     connect(settingsAction,
@@ -5660,25 +5648,13 @@ void MegaApplication::createInfoDialogMenus()
     recreateMegaMenuAction(&MEGAWebAction,
                            infoDialogMenu,
                            tr("MEGA web"),
-                           Utilities::getPixmapName(QLatin1String("globe-01"),
-                                                    Utilities::AttributeType::SMALL |
-                                                        Utilities::AttributeType::THIN |
-                                                        Utilities::AttributeType::OUTLINE,
-                                                    false)
-                               .toStdString()
-                               .c_str(),
+                           "://globe-01.svg",
                            &MegaApplication::goToMyCloud);
 
     recreateMegaMenuAction(&filesAction,
                            infoDialogMenu,
                            tr("Files"),
-                           Utilities::getPixmapName(QLatin1String("folder-open"),
-                                                    Utilities::AttributeType::SMALL |
-                                                        Utilities::AttributeType::THIN |
-                                                        Utilities::AttributeType::OUTLINE,
-                                                    false)
-                               .toStdString()
-                               .c_str(),
+                           "://folder-open.svg",
                            &MegaApplication::goToFiles);
 
     // recreateMenuAction(&deviceCentreAction,
@@ -5708,46 +5684,22 @@ void MegaApplication::createInfoDialogMenus()
     recreateMegaMenuAction(&importLinksAction,
                            infoDialogMenu,
                            tr("Open links"),
-                           Utilities::getPixmapName(QLatin1String("link-01-primary"),
-                                                    Utilities::AttributeType::SMALL |
-                                                        Utilities::AttributeType::THIN |
-                                                        Utilities::AttributeType::OUTLINE,
-                                                    false)
-                               .toStdString()
-                               .c_str(),
+                           "://link-01-primary.svg",
                            &MegaApplication::importLinks);
     recreateMegaMenuAction(&uploadAction,
                            infoDialogMenu,
                            tr("Upload"),
-                           Utilities::getPixmapName(QLatin1String("arrow-up-circle-primary"),
-                                                    Utilities::AttributeType::SMALL |
-                                                        Utilities::AttributeType::THIN |
-                                                        Utilities::AttributeType::OUTLINE,
-                                                    false)
-                               .toStdString()
-                               .c_str(),
+                           "://arrow-up-circle-primary.svg",
                            &MegaApplication::uploadActionClicked);
     recreateMegaMenuAction(&downloadAction,
                            infoDialogMenu,
                            tr("Download"),
-                           Utilities::getPixmapName(QLatin1String("arrow-down-circle-primary"),
-                                                    Utilities::AttributeType::SMALL |
-                                                        Utilities::AttributeType::THIN |
-                                                        Utilities::AttributeType::OUTLINE,
-                                                    false)
-                               .toStdString()
-                               .c_str(),
+                           "://arrow-down-circle-primary.svg",
                            &MegaApplication::downloadActionClicked);
     recreateMegaMenuAction(&streamAction,
                            infoDialogMenu,
                            tr("Stream"),
-                           Utilities::getPixmapName(QLatin1String("stream"),
-                                                    Utilities::AttributeType::SMALL |
-                                                        Utilities::AttributeType::THIN |
-                                                        Utilities::AttributeType::OUTLINE,
-                                                    false)
-                               .toStdString()
-                               .c_str(),
+                           "://stream.svg",
                            &MegaApplication::streamActionClicked);
 
     if (updateAction)
@@ -5765,13 +5717,7 @@ void MegaApplication::createInfoDialogMenus()
     if (updateAvailable)
     {
         updateAction =
-            new MegaMenuItemAction(tr("Install update"),
-                                   Utilities::getPixmapName(QLatin1String("MEGA"),
-                                                            Utilities::AttributeType::SMALL |
-                                                                Utilities::AttributeType::THIN |
-                                                                Utilities::AttributeType::OUTLINE,
-                                                            false),
-                                   0);
+            new MegaMenuItemAction(tr("Install update"), QLatin1String("://mega-outline.svg"), 0);
         connect(updateAction,
                 &QAction::triggered,
                 this,
@@ -5781,14 +5727,7 @@ void MegaApplication::createInfoDialogMenus()
     }
     else
     {
-        aboutAction =
-            new MegaMenuItemAction(tr("About"),
-                                   Utilities::getPixmapName(QLatin1String("MEGA"),
-                                                            Utilities::AttributeType::SMALL |
-                                                                Utilities::AttributeType::THIN |
-                                                                Utilities::AttributeType::OUTLINE,
-                                                            false),
-                                   0);
+        aboutAction = new MegaMenuItemAction(tr("About"), QLatin1String("://mega-outline.svg"), 0);
         connect(aboutAction,
                 &QAction::triggered,
                 this,
@@ -5801,20 +5740,16 @@ void MegaApplication::createInfoDialogMenus()
     infoDialogMenu->addAction(MEGAWebAction);
     infoDialogMenu->addAction(filesAction);
     infoDialogMenu->addSeparator();
-
     if (mSyncs2waysMenu)
         infoDialogMenu->addAction(mSyncs2waysMenu->getAction());
-
     if (mBackupsMenu)
         infoDialogMenu->addAction(mBackupsMenu->getAction());
-
     infoDialogMenu->addAction(importLinksAction);
     infoDialogMenu->addAction(uploadAction);
     infoDialogMenu->addAction(downloadAction);
     infoDialogMenu->addAction(streamAction);
 
     infoDialogMenu->setProperty("class", QLatin1String("MegaMenu"));
-    infoDialogMenu->setProperty("icon-token", QLatin1String("icon-primary"));
     infoDialogMenu->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint);
     infoDialogMenu->setAttribute(Qt::WA_TranslucentBackground);
 
