@@ -84,7 +84,7 @@ void StatusInfo::setState(TRANSFERS_STATES state)
                 mScanningTimer.start();
             }
 
-            const QString statusText{tr("Syncing")+QString::fromUtf8("...")};
+            const QString statusText{tr("Syncing") + QString::fromUtf8("…")};
             ui->lStatusDesc->setToolTip(statusText);
             ui->lStatusDesc->setText(statusText);
             break;
@@ -97,7 +97,7 @@ void StatusInfo::setState(TRANSFERS_STATES state)
                 mScanningTimer.start();
             }
 
-            const QString statusText{tr("Waiting")+QString::fromUtf8("...")};
+            const QString statusText{tr("Waiting") + QString::fromUtf8("…")};
             ui->lStatusDesc->setToolTip(statusText);
             ui->lStatusDesc->setText(statusText);
             break;
@@ -110,7 +110,7 @@ void StatusInfo::setState(TRANSFERS_STATES state)
                 mScanningTimer.start();
             }
 
-            const QString statusText{tr("Scanning")+QString::fromUtf8("...")};
+            const QString statusText{tr("Scanning") + QString::fromUtf8("…")};
             ui->bIconState->setProperty("normal_off", QString::fromUtf8("icon-primary"));
             ui->lStatusDesc->setToolTip(statusText);
             ui->lStatusDesc->setText(statusText);
@@ -124,7 +124,7 @@ void StatusInfo::setState(TRANSFERS_STATES state)
                 mScanningTimer.start();
             }
 
-            const QString statusText{tr("Transferring")+QString::fromUtf8("...")};
+            const QString statusText{tr("Transferring") + QString::fromUtf8("…")};
             ui->lStatusDesc->setToolTip(statusText);
             ui->lStatusDesc->setText(statusText);
             break;
