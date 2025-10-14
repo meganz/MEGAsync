@@ -266,6 +266,13 @@ QIcon NodeSelectorTreeViewWidgetBackups::getEmptyIcon()
                                   Utilities::AttributeType::OUTLINE);
 }
 
+NodeSelectorTreeViewWidget::EmptyLabelInfo NodeSelectorTreeViewWidgetBackups::getEmptyLabel()
+{
+    EmptyLabelInfo info;
+    info.description = tr("No backups");
+    return info;
+}
+
 void NodeSelectorTreeViewWidgetBackups::onRootIndexChanged(const QModelIndex& idx)
 {
     Q_UNUSED(idx)

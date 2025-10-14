@@ -97,6 +97,7 @@ private:
     }
 
     QIcon getEmptyIcon() override;
+    EmptyLabelInfo getEmptyLabel() override;
 };
 
 class NodeSelectorTreeViewWidgetSearch: public NodeSelectorTreeViewWidget
