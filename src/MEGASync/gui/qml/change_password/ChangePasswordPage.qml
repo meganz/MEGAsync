@@ -17,7 +17,13 @@ FooterButtonsPage {
     readonly property int minimumAllowedPasswordLength: 8
     readonly property int mainColumnDesignSpacing: 24
 
-    function error() {
+    function setError(errorMessage) {
+        passwordItem.hint.text = errorMessage;
+        passwordItem.hint.visible = true;
+        passwordItem.hint.textColor = ColorTheme.textError;
+    }
+
+    function checkError() {
         var error = false;
 
         var valid = passwordItem.text.length >= minimumAllowedPasswordLength;
@@ -69,7 +75,7 @@ FooterButtonsPage {
             enabled: passwordItem.validPassword && confirmPasswordItem.text !== ""
 
             onClicked: {
-                if (error()) {
+                if (checkError()) {
                     return;
                 }
 
@@ -136,6 +142,20 @@ FooterButtonsPage {
             title: ChangePasswordStrings.confirmNewPassword
             hint.icon: Images.key
             cleanWhenError: false
+        }
+    }
+
+    Connections{
+        id: changePassConn
+
+        target: changePasswordComponentAccess
+
+        function onPasswordChangeFailed(errorMessage) {
+            setError(errorMessage)
+        }
+
+        function onPasswordCheckFailed(errorMessage) {
+            setError(errorMessage)
         }
     }
 

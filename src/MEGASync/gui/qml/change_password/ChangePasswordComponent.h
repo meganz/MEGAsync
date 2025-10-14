@@ -20,16 +20,15 @@ public:
 
 signals:
     void show2FA();
-    void passwordChangeFailed();
+    void passwordChangeFailed(QString errorMessage);
+    void passwordCheckFailed(QString errorMessage);
     void passwordChangeSucceed();
     void twoFAVerificationFailed();
 
 private:
     std::unique_ptr<ChangePasswordController> mChangePasswordController;
 
-    void onPasswordChangeFailed(QString errorMessage);
     void onPasswordChangeSucceed(QString title, QString description);
-    void onPasswordCheckFailed(QString errorMessage);
 };
 
 #endif

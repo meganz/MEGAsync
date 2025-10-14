@@ -87,10 +87,6 @@ ChangePasswordDialog {
                 changePasswordContentItem.state = changePasswordContentItem.two_fa;
             }
 
-            function onPasswordChangeFailed() {
-                window.close();
-            }
-
             function onPasswordChangeSucceed() {
                 window.close();
             }

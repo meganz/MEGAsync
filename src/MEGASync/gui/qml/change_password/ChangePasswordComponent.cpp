@@ -25,7 +25,7 @@ ChangePasswordComponent::ChangePasswordComponent(QObject* parent):
     connect(mChangePasswordController.get(),
             &ChangePasswordController::passwordChangeFailed,
             this,
-            &ChangePasswordComponent::onPasswordChangeFailed);
+            &ChangePasswordComponent::passwordChangeFailed);
 
     connect(mChangePasswordController.get(),
             &ChangePasswordController::passwordChangeSucceed,
@@ -40,25 +40,7 @@ ChangePasswordComponent::ChangePasswordComponent(QObject* parent):
     connect(mChangePasswordController.get(),
             &ChangePasswordController::passwordCheckFailed,
             this,
-            &ChangePasswordComponent::onPasswordCheckFailed);
-}
-
-void ChangePasswordComponent::onPasswordCheckFailed(QString errorMessage)
-{
-    MessageDialogInfo info;
-    info.descriptionText = errorMessage;
-
-    MessageDialogOpener::critical(info);
-}
-
-void ChangePasswordComponent::onPasswordChangeFailed(QString errorMessage)
-{
-    emit passwordChangeFailed();
-
-    MessageDialogInfo info;
-    info.descriptionText = errorMessage;
-
-    MessageDialogOpener::critical(info);
+            &ChangePasswordComponent::passwordCheckFailed);
 }
 
 void ChangePasswordComponent::onPasswordChangeSucceed(QString title, QString description)
