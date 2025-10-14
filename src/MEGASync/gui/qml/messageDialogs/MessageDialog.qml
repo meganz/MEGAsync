@@ -97,6 +97,7 @@ QmlDialog {
                 height: sizes.iconSize
                 Layout.preferredHeight: height
                 Layout.preferredWidth: width
+                Layout.alignment: Qt.AlignVCenter
                 sourceSize: Qt.size(sizes.iconSize, sizes.iconSize)
                 visible: imageItem.source !== ""
             }

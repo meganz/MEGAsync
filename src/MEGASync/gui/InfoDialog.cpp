@@ -193,9 +193,6 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
 
     circlesShowAllActiveTransfersProgress = true;
 
-    cloudItem = NULL;
-    sharesItem = NULL;
-    rubbishItem = NULL;
     opacityEffect = NULL;
     animation = NULL;
 

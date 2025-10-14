@@ -18,6 +18,7 @@ class MegaTransferView : public LoadingSceneView<TransferManagerLoadingItem, QTr
 
     struct SelectedIndexesInfo
     {
+        QString titleText;
         QString actionText;
         bool isAnyCancellable;
         bool areAllCancellable;
@@ -47,19 +48,26 @@ public:
     SelectedIndexesInfo getSelectedCancelOrClearInfo();
 
     //Static messages for messageboxes
-    static QString cancelAllAskActionText();
-    static QString cancelAndClearAskActionText();
-    static QString cancelAskActionText();
-    static QString cancelWithSyncAskActionText();
-    static QString cancelAndClearWithSyncAskActionText();
-    static QString clearAllCompletedAskActionText();
-    static QString clearCompletedAskActionText();
+    static QString cancelTransfersMultiSelectionTitleText();
 
-    static QString cancelSelectedAskActionText();
-    static QString cancelAndClearSelectedAskActionText();
-    static QString cancelSelectedWithSyncAskActionText();
-    static QString cancelAndClearSelectedWithSyncAskActionText();
-    static QString clearSelectedCompletedAskActionText();
+    static QString clearTransfersMultiSelectionTitleText();
+
+    static QString cancelAllDescriptionText();
+    static QString cancelAndClearDescriptionText();
+    static QString cancelCategoryTransfersDescriptionText();
+    static QString cancelTransfersWithSyncDescriptionText();
+    static QString cancelAndClearTransfersWithSyncDescriptionText();
+
+    static QString clearAllCompletedTransfersWithSycnsDescriptionText();
+    static QString clearAllCompletedDescriptionText();
+    static QString clearCategoryTransfersDescriptionText();
+
+    static QString cancelSelectedDescriptionText();
+    static QString cancelAndClearSelectedDescriptionText();
+    static QString cancelSelectedWithSyncsDescriptionText();
+
+    static QString cancelAndClearSelectedWithSyncDescriptionText();
+    static QString clearSelectedCompletedTransfersDescriptionText();
 
     static QString pauseActionText(int count);
     static QString resumeActionText(int count);
