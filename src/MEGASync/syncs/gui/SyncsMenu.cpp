@@ -9,7 +9,6 @@
 #include "SyncTooltipCreator.h"
 #include "Utilities.h"
 
-<<<<<<< HEAD
 #include <QCoreApplication>
 #include <QUrl>
 
@@ -19,8 +18,6 @@ const QLatin1String SYNC_ADD_ICON("sync-plus");
 const QLatin1String BACKUP_ICON("database");
 const QLatin1String BACKUP_ADD_ICON("database-plus");
 const QLatin1String FOLDER_ICON("folder");
-=======
->>>>>>> 8dfa93d34 (Minor fixes)
 const QString ADD_BACKUP = QCoreApplication::translate("BackupSyncsMenu", "Add Backup");
 const QString ADD_SYNC = QCoreApplication::translate("TwoWaySyncsMenu", "Add Sync");
 const QString BACKUPS = QCoreApplication::translate("BackupSyncsMenu", "Backups");
@@ -35,16 +32,9 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, int itemIndent, QWidget* par
     mMenu->setProperty("class", QLatin1String("MegaMenu"));
     mMenu->setProperty("icon-token", QLatin1String("icon-primary"));
     mAddAction = new MegaMenuItemAction(
-<<<<<<< HEAD
         getAddActionText(),
         Utilities::getPixmapName(type == mega::MegaSync::SyncType::TYPE_BACKUP ? BACKUP_ADD_ICON :
                                                                                  SYNC_ADD_ICON,
-=======
-        type == mega::MegaSync::SyncType::TYPE_BACKUP ? ADD_BACKUP : ADD_SYNC,
-        Utilities::getPixmapName(type == mega::MegaSync::SyncType::TYPE_BACKUP ?
-                                     QLatin1String("database-plus") :
-                                     QLatin1String("sync-plus"),
->>>>>>> 8dfa93d34 (Minor fixes)
                                  Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
                                      Utilities::AttributeType::OUTLINE,
                                  false),
@@ -53,16 +43,9 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, int itemIndent, QWidget* par
     connect(mAddAction, &MegaMenuItemAction::triggered, this, &SyncsMenu::onAddSync);
 
     mMenuAction = new MegaMenuItemAction(
-<<<<<<< HEAD
         getMenuActionText(),
         Utilities::getPixmapName(type == mega::MegaSync::SyncType::TYPE_BACKUP ? BACKUP_ICON :
                                                                                  SYNC_ICON,
-=======
-        type == mega::MegaSync::SyncType::TYPE_BACKUP ? BACKUPS : SYNCS,
-        Utilities::getPixmapName(type == mega::MegaSync::SyncType::TYPE_BACKUP ?
-                                     QLatin1String("database") :
-                                     QLatin1String("sync-01"),
->>>>>>> 8dfa93d34 (Minor fixes)
                                  Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
                                      Utilities::AttributeType::OUTLINE,
                                  false),
@@ -169,15 +152,11 @@ void SyncsMenu::refresh()
             activeFolders++;
             auto* action = new MegaMenuItemAction(
                 SyncController::instance().getSyncNameFromPath(syncSetting->getLocalFolder(true)),
-<<<<<<< HEAD
                 Utilities::getPixmapName(FOLDER_ICON,
                                          Utilities::AttributeType::SMALL |
                                              Utilities::AttributeType::THIN |
                                              Utilities::AttributeType::OUTLINE,
                                          false),
-=======
-                QLatin1String("folder.svg"),
->>>>>>> 8dfa93d34 (Minor fixes)
                 mItemIndent,
                 mMenu);
 
@@ -187,8 +166,7 @@ void SyncsMenu::refresh()
                     this,
                     [syncSetting]()
                     {
-                        Utilities::openUrl(
-                            QUrl::fromLocalFile(syncSetting->getLocalFolder()));
+                        Utilities::openUrl(QUrl::fromLocalFile(syncSetting->getLocalFolder()));
                     });
             mMenu->addAction(action);
         }
@@ -244,8 +222,8 @@ TwoWaySyncsMenu::TwoWaySyncsMenu(QWidget* parent):
 
 QString TwoWaySyncsMenu::createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const
 {
-    return SyncsMenu::createSyncTooltipText(syncSetting)
-           + SyncTooltipCreator::createForRemote(syncSetting->getMegaFolder());
+    return SyncsMenu::createSyncTooltipText(syncSetting) +
+           SyncTooltipCreator::createForRemote(syncSetting->getMegaFolder());
 }
 
 // BackupSyncsMenu ----
@@ -282,8 +260,9 @@ void BackupSyncsMenu::onDeviceNameSet(QString name)
 
 QString BackupSyncsMenu::createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const
 {
-    return SyncsMenu::createSyncTooltipText(syncSetting)
-           + SyncTooltipCreator::createForRemote(mMyBackupsHandleRequest->getNodeLocalizedPath(syncSetting->getMegaFolder()));
+    return SyncsMenu::createSyncTooltipText(syncSetting) +
+           SyncTooltipCreator::createForRemote(
+               mMyBackupsHandleRequest->getNodeLocalizedPath(syncSetting->getMegaFolder()));
 }
 
 void BackupSyncsMenu::refresh()
@@ -300,11 +279,7 @@ void BackupSyncsMenu::refresh()
         // Display device name before folders
         mDevNameAction =
             new MegaMenuItemAction(QString(),
-<<<<<<< HEAD
                                    Utilities::getPixmapName(DEVICE_ICON,
-=======
-                                   Utilities::getPixmapName(QLatin1String("monitor"),
->>>>>>> 8dfa93d34 (Minor fixes)
                                                             Utilities::AttributeType::SMALL |
                                                                 Utilities::AttributeType::THIN |
                                                                 Utilities::AttributeType::OUTLINE,
