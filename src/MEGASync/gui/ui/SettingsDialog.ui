@@ -3423,6 +3423,11 @@ margin-top: 0px;
    <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
   </customwidget>
   <customwidget>
+   <class>TokenizableToolButton</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
+  </customwidget>
+  <customwidget>
    <class>WaitingSpinnerWidget</class>
    <extends>QWidget</extends>
    <header>gui/WaitingSpinnerWidget.h</header>
@@ -3451,11 +3456,6 @@ margin-top: 0px;
    <extends>QWidget</extends>
    <header>syncs/gui/Backups/BackupSettingsUI.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>TokenizableToolButton</class>
-   <extends>QToolButton</extends>
-   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
   </customwidget>
  </customwidgets>
  <resources>

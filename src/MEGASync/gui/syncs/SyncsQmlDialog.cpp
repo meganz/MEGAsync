@@ -2,6 +2,7 @@
 
 #include "DialogOpener.h"
 #include "SettingsDialog.h"
+#include "SyncInfo.h"
 
 #include <QEvent>
 
@@ -11,14 +12,26 @@ bool SyncsQmlDialog::event(QEvent* event)
     {
         if (auto dialog = DialogOpener::findDialog<SettingsDialog>())
         {
-            dialog->getDialog()->setSyncAddButtonEnabled(event->type() == QEvent::Close);
+            dialog->getDialog()->setSyncAddButtonEnabled(
+                event->type() == QEvent::Close,
+                isBackup() ? SettingsDialog::Tabs::BACKUP_TAB : SettingsDialog::Tabs::SYNCS_TAB);
         }
 
-        if (event->type() == QEvent::Close)
+        if (!isBackup() && event->type() == QEvent::Close)
         {
             emit MegaSyncApp->syncsDialogClosed();
         }
     }
 
     return QmlDialog::event(event);
+}
+
+bool SyncsQmlDialog::isBackup() const
+{
+    return mIsBackup;
+}
+
+void SyncsQmlDialog::setIsBackup(bool newIsBackup)
+{
+    mIsBackup = newIsBackup;
 }

@@ -5,11 +5,12 @@ import common 1.0
 import components.views 1.0
 import components.steps 1.0
 
-import QmlDialog 1.0
+import BackupsComponent 1.0
 import SyncInfo 1.0
+
 import ServiceUrls 1.0
 
-QmlDialog {
+SyncsQmlDialog {
     id: window
 
     readonly property int syncOrigin: SyncInfo.MAIN_APP_ORIGIN
@@ -23,6 +24,7 @@ QmlDialog {
     maximumWidth: 640
     minimumHeight: 560
     minimumWidth: 640
+    backup: true
 
     Column {
         id: contentItem
