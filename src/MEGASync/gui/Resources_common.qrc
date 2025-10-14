@@ -1203,8 +1203,8 @@
         <file alias="export-small-regular-outline">images/themed/common/export-small-regular-outline.svg</file>
         <file alias="x_solid_small">images/themed/tokenizable/x_solid_small.svg</file>
         <file alias="external_drive_solid_medium.svg">images/themed/tokenizable/external_drive_solid_medium.svg</file>
-        <file alias="play-circle_medium_thin_outline">images/themed/tokenizable/play-circle_medium_thin_outline.svg</file>
-        <file alias="pause-circle_medium_thin_outline">images/themed/tokenizable/pause-circle_medium_thin_outline.svg</file>
+        <file alias="play-circle_medium_thin_outline.svg">images/themed/tokenizable/play-circle_medium_thin_outline.svg</file>
+        <file alias="pause-circle_medium_thin_outline.svg">images/themed/tokenizable/pause-circle_medium_thin_outline.svg</file>
         <file alias="gear_six_small_thin_outline">images/themed/tokenizable/gear_six_small_thin_outline.svg</file>
         <file alias="menu_01_medium_thin_outline">images/themed/tokenizable/menu_01_medium_thin_outline.svg</file>
         <file alias="alert-circle">images/themed/common/alert-circle.svg</file>
