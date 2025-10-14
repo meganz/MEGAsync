@@ -1,11 +1,10 @@
+#ifndef MEGAMENUITEMACTION_H
+#define MEGAMENUITEMACTION_H
 
-#ifndef MEGA_MENU_ITEM_ACTION_H
-#define MEGA_MENU_ITEM_ACTION_H
-
-#include <QMenu>
 #include <QWidgetAction>
 
 class MegaMenuItem;
+class QMenu;
 
 class MegaMenuItemAction: public QWidgetAction
 {
@@ -17,37 +16,35 @@ public:
                                 int treeDepth = 0,
                                 QObject* parent = nullptr);
 
-    // Configuration methods
+    // Spacing control
     void setIconSpacing(int spacing);
     void setTextSpacing(int spacing);
     void setBeforeIconSpacing(int spacing);
+
+    // Size control
     void setItemHeight(int height);
     void setItemWidth(int width);
+
+    // Tree depth
     void setTreeDepth(int depth);
+
+    // Content
     void setLabelText(const QString& text);
-    void setActionIcon(const QString& iconName);
+    void setActionIcon(const QString& icon);
 
-    // Add submenu support
-    void setSubmenu(QMenu* submenu);
-
-    QMenu* submenu() const
-    {
-        return m_submenu;
-    }
-
-    bool hasSubmenu() const
-    {
-        return m_submenu != nullptr;
-    }
+    // Override to update submenu indicator
+    void setMenu(QMenu* menu);
 
 protected:
     QWidget* createWidget(QWidget* parent) override;
     void deleteWidget(QWidget* widget) override;
-
-private slots:
-    void onItemClicked();
+    bool eventFilter(QObject* watched, QEvent* event) override;
 
 private:
+    void paintItemBackground(MegaMenuItem* item);
+
+private:
+    MegaMenuItem* m_item;
     QString m_text;
     QString m_iconName;
     int m_treeDepth;
@@ -57,7 +54,6 @@ private:
     int m_itemHeight;
     int m_itemWidth;
     QMenu* m_submenu;
-    MegaMenuItem* m_item = nullptr;
 };
 
-#endif // MEGA_MENU_ITEM_ACTION_H
+#endif // MEGAMENUITEMACTION_H

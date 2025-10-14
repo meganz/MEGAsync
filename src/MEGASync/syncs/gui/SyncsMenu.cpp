@@ -1,23 +1,22 @@
 #include "SyncsMenu.h"
 
 #include "DeviceName.h"
+#include "MegaMenuItemAction.h"
 #include "MyBackupsHandle.h"
-#include "Platform.h"
 #include "Preferences.h"
 #include "SyncController.h"
 #include "SyncInfo.h"
 #include "SyncTooltipCreator.h"
 #include "Utilities.h"
 
+#include <QCoreApplication>
+#include <QUrl>
+
 const QLatin1String DEVICE_ICON("://monitor.svg");
 const QLatin1String SYNC_ICON("://sync-01.svg");
 const QLatin1String SYNC_ADD_ICON("://sync-plus.svg");
 const QLatin1String BACKUPC_ICON("://database.svg");
 const QLatin1String BACKUP_ADD_ICON("://database-plus.svg");
-const QString ADD_BACKUP = QCoreApplication::translate("BackupSyncsMenu", "Add Backup");
-const QString ADD_SYNC = QCoreApplication::translate("TwoWaySyncsMenu", "Add Sync");
-const QString BACKUPS = QCoreApplication::translate("BackupSyncsMenu", "Backups");
-const QString SYNCS = QCoreApplication::translate("TwoWaySyncsMenu", "Syncs");
 
 SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, int itemIndent, QWidget* parent):
     QObject(parent),
@@ -27,7 +26,7 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, int itemIndent, QWidget* par
 {
     mMenu->setProperty("class", QLatin1String("MegaMenu"));
     mAddAction = new MegaMenuItemAction(
-        type == mega::MegaSync::SyncType::TYPE_BACKUP ? ADD_BACKUP : ADD_SYNC,
+        getAddActionText(),
         QLatin1String(type == mega::MegaSync::SyncType::TYPE_BACKUP ? BACKUP_ADD_ICON :
                                                                       SYNC_ADD_ICON),
         0,
@@ -35,10 +34,10 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, int itemIndent, QWidget* par
     connect(mAddAction, &MegaMenuItemAction::triggered, this, &SyncsMenu::onAddSync);
 
     mMenuAction = new MegaMenuItemAction(
-        type == mega::MegaSync::SyncType::TYPE_BACKUP ? BACKUPS : SYNCS,
+        getMenuActionText(),
         QLatin1String(type == mega::MegaSync::SyncType::TYPE_BACKUP ? BACKUPC_ICON : SYNC_ICON),
         0);
-    mMenuAction->setSubmenu(mMenu);
+    mMenuAction->setMenu(mMenu);
 
     mMenu->setToolTipsVisible(true);
     mMenu->installEventFilter(this);
@@ -144,8 +143,11 @@ void SyncsMenu::refresh()
                 mMenu);
 
             action->setToolTip(createSyncTooltipText(syncSetting));
-            connect(action, &MenuItemAction::triggered,
-                    this, [syncSetting](){
+            connect(action,
+                    &MegaMenuItemAction::triggered,
+                    this,
+                    [syncSetting]()
+                    {
                         Utilities::openUrl(
                             QUrl::fromLocalFile(syncSetting->getLocalFolder()));
                     });
@@ -162,11 +164,11 @@ void SyncsMenu::refresh()
 
     if (!numItems || !activeFolders)
     {
-        mMenuAction->setSubmenu(nullptr);
+        mMenuAction->setMenu(nullptr);
     }
     else
     {
-        mMenuAction->setSubmenu(mMenu);
+        mMenuAction->setMenu(mMenu);
     }
 }
 
@@ -182,6 +184,20 @@ void SyncsMenu::onAddSync()
     emit addSync(mType);
 }
 
+QString SyncsMenu::getMenuActionText() const
+{
+    return mType == mega::MegaSync::SyncType::TYPE_BACKUP ?
+               QCoreApplication::translate("BackupSyncsMenu", "Backups") :
+               QCoreApplication::translate("TwoWaySyncsMenu", "Syncs");
+}
+
+QString SyncsMenu::getAddActionText() const
+{
+    return mType == mega::MegaSync::SyncType::TYPE_BACKUP ?
+               QCoreApplication::translate("BackupSyncsMenu", "Add Backup") :
+               QCoreApplication::translate("TwoWaySyncsMenu", "Add Sync");
+}
+
 // TwoWaySyncsMenu ----
 TwoWaySyncsMenu::TwoWaySyncsMenu(QWidget* parent):
     SyncsMenu(mega::MegaSync::TYPE_TWOWAY, mTwoWaySyncItemIndent, parent)
@@ -191,16 +207,6 @@ QString TwoWaySyncsMenu::createSyncTooltipText(const std::shared_ptr<SyncSetting
 {
     return SyncsMenu::createSyncTooltipText(syncSetting)
            + SyncTooltipCreator::createForRemote(syncSetting->getMegaFolder());
-}
-
-QString TwoWaySyncsMenu::getMenuActionText() const
-{
-    return tr("Syncs");
-}
-
-QString TwoWaySyncsMenu::getAddActionText() const
-{
-    return tr("Add Sync");
 }
 
 // BackupSyncsMenu ----
@@ -257,14 +263,4 @@ void BackupSyncsMenu::refresh()
         menu->insertAction(firstBackup, mDevNameAction);
         onDeviceNameSet(mDeviceNameRequest->getDeviceName());
     }
-}
-
-QString BackupSyncsMenu::getMenuActionText() const
-{
-    return tr("Backups");
-}
-
-QString BackupSyncsMenu::getAddActionText() const
-{
-    return tr("Add Backup");
 }

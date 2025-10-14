@@ -1,15 +1,19 @@
 #include "MegaMenuItemAction.h"
 
 #include "MegaMenuItem.h"
+#include "TokenParserWidgetManager.h"
 
+#include <QApplication>
 #include <QMenu>
-#include <QTimer>
+#include <QPainter>
+#include <QStyleOption>
 
 MegaMenuItemAction::MegaMenuItemAction(const QString& text,
                                        const QString& iconName,
                                        int treeDepth,
                                        QObject* parent):
     QWidgetAction(parent),
+    m_item(nullptr),
     m_text(text),
     m_iconName(iconName),
     m_treeDepth(treeDepth),
@@ -19,34 +23,14 @@ MegaMenuItemAction::MegaMenuItemAction(const QString& text,
     m_itemHeight(40),
     m_itemWidth(240),
     m_submenu(nullptr)
-{
-    setLabelText(text);
-    setActionIcon(iconName);
-}
+{}
 
 QWidget* MegaMenuItemAction::createWidget(QWidget* parent)
 {
-    m_item = new MegaMenuItem(m_text, m_iconName, m_treeDepth, hasSubmenu(), parent);
-    QTimer* hoverTimer = new QTimer(m_item);
-    hoverTimer->setSingleShot(true);
-    hoverTimer->setInterval(300); // 300ms delay
-    connect(m_item, &MegaMenuItem::hovered, hoverTimer, QOverload<>::of(&QTimer::start));
-    connect(hoverTimer,
-            &QTimer::timeout,
-            this,
-            [this]()
-            {
-                if (hasSubmenu())
-                {
-                    if (m_item)
-                    {
-                        m_item->resetPressedState();
-                    }
-                    QPoint pos = m_item->mapToGlobal(QPoint(m_item->width(), 0));
-                    m_submenu->popup(pos);
-                }
-            });
-    connect(m_item, &MegaMenuItem::leave, hoverTimer, &QTimer::stop);
+    m_item = new MegaMenuItem(m_text, m_iconName, m_treeDepth, menu() != nullptr, parent);
+    m_item->setEnabled(isEnabled());
+    // Install event filter to intercept paint events
+    m_item->installEventFilter(this);
 
     // Apply all spacing settings
     m_item->setIconSpacing(m_iconSpacing);
@@ -58,9 +42,6 @@ QWidget* MegaMenuItemAction::createWidget(QWidget* parent)
     {
         m_item->setFixedWidth(m_itemWidth);
     }
-
-    connect(m_item, &MegaMenuItem::clicked, this, &MegaMenuItemAction::onItemClicked);
-
     return m_item;
 }
 
@@ -72,63 +53,110 @@ void MegaMenuItemAction::deleteWidget(QWidget* widget)
     }
 }
 
-void MegaMenuItemAction::onItemClicked()
+bool MegaMenuItemAction::eventFilter(QObject* watched, QEvent* event)
 {
-    if (m_submenu)
+    if (event->type() == QEvent::Paint)
     {
-        m_item->resetPressedState();
-        if (QWidget* widget = qobject_cast<QWidget*>(sender()))
+        if (MegaMenuItem* item = qobject_cast<MegaMenuItem*>(watched))
         {
-            QPoint pos = widget->mapToGlobal(QPoint(widget->width(), 0));
-            m_submenu->popup(pos);
+            paintItemBackground(item);
+            // Don't return true - let the widget paint its children
         }
     }
-    else
+    return QWidgetAction::eventFilter(watched, event);
+}
+
+void MegaMenuItemAction::paintItemBackground(MegaMenuItem* item)
+{
+    QStyleOption opt;
+    opt.initFrom(item);
+
+    // Check if this action is active in the menu
+    QMenu* menu = qobject_cast<QMenu*>(item->parentWidget());
+    if (menu && menu->activeAction() == this)
     {
-        trigger();
+        opt.state |= QStyle::State_Selected;
+
+        // Check for pressed state
+        if (QApplication::mouseButtons() & Qt::LeftButton)
+        {
+            opt.state |= QStyle::State_Sunken;
+        }
     }
+
+    // Determine color based on state
+    QColor bgColor = Qt::transparent;
+    if (opt.state & QStyle::State_Enabled)
+    {
+        if (opt.state & QStyle::State_Sunken)
+        {
+            bgColor = TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-2"));
+        }
+        else if (opt.state & QStyle::State_Selected)
+        {
+            bgColor = TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-1"));
+        }
+    }
+
+    // Draw background before children are painted
+    QPainter painter(item);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setBrush(bgColor);
+    painter.setPen(Qt::NoPen);
+    painter.drawRoundedRect(item->rect(), 6, 6);
 }
 
 void MegaMenuItemAction::setIconSpacing(int spacing)
 {
     m_iconSpacing = spacing;
+    if (m_item)
+    {
+        m_item->setIconSpacing(spacing);
+    }
 }
 
 void MegaMenuItemAction::setTextSpacing(int spacing)
 {
     m_textSpacing = spacing;
+    if (m_item)
+    {
+        m_item->setTextSpacing(spacing);
+    }
 }
 
 void MegaMenuItemAction::setBeforeIconSpacing(int spacing)
 {
     m_beforeIconSpacing = spacing;
+    if (m_item)
+    {
+        m_item->setBeforeIconSpacing(spacing);
+    }
 }
 
 void MegaMenuItemAction::setItemHeight(int height)
 {
     m_itemHeight = height;
+    if (m_item)
+    {
+        m_item->setFixedHeight(height);
+    }
 }
 
 void MegaMenuItemAction::setItemWidth(int width)
 {
     m_itemWidth = width;
+    if (m_item)
+    {
+        m_item->setFixedWidth(width);
+    }
 }
 
 void MegaMenuItemAction::setTreeDepth(int depth)
 {
     m_treeDepth = depth;
-}
-
-void MegaMenuItemAction::setSubmenu(QMenu* submenu)
-{
-    m_submenu = submenu;
-    const auto widgets = createdWidgets();
-    for (QWidget* widget: widgets)
+    if (m_item)
     {
-        if (MegaMenuItem* item = qobject_cast<MegaMenuItem*>(widget))
-        {
-            item->setHasSubmenu(hasSubmenu());
-        }
+        m_item->setTreeDepth(depth);
     }
 }
 
@@ -137,7 +165,7 @@ void MegaMenuItemAction::setLabelText(const QString& text)
     m_text = text;
     if (m_item)
     {
-        m_item->setText(m_text);
+        m_item->setText(text);
     }
 }
 
@@ -146,6 +174,15 @@ void MegaMenuItemAction::setActionIcon(const QString& icon)
     m_iconName = icon;
     if (m_item)
     {
-        m_item->setIcon(m_iconName);
+        m_item->setIcon(icon);
+    }
+}
+
+void MegaMenuItemAction::setMenu(QMenu* menu)
+{
+    QWidgetAction::setMenu(menu);
+    if (m_item)
+    {
+        m_item->setHasSubmenu(menu != nullptr);
     }
 }

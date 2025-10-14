@@ -183,10 +183,6 @@ private:
 
     FilterAlertWidget* filterMenu;
 
-    MenuItemAction *cloudItem;
-    MenuItemAction *sharesItem;
-    MenuItemAction *rubbishItem;
-
     int activeDownloadState, activeUploadState;
     bool pendingUploadsTimerRunning = false;
     bool pendingDownloadsTimerRunning = false;

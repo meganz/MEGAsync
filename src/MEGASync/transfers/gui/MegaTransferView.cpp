@@ -15,80 +15,7 @@ using namespace mega;
 
 const int MAX_ITEMS_FOR_CONTEXT_MENU = 10;
 
-QString MegaTransferView::cancelAllAskActionText()
-{
-    return tr("Cancel transfers?\n"
-              "All your transfers will be cancelled.");
-}
-
-QString MegaTransferView::cancelAndClearAskActionText()
-{
-    return tr("Cancel transfers?\n"
-              "All your transfers in this category will be cancelled and cleared.");
-}
-
-QString MegaTransferView::cancelAskActionText()
-{
-    return tr("Cancel transfers?\n"
-              "All your transfers in this category will be cancelled.");
-}
-
-QString MegaTransferView::cancelWithSyncAskActionText()
-{
-    return tr("Cancel transfers?\n"
-              "Your incomplete sync transfers won't be cancelled.");
-}
-
-QString MegaTransferView::cancelAndClearWithSyncAskActionText()
-{
-    return tr("Cancel transfers?\n"
-              "Your incomplete sync transfers won't be cancelled\n"
-              "All the other transfers will be cancelled and cleared.");
-}
-
-QString MegaTransferView::clearAllCompletedAskActionText()
-{
-    return tr("Clear transfers?\n"
-              "All your completed transfers will be cleared.");
-}
-
-QString MegaTransferView::clearCompletedAskActionText()
-{
-    return tr("Clear transfers?\n"
-              "All your completed transfers in this category will be cleared.");
-}
-
-//Multiple seletion
-QString MegaTransferView::cancelSelectedAskActionText()
-{
-    return tr("Cancel transfers?\n"
-              "All your selected transfers will be cancelled.");
-}
-
-QString MegaTransferView::cancelAndClearSelectedAskActionText()
-{
-    return tr("Cancel transfers?\n"
-              "All your selected transfers will be cancelled and cleared.");
-}
-
-QString MegaTransferView::cancelSelectedWithSyncAskActionText()
-{
-    return tr("Cancel transfers?\n"
-              "Your selected incomplete sync transfers won't be cancelled.");
-}
-
-QString MegaTransferView::cancelAndClearSelectedWithSyncAskActionText()
-{
-    return tr("Cancel transfers?\n"
-              "Your selected incomplete sync transfers won't be cancelled\n"
-              "All the other selected transfers will be cancelled and cleared.");
-}
-
-QString MegaTransferView::clearSelectedCompletedAskActionText()
-{
-    return tr("Clear transfers?\n"
-              "All the selected completed transfers in this category will be cleared.");
-}
+// Multiple seletion
 
 //Single seletion
 QString MegaTransferView::cancelSingleActionText()
@@ -247,28 +174,33 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getVisibleCancelOrClearI
             {
                 if(info.areAllCancellable || !isAnyCompleted)
                 {
-                    info.actionText = cancelAskActionText();
+                    info.titleText = cancelTransfersMultiSelectionTitleText();
+                    info.actionText = cancelCategoryTransfersDescriptionText();
                 }
                 else
                 {
-                    info.actionText = cancelAndClearAskActionText();
+                    info.titleText = cancelTransfersMultiSelectionTitleText();
+                    info.actionText = cancelAndClearDescriptionText();
                 }
             }
             else
             {
                 if(isAnyCompleted)
                 {
-                    info.actionText = cancelAndClearWithSyncAskActionText();
+                    info.titleText = cancelTransfersMultiSelectionTitleText();
+                    info.actionText = cancelAndClearTransfersWithSyncDescriptionText();
                 }
                 else
                 {
-                    info.actionText = cancelWithSyncAskActionText();
+                    info.titleText = cancelTransfersMultiSelectionTitleText();
+                    info.actionText = cancelTransfersWithSyncDescriptionText();
                 }
             }
         }
         else
         {
-            info.actionText = clearCompletedAskActionText();
+            info.titleText = clearTransfersMultiSelectionTitleText();
+            info.actionText = clearCategoryTransfersDescriptionText();
             info.buttonsText = getClearDialogButtons();
         }
     }
@@ -323,11 +255,16 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getSelectedCancelOrClear
         {
             if(isAnyCompleted)
             {
-                info.actionText = info.isAnyCancellable ? cancelAndClearSelectedWithSyncAskActionText() : clearSelectedCompletedAskActionText();
+                info.titleText = info.isAnyCancellable ? cancelTransfersMultiSelectionTitleText() :
+                                                         clearTransfersMultiSelectionTitleText();
+                info.actionText = info.isAnyCancellable ?
+                                      cancelAndClearSelectedWithSyncDescriptionText() :
+                                      clearSelectedCompletedTransfersDescriptionText();
             }
             else if(info.isAnyCancellable)
             {
-                info.actionText = cancelSelectedWithSyncAskActionText();
+                info.titleText = cancelTransfersMultiSelectionTitleText();
+                info.actionText = cancelSelectedWithSyncsDescriptionText();
             }
 
         }
@@ -337,17 +274,20 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getSelectedCancelOrClear
             {
                 if(info.isAnyCancellable)
                 {
-                    info.actionText = cancelAndClearSelectedAskActionText();
+                    info.titleText = cancelTransfersMultiSelectionTitleText();
+                    info.actionText = cancelAndClearSelectedDescriptionText();
                 }
                 else
                 {
-                    info.actionText = clearSelectedCompletedAskActionText();
+                    info.titleText = clearTransfersMultiSelectionTitleText();
+                    info.actionText = clearSelectedCompletedTransfersDescriptionText();
                     info.buttonsText = getClearDialogButtons();
                 }
             }
             else if(info.isAnyCancellable)
             {
-                info.actionText = cancelSelectedAskActionText();
+                info.titleText = cancelTransfersMultiSelectionTitleText();
+                info.actionText = cancelSelectedDescriptionText();
             }
         }
     }
@@ -396,6 +336,7 @@ void MegaTransferView::onCancelVisibleTransfers()
     if(!info.areAllSync)
     {
         MessageDialogInfo msgInfo;
+        msgInfo.titleText = info.titleText;
         msgInfo.descriptionText = info.actionText;
         msgInfo.parent = this;
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
@@ -422,6 +363,7 @@ void MegaTransferView::onCancelSelectedTransfers()
     auto info = getSelectedCancelOrClearInfo();
 
     MessageDialogInfo msgInfo;
+    msgInfo.titleText = info.titleText;
     msgInfo.descriptionText = info.actionText;
     msgInfo.parent = this;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
@@ -444,6 +386,78 @@ void MegaTransferView::onCancelSelectedTransfers()
     MessageDialogOpener::warning(msgInfo);
 }
 
+QString MegaTransferView::cancelTransfersMultiSelectionTitleText()
+{
+    return tr("Cancel transfers?");
+}
+
+QString MegaTransferView::clearTransfersMultiSelectionTitleText()
+{
+    return tr("Clear transfers?");
+}
+
+QString MegaTransferView::cancelAllDescriptionText()
+{
+    return tr("All your transfers will be cancelled.");
+}
+
+QString MegaTransferView::cancelAndClearDescriptionText()
+{
+    return tr("All your transfers in this category will be cancelled and cleared.");
+}
+
+QString MegaTransferView::cancelCategoryTransfersDescriptionText()
+{
+    return tr("All your transfers in this category will be cancelled.");
+}
+
+QString MegaTransferView::cancelTransfersWithSyncDescriptionText()
+{
+    return tr("Your incomplete sync transfers won't be cancelled.");
+}
+
+QString MegaTransferView::cancelAndClearTransfersWithSyncDescriptionText()
+{
+    return tr("Your incomplete sync transfers won't be cancelled\n"
+              "All the other transfers will be cancelled and cleared.");
+}
+
+QString MegaTransferView::clearAllCompletedDescriptionText()
+{
+    return tr("All your completed transfers will be cleared.");
+}
+
+QString MegaTransferView::clearCategoryTransfersDescriptionText()
+{
+    return tr("All your completed transfers in this category will be cleared.");
+}
+
+QString MegaTransferView::cancelSelectedDescriptionText()
+{
+    return tr("All your selected transfers will be cancelled.");
+}
+
+QString MegaTransferView::cancelAndClearSelectedDescriptionText()
+{
+    return tr("All your selected transfers will be cancelled and cleared.");
+}
+
+QString MegaTransferView::cancelSelectedWithSyncsDescriptionText()
+{
+    return tr("Your selected incomplete sync transfers won't be cancelled.");
+}
+
+QString MegaTransferView::cancelAndClearSelectedWithSyncDescriptionText()
+{
+    return tr("Your selected incomplete sync transfers won't be cancelled\n"
+              "All the other selected transfers will be cancelled and cleared.");
+}
+
+QString MegaTransferView::clearSelectedCompletedTransfersDescriptionText()
+{
+    return tr("All the selected completed transfers in this category will be cleared.");
+}
+
 void MegaTransferView::onCancelAllTransfers()
 {
     auto proxy (qobject_cast<TransfersManagerSortFilterProxyModel*>(model()));
@@ -451,8 +465,9 @@ void MegaTransferView::onCancelAllTransfers()
     if (proxy)
     {
         MessageDialogInfo msgInfo;
-        msgInfo.descriptionText =
-            proxy->isAnySync() ? cancelWithSyncAskActionText() : cancelAllAskActionText();
+        msgInfo.titleText = cancelTransfersMultiSelectionTitleText();
+        msgInfo.descriptionText = proxy->isAnySync() ? cancelTransfersWithSyncDescriptionText() :
+                                                       cancelAllDescriptionText();
         msgInfo.parent = this;
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
         msgInfo.defaultButton = QMessageBox::No;
@@ -474,7 +489,8 @@ void MegaTransferView::onCancelAllTransfers()
 void MegaTransferView::onClearAllTransfers()
 {
     MessageDialogInfo msgInfo;
-    msgInfo.titleText = clearAllCompletedAskActionText();
+    msgInfo.titleText = clearTransfersMultiSelectionTitleText();
+    msgInfo.descriptionText = clearAllCompletedDescriptionText();
     msgInfo.parent = this;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
@@ -496,7 +512,8 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
     auto info = getVisibleCancelOrClearInfo();
 
     MessageDialogInfo msgInfo;
-    msgInfo.titleText = info.actionText;
+    msgInfo.titleText = info.titleText;
+    msgInfo.descriptionText = info.actionText;
     msgInfo.parent = this;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
@@ -523,7 +540,8 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
 void MegaTransferView::onClearVisibleTransfers()
 {
     MessageDialogInfo msgInfo;
-    msgInfo.descriptionText = clearCompletedAskActionText();
+    msgInfo.titleText = clearTransfersMultiSelectionTitleText();
+    msgInfo.descriptionText = clearCategoryTransfersDescriptionText();
     msgInfo.parent = this;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;

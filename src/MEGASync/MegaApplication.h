@@ -572,8 +572,16 @@ private:
                                 const char* iconPath,
                                 Func slotFunc)
     {
+        bool previousEnabledState = true;
+        if (*action)
+        {
+            previousEnabledState = (*action)->isEnabled();
+            (*action)->deleteLater();
+            *action = nullptr;
+        }
         *action = new MegaMenuItemAction(actionName, QLatin1String(iconPath), 0);
         connect(*action, &QAction::triggered, this, slotFunc, Qt::QueuedConnection);
+        (*action)->setEnabled(previousEnabledState);
     }
     template<class Func>
     void recreateAction(QAction** action,

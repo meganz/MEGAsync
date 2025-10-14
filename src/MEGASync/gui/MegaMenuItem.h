@@ -5,10 +5,6 @@
 
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QMouseEvent>
-#include <QPainter>
-#include <QPaintEvent>
-#include <QStyleOption>
 #include <QWidget>
 
 class MegaMenuItem: public QWidget
@@ -49,42 +45,18 @@ public:
     void setIcon(const QString& icon);
     void setHasSubmenu(bool hasSubmenu);
 
-    // State
-    void setEnabled(bool enabled);
-
-    bool isEnabled() const
-    {
-        return m_enabled;
-    }
-
-    void resetPressedState();
-
-signals:
-    void clicked();
-    void hovered();
-    void leave();
-    void pressed();
-
 protected:
-    void mousePressEvent(QMouseEvent* event) override;
-    void mouseReleaseEvent(QMouseEvent* event) override;
-    void enterEvent(QEvent* event) override;
-    void leaveEvent(QEvent* event) override;
-    void paintEvent(QPaintEvent* event) override;
     bool event(QEvent* event) override;
 
 private:
     void updateLayout();
-    void updateStyleSheet();
-
-private:
     void createSubmenuArrow();
 
 private:
     QHBoxLayout* m_layout;
     IconLabel* m_iconLabel;
     QLabel* m_textLabel;
-    QLabel* m_arrowLabel; // Right arrow for submenus
+    QLabel* m_arrowLabel;
 
     QString m_text;
     QString m_iconName;
@@ -92,14 +64,9 @@ private:
     bool m_hasSubmenu;
 
     // Spacing controls
-    int m_iconSpacing; // Space between icon and text
-    int m_textSpacing; // Additional text spacing
-    int m_beforeIconSpacing; // Space before icon
-
-    // State
-    bool m_enabled;
-    bool m_hovered;
-    bool m_pressed;
+    int m_iconSpacing;
+    int m_textSpacing;
+    int m_beforeIconSpacing;
 
     // Constants
     static constexpr int DEFAULT_TREE_INDENT = 20;

@@ -42,8 +42,8 @@ protected:
 
     QPointer<QMenu> getMenu();
 
-    virtual QString getMenuActionText() const = 0;
-    virtual QString getAddActionText() const = 0;
+    QString getMenuActionText() const;
+    QString getAddActionText() const;
 
     QPointer<QMenu> mMenu;
 
@@ -65,10 +65,6 @@ class TwoWaySyncsMenu : public SyncsMenu
 public:
     explicit TwoWaySyncsMenu(QWidget* parent = nullptr);
 
-protected:
-    QString getMenuActionText() const override;
-    QString getAddActionText() const override;
-
 private:
     QString createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const override;
 
@@ -81,10 +77,6 @@ class BackupSyncsMenu : public SyncsMenu
 
 public:
     explicit BackupSyncsMenu(QWidget* parent = nullptr);
-
-protected:
-    QString getMenuActionText() const override;
-    QString getAddActionText() const override;
 
 private slots:
     void onDeviceNameSet(QString name);

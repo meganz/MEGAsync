@@ -581,6 +581,7 @@ void TransfersWidget::onCancelClearButtonPressedOnDelegate()
 
     MessageDialogInfo msgInfo;
     msgInfo.parent = this;
+    msgInfo.titleText = info.titleText;
     msgInfo.descriptionText = info.actionText;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;

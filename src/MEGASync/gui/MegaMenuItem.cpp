@@ -16,32 +16,36 @@ MegaMenuItem::MegaMenuItem(const QString& text,
     m_hasSubmenu(hasSubmenu),
     m_iconSpacing(8),
     m_textSpacing(0),
-    m_beforeIconSpacing(0),
-    m_enabled(true),
-    m_hovered(false),
-    m_pressed(false)
+    m_beforeIconSpacing(0)
 {
+    // Make transparent for mouse events - let QMenu handle all interaction
+    setAttribute(Qt::WA_TransparentForMouseEvents);
+
+    // Transparent background
+    setStyleSheet(QLatin1String("MegaMenuItem { background-color: transparent; }"));
+
     // Create layout
     m_layout = new QHBoxLayout(this);
     m_layout->setSpacing(0);
     m_layout->setContentsMargins(0, 0, 0, 0);
+
     // Create icon label
     m_iconLabel = new IconLabel(this);
-    m_iconLabel->setFixedSize(DEFAULT_ICON_SIZE,
-                              DEFAULT_ICON_SIZE); // Default icon size
+    m_iconLabel->setProperty("disabled_off", QLatin1String("button-disabled"));
+    m_iconLabel->setFixedSize(DEFAULT_ICON_SIZE, DEFAULT_ICON_SIZE);
 
     // Create text label
     m_textLabel = new QLabel(text, this);
     m_textLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-
+    m_textLabel->setStyleSheet(QLatin1String("background-color: transparent"));
     // Create arrow label for submenu indicator
     m_arrowLabel = new QLabel(this);
     m_arrowLabel->setAlignment(Qt::AlignCenter);
     m_arrowLabel->setFixedSize(16, 16);
+    m_arrowLabel->setStyleSheet(QLatin1String("background-color: transparent"));
     createSubmenuArrow();
 
     updateLayout();
-    updateStyleSheet();
 
     // Set default size
     setFixedHeight(32);
@@ -98,7 +102,7 @@ void MegaMenuItem::updateLayout()
     if (m_hasSubmenu)
     {
         m_layout->addWidget(m_arrowLabel);
-        m_layout->addSpacing(0); // Small space from right edge
+        m_layout->addSpacing(0);
     }
 
     // Set margins (includes tree depth)
@@ -120,32 +124,6 @@ void MegaMenuItem::setHasSubmenu(bool hasSubmenu)
     updateLayout();
 }
 
-void MegaMenuItem::updateStyleSheet()
-{
-    QString styleSheet;
-    QString stateColor(QLatin1String("transparent"));
-    if (m_enabled)
-    {
-        if (m_pressed)
-        {
-            stateColor = TokenParserWidgetManager::instance()
-                             ->getColor(QLatin1String("surface-2"))
-                             .name(QColor::NameFormat::HexArgb);
-        }
-        else if (m_hovered)
-        {
-            stateColor = TokenParserWidgetManager::instance()
-                             ->getColor(QLatin1String("surface-1"))
-                             .name(QColor::NameFormat::HexArgb);
-        }
-    }
-    styleSheet = QLatin1String("MegaMenuItem {border-radius: 6px; background-color: %1; } QLabel "
-                               "{background-color: %1;}")
-                     .arg(stateColor);
-    setStyleSheet(styleSheet);
-    TokenParserWidgetManager::instance()->polish(this);
-}
-
 void MegaMenuItem::setTreeDepth(int depth)
 {
     m_treeDepth = depth;
@@ -164,79 +142,12 @@ void MegaMenuItem::setIcon(const QString& icon)
     updateLayout();
 }
 
-void MegaMenuItem::setEnabled(bool enabled)
-{
-    m_enabled = enabled;
-    QWidget::setEnabled(enabled);
-    updateStyleSheet();
-}
-
-void MegaMenuItem::mousePressEvent(QMouseEvent* event)
-{
-    if (m_enabled && event->button() == Qt::LeftButton)
-    {
-        m_pressed = true;
-        updateStyleSheet();
-        emit pressed();
-    }
-    QWidget::mousePressEvent(event);
-}
-
-void MegaMenuItem::mouseReleaseEvent(QMouseEvent* event)
-{
-    if (m_enabled && m_pressed && event->button() == Qt::LeftButton)
-    {
-        m_pressed = false;
-        updateStyleSheet();
-        emit clicked();
-    }
-    QWidget::mouseReleaseEvent(event);
-}
-
-void MegaMenuItem::enterEvent(QEvent* event)
-{
-    if (m_enabled)
-    {
-        m_hovered = true;
-        updateStyleSheet();
-        emit hovered();
-    }
-    QWidget::enterEvent(event);
-}
-
-void MegaMenuItem::leaveEvent(QEvent* event)
-{
-    if (m_enabled)
-    {
-        m_hovered = false;
-        m_pressed = false;
-        updateStyleSheet();
-        emit leave();
-    }
-    QWidget::leaveEvent(event);
-}
-
-void MegaMenuItem::paintEvent(QPaintEvent* event)
-{
-    QStyleOption opt;
-    opt.init(this);
-    QPainter p(this);
-    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
-    QWidget::paintEvent(event);
-}
-
 bool MegaMenuItem::event(QEvent* event)
 {
     if (event->type() == ThemeManager::ThemeChanged)
     {
         updateLayout();
+        update();
     }
     return QWidget::event(event);
-}
-
-void MegaMenuItem::resetPressedState()
-{
-    m_pressed = false;
-    m_hovered = false;
-    updateStyleSheet();
 }

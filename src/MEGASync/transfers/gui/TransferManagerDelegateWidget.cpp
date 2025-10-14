@@ -492,10 +492,10 @@ void TransferManagerDelegateWidget::render(const QStyleOptionViewItem& option,
         TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-1"));
     static QColor selectColor =
         TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-2"));
-    static auto theme = Preferences::instance()->getThemeType();
-    if (theme != Preferences::instance()->getThemeType())
+    static auto theme = ThemeManager::instance()->currentColorScheme();
+    if (theme != ThemeManager::instance()->currentColorScheme())
     {
-        theme = Preferences::instance()->getThemeType();
+        theme = ThemeManager::instance()->currentColorScheme();
         hoverColor = TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-1"));
         selectColor = TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-2"));
     }
