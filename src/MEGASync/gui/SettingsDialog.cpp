@@ -1335,6 +1335,7 @@ void SettingsDialog::on_bExportMasterKey_clicked()
     QDir dir(defaultPath);
 
     QFileDialog* dialog = new QFileDialog(this);
+    dialog->setWindowModality(Qt::WindowModal);
     dialog->setFileMode(QFileDialog::AnyFile);
     dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     dialog->selectFile(dir.filePath(tr("MEGA-RECOVERYKEY")));
