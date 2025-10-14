@@ -759,66 +759,44 @@
     </message>
 </context>
 <context>
-    <name>ChangePassword</name>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to close the Change password dialog discarding the information</translatorcomment>
-        <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Change password</source>
-        <translatorcomment>Windows title of the Change password dialog</translatorcomment>
-        <translation>Change password</translation>
-    </message>
-    <message>
-        <source>Confirm new password</source>
-        <translatorcomment>Label displayed next to control where the user can enter the new password confirmation</translatorcomment>
-        <translation>Confirm new password</translation>
-    </message>
-    <message>
-        <source>New password</source>
-        <translatorcomment>Label displayed next to control where the user can enter the new password</translatorcomment>
-        <translation>New password</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Button label to close the Change password dialog saving the new information</translatorcomment>
-        <translation>OK</translation>
-    </message>
+    <name>ChangePasswordController</name>
     <message>
         <source>Password changed</source>
-        <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
-        <translation>Password changed</translation>
-    </message>
-    <message>
-        <source>Please enter your password</source>
-        <translatorcomment>Error message displayed when an empty password has been provided</translatorcomment>
-        <translation>Enter your password</translation>
-    </message>
-    <message>
-        <source>Please, enter a stronger password</source>
-        <translatorcomment>Error message displayed when an the new password is too weak</translatorcomment>
-        <translation>Enter a stronger password</translation>
-    </message>
-    <message>
-        <source>The entered passwords don&apos;t match</source>
-        <translatorcomment>Error message displayed when the new password and its confirmation are not the same</translatorcomment>
-        <translation>The entered passwords don’t match</translation>
-    </message>
-    <message>
-        <source>Too many requests. Please wait.</source>
-        <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</translatorcomment>
-        <translation>Too many requests. Please wait.</translation>
-    </message>
-    <message>
-        <source>You have entered your current password, please enter a new password.</source>
-        <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
-        <translation>You have entered your current password, enter a new password.</translation>
+        <translatorcomment>Title of the dialog displayed when the change password process finish successful. SNC-5799</translatorcomment>
+        <translation type="unfinished">Password changed</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
-        <translatorcomment>Success message shown when the password has been changed</translatorcomment>
-        <translation>Your password has been changed.</translation>
+        <translatorcomment>Success message shown when the password has been changed. SNC-5799</translatorcomment>
+        <translation type="unfinished">Your password has been changed.</translation>
+    </message>
+    <message>
+        <source>Too many requests. Please wait.</source>
+        <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible). SNC-5799</translatorcomment>
+        <translation type="unfinished">Too many requests. Please wait.</translation>
+    </message>
+    <message>
+        <source>You have entered your current password, please enter a new password.</source>
+        <translatorcomment>Informative message shown when user is trying to change his password with the current one. SNC-5799</translatorcomment>
+        <translation type="unfinished">You have entered your current password, enter a new password.</translation>
+    </message>
+</context>
+<context>
+    <name>ChangePasswordStrings</name>
+    <message>
+        <source>Change password</source>
+        <translatorcomment>Windows title of the Change password dialog. SNC-5799</translatorcomment>
+        <translation type="unfinished">Change password</translation>
+    </message>
+    <message>
+        <source>New password</source>
+        <translatorcomment>Label displayed next to control where the user can enter the new password. SNC-5799</translatorcomment>
+        <translation type="unfinished">New password</translation>
+    </message>
+    <message>
+        <source>Confirm new password</source>
+        <translatorcomment>Label displayed next to control where the user can enter the new password confirmation. SNC-5799</translatorcomment>
+        <translation type="unfinished">Confirm new password</translation>
     </message>
 </context>
 <context>
@@ -3042,44 +3020,6 @@ Wait for the upload to complete.</translation>
         <source>Local Copy</source>
         <translatorcomment>Title in the choosing widget used to offer the user the option to choose local version when conflicts occur.SNC-2565</translatorcomment>
         <translation>Local copy</translation>
-    </message>
-</context>
-<context>
-    <name>Login2FA</name>
-    <message>
-        <source>6 digit code:</source>
-        <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation>6-digit code:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button text to cancel 2FA dialog</translatorcomment>
-        <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Invalid code</source>
-        <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
-        <translation>Invalid code</translation>
-    </message>
-    <message>
-        <source>Login Verification</source>
-        <translatorcomment>A dialog title for the form which collects the user’s 2FA code for login.</translatorcomment>
-        <translation>Login verification</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translatorcomment>Button text to confirm 2FA dialog</translatorcomment>
-        <translation>Next</translation>
-    </message>
-    <message>
-        <source>Please enter the code generated by your authentication app</source>
-        <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>Enter the code generated by your authenticator app</translation>
-    </message>
-    <message>
-        <source>[A]Lost your authenticator device?[/A]</source>
-        <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation>[A]Lost your authenticator device?[/A]</translation>
     </message>
 </context>
 <context>
