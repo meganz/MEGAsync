@@ -97,7 +97,7 @@ image: url(:/error_sync_icon);
 
 #lDisabledSyncs
 {
-color: #ffe31b57; /*colorToken.text-error*/
+color: #ff303233; /*colorToken.text-primary*/
 background-color: transparent;
 }
 
