@@ -173,7 +173,6 @@
         <file alias="folder.svg">images/themed/light/folder.svg</file>
         <file alias="alert-circle-support-warning.svg">images/themed/light/alert-circle-support-warning.svg</file>
         <file alias="atom.svg">images/themed/light/atom.svg</file>
-        <file alias="sync-01.svg">images/themed/light/sync-01.svg</file>
         <file alias="radial-speedometer.svg">images/themed/light/radial-speedometer.svg</file>
         <file alias="radial-cloud.svg">images/themed/light/radial-cloud.svg</file>
         <file alias="Activity.gif">images/themed/light/Activity.gif</file>
