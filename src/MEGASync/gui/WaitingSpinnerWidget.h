@@ -53,7 +53,6 @@ public:
     Q_PROPERTY(QString colorToken MEMBER _colorToken WRITE setColorToken)
     void setColorToken(const QString& colorToken);
 
-    void setColor(QColor color);
     void setRoundness(qreal roundness);
     void setMinimumTrailOpacity(qreal minimumTrailOpacity);
     void setTrailFadePercentage(qreal trail);
@@ -66,7 +65,6 @@ public:
     void setCenterOnParent(bool value);
     qint64 getStartTime();
 
-    QColor color();
     qreal roundness();
     qreal minimumTrailOpacity();
     qreal trailFadePercentage();

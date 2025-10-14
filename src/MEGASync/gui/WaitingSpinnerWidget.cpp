@@ -187,10 +187,6 @@ qint64 WaitingSpinnerWidget::getStartTime()
     return _startTime;
 }
 
-QColor WaitingSpinnerWidget::color() {
-    return _color;
-}
-
 qreal WaitingSpinnerWidget::roundness() {
     return _roundness;
 }
@@ -231,13 +227,10 @@ void WaitingSpinnerWidget::setRoundness(qreal roundness) {
     _roundness = std::max(0.0, std::min(100.0, roundness));
 }
 
-void WaitingSpinnerWidget::setColor(QColor color) {
-    _color = color;
-}
-
 void WaitingSpinnerWidget::setColorToken(const QString& colorToken)
 {
     _colorToken = colorToken;
+    _color = TokenParserWidgetManager::instance()->getColor(_colorToken);
 }
 
 void WaitingSpinnerWidget::setRevolutionsPerSecond(qreal revolutionsPerSecond) {
