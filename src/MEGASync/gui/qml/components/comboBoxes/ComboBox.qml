@@ -50,6 +50,7 @@ Qml.ComboBox {
             border.width: sizes.borderWidth
             border.color: enabled === true? ColorTheme.buttonOutline : ColorTheme.buttonDisabled
             radius: sizes.borderRadius
+            color: "transparent"
         }
     }
     delegate: Qml.ItemDelegate {
@@ -159,6 +160,11 @@ Qml.ComboBox {
                 color: ColorTheme.buttonOutline
             }
         }
+    }
+    Component.onCompleted: {
+        contentItem.color = Qt.binding(function() {
+            return root.enabled ? ColorTheme.textPrimary : ColorTheme.textDisabled
+        })
     }
 }
 

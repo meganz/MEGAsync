@@ -62,7 +62,6 @@ border-radius: 8px;
 
 #labelError {
 font-size: 12px;
-color: #E31B57; /*colorToken.text-error*/
 }
 </string>
   </property>
@@ -1145,14 +1144,14 @@ color: #E31B57; /*colorToken.text-error*/
  </widget>
  <customwidgets>
   <customwidget>
-   <class>IconLabel</class>
-   <extends>QToolButton</extends>
-   <header>tokenizer/TokenizableItems/IconLabel.h</header>
-  </customwidget>
-  <customwidget>
    <class>TokenizableToolButton</class>
    <extends>QToolButton</extends>
    <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
+  </customwidget>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>
