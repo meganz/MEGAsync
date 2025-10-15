@@ -5,7 +5,7 @@ import common 1.0
 QtObject {
     id: root
 
-    property color selection: ColorTheme.focusColor
+    property color selection: ColorTheme.textPrimary
     property color placeholder: ColorTheme.textPlaceholder
     property color text: ColorTheme.textPrimary
     property color textDisabled: ColorTheme.textDisabled
