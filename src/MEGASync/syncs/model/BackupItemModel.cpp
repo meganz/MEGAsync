@@ -82,19 +82,21 @@ QVariant BackupItemModel::data(const QModelIndex& index, int role) const
                 {
                     QIcon syncIcon;
 
-                    QPixmap backupNormal =
-                        Utilities::getColoredPixmap(QLatin1String("settings-backup"),
-                                                    Utilities::AttributeType::NONE,
-                                                    QLatin1String("icon-primary"),
-                                                    QSize(STATES_ICON_SIZE, STATES_ICON_SIZE));
+                    QPixmap backupNormal = Utilities::getColoredPixmap(
+                        QLatin1String("database"),
+                        Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                            Utilities::AttributeType::OUTLINE,
+                        QLatin1String("icon-primary"),
+                        QSize(STATES_ICON_SIZE, STATES_ICON_SIZE));
 
                     syncIcon.addPixmap(backupNormal, QIcon::Normal);
 
-                    QPixmap backupSelected =
-                        Utilities::getColoredPixmap(QLatin1String("settings-backup"),
-                                                    Utilities::AttributeType::NONE,
-                                                    QLatin1String("icon-inverse"),
-                                                    QSize(STATES_ICON_SIZE, STATES_ICON_SIZE));
+                    QPixmap backupSelected = Utilities::getColoredPixmap(
+                        QLatin1String("database"),
+                        Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                            Utilities::AttributeType::OUTLINE,
+                        QLatin1String("icon-inverse"),
+                        QSize(STATES_ICON_SIZE, STATES_ICON_SIZE));
 
                     syncIcon.addPixmap(backupSelected, QIcon::Selected);
 
