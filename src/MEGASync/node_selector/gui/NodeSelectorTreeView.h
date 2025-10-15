@@ -116,6 +116,7 @@ private:
         areAllEligibleForDeletion(const QModelIndexList& selectedIndexes) const;
     bool areAllEligibleForLinkShare(const QModelIndexList& selectedIndexes) const;
     bool areAllEligibleForRestore(const QModelIndexList& selectedIndexes) const;
+    bool areAllEligibleForDownload(const QModelIndexList& selectedIndexes) const;
 
     void addShareLinkMenuAction(QMap<int, QAction*>& actions,
                                 const QModelIndexList& selectedIndexes,
@@ -125,6 +126,7 @@ private:
                               const QModelIndexList& selectedIndexes,
                               const QList<mega::MegaHandle>& selectionHandles);
     void addDownloadMenuAction(QMap<int, QAction*>& actions,
+                               const QModelIndexList& selectedIndexes,
                                const QList<mega::MegaHandle>& selectionHandles);
     void addRenameMenuAction(QMap<int, QAction*>& actions, const QModelIndex& index);
     void addSyncMenuActions(QMap<int, QAction*>& actions,
