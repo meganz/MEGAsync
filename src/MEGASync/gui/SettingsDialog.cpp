@@ -1118,7 +1118,7 @@ void SettingsDialog::on_bMyAccount_clicked()
 
 void SettingsDialog::on_bStorageDetails_clicked()
 {
-    auto accountDetailsDialog = new AccountDetailsDialog();
+    auto accountDetailsDialog = new AccountDetailsDialog(this);
     DialogOpener::showNonModalDialog<AccountDetailsDialog>(accountDetailsDialog);
 }
 
