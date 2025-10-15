@@ -111,10 +111,13 @@ void MegaMenuItem::updateLayout()
 
 void MegaMenuItem::createSubmenuArrow()
 {
-    m_arrowLabel->setPixmap(
-        Utilities::getCachedPixmap(QLatin1String("://chevron-right-icon-secondary.svg"))
-            .pixmap(DEFAULT_ICON_SIZE, DEFAULT_ICON_SIZE));
-    m_arrowLabel->setVisible(m_hasSubmenu);
+    if (m_arrowLabel != nullptr)
+    {
+        m_arrowLabel->setPixmap(
+            Utilities::getCachedPixmap(QLatin1String("://chevron-right-icon-secondary.svg"))
+                .pixmap(DEFAULT_ICON_SIZE, DEFAULT_ICON_SIZE));
+        m_arrowLabel->setVisible(m_hasSubmenu);
+    }
 }
 
 void MegaMenuItem::setHasSubmenu(bool hasSubmenu)

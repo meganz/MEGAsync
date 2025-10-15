@@ -343,31 +343,57 @@ QIcon SyncItemModel::getStateIcon(const std::shared_ptr<SyncSettings>& sync) con
     {
         if (sync->getError())
         {
-            syncIcon.addFile(QLatin1String(":/images/sync_states/x-circle-error.png"),
-                             QSize(STATES_ICON_SIZE, STATES_ICON_SIZE),
-                             QIcon::Normal);
+            QPixmap errorNormal = Utilities::getColoredPixmap(
+                QLatin1String("x-circle"),
+                Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                    Utilities::AttributeType::OUTLINE,
+                QLatin1String("text-error"),
+                QSize(STATES_ICON_SIZE, STATES_ICON_SIZE));
+
+            syncIcon.addPixmap(errorNormal, QIcon::Normal);
         }
         else
         {
-            syncIcon.addFile(QLatin1String(":/images/sync_states/x-circle.png"),
-                             QSize(STATES_ICON_SIZE, STATES_ICON_SIZE),
-                             QIcon::Normal);
+            QPixmap errorNormal = Utilities::getColoredPixmap(
+                QLatin1String("x-circle"),
+                Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                    Utilities::AttributeType::OUTLINE,
+                QLatin1String("icon-primary"),
+                QSize(STATES_ICON_SIZE, STATES_ICON_SIZE));
+
+            syncIcon.addPixmap(errorNormal, QIcon::Normal);
         }
 
-        syncIcon.addFile(QLatin1String(":/images/sync_states/x-circle-selected.png"),
-                         QSize(STATES_ICON_SIZE, STATES_ICON_SIZE),
-                         QIcon::Selected);
+        QPixmap errorNormal = Utilities::getColoredPixmap(
+            QLatin1String("x-circle"),
+            Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                Utilities::AttributeType::OUTLINE,
+            QLatin1String("icon-inverse"),
+            QSize(STATES_ICON_SIZE, STATES_ICON_SIZE));
+
+        syncIcon.addPixmap(errorNormal, QIcon::Selected);
     }
     else if (sync->getRunState() == mega::MegaSync::RUNSTATE_SUSPENDED)
     {
         if (sync->getError())
         {
-            syncIcon.addFile(QLatin1String(":/images/sync_states/hand-error.png"),
-                             QSize(STATES_ICON_SIZE, STATES_ICON_SIZE),
-                             QIcon::Normal);
-            syncIcon.addFile(QLatin1String(":/images/sync_states/hand-selected.png"),
-                             QSize(STATES_ICON_SIZE, STATES_ICON_SIZE),
-                             QIcon::Selected);
+            QPixmap handErrorNormal = Utilities::getColoredPixmap(
+                QLatin1String("hand"),
+                Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                    Utilities::AttributeType::OUTLINE,
+                QLatin1String("text-error"),
+                QSize(STATES_ICON_SIZE, STATES_ICON_SIZE));
+
+            syncIcon.addPixmap(handErrorNormal, QIcon::Normal);
+
+            QPixmap handErrorSelected = Utilities::getColoredPixmap(
+                QLatin1String("hand"),
+                Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                    Utilities::AttributeType::OUTLINE,
+                QLatin1String("icon-inverse"),
+                QSize(STATES_ICON_SIZE, STATES_ICON_SIZE));
+
+            syncIcon.addPixmap(handErrorSelected, QIcon::Selected);
         }
         else
         {

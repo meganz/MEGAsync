@@ -1316,5 +1316,8 @@
         <file alias="move-top_small_thin_outline">images/themed/tokenizable/move-top_small_thin_outline.svg</file>
         <file alias="move-up_small_thin_outline">images/themed/tokenizable/move-up_small_thin_outline.svg</file>
         <file alias="log-out-01_small_thin_outline">images/themed/tokenizable/log-out-01_small_thin_outline.svg</file>
+        <file alias="log-out_small_thin_outline">images/themed/tokenizable/log-out_small_thin_outline.svg</file>
+        <file alias="gear-8_small_thin_outline">images/themed/tokenizable/gear-8_small_thin_outline.svg</file>
+        <file alias="hand_small_thin_outline">images/themed/tokenizable/hand_small_thin_outline.svg</file>
     </qresource>
 </RCC>
