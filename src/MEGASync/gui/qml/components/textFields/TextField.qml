@@ -106,6 +106,8 @@ FocusScope {
         bottomPadding: sizes.padding
         placeholderTextColor: colors.placeholder
         color: enabled ? colors.text : colors.textDisabled
+        selectedTextColor: colors.textInverse
+
         font {
             pixelSize: Texts.Text.Size.MEDIUM
             family: FontStyles.fontFamily
