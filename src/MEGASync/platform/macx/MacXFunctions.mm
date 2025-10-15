@@ -578,7 +578,7 @@ void removeLoginItem()
     }
 }
 
-void applyThemeToFrameWindow(QWidget* widget, bool darkFrame)
+void applyThemeToFrameWindow(QWidget* widget, bool darkFrame, bool lockContent)
 {
 if (!widget) return;
     if (@available(macOS 10.14, *)) {
