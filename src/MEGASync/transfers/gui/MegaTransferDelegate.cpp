@@ -225,7 +225,7 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent* event, QAbstractItemView* view,
         auto widget (currentRow->childAt(event->pos() - currentRow->pos()));
         if (widget)
         {
-            QToolTip::showText(event->globalPos(), widget->toolTip());
+            QToolTip::showText(event->globalPos(), widget->toolTip(), currentRow);
             return true;
         }
     }

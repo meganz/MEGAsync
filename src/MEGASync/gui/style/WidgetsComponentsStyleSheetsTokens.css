@@ -639,9 +639,9 @@ color: #ff616366; /*colorToken.text-secondary*/
 */
 QToolTip
 {
-       color: #FAFAFA;                 /*colorToken.text-inverse*/
-       background-color: #2A2B2C;     /*colorToken.background-inverse*/
-       border: 1px solid #2A2B2C;     /*colorToken.background-inverse*/
+color: #FAFAFA;                 /*colorToken.text-inverse*/
+background-color: #2A2B2C;     /*colorToken.background-inverse*/
+border: 1px solid #2A2B2C;     /*colorToken.background-inverse*/
 }
 
 /*
