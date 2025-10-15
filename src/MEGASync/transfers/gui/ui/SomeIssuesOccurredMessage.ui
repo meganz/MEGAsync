@@ -43,7 +43,6 @@
 
 #issuesInfoLabel
 {
-    color: #FFE31B57; /*colorToken.text-error*/
     background-color:transparent;
 }
 

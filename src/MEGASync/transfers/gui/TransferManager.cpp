@@ -3,6 +3,7 @@
 #include "MegaApplication.h"
 #include "MegaTransferView.h"
 #include "Platform.h"
+#include "SomeIssuesOccurredMessage.h"
 #include "StalledIssuesModel.h"
 #include "ui_TransferManager.h"
 #include "ui_TransferManagerDragBackDrop.h"
@@ -51,7 +52,17 @@ TransferManager::TransferManager(MegaApi* megaApi):
 {
     mUi->setupUi(this);
     createSearchChips();
+    mUi->stalledIssuesContainer->setType(BannerWidget::BANNER_ERROR);
+    mUi->stalledIssuesContainer->setDescription(getIssuesBannerText());
+    mUi->stalledIssuesContainer->setLinkText(getIssuesBannerButtonText());
 
+    connect(mUi->stalledIssuesContainer,
+            &BannerWidget::linkActivated,
+            this,
+            []()
+            {
+                SomeIssuesOccurredMessage::showStalledIssuesDialog();
+            });
     mDragBackDrop = new QWidget(this);
     mUiDragBackDrop->setupUi(mDragBackDrop);
     mDragBackDrop->hide();
@@ -1160,6 +1171,8 @@ bool TransferManager::event(QEvent* event)
         mUi->retranslateUi(this);
         updateCurrentCategoryTitle();
         onUpdatePauseState(mUi->wTransfers->getProxyModel()->getPausedTransfers());
+        mUi->stalledIssuesContainer->setDescription(getIssuesBannerText());
+        mUi->stalledIssuesContainer->setLinkText(getIssuesBannerButtonText());
     }
     return QDialog::event(event);
 }
@@ -1293,4 +1306,14 @@ void TransferManager::createSearchChips()
                      &TabSelector::clicked,
                      this,
                      &TransferManager::showUploadResults);
+}
+
+QString TransferManager::getIssuesBannerText()
+{
+    return tr("Issues with some synced items");
+}
+
+QString TransferManager::getIssuesBannerButtonText()
+{
+    return tr("View");
 }
