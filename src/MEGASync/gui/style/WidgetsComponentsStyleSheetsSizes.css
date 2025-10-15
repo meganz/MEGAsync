@@ -264,13 +264,13 @@ min-width: 0px;
     The Normal buttons have a fixed height and a min-width depending on the dimension
     Both types have the same icon (if any) size
 */
-QPushButton[dimension=small], QPushButton[dimension=medium], QPushButton[dimension=large]
+QAbstractButton[dimension=small], QAbstractButton[dimension=medium], QAbstractButton[dimension=large]
 {
 padding-top: 0px;
 padding-bottom: 0px;
 }
 
-QPushButton[dimension=small]
+QAbstractButton[dimension=small]
 {
 border-radius: 6px;
 height: 26px;
@@ -282,7 +282,7 @@ padding-right: 8px;
 qproperty-iconSize:16px;
 }
 
-QPushButton[dimension=medium]
+QAbstractButton[dimension=medium]
 {
 border-radius: 6px;
 height: 36px;
@@ -294,7 +294,7 @@ padding-right: 16px;
 qproperty-iconSize:24px;
 }
 
-QPushButton[dimension=large]
+QAbstractButton[dimension=large]
 {
 border-radius: 8px;
 height: 46px;
@@ -346,17 +346,17 @@ border-width: 2px;
 border-style: solid;
 }
 
-QPushButton[type="outline"][dimension=small]
+QAbstractButton[type="outline"][dimension=small]
 {
 height: 22px;
 }
 
-QPushButton[type="outline"][dimension=medium]
+QAbstractButton[type="outline"][dimension=medium]
 {
 height: 32px;
 }
 
-QPushButton[type="outline"][dimension=large]
+QAbstractButton[type="outline"][dimension=large]
 {
 height: 44px;
 }
@@ -381,7 +381,7 @@ width: 44px;
 /*
     All types except outline have no borders
 */
-QPushButton[type = "primary"], QPushButton[type = "secondary"], QPushButton[type = "ghost"], QPushButton[type = "link"]
+QAbstractButton[type = "primary"], QAbstractButton[type = "secondary"], QAbstractButton[type = "ghost"], QAbstractButton[type = "link"]
 {
 border:none;
 }
@@ -389,13 +389,13 @@ border:none;
 /*
     common font-weight
 */
-QPushButton[type="primary"], QPushButton[type="secondary"], QPushButton[type="outline"]
+QAbstractButton[type="primary"], QAbstractButton[type="secondary"], QAbstractButton[type="outline"]
 {
 /* semibold */
 font-weight: 600;
 }
 
-QPushButton[type = "ghost"], QPushButton[type = "link"]
+QAbstractButton[type = "ghost"], QAbstractButton[type = "link"]
 {
 /* regular */
 font-weight:400

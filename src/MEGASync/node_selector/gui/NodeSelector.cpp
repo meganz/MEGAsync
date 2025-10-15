@@ -136,6 +136,7 @@ bool NodeSelector::event(QEvent* event)
     {
         ui->retranslateUi(this);
         updateNodeSelectorTabs();
+        onLanguageChangeEvent();
     }
 
     return QDialog::event(event);
@@ -693,7 +694,11 @@ void NodeSelector::addSearch()
     connect(mSearchWidget,
             &NodeSelectorTreeViewWidgetSearch::nodeDoubleClicked,
             this,
-            &NodeSelector::setSelectedNodeHandle);
+            [this](std::shared_ptr<MegaNode> node)
+            {
+                setSelectedNodeHandle(node);
+                performNodeSelection();
+            });
     ui->stackedWidget->addWidget(mSearchWidget);
 }
 

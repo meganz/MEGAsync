@@ -2388,14 +2388,14 @@ QToolButton
  </widget>
  <customwidgets>
   <customwidget>
-   <class>IconLabel</class>
-   <extends>QToolButton</extends>
-   <header>tokenizer/TokenizableItems/IconLabel.h</header>
-  </customwidget>
-  <customwidget>
    <class>TokenizableButton</class>
    <extends>QPushButton</extends>
    <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TokenizableToolButton</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
   </customwidget>
   <customwidget>
    <class>TabSelector</class>
@@ -2404,9 +2404,9 @@ QToolButton
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>TokenizableToolButton</class>
+   <class>IconLabel</class>
    <extends>QToolButton</extends>
-   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
   </customwidget>
   <customwidget>
    <class>SomeIssuesOccurredMessage</class>

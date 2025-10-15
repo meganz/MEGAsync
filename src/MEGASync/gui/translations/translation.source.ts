@@ -5094,6 +5094,14 @@ Enter a different name.</translation>
     </message>
 </context>
 <context>
+    <name>NodeSelectorTreeViewWidgetBackups</name>
+    <message>
+        <source>No backups</source>
+        <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>NodeSelectorTreeViewWidgetCloudDrive</name>
     <message>
         <source>Cloud drive is empty</source>
@@ -8917,7 +8925,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Storage full</source>
         <translatorcomment>Error title indicating that the storage quota is full. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Storage full</translation>
     </message>
     <message>
         <source>Uploads are disabled and sync and backups are paused.</source>

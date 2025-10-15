@@ -74,6 +74,7 @@ public:
 
 protected:
     void createSpecialisedWidgets() override;
+    void onLanguageChangeEvent() override;
 
 protected slots:
     void onCustomButtonClicked(uint id) override;
@@ -99,6 +100,7 @@ private:
     void checkMovingItems(const QList<mega::MegaHandle>& handles,
                           int moveType,
                           NodeSelector::IncreaseOrDecrease type);
+    void updateDialogWindowTitle();
 
     struct HandlesByTab
     {

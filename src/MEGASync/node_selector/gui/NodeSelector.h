@@ -98,6 +98,8 @@ protected:
 
     // Create specialised widgets
     virtual void createSpecialisedWidgets() = 0;
+
+    virtual void onLanguageChangeEvent() {}
     void addCloudDrive();
     NodeSelectorTreeViewWidgetCloudDrive* mCloudDriveWidget;
     void addIncomingShares();
@@ -136,13 +138,13 @@ protected slots:
 
     void onbShowCloudDriveClicked();
     void onbShowIncomingSharesClicked();
+    void onOptionSelected(int index);
 
 private slots:
     void onbShowSearchClicked();
     void onbOkClicked();
-    void onbShowRubbishClicked();
     void onbShowBackupsFolderClicked();
-    void onOptionSelected(int index);
+    void onbShowRubbishClicked();
     void updateNodeSelectorTabs();
     void onfShowSearchHidden();
     void onCurrentWidgetChanged(int index);

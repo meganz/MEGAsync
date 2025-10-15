@@ -110,7 +110,6 @@ signals:
     void viewReady();
 
 protected:
-    void resizeEvent(QResizeEvent*) override;
     void mousePressEvent(QMouseEvent* event) override;
     bool event(QEvent* event) override;
     bool eventFilter(QObject* watched, QEvent* event) override;

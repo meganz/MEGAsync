@@ -245,7 +245,7 @@ void StreamNodeSelector::onOkButtonClicked()
 CloudDriveNodeSelector::CloudDriveNodeSelector(QWidget* parent):
     NodeSelector(SelectTypeSPtr(new CloudDriveType), parent)
 {
-    setWindowTitle(MegaNodeNames::getCloudDriveName());
+    updateDialogWindowTitle();
 
     mDragBackDrop = new QWidget(this);
     mDragBackDrop->hide();
@@ -276,6 +276,11 @@ void CloudDriveNodeSelector::createSpecialisedWidgets()
     addRubbish();
 
     enableDragAndDrop(true);
+}
+
+void CloudDriveNodeSelector::onLanguageChangeEvent()
+{
+    updateDialogWindowTitle();
 }
 
 void CloudDriveNodeSelector::enableDragAndDrop(bool enable)
@@ -576,6 +581,11 @@ void CloudDriveNodeSelector::checkMovingItems(const QList<mega::MegaHandle>& han
     }
 }
 
+void CloudDriveNodeSelector::updateDialogWindowTitle()
+{
+    setWindowTitle(ui->title->text());
+}
+
 CloudDriveNodeSelector::HandlesByTab
     CloudDriveNodeSelector::getTabs(const QList<mega::MegaHandle>& handles)
 {
@@ -622,10 +632,12 @@ void CloudDriveNodeSelector::selectTabs(const HandlesByTab& tabsInfo)
     if (!tabsInfo.cloudDriveNodes.isEmpty())
     {
         onbShowCloudDriveClicked();
+        onOptionSelected(NodeSelector::CLOUD_DRIVE);
     }
     else if (!tabsInfo.incomingSharedNodes.isEmpty())
     {
         onbShowIncomingSharesClicked();
+        onOptionSelected(NodeSelector::SHARES);
     }
 }
 

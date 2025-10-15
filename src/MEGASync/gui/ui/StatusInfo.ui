@@ -127,26 +127,8 @@ qproperty-icon: none;
     </widget>
    </item>
    <item>
-    <widget class="ElidedLabel" name="lStatusDesc">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="mouseTracking">
-      <bool>true</bool>
-     </property>
-     <property name="singleline" stdset="0">
-      <bool>true</bool>
-     </property>
-     <property name="text" stdset="0">
+    <widget class="ElidingLabel" name="lStatusDesc">
+     <property name="text">
       <string>Starting</string>
      </property>
     </widget>
@@ -160,10 +142,9 @@ qproperty-icon: none;
    <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
   </customwidget>
   <customwidget>
-   <class>ElidedLabel</class>
-   <extends>QFrame</extends>
-   <header location="global">ElidedLabel.h</header>
-   <container>1</container>
+   <class>ElidingLabel</class>
+   <extends>QLabel</extends>
+   <header>gui/ElidedLabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
