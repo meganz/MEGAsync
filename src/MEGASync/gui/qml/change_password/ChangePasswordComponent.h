@@ -9,7 +9,7 @@ class ChangePasswordComponent: public QMLComponent
     Q_OBJECT
 
 public:
-    explicit ChangePasswordComponent(QObject* parent = 0);
+    explicit ChangePasswordComponent(QObject* parent = nullptr);
 
     QUrl getQmlUrl() override;
 

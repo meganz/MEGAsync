@@ -14,6 +14,9 @@ import onboard 1.0
 FooterButtonsPage {
     id: root
 
+    readonly property int mainColumnDesignSpacing : 24;
+    readonly property int titleDescriptionDesignSpacing : 12;
+
     footerButtons {
         leftPrimary.visible: false
         rightSecondary {
@@ -36,9 +39,6 @@ FooterButtonsPage {
             }
         }
     }
-
-    readonly property int mainColumnDesignSpacing : 24;
-    readonly property int titleDescriptionDesignSpacing : 12;
 
     function check2FA() {
         changePasswordComponentAccess.check2FA(twoFAItem.key);
@@ -86,7 +86,6 @@ FooterButtonsPage {
                 check2FA();
             }
         }
-
     }
 
     Connections{
