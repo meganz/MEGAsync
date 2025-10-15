@@ -28,13 +28,7 @@ border: none;
 
 #sh_accessContainer
 {
-background-color: #CFFCDB; /*colorToken.notification-success*/
 border-radius: 4px;
-}
-
-#sh_accessLabel
-{
-color: #007C3E; /*colorToken.text-success*/
 }
 
 #treeViewPage
@@ -346,6 +340,25 @@ background-color: transparent;
                    <width>16777215</width>
                    <height>18</height>
                   </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">#sh_accessContainer[access = &quot;2&quot;]
+{
+background-color: #CFFCDB; /*colorToken.notification-success*/
+color: #007C3E; /*colorToken.text-success*/
+}
+
+#sh_accessContainer[access = &quot;1&quot;]
+{
+background-color: #DFF4FE; /*colorToken.notification-info*/
+color: #0078A4; /*colorToken.text-info*/
+}
+
+#sh_accessContainer[access = &quot;0&quot;]
+{
+background-color: #E4E4E5; /*colorToken.surface-3*/
+color: #616366; /*colorToken.text-secondary*/
+}</string>
                  </property>
                  <layout class="QHBoxLayout" name="horizontalLayout_7">
                   <property name="spacing">

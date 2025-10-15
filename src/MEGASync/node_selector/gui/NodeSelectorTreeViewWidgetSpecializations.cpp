@@ -97,6 +97,12 @@ void NodeSelectorTreeViewWidgetCloudDrive::onRootIndexChanged(const QModelIndex&
 }
 
 /////////////////////////////////////////////////////////////////
+/// \brief NodeSelectorTreeViewWidgetIncomingShares::NodeSelectorTreeViewWidgetIncomingShares
+/// \param mode
+/// \param parent
+
+const char* ACCESS_PROPERTY = "access";
+
 NodeSelectorTreeViewWidgetIncomingShares::NodeSelectorTreeViewWidgetIncomingShares(
     SelectTypeSPtr mode,
     QWidget* parent):
@@ -158,7 +164,28 @@ void NodeSelectorTreeViewWidgetIncomingShares::onRootIndexChanged(const QModelIn
         in_share_idx = in_share_idx.sibling(in_share_idx.row(), NodeSelectorModel::COLUMN::ACCESS);
         QPixmap accessPixmap = qvariant_cast<QPixmap>(in_share_idx.data(Qt::DecorationRole));
         ui->sh_accessIcon->setIcon(accessPixmap);
+
         ui->sh_accessLabel->setText(in_share_idx.data(Qt::DisplayRole).toString());
+
+        // Background-color
+        auto accessType = in_share_idx.data(toInt(NodeSelectorModelRoles::ACCESS_ROLE)).toInt();
+        ui->sh_accessContainer->setProperty(ACCESS_PROPERTY, accessType);
+        if (accessType == mega::MegaShare::ACCESS_FULL)
+        {
+            ui->sh_accessIcon->setProperty(TOKEN_PROPERTIES::normalOff,
+                                           QLatin1String("support-success"));
+        }
+        else if (accessType == mega::MegaShare::ACCESS_READ)
+        {
+            ui->sh_accessIcon->setProperty(TOKEN_PROPERTIES::normalOff,
+                                           QLatin1String("text-secondary"));
+        }
+        else if (accessType == mega::MegaShare::ACCESS_READWRITE)
+        {
+            ui->sh_accessIcon->setProperty(TOKEN_PROPERTIES::normalOff, QLatin1String("text-info"));
+        }
+        // Update dynamic properties
+        ui->sh_accessContainer->setStyleSheet(ui->sh_accessContainer->styleSheet());
 
         ui->sh_folderName->setText(idx.data(Qt::DisplayRole).toString());
         ui->sh_userEmail->setText(item->getOwnerEmail());
