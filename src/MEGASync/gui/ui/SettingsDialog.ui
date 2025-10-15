@@ -191,6 +191,7 @@ text-align: left;
 border: none;
 padding: 0px;
 margin: 0px;
+color: #ff333333; /*colorToken.text-primary*/
 }
 
 #lBandwidthFree
