@@ -341,7 +341,7 @@ void UpsellController::onTransferRemainingTimeElapsed()
     {
         remainingTime = 0;
     }
-    mPlans->setTransferRemainingTime(Utilities::getTimeString(remainingTime, true, false));
+    mPlans->setTransferRemainingTime(Utilities::getTimeString(remainingTime, true));
 }
 
 void UpsellController::processGetPricingRequest(mega::MegaPricing* pricing,

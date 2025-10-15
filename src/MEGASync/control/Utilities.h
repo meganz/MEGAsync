@@ -391,7 +391,7 @@ public:
     static QString createSimpleUsedOfString(long long usedData, long long totalData);
     static QString createSimpleUsedStringWithoutReplacement(long long usedData);
     static QString createCompleteUsedString(long long usedData, long long totalData, int percentage);
-    static QString getTimeString(long long secs, bool secondPrecision = true, bool color = true);
+    static QString getTimeString(long long secs, bool secondPrecision = true);
     static QString getAddedTimeString(long long secs);
     static QString extractJSONString(QString json, QString name);
     static QStringList extractJSONStringList(const QString& json, const QString& name);
@@ -552,7 +552,7 @@ private:
     static void initializeFolderTypes();
     static double toDoubleInUnit(unsigned long long bytes, unsigned long long unit);
     static QString getTimeFormat(const TimeInterval& interval);
-    static QString filledTimeString(const QString& timeFormat, const TimeInterval& interval, bool color);
+    static QString filledTimeString(const QString& timeFormat, const TimeInterval& interval);
 
     static QString cleanedTimeString(const QString& timeString);
 

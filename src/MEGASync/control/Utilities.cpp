@@ -522,7 +522,7 @@ QString Utilities::getTimeFormat(const TimeInterval &interval)
     return timeFormat.trimmed();
 }
 
-QString Utilities::filledTimeString(const QString &timeFormat, const TimeInterval &interval, bool color)
+QString Utilities::filledTimeString(const QString& timeFormat, const TimeInterval& interval)
 {
     QString daysFormat = QCoreApplication::translate("Utilities", "%1 [A]d[/A]");
     QString hoursFormat = QCoreApplication::translate("Utilities", "%1 [A]h[/A]");
@@ -543,8 +543,7 @@ QString Utilities::filledTimeString(const QString &timeFormat, const TimeInterva
     timeCountStr = secondsFormat.arg(interval.seconds, 2, 10, QLatin1Char('0'));
     timeString.replace(QString::fromLatin1("[SECONDS]"), timeCountStr);
 
-    QString colorString = (color ? QLatin1String("color:#777777;") : QString());
-    QString styleStartTag = QString::fromUtf8("<span style=\"%1 text-decoration:none;\">").arg(colorString);
+    QString styleStartTag = QString::fromUtf8("<span style=\"text-decoration:none;\">");
     QString styleEndTag = QString::fromLatin1("</span>");
 
     timeString.replace(QString::fromLatin1("[A]"),  styleStartTag);
@@ -725,10 +724,10 @@ void Utilities::copyRecursively(QString srcPath, QString dstPath)
     }
 }
 
-QString Utilities::getTimeString(long long secs, bool secondPrecision, bool color)
+QString Utilities::getTimeString(long long secs, bool secondPrecision)
 {
     TimeInterval interval(secs, secondPrecision);
-    return filledTimeString(getTimeFormat(interval), interval, color);
+    return filledTimeString(getTimeFormat(interval), interval);
 }
 
 QString Utilities::getAddedTimeString(long long secs)
