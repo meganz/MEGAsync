@@ -15,6 +15,7 @@ ChangeEmailPage 1.0 ChangeEmailPage.qml
 ChangeEmailPageForm 1.0 ChangeEmailPageForm.ui.qml
 ConfirmEmailPage 1.0 ConfirmEmailPage.qml
 ConfirmEmailPageForm 1.0 ConfirmEmailPageForm.ui.qml
+PasswordChecker 1.0 PasswordChecker.qml
 PasswordInfoPopUp 1.0 PasswordInfoPopUp.qml
 PasswordConditionItem 1.0 PasswordConditionItem.qml
 PasswordInfoContent 1.0 PasswordInfoContent.qml

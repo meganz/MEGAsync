@@ -35,6 +35,7 @@ QtObject {
     readonly property url helpCircle: imagesQmlPath + "help_circle.svg"
     readonly property url indeterminate: imagesQmlPath + "indeterminate.svg"
     readonly property url lock: imagesQmlPath + "lock.svg"
+    readonly property url crystalLock: imagesPath + "lock.png"
     readonly property url loader: imagesQmlPath + "loader.svg"
     readonly property url smallCircle: imagesQmlPath + "small_circle.svg"
     readonly property url tip: imagesQmlPath + "tip.svg"
