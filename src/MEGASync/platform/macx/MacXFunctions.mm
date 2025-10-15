@@ -577,3 +577,28 @@ void removeLoginItem()
         }
     }
 }
+
+void applyThemeToFrameWindow(QWidget* widget, bool darkFrame)
+{
+if (!widget) return;
+    if (@available(macOS 10.14, *)) {
+        NSView *view = reinterpret_cast<NSView*>(widget->winId());
+        if (!view) return;
+        NSWindow *win = view.window;
+        if (!win) return;
+
+        NSAppearanceName frameName = darkFrame ? NSAppearanceNameDarkAqua : NSAppearanceNameAqua;
+        win.appearance = [NSAppearance appearanceNamed:frameName];
+
+        // Keep inner content from inheriting DarkAqua, so your Qt palette stays as-is.
+        if (lockContent) {
+            view.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
+        } else {
+            view.appearance = nil; // inherit from window
+        }
+
+        // Nudge to refresh chrome immediately
+        [win invalidateShadow];
+        [win displayIfNeeded];
+    }
+}
