@@ -142,7 +142,7 @@ background-color: #FFF3F4F4; /*colorToken.border-subtle*/
 #bNumberUnseenNotifications
 {
 background-color: #FFFF333A;/*colorToken.button-brand*/
-color: #FFFAFAFB;  /*colorToken.text-inverse-accent*/
+color:  #ff09bf5b;/*colorToken.text-on-color*/
 font-weight: 600;
 font-size: 8px;
 line-height: 12px;
@@ -3687,6 +3687,12 @@ background-color: transparent;
    <container>1</container>
   </customwidget>
   <customwidget>
+   <class>StatusInfo</class>
+   <extends>QWidget</extends>
+   <header location="global">StatusInfo.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>CircularUsageProgressBar</class>
    <extends>QWidget</extends>
    <header>CircularUsageProgressBar.h</header>
@@ -3696,12 +3702,6 @@ background-color: transparent;
    <class>InfoDialogTransfersWidget</class>
    <extends>QWidget</extends>
    <header location="global">InfoDialogTransfersWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>StatusInfo</class>
-   <extends>QWidget</extends>
-   <header location="global">StatusInfo.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

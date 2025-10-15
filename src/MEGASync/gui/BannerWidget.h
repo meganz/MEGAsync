@@ -1,6 +1,7 @@
 #ifndef BANNER_WIDGET_H
 #define BANNER_WIDGET_H
 
+#include <QUrl>
 #include <QWidget>
 
 namespace Ui
@@ -25,11 +26,12 @@ public:
     ~BannerWidget();
 
     void setType(Type type);
-    void setText(const QString& text);
+    void setDescription(const QString& text);
+    void setTitle(const QString& text);
     void setAutoManageTextUrl(bool newValue);
-
+    void setLinkText(const QString& displayText);
 signals:
-    void linkActivated(const QUrl& link);
+    void linkActivated();
 
 private:
     Ui::BannerWidget* mUi;

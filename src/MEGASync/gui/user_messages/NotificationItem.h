@@ -25,7 +25,7 @@ public:
     UserMessage* getData() const override;
 
     QSize minimumSizeHint() const override;
-    QSize sizeHint() const override;
+    // QSize sizeHint() const override;
 
 protected:
     bool event(QEvent* event) override;

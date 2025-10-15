@@ -27,7 +27,7 @@ void AlertFilterType::setActualFilter(MessageType type)
         case MessageType::ALERT_CONTACTS:
         {
             ui->liconType->setIcon(QIcon(QString::fromUtf8(":/users.svg")).pixmap(16.0, 16.0));
-            ui->wIconType->show();
+            ui->wIconType->hide();
             ui->lFilterActive->setText(tr("Contacts"));
             break;
         }
@@ -35,15 +35,15 @@ void AlertFilterType::setActualFilter(MessageType type)
         {
             ui->liconType->setIcon(
                 QIcon(QString::fromUtf8(":/currency-dollar.svg")).pixmap(16.0, 16.0));
-            ui->wIconType->show();
-            ui->lFilterActive->setText(tr("Payment"));
+            ui->wIconType->hide();
+            ui->lFilterActive->setText(tr("Payments"));
             break;
         }
         case MessageType::ALERT_SHARES:
         {
             ui->liconType->setIcon(
                 QIcon(QString::fromUtf8(":/folder-users.svg")).pixmap(16.0, 16.0));
-            ui->wIconType->show();
+            ui->wIconType->hide();
             ui->lFilterActive->setText(tr("Incoming Shares"));
             break;
         }

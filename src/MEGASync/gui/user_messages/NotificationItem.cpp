@@ -12,9 +12,6 @@
 namespace
 {
 constexpr int SPACING_WITHOUT_SMALL_IMAGE = 0;
-constexpr int HEIGHT_WITHOUT_IMAGE = 219;
-constexpr int HEIGHT_WITH_IMAGE = 346;
-constexpr int BUTTON_HEIGHT_WITH_SPACING = 40;
 constexpr int NUM_SECS_TO_WAIT_BEFORE_REMOVE = 1;
 }
 
@@ -61,27 +58,6 @@ UserMessage* NotificationItem::getData() const
 QSize NotificationItem::minimumSizeHint() const
 {
     return sizeHint();
-}
-
-QSize NotificationItem::sizeHint() const
-{
-    QSize size = this->size();
-    if (mNotificationData->showImage())
-    {
-        size.setHeight(HEIGHT_WITH_IMAGE);
-    }
-    else
-    {
-        size.setHeight(HEIGHT_WITHOUT_IMAGE);
-    }
-
-    // If there is no action text, the button is not shown
-    if (mNotificationData->getActionText().isEmpty())
-    {
-        size.setHeight(size.height() - BUTTON_HEIGHT_WITH_SPACING);
-    }
-
-    return size;
 }
 
 bool NotificationItem::event(QEvent* event)

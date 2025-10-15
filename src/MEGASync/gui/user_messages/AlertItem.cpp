@@ -162,7 +162,7 @@ void AlertItem::updateAlertType()
         case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
         case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED:
         {
-            notificationTitle = tr("Contacts").toUpper();
+            notificationTitle = tr("Contacts");
             break;
         }
         case MegaUserAlert::TYPE_NEWSHARE:
@@ -181,20 +181,20 @@ void AlertItem::updateAlertType()
                 mUi->bSharedFolder->setIcon(
                     QIcon(QString::fromUtf8(":/folder-users-yellow.svg")).pixmap(24.0, 24.0));
             }
-            notificationTitle = tr("Incoming Shares").toUpper();
+            notificationTitle = tr("Incoming Shares");
             break;
         }
         case MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
         case MegaUserAlert::TYPE_PAYMENT_FAILED:
         case MegaUserAlert::TYPE_PAYMENTREMINDER:
         {
-            notificationTitle = tr("Payment").toUpper();
+            notificationTitle = tr("Payment");
             break;
         }
         case MegaUserAlert::TYPE_TAKEDOWN:
         case MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
         {
-            notificationTitle = tr("Takedown notice").toUpper();
+            notificationTitle = tr("Takedown notice");
             break;
         }
         default:
