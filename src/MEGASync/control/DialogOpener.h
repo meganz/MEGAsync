@@ -12,6 +12,7 @@
 #include <QMessageBox>
 #include <QPointer>
 #include <QQueue>
+#include <QScreen>
 
 #include <functional>
 #include <memory>
@@ -472,6 +473,11 @@ private:
             // correctly applied.
             dialog->setParent(dialog->parentWidget(), dialog->windowFlags());
 
+            if (dialog->parent() && changeWindowModality)
+            {
+                dialog->setWindowModality(Qt::WindowModal);
+            }
+
             auto geoInfo = mSavedGeometries.value(classType, GeometryInfo());
             if(!geoInfo.isEmpty())
             {
@@ -491,6 +497,31 @@ private:
             }
             else
             {
+                // If we don´t have parent, the dialog is not attached to any windows, so we should
+                // show it in a conveniente place
+                if (!dialog->parent())
+                {
+                    QPoint pos;
+                    QPoint mousePos = QCursor::pos();
+                    QScreen* screen = QGuiApplication::screenAt(mousePos);
+
+                    if (screen)
+                    {
+                        QRect screenGeometry = screen->geometry();
+
+                        int dialogWidth = dialog->geometry().width();
+                        int dialogHeight = dialog->geometry().height();
+                        pos.setX(screenGeometry.x() + (screenGeometry.width() - dialogWidth) / 2);
+                        pos.setY(screenGeometry.y() + (screenGeometry.height() - dialogHeight) / 2);
+                    }
+                    else
+                    {
+                        pos = mousePos;
+                    }
+
+                    dialog->move(pos);
+                }
+
                 dialog->show();
             }
 
