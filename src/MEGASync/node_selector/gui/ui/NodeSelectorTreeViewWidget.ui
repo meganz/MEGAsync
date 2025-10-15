@@ -1031,9 +1031,6 @@ background-color: transparent;
               <property name="type" stdset="0">
                <string notr="true">ghost</string>
               </property>
-              <property name="dimension" stdset="0">
-               <string notr="true">small</string>
-              </property>
              </widget>
             </item>
             <item>
@@ -1106,14 +1103,14 @@ background-color: transparent;
  </widget>
  <customwidgets>
   <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
+  </customwidget>
+  <customwidget>
    <class>TokenizableButton</class>
    <extends>QPushButton</extends>
    <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
-  </customwidget>
-  <customwidget>
-   <class>TokenizableToolButton</class>
-   <extends>QToolButton</extends>
-   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
   </customwidget>
   <customwidget>
    <class>TabSelector</class>
@@ -1122,9 +1119,9 @@ background-color: transparent;
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>IconLabel</class>
+   <class>TokenizableToolButton</class>
    <extends>QToolButton</extends>
-   <header>tokenizer/TokenizableItems/IconLabel.h</header>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
   </customwidget>
   <customwidget>
    <class>NodeSelectorTreeView</class>
