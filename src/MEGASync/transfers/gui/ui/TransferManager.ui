@@ -1950,7 +1950,7 @@ QToolButton
               <number>0</number>
              </property>
              <item>
-              <widget class="SomeIssuesOccurredMessage" name="stalledIssuesContainer" native="true"/>
+              <widget class="BannerWidget" name="stalledIssuesContainer" native="true"/>
              </item>
             </layout>
            </widget>
@@ -2409,12 +2409,6 @@ QToolButton
    <header>tokenizer/TokenizableItems/IconLabel.h</header>
   </customwidget>
   <customwidget>
-   <class>SomeIssuesOccurredMessage</class>
-   <extends>QWidget</extends>
-   <header>SomeIssuesOccurredMessage.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>TransfersWidget</class>
    <extends>QWidget</extends>
    <header>TransfersWidget.h</header>
@@ -2442,6 +2436,12 @@ QToolButton
    <class>TransferManagerStatusHeaderWidget</class>
    <extends>QWidget</extends>
    <header>TransferManagerStatusHeaderWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>BannerWidget</class>
+   <extends>QWidget</extends>
+   <header>BannerWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

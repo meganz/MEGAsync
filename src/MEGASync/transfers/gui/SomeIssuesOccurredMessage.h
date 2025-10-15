@@ -18,6 +18,8 @@ public:
     explicit SomeIssuesOccurredMessage(QWidget *parent = nullptr);
     ~SomeIssuesOccurredMessage();
 
+    static void showStalledIssuesDialog();
+
 protected:
     bool event(QEvent* event) override;
 

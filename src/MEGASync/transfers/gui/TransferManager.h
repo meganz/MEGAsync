@@ -116,6 +116,8 @@ private:
     void filterByTab(TransfersWidget::TM_TAB tab);
     void startRequestTaskbarPinningTimer();
     void createSearchChips();
+    QString getIssuesBannerButtonText();
+    QString getIssuesBannerText();
 
 private slots:
     void on_tCompleted_clicked();

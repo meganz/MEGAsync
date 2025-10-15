@@ -317,9 +317,6 @@ padding-left: 0px;
               <property name="type" stdset="0">
                <string notr="true">link</string>
               </property>
-              <property name="dimension" stdset="0">
-               <string notr="true">small</string>
-              </property>
              </widget>
             </item>
             <item>
