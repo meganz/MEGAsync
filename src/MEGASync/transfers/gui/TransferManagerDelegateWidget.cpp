@@ -14,6 +14,8 @@
 
 constexpr uint PB_PRECISION = 1000;
 const char* ACTION_BUTTONS_VISIBILITY = "action_visible";
+const QString HOVER_TOKEN = QStringLiteral("surface-1");
+const QString SELECTED_TOKEN = QStringLiteral("surface-2");
 
 using namespace mega;
 
@@ -488,17 +490,16 @@ void TransferManagerDelegateWidget::render(const QStyleOptionViewItem& option,
                                            const QRegion& sourceRegion)
 {
     bool isDragging(false);
-    static QColor hoverColor =
-        TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-1"));
-    static QColor selectColor =
-        TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-2"));
+    static QColor hoverColor = TokenParserWidgetManager::instance()->getColor(HOVER_TOKEN);
+    static QColor selectColor = TokenParserWidgetManager::instance()->getColor(SELECTED_TOKEN);
     static auto theme = ThemeManager::instance()->currentColorScheme();
     if (theme != ThemeManager::instance()->currentColorScheme())
     {
         theme = ThemeManager::instance()->currentColorScheme();
-        hoverColor = TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-1"));
-        selectColor = TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-2"));
+        hoverColor = TokenParserWidgetManager::instance()->getColor(HOVER_TOKEN);
+        selectColor = TokenParserWidgetManager::instance()->getColor(SELECTED_TOKEN);
     }
+
     bool showButtons = false;
     auto view = dynamic_cast<MegaTransferView*>(parent());
     if (view)

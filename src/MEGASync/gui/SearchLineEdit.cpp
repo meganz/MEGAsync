@@ -65,45 +65,10 @@ void SearchLineEdit::showTextEntry(bool state, bool force)
 
     if (!state)
     {
-        // Collapse lineEdit
-        {
-            runWidthAnimation(ui->leSearchField, false);
-        }
-
-        // Collapse lineEdit
-        {
-            runWidthAnimation(ui->tSearchCancel, false);
-        }
-
-        // Move search icon
-        {
-            QRect startRect(ui->tSearchIcon->geometry());
-            QRect endRect(ui->searchContainer->width() - ui->tSearchIcon->width(),
-                          ui->tSearchIcon->y(),
-                          ui->tSearchIcon->size().width(),
-                          ui->tSearchIcon->size().height());
-
-            QPropertyAnimation* animation =
-                runGeometryAnimation(ui->tSearchIcon, startRect, endRect, QEasingCurve::Linear);
-
-            connect(animation,
-                    &QPropertyAnimation::finished,
-                    this,
-                    [this]()
-                    {
-                        ui->leSearchField->hide();
-                        ui->tSearchCancel->hide();
-                        ui->customWidget->show();
-                    });
-        }
-
-        {
-            // Reduce background to COLLAPSE size
-            QRect startRect(ui->searchContainer->geometry());
-            QRect endRect(size().width() - COLLAPSE_SIZE, 0, COLLAPSE_SIZE, COLLAPSE_SIZE);
-
-            runGeometryAnimation(ui->searchContainer, startRect, endRect, QEasingCurve::Linear);
-        }
+        ui->customWidget->show();
+        ui->leSearchField->hide();
+        ui->tSearchCancel->hide();
+        ui->searchContainer->resize(COLLAPSE_SIZE, COLLAPSE_SIZE);
     }
     else
     {
@@ -192,6 +157,12 @@ bool SearchLineEdit::eventFilter(QObject* obj, QEvent* evnt)
                 mOldString = ui->leSearchField->text();
                 emit search(ui->leSearchField->text());
             }
+        }
+        else if (keyEvent && keyEvent->key() == Qt::Key_Escape)
+        {
+            evnt->accept();
+            focusNextChild();
+            return true;
         }
     }
     else if (obj == ui->leSearchField && evnt->type() == QEvent::FocusOut &&

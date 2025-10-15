@@ -7763,24 +7763,9 @@ Refresh the list.</translation>
         <translation>Paused</translation>
     </message>
     <message>
-        <source>Scanning</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
-        <translation>Scanning</translation>
-    </message>
-    <message>
         <source>Starting</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is starting</translatorcomment>
         <translation>Starting</translation>
-    </message>
-    <message>
-        <source>Syncing</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
-        <translation>Syncing</translation>
-    </message>
-    <message>
-        <source>Transferring</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
-        <translation>Transferring</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -7788,9 +7773,24 @@ Refresh the list.</translation>
         <translation>Up to date</translation>
     </message>
     <message>
-        <source>Waiting</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync is at waiting state</translatorcomment>
-        <translation>Waiting</translation>
+        <source>Syncing…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.  SNC-5938</translatorcomment>
+        <translation type="unfinished">Syncing…</translation>
+    </message>
+    <message>
+        <source>Waiting…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at waiting state. SNC-5938</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scanning…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state. SNC-5938</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transferring…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers. SNC-5938</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8789,11 +8789,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Media type</translation>
     </message>
     <message>
-        <source>No completed transfers</source>
-        <translatorcomment>Empty window message for completed category</translatorcomment>
-        <translation>No completed transfers</translation>
-    </message>
-    <message>
         <source>No downloads</source>
         <translatorcomment>Empty window message for download category</translatorcomment>
         <translation>No downloads</translation>
@@ -8837,11 +8832,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Retry all</source>
         <translatorcomment>Button text for retry all button in Failed category</translatorcomment>
         <translation>Retry all</translation>
-    </message>
-    <message>
-        <source>Scanning</source>
-        <translatorcomment>State of the Transfers: Message which shows that a folder is being scanned</translatorcomment>
-        <translation>Scanning…</translation>
     </message>
     <message>
         <source>Search</source>

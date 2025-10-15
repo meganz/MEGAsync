@@ -12,7 +12,7 @@
 #include <QCoreApplication>
 #include <QUrl>
 
-const QLatin1String DEVICE_ICON("monitor");
+    const QLatin1String DEVICE_ICON("monitor");
 const QLatin1String SYNC_ICON("sync-01");
 const QLatin1String SYNC_ADD_ICON("sync-plus");
 const QLatin1String BACKUP_ICON("database");
@@ -166,8 +166,7 @@ void SyncsMenu::refresh()
                     this,
                     [syncSetting]()
                     {
-                        Utilities::openUrl(
-                            QUrl::fromLocalFile(syncSetting->getLocalFolder()));
+                        Utilities::openUrl(QUrl::fromLocalFile(syncSetting->getLocalFolder()));
                     });
             mMenu->addAction(action);
         }
@@ -223,8 +222,8 @@ TwoWaySyncsMenu::TwoWaySyncsMenu(QWidget* parent):
 
 QString TwoWaySyncsMenu::createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const
 {
-    return SyncsMenu::createSyncTooltipText(syncSetting)
-           + SyncTooltipCreator::createForRemote(syncSetting->getMegaFolder());
+    return SyncsMenu::createSyncTooltipText(syncSetting) +
+           SyncTooltipCreator::createForRemote(syncSetting->getMegaFolder());
 }
 
 // BackupSyncsMenu ----
@@ -261,8 +260,9 @@ void BackupSyncsMenu::onDeviceNameSet(QString name)
 
 QString BackupSyncsMenu::createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const
 {
-    return SyncsMenu::createSyncTooltipText(syncSetting)
-           + SyncTooltipCreator::createForRemote(mMyBackupsHandleRequest->getNodeLocalizedPath(syncSetting->getMegaFolder()));
+    return SyncsMenu::createSyncTooltipText(syncSetting) +
+           SyncTooltipCreator::createForRemote(
+               mMyBackupsHandleRequest->getNodeLocalizedPath(syncSetting->getMegaFolder()));
 }
 
 void BackupSyncsMenu::refresh()

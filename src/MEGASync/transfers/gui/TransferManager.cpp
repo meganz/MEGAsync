@@ -40,10 +40,8 @@ TransferManager::TransferManager(MegaApi* megaApi):
     QDialog(nullptr),
     mUi(new Ui::TransferManager),
     mMegaApi(megaApi),
-    mScanningAnimationIndex(1),
     mPreferences(Preferences::instance()),
     mModel(nullptr),
-    mSearchFieldReturnPressed(false),
     mSpeedRefreshTimer(new QTimer(this)),
     mStatsRefreshTimer(new QTimer(this)),
     mUiDragBackDrop(new Ui::TransferManagerDragBackDrop),
@@ -190,9 +188,6 @@ TransferManager::TransferManager(MegaApi* megaApi):
 
     onStalledIssuesStateChanged();
 
-    mScanningTimer.setInterval(60);
-    connect(&mScanningTimer, &QTimer::timeout, this, &TransferManager::onScanningAnimationUpdate);
-
     mSpeedRefreshTimer->setSingleShot(false);
     connect(mSpeedRefreshTimer, &QTimer::timeout,
             this, &TransferManager::refreshSpeed);
@@ -216,11 +211,11 @@ TransferManager::TransferManager(MegaApi* megaApi):
     connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
             this, &TransferManager::cancelScanning);
 
-    mUi->leSearchField->installEventFilter(this);
+    // Search
+    connect(mUi->leSearch, &SearchLineEdit::search, this, &TransferManager::onSearch);
+    mUi->leSearch->addCustomWidget(mUi->pTransfers);
 
-#ifdef Q_OS_MACOS
-    mUi->leSearchField->setAttribute(Qt::WA_MacShowFocusRect,0);
-#else
+#ifndef Q_OS_MACOS
     Qt::WindowFlags flags =  Qt::Window;
     this->setWindowFlags(flags);
 #endif
@@ -252,8 +247,6 @@ void TransferManager::enterBlockingState()
     enableUserActions(false);
     mTransferScanCancelUi->show();
     refreshStateStats();
-
-    mScanningTimer.start();
 }
 
 void TransferManager::leaveBlockingState(bool fromCancellation)
@@ -263,9 +256,6 @@ void TransferManager::leaveBlockingState(bool fromCancellation)
     mTransferScanCancelUi->hide(fromCancellation);
     refreshStateStats();
     refreshView();
-
-    mScanningTimer.stop();
-    mScanningAnimationIndex = 1;
 }
 
 void TransferManager::disableCancelling()
@@ -561,11 +551,13 @@ void TransferManager::refreshStateStats()
     {
         if(mTransferScanCancelUi && mTransferScanCancelUi->isActive())
         {
-            leftFooterWidget = mUi->pScanning;
+            leftFooterWidget = mUi->wScanning;
+            mUi->bScanning->setState(StatusInfo::TRANSFERS_STATES::STATE_INDEXING);
         }
         else
         {
             leftFooterWidget = mUi->pUpToDate;
+            mUi->bScanning->setState(StatusInfo::TRANSFERS_STATES::STATE_UPDATED);
         }
 
         mSpeedRefreshTimer->stop();
@@ -585,11 +577,17 @@ void TransferManager::refreshStateStats()
 
         if(mTransferScanCancelUi && mTransferScanCancelUi->isActive())
         {
-            leftFooterWidget = mUi->pScanning;
+            leftFooterWidget = mUi->wScanning;
+            mUi->bScanning->setState(StatusInfo::TRANSFERS_STATES::STATE_INDEXING);
         }
-        else if(processedNumber != 0)
+        else
         {
-            leftFooterWidget = mUi->pSpeedAndClear;
+            mUi->bScanning->setState(StatusInfo::TRANSFERS_STATES::STATE_UPDATED);
+
+            if (processedNumber != 0)
+            {
+                leftFooterWidget = mUi->pSpeedAndClear;
+            }
         }
 
         if(processedNumber != 0)
@@ -842,6 +840,12 @@ void TransferManager::pauseResumeTransfers(bool isPaused)
     onUpdatePauseState(isPaused);
 }
 
+void TransferManager::onSearch(const QString& text)
+{
+    mUi->bSearchString->setProperty(SEARCH_TEXT, text);
+    applyTextSearch(text);
+}
+
 void TransferManager::onStalledIssuesStateChanged()
 {
     mFoundStalledIssues = !MegaSyncApp->getStalledIssuesModel()->isEmpty();
@@ -861,35 +865,6 @@ void TransferManager::checkContentInfo()
     }
 }
 
-void TransferManager::on_bSearch_clicked()
-{
-    mUi->wTitleAndSearch->setCurrentWidget(mUi->pSearch);
-    mUi->leSearchField->setText(QString());
-}
-
-void TransferManager::on_leSearchField_editingFinished()
-{
-    if(mUi->leSearchField->text().isEmpty())
-    {
-       mUi->wTitleAndSearch->setCurrentWidget(mUi->pTransfers);
-    }
-}
-
-void TransferManager::on_tSearchIcon_clicked()
-{
-    QString pattern (mUi->leSearchField->text());
-    if(pattern.isEmpty())
-    {
-        on_tClearSearchResult_clicked();
-    }
-    else
-    {
-        mUi->bSearchString->setText(pattern);
-        mUi->bSearchString->setProperty(SEARCH_TEXT, pattern);
-        applyTextSearch(pattern);
-    }
-}
-
 void TransferManager::applyTextSearch(const QString& text)
 {
     mUi->wAllResults->setSelected(true);
@@ -898,6 +873,7 @@ void TransferManager::applyTextSearch(const QString& text)
     mUi->wUlResults->hide();
 
     mUi->wSearch->show();
+    mUi->bSearchString->setText(text);
 
     //This is done to refresh the stylesheet as depends on the object properties
     mUi->pSearchHeaderInfo->setStyleSheet(mUi->pSearchHeaderInfo->styleSheet());
@@ -912,19 +888,13 @@ void TransferManager::applyTextSearch(const QString& text)
 
 void TransferManager::enableUserActions(bool enabled)
 {
-    mUi->wLeftPane->setEnabled(enabled);
+    mUi->wLeftPaneTop->setEnabled(enabled);
     mUi->wRightPaneHeader->setEnabled(enabled);
 }
 
 void TransferManager::on_bSearchString_clicked()
 {
     applyTextSearch(mUi->bSearchString->property(SEARCH_TEXT).toString());
-}
-
-void TransferManager::on_tSearchCancel_clicked()
-{
-    mUi->wTitleAndSearch->setCurrentWidget(mUi->pTransfers);
-    mUi->leSearchField->setPlaceholderText(tr("Search"));
 }
 
 void TransferManager::on_tClearSearchResult_clicked()
@@ -1012,11 +982,6 @@ void TransferManager::on_bDownload_clicked()
 void TransferManager::on_bUpload_clicked()
 {
     MegaSyncApp->uploadActionClicked();
-}
-
-void TransferManager::on_leSearchField_returnPressed()
-{
-    emit mUi->tSearchIcon->clicked();
 }
 
 void TransferManager::toggleTab(int newTab)
@@ -1139,12 +1104,6 @@ void TransferManager::refreshView()
 void TransferManager::disableTransferManager(bool state)
 {
     setDisabled(state);
-
-    if(!state && mSearchFieldReturnPressed)
-    {
-        mUi->leSearchField->setFocus();
-        mSearchFieldReturnPressed = false;
-    }
 }
 
 void TransferManager::checkActionAndMediaVisibility()
@@ -1175,26 +1134,6 @@ void TransferManager::checkActionAndMediaVisibility()
     {
         mUi->wMediaType->hide();
     }
-}
-
-bool TransferManager::eventFilter(QObject *obj, QEvent *event)
-{
-    if (obj == mUi->leSearchField && event->type() == QEvent::KeyPress)
-    {
-        auto keyEvent = dynamic_cast<QKeyEvent*>(event);
-        if (keyEvent && keyEvent->key() == Qt::Key_Escape)
-        {
-            event->accept();
-            on_tSearchCancel_clicked();
-            focusNextChild();
-            return true;
-        }
-        else if (keyEvent && keyEvent->key() == Qt::Key_Return)
-        {
-            mSearchFieldReturnPressed = true;
-        }
-    }
-    return QDialog::eventFilter(obj, event);
 }
 
 void TransferManager::closeEvent(QCloseEvent *event)
@@ -1241,24 +1180,10 @@ bool TransferManager::hasOverQuotaErrors()
 
 void TransferManager::setTransferState(const StatusInfo::TRANSFERS_STATES &transferState)
 {
-    if(transferState == StatusInfo::TRANSFERS_STATES::STATE_INDEXING)
+    if (transferState != StatusInfo::TRANSFERS_STATES::STATE_INDEXING)
     {
-        mScanningTimer.start();
-    }
-    else
-    {
-        if(mScanningTimer.isActive())
-        {
-            mScanningTimer.stop();
-            mScanningAnimationIndex = 1;
-        }
         refreshStateStats();
     }
-}
-
-void TransferManager::onScanningAnimationUpdate()
-{
-    mUi->bScanning->setIcon(StatusInfo::scanningIcon(mScanningAnimationIndex));
 }
 
 void TransferManager::dragEnterEvent(QDragEnterEvent *event)

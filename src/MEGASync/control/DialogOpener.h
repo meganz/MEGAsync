@@ -188,8 +188,6 @@ public:
                     dialogInfo->close();
                 }
             }
-
-            qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         }
     }
 
@@ -213,10 +211,8 @@ public:
         {
             closeDialogsByParentClass<ParentType>();
 
-            auto windowFlags = dialog->windowFlags();
             parentDialog->raise(true);
-            dialog->setParent(parentDialog->getDialog());
-            dialog->setWindowFlags(windowFlags);
+            dialog->setParent(parentDialog->getDialog(), dialog->windowFlags());
         }
     }
 
@@ -474,7 +470,7 @@ private:
 
             // Use to reload the widget stylesheet. Without this line, the new stylesheet is not
             // correctly applied.
-            dialog->setParent(dialog->parentWidget(), Qt::Sheet);
+            dialog->setParent(dialog->parentWidget(), dialog->windowFlags());
 
             auto geoInfo = mSavedGeometries.value(classType, GeometryInfo());
             if(!geoInfo.isEmpty())

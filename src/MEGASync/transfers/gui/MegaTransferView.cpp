@@ -623,8 +623,7 @@ QMenu* MegaTransferView::createContextMenu()
 {
     auto contextMenu = new QMenu(this);
     contextMenu->setProperty("class", QLatin1String("MegaMenu"));
-    contextMenu->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint);
-    contextMenu->setAttribute(Qt::WA_TranslucentBackground);
+    contextMenu->setProperty("icon-token", QLatin1String("icon-primary"));
     contextMenu->setAttribute(Qt::WA_DeleteOnClose);
 
     QModelIndexList indexes = selectedIndexes();
@@ -816,7 +815,11 @@ QMenu* MegaTransferView::createContextMenu()
     {
         auto pauseAction =
             new MegaMenuItemAction(pauseActionText(indexes.size()),
-                                   QLatin1String(":/pause_small_thin_outline_icon_primary"),
+                                   Utilities::getPixmapName(QLatin1String("pause"),
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false),
                                    0,
                                    contextMenu);
         connect(pauseAction, &QAction::triggered, this, &MegaTransferView::pauseSelectedClicked);
@@ -829,7 +832,11 @@ QMenu* MegaTransferView::createContextMenu()
     {
         auto resumeAction =
             new MegaMenuItemAction(resumeActionText(indexes.size()),
-                                   QLatin1String(":/play_small_thin_outline_icon_primary"),
+                                   Utilities::getPixmapName(QLatin1String("play"),
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false),
                                    0,
                                    contextMenu);
         connect(resumeAction, &QAction::triggered,
@@ -848,7 +855,11 @@ QMenu* MegaTransferView::createContextMenu()
         {
             auto openItemAction = new MegaMenuItemAction(
                 tr("Open"),
-                QLatin1String(":/external-link_small_thin_outline_icon_primary"),
+                Utilities::getPixmapName(QLatin1String("external_link"),
+                                         Utilities::AttributeType::SMALL |
+                                             Utilities::AttributeType::THIN |
+                                             Utilities::AttributeType::OUTLINE,
+                                         false),
                 0,
                 contextMenu);
             connect(openItemAction, &QAction::triggered, this, &MegaTransferView::openItemClicked);
@@ -859,10 +870,15 @@ QMenu* MegaTransferView::createContextMenu()
         if(localFoldersToOpenByContextMenu.size() <= MAX_ITEMS_FOR_CONTEXT_MENU)
         {
             //Ico not included in transfer manager folder as it is also used by settingsDialog
-            auto showInFolderAction = new MegaMenuItemAction(tr("Show in folder"),
-                                                             QLatin1String(":/folder-open.svg"),
-                                                             0,
-                                                             contextMenu);
+            auto showInFolderAction = new MegaMenuItemAction(
+                tr("Show in folder"),
+                Utilities::getPixmapName(QLatin1String("folder-open"),
+                                         Utilities::AttributeType::SMALL |
+                                             Utilities::AttributeType::THIN |
+                                             Utilities::AttributeType::OUTLINE,
+                                         false),
+                0,
+                contextMenu);
             connect(showInFolderAction, &QAction::triggered, this, &MegaTransferView::showInFolderClicked);
 
             contextMenu->addAction(showInFolderAction);
@@ -879,20 +895,30 @@ QMenu* MegaTransferView::createContextMenu()
             if (handlesToOpenByContextMenu.size() <= MAX_ITEMS_FOR_CONTEXT_MENU)
             {
                 //Ico not included in transfer manager folder as it is also used by settingsDialog
-                auto openInMEGAAction = new MegaMenuItemAction(tr("Open in MEGA"),
-                                                               QLatin1String(":/mega-outline.svg"),
-                                                               0,
-                                                               contextMenu);
+                auto openInMEGAAction = new MegaMenuItemAction(
+                    tr("Open in MEGA"),
+                    Utilities::getPixmapName(QLatin1String("MEGA"),
+                                             Utilities::AttributeType::SMALL |
+                                                 Utilities::AttributeType::THIN |
+                                                 Utilities::AttributeType::OUTLINE,
+                                             false),
+                    0,
+                    contextMenu);
                 connect(openInMEGAAction, &QAction::triggered, this, &MegaTransferView::openInMEGAClicked);
 
                 contextMenu->addAction(openInMEGAAction);
             }
             if (!containsIncomingShares)
             {
-                auto getLinkAction = new MegaMenuItemAction(tr("Get link"),
-                                                            QLatin1String(":/link-01-primary.svg"),
-                                                            0,
-                                                            contextMenu);
+                auto getLinkAction = new MegaMenuItemAction(
+                    tr("Get link"),
+                    Utilities::getPixmapName(QLatin1String("link-01"),
+                                             Utilities::AttributeType::SMALL |
+                                                 Utilities::AttributeType::THIN |
+                                                 Utilities::AttributeType::OUTLINE,
+                                             false),
+                    0,
+                    contextMenu);
                 connect(getLinkAction, &QAction::triggered, this, &MegaTransferView::getLinkClicked);
 
                 contextMenu->addAction(getLinkAction);
@@ -908,21 +934,29 @@ QMenu* MegaTransferView::createContextMenu()
     {
         if (!isTopIndex)
         {
-            auto moveToTopAction =
-                new MegaMenuItemAction(tr("Move to top"),
-                                       QLatin1String(":/move-top_small_thin_outline_icon_primary"),
-                                       0,
-                                       contextMenu);
+            auto moveToTopAction = new MegaMenuItemAction(
+                tr("Move to top"),
+                Utilities::getPixmapName(QLatin1String("move-top"),
+                                         Utilities::AttributeType::SMALL |
+                                             Utilities::AttributeType::THIN |
+                                             Utilities::AttributeType::OUTLINE,
+                                         false),
+                0,
+                contextMenu);
             connect(moveToTopAction,
                     &QAction::triggered,
                     this,
                     &MegaTransferView::moveToTopClicked);
 
-            auto moveUpAction =
-                new MegaMenuItemAction(tr("Move up"),
-                                       QLatin1String(":/move-up_small_thin_outline_icon_primary"),
-                                       0,
-                                       contextMenu);
+            auto moveUpAction = new MegaMenuItemAction(
+                tr("Move up"),
+                Utilities::getPixmapName(QLatin1String("move-up"),
+                                         Utilities::AttributeType::SMALL |
+                                             Utilities::AttributeType::THIN |
+                                             Utilities::AttributeType::OUTLINE,
+                                         false),
+                0,
+                contextMenu);
             connect(moveUpAction, &QAction::triggered, this, &MegaTransferView::moveUpClicked);
 
             contextMenu->addAction(moveToTopAction);
@@ -933,16 +967,24 @@ QMenu* MegaTransferView::createContextMenu()
 
         if (!isBottomIndex)
         {
-            auto moveDownAction =
-                new MegaMenuItemAction(tr("Move down"),
-                                       QLatin1String(":/move-down_small_thin_outline_icon_primary"),
-                                       0,
-                                       contextMenu);
+            auto moveDownAction = new MegaMenuItemAction(
+                tr("Move down"),
+                Utilities::getPixmapName(QLatin1String("move-down"),
+                                         Utilities::AttributeType::SMALL |
+                                             Utilities::AttributeType::THIN |
+                                             Utilities::AttributeType::OUTLINE,
+                                         false),
+                0,
+                contextMenu);
             connect(moveDownAction, &QAction::triggered, this, &MegaTransferView::moveDownClicked);
 
             auto moveToBottomAction = new MegaMenuItemAction(
                 tr("Move to bottom"),
-                QLatin1String(":/move-bottom_small_thin_outline_icon_primary"),
+                Utilities::getPixmapName(QLatin1String("move-bottom"),
+                                         Utilities::AttributeType::SMALL |
+                                             Utilities::AttributeType::THIN |
+                                             Utilities::AttributeType::OUTLINE,
+                                         false),
                 0,
                 contextMenu);
             connect(moveToBottomAction,
@@ -964,7 +1006,11 @@ QMenu* MegaTransferView::createContextMenu()
         auto cancelAction = new MegaMenuItemAction(
             actionFlag & EnableAction::CLEAR ? cancelAndClearActionText(indexes.size()) :
                                                cancelActionText(indexes.size()),
-            QLatin1String(":/x_small_thin_outline_icon_primary"),
+            Utilities::getPixmapName(QLatin1String("x"),
+                                     Utilities::AttributeType::SMALL |
+                                         Utilities::AttributeType::THIN |
+                                         Utilities::AttributeType::OUTLINE,
+                                     false),
             0,
             contextMenu);
         connect(cancelAction, &QAction::triggered,
@@ -979,7 +1025,11 @@ QMenu* MegaTransferView::createContextMenu()
     {
         auto clearAction =
             new MegaMenuItemAction(tr("Clear"),
-                                   QLatin1String(":/eraser_small_thin_outline_icon_primary"),
+                                   Utilities::getPixmapName(QLatin1String("eraser"),
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false),
                                    0,
                                    contextMenu);
         connect(clearAction, &QAction::triggered,

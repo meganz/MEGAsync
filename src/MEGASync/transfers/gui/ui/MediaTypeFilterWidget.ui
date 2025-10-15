@@ -314,6 +314,9 @@ QGroupBox
           <height>36</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::ClickFocus</enum>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <property name="spacing">
           <number>3</number>
@@ -394,6 +397,9 @@ QGroupBox
           <height>36</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::ClickFocus</enum>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout_7">
          <property name="spacing">
           <number>3</number>
@@ -470,6 +476,9 @@ QGroupBox
           <width>0</width>
           <height>36</height>
          </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::ClickFocus</enum>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_8">
          <property name="spacing">
@@ -548,6 +557,9 @@ QGroupBox
           <height>36</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::ClickFocus</enum>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout_9">
          <property name="spacing">
           <number>3</number>
@@ -625,6 +637,9 @@ QGroupBox
           <height>36</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::ClickFocus</enum>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout_6">
          <property name="spacing">
           <number>3</number>
@@ -701,6 +716,9 @@ QGroupBox
           <width>0</width>
           <height>36</height>
          </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::ClickFocus</enum>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <property name="spacing">
