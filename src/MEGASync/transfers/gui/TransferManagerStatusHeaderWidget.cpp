@@ -27,7 +27,7 @@ TransferManagerStatusHeaderWidget::TransferManagerStatusHeaderWidget(QWidget* pa
     mUi->wTransferBanner->hide();
 
     mUi->wAllPausedBanner->setType(BannerWidget::Type::BANNER_INFO);
-    mUi->wAllPausedBanner->setText(tr("All transfers paused."));
+    mUi->wAllPausedBanner->setDescription(tr("All transfers paused."));
     mUi->wTransferBanner->setType(BannerWidget::Type::BANNER_ERROR);
     mUi->wStorageBanner->setAutoManageTextUrl(false);
 
@@ -57,14 +57,11 @@ void TransferManagerStatusHeaderWidget::hideAllPausedBanner()
 
 void TransferManagerStatusHeaderWidget::showAlmostFullStorageBanner()
 {
-    QString bannerText(
-        tr("[B]Storage almost full[/B][BR][A]Upgrade now[/A] before your storage becomes "
-           "full and your uploads, syncs and backups stop."));
+    mUi->wStorageBanner->setLinkText(tr("Upgrade now"));
 
-    // Manage the link in the banner text.
-    Text::RichText(QString::fromLatin1("")).process(bannerText);
-
-    mUi->wStorageBanner->setText(bannerText);
+    mUi->wStorageBanner->setTitle(tr("Storage almost full"));
+    mUi->wStorageBanner->setDescription(tr("Before your storage becomes "
+                                           "full and your uploads, syncs and backups stop."));
     mUi->wStorageBanner->setType(BannerWidget::Type::BANNER_WARNING);
     mUi->wStorageBanner->show();
 
@@ -77,10 +74,9 @@ void TransferManagerStatusHeaderWidget::showAlmostFullStorageBanner()
 
 void TransferManagerStatusHeaderWidget::showFullStorageBanner()
 {
-    QString bannerText(
-        tr("[B]Storage full[/B][BR]Uploads are disabled and sync and backups are paused."));
-    Text::RichText().process(bannerText);
-    mUi->wStorageBanner->setText(bannerText);
+    mUi->wStorageBanner->setTitle(tr("Storage full"));
+    mUi->wStorageBanner->setDescription(
+        tr("Uploads are disabled and sync and backups are paused."));
     mUi->wStorageBanner->setType(BannerWidget::Type::BANNER_ERROR);
     mUi->wStorageBanner->show();
 }
@@ -98,7 +94,7 @@ void TransferManagerStatusHeaderWidget::showTransferBanner(bool show)
         }
         else
         {
-            mUi->wTransferBanner->setText(tr("Transfer quota exceeded."));
+            mUi->wTransferBanner->setDescription(tr("Transfer quota exceeded."));
             if (mTransferQuotaTimer.isActive())
             {
                 mTransferQuotaTimer.stop();
@@ -150,14 +146,14 @@ void TransferManagerStatusHeaderWidget::onTransferQuotaExceededUpdate()
            "quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.")
             .arg(MegaSyncApp->getTransferQuota()->getRemainingTransferQuotaTime().toString(
                 TIME_FORMAT)));
+
     const auto link = ServiceUrls::getTransferQuotaHelpUrl().toString();
     Text::RichText(link).process(bannerText);
-    mUi->wTransferBanner->setText(bannerText);
+    mUi->wTransferBanner->setDescription(bannerText);
 }
 
-void TransferManagerStatusHeaderWidget::onUpgradeClicked(const QUrl& link)
+void TransferManagerStatusHeaderWidget::onUpgradeClicked()
 {
-    Q_UNUSED(link);
     Utilities::upgradeClicked();
 }
 

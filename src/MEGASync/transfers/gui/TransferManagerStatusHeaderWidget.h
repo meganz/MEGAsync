@@ -28,7 +28,7 @@ protected:
 
 private slots:
     void onTransferQuotaExceededUpdate();
-    void onUpgradeClicked(const QUrl& link);
+    void onUpgradeClicked();
 
 private:
     Ui::TransferManagerStatusHeaderWidget* mUi;

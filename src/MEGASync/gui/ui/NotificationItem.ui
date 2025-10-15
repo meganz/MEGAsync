@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>346</height>
+    <height>296</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -74,6 +74,10 @@ color: #FF616366;/*colorToken.text-secondary*/
 {
 background-color: #FFF3F4F4;/*colorToken.border-subtle*/
 }
+#wHeader, #lHeaderText
+{
+background-color: transparent;
+}
 
 </string>
   </property>
@@ -82,7 +86,7 @@ background-color: #FFF3F4F4;/*colorToken.border-subtle*/
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
    <property name="spacing">
-    <number>0</number>
+    <number>8</number>
    </property>
    <property name="sizeConstraint">
     <enum>QLayout::SetDefaultConstraint</enum>
@@ -124,13 +128,13 @@ background-color: #FFF3F4F4;/*colorToken.border-subtle*/
      </property>
      <layout class="QVBoxLayout" name="vlContainer">
       <property name="spacing">
-       <number>12</number>
+       <number>8</number>
       </property>
       <property name="leftMargin">
        <number>16</number>
       </property>
       <property name="topMargin">
-       <number>12</number>
+       <number>4</number>
       </property>
       <property name="rightMargin">
        <number>16</number>
@@ -148,13 +152,13 @@ background-color: #FFF3F4F4;/*colorToken.border-subtle*/
         </property>
         <property name="minimumSize">
          <size>
-          <width>368</width>
+          <width>366</width>
           <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>368</width>
+          <width>366</width>
           <height>16777215</height>
          </size>
         </property>
@@ -387,7 +391,7 @@ background-color: #FFF3F4F4;/*colorToken.border-subtle*/
         </property>
         <layout class="QVBoxLayout" name="vlContent">
          <property name="spacing">
-          <number>12</number>
+          <number>8</number>
          </property>
          <property name="sizeConstraint">
           <enum>QLayout::SetMinimumSize</enum>
@@ -414,13 +418,13 @@ background-color: #FFF3F4F4;/*colorToken.border-subtle*/
            </property>
            <property name="minimumSize">
             <size>
-             <width>368</width>
+             <width>366</width>
              <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>368</width>
+             <width>366</width>
              <height>66</height>
             </size>
            </property>
@@ -512,7 +516,7 @@ background-color: #FFF3F4F4;/*colorToken.border-subtle*/
            </property>
            <layout class="QVBoxLayout" name="vblDescButton">
             <property name="spacing">
-             <number>12</number>
+             <number>8</number>
             </property>
             <property name="sizeConstraint">
              <enum>QLayout::SetMinimumSize</enum>
@@ -626,13 +630,13 @@ background-color: #FFF3F4F4;/*colorToken.border-subtle*/
     <widget class="QWidget" name="wSeparator" native="true">
      <property name="minimumSize">
       <size>
-       <width>400</width>
+       <width>398</width>
        <height>1</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>400</width>
+       <width>398</width>
        <height>1</height>
       </size>
      </property>

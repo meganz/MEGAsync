@@ -1,9 +1,9 @@
 #include "BannerWidget.h"
 
 #include "ui_BannerWidget.h"
+#include "Utilities.h"
 
 #include <QStyle>
-
 namespace
 {
 constexpr const char* TYPE_PROPERTY_NAME{"type"};
@@ -20,12 +20,14 @@ BannerWidget::BannerWidget(QWidget* parent):
     mType(Type::NONE)
 {
     mUi->setupUi(this);
-
+    mUi->wLinkContainer->hide();
+    mUi->lTitle->hide();
+    mUi->lText->hide();
     mUi->lText->setTextFormat(Qt::RichText);
     mUi->lText->setKeepParentCursor(false);
 
-    connect(mUi->lText,
-            &WordWrapLabel::anchorClicked,
+    connect(mUi->bLink,
+            &QPushButton::clicked,
             this,
             &BannerWidget::linkActivated,
             Qt::UniqueConnection);
@@ -58,12 +60,25 @@ void BannerWidget::setType(Type type)
     mUi->wContent->setStyleSheet(this->styleSheet());
 }
 
-void BannerWidget::setText(const QString& text)
+void BannerWidget::setDescription(const QString& text)
 {
     mUi->lText->setText(text);
+    mUi->lText->show();
 }
 
 void BannerWidget::setAutoManageTextUrl(bool newValue)
 {
     mUi->lText->setAutoManageUrl(newValue);
+}
+
+void BannerWidget::setLinkText(const QString& displayText)
+{
+    mUi->bLink->setText(displayText);
+    mUi->wLinkContainer->show();
+}
+
+void BannerWidget::setTitle(const QString& text)
+{
+    mUi->lTitle->setText(text);
+    mUi->lTitle->show();
 }

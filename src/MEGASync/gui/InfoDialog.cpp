@@ -1021,16 +1021,13 @@ void InfoDialog::updateDialogState()
         {
             auto transfersCount = app->getTransfersModel()->getTransfersCount();
 
-            if (transfersCount.totalDownloads || transfersCount.totalUploads ||
-                ui->wPSA->isPSAready())
+            if (transfersCount.totalDownloads || transfersCount.totalUploads)
             {
                 overlay->setVisible(false);
                 ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
-                ui->wPSA->showPSA();
             }
             else
             {
-                ui->wPSA->hidePSA();
                 ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
                 if (!mWaiting && !mIndexing)
                 {
@@ -1040,6 +1037,14 @@ void InfoDialog::updateDialogState()
                 {
                     overlay->setVisible(false);
                 }
+            }
+            if (ui->wPSA->isPSAready())
+            {
+                ui->wPSA->showPSA();
+            }
+            else
+            {
+                ui->wPSA->showPSA();
             }
         }
     }

@@ -567,7 +567,7 @@ background-color: #FFEFEFF0;/*colorToken.surface-2*/
                </size>
               </property>
               <property name="text">
-               <string>Payment</string>
+               <string>Payments</string>
               </property>
               <property name="class" stdset="0">
                <string notr="true">menu-style</string>

@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>122</height>
+    <height>124</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>350</width>
-    <height>122</height>
+    <height>124</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>400</width>
-    <height>122</height>
+    <height>124</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -89,13 +89,13 @@ background-color: transparent;
      <property name="minimumSize">
       <size>
        <width>400</width>
-       <height>121</height>
+       <height>123</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>400</width>
-       <height>121</height>
+       <height>123</height>
       </size>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -130,7 +130,7 @@ background-color: transparent;
           <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>0</number>
+          <number>2</number>
          </property>
          <item>
           <widget class="QWidget" name="wNotificationIcon" native="true">
