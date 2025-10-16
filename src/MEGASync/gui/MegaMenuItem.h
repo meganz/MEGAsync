@@ -37,6 +37,11 @@ public:
         updateLayout();
     }
 
+    void paintEvent(QPaintEvent* event) override
+    {
+        updateLayout();
+    }
+
     // Tree depth (affects left margin)
     void setTreeDepth(int depth);
 

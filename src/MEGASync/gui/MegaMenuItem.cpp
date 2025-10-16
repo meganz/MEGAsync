@@ -1,7 +1,6 @@
 #include "MegaMenuItem.h"
 
 #include "ThemeManager.h"
-#include "TokenParserWidgetManager.h"
 #include "Utilities.h"
 
 MegaMenuItem::MegaMenuItem(const QString& text,
