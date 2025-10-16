@@ -764,7 +764,6 @@ void InfoDialog::updateState()
         else if (mPreferences->getGlobalPaused())
         {
             mState = StatusInfo::TRANSFERS_STATES::STATE_PAUSED;
-            animateStates(mWaiting || mIndexing || mSyncing);
         }
         else if (mIndexing)
         {
@@ -1021,6 +1020,15 @@ void InfoDialog::updateDialogState()
         {
             auto transfersCount = app->getTransfersModel()->getTransfersCount();
 
+            if (ui->wPSA->isPSAready())
+            {
+                ui->wPSA->showPSA();
+            }
+            else
+            {
+                ui->wPSA->hidePSA();
+            }
+
             if (transfersCount.totalDownloads || transfersCount.totalUploads)
             {
                 overlay->setVisible(false);
@@ -1037,14 +1045,6 @@ void InfoDialog::updateDialogState()
                 {
                     overlay->setVisible(false);
                 }
-            }
-            if (ui->wPSA->isPSAready())
-            {
-                ui->wPSA->showPSA();
-            }
-            else
-            {
-                ui->wPSA->showPSA();
             }
         }
     }
@@ -1302,10 +1302,12 @@ void InfoDialog::on_bStorageDetails_clicked()
 
 void InfoDialog::animateStates(bool opt)
 {
+    static const QSize iconSize = QSize(128, 128);
+
     if (opt) //Enable animation for scanning/waiting states
     {
         ui->lUploadToMega->setIcon(Utilities::getCachedPixmap(QString::fromUtf8("://images/init_scanning.png")));
-        ui->lUploadToMega->setIconSize(QSize(128, 128));
+        ui->lUploadToMega->setIconSize(iconSize);
 
         if (!opacityEffect)
         {
@@ -1330,9 +1332,10 @@ void InfoDialog::animateStates(bool opt)
     }
     else //Disable animation
     {
-        ui->lUploadToMega->setIcon(
-            Utilities::getCachedPixmap(QString::fromUtf8(":/upload-to-mega.png")));
-        ui->lUploadToMega->setIconSize(QSize(128, 128));
+        ui->lUploadToMega->setIcon(Utilities::getPixmap(QString::fromUtf8("upload-to-mega.png"),
+                                                        Utilities::AttributeType::NONE,
+                                                        iconSize));
+        ui->lUploadToMega->setIconSize(iconSize);
         ui->lUploadToMega->setText(tr("Upload to MEGA now"));
 
         if (animation)

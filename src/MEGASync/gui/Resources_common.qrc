@@ -225,9 +225,6 @@
         <file alias="images/ic_sync_warning.png">images/ic_sync_warning.png</file>
         <file alias="images/ic_sync_warning@2x.png">images/ic_sync_warning@2x.png</file>
         <file alias="images/ic_sync_warning@3x.png">images/ic_sync_warning@3x.png</file>
-        <file alias="images/ico-cloud-drive.png">images/ico-cloud-drive.png</file>
-        <file alias="images/ico-cloud-drive@2x.png">images/ico-cloud-drive@2x.png</file>
-        <file alias="images/ico-cloud-drive@3x.png">images/ico-cloud-drive@3x.png</file>
         <file alias="images/ico-device-centre.svg">images/ico-device-centre.svg</file>
         <file alias="images/ico_Delete.png">images/ico_Delete.png</file>
         <file alias="images/ico_Delete@2x.png">images/ico_Delete@2x.png</file>
@@ -1046,9 +1043,6 @@
         <file alias="images/tray_preferences_ico@2x.png">images/tray_preferences_ico@2x.png</file>
         <file alias="images/tray_preferences_ico@3x.png">images/tray_preferences_ico@3x.png</file>
         <file alias="images/tray_sync.ico">images/tray_sync.ico</file>
-        <file alias="images/upload_to_mega.png">images/upload_to_mega.png</file>
-        <file alias="images/upload_to_mega@2x.png">images/upload_to_mega@2x.png</file>
-        <file alias="images/upload_to_mega@3x.png">images/upload_to_mega@3x.png</file>
         <file alias="images/upload_to_mega_ico@3x.png">images/upload_to_mega_ico@3x.png</file>
         <file alias="images/upload_to_mega_ico_white@3x.png">images/upload_to_mega_ico_white@3x.png</file>
         <file alias="images/uptodate.svg">images/uptodate.svg</file>
@@ -1286,5 +1280,8 @@
         <file alias="log-out_small_thin_outline">images/themed/tokenizable/log-out_small_thin_outline.svg</file>
         <file alias="gear-8_small_thin_outline">images/themed/tokenizable/gear-8_small_thin_outline.svg</file>
         <file alias="hand_small_thin_outline">images/themed/tokenizable/hand_small_thin_outline.svg</file>
+        <file alias="upload-to-mega.png">images/upload-to-mega.png</file>
+        <file alias="upload-to-mega@2x.png">images/upload-to-mega@2x.png</file>
+        <file alias="upload-to-mega@3x.png">images/upload-to-mega@3x.png</file>
     </qresource>
 </RCC>

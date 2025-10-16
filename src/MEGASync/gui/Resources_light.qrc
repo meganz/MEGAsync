@@ -159,9 +159,6 @@
         <file alias="alert-triangle.svg">images/themed/light/alert-triangle.svg</file>
         <file alias="sync-warning.svg">images/themed/light/sync-warning.svg</file>
         <file alias="database-warning.svg">images/themed/light/database-warning.svg</file>
-        <file alias="upload-to-mega.png">images/upload-to-mega.png</file>
-        <file alias="upload-to-mega@2x.png">images/upload-to-mega@2x.png</file>
-        <file alias="upload-to-mega@3x.png">images/upload-to-mega@3x.png</file>
         <file alias="rotate-cw.svg">images/themed/light/rotate-cw.svg</file>
         <file alias="arrow-down-brand-primary.svg">images/themed/light/arrow-down-brand-primary.svg</file>
         <file alias="arrow-up-brand-primary.svg">images/themed/light/arrow-up-brand-primary.svg</file>

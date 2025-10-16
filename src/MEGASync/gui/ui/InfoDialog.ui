@@ -3670,12 +3670,6 @@ background-color: transparent;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>AvatarWidget</class>
-   <extends>QWidget</extends>
-   <header>AvatarWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>TokenizableToolButton</class>
    <extends>QToolButton</extends>
    <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
@@ -3690,6 +3684,12 @@ background-color: transparent;
    <class>StatusInfo</class>
    <extends>QWidget</extends>
    <header location="global">StatusInfo.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AvatarWidget</class>
+   <extends>QWidget</extends>
+   <header>AvatarWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
