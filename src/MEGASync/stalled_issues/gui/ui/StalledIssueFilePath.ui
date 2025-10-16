@@ -924,6 +924,9 @@
      <property name="text">
       <string/>
      </property>
+     <property name="normal_off" stdset="0">
+      <string notr="true">icon-primary</string>
+     </property>
     </widget>
    </item>
    <item row="0" column="0">
@@ -970,7 +973,7 @@
   <customwidget>
    <class>IconLabel</class>
    <extends>QToolButton</extends>
-   <header>TokenizableItems/IconLabel.h</header>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
   </customwidget>
   <customwidget>
    <class>WordWrapLabel</class>
