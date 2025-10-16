@@ -1404,6 +1404,9 @@ margin-bottom: 3px;
                   <property name="flat">
                    <bool>true</bool>
                   </property>
+                  <property name="type" stdset="0">
+                   <string notr="true">ghost</string>
+                  </property>
                  </widget>
                 </item>
                </layout>
