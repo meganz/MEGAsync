@@ -508,7 +508,7 @@ void NodeSelectorTreeViewWidget::onRemoveIndexFromGoBack(const QModelIndex& inde
             }
             else
             {
-                setRootIndex(QModelIndex());
+                setRootIndex(mModel->hasTopRootIndex() ? mProxyModel->index(0, 0) : QModelIndex());
                 mNavigationInfo.backwardHandles.clear();
             }
         };
