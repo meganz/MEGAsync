@@ -3543,6 +3543,11 @@ https://mega.co.nz/#sync</source>
         <translatorcomment>Label to indicate a contact of a user.</translatorcomment>
         <translation>contact</translation>
     </message>
+    <message>
+        <source>Don’t ask me again</source>
+        <translatorcomment>Check box in the link created dialog, to inform the system about user preference, in the context ExclusionsStrings we have the same string. SNC-5975</translatorcomment>
+        <translation type="unfinished">Don’t ask me again</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>

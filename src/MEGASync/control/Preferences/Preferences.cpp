@@ -322,6 +322,9 @@ const int Preferences::minSyncStateChangeProcessingIntervalMs = 200;
 
 int Preferences::lastVersionUponStartup = 0;
 
+const QString Preferences::dontShowExportLinkDialogKey =
+    QString::fromLatin1("dontShowExportLinkDialogKey");
+
 std::shared_ptr<Preferences> Preferences::instance()
 {
     static std::shared_ptr<Preferences> preferences (new Preferences());
@@ -2501,6 +2504,16 @@ bool Preferences::getDownloadsPaused()
 void Preferences::setDownloadsPaused(bool value)
 {
     setValueConcurrently(wasDownloadsPausedKey, value);
+}
+
+void Preferences::setDontShowExportLinkDialog(bool value)
+{
+    setValueConcurrently(dontShowExportLinkDialogKey, value);
+}
+
+bool Preferences::getDontShowExportLinkDialog()
+{
+    return getValueConcurrent<bool>(dontShowExportLinkDialogKey, false);
 }
 
 long long Preferences::lastStatsRequest()

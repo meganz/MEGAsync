@@ -3217,12 +3217,11 @@ void MegaApplication::cleanLocalCaches(bool all)
     }
 }
 
-void MegaApplication::showInfoMessage(QString message, bool messageBoxDialogFallback, QString title)
+void MegaApplication::showInfoMessage(QString message, QString title)
 {
     DesktopNotifications::NotificationInfo info;
     info.message = message;
     info.title = title;
-    info.enabledMessageBoxFallback = messageBoxDialogFallback;
 
     showInfoMessage(info);
 }
@@ -3236,16 +3235,7 @@ void MegaApplication::showInfoMessage(DesktopNotifications::NotificationInfo inf
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, info.message.toUtf8().constData());
 
-    if (!mOsNotifications ||
-        (info.enabledMessageBoxFallback && mOsNotifications &&
-         !preferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES)))
-    {
-        MessageDialogInfo msgInfo;
-        msgInfo.descriptionText = info.message;
-        MessageDialogOpener::information(msgInfo);
-    }
-    else if (mOsNotifications &&
-             preferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES))
+    if (mOsNotifications)
     {
 #ifdef __APPLE__
         // In case this method is called from another thread
@@ -3260,6 +3250,12 @@ void MegaApplication::showInfoMessage(DesktopNotifications::NotificationInfo inf
 #endif
         lastTrayMessage = info.message;
         mOsNotifications->sendInfoNotification(info);
+    }
+    else
+    {
+        MessageDialogInfo msgInfo;
+        msgInfo.descriptionText = info.message;
+        MessageDialogOpener::information(msgInfo);
     }
 }
 
@@ -5032,14 +5028,46 @@ void MegaApplication::onRequestLinksFinished()
     }
     QString linkForClipboard(links.join(QLatin1Char('\n')));
     QApplication::clipboard()->setText(linkForClipboard);
+
+    QString title = MegaSyncApp->getMEGAString();
+    QString message;
     if (links.size() == 1)
     {
-        showInfoMessage(tr("The link has been copied to the clipboard"), true);
+        message = tr("The link has been copied to the clipboard");
     }
     else
     {
-        showInfoMessage(tr("The links have been copied to the clipboard"), true);
+        message = tr("The links have been copied to the clipboard");
     }
+
+    if (!preferences->getDontShowExportLinkDialog() &&
+        (!mOsNotifications ||
+         (mOsNotifications &&
+          !preferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES))))
+    {
+        MessageDialogInfo msgInfo;
+        msgInfo.descriptionText = message;
+        msgInfo.titleText = title;
+        msgInfo.checkboxText = tr("Don’t ask me again");
+        msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msgResult)
+        {
+            if (msgResult->result() == QMessageBox::StandardButton::Ok)
+            {
+                preferences->setDontShowExportLinkDialog(msgResult->isChecked());
+            }
+        };
+
+        MessageDialogOpener::information(msgInfo);
+    }
+    else
+    {
+        DesktopNotifications::NotificationInfo info;
+        info.title = title;
+        info.message = message;
+
+        showInfoMessage(info);
+    }
+
     exportProcessor->deleteLater();
     exportOps--;
 }

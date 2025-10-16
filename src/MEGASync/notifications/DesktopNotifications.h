@@ -35,7 +35,6 @@ public:
         QString message;
         QString imagePath;
         QStringList actions;
-        bool enabledMessageBoxFallback;
         std::function<void(DesktopAppNotificationBase::Action)> activatedFunction = nullptr;
         NotificationInfo();
 
