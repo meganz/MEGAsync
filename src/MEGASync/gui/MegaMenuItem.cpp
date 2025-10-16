@@ -44,8 +44,6 @@ MegaMenuItem::MegaMenuItem(const QString& text,
     m_arrowLabel->setStyleSheet(QLatin1String("background-color: transparent"));
     createSubmenuArrow();
 
-    updateLayout();
-
     // Set default size
     setFixedHeight(32);
 }
