@@ -77,6 +77,7 @@ public:
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
     bool updateOverStorageState(int state);
     void createUpsellController();
+    void updateHeaderBackground();
 
     void reset();
 
@@ -188,6 +189,8 @@ private:
     bool pendingDownloadsTimerRunning = false;
     bool circlesShowAllActiveTransfersProgress;
     void setUnseenNotifications(long long value);
+
+    void changePSAVisibility(bool state);
 
     bool mIndexing; //scanning
     bool mWaiting;

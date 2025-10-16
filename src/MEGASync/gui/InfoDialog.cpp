@@ -45,6 +45,8 @@ static constexpr int DEFAULT_MIN_PERCENTAGE{1};
 static constexpr int FONT_SIZE_BUSINESS_PX{12};
 static constexpr int FONT_SIZE_NO_BUSINESS_PX{12};
 
+static const char* TRANSPARENT_HEADER = "transparent_header";
+
 void InfoDialog::pauseResumeClicked()
 {
     app->pauseTransfers();
@@ -277,6 +279,9 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
 #endif
 
     adjustSize();
+
+    // By default, the header has a background-color
+    ui->wHeader->setProperty(TRANSPARENT_HEADER, false);
 
     mTransferScanCancelUi = new TransferScanCancelUi(ui->sTabs, ui->pTransfersTab);
     connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
@@ -787,6 +792,8 @@ void InfoDialog::updateState()
         }
     }
 
+    updateHeaderBackground();
+
     if(ui->wStatus->getState() != mState)
     {
         ui->wStatus->setState(mState);
@@ -905,7 +912,7 @@ void InfoDialog::updateDialogState()
 
             ui->sActiveTransfers->setCurrentWidget(ui->pOverDiskQuotaPaywall);
             overlay->setVisible(false);
-            ui->wPSA->hidePSA();
+            changePSAVisibility(false);
         }
     }
     else if (storageState == Preferences::STATE_OVER_STORAGE)
@@ -937,7 +944,7 @@ void InfoDialog::updateDialogState()
         ui->bBuyQuota->setText(tr("Buy more space"));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
-        ui->wPSA->hidePSA();
+        changePSAVisibility(false);
     }
     else if (transferOverQuotaEnabled)
     {
@@ -965,7 +972,7 @@ void InfoDialog::updateDialogState()
         ui->bOQIcon->setIconSize(QSize(64, 64));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
-        ui->wPSA->hidePSA();
+        changePSAVisibility(false);
     }
     else if (storageState == Preferences::STATE_ALMOST_OVER_STORAGE)
     {
@@ -977,7 +984,7 @@ void InfoDialog::updateDialogState()
         ui->bBuyQuota->setText(tr("Buy more space"));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
-        ui->wPSA->hidePSA();
+        changePSAVisibility(false);
     }
     else if (transferQuotaState == QuotaState::WARNING && transferAlmostOverquotaAlertEnabled)
     {
@@ -993,7 +1000,7 @@ void InfoDialog::updateDialogState()
 
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
-        ui->wPSA->hidePSA();
+        changePSAVisibility(false);
     }
     else if (mSyncInfo->hasUnattendedDisabledSyncs(
                  {mega::MegaSync::TYPE_TWOWAY, mega::MegaSync::TYPE_BACKUP}))
@@ -1012,7 +1019,7 @@ void InfoDialog::updateDialogState()
             ui->sActiveTransfers->setCurrentWidget(ui->pSyncsDisabled);
         }
         overlay->setVisible(false);
-        ui->wPSA->hidePSA();
+        changePSAVisibility(false);
     }
     else
     {
@@ -1022,11 +1029,11 @@ void InfoDialog::updateDialogState()
 
             if (ui->wPSA->isPSAready())
             {
-                ui->wPSA->showPSA();
+                changePSAVisibility(true);
             }
             else
             {
-                ui->wPSA->hidePSA();
+                changePSAVisibility(false);
             }
 
             if (transfersCount.totalDownloads || transfersCount.totalUploads)
@@ -1590,6 +1597,34 @@ void InfoDialog::setUnseenNotifications(long long value)
     else
     {
         ui->bNumberUnseenNotifications->hide();
+    }
+}
+
+void InfoDialog::updateHeaderBackground()
+{
+    auto isHeaderTransparent(ui->wHeader->property(TRANSPARENT_HEADER).toBool());
+    auto willBeHeaderTransparent(false);
+
+    if (mState == StatusInfo::TRANSFERS_STATES::STATE_INDEXING)
+    {
+        // If the PSA is not visible and the app is scanning > the header is transparent;
+        willBeHeaderTransparent = !ui->wPSA->isPSAshown();
+    }
+
+    // The background state has changed
+    if (willBeHeaderTransparent != isHeaderTransparent)
+    {
+        ui->wHeader->setProperty(TRANSPARENT_HEADER, willBeHeaderTransparent);
+        setStyleSheet(styleSheet());
+    }
+}
+
+void InfoDialog::changePSAVisibility(bool state)
+{
+    if (ui->wPSA->isPSAshown() != state)
+    {
+        state ? ui->wPSA->showPSA() : ui->wPSA->hidePSA();
+        updateHeaderBackground();
     }
 }
 
