@@ -113,7 +113,7 @@ pipeline {
                 dir("${linux_sources_workspace}") {
 					sh "rm -rf ${BUILD_DIR}; mkdir ${BUILD_DIR}"
                     sh "cmake -DCMAKE_BUILD_TYPE=Debug -DVCPKG_ROOT=${VCPKGPATH} ${BUILD_OPTIONS} -DCMAKE_VERBOSE_MAKEFILE=ON -S ${linux_sources_workspace} -B ${linux_sources_workspace}/${BUILD_DIR}"
-					sh "cmake --build ${linux_sources_workspace}/${BUILD_DIR} --target MEGAsync -j2"
+					sh "cmake --build ${linux_sources_workspace}/${BUILD_DIR} --target MEGAsync -j4"
                 }
                 script {
                     uploadPackagesExecuted = false
@@ -164,7 +164,7 @@ pipeline {
                         echo "Do Build for $DISTRIBUTION-$ARCHITECTURE"
                         dir(linux_sources_workspace){
                             lock(resource: "$DISTRIBUTION-$ARCHITECTURE-MEGAsync-build", quantity: 1, ){
-                                sh "/opt/buildTools/build/buildManager.sh -a $ARCHITECTURE -j 3 build $DISTRIBUTION . megasync"
+                                sh "/opt/buildTools/build/buildManager.sh -a $ARCHITECTURE -j 5 build $DISTRIBUTION . megasync"
                                 sh "/opt/buildTools/repo/repoManager.sh add /srv/builder/results/$DISTRIBUTION/$ARCHITECTURE/megasync/ $DISTRIBUTION"
                                 sh "SIGN_KEY_PATH=/srv/sign_test/ /opt/buildTools/repo/repoManager.sh build -n $DISTRIBUTION"
                             }
