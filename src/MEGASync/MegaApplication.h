@@ -132,7 +132,9 @@ public:
     QString getMEGAString(){return QLatin1String("MEGA");}
 
     void cleanLocalCaches(bool all = false);
-    void showInfoMessage(QString message, QString title = MegaSyncApp->getMEGAString());
+    void showInfoMessage(QString message,
+                         bool messageBoxDialogFallback = false,
+                         QString title = MegaSyncApp->getMEGAString());
     void showInfoMessage(DesktopNotifications::NotificationInfo info);
     void showWarningMessage(QString message, QString title = MegaSyncApp->getMEGAString());
     void showErrorMessage(QString message, QString title = MegaSyncApp->getMEGAString());

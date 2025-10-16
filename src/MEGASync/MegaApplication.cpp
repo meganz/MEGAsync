@@ -3217,11 +3217,13 @@ void MegaApplication::cleanLocalCaches(bool all)
     }
 }
 
-void MegaApplication::showInfoMessage(QString message, QString title)
+void MegaApplication::showInfoMessage(QString message, bool messageBoxDialogFallback, QString title)
 {
     DesktopNotifications::NotificationInfo info;
     info.message = message;
     info.title = title;
+    info.enabledMessageBoxFallback = messageBoxDialogFallback;
+
     showInfoMessage(info);
 }
 
@@ -3234,26 +3236,30 @@ void MegaApplication::showInfoMessage(DesktopNotifications::NotificationInfo inf
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, info.message.toUtf8().constData());
 
-    if (mOsNotifications)
-    {
-#ifdef __APPLE__
-        //In case this method is called from another thread
-        Utilities::queueFunctionInAppThread([this]()
-        {
-            if (infoDialog && infoDialog->isVisible())
-            {
-                infoDialog->hide();
-            }
-        });
-#endif
-        lastTrayMessage = info.message;
-        mOsNotifications->sendInfoNotification(info);
-    }
-    else
+    if (!mOsNotifications ||
+        (info.enabledMessageBoxFallback && mOsNotifications &&
+         !preferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES)))
     {
         MessageDialogInfo msgInfo;
         msgInfo.descriptionText = info.message;
         MessageDialogOpener::information(msgInfo);
+    }
+    else if (mOsNotifications &&
+             preferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES))
+    {
+#ifdef __APPLE__
+        // In case this method is called from another thread
+        Utilities::queueFunctionInAppThread(
+            [this]()
+            {
+                if (infoDialog && infoDialog->isVisible())
+                {
+                    infoDialog->hide();
+                }
+            });
+#endif
+        lastTrayMessage = info.message;
+        mOsNotifications->sendInfoNotification(info);
     }
 }
 
@@ -5028,11 +5034,11 @@ void MegaApplication::onRequestLinksFinished()
     QApplication::clipboard()->setText(linkForClipboard);
     if (links.size() == 1)
     {
-        showInfoMessage(tr("The link has been copied to the clipboard"));
+        showInfoMessage(tr("The link has been copied to the clipboard"), true);
     }
     else
     {
-        showInfoMessage(tr("The links have been copied to the clipboard"));
+        showInfoMessage(tr("The links have been copied to the clipboard"), true);
     }
     exportProcessor->deleteLater();
     exportOps--;
