@@ -509,6 +509,7 @@ void MenuItemDelegate::paint(QPainter* painter,
 }
 
 const int ICON_SPACE_SIZE = 60;
+const int ICON_SIZE = 16;
 
 IconMiddleDelegate::IconMiddleDelegate(QObject* parent):
     BackgroundColorDelegate(parent)
@@ -525,6 +526,9 @@ void IconMiddleDelegate::paint(QPainter* painter,
     opt.decorationPosition = QStyleOptionViewItem::Top;
     QRect rect = option.rect;
     rect.setRight(ICON_SPACE_SIZE);
+    rect.setTop(rect.top() + ((rect.height() - ICON_SIZE) / 2));
+    rect.setHeight(ICON_SIZE);
+
     QIcon icon = index.data(Qt::DecorationRole).value<QIcon>();
 
     QIcon::Mode iconMode = QIcon::Normal;
