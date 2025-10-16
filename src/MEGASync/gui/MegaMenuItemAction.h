@@ -1,6 +1,7 @@
 #ifndef MEGAMENUITEMACTION_H
 #define MEGAMENUITEMACTION_H
 
+#include <QPointer>
 #include <QWidgetAction>
 
 class MegaMenuItem;
@@ -44,7 +45,7 @@ private:
     void paintItemBackground(MegaMenuItem* item);
 
 private:
-    MegaMenuItem* m_item;
+    QPointer<MegaMenuItem> m_item;
     QString m_text;
     QString m_iconName;
     int m_treeDepth;
@@ -53,7 +54,7 @@ private:
     int m_beforeIconSpacing;
     int m_itemHeight;
     int m_itemWidth;
-    QMenu* m_submenu;
+    QPointer<QMenu> m_submenu;
 };
 
 #endif // MEGAMENUITEMACTION_H

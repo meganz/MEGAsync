@@ -13,7 +13,6 @@ MegaMenuItemAction::MegaMenuItemAction(const QString& text,
                                        int treeDepth,
                                        QObject* parent):
     QWidgetAction(parent),
-    m_item(nullptr),
     m_text(text),
     m_iconName(iconName),
     m_treeDepth(treeDepth),
@@ -37,6 +36,7 @@ QWidget* MegaMenuItemAction::createWidget(QWidget* parent)
     m_item->setTextSpacing(m_textSpacing);
     m_item->setBeforeIconSpacing(m_beforeIconSpacing);
     m_item->setFixedHeight(m_itemHeight);
+    m_item->setHasSubmenu(m_submenu != nullptr);
 
     if (m_itemWidth > 0)
     {
@@ -181,6 +181,7 @@ void MegaMenuItemAction::setActionIcon(const QString& icon)
 void MegaMenuItemAction::setMenu(QMenu* menu)
 {
     QWidgetAction::setMenu(menu);
+    m_submenu = menu;
     if (m_item)
     {
         m_item->setHasSubmenu(menu != nullptr);
