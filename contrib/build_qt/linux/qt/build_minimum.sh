@@ -46,7 +46,7 @@ mainver=`echo $ver | awk -F"." '{print $1"."$2}'`
 SRC_ARCHIVE="qt-everywhere-opensource-src-$ver.tar.xz"
 
 # Download Qt package
-wget -c "https://download.qt.io/official_releases/qt/$mainver/$ver/single/$SRC_ARCHIVE" -O "$SRC_ARCHIVE"
+wget -c "https://download.qt.io/archive/qt/$mainver/$ver/single/$SRC_ARCHIVE" -O "$SRC_ARCHIVE"
 
 # Get patches
 mkdir -p patches
@@ -56,7 +56,7 @@ CVE-2025-30348-qtbase-5.15.diff \
 CVE-2025-4211-qtbase-5.15.diff \
 CVE-2025-5455-qtbase-5.15.patch
 do
-  wget -c "https://download.qt.io/official_releases/qt/$mainver/$p" -O "patches/$p"
+  wget -c "https://download.qt.io/archive/qt/$mainver/$p" -O "patches/$p"
 done
 
 # Verify checksums
@@ -67,7 +67,6 @@ if ! echo 85eb566333d6ba59be3a97c9445a6e52f2af1b52fc3c54b8a2e7f9ea040a7de4 "$SRC
 || ! echo 7bc92fb0423f25195fcc59a851570a2f944cfeecbd843540f0e80f09b6b0e822 patches/CVE-2025-4211-qtbase-5.15.diff | sha256sum -c - \
 || ! echo 967fe137ee358f60ac3338f658624ae2663ec77552c38bcbd94c6f2eff107506 patches/CVE-2025-5455-qtbase-5.15.patch | sha256sum -c - \
 || ! echo fcd011754040d961fec1b48fe9828b2c8d501f2d9c30f0f475487a590de6d3c8 patches/CVE-2025-30348-qtbase-5.15.diff | sha256sum -c -
-# || ! echo 967fe137ee358f60ac3338f658624ae2663ec77552c38bcbd94c6f2eff107506 CVE-2025-23050-qtconnectivity-5.15.diff | sha256sum -c -
 
 then
 exit 1

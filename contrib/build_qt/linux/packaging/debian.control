@@ -2,7 +2,8 @@ Source: qt-mega
 Section: Tools
 Priority: normal
 Maintainer: MEGA Linux Team <linux@mega.io>
-Build-Depends:  debhelper,
+Build-Depends:  python3,
+                debhelper,
                 zlib1g-dev,
                 wget,
                 libtool,
@@ -23,17 +24,27 @@ Build-Depends:  debhelper,
                 libxcb-image0-dev,
                 libxcb-shm0-dev,
                 libxcb-icccm4-dev,
-                libxcb-sync0-dev,
+                libxcb-sync-dev,
                 libxcb-xfixes0-dev,
                 libxcb-shape0-dev,
                 libxcb-randr0-dev,
                 libxcb-render-util0-dev,
                 libxcb-xinerama0-dev,
                 libxkbcommon-dev,
-                libxkbcommon-x11-dev
+                libxkbcommon-x11-dev,
+                libgl1-mesa-dev
 
 Package: qt-mega
 Architecture: any
-Depends: ${shlibs:Depends}
+Depends: ${shlibs:Depends},
+         libxcb-icccm4-dev,
+         libxcb-image0,
+         libxcb-keysyms1,
+         libxcb-render-util0,
+         libxcb-shape0,
+         libxcb-xinerama0,
+         libxkbcommon-dev,
+         libxkbcommon-x11-dev,
+         libgl1-mesa-dev
 Description: TODO
  TODO

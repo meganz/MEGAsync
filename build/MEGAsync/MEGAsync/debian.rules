@@ -2,7 +2,7 @@
 NJOBS := $(shell echo ${DEB_BUILD_OPTIONS} | sed -rn 's/.*parallel=([0-9]*).*/\1/p')
 VCPKG_ROOT := $(shell [ -f /opt/vcpkg.tar.gz ] && echo "-DVCPKG_ROOT=vcpkg" || echo "")
 EXTRADEFINES := $(shell cat /etc/issue | grep "Ubuntu 1[23456789]\|Ubuntu 20\|Ubuntu 21\|Ubuntu 22.10\|Ubuntu 23\|Ubuntu 24.10\|Debian.* [789]" >/dev/null && echo "-DMEGASYNC_DEPRECATED_OS" || echo "")
-QTINSTALL := $(shell cat /etc/issue | grep "Ubuntu 20.04" >/dev/null && echo "-DDEPLOY_QT_LIBRARIES=ON -DCMAKE_PREFIX_PATH=/opt/mega" || echo "")
+QTINSTALL := $(shell cat /etc/issue | grep "Ubuntu 20.04\|Ubuntu 22.04" >/dev/null && echo "-DDEPLOY_QT_LIBRARIES=ON -DCMAKE_PREFIX_PATH=/opt/mega" || echo "")
 QTDEFINES := $(shell [ -f /opt/mega/bin/qmake ] && echo "${QTINSTALL}" || echo "" )
 DEB_TESTING := $(shell cat /etc/issue | grep "Debian" > /dev/null && cat /etc/apt/sources.list.d/debian.sources | grep -v "^\#" | grep testing > /dev/null && echo "testing")
 MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")

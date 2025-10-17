@@ -28,7 +28,7 @@ Suggests: nautilus-megasync, dolphin-megasync, nemo-megasync, thunar-megasync
     BuildRequires: update-desktop-files
     BuildRequires: libqt5-qtbase-devel, libqt5-linguist-devel, libqt5-qtsvg-devel, libqt5-qtx11extras-devel, libqt5-qtdeclarative-devel
     Requires: libQt5Core5 libqt5-qtquickcontrols libqt5-qtquickcontrols2
-    BuildRequires: python311, kernel-devel
+    BuildRequires: kernel-devel
 %else
     BuildRequires: python3, kernel-headers
 %endif
@@ -37,6 +37,16 @@ Suggests: nautilus-megasync, dolphin-megasync, nemo-megasync, thunar-megasync
     BuildRequires: gcc14-c++
 %else
     BuildRequires: gcc-c++
+%endif
+
+# OpenSuse Leap 15.6 -> python311
+# OpenSuse Leap 16.0 -> python313
+# OpenSuse Tumbleweed -> python313
+%if 0%{?sle_version} && 0%{?suse_version} < 1600
+BuildRequires: python311
+%endif
+%if (0%{?sle_version} || 0%{?is_opensuse}) && 0%{?suse_version} >= 1600
+BuildRequires: python313
 %endif
 
 #Fedora specific
@@ -118,6 +128,8 @@ if [ -n "%{extradefines}" ]; then
     export CXXFLAGS="%{extradefines} ${CXXFLAGS}"
 fi
 
+# OpenSuse Leap 15.6:
+# Use gcc14 instead of default (gcc7)
 # Python>=3.10 needed for VCPKG pkgconf
 %if 0%{?suse_version} && 0%{?suse_version} <= 1500
     export CC=gcc-14
