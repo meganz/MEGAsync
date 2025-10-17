@@ -161,10 +161,9 @@ bool MegaMenuItem::eventFilter(QObject* watched, QEvent* event)
 {
     if (event->type() == QEvent::DynamicPropertyChange)
     {
-        auto* dynamicPropertyEvent = static_cast<QDynamicPropertyChangeEvent*>(event);
-        if (dynamicPropertyEvent != nullptr)
+        if (auto dynamicPropertyEvent = dynamic_cast<QDynamicPropertyChangeEvent*>(event))
         {
-            if (QString::fromLatin1(dynamicPropertyEvent->propertyName()) ==
+            if (QString::fromUtf8(dynamicPropertyEvent->propertyName()) ==
                 QLatin1String("icon-token"))
             {
                 updateLayout();
