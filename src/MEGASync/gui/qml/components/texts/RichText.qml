@@ -37,7 +37,6 @@ Text {
     }
 
     function placeFocusBorder() {
-        let act = root.activeFocus;
         if (root.activeFocus && hasLink()) {
 
             // we are scanning the pixels of the link to look for coordinates with hyperlink.
@@ -75,7 +74,7 @@ Text {
                         linkCoords.y = y;
                     }
                     else if (currentLink.length > 0 && found && closed && linkCoords.y !== y
-                             && (linkCoords.y + fontMetrics.lineSpacing) < y) // link continues in the next line.
+                             && (linkCoords.x > x || (linkCoords.x + linkCoords.width) < x)) // link continues in the next line.
                     {
                         linkCoords = Object.create(linkCoordBluePrint);
                         linkCoords.x = x;
@@ -97,14 +96,14 @@ Text {
                 }
             }
 
-            // truly corner case :-) link is located on the edge of the text.
+            // truly corner case :-) link is located on the edge of the text, last line & end of line.
             if (found && !closed) {
                 linkCoords.width = root.width - linkCoords.xi;
                 linkCoordsList.push(linkCoords);
             }
 
             // if found link on text, make focus border visible
-            if(found) {
+            if (found) {
                 focusRepeater.model = linkCoordsList.length;
 
                 for(var coordsIndex = 0; coordsIndex < linkCoordsList.length; ++coordsIndex) {
