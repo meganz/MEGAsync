@@ -7,6 +7,8 @@ import ServiceUrls 1.0
 ConfirmEmailPageForm {
     id: root
 
+    bodyText2.url: serviceUrlsAccess.getContactSupportUrl()
+
     changeEmailLinkText.onLinkActivated: {
         loginControllerAccess.state = LoginController.CHANGING_REGISTER_EMAIL;
     }
