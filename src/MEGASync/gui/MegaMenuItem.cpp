@@ -44,6 +44,8 @@ MegaMenuItem::MegaMenuItem(const QString& text,
     m_arrowLabel->setStyleSheet(QLatin1String("background-color: transparent"));
     createSubmenuArrow();
 
+    updateLayout();
+
     // Set default size
     setFixedHeight(32);
 }
@@ -144,10 +146,12 @@ void MegaMenuItem::setIcon(const QString& icon)
 
 bool MegaMenuItem::event(QEvent* event)
 {
-    if (event->type() == ThemeManager::ThemeChanged)
+    if (event->type() == ThemeManager::ThemeChanged ||
+        event->type() == QEvent::DynamicPropertyChange)
     {
         updateLayout();
         update();
     }
+
     return QWidget::event(event);
 }
