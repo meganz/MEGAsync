@@ -47,6 +47,7 @@ public:
 
 protected:
     bool event(QEvent* event) override;
+    bool eventFilter(QObject* watched, QEvent* e) override;
 
 private:
     void updateLayout();

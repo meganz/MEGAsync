@@ -48,6 +48,8 @@ MegaMenuItem::MegaMenuItem(const QString& text,
 
     // Set default size
     setFixedHeight(32);
+
+    parent->installEventFilter(this);
 }
 
 void MegaMenuItem::updateLayout()
@@ -146,12 +148,29 @@ void MegaMenuItem::setIcon(const QString& icon)
 
 bool MegaMenuItem::event(QEvent* event)
 {
-    if (event->type() == ThemeManager::ThemeChanged ||
-        event->type() == QEvent::DynamicPropertyChange)
+    if (event->type() == ThemeManager::ThemeChanged)
     {
         updateLayout();
         update();
     }
 
     return QWidget::event(event);
+}
+
+bool MegaMenuItem::eventFilter(QObject* watched, QEvent* event)
+{
+    if (event->type() == QEvent::DynamicPropertyChange)
+    {
+        auto* dynamicPropertyEvent = static_cast<QDynamicPropertyChangeEvent*>(event);
+        if (dynamicPropertyEvent != nullptr)
+        {
+            if (QString::fromLatin1(dynamicPropertyEvent->propertyName()) ==
+                QLatin1String("icon-token"))
+            {
+                updateLayout();
+                update();
+            }
+        }
+    }
+    return QWidget::eventFilter(watched, event);
 }
