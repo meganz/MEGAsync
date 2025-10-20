@@ -72,17 +72,7 @@ void MegaMenuItem::updateLayout()
     // Add icon if present
     if (!m_iconName.isEmpty())
     {
-        auto token = parent()->property("icon-token").toString();
-
-        if (token.isEmpty())
-        {
-            m_iconLabel->setIcon(QIcon(m_iconName).pixmap(DEFAULT_ICON_SIZE, DEFAULT_ICON_SIZE));
-        }
-        else
-        {
-            m_iconLabel->setIcon(Utilities::getIcon(m_iconName, Utilities::AttributeType::NONE));
-            m_iconLabel->setProperty("normal_off", token);
-        }
+        updateIconLabel();
 
         m_layout->addWidget(m_iconLabel);
 
@@ -108,6 +98,21 @@ void MegaMenuItem::updateLayout()
 
     // Set margins (includes tree depth)
     m_layout->setContentsMargins(leftMargin, 4, 12, 4);
+}
+
+void MegaMenuItem::updateIconLabel()
+{
+    auto token = parent()->property("icon-token").toString();
+
+    if (token.isEmpty())
+    {
+        m_iconLabel->setIcon(QIcon(m_iconName).pixmap(DEFAULT_ICON_SIZE, DEFAULT_ICON_SIZE));
+    }
+    else
+    {
+        m_iconLabel->setIcon(Utilities::getIcon(m_iconName, Utilities::AttributeType::NONE));
+        m_iconLabel->setProperty("normal_off", token);
+    }
 }
 
 void MegaMenuItem::createSubmenuArrow()
@@ -166,8 +171,7 @@ bool MegaMenuItem::eventFilter(QObject* watched, QEvent* event)
             if (QString::fromUtf8(dynamicPropertyEvent->propertyName()) ==
                 QLatin1String("icon-token"))
             {
-                updateLayout();
-                update();
+                updateIconLabel();
             }
         }
     }

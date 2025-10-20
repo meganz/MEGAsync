@@ -52,6 +52,7 @@ protected:
 private:
     void updateLayout();
     void createSubmenuArrow();
+    void updateIconLabel();
 
 private:
     QHBoxLayout* m_layout;
