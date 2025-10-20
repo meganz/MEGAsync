@@ -522,33 +522,54 @@ QString Utilities::getTimeFormat(const TimeInterval &interval)
     return timeFormat.trimmed();
 }
 
-QString Utilities::filledTimeString(const QString &timeFormat, const TimeInterval &interval, bool color)
+QString Utilities::filledTimeString(const QString& timeFormat, const TimeInterval& interval)
 {
-    QString daysFormat = QCoreApplication::translate("Utilities", "%1 [A]d[/A]");
-    QString hoursFormat = QCoreApplication::translate("Utilities", "%1 [A]h[/A]");
-    QString minutesFormat = QCoreApplication::translate("Utilities", "%1 [A]m[/A]");
-    QString secondsFormat = QCoreApplication::translate("Utilities", "%1 [A]s[/A]");
+    static const QString DAYS = QString::fromLatin1("[DAYS]");
+    static const QString HOURS = QString::fromLatin1("[HOURS]");
+    static const QString MINUTES = QString::fromLatin1("[MINUTES]");
+    static const QString SECONDS = QString::fromLatin1("[SECONDS]");
+
+    QString daysFormat = QCoreApplication::translate("Utilities", "%1d");
+    QString hoursFormat = QCoreApplication::translate("Utilities", "%1h");
+    QString minutesFormat = QCoreApplication::translate("Utilities", "%1m");
+    QString secondsFormat = QCoreApplication::translate("Utilities", "%1s");
+    QString onlySecondsFormat = QCoreApplication::translate("Utilities", "%1 sec");
 
     QString timeString = timeFormat;
+    QString timeCountStr;
 
-    QString timeCountStr = daysFormat.arg(interval.days, 2, 10, QLatin1Char('0'));
-    timeString.replace(QString::fromLatin1("[DAYS]"), timeCountStr);
+    if (timeString.contains(DAYS))
+    {
+        timeCountStr = daysFormat.arg(interval.days, 2, 10, QLatin1Char('0'));
+        timeString.replace(DAYS, timeCountStr);
+    }
 
-    timeCountStr = hoursFormat.arg(interval.hours, 2, 10, QLatin1Char('0'));
-    timeString.replace(QString::fromLatin1("[HOURS]"), timeCountStr);
+    if (timeString.contains(HOURS))
+    {
+        timeCountStr = hoursFormat.arg(interval.hours, 2, 10, QLatin1Char('0'));
+        timeString.replace(HOURS, timeCountStr);
+    }
 
-    timeCountStr = minutesFormat.arg(interval.minutes, 2, 10, QLatin1Char('0'));
-    timeString.replace(QString::fromLatin1("[MINUTES]"), timeCountStr);
+    if (timeString.contains(MINUTES))
+    {
+        timeCountStr = minutesFormat.arg(interval.minutes, 2, 10, QLatin1Char('0'));
+        timeString.replace(MINUTES, timeCountStr);
+    }
 
-    timeCountStr = secondsFormat.arg(interval.seconds, 2, 10, QLatin1Char('0'));
-    timeString.replace(QString::fromLatin1("[SECONDS]"), timeCountStr);
-
-    QString colorString = (color ? QLatin1String("color:#777777;") : QString());
-    QString styleStartTag = QString::fromUtf8("<span style=\"%1 text-decoration:none;\">").arg(colorString);
-    QString styleEndTag = QString::fromLatin1("</span>");
-
-    timeString.replace(QString::fromLatin1("[A]"),  styleStartTag);
-    timeString.replace(QString::fromLatin1("[/A]"), styleEndTag);
+    if (timeString.contains(SECONDS))
+    {
+        // No other field than seconds
+        if (timeString == timeFormat)
+        {
+            timeCountStr = onlySecondsFormat.arg(interval.seconds, 2, 10, QLatin1Char('0'));
+            timeString.replace(SECONDS, timeCountStr);
+        }
+        else
+        {
+            timeCountStr = secondsFormat.arg(interval.seconds, 2, 10, QLatin1Char('0'));
+            timeString.replace(SECONDS, timeCountStr);
+        }
+    }
 
     return cleanedTimeString(timeString);
 }
@@ -725,10 +746,10 @@ void Utilities::copyRecursively(QString srcPath, QString dstPath)
     }
 }
 
-QString Utilities::getTimeString(long long secs, bool secondPrecision, bool color)
+QString Utilities::getTimeString(long long secs, bool secondPrecision)
 {
     TimeInterval interval(secs, secondPrecision);
-    return filledTimeString(getTimeFormat(interval), interval, color);
+    return filledTimeString(getTimeFormat(interval), interval);
 }
 
 QString Utilities::getAddedTimeString(long long secs)

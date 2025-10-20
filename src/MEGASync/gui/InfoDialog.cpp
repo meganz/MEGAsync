@@ -45,6 +45,8 @@ static constexpr int DEFAULT_MIN_PERCENTAGE{1};
 static constexpr int FONT_SIZE_BUSINESS_PX{12};
 static constexpr int FONT_SIZE_NO_BUSINESS_PX{12};
 
+static const char* TRANSPARENT_HEADER = "transparent_header";
+
 void InfoDialog::pauseResumeClicked()
 {
     app->pauseTransfers();
@@ -193,9 +195,6 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
 
     circlesShowAllActiveTransfersProgress = true;
 
-    opacityEffect = NULL;
-    animation = NULL;
-
     actualAccountType = -1;
 
     notificationsReady = false;
@@ -278,9 +277,16 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
 
     adjustSize();
 
+    // By default, the header has a background-color
+    ui->wHeader->setProperty(TRANSPARENT_HEADER, false);
+
     mTransferScanCancelUi = new TransferScanCancelUi(ui->sTabs, ui->pTransfersTab);
     connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
             this, &InfoDialog::cancelScanning);
+    connect(mTransferScanCancelUi,
+            &TransferScanCancelUi::visibilityChanged,
+            this,
+            &InfoDialog::onScanningVisibilityChanged);
 
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesChanged,
             this,  &InfoDialog::onStalledIssuesChanged);
@@ -304,7 +310,6 @@ InfoDialog::~InfoDialog()
         delete ui->tvNotifications->itemDelegate();
     }
     delete ui;
-    delete animation;
     delete filterMenu;
 }
 
@@ -699,6 +704,18 @@ void InfoDialog::onStalledIssuesChanged()
     updateState();
 }
 
+void InfoDialog::onScanningVisibilityChanged(bool state)
+{
+    if (state && ui->wPSA->isPSAshown())
+    {
+        changePSAVisibility(false);
+    }
+    else if (!state & !ui->wPSA->isPSAshown() && ui->wPSA->isActive())
+    {
+        changePSAVisibility(true);
+    }
+}
+
 void InfoDialog::setIndexing(bool indexing)
 {
     mIndexing = indexing;
@@ -764,7 +781,6 @@ void InfoDialog::updateState()
         else if (mPreferences->getGlobalPaused())
         {
             mState = StatusInfo::TRANSFERS_STATES::STATE_PAUSED;
-            animateStates(mWaiting || mIndexing || mSyncing);
         }
         else if (mIndexing)
         {
@@ -784,9 +800,11 @@ void InfoDialog::updateState()
         }
         else
         {
-            changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_UPDATED, false);
+            changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_UPDATED);
         }
     }
+
+    updateHeaderBackground();
 
     if(ui->wStatus->getState() != mState)
     {
@@ -906,7 +924,7 @@ void InfoDialog::updateDialogState()
 
             ui->sActiveTransfers->setCurrentWidget(ui->pOverDiskQuotaPaywall);
             overlay->setVisible(false);
-            ui->wPSA->hidePSA();
+            changePSAVisibility(false);
         }
     }
     else if (storageState == Preferences::STATE_OVER_STORAGE)
@@ -938,7 +956,7 @@ void InfoDialog::updateDialogState()
         ui->bBuyQuota->setText(tr("Buy more space"));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
-        ui->wPSA->hidePSA();
+        changePSAVisibility(false);
     }
     else if (transferOverQuotaEnabled)
     {
@@ -966,7 +984,7 @@ void InfoDialog::updateDialogState()
         ui->bOQIcon->setIconSize(QSize(64, 64));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
-        ui->wPSA->hidePSA();
+        changePSAVisibility(false);
     }
     else if (storageState == Preferences::STATE_ALMOST_OVER_STORAGE)
     {
@@ -978,7 +996,7 @@ void InfoDialog::updateDialogState()
         ui->bBuyQuota->setText(tr("Buy more space"));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
-        ui->wPSA->hidePSA();
+        changePSAVisibility(false);
     }
     else if (transferQuotaState == QuotaState::WARNING && transferAlmostOverquotaAlertEnabled)
     {
@@ -994,7 +1012,7 @@ void InfoDialog::updateDialogState()
 
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
-        ui->wPSA->hidePSA();
+        changePSAVisibility(false);
     }
     else if (mSyncInfo->hasUnattendedDisabledSyncs(
                  {mega::MegaSync::TYPE_TWOWAY, mega::MegaSync::TYPE_BACKUP}))
@@ -1013,13 +1031,22 @@ void InfoDialog::updateDialogState()
             ui->sActiveTransfers->setCurrentWidget(ui->pSyncsDisabled);
         }
         overlay->setVisible(false);
-        ui->wPSA->hidePSA();
+        changePSAVisibility(false);
     }
     else
     {
         if (app->getTransfersModel())
         {
             auto transfersCount = app->getTransfersModel()->getTransfersCount();
+
+            if (ui->wPSA->isPSAready())
+            {
+                changePSAVisibility(true);
+            }
+            else
+            {
+                changePSAVisibility(false);
+            }
 
             if (transfersCount.totalDownloads || transfersCount.totalUploads)
             {
@@ -1037,14 +1064,6 @@ void InfoDialog::updateDialogState()
                 {
                     overlay->setVisible(false);
                 }
-            }
-            if (ui->wPSA->isPSAready())
-            {
-                ui->wPSA->showPSA();
-            }
-            else
-            {
-                ui->wPSA->showPSA();
             }
         }
     }
@@ -1300,56 +1319,6 @@ void InfoDialog::on_bStorageDetails_clicked()
     DialogOpener::showNonModalDialog<AccountDetailsDialog>(dialog);
 }
 
-void InfoDialog::animateStates(bool opt)
-{
-    if (opt) //Enable animation for scanning/waiting states
-    {
-        ui->lUploadToMega->setIcon(Utilities::getCachedPixmap(QString::fromUtf8("://images/init_scanning.png")));
-        ui->lUploadToMega->setIconSize(QSize(128, 128));
-
-        if (!opacityEffect)
-        {
-            opacityEffect = new QGraphicsOpacityEffect();
-            ui->lUploadToMega->setGraphicsEffect(opacityEffect);
-        }
-
-        if (!animation)
-        {
-            animation = new QPropertyAnimation(opacityEffect, "opacity");
-            animation->setDuration(2000);
-            animation->setStartValue(1.0);
-            animation->setEndValue(0.5);
-            animation->setEasingCurve(QEasingCurve::InOutQuad);
-            connect(animation, SIGNAL(finished()), SLOT(onAnimationFinished()));
-        }
-
-        if (animation->state() != QAbstractAnimation::Running)
-        {
-            animation->start();
-        }
-    }
-    else //Disable animation
-    {
-        ui->lUploadToMega->setIcon(
-            Utilities::getCachedPixmap(QString::fromUtf8(":/upload-to-mega.png")));
-        ui->lUploadToMega->setIconSize(QSize(128, 128));
-        ui->lUploadToMega->setText(tr("Upload to MEGA now"));
-
-        if (animation)
-        {
-            if (opacityEffect) //Reset opacity
-            {
-                opacityEffect->setOpacity(1.0);
-            }
-
-            if (animation->state() == QAbstractAnimation::Running)
-            {
-                animation->stop();
-            }
-        }
-    }
-}
-
 void InfoDialog::resetLoggedInMode()
 {
     loggedInMode = STATE_NONE;
@@ -1469,20 +1438,6 @@ void InfoDialog::on_bBuyQuota_clicked()
     on_bUpgrade_clicked();
 }
 
-void InfoDialog::onAnimationFinished()
-{
-    if (animation->direction() == QAbstractAnimation::Forward)
-    {
-        animation->setDirection(QAbstractAnimation::Backward);
-        animation->start();
-    }
-    else
-    {
-        animation->setDirection(QAbstractAnimation::Forward);
-        animation->start();
-    }
-}
-
 void InfoDialog::sTabsChanged(int tab)
 {
     static int lastTab = -1;
@@ -1590,6 +1545,40 @@ void InfoDialog::setUnseenNotifications(long long value)
     }
 }
 
+void InfoDialog::updateHeaderBackground()
+{
+    auto isHeaderTransparent(ui->wHeader->property(TRANSPARENT_HEADER).toBool());
+    auto willBeHeaderTransparent(false);
+
+    if (mState == StatusInfo::TRANSFERS_STATES::STATE_INDEXING)
+    {
+        // If the PSA is not visible and the app is scanning > the header is transparent;
+        willBeHeaderTransparent = !ui->wPSA->isPSAshown();
+    }
+
+    // The background state has changed
+    if (willBeHeaderTransparent != isHeaderTransparent)
+    {
+        ui->wHeader->setProperty(TRANSPARENT_HEADER, willBeHeaderTransparent);
+        setStyleSheet(styleSheet());
+    }
+}
+
+void InfoDialog::changePSAVisibility(bool state)
+{
+    // Don´t show it when the scanning is working
+    if (state && mTransferScanCancelUi && mTransferScanCancelUi->isActive())
+    {
+        state = false;
+    }
+
+    if (ui->wPSA->isPSAshown() != state)
+    {
+        state ? ui->wPSA->showPSA() : ui->wPSA->hidePSA();
+        updateHeaderBackground();
+    }
+}
+
 double InfoDialog::computeRatio(long long completed, long long remaining)
 {
     return static_cast<double>(completed) / static_cast<double>(remaining);
@@ -1602,13 +1591,11 @@ void InfoDialog::enableUserActions(bool newState)
     ui->bCreateSync->setEnabled(newState);
 }
 
-void InfoDialog::changeStatusState(StatusInfo::TRANSFERS_STATES newState,
-                                   bool animate)
+void InfoDialog::changeStatusState(StatusInfo::TRANSFERS_STATES newState)
 {
     if (mState != newState)
     {
         mState = newState;
-        animateStates(animate);
     }
 }
 

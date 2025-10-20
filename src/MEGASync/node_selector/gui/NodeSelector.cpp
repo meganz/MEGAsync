@@ -73,8 +73,8 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
         TabSelector::applyTokens(ui->wLeftPaneNS, iconTokenSetter);
     }
 
-    resize(1280, 800);
-    setMinimumSize(700, 400);
+    resize(1024, 720);
+    setMinimumSize(760, 400);
 }
 
 NodeSelector::~NodeSelector()

@@ -1,5 +1,6 @@
 #include "BackupSettingsUI.h"
 
+#include "BackupCandidatesComponent.h"
 #include "BackupItemModel.h"
 #include "Backups.h"
 #include "BackupsController.h"
@@ -46,7 +47,7 @@ BackupSettingsUI::BackupSettingsUI(QWidget* parent):
                 });
     }
 
-    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<BackupCandidatesComponent>>())
     {
         setAddButtonEnabled(!dialog->getDialog()->isVisible());
     }

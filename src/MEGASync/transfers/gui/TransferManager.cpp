@@ -1173,6 +1173,10 @@ bool TransferManager::event(QEvent* event)
         onUpdatePauseState(mUi->wTransfers->getProxyModel()->getPausedTransfers());
         mUi->stalledIssuesContainer->setDescription(getIssuesBannerText());
         mUi->stalledIssuesContainer->setLinkText(getIssuesBannerButtonText());
+        if (mDragBackDrop)
+        {
+            mUiDragBackDrop->retranslateUi(mDragBackDrop);
+        }
     }
     return QDialog::event(event);
 }

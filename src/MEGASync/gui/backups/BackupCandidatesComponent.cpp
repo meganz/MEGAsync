@@ -5,6 +5,7 @@
 #include "BackupCandidatesModel.h"
 #include "DialogOpener.h"
 #include "MegaApplication.h"
+#include "SyncsQmlDialog.h"
 
 static bool qmlRegistrationDone = false;
 
@@ -41,6 +42,7 @@ void BackupCandidatesComponent::registerQmlModules()
     if (!qmlRegistrationDone)
     {
         qmlRegisterType<BackupCandidatesComponent>("BackupsComponent", 1, 0, "BackupsComponent");
+        qmlRegisterType<SyncsQmlDialog>("BackupsComponent", 1, 0, "SyncsQmlDialog");
         qmlRegisterType<BackupCandidatesProxyModel>("BackupCandidatesProxyModel",
                                                     1,
                                                     0,

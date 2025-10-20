@@ -268,6 +268,10 @@ void StalledIssueFilePath::updateFileIcons()
         ui->filePathIcon->setProperty(TOKEN_PROPERTIES::normalOff,
                                       QLatin1String("icon-inverse-accent"));
     }
+    else
+    {
+        ui->filePathIcon->setProperty(TOKEN_PROPERTIES::normalOff, QString());
+    }
 
     ui->filePathIcon->setIconSize(iconSize);
     ui->filePathIcon->setIcon(QIcon(fileTypeIcon));
@@ -304,6 +308,10 @@ void StalledIssueFilePath::updateMoveFileIcons()
     {
         ui->moveFilePathIcon->setProperty(TOKEN_PROPERTIES::normalOff,
                                           QLatin1String("icon-inverse-accent"));
+    }
+    else
+    {
+        ui->moveFilePathIcon->setProperty(TOKEN_PROPERTIES::normalOff, QString());
     }
 
     ui->moveFilePathIcon->setIconSize(iconSize);
@@ -380,7 +388,6 @@ void StalledIssueFilePath::updateLocalOrMegaTitle()
         ui->LocalOrRemoteText->setText(tr("Local:"));
     }
 
-    ui->LocalOrRemoteIcon->setProperty(TOKEN_PROPERTIES::normalOff, QLatin1String("icon-primary"));
     ui->LocalOrRemoteIcon->setIcon(icon);
 }
 

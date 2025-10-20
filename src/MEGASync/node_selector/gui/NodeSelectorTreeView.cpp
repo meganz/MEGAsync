@@ -447,22 +447,27 @@ void NodeSelectorTreeView::addPasteMenuAction(QMap<int, QAction*>& actions,
 }
 
 void NodeSelectorTreeView::addDownloadMenuAction(QMap<int, QAction*>& actions,
+                                                 const QModelIndexList& selectedIndexes,
                                                  const QList<MegaHandle>& selectionHandles)
 {
-    auto downloadAction(new MegaMenuItemAction(
-        tr("Download"),
-        Utilities::getPixmapName(QLatin1String("arrow-down-circle"),
-                                 Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
-                                     Utilities::AttributeType::OUTLINE,
-                                 false)));
-    connect(downloadAction,
-            &QAction::triggered,
-            this,
-            [selectionHandles]()
-            {
-                MegaSyncApp->downloadACtionClickedWithHandles(selectionHandles);
-            });
-    actions.insert(ActionsOrder::DOWNLOAD, downloadAction);
+    if (areAllEligibleForDownload(selectedIndexes))
+    {
+        auto downloadAction(
+            new MegaMenuItemAction(tr("Download"),
+                                   Utilities::getPixmapName(QLatin1String("arrow-down-circle"),
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false)));
+        connect(downloadAction,
+                &QAction::triggered,
+                this,
+                [selectionHandles]()
+                {
+                    MegaSyncApp->downloadACtionClickedWithHandles(selectionHandles);
+                });
+        actions.insert(ActionsOrder::DOWNLOAD, downloadAction);
+    }
 }
 
 void NodeSelectorTreeView::addRestoreMenuAction(QMap<int, QAction*>& actions,
@@ -774,7 +779,7 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent* event)
         actions.insert(ActionsOrder::COPY, copyAction);
     }
 
-    addDownloadMenuAction(actions, selectionHandles);
+    addDownloadMenuAction(actions, selectedIndexes, selectionHandles);
     addPasteMenuAction(actions, selectedIndexes);
 
     if (!selectedIndexes.isEmpty())
@@ -1092,6 +1097,30 @@ bool NodeSelectorTreeView::areAllEligibleForRestore(const QModelIndexList& selec
             }
         }
         else
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool NodeSelectorTreeView::areAllEligibleForDownload(const QModelIndexList& selectedIndexes) const
+{
+    if (selectedIndexes.isEmpty())
+    {
+        return false;
+    }
+
+    for (const auto& index: selectedIndexes)
+    {
+        if (!index.isValid())
+        {
+            return false;
+        }
+
+        auto item = proxyModel()->getMegaModel()->getItemByIndex(index);
+        if (!item || item->isInRubbishBin())
         {
             return false;
         }

@@ -66,13 +66,13 @@ background-color: #FFFFFFFF; /*colorToken.page-background*/
       <widget class="QToolButton" name="lUploadToMega">
        <property name="minimumSize">
         <size>
-         <width>128</width>
+         <width>0</width>
          <height>172</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>128</width>
+         <width>16777215</width>
          <height>172</height>
         </size>
        </property>
@@ -83,7 +83,7 @@ background-color: #FFFFFFFF; /*colorToken.page-background*/
         <string>Drop to Upload</string>
        </property>
        <property name="icon">
-        <iconset resource="../../../gui/Resources_light.qrc">
+        <iconset resource="../../../gui/Resources_common.qrc">
          <normaloff>:/upload-to-mega.png</normaloff>:/upload-to-mega.png</iconset>
        </property>
        <property name="iconSize">
@@ -131,7 +131,7 @@ background-color: #FFFFFFFF; /*colorToken.page-background*/
   </layout>
  </widget>
  <resources>
-  <include location="../../../gui/Resources_light.qrc"/>
+  <include location="../../../gui/Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>

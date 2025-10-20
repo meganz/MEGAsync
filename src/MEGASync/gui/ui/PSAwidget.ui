@@ -289,7 +289,13 @@ color: #fffafafa; /*colorToken.text-secondary*/
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QPushButton" name="bMore">
+                 <widget class="TokenizableButton" name="bMore">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
@@ -314,7 +320,13 @@ color: #fffafafa; /*colorToken.text-secondary*/
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="bDismiss">
+                 <widget class="TokenizableButton" name="bDismiss">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
@@ -343,9 +355,12 @@ color: #fffafafa; /*colorToken.text-secondary*/
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::MinimumExpanding</enum>
+                  </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>40</width>
+                    <width>0</width>
                     <height>0</height>
                    </size>
                   </property>
@@ -377,6 +392,11 @@ color: #fffafafa; /*colorToken.text-secondary*/
    <extends>QFrame</extends>
    <header location="global">ElidedLabel.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TokenizableButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

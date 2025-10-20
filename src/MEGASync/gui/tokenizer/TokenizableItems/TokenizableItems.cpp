@@ -48,7 +48,6 @@ bool TokenizableItem::themeHasChanged() const
 void TokenizableItem::applyDefaultPixmap(QAbstractButton* button)
 {
     QIcon::State state = button->isChecked() ? QIcon::State::On : QIcon::State::Off;
-
     if (button->isEnabled())
     {
         auto token = state == QIcon::State::Off ? mBaseTokens.getNormalOffToken() :

@@ -15,9 +15,6 @@
 #include "TokenizableItems/TokenPropertySetter.h"
 #include "ui_NodeSelectorTreeViewWidget.h"
 
-const int NodeSelectorTreeViewWidget::LOADING_VIEW_THRESSHOLD = 500;
-const int NodeSelectorTreeViewWidget::LABEL_ELIDE_MARGIN = 250;
-const char* NodeSelectorTreeViewWidget::FULL_NAME_PROPERTY = "full_name";
 const int CHECK_UPDATED_NODES_INTERVAL = 1000;
 const int IMMEDIATE_CHECK_UPDATES_NODES_THRESHOLD = 200;
 
@@ -242,8 +239,14 @@ bool NodeSelectorTreeViewWidget::eventFilter(QObject* watched, QEvent* event)
 
 void NodeSelectorTreeViewWidget::setTitleText(const QString& nodeName)
 {
-    ui->lFolderName->setProperty(FULL_NAME_PROPERTY, nodeName);
-    ui->lFolderName->setText(nodeName);
+    if (ui->lFolderName->isVisible())
+    {
+        ui->lFolderName->setText(nodeName);
+    }
+    else if (ui->sh_folderName->isVisible())
+    {
+        ui->sh_folderName->setText(nodeName);
+    }
 }
 
 void NodeSelectorTreeViewWidget::clearSelection()
@@ -508,7 +511,7 @@ void NodeSelectorTreeViewWidget::onRemoveIndexFromGoBack(const QModelIndex& inde
             }
             else
             {
-                setRootIndex(QModelIndex());
+                setRootIndex(mModel->hasTopRootIndex() ? mProxyModel->index(0, 0) : QModelIndex());
                 mNavigationInfo.backwardHandles.clear();
             }
         };
@@ -648,7 +651,7 @@ void NodeSelectorTreeViewWidget::addCustomButtons(NodeSelectorTreeViewWidget* wd
         auto button = buttonsMap.value(id);
         if (button)
         {
-            ui->customButtonsLayout->addWidget(button);
+            ui->customButtonsLayout->insertWidget(0, button);
             connect(button,
                     &QPushButton::clicked,
                     this,
@@ -684,7 +687,9 @@ void NodeSelectorTreeViewWidget::modelLoaded()
 {
     if (mModel)
     {
-        if (mModel->rowCount() == 0 && showEmptyView())
+        auto topRootIndex = mModel->hasTopRootIndex() ? mModel->index(0, 0) : QModelIndex();
+
+        if (mModel->rowCount(topRootIndex) == 0 && showEmptyView())
         {
             ui->stackedWidget->setCurrentWidget(ui->emptyPage);
             return;
@@ -1486,6 +1491,10 @@ void NodeSelectorTreeViewWidget::updateNode(const UpdateNodesInfo& info, bool sc
 
     mModel->updateItemNode(index, info.node);
 
+    // Update proxy Index in case the node has changed the name/modified data and we are sorting by
+    // any of these attributes
+    proxyIndex = mProxyModel->mapFromSource(index);
+
     if (info.node)
     {
         if (proxyIndex.isValid() && ui->tMegaFolders->rootIndex() == proxyIndex)
@@ -1748,10 +1757,12 @@ QPushButton* SelectType::createCustomButton(const QString& type,
 {
     auto button(new TokenizableButton());
     button->setText(text);
+    button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     QIcon icon;
     icon.addFile(iconFile, QSize(16, 16), QIcon::Mode::Normal, QIcon::State::Off);
     button->setIcon(icon);
     button->setProperty("type", type);
+    button->setProperty("dimension", QLatin1String("small"));
     return button;
 }
 
@@ -1933,11 +1944,6 @@ void CloudDriveType::updateCustomButtonsText(NodeSelectorTreeViewWidget* wdg)
 
 void CloudDriveType::newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg)
 {
-    // First time, move the button to the header
-    if (wdg->ui->bNewFolder->parent() != wdg->ui->customButtonsContainer)
-    {
-        wdg->ui->customButtonsLayout->addWidget(wdg->ui->bNewFolder);
-    }
     SelectType::newFolderButtonVisibility(wdg);
 }
 

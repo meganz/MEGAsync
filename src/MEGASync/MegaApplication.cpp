@@ -3678,6 +3678,7 @@ void MegaApplication::PSAseen(int id)
     if (id >= 0)
     {
         megaApi->setPSA(id);
+        infoDialog->updateHeaderBackground();
     }
 }
 

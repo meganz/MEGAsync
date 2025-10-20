@@ -306,6 +306,11 @@ padding-right: 24px;
 qproperty-iconSize:24px;
 }
 
+QAbstractButton[short=false]
+{
+min-width: -1px;
+}
+
 /*
     class = icon-button
     We need to override and reset some common properties for buttons
@@ -582,4 +587,3 @@ border-radius:12px;
 min-height: 24px;
 max-height: 24px;
 }
-

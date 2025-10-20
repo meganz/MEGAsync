@@ -271,8 +271,34 @@ border-radius: 8px;
        <property name="type" stdset="0">
         <string notr="true">notification</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item alignment="Qt::AlignTop">
+         <widget class="IconLabel" name="icon">
+          <property name="minimumSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
+          </property>
+          <property name="text">
+           <string notr="true"/>
+          </property>
+          <property name="icon">
+           <iconset resource="../Resources_common.qrc">
+            <normaloff>:/info_small_thin_outline</normaloff>:/info_small_thin_outline</iconset>
+          </property>
+          <property name="normal_off" stdset="0">
+           <string notr="true">text-info</string>
+          </property>
+         </widget>
+        </item>
+        <item alignment="Qt::AlignTop">
          <widget class="QLabel" name="label">
           <property name="frameShadow">
            <enum>QFrame::Plain</enum>
@@ -327,7 +353,15 @@ border-radius: 8px;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
+  <include location="../Resources_common.qrc"/>
   <include location="../Resources_light.qrc"/>
  </resources>
  <connections/>

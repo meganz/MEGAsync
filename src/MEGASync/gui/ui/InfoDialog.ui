@@ -35,9 +35,13 @@ padding-left: 0px;
  border-radius: 10px;
  padding: 10px;
 }
-#wHeader
+#wHeader[transparent_header=false]
 {
 background-color: #fffafafa; /*colorToken.surface-1*/
+}
+#wHeader[transparent_header=true]
+{
+background-color:transparent;
 }
 #wContainerTabOptions, #wContainerTabOptions *
 {
@@ -1444,7 +1448,7 @@ background-color: transparent;
                              <string>Upload to MEGA now</string>
                             </property>
                             <property name="icon">
-                             <iconset resource="../Resources_light.qrc">
+                             <iconset resource="../Resources_common.qrc">
                               <normaloff>:/upload-to-mega.png</normaloff>:/upload-to-mega.png</iconset>
                             </property>
                             <property name="iconSize">
@@ -3670,12 +3674,6 @@ background-color: transparent;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>AvatarWidget</class>
-   <extends>QWidget</extends>
-   <header>AvatarWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>TokenizableToolButton</class>
    <extends>QToolButton</extends>
    <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
@@ -3690,6 +3688,12 @@ background-color: transparent;
    <class>StatusInfo</class>
    <extends>QWidget</extends>
    <header location="global">StatusInfo.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AvatarWidget</class>
+   <extends>QWidget</extends>
+   <header>AvatarWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

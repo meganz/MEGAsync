@@ -18,7 +18,6 @@ public:
     explicit ElidingLabel(QWidget* parent = nullptr):
         QLabel(parent)
     {
-        setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         setMinimumWidth(0);
         setTextFormat(Qt::PlainText);
         setWordWrap(false);
@@ -26,8 +25,21 @@ public:
 
     void setText(const QString& text)
     {
+        if (sizePolicy().horizontalPolicy() != QSizePolicy::Preferred ||
+            sizePolicy().horizontalPolicy() != QSizePolicy::Expanding)
+        {
+            setSizePolicy(QSizePolicy::Preferred, sizePolicy().verticalPolicy());
+        }
+
         QLabel::setText(text);
+        // Refresh tooltip
+        setToolTip(QString());
         update();
+    }
+
+    QSize minimumSizeHint() const override
+    {
+        return QSize(0, 0);
     }
 
     void setElideMode(Qt::TextElideMode mode)
@@ -56,6 +68,15 @@ protected:
         const QRect cr = contentsRect();
         const QFontMetrics fm(font());
         const QString elided = fm.elidedText(text(), mElidemode, cr.width());
+
+        if (toolTip().isEmpty() && elided != text())
+        {
+            setToolTip(text());
+        }
+        else if (!toolTip().isEmpty() && elided == text())
+        {
+            setToolTip(QString());
+        }
 
         // Paint elided text
         style()->drawItemText(&p,

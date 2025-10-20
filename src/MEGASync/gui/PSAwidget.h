@@ -27,6 +27,7 @@ public:
     PSA_info getPSAdata();
     void hidePSA(bool animated = false);
     void removeAnnounce();
+    bool isActive();
 
 signals:
     void PSAseen(int id);

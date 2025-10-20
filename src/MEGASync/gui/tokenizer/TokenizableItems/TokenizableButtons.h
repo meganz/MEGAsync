@@ -7,6 +7,50 @@
 #include <QPushButton>
 #include <QToolButton>
 
+namespace ButtonUtilities
+{
+inline void checkMinWidth(QAbstractButton* button)
+{
+    static const char* dimensionProperty = "dimension";
+    static const char* shortProperty = "short";
+    static const char* currentNameProperty = "current-name";
+
+    if (button->text() != button->property(currentNameProperty).toString())
+    {
+        button->setProperty(currentNameProperty, button->text());
+
+        auto dimension = button->property(dimensionProperty).toString();
+        if (!dimension.isEmpty())
+        {
+            auto fm = button->fontMetrics();
+            auto textWidth = fm.boundingRect(button->text()).width();
+            QVariant currentValue = button->property(shortProperty);
+            bool newValue(false);
+
+            // Please check this values from WidgetsComponentsStyleSheetsSizes.css
+            if (dimension == QLatin1String("small"))
+            {
+                newValue = textWidth < 44;
+            }
+            else if (dimension == QLatin1String("medium"))
+            {
+                newValue = textWidth < 48;
+            }
+            else if (dimension == QLatin1String("large"))
+            {
+                newValue = textWidth < 52;
+            }
+
+            if (!currentValue.isValid() || currentValue.toBool() != newValue)
+            {
+                button->setProperty(shortProperty, newValue);
+                button->style()->polish(button);
+            }
+        }
+    }
+}
+}
+
 class ButtonTokens: public TokenUtilities
 {
 public:

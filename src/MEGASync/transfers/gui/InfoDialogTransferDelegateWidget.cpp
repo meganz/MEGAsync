@@ -69,8 +69,7 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
             break;
         case TransferData::TransferState::TRANSFER_ACTIVE:
         {
-            mUi->lRemainingTime->setText(
-                Utilities::getTimeString(getData()->mRemainingTime, true, true));
+            mUi->lRemainingTime->setText(Utilities::getTimeString(getData()->mRemainingTime, true));
 
             // Update current transfer speed
             QString downloadString;

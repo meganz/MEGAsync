@@ -28,13 +28,7 @@ border: none;
 
 #sh_accessContainer
 {
-background-color: #CFFCDB; /*colorToken.notification-success*/
 border-radius: 4px;
-}
-
-#sh_accessLabel
-{
-color: #007C3E; /*colorToken.text-success*/
 }
 
 #treeViewPage
@@ -90,7 +84,7 @@ background-color: transparent;
           <height>16777215</height>
          </size>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,2,0,0">
          <property name="spacing">
           <number>4</number>
          </property>
@@ -108,6 +102,12 @@ background-color: transparent;
          </property>
          <item>
           <widget class="QWidget" name="navigationButtons" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <layout class="QHBoxLayout" name="horizontalLayout_6">
             <property name="spacing">
              <number>4</number>
@@ -255,18 +255,6 @@ background-color: transparent;
          </item>
          <item>
           <widget class="QWidget" name="incomingInfo" native="true">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16777215</height>
-            </size>
-           </property>
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <property name="spacing">
              <number>4</number>
@@ -285,7 +273,7 @@ background-color: transparent;
             </property>
             <item>
              <widget class="QWidget" name="sh_folderNameInfo" native="true">
-              <layout class="QHBoxLayout" name="horizontalLayout_5">
+              <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="0,0,0,0">
                <property name="spacing">
                 <number>8</number>
                </property>
@@ -335,6 +323,12 @@ background-color: transparent;
                </item>
                <item>
                 <widget class="QWidget" name="sh_accessContainer" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -346,6 +340,25 @@ background-color: transparent;
                    <width>16777215</width>
                    <height>18</height>
                   </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">#sh_accessContainer[access = &quot;2&quot;]
+{
+background-color: #CFFCDB; /*colorToken.notification-success*/
+color: #007C3E; /*colorToken.text-success*/
+}
+
+#sh_accessContainer[access = &quot;1&quot;]
+{
+background-color: #DFF4FE; /*colorToken.notification-info*/
+color: #0078A4; /*colorToken.text-info*/
+}
+
+#sh_accessContainer[access = &quot;0&quot;]
+{
+background-color: #E4E4E5; /*colorToken.surface-3*/
+color: #616366; /*colorToken.text-secondary*/
+}</string>
                  </property>
                  <layout class="QHBoxLayout" name="horizontalLayout_7">
                   <property name="spacing">
@@ -397,6 +410,12 @@ background-color: transparent;
                   </item>
                   <item>
                    <widget class="QLabel" name="sh_accessLabel">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
                     <property name="text">
                      <string notr="true"/>
                     </property>
@@ -468,7 +487,7 @@ background-color: transparent;
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="sh_userName">
+                <widget class="ElidingLabel" name="sh_userName">
                  <property name="text">
                   <string notr="true"/>
                  </property>
@@ -520,32 +539,19 @@ background-color: transparent;
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer_4">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
           <widget class="QWidget" name="customButtonsContainer" native="true">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
            <layout class="QHBoxLayout" name="customButtonsLayout">
             <property name="spacing">
-             <number>24</number>
+             <number>0</number>
             </property>
             <property name="leftMargin">
-             <number>10</number>
+             <number>0</number>
             </property>
             <property name="topMargin">
              <number>0</number>
@@ -556,6 +562,38 @@ background-color: transparent;
             <property name="bottomMargin">
              <number>0</number>
             </property>
+            <item>
+             <widget class="TokenizableButton" name="bNewFolder">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="text">
+               <string>New folder</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../gui/Resources_common.qrc">
+                <normaloff>:/folder-plus-01_small_thin_outline</normaloff>:/folder-plus-01_small_thin_outline</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">ghost</string>
+              </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">small</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>
@@ -1005,35 +1043,6 @@ background-color: transparent;
              <number>0</number>
             </property>
             <item>
-             <widget class="TokenizableButton" name="bNewFolder">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="cursor">
-               <cursorShape>PointingHandCursor</cursorShape>
-              </property>
-              <property name="text">
-               <string>New folder</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../../../gui/Resources_common.qrc">
-                <normaloff>:/folder-plus-01_small_thin_outline</normaloff>:/folder-plus-01_small_thin_outline</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>16</width>
-                <height>16</height>
-               </size>
-              </property>
-              <property name="type" stdset="0">
-               <string notr="true">ghost</string>
-              </property>
-             </widget>
-            </item>
-            <item>
              <spacer name="horizontalSpacer">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -1103,14 +1112,14 @@ background-color: transparent;
  </widget>
  <customwidgets>
   <customwidget>
+   <class>TokenizableToolButton</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
+  </customwidget>
+  <customwidget>
    <class>IconLabel</class>
    <extends>QToolButton</extends>
    <header>tokenizer/TokenizableItems/IconLabel.h</header>
-  </customwidget>
-  <customwidget>
-   <class>TokenizableButton</class>
-   <extends>QPushButton</extends>
-   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
   </customwidget>
   <customwidget>
    <class>TabSelector</class>
@@ -1119,9 +1128,9 @@ background-color: transparent;
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>TokenizableToolButton</class>
-   <extends>QToolButton</extends>
-   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
+   <class>TokenizableButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
   </customwidget>
   <customwidget>
    <class>NodeSelectorTreeView</class>

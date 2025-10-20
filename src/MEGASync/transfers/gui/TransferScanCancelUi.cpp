@@ -21,12 +21,16 @@ void TransferScanCancelUi::show()
     mLastSelectedWidget = mContainer->currentWidget();
     mContainer->setCurrentWidget(mBlockingWidget);
     mBlockingWidget->show();
+
+    emit visibilityChanged(true);
 }
 
 void TransferScanCancelUi::hide(bool fromCancellation)
 {
     QWidget* widget = fromCancellation ? mLastSelectedWidget : mFinishedWidget;
     mContainer->setCurrentWidget(widget);
+
+    emit visibilityChanged(false);
 }
 
 void TransferScanCancelUi::disableCancelling()
