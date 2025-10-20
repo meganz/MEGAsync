@@ -45,16 +45,6 @@ margin-top: 0px;
 border-radius: 8px;
 }
 
-#downloadIcon
-{
-image: url(:/arrow-down-circle);
-}
-
-#uploadIcon
-{
-image: url(:/arrow-up-circle);
-}
-
 #SettingsDialog #pStorageQuota, #SettingsDialog #pTransferQuota
 {
 background-color:  #E4E4E5; /*colorToken.surface-3*/
@@ -2193,15 +2183,28 @@ margin-top: 0px;
                 <number>0</number>
                </property>
                <item>
-                <widget class="QPushButton" name="uploadIcon">
+                <widget class="IconLabel" name="uploadIcon">
+                 <property name="minimumSize">
+                  <size>
+                   <width>16</width>
+                   <height>16</height>
+                  </size>
+                 </property>
                  <property name="maximumSize">
                   <size>
-                   <width>26</width>
-                   <height>16777215</height>
+                   <width>16</width>
+                   <height>16</height>
                   </size>
                  </property>
                  <property name="text">
                   <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../Resources_common.qrc">
+                   <normaloff>:/arrow-up-circle_small_thin_outline</normaloff>:/arrow-up-circle_small_thin_outline</iconset>
+                 </property>
+                 <property name="normal_off" stdset="0">
+                  <string notr="true">icon-secondary</string>
                  </property>
                 </widget>
                </item>
@@ -2337,15 +2340,28 @@ margin-top: 0px;
                 <number>0</number>
                </property>
                <item>
-                <widget class="QPushButton" name="downloadIcon">
+                <widget class="IconLabel" name="downloadIcon">
+                 <property name="minimumSize">
+                  <size>
+                   <width>16</width>
+                   <height>16</height>
+                  </size>
+                 </property>
                  <property name="maximumSize">
                   <size>
-                   <width>26</width>
-                   <height>16777215</height>
+                   <width>16</width>
+                   <height>16</height>
                   </size>
                  </property>
                  <property name="text">
                   <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../Resources_common.qrc">
+                   <normaloff>:/arrow-down-circle_small_regular_outline</normaloff>:/arrow-down-circle_small_regular_outline</iconset>
+                 </property>
+                 <property name="normal_off" stdset="0">
+                  <string notr="true">icon-secondary</string>
                  </property>
                 </widget>
                </item>
@@ -3421,25 +3437,30 @@ margin-top: 0px;
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>TokenizableButton</class>
-   <extends>QPushButton</extends>
-   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
-  </customwidget>
-  <customwidget>
    <class>TokenizableToolButton</class>
    <extends>QToolButton</extends>
    <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
   </customwidget>
   <customwidget>
-   <class>WaitingSpinnerWidget</class>
-   <extends>QWidget</extends>
-   <header>gui/WaitingSpinnerWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>AvatarWidget</class>
    <extends>QWidget</extends>
    <header>AvatarWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TokenizableButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
+  </customwidget>
+  <customwidget>
+   <class>WaitingSpinnerWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/WaitingSpinnerWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

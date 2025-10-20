@@ -1283,5 +1283,7 @@
         <file alias="upload-to-mega.png">images/upload-to-mega.png</file>
         <file alias="upload-to-mega@2x.png">images/upload-to-mega@2x.png</file>
         <file alias="upload-to-mega@3x.png">images/upload-to-mega@3x.png</file>
+        <file alias="arrow-down-circle_small_regular_outline">images/themed/tokenizable/arrow-down-circle_small_regular_outline.svg</file>
+        <file alias="arrow-up-circle_small_regular_outline">images/themed/tokenizable/arrow-up-circle_small_regular_outline.svg</file>
     </qresource>
 </RCC>
