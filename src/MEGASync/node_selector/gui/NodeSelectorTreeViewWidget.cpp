@@ -648,7 +648,7 @@ void NodeSelectorTreeViewWidget::addCustomButtons(NodeSelectorTreeViewWidget* wd
         auto button = buttonsMap.value(id);
         if (button)
         {
-            ui->customButtonsLayout->addWidget(button);
+            ui->customButtonsLayout->insertWidget(0, button);
             connect(button,
                     &QPushButton::clicked,
                     this,
@@ -1748,10 +1748,12 @@ QPushButton* SelectType::createCustomButton(const QString& type,
 {
     auto button(new TokenizableButton());
     button->setText(text);
+    button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     QIcon icon;
     icon.addFile(iconFile, QSize(16, 16), QIcon::Mode::Normal, QIcon::State::Off);
     button->setIcon(icon);
     button->setProperty("type", type);
+    button->setProperty("dimension", QLatin1String("small"));
     return button;
 }
 
@@ -1933,11 +1935,6 @@ void CloudDriveType::updateCustomButtonsText(NodeSelectorTreeViewWidget* wdg)
 
 void CloudDriveType::newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg)
 {
-    // First time, move the button to the header
-    if (wdg->ui->bNewFolder->parent() != wdg->ui->customButtonsContainer)
-    {
-        wdg->ui->customButtonsLayout->addWidget(wdg->ui->bNewFolder);
-    }
     SelectType::newFolderButtonVisibility(wdg);
 }
 

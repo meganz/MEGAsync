@@ -93,6 +93,8 @@ void TokenizableButton::paintEvent(QPaintEvent* event)
 
     applyPixmapsByState(this, option);
 
+    ButtonUtilities::checkMinWidth(this);
+
     QPushButton::paintEvent(event);
 }
 
@@ -121,6 +123,8 @@ void TokenizableToolButton::paintEvent(QPaintEvent* event)
     init(this);
 
     applyPixmapsByState(this, option);
+
+    ButtonUtilities::checkMinWidth(this);
 
     QToolButton::paintEvent(event);
 }
