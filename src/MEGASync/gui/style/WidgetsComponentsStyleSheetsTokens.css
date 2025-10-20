@@ -8,6 +8,12 @@ QWidget[type="notification"][error="true"]
 background-color: #ffffe4e8;/*colorToken.notification-error*/
 }
 
+QFileDialog, QFileDialog *
+{
+background-color: #fff3f4f4; /*colorToken.surface-1*/
+color: #ff303233; /*colorToken.text-primary*/
+}
+
 /*
     QTableView
 */
