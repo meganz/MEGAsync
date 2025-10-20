@@ -15,9 +15,6 @@
 #include "TokenizableItems/TokenPropertySetter.h"
 #include "ui_NodeSelectorTreeViewWidget.h"
 
-const int NodeSelectorTreeViewWidget::LOADING_VIEW_THRESSHOLD = 500;
-const int NodeSelectorTreeViewWidget::LABEL_ELIDE_MARGIN = 250;
-const char* NodeSelectorTreeViewWidget::FULL_NAME_PROPERTY = "full_name";
 const int CHECK_UPDATED_NODES_INTERVAL = 1000;
 const int IMMEDIATE_CHECK_UPDATES_NODES_THRESHOLD = 200;
 
@@ -242,8 +239,14 @@ bool NodeSelectorTreeViewWidget::eventFilter(QObject* watched, QEvent* event)
 
 void NodeSelectorTreeViewWidget::setTitleText(const QString& nodeName)
 {
-    ui->lFolderName->setProperty(FULL_NAME_PROPERTY, nodeName);
-    ui->lFolderName->setText(nodeName);
+    if (ui->lFolderName->isVisible())
+    {
+        ui->lFolderName->setText(nodeName);
+    }
+    else if (ui->sh_folderName->isVisible())
+    {
+        ui->sh_folderName->setText(nodeName);
+    }
 }
 
 void NodeSelectorTreeViewWidget::clearSelection()
@@ -1485,6 +1488,10 @@ void NodeSelectorTreeViewWidget::updateNode(const UpdateNodesInfo& info, bool sc
     }
 
     mModel->updateItemNode(index, info.node);
+
+    // Update proxy Index in case the node has changed the name/modified data and we are sorting by
+    // any of these attributes
+    proxyIndex = mProxyModel->mapFromSource(index);
 
     if (info.node)
     {
