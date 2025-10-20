@@ -195,9 +195,6 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
 
     circlesShowAllActiveTransfersProgress = true;
 
-    opacityEffect = NULL;
-    animation = NULL;
-
     actualAccountType = -1;
 
     notificationsReady = false;
@@ -286,6 +283,10 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
     mTransferScanCancelUi = new TransferScanCancelUi(ui->sTabs, ui->pTransfersTab);
     connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
             this, &InfoDialog::cancelScanning);
+    connect(mTransferScanCancelUi,
+            &TransferScanCancelUi::visibilityChanged,
+            this,
+            &InfoDialog::onScanningVisibilityChanged);
 
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesChanged,
             this,  &InfoDialog::onStalledIssuesChanged);
@@ -309,7 +310,6 @@ InfoDialog::~InfoDialog()
         delete ui->tvNotifications->itemDelegate();
     }
     delete ui;
-    delete animation;
     delete filterMenu;
 }
 
@@ -704,6 +704,18 @@ void InfoDialog::onStalledIssuesChanged()
     updateState();
 }
 
+void InfoDialog::onScanningVisibilityChanged(bool state)
+{
+    if (state && ui->wPSA->isPSAshown())
+    {
+        changePSAVisibility(false);
+    }
+    else if (!state & !ui->wPSA->isPSAshown() && ui->wPSA->isActive())
+    {
+        changePSAVisibility(true);
+    }
+}
+
 void InfoDialog::setIndexing(bool indexing)
 {
     mIndexing = indexing;
@@ -788,7 +800,7 @@ void InfoDialog::updateState()
         }
         else
         {
-            changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_UPDATED, false);
+            changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_UPDATED);
         }
     }
 
@@ -1307,59 +1319,6 @@ void InfoDialog::on_bStorageDetails_clicked()
     DialogOpener::showNonModalDialog<AccountDetailsDialog>(dialog);
 }
 
-void InfoDialog::animateStates(bool opt)
-{
-    static const QSize iconSize = QSize(128, 128);
-
-    if (opt) //Enable animation for scanning/waiting states
-    {
-        ui->lUploadToMega->setIcon(Utilities::getCachedPixmap(QString::fromUtf8("://images/init_scanning.png")));
-        ui->lUploadToMega->setIconSize(iconSize);
-
-        if (!opacityEffect)
-        {
-            opacityEffect = new QGraphicsOpacityEffect();
-            ui->lUploadToMega->setGraphicsEffect(opacityEffect);
-        }
-
-        if (!animation)
-        {
-            animation = new QPropertyAnimation(opacityEffect, "opacity");
-            animation->setDuration(2000);
-            animation->setStartValue(1.0);
-            animation->setEndValue(0.5);
-            animation->setEasingCurve(QEasingCurve::InOutQuad);
-            connect(animation, SIGNAL(finished()), SLOT(onAnimationFinished()));
-        }
-
-        if (animation->state() != QAbstractAnimation::Running)
-        {
-            animation->start();
-        }
-    }
-    else //Disable animation
-    {
-        ui->lUploadToMega->setIcon(Utilities::getPixmap(QString::fromUtf8("upload-to-mega.png"),
-                                                        Utilities::AttributeType::NONE,
-                                                        iconSize));
-        ui->lUploadToMega->setIconSize(iconSize);
-        ui->lUploadToMega->setText(tr("Upload to MEGA now"));
-
-        if (animation)
-        {
-            if (opacityEffect) //Reset opacity
-            {
-                opacityEffect->setOpacity(1.0);
-            }
-
-            if (animation->state() == QAbstractAnimation::Running)
-            {
-                animation->stop();
-            }
-        }
-    }
-}
-
 void InfoDialog::resetLoggedInMode()
 {
     loggedInMode = STATE_NONE;
@@ -1477,20 +1436,6 @@ void InfoDialog::on_bDiscard_clicked()
 void InfoDialog::on_bBuyQuota_clicked()
 {
     on_bUpgrade_clicked();
-}
-
-void InfoDialog::onAnimationFinished()
-{
-    if (animation->direction() == QAbstractAnimation::Forward)
-    {
-        animation->setDirection(QAbstractAnimation::Backward);
-        animation->start();
-    }
-    else
-    {
-        animation->setDirection(QAbstractAnimation::Forward);
-        animation->start();
-    }
 }
 
 void InfoDialog::sTabsChanged(int tab)
@@ -1621,6 +1566,12 @@ void InfoDialog::updateHeaderBackground()
 
 void InfoDialog::changePSAVisibility(bool state)
 {
+    // Don´t show it when the scanning is working
+    if (state && mTransferScanCancelUi && mTransferScanCancelUi->isActive())
+    {
+        state = false;
+    }
+
     if (ui->wPSA->isPSAshown() != state)
     {
         state ? ui->wPSA->showPSA() : ui->wPSA->hidePSA();
@@ -1640,13 +1591,11 @@ void InfoDialog::enableUserActions(bool newState)
     ui->bCreateSync->setEnabled(newState);
 }
 
-void InfoDialog::changeStatusState(StatusInfo::TRANSFERS_STATES newState,
-                                   bool animate)
+void InfoDialog::changeStatusState(StatusInfo::TRANSFERS_STATES newState)
 {
     if (mState != newState)
     {
         mState = newState;
-        animateStates(animate);
     }
 }
 

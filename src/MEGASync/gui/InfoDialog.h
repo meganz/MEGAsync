@@ -102,7 +102,6 @@ public:
 
 private:
     InfoDialog() = delete;
-    void animateStates(bool opt);
     void hideEvent(QHideEvent *event) override;
     void showEvent(QShowEvent *event) override;
     void moveEvent(QMoveEvent *) override;
@@ -148,8 +147,6 @@ private slots:
     void on_bDiscard_clicked();
     void on_bBuyQuota_clicked();
 
-    void onAnimationFinished();
-
     void sTabsChanged(int tab);
 
     void on_bDismissSyncSettings_clicked();
@@ -164,6 +161,8 @@ private slots:
     void onTransfersStateChanged();
 
     void onStalledIssuesChanged();
+
+    void onScanningVisibilityChanged(bool state);
 
 signals:
 
@@ -213,9 +212,6 @@ private:
     bool doNotActAsPopup;
 #endif
 
-    QPropertyAnimation *animation;
-    QGraphicsOpacityEffect *opacityEffect;
-
     bool mShownSomeIssuesOccurred = false;
     QPropertyAnimation *minHeightAnimationSomeIssues;
     QPropertyAnimation *maxHeightAnimationSomeIssues;
@@ -251,8 +247,7 @@ protected:
 private:
     static double computeRatio(long long completed, long long remaining);
     void enableUserActions(bool newState);
-    void changeStatusState(StatusInfo::TRANSFERS_STATES newState,
-                           bool animate = true);
+    void changeStatusState(StatusInfo::TRANSFERS_STATES newState);
     void fixMultiscreenResizeBug(int& posX, int& posY);
     void repositionInfoDialog();
     void initNotificationArea();

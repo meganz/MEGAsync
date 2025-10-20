@@ -30,6 +30,9 @@ void StatusInfo::setState(TRANSFERS_STATES state)
 {
     this->mState = state;
 
+    // By default
+    auto iconStateToken = QString::fromUtf8("icon-primary");
+
     switch (this->mState)
     {
         case TRANSFERS_STATES::STATE_PAUSED:
@@ -44,7 +47,6 @@ void StatusInfo::setState(TRANSFERS_STATES state)
             ui->lStatusDesc->setText(statusText);
 
             ui->bIconState->setProperty("state", QString::fromUtf8("paused"));
-            ui->bIconState->setProperty("normal_off", QString::fromUtf8("icon-primary"));
 
             break;
         }
@@ -62,7 +64,7 @@ void StatusInfo::setState(TRANSFERS_STATES state)
                 ui->lStatusDesc->setText(statusText);
 
                 ui->bIconState->setProperty("state", QString::fromUtf8("over_quota"));
-                ui->bIconState->setProperty("normal_off", QString::fromUtf8("support-error"));
+                iconStateToken = QString::fromUtf8("support-error");
             }
             else
             {
@@ -71,7 +73,7 @@ void StatusInfo::setState(TRANSFERS_STATES state)
                 ui->lStatusDesc->setText(statusText);
 
                 ui->bIconState->setProperty("state", QString::fromUtf8("up_to_date"));
-                ui->bIconState->setProperty("normal_off", QString::fromUtf8("indicator-green"));
+                iconStateToken = QString::fromUtf8("indicator-green");
             }
 
             break;
@@ -111,7 +113,6 @@ void StatusInfo::setState(TRANSFERS_STATES state)
             }
 
             const QString statusText{tr("Scanning…")};
-            ui->bIconState->setProperty("normal_off", QString::fromUtf8("icon-primary"));
             ui->lStatusDesc->setToolTip(statusText);
             ui->lStatusDesc->setText(statusText);
             break;
@@ -138,13 +139,15 @@ void StatusInfo::setState(TRANSFERS_STATES state)
 
             setFailedText();
             ui->bIconState->setProperty("state", QString::fromUtf8("failed"));
-            ui->bIconState->setProperty("normal_off", QString::fromUtf8("indicator-pink"));
+            iconStateToken = QString::fromUtf8("indicator-pink");
 
             break;
         }
         default:
             break;
     }
+
+    ui->bIconState->setProperty(TOKEN_PROPERTIES::normalOff, iconStateToken);
     ui->bIconState->style()->polish(ui->bIconState);
 }
 

@@ -91,7 +91,10 @@ void TokenizableButton::paintEvent(QPaintEvent* event)
     // The first time the button is painted
     init(this);
 
-    applyPixmapsByState(this, option);
+    if (!icon().isNull())
+    {
+        applyPixmapsByState(this, option);
+    }
 
     ButtonUtilities::checkMinWidth(this);
 
@@ -122,7 +125,10 @@ void TokenizableToolButton::paintEvent(QPaintEvent* event)
     // The first time the button is painted
     init(this);
 
-    applyPixmapsByState(this, option);
+    if (!icon().isNull())
+    {
+        applyPixmapsByState(this, option);
+    }
 
     ButtonUtilities::checkMinWidth(this);
 

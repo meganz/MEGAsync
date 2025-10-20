@@ -24,6 +24,7 @@ public:
 
 signals:
     void cancelTransfers();
+    void visibilityChanged(bool);
 
 private slots:
     void onCancelClicked();
