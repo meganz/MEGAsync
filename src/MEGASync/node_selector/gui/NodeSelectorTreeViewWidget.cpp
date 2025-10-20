@@ -687,7 +687,9 @@ void NodeSelectorTreeViewWidget::modelLoaded()
 {
     if (mModel)
     {
-        if (mModel->rowCount() == 0 && showEmptyView())
+        auto topRootIndex = mModel->hasTopRootIndex() ? mModel->index(0, 0) : QModelIndex();
+
+        if (mModel->rowCount(topRootIndex) == 0 && showEmptyView())
         {
             ui->stackedWidget->setCurrentWidget(ui->emptyPage);
             return;
