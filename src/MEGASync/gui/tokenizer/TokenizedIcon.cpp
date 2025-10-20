@@ -95,7 +95,20 @@ void TokenizedIcon::performAddPixmap(QIcon::Mode mode, QIcon::State state, const
         return;
     }
 
-    auto untokenPixmap = mOriginalIcon.pixmap(mButton->iconSize(), mode, state);
+    QPixmap untokenPixmap;
+
+    // If we get the pixmap from the disabled mode and it is the first time, Qt grayes out the icon
+    // and even if we tokenized it later, the graying out is applied to the RGB components of the
+    // icon and we only affect to the alpha channel, so the icon will be tokenized but grayed out.
+    if (mode == QIcon::Disabled)
+    {
+        untokenPixmap = mOriginalIcon.pixmap(mButton->iconSize(), QIcon::Normal, state);
+    }
+    else
+    {
+        untokenPixmap = mOriginalIcon.pixmap(mButton->iconSize(), mode, state);
+    }
+
     auto tokenizedPixmapOpt = IconTokenizer::changePixmapColor(untokenPixmap, toColor);
     auto tokenizedPixmap(tokenizedPixmapOpt.value_or(QPixmap()));
     if (!tokenizedPixmap.isNull())
