@@ -5029,7 +5029,6 @@ void MegaApplication::onRequestLinksFinished()
     QString linkForClipboard(links.join(QLatin1Char('\n')));
     QApplication::clipboard()->setText(linkForClipboard);
 
-    QString title = MegaSyncApp->getMEGAString();
     QString message;
     if (links.size() == 1)
     {
@@ -5047,8 +5046,7 @@ void MegaApplication::onRequestLinksFinished()
     {
         MessageDialogInfo msgInfo;
         msgInfo.descriptionText = message;
-        msgInfo.titleText = title;
-        msgInfo.checkboxText = tr("Don’t ask me again");
+        msgInfo.checkboxText = tr("Don’t show me again");
         msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msgResult)
         {
             if (msgResult->result() == QMessageBox::StandardButton::Ok)
@@ -5062,7 +5060,7 @@ void MegaApplication::onRequestLinksFinished()
     else
     {
         DesktopNotifications::NotificationInfo info;
-        info.title = title;
+        info.title = MegaSyncApp->getMEGAString();
         info.message = message;
 
         showInfoMessage(info);
