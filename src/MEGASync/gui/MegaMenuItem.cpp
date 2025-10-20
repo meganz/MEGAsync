@@ -1,7 +1,6 @@
 #include "MegaMenuItem.h"
 
 #include "ThemeManager.h"
-#include "TokenParserWidgetManager.h"
 #include "Utilities.h"
 
 MegaMenuItem::MegaMenuItem(const QString& text,
@@ -49,6 +48,8 @@ MegaMenuItem::MegaMenuItem(const QString& text,
 
     // Set default size
     setFixedHeight(32);
+
+    parent->installEventFilter(this);
 }
 
 void MegaMenuItem::updateLayout()
@@ -71,17 +72,7 @@ void MegaMenuItem::updateLayout()
     // Add icon if present
     if (!m_iconName.isEmpty())
     {
-        auto token = parent()->property("icon-token").toString();
-
-        if (token.isEmpty())
-        {
-            m_iconLabel->setIcon(QIcon(m_iconName).pixmap(DEFAULT_ICON_SIZE, DEFAULT_ICON_SIZE));
-        }
-        else
-        {
-            m_iconLabel->setIcon(Utilities::getIcon(m_iconName, Utilities::AttributeType::NONE));
-            m_iconLabel->setProperty("normal_off", token);
-        }
+        updateIconLabel();
 
         m_layout->addWidget(m_iconLabel);
 
@@ -107,6 +98,21 @@ void MegaMenuItem::updateLayout()
 
     // Set margins (includes tree depth)
     m_layout->setContentsMargins(leftMargin, 4, 12, 4);
+}
+
+void MegaMenuItem::updateIconLabel()
+{
+    auto token = parent()->property("icon-token").toString();
+
+    if (token.isEmpty())
+    {
+        m_iconLabel->setIcon(QIcon(m_iconName).pixmap(DEFAULT_ICON_SIZE, DEFAULT_ICON_SIZE));
+    }
+    else
+    {
+        m_iconLabel->setIcon(Utilities::getIcon(m_iconName, Utilities::AttributeType::NONE));
+        m_iconLabel->setProperty("normal_off", token);
+    }
 }
 
 void MegaMenuItem::createSubmenuArrow()
@@ -152,5 +158,22 @@ bool MegaMenuItem::event(QEvent* event)
         updateLayout();
         update();
     }
+
     return QWidget::event(event);
+}
+
+bool MegaMenuItem::eventFilter(QObject* watched, QEvent* event)
+{
+    if (event->type() == QEvent::DynamicPropertyChange)
+    {
+        if (auto dynamicPropertyEvent = dynamic_cast<QDynamicPropertyChangeEvent*>(event))
+        {
+            if (QString::fromUtf8(dynamicPropertyEvent->propertyName()) ==
+                QLatin1String("icon-token"))
+            {
+                updateIconLabel();
+            }
+        }
+    }
+    return QWidget::eventFilter(watched, event);
 }

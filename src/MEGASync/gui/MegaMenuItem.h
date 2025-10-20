@@ -47,10 +47,12 @@ public:
 
 protected:
     bool event(QEvent* event) override;
+    bool eventFilter(QObject* watched, QEvent* event) override;
 
 private:
     void updateLayout();
     void createSubmenuArrow();
+    void updateIconLabel();
 
 private:
     QHBoxLayout* m_layout;
