@@ -148,6 +148,7 @@ class MessageDialogData: public QObject
 public:
     enum class Type
     {
+        SUCCESS = 0,
         INFORMATION = 1,
         WARNING = 2,
         QUESTION = 3,

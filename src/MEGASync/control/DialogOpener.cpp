@@ -1,6 +1,5 @@
 #include "DialogOpener.h"
 
-#include "MessageDialogComponent.h"
 #include "MessageDialogData.h"
 #include "QmlDialogWrapper.h"
 

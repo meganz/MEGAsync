@@ -3222,6 +3222,7 @@ void MegaApplication::showInfoMessage(QString message, QString title)
     DesktopNotifications::NotificationInfo info;
     info.message = message;
     info.title = title;
+
     showInfoMessage(info);
 }
 
@@ -3237,14 +3238,15 @@ void MegaApplication::showInfoMessage(DesktopNotifications::NotificationInfo inf
     if (mOsNotifications)
     {
 #ifdef __APPLE__
-        //In case this method is called from another thread
-        Utilities::queueFunctionInAppThread([this]()
-        {
-            if (infoDialog && infoDialog->isVisible())
+        // In case this method is called from another thread
+        Utilities::queueFunctionInAppThread(
+            [this]()
             {
-                infoDialog->hide();
-            }
-        });
+                if (infoDialog && infoDialog->isVisible())
+                {
+                    infoDialog->hide();
+                }
+            });
 #endif
         lastTrayMessage = info.message;
         mOsNotifications->sendInfoNotification(info);
@@ -5027,14 +5029,44 @@ void MegaApplication::onRequestLinksFinished()
     }
     QString linkForClipboard(links.join(QLatin1Char('\n')));
     QApplication::clipboard()->setText(linkForClipboard);
+
+    QString message;
     if (links.size() == 1)
     {
-        showInfoMessage(tr("The link has been copied to the clipboard"));
+        message = tr("The link has been copied to the clipboard");
     }
     else
     {
-        showInfoMessage(tr("The links have been copied to the clipboard"));
+        message = tr("The links have been copied to the clipboard");
     }
+
+    if (!preferences->getDontShowExportLinkDialog() &&
+        (!mOsNotifications ||
+         (mOsNotifications &&
+          !preferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES))))
+    {
+        MessageDialogInfo msgInfo;
+        msgInfo.descriptionText = message;
+        msgInfo.checkboxText = tr("Don’t show me again");
+        msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msgResult)
+        {
+            if (msgResult->result() == QMessageBox::StandardButton::Ok)
+            {
+                preferences->setDontShowExportLinkDialog(msgResult->isChecked());
+            }
+        };
+
+        MessageDialogOpener::success(msgInfo);
+    }
+    else
+    {
+        DesktopNotifications::NotificationInfo info;
+        info.title = MegaSyncApp->getMEGAString();
+        info.message = message;
+
+        showInfoMessage(info);
+    }
+
     exportProcessor->deleteLater();
     exportOps--;
 }

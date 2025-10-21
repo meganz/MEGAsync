@@ -7,6 +7,11 @@
 
 #include <QPointer>
 
+void MessageDialogOpener::success(const MessageDialogInfo& info)
+{
+    return show(MessageDialogData::Type::SUCCESS, info);
+}
+
 void MessageDialogOpener::information(const MessageDialogInfo& info)
 {
     return show(MessageDialogData::Type::INFORMATION, info);

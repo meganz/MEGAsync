@@ -339,6 +339,8 @@ void MessageDialogData::updateWidgetsByType()
     // Set default values based on the type.
     switch (mType)
     {
+        case Type::SUCCESS:
+            [[fallthrough]];
         case Type::INFORMATION:
         {
             updateButtonsByDefault(QMessageBox::StandardButton::Ok);

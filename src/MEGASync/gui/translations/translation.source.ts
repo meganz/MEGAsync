@@ -3543,6 +3543,11 @@ https://mega.co.nz/#sync</source>
         <translatorcomment>Label to indicate a contact of a user.</translatorcomment>
         <translation>contact</translation>
     </message>
+    <message>
+        <source>Don’t show me again</source>
+        <translatorcomment>Check box in the link created dialog, to inform the system about user preference. SNC-5975</translatorcomment>
+        <translation type="unfinished">Don’t show me again</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>

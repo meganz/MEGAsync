@@ -431,6 +431,9 @@ public:
     void clearAll();
     void sync();
 
+    void setDontShowExportLinkDialog(bool value);
+    bool getDontShowExportLinkDialog();
+
     enum class ThemeType
     {
         UNINITIALIZED = -1,
@@ -878,6 +881,8 @@ protected:
     static const bool defaultAskOnExclusionRemove;
 
     static const ThemeType defaultTheme;
+
+    static const QString dontShowExportLinkDialogKey;
 
 private:
     void updateFullName();
