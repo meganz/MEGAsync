@@ -346,6 +346,9 @@ background-color: #FFFFFF; /*colorToken.page-background*/
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="spacing">
+      <number>8</number>
+     </property>
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
