@@ -11,6 +11,7 @@
 #include "StatusInfo.h"
 #include "SyncInfo.h"
 #include "SyncsMenu.h"
+#include "TransferItem.h"
 #include "TransferQuota.h"
 #include "TransferScanCancelUi.h"
 #include "Utilities.h"
@@ -163,7 +164,7 @@ private slots:
     void onStalledIssuesChanged();
 
     void onScanningVisibilityChanged(bool state);
-
+    void onMostPriorityTransferUpdate(int uploadTag, int downloadTag);
 signals:
 
     void openTransferManager(int tab);

@@ -787,14 +787,16 @@ QVariant NodeSelectorModel::data(const QModelIndex& index, int role) const
                 }
                 case Qt::FontRole:
                 {
+                    QFont font; // This will use the app default font.
                     if (index.column() == NODE)
                     {
-                        return QFont(QLatin1String("Lato"), 12, 400);
+                        font.setPixelSize(12);
                     }
                     else
                     {
-                        return QFont(QLatin1String("Lato"), 10, 400);
+                        font.setPixelSize(10);
                     }
+                    return font;
                 }
                 case Qt::ToolTipRole:
                 {

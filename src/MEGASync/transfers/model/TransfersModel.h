@@ -376,7 +376,6 @@ public:
     void showSyncCancelledWarning();
 
     QList<int> getDragAndDropRows(const QMimeData* data);
-    std::optional<TransferData::TransferTypes> getTopTransferType();
 signals:
     void pauseStateChanged(bool pauseState);
     void transferPauseStateChanged();
