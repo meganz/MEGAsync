@@ -7,6 +7,7 @@
 #include <QProcess>
 #include <Preferences/Preferences.h>
 #include <QOperatingSystemVersion>
+#include <QWindow>
 
 #import <objc/runtime.h>
 #import <sys/proc_info.h>
@@ -578,11 +579,11 @@ void removeLoginItem()
     }
 }
 
-void applyThemeToFrameWindow(QWidget* widget, bool darkFrame, bool lockContent)
+void applyThemeToFrameWindow(QWindow* window, bool darkFrame, bool lockContent)
 {
-if (!widget) return;
+if (!window) return;
     if (@available(macOS 10.14, *)) {
-        NSView *view = reinterpret_cast<NSView*>(widget->winId());
+        NSView *view = reinterpret_cast<NSView*>(window->winId());
         if (!view) return;
         NSWindow *win = view.window;
         if (!win) return;

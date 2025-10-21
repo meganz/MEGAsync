@@ -112,7 +112,7 @@ public:
     void show();
     void close();
     void activateWindow();
-    QWindow* window();
+    QWindow* windowHandle();
     void raise();
     void removeDialog();
     int minimumWidth();

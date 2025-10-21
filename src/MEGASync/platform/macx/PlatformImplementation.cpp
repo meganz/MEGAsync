@@ -589,9 +589,9 @@ void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, i
     logInfoDialogCoordinates("Final", screenGeometry, otherInfo);
 }
 
-void PlatformImplementation::applyCurrentThemeOnCurrentDialogFrame(QWidget* widget)
+void PlatformImplementation::applyCurrentThemeOnCurrentDialogFrame(QWindow* window)
 {
-    applyThemeToFrameWindow(widget,
+    applyThemeToFrameWindow(window,
                             ThemeManager::instance()->getCurrentColorScheme() ==
                                 Preferences::ThemeAppeareance::DARK,
                             true);

@@ -357,4 +357,4 @@ Preferences::SystemColorScheme AbstractPlatform::getCurrentThemeAppearance() con
     return {};
 }
 
-void AbstractPlatform::applyCurrentThemeOnCurrentDialogFrame(QWidget* widget) {}
+void AbstractPlatform::applyCurrentThemeOnCurrentDialogFrame(QWindow*) {}
