@@ -53,7 +53,7 @@ TransferManager::TransferManager(MegaApi* megaApi):
     mUi->setupUi(this);
     createSearchChips();
     mUi->stalledIssuesContainer->setType(BannerWidget::BANNER_ERROR);
-    mUi->stalledIssuesContainer->setDescription(getIssuesBannerText());
+    mUi->stalledIssuesContainer->setTitle(getIssuesBannerText());
     mUi->stalledIssuesContainer->setLinkText(getIssuesBannerButtonText());
 
     connect(mUi->stalledIssuesContainer,

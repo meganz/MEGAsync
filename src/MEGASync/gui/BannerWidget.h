@@ -19,17 +19,22 @@ public:
         NONE = 0,
         BANNER_WARNING = 1,
         BANNER_ERROR = 2,
-        BANNER_INFO = 3
+        BANNER_INFO = 3,
+        BANNER_SUCCESS = 4
     };
 
     explicit BannerWidget(QWidget* parent = nullptr);
     ~BannerWidget();
 
-    void setType(Type type);
+    void setType(Type type, bool showIcon = true);
     void setDescription(const QString& text);
     void setTitle(const QString& text);
     void setAutoManageTextUrl(bool newValue);
     void setLinkText(const QString& displayText);
+
+private:
+    void updateLayout();
+
 signals:
     void linkActivated();
 
