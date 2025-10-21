@@ -59,6 +59,7 @@ public:
     QString getArchUpdateString() const override;
 
     Preferences::SystemColorScheme getCurrentThemeAppearance() const override;
+    void applyCurrentThemeOnCurrentDialogFrame(QWindow* window) override;
 
 private:
     void disableSignalHandler();

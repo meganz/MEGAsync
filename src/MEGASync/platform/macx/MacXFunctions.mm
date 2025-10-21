@@ -7,6 +7,7 @@
 #include <QProcess>
 #include <Preferences/Preferences.h>
 #include <QOperatingSystemVersion>
+#include <QWindow>
 
 #import <objc/runtime.h>
 #import <sys/proc_info.h>
@@ -575,5 +576,30 @@ void removeLoginItem()
                 }
             }
         }
+    }
+}
+
+void applyThemeToFrameWindow(QWindow* window, bool darkFrame, bool lockContent)
+{
+if (!window) return;
+    if (@available(macOS 10.14, *)) {
+        NSView *view = reinterpret_cast<NSView*>(window->winId());
+        if (!view) return;
+        NSWindow *win = view.window;
+        if (!win) return;
+
+        NSAppearanceName frameName = darkFrame ? NSAppearanceNameDarkAqua : NSAppearanceNameAqua;
+        win.appearance = [NSAppearance appearanceNamed:frameName];
+
+        // Keep inner content from inheriting DarkAqua, so your Qt palette stays as-is.
+        if (lockContent) {
+            view.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
+        } else {
+            view.appearance = nil; // inherit from window
+        }
+
+        // Nudge to refresh chrome immediately
+        [win invalidateShadow];
+        [win displayIfNeeded];
     }
 }

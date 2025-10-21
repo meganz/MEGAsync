@@ -1,5 +1,9 @@
 #include "PlatformImplementation.h"
 
+#include "MacXFunctions.h"
+#include "Preferences.h"
+#include "ThemeManager.h"
+
 #include <QHostInfo>
 #include <QScreen>
 
@@ -583,4 +587,12 @@ void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, i
 
     QString otherInfo = QString::fromUtf8("dialog rect = %1, posx = %2, posy = %3").arg(rectToString(rect)).arg(*posx).arg(*posy);
     logInfoDialogCoordinates("Final", screenGeometry, otherInfo);
+}
+
+void PlatformImplementation::applyCurrentThemeOnCurrentDialogFrame(QWindow* window)
+{
+    applyThemeToFrameWindow(window,
+                            ThemeManager::instance()->getCurrentColorScheme() ==
+                                Preferences::ThemeAppeareance::DARK,
+                            true);
 }

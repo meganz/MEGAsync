@@ -257,7 +257,6 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
     replaceColorTokens(widgetStyleSheet, colorTokens);
     replaceIconColorTokens(widget, widgetStyleSheet);
     tokenizeChildStyleSheets(widget);
-
     removeFrameOnDialogCombos(widget);
 
     QString styleSheet = (isTokenized(widget) ? mThemedStandardComponentsStyleSheet[currentTheme] :

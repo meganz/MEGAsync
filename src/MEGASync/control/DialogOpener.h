@@ -13,6 +13,7 @@
 #include <QPointer>
 #include <QQueue>
 #include <QScreen>
+#include <QWindow>
 
 #include <functional>
 #include <memory>
@@ -56,6 +57,7 @@ private:
         virtual void show() = 0;
         virtual void close() = 0;
         virtual bool isParent(QObject* parent) = 0;
+        virtual void applyCurrentTheme() = 0;
 
         bool ignoreCloseAllAction() const {return mIgnoreCloseAllAction;}
         void setIgnoreCloseAllAction(bool newIgnoreCloseAllAction){mIgnoreCloseAllAction = newIgnoreCloseAllAction;}
@@ -125,6 +127,10 @@ private:
             return (info.mDialog == mDialog);
         }
 
+        void applyCurrentTheme() override
+        {
+            Platform::getInstance()->applyCurrentThemeOnCurrentDialogFrame(mDialog->windowHandle());
+        }
 
     private:
         QPointer<DialogType> mDialog;
@@ -394,6 +400,14 @@ public:
         }
     }
 
+    static void currentThemeChanged()
+    {
+        foreach(auto dialogInfo, mOpenedDialogs)
+        {
+            dialogInfo->applyCurrentTheme();
+        }
+    }
+
     static QList<QPointer<QWidget>> getAllOpenedDialogs();
 
 private:
@@ -535,6 +549,8 @@ private:
             }
 
             info->raise(true);
+
+            Platform::getInstance()->applyCurrentThemeOnCurrentDialogFrame(dialog->windowHandle());
 
             return info;
         }

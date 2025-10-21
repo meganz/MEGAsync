@@ -161,9 +161,9 @@ void QmlDialogWrapperBase::activateWindow()
    mWindow->requestActivate();
 }
 
-QWindow *QmlDialogWrapperBase::window()
+QWindow* QmlDialogWrapperBase::windowHandle()
 {
-   return mWindow;
+    return mWindow;
 }
 
 int QmlDialogWrapperBase::minimumWidth()

@@ -111,7 +111,7 @@ void QmlDialogManager::raiseOrHideInfoGuestDialog(QTimer* dialogTimer, int msec)
         return;
     }
 
-    auto dialog = dynamic_cast<GuestQmlDialog*>(guestDialogWrapper->getDialog()->window());
+    auto dialog = dynamic_cast<GuestQmlDialog*>(guestDialogWrapper->getDialog()->windowHandle());
     if(dialog && dialog->isHiddenForLongTime())
     {
         dialogTimer->start(msec);
@@ -122,7 +122,7 @@ void QmlDialogManager::forceCloseOnboardingDialog()
 {
     if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
     {
-        static_cast<OnboardingQmlDialog*>(dialog->getDialog()->window())->forceClose();
+        static_cast<OnboardingQmlDialog*>(dialog->getDialog()->windowHandle())->forceClose();
     }
 }
 

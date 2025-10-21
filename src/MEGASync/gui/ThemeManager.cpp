@@ -1,5 +1,6 @@
 #include "ThemeManager.h"
 
+#include "DialogOpener.h"
 #include "Platform.h"
 #include "Preferences/Preferences.h"
 #include "ServiceUrls.h"
@@ -159,6 +160,7 @@ void ThemeManager::applyTheme(Preferences::ThemeAppeareance theme)
 
         emit themeChanged();
         Utilities::propagateCustomEvent(ThemeChanged);
+        DialogOpener::currentThemeChanged();
     }
 }
 
