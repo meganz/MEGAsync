@@ -5055,7 +5055,7 @@ void MegaApplication::onRequestLinksFinished()
             }
         };
 
-        MessageDialogOpener::information(msgInfo);
+        MessageDialogOpener::success(msgInfo);
     }
     else
     {
