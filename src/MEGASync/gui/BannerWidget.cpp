@@ -1,7 +1,6 @@
 #include "BannerWidget.h"
 
 #include "ui_BannerWidget.h"
-#include "Utilities.h"
 
 #include <QStyle>
 namespace
@@ -9,9 +8,11 @@ namespace
 constexpr const char* TYPE_PROPERTY_NAME{"type"};
 const std::map<BannerWidget::Type, QLatin1String> TYPE_MAP{
     {BannerWidget::Type::BANNER_WARNING, QLatin1String{"warning"}},
-    {BannerWidget::Type::BANNER_ERROR,   QLatin1String{"error"}  },
-    {BannerWidget::Type::BANNER_INFO,    QLatin1String{"info"}   }
-};
+    {BannerWidget::Type::BANNER_ERROR, QLatin1String{"error"}},
+    {BannerWidget::Type::BANNER_INFO, QLatin1String{"info"}},
+    {BannerWidget::Type::BANNER_SUCCESS, QLatin1String{"success"}}};
+constexpr int TITLE_AND_DESCRIPTION_HEIGHT = 64;
+constexpr int TITLE_ONLY_HEIGHT = 50;
 }
 
 BannerWidget::BannerWidget(QWidget* parent):
@@ -38,8 +39,10 @@ BannerWidget::~BannerWidget()
     delete mUi;
 }
 
-void BannerWidget::setType(Type type)
+void BannerWidget::setType(Type type, bool showIcon)
 {
+    mUi->lIcon->setVisible(showIcon);
+
     if (mType == type)
     {
         return;
@@ -64,6 +67,7 @@ void BannerWidget::setDescription(const QString& text)
 {
     mUi->lText->setText(text);
     mUi->lText->show();
+    updateLayout();
 }
 
 void BannerWidget::setAutoManageTextUrl(bool newValue)
@@ -81,4 +85,17 @@ void BannerWidget::setTitle(const QString& text)
 {
     mUi->lTitle->setText(text);
     mUi->lTitle->show();
+    updateLayout();
+}
+
+void BannerWidget::updateLayout()
+{
+    if (!mUi->lText->toPlainText().isEmpty())
+    {
+        setFixedHeight(TITLE_AND_DESCRIPTION_HEIGHT);
+    }
+    else if (!mUi->lTitle->toPlainText().isEmpty())
+    {
+        setFixedHeight(TITLE_ONLY_HEIGHT);
+    }
 }

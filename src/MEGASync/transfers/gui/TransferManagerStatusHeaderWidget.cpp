@@ -27,7 +27,7 @@ TransferManagerStatusHeaderWidget::TransferManagerStatusHeaderWidget(QWidget* pa
     mUi->wTransferBanner->hide();
 
     mUi->wAllPausedBanner->setType(BannerWidget::Type::BANNER_INFO);
-    mUi->wAllPausedBanner->setDescription(tr("All transfers paused."));
+    mUi->wAllPausedBanner->setTitle(tr("All transfers paused."));
     mUi->wTransferBanner->setType(BannerWidget::Type::BANNER_ERROR);
     mUi->wStorageBanner->setAutoManageTextUrl(false);
 
