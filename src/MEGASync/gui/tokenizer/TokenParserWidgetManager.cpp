@@ -259,12 +259,6 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
     tokenizeChildStyleSheets(widget);
     removeFrameOnDialogCombos(widget);
 
-    // only dialogs have window frame.
-    if (dynamic_cast<QDialog*>(widget))
-    {
-        Platform::getInstance()->applyCurrentThemeOnCurrentDialogFrame(widget);
-    }
-
     QString styleSheet = (isTokenized(widget) ? mThemedStandardComponentsStyleSheet[currentTheme] :
                                                 QLatin1String()) %
                          widgetStyleSheet;

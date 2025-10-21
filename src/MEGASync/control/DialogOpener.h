@@ -536,6 +536,7 @@ private:
 
             info->raise(true);
 
+            Platform::getInstance()->applyCurrentThemeOnCurrentDialogFrame(dialog);
             return info;
         }
 
