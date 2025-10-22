@@ -262,6 +262,13 @@ QUrl ServiceUrls::getCreateSyncHelpUrl()
     return url;
 }
 
+QUrl ServiceUrls::getSslErrorHelpUrl()
+{
+    auto url = getHelpBaseUrl();
+    url.setPath(url.path() + QLatin1String("/security/data-protection/resolve-ssl-errors"));
+    return url;
+}
+
 QUrl ServiceUrls::getAcknowledgementsUrl()
 {
     return {QLatin1String("https://github.com/meganz/MEGAsync/blob/master/CREDITS.md")};
