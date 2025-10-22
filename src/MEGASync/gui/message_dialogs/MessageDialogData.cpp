@@ -287,6 +287,10 @@ void MessageDialogData::buildButtons()
                       QMessageBox::StandardButton::Cancel,
                       MessageDialogButtonInfo::ButtonStyle::SECONDARY,
                       QApplication::translate("QDialogButtonBox", "&Cancel"));
+    processButtonInfo(mInfo.buttons,
+                      QMessageBox::StandardButton::Close,
+                      MessageDialogButtonInfo::ButtonStyle::PRIMARY,
+                      QApplication::translate("QDialogButtonBox", "&Close"));
 
     for (auto it = mInfo.buttonsIcons.constBegin(); it != mInfo.buttonsIcons.constEnd(); ++it)
     {
@@ -340,7 +344,10 @@ void MessageDialogData::updateWidgetsByType()
     switch (mType)
     {
         case Type::SUCCESS:
-            [[fallthrough]];
+        {
+            updateButtonsByDefault(QMessageBox::StandardButton::Close);
+            break;
+        }
         case Type::INFORMATION:
         {
             updateButtonsByDefault(QMessageBox::StandardButton::Ok);

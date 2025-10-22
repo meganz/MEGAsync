@@ -6178,6 +6178,11 @@ Enter a different name.</translation>
         <translatorcomment>Label for confirm button. Keep capital letter.</translatorcomment>
         <translation>&amp;Yes</translation>
     </message>
+    <message>
+        <source>&amp;Close</source>
+        <translatorcomment>Label for close button. Keep capital letter. SNC-5997</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QFileDialog</name>
