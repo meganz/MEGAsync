@@ -142,6 +142,7 @@ QmlDialog {
             Item {
                 id: spacer
 
+                visible: checkBoxItem.visible
                 width: sizes.iconSize
                 height: sizes.iconSize
             }
