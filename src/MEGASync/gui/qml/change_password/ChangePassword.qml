@@ -28,7 +28,7 @@ ChangePasswordDialog {
         id: changePasswordContentItem
 
         anchors.fill: parent
-        color: ColorTheme.surface1
+        color: ColorTheme.pageBackground
 
         readonly property string change_password: "change_password"
         readonly property string two_fa: "two_fa"

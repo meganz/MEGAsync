@@ -9,20 +9,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>489</width>
-    <height>471</height>
+    <width>495</width>
+    <height>512</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
-    <height>0</height>
+    <width>495</width>
+    <height>512</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -53,16 +53,16 @@ background-color: #FFFFFF; /*colorToken.page-background*/
     <number>24</number>
    </property>
    <property name="leftMargin">
-    <number>20</number>
+    <number>48</number>
    </property>
    <property name="topMargin">
-    <number>10</number>
+    <number>48</number>
    </property>
    <property name="rightMargin">
-    <number>20</number>
+    <number>48</number>
    </property>
    <property name="bottomMargin">
-    <number>10</number>
+    <number>48</number>
    </property>
    <item>
     <widget class="QGroupBox" name="gProxy">
@@ -98,10 +98,10 @@ background-color: #FFFFFF; /*colorToken.page-background*/
        <number>12</number>
       </property>
       <property name="horizontalSpacing">
-       <number>6</number>
+       <number>12</number>
       </property>
       <property name="verticalSpacing">
-       <number>20</number>
+       <number>24</number>
       </property>
       <item row="13" column="0">
        <widget class="QLabel" name="lProxyUsername">
@@ -478,7 +478,7 @@ background-color: #FFFFFF; /*colorToken.page-background*/
      </property>
      <layout class="QHBoxLayout" name="buttonBoxLayout">
       <property name="spacing">
-       <number>10</number>
+       <number>12</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -510,13 +510,13 @@ background-color: #FFFFFF; /*colorToken.page-background*/
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>26</height>
+          <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>26</height>
+          <height>16777215</height>
          </size>
         </property>
         <property name="cursor">
@@ -529,7 +529,7 @@ background-color: #FFFFFF; /*colorToken.page-background*/
          <string notr="true">outline</string>
         </property>
         <property name="dimension" stdset="0">
-         <string notr="true">small</string>
+         <string notr="true">medium</string>
         </property>
        </widget>
       </item>
@@ -538,13 +538,13 @@ background-color: #FFFFFF; /*colorToken.page-background*/
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>26</height>
+          <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>26</height>
+          <height>16777215</height>
          </size>
         </property>
         <property name="cursor">
@@ -560,7 +560,7 @@ background-color: #FFFFFF; /*colorToken.page-background*/
          <string notr="true">primary</string>
         </property>
         <property name="dimension" stdset="0">
-         <string notr="true">small</string>
+         <string notr="true">medium</string>
         </property>
        </widget>
       </item>
