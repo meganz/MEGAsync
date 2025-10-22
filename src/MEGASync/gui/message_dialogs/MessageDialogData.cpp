@@ -290,7 +290,7 @@ void MessageDialogData::buildButtons()
     processButtonInfo(mInfo.buttons,
                       QMessageBox::StandardButton::Close,
                       MessageDialogButtonInfo::ButtonStyle::PRIMARY,
-                      QApplication::translate("QDialogButtonBox", "&Close"));
+                      tr("Close"));
 
     for (auto it = mInfo.buttonsIcons.constBegin(); it != mInfo.buttonsIcons.constEnd(); ++it)
     {
