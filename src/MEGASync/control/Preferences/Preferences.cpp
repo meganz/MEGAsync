@@ -2740,6 +2740,7 @@ void Preferences::login(QString account)
             emit updated(lastVersion);
         }
         mSettings->setValue(lastVersionKey, Preferences::VERSION_CODE);
+        sync();
     }
     mutex.unlock();
 }
