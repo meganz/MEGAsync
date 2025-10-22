@@ -164,7 +164,7 @@ private slots:
     void onStalledIssuesChanged();
 
     void onScanningVisibilityChanged(bool state);
-    void onMostPriorityTransferUpdate(int uploadTag, int downloadTag);
+    void onTopTransferTypeChanged(TransferData::TransferTypes);
 signals:
 
     void openTransferManager(int tab);

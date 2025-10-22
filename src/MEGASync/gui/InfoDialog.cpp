@@ -135,10 +135,10 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
             this,
             &InfoDialog::onTransfersStateChanged);
 
-    connect(app->getTransfersModel(),
-            &TransfersModel::mostPriorityTransferUpdate,
+    connect(ui->wListTransfers,
+            &InfoDialogTransfersWidget::topTransferTypeChanged,
             this,
-            &InfoDialog::onMostPriorityTransferUpdate);
+            &InfoDialog::onTopTransferTypeChanged);
 
     connect(mPreferences.get(),
             &Preferences::valueChanged,
@@ -1787,7 +1787,7 @@ void InfoDialog::setFooterState()
     ui->wSeparator->setVisible(hasTransfers);
 }
 
-void InfoDialog::onMostPriorityTransferUpdate(int uploadTag, int downloadTag)
+void InfoDialog::onTopTransferTypeChanged(TransferData::TransferTypes type)
 {
-    ui->bTransferManager->setTopTransferDirection(uploadTag != -1);
+    ui->bTransferManager->setTopTransferDirection(type & TransferData::TRANSFER_UPLOAD);
 }

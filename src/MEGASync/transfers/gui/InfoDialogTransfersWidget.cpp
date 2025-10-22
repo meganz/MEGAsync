@@ -24,6 +24,11 @@ void InfoDialogTransfersWidget::setupTransfers()
     mProxyModel->sort(0);
     mProxyModel->setDynamicSortFilter(true);
 
+    connect(mProxyModel,
+            &InfoDialogTransfersProxyModel::dataChanged,
+            this,
+            &InfoDialogTransfersWidget::onProxyDataChanged);
+
     configureTransferView();
 }
 
@@ -70,4 +75,32 @@ void InfoDialogTransfersWidget::configureTransferView()
     connect(MegaSyncApp->getTransfersModel(), &TransfersModel::unblockUiAndFilter, this, &InfoDialogTransfersWidget::onUiUnblocked);
 
     mViewHoverManager.setView(mUi->tView);
+}
+
+std::optional<TransferData::TransferTypes> InfoDialogTransfersWidget::getTopTransferType()
+{
+    if (!mProxyModel)
+        return std::nullopt;
+
+    QModelIndex firstProxyIndex = mProxyModel->index(0, 0);
+    if (!firstProxyIndex.isValid())
+        return std::nullopt;
+
+    auto transferData(qvariant_cast<TransferItem>(firstProxyIndex.data()).getTransferData());
+    return transferData->mType;
+}
+
+void InfoDialogTransfersWidget::onProxyDataChanged(const QModelIndex& topLeft,
+                                                   const QModelIndex& bottomRight,
+                                                   const QVector<int>& roles)
+{
+    if (topLeft.row() != 0)
+    {
+        return;
+    }
+    auto topTransferType = getTopTransferType();
+    if (topTransferType)
+    {
+        emit topTransferTypeChanged(topTransferType.value());
+    }
 }
