@@ -4328,6 +4328,14 @@ All the other selected transfers will be cancelled and cleared.</source>
     </message>
 </context>
 <context>
+    <name>MessageDialogData</name>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Label for close button. Keep capital letter. SNC-5997</translatorcomment>
+        <translation type="unfinished">Close</translation>
+    </message>
+</context>
+<context>
     <name>MoveOrRenameCannotOccur</name>
     <message>
         <source>Please select which version you want to keep</source>

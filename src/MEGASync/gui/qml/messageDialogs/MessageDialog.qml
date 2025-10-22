@@ -129,19 +129,33 @@ QmlDialog {
                     textLineHeight: sizes.descriptionTextLineHeight
                     textPixelSize: Texts.Text.Size.NORMAL
                     textWeight: Font.Normal
+                    Layout.alignment: title.visible ? Qt.AlignBottom : Qt.AlignVCenter
                 }
+            }
+        }
 
-                CheckBox {
-                    id: checkBoxItem
+        Row {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            spacing: sizes.topContentRowSpacing
 
-                    leftPadding: 0
-                    anchors.left: parent.left
-                    text: messageDialogDataAccess ? messageDialogDataAccess.checkbox.text : ""
-                    checked: messageDialogDataAccess ? messageDialogDataAccess.checkbox.checked : false
-                    visible: checkBoxItem.text !== ""
-                    onCheckedChanged: {
-                        messageDialogComponentAccess.setChecked(checkBoxItem.checked);
-                    }
+            Item {
+                id: spacer
+
+                visible: checkBoxItem.visible
+                width: sizes.iconSize
+                height: sizes.iconSize
+            }
+
+            CheckBox {
+                id: checkBoxItem
+
+                leftPadding: 0
+                text: messageDialogDataAccess ? messageDialogDataAccess.checkbox.text : ""
+                checked: messageDialogDataAccess ? messageDialogDataAccess.checkbox.checked : false
+                visible: checkBoxItem.text !== ""
+                onCheckedChanged: {
+                    messageDialogComponentAccess.setChecked(checkBoxItem.checked);
                 }
             }
         }
