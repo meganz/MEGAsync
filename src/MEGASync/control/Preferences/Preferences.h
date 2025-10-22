@@ -101,8 +101,6 @@ public:
     int bandwidthInterval();
     void setBandwidthInterval(int value);
     bool isTemporalBandwidthValid();
-    long long getMsDiffTimeWithSDK();
-    void setDsDiffTimeWithSDK(long long diffTime);
 
     long long getOverStorageDialogExecution();
     void setOverStorageDialogExecution(long long timestamp);
@@ -663,7 +661,6 @@ protected:
     int tempBandwidthInterval;
     bool isTempBandwidthValid;
     QString mDataPath;
-    long long diffTimeWithSDK;
     std::chrono::system_clock::time_point transferOverQuotaDialogDisabledUntil;
     std::chrono::system_clock::time_point transferOverQuotaOsNotificationDisabledUntil;
     std::chrono::system_clock::time_point transferAlmostOverQuotaOsNotificationDisabledUntil;

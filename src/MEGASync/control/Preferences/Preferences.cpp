@@ -408,11 +408,10 @@ void Preferences::initialize(QString dataPath)
     }
 }
 
-Preferences::Preferences() :
+Preferences::Preferences():
     QObject(),
     mutex(QMutex::Recursive),
     mSettings(nullptr),
-    diffTimeWithSDK(0),
     lastTransferNotification(0)
 {
     qRegisterMetaType<Preferences::SystemColorScheme>("Preferences::SystemColorScheme");
@@ -804,16 +803,6 @@ void Preferences::setBandwidthInterval(int value)
 bool Preferences::isTemporalBandwidthValid()
 {
     return isTempBandwidthValid;
-}
-
-long long Preferences::getMsDiffTimeWithSDK()
-{
-    return diffTimeWithSDK;
-}
-
-void Preferences::setDsDiffTimeWithSDK(long long diffTime)
-{
-    this->diffTimeWithSDK = diffTime;
 }
 
 long long Preferences::getOverStorageDialogExecution()

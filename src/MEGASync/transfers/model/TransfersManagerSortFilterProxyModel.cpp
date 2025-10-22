@@ -412,7 +412,7 @@ bool TransfersManagerSortFilterProxyModel::lessThan(const QModelIndex &left, con
             }
             else if(leftItem->isFinished() && rightItem->isFinished())
             {
-                return leftItem->getRawFinishedTime() < rightItem->getRawFinishedTime();
+                return leftItem->getFinishedDateTime() < rightItem->getFinishedDateTime();
             }
         }
         default:
@@ -422,7 +422,6 @@ bool TransfersManagerSortFilterProxyModel::lessThan(const QModelIndex &left, con
 
     return QSortFilterProxyModel::lessThan(left, right);
 }
-
 
 //It is called from a QtConcurrent thread
 void TransfersManagerSortFilterProxyModel::onRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last)

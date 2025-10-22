@@ -227,7 +227,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                 showTPauseResume = false;
             }
 
-            auto dateTime = getData()->getFinishedDateTime();
+            const auto dateTime = getData()->getFinishedDateTime();
             timeString = MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime, QLocale::FormatType::ShortFormat);
 
             timeTooltip = getData()->getFullFormattedFinishedTime();

@@ -1314,21 +1314,19 @@ if (!preferences->lastExecutionTime())
     #endif
 }
 
-    preferences->setLastExecutionTime(QDateTime::currentDateTime().toMSecsSinceEpoch());
-    QDateTime now = QDateTime::currentDateTime();
-    preferences->setDsDiffTimeWithSDK(now.toMSecsSinceEpoch() / 100 - megaApi->getSDKtime());
+preferences->setLastExecutionTime(QDateTime::currentMSecsSinceEpoch());
 
-    startUpdateTask();
-    QString language = preferences->language();
-    changeLanguage(language);
-    updated = false;
+startUpdateTask();
+QString language = preferences->language();
+changeLanguage(language);
+updated = false;
 
-    checkOperatingSystem();
+checkOperatingSystem();
 
-    if (!infoDialog)
-    {
-        createInfoDialog();
-    }
+if (!infoDialog)
+{
+    createInfoDialog();
+}
     infoDialog->setUsage();
     infoDialog->setAvatar();
     infoDialog->setAccountType(preferences->accountType());
