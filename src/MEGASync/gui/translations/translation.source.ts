@@ -9938,49 +9938,6 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
 </context>
 <context>
-    <name>WhatsNewStrings</name>
-    <message>
-        <source>Advanced filters</source>
-        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
-        <translation>Advanced filters</translation>
-    </message>
-    <message>
-        <source>Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
-        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>Advanced settings allow you to write your own exclusion rules for each of your syncs</translation>
-    </message>
-    <message>
-        <source>Better Performance</source>
-        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
-        <translation>Better performance</translation>
-    </message>
-    <message>
-        <source>Files now sync up to 5x faster than before</source>
-        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>Files now sync up to 5x faster than before.</translation>
-    </message>
-    <message>
-        <source>Full visibility into sync issues and total control over how conflicts are resolved</source>
-        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>Full visibility into sync issues and total control over how conflicts are resolved</translation>
-    </message>
-    <message>
-        <source>Got it</source>
-        <translatorcomment>Button to accept whats new dialog.con-703</translatorcomment>
-        <translation>Got it</translation>
-    </message>
-    <message>
-        <source>Greater control</source>
-        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
-        <translation>Greater control</translation>
-    </message>
-    <message>
-        <source>What&apos;s new in MEGA</source>
-        <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.SAT-1670</translatorcomment>
-        <translation>What’s new in MEGA</translation>
-    </message>
-</context>
-<context>
     <name>WinToastLib</name>
     <message>
         <source>%1 did not find a valid link in Start Menu. Not having a link may prevent the correct functioning of desktop notifications.

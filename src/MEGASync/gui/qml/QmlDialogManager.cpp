@@ -9,7 +9,6 @@
 #include "Onboarding.h"
 #include "OnboardingQmlDialog.h"
 #include "QmlDialogWrapper.h"
-#include "WhatsNewWindow.h"
 
 std::shared_ptr<QmlDialogManager> QmlDialogManager::instance()
 {
@@ -124,25 +123,4 @@ void QmlDialogManager::forceCloseOnboardingDialog()
     {
         static_cast<OnboardingQmlDialog*>(dialog->getDialog()->windowHandle())->forceClose();
     }
-}
-
-bool QmlDialogManager::openWhatsNewDialog()
-{
-    if(MegaSyncApp->finished())
-    {
-        return false;
-    }
-
-    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<WhatsNewWindow>>())
-    {
-        DialogOpener::showDialog(dialog->getDialog());
-        dialog->getDialog()->raise();
-    }
-    else
-    {
-        QPointer<QmlDialogWrapper<WhatsNewWindow>> whatsNew = new QmlDialogWrapper<WhatsNewWindow>();
-        DialogOpener::showDialog(whatsNew);
-        whatsNew->raise();
-    }
-    return true;
 }

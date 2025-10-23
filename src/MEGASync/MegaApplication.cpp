@@ -1243,12 +1243,6 @@ void MegaApplication::start()
         QmlDialogManager::instance()->openOnboardingDialog();
     }
 
-    static constexpr int FIRST_5_X_VERSION = 50000;
-    if (updated && !(preferences->getSession().isEmpty()) &&
-        (Preferences::lastVersionUponStartup < FIRST_5_X_VERSION))
-    {
-        QmlDialogManager::instance()->openWhatsNewDialog();
-    }
     updateTrayIcon();
 }
 

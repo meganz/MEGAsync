@@ -65,15 +65,6 @@
         <file alias="images/qml/sync_exclusions/extension.svg">images/qml/sync_exclusions/extension.svg</file>
         <file alias="images/qml/sync_exclusions/chevron-down.svg">images/qml/sync_exclusions/chevron-down.svg</file>
         <file alias="images/qml/sync_exclusions/info.svg">images/qml/sync_exclusions/info.svg</file>
-        <file alias="images/qml/rocket.png">images/qml/rocket.png</file>
-        <file alias="images/qml/rocket@2x.png">images/qml/rocket@2x.png</file>
-        <file alias="images/qml/rocket@3x.png">images/qml/rocket@3x.png</file>
-        <file alias="images/qml/controls.png">images/qml/controls.png</file>
-        <file alias="images/qml/controls@2x.png">images/qml/controls@2x.png</file>
-        <file alias="images/qml/controls@3x.png">images/qml/controls@3x.png</file>
-        <file alias="images/qml/mega-cloud.png">images/qml/mega-cloud.png</file>
-        <file alias="images/qml/mega-cloud@2x.png">images/qml/mega-cloud@2x.png</file>
-        <file alias="images/qml/mega-cloud@3x.png">images/qml/mega-cloud@3x.png</file>
         <file alias="images/qml/alert_circle_filled.svg">images/qml/alert_circle_filled.svg</file>
         <file alias="images/qml/check_circle_filled.svg">images/qml/check_circle_filled.svg</file>
         <file alias="images/qml/device_center/backup_folder.svg">images/qml/device_center/backup_folder.svg</file>

@@ -170,10 +170,6 @@
         <file>sync_exclusions/ExclusionsStrings.qml</file>
         <file>sync_exclusions/RulesTable.qml</file>
         <file>sync_exclusions/AddRuleDialog.qml</file>
-        <file>whatsNew/WhatsNewStrings.qml</file>
-        <file>whatsNew/qmldir</file>
-        <file>whatsNew/WhatsNewDialog.qml</file>
-        <file>whatsNew/UpdatesElement.qml</file>
         <file>backups/qmldir</file>
         <file>backups/BackupsDialog.qml</file>
         <file>backups/BackupsFlow.qml</file>
@@ -224,4 +220,3 @@
         <file>change_password/qmldir</file>
     </qresource>
 </RCC>
-
