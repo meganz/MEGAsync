@@ -318,9 +318,9 @@ const bool Preferences::defaultSystemTrayPromptSuppressed = false;
 const Preferences::ThemeType Preferences::defaultTheme = Preferences::ThemeType::UNINITIALIZED;
 const bool Preferences::defaultAskOnExclusionRemove = true;
 
-const int Preferences::minSyncStateChangeProcessingIntervalMs = 200;
+const int Preferences::defaultLastVersion = 0;
 
-int Preferences::lastVersionUponStartup = 0;
+const int Preferences::minSyncStateChangeProcessingIntervalMs = 200;
 
 const QString Preferences::dontShowExportLinkDialogKey =
     QString::fromLatin1("dontShowExportLinkDialogKey");
@@ -2731,17 +2731,19 @@ void Preferences::login(QString account)
     mSettings->beginGroup(account);
     readFolders();
     loadExcludedSyncNames();
-    int lastVersion = mSettings->value(lastVersionKey).toInt();
-    lastVersionUponStartup = lastVersion;
-    if (lastVersion != Preferences::VERSION_CODE)
+    const auto previousVersion =
+        mSettings->value(lastVersionKey, Preferences::defaultLastVersion).toInt();
+    if (previousVersion != Preferences::VERSION_CODE)
     {
-        if ((lastVersion != 0) && (lastVersion < Preferences::VERSION_CODE))
-        {
-            emit updated(lastVersion);
-        }
         mSettings->setValue(lastVersionKey, Preferences::VERSION_CODE);
+        sync();
     }
     mutex.unlock();
+    if ((previousVersion != Preferences::defaultLastVersion) &&
+        (previousVersion < Preferences::VERSION_CODE))
+    {
+        emit updated(previousVersion);
+    }
 }
 
 bool Preferences::logged()
