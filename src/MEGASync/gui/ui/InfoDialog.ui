@@ -429,6 +429,9 @@ background-color: transparent;
                    <height>28</height>
                   </size>
                  </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
                 </widget>
                </item>
                <item>

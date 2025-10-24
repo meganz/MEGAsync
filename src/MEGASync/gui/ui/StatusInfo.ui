@@ -52,7 +52,7 @@ background-color: #fffafafa; /*colorToken.surface-1*/
 }
 #bIconState[state=&quot;paused&quot;]
 {
-qproperty-icon: url(:/pause-circle_small_thin_outline);
+qproperty-icon: url(:/pause-thin_small_regular_outline.svg);
 }
 #bIconState[state=&quot;over_quota&quot;]
 {
@@ -108,8 +108,8 @@ qproperty-icon: none;
      </property>
      <property name="maximumSize">
       <size>
-       <width>18</width>
-       <height>18</height>
+       <width>24</width>
+       <height>24</height>
       </size>
      </property>
      <property name="mouseTracking">
