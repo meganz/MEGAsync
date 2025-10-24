@@ -63,7 +63,8 @@ public:
 
 #ifndef QT_NO_DBUS
         //This check is not neccesary, but just in case...this slot is only called when the boolean is true
-        QDBusConnection bus = QDBusConnection::sessionBus();
+        auto bus = QDBusConnection::connectToBus(QDBusConnection::BusType::SessionBus,
+                                                 QLatin1String("session"));
 
         if(bus.isConnected())
         {
@@ -85,7 +86,9 @@ public:
             }
             else
             {   // Then try system-level power management, on the "system" bus
-                bus = QDBusConnection::systemBus();
+                bus = QDBusConnection::connectToBus(QDBusConnection::BusType::SystemBus,
+                                                    QLatin1String("system"));
+
                 if(bus.isConnected())
                 {
                     reply = bus.interface()->registeredServiceNames();
