@@ -436,8 +436,8 @@ public:
     {
         UNINITIALIZED = -1,
         SYSTEM_DEFAULT = 0,
-        DARK_THEME = 1,
-        LIGHT_THEME = 2,
+        LIGHT_THEME = 1,
+        DARK_THEME = 2,
         LAST
     };
     Q_ENUM(ThemeType)
