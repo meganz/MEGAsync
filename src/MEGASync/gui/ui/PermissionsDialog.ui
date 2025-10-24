@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>524</width>
-    <height>612</height>
+    <height>608</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,7 +19,7 @@
   <property name="minimumSize">
    <size>
     <width>524</width>
-    <height>612</height>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -79,11 +79,11 @@ background-color: #FFFFFF; /*colorToken.page-background*/
        <property name="text">
         <string>Permissions for new folders and files</string>
        </property>
-       <property name="dimension" stdset="0">
-        <string notr="true">label-2</string>
-       </property>
        <property name="semibold" stdset="0">
         <bool>true</bool>
+       </property>
+       <property name="font-size" stdset="0">
+        <string notr="true">body-1</string>
        </property>
       </widget>
      </item>
@@ -347,7 +347,7 @@ background-color: #FFFFFF; /*colorToken.page-background*/
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <property name="spacing">
-      <number>12</number>
+      <number>8</number>
      </property>
      <item>
       <spacer name="horizontalSpacer">
