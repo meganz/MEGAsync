@@ -1126,7 +1126,7 @@ font-size: 12px;
          <string>Close</string>
         </property>
         <property name="dimension" stdset="0">
-         <string notr="true">small</string>
+         <string notr="true">medium</string>
         </property>
         <property name="type" stdset="0">
          <string notr="true">primary</string>

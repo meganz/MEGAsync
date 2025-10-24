@@ -110,7 +110,7 @@ void StreamingFromMegaDialog::on_bFromPublicLink_clicked()
     const QPointer<MegaInputDialog> inputDialog = new MegaInputDialog(this);
     inputDialog->setWindowTitle(tr("Open link"));
     inputDialog->setLabelText(tr("Enter a MEGA file link:"));
-    inputDialog->resize(470, inputDialog->height());
+    inputDialog->resize(440, inputDialog->height());
 
     DialogOpener::showDialog<MegaInputDialog>(
         inputDialog,
@@ -249,7 +249,7 @@ void StreamingFromMegaDialog::on_bOpenOther_clicked()
                 QStringList paths = QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation);
                 if (paths.size())
                 {
-                    defaultPath = paths.at(0);
+                    defaultPath = paths.at(1);
                 }
         #else
             defaultPath = QString::fromUtf8("/usr/bin");
