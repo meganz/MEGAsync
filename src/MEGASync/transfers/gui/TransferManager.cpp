@@ -105,6 +105,10 @@ TransferManager::TransferManager(MegaApi* megaApi):
             &TabSelector::hidden,
             this,
             &TransferManager::on_tClearSearchResult_clicked);
+    connect(mUi->tabSearch,
+            &TabSelector::clicked,
+            this,
+            &TransferManager::on_bSearchString_clicked);
 
     mTabNoItem[TransfersWidget::ALL_TRANSFERS_TAB] = mUi->wNoTransfers;
     mTabNoItem[TransfersWidget::DOWNLOADS_TAB]     = mUi->wNoDownloads;

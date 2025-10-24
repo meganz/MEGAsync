@@ -35,11 +35,7 @@ private slots:
 private:
     Ui::MediaTypeFilterWidget* mUi;
     QMap<TransfersWidget::TM_TAB, TabSelector*> mTabSelectorsByType;
-    std::map<TransfersWidget::TM_TAB, bool> mVisibilityMap;
 
-    void initializeVisibilityStates();
-    bool isVisible(TransfersWidget::TM_TAB tab) const;
-    void setIsVisible(TransfersWidget::TM_TAB tab, bool isVisible);
     void updateStrings();
 };
 

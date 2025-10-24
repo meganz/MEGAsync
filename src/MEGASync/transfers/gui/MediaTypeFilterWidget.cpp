@@ -9,7 +9,6 @@ MediaTypeFilterWidget::MediaTypeFilterWidget(QWidget* parent):
 {
     mUi->setupUi(this);
 
-    initializeVisibilityStates();
     updateStrings();
 
     connect(mUi->bGroupBoxTitle,

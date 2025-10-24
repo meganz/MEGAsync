@@ -388,12 +388,6 @@ QToolButton
            <property name="type" stdset="0">
             <string notr="true">mega</string>
            </property>
-           <property name="regular" stdset="0">
-            <bool>true</bool>
-           </property>
-           <property name="font-size" stdset="0">
-            <string notr="true">20</string>
-           </property>
            <layout class="QVBoxLayout" name="verticalLayout">
             <property name="spacing">
              <number>4</number>
@@ -519,12 +513,6 @@ QToolButton
            </property>
            <property name="type" stdset="0">
             <string notr="true">mega</string>
-           </property>
-           <property name="regular" stdset="0">
-            <bool>true</bool>
-           </property>
-           <property name="font-size" stdset="0">
-            <string>10</string>
            </property>
            <layout class="QVBoxLayout" name="wSearchLayout">
             <property name="spacing">
