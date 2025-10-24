@@ -338,7 +338,11 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     scanningTimer = nullptr;
 #endif
 
-    mDisableGfx = args.contains(QLatin1String("--nogfx")) || args.contains(QLatin1String("/nogfx"));
+    // Passing "--nogfx" or "/nogfx" disables graphics processing for the current run.
+    // To always disable graphics processing, create a "megasync.nogfx" file in the user data dir.
+    mDisableGfx |=
+        args.contains(QLatin1String("--nogfx")) || args.contains(QLatin1String("/nogfx"));
+
     mFolderTransferListener = std::make_shared<FolderTransferListener>();
 
     connect(mFolderTransferListener.get(), &FolderTransferListener::folderTransferUpdated,
@@ -509,6 +513,10 @@ void MegaApplication::initialize()
             &FatalEventHandler::requestRebootApp,
             this,
             &MegaApplication::rebootApplication);
+
+    // Check presence of media processing disabling file
+    const QFile nogfxFile(QDir(dataPath).filePath(QLatin1String("megasync.nogfx")));
+    mDisableGfx |= nogfxFile.exists();
 
     QTMegaApiManager::createMegaApi(megaApi,
                                     Preferences::CLIENT_KEY,
