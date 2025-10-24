@@ -20,9 +20,12 @@ Rectangle {
     property int iconTextSpacing: 4
     property int horizontalPadding: 4
     property int verticalPadding: 2
+    property int maximumAllowedWidth: -1  // -1 means no limit
 
     implicitWidth: layout.implicitWidth + 2 * horizontalPadding
-    implicitHeight: layout.implicitHeight+ 2 * verticalPadding
+    implicitHeight: layout.implicitHeight + 2 * verticalPadding
+
+    width: maximumAllowedWidth > 0 ? Math.min(implicitWidth, maximumAllowedWidth) : implicitWidth
 
     anchors.leftMargin: horizontalPadding
     anchors.rightMargin: horizontalPadding
@@ -34,6 +37,8 @@ Rectangle {
 
         spacing: iconTextSpacing
         anchors.centerIn: parent
+        width: parent.width - 2 * horizontalPadding
+
         SvgImage {
             id: iconImage
 
@@ -41,13 +46,16 @@ Rectangle {
             visible: mainRect.visible
         }
 
-        Texts.RichText {
+        Texts.ElidedText {
             id: richText
             visible: mainRect.visible
             wrapMode: Text.NoWrap
+            elide: Qt.ElideMiddle
             verticalAlignment: Text.AlignVCenter
+            Layout.fillWidth: true
+            Layout.maximumWidth: maximumAllowedWidth > 0 ?
+                maximumAllowedWidth - iconImage.width - iconTextSpacing - 2 * horizontalPadding :
+                Number.POSITIVE_INFINITY
         }
     }
 }
-
-

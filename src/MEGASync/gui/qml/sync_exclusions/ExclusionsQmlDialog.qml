@@ -23,8 +23,6 @@ QmlDialog {
 
     width: 640
     height: 680
-    maximumHeight: 680
-    maximumWidth: 640
     minimumHeight: 680
     minimumWidth: 640
     title: ExclusionsStrings.addExclusions
@@ -431,6 +429,7 @@ QmlDialog {
                 radius:4
                 horizontalPadding: 6
                 verticalPadding: 3
+                iconColor: ColorTheme.iconPrimary
                 anchors{
                     verticalCenter: parent.verticalCenter
                     left: nameRulesDescription.right
@@ -450,6 +449,8 @@ QmlDialog {
                 left: parent.left
                 right: parent.right
                 top: nameRulesDescriptionItem.bottom
+                bottom: doneButton.top
+                bottomMargin: 30
                 topMargin: 8
             }
             onEditRuleClicked: {
