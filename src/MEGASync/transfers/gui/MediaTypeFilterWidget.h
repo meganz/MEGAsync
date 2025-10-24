@@ -1,6 +1,7 @@
 #ifndef MEDIA_TYPE_FILTER_WIDGET_H
 #define MEDIA_TYPE_FILTER_WIDGET_H
 
+#include "TabSelector.h"
 #include "TransfersWidget.h"
 
 #include <QFrame>
@@ -19,11 +20,11 @@ public:
     explicit MediaTypeFilterWidget(QWidget* parent = nullptr);
     ~MediaTypeFilterWidget();
 
-    QFrame* getFrame(TransfersWidget::TM_TAB tab) const;
-    QLabel* getLabel(TransfersWidget::TM_TAB tab) const;
-
     void resetCounter(TransfersWidget::TM_TAB tab);
-    void showIfGroupboxVisible(TransfersWidget::TM_TAB tab, unsigned long long counter);
+    void setCounter(TransfersWidget::TM_TAB tab, unsigned long long counter);
+
+    TabSelector* getTabSelectorByType(TransfersWidget::TM_TAB tab);
+    TransfersWidget::TM_TAB getTabByTabSelector(TabSelector* tabSelector);
 
 protected:
     bool event(QEvent* event) override;
@@ -33,6 +34,7 @@ private slots:
 
 private:
     Ui::MediaTypeFilterWidget* mUi;
+    QMap<TransfersWidget::TM_TAB, TabSelector*> mTabSelectorsByType;
     std::map<TransfersWidget::TM_TAB, bool> mVisibilityMap;
 
     void initializeVisibilityStates();

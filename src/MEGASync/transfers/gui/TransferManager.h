@@ -5,6 +5,7 @@
 #include "megaapi.h"
 #include "Preferences.h"
 #include "StatusInfo.h"
+#include "TabSelector.h"
 #include "TransferQuota.h"
 #include "TransferScanCancelUi.h"
 #include "TransfersModel.h"
@@ -77,8 +78,7 @@ private:
 
     std::shared_ptr<Preferences> mPreferences;
     QPoint mDragPosition;
-    QMap<TransfersWidget::TM_TAB, QFrame*> mTabFramesToggleGroup;
-    QMap<TransfersWidget::TM_TAB, QLabel*> mNumberLabelsGroup;
+    QMap<TransfersWidget::TM_TAB, TabSelector*> mTabSelectorsToggleGroup;
     QMap<TransfersWidget::TM_TAB, QWidget*> mTabNoItem;
     QMap<TransfersWidget::TM_TAB, QPair<int, Qt::SortOrder>> mTabSortCriterion;
 
@@ -146,6 +146,7 @@ private slots:
     void on_bAudio_clicked();
     void on_bVideos_clicked();
     void on_bOther_clicked();
+    void onMediaTabSelectorClicked();
 
     void onUpdatePauseState(bool isPaused);
     void onPauseStateChangedByTransferResume();
