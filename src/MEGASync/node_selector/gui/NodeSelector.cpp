@@ -55,7 +55,7 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
     connect(ui->fSearch, &TabSelector::hidden, this, &NodeSelector::onfShowSearchHidden);
     connect(ui->leSearch, &SearchLineEdit::search, this, &NodeSelector::onSearch);
 
-    ui->leSearch->addCustomWidget(ui->title);
+    ui->leSearch->addCustomWidget(ui->wTitleContainer);
 
     ui->wSearch->hide();
     ui->fRubbish->hide();
