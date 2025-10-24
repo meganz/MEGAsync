@@ -193,6 +193,11 @@ bool NodeSelectorTreeViewWidget::event(QEvent* event)
 
         initEmptyMessages();
     }
+    else if (event->type() == QEvent::MouseButtonRelease)
+    {
+        clearSelection();
+    }
+
     return QWidget::event(event);
 }
 

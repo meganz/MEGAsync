@@ -722,14 +722,17 @@ color: #616366; /*colorToken.text-secondary*/
         </property>
         <widget class="QWidget" name="treeViewPage">
          <layout class="QVBoxLayout" name="verticalLayout_2">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <property name="leftMargin">
-           <number>16</number>
+           <number>12</number>
           </property>
           <property name="topMargin">
            <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>16</number>
+           <number>1</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
@@ -1122,15 +1125,15 @@ color: #616366; /*colorToken.text-secondary*/
    <header>tokenizer/TokenizableItems/IconLabel.h</header>
   </customwidget>
   <customwidget>
+   <class>TokenizableButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
+  </customwidget>
+  <customwidget>
    <class>TabSelector</class>
    <extends>QWidget</extends>
    <header>TabSelector.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>TokenizableButton</class>
-   <extends>QPushButton</extends>
-   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
   </customwidget>
   <customwidget>
    <class>NodeSelectorTreeView</class>

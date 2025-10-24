@@ -21,6 +21,8 @@ void NodeSelectorDelegate::paint(QPainter* painter,
                                  const QStyleOptionViewItem& option,
                                  const QModelIndex& index) const
 {
+    // The background for each row is painted in NodeSeletorTreeView::drawRows
+
     QStyleOptionViewItem auxOpt(option);
 
     if (!index.data(toInt(NodeSelectorModelRoles::EXTRA_ROW_ROLE)).toBool())
@@ -53,15 +55,13 @@ void NodeSelectorDelegate::paint(QPainter* painter,
             painter->setPen(pen);
 
             int y = option.rect.bottomLeft().y();
-            int leftX = index.column() == 0 ? 0 : option.rect.x();
+            int leftX = index.column() == 0 ? 4 : option.rect.x();
             int rightX = option.rect.x();
             rightX += index.column() == index.model()->columnCount() - 1 ?
-                          (option.rect.width() - 10) :
+                          (option.rect.width() - 14) :
                           option.rect.width();
 
-            auto line = QLine(QPoint(leftX, y), QPoint(rightX, y));
-
-            painter->drawLine(line);
+            painter->drawLine(QLine(QPoint(leftX, y), QPoint(rightX, y)));
             painter->restore();
         }
 

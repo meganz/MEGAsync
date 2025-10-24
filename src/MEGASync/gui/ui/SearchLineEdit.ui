@@ -120,7 +120,7 @@ border-radius: 16px;
        <number>3</number>
       </property>
       <item>
-       <widget class="QPushButton" name="tSearchIcon">
+       <widget class="TokenizableToolButton" name="tSearchIcon">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -154,9 +154,6 @@ border-radius: 16px;
         </property>
         <property name="checked">
          <bool>false</bool>
-        </property>
-        <property name="class" stdset="0">
-         <string notr="true">icon-button</string>
         </property>
         <property name="type" stdset="0">
          <string notr="true">ghost</string>
@@ -198,7 +195,7 @@ border-radius: 16px;
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="tSearchCancel">
+       <widget class="TokenizableToolButton" name="tSearchCancel">
         <property name="minimumSize">
          <size>
           <width>16</width>
@@ -221,9 +218,6 @@ border-radius: 16px;
          <iconset resource="../Resources_common.qrc">
           <normaloff>:/x-circle_small_thin_outline</normaloff>:/x-circle_small_thin_outline</iconset>
         </property>
-        <property name="class" stdset="0">
-         <string notr="true">icon-button</string>
-        </property>
         <property name="type" stdset="0">
          <string notr="true">ghost</string>
         </property>
@@ -234,6 +228,13 @@ border-radius: 16px;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TokenizableToolButton</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../Resources_common.qrc"/>
  </resources>

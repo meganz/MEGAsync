@@ -211,7 +211,9 @@ void NodeSelectorTreeView::drawRow(QPainter* painter,
 
             QPainterPath path;
             auto rect(option.rect);
-            rect.setRight(option.rect.right() - 10);
+            // These are not magical numbers, they are taken from design
+            // Left margin is set on the UI (also 12px)
+            rect.setRight(option.rect.right() - 12);
             rect.setTop(option.rect.top() + 3);
             rect.setBottom(option.rect.bottom() - 5);
             path.addRoundedRect(rect, 4, 4);

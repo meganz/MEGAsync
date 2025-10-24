@@ -202,7 +202,15 @@ void SearchLineEdit::onTextChanged(const QString& text)
 
 void SearchLineEdit::onSearchButtonClicked()
 {
-    showTextEntry(true);
+    if (ui->leSearchField->isVisible())
+    {
+        onClearClicked();
+        showTextEntry(false);
+    }
+    else
+    {
+        showTextEntry(true);
+    }
 }
 
 void SearchLineEdit::animationFinished()
@@ -223,7 +231,7 @@ void SearchLineEdit::toggleClearButton(bool fadeIn)
 QPropertyAnimation* SearchLineEdit::runWidthAnimation(QWidget* target, bool expand)
 {
     auto an = new QPropertyAnimation(target->graphicsEffect(), "width");
-    an->setDuration(250);
+    an->setDuration(125);
     if (expand)
     {
         an->setStartValue(0);
