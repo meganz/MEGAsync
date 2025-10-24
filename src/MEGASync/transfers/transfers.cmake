@@ -60,27 +60,6 @@ set(DESKTOP_APP_TRANSFERS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/gui/TransferManagerStatusHeaderWidget.cpp
 )
 
-target_sources_conditional(${ExecutableTarget}
-   FLAG WIN32
-   QT_AWARE
-   PRIVATE
-   ${CMAKE_CURRENT_LIST_DIR}/gui/win/InfoDialogTransferDelegateWidget.ui
-)
-
-target_sources_conditional(${ExecutableTarget}
-   FLAG APPLE
-   QT_AWARE
-   PRIVATE
-   ${CMAKE_CURRENT_LIST_DIR}/gui/macx/InfoDialogTransferDelegateWidget.ui
-)
-
-target_sources_conditional(${ExecutableTarget}
-   FLAG UNIX AND NOT APPLE
-   QT_AWARE
-   PRIVATE
-   ${CMAKE_CURRENT_LIST_DIR}/gui/linux/InfoDialogTransferDelegateWidget.ui
-)
-
 if (WIN32)
     set_property(TARGET ${ExecutableTarget}
         APPEND PROPERTY AUTOUIC_SEARCH_PATHS
@@ -116,6 +95,8 @@ target_sources(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/ui/DuplicatedNodeItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/InfoDialogTransferLoadingItem.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/InfoDialogTransfersWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/InfoDialogTransferDelegateWidget.ui
+
 )
 
 set_property(TARGET ${ExecutableTarget}
