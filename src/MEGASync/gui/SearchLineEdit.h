@@ -3,9 +3,11 @@
 
 #include "ButtonIconManager.h"
 
+#include <QDialog>
 #include <QFrame>
 #include <QGraphicsOpacityEffect>
 #include <QIcon>
+#include <QPointer>
 #include <QPropertyAnimation>
 
 namespace Ui
@@ -55,6 +57,7 @@ private:
     Ui::SearchLineEdit* ui;
     ButtonIconManager mButtonManager;
     QString mOldString;
+    QPointer<QDialog> mTopParent;
 };
 
 #endif // SEARCHLINEEDIT_H

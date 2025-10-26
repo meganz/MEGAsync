@@ -3,6 +3,7 @@
 #include "EventHelper.h"
 #include "TokenParserWidgetManager.h"
 #include "ui_SearchLineEdit.h"
+#include "Utilities.h"
 
 #include <QDebug>
 #include <QEvent>
@@ -42,6 +43,12 @@ SearchLineEdit::SearchLineEdit(QWidget* parent):
     ui->searchContainer->resize(COLLAPSE_SIZE, COLLAPSE_SIZE);
 
     setFocusProxy(ui->leSearchField);
+
+    mTopParent = Utilities::getTopParent<QDialog>(this);
+    if (mTopParent)
+    {
+        mTopParent->installEventFilter(this);
+    }
 }
 
 SearchLineEdit::~SearchLineEdit()
@@ -169,6 +176,11 @@ bool SearchLineEdit::eventFilter(QObject* obj, QEvent* evnt)
              ui->leSearchField->text().isEmpty())
     {
         showTextEntry(false, true);
+    }
+    else if (mTopParent == obj && evnt->type() == QEvent::MouseButtonRelease)
+    {
+        onClearClicked();
+        showTextEntry(false);
     }
 
     return QFrame::eventFilter(obj, evnt);
