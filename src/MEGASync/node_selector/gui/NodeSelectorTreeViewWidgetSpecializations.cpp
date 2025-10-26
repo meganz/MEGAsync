@@ -377,6 +377,11 @@ bool NodeSelectorTreeViewWidgetSearch::isCurrentRootIndexReadOnly()
     return true;
 }
 
+bool NodeSelectorTreeViewWidgetSearch::isSelectionReadOnly(const QModelIndexList& selection)
+{
+    return true;
+}
+
 void NodeSelectorTreeViewWidgetSearch::resetMovingNumber()
 {
     mModel->moveProcessedByNumber(mModel->getMoveRequestsCounter());

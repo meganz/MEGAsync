@@ -110,6 +110,7 @@ public:
     void stopSearch();
     std::unique_ptr<NodeSelectorProxyModel> createProxyModel() override;
     bool isCurrentRootIndexReadOnly() override;
+    bool isSelectionReadOnly(const QModelIndexList& selection) override;
 
     std::shared_ptr<RestoreNodeManager> getRestoreManager() const;
 
