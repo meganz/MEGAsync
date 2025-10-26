@@ -156,8 +156,6 @@ private slots:
     void onTransfersDataUpdated();
     void refreshSearchStats();
 
-    void onVerticalScrollBarVisibilityChanged(bool state);
-
     void refreshSpeed();
     void refreshView();
     void disableTransferManager(bool state);

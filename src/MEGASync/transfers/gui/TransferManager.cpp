@@ -166,9 +166,6 @@ TransferManager::TransferManager(MegaApi* megaApi):
     connect(this, &TransferManager::retryAllTransfers,
             findChild<MegaTransferView*>(), &MegaTransferView::onRetryVisibleTransfers);
 
-    connect(findChild<MegaTransferView*>(), &MegaTransferView::verticalScrollBarVisibilityChanged,
-            this, &TransferManager::onVerticalScrollBarVisibilityChanged);
-
     connect(mUi->wTransfers->getProxyModel(),
             &TransfersManagerSortFilterProxyModel::searchNumbersChanged,
             this, &TransferManager::refreshSearchStats);
@@ -233,13 +230,9 @@ TransferManager::TransferManager(MegaApi* megaApi):
 
 TransferManager::~TransferManager()
 {
-    disconnect(findChild<MegaTransferView*>(), &MegaTransferView::verticalScrollBarVisibilityChanged,
-            this, &TransferManager::onVerticalScrollBarVisibilityChanged);
-
     delete mUi;
     delete mTransferScanCancelUi;
 }
-
 
 void TransferManager::pauseModel(bool value)
 {
@@ -650,33 +643,6 @@ void TransferManager::onStorageStateChanged(int storageState)
     onTransferQuotaStateChanged(mTransferQuotaState);
 
     checkPauseButtonVisibilityIfPossible();
-}
-
-void TransferManager::onVerticalScrollBarVisibilityChanged(bool state)
-{
-    QPointer<TransferManager> currentTransferManager = this;
-
-    if(currentTransferManager)
-    {
-        auto transfersView = dynamic_cast<MegaTransferView*>(sender());
-        if(transfersView && transfersView->isVisible())
-        {
-            if(state)
-            {
-                int sliderWidth = transfersView->getVerticalScrollBarWidth();
-                mUi->wRightPanelScrollMargin->changeSize(sliderWidth,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
-            }
-            else
-            {
-                mUi->wRightPanelScrollMargin->changeSize(0,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
-            }
-
-            if(mUi->wRightPaneHeaderLayout)
-            {
-                mUi->wRightPaneHeaderLayout->invalidate();
-            }
-        }
-    }
 }
 
 void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
