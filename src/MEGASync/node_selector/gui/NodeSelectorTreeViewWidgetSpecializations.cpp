@@ -37,7 +37,7 @@ std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetCloudDrive::createM
     return std::unique_ptr<NodeSelectorModelCloudDrive>(new NodeSelectorModelCloudDrive);
 }
 
-void NodeSelectorTreeViewWidgetCloudDrive::modelLoaded()
+void NodeSelectorTreeViewWidgetCloudDrive::setViewPage()
 {
     auto rootIndex = mModel->index(0, 0);
     if (mModel->rowCount(rootIndex) == 0 && showEmptyView())
@@ -121,6 +121,12 @@ bool NodeSelectorTreeViewWidgetIncomingShares::isNodeCompatibleWithModel(mega::M
     auto access(Utilities::getNodeAccess(node));
 
     return access != mega::MegaShare::ACCESS_OWNER && access != mega::MegaShare::ACCESS_UNKNOWN;
+}
+
+void NodeSelectorTreeViewWidgetIncomingShares::setTitleText(const QString& nodeName)
+{
+    ui->sh_folderName->setText(nodeName);
+    NodeSelectorTreeViewWidget::setTitleText(nodeName);
 }
 
 QString NodeSelectorTreeViewWidgetIncomingShares::getRootText()
@@ -522,7 +528,7 @@ std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetSearch::createModel
     connect(model.get(),
             &NodeSelectorModelSearch::nodeTypeHasChanged,
             this,
-            &NodeSelectorTreeViewWidgetSearch::modelLoaded);
+            &NodeSelectorTreeViewWidgetSearch::setViewPage);
 
     mRestoreManager = std::make_shared<RestoreNodeManager>(model.get(), this);
 
@@ -559,7 +565,7 @@ NodeSelectorTreeViewWidget::EmptyLabelInfo NodeSelectorTreeViewWidgetSearch::get
     return info;
 }
 
-void NodeSelectorTreeViewWidgetSearch::modelLoaded()
+void NodeSelectorTreeViewWidgetSearch::setViewPage()
 {
     if (!mModel)
     {
@@ -567,7 +573,7 @@ void NodeSelectorTreeViewWidgetSearch::modelLoaded()
     }
 
     changeButtonsWidgetSizePolicy(false);
-    NodeSelectorTreeViewWidget::modelLoaded();
+    NodeSelectorTreeViewWidget::setViewPage();
 
     checkSearchButtonsVisibility();
 
@@ -655,7 +661,7 @@ std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetRubbish::createMode
     return model;
 }
 
-void NodeSelectorTreeViewWidgetRubbish::modelLoaded()
+void NodeSelectorTreeViewWidgetRubbish::setViewPage()
 {
     auto rootIndex = mModel->index(0, 0);
     if (mModel->rowCount(rootIndex) == 0 && showEmptyView())

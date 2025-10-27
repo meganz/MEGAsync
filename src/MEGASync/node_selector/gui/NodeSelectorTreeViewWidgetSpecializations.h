@@ -31,7 +31,7 @@ private:
     QString getRootText() override;
     void onRootIndexChanged(const QModelIndex& idx) override;
     std::unique_ptr<NodeSelectorModel> createModel() override;
-    void modelLoaded() override;
+    void setViewPage() override;
     QIcon getEmptyIcon() override;
     EmptyLabelInfo getEmptyLabel() override;
 
@@ -57,6 +57,7 @@ public:
 
 protected:
     bool isNodeCompatibleWithModel(mega::MegaNode* node) override;
+    void setTitleText(const QString& nodeName) override;
 
 private:
     QString getRootText() override;
@@ -116,7 +117,7 @@ public:
 
 public slots:
     void resetMovingNumber();
-    void modelLoaded() override;
+    void setViewPage() override;
 
 signals:
     void nodeDoubleClicked(std::shared_ptr<mega::MegaNode> node, bool goToInit);
@@ -173,7 +174,7 @@ private:
     QString getRootText() override;
     void onRootIndexChanged(const QModelIndex& idx) override;
     std::unique_ptr<NodeSelectorModel> createModel() override;
-    void modelLoaded() override;
+    void setViewPage() override;
     QIcon getEmptyIcon() override;
     EmptyLabelInfo getEmptyLabel() override;
 

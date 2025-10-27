@@ -82,6 +82,9 @@ background-color: #F7F7F7; /*colorToken.surface-1*/
       <property name="spacing">
        <number>16</number>
       </property>
+      <property name="leftMargin">
+       <number>13</number>
+      </property>
       <property name="topMargin">
        <number>24</number>
       </property>
@@ -107,7 +110,7 @@ background-color: #F7F7F7; /*colorToken.surface-1*/
           <number>0</number>
          </property>
          <property name="leftMargin">
-          <number>4</number>
+          <number>0</number>
          </property>
          <property name="topMargin">
           <number>0</number>
@@ -187,7 +190,7 @@ background-color: #F7F7F7; /*colorToken.surface-1*/
           <number>8</number>
          </property>
          <property name="leftMargin">
-          <number>4</number>
+          <number>0</number>
          </property>
          <property name="topMargin">
           <number>0</number>
@@ -316,7 +319,7 @@ background-color: #F7F7F7; /*colorToken.surface-1*/
           <number>0</number>
          </property>
          <property name="leftMargin">
-          <number>4</number>
+          <number>0</number>
          </property>
          <property name="topMargin">
           <number>0</number>
@@ -377,7 +380,7 @@ background-color: #F7F7F7; /*colorToken.surface-1*/
           <number>0</number>
          </property>
          <property name="leftMargin">
-          <number>4</number>
+          <number>0</number>
          </property>
          <property name="topMargin">
           <number>0</number>

@@ -18,6 +18,7 @@
 class NodeSelectorProxyModel;
 class NodeSelectorModel;
 class NodeSelectorModelItem;
+class NodeSelectorTreeView;
 class SelectType;
 typedef std::shared_ptr<SelectType> SelectTypeSPtr;
 
@@ -70,7 +71,7 @@ public:
 
     void selectPendingIndexes();
 
-    void setTitleText(const QString& nodeName);
+    virtual void setTitleText(const QString& nodeName);
 
     void clearSelection();
 
@@ -122,7 +123,7 @@ protected:
         return mSelectType;
     }
 
-    virtual void modelLoaded();
+    virtual void setViewPage();
 
     virtual bool showEmptyView()
     {
@@ -179,7 +180,9 @@ private slots:
     void onbNewFolderClicked();
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
     void onModelModified();
-    void onDeleteClicked(const QList<mega::MegaHandle>& handles, bool permanently);
+    void onDeleteClicked(const QList<mega::MegaHandle>& handles,
+                         bool permanently,
+                         bool showConfirmationMessageBox);
     void onLeaveShareClicked(const QList<mega::MegaHandle>& handles);
     void onRenameClicked();
     void onGenMEGALinkClicked(const QList<mega::MegaHandle>& handles);
@@ -204,6 +207,7 @@ private:
     void checkBackForwardButtons();
     void setRootIndex(const QModelIndex& proxy_idx);
     virtual QIcon getEmptyIcon();
+    void setEmptyFolderPage();
 
     QModelIndex getIndexFromHandle(const mega::MegaHandle& handle);
     void checkButtonsVisibility();
@@ -346,6 +350,8 @@ public:
         return true;
     }
 
+    virtual void makeViewCustomConnections(NodeSelectorTreeView*, NodeSelectorTreeViewWidget*) {}
+
 protected:
     bool cloudDriveIsCurrentRootIndex(NodeSelectorTreeViewWidget* wdg);
 
@@ -417,6 +423,9 @@ public:
     bool okButtonEnabled(NodeSelectorTreeViewWidget*, const QModelIndexList& selected) override;
     NodeSelectorModelItemSearch::Types allowedTypes() override;
     bool footerVisible() const override;
+
+    void makeViewCustomConnections(NodeSelectorTreeView* view,
+                                   NodeSelectorTreeViewWidget* wdg) override;
 
 private:
     QString getCustomButtonText(uint buttonId) const;
