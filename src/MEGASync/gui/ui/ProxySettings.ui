@@ -21,8 +21,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>495</width>
-    <height>512</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -51,6 +51,9 @@ background-color: #FFFFFF; /*colorToken.page-background*/
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
     <number>24</number>
+   </property>
+   <property name="sizeConstraint">
+    <enum>QLayout::SetFixedSize</enum>
    </property>
    <property name="leftMargin">
     <number>48</number>
