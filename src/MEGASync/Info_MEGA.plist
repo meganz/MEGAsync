@@ -6,6 +6,8 @@
     <string>NSApplication</string>
     <key>CFBundleIconFile</key>
     <string>app.icns</string>
+    <key>CFBundleIconName</key>
+    <string>MEGA_icon</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleSignature</key>
