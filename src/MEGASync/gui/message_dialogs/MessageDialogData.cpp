@@ -281,11 +281,11 @@ void MessageDialogData::buildButtons()
                       QApplication::translate("QDialogButtonBox", "&Yes"));
     processButtonInfo(mInfo.buttons,
                       QMessageBox::StandardButton::No,
-                      MessageDialogButtonInfo::ButtonStyle::SECONDARY,
+                      MessageDialogButtonInfo::ButtonStyle::OUTLINE,
                       QApplication::translate("QDialogButtonBox", "&No"));
     processButtonInfo(mInfo.buttons,
                       QMessageBox::StandardButton::Cancel,
-                      MessageDialogButtonInfo::ButtonStyle::SECONDARY,
+                      MessageDialogButtonInfo::ButtonStyle::OUTLINE,
                       QApplication::translate("QDialogButtonBox", "&Cancel"));
     processButtonInfo(mInfo.buttons,
                       QMessageBox::StandardButton::Close,

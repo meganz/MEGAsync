@@ -5,10 +5,13 @@ import common 1.0
 QtObject {
 
     readonly property real defaultMinimumWidth: 480.0
-    readonly property real defaultMinimumHeight: 147.0
-    readonly property real contentMargin: 24.0
+    readonly property real defaultMinimumHeight: 220.0
+    readonly property real bottomContentMargin: 44.0
+    readonly property real rightContentMargin: 44.0
+    readonly property real topContentMargin: 44.0
+    readonly property real leftContentMargin: 48.0
     readonly property real numberOfMargins: 2.0
-    readonly property real defaultSpacing: 12.0
+    readonly property real defaultSpacing: 24.0
     readonly property real iconSize: 48.0
     readonly property real topContentRowSpacing: 24.0
     readonly property real rightContentWidth: 340.0
