@@ -418,7 +418,7 @@ color: #F3F4F4; /*colorToken.text-primary*/
          <string notr="true">secondary</string>
         </property>
         <property name="dimension" stdset="0">
-         <string notr="true">small</string>
+         <string notr="true">medium</string>
         </property>
        </widget>
       </item>
@@ -452,7 +452,7 @@ color: #F3F4F4; /*colorToken.text-primary*/
          <string notr="true">primary</string>
         </property>
         <property name="dimension" stdset="0">
-         <string notr="true">small</string>
+         <string notr="true">medium</string>
         </property>
        </widget>
       </item>
