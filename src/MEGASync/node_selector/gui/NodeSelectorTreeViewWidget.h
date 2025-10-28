@@ -74,6 +74,7 @@ public:
     virtual void setTitleText(const QString& nodeName);
 
     void clearSelection();
+    bool isSelectionCorrect();
 
     void abort();
     NodeSelectorModelItem* rootItem();
@@ -100,15 +101,18 @@ public:
     void setMergeFolderHandles(const QMultiHash<SourceHandle, TargetHandle>& handles);
     void resetMergeFolderHandles(const QMultiHash<SourceHandle, TargetHandle>& handles);
 
+    bool isUiBlocked();
+
 public slots:
     virtual void checkViewOnModelChange();
     void setLoadingSceneVisible(bool visible);
 
 signals:
     void okBtnClicked();
-    void cancelBtnClicked();
     void onCustomButtonClicked(uint id);
     void viewReady();
+    void uiIsBlocked(bool state);
+    void selectionIsCorrect(bool state);
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;
@@ -211,7 +215,6 @@ private:
 
     QModelIndex getIndexFromHandle(const mega::MegaHandle& handle);
     void checkButtonsVisibility();
-    void checkOkCancelButtonsVisibility();
     void addCustomButtons(NodeSelectorTreeViewWidget* wdg);
     virtual QString getRootText() = 0;
     virtual std::unique_ptr<NodeSelectorProxyModel> createProxyModel();
@@ -331,11 +334,6 @@ public:
 
     virtual void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg);
 
-    virtual void okCancelButtonsVisibility(NodeSelectorTreeViewWidget* wdg)
-    {
-        Q_UNUSED(wdg)
-    }
-
     virtual QMap<uint, QPushButton*> addCustomButtons(NodeSelectorTreeViewWidget*)
     {
         return QMap<uint, QPushButton*>();
@@ -415,7 +413,6 @@ public:
 
     void init(NodeSelectorTreeViewWidget* wdg) override;
     void selectionHasChanged(NodeSelectorTreeViewWidget* wdg) override;
-    void okCancelButtonsVisibility(NodeSelectorTreeViewWidget* wdg) override;
     QMap<uint, QPushButton*> addCustomButtons(NodeSelectorTreeViewWidget* wdg) override;
     void updateCustomButtonsText(NodeSelectorTreeViewWidget* wdg) override;
     void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg) override;

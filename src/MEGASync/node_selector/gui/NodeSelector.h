@@ -151,6 +151,8 @@ private slots:
     void onShowDuplicatedNodeDialog(QPointer<DuplicatedNodeDialog>);
     void performNodeSelection();
     void onSearch(const QString& text);
+    void onUiIsBlocked(bool state);
+    void onSelectionChanged(bool state);
 
 private:
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
