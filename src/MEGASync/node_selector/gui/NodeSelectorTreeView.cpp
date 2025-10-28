@@ -24,6 +24,9 @@ QList<mega::MegaHandle> NodeSelectorTreeView::mCopiedHandles = QList<mega::MegaH
 
 NodeSelectorTreeView::NodeSelectorTreeView(QWidget* parent):
     LoadingSceneView<NodeSelectorLoadingDelegate, QTreeView>(parent),
+    mAllowContextMenu(false),
+    mAllowNewFolderContextMenuItem(false),
+    mRootIndexReadOnly(false),
     mMegaApi(MegaSyncApp->getMegaApi())
 {
     installEventFilter(this);
@@ -103,6 +106,11 @@ void NodeSelectorTreeView::setModel(QAbstractItemModel* model)
             &NodeSelectorProxyModel::navigateReady,
             this,
             &NodeSelectorTreeView::onNavigateReady);
+}
+
+void NodeSelectorTreeView::setRootIndexReadOnly(bool state)
+{
+    mRootIndexReadOnly = state;
 }
 
 void NodeSelectorTreeView::drawBranches(QPainter* painter,
@@ -211,7 +219,9 @@ void NodeSelectorTreeView::drawRow(QPainter* painter,
 
             QPainterPath path;
             auto rect(option.rect);
-            rect.setRight(option.rect.right() - 10);
+            // These are not magical numbers, they are taken from design
+            // Left margin is set on the UI (also 12px)
+            rect.setRight(option.rect.right() - 12);
             rect.setTop(option.rect.top() + 3);
             rect.setBottom(option.rect.bottom() - 5);
             path.addRoundedRect(rect, 4, 4);
@@ -446,6 +456,27 @@ void NodeSelectorTreeView::addPasteMenuAction(QMap<int, QAction*>& actions,
     }
 }
 
+void NodeSelectorTreeView::addNewFolderMenuAction(QMap<int, QAction*>& actions)
+{
+    if (!mRootIndexReadOnly)
+    {
+        auto newfolderAction(
+            new MegaMenuItemAction(tr("New folder"),
+                                   Utilities::getPixmapName(QLatin1String("folder-plus-01"),
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false)));
+
+        connect(newfolderAction,
+                &QAction::triggered,
+                this,
+                &NodeSelectorTreeView::newFolderClicked);
+
+        actions.insert(ActionsOrder::NEW_FOLDER, newfolderAction);
+    }
+}
+
 void NodeSelectorTreeView::addDownloadMenuAction(QMap<int, QAction*>& actions,
                                                  const QModelIndexList& selectedIndexes,
                                                  const QList<MegaHandle>& selectionHandles)
@@ -468,6 +499,18 @@ void NodeSelectorTreeView::addDownloadMenuAction(QMap<int, QAction*>& actions,
                 });
         actions.insert(ActionsOrder::DOWNLOAD, downloadAction);
     }
+}
+
+void NodeSelectorTreeView::addUploadMenuAction(QMap<int, QAction*>& actions)
+{
+    auto uploadAction(new MegaMenuItemAction(
+        tr("Upload"),
+        Utilities::getPixmapName(QLatin1String("arrow-up-circle"),
+                                 Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                                     Utilities::AttributeType::OUTLINE,
+                                 false)));
+    connect(uploadAction, &QAction::triggered, this, &NodeSelectorTreeView::uploadClicked);
+    actions.insert(ActionsOrder::UPLOAD, uploadAction);
 }
 
 void NodeSelectorTreeView::addRestoreMenuAction(QMap<int, QAction*>& actions,
@@ -571,6 +614,11 @@ void NodeSelectorTreeView::addSyncMenuActions(QMap<int, QAction*>& actions,
     }
 }
 
+void NodeSelectorTreeView::setAllowNewFolderContextMenuItem(bool newAllowNewFolderContextMenuItem)
+{
+    mAllowNewFolderContextMenuItem = newAllowNewFolderContextMenuItem;
+}
+
 void NodeSelectorTreeView::setAllowContextMenu(bool newAllowContextMenu)
 {
     mAllowContextMenu = newAllowContextMenu;
@@ -590,7 +638,7 @@ void NodeSelectorTreeView::addDeleteMenuAction(QMap<int, QAction*>& actions,
             this,
             [this, selectionHandles]()
             {
-                deleteNode(selectionHandles, false);
+                deleteNode(selectionHandles, false, false);
             });
     actions.insert(ActionsOrder::DELETE_RUBBISH, deleteAction);
 }
@@ -722,6 +770,7 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent* event)
 
     QList<mega::MegaHandle> selectionHandles;
     mega::MegaHandle clickedHandle(mega::INVALID_HANDLE);
+    bool clickedEmptySpace(false);
 
     auto indexClicked = indexAt(event->pos());
     if (indexClicked.isValid())
@@ -733,6 +782,9 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent* event)
     if (clickedHandle == mega::INVALID_HANDLE)
     {
         clickedHandle = proxyModel->getHandle(rootIndex());
+        indexClicked = rootIndex();
+        clickedEmptySpace = true;
+        clearSelection();
     }
 
     // If it is still invalid, don´t show anything
@@ -761,7 +813,7 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent* event)
 
     QMap<int, QAction*> actions;
 
-    if (areAllEligibleForCopy(selectedIndexes))
+    if (!clickedEmptySpace && areAllEligibleForCopy(selectedIndexes))
     {
         auto copyAction(
             new MegaMenuItemAction(tr("Copy"),
@@ -779,10 +831,25 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent* event)
         actions.insert(ActionsOrder::COPY, copyAction);
     }
 
-    addDownloadMenuAction(actions, selectedIndexes, selectionHandles);
+    // Don´t offer "Download" if the folder is empty
+    if (model()->index(0, 0, rootIndex()).isValid())
+    {
+        addDownloadMenuAction(actions, selectedIndexes, selectionHandles);
+    }
+
+    if (clickedEmptySpace && !mRootIndexReadOnly)
+    {
+        addUploadMenuAction(actions);
+    }
+
     addPasteMenuAction(actions, selectedIndexes);
 
-    if (!selectedIndexes.isEmpty())
+    if (clickedEmptySpace)
+    {
+        addNewFolderMenuAction(actions);
+    }
+
+    if (!clickedEmptySpace && !selectedIndexes.isEmpty())
     {
         if (selectedIndexes.size() == 1)
         {
@@ -1129,9 +1196,11 @@ bool NodeSelectorTreeView::areAllEligibleForDownload(const QModelIndexList& sele
     return true;
 }
 
-void NodeSelectorTreeView::deleteNode(const QList<MegaHandle>& handles, bool permanently)
+void NodeSelectorTreeView::deleteNode(const QList<MegaHandle>& handles,
+                                      bool permanently,
+                                      bool showConfirmationMessageBox)
 {
-    emit deleteNodeClicked(handles, permanently);
+    emit deleteNodeClicked(handles, permanently, showConfirmationMessageBox);
 }
 
 void NodeSelectorTreeView::renameNode()

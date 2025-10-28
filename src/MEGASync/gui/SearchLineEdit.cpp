@@ -3,6 +3,7 @@
 #include "EventHelper.h"
 #include "TokenParserWidgetManager.h"
 #include "ui_SearchLineEdit.h"
+#include "Utilities.h"
 
 #include <QDebug>
 #include <QEvent>
@@ -42,6 +43,12 @@ SearchLineEdit::SearchLineEdit(QWidget* parent):
     ui->searchContainer->resize(COLLAPSE_SIZE, COLLAPSE_SIZE);
 
     setFocusProxy(ui->leSearchField);
+
+    mTopParent = Utilities::getTopParent<QDialog>(this);
+    if (mTopParent)
+    {
+        mTopParent->installEventFilter(this);
+    }
 }
 
 SearchLineEdit::~SearchLineEdit()
@@ -170,6 +177,11 @@ bool SearchLineEdit::eventFilter(QObject* obj, QEvent* evnt)
     {
         showTextEntry(false, true);
     }
+    else if (mTopParent == obj && evnt->type() == QEvent::MouseButtonRelease)
+    {
+        onClearClicked();
+        showTextEntry(false);
+    }
 
     return QFrame::eventFilter(obj, evnt);
 }
@@ -202,7 +214,15 @@ void SearchLineEdit::onTextChanged(const QString& text)
 
 void SearchLineEdit::onSearchButtonClicked()
 {
-    showTextEntry(true);
+    if (ui->leSearchField->isVisible())
+    {
+        onClearClicked();
+        showTextEntry(false);
+    }
+    else
+    {
+        showTextEntry(true);
+    }
 }
 
 void SearchLineEdit::animationFinished()
@@ -223,7 +243,7 @@ void SearchLineEdit::toggleClearButton(bool fadeIn)
 QPropertyAnimation* SearchLineEdit::runWidthAnimation(QWidget* target, bool expand)
 {
     auto an = new QPropertyAnimation(target->graphicsEffect(), "width");
-    an->setDuration(250);
+    an->setDuration(125);
     if (expand)
     {
         an->setStartValue(0);

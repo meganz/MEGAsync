@@ -109,6 +109,8 @@ void NodeSelectorTreeViewWidget::init()
     ui->tMegaFolders->setSortingEnabled(true);
     ui->tMegaFolders->setAllowContextMenu(mSelectType->isContextMenuAllowed());
     ui->tMegaFolders->viewport()->installEventFilter(this);
+    ui->emptyFolderPage->installEventFilter(this);
+    ui->emptyFolderPage->setAcceptDrops(true);
     mProxyModel->setSourceModel(mModel.get());
 
     connect(mProxyModel.get(),
@@ -122,7 +124,7 @@ void NodeSelectorTreeViewWidget::init()
     connect(mProxyModel.get(),
             &NodeSelectorProxyModel::modelSorted,
             this,
-            &NodeSelectorTreeViewWidget::modelLoaded);
+            &NodeSelectorTreeViewWidget::setViewPage);
     connect(mModel.get(),
             &QAbstractItemModel::rowsInserted,
             this,
@@ -193,6 +195,11 @@ bool NodeSelectorTreeViewWidget::event(QEvent* event)
 
         initEmptyMessages();
     }
+    else if (event->type() == QEvent::MouseButtonRelease)
+    {
+        clearSelection();
+    }
+
     return QWidget::event(event);
 }
 
@@ -226,6 +233,16 @@ bool NodeSelectorTreeViewWidget::eventFilter(QObject* watched, QEvent* event)
             }
         }
     }
+    else if (event->type() == QEvent::Drop)
+    {
+        if (auto dropEvent = static_cast<QDragEnterEvent*>(event))
+        {
+            if (!dropEvent->mimeData()->urls().isEmpty())
+            {
+                ui->tMegaFolders->dropEvent(dropEvent);
+            }
+        }
+    }
     else if (event->type() == QEvent::Resize)
     {
         if (watched == ui->tMegaFolders->viewport())
@@ -233,20 +250,17 @@ bool NodeSelectorTreeViewWidget::eventFilter(QObject* watched, QEvent* event)
             updateColumnsWidth(false);
         }
     }
+    else if (watched == ui->emptyFolderPage && event->type() == QEvent::ContextMenu)
+    {
+        ui->tMegaFolders->contextMenuEvent(static_cast<QContextMenuEvent*>(event));
+    }
 
     return QWidget::eventFilter(watched, event);
 }
 
 void NodeSelectorTreeViewWidget::setTitleText(const QString& nodeName)
 {
-    if (ui->lFolderName->isVisible())
-    {
-        ui->lFolderName->setText(nodeName);
-    }
-    else if (ui->sh_folderName->isVisible())
-    {
-        ui->sh_folderName->setText(nodeName);
-    }
+    ui->lFolderName->setText(nodeName);
 }
 
 void NodeSelectorTreeViewWidget::clearSelection()
@@ -388,7 +402,9 @@ void NodeSelectorTreeViewWidget::onSectionResized()
 void NodeSelectorTreeViewWidget::checkViewOnModelChange()
 {
     checkBackForwardButtons();
-    modelLoaded();
+    setViewPage();
+
+    setEmptyFolderPage();
 }
 
 void NodeSelectorTreeViewWidget::checkNewFolderAdded(QPointer<NodeSelectorModelItem> item)
@@ -445,6 +461,10 @@ void NodeSelectorTreeViewWidget::onExpandReady()
                 this,
                 &NodeSelectorTreeViewWidget::onRenameClicked);
         connect(ui->tMegaFolders,
+                &NodeSelectorTreeView::newFolderClicked,
+                this,
+                &NodeSelectorTreeViewWidget::onbNewFolderClicked);
+        connect(ui->tMegaFolders,
                 &NodeSelectorTreeView::getMegaLinkClicked,
                 this,
                 &NodeSelectorTreeViewWidget::onGenMEGALinkClicked);
@@ -469,6 +489,7 @@ void NodeSelectorTreeViewWidget::onExpandReady()
                 this,
                 &NodeSelectorTreeViewWidget::onSectionResized);
 
+        mSelectType->makeViewCustomConnections(ui->tMegaFolders, this);
         makeCustomConnections();
 
         setRootIndex(mModel->hasTopRootIndex() ? mProxyModel->index(0, 0) : QModelIndex());
@@ -683,7 +704,7 @@ void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool blockUi)
     }
 }
 
-void NodeSelectorTreeViewWidget::modelLoaded()
+void NodeSelectorTreeViewWidget::setViewPage()
 {
     if (mModel)
     {
@@ -767,7 +788,8 @@ void NodeSelectorTreeViewWidget::onRenameClicked()
 }
 
 void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle>& handles,
-                                                 bool permanently)
+                                                 bool permanently,
+                                                 bool showConfirmationMessageBox)
 {
     if (handles.isEmpty())
     {
@@ -788,77 +810,85 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle>& 
         return node;
     };
 
-    MessageDialogInfo msgInfo;
-    msgInfo.parent = ui->tMegaFolders;
-    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
-    msgInfo.defaultButton = QMessageBox::Yes;
-    msgInfo.finishFunc = [this, handles, permanently](QPointer<MessageDialogResult> msg)
+    if (showConfirmationMessageBox)
     {
-        if (msg->result() == QMessageBox::Yes)
+        MessageDialogInfo msgInfo;
+        msgInfo.parent = ui->tMegaFolders;
+        msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+        msgInfo.defaultButton = QMessageBox::Yes;
+        msgInfo.finishFunc = [this, handles, permanently](QPointer<MessageDialogResult> msg)
         {
-            mModel->deleteNodes(handles, permanently);
-        }
-    };
+            if (msg->result() == QMessageBox::Yes)
+            {
+                mModel->deleteNodes(handles, permanently);
+            }
+        };
 
-    if (permanently)
-    {
-        msgInfo.descriptionText = tr("You cannot undo this action");
-    }
-    else
-    {
-        msgInfo.descriptionText =
-            tr("Any shared files or folders will no longer be accessible to the people you shared "
-               "them with. You can still access these items in the Rubbish bin, restore, and share "
-               "them.");
-    }
-
-    auto type(Utilities::getHandlesType(handles));
-
-    if (permanently)
-    {
-        msgInfo.buttonsText.insert(QMessageBox::Yes, tr("Delete"));
-        msgInfo.buttonsText.insert(QMessageBox::No, tr("Cancel"));
-
-        if (type == Utilities::HandlesType::FILES)
+        if (permanently)
         {
-            msgInfo.titleText =
-                tr("You are about to permanently delete %n file. Would you like to proceed?",
-                   "",
-                   handles.size());
-        }
-        else if (type == Utilities::HandlesType::FOLDERS)
-        {
-            msgInfo.titleText =
-                tr("You are about to permanently delete %n folder. Would you like to proceed?",
-                   "",
-                   handles.size());
+            msgInfo.descriptionText = tr("You cannot undo this action");
         }
         else
         {
-            msgInfo.titleText =
-                tr("You are about to permanently delete %n items. Would you like to proceed?",
-                   "",
-                   handles.size());
+            msgInfo.descriptionText = tr(
+                "Any shared files or folders will no longer be accessible to the people you shared "
+                "them with. You can still access these items in the Rubbish bin, restore, and "
+                "share "
+                "them.");
         }
-    }
-    else
-    {
-        msgInfo.buttonsText.insert(QMessageBox::Yes, tr("Move"));
-        msgInfo.buttonsText.insert(QMessageBox::No, tr("Don’t move"));
 
-        auto node = getNode(handles.first());
-        if (handles.size() == 1 && node)
+        auto type(Utilities::getHandlesType(handles));
+
+        if (permanently)
         {
-            msgInfo.titleText =
-                tr("Move %1 to Rubbish bin?").arg(MegaNodeNames::getNodeName(node.get()));
+            msgInfo.buttonsText.insert(QMessageBox::Yes, tr("Delete"));
+            msgInfo.buttonsText.insert(QMessageBox::No, tr("Cancel"));
+
+            if (type == Utilities::HandlesType::FILES)
+            {
+                msgInfo.titleText =
+                    tr("You are about to permanently delete %n file. Would you like to proceed?",
+                       "",
+                       handles.size());
+            }
+            else if (type == Utilities::HandlesType::FOLDERS)
+            {
+                msgInfo.titleText =
+                    tr("You are about to permanently delete %n folder. Would you like to proceed?",
+                       "",
+                       handles.size());
+            }
+            else
+            {
+                msgInfo.titleText =
+                    tr("You are about to permanently delete %n items. Would you like to proceed?",
+                       "",
+                       handles.size());
+            }
         }
         else
         {
-            msgInfo.titleText = tr("Move %n items to Rubbish bin?", "", handles.size());
-        }
-    }
+            msgInfo.buttonsText.insert(QMessageBox::Yes, tr("Move"));
+            msgInfo.buttonsText.insert(QMessageBox::No, tr("Don’t move"));
 
-    MessageDialogOpener::warning(msgInfo);
+            auto node = getNode(handles.first());
+            if (handles.size() == 1 && node)
+            {
+                msgInfo.titleText =
+                    tr("Move %1 to Rubbish bin?").arg(MegaNodeNames::getNodeName(node.get()));
+            }
+            else
+            {
+                msgInfo.titleText = tr("Move %n items to Rubbish bin?", "", handles.size());
+            }
+        }
+
+        MessageDialogOpener::warning(msgInfo);
+    }
+    else
+    {
+        mModel->deleteNodes(handles, permanently);
+    }
 }
 
 void NodeSelectorTreeViewWidget::onLeaveShareClicked(const QList<mega::MegaHandle>& handles)
@@ -1535,6 +1565,7 @@ void NodeSelectorTreeViewWidget::resetMergeFolderHandles(
 void NodeSelectorTreeViewWidget::setNewFolderButtonVisibility(bool state)
 {
     ui->bNewFolder->setVisible(state);
+    ui->tMegaFolders->setAllowNewFolderContextMenuItem(state);
 }
 
 void NodeSelectorTreeViewWidget::setSelectedNodeHandle(const MegaHandle& selectedHandle)
@@ -1589,6 +1620,7 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex& proxy_idx)
 
     mModel->setCurrentRootIndex(mProxyModel->mapToSource(node_column_idx));
     ui->tMegaFolders->setRootIndex(node_column_idx);
+    ui->tMegaFolders->setRootIndexReadOnly(isCurrentRootIndexReadOnly());
 
     checkButtonsVisibility();
 
@@ -1603,6 +1635,7 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex& proxy_idx)
     }
 
     onRootIndexChanged(node_column_idx);
+    setEmptyFolderPage();
 
     if (!node_column_idx.isValid())
     {
@@ -1626,6 +1659,21 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex& proxy_idx)
 QIcon NodeSelectorTreeViewWidget::getEmptyIcon()
 {
     return QIcon();
+}
+
+void NodeSelectorTreeViewWidget::setEmptyFolderPage()
+{
+    auto currentRootIndex(ui->tMegaFolders->rootIndex());
+    auto topRootIndex(mModel->hasTopRootIndex() ? mProxyModel->index(0, 0) : QModelIndex());
+
+    if (currentRootIndex != topRootIndex && mProxyModel->rowCount(currentRootIndex) == 0)
+    {
+        ui->stackedWidget->setCurrentWidget(ui->emptyFolderPage);
+    }
+    else
+    {
+        setViewPage();
+    }
 }
 
 NodeSelectorTreeViewWidget::EmptyLabelInfo NodeSelectorTreeViewWidget::getEmptyLabel()
@@ -1890,6 +1938,18 @@ bool CloudDriveType::footerVisible() const
     return false;
 }
 
+void CloudDriveType::makeViewCustomConnections(NodeSelectorTreeView* view,
+                                               NodeSelectorTreeViewWidget* wdg)
+{
+    wdg->connect(view,
+                 &NodeSelectorTreeView::uploadClicked,
+                 wdg,
+                 [wdg]()
+                 {
+                     emit wdg->onCustomButtonClicked(ButtonId::Upload);
+                 });
+}
+
 bool CloudDriveType::okButtonEnabled(NodeSelectorTreeViewWidget*, const QModelIndexList& selected)
 {
     return false;
@@ -1909,7 +1969,7 @@ QMap<uint, QPushButton*> CloudDriveType::addCustomButtons(NodeSelectorTreeViewWi
         auto uploadButton =
             createCustomButton(QLatin1String("ghost"),
                                getCustomButtonText(ButtonId::Upload),
-                               Utilities::getPixmapName(QLatin1String("upload"),
+                               Utilities::getPixmapName(QLatin1String("arrow-up"),
                                                         Utilities::AttributeType::SMALL |
                                                             Utilities::AttributeType::THIN |
                                                             Utilities::AttributeType::OUTLINE));

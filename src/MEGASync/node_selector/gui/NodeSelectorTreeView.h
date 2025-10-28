@@ -28,6 +28,7 @@ public:
     MegaHandle getSelectedNodeHandle();
     QList<MegaHandle> getMultiSelectionNodeHandle(const QModelIndexList& selectedRows) const;
     void setModel(QAbstractItemModel* model) override;
+    void setRootIndexReadOnly(bool state);
 
     QModelIndexList selectedRows() const;
 
@@ -39,16 +40,19 @@ public:
     {
         RESTORE = 0,
         SEPARATOR_1,
+        UPLOAD,
         DOWNLOAD,
         SEPARATOR_2,
         MEGA_LINK,
         SYNC,
         UNSYNC,
         SEPARATOR_3,
+        NEW_FOLDER,
+        SEPARATOR_4,
         RENAME,
         COPY,
         PASTE,
-        SEPARATOR_4,
+        SEPARATOR_5,
         DELETE_RUBBISH,
         DELETE_PERMANENTLY,
         LEAVE_SHARE
@@ -56,6 +60,10 @@ public:
     Q_ENUM(ActionsOrder)
 
     void setAllowContextMenu(bool newAllowContextMenu);
+
+    void setAllowNewFolderContextMenuItem(bool newAllowNewFolderContextMenuItem);
+
+    void contextMenuEvent(QContextMenuEvent* event) override;
 
 protected:
     void drawBranches(QPainter* painter,
@@ -70,23 +78,28 @@ protected:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
     void keyPressEvent(QKeyEvent* event) override;
-    void contextMenuEvent(QContextMenuEvent* event) override;
 
     void startDrag(Qt::DropActions supportedActions) override;
 
     bool event(QEvent* event) override;
 
 signals:
-    void deleteNodeClicked(const QList<MegaHandle>& handles, bool permanently);
+    void deleteNodeClicked(const QList<MegaHandle>& handles,
+                           bool permanently,
+                           bool showConfirmationMessageBo);
     void leaveShareClicked(const QList<MegaHandle>& handles);
     void renameNodeClicked();
     void pasteNodesClicked();
     void getMegaLinkClicked(const QList<MegaHandle>& handles);
     void restoreClicked(const QList<MegaHandle>& handles);
     void nodeSelected();
+    void newFolderClicked();
+    void uploadClicked();
 
 private slots:
-    void deleteNode(const QList<MegaHandle>& handles, bool permanently);
+    void deleteNode(const QList<MegaHandle>& handles,
+                    bool permanently,
+                    bool showConfirmationMessageBox = true);
     void renameNode();
     void restore(const QList<MegaHandle>& handles);
     void onNavigateReady(const QModelIndex& index);
@@ -128,6 +141,8 @@ private:
     void addDownloadMenuAction(QMap<int, QAction*>& actions,
                                const QModelIndexList& selectedIndexes,
                                const QList<mega::MegaHandle>& selectionHandles);
+    void addUploadMenuAction(QMap<int, QAction*>& actions);
+    void addNewFolderMenuAction(QMap<int, QAction*>& actions);
     void addRenameMenuAction(QMap<int, QAction*>& actions, const QModelIndex& index);
     void addSyncMenuActions(QMap<int, QAction*>& actions,
                             const QModelIndex& index,
@@ -143,9 +158,13 @@ private:
                               const QList<MegaHandle>& selectionHandles);
 
     bool mAllowContextMenu;
+    bool mAllowNewFolderContextMenuItem;
 
     // Access
     QHash<mega::MegaHandle, int> getNodesAccess(const QList<mega::MegaHandle>& handles) const;
+
+    // Read-Only root index
+    bool mRootIndexReadOnly;
 
     // Shortcuts
     QShortcut* mCopyShortcut;

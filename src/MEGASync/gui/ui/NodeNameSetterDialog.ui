@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>388</width>
-    <height>159</height>
+    <width>436</width>
+    <height>213</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,28 +28,28 @@ color: #E31B57; /*colorToken.text-error*/
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
-    <number>16</number>
+    <number>24</number>
    </property>
    <property name="sizeConstraint">
     <enum>QLayout::SetDefaultConstraint</enum>
    </property>
    <property name="leftMargin">
-    <number>16</number>
+    <number>48</number>
    </property>
    <property name="topMargin">
-    <number>16</number>
+    <number>48</number>
    </property>
    <property name="rightMargin">
-    <number>16</number>
+    <number>48</number>
    </property>
    <property name="bottomMargin">
-    <number>16</number>
+    <number>48</number>
    </property>
    <item>
     <widget class="QWidget" name="container" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="spacing">
-       <number>8</number>
+       <number>12</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -171,10 +171,10 @@ color: #E31B57; /*colorToken.text-error*/
          <string>Cancel</string>
         </property>
         <property name="type" stdset="0">
-         <string notr="true">secondary</string>
+         <string notr="true">outline</string>
         </property>
         <property name="dimension" stdset="0">
-         <string notr="true">small</string>
+         <string notr="true">medium</string>
         </property>
        </widget>
       </item>
@@ -190,7 +190,7 @@ color: #E31B57; /*colorToken.text-error*/
          <string notr="true">primary</string>
         </property>
         <property name="dimension" stdset="0">
-         <string notr="true">small</string>
+         <string notr="true">medium</string>
         </property>
        </widget>
       </item>
@@ -203,7 +203,7 @@ color: #E31B57; /*colorToken.text-error*/
   <customwidget>
    <class>IconLabel</class>
    <extends>QToolButton</extends>
-   <header>TokenizableItems/IconLabel.h</header>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>

@@ -4999,6 +4999,16 @@ Enter a different name.</translation>
         <translatorcomment>Contextual menu text that appears when we right click on a node on node selector. It downloads the selected nodes. SNC-5804</translatorcomment>
         <translation type="unfinished">Download</translation>
     </message>
+    <message>
+        <source>New folder</source>
+        <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It uploads to the selected. SNC-5804</translatorcomment>
+        <translation type="unfinished">New folder</translation>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It creates a new folder. SNC-5804</translatorcomment>
+        <translation type="unfinished">Upload</translation>
+    </message>
 </context>
 <context>
     <name>NodeSelectorTreeViewWidget</name>
@@ -5109,6 +5119,11 @@ Enter a different name.</translation>
         <source>You cannot undo this action</source>
         <translatorcomment>Second part of the messagebox text when the user is about to remove permanently a node. SAT-426</translatorcomment>
         <translation>You cannot undo this action</translation>
+    </message>
+    <message>
+        <source>Folder is empty</source>
+        <translatorcomment>Message on the view when there are no items in a folder. SNC-5804</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

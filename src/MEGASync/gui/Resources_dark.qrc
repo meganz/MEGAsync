@@ -195,5 +195,6 @@
         <file alias="play_small_thin_outline_button_outline_hover">images/themed/dark/play_small_thin_outline_button_outline_hover.svg</file>
         <file alias="info_small_thin_outline_text_info">images/themed/dark/info_small_thin_outline_text_info.svg</file>
         <file alias="x_circle_small_thin_outline_text_error">images/themed/dark/x_circle_small_thin_outline_text_error.svg</file>
+        <file alias="folder_small_thin">images/themed/dark/folder_small_thin_solid.svg</file>
     </qresource>
 </RCC>
