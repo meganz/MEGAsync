@@ -159,6 +159,7 @@ void ProxySettings::onProxyTestFinished(bool success)
         mUi->lErrorText->setText(tr("We couldn’t connect using your proxy settings. Check your "
                                     "proxy details or try a different network."));
         mUi->wError->setVisible(true);
+        adjustSize();
     }
 }
 

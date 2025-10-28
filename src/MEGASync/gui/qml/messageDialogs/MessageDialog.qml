@@ -20,16 +20,16 @@ QmlDialog {
 
     property MessageDialogMediumSizes sizes: MessageDialogMediumSizes {}
 
-    property real totalWidth: Math.max(sizes.defaultMinimumWidth, contentColum.implicitWidth + sizes.numberOfMargins * sizes.contentMargin)
-    property real totalHeight: Math.max(sizes.defaultMinimumHeight, contentColum.implicitHeight + sizes.numberOfMargins * sizes.contentMargin)
+    property real totalWidth: Math.max(sizes.defaultMinimumWidth, contentColum.implicitWidth + sizes.leftContentMargin + sizes.rightContentMargin)
+    property real totalHeight: Math.max(sizes.defaultMinimumHeight, contentColum.implicitHeight + sizes.topContentMargin + sizes.bottomContentMargin)
 
     width: window.totalWidth
     height: window.totalHeight
     flags: OS.isWindows() ? Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint | Qt.WindowTitleHint | Qt.WindowCloseButtonHint : Qt.Dialog;
     //On Windows we don´t set a maximum width/height, so we set a non-reachable max size of the double of the required size (as a hack)
     //If we set a fixed size and the scale is not 100%, we found that the dialog is resized automatically by a few pixels.
-    maximumWidth: OS.isWindows() ? window.totalWidth*2 : window.totalWidth
-    maximumHeight: OS.isWindows() ? window.totalHeight*2 : window.totalHeight
+    maximumWidth: OS.isWindows() ? window.totalWidth * 2 : window.totalWidth
+    maximumHeight: OS.isWindows() ? window.totalHeight * 2 : window.totalHeight
     minimumWidth: OS.isWindows() ? 0 : window.totalWidth
     minimumHeight: OS.isWindows() ? 0 : window.totalHeight
     modality: Qt.WindowModal
@@ -83,7 +83,11 @@ QmlDialog {
             left: parent.left
             right: parent.right
             top: parent.top
-            margins: sizes.contentMargin
+
+            topMargin: sizes.topContentMargin
+            leftMargin: sizes.leftContentMargin
+            rightMargin: sizes.rightContentMargin
+            bottomMargin: sizes.bottomContentMargin
         }
 
         spacing: sizes.defaultSpacing
@@ -165,7 +169,7 @@ QmlDialog {
 
             Layout.fillWidth: true
             Layout.fillHeight: true
-            spacing: sizes.bottomButtonsRowSpacing
+            spacing: sizes.bottomButtonsRowSpacing - 2 * Constants.focusBorderWidth
             layoutDirection: Qt.RightToLeft
 
             Repeater {

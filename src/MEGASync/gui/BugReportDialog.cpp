@@ -157,7 +157,7 @@ void BugReportDialog::onReportFinished()
     msgInfo.descriptionText = tr("Your bug report has been submitted, a confirmation email "
                                  "will sent to you accordingly.");
     accept();
-    MessageDialogOpener::information(msgInfo);
+    MessageDialogOpener::success(msgInfo);
 }
 
 void BugReportDialog::onReportFailed()
