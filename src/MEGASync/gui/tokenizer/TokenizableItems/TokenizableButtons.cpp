@@ -101,6 +101,11 @@ void TokenizableButton::paintEvent(QPaintEvent* event)
     QPushButton::paintEvent(event);
 }
 
+void TokenizableButton::leaveEvent(QEvent* event)
+{
+    QPushButton::leaveEvent(event);
+    update();
+}
 /*************** TOOL BUTTON ***************/
 TokenizableToolButton::TokenizableToolButton(QWidget* parent):
     QToolButton(parent)
@@ -133,4 +138,10 @@ void TokenizableToolButton::paintEvent(QPaintEvent* event)
     ButtonUtilities::checkMinWidth(this);
 
     QToolButton::paintEvent(event);
+}
+
+void TokenizableToolButton::leaveEvent(QEvent* event)
+{
+    QToolButton::leaveEvent(event);
+    update();
 }

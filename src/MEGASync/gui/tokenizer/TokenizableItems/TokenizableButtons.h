@@ -142,6 +142,8 @@ public:
     DEFINE_ICON_PROPERTY()
 
 protected:
+    void leaveEvent(QEvent* event) override;
+
     void paintEvent(QPaintEvent* event) override;
 };
 
@@ -157,6 +159,7 @@ public:
     DEFINE_ICON_PROPERTY()
 
 protected:
+    void leaveEvent(QEvent* event) override;
     void paintEvent(QPaintEvent* event) override;
 };
 
