@@ -1170,7 +1170,6 @@
         <file alias="menu_01_medium_thin_outline">images/themed/tokenizable/menu_01_medium_thin_outline.svg</file>
         <file alias="alert-circle">images/themed/common/alert-circle.svg</file>
         <file alias="help-circle">images/themed/common/help-circle.svg</file>
-        <file alias="arrows-up-down-circle">images/themed/tokenizable/arrows-up-down-circle.svg</file>
         <file alias="chevron-left_default">images/themed/tokenizable/chevron-left_default.svg</file>
         <file alias="check_small_thin_outline">images/themed/tokenizable/check_small_thin_outline.svg</file>
         <file alias="cross_small_thin_outline">images/themed/tokenizable/cross_small_thin_outline.svg</file>
@@ -1288,5 +1287,21 @@
         <file alias="arrow-up_medium_thin_outline">images/themed/tokenizable/arrow-up_medium_thin_outline.svg</file>
         <file alias="arrow-up_small_thin_outline">images/themed/tokenizable/arrow-up_small_thin_outline.svg</file>
         <file alias="pause-thin_small_regular_outline.svg">images/themed/tokenizable/pause-thin_small_regular_outline.svg</file>
+        <file alias="file-02_small_thin_outline">images/themed/tokenizable/file-02_small_thin_outline.svg</file>
+        <file alias="file-02_small_thin_solid">images/themed/tokenizable/file-02_small_thin_solid.svg</file>
+        <file alias="file-audio_small_thin_outline">images/themed/tokenizable/file-audio_small_thin_outline.svg</file>
+        <file alias="file-film_small_thin_outline">images/themed/tokenizable/file-film_small_thin_outline.svg</file>
+        <file alias="file-film_small_thin_solid">images/themed/tokenizable/file-film_small_thin_solid.svg</file>
+        <file alias="file-image_small_thin_outline">images/themed/tokenizable/file-image_small_thin_outline.svg</file>
+        <file alias="file-image_small_thin_solid">images/themed/tokenizable/file-image_small_thin_solid.svg</file>
+        <file alias="file-text_small_thin_outline">images/themed/tokenizable/file-text_small_thin_outline.svg</file>
+        <file alias="file-text_small_thin_solid">images/themed/tokenizable/file-text_small_thin_solid.svg</file>
+        <file alias="file-zip_small_thin_outline">images/themed/tokenizable/file-zip_small_thin_outline.svg</file>
+        <file alias="file-zip_small_thins_solid">images/themed/tokenizable/file-zip_small_thins_solid.svg</file>
+        <file alias="arrow-down-circle_small_thin_solid">images/themed/tokenizable/arrow-down-circle_small_thin_solid.svg</file>
+        <file alias="arrow-up-circle_small_thin_solid">images/themed/tokenizable/arrow-up-circle_small_thin_solid.svg</file>
+        <file alias="arrows-up-down-circle_small_thin_solid">images/themed/tokenizable/arrows-up-down-circle_small_thin_solid.svg</file>
+        <file alias="file-audio_small_thin_solid">images/themed/tokenizable/file-audio_small_thin_solid.svg</file>
+        <file alias="search-large_small_thin_solid">images/themed/tokenizable/search-large_small_thin_solid.svg</file>
     </qresource>
 </RCC>

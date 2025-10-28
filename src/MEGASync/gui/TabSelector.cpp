@@ -102,10 +102,28 @@ bool TabSelector::isCloseButtonVisible() const
     return ui->lClose->isVisible();
 }
 
-void TabSelector::setCounter(int count)
+void TabSelector::setCounter(unsigned long long count)
 {
-    ui->lCounter->show();
-    ui->lCounter->setText(QString::number(count));
+    auto currentValue(ui->lCounter->text().toULongLong());
+
+    if (currentValue != count)
+    {
+        if (count > 0)
+        {
+            ui->lCounter->show();
+            ui->lCounter->setText(QString::number(count));
+        }
+        else
+        {
+            ui->lCounter->setText(QString());
+            ui->lCounter->hide();
+        }
+    }
+}
+
+bool TabSelector::isEmpty()
+{
+    return !ui->lCounter->isVisible();
 }
 
 void TabSelector::setSelected(bool state)
@@ -147,6 +165,11 @@ bool TabSelector::event(QEvent* event)
             setProperty(HOVER, event->type() == QEvent::Enter ? true : false);
             setStyleSheet(styleSheet());
         }
+    }
+
+    if (event->type() == QEvent::Hide)
+    {
+        setCounter(0);
     }
 
     return QWidget::event(event);

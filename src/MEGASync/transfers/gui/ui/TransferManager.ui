@@ -35,75 +35,15 @@
 {
     background-color: #FFFFFFFF; /*colorToken.page-background*/
 }
+
 QGroupBox
 {
-    font-size: 12px;
-    border: none;
-    background-color: #fff7f7f7; /*colorToken.surface-1*/
+border:none;
 }
 
-QGroupBox::title
+QGroupBox::title[type=&quot;mega&quot;]
 {
-    padding-left: 20px;
-    font-weight: 400;
-    color: #FF616366; /*colorToken.text-secondary*/
-    font-size: 10px;
-}
-
-#wLeftPane QFrame &gt; QLabel
-{
-    text-align: right;
-}
-
-#wLeftPane QFrame[itsOn=true]
-{
-    border: none;
-    border-radius: 6px;
-    background-color: #FFFFFFFF; /*colorToken.page-background*/
-}
-
-#wLeftPane QFrame[itsOn=false]
-{
-    border-radius: none;
-    background-color: transparent;
-}
-
-#wLeftPane QFrame[itsOn=true] &gt; QLabel
-{
-    font-weight: 600;
-    color: #FF303233; /*colorToken.icon-primary*/
-}
-
-#wLeftPane QFrame &gt; QPushButton
-{
-    text-align: left;
-    padding-left:0px;
-    padding-right:0px;
-    border: none;
-    font-size: 12px;
-    font-weight: 400;
-    height: 32px;
-    color: #FF616366; /*colorToken.text-secondary*/
-}
-
-#wLeftPane QFrame[itsOn=true] &gt; QPushButton
-{
-    font-size: 12px;
-    font-weight: 600;
-    color: #FF303233; /*colorToken.icon-primary*/
-}
-
-#wLeftPane QFrame[itsOn=false] &gt; QLabel
-{
-    font-weight: 400;
-    color: #FF616366; /*colorToken.text-secondary*/
-}
-
-#wLeftPane QFrame[itsOn=false] &gt; QPushButton
-{
-    font-size: 12px;
-    font-weight: 400;
-    color: #FF616366; /*colorToken.text-secondary*/
+color: #ff04101E; /*colorToken.text-secondary*/
 }
 
 #lTransfers
@@ -114,67 +54,7 @@ QGroupBox::title
     qproperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
-QFrame[itsOn=false] &gt; #tAllTransfers
-{
-    qproperty-icon: url(:/all_transfers);
-    qproperty-iconSize: 16px;
-}
-
-QFrame[itsOn=true] &gt; #tAllTransfers
-{
-    qproperty-icon: url(:/all_transfers_selected);
-    qproperty-iconSize: 16px;
-}
-
-QFrame[itsOn=false] &gt; #tDownloads
-{
-    qproperty-icon: url(:/downloads);
-    qproperty-iconSize: 16px;
-}
-
-QFrame[itsOn=true] &gt; #tDownloads
-{
-    qproperty-icon: url(:/downloads_selected);
-    qproperty-iconSize: 16px;
-}
-
-QFrame[itsOn=false] &gt; #tUploads
-{
-    qproperty-icon: url(:/uploads);
-    qproperty-iconSize: 16px;
-}
-
-QFrame[itsOn=true] &gt; #tUploads
-{
-    qproperty-icon: url(:/uploads_selected);
-    qproperty-iconSize: 16px;
-}
-
-QFrame[itsOn=false] &gt; #tCompleted
-{
-    qproperty-icon: url(:/completed);
-    qproperty-iconSize: 16px;
-}
-
-QFrame[itsOn=true] &gt; #tCompleted
-{
-    qproperty-icon: url(:/completed_selected);
-    qproperty-iconSize: 16px;
-}
-
-QFrame[itsOn=false] &gt; #tFailed
-{
-    qproperty-icon: url(:/failed);
-    qproperty-iconSize: 16px;
-}
-
-QFrame[itsOn=true] &gt; #tFailed
-{
-    qproperty-icon: url(:/failed_selected);
-    qproperty-iconSize: 16px;
-}
-
-#bPause, #bSearch
+#bPause
 {
     height: 32px;
     width: 32px;
@@ -194,12 +74,6 @@ icon: url(:/pause);
 {
 icon-size: 16px;
 icon: url(:/play);
-}
-
-#bSearch
-{
-    qproperty-iconSize: 16px;
-    qproperty-icon: url(:/search);
 }
 
 #wDownSpeed, #wUpSpeed
@@ -233,17 +107,6 @@ icon: url(:/play);
     qproperty-iconSize: 16px;
 }
 
-#wTransferring QFrame, #wSearch QFrame
-{
-    padding-right: 6px;
-    padding-left: 6px;
-}
-
-#wSearch QPushButton
-{
-    height: 32px;
-}
-
 #pSearch
 {
     height: 32px;
@@ -255,36 +118,6 @@ icon: url(:/play);
 #wTitleAndSearch
 {
      height: 32px;
-}
-
-#tSearchIcon
-{
-    border: none;
-    qproperty-iconSize: 16px;
-    qproperty-icon: url(:/search);
-}
-
-#tSearchCancel
-{
-    border: none;
-    qproperty-iconSize: 16px;
-    qproperty-icon: url(:/cancel);
-}
-
-#bSearchString
-{
-    color: #ffffffff; /*colorToken.page-background*/
-    border: none;
-    text-align: left;
-    padding-left:-1px;
-    padding-right: 0px;
-    qproperty-iconSize: 16px;
-    qproperty-icon: url(:/search_active);
-}
-
-#tClearSearchResult
-{
-    qproperty-iconSize: 16px;
 }
 
 #sStatus
@@ -333,8 +166,7 @@ QToolButton
 #wNoDownloads QLabel, #wNoUploads QLabel,  #wNoTransfers QLabel, #wNoFinished QLabel, #wNoResults QLabel
 {
         line-height: 24px;
-}
-</string>
+}</string>
   </property>
   <property name="TOKENIZED" stdset="0">
    <bool>true</bool>
@@ -375,9 +207,6 @@ QToolButton
        <height>16777215</height>
       </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
      <layout class="QVBoxLayout" name="wLeftPaneLayout">
       <property name="spacing">
        <number>11</number>
@@ -396,21 +225,24 @@ QToolButton
       </property>
       <item>
        <widget class="QWidget" name="wLeftPaneTop" native="true">
+        <property name="tabselector_group" stdset="0">
+         <bool>true</bool>
+        </property>
         <layout class="QVBoxLayout" name="vlLeftTop">
          <property name="spacing">
           <number>16</number>
          </property>
          <property name="leftMargin">
-          <number>6</number>
-         </property>
-         <property name="topMargin">
           <number>12</number>
          </property>
+         <property name="topMargin">
+          <number>24</number>
+         </property>
          <property name="rightMargin">
-          <number>6</number>
+          <number>12</number>
          </property>
          <property name="bottomMargin">
-          <number>0</number>
+          <number>24</number>
          </property>
          <item>
           <widget class="QWidget" name="TopHeader" native="true">
@@ -422,13 +254,13 @@ QToolButton
              <number>8</number>
             </property>
             <property name="leftMargin">
-             <number>20</number>
+             <number>0</number>
             </property>
             <property name="topMargin">
              <number>0</number>
             </property>
             <property name="rightMargin">
-             <number>16</number>
+             <number>4</number>
             </property>
             <property name="bottomMargin">
              <number>0</number>
@@ -440,7 +272,7 @@ QToolButton
                 <number>4</number>
                </property>
                <property name="leftMargin">
-                <number>0</number>
+                <number>8</number>
                </property>
                <property name="topMargin">
                 <number>0</number>
@@ -543,8 +375,8 @@ QToolButton
            </property>
            <property name="maximumSize">
             <size>
-             <width>256</width>
-             <height>600</height>
+             <width>16777215</width>
+             <height>16777215</height>
             </size>
            </property>
            <property name="title">
@@ -553,519 +385,164 @@ QToolButton
            <property name="flat">
             <bool>true</bool>
            </property>
+           <property name="type" stdset="0">
+            <string notr="true">mega</string>
+           </property>
            <layout class="QVBoxLayout" name="verticalLayout">
             <property name="spacing">
              <number>4</number>
             </property>
             <property name="leftMargin">
-             <number>4</number>
+             <number>1</number>
             </property>
             <property name="topMargin">
-             <number>24</number>
+             <number>0</number>
             </property>
             <property name="rightMargin">
-             <number>4</number>
+             <number>0</number>
             </property>
             <property name="bottomMargin">
              <number>4</number>
             </property>
             <item>
-             <widget class="QFrame" name="fAllTransfers">
-              <property name="focusPolicy">
-               <enum>Qt::ClickFocus</enum>
+             <widget class="TabSelector" name="tabAllTransfers" native="true">
+              <property name="class" stdset="0">
+               <string notr="true">sidebar</string>
               </property>
-              <property name="frameShape">
-               <enum>QFrame::NoFrame</enum>
+              <property name="title" stdset="0">
+               <string>All transfers</string>
               </property>
-              <property name="frameShadow">
-               <enum>QFrame::Plain</enum>
+              <property name="icon" stdset="0">
+               <iconset resource="../../../gui/Resources_common.qrc">
+                <normaloff>:/arrows-up-down-circle_small_thin_outline</normaloff>
+                <normalon>:/arrows-up-down-circle_small_thin_solid</normalon>:/arrows-up-down-circle_small_thin_outline</iconset>
               </property>
-              <property name="lineWidth">
-               <number>0</number>
-              </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_10">
-               <property name="spacing">
-                <number>5</number>
-               </property>
-               <property name="leftMargin">
-                <number>12</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>12</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QPushButton" name="tAllTransfers">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>PointingHandCursor</cursorShape>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true"/>
-                 </property>
-                 <property name="text">
-                  <string>All transfers</string>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="checkable">
-                  <bool>true</bool>
-                 </property>
-                 <property name="autoDefault">
-                  <bool>false</bool>
-                 </property>
-                 <property name="flat">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item alignment="Qt::AlignRight">
-                <widget class="QLabel" name="lAllTransfers">
-                 <property name="enabled">
-                  <bool>true</bool>
-                 </property>
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string notr="true"/>
-                 </property>
-                </widget>
-               </item>
-              </layout>
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="fDownloads">
-              <property name="focusPolicy">
-               <enum>Qt::ClickFocus</enum>
+             <widget class="TabSelector" name="tabDownloads" native="true">
+              <property name="class" stdset="0">
+               <string notr="true">sidebar</string>
               </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_11">
-               <property name="spacing">
-                <number>5</number>
-               </property>
-               <property name="leftMargin">
-                <number>12</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>12</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QPushButton" name="tDownloads">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>PointingHandCursor</cursorShape>
-                 </property>
-                 <property name="text">
-                  <string>Downloads</string>
-                 </property>
-                 <property name="checkable">
-                  <bool>true</bool>
-                 </property>
-                 <property name="autoDefault">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item alignment="Qt::AlignRight">
-                <widget class="QLabel" name="lDownloads">
-                 <property name="enabled">
-                  <bool>true</bool>
-                 </property>
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string notr="true"/>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+              <property name="title" stdset="0">
+               <string>Downloads</string>
+              </property>
+              <property name="icon" stdset="0">
+               <iconset resource="../../../gui/Resources_common.qrc">
+                <normaloff>:/arrow-down-circle_small_thin_outline</normaloff>
+                <normalon>:/arrow-down-circle_small_thin_solid</normalon>:/arrow-down-circle_small_thin_outline</iconset>
+              </property>
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="fUploads">
-              <property name="focusPolicy">
-               <enum>Qt::ClickFocus</enum>
+             <widget class="TabSelector" name="tabUploads" native="true">
+              <property name="class" stdset="0">
+               <string notr="true">sidebar</string>
               </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_12">
-               <property name="spacing">
-                <number>5</number>
-               </property>
-               <property name="leftMargin">
-                <number>12</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>12</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QPushButton" name="tUploads">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>PointingHandCursor</cursorShape>
-                 </property>
-                 <property name="text">
-                  <string>Uploads</string>
-                 </property>
-                 <property name="checkable">
-                  <bool>true</bool>
-                 </property>
-                 <property name="autoDefault">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item alignment="Qt::AlignRight">
-                <widget class="QLabel" name="lUploads">
-                 <property name="enabled">
-                  <bool>true</bool>
-                 </property>
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string notr="true"/>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+              <property name="title" stdset="0">
+               <string>Uploads</string>
+              </property>
+              <property name="icon" stdset="0">
+               <iconset resource="../../../gui/Resources_common.qrc">
+                <normaloff>:/arrow-up-circle_small_thin_outline</normaloff>
+                <normalon>:/arrow-up-circle_small_thin_solid</normalon>:/arrow-up-circle_small_thin_outline</iconset>
+              </property>
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="fCompleted">
-              <property name="focusPolicy">
-               <enum>Qt::ClickFocus</enum>
+             <widget class="TabSelector" name="tabCompleted" native="true">
+              <property name="class" stdset="0">
+               <string notr="true">sidebar</string>
               </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_13">
-               <property name="spacing">
-                <number>5</number>
-               </property>
-               <property name="leftMargin">
-                <number>12</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>12</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QPushButton" name="tCompleted">
-                 <property name="enabled">
-                  <bool>true</bool>
-                 </property>
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>PointingHandCursor</cursorShape>
-                 </property>
-                 <property name="text">
-                  <string>Completed</string>
-                 </property>
-                 <property name="checkable">
-                  <bool>true</bool>
-                 </property>
-                 <property name="autoDefault">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item alignment="Qt::AlignRight">
-                <widget class="QLabel" name="lCompleted">
-                 <property name="enabled">
-                  <bool>true</bool>
-                 </property>
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string notr="true"/>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+              <property name="title" stdset="0">
+               <string>Completed</string>
+              </property>
+              <property name="icon" stdset="0">
+               <iconset resource="../../../gui/Resources_common.qrc">
+                <normaloff>:/check-circle_small_thin_outline</normaloff>
+                <normalon>:/check-circle_small_thin_solid</normalon>:/check-circle_small_thin_outline</iconset>
+              </property>
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="fFailed">
-              <property name="focusPolicy">
-               <enum>Qt::ClickFocus</enum>
+             <widget class="TabSelector" name="tabFailed" native="true">
+              <property name="class" stdset="0">
+               <string notr="true">sidebar</string>
               </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_failed">
-               <property name="spacing">
-                <number>5</number>
-               </property>
-               <property name="leftMargin">
-                <number>12</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>12</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QPushButton" name="tFailed">
-                 <property name="enabled">
-                  <bool>true</bool>
-                 </property>
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>PointingHandCursor</cursorShape>
-                 </property>
-                 <property name="text">
-                  <string>Failed</string>
-                 </property>
-                 <property name="checkable">
-                  <bool>true</bool>
-                 </property>
-                 <property name="autoDefault">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item alignment="Qt::AlignRight">
-                <widget class="QLabel" name="lFailed">
-                 <property name="enabled">
-                  <bool>true</bool>
-                 </property>
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string notr="true"/>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+              <property name="title" stdset="0">
+               <string>Failed</string>
+              </property>
+              <property name="icon" stdset="0">
+               <iconset resource="../../../gui/Resources_common.qrc">
+                <normaloff>:/alert-circle_small_thin_outline</normaloff>
+                <normalon>:/alert-circle_small_thin_solid</normalon>:/alert-circle_small_thin_outline</iconset>
+              </property>
              </widget>
             </item>
            </layout>
           </widget>
          </item>
          <item>
-          <widget class="MediaTypeFilterWidget" name="wMediaType" native="true"/>
+          <widget class="QWidget" name="wMediaTypeContainer" native="true">
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>1</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>4</number>
+            </property>
+            <item>
+             <widget class="MediaTypeFilterWidget" name="wMediaType" native="true"/>
+            </item>
+           </layout>
+          </widget>
          </item>
          <item>
           <widget class="QGroupBox" name="wSearch">
            <property name="title">
             <string>Search</string>
            </property>
+           <property name="type" stdset="0">
+            <string notr="true">mega</string>
+           </property>
            <layout class="QVBoxLayout" name="wSearchLayout">
             <property name="spacing">
-             <number>0</number>
+             <number>8</number>
             </property>
             <property name="leftMargin">
-             <number>4</number>
+             <number>1</number>
             </property>
             <property name="topMargin">
-             <number>24</number>
+             <number>0</number>
             </property>
             <property name="rightMargin">
-             <number>4</number>
+             <number>0</number>
             </property>
             <property name="bottomMargin">
              <number>4</number>
             </property>
             <item>
-             <widget class="QFrame" name="fSearchString">
-              <property name="focusPolicy">
-               <enum>Qt::StrongFocus</enum>
+             <widget class="TabSelector" name="tabSearch" native="true">
+              <property name="class" stdset="0">
+               <string notr="true">sidebar</string>
               </property>
-              <property name="frameShape">
-               <enum>QFrame::NoFrame</enum>
+              <property name="icon" stdset="0">
+               <iconset resource="../../../gui/Resources_common.qrc">
+                <normaloff>:/search-large_small_thin_outline</normaloff>
+                <normalon>:/search-large_small_thin_solid</normalon>:/search-large_small_thin_outline</iconset>
               </property>
-              <property name="frameShadow">
-               <enum>QFrame::Plain</enum>
+              <property name="closeButtonVisible" stdset="0">
+               <bool>true</bool>
               </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_14">
-               <property name="spacing">
-                <number>0</number>
-               </property>
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QPushButton" name="bSearchString">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>PointingHandCursor</cursorShape>
-                 </property>
-                 <property name="text">
-                  <string notr="true"/>
-                 </property>
-                 <property name="checkable">
-                  <bool>true</bool>
-                 </property>
-                 <property name="autoDefault">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="TokenizableToolButton" name="tClearSearchResult">
-                 <property name="maximumSize">
-                  <size>
-                   <width>16</width>
-                   <height>16</height>
-                  </size>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>PointingHandCursor</cursorShape>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../../../gui/Resources_common.qrc">
-                   <normaloff>:/x_solid_small</normaloff>:/x_solid_small</iconset>
-                 </property>
-                 <property name="type" stdset="0">
-                  <string notr="true">ghost</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
              </widget>
             </item>
            </layout>
@@ -1474,6 +951,141 @@ QToolButton
          <property name="verticalSpacing">
           <number>5</number>
          </property>
+         <item row="0" column="1" colspan="2">
+          <widget class="QWidget" name="pToolButtons" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_15">
+            <property name="spacing">
+             <number>24</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <spacer name="horizontalSpacer_6">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="TokenizableButton" name="bOpenLinks">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="text">
+               <string>Open links</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../gui/Resources_common.qrc">
+                <normaloff>:/link_01_small_thin_outline</normaloff>:/link_01_small_thin_outline</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">ghost</string>
+              </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">small</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="TokenizableButton" name="bUpload">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="text">
+               <string>Upload</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../gui/Resources_common.qrc">
+                <normaloff>:/upload_small_thin_outline</normaloff>:/upload_small_thin_outline</iconset>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">ghost</string>
+              </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">small</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="TokenizableButton" name="bDownload">
+              <property name="text">
+               <string>Download</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../gui/Resources_common.qrc">
+                <normaloff>:/download_small_thin_outline</normaloff>:/download_small_thin_outline</iconset>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">ghost</string>
+              </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">small</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="TokenizableToolButton" name="tCogWheel">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../gui/Resources_common.qrc">
+                <normaloff>:/gear_six_small_thin_outline</normaloff>:/gear_six_small_thin_outline</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">ghost</string>
+              </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">small</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
          <item row="0" column="0" alignment="Qt::AlignTop">
           <widget class="QStackedWidget" name="sCurrentContent">
            <property name="sizePolicy">
@@ -1641,157 +1253,6 @@ QToolButton
            </widget>
           </widget>
          </item>
-         <item row="0" column="1" colspan="2">
-          <widget class="QWidget" name="pToolButtons" native="true">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_15">
-            <property name="spacing">
-             <number>24</number>
-            </property>
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <spacer name="horizontalSpacer_6">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="TokenizableButton" name="bOpenLinks">
-              <property name="cursor">
-               <cursorShape>PointingHandCursor</cursorShape>
-              </property>
-              <property name="text">
-               <string>Open links</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../../../gui/Resources_common.qrc">
-                <normaloff>:/link_01_small_thin_outline</normaloff>:/link_01_small_thin_outline</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>16</width>
-                <height>16</height>
-               </size>
-              </property>
-              <property name="type" stdset="0">
-               <string notr="true">ghost</string>
-              </property>
-              <property name="dimension" stdset="0">
-               <string notr="true">small</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="TokenizableButton" name="bUpload">
-              <property name="cursor">
-               <cursorShape>PointingHandCursor</cursorShape>
-              </property>
-              <property name="text">
-               <string>Upload</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../../../gui/Resources_common.qrc">
-                <normaloff>:/upload_small_thin_outline</normaloff>:/upload_small_thin_outline</iconset>
-              </property>
-              <property name="type" stdset="0">
-               <string notr="true">ghost</string>
-              </property>
-              <property name="dimension" stdset="0">
-               <string notr="true">small</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="TokenizableButton" name="bDownload">
-              <property name="text">
-               <string>Download</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../../../gui/Resources_common.qrc">
-                <normaloff>:/download_small_thin_outline</normaloff>:/download_small_thin_outline</iconset>
-              </property>
-              <property name="type" stdset="0">
-               <string notr="true">ghost</string>
-              </property>
-              <property name="dimension" stdset="0">
-               <string notr="true">small</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="TokenizableToolButton" name="tCogWheel">
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="cursor">
-               <cursorShape>PointingHandCursor</cursorShape>
-              </property>
-              <property name="text">
-               <string notr="true"/>
-              </property>
-              <property name="icon">
-               <iconset resource="../../../gui/Resources_common.qrc">
-                <normaloff>:/gear_six_small_thin_outline</normaloff>:/gear_six_small_thin_outline</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>16</width>
-                <height>16</height>
-               </size>
-              </property>
-              <property name="type" stdset="0">
-               <string notr="true">ghost</string>
-              </property>
-              <property name="dimension" stdset="0">
-               <string notr="true">small</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <spacer name="wRightPanelScrollMargin">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Fixed</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>0</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
          <item row="1" column="0" colspan="3" alignment="Qt::AlignTop">
           <widget class="AutoResizeStackedWidget" name="sCurrentContentInfo">
            <property name="minimumSize">
@@ -1818,7 +1279,7 @@ QToolButton
               <enum>QLayout::SetMinimumSize</enum>
              </property>
              <property name="leftMargin">
-              <number>8</number>
+              <number>0</number>
              </property>
              <property name="topMargin">
               <number>0</number>
@@ -1962,7 +1423,7 @@ QToolButton
       <item>
        <widget class="QStackedWidget" name="sTransfers">
         <property name="currentIndex">
-         <number>5</number>
+         <number>2</number>
         </property>
         <widget class="TransfersWidget" name="wTransfers">
          <property name="sizePolicy">
@@ -2388,14 +1849,25 @@ QToolButton
  </widget>
  <customwidgets>
   <customwidget>
+   <class>TokenizableToolButton</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
+  </customwidget>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
+  </customwidget>
+  <customwidget>
    <class>TokenizableButton</class>
    <extends>QPushButton</extends>
    <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
   </customwidget>
   <customwidget>
-   <class>TokenizableToolButton</class>
-   <extends>QToolButton</extends>
-   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
+   <class>StatusInfo</class>
+   <extends>QWidget</extends>
+   <header location="global">StatusInfo.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>TabSelector</class>
@@ -2404,9 +1876,10 @@ QToolButton
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>IconLabel</class>
-   <extends>QToolButton</extends>
-   <header>tokenizer/TokenizableItems/IconLabel.h</header>
+   <class>SearchLineEdit</class>
+   <extends>QFrame</extends>
+   <header>SearchLineEdit.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>TransfersWidget</class>
@@ -2444,38 +1917,18 @@ QToolButton
    <header>BannerWidget.h</header>
    <container>1</container>
   </customwidget>
-  <customwidget>
-   <class>StatusInfo</class>
-   <extends>QWidget</extends>
-   <header location="global">StatusInfo.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>SearchLineEdit</class>
-   <extends>QFrame</extends>
-   <header>SearchLineEdit.h</header>
-   <container>1</container>
-  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>bPause</tabstop>
-  <tabstop>tAllTransfers</tabstop>
-  <tabstop>tDownloads</tabstop>
-  <tabstop>tUploads</tabstop>
-  <tabstop>tCompleted</tabstop>
-  <tabstop>tFailed</tabstop>
   <tabstop>bOpenLinks</tabstop>
   <tabstop>bUpload</tabstop>
   <tabstop>tCogWheel</tabstop>
   <tabstop>tNoUploads</tabstop>
   <tabstop>tActionButton</tabstop>
-  <tabstop>fSearchString</tabstop>
-  <tabstop>tClearSearchResult</tabstop>
   <tabstop>tNoDownloads</tabstop>
   <tabstop>tNoTransfers</tabstop>
   <tabstop>tNoResults</tabstop>
   <tabstop>tNoFinished</tabstop>
-  <tabstop>bSearchString</tabstop>
  </tabstops>
  <resources>
   <include location="../../../gui/Resources_common.qrc"/>

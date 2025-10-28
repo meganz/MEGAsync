@@ -3986,7 +3986,10 @@ void MegaApplication::importLinks()
 
             //Show the dialog to paste public links
             auto pasteMegaLinksDialog = new PasteMegaLinksDialog();
-            DialogOpener::showDialog<PasteMegaLinksDialog, TransferManager>(pasteMegaLinksDialog, true, this, &MegaApplication::onPasteMegaLinksDialogFinish);
+            DialogOpener::showDialog<PasteMegaLinksDialog>(
+                pasteMegaLinksDialog,
+                this,
+                &MegaApplication::onPasteMegaLinksDialogFinish);
         }
     });
 }
@@ -4010,35 +4013,41 @@ void MegaApplication::onPasteMegaLinksDialogFinish(QPointer<PasteMegaLinksDialog
 
         mLinkProcessor->requestLinkInfo();
 
-        DialogOpener::showDialog<ImportMegaLinksDialog, TransferManager>(importDialog, true, [this, importDialog]()
-        {
-            if (importDialog->result() == QDialog::Accepted)
+        DialogOpener::showDialog<ImportMegaLinksDialog>(
+            importDialog,
+            [this, importDialog]()
             {
-                //If the user wants to download some links, do it
-                if (importDialog->shouldDownload())
+                if (importDialog->result() == QDialog::Accepted)
                 {
-                    if (!preferences->hasDefaultDownloadFolder())
+                    // If the user wants to download some links, do it
+                    if (importDialog->shouldDownload())
                     {
-                        preferences->setDownloadFolder(importDialog->getDownloadPath());
+                        if (!preferences->hasDefaultDownloadFolder())
+                        {
+                            preferences->setDownloadFolder(importDialog->getDownloadPath());
+                        }
+
+                        mLinkProcessor->downloadLinks(importDialog->getDownloadPath());
                     }
 
-                    mLinkProcessor->downloadLinks(importDialog->getDownloadPath());
-                }
-
-                //If the user wants to import some links, do it
-                if (preferences->logged() && importDialog->shouldImport())
-                {
-                    preferences->setOverStorageDismissExecution(0);
-
-                    connect(mLinkProcessor, &LinkProcessor::onLinkImportFinish, this, [this]() mutable
+                    // If the user wants to import some links, do it
+                    if (preferences->logged() && importDialog->shouldImport())
                     {
-                        preferences->setImportFolder(mLinkProcessor->getImportParentFolder());
-                    });
+                        preferences->setOverStorageDismissExecution(0);
 
-                    mLinkProcessor->importLinks(importDialog->getImportPath());
+                        connect(mLinkProcessor,
+                                &LinkProcessor::onLinkImportFinish,
+                                this,
+                                [this]() mutable
+                                {
+                                    preferences->setImportFolder(
+                                        mLinkProcessor->getImportParentFolder());
+                                });
+
+                        mLinkProcessor->importLinks(importDialog->getImportPath());
+                    }
                 }
-            }
-        });
+            });
     }
 }
 

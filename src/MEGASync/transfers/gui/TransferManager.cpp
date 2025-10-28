@@ -5,6 +5,7 @@
 #include "Platform.h"
 #include "SomeIssuesOccurredMessage.h"
 #include "StalledIssuesModel.h"
+#include "tokenizer/TokenizableItems/TokenPropertySetter.h"
 #include "ui_TransferManager.h"
 #include "ui_TransferManagerDragBackDrop.h"
 
@@ -75,39 +76,39 @@ TransferManager::TransferManager(MegaApi* megaApi):
 
     mUi->wSearch->hide();
     mUi->wMediaType->hide();
-    mUi->fCompleted->hide();
 
     mUi->sStatus->setCurrentWidget(mUi->pUpToDate);
 
-    mTabFramesToggleGroup[TransfersWidget::ALL_TRANSFERS_TAB] = mUi->fAllTransfers;
-    mTabFramesToggleGroup[TransfersWidget::DOWNLOADS_TAB]     = mUi->fDownloads;
-    mTabFramesToggleGroup[TransfersWidget::UPLOADS_TAB]       = mUi->fUploads;
-    mTabFramesToggleGroup[TransfersWidget::COMPLETED_TAB]     = mUi->fCompleted;
-    mTabFramesToggleGroup[TransfersWidget::FAILED_TAB]        = mUi->fFailed;
-    mTabFramesToggleGroup[TransfersWidget::SEARCH_TAB]        = mUi->fSearchString;
-    mTabFramesToggleGroup[TransfersWidget::TYPE_OTHER_TAB] =
-        mUi->wMediaType->getFrame(TransfersWidget::TYPE_OTHER_TAB);
-    mTabFramesToggleGroup[TransfersWidget::TYPE_AUDIO_TAB] =
-        mUi->wMediaType->getFrame(TransfersWidget::TYPE_AUDIO_TAB);
-    mTabFramesToggleGroup[TransfersWidget::TYPE_VIDEO_TAB] =
-        mUi->wMediaType->getFrame(TransfersWidget::TYPE_VIDEO_TAB);
-    mTabFramesToggleGroup[TransfersWidget::TYPE_ARCHIVE_TAB] =
-        mUi->wMediaType->getFrame(TransfersWidget::TYPE_ARCHIVE_TAB);
-    mTabFramesToggleGroup[TransfersWidget::TYPE_DOCUMENT_TAB] =
-        mUi->wMediaType->getFrame(TransfersWidget::TYPE_DOCUMENT_TAB);
-    mTabFramesToggleGroup[TransfersWidget::TYPE_IMAGE_TAB] =
-        mUi->wMediaType->getFrame(TransfersWidget::TYPE_IMAGE_TAB);
+    mTabSelectorsToggleGroup.insert(TransfersWidget::ALL_TRANSFERS_TAB, mUi->tabAllTransfers);
+    mTabSelectorsToggleGroup.insert(TransfersWidget::DOWNLOADS_TAB, mUi->tabDownloads);
+    mTabSelectorsToggleGroup.insert(TransfersWidget::UPLOADS_TAB, mUi->tabUploads);
+    mTabSelectorsToggleGroup.insert(TransfersWidget::FAILED_TAB, mUi->tabFailed);
+    mTabSelectorsToggleGroup.insert(TransfersWidget::COMPLETED_TAB, mUi->tabCompleted);
 
-    for (auto tabFrame : qAsConst(mTabFramesToggleGroup))
-    {
-        tabFrame->setProperty(ITS_ON, false);
+    connect(mUi->tabAllTransfers,
+            &TabSelector::clicked,
+            this,
+            &TransferManager::on_tAllTransfers_clicked);
+    connect(mUi->tabDownloads,
+            &TabSelector::clicked,
+            this,
+            &TransferManager::on_tDownloads_clicked);
+    connect(mUi->tabUploads, &TabSelector::clicked, this, &TransferManager::on_tUploads_clicked);
+    connect(mUi->tabCompleted,
+            &TabSelector::clicked,
+            this,
+            &TransferManager::on_tCompleted_clicked);
+    connect(mUi->tabFailed, &TabSelector::clicked, this, &TransferManager::on_tFailed_clicked);
 
-        auto pushButton = tabFrame->findChild<QPushButton*>();
-        if(pushButton)
-        {
-            pushButton->setProperty(ButtonIconManager::DISABLE_UNCHECK_ON_CLICK, true);
-        }
-    }
+    mTabSelectorsToggleGroup.insert(TransfersWidget::SEARCH_TAB, mUi->tabSearch);
+    connect(mUi->tabSearch,
+            &TabSelector::hidden,
+            this,
+            &TransferManager::on_tClearSearchResult_clicked);
+    connect(mUi->tabSearch,
+            &TabSelector::clicked,
+            this,
+            &TransferManager::on_bSearchString_clicked);
 
     mTabNoItem[TransfersWidget::ALL_TRANSFERS_TAB] = mUi->wNoTransfers;
     mTabNoItem[TransfersWidget::DOWNLOADS_TAB]     = mUi->wNoDownloads;
@@ -122,24 +123,6 @@ TransferManager::TransferManager(MegaApi* megaApi):
     mTabNoItem[TransfersWidget::TYPE_DOCUMENT_TAB] = mUi->wNoTransfers;
     mTabNoItem[TransfersWidget::TYPE_IMAGE_TAB]    = mUi->wNoTransfers;
 
-    mNumberLabelsGroup[TransfersWidget::ALL_TRANSFERS_TAB]    = mUi->lAllTransfers;
-    mNumberLabelsGroup[TransfersWidget::DOWNLOADS_TAB]        = mUi->lDownloads;
-    mNumberLabelsGroup[TransfersWidget::UPLOADS_TAB]          = mUi->lUploads;
-    mNumberLabelsGroup[TransfersWidget::COMPLETED_TAB]        = mUi->lCompleted;
-    mNumberLabelsGroup[TransfersWidget::FAILED_TAB]           = mUi->lFailed;
-    mNumberLabelsGroup[TransfersWidget::TYPE_OTHER_TAB] =
-        mUi->wMediaType->getLabel(TransfersWidget::TYPE_OTHER_TAB);
-    mNumberLabelsGroup[TransfersWidget::TYPE_AUDIO_TAB] =
-        mUi->wMediaType->getLabel(TransfersWidget::TYPE_AUDIO_TAB);
-    mNumberLabelsGroup[TransfersWidget::TYPE_VIDEO_TAB] =
-        mUi->wMediaType->getLabel(TransfersWidget::TYPE_VIDEO_TAB);
-    mNumberLabelsGroup[TransfersWidget::TYPE_ARCHIVE_TAB] =
-        mUi->wMediaType->getLabel(TransfersWidget::TYPE_ARCHIVE_TAB);
-    mNumberLabelsGroup[TransfersWidget::TYPE_DOCUMENT_TAB] =
-        mUi->wMediaType->getLabel(TransfersWidget::TYPE_DOCUMENT_TAB);
-    mNumberLabelsGroup[TransfersWidget::TYPE_IMAGE_TAB] =
-        mUi->wMediaType->getLabel(TransfersWidget::TYPE_IMAGE_TAB);
-
     QMetaEnum tabs = QMetaEnum::fromType<TransfersWidget::TM_TAB>();
 
     for (int index = 0; index < tabs.keyCount(); index++)
@@ -149,14 +132,26 @@ TransferManager::TransferManager(MegaApi* megaApi):
         if(value > TransfersWidget::TYPES_TAB_BASE && value < TransfersWidget::TYPES_LAST)
         {
             TransfersWidget::TM_TAB currentTab = static_cast<TransfersWidget::TM_TAB>(value);
-            mNumberLabelsGroup[currentTab]->parentWidget()->hide();
+            auto tabSelector = mUi->wMediaType->getTabSelectorByType(currentTab);
+            if (tabSelector)
+            {
+                connect(tabSelector,
+                        &TabSelector::clicked,
+                        this,
+                        &TransferManager::onMediaTabSelectorClicked);
+                tabSelector->hide();
+            }
         }
     }
 
-    auto managedButtons = mUi->wRightPaneHeader->findChildren<QAbstractButton*>();
-    foreach(auto& button, managedButtons)
+    // Left pane tokens
     {
-        mButtonIconManager.addButton(button);
+        BaseTokens iconTokens;
+        iconTokens.setNormalOff(QLatin1String("icon-secondary"));
+        iconTokens.setNormalOn(QLatin1String("icon-primary"));
+        auto iconTokenSetter = std::make_shared<TokenPropertySetter>(iconTokens);
+
+        TabSelector::applyTokens(mUi->wLeftPaneTop, iconTokenSetter);
     }
 
     connect(mModel, &TransfersModel::pauseStateChanged,
@@ -170,9 +165,6 @@ TransferManager::TransferManager(MegaApi* megaApi):
 
     connect(this, &TransferManager::retryAllTransfers,
             findChild<MegaTransferView*>(), &MegaTransferView::onRetryVisibleTransfers);
-
-    connect(findChild<MegaTransferView*>(), &MegaTransferView::verticalScrollBarVisibilityChanged,
-            this, &TransferManager::onVerticalScrollBarVisibilityChanged);
 
     connect(mUi->wTransfers->getProxyModel(),
             &TransfersManagerSortFilterProxyModel::searchNumbersChanged,
@@ -238,13 +230,9 @@ TransferManager::TransferManager(MegaApi* megaApi):
 
 TransferManager::~TransferManager()
 {
-    disconnect(findChild<MegaTransferView*>(), &MegaTransferView::verticalScrollBarVisibilityChanged,
-            this, &TransferManager::onVerticalScrollBarVisibilityChanged);
-
     delete mUi;
     delete mTransferScanCancelUi;
 }
-
 
 void TransferManager::pauseModel(bool value)
 {
@@ -500,59 +488,45 @@ void TransferManager::showQuotaStorageDialogs(bool isPaused)
 
 void TransferManager::refreshStateStats()
 {
-    QLabel* countLabel (nullptr);
-    QString countLabelText;
+    TabSelector* tabSelector(nullptr);
     uint processedNumber (0);
 
     // First check Finished states -----------------------------------------------------------------
-    countLabel = mNumberLabelsGroup[TransfersWidget::COMPLETED_TAB];
+    tabSelector = mTabSelectorsToggleGroup[TransfersWidget::COMPLETED_TAB];
 
     processedNumber = mTransfersCount.completedDownloads() + mTransfersCount.completedUploads();
-    countLabelText = processedNumber > 0 ? QString::number(processedNumber) : QString();
 
     // Update if the value changed
-    if (countLabel->text().isEmpty() || countLabelText != countLabel->text())
+    if (mUi->wTransfers->getCurrentTab() != TransfersWidget::COMPLETED_TAB && processedNumber == 0)
     {
-        if (mUi->wTransfers->getCurrentTab() != TransfersWidget::COMPLETED_TAB && processedNumber == 0)
-        {
-            countLabel->parentWidget()->hide();
-            countLabel->clear();
-        }
-        else
-        {
-            countLabel->parentWidget()->show();
-            countLabel->setVisible(processedNumber > 0);
-            countLabel->setText(countLabelText);
-        }
+        tabSelector->hide();
+    }
+    else
+    {
+        tabSelector->setCounter(processedNumber);
+        tabSelector->show();
     }
 
     // The check Failed states -----------------------------------------------------------------
-    countLabel = mNumberLabelsGroup[TransfersWidget::FAILED_TAB];
+    tabSelector = mTabSelectorsToggleGroup[TransfersWidget::FAILED_TAB];
 
     auto failedNumber(mTransfersCount.totalFailedTransfers());
-    countLabelText = failedNumber > 0 ? QString::number(failedNumber) : QString();
 
     // Update if the value changed
-    if (countLabel->text().isEmpty() || countLabelText != countLabel->text())
+    if (mUi->wTransfers->getCurrentTab() != TransfersWidget::FAILED_TAB && failedNumber == 0)
     {
-        if (mUi->wTransfers->getCurrentTab() != TransfersWidget::FAILED_TAB && failedNumber == 0)
-        {
-            countLabel->parentWidget()->hide();
-            countLabel->clear();
-        }
-        else
-        {
-            countLabel->parentWidget()->show();
-            countLabel->setVisible(failedNumber > 0);
-            countLabel->setText(countLabelText);
-        }
+        tabSelector->hide();
+    }
+    else
+    {
+        tabSelector->setCounter(failedNumber);
+        tabSelector->show();
     }
 
     // Then Active states --------------------------------------------------------------------------
-    countLabel = mNumberLabelsGroup[TransfersWidget::ALL_TRANSFERS_TAB];
+    tabSelector = mTabSelectorsToggleGroup[TransfersWidget::ALL_TRANSFERS_TAB];
 
     processedNumber = mTransfersCount.pendingDownloads + mTransfersCount.pendingUploads;
-    countLabelText = processedNumber > 0 ? QString::number(processedNumber) : QString();
 
     QWidget* leftFooterWidget (nullptr);
 
@@ -572,18 +546,14 @@ void TransferManager::refreshStateStats()
         }
 
         mSpeedRefreshTimer->stop();
-        countLabel->hide();
-        countLabel->clear();
+        tabSelector->setCounter(0);
     }
     else
     {
         // If we didn't have transfers, launch timer and show speed.
-        if (countLabel->text().isEmpty())
+        if (tabSelector->isEmpty() && !mSpeedRefreshTimer->isActive())
         {
-            if(!mSpeedRefreshTimer->isActive())
-            {
-                mSpeedRefreshTimer->start(SPEED_REFRESH_PERIOD_MS);
-            }
+            mSpeedRefreshTimer->start(SPEED_REFRESH_PERIOD_MS);
         }
 
         if(mTransferScanCancelUi && mTransferScanCancelUi->isActive())
@@ -601,16 +571,7 @@ void TransferManager::refreshStateStats()
             }
         }
 
-        if(processedNumber != 0)
-        {
-            countLabel->show();
-            countLabel->setText(countLabelText);
-        }
-        else
-        {
-            countLabel->hide();
-            countLabel->clear();
-        }
+        tabSelector->setCounter(processedNumber);
     }
 
     if(leftFooterWidget && leftFooterWidget != mUi->sStatus->currentWidget())
@@ -623,28 +584,12 @@ void TransferManager::refreshTypeStats()
 {
     auto downloadTransfers = mTransfersCount.pendingDownloads;
 
-    auto countLabel = mNumberLabelsGroup[TransfersWidget::DOWNLOADS_TAB];
-    QString countLabelText(downloadTransfers > 0 ? QString::number(downloadTransfers) : QString());
-
-    // First check Downloads -----------------------------------------------------------------------
-    if (countLabel->text().isEmpty() || countLabelText != countLabel->text())
-    {
-        countLabel->setText(countLabelText);
-    }
-
-    countLabel->setVisible(!countLabelText.isEmpty());
+    auto tabSelector = mTabSelectorsToggleGroup[TransfersWidget::DOWNLOADS_TAB];
+    tabSelector->setCounter(downloadTransfers);
 
     auto uploadTransfers = mTransfersCount.pendingUploads;
-
-    countLabel = mNumberLabelsGroup[TransfersWidget::UPLOADS_TAB];
-    countLabelText = uploadTransfers > 0 ? QString::number(uploadTransfers) : QString();
-
-    // Then Uploads --------------------------------------------------------------------------------
-    if (countLabel->text().isEmpty() || countLabelText != countLabel->text())
-    {
-        countLabel->setText(countLabelText);
-    }
-    countLabel->setVisible(!countLabelText.isEmpty());
+    tabSelector = mTabSelectorsToggleGroup[TransfersWidget::UPLOADS_TAB];
+    tabSelector->setCounter(uploadTransfers);
 }
 
 void TransferManager::refreshFileTypesStats()
@@ -667,7 +612,7 @@ void TransferManager::refreshFileTypesStats()
             }
             else
             {
-                mUi->wMediaType->showIfGroupboxVisible(tab, number);
+                mUi->wMediaType->setCounter(tab, number);
             }
         }
     }
@@ -698,33 +643,6 @@ void TransferManager::onStorageStateChanged(int storageState)
     onTransferQuotaStateChanged(mTransferQuotaState);
 
     checkPauseButtonVisibilityIfPossible();
-}
-
-void TransferManager::onVerticalScrollBarVisibilityChanged(bool state)
-{
-    QPointer<TransferManager> currentTransferManager = this;
-
-    if(currentTransferManager)
-    {
-        auto transfersView = dynamic_cast<MegaTransferView*>(sender());
-        if(transfersView && transfersView->isVisible())
-        {
-            if(state)
-            {
-                int sliderWidth = transfersView->getVerticalScrollBarWidth();
-                mUi->wRightPanelScrollMargin->changeSize(sliderWidth,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
-            }
-            else
-            {
-                mUi->wRightPanelScrollMargin->changeSize(0,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
-            }
-
-            if(mUi->wRightPaneHeaderLayout)
-            {
-                mUi->wRightPaneHeaderLayout->invalidate();
-            }
-        }
-    }
 }
 
 void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
@@ -795,9 +713,9 @@ void TransferManager::refreshSearchStats()
         int nbDl (proxy->getNumberOfItems(TransferData::TRANSFER_DOWNLOAD));
         int nbUl (proxy->getNumberOfItems(TransferData::TRANSFER_UPLOAD));
         int nbAll (nbDl + nbUl);
-        mUi->wAllResults->setCounter(nbAll);
-        mUi->wDlResults->setCounter(nbDl);
-        mUi->wUlResults->setCounter(nbUl);
+        mUi->wAllResults->setCounter(static_cast<unsigned long long>(nbAll));
+        mUi->wDlResults->setCounter(static_cast<unsigned long long>(nbDl));
+        mUi->wUlResults->setCounter(static_cast<unsigned long long>(nbUl));
 
         if(nbDl != 0 && nbUl != 0)
         {
@@ -853,7 +771,6 @@ void TransferManager::pauseResumeTransfers(bool isPaused)
 
 void TransferManager::onSearch(const QString& text)
 {
-    mUi->bSearchString->setProperty(SEARCH_TEXT, text);
     applyTextSearch(text);
 }
 
@@ -883,8 +800,10 @@ void TransferManager::applyTextSearch(const QString& text)
     mUi->wDlResults->hide();
     mUi->wUlResults->hide();
 
-    mUi->wSearch->show();
-    mUi->bSearchString->setText(text);
+    mUi->wSearch->setVisible(true);
+
+    mUi->tabSearch->setTitle(text);
+    mUi->tabSearch->setSelected(true);
 
     //This is done to refresh the stylesheet as depends on the object properties
     mUi->pSearchHeaderInfo->setStyleSheet(mUi->pSearchHeaderInfo->styleSheet());
@@ -905,13 +824,18 @@ void TransferManager::enableUserActions(bool enabled)
 
 void TransferManager::on_bSearchString_clicked()
 {
-    applyTextSearch(mUi->bSearchString->property(SEARCH_TEXT).toString());
+    auto searchTab = mTabSelectorsToggleGroup.value(TransfersWidget::SEARCH_TAB);
+    if (searchTab)
+    {
+        applyTextSearch(searchTab->getTitle());
+    }
 }
 
 void TransferManager::on_tClearSearchResult_clicked()
 {
-    mUi->wSearch->hide();
-    mUi->bSearchString->setText(QString());
+    mUi->leSearch->onClearClicked();
+    mUi->wSearch->setVisible(false);
+
     if (mUi->wTransfers->getCurrentTab() == TransfersWidget::SEARCH_TAB)
     {
         mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
@@ -966,6 +890,52 @@ void TransferManager::on_bOther_clicked()
     onFileTypeButtonClicked(TransfersWidget::TYPE_OTHER_TAB, Utilities::FileType::TYPE_OTHER);
 }
 
+void TransferManager::onMediaTabSelectorClicked()
+{
+    if (auto tabSelector = dynamic_cast<TabSelector*>(sender()))
+    {
+        auto tab = mUi->wMediaType->getTabByTabSelector(tabSelector);
+
+        switch (tab)
+        {
+            case TransfersWidget::TM_TAB::TYPE_ARCHIVE_TAB:
+            {
+                on_bArchives_clicked();
+                break;
+            }
+            case TransfersWidget::TM_TAB::TYPE_DOCUMENT_TAB:
+            {
+                on_bDocuments_clicked();
+                break;
+            }
+            case TransfersWidget::TM_TAB::TYPE_IMAGE_TAB:
+            {
+                on_bImages_clicked();
+                break;
+            }
+            case TransfersWidget::TM_TAB::TYPE_VIDEO_TAB:
+            {
+                on_bVideos_clicked();
+                break;
+            }
+            case TransfersWidget::TM_TAB::TYPE_AUDIO_TAB:
+            {
+                on_bAudio_clicked();
+                break;
+            }
+            case TransfersWidget::TM_TAB::TYPE_OTHER_TAB:
+            {
+                on_bOther_clicked();
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
+    }
+}
+
 void TransferManager::onFileTypeButtonClicked(TransfersWidget::TM_TAB tab, Utilities::FileType fileType)
 {
     if (mUi->wTransfers->getCurrentTab() != tab)
@@ -1015,31 +985,24 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
         //First, update the data
         onTransfersDataUpdated();
 
-        // De-activate old tab frame
-        if (mUi->wTransfers->getCurrentTab() != TransfersWidget::NO_TAB)
-        {
-            mTabFramesToggleGroup[mUi->wTransfers->getCurrentTab()]->setProperty(ITS_ON, false);
-            auto pushButton = mTabFramesToggleGroup[mUi->wTransfers->getCurrentTab()]->findChild<QPushButton*>();
-            if(pushButton)
-            {
-                pushButton->setChecked(false);
-            }
-        }
-
-        // Activate new tab frame
-        mTabFramesToggleGroup[newTab]->setProperty(ITS_ON, true);
-
-        // Reload QSS because it is glitchy
-        mUi->wLeftPane->setStyleSheet(mUi->wLeftPane->styleSheet());
-
-        auto pushButton = mTabFramesToggleGroup[newTab]->findChild<QPushButton*>();
-        if(pushButton)
-        {
-            pushButton->setChecked(true);
-        }
-
         auto previousTab = mUi->wTransfers->getCurrentTab();
         mUi->wTransfers->setCurrentTab(newTab);
+
+        TabSelector* newTabSelector(nullptr);
+
+        if (newTab > TransfersWidget::TYPES_TAB_BASE && newTab < TransfersWidget::TYPES_LAST)
+        {
+            newTabSelector = mUi->wMediaType->getTabSelectorByType(newTab);
+        }
+        else
+        {
+            newTabSelector = mTabSelectorsToggleGroup.value(newTab);
+        }
+
+        if (newTabSelector)
+        {
+            newTabSelector->setSelected(true);
+        }
 
         //The rest of cases
         if (previousTab == TransfersWidget::COMPLETED_TAB
@@ -1048,26 +1011,37 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
         {
             uint transfers(0);
 
-            if(previousTab == TransfersWidget::COMPLETED_TAB)
+            if (previousTab == TransfersWidget::COMPLETED_TAB ||
+                previousTab == TransfersWidget::FAILED_TAB)
             {
-                transfers = mTransfersCount.completedDownloads() + mTransfersCount.completedUploads();
-            }
-            else if(previousTab == TransfersWidget::FAILED_TAB)
-            {
-                transfers = mTransfersCount.totalFailedTransfers();
+                if (previousTab == TransfersWidget::COMPLETED_TAB)
+                {
+                    transfers =
+                        mTransfersCount.completedDownloads() + mTransfersCount.completedUploads();
+                }
+                else if (previousTab == TransfersWidget::FAILED_TAB)
+                {
+                    transfers = mTransfersCount.totalFailedTransfers();
+                }
+
+                if (transfers == 0)
+                {
+                    auto previousTabSelector = mTabSelectorsToggleGroup.value(previousTab);
+
+                    if (previousTabSelector)
+                    {
+                        previousTabSelector->hide();
+                    }
+                }
             }
             else
             {
                 Utilities::FileType fileType = static_cast<Utilities::FileType>(previousTab - TransfersWidget::TYPES_TAB_BASE);
                 transfers = mModel->getNumberOfTransfersForFileType(fileType);
-            }
 
-            if(transfers == 0)
-            {
-                auto countLabel(mNumberLabelsGroup[previousTab]);
-                if(countLabel->parentWidget()->isVisible())
+                if (transfers == 0)
                 {
-                    countLabel->parentWidget()->hide();
+                    mUi->wMediaType->resetCounter(previousTab);
                 }
             }
         }
