@@ -106,7 +106,7 @@ Rectangle {
                 source: paused? Images.play_circle_medium_thin_outline : Images.pause_circle_medium_thin_outline
                 sourceSize: Qt.size(root.buttonIconSize, root.buttonIconSize)
                 color: ColorTheme.buttonOutline
-                visible: areThereTransfers
+                visible: areThereTransfers || paused
 
                 MouseArea {
                     anchors.fill: parent
@@ -198,7 +198,5 @@ Rectangle {
                 }
             }
         }
-
-
     }
 }

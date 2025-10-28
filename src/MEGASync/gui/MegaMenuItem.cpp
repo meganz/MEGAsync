@@ -87,7 +87,7 @@ void MegaMenuItem::updateLayout()
     m_layout->addWidget(m_textLabel);
 
     // Add stretch to push submenu arrow to the right
-    m_layout->addStretch();
+    m_layout->addSpacing(DEFAULT_SPACING);
 
     // Add submenu arrow if needed
     if (m_hasSubmenu)

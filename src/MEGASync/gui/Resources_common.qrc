@@ -1287,5 +1287,6 @@
         <file alias="folder-plus-02_medium_thin_outline">images/themed/tokenizable/folder-plus-02_medium_thin_outline.svg</file>
         <file alias="arrow-up_medium_thin_outline">images/themed/tokenizable/arrow-up_medium_thin_outline.svg</file>
         <file alias="arrow-up_small_thin_outline">images/themed/tokenizable/arrow-up_small_thin_outline.svg</file>
+        <file alias="pause-thin_small_regular_outline.svg">images/themed/tokenizable/pause-thin_small_regular_outline.svg</file>
     </qresource>
 </RCC>

@@ -710,7 +710,7 @@ qproperty-eyeClosedDisabledImage: url(:/eye-off_disabled);
 QMenu.MegaMenu
 {
 background-color: #FFFFFFFF; /*colorToken.page-background*/
-border-color: #ff494a4d; /*colorToken.border-disabled*/
+border-color: #ff494a4d; /*colorToken.border-subtle*/
 }
 QMenu.MegaMenu::separator
 {

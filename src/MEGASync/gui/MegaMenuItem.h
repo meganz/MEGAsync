@@ -74,6 +74,7 @@ private:
     static constexpr int DEFAULT_TREE_INDENT = 20;
     static constexpr int DEFAULT_BASE_MARGIN = 16;
     static constexpr int DEFAULT_ICON_SIZE = 16;
+    static constexpr int DEFAULT_SPACING = 32;
 };
 
 #endif // MENUITEM_H

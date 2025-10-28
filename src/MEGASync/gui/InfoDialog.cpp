@@ -1406,8 +1406,7 @@ void InfoDialog::applyFilterOption(MessageType opt)
 
 void InfoDialog::on_bNotificationsSettings_clicked()
 {
-    Utilities::openUrl(ServiceUrls::getAccountNotificationsUrl());
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::NOTIFICATION_SETTINGS_CLICKED, true);
+    MegaSyncApp->openSettings(SettingsDialog::NOTIFICATIONS_TAB);
 }
 
 void InfoDialog::on_bDiscard_clicked()

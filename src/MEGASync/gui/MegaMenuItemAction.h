@@ -24,7 +24,7 @@ public:
 
     // Size control
     void setItemHeight(int height);
-    void setItemWidth(int width);
+    void setItemMinimumWidth(int width);
 
     // Tree depth
     void setTreeDepth(int depth);
@@ -53,7 +53,7 @@ private:
     int m_textSpacing;
     int m_beforeIconSpacing;
     int m_itemHeight;
-    int m_itemWidth;
+    int m_itemMinimumWidth;
     QPointer<QMenu> m_submenu;
 };
 

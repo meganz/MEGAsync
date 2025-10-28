@@ -20,7 +20,7 @@ MegaMenuItemAction::MegaMenuItemAction(const QString& text,
     m_textSpacing(0),
     m_beforeIconSpacing(0),
     m_itemHeight(40),
-    m_itemWidth(240),
+    m_itemMinimumWidth(200),
     m_submenu(nullptr)
 {}
 
@@ -38,9 +38,9 @@ QWidget* MegaMenuItemAction::createWidget(QWidget* parent)
     m_item->setFixedHeight(m_itemHeight);
     m_item->setHasSubmenu(m_submenu != nullptr);
 
-    if (m_itemWidth > 0)
+    if (m_itemMinimumWidth > 0)
     {
-        m_item->setFixedWidth(m_itemWidth);
+        m_item->setMinimumWidth(m_itemMinimumWidth);
     }
     return m_item;
 }
@@ -142,12 +142,12 @@ void MegaMenuItemAction::setItemHeight(int height)
     }
 }
 
-void MegaMenuItemAction::setItemWidth(int width)
+void MegaMenuItemAction::setItemMinimumWidth(int width)
 {
-    m_itemWidth = width;
+    m_itemMinimumWidth = width;
     if (m_item)
     {
-        m_item->setFixedWidth(width);
+        m_item->setMinimumWidth(width);
     }
 }
 
