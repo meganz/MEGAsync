@@ -75,8 +75,8 @@
         <translation>مشاركات واردة</translation>
     </message>
     <message>
-        <source>Payment</source>
-        <translatorcomment>Label to indicate that the application is showing only payment notifications</translatorcomment>
+        <source>Payments</source>
+        <translatorcomment>Label to indicate that the application is showing only payment notifications SNC-5953</translatorcomment>
         <translation>دفعات</translation>
     </message>
 </context>
@@ -738,66 +738,44 @@
     </message>
 </context>
 <context>
-    <name>ChangePassword</name>
+    <name>ChangePasswordController</name>
     <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to close the Change password dialog discarding the information</translatorcomment>
-        <translation>الغاء</translation>
+        <source>Password changed</source>
+        <translatorcomment>Title of the dialog displayed when the change password process finish successful. SNC-5799</translatorcomment>
+        <translation>تم تغيير كلمة السر</translation>
     </message>
     <message>
+        <source>Too many requests. Please wait.</source>
+        <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible). SNC-5799</translatorcomment>
+        <translation>عدد كبير جدًا من الطلبات، يرجى الانتظار</translation>
+    </message>
+    <message>
+        <source>You have entered your current password, please enter a new password.</source>
+        <translatorcomment>Informative message shown when user is trying to change his password with the current one. SNC-5799</translatorcomment>
+        <translation>لقد أدخلت كلمة المرور الحالية، أدخل كلمة مرور جديدة</translation>
+    </message>
+    <message>
+        <source>Your password has been changed.</source>
+        <translatorcomment>Success message shown when the password has been changed. SNC-5799</translatorcomment>
+        <translation>تم تغيير كلمة المرور الخاصة بك</translation>
+    </message>
+</context>
+<context>
+    <name>ChangePasswordStrings</name>
+    <message>
         <source>Change password</source>
-        <translatorcomment>Windows title of the Change password dialog</translatorcomment>
+        <translatorcomment>Windows title of the Change password dialog. SNC-5799</translatorcomment>
         <translation>تغيير كلمة المرور</translation>
     </message>
     <message>
         <source>Confirm new password</source>
-        <translatorcomment>Label displayed next to control where the user can enter the new password confirmation</translatorcomment>
+        <translatorcomment>Label displayed next to control where the user can enter the new password confirmation. SNC-5799</translatorcomment>
         <translation>تأكيد كلمة المرور الجديدة</translation>
     </message>
     <message>
         <source>New password</source>
-        <translatorcomment>Label displayed next to control where the user can enter the new password</translatorcomment>
-        <translation>كلمة المرور جديدة</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Button label to close the Change password dialog saving the new information</translatorcomment>
-        <translation>موافق</translation>
-    </message>
-    <message>
-        <source>Password changed</source>
-        <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
-        <translation>تم تغيير كلمة السر</translation>
-    </message>
-    <message>
-        <source>Please enter your password</source>
-        <translatorcomment>Error message displayed when an empty password has been provided</translatorcomment>
-        <translation>أدخل كلمة المرور الخاصة بك</translation>
-    </message>
-    <message>
-        <source>Please, enter a stronger password</source>
-        <translatorcomment>Error message displayed when an the new password is too weak</translatorcomment>
-        <translation>أدخل كلمة مرور أقوى</translation>
-    </message>
-    <message>
-        <source>The entered passwords don&apos;t match</source>
-        <translatorcomment>Error message displayed when the new password and its confirmation are not the same</translatorcomment>
-        <translation>كلمات المرور التي تم إدخالها غير متطابقة</translation>
-    </message>
-    <message>
-        <source>Too many requests. Please wait.</source>
-        <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</translatorcomment>
-        <translation>طلبات كثيرة جداً. يرجى الانتظار.</translation>
-    </message>
-    <message>
-        <source>You have entered your current password, please enter a new password.</source>
-        <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
-        <translation>لقد أدخلت كلمة المرور الحالية، أدخل كلمة مرور جديدة.</translation>
-    </message>
-    <message>
-        <source>Your password has been changed.</source>
-        <translatorcomment>Success message shown when the password has been changed</translatorcomment>
-        <translation>تم تغيير كلمة المرور.</translation>
+        <translatorcomment>Label displayed next to control where the user can enter the new password. SNC-5799</translatorcomment>
+        <translation>كلمة سر جديدة</translation>
     </message>
 </context>
 <context>
@@ -931,11 +909,9 @@
         <translation>ستنتهي صلاحية اشتراك برو Pro الخاص بك قريباً</translation>
     </message>
     <message>
-        <source>The following characters are not allowed:
-%1</source>
-        <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder)</translatorcomment>
-        <translation>المحارف التالية غير مسموح بها:
-%1</translation>
+        <source>The following characters are not allowed: %1</source>
+        <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder). SNC-5804</translatorcomment>
+        <translation>المحارف التالية غير مسموح بها: %1</translation>
     </message>
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
@@ -1976,8 +1952,8 @@
         <translation>مشاركات واردة</translation>
     </message>
     <message>
-        <source>Payment</source>
-        <translatorcomment>Label to indicate that only Payment notifications will be shown.</translatorcomment>
+        <source>Payments</source>
+        <translatorcomment>Label to indicate that only Payment notifications will be shown. SNC-5953</translatorcomment>
         <translation>دفعات</translation>
     </message>
 </context>
@@ -2369,11 +2345,6 @@ Check your email inbox for instructions on unlocking your account and tips on ho
         <translation>قم بترقية حسابك.</translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translatorcomment>This is the string used to refer to settings for all platforms.</translatorcomment>
-        <translation>الاعدادات</translation>
-    </message>
-    <message>
         <source>Show MEGAsync options</source>
         <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
         <translation>عرض الخيارات</translation>
@@ -2449,14 +2420,14 @@ Check your email inbox for instructions on unlocking your account and tips on ho
         <translation>لا يمكنك متابعة التنزيل نظرًا لعدم وجود حصة تراسل متاحة كافية على هذا الحساب. لمتابعة التنزيل قم بشراء باقة جديدة أو إذا كان لديك اشتراك متكرر مع ميغا MEGA يمكنك الانتظار حتى يتم تجديد باقتك.</translation>
     </message>
     <message numerus="yes">
-        <source>You have [A]%n day[/A] left to upgrade. After that, your data is subject to deletion.</source>
-        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of days left to upgrade.</translatorcomment>
-        <translation><numerusform>لديك [A]%n يوم[/A] متبقي للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform><numerusform>لديك [A]%n يوم[/A] متبقي للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform><numerusform>لديك [A]%n يومان[/A] متبقيان للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform><numerusform>لديك [A]%n أيام[/A] متبقية للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform><numerusform>لديك [A]%n يوماً[/A] متبقياً للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform><numerusform>لديك [A]%n يوم[/A] متبقي للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform></translation>
+        <source>You have %n day left to upgrade. After that, your data is subject to deletion.</source>
+        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. %n- number of days left to upgrade.</translatorcomment>
+        <translation><numerusform>لديك %n يوم متبقي للترقية أو ستخضع بياناتك للحذف</numerusform><numerusform>لديك %n يوم متبقي للترقية أو ستخضع بياناتك للحذف</numerusform><numerusform>لديك %n يومين متبقيين للترقية أو ستخضع بياناتك للحذف</numerusform><numerusform>لديك %n أيام متبقية للترقية أو ستخضع بياناتك للحذف</numerusform><numerusform>لديك %n يوماً متبقياً للترقية أو ستخضع بياناتك للحذف</numerusform><numerusform>لديك %n يوم متبقي للترقية أو ستخضع بياناتك للحذف</numerusform></translation>
     </message>
     <message numerus="yes">
-        <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
-        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
-        <translation><numerusform>لديك [A]%n ساعة[/A] متبقية للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform><numerusform>لديك [A]%n ساعة[/A] متبقية للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform><numerusform>لديك [A]%n ساعتان[/A] متبقيتان للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform><numerusform>لديك [A]%n ساعات[/A] متبقية للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform><numerusform>لديك [A]%n ساعة[/A] متبقية للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform><numerusform>لديك [A]%n ساعة[/A] متبقية للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform></translation>
+        <source>You have %n hour left to upgrade. After that, your data is subject to deletion.</source>
+        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: %n- number of hours left to upgrade.</translatorcomment>
+        <translation><numerusform>لديك %n ساعة متبقية للترقية أو ستخضع بياناتك للحذف</numerusform><numerusform>لديك %n ساعة متبقية للترقية أو ستخضع بياناتك للحذف</numerusform><numerusform>لديك %n ساعتين متبقيتان للترقية أو ستخضع بياناتك للحذف</numerusform><numerusform>لديك %n ساعات متبقية للترقية أو ستخضع بياناتك للحذف</numerusform><numerusform>لديك %n ساعة متبقية للترقية أو ستخضع بياناتك للحذف</numerusform><numerusform>لديك %n ساعة متبقية للترقية أو ستخضع بياناتك للحذف</numerusform></translation>
     </message>
     <message>
         <source>You must act immediately to save your data</source>
@@ -2583,7 +2554,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>Do not show again</source>
         <translatorcomment>This is a label for a checkbox. When checked by the user, it ensures that the Enable Notification Area Icon notification will not be displayed to them in the future. SNC-2270</translatorcomment>
-        <translation>لا تظهر مرة أخرى</translation>
+        <translation>لا تُظهر هذا مرة أخرى</translation>
     </message>
     <message>
         <source>Failed to install the necessary components.</source>
@@ -2968,62 +2939,6 @@ Please wait for the upload to complete.</source>
     </message>
 </context>
 <context>
-    <name>LockedPopOver</name>
-    <message>
-        <source>Locked Accounts</source>
-        <translatorcomment>Title of informative popover which informs users about the lock situation.</translatorcomment>
-        <translation>الحسابات المقفلة</translation>
-    </message>
-    <message>
-        <source>[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</source>
-        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
-        <translation>[A] من المحتمل أنك تستخدم نفس كلمة المرور لحساب ميغا MEGA الخاص بك الخدمات أخرى، وأن واحدة على الأقل من هذه الخدمات الأخرى قد تعرضت لانتهاك للبيانات.[/A]</translation>
-    </message>
-    <message>
-        <source>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</source>
-        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation>[A] تم تسريب كلمة المرور الخاصة بك ويتم استخدامها الآن من قبل جهات سيئة لتسجيل الدخول إلى حساباتك، بما في ذلك، على سبيل المثال لا الحصر، حساب ميغا MEGA الخاص بك.[/A]</translation>
-    </message>
-</context>
-<context>
-    <name>Login2FA</name>
-    <message>
-        <source>6 digit code:</source>
-        <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation>رمز من 6 أرقام:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button text to cancel 2FA dialog</translatorcomment>
-        <translation>الغاء</translation>
-    </message>
-    <message>
-        <source>Invalid code</source>
-        <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
-        <translation>الرمز غير صالح</translation>
-    </message>
-    <message>
-        <source>Login Verification</source>
-        <translatorcomment>A dialog title for the form which collects the user’s 2FA code for login.</translatorcomment>
-        <translation>التحقق من تسجيل الدخول</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translatorcomment>Button text to confirm 2FA dialog</translatorcomment>
-        <translation>التالي</translation>
-    </message>
-    <message>
-        <source>Please enter the code generated by your authentication app</source>
-        <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>أدخل الرمز الذي تم إنشاؤه بواسطة تطبيق المصادقة</translation>
-    </message>
-    <message>
-        <source>[A]Lost your authenticator device?[/A]</source>
-        <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation>[A]هل فقدت جهازك المصدق؟[/A]</translation>
-    </message>
-</context>
-<context>
     <name>LoginController</name>
     <message>
         <source>Email address already in use.</source>
@@ -3054,9 +2969,14 @@ Please wait for the upload to complete.</source>
 <context>
     <name>LogoutController</name>
     <message>
-        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
-        <translatorcomment>Notification message shown when SSL checks fails. SNC-4122</translatorcomment>
-        <translation>لا يمكن التحقق من مفتاح SSL الخاص بنا. قد تتأثر بهجوم رجل في الوسط أو قد يقوم برنامج مكافحة الفيروسات الخاص بك باعتراض اتصالاتك والتسبب في هذه المشكلة. قم بتعطيله وحاول مرة أخرى.</translation>
+        <source>MEGA couldn’t connect securely.[BR]If you’re on public Wi-Fi, try signing in through your browser first. Your ISP or security software might also be interfering with the connection.[BR][A]Learn more[/A]</source>
+        <translatorcomment>Body for the notification message shown when SSL checks fails. SNC-5610</translatorcomment>
+        <translation>لم تتمكن ميغا MEGA من الاتصال بأمان.[BR]إذا كنت تستخدم شبكة الواي فاي Wi-Fi عامة، فحاول تسجيل الدخول من خلال المتصفح أولاً. قد يتداخل مزود خدمة الإنترنت أو برنامج الأمان أيضًا مع الاتصال.[BR][A]اعرف المزيد[/A]</translation>
+    </message>
+    <message>
+        <source>Secure connection failed</source>
+        <translatorcomment>Title for the notification message shown when SSL checks fails. SNC-5610</translatorcomment>
+        <translation>فشل الاتصال الآمن</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
@@ -3163,6 +3083,11 @@ Please wait for the upload to complete.</source>
         <source>Dismiss</source>
         <translatorcomment>Button text to discard a notification or message box</translatorcomment>
         <translation>رفض</translation>
+    </message>
+    <message>
+        <source>Don’t show me again</source>
+        <translatorcomment>Check box in the link created dialog, to inform the system about user preference. SNC-5975</translatorcomment>
+        <translation>لا تُظهر هذا مرة أخرى</translation>
     </message>
     <message>
         <source>Download</source>
@@ -3561,6 +3486,11 @@ https://mega.co.nz/#sync</source>
         <translation>تم رفض السماح بالدخول</translation>
     </message>
     <message>
+        <source>Alert</source>
+        <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
+        <translation>تنبيه</translation>
+    </message>
+    <message>
         <source>Already exists</source>
         <translatorcomment>Label to show that an error related with an existent resource occurs during a SDK operation.</translatorcomment>
         <translation>موجود مسبقاً</translation>
@@ -3824,14 +3754,22 @@ https://mega.co.nz/#sync</source>
         <translation>إعدادات المزامنة والنسخ الاحتياطي تالفة وتمت إعادة تعيينها. ستحتاج إلى إعداد أي عمليات مزامنة ونسخ احتياطية لديك مرة أخرى.</translation>
     </message>
     <message>
-        <source>Alert</source>
-        <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation>تنبيه</translation>
-    </message>
-    <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
         <translation>[B]تم اكتشاف خطأ[/B][BR]حدث خطأ أثناء تحميل موارد التطبيق، ويجب إغلاق التطبيق. يرجى إعادة تثبيته من [A]mega.io/desktop[/A] لحل هذه المشكلة. إذا استمرت هذه المشكلة بعد إعادة التثبيت، تواصل مع الدعم للحصول على مزيد من المساعدة.</translation>
+    </message>
+</context>
+<context>
+    <name>MegaInputDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for Cancel buttons. SNC-5798.</translatorcomment>
+        <translation>إلغاء</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for Ok buttons. SNC-5798.</translatorcomment>
+        <translation>موافق</translation>
     </message>
 </context>
 <context>
@@ -4121,6 +4059,46 @@ https://mega.co.nz/#sync</source>
 <context>
     <name>MegaTransferView</name>
     <message>
+        <source>All the selected completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
+        <translation>سيتم مسح جميع عمليات تراسل المعطيات المكتملة المحددة</translation>
+    </message>
+    <message>
+        <source>All your completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
+        <translation>سيتم مسح جميع عمليات تراسل المعطيات المكتملة في هذه الفئة</translation>
+    </message>
+    <message>
+        <source>All your completed transfers will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
+        <translation>سيتم مسح جميع عمليات تراسل المعطيات المكتملة</translation>
+    </message>
+    <message>
+        <source>All your selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers</translatorcomment>
+        <translation>سيتم إلغاء جميع عمليات تراسل المعطيات المحددة ومسحها</translation>
+    </message>
+    <message>
+        <source>All your selected transfers will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers</translatorcomment>
+        <translation>سيتم إلغاء جميع عمليات تراسل المعطيات المحددة</translation>
+    </message>
+    <message>
+        <source>All your transfers in this category will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>سيتم إلغاء جميع عمليات تراسل المعطيات في هذه الفئة ومسحها</translation>
+    </message>
+    <message>
+        <source>All your transfers in this category will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>سيتم إلغاء جميع عمليات تراسل المعطيات في هذه الفئة</translation>
+    </message>
+    <message>
+        <source>All your transfers will be cancelled.</source>
+        <translatorcomment>Messagebox description text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
+        <translation>سيتم إلغاء جميع عمليات تراسل المعطيات</translation>
+    </message>
+    <message>
         <source>Cancel</source>
         <translatorcomment>Dialog button to do the proposed actions (cancel the transfers). See CON-188.</translatorcomment>
         <translation>إلغاء</translation>
@@ -4141,71 +4119,9 @@ https://mega.co.nz/#sync</source>
         <translation>إلغاء عملية تراسل المعطيات؟</translation>
     </message>
     <message>
-        <source>Cancel transfers?
-All your selected transfers will be cancelled and cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers</translatorcomment>
-        <translation>إلغاء عمليات تراسل المعطيات؟
-سيتم إلغاء جميع عمليات تراسل المعطيات المحددة الخاصة بك ومسحها.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-All your selected transfers will be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers</translatorcomment>
-        <translation>إلغاء عمليات تراسل المعطيات؟
-سيتم إلغاء جميع عمليات تراسل المعطيات المحددة.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-All your transfers in this category will be cancelled and cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category</translatorcomment>
-        <translation>إلغاء عمليات تراسل المعطيات؟
-سيتم إلغاء جميع عمليات تراسل المعطيات الخاصة بك في هذه الفئة ومسحها.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-All your transfers in this category will be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category</translatorcomment>
-        <translation>إلغاء عمليات تراسل المعطيات؟
-سيتم إلغاء جميع عمليات تراسل المعطيات الخاصة بك في هذه الفئة.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-All your transfers will be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
-        <translation>إلغاء عمليات تراسل المعطيات؟
-سيتم إلغاء جميع عمليات تراسل المعطيات الخاصة بك.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-Your incomplete sync transfers won't be cancelled
-All the other transfers will be cancelled and cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
-        <translation>إلغاء عمليات تراسل المعطيات؟
-لن يتم إلغاء عمليات تراسل المعطيات المتزامنة غير المكتملة.
-سيتم إلغاء جميع عمليات تراسل المعطيات الأخرى ومسحها.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-Your incomplete sync transfers won&apos;t be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
-        <translation>إلغاء عمليات تراسل المعطيات؟
-لن يتم إلغاء عمليات تراسل المعطيات المتزامنة غير المكتملة. سيتم إلغاء جميع عمليات تراسل المعطيات الأخرى.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-Your selected incomplete sync transfers won't be cancelled
-All the other selected transfers will be cancelled and cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
-        <translation>إلغاء عمليات تراسل المعطيات؟
-لن يتم إلغاء عمليات تراسل المعطيات المحددة الغير المكتملة و المتزامنة.
-سيتم إلغاء و مسح جميع عمليات تراسل المعطيات المحددة الأخرى.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-Your selected incomplete sync transfers won&apos;t be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
-        <translation>إلغاء عمليات تراسل المعطيات؟
-لن يتم إلغاء عمليات تراسل المعطيات المحددة الغير المكتملة و المتزامنة . سيتم إلغاء جميع عمليات تراسل المعطيات المحددة الأخرى.</translation>
+        <source>Cancel transfers?</source>
+        <translatorcomment>Messagebox title to confirm if the user wants to cancel multipe selected  transfer</translatorcomment>
+        <translation>إلغاء عمليات التراسل؟</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -4223,25 +4139,9 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <translation>مسح عمليات تراسل المعطيات؟</translation>
     </message>
     <message>
-        <source>Clear transfers?
-All the selected completed transfers in this category will be cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
-        <translation>مسح عمليات تراسل المعطيات؟
-سيتم مسح جميع عمليات تراسل المعطيات المحددة و المكتملة في هذه الفئة.</translation>
-    </message>
-    <message>
-        <source>Clear transfers?
-All your completed transfers in this category will be cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in a category other than the completed category</translatorcomment>
-        <translation>مسح عمليات تراسل المعطيات؟
-سيتم مسح جميع عمليات تراسل المعطيات الخاصة بك في هذه الفئة.</translation>
-    </message>
-    <message>
-        <source>Clear transfers?
-All your completed transfers will be cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
-        <translation>مسح عمليات تراسل المعطيات؟
-سيتم مسح جميع عمليات تراسل المعطيات المكتملة الخاصة بك.</translation>
+        <source>Clear transfers?</source>
+        <translatorcomment>Messagebox title to confirm if the user wants to clear multipe selected completed transfer</translatorcomment>
+        <translation>مسح عمليات تراسل المعطيات؟</translation>
     </message>
     <message>
         <source>Don&apos;t cancel</source>
@@ -4307,6 +4207,36 @@ All your completed transfers will be cleared.</source>
         <source>Show in folder</source>
         <translatorcomment>Label of context menu option to open the selected completed transfer using the specific file browser</translatorcomment>
         <translation>العرض في المجلد</translation>
+    </message>
+    <message>
+        <source>Your incomplete sync transfers won't be cancelled
+All the other transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>لا يمكن إلغاء عمليات تراسل المعطيات المتزامنة ولكن سيتم إلغاء جميع عمليات تراسل المعطيات الأخرى ومسحها</translation>
+    </message>
+    <message>
+        <source>Your incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>لا يمكن إلغاء عمليات تراسل المعطيات المزامنة</translation>
+    </message>
+    <message>
+        <source>Your selected incomplete sync transfers won't be cancelled
+All the other selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>لا يمكن إلغاء عمليات تراسل المعطيات المتزامنة ولكن سيتم إلغاء جميع عمليات تراسل المعطيات المحددة الأخرى ومسحها</translation>
+    </message>
+    <message>
+        <source>Your selected incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>لا يمكن إلغاء عمليات تراسل المعطيات المتزامنة</translation>
+    </message>
+</context>
+<context>
+    <name>MessageDialogData</name>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Label for close button. Keep capital letter. SNC-5997</translatorcomment>
+        <translation>إغلاق</translation>
     </message>
 </context>
 <context>
@@ -4605,29 +4535,27 @@ Enter a different name</source>
 أدخل اسمًا مختلفًا.</translation>
     </message>
     <message>
-        <source>The following characters are not allowed:
-%1</source>
-        <translatorcomment>Message shown when the user has entered a not allowed character</translatorcomment>
-        <translation>المحارف التالية غير مسموح بها:
-%1</translation>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button. Keep capital letter. SNC.5804</translatorcomment>
+        <translation>إلغاء</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for ok button. Keep capital letter. SNC.5804</translatorcomment>
+        <translation>موافق</translation>
     </message>
 </context>
 <context>
     <name>NodeSelector</name>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Button text to navigate to backups section</translatorcomment>
-        <translation>النسخ الاحتياطية</translation>
+        <source>Always upload to this destination</source>
+        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox. SNC-5804</translatorcomment>
+        <translation>الرفع دائما الي هذه الوجهة</translation>
     </message>
     <message>
-        <source>Cloud Drive</source>
-        <translatorcomment>Button text to navigate to cloud drive section</translatorcomment>
-        <translation>السواقة السحابية</translation>
-    </message>
-    <message>
-        <source>Incoming Shares</source>
-        <translatorcomment>Button text to navigate to incoming shares section</translatorcomment>
-        <translation>مشاركات واردة</translation>
+        <source>Files</source>
+        <translatorcomment>Sidebar title. SNC.5804</translatorcomment>
+        <translation>ملفات</translation>
     </message>
     <message>
         <source>Search</source>
@@ -4656,6 +4584,11 @@ Enter a different name</source>
         <source>Close</source>
         <translatorcomment>Cancel button string for failed action in Cloud Drive dialog.SAT-426</translatorcomment>
         <translation>إغلاق</translation>
+    </message>
+    <message>
+        <source>Date added</source>
+        <translatorcomment>Table header title for node date added info. SNC.5804</translatorcomment>
+        <translation>تاريخ الإضافة</translation>
     </message>
     <message>
         <source>Error copying file</source>
@@ -4768,14 +4701,19 @@ Enter a different name</source>
         <translation>تمت مزامنة محتويات المجلد بالفعل</translation>
     </message>
     <message>
+        <source>Last modified</source>
+        <translatorcomment>Table header title for node last modified date info. SNC.5804</translatorcomment>
+        <translation>آخر تعديل</translation>
+    </message>
+    <message>
         <source>Name</source>
         <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
         <translation>الاسم</translation>
     </message>
     <message>
-        <source>Recently used</source>
-        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation>آخر تعديل</translation>
+        <source>Owner</source>
+        <translatorcomment>Table header title for incoming shared owner info. SNC.5804</translatorcomment>
+        <translation>المالك</translation>
     </message>
     <message>
         <source>Sort by access</source>
@@ -4783,9 +4721,14 @@ Enter a different name</source>
         <translation>فرز حسب إذن الوصول</translation>
     </message>
     <message>
-        <source>Sort by date</source>
-        <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>فرز حسب التاريخ</translation>
+        <source>Sort by date added</source>
+        <translatorcomment>Table header tooltip for Date added column. SNC.5804</translatorcomment>
+        <translation>فرز حسب تاريخ الإضافة  </translation>
+    </message>
+    <message>
+        <source>Sort by last modified date</source>
+        <translatorcomment>Table header tooltip for last modified column. SNC.5804</translatorcomment>
+        <translation>فرز حسب تاريخ آخر تعديل</translation>
     </message>
     <message>
         <source>Sort by name</source>
@@ -4796,11 +4739,6 @@ Enter a different name</source>
         <source>Sort by owner name</source>
         <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
         <translation>فرز حسب اسم المالك</translation>
-    </message>
-    <message>
-        <source>Sort by status</source>
-        <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
-        <translation>فرز حسب الحالة</translation>
     </message>
     <message>
         <source>The file %1 couldn’t be copied. Try again later</source>
@@ -4911,6 +4849,11 @@ Enter a different name</source>
         <translation>نسخ</translation>
     </message>
     <message>
+        <source>Download</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a node on node selector. It downloads the selected nodes. SNC-5804</translatorcomment>
+        <translation>تنزيل</translation>
+    </message>
+    <message>
         <source>Leave folder</source>
         <translatorcomment>Contextual menu text that appears when we right click on inshare folder on the incoming shared page on node selector. It leaves an inshared folder. CON-1255</translatorcomment>
         <translation>غادر المجلد</translation>
@@ -4959,29 +4902,14 @@ Enter a different name</source>
 <context>
     <name>NodeSelectorTreeViewWidget</name>
     <message>
-        <source>Always upload to this destination</source>
-        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
-        <translation>قم بالترفيع إلى هذه الوجهة دائماً</translation>
-    </message>
-    <message>
         <source>Any shared files or folders will no longer be accessible to the people you shared them with. You can still access these items in the Rubbish bin, restore, and share them.</source>
         <translatorcomment>Informative text about the potential issues of removing the nodes. CON-334</translatorcomment>
         <translation>لن يتمكن الأشخاص الذين شاركتها معهم من الوصول إلى أي ملفات أو مجلدات مشاركة. لا يزال بإمكانك الوصول إلى هذه العناصر في سلة المحذوفات واستعادتها ومشاركتها.</translation>
     </message>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Button to filter search results from backups</translatorcomment>
-        <translation>النسخ الاحتياطية</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>إلغاء</translation>
-    </message>
-    <message>
-        <source>Cloud drive</source>
-        <translatorcomment>Button to filter search results from cloud drive</translatorcomment>
-        <translation>السواقة السحابية</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -5007,11 +4935,6 @@ Enter a different name</source>
         <source>If you leave the folder, you will not be able to see it again.</source>
         <translatorcomment>Body of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
         <translation><numerusform>إذا غادرت هذا المجلد، فلن تتمكن من رؤيته مرة أخرى.</numerusform><numerusform>إذا غادرت هذا المجلد، فلن تتمكن من رؤيته مرة أخرى.</numerusform><numerusform>إذا غادرت هذين المجلدين، فلن تتمكن من رؤيتهما مرة أخرى.</numerusform><numerusform>إذا غادرت هذه المجلدات، فلن تتمكن من رؤيتهم مرة أخرى.</numerusform><numerusform>إذا غادرت هذه المجلدات، فلن تتمكن من رؤيتهم مرة أخرى.</numerusform><numerusform>إذا غادرت هذه المجلدات، فلن تتمكن من رؤيتهم مرة أخرى.</numerusform></translation>
-    </message>
-    <message>
-        <source>Incoming Shares</source>
-        <translatorcomment>Button to filter search results from incoming shares</translatorcomment>
-        <translation>مشاركات واردة</translation>
     </message>
     <message>
         <source>Leave</source>
@@ -5044,19 +4967,9 @@ Enter a different name</source>
         <translation>مجلّد جديد</translation>
     </message>
     <message>
-        <source>No results for:</source>
-        <translatorcomment>Label indicating that there are no results for the current search, searched text will be following this label.</translatorcomment>
-        <translation>لم يتم العثور على أية نتائج لـ:</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translatorcomment>Button text to accept and close the dialog</translatorcomment>
         <translation>موافق</translation>
-    </message>
-    <message>
-        <source>Rubbish bin</source>
-        <translatorcomment>Button to filter search results from rubbish bin</translatorcomment>
-        <translation>سلة المحذوفات</translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
@@ -5080,11 +4993,58 @@ Enter a different name</source>
     </message>
 </context>
 <context>
-    <name>NodeSelectorTreeViewWidgetSearch</name>
+    <name>NodeSelectorTreeViewWidgetBackups</name>
     <message>
-        <source>Searching:</source>
-        <translatorcomment>Label indicating the current search, searched text will be following this label.</translatorcomment>
-        <translation>جاري البحث</translation>
+        <source>No backups</source>
+        <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
+        <translation>لا يوجد نسخ احتياطية</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetCloudDrive</name>
+    <message>
+        <source>Cloud drive is empty</source>
+        <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
+        <translation>السواقة السحابية فارغة</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetIncomingShares</name>
+    <message>
+        <source>No incoming shares</source>
+        <translatorcomment>Title message on the view when there are no items in the normal view. SNC-5804</translatorcomment>
+        <translation>لا توجد مشاركات واردة</translation>
+    </message>
+    <message>
+        <source>No incoming shares you can sync</source>
+        <translatorcomment>Title message on the view when there are no items in the Sync view. SNC-5804</translatorcomment>
+        <translation>لا توجد مشاركات واردة يمكنك مزامنتها</translation>
+    </message>
+    <message>
+        <source>You can only sync a shared folder if you’ve been given full access</source>
+        <translatorcomment>Description message on the view when there are no items in the sync view. It says you don´t have shared folders with the needed rights. SNC-5804</translatorcomment>
+        <translation>يمكنك فقط مزامنة مجلد مشارك إذا تم منحك إذن الوصول الكامل</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetRubbish</name>
+    <message>
+        <source>The Rubbish bin is empty</source>
+        <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
+        <translation>سلة المحذوفات فارغة</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetSearch</name>
+    <message numerus="yes">
+        <source>%n result found</source>
+        <translatorcomment>Search tab subtitle that shows the number of coincidences found. %n is the number of found nodes. SNC-5804</translatorcomment>
+        <translation><numerusform>%n نتيجة بحث تم العثور عليها</numerusform><numerusform>%n نتيجة بحث تم العثور عليها</numerusform><numerusform>%n نتيجة بحث تم العثور عليها</numerusform><numerusform>%n نتائج بحث تم العثور عليها</numerusform><numerusform>%n نتيجة بحث تم العثور عليها</numerusform><numerusform>%n نتيجة بحث تم العثور عليها</numerusform></translation>
+    </message>
+    <message>
+        <source>No search results</source>
+        <translatorcomment>Message on the view when the search did not find any coincidence. SNC-5804</translatorcomment>
+        <translation>لم يتم إيجاد أي نتائج للبحث</translation>
     </message>
 </context>
 <context>
@@ -7644,9 +7604,9 @@ Please, refresh the list.</source>
         <translation>متوقف مؤقتاً</translation>
     </message>
     <message>
-        <source>Scanning</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
-        <translation>جاري الفحص</translation>
+        <source>Scanning…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state. SNC-5938</translatorcomment>
+        <translation>جاري الفحص…</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -7654,14 +7614,14 @@ Please, refresh the list.</source>
         <translation>جاري البدء</translation>
     </message>
     <message>
-        <source>Syncing</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
-        <translation>جاري المزامنة</translation>
+        <source>Syncing…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.  SNC-5938</translatorcomment>
+        <translation>جارٍ المزامنة…</translation>
     </message>
     <message>
-        <source>Transferring</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
-        <translation>قيد التراسل</translation>
+        <source>Transferring…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers. SNC-5938</translatorcomment>
+        <translation>قيد التراسل…</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -7669,9 +7629,9 @@ Please, refresh the list.</source>
         <translation>لا يوجد تحديثات</translation>
     </message>
     <message>
-        <source>Waiting</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync is at waiting state</translatorcomment>
-        <translation>بالانتظار</translation>
+        <source>Waiting…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at waiting state. SNC-5938</translatorcomment>
+        <translation>في الانتظار...</translation>
     </message>
 </context>
 <context>
@@ -7684,11 +7644,6 @@ Please, refresh the list.</source>
 </context>
 <context>
     <name>StreamingFromMegaDialog</name>
-    <message>
-        <source>Are you sure that you want to stop the streaming?</source>
-        <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation>هل أنت متأكد أنك تريد إيقاف البث؟</translation>
-    </message>
     <message>
         <source>Choose application</source>
         <translatorcomment>Text of the button to open a streaming link with a custom application</translatorcomment>
@@ -8521,6 +8476,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>ThemeManager</name>
+    <message>
+        <source>Dark</source>
+        <translatorcomment>Name of the dark color scheme, it can be selected by the user to customize the interface colors. SNC-5799</translatorcomment>
+        <translation>داكن</translation>
+    </message>
+    <message>
+        <source>Light</source>
+        <translatorcomment>Name of the light color scheme, it can be selected by the user to customize the interface colors. SNC-5799</translatorcomment>
+        <translation>خفيف</translation>
+    </message>
+    <message>
+        <source>System default</source>
+        <translatorcomment>The user request the aplication color scheme to follow the operating system active theme. SNC-5799</translatorcomment>
+        <translation>افتراضي النظام</translation>
+    </message>
+</context>
+<context>
     <name>TransferBaseDelegateWidget</name>
     <message>
         <source>(in queue)</source>
@@ -8650,20 +8623,15 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Categories for image type transfers</translatorcomment>
         <translation>صور</translation>
     </message>
-    <message numerus="yes">
-        <source>Issue found</source>
-        <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
-        <translation><numerusform>تم اكتشاف مشكلة</numerusform><numerusform>تم اكتشاف مشكلة</numerusform><numerusform>تم اكتشاف مشاكل</numerusform><numerusform>تم اكتشاف مشاكل</numerusform><numerusform>تم اكتشاف مشاكل</numerusform><numerusform>تم اكتشاف مشاكل</numerusform></translation>
+    <message>
+        <source>Issues with some synced items</source>
+        <translatorcomment>Label that appears when sync stalls are detected. SNC-5970</translatorcomment>
+        <translation>تم اكتشاف المشكلات</translation>
     </message>
     <message>
         <source>Media type</source>
         <translatorcomment>Title of the groupbox which contains all the media categories</translatorcomment>
         <translation>نوع الوسائط</translation>
-    </message>
-    <message>
-        <source>No completed transfers</source>
-        <translatorcomment>Empty window message for completed category</translatorcomment>
-        <translation>لا يوجد عمليات تراسل معطيات مكتملة</translation>
     </message>
     <message>
         <source>No downloads</source>
@@ -8711,19 +8679,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>أعد محاولة الكل</translation>
     </message>
     <message>
-        <source>Scanning</source>
-        <translatorcomment>State of the Transfers: Message which shows that a folder is being scanned</translatorcomment>
-        <translation>جاري الفحص…</translation>
-    </message>
-    <message>
         <source>Search</source>
         <translatorcomment>Title for text search window</translatorcomment>
         <translation>البحث</translation>
-    </message>
-    <message>
-        <source>Search:</source>
-        <translatorcomment>Title to show the text used to search</translatorcomment>
-        <translation>بحث:</translation>
     </message>
     <message>
         <source>Transfer Manager</source>
@@ -8741,11 +8699,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>عمليات تراسل المعطيات</translation>
     </message>
     <message>
-        <source>Up to date</source>
-        <translatorcomment>All transfers have been finished</translatorcomment>
-        <translation>لا يوجد تحديثات</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label of the button to start a new upload</translatorcomment>
         <translation>رفع</translation>
@@ -8759,6 +8712,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Videos</source>
         <translatorcomment>Categories for video type transfers</translatorcomment>
         <translation>مقاطع الفيديو</translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translatorcomment>Button to show the sync stalls. SNC-5970</translatorcomment>
+        <translation>عرض</translation>
     </message>
 </context>
 <context>
@@ -8777,19 +8735,34 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>تم إيقاف عمليات التراسل مؤقتاً</translation>
     </message>
     <message>
+        <source>Before your storage becomes full and your uploads, syncs and backups stop.</source>
+        <translatorcomment>Warning description shown when storage quota is almost full</translatorcomment>
+        <translation>قم بالترقية قبل امتلاء مساحة التخزين وإيقاف عمليات الترفيع والمزامنة والنسخ الاحتياطي</translation>
+    </message>
+    <message>
+        <source>Storage almost full</source>
+        <translatorcomment>Warning title shown when storage quota is almost full</translatorcomment>
+        <translation>مساحة التخزين ممتلئة تقريبًا</translation>
+    </message>
+    <message>
+        <source>Storage full</source>
+        <translatorcomment>Error title indicating that the storage quota is full. CON-1061</translatorcomment>
+        <translation>المساحة ممتلئة</translation>
+    </message>
+    <message>
         <source>Transfer quota exceeded.</source>
         <translatorcomment>Error text indicating that the transfer quota has been exceeded for pro users. CON-1061</translatorcomment>
         <translation>تم تجاوز حجم التراسل المتاح</translation>
     </message>
     <message>
-        <source>[B]Storage almost full[/B][BR][A]Upgrade now[/A] before your storage becomes full and your uploads, syncs and backups stop.</source>
-        <translatorcomment>Warning text indicating that the storage quota is almost full. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. CON-1061</translatorcomment>
-        <translation>[B]مساحة التخزين ممتلئة تقريبًا[/B][BR][A]قم بالترقية الآن[/A] قبل امتلاء مساحة التخزين الخاصة بك وإيقاف الترفيعات والمزامنة والنسخ الاحتياطية.</translation>
+        <source>Upgrade now</source>
+        <translatorcomment>Text for link shown when the storage quota is almost full.</translatorcomment>
+        <translation>رق حسابك الآن</translation>
     </message>
     <message>
-        <source>[B]Storage full[/B][BR]Uploads are disabled and sync and backups are paused.</source>
-        <translatorcomment>Error text indicating that the storage quota is full. Please, keep the [BR] placeholder for breaking the line and [B][/B] used for formatting the bold text. CON-1061</translatorcomment>
-        <translation>[B]مساحة التخزين ممتلئة[/B][BR]تم تعطيل الترفيعات والمزامنة والنسخ الاحتياطية مؤقتًا.</translation>
+        <source>Uploads are disabled and sync and backups are paused.</source>
+        <translatorcomment>Error description shown when storage is full. CON-1061</translatorcomment>
+        <translation>تم تعطيل الترفيعات وتم إيقاف المزامنة والنسخ الاحتياطية مؤقتًا</translation>
     </message>
     <message>
         <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
@@ -9512,29 +9485,19 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation><numerusform>%1 (%2%) من %3 مُستخدم</numerusform><numerusform>%1 (%2%) من %3 مُستخدم</numerusform><numerusform>%1 (%2%) من %3 مُستخدم</numerusform><numerusform>%1 (%2%) من %3 مُستخدم</numerusform><numerusform>%1 (%2%) من %3 مُستخدم</numerusform><numerusform>%1 (%2%) من %3 مُستخدم</numerusform></translation>
     </message>
     <message>
-        <source>%1 [A]d[/A]</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]يوم[/A]</translation>
-    </message>
-    <message>
-        <source>%1 [A]h[/A]</source>
-        <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]ساعة[/A]</translation>
-    </message>
-    <message>
-        <source>%1 [A]m[/A]</source>
-        <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]دقيقة[/A]</translation>
-    </message>
-    <message>
-        <source>%1 [A]s[/A]</source>
-        <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]ثانية[/A]</translation>
+        <source>%1 / %2</source>
+        <translatorcomment>This translated separator template with placeholders &quot;%1&quot; and &quot;%2&quot; is used to format the display of two values separated by a slash, with a space on each side of the separator. The placeholders represent dynamic content that will be replaced with actual data. For instance, in French: &quot;15,2 Go / 400 Go&quot;. SNC-5456</translatorcomment>
+        <translation>%1 / %2</translation>
     </message>
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to indicate the amount of used and total space available. Keep %1 (used space) and %2 (total space) substitution placeholders because they will be filled with the required amounts of storage space dynamically including the unit (e.g. 1KB, 5MB, 8GB...). CON-944</translatorcomment>
         <translation>%1 من %2</translation>
+    </message>
+    <message>
+        <source>%1 sec</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
@@ -9542,9 +9505,24 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation><numerusform>%1 مُستخدم</numerusform><numerusform>%1 مُستخدم</numerusform><numerusform>%1 مُستخدم</numerusform><numerusform>%1 مُستخدم</numerusform><numerusform>%1 مُستخدم</numerusform><numerusform>%1 مُستخدم</numerusform></translation>
     </message>
     <message>
-        <source>%1/%2</source>
-        <translatorcomment>This translated separator template with placeholders &quot;%1&quot; and &quot;%2&quot; is used to format the display of two values separated by a slash, without any superfluous spaces, in the UI. The placeholders represent dynamic content that will be replaced with actual data. For instance, in French, the formatted string should appear as &quot;15,2 Go/400 Go&quot;, without any spaces surrounding the slash. Translators should adjust the spaces around the slash according to their language-specific formatting rules, ensuring that the translation adheres to the standard typographical conventions of the target language. SNC-1793</translatorcomment>
-        <translation>%1/%2</translation>
+        <source>%1d</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1h</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1m</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1s</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation>%1 ثانية</translation>
     </message>
     <message numerus="yes">
         <source>Added %n day ago</source>
@@ -9690,11 +9668,6 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>VerifyLockMessage</name>
     <message>
-        <source>Email sent</source>
-        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
-        <translation>تم إرسال البريد الالكتروني</translation>
-    </message>
-    <message>
         <source>Locked account</source>
         <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
         <translation>حساب مقفل</translation>
@@ -9705,18 +9678,8 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>تسجيل الخروج</translation>
     </message>
     <message>
-        <source>Resend email</source>
-        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
-        <translation>إعادة إرسال البريد الإلكتروني</translation>
-    </message>
-    <message>
-        <source>Verify your email</source>
-        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
-        <translation>تحقق من صندوق بريدك الالكتروني</translation>
-    </message>
-    <message>
         <source>Why am I seeing this?</source>
-        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translatorcomment>Clickable Label to inform the user about why the account is locked and needs verification (email verification). It redirects to credential-stuffing helpdesk article (SNC-5553) </translatorcomment>
         <translation>لماذا أرى هذا؟</translation>
     </message>
 </context>

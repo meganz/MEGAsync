@@ -75,9 +75,9 @@
         <translation>Binnenkomende delingen</translation>
     </message>
     <message>
-        <source>Payment</source>
-        <translatorcomment>Label to indicate that the application is showing only payment notifications</translatorcomment>
-        <translation>Betaling</translation>
+        <source>Payments</source>
+        <translatorcomment>Label to indicate that the application is showing only payment notifications SNC-5953</translatorcomment>
+        <translation>Betalingen</translation>
     </message>
 </context>
 <context>
@@ -739,66 +739,44 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     </message>
 </context>
 <context>
-    <name>ChangePassword</name>
+    <name>ChangePasswordController</name>
     <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to close the Change password dialog discarding the information</translatorcomment>
-        <translation>Annuleren</translation>
+        <source>Password changed</source>
+        <translatorcomment>Title of the dialog displayed when the change password process finish successful. SNC-5799</translatorcomment>
+        <translation>Wachtwoord gewijzigd</translation>
     </message>
     <message>
+        <source>Too many requests. Please wait.</source>
+        <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible). SNC-5799</translatorcomment>
+        <translation>Te veel verzoeken, even geduld a.u.b.</translation>
+    </message>
+    <message>
+        <source>You have entered your current password, please enter a new password.</source>
+        <translatorcomment>Informative message shown when user is trying to change his password with the current one. SNC-5799</translatorcomment>
+        <translation>U heeft uw huidige wachtwoord ingevoerd, voer een nieuw wachtwoord in</translation>
+    </message>
+    <message>
+        <source>Your password has been changed.</source>
+        <translatorcomment>Success message shown when the password has been changed. SNC-5799</translatorcomment>
+        <translation>Uw wachtwoord is gewijzigd</translation>
+    </message>
+</context>
+<context>
+    <name>ChangePasswordStrings</name>
+    <message>
         <source>Change password</source>
-        <translatorcomment>Windows title of the Change password dialog</translatorcomment>
-        <translation>Wijzig wachtwoord</translation>
+        <translatorcomment>Windows title of the Change password dialog. SNC-5799</translatorcomment>
+        <translation>Wachtwoord wijzigen</translation>
     </message>
     <message>
         <source>Confirm new password</source>
-        <translatorcomment>Label displayed next to control where the user can enter the new password confirmation</translatorcomment>
+        <translatorcomment>Label displayed next to control where the user can enter the new password confirmation. SNC-5799</translatorcomment>
         <translation>Bevestig nieuw wachtwoord</translation>
     </message>
     <message>
         <source>New password</source>
-        <translatorcomment>Label displayed next to control where the user can enter the new password</translatorcomment>
+        <translatorcomment>Label displayed next to control where the user can enter the new password. SNC-5799</translatorcomment>
         <translation>Nieuw wachtwoord</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Button label to close the Change password dialog saving the new information</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Password changed</source>
-        <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
-        <translation>Wachtwoord gewijzigd</translation>
-    </message>
-    <message>
-        <source>Please enter your password</source>
-        <translatorcomment>Error message displayed when an empty password has been provided</translatorcomment>
-        <translation>Voer uw wachtwoord in</translation>
-    </message>
-    <message>
-        <source>Please, enter a stronger password</source>
-        <translatorcomment>Error message displayed when an the new password is too weak</translatorcomment>
-        <translation>Voer een sterker wachtwoord in</translation>
-    </message>
-    <message>
-        <source>The entered passwords don&apos;t match</source>
-        <translatorcomment>Error message displayed when the new password and its confirmation are not the same</translatorcomment>
-        <translation>De ingevoerde wachtwoorden komen niet overeen</translation>
-    </message>
-    <message>
-        <source>Too many requests. Please wait.</source>
-        <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</translatorcomment>
-        <translation>Te veel verzoeken. Wacht a.u.b.</translation>
-    </message>
-    <message>
-        <source>You have entered your current password, please enter a new password.</source>
-        <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
-        <translation>U heeft uw huidige wachtwoord ingevoerd, voer een nieuw wachtwoord in.</translation>
-    </message>
-    <message>
-        <source>Your password has been changed.</source>
-        <translatorcomment>Success message shown when the password has been changed</translatorcomment>
-        <translation>Uw wachtwoord is gewijzigd.</translation>
     </message>
 </context>
 <context>
@@ -932,11 +910,9 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
         <translation>Pro-lidmaatschap abonnement verloopt binnenkort</translation>
     </message>
     <message>
-        <source>The following characters are not allowed:
-%1</source>
-        <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder)</translatorcomment>
-        <translation>De volgende tekens zijn niet toegestaan:
-%1</translation>
+        <source>The following characters are not allowed: %1</source>
+        <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder). SNC-5804</translatorcomment>
+        <translation>De volgende tekens zijn niet toegestaan: %1</translation>
     </message>
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
@@ -1977,9 +1953,9 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
         <translation>Binnenkomende delingen</translation>
     </message>
     <message>
-        <source>Payment</source>
-        <translatorcomment>Label to indicate that only Payment notifications will be shown.</translatorcomment>
-        <translation>Betaling</translation>
+        <source>Payments</source>
+        <translatorcomment>Label to indicate that only Payment notifications will be shown. SNC-5953</translatorcomment>
+        <translation>Betalingen</translation>
     </message>
 </context>
 <context>
@@ -2370,11 +2346,6 @@ Controleer uw e-mailinbox voor instructies over het ontgrendelen van uw account 
         <translation>Upgrade uw account.</translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translatorcomment>This is the string used to refer to settings for all platforms.</translatorcomment>
-        <translation>Instellingen</translation>
-    </message>
-    <message>
         <source>Show MEGAsync options</source>
         <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
         <translation>Opties weergeven</translation>
@@ -2450,14 +2421,14 @@ Controleer uw e-mailinbox voor instructies over het ontgrendelen van uw account 
         <translation>U kunt niet doorgaan met downloaden omdat u niet genoeg overdrachtstegoed meer hebt op dit account. Als u wilt doorgaan met downloaden, een nieuw abonnement wilt kopen of als u een terugkerend abonnement bij MEGA hebt, kunt u wachten tot uw abonnement wordt verlengd.</translation>
     </message>
     <message numerus="yes">
-        <source>You have [A]%n day[/A] left to upgrade. After that, your data is subject to deletion.</source>
-        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of days left to upgrade.</translatorcomment>
-        <translation><numerusform>U heeft [A]%n dag over [/A]om te upgraden. Daarna kunnen uw gegevens verwijderd worden.</numerusform><numerusform>U heeft [A]%n dagen over [/A]om te upgraden. Daarna kunnen uw gegevens verwijderd worden.</numerusform></translation>
+        <source>You have %n day left to upgrade. After that, your data is subject to deletion.</source>
+        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. %n- number of days left to upgrade.</translatorcomment>
+        <translation><numerusform>U heeft %n resterende dag om te upgraden, anders worden uw gegevens verwijderd</numerusform><numerusform>U heeft %n resterende dagen om te upgraden, anders worden uw gegevens verwijderd</numerusform></translation>
     </message>
     <message numerus="yes">
-        <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
-        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
-        <translation><numerusform>U heeft [A]%n uur over [/A] om te upgraden. Daarna kunnen uw gegevens verwijderd worden.</numerusform><numerusform>U heeft [A]%n uur over [/A] om te upgraden. Daarna kunnen uw gegevens verwijderd worden.</numerusform></translation>
+        <source>You have %n hour left to upgrade. After that, your data is subject to deletion.</source>
+        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: %n- number of hours left to upgrade.</translatorcomment>
+        <translation><numerusform>U heeft %n uur resterend om te upgraden, anders worden uw gegevens verwijderd</numerusform><numerusform>U heeft %n resterende uren om te upgraden, anders worden uw gegevens verwijderd</numerusform></translation>
     </message>
     <message>
         <source>You must act immediately to save your data</source>
@@ -2584,7 +2555,7 @@ Controleer uw e-mailinbox voor instructies over het ontgrendelen van uw account 
     <message>
         <source>Do not show again</source>
         <translatorcomment>This is a label for a checkbox. When checked by the user, it ensures that the Enable Notification Area Icon notification will not be displayed to them in the future. SNC-2270</translatorcomment>
-        <translation>Niet opnieuw weergeven</translation>
+        <translation>Laat dit niet meer zien</translation>
     </message>
     <message>
         <source>Failed to install the necessary components.</source>
@@ -2969,62 +2940,6 @@ Wacht tot het uploaden is voltooid.</translation>
     </message>
 </context>
 <context>
-    <name>LockedPopOver</name>
-    <message>
-        <source>Locked Accounts</source>
-        <translatorcomment>Title of informative popover which informs users about the lock situation.</translatorcomment>
-        <translation>Gesloten accounts</translation>
-    </message>
-    <message>
-        <source>[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</source>
-        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
-        <translation>[A]Het is mogelijk dat u voor uw MEGA-account hetzelfde wachtwoord gebruikt als voor andere diensten en dat ten minste één van deze andere diensten een gegevenslek heeft opgelopen.[/A]</translation>
-    </message>
-    <message>
-        <source>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</source>
-        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation>[A]Uw wachtwoord is gelekt en wordt nu door slechte personen gebruikt om in te loggen op uw accounts, inclusief maar niet beperkt tot uw MEGA-account.[/A]</translation>
-    </message>
-</context>
-<context>
-    <name>Login2FA</name>
-    <message>
-        <source>6 digit code:</source>
-        <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation>6-cijferige code:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button text to cancel 2FA dialog</translatorcomment>
-        <translation>Annuleren</translation>
-    </message>
-    <message>
-        <source>Invalid code</source>
-        <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
-        <translation>Ongeldige code</translation>
-    </message>
-    <message>
-        <source>Login Verification</source>
-        <translatorcomment>A dialog title for the form which collects the user’s 2FA code for login.</translatorcomment>
-        <translation>Login verificatie</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translatorcomment>Button text to confirm 2FA dialog</translatorcomment>
-        <translation>Volgende</translation>
-    </message>
-    <message>
-        <source>Please enter the code generated by your authentication app</source>
-        <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>Voer de code in die is gegenereerd door uw authenticatie applicatie</translation>
-    </message>
-    <message>
-        <source>[A]Lost your authenticator device?[/A]</source>
-        <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation>[A]Bent u uw authenticatieapparaat kwijt?[/A]</translation>
-    </message>
-</context>
-<context>
     <name>LoginController</name>
     <message>
         <source>Email address already in use.</source>
@@ -3055,9 +2970,14 @@ Wacht tot het uploaden is voltooid.</translation>
 <context>
     <name>LogoutController</name>
     <message>
-        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
-        <translatorcomment>Notification message shown when SSL checks fails. SNC-4122</translatorcomment>
-        <translation>Onze SSL-sleutel kan niet worden geverifieerd. U kunt worden getroffen door een man-in-the-middle-aanval of uw antivirussoftware kan uw communicatie onderscheppen en dit probleem veroorzaken. Schakel het uit en probeer het opnieuw.</translation>
+        <source>MEGA couldn’t connect securely.[BR]If you’re on public Wi-Fi, try signing in through your browser first. Your ISP or security software might also be interfering with the connection.[BR][A]Learn more[/A]</source>
+        <translatorcomment>Body for the notification message shown when SSL checks fails. SNC-5610</translatorcomment>
+        <translation>MEGA kon geen veilige verbinding maken.[BR]Als u een openbaar wifi-netwerk gebruikt, moet u eerst proberen in te loggen via uw browser. Uw internetprovider of beveiligingssoftware kan ook interfereren met de verbinding.[BR][A]Meer informatie[/A]</translation>
+    </message>
+    <message>
+        <source>Secure connection failed</source>
+        <translatorcomment>Title for the notification message shown when SSL checks fails. SNC-5610</translatorcomment>
+        <translation>Beveiligde verbinding is mislukt</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
@@ -3164,6 +3084,11 @@ Wacht tot het uploaden is voltooid.</translation>
         <source>Dismiss</source>
         <translatorcomment>Button text to discard a notification or message box</translatorcomment>
         <translation>Sluiten</translation>
+    </message>
+    <message>
+        <source>Don’t show me again</source>
+        <translatorcomment>Check box in the link created dialog, to inform the system about user preference. SNC-5975</translatorcomment>
+        <translation>Laat dit niet meer zien</translation>
     </message>
     <message>
         <source>Download</source>
@@ -3558,6 +3483,11 @@ https://mega.co.nz/#sync</source>
         <translation>Toegang geweigerd</translation>
     </message>
     <message>
+        <source>Alert</source>
+        <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
+        <translation>Waarschuwing</translation>
+    </message>
+    <message>
         <source>Already exists</source>
         <translatorcomment>Label to show that an error related with an existent resource occurs during a SDK operation.</translatorcomment>
         <translation>Bestaat al</translation>
@@ -3821,14 +3751,22 @@ U zult niet opnieuw toegang krijgen tot uw opgeslagen gegevens en u kunt zich ni
         <translation>Uw synchronisatie- en backupinstellingen zijn beschadigd en zijn opnieuw ingesteld. U moet alle synchronisaties en back-ups die u opnieuw had, instellen.</translation>
     </message>
     <message>
-        <source>Alert</source>
-        <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation>Waarschuwing</translation>
-    </message>
-    <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
         <translation>[B]Fout gedetecteerd[/B][BR]Er is een fout opgetreden bij het laden van toepassingsbronnen en de applicatie moet worden gesloten. Installeer het alstublieft opnieuw vanaf [A]mega.io/desktop[/A] om dit probleem op te lossen. Als dit probleem zich blijft voordoen na het opnieuw installeren, neem contact op met de klantenservice voor verdere hulp.</translation>
+    </message>
+</context>
+<context>
+    <name>MegaInputDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for Cancel buttons. SNC-5798.</translatorcomment>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for Ok buttons. SNC-5798.</translatorcomment>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -4118,6 +4056,46 @@ U zult niet opnieuw toegang krijgen tot uw opgeslagen gegevens en u kunt zich ni
 <context>
     <name>MegaTransferView</name>
     <message>
+        <source>All the selected completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
+        <translation>Alle geselecteerde voltooide overdrachten worden verwerkt</translation>
+    </message>
+    <message>
+        <source>All your completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
+        <translation>Alle voltooide overdrachten in deze categorie worden verwerkt</translation>
+    </message>
+    <message>
+        <source>All your completed transfers will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
+        <translation>Alle voltooide overdrachten worden verwerkt</translation>
+    </message>
+    <message>
+        <source>All your selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers</translatorcomment>
+        <translation>Alle geselecteerde overschrijvingen worden geannuleerd en verwerkt</translation>
+    </message>
+    <message>
+        <source>All your selected transfers will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers</translatorcomment>
+        <translation>Alle geselecteerde overdrachten worden geannuleerd</translation>
+    </message>
+    <message>
+        <source>All your transfers in this category will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>Alle overschrijvingen in deze categorie worden geannuleerd en verwerkt</translation>
+    </message>
+    <message>
+        <source>All your transfers in this category will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>Alle transfers in deze categorie worden geannuleerd</translation>
+    </message>
+    <message>
+        <source>All your transfers will be cancelled.</source>
+        <translatorcomment>Messagebox description text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
+        <translation>Alle overdrachten worden geannuleerd</translation>
+    </message>
+    <message>
         <source>Cancel</source>
         <translatorcomment>Dialog button to do the proposed actions (cancel the transfers). See CON-188.</translatorcomment>
         <translation>Annuleren</translation>
@@ -4138,71 +4116,9 @@ U zult niet opnieuw toegang krijgen tot uw opgeslagen gegevens en u kunt zich ni
         <translation>Overdracht annuleren?</translation>
     </message>
     <message>
-        <source>Cancel transfers?
-All your selected transfers will be cancelled and cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers</translatorcomment>
-        <translation>Overdrachten annuleren?
-All uw geselecteerde overdrachten worden geannuleerd en gewist.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-All your selected transfers will be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers</translatorcomment>
-        <translation>Overdrachten annuleren?
-All uw geselecteerde overdrachten worden geannuleerd.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-All your transfers in this category will be cancelled and cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category</translatorcomment>
-        <translation>Overdrachten annuleren? All uw overdrachten in deze categorie worden geannuleerd en gewist.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-All your transfers in this category will be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category</translatorcomment>
-        <translation>Overdrachten annuleren?
-All uw overdrachten in deze category worden geannulleerd.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-All your transfers will be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
-        <translation>Overdrachten annuleren?
-All uw overdrachten worden geannueleerd.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-Your incomplete sync transfers won't be cancelled
-All the other transfers will be cancelled and cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
-        <translation>Overdrachten annuleren?
-Uw incomplete gesynchroniseerde overdrachten worden niet geannuleerd.
-All de andere overdrachten worden geannuleerd en gewist.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-Your incomplete sync transfers won&apos;t be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
-        <translation>Overdrachten annuleren?
-Uw incomplete gesynchroniseerde overdrachten worden niet geannuleerd. Alle andere overdrachten worden geannuleerd.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-Your selected incomplete sync transfers won't be cancelled
-All the other selected transfers will be cancelled and cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
-        <translation>Overdrachten annuleren?
-Uw geselecteerde incomplete gesynchroniseerde overdrachten worden niet geannuleerd.
-Alle andere geselecteerde overdrachten worden geannuleerd en gewist.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-Your selected incomplete sync transfers won&apos;t be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
-        <translation>Overdrachten annuleren?
-Uw geselecteerde incomplete gesynchroniseerde overdrachten worden niet geannuleerd
-Alle andere geselecteerde overdrachten worden geannuleerd.</translation>
+        <source>Cancel transfers?</source>
+        <translatorcomment>Messagebox title to confirm if the user wants to cancel multipe selected  transfer</translatorcomment>
+        <translation>Overdrachten annuleren?</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -4220,25 +4136,9 @@ Alle andere geselecteerde overdrachten worden geannuleerd.</translation>
         <translation>Overdracht wissen?</translation>
     </message>
     <message>
-        <source>Clear transfers?
-All the selected completed transfers in this category will be cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
-        <translation>Overdrachten wissen?
-Alle geselecteerde voltooide overdrachten in deze category worden gewist.</translation>
-    </message>
-    <message>
-        <source>Clear transfers?
-All your completed transfers in this category will be cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in a category other than the completed category</translatorcomment>
-        <translation>Overdrachten wissen?
-All uw voltooide overdrachten in deze category worden gewist.</translation>
-    </message>
-    <message>
-        <source>Clear transfers?
-All your completed transfers will be cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
-        <translation>Overdrachten wissen?
-All uw voltooide overdrachten worden gewist.</translation>
+        <source>Clear transfers?</source>
+        <translatorcomment>Messagebox title to confirm if the user wants to clear multipe selected completed transfer</translatorcomment>
+        <translation>Overboekingen overmaken?</translation>
     </message>
     <message>
         <source>Don&apos;t cancel</source>
@@ -4304,6 +4204,36 @@ All uw voltooide overdrachten worden gewist.</translation>
         <source>Show in folder</source>
         <translatorcomment>Label of context menu option to open the selected completed transfer using the specific file browser</translatorcomment>
         <translation>Weergeven in map</translation>
+    </message>
+    <message>
+        <source>Your incomplete sync transfers won't be cancelled
+All the other transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>Synchronisatieoverdrachten kunnen niet worden geannuleerd, maar alle andere overdrachten worden geannuleerd en gewist</translation>
+    </message>
+    <message>
+        <source>Your incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>Synchronisatie-overdrachten kunnen niet worden geannuleerd</translation>
+    </message>
+    <message>
+        <source>Your selected incomplete sync transfers won't be cancelled
+All the other selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>Synchronisatieoverdrachten kunnen niet worden geannuleerd, maar alle andere geselecteerde overdrachten worden geannuleerd en gewist</translation>
+    </message>
+    <message>
+        <source>Your selected incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>Synchronisatie-overdrachten kunnen niet worden geannuleerd</translation>
+    </message>
+</context>
+<context>
+    <name>MessageDialogData</name>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Label for close button. Keep capital letter. SNC-5997</translatorcomment>
+        <translation>Sluiten</translation>
     </message>
 </context>
 <context>
@@ -4602,29 +4532,27 @@ Enter a different name</source>
 Voer een andere naam in.</translation>
     </message>
     <message>
-        <source>The following characters are not allowed:
-%1</source>
-        <translatorcomment>Message shown when the user has entered a not allowed character</translatorcomment>
-        <translation>De volgende tekens zijn niet toegestaan:
-%1</translation>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button. Keep capital letter. SNC.5804</translatorcomment>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for ok button. Keep capital letter. SNC.5804</translatorcomment>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
     <name>NodeSelector</name>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Button text to navigate to backups section</translatorcomment>
-        <translation>Back-ups</translation>
+        <source>Always upload to this destination</source>
+        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox. SNC-5804</translatorcomment>
+        <translation>Upload altijd naar deze bestemming</translation>
     </message>
     <message>
-        <source>Cloud Drive</source>
-        <translatorcomment>Button text to navigate to cloud drive section</translatorcomment>
-        <translation>Cloud schijf</translation>
-    </message>
-    <message>
-        <source>Incoming Shares</source>
-        <translatorcomment>Button text to navigate to incoming shares section</translatorcomment>
-        <translation>Binnenkomende delingen</translation>
+        <source>Files</source>
+        <translatorcomment>Sidebar title. SNC.5804</translatorcomment>
+        <translation>Bestanden</translation>
     </message>
     <message>
         <source>Search</source>
@@ -4653,6 +4581,11 @@ Voer een andere naam in.</translation>
         <source>Close</source>
         <translatorcomment>Cancel button string for failed action in Cloud Drive dialog.SAT-426</translatorcomment>
         <translation>Sluiten</translation>
+    </message>
+    <message>
+        <source>Date added</source>
+        <translatorcomment>Table header title for node date added info. SNC.5804</translatorcomment>
+        <translation>Datum toegevoegd</translation>
     </message>
     <message>
         <source>Error copying file</source>
@@ -4765,14 +4698,19 @@ Voer een andere naam in.</translation>
         <translation>Mapinhoud is al gesynchroniseerd</translation>
     </message>
     <message>
+        <source>Last modified</source>
+        <translatorcomment>Table header title for node last modified date info. SNC.5804</translatorcomment>
+        <translation>Laatst gewijzigd</translation>
+    </message>
+    <message>
         <source>Name</source>
         <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
         <translation>Naam</translation>
     </message>
     <message>
-        <source>Recently used</source>
-        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation>Laatst aangepast</translation>
+        <source>Owner</source>
+        <translatorcomment>Table header title for incoming shared owner info. SNC.5804</translatorcomment>
+        <translation>Eigenaar</translation>
     </message>
     <message>
         <source>Sort by access</source>
@@ -4780,9 +4718,14 @@ Voer een andere naam in.</translation>
         <translation>Sorteer op toegang</translation>
     </message>
     <message>
-        <source>Sort by date</source>
-        <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>Sorteren op datum</translation>
+        <source>Sort by date added</source>
+        <translatorcomment>Table header tooltip for Date added column. SNC.5804</translatorcomment>
+        <translation>Sorteer op datum toegevoegd</translation>
+    </message>
+    <message>
+        <source>Sort by last modified date</source>
+        <translatorcomment>Table header tooltip for last modified column. SNC.5804</translatorcomment>
+        <translation>Sorteer op laatst gewijzigde datum</translation>
     </message>
     <message>
         <source>Sort by name</source>
@@ -4793,11 +4736,6 @@ Voer een andere naam in.</translation>
         <source>Sort by owner name</source>
         <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
         <translation>Sorteren op naam van eigenaar</translation>
-    </message>
-    <message>
-        <source>Sort by status</source>
-        <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
-        <translation>Sorteren op status</translation>
     </message>
     <message>
         <source>The file %1 couldn’t be copied. Try again later</source>
@@ -4908,6 +4846,11 @@ Voer een andere naam in.</translation>
         <translation>Kopiëren</translation>
     </message>
     <message>
+        <source>Download</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a node on node selector. It downloads the selected nodes. SNC-5804</translatorcomment>
+        <translation>Downloaden</translation>
+    </message>
+    <message>
         <source>Leave folder</source>
         <translatorcomment>Contextual menu text that appears when we right click on inshare folder on the incoming shared page on node selector. It leaves an inshared folder. CON-1255</translatorcomment>
         <translation>De map verlaten</translation>
@@ -4956,29 +4899,14 @@ Voer een andere naam in.</translation>
 <context>
     <name>NodeSelectorTreeViewWidget</name>
     <message>
-        <source>Always upload to this destination</source>
-        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
-        <translation>Always uploaden naar deze locatie</translation>
-    </message>
-    <message>
         <source>Any shared files or folders will no longer be accessible to the people you shared them with. You can still access these items in the Rubbish bin, restore, and share them.</source>
         <translatorcomment>Informative text about the potential issues of removing the nodes. CON-334</translatorcomment>
         <translation>Alle gedeelde bestanden of mappen zijn niet langer toegankelijk voor de mensen met wie u ze hebt gedeeld. U kunt deze items nog steeds openen in de Prullenbak, ze herstellen en delen.</translation>
     </message>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Button to filter search results from backups</translatorcomment>
-        <translation>Back-ups</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>Annuleren</translation>
-    </message>
-    <message>
-        <source>Cloud drive</source>
-        <translatorcomment>Button to filter search results from cloud drive</translatorcomment>
-        <translation>Cloud schijf</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -5004,11 +4932,6 @@ Voer een andere naam in.</translation>
         <source>If you leave the folder, you will not be able to see it again.</source>
         <translatorcomment>Body of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
         <translation><numerusform>Als u de map verlaat, bent u niet in staat het weer te zien.</numerusform><numerusform>Als u deze mappen verlaat, kunt u ze niet meer zien.</numerusform></translation>
-    </message>
-    <message>
-        <source>Incoming Shares</source>
-        <translatorcomment>Button to filter search results from incoming shares</translatorcomment>
-        <translation>Binnenkomende delingen</translation>
     </message>
     <message>
         <source>Leave</source>
@@ -5041,19 +4964,9 @@ Voer een andere naam in.</translation>
         <translation>Nieuwe map</translation>
     </message>
     <message>
-        <source>No results for:</source>
-        <translatorcomment>Label indicating that there are no results for the current search, searched text will be following this label.</translatorcomment>
-        <translation>Geen resultaten voor:</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translatorcomment>Button text to accept and close the dialog</translatorcomment>
         <translation>OK</translation>
-    </message>
-    <message>
-        <source>Rubbish bin</source>
-        <translatorcomment>Button to filter search results from rubbish bin</translatorcomment>
-        <translation>Prullenbak</translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
@@ -5077,11 +4990,58 @@ Voer een andere naam in.</translation>
     </message>
 </context>
 <context>
-    <name>NodeSelectorTreeViewWidgetSearch</name>
+    <name>NodeSelectorTreeViewWidgetBackups</name>
     <message>
-        <source>Searching:</source>
-        <translatorcomment>Label indicating the current search, searched text will be following this label.</translatorcomment>
-        <translation>Zoeken:</translation>
+        <source>No backups</source>
+        <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
+        <translation>Geen backup</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetCloudDrive</name>
+    <message>
+        <source>Cloud drive is empty</source>
+        <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
+        <translation>Cloudschijf is leeg</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetIncomingShares</name>
+    <message>
+        <source>No incoming shares</source>
+        <translatorcomment>Title message on the view when there are no items in the normal view. SNC-5804</translatorcomment>
+        <translation>Geen binnenkomende delingen</translation>
+    </message>
+    <message>
+        <source>No incoming shares you can sync</source>
+        <translatorcomment>Title message on the view when there are no items in the Sync view. SNC-5804</translatorcomment>
+        <translation>Geen binnenkomende delingen die u kunt synchroniseren</translation>
+    </message>
+    <message>
+        <source>You can only sync a shared folder if you’ve been given full access</source>
+        <translatorcomment>Description message on the view when there are no items in the sync view. It says you don´t have shared folders with the needed rights. SNC-5804</translatorcomment>
+        <translation>U kunt een gedeelde map alleen synchroniseren als u volledige toegang hebt gekregen</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetRubbish</name>
+    <message>
+        <source>The Rubbish bin is empty</source>
+        <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
+        <translation>Prullenbak is leeg</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetSearch</name>
+    <message numerus="yes">
+        <source>%n result found</source>
+        <translatorcomment>Search tab subtitle that shows the number of coincidences found. %n is the number of found nodes. SNC-5804</translatorcomment>
+        <translation><numerusform>%n resultaat gevonden</numerusform><numerusform>%n resultaten gevonden</numerusform></translation>
+    </message>
+    <message>
+        <source>No search results</source>
+        <translatorcomment>Message on the view when the search did not find any coincidence. SNC-5804</translatorcomment>
+        <translation>Geen zoekresultaten</translation>
     </message>
 </context>
 <context>
@@ -7641,9 +7601,9 @@ Vernieuw de lijst.</translation>
         <translation>Gepauzeerd</translation>
     </message>
     <message>
-        <source>Scanning</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
-        <translation>Scannen</translation>
+        <source>Scanning…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state. SNC-5938</translatorcomment>
+        <translation>Scannen…</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -7651,14 +7611,14 @@ Vernieuw de lijst.</translation>
         <translation>Opstarten</translation>
     </message>
     <message>
-        <source>Syncing</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
-        <translation>Synchroniseren</translation>
+        <source>Syncing…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.  SNC-5938</translatorcomment>
+        <translation>Synchroniseren…</translation>
     </message>
     <message>
-        <source>Transferring</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
-        <translation>Overdragen</translation>
+        <source>Transferring…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers. SNC-5938</translatorcomment>
+        <translation>Overdragen…</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -7666,9 +7626,9 @@ Vernieuw de lijst.</translation>
         <translation>Bijgewerkt</translation>
     </message>
     <message>
-        <source>Waiting</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync is at waiting state</translatorcomment>
-        <translation>Wachten</translation>
+        <source>Waiting…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at waiting state. SNC-5938</translatorcomment>
+        <translation>Wachten...</translation>
     </message>
 </context>
 <context>
@@ -7681,11 +7641,6 @@ Vernieuw de lijst.</translation>
 </context>
 <context>
     <name>StreamingFromMegaDialog</name>
-    <message>
-        <source>Are you sure that you want to stop the streaming?</source>
-        <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation>Weet u zeker dat u het afspelen wilt stoppen?</translation>
-    </message>
     <message>
         <source>Choose application</source>
         <translatorcomment>Text of the button to open a streaming link with a custom application</translatorcomment>
@@ -8518,6 +8473,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>ThemeManager</name>
+    <message>
+        <source>Dark</source>
+        <translatorcomment>Name of the dark color scheme, it can be selected by the user to customize the interface colors. SNC-5799</translatorcomment>
+        <translation>Donker</translation>
+    </message>
+    <message>
+        <source>Light</source>
+        <translatorcomment>Name of the light color scheme, it can be selected by the user to customize the interface colors. SNC-5799</translatorcomment>
+        <translation>Licht</translation>
+    </message>
+    <message>
+        <source>System default</source>
+        <translatorcomment>The user request the aplication color scheme to follow the operating system active theme. SNC-5799</translatorcomment>
+        <translation>Systeemstandaard</translation>
+    </message>
+</context>
+<context>
     <name>TransferBaseDelegateWidget</name>
     <message>
         <source>(in queue)</source>
@@ -8647,20 +8620,15 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Categories for image type transfers</translatorcomment>
         <translation>Afbeeldingen</translation>
     </message>
-    <message numerus="yes">
-        <source>Issue found</source>
-        <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
-        <translation><numerusform>Probleem gedetecteerd</numerusform><numerusform>Gedetecteerde problemen</numerusform></translation>
+    <message>
+        <source>Issues with some synced items</source>
+        <translatorcomment>Label that appears when sync stalls are detected. SNC-5970</translatorcomment>
+        <translation>Gedetecteerde problemen</translation>
     </message>
     <message>
         <source>Media type</source>
         <translatorcomment>Title of the groupbox which contains all the media categories</translatorcomment>
         <translation>Mediatype</translation>
-    </message>
-    <message>
-        <source>No completed transfers</source>
-        <translatorcomment>Empty window message for completed category</translatorcomment>
-        <translation>Geen voltooide overdrachten</translation>
     </message>
     <message>
         <source>No downloads</source>
@@ -8708,19 +8676,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Alles herproberen</translation>
     </message>
     <message>
-        <source>Scanning</source>
-        <translatorcomment>State of the Transfers: Message which shows that a folder is being scanned</translatorcomment>
-        <translation>Scannen…</translation>
-    </message>
-    <message>
         <source>Search</source>
         <translatorcomment>Title for text search window</translatorcomment>
         <translation>Zoeken</translation>
-    </message>
-    <message>
-        <source>Search:</source>
-        <translatorcomment>Title to show the text used to search</translatorcomment>
-        <translation>Zoeken:</translation>
     </message>
     <message>
         <source>Transfer Manager</source>
@@ -8738,11 +8696,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Overdrachten</translation>
     </message>
     <message>
-        <source>Up to date</source>
-        <translatorcomment>All transfers have been finished</translatorcomment>
-        <translation>Bijgewerkt</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label of the button to start a new upload</translatorcomment>
         <translation>Uploaden</translation>
@@ -8756,6 +8709,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Videos</source>
         <translatorcomment>Categories for video type transfers</translatorcomment>
         <translation>Video’s</translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translatorcomment>Button to show the sync stalls. SNC-5970</translatorcomment>
+        <translation>Weergeven</translation>
     </message>
 </context>
 <context>
@@ -8774,19 +8732,34 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Alle overdrachten zijn gepauzeerd</translation>
     </message>
     <message>
+        <source>Before your storage becomes full and your uploads, syncs and backups stop.</source>
+        <translatorcomment>Warning description shown when storage quota is almost full</translatorcomment>
+        <translation>Upgrade voordat uw opslag vol is en uw uploads, synchronisaties en backups stoppen</translation>
+    </message>
+    <message>
+        <source>Storage almost full</source>
+        <translatorcomment>Warning title shown when storage quota is almost full</translatorcomment>
+        <translation>Opslag bijna vol</translation>
+    </message>
+    <message>
+        <source>Storage full</source>
+        <translatorcomment>Error title indicating that the storage quota is full. CON-1061</translatorcomment>
+        <translation>Opslagruimte vol</translation>
+    </message>
+    <message>
         <source>Transfer quota exceeded.</source>
         <translatorcomment>Error text indicating that the transfer quota has been exceeded for pro users. CON-1061</translatorcomment>
         <translation>Overdracht tegoed overschreden</translation>
     </message>
     <message>
-        <source>[B]Storage almost full[/B][BR][A]Upgrade now[/A] before your storage becomes full and your uploads, syncs and backups stop.</source>
-        <translatorcomment>Warning text indicating that the storage quota is almost full. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. CON-1061</translatorcomment>
-        <translation>[B]Opslag bijna vol[/B][BR][A]Nu upgraden[/A] voordat uw opslag vol raakt en uw uploads, synchronisaties en backups stoppen.</translation>
+        <source>Upgrade now</source>
+        <translatorcomment>Text for link shown when the storage quota is almost full.</translatorcomment>
+        <translation>Nu upgraden</translation>
     </message>
     <message>
-        <source>[B]Storage full[/B][BR]Uploads are disabled and sync and backups are paused.</source>
-        <translatorcomment>Error text indicating that the storage quota is full. Please, keep the [BR] placeholder for breaking the line and [B][/B] used for formatting the bold text. CON-1061</translatorcomment>
-        <translation>[B]Opslag vol[/B][BR]Het uploaden is uitgeschakeld en het synchroniseren en de backup wordt gepauzeerd.</translation>
+        <source>Uploads are disabled and sync and backups are paused.</source>
+        <translatorcomment>Error description shown when storage is full. CON-1061</translatorcomment>
+        <translation>Uploads zijn uitgeschakeld en synchroniseren en back-ups worden gepauzeerd</translation>
     </message>
     <message>
         <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
@@ -9509,29 +9482,19 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation><numerusform>%1 (%2%) van %3 gebruikt</numerusform><numerusform>%1 (%2%) van %3 gebruikt</numerusform></translation>
     </message>
     <message>
-        <source>%1 [A]d[/A]</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]d[/A]</translation>
-    </message>
-    <message>
-        <source>%1 [A]h[/A]</source>
-        <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]u[/A]</translation>
-    </message>
-    <message>
-        <source>%1 [A]m[/A]</source>
-        <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]m[/A]</translation>
-    </message>
-    <message>
-        <source>%1 [A]s[/A]</source>
-        <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]s[/A]</translation>
+        <source>%1 / %2</source>
+        <translatorcomment>This translated separator template with placeholders &quot;%1&quot; and &quot;%2&quot; is used to format the display of two values separated by a slash, with a space on each side of the separator. The placeholders represent dynamic content that will be replaced with actual data. For instance, in French: &quot;15,2 Go / 400 Go&quot;. SNC-5456</translatorcomment>
+        <translation>%1 / %2</translation>
     </message>
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to indicate the amount of used and total space available. Keep %1 (used space) and %2 (total space) substitution placeholders because they will be filled with the required amounts of storage space dynamically including the unit (e.g. 1KB, 5MB, 8GB...). CON-944</translatorcomment>
         <translation>%1 van %2</translation>
+    </message>
+    <message>
+        <source>%1 sec</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation>%1 sec</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
@@ -9539,9 +9502,24 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation><numerusform>%1 gebruikt</numerusform><numerusform>%1 gebruikt</numerusform></translation>
     </message>
     <message>
-        <source>%1/%2</source>
-        <translatorcomment>This translated separator template with placeholders &quot;%1&quot; and &quot;%2&quot; is used to format the display of two values separated by a slash, without any superfluous spaces, in the UI. The placeholders represent dynamic content that will be replaced with actual data. For instance, in French, the formatted string should appear as &quot;15,2 Go/400 Go&quot;, without any spaces surrounding the slash. Translators should adjust the spaces around the slash according to their language-specific formatting rules, ensuring that the translation adheres to the standard typographical conventions of the target language. SNC-1793</translatorcomment>
-        <translation>%1/%2</translation>
+        <source>%1d</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation>%1 d</translation>
+    </message>
+    <message>
+        <source>%1h</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation>%1 u</translation>
+    </message>
+    <message>
+        <source>%1m</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation>%1 m</translation>
+    </message>
+    <message>
+        <source>%1s</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation>%1s</translation>
     </message>
     <message numerus="yes">
         <source>Added %n day ago</source>
@@ -9687,11 +9665,6 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>VerifyLockMessage</name>
     <message>
-        <source>Email sent</source>
-        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
-        <translation>Email verstuurd</translation>
-    </message>
-    <message>
         <source>Locked account</source>
         <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
         <translation>Gesloten Account</translation>
@@ -9702,18 +9675,8 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Uitloggen</translation>
     </message>
     <message>
-        <source>Resend email</source>
-        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
-        <translation>Email opnieuw verzenden</translation>
-    </message>
-    <message>
-        <source>Verify your email</source>
-        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
-        <translation>Controleer uw email inbox</translation>
-    </message>
-    <message>
         <source>Why am I seeing this?</source>
-        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translatorcomment>Clickable Label to inform the user about why the account is locked and needs verification (email verification). It redirects to credential-stuffing helpdesk article (SNC-5553) </translatorcomment>
         <translation>Waarom zie ik dit?</translation>
     </message>
 </context>

@@ -75,8 +75,8 @@
         <translation>Mục chia sẻ nhận được</translation>
     </message>
     <message>
-        <source>Payment</source>
-        <translatorcomment>Label to indicate that the application is showing only payment notifications</translatorcomment>
+        <source>Payments</source>
+        <translatorcomment>Label to indicate that the application is showing only payment notifications SNC-5953</translatorcomment>
         <translation>Thanh toán</translation>
     </message>
 </context>
@@ -738,66 +738,44 @@
     </message>
 </context>
 <context>
-    <name>ChangePassword</name>
+    <name>ChangePasswordController</name>
     <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to close the Change password dialog discarding the information</translatorcomment>
-        <translation>Hủy</translation>
+        <source>Password changed</source>
+        <translatorcomment>Title of the dialog displayed when the change password process finish successful. SNC-5799</translatorcomment>
+        <translation>Mật khẩu đã được thay đổi</translation>
     </message>
     <message>
+        <source>Too many requests. Please wait.</source>
+        <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible). SNC-5799</translatorcomment>
+        <translation>Quá nhiều lời yêu cầu, xin chờ</translation>
+    </message>
+    <message>
+        <source>You have entered your current password, please enter a new password.</source>
+        <translatorcomment>Informative message shown when user is trying to change his password with the current one. SNC-5799</translatorcomment>
+        <translation>Mật khẩu bạn vừa nhập trùng với mật khẩu hiện tại, hãy nhập một mật khẩu mới</translation>
+    </message>
+    <message>
+        <source>Your password has been changed.</source>
+        <translatorcomment>Success message shown when the password has been changed. SNC-5799</translatorcomment>
+        <translation>Mật khẩu của bạn đã được thay đổi</translation>
+    </message>
+</context>
+<context>
+    <name>ChangePasswordStrings</name>
+    <message>
         <source>Change password</source>
-        <translatorcomment>Windows title of the Change password dialog</translatorcomment>
-        <translation>Đổi mật khẩu</translation>
+        <translatorcomment>Windows title of the Change password dialog. SNC-5799</translatorcomment>
+        <translation>Đổi mật khẩu</translation>
     </message>
     <message>
         <source>Confirm new password</source>
-        <translatorcomment>Label displayed next to control where the user can enter the new password confirmation</translatorcomment>
+        <translatorcomment>Label displayed next to control where the user can enter the new password confirmation. SNC-5799</translatorcomment>
         <translation>Nhập lại mật khẩu mới</translation>
     </message>
     <message>
         <source>New password</source>
-        <translatorcomment>Label displayed next to control where the user can enter the new password</translatorcomment>
+        <translatorcomment>Label displayed next to control where the user can enter the new password. SNC-5799</translatorcomment>
         <translation>Mật khẩu mới</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Button label to close the Change password dialog saving the new information</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Password changed</source>
-        <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
-        <translation>Mật khẩu đã được thay đổi</translation>
-    </message>
-    <message>
-        <source>Please enter your password</source>
-        <translatorcomment>Error message displayed when an empty password has been provided</translatorcomment>
-        <translation>Nhập mật khẩu</translation>
-    </message>
-    <message>
-        <source>Please, enter a stronger password</source>
-        <translatorcomment>Error message displayed when an the new password is too weak</translatorcomment>
-        <translation>Đặt một mật khẩu mạnh hơn</translation>
-    </message>
-    <message>
-        <source>The entered passwords don&apos;t match</source>
-        <translatorcomment>Error message displayed when the new password and its confirmation are not the same</translatorcomment>
-        <translation>Các mật khẩu đã nhập không có trùng khớp</translation>
-    </message>
-    <message>
-        <source>Too many requests. Please wait.</source>
-        <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</translatorcomment>
-        <translation>Quá nhiều lời yêu cầu. Xin chờ.</translation>
-    </message>
-    <message>
-        <source>You have entered your current password, please enter a new password.</source>
-        <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
-        <translation>Mật khẩu bạn vừa nhập trùng với mật khẩu hiện tại, nhập một mật khẩu mới.</translation>
-    </message>
-    <message>
-        <source>Your password has been changed.</source>
-        <translatorcomment>Success message shown when the password has been changed</translatorcomment>
-        <translation>Mật khẩu của bạn đã được thay đổi.</translation>
     </message>
 </context>
 <context>
@@ -931,11 +909,9 @@
         <translation>Gói thành viên hạng Pro sắp hết hạn</translation>
     </message>
     <message>
-        <source>The following characters are not allowed:
-%1</source>
-        <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder)</translatorcomment>
-        <translation>Các ký tự sau không được phép sử dụng:
-%1</translation>
+        <source>The following characters are not allowed: %1</source>
+        <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder). SNC-5804</translatorcomment>
+        <translation>Các ký tự sau không được phép sử dụng: %1</translation>
     </message>
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
@@ -1976,8 +1952,8 @@
         <translation>Mục chia sẻ nhận được</translation>
     </message>
     <message>
-        <source>Payment</source>
-        <translatorcomment>Label to indicate that only Payment notifications will be shown.</translatorcomment>
+        <source>Payments</source>
+        <translatorcomment>Label to indicate that only Payment notifications will be shown. SNC-5953</translatorcomment>
         <translation>Thanh toán</translation>
     </message>
 </context>
@@ -2369,11 +2345,6 @@ Kiểm tra hộp thư email của bạn để xem hướng dẫn mở khóa t�
         <translation>Nâng cấp tài khoản của bạn</translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translatorcomment>This is the string used to refer to settings for all platforms.</translatorcomment>
-        <translation>Thiết Đặt</translation>
-    </message>
-    <message>
         <source>Show MEGAsync options</source>
         <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
         <translation>Hiện các tùy chọn</translation>
@@ -2449,14 +2420,14 @@ Kiểm tra hộp thư email của bạn để xem hướng dẫn mở khóa t�
         <translation>Bạn không thể tiếp tục tải xuống vì bạn không còn đủ băng thông truyền tải được cấp cho tài khoản này. Để tiếp tục tải xuống, hãy mua gói mới hoặc nếu bạn có mua đăng ký định kỳ với MEGA, bạn có thể đợi đến khi gói của mình được gia hạn lại.</translation>
     </message>
     <message numerus="yes">
-        <source>You have [A]%n day[/A] left to upgrade. After that, your data is subject to deletion.</source>
-        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of days left to upgrade.</translatorcomment>
-        <translation><numerusform>Quý khách còn lại [A]%n ngày[/A] để tiến hành nâng cấp. Nếu không sau thời gian này, dữ liệu của quý khách sẽ bị xóa bỏ.</numerusform></translation>
+        <source>You have %n day left to upgrade. After that, your data is subject to deletion.</source>
+        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. %n- number of days left to upgrade.</translatorcomment>
+        <translation><numerusform>Còn lại %n ngày để thực hiện nâng cấp, hoặc nếu không dữ liệu sẽ bị xóa</numerusform></translation>
     </message>
     <message numerus="yes">
-        <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
-        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
-        <translation><numerusform>Quý khách còn lại [A]%n giờ đồng hồ[/A] để tiến hành nâng cấp. Nếu không sau thời gian này, dữ liệu của quý khách sẽ bị xóa bỏ.</numerusform></translation>
+        <source>You have %n hour left to upgrade. After that, your data is subject to deletion.</source>
+        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: %n- number of hours left to upgrade.</translatorcomment>
+        <translation><numerusform>Còn lại %n giờ đồng hồ để thực hiện nâng cấp, hoặc nếu không dữ liệu sẽ bị xóa</numerusform></translation>
     </message>
     <message>
         <source>You must act immediately to save your data</source>
@@ -2583,7 +2554,7 @@ Kiểm tra hộp thư email của bạn để xem hướng dẫn mở khóa t�
     <message>
         <source>Do not show again</source>
         <translatorcomment>This is a label for a checkbox. When checked by the user, it ensures that the Enable Notification Area Icon notification will not be displayed to them in the future. SNC-2270</translatorcomment>
-        <translation>Đừng hiện lại nữa</translation>
+        <translation>Đừng hiện cái này nữa</translation>
     </message>
     <message>
         <source>Failed to install the necessary components.</source>
@@ -2968,62 +2939,6 @@ Hãy chờ cho phiên tải lên được hoàn tất.</translation>
     </message>
 </context>
 <context>
-    <name>LockedPopOver</name>
-    <message>
-        <source>Locked Accounts</source>
-        <translatorcomment>Title of informative popover which informs users about the lock situation.</translatorcomment>
-        <translation>Tài khoản bị khóa</translation>
-    </message>
-    <message>
-        <source>[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</source>
-        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
-        <translation>[A]Quý khách hiện tại có thể đang dùng một mật khẩu duy nhất cho tất cả các dịch vụ khác bao gồm cả MEGA, một trong các dịch vụ đó đã bị tấn công và để lộ thông tin gần đây.[/A]</translation>
-    </message>
-    <message>
-        <source>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</source>
-        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation>[A]Mật khẩu có nguy cơ đã bị tiết lộ và hacker sử dụng để thử truy cập vào các dịch vụ khác nhau, có thể bao gồm cả MEGA.[/A]</translation>
-    </message>
-</context>
-<context>
-    <name>Login2FA</name>
-    <message>
-        <source>6 digit code:</source>
-        <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation>Mã 6 số:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button text to cancel 2FA dialog</translatorcomment>
-        <translation>Hủy</translation>
-    </message>
-    <message>
-        <source>Invalid code</source>
-        <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
-        <translation>Mã không phù hợp</translation>
-    </message>
-    <message>
-        <source>Login Verification</source>
-        <translatorcomment>A dialog title for the form which collects the user’s 2FA code for login.</translatorcomment>
-        <translation>Xác thực đăng nhập</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translatorcomment>Button text to confirm 2FA dialog</translatorcomment>
-        <translation>Tiếp</translation>
-    </message>
-    <message>
-        <source>Please enter the code generated by your authentication app</source>
-        <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>Nhập mã số được tạo bởi ứng dụng lập xác thực của bạn</translation>
-    </message>
-    <message>
-        <source>[A]Lost your authenticator device?[/A]</source>
-        <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation>[A]Mất thiết bị lập xác thực?[/A]</translation>
-    </message>
-</context>
-<context>
     <name>LoginController</name>
     <message>
         <source>Email address already in use.</source>
@@ -3054,9 +2969,14 @@ Hãy chờ cho phiên tải lên được hoàn tất.</translation>
 <context>
     <name>LogoutController</name>
     <message>
-        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
-        <translatorcomment>Notification message shown when SSL checks fails. SNC-4122</translatorcomment>
-        <translation>Không thể xác minh chìa khóa SSL của MEGA. Bạn có thể bị ảnh hưởng bởi một hành vi tấn công trung gian hoặc phần mềm chống vi-rút của bạn chặn việc giao tiếp của bạn và gây ra sự cố này. Hãy tắt nó đi và thử lại.</translation>
+        <source>MEGA couldn’t connect securely.[BR]If you’re on public Wi-Fi, try signing in through your browser first. Your ISP or security software might also be interfering with the connection.[BR][A]Learn more[/A]</source>
+        <translatorcomment>Body for the notification message shown when SSL checks fails. SNC-5610</translatorcomment>
+        <translation>MEGA đã không thể kết nối một cách bảo mật được.[BR]Nếu bạn đang sử dụng Wi-Fi công cộng, hãy thử đăng nhập qua trình duyệt trước. Nhà mạng Internet hoặc phần mềm bảo mật của bạn cũng có thể đang gây trở ngại cho kết nối.[BR][A]Tìm hiểu thêm[/A]</translation>
+    </message>
+    <message>
+        <source>Secure connection failed</source>
+        <translatorcomment>Title for the notification message shown when SSL checks fails. SNC-5610</translatorcomment>
+        <translation>Kết nối an toàn không thành công</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
@@ -3163,6 +3083,11 @@ Hãy chờ cho phiên tải lên được hoàn tất.</translation>
         <source>Dismiss</source>
         <translatorcomment>Button text to discard a notification or message box</translatorcomment>
         <translation>Đã đọc</translation>
+    </message>
+    <message>
+        <source>Don’t show me again</source>
+        <translatorcomment>Check box in the link created dialog, to inform the system about user preference. SNC-5975</translatorcomment>
+        <translation>Đừng hiện cái này nữa</translation>
     </message>
     <message>
         <source>Download</source>
@@ -3556,6 +3481,11 @@ https://mega.co.nz/#sync</source>
         <translation>Truy cập bị từ chối</translation>
     </message>
     <message>
+        <source>Alert</source>
+        <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
+        <translation>Cảnh báo</translation>
+    </message>
+    <message>
         <source>Already exists</source>
         <translatorcomment>Label to show that an error related with an existent resource occurs during a SDK operation.</translatorcomment>
         <translation>Đã tồn tại sẵn</translation>
@@ -3819,14 +3749,22 @@ Bạn sẽ không thể lấy lại quyền truy cập vào dữ liệu đã �
         <translation>Các thiết đặt của đồng bộ và sao lưu đã bị hỏng và đã được đặt lại từ đầu. Bạn sẽ cần phải thiết lập lại bất kỳ đồng bộ hóa và sao lưu nào bạn đã có trước đây một lần nữa.</translation>
     </message>
     <message>
-        <source>Alert</source>
-        <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation>Cảnh báo</translation>
-    </message>
-    <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
         <translation>[B]Đã phát hiện lỗi[/B][BR]Đã xảy ra lỗi khi tải các tài nguyên của ứng dụng và ứng dụng cần phải chấm dứt. Vui lòng gỡ rồi cài đặt lại ứng dụng từ [A]mega.io/desktop[/A] để khắc phục sự cố này. Nếu sự cố vẫn tiếp diễn sau khi cài đặt lại, hãy liên lạc với bộ phận hỗ trợ để được giúp thêm.</translation>
+    </message>
+</context>
+<context>
+    <name>MegaInputDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for Cancel buttons. SNC-5798.</translatorcomment>
+        <translation>Hủy</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for Ok buttons. SNC-5798.</translatorcomment>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -4116,6 +4054,46 @@ Bạn sẽ không thể lấy lại quyền truy cập vào dữ liệu đã �
 <context>
     <name>MegaTransferView</name>
     <message>
+        <source>All the selected completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
+        <translation>Tất cả các phiên truyền đã hoàn tất được chọn sẽ bị dọn đi</translation>
+    </message>
+    <message>
+        <source>All your completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
+        <translation>Tất cả các phiên truyền đã hoàn tất trong loại này sẽ bị dọn đi</translation>
+    </message>
+    <message>
+        <source>All your completed transfers will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
+        <translation>Tất cả các phiên truyền tải sẽ bị dọn đi</translation>
+    </message>
+    <message>
+        <source>All your selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers</translatorcomment>
+        <translation>Tất cả các phiên truyền được chọn sẽ bị hủy bỏ và dọn đi</translation>
+    </message>
+    <message>
+        <source>All your selected transfers will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers</translatorcomment>
+        <translation>Tất cả các phiên truyền được chọn sẽ bị hủy bỏ</translation>
+    </message>
+    <message>
+        <source>All your transfers in this category will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>Tất cả các phiên truyền trong loại bày sẽ bị hủy bỏ và dọn đi</translation>
+    </message>
+    <message>
+        <source>All your transfers in this category will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>Tất cả các phiên truyền trong loại bày sẽ bị hủy bỏ</translation>
+    </message>
+    <message>
+        <source>All your transfers will be cancelled.</source>
+        <translatorcomment>Messagebox description text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
+        <translation>Tất cả các phiên truyền tải sẽ bị hủy bỏ</translation>
+    </message>
+    <message>
         <source>Cancel</source>
         <translatorcomment>Dialog button to do the proposed actions (cancel the transfers). See CON-188.</translatorcomment>
         <translation>Hủy</translation>
@@ -4136,70 +4114,9 @@ Bạn sẽ không thể lấy lại quyền truy cập vào dữ liệu đã �
         <translation>Hủy phiên truyền tải?</translation>
     </message>
     <message>
-        <source>Cancel transfers?
-All your selected transfers will be cancelled and cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers</translatorcomment>
-        <translation>Hủy các phiên truyền tải?
-Tất cả các phiên truyền tải bạn đã chọn sẽ bị hủy và dọn dẹp.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-All your selected transfers will be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers</translatorcomment>
-        <translation>Hủy các phiên truyền tải?
-Tất cả các phiên truyền tải bạn đã chọn sẽ bị hủy.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-All your transfers in this category will be cancelled and cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category</translatorcomment>
-        <translation>Hủy các phiên truyền tải?
-Tất cả các phiên truyền tải trong loại này sẽ bị hủy và dọn dẹp.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-All your transfers in this category will be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category</translatorcomment>
-        <translation>Hủy các phiên truyền tải?
-Tất cả các phiên truyền tải trong loại này sẽ bị hủy.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-All your transfers will be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
-        <translation>Hủy các phiên truyền tải?
-Tất cả các phiên truyền tải của bạn sẽ bị hủy.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-Your incomplete sync transfers won't be cancelled
-All the other transfers will be cancelled and cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
-        <translation>Hủy các phiên truyền tải?
-Các phiên truyền tải đồng bộ chưa hoàn tất sẽ không bị hủy.
-Tất cả các phiên truyền tải còn lại sẽ bị hủy và dọn dẹp.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-Your incomplete sync transfers won&apos;t be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
-        <translation>Hủy các phiên truyền tải?
-Các phiên truyền tải đồng bộ chưa hoàn tất sẽ không bị hủy. Các phiên truyền tải còn lại khác sẽ bị hủy.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-Your selected incomplete sync transfers won't be cancelled
-All the other selected transfers will be cancelled and cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
-        <translation>Hủy các phiên truyền tải?
-Các phiên truyền tải đồng bộ chưa hoàn tất mà bạn đã chọn sẽ không bị hủy. Tất cả các phiên tải còn lại khác mà bạn đã chọn sẽ bị hủy.</translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
-Your selected incomplete sync transfers won&apos;t be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
-        <translation>Hủy các phiên truyền tải?
-Các phiên truyền tải đồng bộ chưa hoàn tất mà bạn đã chọn sẽ không bị hủy. Tất cả các phiên tải còn lại khác mà bạn đã chọn sẽ bị hủy và dọn dẹp.</translation>
+        <source>Cancel transfers?</source>
+        <translatorcomment>Messagebox title to confirm if the user wants to cancel multipe selected  transfer</translatorcomment>
+        <translation>Muốn hủy các phiên truyền tải?</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -4217,25 +4134,9 @@ Các phiên truyền tải đồng bộ chưa hoàn tất mà bạn đã ch�
         <translation>Dọn dẹp phiên truyền tải?</translation>
     </message>
     <message>
-        <source>Clear transfers?
-All the selected completed transfers in this category will be cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
-        <translation>Hủy các phiên truyền tải?
-Tất cả các phiên truyền tải đã hoàn tất bạn chọn trong loại này sẽ bị dọn dẹp.</translation>
-    </message>
-    <message>
-        <source>Clear transfers?
-All your completed transfers in this category will be cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in a category other than the completed category</translatorcomment>
-        <translation>Dọn dẹp các phiên truyền tải?
-Tất cả các phiên truyền tải đã hoàn tất trong loại này sẽ bị dọn đi.</translation>
-    </message>
-    <message>
-        <source>Clear transfers?
-All your completed transfers will be cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
-        <translation>Hủy các phiên truyền tải?
-Tất cả các phiên truyền tải đã hoàn tất của bạn sẽ bị dọn dẹp.</translation>
+        <source>Clear transfers?</source>
+        <translatorcomment>Messagebox title to confirm if the user wants to clear multipe selected completed transfer</translatorcomment>
+        <translation>Dọn các phiên truyền tải?</translation>
     </message>
     <message>
         <source>Don&apos;t cancel</source>
@@ -4301,6 +4202,36 @@ Tất cả các phiên truyền tải đã hoàn tất của bạn sẽ bị d�
         <source>Show in folder</source>
         <translatorcomment>Label of context menu option to open the selected completed transfer using the specific file browser</translatorcomment>
         <translation>Hiện trong thư mục chứa</translation>
+    </message>
+    <message>
+        <source>Your incomplete sync transfers won't be cancelled
+All the other transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>Các phiên truyền đồng bộ không thể hủy được, nhưng các dạng truyền tải khác sẽ bị hủy bỏ và dọn đi</translation>
+    </message>
+    <message>
+        <source>Your incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>Các phiên truyền đồng bộ không thể hủy được</translation>
+    </message>
+    <message>
+        <source>Your selected incomplete sync transfers won't be cancelled
+All the other selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>Các phiên truyền đồng bộ không thể hủy được, nhưng các phiên truyền tải được chọn sẽ bị hủy bỏ và dọn đi</translation>
+    </message>
+    <message>
+        <source>Your selected incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>Các phiên truyền đồng bộ không thể hủy được</translation>
+    </message>
+</context>
+<context>
+    <name>MessageDialogData</name>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Label for close button. Keep capital letter. SNC-5997</translatorcomment>
+        <translation>Đóng</translation>
     </message>
 </context>
 <context>
@@ -4599,29 +4530,27 @@ Enter a different name</source>
 Nhập một tên khác.</translation>
     </message>
     <message>
-        <source>The following characters are not allowed:
-%1</source>
-        <translatorcomment>Message shown when the user has entered a not allowed character</translatorcomment>
-        <translation>Các ký tự sau không được phép sử dụng:
-%1</translation>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button. Keep capital letter. SNC.5804</translatorcomment>
+        <translation>Hủy</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for ok button. Keep capital letter. SNC.5804</translatorcomment>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
     <name>NodeSelector</name>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Button text to navigate to backups section</translatorcomment>
-        <translation>Sao lưu dự phòng</translation>
+        <source>Always upload to this destination</source>
+        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox. SNC-5804</translatorcomment>
+        <translation>Luôn luôn tải lên tệp tin vào chỗ này</translation>
     </message>
     <message>
-        <source>Cloud Drive</source>
-        <translatorcomment>Button text to navigate to cloud drive section</translatorcomment>
-        <translation>Ổ Mây</translation>
-    </message>
-    <message>
-        <source>Incoming Shares</source>
-        <translatorcomment>Button text to navigate to incoming shares section</translatorcomment>
-        <translation>Mục chia sẻ nhận được</translation>
+        <source>Files</source>
+        <translatorcomment>Sidebar title. SNC.5804</translatorcomment>
+        <translation>Tệp</translation>
     </message>
     <message>
         <source>Search</source>
@@ -4650,6 +4579,11 @@ Nhập một tên khác.</translation>
         <source>Close</source>
         <translatorcomment>Cancel button string for failed action in Cloud Drive dialog.SAT-426</translatorcomment>
         <translation>Đóng</translation>
+    </message>
+    <message>
+        <source>Date added</source>
+        <translatorcomment>Table header title for node date added info. SNC.5804</translatorcomment>
+        <translation>Ngày thêm vào</translation>
     </message>
     <message>
         <source>Error copying file</source>
@@ -4762,14 +4696,19 @@ Nhập một tên khác.</translation>
         <translation>Nội dung của thư mục được đồng bộ rồi</translation>
     </message>
     <message>
+        <source>Last modified</source>
+        <translatorcomment>Table header title for node last modified date info. SNC.5804</translatorcomment>
+        <translation>Lần sửa cuối</translation>
+    </message>
+    <message>
         <source>Name</source>
         <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
         <translation>Tên</translation>
     </message>
     <message>
-        <source>Recently used</source>
-        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation>Lần sửa cuối</translation>
+        <source>Owner</source>
+        <translatorcomment>Table header title for incoming shared owner info. SNC.5804</translatorcomment>
+        <translation>Chủ sở hữu</translation>
     </message>
     <message>
         <source>Sort by access</source>
@@ -4777,9 +4716,14 @@ Nhập một tên khác.</translation>
         <translation>Xếp theo quyền truy cập</translation>
     </message>
     <message>
-        <source>Sort by date</source>
-        <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>Xếp theo ngày</translation>
+        <source>Sort by date added</source>
+        <translatorcomment>Table header tooltip for Date added column. SNC.5804</translatorcomment>
+        <translation>Xếp theo ngày thêm vào</translation>
+    </message>
+    <message>
+        <source>Sort by last modified date</source>
+        <translatorcomment>Table header tooltip for last modified column. SNC.5804</translatorcomment>
+        <translation>Xếp theo lần sửa cuối</translation>
     </message>
     <message>
         <source>Sort by name</source>
@@ -4790,11 +4734,6 @@ Nhập một tên khác.</translation>
         <source>Sort by owner name</source>
         <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
         <translation>Xếp theo tên của chủ sở hữu</translation>
-    </message>
-    <message>
-        <source>Sort by status</source>
-        <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
-        <translation>Xếp theo trạng thái</translation>
     </message>
     <message>
         <source>The file %1 couldn’t be copied. Try again later</source>
@@ -4905,6 +4844,11 @@ Nhập một tên khác.</translation>
         <translation>Sao chép</translation>
     </message>
     <message>
+        <source>Download</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a node on node selector. It downloads the selected nodes. SNC-5804</translatorcomment>
+        <translation>Tải xuống</translation>
+    </message>
+    <message>
         <source>Leave folder</source>
         <translatorcomment>Contextual menu text that appears when we right click on inshare folder on the incoming shared page on node selector. It leaves an inshared folder. CON-1255</translatorcomment>
         <translation>Từ bỏ thư mục</translation>
@@ -4953,29 +4897,14 @@ Nhập một tên khác.</translation>
 <context>
     <name>NodeSelectorTreeViewWidget</name>
     <message>
-        <source>Always upload to this destination</source>
-        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
-        <translation>Luôn luôn tải lên vào trong vị trí này</translation>
-    </message>
-    <message>
         <source>Any shared files or folders will no longer be accessible to the people you shared them with. You can still access these items in the Rubbish bin, restore, and share them.</source>
         <translatorcomment>Informative text about the potential issues of removing the nodes. CON-334</translatorcomment>
         <translation>Bất kỳ tệp tin hoặc thư mục bên trong mà bạn đã chia sẻ cho người khác, họ sẽ không thể truy cập được nữa. Bạn vẫn có thể truy cập các mục này trong Thùng Rác, và khôi phục để chia sẻ lại nếu cần.</translation>
     </message>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Button to filter search results from backups</translatorcomment>
-        <translation>Sao lưu dự phòng</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>Hủy</translation>
-    </message>
-    <message>
-        <source>Cloud drive</source>
-        <translatorcomment>Button to filter search results from cloud drive</translatorcomment>
-        <translation>Ổ Mây</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -5001,11 +4930,6 @@ Nhập một tên khác.</translation>
         <source>If you leave the folder, you will not be able to see it again.</source>
         <translatorcomment>Body of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
         <translation><numerusform>Nếu bạn quyết định từ bỏ các thư mục này, bạn sẽ không thể truy cập lại được nữa.</numerusform></translation>
-    </message>
-    <message>
-        <source>Incoming Shares</source>
-        <translatorcomment>Button to filter search results from incoming shares</translatorcomment>
-        <translation>Mục chia sẻ nhận được</translation>
     </message>
     <message>
         <source>Leave</source>
@@ -5038,19 +4962,9 @@ Nhập một tên khác.</translation>
         <translation>Thư Mục Mới</translation>
     </message>
     <message>
-        <source>No results for:</source>
-        <translatorcomment>Label indicating that there are no results for the current search, searched text will be following this label.</translatorcomment>
-        <translation>Không có kết quả cho:</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translatorcomment>Button text to accept and close the dialog</translatorcomment>
         <translation>OK</translation>
-    </message>
-    <message>
-        <source>Rubbish bin</source>
-        <translatorcomment>Button to filter search results from rubbish bin</translatorcomment>
-        <translation>Thùng Rác</translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
@@ -5074,11 +4988,58 @@ Nhập một tên khác.</translation>
     </message>
 </context>
 <context>
-    <name>NodeSelectorTreeViewWidgetSearch</name>
+    <name>NodeSelectorTreeViewWidgetBackups</name>
     <message>
-        <source>Searching:</source>
-        <translatorcomment>Label indicating the current search, searched text will be following this label.</translatorcomment>
-        <translation>Tìm:</translation>
+        <source>No backups</source>
+        <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
+        <translation>Không có bản sao lưu</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetCloudDrive</name>
+    <message>
+        <source>Cloud drive is empty</source>
+        <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
+        <translation>Ổ Mây trống rỗng</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetIncomingShares</name>
+    <message>
+        <source>No incoming shares</source>
+        <translatorcomment>Title message on the view when there are no items in the normal view. SNC-5804</translatorcomment>
+        <translation>Không có mục chia sẻ nhận được nào</translation>
+    </message>
+    <message>
+        <source>No incoming shares you can sync</source>
+        <translatorcomment>Title message on the view when there are no items in the Sync view. SNC-5804</translatorcomment>
+        <translation>Không có mục chia sẻ nào có thể đồng bộ được</translation>
+    </message>
+    <message>
+        <source>You can only sync a shared folder if you’ve been given full access</source>
+        <translatorcomment>Description message on the view when there are no items in the sync view. It says you don´t have shared folders with the needed rights. SNC-5804</translatorcomment>
+        <translation>Bạn chỉ có thể đồng bộ thư mục chia sẻ khi bạn được cấp phép toàn quyền</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetRubbish</name>
+    <message>
+        <source>The Rubbish bin is empty</source>
+        <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
+        <translation>Thùng Rác trống rỗng</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetSearch</name>
+    <message numerus="yes">
+        <source>%n result found</source>
+        <translatorcomment>Search tab subtitle that shows the number of coincidences found. %n is the number of found nodes. SNC-5804</translatorcomment>
+        <translation><numerusform>Đã tìm được %n kết quả</numerusform></translation>
+    </message>
+    <message>
+        <source>No search results</source>
+        <translatorcomment>Message on the view when the search did not find any coincidence. SNC-5804</translatorcomment>
+        <translation>Không tìm được kết quả nào</translation>
     </message>
 </context>
 <context>
@@ -7638,9 +7599,9 @@ Làm mới danh sách.</translation>
         <translation>Đã tạm dừng</translation>
     </message>
     <message>
-        <source>Scanning</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
-        <translation>Đang quét nội dung</translation>
+        <source>Scanning…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state. SNC-5938</translatorcomment>
+        <translation>Đang quét…</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -7648,14 +7609,14 @@ Làm mới danh sách.</translation>
         <translation>Đang khởi động</translation>
     </message>
     <message>
-        <source>Syncing</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
-        <translation>Đang đồng bộ</translation>
+        <source>Syncing…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.  SNC-5938</translatorcomment>
+        <translation>Đang đồng[w]bộ…</translation>
     </message>
     <message>
-        <source>Transferring</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
-        <translation>Đang truyền tải</translation>
+        <source>Transferring…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers. SNC-5938</translatorcomment>
+        <translation>Đang truyền…</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -7663,9 +7624,9 @@ Làm mới danh sách.</translation>
         <translation>Đã cập nhật</translation>
     </message>
     <message>
-        <source>Waiting</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync is at waiting state</translatorcomment>
-        <translation>Đang chờ</translation>
+        <source>Waiting…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at waiting state. SNC-5938</translatorcomment>
+        <translation>Đang chờ...</translation>
     </message>
 </context>
 <context>
@@ -7678,11 +7639,6 @@ Làm mới danh sách.</translation>
 </context>
 <context>
     <name>StreamingFromMegaDialog</name>
-    <message>
-        <source>Are you sure that you want to stop the streaming?</source>
-        <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation>Bạn có chắc muốn ngưng việc streaming?</translation>
-    </message>
     <message>
         <source>Choose application</source>
         <translatorcomment>Text of the button to open a streaming link with a custom application</translatorcomment>
@@ -8515,6 +8471,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>ThemeManager</name>
+    <message>
+        <source>Dark</source>
+        <translatorcomment>Name of the dark color scheme, it can be selected by the user to customize the interface colors. SNC-5799</translatorcomment>
+        <translation>Tối</translation>
+    </message>
+    <message>
+        <source>Light</source>
+        <translatorcomment>Name of the light color scheme, it can be selected by the user to customize the interface colors. SNC-5799</translatorcomment>
+        <translation>Sáng</translation>
+    </message>
+    <message>
+        <source>System default</source>
+        <translatorcomment>The user request the aplication color scheme to follow the operating system active theme. SNC-5799</translatorcomment>
+        <translation>Mặc định với hệ thống</translation>
+    </message>
+</context>
+<context>
     <name>TransferBaseDelegateWidget</name>
     <message>
         <source>(in queue)</source>
@@ -8644,20 +8618,15 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Categories for image type transfers</translatorcomment>
         <translation>Hình ảnh</translation>
     </message>
-    <message numerus="yes">
-        <source>Issue found</source>
-        <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
-        <translation><numerusform>Đã phát hiện vấn đề</numerusform></translation>
+    <message>
+        <source>Issues with some synced items</source>
+        <translatorcomment>Label that appears when sync stalls are detected. SNC-5970</translatorcomment>
+        <translation>Đã phát hiện vấn đề</translation>
     </message>
     <message>
         <source>Media type</source>
         <translatorcomment>Title of the groupbox which contains all the media categories</translatorcomment>
         <translation>Dạng phương tiện</translation>
-    </message>
-    <message>
-        <source>No completed transfers</source>
-        <translatorcomment>Empty window message for completed category</translatorcomment>
-        <translation>Chưa có phiên truyền tải nào đã hoàn tất</translation>
     </message>
     <message>
         <source>No downloads</source>
@@ -8705,19 +8674,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Thử lại tất cả</translation>
     </message>
     <message>
-        <source>Scanning</source>
-        <translatorcomment>State of the Transfers: Message which shows that a folder is being scanned</translatorcomment>
-        <translation>Đang quét…</translation>
-    </message>
-    <message>
         <source>Search</source>
         <translatorcomment>Title for text search window</translatorcomment>
         <translation>Tìm kiếm</translation>
-    </message>
-    <message>
-        <source>Search:</source>
-        <translatorcomment>Title to show the text used to search</translatorcomment>
-        <translation>Tìm kiếm:</translation>
     </message>
     <message>
         <source>Transfer Manager</source>
@@ -8735,11 +8694,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Phiên truyền tải</translation>
     </message>
     <message>
-        <source>Up to date</source>
-        <translatorcomment>All transfers have been finished</translatorcomment>
-        <translation>Đã cập nhật</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label of the button to start a new upload</translatorcomment>
         <translation>Tải lên</translation>
@@ -8753,6 +8707,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Videos</source>
         <translatorcomment>Categories for video type transfers</translatorcomment>
         <translation>Videos</translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translatorcomment>Button to show the sync stalls. SNC-5970</translatorcomment>
+        <translation>Xem</translation>
     </message>
 </context>
 <context>
@@ -8771,19 +8730,34 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Các phiên truyền tải hiện tạm dừng</translation>
     </message>
     <message>
+        <source>Before your storage becomes full and your uploads, syncs and backups stop.</source>
+        <translatorcomment>Warning description shown when storage quota is almost full</translatorcomment>
+        <translation>Nâng cấp trước khi không gian của bạn bị đầy và các phiên tải lên, đồng bộ hóa và sao lưu bị dừng lại</translation>
+    </message>
+    <message>
+        <source>Storage almost full</source>
+        <translatorcomment>Warning title shown when storage quota is almost full</translatorcomment>
+        <translation>Không gian lưu trữ sắp đầy</translation>
+    </message>
+    <message>
+        <source>Storage full</source>
+        <translatorcomment>Error title indicating that the storage quota is full. CON-1061</translatorcomment>
+        <translation>Không gian lưu trữ đã đầy</translation>
+    </message>
+    <message>
         <source>Transfer quota exceeded.</source>
         <translatorcomment>Error text indicating that the transfer quota has been exceeded for pro users. CON-1061</translatorcomment>
         <translation>Đã vượt hạn mức băng thông truyền tải</translation>
     </message>
     <message>
-        <source>[B]Storage almost full[/B][BR][A]Upgrade now[/A] before your storage becomes full and your uploads, syncs and backups stop.</source>
-        <translatorcomment>Warning text indicating that the storage quota is almost full. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. CON-1061</translatorcomment>
-        <translation>[B]Không gian lưu trữ sắp đầy[/B][BR][A]Nâng cấp ngay[/A] trước khi không gian của bạn bị đầy và các phiên tải lên, đồng bộ hóa và sao lưu bị dừng lại.</translation>
+        <source>Upgrade now</source>
+        <translatorcomment>Text for link shown when the storage quota is almost full.</translatorcomment>
+        <translation>Nâng cấp ngay</translation>
     </message>
     <message>
-        <source>[B]Storage full[/B][BR]Uploads are disabled and sync and backups are paused.</source>
-        <translatorcomment>Error text indicating that the storage quota is full. Please, keep the [BR] placeholder for breaking the line and [B][/B] used for formatting the bold text. CON-1061</translatorcomment>
-        <translation>[B]Không gian lưu trữ đã đầy[/B][BR]Các phiên tải lên đã bị vô hiệu, đồng bộ hóa và sao lưu bị tạm dừng.</translation>
+        <source>Uploads are disabled and sync and backups are paused.</source>
+        <translatorcomment>Error description shown when storage is full. CON-1061</translatorcomment>
+        <translation>Các phiên tải lên đã bị vô hiệu, đồng bộ hóa và sao lưu bị tạm dừng</translation>
     </message>
     <message>
         <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
@@ -9506,29 +9480,19 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation><numerusform>%1 (%2%) trong tổng %3 đang được sử dụng</numerusform></translation>
     </message>
     <message>
-        <source>%1 [A]d[/A]</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]ngày[/A]</translation>
-    </message>
-    <message>
-        <source>%1 [A]h[/A]</source>
-        <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]g̀[/A]</translation>
-    </message>
-    <message>
-        <source>%1 [A]m[/A]</source>
-        <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]ṕ[/A]</translation>
-    </message>
-    <message>
-        <source>%1 [A]s[/A]</source>
-        <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]giây[/A]</translation>
+        <source>%1 / %2</source>
+        <translatorcomment>This translated separator template with placeholders &quot;%1&quot; and &quot;%2&quot; is used to format the display of two values separated by a slash, with a space on each side of the separator. The placeholders represent dynamic content that will be replaced with actual data. For instance, in French: &quot;15,2 Go / 400 Go&quot;. SNC-5456</translatorcomment>
+        <translation>%1 / %2</translation>
     </message>
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to indicate the amount of used and total space available. Keep %1 (used space) and %2 (total space) substitution placeholders because they will be filled with the required amounts of storage space dynamically including the unit (e.g. 1KB, 5MB, 8GB...). CON-944</translatorcomment>
         <translation>%1 trong tổng %2</translation>
+    </message>
+    <message>
+        <source>%1 sec</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation>%1 giây</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
@@ -9536,9 +9500,24 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation><numerusform>Đang dùng %1</numerusform></translation>
     </message>
     <message>
-        <source>%1/%2</source>
-        <translatorcomment>This translated separator template with placeholders &quot;%1&quot; and &quot;%2&quot; is used to format the display of two values separated by a slash, without any superfluous spaces, in the UI. The placeholders represent dynamic content that will be replaced with actual data. For instance, in French, the formatted string should appear as &quot;15,2 Go/400 Go&quot;, without any spaces surrounding the slash. Translators should adjust the spaces around the slash according to their language-specific formatting rules, ensuring that the translation adheres to the standard typographical conventions of the target language. SNC-1793</translatorcomment>
-        <translation>%1/%2</translation>
+        <source>%1d</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation>%1 ng</translation>
+    </message>
+    <message>
+        <source>%1h</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation>%1 g̀</translation>
+    </message>
+    <message>
+        <source>%1m</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation>%1 ṕ</translation>
+    </message>
+    <message>
+        <source>%1s</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation>%1 ĝ</translation>
     </message>
     <message numerus="yes">
         <source>Added %n day ago</source>
@@ -9684,11 +9663,6 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>VerifyLockMessage</name>
     <message>
-        <source>Email sent</source>
-        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
-        <translation>Email đã được gửi</translation>
-    </message>
-    <message>
         <source>Locked account</source>
         <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
         <translation>Tài khoản bị khóa</translation>
@@ -9699,18 +9673,8 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Đăng xuất</translation>
     </message>
     <message>
-        <source>Resend email</source>
-        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
-        <translation>Gửi lại email</translation>
-    </message>
-    <message>
-        <source>Verify your email</source>
-        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
-        <translation>Kiểm tra hộp thư email của bạn</translation>
-    </message>
-    <message>
         <source>Why am I seeing this?</source>
-        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translatorcomment>Clickable Label to inform the user about why the account is locked and needs verification (email verification). It redirects to credential-stuffing helpdesk article (SNC-5553) </translatorcomment>
         <translation>Tại sao tôi đang thấy cái này?</translation>
     </message>
 </context>

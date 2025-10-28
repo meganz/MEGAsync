@@ -76,8 +76,8 @@
     </message>
     <message>
         <source>Payments</source>
-        <translatorcomment>Label to indicate that the application is showing only payment notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Label to indicate that the application is showing only payment notifications SNC-5953</translatorcomment>
+        <translation>Payments</translation>
     </message>
 </context>
 <context>
@@ -763,22 +763,22 @@
     <message>
         <source>Password changed</source>
         <translatorcomment>Title of the dialog displayed when the change password process finish successful. SNC-5799</translatorcomment>
-        <translation type="unfinished">Password changed</translation>
-    </message>
-    <message>
-        <source>Your password has been changed.</source>
-        <translatorcomment>Success message shown when the password has been changed. SNC-5799</translatorcomment>
-        <translation type="unfinished">Your password has been changed.</translation>
+        <translation>Password changed</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
         <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible). SNC-5799</translatorcomment>
-        <translation type="unfinished">Too many requests. Please wait.</translation>
+        <translation>Too many requests, please wait</translation>
     </message>
     <message>
         <source>You have entered your current password, please enter a new password.</source>
         <translatorcomment>Informative message shown when user is trying to change his password with the current one. SNC-5799</translatorcomment>
-        <translation type="unfinished">You have entered your current password, enter a new password.</translation>
+        <translation>You have entered your current password, enter a new password</translation>
+    </message>
+    <message>
+        <source>Your password has been changed.</source>
+        <translatorcomment>Success message shown when the password has been changed. SNC-5799</translatorcomment>
+        <translation>Your password has been changed</translation>
     </message>
 </context>
 <context>
@@ -786,17 +786,17 @@
     <message>
         <source>Change password</source>
         <translatorcomment>Windows title of the Change password dialog. SNC-5799</translatorcomment>
-        <translation type="unfinished">Change password</translation>
-    </message>
-    <message>
-        <source>New password</source>
-        <translatorcomment>Label displayed next to control where the user can enter the new password. SNC-5799</translatorcomment>
-        <translation type="unfinished">New password</translation>
+        <translation>Change password</translation>
     </message>
     <message>
         <source>Confirm new password</source>
         <translatorcomment>Label displayed next to control where the user can enter the new password confirmation. SNC-5799</translatorcomment>
-        <translation type="unfinished">Confirm new password</translation>
+        <translation>Confirm new password</translation>
+    </message>
+    <message>
+        <source>New password</source>
+        <translatorcomment>Label displayed next to control where the user can enter the new password. SNC-5799</translatorcomment>
+        <translation>New password</translation>
     </message>
 </context>
 <context>
@@ -938,6 +938,11 @@
         <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
         <translation>Pro membership plan expiring soon</translation>
     </message>
+    <message>
+        <source>The following characters are not allowed: %1</source>
+        <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder). SNC-5804</translatorcomment>
+        <translation>The following characters are not allowed: %1</translation>
+    </message>
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
@@ -958,11 +963,6 @@
         <source>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</source>
         <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. Max 140 characters. SNC-3019, SNC-3934 and CON-435</translatorcomment>
         <translation>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</translation>
-    </message>
-    <message>
-        <source>The following characters are not allowed: %1</source>
-        <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder). SNC-5804</translatorcomment>
-        <translation type="unfinished">The following characters are not allowed: %1</translation>
     </message>
 </context>
 <context>
@@ -2013,8 +2013,8 @@
     </message>
     <message>
         <source>Payments</source>
-        <translatorcomment>Label to indicate that only Payment notifications will be shown.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Label to indicate that only Payment notifications will be shown. SNC-5953</translatorcomment>
+        <translation>Payments</translation>
     </message>
 </context>
 <context>
@@ -2488,6 +2488,22 @@ Check your email inbox for instructions on unlocking your account and tips on ho
         <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account does not have enough transfer quota.</translatorcomment>
         <translation>You can’t continue downloading as you don’t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</translation>
     </message>
+    <message numerus="yes">
+        <source>You have %n day left to upgrade. After that, your data is subject to deletion.</source>
+        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. %n- number of days left to upgrade.</translatorcomment>
+        <translation>
+            <numerusform>You have %n day left to upgrade, or your data will be subject to deletion</numerusform>
+            <numerusform>You have %n days left to upgrade, or your data will be subject to deletion</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>You have %n hour left to upgrade. After that, your data is subject to deletion.</source>
+        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: %n- number of hours left to upgrade.</translatorcomment>
+        <translation>
+            <numerusform>You have %n hour left to upgrade, or your data will be subject to deletion</numerusform>
+            <numerusform>You have %n hours left to upgrade, or your data will be subject to deletion</numerusform>
+        </translation>
+    </message>
     <message>
         <source>You must act immediately to save your data</source>
         <translatorcomment>Label to inform the user that deadline for upgrade has been reached. The user needs to fix the situation asap to avoid data deletion.</translatorcomment>
@@ -2512,22 +2528,6 @@ Check your email inbox for instructions on unlocking your account and tips on ho
         <source>Your queued transfers exceed the current quota available for your IP address.</source>
         <translatorcomment>Informative label to indicate that your queued transfers exceed the current quota available for IP. Applies to free users.</translatorcomment>
         <translation>Your queued transfers exceed the current quota available for your IP address.</translation>
-    </message>
-    <message numerus="yes">
-        <source>You have %n day left to upgrade. After that, your data is subject to deletion.</source>
-        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. %n- number of days left to upgrade.</translatorcomment>
-        <translation>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>You have %n hour left to upgrade. After that, your data is subject to deletion.</source>
-        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: %n- number of hours left to upgrade.</translatorcomment>
-        <translation>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
     </message>
 </context>
 <context>
@@ -2629,7 +2629,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>Do not show again</source>
         <translatorcomment>This is a label for a checkbox. When checked by the user, it ensures that the Enable Notification Area Icon notification will not be displayed to them in the future. SNC-2270</translatorcomment>
-        <translation>Do not show again</translation>
+        <translation>Don’t show this again</translation>
     </message>
     <message>
         <source>Failed to install the necessary components.</source>
@@ -3053,6 +3053,16 @@ Wait for the upload to complete.</translation>
 <context>
     <name>LogoutController</name>
     <message>
+        <source>MEGA couldn’t connect securely.[BR]If you’re on public Wi-Fi, try signing in through your browser first. Your ISP or security software might also be interfering with the connection.[BR][A]Learn more[/A]</source>
+        <translatorcomment>Body for the notification message shown when SSL checks fails. SNC-5610</translatorcomment>
+        <translation>MEGA couldn’t connect securely.[BR]If you’re on public Wi-Fi, try signing in through your browser first. Your ISP or security software might also be interfering with the connection.[BR][A]Learn more[/A]</translation>
+    </message>
+    <message>
+        <source>Secure connection failed</source>
+        <translatorcomment>Title for the notification message shown when SSL checks fails. SNC-5610</translatorcomment>
+        <translation>Secure connection failed</translation>
+    </message>
+    <message>
         <source>You have been logged out because of this error: %1</source>
         <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message. SNC-4122</translatorcomment>
         <translation>You have been logged out because of this error: %1</translation>
@@ -3066,16 +3076,6 @@ Wait for the upload to complete.</translation>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
         <translation>You have been logged out. Contact [A]support@mega.io[/A] if this issue persists.</translation>
-    </message>
-    <message>
-        <source>Secure connection failed</source>
-        <translatorcomment>Title for the notification message shown when SSL checks fails. SNC-5610</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MEGA couldn’t connect securely.[BR]If you’re on public Wi-Fi, try signing in through your browser first. Your ISP or security software might also be interfering with the connection.[BR][A]Learn more[/A]</source>
-        <translatorcomment>Body for the notification message shown when SSL checks fails. SNC-5610</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3167,6 +3167,11 @@ Wait for the upload to complete.</translation>
         <source>Dismiss</source>
         <translatorcomment>Button text to discard a notification or message box</translatorcomment>
         <translation>Dismiss</translation>
+    </message>
+    <message>
+        <source>Don’t show me again</source>
+        <translatorcomment>Check box in the link created dialog, to inform the system about user preference. SNC-5975</translatorcomment>
+        <translation>Don’t show this again</translation>
     </message>
     <message>
         <source>Download</source>
@@ -3548,11 +3553,6 @@ https://mega.co.nz/#sync</source>
         <translatorcomment>Label to indicate a contact of a user.</translatorcomment>
         <translation>contact</translation>
     </message>
-    <message>
-        <source>Don’t show me again</source>
-        <translatorcomment>Check box in the link created dialog, to inform the system about user preference. SNC-5975</translatorcomment>
-        <translation type="unfinished">Don’t show me again</translation>
-    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -3570,6 +3570,11 @@ https://mega.co.nz/#sync</source>
         <source>Access denied</source>
         <translatorcomment>Label to show that an error related with an denied access occurs during a SDK operation.</translatorcomment>
         <translation>Access denied</translation>
+    </message>
+    <message>
+        <source>Alert</source>
+        <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
+        <translation>Alert</translation>
     </message>
     <message>
         <source>Already exists</source>
@@ -3835,11 +3840,6 @@ You will not be able to regain access to your stored data or be authorised to si
         <translation>Your sync and backup settings were corrupted and have been reset. You will need to set up any syncs and backups you had again.</translation>
     </message>
     <message>
-        <source>Alert</source>
-        <translatorcomment>Title of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation>Alert</translation>
-    </message>
-    <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
         <translation>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall it from [A]mega.io/desktop[/A] to resolve this issue. If this problem persists after reinstalling, contact support for further assistance.</translation>
@@ -3850,12 +3850,12 @@ You will not be able to regain access to your stored data or be authorised to si
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel buttons. SNC-5798.</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for Ok buttons. SNC-5798.</translatorcomment>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -4145,6 +4145,46 @@ You will not be able to regain access to your stored data or be authorised to si
 <context>
     <name>MegaTransferView</name>
     <message>
+        <source>All the selected completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
+        <translation>All selected completed transfers will be cleared</translation>
+    </message>
+    <message>
+        <source>All your completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
+        <translation>All completed transfers in this category will be cleared</translation>
+    </message>
+    <message>
+        <source>All your completed transfers will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
+        <translation>All completed transfers will be cleared</translation>
+    </message>
+    <message>
+        <source>All your selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers</translatorcomment>
+        <translation>All selected transfers will be cancelled and cleared</translation>
+    </message>
+    <message>
+        <source>All your selected transfers will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers</translatorcomment>
+        <translation>All selected transfers will be cancelled</translation>
+    </message>
+    <message>
+        <source>All your transfers in this category will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>All transfers in this category will be cancelled and cleared</translation>
+    </message>
+    <message>
+        <source>All your transfers in this category will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>All transfers in this category will be cancelled</translation>
+    </message>
+    <message>
+        <source>All your transfers will be cancelled.</source>
+        <translatorcomment>Messagebox description text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
+        <translation>All transfers will be cancelled</translation>
+    </message>
+    <message>
         <source>Cancel</source>
         <translatorcomment>Dialog button to do the proposed actions (cancel the transfers). See CON-188.</translatorcomment>
         <translation>Cancel</translation>
@@ -4171,6 +4211,11 @@ You will not be able to regain access to your stored data or be authorised to si
         <translation>Cancel transfer?</translation>
     </message>
     <message>
+        <source>Cancel transfers?</source>
+        <translatorcomment>Messagebox title to confirm if the user wants to cancel multipe selected  transfer</translatorcomment>
+        <translation>Cancel transfers?</translation>
+    </message>
+    <message>
         <source>Clear</source>
         <translatorcomment>Label of context menu option to clear selected transfer item of completed view</translatorcomment>
         <translation>Clear</translation>
@@ -4187,6 +4232,11 @@ You will not be able to regain access to your stored data or be authorised to si
         <source>Clear transfer?</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear a single selected completed transfer</translatorcomment>
         <translation>Clear transfer?</translation>
+    </message>
+    <message>
+        <source>Clear transfers?</source>
+        <translatorcomment>Messagebox title to confirm if the user wants to clear multipe selected completed transfer</translatorcomment>
+        <translation>Clear transfers?</translation>
     </message>
     <message>
         <source>Don&apos;t cancel</source>
@@ -4260,76 +4310,26 @@ You will not be able to regain access to your stored data or be authorised to si
         <translation>Show in folder</translation>
     </message>
     <message>
-        <source>Cancel transfers?</source>
-        <translatorcomment>Messagebox title to confirm if the user wants to cancel multipe selected  transfer</translatorcomment>
-        <translation>Cancel transfers?</translation>
-    </message>
-    <message>
-        <source>All your transfers will be cancelled.</source>
-        <translatorcomment>Messagebox description text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>All your transfers in this category will be cancelled and cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>All your transfers in this category will be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category</translatorcomment>
-        <translation></translation>
+        <source>Your incomplete sync transfers won&apos;t be cancelled
+All the other transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>Sync transfers can’t be cancelled, but all other transfers will be cancelled and cleared</translation>
     </message>
     <message>
         <source>Your incomplete sync transfers won&apos;t be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Your incomplete sync transfers won&apos;t be cancelled
-All the other transfers will be cancelled and cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>All your completed transfers will be cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>All your completed transfers in this category will be cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>All your selected transfers will be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>All your selected transfers will be cancelled and cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Your selected incomplete sync transfers won&apos;t be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
-        <translation></translation>
+        <translation>Sync transfers can’t be cancelled</translation>
     </message>
     <message>
         <source>Your selected incomplete sync transfers won&apos;t be cancelled
 All the other selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
-        <translation></translation>
+        <translation>Sync transfers can’t be cancelled, but all other selected transfers will be cancelled and cleared</translation>
     </message>
     <message>
-        <source>All the selected completed transfers in this category will be cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Clear transfers?</source>
-        <translatorcomment>Messagebox title to confirm if the user wants to clear multipe selected completed transfer</translatorcomment>
-        <translation></translation>
+        <source>Your selected incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>Sync transfers can’t be cancelled</translation>
     </message>
 </context>
 <context>
@@ -4337,7 +4337,7 @@ All the other selected transfers will be cancelled and cleared.</source>
     <message>
         <source>Close</source>
         <translatorcomment>Label for close button. Keep capital letter. SNC-5997</translatorcomment>
-        <translation type="unfinished">Close</translation>
+        <translation>Close</translation>
     </message>
 </context>
 <context>
@@ -4638,16 +4638,31 @@ Enter a different name.</translation>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter. SNC.5804</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for ok button. Keep capital letter. SNC.5804</translatorcomment>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
     <name>NodeSelector</name>
+    <message>
+        <source>Always upload to this destination</source>
+        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox. SNC-5804</translatorcomment>
+        <translation>Always upload to this destination</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translatorcomment>Sidebar title. SNC.5804</translatorcomment>
+        <translation>Files</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translatorcomment>Search button header</translatorcomment>
+        <translation>Search</translation>
+    </message>
     <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Node selector dialog title</translatorcomment>
@@ -4657,21 +4672,6 @@ Enter a different name.</translation>
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
         <translation>The item you selected has been removed. To reselect, close this window and try again.</translation>
-    </message>
-    <message>
-        <source>Files</source>
-        <translatorcomment>Sidebar title. SNC.5804</translatorcomment>
-        <translation type="unfinished">Files</translation>
-    </message>
-    <message>
-        <source>Search</source>
-        <translatorcomment>Groupbox title for search coincidences. SNC.5804</translatorcomment>
-        <translation type="unfinished">Search</translation>
-    </message>
-    <message>
-        <source>Always upload to this destination</source>
-        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox. SNC-5804</translatorcomment>
-        <translation type="unfinished">Always upload to this destination</translation>
     </message>
 </context>
 <context>
@@ -4685,6 +4685,11 @@ Enter a different name.</translation>
         <source>Close</source>
         <translatorcomment>Cancel button string for failed action in Cloud Drive dialog.SAT-426</translatorcomment>
         <translation>Close</translation>
+    </message>
+    <message>
+        <source>Date added</source>
+        <translatorcomment>Table header title for node date added info. SNC.5804</translatorcomment>
+        <translation>Date added</translation>
     </message>
     <message>
         <source>Error copying file</source>
@@ -4797,14 +4802,34 @@ Enter a different name.</translation>
         <translation>Folder contents already synced</translation>
     </message>
     <message>
+        <source>Last modified</source>
+        <translatorcomment>Table header title for node last modified date info. SNC.5804</translatorcomment>
+        <translation>Last modified</translation>
+    </message>
+    <message>
         <source>Name</source>
         <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
         <translation>Name</translation>
     </message>
     <message>
+        <source>Owner</source>
+        <translatorcomment>Table header title for incoming shared owner info. SNC.5804</translatorcomment>
+        <translation>Owner</translation>
+    </message>
+    <message>
         <source>Sort by access</source>
         <translatorcomment>Access column tooltip. Sorts the order of the column by incoming shared folder access.CON-1266</translatorcomment>
         <translation>Sort by access</translation>
+    </message>
+    <message>
+        <source>Sort by date added</source>
+        <translatorcomment>Table header tooltip for Date added column. SNC.5804</translatorcomment>
+        <translation>Sort by date added</translation>
+    </message>
+    <message>
+        <source>Sort by last modified date</source>
+        <translatorcomment>Table header tooltip for last modified column. SNC.5804</translatorcomment>
+        <translation>Sort by last modified date</translation>
     </message>
     <message>
         <source>Sort by name</source>
@@ -4916,31 +4941,6 @@ Enter a different name.</translation>
         <translatorcomment>Secondary text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>The items couldn’t be restored. Try again later.</translation>
     </message>
-    <message>
-        <source>Date added</source>
-        <translatorcomment>Table header title for node date added info. SNC.5804</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Last modified</source>
-        <translatorcomment>Table header title for node last modified date info. SNC.5804</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sort by date added</source>
-        <translatorcomment>Table header tooltip for Date added column. SNC.5804</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sort by last modified date</source>
-        <translatorcomment>Table header tooltip for last modified column. SNC.5804</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Owner</source>
-        <translatorcomment>Table header title for incoming shared owner info. SNC.5804</translatorcomment>
-        <translation type="unfinished">Owner</translation>
-    </message>
 </context>
 <context>
     <name>NodeSelectorTreeView</name>
@@ -4948,6 +4948,11 @@ Enter a different name.</translation>
         <source>Copy</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It copy the selected nodes (files or folders), waiting for the paste action. SAT-426</translatorcomment>
         <translation>Copy</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a node on node selector. It downloads the selected nodes. SNC-5804</translatorcomment>
+        <translation>Download</translation>
     </message>
     <message>
         <source>Leave folder</source>
@@ -4993,11 +4998,6 @@ Enter a different name.</translation>
         <source>Sync</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It creates a sync in the selected folder. SAT-426</translatorcomment>
         <translation>Sync</translation>
-    </message>
-    <message>
-        <source>Download</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a node on node selector. It downloads the selected nodes. SNC-5804</translatorcomment>
-        <translation type="unfinished">Download</translation>
     </message>
     <message>
         <source>New folder</source>
@@ -5131,7 +5131,7 @@ Enter a different name.</translation>
     <message>
         <source>No backups</source>
         <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>No backups</translation>
     </message>
 </context>
 <context>
@@ -5139,25 +5139,25 @@ Enter a different name.</translation>
     <message>
         <source>Cloud drive is empty</source>
         <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cloud drive is empty</translation>
     </message>
 </context>
 <context>
     <name>NodeSelectorTreeViewWidgetIncomingShares</name>
     <message>
+        <source>No incoming shares</source>
+        <translatorcomment>Title message on the view when there are no items in the normal view. SNC-5804</translatorcomment>
+        <translation>No incoming shares</translation>
+    </message>
+    <message>
         <source>No incoming shares you can sync</source>
         <translatorcomment>Title message on the view when there are no items in the Sync view. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>No incoming shares you can sync</translation>
     </message>
     <message>
         <source>You can only sync a shared folder if you’ve been given full access</source>
         <translatorcomment>Description message on the view when there are no items in the sync view. It says you don´t have shared folders with the needed rights. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No incoming shares</source>
-        <translatorcomment>Title message on the view when there are no items in the normal view. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>You can only sync a shared folder if you’ve been given full access</translation>
     </message>
 </context>
 <context>
@@ -5165,7 +5165,7 @@ Enter a different name.</translation>
     <message>
         <source>The Rubbish bin is empty</source>
         <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Rubbish bin is empty</translation>
     </message>
 </context>
 <context>
@@ -5173,15 +5173,15 @@ Enter a different name.</translation>
     <message numerus="yes">
         <source>%n result found</source>
         <translatorcomment>Search tab subtitle that shows the number of coincidences found. %n is the number of found nodes. SNC-5804</translatorcomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n result found</numerusform>
+            <numerusform>%n results found</numerusform>
         </translation>
     </message>
     <message>
         <source>No search results</source>
         <translatorcomment>Message on the view when the search did not find any coincidence. SNC-5804</translatorcomment>
-        <translation type="unfinished">No search results</translation>
+        <translation>No search results</translation>
     </message>
 </context>
 <context>
@@ -7637,11 +7637,11 @@ Do you want to delete it anyway?</translation>
         <translation>All issues: %1</translation>
     </message>
     <message numerus="yes">
-        <source>Name conflict: %n</source>
-        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
+        <source>Failed: %n</source>
+        <translatorcomment>Name of the tab containing failed sync stalls in sync stalls dialog, %n variable is for the count.SAT-1034</translatorcomment>
         <translation>
-            <numerusform>Name conflicts: %n</numerusform>
-            <numerusform>Name conflicts: %n</numerusform>
+            <numerusform>Failed: %n</numerusform>
+            <numerusform>Failed: %n</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -7653,19 +7653,19 @@ Do you want to delete it anyway?</translation>
         </translation>
     </message>
     <message numerus="yes">
+        <source>Name conflict: %n</source>
+        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
+        <translation>
+            <numerusform>Name conflicts: %n</numerusform>
+            <numerusform>Name conflicts: %n</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
         <source>Other: %n</source>
         <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
         <translation>
             <numerusform>Others: %n</numerusform>
             <numerusform>Others: %n</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>Failed: %n</source>
-        <translatorcomment>Name of the tab containing failed sync stalls in sync stalls dialog, %n variable is for the count.SAT-1034</translatorcomment>
-        <translation>
-            <numerusform>Failed: %n</numerusform>
-            <numerusform>Failed: %n</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -7804,9 +7804,24 @@ Refresh the list.</translation>
         <translation>Paused</translation>
     </message>
     <message>
+        <source>Scanning…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state. SNC-5938</translatorcomment>
+        <translation>Scanning…</translation>
+    </message>
+    <message>
         <source>Starting</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is starting</translatorcomment>
         <translation>Starting</translation>
+    </message>
+    <message>
+        <source>Syncing…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.  SNC-5938</translatorcomment>
+        <translation>Syncing…</translation>
+    </message>
+    <message>
+        <source>Transferring…</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers. SNC-5938</translatorcomment>
+        <translation>Transferring…</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -7814,24 +7829,9 @@ Refresh the list.</translation>
         <translation>Up to date</translation>
     </message>
     <message>
-        <source>Syncing…</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.  SNC-5938</translatorcomment>
-        <translation type="unfinished">Syncing…</translation>
-    </message>
-    <message>
         <source>Waiting…</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is at waiting state. SNC-5938</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Scanning…</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state. SNC-5938</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transferring…</source>
-        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers. SNC-5938</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Waiting…</translation>
     </message>
 </context>
 <context>
@@ -8683,17 +8683,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Dark</source>
         <translatorcomment>Name of the dark color scheme, it can be selected by the user to customize the interface colors. SNC-5799</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Dark</translation>
     </message>
     <message>
         <source>Light</source>
         <translatorcomment>Name of the light color scheme, it can be selected by the user to customize the interface colors. SNC-5799</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Light</translation>
     </message>
     <message>
         <source>System default</source>
         <translatorcomment>The user request the aplication color scheme to follow the operating system active theme. SNC-5799</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>System default</translation>
     </message>
 </context>
 <context>
@@ -8810,6 +8810,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Documents</translation>
     </message>
     <message>
+        <source>Download</source>
+        <translatorcomment>Label of the button to start a new download</translatorcomment>
+        <translation>Download</translation>
+    </message>
+    <message>
         <source>Downloads</source>
         <translatorcomment>Label of tab to access all active downloads</translatorcomment>
         <translation>Downloads</translation>
@@ -8823,6 +8828,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Images</source>
         <translatorcomment>Categories for image type transfers</translatorcomment>
         <translation>Images</translation>
+    </message>
+    <message>
+        <source>Issues with some synced items</source>
+        <translatorcomment>Label that appears when sync stalls are detected. SNC-5970</translatorcomment>
+        <translation>Issues detected</translation>
     </message>
     <message>
         <source>Media type</source>
@@ -8910,19 +8920,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Videos</translation>
     </message>
     <message>
-        <source>Download</source>
-        <translatorcomment>Label of the button to start a new download</translatorcomment>
-        <translation>Download</translation>
-    </message>
-    <message>
         <source>View</source>
         <translatorcomment>Button to show the sync stalls. SNC-5970</translatorcomment>
-        <translation type="unfinished">View</translation>
-    </message>
-    <message>
-        <source>Issues with some synced items</source>
-        <translatorcomment>Label that appears when sync stalls are detected. SNC-5970</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>View</translation>
     </message>
 </context>
 <context>
@@ -8941,39 +8941,39 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>All transfers paused</translation>
     </message>
     <message>
+        <source>Before your storage becomes full and your uploads, syncs and backups stop.</source>
+        <translatorcomment>Warning description shown when storage quota is almost full</translatorcomment>
+        <translation>Upgrade before your storage becomes full and your uploads, syncs and backups stop</translation>
+    </message>
+    <message>
+        <source>Storage almost full</source>
+        <translatorcomment>Warning title shown when storage quota is almost full</translatorcomment>
+        <translation>Storage almost full</translation>
+    </message>
+    <message>
+        <source>Storage full</source>
+        <translatorcomment>Error title indicating that the storage quota is full. CON-1061</translatorcomment>
+        <translation>Storage full</translation>
+    </message>
+    <message>
         <source>Transfer quota exceeded.</source>
         <translatorcomment>Error text indicating that the transfer quota has been exceeded for pro users. CON-1061</translatorcomment>
         <translation>Transfer quota exceeded</translation>
     </message>
     <message>
-        <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
-        <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
-        <translation>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade your account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</translation>
-    </message>
-    <message>
         <source>Upgrade now</source>
         <translatorcomment>Text for link shown when the storage quota is almost full.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Storage almost full</source>
-        <translatorcomment>Warning title shown when storage quota is almost full</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Before your storage becomes full and your uploads, syncs and backups stop.</source>
-        <translatorcomment>Warning description shown when storage quota is almost full</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Storage full</source>
-        <translatorcomment>Error title indicating that the storage quota is full. CON-1061</translatorcomment>
-        <translation type="unfinished">Storage full</translation>
+        <translation>Upgrade now</translation>
     </message>
     <message>
         <source>Uploads are disabled and sync and backups are paused.</source>
         <translatorcomment>Error description shown when storage is full. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Uploads are disabled, and sync and backups are paused</translation>
+    </message>
+    <message>
+        <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
+        <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
+        <translation>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade your account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</translation>
     </message>
 </context>
 <context>
@@ -9733,9 +9733,19 @@ Please delete the folder sync from settings to cancel them.</source>
         </translation>
     </message>
     <message>
+        <source>%1 / %2</source>
+        <translatorcomment>This translated separator template with placeholders &quot;%1&quot; and &quot;%2&quot; is used to format the display of two values separated by a slash, with a space on each side of the separator. The placeholders represent dynamic content that will be replaced with actual data. For instance, in French: &quot;15,2 Go / 400 Go&quot;. SNC-5456</translatorcomment>
+        <translation>%1 / %2</translation>
+    </message>
+    <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to indicate the amount of used and total space available. Keep %1 (used space) and %2 (total space) substitution placeholders because they will be filled with the required amounts of storage space dynamically including the unit (e.g. 1KB, 5MB, 8GB...). CON-944</translatorcomment>
         <translation>%1 of %2</translation>
+    </message>
+    <message>
+        <source>%1 sec</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation>%1&#xa0;sec</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
@@ -9744,6 +9754,26 @@ Please delete the folder sync from settings to cancel them.</source>
             <numerusform>%1 used</numerusform>
             <numerusform>%1 used</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>%1d</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation>%1&#xa0;d</translation>
+    </message>
+    <message>
+        <source>%1h</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation>%1&#xa0;h</translation>
+    </message>
+    <message>
+        <source>%1m</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation>%1&#xa0;m</translation>
+    </message>
+    <message>
+        <source>%1s</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation>%1&#xa0;s</translation>
     </message>
     <message numerus="yes">
         <source>Added %n day ago</source>
@@ -9902,36 +9932,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>[MINUTES] [SECONDS]</source>
         <translatorcomment>String used to control formatting of time intervals. [MINUTES] will be replaced by the minutes count and [SECONDS] by the seconds. This is used for example in the Time remaining column of Transfer Manager.</translatorcomment>
         <translation>[MINUTES] [SECONDS]</translation>
-    </message>
-    <message>
-        <source>%1 / %2</source>
-        <translatorcomment>This translated separator template with placeholders &amp;quot;%1&amp;quot; and &amp;quot;%2&amp;quot; is used to format the display of two values separated by a slash, without any superfluous spaces, in the UI. The placeholders represent dynamic content that will be replaced with actual data. For instance, in French, the formatted string should appear as &amp;quot;15,2 Go/400 Go&amp;quot;, without any spaces surrounding the slash. Translators should adjust the spaces around the slash according to their language-specific formatting rules, ensuring that the translation adheres to the standard typographical conventions of the target language. SNC-1793</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1d</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation type="unfinished">%1d</translation>
-    </message>
-    <message>
-        <source>%1h</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation type="unfinished">%1h</translation>
-    </message>
-    <message>
-        <source>%1m</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation type="unfinished">%1m</translation>
-    </message>
-    <message>
-        <source>%1s</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation type="unfinished">%1s</translation>
-    </message>
-    <message>
-        <source>%1 sec</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
