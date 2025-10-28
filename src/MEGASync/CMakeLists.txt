@@ -215,6 +215,15 @@ if (MSVC)
     )
 endif()
 
+if (CMAKE_HOST_APPLE)
+    add_custom_command(
+            TARGET MEGAsync
+            POST_BUILD
+            COMMAND xcrun actool --compile "$<TARGET_FILE_DIR:MEGAsync>/../Resources" --include-all-app-icons --enable-on-demand-resources NO --enable-icon-stack-fallback-generation NO --platform macosx --minimum-deployment-target ${CMAKE_OSX_DEPLOYMENT_TARGET} "${CMAKE_CURRENT_SOURCE_DIR}/gui/images/MEGA_icon.icon"
+            COMMENT "Building Assets.car in Resources..."
+            )
+endif()
+
 # Copy GFX worker if needed
 if(TARGET gfxworker)
     set_target_properties(gfxworker PROPERTIES OUTPUT_NAME "mega-desktop-app-gfxworker")
