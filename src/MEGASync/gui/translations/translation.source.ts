@@ -4965,6 +4965,11 @@ Enter a different name.</translation>
         <translation>Move to Rubbish bin</translation>
     </message>
     <message>
+        <source>New folder</source>
+        <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It creates a new folder. SNC-5804</translatorcomment>
+        <translation>New folder</translation>
+    </message>
+    <message>
         <source>Paste</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It paste the copied nodes (files and folders). SAT-426</translatorcomment>
         <translation>Paste</translation>
@@ -5000,14 +5005,9 @@ Enter a different name.</translation>
         <translation>Sync</translation>
     </message>
     <message>
-        <source>New folder</source>
-        <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It uploads to the selected. SNC-5804</translatorcomment>
-        <translation type="unfinished">New folder</translation>
-    </message>
-    <message>
         <source>Upload</source>
-        <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It creates a new folder. SNC-5804</translatorcomment>
-        <translation type="unfinished">Upload</translation>
+        <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It uploads to the selected. SNC-5804</translatorcomment>
+        <translation>Upload</translation>
     </message>
 </context>
 <context>
@@ -5041,6 +5041,11 @@ Enter a different name.</translation>
         <source>Empty Rubbish bin</source>
         <translatorcomment>Button text to empty the rubbish bin. SAT-426</translatorcomment>
         <translation>Empty Rubbish bin</translation>
+    </message>
+    <message>
+        <source>Folder is empty</source>
+        <translatorcomment>Message on the view when there are no items in a folder. SNC-5804</translatorcomment>
+        <translation>Folder is empty</translation>
     </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
@@ -5086,6 +5091,11 @@ Enter a different name.</translation>
         <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
         <translation>New folder</translation>
     </message>
+    <message>
+        <source>Ok</source>
+        <translatorcomment>Button text to accept and close the dialog</translatorcomment>
+        <translation>OK</translation>
+    </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a file(s) from the rubbish bin. %n is the number of files to delete. CON-1258</translatorcomment>
@@ -5115,17 +5125,6 @@ Enter a different name.</translation>
         <translatorcomment>Second part of the messagebox text when the user is about to remove permanently a node. SAT-426</translatorcomment>
         <translation>You cannot undo this action</translation>
     </message>
-    <message>
-        <source>Ok</source>
-        <translatorcomment>Button text to accept and close the dialog</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Folder is empty</source>
-        <translatorcomment>Message on the view when there are no items in a folder. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-
 </context>
 <context>
     <name>NodeSelectorTreeViewWidgetBackups</name>
@@ -6092,10 +6091,14 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- This update includes numerous core improvements and fixes to enhance overall performance.
+        <source>- Introducing dark mode!
+- We&apos;ve refreshed the app design.
+- We&apos;ve fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
-        <translation>- This update includes numerous core improvements and fixes to enhance overall performance.
+        <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
+        <translation>- Dark mode is here.
+- We’ve refreshed the app design to make it cleaner and easier to use.
+- Bug fixes and improved app stability.
 </translation>
     </message>
 </context>
@@ -9758,23 +9761,23 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
     <message>
         <source>%1d</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation>%1&#xa0;d</translation>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
+        <translation>%1d</translation>
     </message>
     <message>
         <source>%1h</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation>%1&#xa0;h</translation>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
+        <translation>%1h</translation>
     </message>
     <message>
         <source>%1m</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation>%1&#xa0;m</translation>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
+        <translation>%1m</translation>
     </message>
     <message>
         <source>%1s</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation>%1&#xa0;s</translation>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
+        <translation>%1s</translation>
     </message>
     <message numerus="yes">
         <source>Added %n day ago</source>
