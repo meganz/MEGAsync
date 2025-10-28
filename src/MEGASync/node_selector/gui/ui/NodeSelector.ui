@@ -31,12 +31,12 @@
 border:none;
 }
 
-#wLeftPaneNS, #footer
+#wLeftPaneNS
 {
 background-color: #F7F7F7; /*colorToken.surface-1*/
 }
 
-#wRightPaneNS
+#wRightPaneNS, #footer
 {
 background-color: #FFFFFF; /*colorToken.page-background*/
 }</string>
