@@ -4859,6 +4859,11 @@ Enter a different name</source>
         <translation>移到垃圾筒</translation>
     </message>
     <message>
+        <source>New folder</source>
+        <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It creates a new folder. SNC-5804</translatorcomment>
+        <translation>新增資料夾</translation>
+    </message>
+    <message>
         <source>Paste</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It paste the copied nodes (files and folders). SAT-426</translatorcomment>
         <translation>貼上</translation>
@@ -4893,6 +4898,11 @@ Enter a different name</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It creates a sync in the selected folder. SAT-426</translatorcomment>
         <translation>同步</translation>
     </message>
+    <message>
+        <source>Upload</source>
+        <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It uploads to the selected. SNC-5804</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NodeSelectorTreeViewWidget</name>
@@ -4925,6 +4935,11 @@ Enter a different name</source>
         <source>Empty Rubbish bin</source>
         <translatorcomment>Button text to empty the rubbish bin. SAT-426</translatorcomment>
         <translation>清空垃圾筒</translation>
+    </message>
+    <message>
+        <source>Folder is empty</source>
+        <translatorcomment>Message on the view when there are no items in a folder. SNC-5804</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
@@ -5934,10 +5949,14 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- This update includes numerous core improvements and fixes to enhance overall performance.
+        <source>- Introducing dark mode!
+- We've refreshed the app design.
+- We've fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
-        <translation>- 此更新包括許多核心改進和修復，提高整體效能。
+        <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
+        <translation>- 深色模式上線囉！
+- 我們更新了應用程式介面，使其更加簡潔易用。
+- 修復已知問題，並提升應用程式穩定性。
 </translation>
     </message>
 </context>
@@ -9501,22 +9520,22 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
     <message>
         <source>%1d</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1h</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1m</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1s</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
         <translation>%1秒</translation>
     </message>
     <message numerus="yes">
@@ -9676,49 +9695,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Why am I seeing this?</source>
         <translatorcomment>Clickable Label to inform the user about why the account is locked and needs verification (email verification). It redirects to credential-stuffing helpdesk article (SNC-5553) </translatorcomment>
         <translation>為什麼我會看到這個？</translation>
-    </message>
-</context>
-<context>
-    <name>WhatsNewStrings</name>
-    <message>
-        <source>Advanced filters</source>
-        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
-        <translation>進階過濾器</translation>
-    </message>
-    <message>
-        <source>Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
-        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>進階設定可以讓您為每個同步編寫自己的排除規則</translation>
-    </message>
-    <message>
-        <source>Better Performance</source>
-        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
-        <translation>更強的效能</translation>
-    </message>
-    <message>
-        <source>Files now sync up to 5x faster than before</source>
-        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>檔案同步速度比以前快了5倍。</translation>
-    </message>
-    <message>
-        <source>Full visibility into sync issues and total control over how conflicts are resolved</source>
-        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>同步問題全面可視性，完全控制衝突的解決方式</translation>
-    </message>
-    <message>
-        <source>Got it</source>
-        <translatorcomment>Button to accept whats new dialog.con-703</translatorcomment>
-        <translation>知道了</translation>
-    </message>
-    <message>
-        <source>Greater control</source>
-        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
-        <translation>更好的控制</translation>
-    </message>
-    <message>
-        <source>What&apos;s new in MEGA</source>
-        <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.SAT-1670</translatorcomment>
-        <translation>MEGA新功能</translation>
     </message>
 </context>
 <context>

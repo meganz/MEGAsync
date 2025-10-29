@@ -516,7 +516,7 @@ background-color: #FFFFFF; /*colorToken.page-background*/
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="text">
-               <string>Cancel</string>
+               <string notr="true">Cancel</string>
               </property>
               <property name="type" stdset="0">
                <string notr="true">secondary</string>
@@ -538,7 +538,7 @@ background-color: #FFFFFF; /*colorToken.page-background*/
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="text">
-               <string>OK</string>
+               <string notr="true">OK</string>
               </property>
               <property name="type" stdset="0">
                <string notr="true">primary</string>

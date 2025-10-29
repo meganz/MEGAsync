@@ -4862,6 +4862,11 @@ Enter a different name</source>
         <translation>Переместить в Корзину</translation>
     </message>
     <message>
+        <source>New folder</source>
+        <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It creates a new folder. SNC-5804</translatorcomment>
+        <translation>Новая папка</translation>
+    </message>
+    <message>
         <source>Paste</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It paste the copied nodes (files and folders). SAT-426</translatorcomment>
         <translation>Вставить</translation>
@@ -4896,6 +4901,11 @@ Enter a different name</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It creates a sync in the selected folder. SAT-426</translatorcomment>
         <translation>Синхронизация</translation>
     </message>
+    <message>
+        <source>Upload</source>
+        <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It uploads to the selected. SNC-5804</translatorcomment>
+        <translation>Загрузить</translation>
+    </message>
 </context>
 <context>
     <name>NodeSelectorTreeViewWidget</name>
@@ -4928,6 +4938,11 @@ Enter a different name</source>
         <source>Empty Rubbish bin</source>
         <translatorcomment>Button text to empty the rubbish bin. SAT-426</translatorcomment>
         <translation>Очистка Корзины</translation>
+    </message>
+    <message>
+        <source>Folder is empty</source>
+        <translatorcomment>Message on the view when there are no items in a folder. SNC-5804</translatorcomment>
+        <translation>Папка пуста</translation>
     </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
@@ -5937,10 +5952,14 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- This update includes numerous core improvements and fixes to enhance overall performance.
+        <source>- Introducing dark mode!
+- We've refreshed the app design.
+- We've fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 5.16.0. CON-1472</translatorcomment>
-        <translation>- Это обновление включает множество базовых улучшений и исправлений для повышения общей производительности.
+        <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
+        <translation>- Добавлена тёмная тема.
+- Мы обновили дизайн приложения, чтобы сделать его понятнее и удобнее.
+- Исправлены ошибки и улучшена стабильность приложения.
 </translation>
     </message>
 </context>
@@ -9504,23 +9523,23 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
     <message>
         <source>%1d</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation>%1 д.</translation>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
+        <translation>%1д</translation>
     </message>
     <message>
         <source>%1h</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation>%1 ч.</translation>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
+        <translation>%1ч</translation>
     </message>
     <message>
         <source>%1m</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation>%1 мин.</translation>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
+        <translation>%1м</translation>
     </message>
     <message>
         <source>%1s</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation>%1 с.</translation>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
+        <translation>%1с</translation>
     </message>
     <message numerus="yes">
         <source>Added %n day ago</source>
@@ -9679,49 +9698,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Why am I seeing this?</source>
         <translatorcomment>Clickable Label to inform the user about why the account is locked and needs verification (email verification). It redirects to credential-stuffing helpdesk article (SNC-5553) </translatorcomment>
         <translation>Почему я это вижу?</translation>
-    </message>
-</context>
-<context>
-    <name>WhatsNewStrings</name>
-    <message>
-        <source>Advanced filters</source>
-        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
-        <translation>Расширенные фильтры</translation>
-    </message>
-    <message>
-        <source>Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
-        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>Расширенные настройки позволяют писать собственные правила исключения для каждой синхронизации</translation>
-    </message>
-    <message>
-        <source>Better Performance</source>
-        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
-        <translation>Повышена производительность</translation>
-    </message>
-    <message>
-        <source>Files now sync up to 5x faster than before</source>
-        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>Теперь файлы синхронизируются в 5 раз быстрее, чем раньше.</translation>
-    </message>
-    <message>
-        <source>Full visibility into sync issues and total control over how conflicts are resolved</source>
-        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>Полная информация об ошибках синхронизации и полный контроль над тем, как разрешаются конфликты</translation>
-    </message>
-    <message>
-        <source>Got it</source>
-        <translatorcomment>Button to accept whats new dialog.con-703</translatorcomment>
-        <translation>Понятно</translation>
-    </message>
-    <message>
-        <source>Greater control</source>
-        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
-        <translation>Больше контроля</translation>
-    </message>
-    <message>
-        <source>What&apos;s new in MEGA</source>
-        <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.SAT-1670</translatorcomment>
-        <translation>Что нового в MEGA</translation>
     </message>
 </context>
 <context>
