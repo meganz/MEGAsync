@@ -159,6 +159,7 @@ private:
 
     virtual void onOkButtonClicked() = 0;
     void shortCutConnects(int ignoreThis);
+    void resetButtonsText();
 
     std::optional<TabItem> selectedNodeTab();
 

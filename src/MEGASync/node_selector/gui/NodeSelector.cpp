@@ -79,6 +79,8 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
         ui->wRightPaneNS->layout()->setContentsMargins(0, 0, 0, 14);
     }
 
+    resetButtonsText();
+
     ui->bOk->setDefault(true);
     ui->bOk->setEnabled(false);
 
@@ -161,6 +163,7 @@ bool NodeSelector::event(QEvent* event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        resetButtonsText();
         updateNodeSelectorTabs();
         onLanguageChangeEvent();
     }
@@ -390,6 +393,13 @@ void NodeSelector::shortCutConnects(int ignoreThis)
                              });
         }
     }
+}
+
+void NodeSelector::resetButtonsText()
+{
+    // Done here to re-use contexts
+    ui->bOk->setText(QCoreApplication::translate("NodeSelectorTreeViewWidget", "Ok"));
+    ui->bCancel->setText(QCoreApplication::translate("NodeSelectorTreeViewWidget", "Cancel"));
 }
 
 NodeSelectorTreeViewWidget* NodeSelector::getTreeViewWidget(int page) const
