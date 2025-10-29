@@ -34,22 +34,14 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
 {
     ui->setupUi(this);
     setFocusProxy(ui->tMegaFolders);
-    ui->bOk->setDefault(true);
-    ui->bOk->setEnabled(false);
     ui->searchButtonsWidget->setVisible(false);
 
     connect(ui->bNewFolder,
             &QPushButton::clicked,
             this,
             &NodeSelectorTreeViewWidget::onbNewFolderClicked);
-    connect(ui->bOk, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::okBtnClicked);
-    connect(ui->bCancel,
-            &QPushButton::clicked,
-            this,
-            &NodeSelectorTreeViewWidget::cancelBtnClicked);
 
     checkBackForwardButtons();
-    checkOkCancelButtonsVisibility();
     addCustomButtons(this);
 
     connect(&ui->tMegaFolders->loadingView(),
@@ -69,7 +61,6 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
     ui->incomingSharesSearch->setProperty("title", MegaNodeNames::getIncomingSharesName());
     ui->rubbishSearch->setProperty("title", MegaNodeNames::getRubbishName());
 
-    ui->footer->setVisible(mSelectType->footerVisible());
     ui->incomingInfo->setVisible(false);
 
     mResizeEventsTimer.setSingleShot(true);
@@ -266,6 +257,16 @@ void NodeSelectorTreeViewWidget::setTitleText(const QString& nodeName)
 void NodeSelectorTreeViewWidget::clearSelection()
 {
     ui->tMegaFolders->clearSelection();
+}
+
+bool NodeSelectorTreeViewWidget::isSelectionCorrect()
+{
+    if (ui->tMegaFolders->selectionModel())
+    {
+        return mSelectType->okButtonEnabled(this,
+                                            ui->tMegaFolders->selectionModel()->selectedIndexes());
+    }
+    return false;
 }
 
 void NodeSelectorTreeViewWidget::abort()
@@ -659,11 +660,6 @@ void NodeSelectorTreeViewWidget::checkButtonsVisibility()
     mSelectType->newFolderButtonVisibility(this);
 }
 
-void NodeSelectorTreeViewWidget::checkOkCancelButtonsVisibility()
-{
-    mSelectType->okCancelButtonsVisibility(this);
-}
-
 void NodeSelectorTreeViewWidget::addCustomButtons(NodeSelectorTreeViewWidget* wdg)
 {
     auto buttonsMap = mSelectType->addCustomButtons(wdg);
@@ -691,10 +687,6 @@ std::unique_ptr<NodeSelectorProxyModel> NodeSelectorTreeViewWidget::createProxyM
 
 void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool blockUi)
 {
-    if (mSelectType->footerVisible())
-    {
-        ui->footer->setVisible(!blockUi);
-    }
     ui->tMegaFolders->loadingView().toggleLoadingScene(blockUi);
 
     if (!blockUi)
@@ -731,8 +723,9 @@ void NodeSelectorTreeViewWidget::onUiBlocked(bool state)
         mUiBlocked = state;
     }
 
+    emit uiIsBlocked(mUiBlocked);
+
     ui->bNewFolder->setDisabled(state);
-    ui->bCancel->setDisabled(state);
     ui->searchButtonsWidget->setDisabled(state);
 
     if (!state)
@@ -744,7 +737,6 @@ void NodeSelectorTreeViewWidget::onUiBlocked(bool state)
     {
         ui->bBack->setEnabled(false);
         ui->bForward->setEnabled(false);
-        ui->bOk->setDisabled(true);
     }
 }
 
@@ -767,7 +759,7 @@ void NodeSelectorTreeViewWidget::onModelModified()
 
 void NodeSelectorTreeViewWidget::selectionHasChanged(const QModelIndexList& selected)
 {
-    ui->bOk->setEnabled(mSelectType->okButtonEnabled(this, selected));
+    emit selectionIsCorrect(mSelectType->okButtonEnabled(this, selected));
     mSelectType->selectionHasChanged(this);
 }
 
@@ -1562,6 +1554,11 @@ void NodeSelectorTreeViewWidget::resetMergeFolderHandles(
     }
 }
 
+bool NodeSelectorTreeViewWidget::isUiBlocked()
+{
+    return mUiBlocked;
+}
+
 void NodeSelectorTreeViewWidget::setNewFolderButtonVisibility(bool state)
 {
     ui->bNewFolder->setVisible(state);
@@ -1822,9 +1819,9 @@ void DownloadType::init(NodeSelectorTreeViewWidget* wdg)
     wdg->mModel->showReadOnlyFolders(true);
 }
 
-bool DownloadType::okButtonEnabled(NodeSelectorTreeViewWidget*, const QModelIndexList& selected)
+bool DownloadType::okButtonEnabled(NodeSelectorTreeViewWidget* wdg, const QModelIndexList& selected)
 {
-    return !selected.isEmpty();
+    return !selected.isEmpty() || cloudDriveIsCurrentRootIndex(wdg);
 }
 
 NodeSelectorModelItemSearch::Types DownloadType::allowedTypes()
@@ -1950,15 +1947,9 @@ void CloudDriveType::makeViewCustomConnections(NodeSelectorTreeView* view,
                  });
 }
 
-bool CloudDriveType::okButtonEnabled(NodeSelectorTreeViewWidget*, const QModelIndexList& selected)
+bool CloudDriveType::okButtonEnabled(NodeSelectorTreeViewWidget*, const QModelIndexList&)
 {
     return false;
-}
-
-void CloudDriveType::okCancelButtonsVisibility(NodeSelectorTreeViewWidget* wdg)
-{
-    wdg->ui->bOk->setVisible(false);
-    wdg->ui->bCancel->setVisible(false);
 }
 
 QMap<uint, QPushButton*> CloudDriveType::addCustomButtons(NodeSelectorTreeViewWidget* wdg)

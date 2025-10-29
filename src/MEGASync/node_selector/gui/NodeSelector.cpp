@@ -73,6 +73,18 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
         TabSelector::applyTokens(ui->wLeftPaneNS, iconTokenSetter);
     }
 
+    if (!mSelectType->footerVisible())
+    {
+        ui->footer->hide();
+        ui->wRightPaneNS->layout()->setContentsMargins(0, 0, 0, 14);
+    }
+
+    ui->bOk->setDefault(true);
+    ui->bOk->setEnabled(false);
+
+    connect(ui->bOk, &QPushButton::clicked, this, &NodeSelector::onbOkClicked);
+    connect(ui->bCancel, &QPushButton::clicked, this, &NodeSelector::reject);
+
     resize(1024, 720);
     setMinimumSize(760, 400);
 }
@@ -113,6 +125,20 @@ void NodeSelector::onSearch(const QString& text)
 
     mSearchWidget->search(text);
     onbShowSearchClicked();
+}
+
+void NodeSelector::onUiIsBlocked(bool state)
+{
+    ui->bCancel->setDisabled(state);
+    if (state)
+    {
+        ui->bOk->setDisabled(true);
+    }
+}
+
+void NodeSelector::onSelectionChanged(bool state)
+{
+    ui->bOk->setEnabled(state);
 }
 
 void NodeSelector::showDefaultUploadOption(bool show)
@@ -452,16 +478,20 @@ void NodeSelector::initSpecialisedWidgets()
                     &NodeSelector::onCustomButtonClicked,
                     Qt::UniqueConnection);
             connect(viewContainer,
+                    &NodeSelectorTreeViewWidget::uiIsBlocked,
+                    this,
+                    &NodeSelector::onUiIsBlocked,
+                    Qt::UniqueConnection);
+            connect(viewContainer,
+                    &NodeSelectorTreeViewWidget::selectionIsCorrect,
+                    this,
+                    &NodeSelector::onSelectionChanged,
+                    Qt::UniqueConnection);
+            connect(viewContainer,
                     &NodeSelectorTreeViewWidget::okBtnClicked,
                     this,
                     &NodeSelector::onbOkClicked,
                     Qt::UniqueConnection);
-            connect(viewContainer,
-                    &NodeSelectorTreeViewWidget::cancelBtnClicked,
-                    this,
-                    &NodeSelector::reject,
-                    Qt::UniqueConnection);
-
             connect(viewContainer,
                     &NodeSelectorTreeViewWidget::viewReady,
                     this,
@@ -628,14 +658,16 @@ std::optional<NodeSelector::TabItem> NodeSelector::selectedNodeTab()
 
 void NodeSelector::onCurrentWidgetChanged(int index)
 {
-    if (mNodeToBeSelected)
+    if (auto wid = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(index)))
     {
-        if (auto wid = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(index)))
+        if (mNodeToBeSelected)
         {
             wid->clearSelection();
             wid->setSelectedNodeHandle(mNodeToBeSelected->getHandle());
             mNodeToBeSelected.reset();
         }
+
+        onSelectionChanged(wid->isSelectionCorrect());
     }
 }
 

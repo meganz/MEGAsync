@@ -4673,6 +4673,16 @@ Enter a different name.</translation>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
         <translation>The item you selected has been removed. To reselect, close this window and try again.</translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text to reject and close the dialog. SNC-5804</translatorcomment>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Button text to accept and close the dialog. SNC-5804</translatorcomment>
+        <translation type="unfinished">OK</translation>
+    </message>
 </context>
 <context>
     <name>NodeSelectorModel</name>
@@ -5085,11 +5095,6 @@ Enter a different name.</translation>
         <source>New folder</source>
         <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
         <translation>New folder</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translatorcomment>Button text to accept and close the dialog</translatorcomment>
-        <translation>OK</translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
