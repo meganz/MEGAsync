@@ -77,7 +77,8 @@ TransferManager::TransferManager(MegaApi* megaApi):
     mUi->wSearch->hide();
     mUi->wMediaType->hide();
 
-    mUi->sStatus->setCurrentWidget(mUi->pUpToDate);
+    mUi->sStatus->setCurrentWidget(mUi->wScanning);
+    mUi->bScanning->setState(StatusInfo::TRANSFERS_STATES::STATE_UPDATED);
 
     mTabSelectorsToggleGroup.insert(TransfersWidget::ALL_TRANSFERS_TAB, mUi->tabAllTransfers);
     mTabSelectorsToggleGroup.insert(TransfersWidget::DOWNLOADS_TAB, mUi->tabDownloads);
@@ -528,7 +529,7 @@ void TransferManager::refreshStateStats()
 
     processedNumber = mTransfersCount.pendingDownloads + mTransfersCount.pendingUploads;
 
-    QWidget* leftFooterWidget (nullptr);
+    QWidget* leftFooterWidget(mUi->wScanning);
 
     // If we don't have transfers, stop refresh timer and show "Up to date",
     // and if current tab is ALL TRANSFERS, show empty.
@@ -536,12 +537,10 @@ void TransferManager::refreshStateStats()
     {
         if(mTransferScanCancelUi && mTransferScanCancelUi->isActive())
         {
-            leftFooterWidget = mUi->wScanning;
             mUi->bScanning->setState(StatusInfo::TRANSFERS_STATES::STATE_INDEXING);
         }
         else
         {
-            leftFooterWidget = mUi->pUpToDate;
             mUi->bScanning->setState(StatusInfo::TRANSFERS_STATES::STATE_UPDATED);
         }
 
@@ -558,8 +557,13 @@ void TransferManager::refreshStateStats()
 
         if(mTransferScanCancelUi && mTransferScanCancelUi->isActive())
         {
-            leftFooterWidget = mUi->wScanning;
             mUi->bScanning->setState(StatusInfo::TRANSFERS_STATES::STATE_INDEXING);
+        }
+        else if (!MegaSyncApp->getStalledIssuesModel()->isEmpty())
+        {
+            mUi->bScanning->setState(StatusInfo::TRANSFERS_STATES::STATE_FAILED);
+            // Don´t show any message
+            leftFooterWidget = nullptr;
         }
         else
         {
@@ -574,9 +578,18 @@ void TransferManager::refreshStateStats()
         tabSelector->setCounter(processedNumber);
     }
 
-    if(leftFooterWidget && leftFooterWidget != mUi->sStatus->currentWidget())
+    if (!leftFooterWidget)
     {
-        mUi->sStatus->setCurrentWidget(leftFooterWidget);
+        mUi->sStatus->hide();
+    }
+    else
+    {
+        mUi->sStatus->show();
+
+        if (leftFooterWidget != mUi->sStatus->currentWidget())
+        {
+            mUi->sStatus->setCurrentWidget(leftFooterWidget);
+        }
     }
 }
 
@@ -789,7 +802,7 @@ void TransferManager::checkContentInfo()
     }
     else
     {
-        mUi->sCurrentContentInfo->setCurrentWidget(mUi->pStatusHeaderInfo);
+        mUi->sCurrentContentInfo->setCurrentWidget(mUi->pStatusHeaderInfoContainer);
     }
 }
 
