@@ -202,6 +202,7 @@ void NodeSelectorTreeViewWidgetIncomingShares::onRootIndexChanged(const QModelIn
     else
     {
         ui->incomingInfo->setVisible(false);
+        ui->lFolderName->setVisible(true);
     }
 }
 
