@@ -56,6 +56,7 @@ private:
 
     mega::MegaSync::SyncType mType;
     int mItemIndent;
+    static QMap<mega::MegaSync::SyncType, bool> mEnableStateByType;
 };
 
 class TwoWaySyncsMenu : public SyncsMenu

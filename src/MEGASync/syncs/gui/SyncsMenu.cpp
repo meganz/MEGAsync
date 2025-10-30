@@ -12,7 +12,7 @@
 #include <QCoreApplication>
 #include <QUrl>
 
-    const QLatin1String DEVICE_ICON("monitor");
+const QLatin1String DEVICE_ICON("monitor");
 const QLatin1String SYNC_ICON("sync-01");
 const QLatin1String SYNC_ADD_ICON("sync-plus");
 const QLatin1String BACKUP_ICON("database");
@@ -22,6 +22,9 @@ const QString ADD_BACKUP = QCoreApplication::translate("BackupSyncsMenu", "Add B
 const QString ADD_SYNC = QCoreApplication::translate("TwoWaySyncsMenu", "Add Sync");
 const QString BACKUPS = QCoreApplication::translate("BackupSyncsMenu", "Backups");
 const QString SYNCS = QCoreApplication::translate("TwoWaySyncsMenu", "Syncs");
+
+QMap<mega::MegaSync::SyncType, bool> SyncsMenu::mEnableStateByType =
+    QMap<mega::MegaSync::SyncType, bool>();
 
 SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, int itemIndent, QWidget* parent):
     QObject(parent),
@@ -82,6 +85,12 @@ SyncsMenu* SyncsMenu::newSyncsMenu(mega::MegaSync::SyncType type, QWidget* paren
             break;
         }
     }
+
+    if (menu)
+    {
+        menu->setEnabled(mEnableStateByType.value(type, true));
+    }
+
     return menu;
 }
 
@@ -108,6 +117,7 @@ void SyncsMenu::callMenu(const QPoint& p)
 void SyncsMenu::setEnabled(bool state)
 {
     mAddAction->setEnabled(state);
+    mEnableStateByType.insert(mType, state);
 }
 
 bool SyncsMenu::eventFilter(QObject* obj, QEvent* e)
