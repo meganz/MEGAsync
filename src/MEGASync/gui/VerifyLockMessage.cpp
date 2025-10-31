@@ -48,17 +48,13 @@ void VerifyLockMessage::regenerateUI()
     Text::NewLine decorator;
     decorator.process(msg, 2);
     m_ui->lVerifyEmailDesc->setText(msg);
+
+    m_ui->bClose->setText(QCoreApplication::translate("MessageDialogData", "Close"));
 }
 
 VerifyLockMessage::~VerifyLockMessage()
 {
     delete m_ui;
-}
-
-void VerifyLockMessage::on_bLogout_clicked()
-{
-    close();
-    emit logout();
 }
 
 void VerifyLockMessage::onHelpButtonClicked()

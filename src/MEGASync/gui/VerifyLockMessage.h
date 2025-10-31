@@ -25,7 +25,6 @@ signals:
     void logout();
 
 private slots:
-    void on_bLogout_clicked();
     void onHelpButtonClicked();
 
 protected:

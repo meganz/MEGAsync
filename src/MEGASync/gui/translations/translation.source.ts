@@ -9946,11 +9946,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Locked account</translation>
     </message>
     <message>
-        <source>Log out</source>
-        <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation>Log&#xa0;out</translation>
-    </message>
-    <message>
         <source>Why am I seeing this?</source>
         <translatorcomment>Clickable Label to inform the user about why the account is locked and needs verification (email verification). It redirects to credential-stuffing helpdesk article (SNC-5553) </translatorcomment>
         <translation>Why am I seeing this?</translation>
