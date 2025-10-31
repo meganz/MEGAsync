@@ -804,25 +804,6 @@ QToolButton
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="pUpToDate">
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="leftMargin">
-           <number>5</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-         </layout>
-        </widget>
         <widget class="QWidget" name="wScanning">
          <layout class="QHBoxLayout" name="horizontalLayout_5">
           <property name="spacing">
@@ -1264,22 +1245,19 @@ QToolButton
            <property name="currentIndex">
             <number>2</number>
            </property>
-           <widget class="TransferManagerStatusHeaderWidget" name="pStatusHeaderInfo">
+           <widget class="QWidget" name="pStatusHeaderInfoContainer">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_3">
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
              <property name="spacing">
               <number>0</number>
              </property>
-             <property name="sizeConstraint">
-              <enum>QLayout::SetMinimumSize</enum>
-             </property>
              <property name="leftMargin">
-              <number>0</number>
+              <number>20</number>
              </property>
              <property name="topMargin">
               <number>0</number>
@@ -1290,6 +1268,9 @@ QToolButton
              <property name="bottomMargin">
               <number>5</number>
              </property>
+             <item>
+              <widget class="TransferManagerStatusHeaderWidget" name="pStatusHeaderInfo" native="true"/>
+             </item>
             </layout>
            </widget>
            <widget class="QWidget" name="pSearchHeaderInfo">
@@ -1404,11 +1385,20 @@ QToolButton
            </widget>
            <widget class="QWidget" name="pStalledIssuesHeaderInfo">
             <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <property name="leftMargin">
               <number>20</number>
              </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
              <property name="rightMargin">
               <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>5</number>
              </property>
              <item>
               <widget class="BannerWidget" name="stalledIssuesContainer" native="true"/>
