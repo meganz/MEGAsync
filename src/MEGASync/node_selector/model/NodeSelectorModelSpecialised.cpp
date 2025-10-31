@@ -692,11 +692,6 @@ int NodeSelectorModelRubbish::rootItemsCount() const
     return 1;
 }
 
-QModelIndex NodeSelectorModelRubbish::getTopRootIndex() const
-{
-    return QModelIndex();
-}
-
 void NodeSelectorModelRubbish::fetchMore(const QModelIndex& parent)
 {
     if (parent.isValid())

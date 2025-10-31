@@ -9,7 +9,8 @@
 
 namespace ButtonUtilities
 {
-inline void checkMinWidth(QAbstractButton* button)
+inline void checkMinWidth(QAbstractButton* button,
+                          Qt::ToolButtonStyle style = Qt::ToolButtonStyle::ToolButtonTextBesideIcon)
 {
     static const char* dimensionProperty = "dimension";
     static const char* shortProperty = "short";
@@ -23,22 +24,37 @@ inline void checkMinWidth(QAbstractButton* button)
         if (!dimension.isEmpty())
         {
             auto fm = button->fontMetrics();
-            auto textWidth = fm.boundingRect(button->text()).width();
+            auto contentsWidth = fm.boundingRect(button->text()).width();
+            auto iconSize(button->icon().isNull() ? 0 : button->iconSize().width());
+
+            if (style == Qt::ToolButtonStyle::ToolButtonTextBesideIcon)
+            {
+                contentsWidth += iconSize + 4;
+            }
+            else if (style == Qt::ToolButtonStyle::ToolButtonTextUnderIcon)
+            {
+                contentsWidth = std::max(contentsWidth, iconSize);
+            }
+            else if (style == Qt::ToolButtonStyle::ToolButtonIconOnly)
+            {
+                contentsWidth = iconSize;
+            }
+
             QVariant currentValue = button->property(shortProperty);
             bool newValue(false);
 
             // Please check this values from WidgetsComponentsStyleSheetsSizes.css
             if (dimension == QLatin1String("small"))
             {
-                newValue = textWidth < 44;
+                newValue = contentsWidth < 44;
             }
             else if (dimension == QLatin1String("medium"))
             {
-                newValue = textWidth < 48;
+                newValue = contentsWidth < 48;
             }
             else if (dimension == QLatin1String("large"))
             {
-                newValue = textWidth < 52;
+                newValue = contentsWidth < 52;
             }
 
             if (!currentValue.isValid() || currentValue.toBool() != newValue)

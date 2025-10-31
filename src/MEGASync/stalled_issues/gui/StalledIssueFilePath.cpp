@@ -79,7 +79,7 @@ void StalledIssueFilePath::fillFilePath()
         ui->file->show();
         const auto pathProblem(mData->getPath().pathProblem);
 
-        auto hasProblem(pathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem && showError(pathProblem));
+        auto hasProblem(showError(pathProblem));
 
         if(hasProblem)
         {
@@ -135,7 +135,7 @@ void StalledIssueFilePath::fillMoveFilePath()
 {
     if(!mData->getMovePath().isEmpty())
     {
-        auto hasProblem(mData->getMovePath().pathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
+        auto hasProblem(showError(mData->getMovePath().pathProblem));
         if (hasProblem)
         {
             ui->movePathProblemContainer->show();
@@ -263,7 +263,7 @@ void StalledIssueFilePath::updateFileIcons()
     }
 
     // Has a problem
-    if (mData->getPath().pathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem)
+    if (showError(mData->getPath().pathProblem))
     {
         ui->filePathIcon->setProperty(TOKEN_PROPERTIES::normalOff,
                                       QLatin1String("icon-inverse-accent"));
@@ -304,7 +304,7 @@ void StalledIssueFilePath::updateMoveFileIcons()
     }
 
     // Has a problem
-    if (mData->getMovePath().pathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem)
+    if (showError(mData->getMovePath().pathProblem))
     {
         ui->moveFilePathIcon->setProperty(TOKEN_PROPERTIES::normalOff,
                                           QLatin1String("icon-inverse-accent"));
@@ -331,8 +331,7 @@ void StalledIssueFilePath::updateCornerArrows()
     {
         QIcon icon(Utilities::getIcon(QLatin1String("arrow_corner_right"),
                                       Utilities::AttributeType::NONE));
-        auto hasProblem(mData->getPath().pathProblem !=
-                        mega::MegaSyncStall::SyncPathProblem::NoProblem);
+        auto hasProblem(showError(mData->getPath().pathProblem));
         if (hasProblem)
         {
             ui->problemArrow->setIcon(icon);
@@ -354,8 +353,7 @@ void StalledIssueFilePath::updateCornerArrows()
     {
         QIcon icon(Utilities::getIcon(QLatin1String("arrow_corner_right"),
                                       Utilities::AttributeType::NONE));
-        auto hasProblem(mData->getMovePath().pathProblem !=
-                        mega::MegaSyncStall::SyncPathProblem::NoProblem);
+        auto hasProblem(showError(mData->getMovePath().pathProblem));
         if (hasProblem)
         {
             ui->movePathProblemArrow->setIcon(icon);
@@ -549,9 +547,10 @@ QString StalledIssueFilePath::getSyncPathProblemString(mega::MegaSyncStall::Sync
 
 bool StalledIssueFilePath::showError(mega::MegaSyncStall::SyncPathProblem pathProblem)
 {
-    switch(pathProblem)
+    switch (pathProblem)
     {
         case mega::MegaSyncStall::CloudNodeIsBlocked:
+        case mega::MegaSyncStall::NoProblem:
         {
             return false;
         }
