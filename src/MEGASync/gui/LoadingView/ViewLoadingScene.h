@@ -314,7 +314,7 @@ signals:
 protected:
     QTimer mDelayTimerToShow;
     QTimer mDelayTimerToHide;
-    int mDelayTimeToShowInMs;
+    int mDelayTimeToShowInMs = 0;
     QPointer<QTreeView> mLoadingView;
     QWidget* mLoadingSceneUI;
     Ui::ViewLoadingSceneUI* ui;

@@ -718,7 +718,7 @@ color: #616366; /*colorToken.text-secondary*/
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="treeViewPage">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1201,6 +1201,11 @@ color: #616366; /*colorToken.text-secondary*/
  </widget>
  <customwidgets>
   <customwidget>
+   <class>TokenizableButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
+  </customwidget>
+  <customwidget>
    <class>TokenizableToolButton</class>
    <extends>QToolButton</extends>
    <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
@@ -1209,11 +1214,6 @@ color: #616366; /*colorToken.text-secondary*/
    <class>IconLabel</class>
    <extends>QToolButton</extends>
    <header>tokenizer/TokenizableItems/IconLabel.h</header>
-  </customwidget>
-  <customwidget>
-   <class>TokenizableButton</class>
-   <extends>QPushButton</extends>
-   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
   </customwidget>
   <customwidget>
    <class>TabSelector</class>

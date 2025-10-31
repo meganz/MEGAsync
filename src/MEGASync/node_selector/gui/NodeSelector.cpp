@@ -226,15 +226,6 @@ void NodeSelector::onfShowSearchHidden()
     }
 }
 
-void NodeSelector::onUpdateLoadingMessage(std::shared_ptr<MessageInfo> message)
-{
-    auto viewContainer = getCurrentTreeViewWidget();
-    if (viewContainer && viewContainer->getProxyModel()->getMegaModel() == sender())
-    {
-        viewContainer->updateLoadingMessage(message);
-    }
-}
-
 void NodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles, int)
 {
     performItemsToBeMoved(handles, IncreaseOrDecrease::INCREASE, true, true);
@@ -538,11 +529,6 @@ void NodeSelector::initSpecialisedWidgets()
                     &NodeSelectorModel::itemsAboutToBeMergedFailed,
                     this,
                     &NodeSelector::onItemsAboutToBeMergedFailed);
-
-            connect(model,
-                    &NodeSelectorModel::updateLoadingMessage,
-                    this,
-                    &NodeSelector::onUpdateLoadingMessage);
 
             connect(model,
                     &NodeSelectorModel::showMessageBox,

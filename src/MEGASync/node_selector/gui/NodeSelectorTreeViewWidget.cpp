@@ -86,6 +86,10 @@ NodeSelectorTreeViewWidget::~NodeSelectorTreeViewWidget()
 
 void NodeSelectorTreeViewWidget::init()
 {
+    // When init, show the loading view and then, add a 150 delay to avoid showing the loading view
+    // for short loads
+    setLoadingSceneVisible(true);
+    ui->tMegaFolders->loadingView().setDelayTimeToShowInMs(150);
     mProxyModel = createProxyModel();
     mModel = createModel();
     // Regardless the type of treeviewwidget, the empty icon always use icon-secondary token
@@ -299,11 +303,6 @@ bool NodeSelectorTreeViewWidget::isInRootView() const
 bool NodeSelectorTreeViewWidget::isEmpty() const
 {
     return ui->tMegaFolders->model()->rowCount(QModelIndex()) == 0;
-}
-
-void NodeSelectorTreeViewWidget::updateLoadingMessage(std::shared_ptr<MessageInfo> message)
-{
-    ui->tMegaFolders->getLoadingMessageHandler()->updateMessage(message);
 }
 
 void NodeSelectorTreeViewWidget::enableDragAndDrop(bool enable)
