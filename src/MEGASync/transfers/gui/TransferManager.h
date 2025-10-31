@@ -168,6 +168,8 @@ private slots:
     void showAllResults();
     void showDownloadResults();
     void showUploadResults();
+
+    void setStalledIssuesBannerText();
 };
 
 #endif // TRANSFERMANAGER_H

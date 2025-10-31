@@ -32,13 +32,15 @@ public:
     void setAutoManageTextUrl(bool newValue);
     void setLinkText(const QString& displayText);
 
-private:
-    void updateLayout();
-
 signals:
     void linkActivated();
 
+protected:
+    bool event(QEvent* event) override;
+
 private:
+    void checkLayoutOrientation();
+
     Ui::BannerWidget* mUi;
     Type mType;
 };
