@@ -1,5 +1,6 @@
 #include "BannerWidget.h"
 
+#include "Preferences.h"
 #include "ui_BannerWidget.h"
 
 #include <QStyle>
@@ -11,8 +12,6 @@ const std::map<BannerWidget::Type, QLatin1String> TYPE_MAP{
     {BannerWidget::Type::BANNER_ERROR, QLatin1String{"error"}},
     {BannerWidget::Type::BANNER_INFO, QLatin1String{"info"}},
     {BannerWidget::Type::BANNER_SUCCESS, QLatin1String{"success"}}};
-constexpr int TITLE_AND_DESCRIPTION_HEIGHT = 64;
-constexpr int TITLE_ONLY_HEIGHT = 50;
 }
 
 BannerWidget::BannerWidget(QWidget* parent):
@@ -24,7 +23,6 @@ BannerWidget::BannerWidget(QWidget* parent):
     mUi->wLinkContainer->hide();
     mUi->lTitle->hide();
     mUi->lText->hide();
-    mUi->lText->setTextFormat(Qt::RichText);
     mUi->lText->setKeepParentCursor(false);
 
     connect(mUi->bLink,
@@ -32,6 +30,8 @@ BannerWidget::BannerWidget(QWidget* parent):
             this,
             &BannerWidget::linkActivated,
             Qt::UniqueConnection);
+
+    checkLayoutOrientation();
 }
 
 BannerWidget::~BannerWidget()
@@ -67,7 +67,6 @@ void BannerWidget::setDescription(const QString& text)
 {
     mUi->lText->setText(text);
     mUi->lText->show();
-    updateLayout();
 }
 
 void BannerWidget::setAutoManageTextUrl(bool newValue)
@@ -81,21 +80,41 @@ void BannerWidget::setLinkText(const QString& displayText)
     mUi->wLinkContainer->show();
 }
 
+bool BannerWidget::event(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        checkLayoutOrientation();
+    }
+
+    return QWidget::event(event);
+}
+
 void BannerWidget::setTitle(const QString& text)
 {
     mUi->lTitle->setText(text);
     mUi->lTitle->show();
-    updateLayout();
 }
 
-void BannerWidget::updateLayout()
+void BannerWidget::checkLayoutOrientation()
 {
-    if (!mUi->lText->toPlainText().isEmpty())
+    const QLocale current = QLocale(Preferences::instance()->language());
+
+    // Arabic, for now
+    if (current.textDirection() == Qt::RightToLeft)
     {
-        setFixedHeight(TITLE_AND_DESCRIPTION_HEIGHT);
+        // Move icon to the right
+        mUi->gridLayout->addWidget(mUi->lIcon, 0, 2, 1, 1, Qt::AlignTop);
+
+        // Move button to the left
+        mUi->contentLayout->insertWidget(0, mUi->wLinkContainer);
     }
-    else if (!mUi->lTitle->toPlainText().isEmpty())
+    else
     {
-        setFixedHeight(TITLE_ONLY_HEIGHT);
+        // Move icon to the left
+        mUi->gridLayout->addWidget(mUi->lIcon, 0, 0, 1, 1, Qt::AlignTop);
+
+        // Move button to the right
+        mUi->contentLayout->insertWidget(1, mUi->wLinkContainer);
     }
 }

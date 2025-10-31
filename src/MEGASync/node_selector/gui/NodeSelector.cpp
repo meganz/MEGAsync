@@ -677,6 +677,7 @@ void NodeSelector::onCurrentWidgetChanged(int index)
             mNodeToBeSelected.reset();
         }
 
+        mSelectType->selectionHasChanged(wid);
         onSelectionChanged(wid->isSelectionCorrect());
     }
 }

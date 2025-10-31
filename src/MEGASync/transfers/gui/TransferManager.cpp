@@ -54,8 +54,7 @@ TransferManager::TransferManager(MegaApi* megaApi):
     mUi->setupUi(this);
     createSearchChips();
     mUi->stalledIssuesContainer->setType(BannerWidget::BANNER_ERROR);
-    mUi->stalledIssuesContainer->setTitle(getIssuesBannerText());
-    mUi->stalledIssuesContainer->setLinkText(getIssuesBannerButtonText());
+    setStalledIssuesBannerText();
 
     connect(mUi->stalledIssuesContainer,
             &BannerWidget::linkActivated,
@@ -1158,8 +1157,7 @@ bool TransferManager::event(QEvent* event)
         mUi->retranslateUi(this);
         updateCurrentCategoryTitle();
         onUpdatePauseState(mUi->wTransfers->getProxyModel()->getPausedTransfers());
-        mUi->stalledIssuesContainer->setDescription(getIssuesBannerText());
-        mUi->stalledIssuesContainer->setLinkText(getIssuesBannerButtonText());
+        setStalledIssuesBannerText();
         if (mDragBackDrop)
         {
             mUiDragBackDrop->retranslateUi(mDragBackDrop);
@@ -1307,4 +1305,10 @@ QString TransferManager::getIssuesBannerText()
 QString TransferManager::getIssuesBannerButtonText()
 {
     return tr("View");
+}
+
+void TransferManager::setStalledIssuesBannerText()
+{
+    mUi->stalledIssuesContainer->setTitle(getIssuesBannerText());
+    mUi->stalledIssuesContainer->setLinkText(getIssuesBannerButtonText());
 }

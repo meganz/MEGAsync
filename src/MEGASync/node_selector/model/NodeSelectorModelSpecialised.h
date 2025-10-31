@@ -191,8 +191,6 @@ public:
     void createRootNodes() override;
     int rootItemsCount() const override;
 
-    QModelIndex getTopRootIndex() const override;
-
     void fetchMore(const QModelIndex& parent) override;
     void firstLoad() override;
 

@@ -437,7 +437,6 @@ private:
                 if(removeSiblings && info->getDialog() != dialog)
                 {
                     QRect siblingGeometry = info->getDialog()->geometry();
-                    bool siblingIsMaximized = info->getDialog()->isMaximized();
                     dialog->setWindowFlags(info->getDialog()->windowFlags());
                     removeDialog(info->getDialog());
                     info->setDialog(dialog);
@@ -445,11 +444,7 @@ private:
 
                     initDialog(dialog);
 
-                    if(siblingIsMaximized)
-                    {
-                        dialog->setWindowState(Qt::WindowMaximized);
-                    }
-                    else if(siblingGeometry.isValid())
+                    if (siblingGeometry.isValid())
                     {
                         dialog->setGeometry(siblingGeometry);
                     }

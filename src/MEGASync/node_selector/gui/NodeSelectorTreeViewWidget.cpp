@@ -1578,6 +1578,9 @@ void NodeSelectorTreeViewWidget::setSelectedNodeHandle(const MegaHandle& selecte
 
     mProxyModel->setExpandMapped(true);
 
+    auto topIndex(mProxyModel->mapFromSource(mModel->getTopRootIndex()));
+
+    setRootIndex(topIndex);
     mModel->selectIndexesByHandleAsync(QSet<mega::MegaHandle>() << node->getHandle());
     mModel->loadTreeFromNode(node);
 }

@@ -42,9 +42,6 @@ background-color: #ffffff; /*colorToken.page-background*/
   <property name="TOKENIZED" stdset="0">
    <bool>true</bool>
   </property>
-  <property name="bool" stdset="0">
-   <bool>false</bool>
-  </property>
   <layout class="QHBoxLayout" name="horizontalLayout_4">
    <property name="leftMargin">
     <number>24</number>
@@ -118,7 +115,7 @@ background-color: #ffffff; /*colorToken.page-background*/
           <string notr="true"/>
          </property>
          <property name="icon">
-          <iconset>
+          <iconset resource="../Resources_common.qrc">
            <normaloff>:/external_drive_solid_medium.svg</normaloff>:/external_drive_solid_medium.svg</iconset>
          </property>
          <property name="iconSize">
@@ -298,9 +295,11 @@ background-color: #ffffff; /*colorToken.page-background*/
   <customwidget>
    <class>IconLabel</class>
    <extends>QToolButton</extends>
-   <header>TokenizableItems/IconLabel.h</header>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../Resources_common.qrc"/>
+ </resources>
  <connections/>
 </ui>
