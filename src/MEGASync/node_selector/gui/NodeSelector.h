@@ -179,6 +179,9 @@ private:
     // Loading view
     QList<NodeSelectorTreeViewWidget*> mSourceWids;
     NodeSelectorTreeViewWidget* mTargetWid;
+
+    // Selection changed signal
+    QMetaObject::Connection mSelectionChangedConnection;
 };
 
 #endif // NODESELECTOR_H

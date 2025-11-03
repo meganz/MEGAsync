@@ -40,6 +40,11 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
     ui->setupUi(this);
     ui->cbAlwaysUploadToLocation->hide();
 
+    connect(ui->stackedWidget,
+            &QStackedWidget::currentChanged,
+            this,
+            &NodeSelector::onCurrentWidgetChanged);
+
     mMegaApi->addListener(mDelegateListener.get());
 
     connect(ui->fIncomingShares,
@@ -484,11 +489,6 @@ void NodeSelector::initSpecialisedWidgets()
                     &NodeSelector::onUiIsBlocked,
                     Qt::UniqueConnection);
             connect(viewContainer,
-                    &NodeSelectorTreeViewWidget::selectionIsCorrect,
-                    this,
-                    &NodeSelector::onSelectionChanged,
-                    Qt::UniqueConnection);
-            connect(viewContainer,
                     &NodeSelectorTreeViewWidget::okBtnClicked,
                     this,
                     &NodeSelector::onbOkClicked,
@@ -558,11 +558,6 @@ void NodeSelector::initSpecialisedWidgets()
                     });
         }
     }
-
-    connect(ui->stackedWidget,
-            &QStackedWidget::currentChanged,
-            this,
-            &NodeSelector::onCurrentWidgetChanged);
 }
 
 bool NodeSelector::eventFilter(QObject* obj, QEvent* event)
@@ -664,6 +659,14 @@ void NodeSelector::onCurrentWidgetChanged(int index)
         }
 
         mSelectType->selectionHasChanged(wid);
+
+        disconnect(mSelectionChangedConnection);
+        mSelectionChangedConnection = connect(wid,
+                                              &NodeSelectorTreeViewWidget::selectionIsCorrect,
+                                              this,
+                                              &NodeSelector::onSelectionChanged,
+                                              Qt::UniqueConnection);
+
         onSelectionChanged(wid->isSelectionCorrect());
     }
 }

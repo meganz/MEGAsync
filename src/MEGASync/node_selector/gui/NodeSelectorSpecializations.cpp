@@ -27,7 +27,7 @@ void UploadNodeSelector::createSpecialisedWidgets()
 {
     ui->fBackups->hide();
     addCloudDrive();
-    mCloudDriveWidget->setShowEmptyView(false);
+    mCloudDriveWidget->setShowEmptyView(true);
     addIncomingShares();
 }
 
