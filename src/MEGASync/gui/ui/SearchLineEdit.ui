@@ -32,12 +32,7 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">/*ColorTokenIcon;Button;tSearchIcon;normal;off;colorToken.icon-secondary*/
-/*ColorTokenIcon;Button;tSearchIcon;disabled;off;colorToken.icon-disabled*/
-/*ColorTokenIcon;Button;tSearchCancel;normal;off;colorToken.icon-secondary*/
-/*ColorTokenIcon;Button;tSearchCancel;disabled;off;colorToken.icon-disabled*/
-
-QLineEdit
+   <string notr="true">QLineEdit
 {
 background-color: transparent;
 }
@@ -158,6 +153,12 @@ border-radius: 16px;
         <property name="type" stdset="0">
          <string notr="true">ghost</string>
         </property>
+        <property name="disabled_off" stdset="0">
+         <string notr="true">icon-disabled</string>
+        </property>
+        <property name="normal_off" stdset="0">
+         <string notr="true">icon-secondary</string>
+        </property>
        </widget>
       </item>
       <item>
@@ -220,6 +221,12 @@ border-radius: 16px;
         </property>
         <property name="type" stdset="0">
          <string notr="true">ghost</string>
+        </property>
+        <property name="disabled_off" stdset="0">
+         <string notr="true">icon-disabled</string>
+        </property>
+        <property name="normal_off" stdset="0">
+         <string notr="true">icon-secondary</string>
         </property>
        </widget>
       </item>
