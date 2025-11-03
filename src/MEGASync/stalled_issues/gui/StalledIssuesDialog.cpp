@@ -7,6 +7,7 @@
 #include "StalledIssueDelegate.h"
 #include "StalledIssuesModel.h"
 #include "StalledIssuesProxyModel.h"
+#include "ThemeManager.h"
 #include "TokenizableItems/TokenPropertySetter.h"
 #include "ui_StalledIssuesDialog.h"
 #include "Utilities.h"
@@ -429,6 +430,10 @@ bool StalledIssuesDialog::event(QEvent* event)
         MegaSyncApp->getStalledIssuesModel()->languageChanged();
         ui->stalledIssuesTree->update();
         createTabTitles();
+    }
+    else if (event->type() == ThemeManager::ThemeChanged)
+    {
+        ui->stalledIssuesTree->viewport()->update();
     }
 
     return QDialog::event(event);
