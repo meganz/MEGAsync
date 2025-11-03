@@ -49,9 +49,9 @@ border-width: 1px;
 border-style: solid;
 border-radius: 4px;
 font-size: 13px;
-border-color: #ff04101E; /*colorToken.button-brand*/
+border-color: #ffdd1405; /*colorToken.button-brand*/
 background-color: transparent;
-color: #ff04101E; /*colorToken.button-brand*/
+color: #ffdd1405; /*colorToken.button-brand*/
 }
 #bSharedFolder, #bMega
 {
