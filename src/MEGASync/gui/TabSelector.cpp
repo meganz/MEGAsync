@@ -167,11 +167,6 @@ bool TabSelector::event(QEvent* event)
         }
     }
 
-    if (event->type() == QEvent::Hide)
-    {
-        setCounter(0);
-    }
-
     return QWidget::event(event);
 }
 
@@ -255,4 +250,10 @@ void TabSelector::toggleOffSiblings()
 void TabSelector::hideIcon()
 {
     ui->lIcon->setVisible(false);
+}
+
+void TabSelector::hide()
+{
+    setCounter(0);
+    QWidget::hide();
 }
