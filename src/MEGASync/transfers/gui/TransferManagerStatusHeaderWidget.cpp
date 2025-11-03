@@ -85,7 +85,7 @@ void TransferManagerStatusHeaderWidget::setAlmostFullStorageBannerText()
 
 void TransferManagerStatusHeaderWidget::setFullStorageBannerText()
 {
-    mUi->wStorageBanner->setLinkText(QString());
+    mUi->wStorageBanner->setLinkText(tr("Upgrade now"));
     mUi->wStorageBanner->setTitle(tr("Storage full"));
     mUi->wStorageBanner->setDescription(
         tr("Uploads are disabled and sync and backups are paused."));
