@@ -33,7 +33,6 @@ ChangePasswordDialog {
         readonly property string change_password: "change_password"
         readonly property string two_fa: "two_fa"
 
-        state: change_password
         states: [
             State {
                 name: changePasswordContentItem.change_password
@@ -59,6 +58,8 @@ ChangePasswordDialog {
                 fill: parent
                 margins: Constants.bigWindowMargin
             }
+
+            initialItem: changePasswordPage
 
             Component {
                 id: changePasswordPage
