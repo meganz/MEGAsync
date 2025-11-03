@@ -228,7 +228,8 @@ bool NodeSelectorTreeViewWidget::eventFilter(QObject* watched, QEvent* event)
             }
         }
     }
-    else if (event->type() == QEvent::Drop)
+    else if (event->type() == QEvent::Drop &&
+             ui->stackedWidget->currentWidget() != ui->treeViewPage)
     {
         if (auto dropEvent = static_cast<QDragEnterEvent*>(event))
         {
