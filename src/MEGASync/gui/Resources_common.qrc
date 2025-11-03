@@ -1303,5 +1303,6 @@
         <file alias="arrows-up-down-circle_small_thin_solid">images/themed/tokenizable/arrows-up-down-circle_small_thin_solid.svg</file>
         <file alias="file-audio_small_thin_solid">images/themed/tokenizable/file-audio_small_thin_solid.svg</file>
         <file alias="search-large_small_thin_solid">images/themed/tokenizable/search-large_small_thin_solid.svg</file>
+        <file alias="alert-circle_medium_thin_outline">images/themed/tokenizable/alert-circle_medium_thin_outline.svg</file>
     </qresource>
 </RCC>

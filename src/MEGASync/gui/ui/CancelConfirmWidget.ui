@@ -51,12 +51,34 @@ line-height: 20px;
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="lWarningIcon">
-       <property name="text">
-        <string/>
+      <widget class="TokenizableToolButton" name="lWarningIcon">
+       <property name="minimumSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
        </property>
-       <property name="pixmap">
-        <pixmap resource="../Resources_light.qrc">:/alert-circle-support-warning.svg</pixmap>
+       <property name="maximumSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="text">
+        <string notr="true"/>
+       </property>
+       <property name="icon">
+        <iconset resource="../Resources_common.qrc">
+         <normaloff>:/alert-circle_medium_thin_outline</normaloff>:/alert-circle_medium_thin_outline</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="normal_off" stdset="0">
+        <string notr="true">support-warning</string>
        </property>
       </widget>
      </item>
@@ -383,8 +405,15 @@ font-weight:400;</string>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TokenizableToolButton</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
+  </customwidget>
+ </customwidgets>
  <resources>
-  <include location="../Resources_light.qrc"/>
+  <include location="../Resources_common.qrc"/>
  </resources>
  <connections/>
 </ui>
