@@ -42,9 +42,7 @@ protected:
 private slots:
     void onUiBlocked();
     void onUiUnblocked();
-    void onProxyDataChanged(const QModelIndex& topLeft,
-                            const QModelIndex& bottomRight,
-                            const QVector<int>& roles = QVector<int>());
+    void onProxyModelModified();
 
 private:
     Ui::InfoDialogTransfersWidget *mUi;
