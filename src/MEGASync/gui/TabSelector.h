@@ -63,6 +63,7 @@ signals:
 protected:
     bool event(QEvent* event) override;
     bool eventFilter(QObject* watched, QEvent* event) override;
+    void dragEnterEvent(QDragEnterEvent* event) override;
 
 private:
     Ui::TabSelector* ui;

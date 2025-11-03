@@ -59,6 +59,8 @@ TabSelector::TabSelector(QWidget* parent):
     }
 
     setProperty(SELECTED, false);
+
+    setAcceptDrops(true);
 }
 
 TabSelector::~TabSelector()
@@ -186,6 +188,11 @@ bool TabSelector::eventFilter(QObject* watched, QEvent* event)
     }
 
     return QWidget::eventFilter(watched, event);
+}
+
+void TabSelector::dragEnterEvent(QDragEnterEvent*)
+{
+    setSelected(true);
 }
 
 QList<TabSelector*> TabSelector::getTabSelectorByParent(QWidget* parent)
