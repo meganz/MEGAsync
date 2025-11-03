@@ -176,21 +176,6 @@ bool NodeSelector::event(QEvent* event)
     return QDialog::event(event);
 }
 
-void NodeSelector::keyPressEvent(QKeyEvent* e)
-{
-    switch (e->key())
-    {
-        case Qt::Key_Enter:
-        case Qt::Key_Return:
-        {
-            e->ignore();
-            return;
-        }
-    }
-
-    QDialog::keyPressEvent(e);
-}
-
 void NodeSelector::mousePressEvent(QMouseEvent* event)
 {
     for (int page = 0; page < ui->stackedWidget->count(); ++page)

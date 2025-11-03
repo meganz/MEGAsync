@@ -141,7 +141,7 @@ void SyncNodeSelector::createSpecialisedWidgets()
 {
     ui->fBackups->hide();
     addCloudDrive();
-    mCloudDriveWidget->setShowEmptyView(false);
+    mCloudDriveWidget->setShowEmptyView(true);
     addIncomingShares();
 }
 
@@ -652,7 +652,7 @@ MoveBackupNodeSelector::MoveBackupNodeSelector(QWidget* parent):
 void MoveBackupNodeSelector::createSpecialisedWidgets()
 {
     addCloudDrive();
-    mCloudDriveWidget->setShowEmptyView(false);
+    mCloudDriveWidget->setShowEmptyView(true);
 }
 
 void MoveBackupNodeSelector::onOkButtonClicked()
