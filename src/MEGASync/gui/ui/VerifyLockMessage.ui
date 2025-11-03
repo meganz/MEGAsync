@@ -199,7 +199,7 @@ background-color: #ffffff; /*colorToken.page-background*/
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="bLogout">
+        <widget class="QPushButton" name="bClose">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -207,13 +207,13 @@ background-color: #ffffff; /*colorToken.page-background*/
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Log out</string>
+          <string/>
          </property>
          <property name="type" stdset="0">
-          <string notr="true">outline</string>
+          <string notr="true">primary</string>
          </property>
          <property name="dimension" stdset="0">
-          <string notr="true">small</string>
+          <string notr="true">medium</string>
          </property>
         </widget>
        </item>
@@ -225,18 +225,35 @@ background-color: #ffffff; /*colorToken.page-background*/
  </widget>
  <customwidgets>
   <customwidget>
-   <class>TokenizableButton</class>
-   <extends>QPushButton</extends>
-   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
-  </customwidget>
-  <customwidget>
    <class>IconLabel</class>
    <extends>QToolButton</extends>
    <header>tokenizer/TokenizableItems/IconLabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TokenizableButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
   </customwidget>
  </customwidgets>
  <resources>
   <include location="../Resources_common.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>bClose</sender>
+   <signal>clicked()</signal>
+   <receiver>VerifyLockMessage</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>537</x>
+     <y>168</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>294</x>
+     <y>114</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
