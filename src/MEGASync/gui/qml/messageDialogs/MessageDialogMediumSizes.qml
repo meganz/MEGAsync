@@ -8,7 +8,7 @@ QtObject {
     readonly property real defaultMinimumHeight: 172.0
     readonly property real bottomContentMargin: 21.0
     readonly property real rightContentMargin: 21.0
-    readonly property real topContentMargin: 21.0
+    readonly property real topContentMargin: 24.0
     readonly property real leftContentMargin: 24.0
     readonly property real numberOfMargins: 2.0
     readonly property real defaultSpacing: 24.0
