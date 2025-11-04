@@ -129,7 +129,6 @@ signals:
     void searchItemsCreated();
     void nodeAdded(NodeSelectorModelItem* item);
     void nodesAdded(QList<QPointer<NodeSelectorModelItem>> item);
-    void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
 
 private slots:
     void onSearchItemTypeChanged(NodeSelectorModelItemSearch::Types type);
@@ -420,7 +419,6 @@ signals:
     void removeRootItem(NodeSelectorModelItem* items);
     void deleteWorker();
     void blockUi(bool state, QPrivateSignal);
-    void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
     void showMessageBox(MessageDialogInfo info) const;
     void showDuplicatedNodeDialog(std::shared_ptr<ConflictTypes> conflicts, MoveActionType type);
     void modelIsBeingModifiedChanged(bool status);

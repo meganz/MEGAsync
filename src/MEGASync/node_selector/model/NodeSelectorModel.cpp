@@ -76,17 +76,9 @@ void NodeRequester::requestNodeAndCreateChildren(NodeSelectorModelItem* item,
             mNodesRequested = false;
             if (!isAborted())
             {
-                connect(item,
-                        &NodeSelectorModelItem::updateLoadingMessage,
-                        this,
-                        &NodeRequester::updateLoadingMessage);
                 lockDataMutex(true);
                 item->createChildItems(std::move(childNodesFiltered));
                 lockDataMutex(false);
-                disconnect(item,
-                           &NodeSelectorModelItem::updateLoadingMessage,
-                           this,
-                           &NodeRequester::updateLoadingMessage);
                 emit nodesReady(item);
             }
         }
@@ -621,12 +613,6 @@ NodeSelectorModel::NodeSelectorModel(QObject* parent):
             this,
             &NodeSelectorModel::onRootItemAdded,
             Qt::QueuedConnection);
-
-    connect(mNodeRequesterWorker,
-            &NodeRequester::updateLoadingMessage,
-            this,
-            &NodeSelectorModel::updateLoadingMessage,
-            Qt::DirectConnection);
 
     connect(SyncInfo::instance(),
             &SyncInfo::syncStateChanged,
@@ -2771,9 +2757,6 @@ void NodeSelectorModel::fetchItemChildren(const QModelIndex& parent)
             blockSignals(true);
             beginInsertRows(parent, 0, itemNumChildren - 1);
             blockSignals(false);
-            auto info = std::make_shared<MessageInfo>();
-            info->message = QLatin1String("Requesting nodes...");
-            emit updateLoadingMessage(info);
             emit requestChildNodes(item, parent);
 
             // Unblock UI when children are added async
@@ -2784,10 +2767,6 @@ void NodeSelectorModel::fetchItemChildren(const QModelIndex& parent)
 
 void NodeSelectorModel::onChildNodesReady(NodeSelectorModelItem* parent)
 {
-    auto info = std::make_shared<MessageInfo>();
-    info->message = QLatin1String("Filtering items...");
-    emit updateLoadingMessage(info);
-
     auto index = parent->property(INDEX_PROPERTY).value<QModelIndex>();
     continueWithNextItemToLoad(index);
 }

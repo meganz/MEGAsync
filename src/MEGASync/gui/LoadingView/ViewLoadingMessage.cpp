@@ -5,7 +5,8 @@
 #include "ViewLoadingScene.h"
 
 ViewLoadingMessage::ViewLoadingMessage(QWidget* parent):
-    QWidget(parent),
+    // We look for the view container, not the view
+    QWidget(parent->parentWidget() ? parent->parentWidget() : parent),
     ui(new Ui::ViewLoadingMessage),
     mCloseWhenAnyButtonIsPressed(false),
     mWaitingForAnswer(false)
@@ -115,7 +116,10 @@ void ViewLoadingMessage::updateMessage(std::shared_ptr<MessageInfo> info)
 
 void ViewLoadingMessage::updateGeometry()
 {
-    setGeometry(QRect(QPoint(0, 0), parentWidget()->size()));
+    if (parentWidget())
+    {
+        setGeometry(QRect(QPoint(0, 0), parentWidget()->size()));
+    }
     raise();
 }
 

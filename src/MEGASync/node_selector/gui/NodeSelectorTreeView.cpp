@@ -30,7 +30,6 @@ NodeSelectorTreeView::NodeSelectorTreeView(QWidget* parent):
     mMegaApi(MegaSyncApp->getMegaApi())
 {
     installEventFilter(this);
-    loadingView().setDelayTimeToShowInMs(150);
 
     // Copy paste actions
     mCopyShortcut = new QShortcut(QKeySequence(QKeySequence::Copy), this);
