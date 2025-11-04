@@ -17,6 +17,17 @@ FooterButtonsPage {
     readonly property int minimumAllowedPasswordLength: 8
     readonly property int mainColumnDesignSpacing: 24
 
+    Component.onCompleted: {
+        Qt.callLater(() => passwordItem.textField.forceActiveFocus())
+    }
+
+    Keys.onPressed: (event)=>{
+        if (event.key === Qt.Key_Escape) {
+            event.accepted = true;
+            window.close();
+        }
+    }
+
     function setError(errorMessage) {
         passwordItem.hint.text = errorMessage;
         passwordItem.hint.visible = true;
