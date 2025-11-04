@@ -115,6 +115,8 @@ public:
 
     std::shared_ptr<RestoreNodeManager> getRestoreManager() const;
 
+    void treeViewWidgetSelected() override;
+
 public slots:
     void resetMovingNumber();
     void setViewPage() override;
@@ -127,6 +129,7 @@ protected:
     bool isNodeCompatibleWithModel(mega::MegaNode* node) override;
     QModelIndex getAddedNodeParent(mega::MegaHandle parentHandle) override;
     void makeCustomConnections() override;
+    void onExpandReady() override;
 
 protected slots:
     NodeState getNodeOnModelState(const QModelIndex& index, mega::MegaNode* node) override;
@@ -140,8 +143,8 @@ private slots:
 
 private:
     void checkSearchButtonsVisibility();
-    void checkAndClick(TabSelector* tab);
-    void changeButtonsWidgetSizePolicy(bool state);
+    void changeColumnsVisibility(NodeSelectorModelItemSearch::Type type);
+    void resetChipsVisibility();
     QString getRootText() override;
     std::unique_ptr<NodeSelectorModel> createModel() override;
     QIcon getEmptyIcon() override;

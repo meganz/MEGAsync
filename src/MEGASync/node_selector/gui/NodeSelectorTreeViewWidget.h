@@ -73,6 +73,8 @@ public:
 
     virtual void setTitleText(const QString& nodeName);
 
+    virtual void treeViewWidgetSelected() {}
+
     void clearSelection();
     bool isSelectionCorrect();
 
@@ -179,6 +181,9 @@ protected slots:
     // Title
     void updateRootTitle();
 
+    // When the model has been filtered
+    virtual void onExpandReady();
+
 private slots:
     void onbNewFolderClicked();
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
@@ -194,7 +199,6 @@ private slots:
     void onGoBackClicked();
     void onRemoveIndexFromGoBack(const QModelIndex& index);
     void onSectionResized();
-    void onExpandReady();
     void onUiBlocked(bool state);
     void processCachedNodesUpdated();
     void removeItemByHandle(mega::MegaHandle handle);

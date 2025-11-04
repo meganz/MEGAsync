@@ -652,6 +652,8 @@ void NodeSelector::onCurrentWidgetChanged(int index)
             mNodeToBeSelected.reset();
         }
 
+        wid->treeViewWidgetSelected();
+
         mSelectType->selectionHasChanged(wid);
 
         disconnect(mSelectionChangedConnection);

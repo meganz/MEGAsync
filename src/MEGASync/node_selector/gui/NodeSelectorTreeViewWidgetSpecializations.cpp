@@ -318,37 +318,37 @@ void NodeSelectorTreeViewWidgetBackups::onRootIndexChanged(const QModelIndex& id
 
 /////////////////////////////////////////////////////////////////
 
+const char* TAB_TYPE = "search_tab_type";
+
 NodeSelectorTreeViewWidgetSearch::NodeSelectorTreeViewWidgetSearch(SelectTypeSPtr mode,
                                                                    QWidget* parent):
     NodeSelectorTreeViewWidget(mode, parent),
     mHasRows(false)
 
 {
-    connect(ui->cloudDriveSearch,
-            &TabSelector::clicked,
-            this,
-            &NodeSelectorTreeViewWidgetSearch::onCloudDriveSearchClicked);
-    connect(ui->incomingSharesSearch,
-            &TabSelector::clicked,
-            this,
-            &NodeSelectorTreeViewWidgetSearch::onIncomingSharesSearchClicked);
-    connect(ui->backupsSearch,
-            &TabSelector::clicked,
-            this,
-            &NodeSelectorTreeViewWidgetSearch::onBackupsSearchClicked);
-    connect(ui->rubbishSearch,
-            &TabSelector::clicked,
-            this,
-            &NodeSelectorTreeViewWidgetSearch::onRubbishSearchClicked);
+    auto setTypeToTabSelector = [](TabSelector* tab, NodeSelectorModelItemSearch::Type type)
+    {
+        tab->setProperty(TAB_TYPE, static_cast<int>(type));
+    };
+
+    setTypeToTabSelector(ui->cloudDriveSearch, NodeSelectorModelItemSearch::Type::CLOUD_DRIVE);
+    setTypeToTabSelector(ui->incomingSharesSearch,
+                         NodeSelectorModelItemSearch::Type::INCOMING_SHARE);
+    setTypeToTabSelector(ui->backupsSearch, NodeSelectorModelItemSearch::Type::BACKUP);
+    setTypeToTabSelector(ui->rubbishSearch, NodeSelectorModelItemSearch::Type::RUBBISH);
 
     ui->tMegaFolders->loadingView().setDelayTimeToShowInMs(0);
 }
 
 void NodeSelectorTreeViewWidgetSearch::search(const QString& text)
 {
+    resetChipsVisibility();
+
     mSearchStr = text;
 
-    changeButtonsWidgetSizePolicy(true);
+    // Reset it and wait for the updated text
+    setTitleText(QString());
+
     ui->stackedWidget->setCurrentWidget(ui->treeViewPage);
     setStyleSheet(styleSheet());
 
@@ -389,6 +389,15 @@ bool NodeSelectorTreeViewWidgetSearch::isSelectionReadOnly(const QModelIndexList
     return true;
 }
 
+void NodeSelectorTreeViewWidgetSearch::treeViewWidgetSelected()
+{
+    // By default, all visible the first time
+    if (ui->searchButtonsWidget->isHidden())
+    {
+        resetChipsVisibility();
+    }
+}
+
 void NodeSelectorTreeViewWidgetSearch::resetMovingNumber()
 {
     mModel->moveProcessedByNumber(mModel->getMoveRequestsCounter());
@@ -411,7 +420,6 @@ void NodeSelectorTreeViewWidgetSearch::checkSearchButtonsVisibility()
         searchedTypes.testFlag(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE));
     ui->rubbishSearch->setVisible(
         searchedTypes.testFlag(NodeSelectorModelItemSearch::Type::RUBBISH));
-    ui->searchButtonsWidget->setVisible(true);
 }
 
 bool NodeSelectorTreeViewWidgetSearch::isNodeCompatibleWithModel(mega::MegaNode* node)
@@ -460,44 +468,28 @@ void NodeSelectorTreeViewWidgetSearch::onBackupsSearchClicked()
 {
     auto proxy_model = static_cast<NodeSelectorProxyModelSearch*>(mProxyModel.get());
     proxy_model->setMode(NodeSelectorModelItemSearch::Type::BACKUP);
-    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::USER, true);
-    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ACCESS, true);
-    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ADDED_DATE, false);
-
-    onRootIndexChanged(QModelIndex());
+    changeColumnsVisibility(NodeSelectorModelItemSearch::Type::BACKUP);
 }
 
 void NodeSelectorTreeViewWidgetSearch::onRubbishSearchClicked()
 {
     auto proxy_model = static_cast<NodeSelectorProxyModelSearch*>(mProxyModel.get());
     proxy_model->setMode(NodeSelectorModelItemSearch::Type::RUBBISH);
-    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::USER, true);
-    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ACCESS, true);
-    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ADDED_DATE, true);
-
-    onRootIndexChanged(QModelIndex());
+    changeColumnsVisibility(NodeSelectorModelItemSearch::Type::RUBBISH);
 }
 
 void NodeSelectorTreeViewWidgetSearch::onIncomingSharesSearchClicked()
 {
     auto proxy_model = static_cast<NodeSelectorProxyModelSearch*>(mProxyModel.get());
     proxy_model->setMode(NodeSelectorModelItemSearch::Type::INCOMING_SHARE);
-    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::USER, false);
-    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ACCESS, false);
-    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ADDED_DATE, true);
-
-    onRootIndexChanged(QModelIndex());
+    changeColumnsVisibility(NodeSelectorModelItemSearch::Type::INCOMING_SHARE);
 }
 
 void NodeSelectorTreeViewWidgetSearch::onCloudDriveSearchClicked()
 {
     auto proxy_model = static_cast<NodeSelectorProxyModelSearch*>(mProxyModel.get());
     proxy_model->setMode(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE);
-    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::USER, true);
-    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ACCESS, true);
-    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ADDED_DATE, false);
-
-    onRootIndexChanged(QModelIndex());
+    changeColumnsVisibility(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE);
 }
 
 void NodeSelectorTreeViewWidgetSearch::onItemDoubleClick(const QModelIndex& index)
@@ -507,11 +499,122 @@ void NodeSelectorTreeViewWidgetSearch::onItemDoubleClick(const QModelIndex& inde
     emit nodeDoubleClicked(node, true);
 }
 
-void NodeSelectorTreeViewWidgetSearch::changeButtonsWidgetSizePolicy(bool state)
+void NodeSelectorTreeViewWidgetSearch::changeColumnsVisibility(
+    NodeSelectorModelItemSearch::Type type)
 {
-    auto buttonWidgetSizePolicy = ui->searchButtonsWidget->sizePolicy();
-    buttonWidgetSizePolicy.setRetainSizeWhenHidden(state);
-    ui->searchButtonsWidget->setSizePolicy(buttonWidgetSizePolicy);
+    bool hideUserColumn(true);
+    bool hideAccessColumn(true);
+    bool hideAddedDate(true);
+
+    switch (type)
+    {
+        case NodeSelectorModelItemSearch::Type::BACKUP:
+        case NodeSelectorModelItemSearch::Type::CLOUD_DRIVE:
+        {
+            hideAddedDate = false;
+            break;
+        }
+        case NodeSelectorModelItemSearch::Type::INCOMING_SHARE:
+        {
+            hideUserColumn = false;
+            hideAccessColumn = false;
+            break;
+        }
+        case NodeSelectorModelItemSearch::Type::RUBBISH:
+        default:
+            break;
+    }
+
+    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::USER, hideUserColumn);
+    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ACCESS, hideAccessColumn);
+    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ADDED_DATE, hideAddedDate);
+
+    onRootIndexChanged(QModelIndex());
+}
+
+void NodeSelectorTreeViewWidgetSearch::resetChipsVisibility()
+{
+    ui->backupsSearch->setVisible(true);
+    ui->incomingSharesSearch->setVisible(true);
+    ui->cloudDriveSearch->setVisible(true);
+    ui->rubbishSearch->setVisible(true);
+
+    ui->searchButtonsWidget->setVisible(true);
+}
+
+void NodeSelectorTreeViewWidgetSearch::onExpandReady()
+{
+    auto firstTime(ui->tMegaFolders->model() == nullptr);
+
+    checkSearchButtonsVisibility();
+
+    // Get the searched types returned by the SDK
+    NodeSelectorModelItemSearch::Types searchedTypes = NodeSelectorModelItemSearch::Type::NONE;
+    auto searchModel = dynamic_cast<NodeSelectorModelSearch*>(mModel.get());
+    if (searchModel)
+    {
+        searchedTypes = searchModel->searchedTypes();
+    }
+
+    NodeSelectorModelItemSearch::Type tabSelected(NodeSelectorModelItemSearch::Type::NONE);
+
+    // Set the model and the tab selector
+    auto setMode =
+        [this, searchedTypes, &tabSelected, firstTime](NodeSelectorModelItemSearch::Type type)
+    {
+        if (tabSelected != NodeSelectorModelItemSearch::Type::NONE)
+        {
+            return;
+        }
+
+        auto proxy_model = static_cast<NodeSelectorProxyModelSearch*>(mProxyModel.get());
+        if (searchedTypes.testFlag(type))
+        {
+            tabSelected = type;
+            TabSelector::selectTabIf(ui->searchButtonsWidget, TAB_TYPE, static_cast<int>(type));
+            // Only do it the first time, the rest of times the Tab will call its slot when selected
+            if (firstTime)
+            {
+                proxy_model->setMode(type, !firstTime);
+            }
+        }
+    };
+
+    // Only one will be set, in this order
+    setMode(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE);
+    setMode(NodeSelectorModelItemSearch::Type::INCOMING_SHARE);
+    setMode(NodeSelectorModelItemSearch::Type::BACKUP);
+    setMode(NodeSelectorModelItemSearch::Type::RUBBISH);
+
+    // The first time connect the tabsSelectors.
+
+    if (firstTime)
+    {
+        connect(ui->cloudDriveSearch,
+                &TabSelector::clicked,
+                this,
+                &NodeSelectorTreeViewWidgetSearch::onCloudDriveSearchClicked);
+
+        connect(ui->incomingSharesSearch,
+                &TabSelector::clicked,
+                this,
+                &NodeSelectorTreeViewWidgetSearch::onIncomingSharesSearchClicked);
+
+        connect(ui->backupsSearch,
+                &TabSelector::clicked,
+                this,
+                &NodeSelectorTreeViewWidgetSearch::onBackupsSearchClicked);
+
+        connect(ui->rubbishSearch,
+                &TabSelector::clicked,
+                this,
+                &NodeSelectorTreeViewWidgetSearch::onRubbishSearchClicked);
+    }
+
+    NodeSelectorTreeViewWidget::onExpandReady();
+
+    // Do it after setting the model to the view, otherwise it won´t work
+    changeColumnsVisibility(tabSelected);
 }
 
 QString NodeSelectorTreeViewWidgetSearch::getRootText()
@@ -573,28 +676,7 @@ void NodeSelectorTreeViewWidgetSearch::setViewPage()
         return;
     }
 
-    changeButtonsWidgetSizePolicy(false);
     NodeSelectorTreeViewWidget::setViewPage();
-
-    checkSearchButtonsVisibility();
-
-    TabSelector* tabToCheck(nullptr);
-
-    auto tabs = ui->searchButtonsWidget->findChildren<TabSelector*>();
-    foreach(auto& tab, tabs)
-    {
-        if (tab->isVisible() && tab->isSelected())
-        {
-            tabToCheck = tab;
-            break;
-        }
-        else if (!tabToCheck && tab->isVisible())
-        {
-            tabToCheck = tab;
-        }
-    }
-
-    checkAndClick(tabToCheck);
 
     if (ui->tMegaFolders->model())
     {
@@ -606,14 +688,6 @@ void NodeSelectorTreeViewWidgetSearch::setViewPage()
         }
     }
     ui->stackedWidget->setCurrentWidget(ui->treeViewPage);
-}
-
-void NodeSelectorTreeViewWidgetSearch::checkAndClick(TabSelector* tab)
-{
-    if (tab && tab->isVisible())
-    {
-        tab->setSelected(true);
-    }
 }
 
 ///////////////////////

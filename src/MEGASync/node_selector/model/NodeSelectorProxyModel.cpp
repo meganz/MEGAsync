@@ -334,7 +334,8 @@ NodeSelectorProxyModelSearch::NodeSelectorProxyModelSearch(QObject* parent):
     mMode(NodeSelectorModelItemSearch::Type::NONE)
 {}
 
-void NodeSelectorProxyModelSearch::setMode(NodeSelectorModelItemSearch::Types mode)
+void NodeSelectorProxyModelSearch::setMode(NodeSelectorModelItemSearch::Types mode,
+                                           bool forceFilter)
 {
     if (mMode == mode)
     {
@@ -343,7 +344,10 @@ void NodeSelectorProxyModelSearch::setMode(NodeSelectorModelItemSearch::Types mo
 
     getMegaModel()->sendBlockUiSignal(true);
     mMode = mode;
-    invalidateFilter();
+    if (forceFilter)
+    {
+        invalidateFilter();
+    }
     getMegaModel()->sendBlockUiSignal(false);
     if (rowCount() == 0)
     {
