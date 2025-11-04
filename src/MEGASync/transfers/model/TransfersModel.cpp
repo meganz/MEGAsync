@@ -323,7 +323,6 @@ void TransferThread::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
             if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
             {
                 mTransfersCount.completedUploadBytes += transfer->getDeltaSize();
-
                 mLastTransfersCount.completedUploadBytes += transfer->getDeltaSize();
             }
             else
@@ -442,6 +441,7 @@ void TransferThread::onTransferFinish(MegaApi* megaApi, MegaTransfer *transfer, 
                             if (transfer->getState() == MegaTransfer::STATE_FAILED)
                             {
                                 mTransfersCount.failedUploads++;
+                                mLastTransfersCount.failedUploads++;
                             }
 
                             mLastTransfersCount.completedUploadsByTag.insert(transfer->getTag());
@@ -460,6 +460,7 @@ void TransferThread::onTransferFinish(MegaApi* megaApi, MegaTransfer *transfer, 
                             if (transfer->getState() == MegaTransfer::STATE_FAILED)
                             {
                                 mTransfersCount.failedDownloads++;
+                                mLastTransfersCount.failedDownloads++;
                             }
 
                             mLastTransfersCount.completedDownloadsByTag.insert(transfer->getTag());
@@ -727,7 +728,8 @@ void TransfersModel::uiUnblocked()
     showSyncCancelledWarning();
 }
 
-void TransferThread::resetCompletedUploads(QList<QExplicitlySharedDataPointer<TransferData>> transfersToReset)
+void TransferThread::resetUploads(
+    QList<QExplicitlySharedDataPointer<TransferData>> transfersToReset)
 {
     QMutexLocker lock(&mCountersMutex);
 
@@ -781,7 +783,8 @@ void TransferThread::resetCompletedUploads(QList<QExplicitlySharedDataPointer<Tr
     }
 }
 
-void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<TransferData>> transfersToReset)
+void TransferThread::resetDownloads(
+    QList<QExplicitlySharedDataPointer<TransferData>> transfersToReset)
 {
     QMutexLocker lock(&mCountersMutex);
 
@@ -790,7 +793,6 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
         if(mTransfersCount.totalDownloads > 0)
         {
             mTransfersCount.totalDownloads--;
-            mTransfersCount.completedDownloadBytes -= transfer->mTotalSize;
             mTransfersCount.totalDownloadBytes -= transfer->mTotalSize;
             mTransfersCount.transfersByType[transfer->mFileType]--;
             mTransfersCount.transfersFinishedByType[transfer->mFileType]--;
@@ -799,13 +801,16 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
             {
                 mTransfersCount.failedDownloads--;
             }
+            else
+            {
+                mTransfersCount.completedDownloadBytes -= transfer->mTotalSize;
+            }
         }
 
         if(mLastTransfersCount.completedDownloadsByTag.contains(transfer->mTag))
         {
             mLastTransfersCount.completedDownloadsByTag.remove(transfer->mTag);
             mLastTransfersCount.totalDownloads--;
-            mLastTransfersCount.completedDownloadBytes -= transfer->mTotalSize;
             mLastTransfersCount.totalDownloadBytes -= transfer->mTotalSize;
             mLastTransfersCount.transfersByType[transfer->mFileType]--;
             mLastTransfersCount.transfersFinishedByType[transfer->mFileType]--;
@@ -813,6 +818,10 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
             if (transfer->isFailed() && !transfer->isSyncTransfer())
             {
                 mLastTransfersCount.failedDownloads--;
+            }
+            else
+            {
+                mLastTransfersCount.completedDownloadBytes -= transfer->mTotalSize;
             }
         }
     }
@@ -1602,108 +1611,135 @@ QFileInfo TransfersModel::getFileInfoByIndex(const QModelIndex& index)
 void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, QExplicitlySharedDataPointer<TransferData>> &transfersToRetry)
 {
     //This method receives a list of uploads or downloads, never mixed
-
-    QtConcurrent::run([transfersToRetry, this]()
-    {
-        foreach(auto& appData, transfersToRetry.uniqueKeys())
+    auto future = QtConcurrent::run(
+        [transfersToRetry, this]()
         {
-            auto transferDatas = transfersToRetry.values(appData);
-
-            QByteArray appDataBA = QString::number(appData).toUtf8();
-            const char* appDataRaw = appDataBA.constData();
-
-            foreach(auto& failedTransferdata, transferDatas)
+            foreach(auto& appData, transfersToRetry.uniqueKeys())
             {
-                if(!failedTransferdata)
-                {
-                    continue;
-                }
-                auto failedTransfer = failedTransferdata->mFailedTransfer;
+                auto transferDatas = transfersToRetry.values(appData);
 
-                std::shared_ptr<TransferMetaData> data(nullptr);
+                QByteArray appDataBA = QString::number(appData).toUtf8();
+                const char* appDataRaw = appDataBA.constData();
 
-                auto transferAppData(failedTransfer->getAppData());
-                if(transferAppData != appDataRaw)
+                foreach(auto& failedTransferdata, transferDatas)
                 {
-                    auto oldAppDataId = TransferMetaDataContainer::appDataToId(failedTransfer->getAppData());
-                    if(oldAppDataId.first)
+                    if (!failedTransferdata)
                     {
-                        data = TransferMetaDataContainer::getAppDataById(oldAppDataId.second);
-                        if(data)
+                        continue;
+                    }
+                    auto failedTransfer = failedTransferdata->mFailedTransfer;
+
+                    std::shared_ptr<TransferMetaData> data(nullptr);
+
+                    auto transferAppData(failedTransfer->getAppData());
+                    if (transferAppData != appDataRaw)
+                    {
+                        auto oldAppDataId =
+                            TransferMetaDataContainer::appDataToId(failedTransfer->getAppData());
+                        if (oldAppDataId.first)
                         {
-                            TransferMetaDataContainer::retryTransfer(failedTransfer.get(), oldAppDataId.second);
+                            data = TransferMetaDataContainer::getAppDataById(oldAppDataId.second);
+                            if (data)
+                            {
+                                TransferMetaDataContainer::retryTransfer(failedTransfer.get(),
+                                                                         oldAppDataId.second);
+                            }
                         }
                     }
-                }
 
-                data = TransferMetaDataContainer::getAppDataById(appData);
-                //When retrying, the appDataId is a new one
-                if(!data)
-                {
-                    if(failedTransfer->getType() == mega::MegaTransfer::TYPE_UPLOAD)
+                    data = TransferMetaDataContainer::getAppDataById(appData);
+                    // When retrying, the appDataId is a new one
+                    if (!data)
                     {
-                        data = TransferMetaDataContainer::createTransferMetaDataWithappDataId<UploadTransferMetaData>(appData, failedTransfer->getParentHandle());
+                        if (failedTransfer->getType() == mega::MegaTransfer::TYPE_UPLOAD)
+                        {
+                            data = TransferMetaDataContainer::createTransferMetaDataWithappDataId<
+                                UploadTransferMetaData>(appData, failedTransfer->getParentHandle());
+                        }
+                        else
+                        {
+                            data = TransferMetaDataContainer::createTransferMetaDataWithappDataId<
+                                DownloadTransferMetaData>(
+                                appData,
+                                QString::fromUtf8(failedTransfer->getParentPath()));
+                        }
+
+                        data->setInitialTransfers(transferDatas.size());
                     }
                     else
                     {
-                        data = TransferMetaDataContainer::createTransferMetaDataWithappDataId<DownloadTransferMetaData>(appData, QString::fromUtf8(failedTransfer->getParentPath()));
+                        TransferMetaDataContainer::retryTransfer(failedTransfer.get(), appData);
                     }
 
-                    data->setInitialTransfers(transferDatas.size());
-                }
-                else
-                {
-                    TransferMetaDataContainer::retryTransfer(failedTransfer.get(), appData);
-                }
-
-                if (failedTransfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
-                {
-                    std::unique_ptr<mega::MegaNode> node = failedTransferdata->getNode();
-                    // If node is null, then it was intended to be undeleted
-                    bool undelete = (!node);
-                    mMegaApi->startDownload(node.get(), failedTransfer->getPath(),
-                                            failedTransfer->getFileName(), appDataRaw,
-                                            false, nullptr,
-                                            MegaTransfer::COLLISION_CHECK_FINGERPRINT,
-                                            MegaTransfer::COLLISION_RESOLUTION_NEW_WITH_N,
-                                            undelete,
-                                            nullptr);
-                }
-                else
-                {
-                    std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(failedTransfer->getParentHandle()));
-                    const int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
-                    const bool isSrcTemporary = false;
-                    mMegaApi->startUpload(failedTransfer->getPath(), parentNode.get(), failedTransfer->getFileName(), mtime, appDataRaw, isSrcTemporary, false, nullptr, nullptr);
+                    if (failedTransfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
+                    {
+                        std::unique_ptr<mega::MegaNode> node = failedTransferdata->getNode();
+                        // If node is null, then it was intended to be undeleted
+                        bool undelete = (!node);
+                        mMegaApi->startDownload(node.get(),
+                                                failedTransfer->getPath(),
+                                                failedTransfer->getFileName(),
+                                                appDataRaw,
+                                                false,
+                                                nullptr,
+                                                MegaTransfer::COLLISION_CHECK_FINGERPRINT,
+                                                MegaTransfer::COLLISION_RESOLUTION_NEW_WITH_N,
+                                                undelete,
+                                                nullptr);
+                    }
+                    else
+                    {
+                        std::unique_ptr<mega::MegaNode> parentNode(
+                            MegaSyncApp->getMegaApi()->getNodeByHandle(
+                                failedTransfer->getParentHandle()));
+                        const int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
+                        const bool isSrcTemporary = false;
+                        mMegaApi->startUpload(failedTransfer->getPath(),
+                                              parentNode.get(),
+                                              failedTransfer->getFileName(),
+                                              mtime,
+                                              appDataRaw,
+                                              isSrcTemporary,
+                                              false,
+                                              nullptr,
+                                              nullptr);
+                    }
                 }
             }
-        }
-    });
+        });
+
+    mRetryTransferWatcher.setFuture(future);
+    connect(&mRetryTransferWatcher,
+            &QFutureWatcher<void>::finished,
+            this,
+            [this]()
+            {
+                updateTransfersCount();
+            });
 }
 
 void TransfersModel::retryTransferByIndex(const QModelIndex& index)
 {
     mModelMutex.lock();
 
-    const auto transferItem (
-                qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
-    auto d (transferItem.getTransferData());
+    const auto transferItem(qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
+    auto d(transferItem.getTransferData());
 
-    if(d && d->mFailedTransfer && d->canBeRetried())
-    {        
+    if (d && d->mFailedTransfer && d->canBeRetried())
+    {
         QMultiMap<unsigned long long, QExplicitlySharedDataPointer<TransferData>> transfersToRetry;
         auto copiedTransfer = std::shared_ptr<mega::MegaTransfer>(d->mFailedTransfer->copy());
 
         unsigned long long appData(0);
 
         auto data = TransferMetaDataContainer::getAppData(copiedTransfer.get());
-        if(data)
+        if (data)
         {
             appData = data->getAppId();
         }
         else
         {
-            if(d->isUpload())
+            if (d->isUpload())
             {
                 appData = mPreferences->transferIdentifier();
             }
@@ -2169,14 +2205,14 @@ void TransfersModel::performClearTransfers(const QMap<QModelIndex, QExplicitlySh
 
     if(!uploads.isEmpty())
     {
-        mTransferEventWorker->resetCompletedUploads(uploads.values());
+        mTransferEventWorker->resetUploads(uploads.values());
 
         itemsToRemove.append(uploads.keys());
     }
 
     if(!downloads.isEmpty())
     {
-        mTransferEventWorker->resetCompletedDownloads(downloads.values());
+        mTransferEventWorker->resetDownloads(downloads.values());
 
         itemsToRemove.append(downloads.keys());
     }

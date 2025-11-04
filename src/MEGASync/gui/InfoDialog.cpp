@@ -668,7 +668,9 @@ void InfoDialog::updateTransfersCount()
         auto totalTransfers =
             transfersCountUpdated.totalDownloads + transfersCountUpdated.totalUploads;
         auto completedTransfers =
-            transfersCountUpdated.completedDownloads() + transfersCountUpdated.completedUploads();
+            transfersCountUpdated.completedDownloads() + transfersCountUpdated.failedDownloads +
+            transfersCountUpdated.completedUploads() + transfersCountUpdated.failedUploads;
+
         ui->bTransferManager->setTransfersCount(completedTransfers, totalTransfers);
         ui->bTransferManager->setOngoingTransfers(ongoingTransfers);
     }
