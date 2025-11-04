@@ -57,6 +57,15 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
     connect(ui->fRubbish, &TabSelector::clicked, this, &NodeSelector::onbShowRubbishClicked);
     connect(ui->fSearch, &TabSelector::clicked, this, &NodeSelector::onbShowSearchClicked);
 
+    TabSelector::applyActionToTabSelectors(ui->wLeftPaneNS,
+                                           [this](TabSelector* tabSelector)
+                                           {
+                                               if (tabSelector != ui->fBackups)
+                                               {
+                                                   tabSelector->setAcceptDrops(true);
+                                               }
+                                           });
+
     connect(ui->fSearch, &TabSelector::hidden, this, &NodeSelector::onfShowSearchHidden);
     connect(ui->leSearch, &SearchLineEdit::search, this, &NodeSelector::onSearch);
 

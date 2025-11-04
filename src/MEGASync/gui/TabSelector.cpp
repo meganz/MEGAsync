@@ -59,8 +59,6 @@ TabSelector::TabSelector(QWidget* parent):
     }
 
     setProperty(SELECTED, false);
-
-    setAcceptDrops(true);
 }
 
 TabSelector::~TabSelector()
@@ -190,6 +188,7 @@ bool TabSelector::eventFilter(QObject* watched, QEvent* event)
     return QWidget::eventFilter(watched, event);
 }
 
+// You need to use setAcceptDrops externally in order to activate this feature
 void TabSelector::dragEnterEvent(QDragEnterEvent*)
 {
     setSelected(true);
@@ -227,6 +226,16 @@ void TabSelector::selectTabIf(QWidget* parent, const char* property, const QVari
         {
             tab->setSelected(true);
         }
+    }
+}
+
+void TabSelector::applyActionToTabSelectors(QWidget* parent, std::function<void(TabSelector*)> func)
+{
+    auto tabs = getTabSelectorByParent(parent);
+
+    for (auto& tab: tabs)
+    {
+        func(tab);
     }
 }
 

@@ -56,6 +56,9 @@ public:
     // Convenient method to get the tabs
     static QList<TabSelector*> getTabSelectorByParent(QWidget* parent);
 
+    // convenient method to apply actions over tabs
+    static void applyActionToTabSelectors(QWidget* parent, std::function<void(TabSelector*)> func);
+
 signals:
     void clicked();
     void hidden();
