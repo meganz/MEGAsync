@@ -550,7 +550,7 @@ void MegaApplication::initialize()
     // Set maximum log line size to 10k (same as SDK default)
     // Otherwise network logging can cause large glitches when logging hundreds of MB
     // On Mac it is particularly apparent, causing the beachball to appear often
-    long long newPayLoadLogSize = 10240;
+    size_t newPayLoadLogSize = 10240;
     megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Establishing max payload log size: %1").arg(newPayLoadLogSize).toUtf8().constData());
     megaApi->setMaxPayloadLogSize(newPayLoadLogSize);
     megaApiFolders->setMaxPayloadLogSize(newPayLoadLogSize);
