@@ -66,9 +66,6 @@ public:
     void closeEvent(QCloseEvent* event) override;
     static void showNotFoundNodeMessageBox();
 
-public slots:
-    void onUpdateLoadingMessage(std::shared_ptr<MessageInfo> message);
-
 protected:
     bool event(QEvent* event) override;
     void keyPressEvent(QKeyEvent* e) override;

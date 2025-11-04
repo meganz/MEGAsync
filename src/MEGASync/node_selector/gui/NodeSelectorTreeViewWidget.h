@@ -83,7 +83,6 @@ public:
     bool isEmpty() const;
 
     bool onNodesUpdate(mega::MegaApi*, mega::MegaNodeList* nodes);
-    void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
 
     void enableDragAndDrop(bool enable);
 

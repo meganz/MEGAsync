@@ -84,7 +84,6 @@ public:
 
 signals:
     void infoUpdated(int role);
-    void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
 
 protected:
     QString mOwnerEmail;
