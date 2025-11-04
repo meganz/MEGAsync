@@ -32,4 +32,27 @@
     completionHandler();
 }
 
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+       willPresentNotification:(UNNotification *)notification
+         withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
+{
+
+    // Show notificatoin even when foreground.
+    // On macOS 12+ prefer Banner/List; fall back to Alert on older systems.
+    UNNotificationPresentationOptions opts = 0;
+    if (@available(macOS 12.0, *)) {
+        opts = UNNotificationPresentationOptionBanner |
+               UNNotificationPresentationOptionList   |
+               UNNotificationPresentationOptionSound;
+    } else {
+        // Older macOS that still uses "Alert"
+        opts = UNNotificationPresentationOptionAlert |
+               UNNotificationPresentationOptionSound;
+    }
+
+    completionHandler(opts);
+}
+
+
 @end
