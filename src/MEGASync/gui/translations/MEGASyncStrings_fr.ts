@@ -2066,7 +2066,7 @@
     <message>
         <source>Finish set up</source>
         <translatorcomment>Text on the O.S. notification button to open the window for creating the first sync after the onboarding process (first run of the application). CON-1207</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Terminer la configuration</translation>
     </message>
     <message>
         <source>Set up your first sync to get the most out of the desktop app</source>
@@ -3241,17 +3241,17 @@ Attendez la fin du téléversement.</translation>
     <message>
         <source>Link can&apos;t be imported, invalid key or decryption error</source>
         <translatorcomment>Error message when there is a decryption error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Le lien ne peut pas être importé. Clé invalide ou erreur de déchiffrement.</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported, your storage is full</source>
         <translatorcomment>Error message when there is an error importing a MEGA link because the storage quota is exceeded. SNC-3673.</translatorcomment>
-        <translation>Impossible d’importer le lien, votre espace de stockage est plein</translation>
+        <translation>Le lien ne peut pas être importé, car votre espace de stockage est plein</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported: %1</source>
         <translatorcomment>Error message when there is a generic error importing a MEGA link. %1 the error message coming from the SDK. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Le lien ne peut pas être importé. Erreur : %1</translation>
     </message>
     <message>
         <source>Link import error</source>
@@ -6096,7 +6096,9 @@ Saisissez un nom différent.</translation>
 - We&apos;ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Le mode sombre est désormais disponible.
+- Nous avons rafraîchi le design de l’application pour la rendre plus claire et plus facile à utiliser.
+- Corrections de bugs et amélioration de la stabilité de l’application.</translation>
     </message>
 </context>
 <context>
@@ -9759,17 +9761,17 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1d</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 j</translation>
     </message>
     <message>
         <source>%1h</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1h</translation>
     </message>
     <message>
         <source>%1m</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1m</translation>
     </message>
     <message>
         <source>%1s</source>
@@ -9941,11 +9943,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Locked account</source>
         <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
         <translation>Compte verrouillé</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation>Me déconnecter</translation>
     </message>
     <message>
         <source>Why am I seeing this?</source>
