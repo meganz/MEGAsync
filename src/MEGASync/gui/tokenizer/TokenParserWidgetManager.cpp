@@ -10,7 +10,6 @@
 #include <QDir>
 #include <QtConcurrent/QtConcurrent>
 #include <QToolButton>
-#include <QWidget>
 
 namespace // anonymous namespace to hide names from other translation units
 {

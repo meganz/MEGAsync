@@ -15,11 +15,14 @@
 // clang-format on
 
 #include <QApplication>
+#include <QComboBox>
 #include <QCryptographicHash>
 #include <QDateTime>
 #include <QDesktopWidget>
+#include <QDialogButtonBox>
 #include <QDirIterator>
 #include <QImageReader>
+#include <QLineEdit>
 #include <QPixmapCache>
 #include <QScreen>
 #include <QTextStream>
@@ -2122,6 +2125,53 @@ void Utilities::propagateCustomEvent(QEvent::Type type)
         }
 
         QApplication::postEvent(topW, new QEvent(type));
+    }
+}
+
+void Utilities::styleQFileDialog(QPointer<QFileDialog> dialog)
+{
+    if (dialog)
+    {
+        dialog->setProperty("TOKENIZED", true);
+        const auto dimension = QLatin1String("small");
+        auto* buttonBox = dialog->findChild<QDialogButtonBox*>(QLatin1String("buttonBox"));
+        if (buttonBox)
+        {
+            for (auto primaryButtonType: {QDialogButtonBox::Open, QDialogButtonBox::Save})
+            {
+                auto* bPrimary = buttonBox->button(primaryButtonType);
+                if (bPrimary)
+                {
+                    bPrimary->setIcon({});
+                    bPrimary->setProperty("type", QLatin1String("primary"));
+                    bPrimary->setProperty("dimension", dimension);
+                }
+            }
+            for (auto secondaryButtonType: {QDialogButtonBox::Cancel})
+            {
+                auto* bSecondary = buttonBox->button(secondaryButtonType);
+                if (bSecondary)
+                {
+                    bSecondary->setIcon({});
+                    bSecondary->setProperty("type", QLatin1String("secondary"));
+                    bSecondary->setProperty("dimension", dimension);
+                }
+            }
+        }
+
+        auto cbs = dialog->findChildren<QComboBox*>();
+        for (QList<QComboBox*>::const_iterator it = cbs.cbegin(); it != cbs.cend(); ++it)
+        {
+            (*it)->setProperty("type", QLatin1String("mega"));
+            (*it)->setProperty("dimension", dimension);
+        }
+
+        auto les = dialog->findChildren<QLineEdit*>();
+        for (QList<QLineEdit*>::const_iterator it = les.cbegin(); it != les.cend(); ++it)
+        {
+            (*it)->setProperty("type", QLatin1String("mega"));
+            (*it)->setProperty("dimension", dimension);
+        }
     }
 }
 

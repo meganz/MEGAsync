@@ -9,6 +9,7 @@
 #include <QEasingCurve>
 #include <QEvent>
 #include <QEventLoop>
+#include <QFileDialog>
 #include <QFuture>
 #include <QHash>
 #include <QIcon>
@@ -616,6 +617,8 @@ public:
     static bool shouldDisplayUpgradeButton(const bool isTransferOverquota);
 
     static void propagateCustomEvent(QEvent::Type event);
+
+    static void styleQFileDialog(QPointer<QFileDialog> dialog);
 };
 
 Q_DECLARE_METATYPE(Utilities::FileType)

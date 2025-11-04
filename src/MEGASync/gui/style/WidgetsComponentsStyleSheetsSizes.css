@@ -31,6 +31,21 @@ border-style: none;
 }
 
 /*
+    QFileDialog
+*/
+QFileDialog QAbstractItemView
+{
+outline: 0;
+border-radius: 5px;
+}
+
+QFileDialog QAbstractItemView::item
+{
+border: none;
+padding-left: 4px;
+}
+
+/*
     QScrollBar
     Scroll handle will be 8px with 4 px padding to the left and right
     making it a total of 16

@@ -6,7 +6,6 @@
 #include "BugReportDialog.h"
 #include "ChangePasswordComponent.h"
 #include "CommonMessages.h"
-#include "CreateRemoveSyncsManager.h"
 #include "DialogOpener.h"
 #include "FullName.h"
 #include "MegaApplication.h"
@@ -14,7 +13,6 @@
 #include "Platform.h"
 #include "PowerOptions.h"
 #include "ProxySettings.h"
-#include "RemoveBackupDialog.h"
 #include "StatsEventHandler.h"
 #include "ThemeManager.h"
 #include "ui_SettingsDialog.h"
@@ -1334,7 +1332,7 @@ void SettingsDialog::on_bExportMasterKey_clicked()
 
     QDir dir(defaultPath);
 
-    QFileDialog* dialog = new QFileDialog(this);
+    QPointer<QFileDialog> dialog = new QFileDialog(this);
     dialog->setWindowModality(Qt::WindowModal);
     dialog->setFileMode(QFileDialog::AnyFile);
     dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
@@ -1344,6 +1342,10 @@ void SettingsDialog::on_bExportMasterKey_clicked()
     const QStringList schemes = QStringList(QStringLiteral("file"));
     dialog->setSupportedSchemes(schemes);
     dialog->setAcceptMode(QFileDialog::AcceptSave);
+
+    // Style
+    Utilities::styleQFileDialog(dialog);
+
     DialogOpener::showDialog<QFileDialog>(
         dialog,
         [this, dialog]

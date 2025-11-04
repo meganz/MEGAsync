@@ -8,10 +8,31 @@ QWidget[type="notification"][error="true"]
 background-color: #ffffe4e8;/*colorToken.notification-error*/
 }
 
-QFileDialog, QFileDialog *
+/*
+    QFileDialog
+*/
+QFileDialog
 {
-background-color: #fff3f4f4; /*colorToken.surface-1*/
+background-color: #FFFFFFFF; /*colorToken.page-background*/
 color: #ff303233; /*colorToken.text-primary*/
+}
+
+QFileDialog QAbstractItemView
+{
+color: #ff303233; /*colorToken.text-primary*/
+background-color: transparent;
+border: 1px solid #ff18191A; /*colorToken.surface-2*/
+}
+
+QFileDialog QAbstractItemView::item:selected
+{
+color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
+background-color: #ffbdc0c4; /*colorToken.surface-inverse-accent*/
+}
+
+QFileDialog QAbstractItemView::item:!selected:hover
+{
+background-color: #ff222324; /*colorToken.surface-1*/
 }
 
 /*
@@ -81,6 +102,8 @@ QScrollBar
 background: transparent;
 }
 
+QScrollBar::add-page:horizontal,
+QScrollBar::sub-page:horizontal,
 QScrollBar::add-page:vertical,
 QScrollBar::sub-page:vertical
 {
@@ -565,6 +588,8 @@ QLineEdit[type="mega"], QTextEdit[type="mega"]
 background-color: #ffFFFFFF; /*colorToken.page-background*/
 border-color: #ffd8d9db; /*colorToken.border-strong*/
 color: #ff303233; /*colorToken.text-primary*/
+selection-color: #ff303233; /*colorToken.text-inverse*/
+selection-background-color : #ff303233; /*colorToken.text-primary*/
 }
 
 QLineEdit:focus[type="mega"], QTextEdit:focus[type="mega"]

@@ -1,10 +1,14 @@
 #ifndef THEME_WIDGET_MANAGER_H
 #define THEME_WIDGET_MANAGER_H
 
-#include "Preferences/Preferences.h"
-
+#include <QColor>
+#include <QMap>
 #include <QObject>
-#include <QIcon>
+#include <QSet>
+#include <QString>
+#include <QWidget>
+
+#include <memory>
 
 class TokenParserWidgetManager : public QObject
 {
