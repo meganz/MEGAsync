@@ -3157,17 +3157,17 @@ Yüklemenin tamamlanmasını bekleyin.</translation>
     <message>
         <source>Link can&apos;t be imported, invalid key or decryption error</source>
         <translatorcomment>Error message when there is a decryption error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation>Bağlantı içe aktarılamıyor, geçersiz anahtar veya şifre çözme hatası</translation>
+        <translation>Bağlantı içe aktarılamıyor. Geçersiz anahtar veya şifre çözme hatası.</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported, your storage is full</source>
         <translatorcomment>Error message when there is an error importing a MEGA link because the storage quota is exceeded. SNC-3673.</translatorcomment>
-        <translation>Bağlantı içe aktarılamıyor, depolama alanınız dolu</translation>
+        <translation>Depolama alanınız dolu olduğu için bağlantı içe aktarılamıyor</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported: %1</source>
         <translatorcomment>Error message when there is a generic error importing a MEGA link. %1 the error message coming from the SDK. SNC-3673.</translatorcomment>
-        <translation>Bağlantı içe aktarılamıyor: %1</translation>
+        <translation>Bağlantı içe aktarılamıyor. Hata: %1</translation>
     </message>
     <message>
         <source>Link import error</source>
@@ -5955,10 +5955,9 @@ Farklı bir ad girin.</translation>
 - We've fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
-        <translation>- Koyu tema eklendi.
-- Uygulama tasarımını daha temiz ve kullanımı daha kolay hale getirmek için yeniledik.
-- Hata düzeltmeleri yapıldı ve uygulama kararlılığı geliştirildi.
-</translation>
+        <translation>- Artık koyu tema kullanılabilir.
+- Uygulama tasarımını daha sade ve kullanımı daha kolay hâle getirmek için yeniledik.
+- Hata düzeltmeleri yapıldı ve uygulama kararlılığı geliştirildi.</translation>
     </message>
 </context>
 <context>
@@ -9686,11 +9685,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Locked account</source>
         <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
         <translation>Kilitli hesap</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation>Çıkış yap</translation>
     </message>
     <message>
         <source>Why am I seeing this?</source>

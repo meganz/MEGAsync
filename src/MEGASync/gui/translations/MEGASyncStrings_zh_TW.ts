@@ -2000,7 +2000,7 @@
     <message>
         <source>Finish set up</source>
         <translatorcomment>Text on the O.S. notification button to open the window for creating the first sync after the onboarding process (first run of the application). CON-1207</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>完成設定</translation>
     </message>
     <message>
         <source>Set up your first sync to get the most out of the desktop app</source>
@@ -3157,17 +3157,17 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Link can&apos;t be imported, invalid key or decryption error</source>
         <translatorcomment>Error message when there is a decryption error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>連結無法匯入。金鑰無效或解密錯誤。</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported, your storage is full</source>
         <translatorcomment>Error message when there is an error importing a MEGA link because the storage quota is exceeded. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>連結無法匯入，因為您的儲存空間已滿</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported: %1</source>
         <translatorcomment>Error message when there is a generic error importing a MEGA link. %1 the error message coming from the SDK. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>連結無法匯入。錯誤：%1</translation>
     </message>
     <message>
         <source>Link import error</source>
@@ -5954,10 +5954,9 @@ Enter a different name</source>
 - We've fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
-        <translation>- 深色模式上線囉！
-- 我們更新了應用程式介面，使其更加簡潔易用。
-- 修復已知問題，並提升應用程式穩定性。
-</translation>
+        <translation>- 現在提供深色模式。
+- 我們更新了應用程式設計，使其更簡潔易用。
+- 修復已知錯誤並提升應用程式穩定性。</translation>
     </message>
 </context>
 <context>
@@ -9521,17 +9520,17 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1d</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1天</translation>
     </message>
     <message>
         <source>%1h</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1時</translation>
     </message>
     <message>
         <source>%1m</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1分</translation>
     </message>
     <message>
         <source>%1s</source>
@@ -9685,11 +9684,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Locked account</source>
         <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
         <translation>帳戶已封鎖</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation>登出</translation>
     </message>
     <message>
         <source>Why am I seeing this?</source>

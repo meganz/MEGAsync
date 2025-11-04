@@ -714,7 +714,7 @@
     <message>
         <source>Credits</source>
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
-        <translation>Благодарность</translation>
+        <translation>Благодарности</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -2000,7 +2000,7 @@
     <message>
         <source>Finish set up</source>
         <translatorcomment>Text on the O.S. notification button to open the window for creating the first sync after the onboarding process (first run of the application). CON-1207</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Завершить настройку</translation>
     </message>
     <message>
         <source>Set up your first sync to get the most out of the desktop app</source>
@@ -3157,7 +3157,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Link can&apos;t be imported, invalid key or decryption error</source>
         <translatorcomment>Error message when there is a decryption error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation>Невозможно импортировать ссылку, неправильный ключ или ошибка дешифрования</translation>
+        <translation>Невозможно импортировать ссылку. Неправильный ключ или ошибка дешифрования.</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported, your storage is full</source>
@@ -3167,7 +3167,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Link can&apos;t be imported: %1</source>
         <translatorcomment>Error message when there is a generic error importing a MEGA link. %1 the error message coming from the SDK. SNC-3673.</translatorcomment>
-        <translation>Невозможно импортировать ссылку: %1</translation>
+        <translation>Невозможно импортировать ссылку. Ошибка: %1</translation>
     </message>
     <message>
         <source>Link import error</source>
@@ -5958,9 +5958,8 @@ Enter a different name</source>
 </source>
         <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
         <translation>- Добавлена тёмная тема.
-- Мы обновили дизайн приложения, чтобы сделать его понятнее и удобнее.
-- Исправлены ошибки и улучшена стабильность приложения.
-</translation>
+- Дизайн приложения стал понятнее и удобнее.
+- Исправлены ошибки и улучшена стабильность приложения.</translation>
     </message>
 </context>
 <context>
@@ -9688,11 +9687,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Locked account</source>
         <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
         <translation>Заблокированный аккаунт</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation>Выйти</translation>
     </message>
     <message>
         <source>Why am I seeing this?</source>
