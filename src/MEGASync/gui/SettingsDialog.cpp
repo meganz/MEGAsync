@@ -1344,7 +1344,7 @@ void SettingsDialog::on_bExportMasterKey_clicked()
     dialog->setAcceptMode(QFileDialog::AcceptSave);
 
     // Style
-    Utilities::styleQFileDialog(dialog);
+    TokenParserWidgetManager::styleQFileDialog(dialog);
 
     DialogOpener::showDialog<QFileDialog>(
         dialog,

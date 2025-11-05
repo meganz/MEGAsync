@@ -2,8 +2,10 @@
 #define THEME_WIDGET_MANAGER_H
 
 #include <QColor>
+#include <QFileDialog>
 #include <QMap>
 #include <QObject>
+#include <QPointer>
 #include <QSet>
 #include <QString>
 #include <QWidget>
@@ -23,6 +25,7 @@ public:
     void polish(QWidget* widget);
     QColor getColor(const QString& colorToken);
     QColor getColor(const QString& colorToken, const QString& currentColorSchema);
+    static void styleQFileDialog(QPointer<QFileDialog> dialog);
 
 private:
     using ColorTokens = QMap<QString, QString>;
