@@ -1,10 +1,16 @@
 #ifndef THEME_WIDGET_MANAGER_H
 #define THEME_WIDGET_MANAGER_H
 
-#include "Preferences/Preferences.h"
-
+#include <QColor>
+#include <QFileDialog>
+#include <QMap>
 #include <QObject>
-#include <QIcon>
+#include <QPointer>
+#include <QSet>
+#include <QString>
+#include <QWidget>
+
+#include <memory>
 
 class TokenParserWidgetManager : public QObject
 {
@@ -19,6 +25,7 @@ public:
     void polish(QWidget* widget);
     QColor getColor(const QString& colorToken);
     QColor getColor(const QString& colorToken, const QString& currentColorSchema);
+    static void styleQFileDialog(QPointer<QFileDialog> dialog);
 
 private:
     using ColorTokens = QMap<QString, QString>;
