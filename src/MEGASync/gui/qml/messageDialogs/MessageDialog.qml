@@ -50,7 +50,7 @@ QmlDialog {
         {
             if (messageDialogDataAccess.type === MessageDialogData.Type.SUCCESS)
             {
-                imageItem.source = Images.dialogMessageInformation;
+                imageItem.source = Images.dialogMessageSuccess;
                 imageItem.color = ColorTheme.supportSuccess;
             }
             else if (messageDialogDataAccess.type === MessageDialogData.Type.QUESTION)

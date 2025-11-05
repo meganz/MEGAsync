@@ -51,7 +51,7 @@ void ChangePasswordComponent::onPasswordChangeSucceed(QString title, QString des
     info.titleText = title;
     info.descriptionText = description;
 
-    MessageDialogOpener::information(info);
+    MessageDialogOpener::success(info);
 }
 
 QUrl ChangePasswordComponent::getQmlUrl()
