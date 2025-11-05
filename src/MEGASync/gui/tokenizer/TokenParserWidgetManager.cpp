@@ -7,10 +7,11 @@
 
 #include <QBitmap>
 #include <QComboBox>
+#include <QDialogButtonBox>
 #include <QDir>
+#include <QLineEdit>
 #include <QtConcurrent/QtConcurrent>
 #include <QToolButton>
-#include <QWidget>
 
 namespace // anonymous namespace to hide names from other translation units
 {
@@ -229,6 +230,47 @@ QColor TokenParserWidgetManager::getColor(const QString& colorToken,
     }
 
     return color;
+}
+
+void TokenParserWidgetManager::styleQFileDialog(QPointer<QFileDialog> dialog)
+{
+    if (dialog)
+    {
+        dialog->setProperty("TOKENIZED", true);
+        const auto dimension = QLatin1String("small");
+        auto* buttonBox = dialog->findChild<QDialogButtonBox*>(QLatin1String("buttonBox"));
+        if (buttonBox)
+        {
+            auto applyButtonDesignProperties =
+                [&dimension, buttonBox](QLatin1String designTypeValue,
+                                        QDialogButtonBox::StandardButton buttonType)
+            {
+                auto* button = buttonBox->button(buttonType);
+                if (button)
+                {
+                    button->setIcon({});
+                    button->setProperty("type", designTypeValue);
+                    button->setProperty("dimension", dimension);
+                }
+            };
+
+            applyButtonDesignProperties(QLatin1String("primary"), QDialogButtonBox::Open);
+            applyButtonDesignProperties(QLatin1String("primary"), QDialogButtonBox::Save);
+            applyButtonDesignProperties(QLatin1String("secondary"), QDialogButtonBox::Cancel);
+        }
+
+        auto applyItemDesignProperties = [&dimension](auto itQWidget)
+        {
+            itQWidget->setProperty("type", QLatin1String("mega"));
+            itQWidget->setProperty("dimension", dimension);
+        };
+
+        auto cbs = dialog->findChildren<QComboBox*>();
+        std::for_each(cbs.cbegin(), cbs.cend(), applyItemDesignProperties);
+
+        auto les = dialog->findChildren<QLineEdit*>();
+        std::for_each(les.cbegin(), les.cend(), applyItemDesignProperties);
+    }
 }
 
 void TokenParserWidgetManager::applyTheme(QWidget* widget)
