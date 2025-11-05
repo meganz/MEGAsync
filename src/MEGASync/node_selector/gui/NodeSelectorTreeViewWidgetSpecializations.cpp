@@ -323,7 +323,8 @@ const char* TAB_TYPE = "search_tab_type";
 NodeSelectorTreeViewWidgetSearch::NodeSelectorTreeViewWidgetSearch(SelectTypeSPtr mode,
                                                                    QWidget* parent):
     NodeSelectorTreeViewWidget(mode, parent),
-    mHasRows(false)
+    mHasRows(false),
+    mNewSearch(true)
 
 {
     auto setTypeToTabSelector = [](TabSelector* tab, NodeSelectorModelItemSearch::Type type)
@@ -337,6 +338,26 @@ NodeSelectorTreeViewWidgetSearch::NodeSelectorTreeViewWidgetSearch(SelectTypeSPt
     setTypeToTabSelector(ui->backupsSearch, NodeSelectorModelItemSearch::Type::BACKUP);
     setTypeToTabSelector(ui->rubbishSearch, NodeSelectorModelItemSearch::Type::RUBBISH);
 
+    connect(ui->cloudDriveSearch,
+            &TabSelector::clicked,
+            this,
+            &NodeSelectorTreeViewWidgetSearch::onCloudDriveSearchClicked);
+
+    connect(ui->incomingSharesSearch,
+            &TabSelector::clicked,
+            this,
+            &NodeSelectorTreeViewWidgetSearch::onIncomingSharesSearchClicked);
+
+    connect(ui->backupsSearch,
+            &TabSelector::clicked,
+            this,
+            &NodeSelectorTreeViewWidgetSearch::onBackupsSearchClicked);
+
+    connect(ui->rubbishSearch,
+            &TabSelector::clicked,
+            this,
+            &NodeSelectorTreeViewWidgetSearch::onRubbishSearchClicked);
+
     ui->tMegaFolders->loadingView().setDelayTimeToShowInMs(0);
 }
 
@@ -344,6 +365,7 @@ void NodeSelectorTreeViewWidgetSearch::search(const QString& text)
 {
     resetChipsVisibility();
 
+    mNewSearch = true;
     mSearchStr = text;
 
     // Reset it and wait for the updated text
@@ -544,77 +566,80 @@ void NodeSelectorTreeViewWidgetSearch::resetChipsVisibility()
 
 void NodeSelectorTreeViewWidgetSearch::onExpandReady()
 {
-    auto firstTime(ui->tMegaFolders->model() == nullptr);
-
-    checkSearchButtonsVisibility();
-
-    // Get the searched types returned by the SDK
-    NodeSelectorModelItemSearch::Types searchedTypes = NodeSelectorModelItemSearch::Type::NONE;
-    auto searchModel = dynamic_cast<NodeSelectorModelSearch*>(mModel.get());
-    if (searchModel)
+    if (mNewSearch)
     {
-        searchedTypes = searchModel->searchedTypes();
-    }
+        checkSearchButtonsVisibility();
 
-    NodeSelectorModelItemSearch::Type tabSelected(NodeSelectorModelItemSearch::Type::NONE);
-
-    // Set the model and the tab selector
-    auto setMode =
-        [this, searchedTypes, &tabSelected, firstTime](NodeSelectorModelItemSearch::Type type)
-    {
-        if (tabSelected != NodeSelectorModelItemSearch::Type::NONE)
+        // Get the searched types returned by the SDK
+        NodeSelectorModelItemSearch::Types searchedTypes = NodeSelectorModelItemSearch::Type::NONE;
+        auto searchModel = dynamic_cast<NodeSelectorModelSearch*>(mModel.get());
+        if (searchModel)
         {
-            return;
+            searchedTypes = searchModel->searchedTypes();
         }
 
-        auto proxy_model = static_cast<NodeSelectorProxyModelSearch*>(mProxyModel.get());
-        if (searchedTypes.testFlag(type))
+        NodeSelectorModelItemSearch::Type tabSelected(NodeSelectorModelItemSearch::Type::NONE);
+        // Set the model and the tab selector
+        auto setMode = [this, searchedTypes, &tabSelected](NodeSelectorModelItemSearch::Type type)
         {
-            tabSelected = type;
-            TabSelector::selectTabIf(ui->searchButtonsWidget, TAB_TYPE, static_cast<int>(type));
-            // Only do it the first time, the rest of times the Tab will call its slot when selected
-            if (firstTime)
+            if (tabSelected != NodeSelectorModelItemSearch::Type::NONE)
             {
-                proxy_model->setMode(type, !firstTime);
+                return;
             }
-        }
-    };
 
-    // Only one will be set, in this order
-    setMode(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE);
-    setMode(NodeSelectorModelItemSearch::Type::INCOMING_SHARE);
-    setMode(NodeSelectorModelItemSearch::Type::BACKUP);
-    setMode(NodeSelectorModelItemSearch::Type::RUBBISH);
+            auto proxy_model = static_cast<NodeSelectorProxyModelSearch*>(mProxyModel.get());
+            if (searchedTypes.testFlag(type))
+            {
+                tabSelected = type;
+                // If it is the first time we load the model, the base method will run a sort/filter
+                // action, so we don´t need to do it, just set the mode without sorting/filtering
+                if (ui->tMegaFolders->model() == nullptr)
+                {
+                    // Block the chip signals to avoid calling the slot, which will sort/filter the
+                    // model
+                    TabSelector::applyActionToTabSelectors(ui->searchButtonsWidget,
+                                                           [](TabSelector* tab)
+                                                           {
+                                                               tab->blockSignals(true);
+                                                           });
+                    TabSelector::selectTabIf(ui->searchButtonsWidget,
+                                             TAB_TYPE,
+                                             static_cast<int>(type));
+                    TabSelector::applyActionToTabSelectors(ui->searchButtonsWidget,
+                                                           [](TabSelector* tab)
+                                                           {
+                                                               tab->blockSignals(false);
+                                                           });
+                    proxy_model->setMode(type, false);
+                }
+                // If it is not the first time, we just click on the correct chip, and it will
+                // sort/filter for us
+                else
+                {
+                    TabSelector::selectTabIf(ui->searchButtonsWidget,
+                                             TAB_TYPE,
+                                             static_cast<int>(type));
+                }
+            }
+        };
 
-    // The first time connect the tabsSelectors.
+        // Only one will be set, in this order
+        setMode(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE);
+        setMode(NodeSelectorModelItemSearch::Type::INCOMING_SHARE);
+        setMode(NodeSelectorModelItemSearch::Type::BACKUP);
+        setMode(NodeSelectorModelItemSearch::Type::RUBBISH);
 
-    if (firstTime)
-    {
-        connect(ui->cloudDriveSearch,
-                &TabSelector::clicked,
-                this,
-                &NodeSelectorTreeViewWidgetSearch::onCloudDriveSearchClicked);
+        mNewSearch = false;
 
-        connect(ui->incomingSharesSearch,
-                &TabSelector::clicked,
-                this,
-                &NodeSelectorTreeViewWidgetSearch::onIncomingSharesSearchClicked);
+        NodeSelectorTreeViewWidget::onExpandReady();
 
-        connect(ui->backupsSearch,
-                &TabSelector::clicked,
-                this,
-                &NodeSelectorTreeViewWidgetSearch::onBackupsSearchClicked);
-
-        connect(ui->rubbishSearch,
-                &TabSelector::clicked,
-                this,
-                &NodeSelectorTreeViewWidgetSearch::onRubbishSearchClicked);
+        // Do it after setting the model to the view, otherwise it won´t work
+        changeColumnsVisibility(tabSelected);
     }
-
-    NodeSelectorTreeViewWidget::onExpandReady();
-
-    // Do it after setting the model to the view, otherwise it won´t work
-    changeColumnsVisibility(tabSelected);
+    else
+    {
+        NodeSelectorTreeViewWidget::onExpandReady();
+    }
 }
 
 QString NodeSelectorTreeViewWidgetSearch::getRootText()

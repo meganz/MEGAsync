@@ -156,6 +156,7 @@ private:
     }
     bool mHasRows;
     QString mSearchStr;
+    bool mNewSearch;
 
     std::shared_ptr<RestoreNodeManager> mRestoreManager;
 };
