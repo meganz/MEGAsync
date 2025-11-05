@@ -70,6 +70,8 @@ QtObject {
     readonly property url dialogMessageInformation: imagesQmlPath + "dialog_message_information.svg"
     readonly property url dialogMessageWarning: imagesQmlPath + "dialog_message_warning.svg"
     readonly property url dialogMessageCritical: imagesQmlPath + "dialog_message_critical.svg"
+    readonly property url dialogMessageSuccess: imagesQmlPath + "dialog_message_success.svg"
+    readonly property url dialogMessageCross: imagesQmlPath + "dialog_message_cross.svg"
 
     readonly property url database: imagesOnboardingPath + "database.svg"
     readonly property url edit: imagesOnboardingPath + "edit.svg"
