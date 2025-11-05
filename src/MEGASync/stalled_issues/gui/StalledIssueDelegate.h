@@ -55,7 +55,8 @@ private:
 
     StalledIssueBaseDelegateWidget *getStalledIssueItemWidget(const QModelIndex &proxyIndex, const StalledIssueVariant &data, const QSize& size = QSize()) const;
 
-    void updateColors();
+    void updateColors() const;
+    void updateColorsCheckingTheme() const;
 
     StalledIssuesView* mView;
     StalledIssuesProxyModel* mProxyModel;
@@ -75,9 +76,9 @@ private:
     mutable QMap<int, QPair<int, QSize>> mAverageHeaderHeight;
 
     // Colors
-    QColor mActiveColor;
-    QColor mSelectedColor;
-    QColor mBottomBorderColor;
+    mutable QColor mActiveColor;
+    mutable QColor mSelectedColor;
+    mutable QColor mBottomBorderColor;
 };
 
 #endif // STALLEDISSUEDELEGATE_H

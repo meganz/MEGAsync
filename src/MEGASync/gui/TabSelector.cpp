@@ -167,11 +167,6 @@ bool TabSelector::event(QEvent* event)
         }
     }
 
-    if (event->type() == QEvent::Hide)
-    {
-        setCounter(0);
-    }
-
     return QWidget::event(event);
 }
 
@@ -191,6 +186,12 @@ bool TabSelector::eventFilter(QObject* watched, QEvent* event)
     }
 
     return QWidget::eventFilter(watched, event);
+}
+
+// You need to use setAcceptDrops externally in order to activate this feature
+void TabSelector::dragEnterEvent(QDragEnterEvent*)
+{
+    setSelected(true);
 }
 
 QList<TabSelector*> TabSelector::getTabSelectorByParent(QWidget* parent)
@@ -228,6 +229,16 @@ void TabSelector::selectTabIf(QWidget* parent, const char* property, const QVari
     }
 }
 
+void TabSelector::applyActionToTabSelectors(QWidget* parent, std::function<void(TabSelector*)> func)
+{
+    auto tabs = getTabSelectorByParent(parent);
+
+    for (auto& tab: tabs)
+    {
+        func(tab);
+    }
+}
+
 void TabSelector::toggleOffSiblings()
 {
     if (!mTabSelectorGroupParent)
@@ -255,4 +266,10 @@ void TabSelector::toggleOffSiblings()
 void TabSelector::hideIcon()
 {
     ui->lIcon->setVisible(false);
+}
+
+void TabSelector::hide()
+{
+    setCounter(0);
+    QWidget::hide();
 }

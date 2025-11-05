@@ -40,6 +40,11 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
     ui->setupUi(this);
     ui->cbAlwaysUploadToLocation->hide();
 
+    connect(ui->stackedWidget,
+            &QStackedWidget::currentChanged,
+            this,
+            &NodeSelector::onCurrentWidgetChanged);
+
     mMegaApi->addListener(mDelegateListener.get());
 
     connect(ui->fIncomingShares,
@@ -51,6 +56,15 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
     connect(ui->fBackups, &TabSelector::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
     connect(ui->fRubbish, &TabSelector::clicked, this, &NodeSelector::onbShowRubbishClicked);
     connect(ui->fSearch, &TabSelector::clicked, this, &NodeSelector::onbShowSearchClicked);
+
+    TabSelector::applyActionToTabSelectors(ui->wLeftPaneNS,
+                                           [this](TabSelector* tabSelector)
+                                           {
+                                               if (tabSelector != ui->fBackups)
+                                               {
+                                                   tabSelector->setAcceptDrops(true);
+                                               }
+                                           });
 
     connect(ui->fSearch, &TabSelector::hidden, this, &NodeSelector::onfShowSearchHidden);
     connect(ui->leSearch, &SearchLineEdit::search, this, &NodeSelector::onSearch);
@@ -169,21 +183,6 @@ bool NodeSelector::event(QEvent* event)
     }
 
     return QDialog::event(event);
-}
-
-void NodeSelector::keyPressEvent(QKeyEvent* e)
-{
-    switch (e->key())
-    {
-        case Qt::Key_Enter:
-        case Qt::Key_Return:
-        {
-            e->ignore();
-            return;
-        }
-    }
-
-    QDialog::keyPressEvent(e);
 }
 
 void NodeSelector::mousePressEvent(QMouseEvent* event)
@@ -484,11 +483,6 @@ void NodeSelector::initSpecialisedWidgets()
                     &NodeSelector::onUiIsBlocked,
                     Qt::UniqueConnection);
             connect(viewContainer,
-                    &NodeSelectorTreeViewWidget::selectionIsCorrect,
-                    this,
-                    &NodeSelector::onSelectionChanged,
-                    Qt::UniqueConnection);
-            connect(viewContainer,
                     &NodeSelectorTreeViewWidget::okBtnClicked,
                     this,
                     &NodeSelector::onbOkClicked,
@@ -558,11 +552,6 @@ void NodeSelector::initSpecialisedWidgets()
                     });
         }
     }
-
-    connect(ui->stackedWidget,
-            &QStackedWidget::currentChanged,
-            this,
-            &NodeSelector::onCurrentWidgetChanged);
 }
 
 bool NodeSelector::eventFilter(QObject* obj, QEvent* event)
@@ -663,7 +652,17 @@ void NodeSelector::onCurrentWidgetChanged(int index)
             mNodeToBeSelected.reset();
         }
 
+        wid->treeViewWidgetSelected();
+
         mSelectType->selectionHasChanged(wid);
+
+        disconnect(mSelectionChangedConnection);
+        mSelectionChangedConnection = connect(wid,
+                                              &NodeSelectorTreeViewWidget::selectionIsCorrect,
+                                              this,
+                                              &NodeSelector::onSelectionChanged,
+                                              Qt::UniqueConnection);
+
         onSelectionChanged(wid->isSelectionCorrect());
     }
 }

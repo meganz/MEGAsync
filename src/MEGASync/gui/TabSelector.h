@@ -45,6 +45,8 @@ public:
     void setIconTokens(const std::shared_ptr<TokenPropertySetter>& newIconTokens);
     void hideIcon();
 
+    void hide();
+
     // Convenient method to set to all selectors
     static void applyTokens(QWidget* parent, std::shared_ptr<TokenPropertySetter> iconTokensSetter);
 
@@ -54,6 +56,9 @@ public:
     // Convenient method to get the tabs
     static QList<TabSelector*> getTabSelectorByParent(QWidget* parent);
 
+    // convenient method to apply actions over tabs
+    static void applyActionToTabSelectors(QWidget* parent, std::function<void(TabSelector*)> func);
+
 signals:
     void clicked();
     void hidden();
@@ -61,6 +66,7 @@ signals:
 protected:
     bool event(QEvent* event) override;
     bool eventFilter(QObject* watched, QEvent* event) override;
+    void dragEnterEvent(QDragEnterEvent* event) override;
 
 private:
     Ui::TabSelector* ui;

@@ -169,8 +169,8 @@ public:
     TransfersCount getTransfersCount();
     LastTransfersCount getLastTransfersCount();
 
-    void resetCompletedUploads(QList<QExplicitlySharedDataPointer<TransferData> > transfersToReset);
-    void resetCompletedDownloads(QList<QExplicitlySharedDataPointer<TransferData>> transfersToReset);
+    void resetUploads(QList<QExplicitlySharedDataPointer<TransferData>> transfersToReset);
+    void resetDownloads(QList<QExplicitlySharedDataPointer<TransferData>> transfersToReset);
     void resetCompletedTransfers();
 
     void setMaxTransfersToProcess(int max);
@@ -469,6 +469,7 @@ private:
     QFutureWatcher<void> mUpdateTransferWatcher;
     QFutureWatcher<void> mClearTransferWatcher;
     QFutureWatcher<QPair<int, int>> mAskForMostPriorityTransfersWatcher;
+    QFutureWatcher<void> mRetryTransferWatcher;
 
     uint8_t mTransfersProcessChanged;
     uint8_t mUpdateMostPriorityTransfer;
