@@ -1,21 +1,23 @@
 {
     "fill": {
-        "automatic-gradient": "display-p3:1.00000,0.90526,0.90526,1.00000"
+        "automatic-gradient": "display-p3:0.79013,0.19128,0.12356,1.00000"
     },
     "groups": [
         {
+            "hidden": false,
             "layers": [
                 {
-                    "blend-mode": "normal",
-                    "fill": "automatic",
-                    "hidden": false,
-                    "image-name": "2 – Layer.svg",
-                    "name": "2 – Layer",
-                    "opacity": 0.9
+                    "image-name": "1 – Layer 2.svg",
+                    "name": "1 – Layer 2"
                 }
             ],
-            "name": "Group",
             "shadow-specializations": [
+                {
+                    "value": {
+                        "kind": "neutral",
+                        "opacity": 1
+                    }
+                },
                 {
                     "appearance": "dark",
                     "value": {
@@ -24,30 +26,10 @@
                     }
                 }
             ],
+            "specular": true,
             "translucency": {
                 "enabled": true,
-                "value": 0.5
-            }
-        },
-        {
-            "layers": [
-                {
-                    "fill": {
-                        "automatic-gradient": "display-p3:0.79534,0.08065,0.00000,1.00000"
-                    },
-                    "hidden": false,
-                    "image-name": "1 – Layer.svg",
-                    "name": "1 – Layer"
-                }
-            ],
-            "name": "Group",
-            "shadow": {
-                "kind": "neutral",
-                "opacity": 0.5
-            },
-            "translucency": {
-                "enabled": true,
-                "value": 0.5
+                "value": 0.3
             }
         }
     ],
