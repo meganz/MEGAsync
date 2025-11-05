@@ -348,9 +348,11 @@ void NodeSelectorTreeView::keyPressEvent(QKeyEvent* event)
                         }
                         else
                         {
+                            bool showConfirmationDialog(deletionType !=
+                                                        DeletionType::MOVE_TO_RUBBISH);
                             deleteNode(selectionHandles,
-                                       deletionType == DeletionType::MOVE_TO_RUBBISH ? false :
-                                                                                       true);
+                                       deletionType == DeletionType::MOVE_TO_RUBBISH ? false : true,
+                                       showConfirmationDialog);
                         }
                     }
                 }

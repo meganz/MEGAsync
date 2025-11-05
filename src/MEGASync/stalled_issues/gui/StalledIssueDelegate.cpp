@@ -245,6 +245,8 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
         bool isExpanded(mView->isExpanded(index) && stalledIssueItem.consultData()->isExpandable());
 
+        updateColorsCheckingTheme();
+
         auto pos (option.rect.topLeft());
         QRect geometry(option.rect);
         QRectF realGeometry(geometry);
@@ -473,10 +475,6 @@ bool StalledIssueDelegate::event(QEvent *event)
                 onHoverLeave(hoverEvent->index());
             }
         }
-        else if (event->type() == ThemeManager::ThemeChanged)
-        {
-            updateColors();
-        }
     }
     return QStyledItemDelegate::event(event);
 }
@@ -634,7 +632,17 @@ StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(
     return item;
 }
 
-void StalledIssueDelegate::updateColors()
+void StalledIssueDelegate::updateColorsCheckingTheme() const
+{
+    static auto theme = ThemeManager::instance()->currentColorScheme();
+    if (theme != ThemeManager::instance()->currentColorScheme())
+    {
+        theme = ThemeManager::instance()->currentColorScheme();
+        updateColors();
+    }
+}
+
+void StalledIssueDelegate::updateColors() const
 {
     mActiveColor = TokenParserWidgetManager::instance()->getColor(QLatin1String("page-background"));
     mSelectedColor = TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-1"));

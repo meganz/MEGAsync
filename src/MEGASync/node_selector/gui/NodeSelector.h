@@ -68,7 +68,6 @@ public:
 
 protected:
     bool event(QEvent* event) override;
-    void keyPressEvent(QKeyEvent* e) override;
     void mousePressEvent(QMouseEvent* event) override;
     void addBackupsView();
     std::shared_ptr<mega::MegaNode> getSelectedNode();
@@ -179,6 +178,9 @@ private:
     // Loading view
     QList<NodeSelectorTreeViewWidget*> mSourceWids;
     NodeSelectorTreeViewWidget* mTargetWid;
+
+    // Selection changed signal
+    QMetaObject::Connection mSelectionChangedConnection;
 };
 
 #endif // NODESELECTOR_H

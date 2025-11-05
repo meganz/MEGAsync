@@ -119,7 +119,7 @@ void NodeSelectorTreeViewWidget::init()
     connect(mProxyModel.get(),
             &NodeSelectorProxyModel::modelSorted,
             this,
-            &NodeSelectorTreeViewWidget::setViewPage);
+            &NodeSelectorTreeViewWidget::checkViewOnModelChange);
     connect(mModel.get(),
             &QAbstractItemModel::rowsInserted,
             this,
@@ -228,7 +228,8 @@ bool NodeSelectorTreeViewWidget::eventFilter(QObject* watched, QEvent* event)
             }
         }
     }
-    else if (event->type() == QEvent::Drop)
+    else if (event->type() == QEvent::Drop &&
+             ui->stackedWidget->currentWidget() != ui->treeViewPage)
     {
         if (auto dropEvent = static_cast<QDragEnterEvent*>(event))
         {
@@ -402,8 +403,6 @@ void NodeSelectorTreeViewWidget::onSectionResized()
 void NodeSelectorTreeViewWidget::checkViewOnModelChange()
 {
     checkBackForwardButtons();
-    setViewPage();
-
     setEmptyFolderPage();
 }
 
@@ -1905,6 +1904,10 @@ bool UploadType::okButtonEnabled(NodeSelectorTreeViewWidget* wdg, const QModelIn
     if (selected.size() == 1)
     {
         return !selected.first().data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)).toBool();
+    }
+    else
+    {
+        return !wdg->isCurrentRootIndexReadOnly();
     }
 
     return false;
