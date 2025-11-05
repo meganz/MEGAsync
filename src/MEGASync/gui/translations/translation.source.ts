@@ -2066,7 +2066,7 @@
     <message>
         <source>Finish set up</source>
         <translatorcomment>Text on the O.S. notification button to open the window for creating the first sync after the onboarding process (first run of the application). CON-1207</translatorcomment>
-        <translation>Finish set up</translation>
+        <translation>Finish setup</translation>
     </message>
     <message>
         <source>Set up your first sync to get the most out of the desktop app</source>
@@ -3241,17 +3241,17 @@ Wait for the upload to complete.</translation>
     <message>
         <source>Link can&apos;t be imported, invalid key or decryption error</source>
         <translatorcomment>Error message when there is a decryption error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation>Link can’t be imported, invalid key or decryption error</translation>
+        <translation>Link can’t be imported. Invalid key or decryption error.</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported, your storage is full</source>
         <translatorcomment>Error message when there is an error importing a MEGA link because the storage quota is exceeded. SNC-3673.</translatorcomment>
-        <translation>Link can’t be imported, your storage is full</translation>
+        <translation>Link can’t be imported, as your storage is full</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported: %1</source>
         <translatorcomment>Error message when there is a generic error importing a MEGA link. %1 the error message coming from the SDK. SNC-3673.</translatorcomment>
-        <translation>Link can’t be imported: %1</translation>
+        <translation>Link can’t be imported. Error: %1</translation>
     </message>
     <message>
         <source>Link import error</source>
@@ -6096,10 +6096,9 @@ Enter a different name.</translation>
 - We&apos;ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
-        <translation>- Dark mode is here.
+        <translation>- Dark mode is now available.
 - We’ve refreshed the app design to make it cleaner and easier to use.
-- Bug fixes and improved app stability.
-</translation>
+- Bugs have been fixed and app stability improved.</translation>
     </message>
 </context>
 <context>

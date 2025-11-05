@@ -2000,7 +2000,7 @@
     <message>
         <source>Finish set up</source>
         <translatorcomment>Text on the O.S. notification button to open the window for creating the first sync after the onboarding process (first run of the application). CON-1207</translatorcomment>
-        <translation>Hoàn tất thiết lập</translation>
+        <translation>Kết thúc thiết lập</translation>
     </message>
     <message>
         <source>Set up your first sync to get the most out of the desktop app</source>
@@ -3157,12 +3157,12 @@ Hãy chờ cho phiên tải lên được hoàn tất.</translation>
     <message>
         <source>Link can&apos;t be imported, invalid key or decryption error</source>
         <translatorcomment>Error message when there is a decryption error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation>Không thể chuyển nhập đường liên kết, chìa khóa không hợp lệ hoặc lỗi giải mã</translation>
+        <translation>Không thể chuyển nhập đường liên kết, chìa khóa không hợp lệ hoặc lỗi giải mã.</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported, your storage is full</source>
         <translatorcomment>Error message when there is an error importing a MEGA link because the storage quota is exceeded. SNC-3673.</translatorcomment>
-        <translation>Không thể chuyển nhập đường liên kết, không gian lưu trữ bị đầy</translation>
+        <translation>Không thể chuyển nhập đường liên kết, không gian lưu trữ bị đầy</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported: %1</source>
@@ -5954,7 +5954,9 @@ Nhập một tên khác.</translation>
 - We've fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Chế độ tối hiện có sẵn.
+- Chúng tôi đã làm mới thiết kế ứng dụng để làm cho nó sạch hơn và dễ sử dụng hơn.
+- Lỗi đã được sửa và tính ổn định của ứng dụng được cải thiện.</translation>
     </message>
 </context>
 <context>
@@ -9518,17 +9520,17 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1d</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1d</translation>
     </message>
     <message>
         <source>%1h</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1h</translation>
     </message>
     <message>
         <source>%1m</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1p</translation>
     </message>
     <message>
         <source>%1s</source>
@@ -9682,11 +9684,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Locked account</source>
         <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
         <translation>Tài khoản bị khóa</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation>Đăng xuất</translation>
     </message>
     <message>
         <source>Why am I seeing this?</source>

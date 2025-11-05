@@ -2000,7 +2000,7 @@
     <message>
         <source>Finish set up</source>
         <translatorcomment>Text on the O.S. notification button to open the window for creating the first sync after the onboarding process (first run of the application). CON-1207</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Selesaikan penyiapan</translation>
     </message>
     <message>
         <source>Set up your first sync to get the most out of the desktop app</source>
@@ -2422,12 +2422,12 @@ Periksa kotak masuk email anda untuk petunjuk tentang membuka kunci akun anda da
     <message numerus="yes">
         <source>You have %n day left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. %n- number of days left to upgrade.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Anda memiliki %n hari tersisa untuk meningkatkan, atau data Anda akan dihapus</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have %n hour left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: %n- number of hours left to upgrade.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Anda memiliki %n jam tersisa untuk meningkatkan, atau data Anda akan dihapus</numerusform></translation>
     </message>
     <message>
         <source>You must act immediately to save your data</source>
@@ -2971,12 +2971,12 @@ Tunggu hingga unggahan selesai.</translation>
     <message>
         <source>MEGA couldn’t connect securely.[BR]If you’re on public Wi-Fi, try signing in through your browser first. Your ISP or security software might also be interfering with the connection.[BR][A]Learn more[/A]</source>
         <translatorcomment>Body for the notification message shown when SSL checks fails. SNC-5610</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA tidak dapat terhubung dengan aman.[BR]Jika Anda menggunakan Wi-Fi publik, coba masuk melalui browser Anda terlebih dahulu. ISP atau perangkat lunak keamanan Anda mungkin juga mengganggu koneksi.[BR][A]Pelajari selengkapnya[/A]</translation>
     </message>
     <message>
         <source>Secure connection failed</source>
         <translatorcomment>Title for the notification message shown when SSL checks fails. SNC-5610</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Koneksi aman gagal</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
@@ -3157,17 +3157,17 @@ Tunggu hingga unggahan selesai.</translation>
     <message>
         <source>Link can&apos;t be imported, invalid key or decryption error</source>
         <translatorcomment>Error message when there is a decryption error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tautan tidak dapat diimpor. Kunci tidak valid atau kesalahan dekripsi.</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported, your storage is full</source>
         <translatorcomment>Error message when there is an error importing a MEGA link because the storage quota is exceeded. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tautan tidak dapat diimpor, karena penyimpanan Anda penuh</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported: %1</source>
         <translatorcomment>Error message when there is a generic error importing a MEGA link. %1 the error message coming from the SDK. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tautan tidak dapat diimpor. Kesalahan: %1</translation>
     </message>
     <message>
         <source>Link import error</source>
@@ -3751,7 +3751,7 @@ Anda tidak akan dapat memperoleh kembali akses ke data yang disimpan atau diberi
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Kesalahan terdeteksi[/B][BR]Terjadi kesalahan saat memuat sumber daya aplikasi, dan aplikasi harus ditutup. Silakan instal ulang dari [A]mega.io/desktop[/A] untuk menyelesaikan masalah ini. Jika masalah ini berlanjut setelah menginstal ulang, hubungi dukungan untuk bantuan lebih lanjut.</translation>
     </message>
 </context>
 <context>
@@ -5954,7 +5954,9 @@ Masukkan nama yang berbeda.</translation>
 - We've fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Mode gelap sekarang tersedia.
+- Kami telah menyegarkan desain aplikasi untuk membuatnya lebih bersih dan lebih mudah digunakan.
+- Bug telah diperbaiki dan stabilitas aplikasi ditingkatkan.</translation>
     </message>
 </context>
 <context>
@@ -6514,7 +6516,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder akan dihapus dari MEGA, tetapi tidak akan dihapus dari perangkat Anda. Tindakan ini tidak dapat dibatalkan.</translation>
     </message>
     <message>
         <source>Move folder</source>
@@ -9519,17 +9521,17 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message>
         <source>%1d</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1d</translation>
     </message>
     <message>
         <source>%1h</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1h</translation>
     </message>
     <message>
         <source>%1m</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1m</translation>
     </message>
     <message>
         <source>%1s</source>
@@ -9683,11 +9685,6 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
         <source>Locked account</source>
         <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
         <translation>Akun terkunci</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation>Keluar</translation>
     </message>
     <message>
         <source>Why am I seeing this?</source>

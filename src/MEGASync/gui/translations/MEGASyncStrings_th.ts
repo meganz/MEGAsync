@@ -2000,7 +2000,7 @@
     <message>
         <source>Finish set up</source>
         <translatorcomment>Text on the O.S. notification button to open the window for creating the first sync after the onboarding process (first run of the application). CON-1207</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เสร็จสิ้นการตั้งค่า</translation>
     </message>
     <message>
         <source>Set up your first sync to get the most out of the desktop app</source>
@@ -3156,17 +3156,17 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Link can&apos;t be imported, invalid key or decryption error</source>
         <translatorcomment>Error message when there is a decryption error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถนำเข้าลิงก์ได้คีย์ที่ไม่ถูกต้องหรือข้อผิดพลาดในการถอดรหัส</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported, your storage is full</source>
         <translatorcomment>Error message when there is an error importing a MEGA link because the storage quota is exceeded. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถนำเข้าลิงก์ได้เนื่องจากพื้นที่เก็บข้อมูลของคุณเต็มแล้ว</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported: %1</source>
         <translatorcomment>Error message when there is a generic error importing a MEGA link. %1 the error message coming from the SDK. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถนำเข้าลิงก์ได้ข้อผิดพลาด: %1</translation>
     </message>
     <message>
         <source>Link import error</source>
@@ -5951,7 +5951,7 @@ Enter a different name</source>
 - We've fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
-        <translation>- โหมดสีเข้ม (Dark Mode) พร้อมแล้ว
+        <translation>- โหมดสีเข้มพร้อมให้ใช้งานแล้ว
 - เราได้ปรับปรุงดีไซน์แอปใหม่ให้ดูสะอาดตาและใช้งานง่ายยิ่งขึ้น
 - แก้ไขข้อบกพร่องและปรับปรุงแอปให้เสถียรยิ่งขึ้น
 </translation>
@@ -9518,17 +9518,17 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1d</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1วัน</translation>
     </message>
     <message>
         <source>%1h</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1ชม.</translation>
     </message>
     <message>
         <source>%1m</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1นาที</translation>
     </message>
     <message>
         <source>%1s</source>
@@ -9682,11 +9682,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Locked account</source>
         <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
         <translation>บัญชีถูกล็อก</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation>ออกจากระบบ</translation>
     </message>
     <message>
         <source>Why am I seeing this?</source>

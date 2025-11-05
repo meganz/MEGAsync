@@ -768,12 +768,12 @@
     <message>
         <source>Too many requests. Please wait.</source>
         <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible). SNC-5799</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Troppe richieste, attendi</translation>
     </message>
     <message>
         <source>You have entered your current password, please enter a new password.</source>
         <translatorcomment>Informative message shown when user is trying to change his password with the current one. SNC-5799</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hai inserito la tua password attuale, inserisci una nuova password</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
@@ -2066,7 +2066,7 @@
     <message>
         <source>Finish set up</source>
         <translatorcomment>Text on the O.S. notification button to open the window for creating the first sync after the onboarding process (first run of the application). CON-1207</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Completa la configurazione</translation>
     </message>
     <message>
         <source>Set up your first sync to get the most out of the desktop app</source>
@@ -2492,16 +2492,16 @@ Controlla la tua casella di posta elettronica per istruzioni su come sbloccare i
         <source>You have %n day left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. %n- number of days left to upgrade.</translatorcomment>
         <translation>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>Hai %n giorn rimanente per effettuare l’upgrade, altrimenti i tuoi dati saranno soggetti a cancellazione</numerusform>
+            <numerusform>Hai %n giorni rimanenti per effettuare l’upgrade, altrimenti i tuoi dati saranno soggetti a cancellazione</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>You have %n hour left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: %n- number of hours left to upgrade.</translatorcomment>
         <translation>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>Hai %n ora rimanente per effettuare l’upgrade, altrimenti i tuoi dati saranno soggetti a cancellazione</numerusform>
+            <numerusform>Hai %n ore rimanenti per effettuare l’upgrade, altrimenti i tuoi dati saranno soggetti a cancellazione</numerusform>
         </translation>
     </message>
     <message>
@@ -3241,17 +3241,17 @@ Attendi il completamento dei caricamenti.</translation>
     <message>
         <source>Link can&apos;t be imported, invalid key or decryption error</source>
         <translatorcomment>Error message when there is a decryption error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Il link non può essere importato. Chiave non valida o errore di decrittografia.</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported, your storage is full</source>
         <translatorcomment>Error message when there is an error importing a MEGA link because the storage quota is exceeded. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Il link non può essere importato, poiché lo spazio di archiviazione è pieno</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported: %1</source>
         <translatorcomment>Error message when there is a generic error importing a MEGA link. %1 the error message coming from the SDK. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Il link non può essere importato. Errore: %1</translation>
     </message>
     <message>
         <source>Link import error</source>
@@ -3842,7 +3842,7 @@ Non puoi riottenere accesso ai tuoi dati archiviati o registrare un nuovo accoun
     <message>
         <source>[B]Error detected[/B][BR]An error has occurred loading application resources, and the app needs to close. Please reinstall the app from [A]mega.io/desktop[/A] to resolve this issue. If the problem persists after reinstalling, contact support for further assistance.</source>
         <translatorcomment>Body of the error dialog shown when resources necessary to running the app could not be loaded - CON-1431</translatorcomment>
-        <translation>[B]Errore rilevato[/B][BR]Si è verificato un errore durante il caricamento delle risorse dell’applicazione e l’app deve essere chiusa. Si prega di reinstallarla da [A]mega.io/desktop[/A] per risolvere questo problema. Se il problema persiste dopo la reinstallazione, contatta l’assistenza per ulteriore assistenza.</translation>
+        <translation>[B]Errore rilevato[/B][BR]Si è verificato un errore durante il caricamento delle risorse dell’applicazione e l’app deve essere chiusa. Ti chiediamo di reinstallarla da [A]mega.io/desktop[/A] per risolvere questo problema. Se il problema persiste dopo la reinstallazione, contatta l’assistenza per ulteriore assistenza.</translation>
     </message>
 </context>
 <context>
@@ -3855,7 +3855,7 @@ Non puoi riottenere accesso ai tuoi dati archiviati o registrare un nuovo accoun
     <message>
         <source>OK</source>
         <translatorcomment>Label for Ok buttons. SNC-5798.</translatorcomment>
-        <translation>Ok</translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -4147,42 +4147,42 @@ Non puoi riottenere accesso ai tuoi dati archiviati o registrare un nuovo accoun
     <message>
         <source>All the selected completed transfers in this category will be cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tutti i trasferimenti completati selezionati verranno cancellati</translation>
     </message>
     <message>
         <source>All your completed transfers in this category will be cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tutti i trasferimenti completati in questa categoria verranno cancellati</translation>
     </message>
     <message>
         <source>All your completed transfers will be cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tutti i trasferimenti completati verranno cancellati</translation>
     </message>
     <message>
         <source>All your selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tutti i trasferimenti selezionati verranno annullati e cancellati</translation>
     </message>
     <message>
         <source>All your selected transfers will be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tutti i trasferimenti selezionati verranno annullati</translation>
     </message>
     <message>
         <source>All your transfers in this category will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tutti i trasferimenti in questa categoria verranno annullati e cancellati</translation>
     </message>
     <message>
         <source>All your transfers in this category will be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tutti i trasferimenti in questa categoria verranno annullati</translation>
     </message>
     <message>
         <source>All your transfers will be cancelled.</source>
         <translatorcomment>Messagebox description text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tutti i trasferimenti verranno annullati</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4236,7 +4236,7 @@ Non puoi riottenere accesso ai tuoi dati archiviati o registrare un nuovo accoun
     <message>
         <source>Clear transfers?</source>
         <translatorcomment>Messagebox title to confirm if the user wants to clear multipe selected completed transfer</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pulire la lista dei trasferimenti?</translation>
     </message>
     <message>
         <source>Don&apos;t cancel</source>
@@ -4313,23 +4313,23 @@ Non puoi riottenere accesso ai tuoi dati archiviati o registrare un nuovo accoun
         <source>Your incomplete sync transfers won&apos;t be cancelled
 All the other transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>I trasferimenti delle sincronizzazioni non saranno annullati, ma tutti gli altri trasferimenti verranno annullati e cancellati</translation>
     </message>
     <message>
         <source>Your incomplete sync transfers won&apos;t be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>I trasferimenti delle sincronizzazioni non saranno annullati</translation>
     </message>
     <message>
         <source>Your selected incomplete sync transfers won&apos;t be cancelled
 All the other selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>I trasferimenti delle sincronizzazioni non saranno annullati, ma tutti gli altri trasferimenti selezionati verranno annullati e cancellati</translation>
     </message>
     <message>
         <source>Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>I trasferimenti delle sincronizzazioni non saranno annullati</translation>
     </message>
 </context>
 <context>
@@ -4643,7 +4643,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>OK</source>
         <translatorcomment>Label for ok button. Keep capital letter. SNC.5804</translatorcomment>
-        <translation>Ok</translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -4824,12 +4824,12 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Sort by date added</source>
         <translatorcomment>Table header tooltip for Date added column. SNC.5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ordina per data di aggiunta</translation>
     </message>
     <message>
         <source>Sort by last modified date</source>
         <translatorcomment>Table header tooltip for last modified column. SNC.5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ordina per data di ultima modifica</translation>
     </message>
     <message>
         <source>Sort by name</source>
@@ -4967,7 +4967,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>New folder</source>
         <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It creates a new folder. SNC-5804</translatorcomment>
-        <translation>Nuova Cartella</translation>
+        <translation>Nuova cartella</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -5007,7 +5007,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Upload</source>
         <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It uploads to the selected. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Carica</translation>
     </message>
 </context>
 <context>
@@ -5045,7 +5045,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Folder is empty</source>
         <translatorcomment>Message on the view when there are no items in a folder. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>La cartella è vuota</translation>
     </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
@@ -5131,7 +5131,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>No backups</source>
         <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nessun backup</translation>
     </message>
 </context>
 <context>
@@ -5152,12 +5152,12 @@ Inserisci un nome differente.</translation>
     <message>
         <source>No incoming shares you can sync</source>
         <translatorcomment>Title message on the view when there are no items in the Sync view. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nessuna condivisione in entrata che puoi sincronizzare</translation>
     </message>
     <message>
         <source>You can only sync a shared folder if you’ve been given full access</source>
         <translatorcomment>Description message on the view when there are no items in the sync view. It says you don´t have shared folders with the needed rights. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Puoi sincronizzare una cartella condivisa solo se ti è stato concesso l’accesso completo</translation>
     </message>
 </context>
 <context>
@@ -5174,8 +5174,8 @@ Inserisci un nome differente.</translation>
         <source>%n result found</source>
         <translatorcomment>Search tab subtitle that shows the number of coincidences found. %n is the number of found nodes. SNC-5804</translatorcomment>
         <translation>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%n risultato trovato</numerusform>
+            <numerusform>%n risultati trovati</numerusform>
         </translation>
     </message>
     <message>
@@ -6096,7 +6096,9 @@ Inserisci un nome differente.</translation>
 - We&apos;ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- La modalità oscura è ora disponibile.
+- Abbiamo aggiornato il design dell’app per renderla più pulita e facile da usare.
+- I bug sono stati corretti e la stabilità dell’app è migliorata.</translation>
     </message>
 </context>
 <context>
@@ -7832,7 +7834,7 @@ Aggiorna la lista.</translation>
     <message>
         <source>Waiting…</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is at waiting state. SNC-5938</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>In attesa…</translation>
     </message>
 </context>
 <context>
@@ -8944,12 +8946,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Before your storage becomes full and your uploads, syncs and backups stop.</source>
         <translatorcomment>Warning description shown when storage quota is almost full</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Effettua l’upgrade prima che lo spazio di archiviazione si esaurisca e che i caricamenti, le sincronizzazioni e i backup si interrompano</translation>
     </message>
     <message>
         <source>Storage almost full</source>
         <translatorcomment>Warning title shown when storage quota is almost full</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Spazio di archiviazione quasi pieno</translation>
     </message>
     <message>
         <source>Storage full</source>
@@ -8964,12 +8966,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Upgrade now</source>
         <translatorcomment>Text for link shown when the storage quota is almost full.</translatorcomment>
-        <translation>Effettua l’upgrade ora</translation>
+        <translation>Effettua ora l’upgrade</translation>
     </message>
     <message>
         <source>Uploads are disabled and sync and backups are paused.</source>
         <translatorcomment>Error description shown when storage is full. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>I caricamenti sono disabilitati e la sincronizzazione e i backup sono sospesi</translation>
     </message>
     <message>
         <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
@@ -9736,7 +9738,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 / %2</source>
         <translatorcomment>This translated separator template with placeholders &quot;%1&quot; and &quot;%2&quot; is used to format the display of two values separated by a slash, with a space on each side of the separator. The placeholders represent dynamic content that will be replaced with actual data. For instance, in French: &quot;15,2 Go / 400 Go&quot;. SNC-5456</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 / %2</translation>
     </message>
     <message>
         <source>%1 of %2</source>
@@ -9746,7 +9748,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 sec</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 sec</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
@@ -9759,17 +9761,17 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1d</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1d</translation>
     </message>
     <message>
         <source>%1h</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1h</translation>
     </message>
     <message>
         <source>%1m</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1m</translation>
     </message>
     <message>
         <source>%1s</source>
@@ -9941,11 +9943,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Locked account</source>
         <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
         <translation>Account bloccato</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation>Effettua il logout</translation>
     </message>
     <message>
         <source>Why am I seeing this?</source>
