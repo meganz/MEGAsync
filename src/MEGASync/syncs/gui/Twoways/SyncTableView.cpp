@@ -435,22 +435,25 @@ void BackgroundColorDelegate::paintRowBackground(QPainter* painter,
 {
     const int ENABLED_COLUMN_INDEX = 0;
     const int MENU_COLUMN_INDEX = index.model()->columnCount() - 1;
-    const double RADIUS_SQUARE_PERCENTATGE = 0.20;
+    const double RADIUS_SIZE = 5;
 
     auto optionRect = option.rect;
-    auto radius = optionRect.width() * RADIUS_SQUARE_PERCENTATGE;
 
     if (index.column() == ENABLED_COLUMN_INDEX) // first column will have the left squares rounded.
     {
         QPainterPath roundRectPath;
-        roundRectPath.moveTo(optionRect.left() + 2 * radius, optionRect.top());
-        roundRectPath
-            .arcTo(optionRect.left(), optionRect.top(), radius * 2.0, radius * 2.0, 90.0, 90.0);
-        roundRectPath.lineTo(optionRect.left(), optionRect.bottom() - radius);
+        roundRectPath.moveTo(optionRect.left() + 2 * RADIUS_SIZE, optionRect.top());
         roundRectPath.arcTo(optionRect.left(),
-                            (optionRect.bottom() + 1) - radius * 2.0,
-                            radius * 2.0,
-                            radius * 2.0,
+                            optionRect.top(),
+                            RADIUS_SIZE * 2.0,
+                            RADIUS_SIZE * 2.0,
+                            90.0,
+                            90.0);
+        roundRectPath.lineTo(optionRect.left(), optionRect.bottom() - RADIUS_SIZE);
+        roundRectPath.arcTo(optionRect.left(),
+                            (optionRect.bottom() + 1) - RADIUS_SIZE * 2.0,
+                            RADIUS_SIZE * 2.0,
+                            RADIUS_SIZE * 2.0,
                             180.0,
                             90.0);
         roundRectPath.lineTo(optionRect.right() + 1, optionRect.bottom() + 1);
@@ -462,21 +465,25 @@ void BackgroundColorDelegate::paintRowBackground(QPainter* painter,
     else if (index.column() ==
              MENU_COLUMN_INDEX) // last column will have the right squares rounded.
     {
+        const int SCROLL_BAR_WIDTH = 18;
+
         QPainterPath roundRectPath;
         roundRectPath.moveTo(optionRect.left(), optionRect.top());
         roundRectPath.lineTo(optionRect.left(), optionRect.bottom() + 1);
-        roundRectPath.lineTo(optionRect.right() + 1 - radius, optionRect.bottom() + 1);
-        roundRectPath.arcTo(optionRect.right() + 1 - radius * 2.0,
-                            optionRect.bottom() + 1 - radius * 2.0,
-                            radius * 2.0,
-                            radius * 2.0,
+        roundRectPath.lineTo(optionRect.right() - SCROLL_BAR_WIDTH + 1 - RADIUS_SIZE,
+                             optionRect.bottom() + 1);
+        roundRectPath.arcTo(optionRect.right() - SCROLL_BAR_WIDTH + 1 - RADIUS_SIZE * 2.0,
+                            optionRect.bottom() + 1 - RADIUS_SIZE * 2.0,
+                            RADIUS_SIZE * 2.0,
+                            RADIUS_SIZE * 2.0,
                             270.0,
                             90.0);
-        roundRectPath.lineTo(optionRect.right() + 1, optionRect.top() + radius);
-        roundRectPath.arcTo(optionRect.right() + 1 - 2.0 * radius,
+        roundRectPath.lineTo(optionRect.right() - SCROLL_BAR_WIDTH + 1,
+                             optionRect.top() + RADIUS_SIZE);
+        roundRectPath.arcTo(optionRect.right() - SCROLL_BAR_WIDTH + 1 - 2.0 * RADIUS_SIZE,
                             optionRect.top(),
-                            2.0 * radius,
-                            2.0 * radius,
+                            2.0 * RADIUS_SIZE,
+                            2.0 * RADIUS_SIZE,
                             0.0,
                             90.0);
         roundRectPath.closeSubpath();
