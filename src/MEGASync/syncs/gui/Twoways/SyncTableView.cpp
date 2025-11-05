@@ -465,23 +465,25 @@ void BackgroundColorDelegate::paintRowBackground(QPainter* painter,
     else if (index.column() ==
              MENU_COLUMN_INDEX) // last column will have the right squares rounded.
     {
-        const int SCROLL_BAR_WIDTH = 18;
+        auto rect = optionRect;
 
+#ifdef Q_OS_MACOS
+        const int SCROLL_BAR_WIDTH = 18;
+        rect.setRight(rect.right() - SCROLL_BAR_WIDTH);
+#endif
         QPainterPath roundRectPath;
-        roundRectPath.moveTo(optionRect.left(), optionRect.top());
-        roundRectPath.lineTo(optionRect.left(), optionRect.bottom() + 1);
-        roundRectPath.lineTo(optionRect.right() - SCROLL_BAR_WIDTH + 1 - RADIUS_SIZE,
-                             optionRect.bottom() + 1);
-        roundRectPath.arcTo(optionRect.right() - SCROLL_BAR_WIDTH + 1 - RADIUS_SIZE * 2.0,
-                            optionRect.bottom() + 1 - RADIUS_SIZE * 2.0,
+        roundRectPath.moveTo(rect.left(), rect.top());
+        roundRectPath.lineTo(rect.left(), rect.bottom() + 1);
+        roundRectPath.lineTo(rect.right() + 1 - RADIUS_SIZE, rect.bottom() + 1);
+        roundRectPath.arcTo(rect.right() + 1 - RADIUS_SIZE * 2.0,
+                            rect.bottom() + 1 - RADIUS_SIZE * 2.0,
                             RADIUS_SIZE * 2.0,
                             RADIUS_SIZE * 2.0,
                             270.0,
                             90.0);
-        roundRectPath.lineTo(optionRect.right() - SCROLL_BAR_WIDTH + 1,
-                             optionRect.top() + RADIUS_SIZE);
-        roundRectPath.arcTo(optionRect.right() - SCROLL_BAR_WIDTH + 1 - 2.0 * RADIUS_SIZE,
-                            optionRect.top(),
+        roundRectPath.lineTo(rect.right() + 1, rect.top() + RADIUS_SIZE);
+        roundRectPath.arcTo(rect.right() + 1 - 2.0 * RADIUS_SIZE,
+                            rect.top(),
                             2.0 * RADIUS_SIZE,
                             2.0 * RADIUS_SIZE,
                             0.0,
