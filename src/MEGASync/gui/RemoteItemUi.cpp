@@ -46,6 +46,9 @@ void RemoteItemUi::initView(QTableView* newView)
     delete oldLayoutItem;
     delete ui->tableView;
     ui->tableView = newView;
+
+    ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tableView->horizontalHeader()->setStretchLastSection(true);
 }
 
 void RemoteItemUi::setUsePermissions(const bool use)
