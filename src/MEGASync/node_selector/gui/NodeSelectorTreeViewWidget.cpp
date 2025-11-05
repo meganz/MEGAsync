@@ -1901,16 +1901,9 @@ void UploadType::init(NodeSelectorTreeViewWidget* wdg)
 
 bool UploadType::okButtonEnabled(NodeSelectorTreeViewWidget* wdg, const QModelIndexList& selected)
 {
-    if (selected.size() == 1)
-    {
-        return !selected.first().data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)).toBool();
-    }
-    else
-    {
-        return !wdg->isCurrentRootIndexReadOnly();
-    }
-
-    return false;
+    return selected.size() == 1 ?
+               !selected.first().data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)).toBool() :
+               !wdg->isCurrentRootIndexReadOnly();
 }
 
 NodeSelectorModelItemSearch::Types UploadType::allowedTypes()

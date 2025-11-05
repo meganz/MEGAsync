@@ -2000,7 +2000,7 @@
     <message>
         <source>Finish set up</source>
         <translatorcomment>Text on the O.S. notification button to open the window for creating the first sync after the onboarding process (first run of the application). CON-1207</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Finalizați configurarea</translation>
     </message>
     <message>
         <source>Set up your first sync to get the most out of the desktop app</source>
@@ -3157,17 +3157,17 @@ Așteptați finalizarea încărcării.</translation>
     <message>
         <source>Link can&apos;t be imported, invalid key or decryption error</source>
         <translatorcomment>Error message when there is a decryption error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Linkul nu poate fi importat. Cheie nevalidă sau eroare de decriptare.</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported, your storage is full</source>
         <translatorcomment>Error message when there is an error importing a MEGA link because the storage quota is exceeded. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Linkul nu poate fi importat, deoarece spațiul de stocare este plin</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported: %1</source>
         <translatorcomment>Error message when there is a generic error importing a MEGA link. %1 the error message coming from the SDK. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Linkul nu poate fi importat. Eroare: %1</translation>
     </message>
     <message>
         <source>Link import error</source>
@@ -5956,7 +5956,9 @@ Introdu un alt nume.</translation>
 - We've fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Modul întunecat este acum disponibil.
+- Am reîmprospătat designul aplicației pentru a-l face mai curat și mai ușor de folosit.
+- Bugurile au fost remediate și stabilitatea aplicației îmbunătățită.</translation>
     </message>
 </context>
 <context>
@@ -9520,17 +9522,17 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1d</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1d</translation>
     </message>
     <message>
         <source>%1h</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1h</translation>
     </message>
     <message>
         <source>%1m</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1m</translation>
     </message>
     <message>
         <source>%1s</source>
@@ -9575,7 +9577,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Basic</translation>
     </message>
     <message>
         <source>Business</source>
@@ -9590,7 +9592,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Essential</translation>
     </message>
     <message>
         <source>Free</source>
@@ -9655,7 +9657,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Starter</translation>
     </message>
     <message>
         <source>TB</source>
@@ -9684,11 +9686,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Locked account</source>
         <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
         <translation>Cont blocat</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation>Deconectați-vă</translation>
     </message>
     <message>
         <source>Why am I seeing this?</source>

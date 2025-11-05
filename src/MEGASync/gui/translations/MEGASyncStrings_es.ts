@@ -2066,7 +2066,7 @@
     <message>
         <source>Finish set up</source>
         <translatorcomment>Text on the O.S. notification button to open the window for creating the first sync after the onboarding process (first run of the application). CON-1207</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Completar configuración</translation>
     </message>
     <message>
         <source>Set up your first sync to get the most out of the desktop app</source>
@@ -3241,17 +3241,17 @@ Espera a que se complete la subida.</translation>
     <message>
         <source>Link can&apos;t be imported, invalid key or decryption error</source>
         <translatorcomment>Error message when there is a decryption error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation>El enlace no se puede importar, la clave no es válida o hay un error de descifrado</translation>
+        <translation>No se puede importar el enlace. La clave no es válida o hay un error de descifrado.</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported, your storage is full</source>
         <translatorcomment>Error message when there is an error importing a MEGA link because the storage quota is exceeded. SNC-3673.</translatorcomment>
-        <translation>El enlace no se puede importar, tu almacenamiento está lleno</translation>
+        <translation>El enlace no se puede importar porque tu almacenamiento está lleno</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported: %1</source>
         <translatorcomment>Error message when there is a generic error importing a MEGA link. %1 the error message coming from the SDK. SNC-3673.</translatorcomment>
-        <translation>No se puede importar el enlace: %1</translation>
+        <translation>No se puede importar el enlace. Error: %1</translation>
     </message>
     <message>
         <source>Link import error</source>
@@ -6096,10 +6096,9 @@ Introduzca un nombre diferente.</translation>
 - We&apos;ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
-        <translation>- Ya tenemos modo oscuro.
+        <translation>- El modo oscuro ya está disponible.
 - Hemos actualizado el diseño de la aplicación para que sea más limpia y fácil de usar.
-- Corrección de errores y mejora de la estabilidad de la aplicación.
-</translation>
+- Se han corregido errores y se ha mejorado la estabilidad de la aplicación.</translation>
     </message>
 </context>
 <context>
@@ -9944,11 +9943,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Locked account</source>
         <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
         <translation>Cuenta bloqueada</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation>Cerrar sesión</translation>
     </message>
     <message>
         <source>Why am I seeing this?</source>
