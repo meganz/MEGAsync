@@ -33,6 +33,7 @@ public:
     QModelIndex getIndexFromHandle(const mega::MegaHandle& handle);
     QModelIndex getIndexFromNode(const std::shared_ptr<mega::MegaNode> node);
     QModelIndex findIndexInParentList(const std::shared_ptr<mega::MegaNode> node);
+    QModelIndex getTopRootIndex();
     void deleteNode(const QModelIndex& item);
     bool lessThan(const QModelIndex& left, const QModelIndex& right) const override;
     void setSourceModel(QAbstractItemModel* sourceModel) override;

@@ -104,6 +104,8 @@ public:
 
     bool isUiBlocked();
 
+    void dropIntoRootIndex(QDropEvent* event);
+
 public slots:
     virtual void checkViewOnModelChange();
     void setLoadingSceneVisible(bool visible);
