@@ -231,9 +231,14 @@ bool NodeSelectorTreeViewWidget::eventFilter(QObject* watched, QEvent* event)
     else if (event->type() == QEvent::Drop &&
              ui->stackedWidget->currentWidget() != ui->treeViewPage)
     {
-        if (auto dropEvent = static_cast<QDragEnterEvent*>(event))
+        if (auto dropEvent = static_cast<QDropEvent*>(event))
         {
-            if (!dropEvent->mimeData()->urls().isEmpty())
+            if (!dropEvent->mimeData()->urls().isEmpty() ||
+                mModel->canDropMimeData(dropEvent->mimeData(),
+                                        Qt::MoveAction,
+                                        -1,
+                                        -1,
+                                        mModel->index(0, 0, QModelIndex())))
             {
                 ui->tMegaFolders->dropEvent(dropEvent);
             }

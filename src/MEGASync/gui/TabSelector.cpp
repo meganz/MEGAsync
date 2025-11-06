@@ -189,8 +189,9 @@ bool TabSelector::eventFilter(QObject* watched, QEvent* event)
 }
 
 // You need to use setAcceptDrops externally in order to activate this feature
-void TabSelector::dragEnterEvent(QDragEnterEvent*)
+void TabSelector::dragEnterEvent(QDragEnterEvent* event)
 {
+    event->accept();
     setSelected(true);
 }
 
