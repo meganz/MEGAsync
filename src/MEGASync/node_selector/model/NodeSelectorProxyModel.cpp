@@ -254,6 +254,17 @@ QModelIndex
     return QModelIndex();
 }
 
+QModelIndex NodeSelectorProxyModel::getTopRootIndex()
+{
+    auto model(dynamic_cast<NodeSelectorModel*>(sourceModel()));
+    if (model)
+    {
+        return mapFromSource(model->getTopRootIndex());
+    }
+
+    return QModelIndex();
+}
+
 NodeSelectorModel* NodeSelectorProxyModel::getMegaModel() const
 {
     return dynamic_cast<NodeSelectorModel*>(sourceModel());

@@ -57,6 +57,12 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
     connect(ui->fRubbish, &TabSelector::clicked, this, &NodeSelector::onbShowRubbishClicked);
     connect(ui->fSearch, &TabSelector::clicked, this, &NodeSelector::onbShowSearchClicked);
 
+    ui->fCloudDrive->connectToDropEvent(
+        [this](std::shared_ptr<QDropEvent> event)
+        {
+            onCloudDriveTabDropped(event);
+        });
+
     TabSelector::applyActionToTabSelectors(ui->wLeftPaneNS,
                                            [this](TabSelector* tabSelector)
                                            {
@@ -328,6 +334,11 @@ void NodeSelector::onOptionSelected(int index)
         default:
             break;
     }
+}
+
+void NodeSelector::onCloudDriveTabDropped(std::shared_ptr<QDropEvent> event)
+{
+    getTreeViewWidget(CLOUD_DRIVE)->dropIntoRootIndex(event.get());
 }
 
 void NodeSelector::onbShowCloudDriveClicked()

@@ -21,7 +21,8 @@ const char* TAB_SELECTOR_GROUP = "tabselector_group";
 
 TabSelector::TabSelector(QWidget* parent):
     QWidget(parent),
-    ui(new Ui::TabSelector)
+    ui(new Ui::TabSelector),
+    mConnectedToDropEvent(false)
 {
     ui->setupUi(this);
 
@@ -195,6 +196,27 @@ void TabSelector::dragEnterEvent(QDragEnterEvent* event)
     setSelected(true);
 }
 
+void TabSelector::dropEvent(QDropEvent* event)
+{
+    if (mConnectedToDropEvent)
+    {
+        std::shared_ptr<QDropEvent> newEvent =
+            std::make_shared<QDropEvent>(QPoint(-1, -1),
+                                         event->possibleActions(),
+                                         event->mimeData(),
+                                         event->mouseButtons(),
+                                         event->keyboardModifiers(),
+                                         event->type());
+
+        emit dropOnTabSelector(newEvent);
+        event->accept();
+    }
+    else
+    {
+        event->ignore();
+    }
+}
+
 QList<TabSelector*> TabSelector::getTabSelectorByParent(QWidget* parent)
 {
     return parent->findChildren<TabSelector*>();
@@ -273,4 +295,10 @@ void TabSelector::hide()
 {
     setCounter(0);
     QWidget::hide();
+}
+
+void TabSelector::connectToDropEvent(std::function<void(std::shared_ptr<QDropEvent>)> slot)
+{
+    mConnectedToDropEvent = true;
+    connect(this, &TabSelector::dropOnTabSelector, this, slot);
 }

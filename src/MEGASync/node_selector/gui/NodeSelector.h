@@ -140,6 +140,8 @@ protected slots:
     void onbShowIncomingSharesClicked();
     void onOptionSelected(int index);
 
+    void onCloudDriveTabDropped(std::shared_ptr<QDropEvent> event);
+
 private slots:
     void onbShowSearchClicked();
     void onbOkClicked();

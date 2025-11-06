@@ -231,18 +231,7 @@ bool NodeSelectorTreeViewWidget::eventFilter(QObject* watched, QEvent* event)
     else if (event->type() == QEvent::Drop &&
              ui->stackedWidget->currentWidget() != ui->treeViewPage)
     {
-        if (auto dropEvent = static_cast<QDropEvent*>(event))
-        {
-            if (!dropEvent->mimeData()->urls().isEmpty() ||
-                mModel->canDropMimeData(dropEvent->mimeData(),
-                                        Qt::MoveAction,
-                                        -1,
-                                        -1,
-                                        mModel->index(0, 0, QModelIndex())))
-            {
-                ui->tMegaFolders->dropEvent(dropEvent);
-            }
-        }
+        dropIntoRootIndex(static_cast<QDropEvent*>(event));
     }
     else if (event->type() == QEvent::Resize)
     {
@@ -1560,6 +1549,18 @@ void NodeSelectorTreeViewWidget::resetMergeFolderHandles(
 bool NodeSelectorTreeViewWidget::isUiBlocked()
 {
     return mUiBlocked;
+}
+
+void NodeSelectorTreeViewWidget::dropIntoRootIndex(QDropEvent* event)
+{
+    if (!event->mimeData()->urls().isEmpty() || mModel->canDropMimeData(event->mimeData(),
+                                                                        Qt::MoveAction,
+                                                                        -1,
+                                                                        -1,
+                                                                        mModel->getTopRootIndex()))
+    {
+        ui->tMegaFolders->dropEvent(event);
+    }
 }
 
 void NodeSelectorTreeViewWidget::setNewFolderButtonVisibility(bool state)
