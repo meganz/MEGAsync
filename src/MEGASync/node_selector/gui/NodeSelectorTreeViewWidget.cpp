@@ -1909,9 +1909,17 @@ void UploadType::init(NodeSelectorTreeViewWidget* wdg)
 
 bool UploadType::okButtonEnabled(NodeSelectorTreeViewWidget* wdg, const QModelIndexList& selected)
 {
-    return selected.size() == 1 ?
-               !selected.first().data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)).toBool() :
-               !wdg->isCurrentRootIndexReadOnly();
+    auto itemsSelected(selected.size());
+    // If we have one or less items selected
+    if (itemsSelected < 2)
+    {
+        return itemsSelected == 1 ?
+                   !selected.first().data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)).toBool() :
+                   !wdg->isCurrentRootIndexReadOnly();
+    }
+
+    // If we have more than one item selected, we cannot upload anything
+    return false;
 }
 
 NodeSelectorModelItemSearch::Types UploadType::allowedTypes()
