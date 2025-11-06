@@ -1917,8 +1917,6 @@ bool UploadType::okButtonEnabled(NodeSelectorTreeViewWidget* wdg, const QModelIn
     {
         return !wdg->isCurrentRootIndexReadOnly();
     }
-
-    return false;
 }
 
 NodeSelectorModelItemSearch::Types UploadType::allowedTypes()
