@@ -68,7 +68,7 @@ void NodeSelectorDelegate::paint(QPainter* painter,
         // Adjust the content to align it with the header
 #ifdef Q_OS_MACOS
         auxOpt.rect.adjust(0, 0, -5, 0);
-#elif defined(Q_OS_WINDOWS)
+#else
         auxOpt.rect.adjust(3, 0, -5, 0);
 #endif
     }
