@@ -81,6 +81,10 @@ protected:
 
     void onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList* nodes) override;
 
+    NodeSelectorTreeViewWidget* getTreeViewWidget(int page) const;
+    NodeSelectorTreeViewWidget* getTreeViewWidget(QObject* object) const;
+    NodeSelectorTreeViewWidget* getCurrentTreeViewWidget() const;
+
     enum class IncreaseOrDecrease
     {
         INCREASE,
@@ -160,10 +164,6 @@ private:
     std::optional<TabItem> selectedNodeTab();
 
     std::unique_ptr<mega::QTMegaListener> mDelegateListener;
-
-    NodeSelectorTreeViewWidget* getTreeViewWidget(int page) const;
-    NodeSelectorTreeViewWidget* getTreeViewWidget(QObject* object) const;
-    NodeSelectorTreeViewWidget* getCurrentTreeViewWidget() const;
 
     bool mManuallyResizedColumn;
     bool mInitialised;
