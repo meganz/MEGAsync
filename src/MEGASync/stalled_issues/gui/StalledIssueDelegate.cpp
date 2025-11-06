@@ -121,6 +121,22 @@ void StalledIssueDelegate::updateVisibleIndexesSizeHint(int updateDelay, bool fo
     }
 }
 
+void StalledIssueDelegate::onSelectionChanged(const QItemSelection&,
+                                              const QItemSelection& itemsDeselected)
+{
+    for (auto& index: itemsDeselected.indexes())
+    {
+        auto relativeIndex(getRelativeIndex(index));
+
+        QTimer::singleShot(0,
+                           this,
+                           [this, relativeIndex]()
+                           {
+                               mView->update(relativeIndex);
+                           });
+    }
+}
+
 QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
     if(mSizeHintRequested > 0)
@@ -598,7 +614,7 @@ QModelIndex StalledIssueDelegate::getRelativeIndex(const QModelIndex& index) con
     {
         if(auto model = index.model())
         {
-            model->index(0,0,index);
+            return model->index(0, 0, index);
         }
     }
     return QModelIndex();
