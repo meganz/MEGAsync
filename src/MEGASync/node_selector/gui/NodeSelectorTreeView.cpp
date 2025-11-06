@@ -1018,7 +1018,7 @@ std::shared_ptr<MegaNode> NodeSelectorTreeView::getDropNode(const QModelIndex& d
 {
     if (!dropIndex.isValid())
     {
-        const auto root = proxyModel()->getTopRootIndex();
+        const auto root = rootIndex();
         NodeSelectorModelItem* item(nullptr);
         if (!root.isValid())
         {
