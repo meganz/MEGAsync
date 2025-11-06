@@ -66,7 +66,11 @@ void NodeSelectorDelegate::paint(QPainter* painter,
         }
 
         // Adjust the content to align it with the header
+#ifdef Q_OS_MACOS
         auxOpt.rect.adjust(0, 0, -5, 0);
+#elif Q_OS_WIN
+        auxOpt.rect.adjust(12, 0, -5, 0);
+#endif
     }
 
     auxOpt.state.setFlag(QStyle::State_MouseOver, false);
@@ -132,7 +136,6 @@ void NodeRowDelegate::paint(QPainter* painter,
     QStyleOptionViewItem opt(option);
 
     opt.displayAlignment = Qt::AlignVCenter | Qt::AlignLeft;
-    opt.decorationAlignment = Qt::AlignVCenter | Qt::AlignLeft;
     opt.decorationSize = index.data(toInt(NodeSelectorModelRoles::ICON_SIZE_ROLE)).toSize();
 
     NodeSelectorDelegate::paint(painter, opt, index);
