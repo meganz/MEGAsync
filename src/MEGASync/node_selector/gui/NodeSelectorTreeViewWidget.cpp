@@ -1614,9 +1614,6 @@ void NodeSelectorTreeViewWidget::checkBackForwardButtons()
 
 void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex& proxy_idx)
 {
-    // Everytime we move among folders, we reset the selection
-    ui->tMegaFolders->selectionModel()->clear();
-
     // In case the idx is coming from a potentially hidden column, we always take the NODE column
     // As it is the only one that have childrens
     auto node_column_idx = proxy_idx.sibling(proxy_idx.row(), NodeSelectorModel::COLUMN::NODE);
@@ -1624,6 +1621,11 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex& proxy_idx)
     mModel->setCurrentRootIndex(mProxyModel->mapToSource(node_column_idx));
     ui->tMegaFolders->setRootIndex(node_column_idx);
     ui->tMegaFolders->setRootIndexReadOnly(isCurrentRootIndexReadOnly());
+    if (ui->tMegaFolders->rootIndex().isValid())
+    {
+        ui->tMegaFolders->selectionModel()->select(ui->tMegaFolders->rootIndex(),
+                                                   QItemSelectionModel::ClearAndSelect);
+    }
 
     checkButtonsVisibility();
 
@@ -2041,22 +2043,7 @@ void CloudDriveType::selectionHasChanged(NodeSelectorTreeViewWidget* wdg)
     else
     {
         buttons.value(ButtonId::ClearRubbish)->setVisible(false);
-
-        bool uploadEnabled(false);
-
-        auto selected = wdg->getSelectedIndexes();
-
-        if (!selected.isEmpty())
-        {
-            if (selected.size() == 1)
-            {
-                uploadEnabled =
-                    !selected.first().data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)).toBool();
-            }
-        }
-
-        buttons.value(ButtonId::Upload)
-            ->setVisible(uploadEnabled && !wdg->isSelectionReadOnly(selected));
+        buttons.value(ButtonId::Upload)->setVisible(!wdg->isCurrentRootIndexReadOnly());
     }
 }
 
