@@ -339,14 +339,18 @@ void CloudDriveNodeSelector::onCustomButtonClicked(uint id)
 {
     if (id == CloudDriveType::Upload)
     {
-        auto selectedNode = getSelectedNode();
-        if (selectedNode)
+        auto rootItem = getCurrentTreeViewWidget()->rootItem();
+        if (rootItem)
         {
-            MegaSyncApp->runUploadActionWithTargetHandle(selectedNode->getHandle(), this);
-        }
-        else
-        {
-            showNotFoundNodeMessageBox();
+            auto node = rootItem->getNode();
+            if (node)
+            {
+                MegaSyncApp->runUploadActionWithTargetHandle(node->getHandle(), this);
+            }
+            else
+            {
+                showNotFoundNodeMessageBox();
+            }
         }
     }
     else if (id == CloudDriveType::ClearRubbish)
