@@ -2,6 +2,7 @@
 
 #include "AlertItem.h"
 #include "NotificationItem.h"
+#include "TokenParserWidgetManager.h"
 
 namespace
 {
@@ -60,6 +61,7 @@ UserMessageWidget* UserMessageCacheManager::createOrGetWidget(int cacheIndex,
     {
         if(!widget->getData() || !data->hasSameId(widget->getData()->id()))
         {
+            data->clearSizeHint();
             widget->setData(data);
             newDataInWidget = true;
         }
@@ -75,8 +77,8 @@ UserMessageWidget* UserMessageCacheManager::createOrGetWidget(int cacheIndex,
     if (widget && newDataInWidget)
     {
         widget->show();
+        TokenParserWidgetManager::instance()->polish(widget);
         widget->hide();
-        data->setSizeHint(widget->sizeHint());
     }
 
     return widget;

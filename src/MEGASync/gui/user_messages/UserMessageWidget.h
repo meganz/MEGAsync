@@ -20,6 +20,7 @@ public:
 
 signals:
     void dataChanged();
+    void sizeHintChanged();
 };
 
 #endif // USER_MESSAGE_WIDGET_H
