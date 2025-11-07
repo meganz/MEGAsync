@@ -195,7 +195,7 @@ QmlDialog {
                     left: checkBoxText.right
                     leftMargin: 12
                 }
-                implicitWidth: 136
+                implicitWidth: 170
                 popupWidth: 210
                 currentIndex: syncExclusionsAccess.sizeExclusionStatus === disabledExclusionStatusIndex ? 0 : syncExclusionsAccess.sizeExclusionStatus
                 enabled: sizeRuleCheckbox.checked
@@ -259,7 +259,7 @@ QmlDialog {
                     left: lowLimitValue.right
                     leftMargin: 8 - lowLimitUnit.sizes.focusBorderWidth - lowLimitValue.sizes.focusBorderWidth
                 }
-                implicitWidth: 80
+                implicitWidth: 65
                 popupWidth: 107
                 currentIndex: syncExclusionsAccess.minimumAllowedUnit
                 enabled: sizeRuleCheckbox.checked
@@ -331,7 +331,7 @@ QmlDialog {
                     left: upperLimitValue.right
                     leftMargin: 8 - upperLimitValue.sizes.focusBorderWidth - upperLimitUnit.sizes.focusBorderWidth
                 }
-                implicitWidth: 80
+                implicitWidth: 65
                 popupWidth: 107
                 currentIndex: syncExclusionsAccess.maximumAllowedUnit
                 enabled: sizeRuleCheckbox.checked && (sizeLimitComboBox.currentText === ExclusionsStrings.outsideOf)
