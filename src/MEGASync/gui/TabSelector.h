@@ -47,6 +47,8 @@ public:
 
     void hide();
 
+    void connectToDropEvent(std::function<void(std::shared_ptr<QDropEvent>)> slot);
+
     // Convenient method to set to all selectors
     static void applyTokens(QWidget* parent, std::shared_ptr<TokenPropertySetter> iconTokensSetter);
 
@@ -62,11 +64,13 @@ public:
 signals:
     void clicked();
     void hidden();
+    void dropOnTabSelector(std::shared_ptr<QDropEvent> event);
 
 protected:
     bool event(QEvent* event) override;
     bool eventFilter(QObject* watched, QEvent* event) override;
     void dragEnterEvent(QDragEnterEvent* event) override;
+    void dropEvent(QDropEvent* event) override;
 
 private:
     Ui::TabSelector* ui;
@@ -74,6 +78,7 @@ private:
     std::shared_ptr<TokenPropertySetter> mIconTokens;
     std::shared_ptr<TokenPropertySetter> mCloseButtonTokens;
     QString mTitle;
+    bool mConnectedToDropEvent;
 };
 
 #endif // TABSELECTOR_H

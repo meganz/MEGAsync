@@ -176,8 +176,11 @@ QModelIndexList StalledIssuesDialog::getSelection(std::function<bool (const std:
 
 void StalledIssuesDialog::mouseReleaseEvent(QMouseEvent *event)
 {
-    //User cliked outside the view
-    ui->stalledIssuesTree->clearSelection();
+    // User cliked outside the view, but never while it is filtering
+    if (!ui->stalledIssuesTree->loadingView().isLoadingViewSet())
+    {
+        ui->stalledIssuesTree->clearSelection();
+    }
 
     QDialog::mouseReleaseEvent(event);
 }
@@ -344,6 +347,11 @@ void StalledIssuesDialog::onModelFiltered()
     {
         ui->stalledIssuesTree->setModel(mProxyModel);
         mViewHoverManager.setView(ui->stalledIssuesTree);
+
+        connect(ui->stalledIssuesTree->selectionModel(),
+                &QItemSelectionModel::selectionChanged,
+                mDelegate,
+                &StalledIssueDelegate::onSelectionChanged);
     }
 
     createTabTitles();

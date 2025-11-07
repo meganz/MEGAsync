@@ -21,7 +21,8 @@ const char* TAB_SELECTOR_GROUP = "tabselector_group";
 
 TabSelector::TabSelector(QWidget* parent):
     QWidget(parent),
-    ui(new Ui::TabSelector)
+    ui(new Ui::TabSelector),
+    mConnectedToDropEvent(false)
 {
     ui->setupUi(this);
 
@@ -189,9 +190,31 @@ bool TabSelector::eventFilter(QObject* watched, QEvent* event)
 }
 
 // You need to use setAcceptDrops externally in order to activate this feature
-void TabSelector::dragEnterEvent(QDragEnterEvent*)
+void TabSelector::dragEnterEvent(QDragEnterEvent* event)
 {
+    event->accept();
     setSelected(true);
+}
+
+void TabSelector::dropEvent(QDropEvent* event)
+{
+    if (mConnectedToDropEvent)
+    {
+        std::shared_ptr<QDropEvent> newEvent =
+            std::make_shared<QDropEvent>(QPoint(-1, -1),
+                                         event->possibleActions(),
+                                         event->mimeData(),
+                                         event->mouseButtons(),
+                                         event->keyboardModifiers(),
+                                         event->type());
+
+        emit dropOnTabSelector(newEvent);
+        event->accept();
+    }
+    else
+    {
+        event->ignore();
+    }
 }
 
 QList<TabSelector*> TabSelector::getTabSelectorByParent(QWidget* parent)
@@ -272,4 +295,10 @@ void TabSelector::hide()
 {
     setCounter(0);
     QWidget::hide();
+}
+
+void TabSelector::connectToDropEvent(std::function<void(std::shared_ptr<QDropEvent>)> slot)
+{
+    mConnectedToDropEvent = true;
+    connect(this, &TabSelector::dropOnTabSelector, this, slot);
 }

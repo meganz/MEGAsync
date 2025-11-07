@@ -29,6 +29,7 @@ public:
 
 public slots:
     void updateView();
+    void onSelectionChanged(const QItemSelection&, const QItemSelection& itemsDeselected);
 
 signals:
     bool goToIssue(StalledIssueFilterCriterion filter, const QModelIndex& sourceIndex);
