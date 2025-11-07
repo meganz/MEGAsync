@@ -1,13 +1,11 @@
 #include "UserMessageDelegate.h"
 
 #include "MegaDelegateHoverManager.h"
-#include "TokenParserWidgetManager.h"
 #include "UserMessage.h"
 #include "UserMessageCacheManager.h"
 #include "UserMessageProxyModel.h"
 #include "UserMessageWidget.h"
 
-#include <QLayout>
 #include <QPainter>
 #include <QTimer>
 #include <QTreeView>
