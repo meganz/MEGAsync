@@ -126,14 +126,7 @@ void StalledIssueDelegate::onSelectionChanged(const QItemSelection&,
 {
     for (auto& index: itemsDeselected.indexes())
     {
-        auto relativeIndex(getRelativeIndex(index));
-
-        QTimer::singleShot(0,
-                           this,
-                           [this, relativeIndex]()
-                           {
-                               mView->update(relativeIndex);
-                           });
+        updateRelativeIndex(index);
     }
 }
 
@@ -457,15 +450,9 @@ bool StalledIssueDelegate::event(QEvent *event)
             if (hoverEvent->type() == MegaDelegateHoverEvent::Enter)
             {
                 auto headerIndex(getHeaderIndex(hoverEvent->index()));
-                auto relativeIndex(getRelativeIndex(hoverEvent->index()));
-
                 mLastHoverIndex = headerIndex;
-                QTimer::singleShot(0,
-                                   this,
-                                   [this, relativeIndex]()
-                                   {
-                                       mView->update(relativeIndex);
-                                   });
+
+                updateRelativeIndex(hoverEvent->index());
 
                 onHoverEnter(hoverEvent->index());
             }
@@ -478,14 +465,7 @@ bool StalledIssueDelegate::event(QEvent *event)
                 auto headerIndex(getHeaderIndex(hoverEvent->index()));
                 if (mLastHoverIndex == headerIndex)
                 {
-                    auto relativeIndex(getRelativeIndex(hoverEvent->index()));
-                    QTimer::singleShot(0,
-                                       this,
-                                       [this, relativeIndex]()
-                                       {
-                                           mView->update(relativeIndex);
-                                       });
-
+                    updateRelativeIndex(hoverEvent->index());
                     mLastHoverIndex = QModelIndex();
                 }
                 onHoverLeave(hoverEvent->index());
@@ -623,6 +603,21 @@ QModelIndex StalledIssueDelegate::getRelativeIndex(const QModelIndex& index) con
 QModelIndex StalledIssueDelegate::getHeaderIndex(const QModelIndex &index) const
 {
     return index.parent().isValid() ? index.parent() : index;
+}
+
+void StalledIssueDelegate::updateRelativeIndex(const QModelIndex& parentIndex) const
+{
+    QPersistentModelIndex relativeIndex(getRelativeIndex(parentIndex));
+
+    QTimer::singleShot(0,
+                       this,
+                       [this, relativeIndex]()
+                       {
+                           if (relativeIndex.isValid())
+                           {
+                               mView->update(relativeIndex);
+                           }
+                       });
 }
 
 StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(const QModelIndex& proxyIndex, const StalledIssueVariant& data, const QSize& size) const
