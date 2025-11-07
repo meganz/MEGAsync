@@ -526,7 +526,7 @@ currentuser:
 modeselected:
 
   !insertmacro DEBUG_MSG "Closing MEGAsync"
-  ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /t /IM MEGAsync.exe"
+  ExecDos::exec /DETAILED /DISABLEFSR "$WINDIR\System32\taskkill.exe /f /t /IM MEGAsync.exe"
   Sleep 1000
 
   !insertmacro DEBUG_MSG "Installing files"
@@ -905,7 +905,7 @@ Function un.UninstallSyncs
 FunctionEnd
 
 Section Uninstall
-  ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /t /IM MEGASync.exe"
+  ExecDos::exec /DETAILED /DISABLEFSR "$WINDIR\System32\taskkill.exe /f /t /IM MEGASync.exe"
   Sleep 1000
 
   ${UAC.CallFunctionAsUser} un.UninstallSyncs
