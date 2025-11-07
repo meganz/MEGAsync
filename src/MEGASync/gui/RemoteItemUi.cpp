@@ -48,7 +48,6 @@ void RemoteItemUi::initView(QTableView* newView)
     ui->tableView = newView;
 
 #ifdef Q_OS_MACOS
-    ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tableView->horizontalHeader()->setStretchLastSection(true);
 #endif
 }
