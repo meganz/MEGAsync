@@ -15,7 +15,8 @@ ChangePasswordDialog {
     readonly property int passwordChangePageWidth: 496
 
     title: ChangePasswordStrings.title
-    visible: true
+    visible: false
+    Component.onCompleted: Qt.callLater(() => window.visible = true)
     modality: Qt.WindowModal
     width: passwordChangePageWidth
     height: passwordChangePageHeigh
