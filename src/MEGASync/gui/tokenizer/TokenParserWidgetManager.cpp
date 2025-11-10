@@ -156,8 +156,8 @@ void TokenParserWidgetManager::applyCurrentTheme(QWidget* dialog)
     std::chrono::duration<float> elapsed = end - start;
 
     qDebug() << "Time used to apply the theme : "
-             << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms";
-    qDebug() << "to the following dialog : " << dialog->objectName();
+             << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms"
+             << " to the following dialog : " << dialog->objectName();
 #endif
 }
 
@@ -193,7 +193,7 @@ void TokenParserWidgetManager::applyCurrentTheme()
         applyCurrentTheme(dialog);
     }
 
-    for (auto widget: mRegisteredWidgets)
+    for (auto widget: qAsConst(mRegisteredWidgets))
     {
         applyCurrentTheme(widget);
     }
@@ -204,18 +204,17 @@ QColor TokenParserWidgetManager::getColor(const QString& colorToken)
     return getColor(colorToken, ThemeManager::instance()->getSelectedColorSchemaString());
 }
 
-QColor TokenParserWidgetManager::getColor(const QString& colorToken,
-                                          const QString& currentColorSchema)
+QColor TokenParserWidgetManager::getColor(const QString& colorToken, const QString& colorSchema)
 {
     QColor color;
 
-    if (!mColorThemedTokens.contains(currentColorSchema))
+    if (!mColorThemedTokens.contains(colorSchema))
     {
-        qWarning() << __func__ << " Error theme not found : " << currentColorSchema;
+        qWarning() << __func__ << " Error theme not found : " << colorSchema;
     }
     else
     {
-        const auto& colorTokens = mColorThemedTokens.value(currentColorSchema);
+        const auto& colorTokens = mColorThemedTokens.value(colorSchema);
         color = QColor(colorTokens.value(colorToken, QString()));
         if (!color.isValid())
         {
@@ -277,21 +276,45 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
 {
     auto currentTheme = ThemeManager::instance()->getSelectedColorSchemaString();
 
-    QString widgetStyleSheet;
-    if (mWidgetsStyleSheets.contains(widget->objectName()))
+    QString widgetThemedStyleSheet;
+    if (mThemedWidgetStyleSheets.contains(currentTheme) &&
+        mThemedWidgetStyleSheets[currentTheme].contains(widget->objectName()))
     {
-        widgetStyleSheet = mWidgetsStyleSheets[widget->objectName()];
+        widgetThemedStyleSheet = mThemedWidgetStyleSheets[currentTheme][widget->objectName()];
+    }
+    else
+    {
+        widgetThemedStyleSheet = helpApplyTheme(widget);
+        mThemedWidgetStyleSheets[currentTheme][widget->objectName()] = widgetThemedStyleSheet;
+    }
+
+    if (!widgetThemedStyleSheet.isEmpty())
+    {
+        widget->setStyleSheet(widgetThemedStyleSheet);
+    }
+}
+
+QString TokenParserWidgetManager::helpApplyTheme(QWidget* widget)
+{
+    auto currentTheme = ThemeManager::instance()->getSelectedColorSchemaString();
+
+    static QMap<QString, QString> widgetsStyleSheets;
+
+    QString widgetStyleSheet;
+    if (widgetsStyleSheets.contains(widget->objectName()))
+    {
+        widgetStyleSheet = widgetsStyleSheets[widget->objectName()];
     }
     else
     {
         widgetStyleSheet = widget->styleSheet();
-        mWidgetsStyleSheets[widget->objectName()] = widgetStyleSheet;
+        widgetsStyleSheets[widget->objectName()] = widgetStyleSheet;
     }
 
     if (!mColorThemedTokens.contains(currentTheme))
     {
         qWarning() << __func__ << " Error theme not found : " << currentTheme;
-        return;
+        return {};
     }
 
     const auto& colorTokens = mColorThemedTokens.value(currentTheme);
@@ -305,7 +328,7 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
                                                 QLatin1String()) %
                          widgetStyleSheet;
 
-    widget->setStyleSheet(styleSheet);
+    return styleSheet;
 }
 
 void TokenParserWidgetManager::removeFrameOnDialogCombos(QWidget* widget)
@@ -316,7 +339,7 @@ void TokenParserWidgetManager::removeFrameOnDialogCombos(QWidget* widget)
         return;
     }
 
-    for (auto comboBox: comboBoxes)
+    for (auto comboBox: qAsConst(comboBoxes))
     {
         comboBox->view()->window()->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint |
                                                    Qt::NoDropShadowWindowHint);

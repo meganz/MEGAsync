@@ -24,7 +24,7 @@ public:
     void applyCurrentTheme(QWidget* dialog);
     void polish(QWidget* widget);
     QColor getColor(const QString& colorToken);
-    QColor getColor(const QString& colorToken, const QString& currentColorSchema);
+    QColor getColor(const QString& colorToken, const QString& colorSchema);
     static void styleQFileDialog(QPointer<QFileDialog> dialog);
 
 private:
@@ -36,6 +36,7 @@ private:
     void onThemeChanged();
     void onUpdateRequested();
     void applyTheme(QWidget* widget);
+    QString helpApplyTheme(QWidget* widget);
     void replaceIconColorTokens(QWidget* widget, QString& styleSheet);
     void replaceColorTokens(QString& styleSheet, const ColorTokens& colorTokens);
     void removeFrameOnDialogCombos(QWidget* widget);
@@ -44,7 +45,7 @@ private:
 
     QMap<QString, ColorTokens> mColorThemedTokens;
     QMap<QString, QString> mThemedStandardComponentsStyleSheet;
-    QMap<QString, QString> mWidgetsStyleSheets;
+    QMap<QString, QMap<QString, QString>> mThemedWidgetStyleSheets;
     QSet<QWidget*> mRegisteredWidgets;
 };
 
