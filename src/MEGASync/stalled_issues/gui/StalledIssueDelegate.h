@@ -54,6 +54,8 @@ private:
     QModelIndex getRelativeIndex(const QModelIndex &index) const;
     QModelIndex getHeaderIndex(const QModelIndex& index) const;
 
+    void updateRelativeIndex(const QModelIndex& parentIndex) const;
+
     StalledIssueBaseDelegateWidget *getStalledIssueItemWidget(const QModelIndex &proxyIndex, const StalledIssueVariant &data, const QSize& size = QSize()) const;
 
     void updateColors() const;
