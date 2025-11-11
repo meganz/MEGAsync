@@ -111,6 +111,7 @@ public:
     bool isVisible();
     void hide();
     void show();
+    void showSync();
     void close();
     void activateWindow();
     QWindow* windowHandle();

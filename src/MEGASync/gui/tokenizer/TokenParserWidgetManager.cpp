@@ -281,6 +281,7 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
         mThemedWidgetStyleSheets[currentTheme].contains(widget->objectName()))
     {
         widgetThemedStyleSheet = mThemedWidgetStyleSheets[currentTheme][widget->objectName()];
+        tokenizeChildStyleSheets(widget);
     }
     else
     {
