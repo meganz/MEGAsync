@@ -145,7 +145,7 @@ protected:
 
 private:
     QDialog::DialogCode mResult;
-    QTimer mCallDelayer;
+    QTimer mShowDelay;
 };
 
 
