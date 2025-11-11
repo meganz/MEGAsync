@@ -36,7 +36,6 @@ private:
     void onThemeChanged();
     void onUpdateRequested();
     void applyTheme(QWidget* widget);
-    QString helpApplyTheme(QWidget* widget);
     void replaceIconColorTokens(QWidget* widget, QString& styleSheet);
     void replaceColorTokens(QString& styleSheet, const ColorTokens& colorTokens);
     void removeFrameOnDialogCombos(QWidget* widget);
@@ -45,7 +44,7 @@ private:
 
     QMap<QString, ColorTokens> mColorThemedTokens;
     QMap<QString, QString> mThemedStandardComponentsStyleSheet;
-    QMap<QString, QMap<QString, QString>> mThemedWidgetStyleSheets;
+    QMap<QString, QString> mWidgetsStyleSheets;
     QSet<QWidget*> mRegisteredWidgets;
 };
 

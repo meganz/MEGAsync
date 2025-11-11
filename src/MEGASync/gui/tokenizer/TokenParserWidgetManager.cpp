@@ -156,8 +156,8 @@ void TokenParserWidgetManager::applyCurrentTheme(QWidget* dialog)
     std::chrono::duration<float> elapsed = end - start;
 
     qDebug() << "Time used to apply the theme : "
-             << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms"
-             << " to the following dialog : " << dialog->objectName();
+             << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms";
+    qDebug() << "to the following dialog : " << dialog->objectName();
 #endif
 }
 
@@ -276,46 +276,21 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
 {
     auto currentTheme = ThemeManager::instance()->getSelectedColorSchemaString();
 
-    QString widgetThemedStyleSheet;
-    if (mThemedWidgetStyleSheets.contains(currentTheme) &&
-        mThemedWidgetStyleSheets[currentTheme].contains(widget->objectName()))
-    {
-        widgetThemedStyleSheet = mThemedWidgetStyleSheets[currentTheme][widget->objectName()];
-        tokenizeChildStyleSheets(widget);
-    }
-    else
-    {
-        widgetThemedStyleSheet = helpApplyTheme(widget);
-        mThemedWidgetStyleSheets[currentTheme][widget->objectName()] = widgetThemedStyleSheet;
-    }
-
-    if (!widgetThemedStyleSheet.isEmpty())
-    {
-        widget->setStyleSheet(widgetThemedStyleSheet);
-    }
-}
-
-QString TokenParserWidgetManager::helpApplyTheme(QWidget* widget)
-{
-    auto currentTheme = ThemeManager::instance()->getSelectedColorSchemaString();
-
-    static QMap<QString, QString> widgetsStyleSheets;
-
     QString widgetStyleSheet;
-    if (widgetsStyleSheets.contains(widget->objectName()))
+    if (mWidgetsStyleSheets.contains(widget->objectName()))
     {
-        widgetStyleSheet = widgetsStyleSheets[widget->objectName()];
+        widgetStyleSheet = mWidgetsStyleSheets[widget->objectName()];
     }
     else
     {
         widgetStyleSheet = widget->styleSheet();
-        widgetsStyleSheets[widget->objectName()] = widgetStyleSheet;
+        mWidgetsStyleSheets[widget->objectName()] = widgetStyleSheet;
     }
 
     if (!mColorThemedTokens.contains(currentTheme))
     {
         qWarning() << __func__ << " Error theme not found : " << currentTheme;
-        return {};
+        return;
     }
 
     const auto& colorTokens = mColorThemedTokens.value(currentTheme);
@@ -329,7 +304,7 @@ QString TokenParserWidgetManager::helpApplyTheme(QWidget* widget)
                                                 QLatin1String()) %
                          widgetStyleSheet;
 
-    return styleSheet;
+    widget->setStyleSheet(styleSheet);
 }
 
 void TokenParserWidgetManager::removeFrameOnDialogCombos(QWidget* widget)
