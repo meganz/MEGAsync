@@ -153,7 +153,13 @@ void QmlDialogWrapperBase::hide()
 
 void QmlDialogWrapperBase::show()
 {
-   setWindowState(mWindow->windowState());
+    static int SHOW_DELAY = 150;
+
+    mCallDelayer.singleShot(SHOW_DELAY,
+                            [this]()
+                            {
+                                setWindowState(mWindow->windowState());
+                            });
 }
 
 void QmlDialogWrapperBase::activateWindow()

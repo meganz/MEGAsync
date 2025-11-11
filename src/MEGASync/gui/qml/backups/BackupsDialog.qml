@@ -16,7 +16,7 @@ SyncsQmlDialog {
     readonly property int syncOrigin: SyncInfo.MAIN_APP_ORIGIN
 
     title: BackupsStrings.backupsWindowTitle
-    visible: true
+    visible: false
     modality: Qt.NonModal
     width: 640
     height: 560

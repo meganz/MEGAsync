@@ -10,9 +10,10 @@ GuestQmlDialog {
     width: 400
     height: 560
     color: "transparent"
+    visible: false
 
     onVisibleChanged:  {
-        if(visible) {
+        if (visible) {
             accountStatusControllerAccess.whyAmIBlocked();
         }
     }

@@ -18,6 +18,7 @@
 #include <QQmlEngine>
 #include <QQuickWindow>
 #include <QScreen>
+#include <QTimer>
 
 #include <iostream>
 
@@ -143,6 +144,7 @@ protected:
 
 private:
     QDialog::DialogCode mResult;
+    QTimer mCallDelayer;
 };
 
 
