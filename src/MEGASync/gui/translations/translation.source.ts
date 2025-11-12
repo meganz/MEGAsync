@@ -7248,6 +7248,11 @@ Do you want to delete it anyway?</translation>
             <numerusform>days</numerusform>
         </translation>
     </message>
+    <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog_Bandwith</name>
