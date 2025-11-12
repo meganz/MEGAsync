@@ -2,6 +2,7 @@
 
 #include "SyncController.h"
 #include "SyncTooltipCreator.h"
+#include "Utilities.h"
 
 #include <QCoreApplication>
 #include <QFileInfo>
@@ -80,12 +81,25 @@ QVariant BackupItemModel::data(const QModelIndex& index, int role) const
                      sync->getRunState() == mega::MegaSync::RUNSTATE_PENDING))
                 {
                     QIcon syncIcon;
-                    syncIcon.addFile(QLatin1String(":/images/sync_states/backup.png"),
-                                     QSize(STATES_ICON_SIZE, STATES_ICON_SIZE),
-                                     QIcon::Normal);
-                    syncIcon.addFile(QLatin1String(":/images/sync_states/backup-selected.png"),
-                                     QSize(STATES_ICON_SIZE, STATES_ICON_SIZE),
-                                     QIcon::Selected);
+
+                    QPixmap backupNormal = Utilities::getColoredPixmap(
+                        QLatin1String("database"),
+                        Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                            Utilities::AttributeType::OUTLINE,
+                        QLatin1String("icon-primary"),
+                        QSize(STATES_ICON_SIZE, STATES_ICON_SIZE));
+
+                    syncIcon.addPixmap(backupNormal, QIcon::Normal);
+
+                    QPixmap backupSelected = Utilities::getColoredPixmap(
+                        QLatin1String("database"),
+                        Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                            Utilities::AttributeType::OUTLINE,
+                        QLatin1String("icon-inverse"),
+                        QSize(STATES_ICON_SIZE, STATES_ICON_SIZE));
+
+                    syncIcon.addPixmap(backupSelected, QIcon::Selected);
+
                     return syncIcon;
                 }
             }

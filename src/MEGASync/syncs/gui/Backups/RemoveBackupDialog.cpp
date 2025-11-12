@@ -65,6 +65,7 @@ void RemoveBackupDialog::OnMoveSelected()
 void RemoveBackupDialog::OnChangeButtonClicked()
 {
     auto nodeSelector = new MoveBackupNodeSelector(this);
+    nodeSelector->init();
     DialogOpener::showDialog<NodeSelector>(
         nodeSelector,
         [this, nodeSelector]

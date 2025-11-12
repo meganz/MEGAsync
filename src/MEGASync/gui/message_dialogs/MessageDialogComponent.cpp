@@ -37,12 +37,21 @@ void MessageDialogComponent::registerQmlModules()
             0,
             "MessageDialogButtonInfo",
             QString::fromLatin1("MessageDialogButtonInfo can only be used for the enum values"));
+
         qmlRegisterUncreatableType<MessageDialogTextInfo>(
             "MessageDialogTextInfo",
             1,
             0,
             "MessageDialogTextInfo",
             QString::fromLatin1("MessageDialogTextInfo can only be used for the enum values"));
+
+        qmlRegisterUncreatableType<MessageDialogData>(
+            "MessageDialogData",
+            1,
+            0,
+            "MessageDialogData",
+            QString::fromLatin1("MessageDialogDataType can only be used for the enum values"));
+
         qmlRegistrationDone = true;
     }
 }

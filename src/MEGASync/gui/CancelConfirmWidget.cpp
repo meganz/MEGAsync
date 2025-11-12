@@ -1,6 +1,5 @@
 #include "CancelConfirmWidget.h"
 
-#include "BlurredShadowEffect.h"
 #include "ui_CancelConfirmWidget.h"
 #include "Utilities.h"
 
@@ -10,9 +9,6 @@ CancelConfirmWidget::CancelConfirmWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     setupAnimation();
-
-    ui->pDismiss->setGraphicsEffect(CreateBlurredShadowEffect());
-    ui->pProceed->setGraphicsEffect(CreateBlurredShadowEffect(QColor(217, 0, 7, 76)));
 
     connect(ui->pDismiss, &QPushButton::clicked, this, &CancelConfirmWidget::onDismissClicked);
     connect(ui->pProceed, &QPushButton::clicked, this, &CancelConfirmWidget::onProceedClicked);
@@ -72,8 +68,8 @@ void CancelConfirmWidget::setupAnimation()
     mAnimation = new QMovie(this);
     mAnimation->setCacheMode(QMovie::CacheAll);
     qreal ratio = Utilities::getDevicePixelRatio();
-    QString gifFile = (ratio < 2) ? QString::fromUtf8(":/animations/cancelling.gif")
-                                  : QString::fromUtf8(":/animations/cancelling@2x.gif");
+    QString gifFile =
+        (ratio < 2) ? QString::fromUtf8(":/Activity.gif") : QString::fromUtf8(":/Activity@2x.gif");
     mAnimation->setFileName(gifFile);
 }
 

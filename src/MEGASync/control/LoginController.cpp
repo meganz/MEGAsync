@@ -968,13 +968,13 @@ FastLoginController::FastLoginController(QObject *parent)
 
 bool FastLoginController::fastLogin()
 {
-    QString session = mPreferences->getSession();
-    if(session.size())
+    const auto session = mPreferences->getSession();
+    const bool hasSession = !session.isEmpty();
+    if (hasSession)
     {
         mMegaApi->fastLogin(session.toUtf8().constData());
-        return true;
     }
-    return false;
+    return hasSession;
 }
 
 void FastLoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e)
@@ -1076,13 +1076,18 @@ void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
         else if (paramType == mega::MegaError::API_ESSL)
         {
             MessageDialogInfo msgInfo;
+
+            msgInfo.textFormat = Qt::RichText;
+
+            msgInfo.titleText = tr("Secure connection failed");
             msgInfo.descriptionText =
-                tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle "
-                   "attack or your antivirus software "
-                   "could be intercepting your communications and causing this problem. Please "
-                   "disable it and try again.") +
-                QString::fromUtf8(" (Issuer: %1)")
-                    .arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown"));
+                tr("MEGA couldn’t connect securely.[BR]If you’re on public Wi-Fi, try signing in "
+                   "through your browser first. Your ISP or security software might also be "
+                   "interfering with the connection.[BR][A]Learn more[/A]");
+            Text::RichText(ServiceUrls::getSslErrorHelpUrl().toString())
+                .process(msgInfo.descriptionText);
+
+            msgInfo.buttons = QMessageBox::Ok;
 
             MessageDialogOpener::critical(msgInfo);
             mMegaApi->localLogout();

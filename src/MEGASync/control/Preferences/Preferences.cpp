@@ -230,6 +230,7 @@ const QString Preferences::lastExitKey              = QString::fromLatin1("lastE
 const QString Preferences::disableOverlayIconsKey   = QString::fromLatin1("disableOverlayIcons");
 const QString Preferences::disableFileVersioningKey = QString::fromLatin1("disableFileVersioning");
 const QString Preferences::disableLeftPaneIconsKey  = QString::fromLatin1("disableLeftPaneIcons");
+const QString Preferences::disableContextMenuKey = QString::fromLatin1("disableContextMenu");
 const QString Preferences::sessionKey               = QString::fromLatin1("session");
 const QString Preferences::ephemeralSessionKey      = QString::fromLatin1("ephemeralSession");
 const QString Preferences::firstStartDoneKey        = QString::fromLatin1("firstStartDone");
@@ -314,12 +315,15 @@ const bool  Preferences::defaultNeverCreateLink   = false;
 const bool  Preferences::defaultImportMegaLinksEnabled = true;
 const bool  Preferences::defaultDownloadMegaLinksEnabled = true;
 const bool Preferences::defaultSystemTrayPromptSuppressed = false;
-const Preferences::ThemeType Preferences::defaultTheme = Preferences::ThemeType::LIGHT_THEME;
+const Preferences::ThemeType Preferences::defaultTheme = Preferences::ThemeType::UNINITIALIZED;
 const bool Preferences::defaultAskOnExclusionRemove = true;
+
+const int Preferences::defaultLastVersion = 0;
 
 const int Preferences::minSyncStateChangeProcessingIntervalMs = 200;
 
-int Preferences::lastVersionUponStartup = 0;
+const QString Preferences::dontShowExportLinkDialogKey =
+    QString::fromLatin1("dontShowExportLinkDialogKey");
 
 std::shared_ptr<Preferences> Preferences::instance()
 {
@@ -404,13 +408,13 @@ void Preferences::initialize(QString dataPath)
     }
 }
 
-Preferences::Preferences() :
+Preferences::Preferences():
     QObject(),
     mutex(QMutex::Recursive),
     mSettings(nullptr),
-    diffTimeWithSDK(0),
     lastTransferNotification(0)
 {
+    qRegisterMetaType<Preferences::SystemColorScheme>("Preferences::SystemColorScheme");
     clearTemporalBandwidth();
 }
 
@@ -799,16 +803,6 @@ void Preferences::setBandwidthInterval(int value)
 bool Preferences::isTemporalBandwidthValid()
 {
     return isTempBandwidthValid;
-}
-
-long long Preferences::getMsDiffTimeWithSDK()
-{
-    return diffTimeWithSDK;
-}
-
-void Preferences::setDsDiffTimeWithSDK(long long diffTime)
-{
-    this->diffTimeWithSDK = diffTime;
 }
 
 long long Preferences::getOverStorageDialogExecution()
@@ -2501,6 +2495,16 @@ void Preferences::setDownloadsPaused(bool value)
     setValueConcurrently(wasDownloadsPausedKey, value);
 }
 
+void Preferences::setDontShowExportLinkDialog(bool value)
+{
+    setValueConcurrently(dontShowExportLinkDialogKey, value);
+}
+
+bool Preferences::getDontShowExportLinkDialog()
+{
+    return getValueConcurrent<bool>(dontShowExportLinkDialogKey, false);
+}
+
 long long Preferences::lastStatsRequest()
 {
     return getValueConcurrent<long long>(lastStatsRequestKey, 0);
@@ -2565,6 +2569,18 @@ void Preferences::disableLeftPaneIcons(bool value)
     setValueConcurrently(disableLeftPaneIconsKey, value);
 }
 
+bool Preferences::contextMenuDisabled()
+{
+    QMutexLocker locker(&mutex);
+    bool result = getValue(disableContextMenuKey, false);
+    return result;
+}
+
+void Preferences::disableContextMenu(bool value)
+{
+    setValueConcurrently(disableContextMenuKey, value);
+}
+
 bool Preferences::error()
 {
     return errorFlag;
@@ -2624,14 +2640,17 @@ void Preferences::setThemeType(ThemeType theme)
 
     if (theme != currentValue)
     {
-        setValueConcurrently(themeKey, static_cast<int>(theme));
+        setValueConcurrently(themeKey, QVariant::fromValue<Preferences::ThemeType>(theme).toInt());
+        sync();
     }
 }
 
 Preferences::ThemeType Preferences::getThemeType()
 {
-    auto value = getValueConcurrent<int>(themeKey, static_cast<int>(defaultTheme));
-    return static_cast<ThemeType>(value);
+    auto value =
+        getValueConcurrent<int>(themeKey,
+                                QVariant::fromValue<Preferences::ThemeType>(defaultTheme).toInt());
+    return QVariant::fromValue<int>(value).value<Preferences::ThemeType>();
 }
 
 #if defined(ENABLE_SDK_ISOLATED_GFX)
@@ -2712,17 +2731,19 @@ void Preferences::login(QString account)
     mSettings->beginGroup(account);
     readFolders();
     loadExcludedSyncNames();
-    int lastVersion = mSettings->value(lastVersionKey).toInt();
-    lastVersionUponStartup = lastVersion;
-    if (lastVersion != Preferences::VERSION_CODE)
+    const auto previousVersion =
+        mSettings->value(lastVersionKey, Preferences::defaultLastVersion).toInt();
+    if (previousVersion != Preferences::VERSION_CODE)
     {
-        if ((lastVersion != 0) && (lastVersion < Preferences::VERSION_CODE))
-        {
-            emit updated(lastVersion);
-        }
         mSettings->setValue(lastVersionKey, Preferences::VERSION_CODE);
+        sync();
     }
     mutex.unlock();
+    if ((previousVersion != Preferences::defaultLastVersion) &&
+        (previousVersion < Preferences::VERSION_CODE))
+    {
+        emit updated(previousVersion);
+    }
 }
 
 bool Preferences::logged()

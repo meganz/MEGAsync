@@ -36,9 +36,12 @@ void StalledIssueChooseWidget::setActionButtonVisibility(bool state)
     ui->chooseTitle->setActionButtonVisibility(BUTTON_ID, state);
 }
 
-void StalledIssueChooseWidget::setMessage(const QString& string, const QPixmap& pixmap, const QString& tooltip)
+void StalledIssueChooseWidget::setMessage(const QString& string,
+                                          const QString& pixmapName,
+                                          const QString& iconToken,
+                                          const QString& tooltip)
 {
-    ui->chooseTitle->setMessage(string, pixmap, tooltip);
+    ui->chooseTitle->setMessage(string, pixmapName, iconToken, tooltip);
 }
 
 void StalledIssueChooseWidget::setFailed(bool state, const QString& tooltip)
@@ -94,10 +97,11 @@ GenericChooseWidget::GenericChooseWidget(QWidget* parent)
     ui->pathContainer->hide();
     ui->nameContainer->hide();
 
-    auto margins(ui->titleContainer->layout()->contentsMargins());
-    margins.setTop(4);
-    margins.setBottom(4);
-    ui->titleContainer->layout()->setContentsMargins(margins);
+    auto margins(ui->frame->layout()->contentsMargins());
+    margins.setTop(1);
+    margins.setBottom(1);
+    ui->frame->layout()->setContentsMargins(margins);
+
     ui->chooseTitle->removeBackgroundColor();
 }
 
@@ -108,10 +112,14 @@ QString GenericChooseWidget::solvedString() const
 
 void GenericChooseWidget::setSolved(bool isSolved, bool isSelected)
 {
-    if(isSelected)
+    if (isSelected)
     {
-        QIcon solvedIcon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-        ui->chooseTitle->setMessage(mInfo.solvedText, solvedIcon.pixmap(16,16));
+        ui->chooseTitle->setMessage(mInfo.solvedText,
+                                    Utilities::getPixmapName(QLatin1String("check"),
+                                                             Utilities::AttributeType::SMALL |
+                                                                 Utilities::AttributeType::THIN |
+                                                                 Utilities::AttributeType::OUTLINE),
+                                    QLatin1String("support-success"));
     }
     else
     {
@@ -126,8 +134,6 @@ void GenericChooseWidget::setInfo(const GenericInfo &info)
 {
     mInfo = info;
 
-    QIcon icon(info.icon);
-    auto iconPixmap(icon.pixmap(QSize(16,16)));
-    ui->chooseTitle->setHTML(info.title, iconPixmap);
+    ui->chooseTitle->setHTML(info.title, info.icon, info.iconToken);
     ui->chooseTitle->addActionButton(QIcon(), info.buttonText, BUTTON_ID, true);
 }

@@ -13,15 +13,9 @@
   <property name="styleSheet">
    <string notr="true">#frame 
 {
-    border-radius: 8px;
-    border: 1px solid  #D6D6D6;
-    background-color: #FFFFFF;
-}
-
-StalledIssueActionTitle
-{
-    min-height: 40 px;
-    background-color: #F5F5F5;
+    border-radius: 6px;
+    border: 1px solid  #F6F6F7; /*colorToken.border-subtle*/
+    background-color: #FFFFFFFF; /*colorToken.page-background*/
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -56,7 +50,7 @@ StalledIssueActionTitle
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>4</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
@@ -71,13 +65,13 @@ StalledIssueActionTitle
           <number>4</number>
          </property>
          <property name="leftMargin">
-          <number>4</number>
+          <number>8</number>
          </property>
          <property name="topMargin">
-          <number>0</number>
+          <number>8</number>
          </property>
          <property name="rightMargin">
-          <number>4</number>
+          <number>8</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
@@ -92,10 +86,10 @@ StalledIssueActionTitle
           <number>0</number>
          </property>
          <property name="leftMargin">
-          <number>8</number>
+          <number>20</number>
          </property>
          <property name="topMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="rightMargin">
           <number>8</number>

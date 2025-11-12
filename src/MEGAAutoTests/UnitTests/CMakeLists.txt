@@ -76,6 +76,7 @@ include(${MegaSyncDir}/syncs/syncs.cmake)
 include(${MegaSyncDir}/platform/platform.cmake)
 include(${MegaSyncDir}/transfers/transfers.cmake)
 include(${MegaSyncDir}/stalled_issues/stalledissues.cmake)
+include(${MegaSyncDir}/node_selector/nodeselector.cmake)
 include(${MegaSyncDir}/notifications/notifications.cmake)
 include(${MegaSyncDir}/UserAttributesRequests/userattributesrequests.cmake)
 

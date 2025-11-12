@@ -244,6 +244,13 @@ void MegaProxyStyle::polish(QWidget *widget)
 
                                    return false;
                                });
+
+        if (menu->property("class").toString() == QLatin1String("MegaMenu") &&
+            !menu->testAttribute(Qt::WA_TranslucentBackground))
+        {
+            menu->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint);
+            menu->setAttribute(Qt::WA_TranslucentBackground);
+        }
     }
     else if(qobject_cast<QDialog*>(widget) || qobject_cast<QWindow*>(widget))
     {

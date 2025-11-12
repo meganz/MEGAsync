@@ -17,6 +17,7 @@ FocusScope {
     property string key: digit1.text + digit2.text + digit3.text
                             + digit4.text + digit5.text + digit6.text
     property bool hasError: false
+    property bool hasAllDigitsFilled: (key.length === 6)
 
     signal allDigitsFilled
 

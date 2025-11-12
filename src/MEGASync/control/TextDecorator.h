@@ -43,6 +43,7 @@ class NewLine : public Decorator
 public:
     explicit NewLine(QObject* parent = nullptr);
     void process(QString& input) const override;
+    void process(QString& input, int brCount) const;
 };
 
 class RichText: public Decorator

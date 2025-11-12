@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>639</width>
-    <height>397</height>
+    <height>421</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -35,112 +35,88 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">*
+   <string notr="true">/*********** actionContainer **********/
+#actionMessageContainer
 {
-   font-family: Lato;
-}
-
-#selectionText
-{
-  color: #333333;
-  font-size: 13px;
-  font-weight: bold;
-}
-
-#errorDescriptionText
-{
-  color: #666666;
-  line-height: 15px;
-  font-size: 12px;
-  font-weight: normal;
-}
-
-#actionButton, #ignoreFileButton, #multipleActionButton
-{
-   font-size:14px;
-   background-color: #FCFCFC;
-   color: #333333;
-   border-radius:3px;
-   border: 1px solid rgba(0,0,0,0.15);
-   padding-left: 16px;
-   padding-right: 16px;
-}
-
-#actionButton:hover:enabled, #ignoreFileButton::hover:enabled, #multipleActionButton::hover:enabled
-{
-    background-color: #E2E2E2;
-}
-
-#actionButton:pressed:enabled, #ignoreFileButton::pressed:enabled, #multipleActionButton::pressed:enabled
-{
-    background-color: #C9C9C9;
-}
-
-QToolTip
-{
-	color:#FAFAFA;
-	background-color:#333333
-}
-
-/*********** actionContainer **********/
-#actionMessage
-{
-   font-size:12px;
+   border-radius: 4px;
 }
 
 #actionMessageContainer[STATE=&quot;being solved&quot;]
 {
-	background-color: #F3F4F4;
-	border-radius: 4px;
+	background-color: #F3F4F4; /*colorToken.surface-2*/
 }
 
 #actionMessageContainer[STATE=&quot;being solved&quot;] QLabel
 {
-    color: #616366;
+    color: #616366; /*colorToken.text-secondary*/
 }
 
 #actionMessageContainer[STATE=&quot;solved&quot;]
 {
-	background-color: #CFFCDB;
-	border-radius: 4px;
+	background-color: #CFFCDB; /*colorToken.notification-success*/
 }
 
 #actionMessageContainer[STATE=&quot;solved&quot;] QLabel
 {
-    color: #007C3E;
+    color: #007C3E; /*colorToken.text-success*/
+}
+
+#actionMessageContainer[STATE=&quot;ignored&quot;]
+{
+	background-color: #CFFCDB; /*colorToken.notification-success*/
+}
+
+#actionMessageContainer[STATE=&quot;ignored&quot;]
+{
+	background-color: #FEF4C6; /*colorToken.notification-warning*/
 }
 
 #actionMessageContainer[STATE=&quot;failed&quot;]
 {
-	background-color: #FFE4E8;
-	border-radius: 4px;
+	background-color: #B55407; /*colorToken.notification-error*/
 }
 
 #actionMessageContainer[STATE=&quot;failed&quot;] QLabel
 {
-	color: #E31B57;
+	color: #E31B57; /*colorToken.text-error*/
 }
 /*********** actionContainer **********/
 
-/*********** errorContainer **********/
-#fileNameTitle
+/*********** multiple action button ****/
+#multipleActionButton
 {
-     color: #333333;
-     font-size: 13px;
-     line-height: 16px;
-     font-family: Lato Bold;
+    	qproperty-icon: url(:/chevron-down_default); 
+    	qproperty-iconSize: 16px;
 }
-/*********** errorContainer **********/</string>
+
+#multipleActionButton:hover
+{
+    	qproperty-icon: url(:/chevron-down_hover); 
+    	qproperty-iconSize: 16px;
+}
+
+#multipleActionButton:pressed
+{
+    	qproperty-icon: url(:/chevron-down_pressed); 
+    	qproperty-iconSize: 16px;
+}
+/*********** multiple action button ****/</string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,0">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
-    <number>6</number>
+    <number>20</number>
    </property>
    <property name="topMargin">
     <number>6</number>
    </property>
    <property name="rightMargin">
-    <number>20</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>6</number>
@@ -166,6 +142,9 @@ QToolTip
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_7">
+      <property name="spacing">
+       <number>8</number>
+      </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -179,7 +158,13 @@ QToolTip
        <number>0</number>
       </property>
       <item>
-       <widget class="QLabel" name="arrow">
+       <widget class="IconLabel" name="arrow">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>16</width>
@@ -192,13 +177,36 @@ QToolTip
           <height>16</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../gui/Resources_common.qrc">
+          <normaloff>:/chevron-left_default</normaloff>
+          <normalon>:/chevron-down_default</normalon>:/chevron-left_default</iconset>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="normal_off" stdset="0">
+         <string notr="true">icon-primary</string>
+        </property>
+        <property name="normal_on" stdset="0">
+         <string notr="true">icon-primary</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="fileTypeIcon">
+       <widget class="IconLabel" name="fileTypeIcon">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>48</width>
@@ -211,11 +219,17 @@ QToolTip
           <height>48</height>
          </size>
         </property>
-        <property name="text">
-         <string/>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>48</width>
+          <height>48</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -263,7 +277,7 @@ QToolTip
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
+           <layout class="QHBoxLayout" name="horizontalLayout">
             <property name="spacing">
              <number>3</number>
             </property>
@@ -280,59 +294,51 @@ QToolTip
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="errorTitleIcon">
+             <widget class="IconLabel" name="errorTitleIcon">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
-                <width>24</width>
-                <height>24</height>
+                <width>16</width>
+                <height>16</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>24</width>
-                <height>24</height>
+                <width>16</width>
+                <height>16</height>
                </size>
               </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
               <property name="text">
-               <string/>
+               <string notr="true"/>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../gui/Resources_common.qrc">
+                <normaloff>:/alert-triangle_small_thin_outline</normaloff>:/alert-triangle_small_thin_outline</iconset>
+              </property>
+              <property name="normal_off" stdset="0">
+               <string notr="true">support-warning</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QWidget" name="errorTitleTextContainer" native="true">
+             <widget class="WordWrapLabel" name="fileNameTitle">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0">
-               <property name="spacing">
-                <number>3</number>
-               </property>
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="WordWrapLabel" name="fileNameTitle">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+              <property name="font-size" stdset="0">
+               <string notr="true">body-2</string>
+              </property>
              </widget>
             </item>
            </layout>
@@ -373,6 +379,12 @@ QToolTip
               <property name="toolTip">
                <string/>
               </property>
+              <property name="type" stdset="0">
+               <string notr="true">secondary</string>
+              </property>
+              <property name="font-size" stdset="0">
+               <string notr="true">caption</string>
+              </property>
              </widget>
             </item>
            </layout>
@@ -397,7 +409,7 @@ QToolTip
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>7</number>
+       <number>20</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -407,28 +419,29 @@ QToolTip
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>32</height>
+          <height>26</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>32</height>
+          <height>26</height>
          </size>
         </property>
         <property name="text">
          <string/>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normalon>:/images/node_selector/Icon-Small-Arrow-Down.png</normalon>
-         </iconset>
         </property>
         <property name="iconSize">
          <size>
           <width>16</width>
           <height>16</height>
          </size>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">secondary</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string notr="true">small</string>
         </property>
        </widget>
       </item>
@@ -476,10 +489,19 @@ QToolTip
              <height>16</height>
             </size>
            </property>
+           <property name="colorToken" stdset="0">
+            <string notr="true">icon-primary</string>
+           </property>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="actionMessageIcon">
+          <widget class="IconLabel" name="actionMessageIcon">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>16</width>
@@ -492,6 +514,9 @@ QToolTip
              <height>16</height>
             </size>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="text">
             <string notr="true"/>
            </property>
@@ -501,6 +526,9 @@ QToolTip
           <widget class="QLabel" name="actionMessage">
            <property name="text">
             <string/>
+           </property>
+           <property name="font-size" stdset="0">
+            <string notr="true">body-2</string>
            </property>
           </widget>
          </item>
@@ -514,6 +542,11 @@ QToolTip
  </widget>
  <customwidgets>
   <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>TokenizableItems/IconLabel.h</header>
+  </customwidget>
+  <customwidget>
    <class>WordWrapLabel</class>
    <extends>QTextEdit</extends>
    <header>WordWrapLabel.h</header>
@@ -521,10 +554,12 @@ QToolTip
   <customwidget>
    <class>WaitingSpinnerWidget</class>
    <extends>QWidget</extends>
-   <header>WaitingSpinnerWidget.h</header>
+   <header>gui/WaitingSpinnerWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../../gui/Resources_common.qrc"/>
+ </resources>
  <connections/>
 </ui>

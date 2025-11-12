@@ -439,7 +439,6 @@ HRESULT UnregisterInprocServer(const CLSID& clsid)
     return hr;
 }
 
-
 HRESULT RegisterShellExtContextMenuHandler(
     PCWSTR pszFileType, const CLSID& clsid, PCWSTR pszFriendlyName)
 {

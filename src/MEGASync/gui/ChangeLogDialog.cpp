@@ -3,6 +3,7 @@
 #include "Preferences.h"
 #include "ServiceUrls.h"
 #include "ThemeManager.h"
+#include "TokenParserWidgetManager.h"
 #include "ui_ChangeLogDialog.h"
 
 #include <QDesktopServices>
@@ -80,13 +81,21 @@ ChangeLogDialog::~ChangeLogDialog()
 
 void ChangeLogDialog::setChangeLogNotes(QString notes)
 {
+    QColor colorPrimary =
+        TokenParserWidgetManager::instance()->getColor(QLatin1String("text-primary"));
+    QColor colorSecondary =
+        TokenParserWidgetManager::instance()->getColor(QLatin1String("text-secondary"));
     QString changelog = QCoreApplication::translate("Preferences", notes.toUtf8().constData());
-    ui->tChangelog->setHtml(QString::fromUtf8("<p style='line-height: 119%;'><span style='margin: 16px; font-family: Lato; font-size:11px; color: #333333;'>") +
-                            tr("New in this version:") +
-                            QString::fromUtf8("</span></p>") +
-                            QString::fromUtf8("<p style=' line-height: 146%;'><span style='font-family: Lato; font-size:11px; color: #666666;'>") +
-                            changelog.replace(QString::fromUtf8("\n"), QString::fromUtf8("<br>")) +
-                            QString::fromUtf8("</span></p>"));
+    ui->tChangelog->setHtml(
+        QString::fromUtf8("<p style='line-height: 119%; font-weight: 600;'><span style='margin: "
+                          "16px; font-family: Inter; font-size:12px; color: %1'>")
+            .arg(colorPrimary.name()) +
+        tr("New in this version:") + QString::fromUtf8("</span></p>") +
+        QString::fromUtf8("<p style=' line-height: 146%; font-weight: 400;'><span "
+                          "style='font-family: Inter; font-size:12px; color: %1'>")
+            .arg(colorSecondary.name()) +
+        changelog.replace(QString::fromUtf8("\n"), QString::fromUtf8("<br>")) +
+        QString::fromUtf8("</span></p>"));
 }
 
 void ChangeLogDialog::on_bTerms_clicked()

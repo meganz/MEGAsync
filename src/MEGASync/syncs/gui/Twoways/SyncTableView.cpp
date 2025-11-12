@@ -1,6 +1,7 @@
 #include "SyncTableView.h"
 
-#include "MenuItemAction.h"
+#include "MegaMenuItemAction.h"
+// #include "MenuItemAction.h"
 #include "Platform.h"
 #include "PlatformStrings.h"
 #include "SyncItemModel.h"
@@ -162,23 +163,30 @@ mega::MegaSync::SyncType SyncTableView::getType() const
 
 void SyncTableView::showContextMenu(const QPoint& pos, const QModelIndex index)
 {
-    QMenu* menu(new QMenu(this));
-    Platform::getInstance()->initMenu(menu, mContextMenuName);
+    QMenu* menu = new QMenu(this);
+    menu->setProperty("class", QLatin1String("MegaMenu"));
+    menu->setProperty("icon-token", QLatin1String("icon-primary"));
     menu->setAttribute(Qt::WA_DeleteOnClose);
 
     auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
 
     // Show in file explorer action
-    MenuItemAction* showLocalAction(nullptr);
+    MegaMenuItemAction* showLocalAction(nullptr);
     QFileInfo localFolder(sync->getLocalFolder());
     if (localFolder.exists())
     {
         showLocalAction =
-            new MenuItemAction(PlatformStrings::fileExplorer(),
-                               QLatin1String("://images/sync_context_menu/folder-small.png"),
-                               menu);
+            new MegaMenuItemAction(PlatformStrings::fileExplorer(),
+                                   Utilities::getPixmapName(QLatin1String("folder"),
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false),
+                                   0,
+                                   menu);
+
         connect(showLocalAction,
-                &MenuItemAction::triggered,
+                &MegaMenuItemAction::triggered,
                 this,
                 [sync]()
                 {
@@ -186,25 +194,34 @@ void SyncTableView::showContextMenu(const QPoint& pos, const QModelIndex index)
                 });
     }
 
-    // Show in Mega web action
-    auto showRemoteAction(
-        new MenuItemAction(QCoreApplication::translate("SyncTableView", "Open in MEGA"),
-                           QLatin1String("://images/sync_context_menu/MEGA-small.png"),
-                           menu));
+    auto showRemoteAction(new MegaMenuItemAction(
+        QCoreApplication::translate("SyncTableView", "Open in MEGA"),
+        Utilities::getPixmapName(QLatin1String("MEGA"),
+                                 Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                                     Utilities::AttributeType::OUTLINE,
+                                 false),
+        0,
+        menu));
+
     connect(showRemoteAction,
-            &MenuItemAction::triggered,
+            &MegaMenuItemAction::triggered,
             this,
             [sync]()
             {
                 Utilities::openInMega(sync->getMegaHandle());
             });
 
-    // Remove Sync action
-    auto delAction(new MenuItemAction(getRemoveActionString(),
-                                      QLatin1String("://images/sync_context_menu/minus-circle.png"),
-                                      menu));
+    auto delAction = new MegaMenuItemAction(
+        getRemoveActionString(),
+        Utilities::getPixmapName(QLatin1String("remove"),
+                                 Utilities::AttributeType::SMALL | Utilities::AttributeType::THIN |
+                                     Utilities::AttributeType::OUTLINE,
+                                 false),
+        0,
+        menu);
+
     connect(delAction,
-            &MenuItemAction::triggered,
+            &MegaMenuItemAction::triggered,
             this,
             [this, sync]()
             {
@@ -244,11 +261,17 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
     auto addRun = [this, sync, menu]()
     {
         auto syncRun(
-            new MenuItemAction(QCoreApplication::translate("SyncTableView", "Run"),
-                               QLatin1String("://images/sync_context_menu/play-circle.png"),
-                               menu));
+            new MegaMenuItemAction(QCoreApplication::translate("SyncTableView", "Run"),
+                                   Utilities::getPixmapName(QLatin1String("play"),
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false),
+                                   0,
+                                   menu));
+
         connect(syncRun,
-                &MenuItemAction::triggered,
+                &MegaMenuItemAction::triggered,
                 this,
                 [this, sync]()
                 {
@@ -266,12 +289,18 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
         if (sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_DISABLED &&
             sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_SUSPENDED)
         {
-            auto syncSuspend(
-                new MenuItemAction(QCoreApplication::translate("SyncTableView", "Pause"),
-                                   QLatin1String("://images/sync_states/pause-circle.png"),
-                                   menu));
+            auto syncSuspend(new MegaMenuItemAction(
+                QCoreApplication::translate("SyncTableView", "Pause"),
+                Utilities::getPixmapName(QLatin1String("pause"),
+                                         Utilities::AttributeType::SMALL |
+                                             Utilities::AttributeType::THIN |
+                                             Utilities::AttributeType::OUTLINE,
+                                         false),
+                0,
+                menu));
+
             connect(syncSuspend,
-                    &MenuItemAction::triggered,
+                    &MegaMenuItemAction::triggered,
                     this,
                     [this, sync]()
                     {
@@ -288,12 +317,18 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
     QFileInfo syncDir(sync->getLocalFolder());
     if (syncDir.exists())
     {
-        auto addExclusions(new MenuItemAction(
+        auto addExclusions(new MegaMenuItemAction(
             QCoreApplication::translate("ExclusionsStrings", "Manage exclusions"),
-            QLatin1String("://images/sync_context_menu/slash-circle.png"),
+            Utilities::getPixmapName(QLatin1String("manage"),
+                                     Utilities::AttributeType::SMALL |
+                                         Utilities::AttributeType::THIN |
+                                         Utilities::AttributeType::OUTLINE,
+                                     false),
+            0,
             menu));
+
         connect(addExclusions,
-                &MenuItemAction::triggered,
+                &MegaMenuItemAction::triggered,
                 this,
                 [this, sync]()
                 {
@@ -307,24 +342,36 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
     if (sync->getSync()->getRunState() == mega::MegaSync::RUNSTATE_RUNNING)
     {
         auto rescanDeep(
-            new MenuItemAction(QCoreApplication::translate("SyncTableView", "Rescan"),
-                               QLatin1String("://images/sync_context_menu/search-small.png"),
-                               menu));
+            new MegaMenuItemAction(QCoreApplication::translate("SyncTableView", "Rescan"),
+                                   Utilities::getPixmapName(QLatin1String("rescan"),
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false),
+                                   0,
+                                   menu));
+
         connect(rescanDeep,
-                &MenuItemAction::triggered,
+                &MegaMenuItemAction::triggered,
                 this,
                 [this, sync]()
                 {
                     emit signalRescanDeep(sync);
                 });
 
-        auto reboot(new MenuItemAction(sync->getType() == mega::MegaSync::TYPE_TWOWAY ?
-                                           tr("Reboot sync") :
-                                           tr("Reboot backup"),
-                                       QLatin1String("://images/qml/power.svg"),
-                                       menu));
+        auto reboot(new MegaMenuItemAction(
+            sync->getType() == mega::MegaSync::TYPE_TWOWAY ? tr("Reboot sync") :
+                                                             tr("Reboot backup"),
+            Utilities::getPixmapName(QLatin1String("reboot"),
+                                     Utilities::AttributeType::SMALL |
+                                         Utilities::AttributeType::THIN |
+                                         Utilities::AttributeType::OUTLINE,
+                                     false),
+            0,
+            menu));
+
         connect(reboot,
-                &MenuItemAction::triggered,
+                &MegaMenuItemAction::triggered,
                 this,
                 [this, sync]()
                 {
@@ -388,22 +435,25 @@ void BackgroundColorDelegate::paintRowBackground(QPainter* painter,
 {
     const int ENABLED_COLUMN_INDEX = 0;
     const int MENU_COLUMN_INDEX = index.model()->columnCount() - 1;
-    const double RADIUS_SQUARE_PERCENTATGE = 0.20;
+    const double RADIUS_SIZE = 5;
 
     auto optionRect = option.rect;
-    auto radius = optionRect.width() * RADIUS_SQUARE_PERCENTATGE;
 
     if (index.column() == ENABLED_COLUMN_INDEX) // first column will have the left squares rounded.
     {
         QPainterPath roundRectPath;
-        roundRectPath.moveTo(optionRect.left() + 2 * radius, optionRect.top());
-        roundRectPath
-            .arcTo(optionRect.left(), optionRect.top(), radius * 2.0, radius * 2.0, 90.0, 90.0);
-        roundRectPath.lineTo(optionRect.left(), optionRect.bottom() - radius);
+        roundRectPath.moveTo(optionRect.left() + 2 * RADIUS_SIZE, optionRect.top());
         roundRectPath.arcTo(optionRect.left(),
-                            (optionRect.bottom() + 1) - radius * 2.0,
-                            radius * 2.0,
-                            radius * 2.0,
+                            optionRect.top(),
+                            RADIUS_SIZE * 2.0,
+                            RADIUS_SIZE * 2.0,
+                            90.0,
+                            90.0);
+        roundRectPath.lineTo(optionRect.left(), optionRect.bottom() - RADIUS_SIZE);
+        roundRectPath.arcTo(optionRect.left(),
+                            (optionRect.bottom() + 1) - RADIUS_SIZE * 2.0,
+                            RADIUS_SIZE * 2.0,
+                            RADIUS_SIZE * 2.0,
                             180.0,
                             90.0);
         roundRectPath.lineTo(optionRect.right() + 1, optionRect.bottom() + 1);
@@ -415,21 +465,27 @@ void BackgroundColorDelegate::paintRowBackground(QPainter* painter,
     else if (index.column() ==
              MENU_COLUMN_INDEX) // last column will have the right squares rounded.
     {
+        auto rect = optionRect;
+
+#ifdef Q_OS_MACOS
+        const int SCROLL_BAR_WIDTH = 18;
+        rect.setRight(rect.right() - SCROLL_BAR_WIDTH);
+#endif
         QPainterPath roundRectPath;
-        roundRectPath.moveTo(optionRect.left(), optionRect.top());
-        roundRectPath.lineTo(optionRect.left(), optionRect.bottom() + 1);
-        roundRectPath.lineTo(optionRect.right() + 1 - radius, optionRect.bottom() + 1);
-        roundRectPath.arcTo(optionRect.right() + 1 - radius * 2.0,
-                            optionRect.bottom() + 1 - radius * 2.0,
-                            radius * 2.0,
-                            radius * 2.0,
+        roundRectPath.moveTo(rect.left(), rect.top());
+        roundRectPath.lineTo(rect.left(), rect.bottom() + 1);
+        roundRectPath.lineTo(rect.right() + 1 - RADIUS_SIZE, rect.bottom() + 1);
+        roundRectPath.arcTo(rect.right() + 1 - RADIUS_SIZE * 2.0,
+                            rect.bottom() + 1 - RADIUS_SIZE * 2.0,
+                            RADIUS_SIZE * 2.0,
+                            RADIUS_SIZE * 2.0,
                             270.0,
                             90.0);
-        roundRectPath.lineTo(optionRect.right() + 1, optionRect.top() + radius);
-        roundRectPath.arcTo(optionRect.right() + 1 - 2.0 * radius,
-                            optionRect.top(),
-                            2.0 * radius,
-                            2.0 * radius,
+        roundRectPath.lineTo(rect.right() + 1, rect.top() + RADIUS_SIZE);
+        roundRectPath.arcTo(rect.right() + 1 - 2.0 * RADIUS_SIZE,
+                            rect.top(),
+                            2.0 * RADIUS_SIZE,
+                            2.0 * RADIUS_SIZE,
                             0.0,
                             90.0);
         roundRectPath.closeSubpath();
@@ -462,6 +518,7 @@ void MenuItemDelegate::paint(QPainter* painter,
 }
 
 const int ICON_SPACE_SIZE = 60;
+const int ICON_SIZE = 16;
 
 IconMiddleDelegate::IconMiddleDelegate(QObject* parent):
     BackgroundColorDelegate(parent)
@@ -478,6 +535,9 @@ void IconMiddleDelegate::paint(QPainter* painter,
     opt.decorationPosition = QStyleOptionViewItem::Top;
     QRect rect = option.rect;
     rect.setRight(ICON_SPACE_SIZE);
+    rect.setTop(rect.top() + ((rect.height() - ICON_SIZE) / 2));
+    rect.setHeight(ICON_SIZE);
+
     QIcon icon = index.data(Qt::DecorationRole).value<QIcon>();
 
     QIcon::Mode iconMode = QIcon::Normal;

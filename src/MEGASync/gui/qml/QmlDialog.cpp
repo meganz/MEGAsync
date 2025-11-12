@@ -16,7 +16,7 @@ QmlDialog::QmlDialog(QWindow* parent):
     mInstancesManager(new QmlInstancesManager())
 {
     setFlags(flags() | Qt::Dialog);
-
+    setIcon(QIcon(mIconSrc));
     setTitle(DEFAULT_TITLE);
 
     connect(this,

@@ -92,7 +92,7 @@ void TransferData::update(mega::MegaTransfer* transfer)
 
         if(mState & TransferData::FINISHED_STATES_MASK)
         {
-            mFinishedTime = transfer->getUpdateTime();
+            mFinishedTime = QDateTime::currentDateTime();
             mSpeed = transfer->getMeanSpeed() != 0 ?  transfer->getMeanSpeed() : mTotalSize;
         }
         else
@@ -108,7 +108,6 @@ void TransferData::update(mega::MegaTransfer* transfer)
             }
 
             mMeanSpeed = 0;
-            mFinishedTime = 0;
         }
 
         if(mTotalSize > mTransferredBytes)
@@ -249,41 +248,23 @@ bool TransferData::stateHasChanged() const
     return mState != mPreviousState;
 }
 
-int64_t TransferData::getRawFinishedTime() const
+qint64 TransferData::getSecondsSinceFinished() const
 {
-    return mFinishedTime;
-}
-
-int64_t TransferData::getSecondsSinceFinished() const
-{
-    auto preferences = Preferences::instance();
-    return ((QDateTime::currentMSecsSinceEpoch()/ 100) - (preferences->getMsDiffTimeWithSDK() + mFinishedTime))/10;
+    return QDateTime::currentSecsSinceEpoch() - mFinishedTime.toSecsSinceEpoch();
 }
 
 QDateTime TransferData::getFinishedDateTime() const
 {
-    auto preferences = Preferences::instance();
-    qint64 secs = (preferences->getMsDiffTimeWithSDK() + mFinishedTime)/10;
-    return QDateTime::fromTime_t(static_cast<uint>(secs)).toLocalTime();
-}
-
-QString TransferData::getFormattedFinishedTime() const
-{
-    auto dateTime = getFinishedDateTime();
-    return dateTime.toString(QString::fromLatin1("hh:mm"));
+    return mFinishedTime;
 }
 
 QString TransferData::getFullFormattedFinishedTime() const
 {
-    auto preferences = Preferences::instance();
-    qint64 secs = (preferences->getMsDiffTimeWithSDK() + mFinishedTime)/10;
-
     auto format = QLocale::system().dateTimeFormat(QLocale::LongFormat);
     format.remove(QLatin1Char(','));
     format.remove(QLatin1String("dddd"));
     format = format.trimmed();
-
-    return QDateTime::fromTime_t(static_cast<uint>(secs)).toLocalTime().toString(format);
+    return mFinishedTime.toString(format);
 }
 
 std::unique_ptr<MegaNode> TransferData::getNode() const

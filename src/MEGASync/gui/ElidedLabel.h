@@ -2,10 +2,95 @@
 #define ELIDEDLABEL_H
 
 #include <QFrame>
+#include <QLabel>
+#include <QPainter>
+#include <QStyleOption>
 #include <QtCore/QRect>
-#include <QtGui/QResizeEvent>
 #include <QtCore/QString>
+#include <QtGui/QResizeEvent>
 #include <QWidget>
+
+class ElidingLabel: public QLabel
+{
+    Q_OBJECT
+
+public:
+    explicit ElidingLabel(QWidget* parent = nullptr):
+        QLabel(parent)
+    {
+        setMinimumWidth(0);
+        setTextFormat(Qt::PlainText);
+        setWordWrap(false);
+    }
+
+    void setText(const QString& text)
+    {
+        if (sizePolicy().horizontalPolicy() != QSizePolicy::Preferred ||
+            sizePolicy().horizontalPolicy() != QSizePolicy::Expanding)
+        {
+            setSizePolicy(QSizePolicy::Preferred, sizePolicy().verticalPolicy());
+        }
+
+        QLabel::setText(text);
+        // Refresh tooltip
+        setToolTip(QString());
+        update();
+    }
+
+    QSize minimumSizeHint() const override
+    {
+        return QSize(0, 0);
+    }
+
+    void setElideMode(Qt::TextElideMode mode)
+    {
+        if (mElidemode != mode)
+        {
+            mElidemode = mode;
+            update();
+        }
+    }
+
+protected:
+    void paintEvent(QPaintEvent*) override
+    {
+        QPainter p(this);
+
+        // Paint background
+        if (testAttribute(Qt::WA_StyledBackground))
+        {
+            QStyleOption opt;
+            opt.initFrom(this);
+            style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+        }
+
+        // Elide
+        const QRect cr = contentsRect();
+        const QFontMetrics fm(font());
+        const QString elided = fm.elidedText(text(), mElidemode, cr.width());
+
+        if (toolTip().isEmpty() && elided != text())
+        {
+            setToolTip(text());
+        }
+        else if (!toolTip().isEmpty() && elided == text())
+        {
+            setToolTip(QString());
+        }
+
+        // Paint elided text
+        style()->drawItemText(&p,
+                              cr,
+                              static_cast<int>(alignment()),
+                              palette(),
+                              isEnabled(),
+                              elided,
+                              QPalette::WindowText);
+    }
+
+private:
+    Qt::TextElideMode mElidemode = Qt::ElideMiddle;
+};
 
 class ElidedLabel : public QFrame
 {

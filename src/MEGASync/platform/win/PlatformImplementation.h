@@ -2,6 +2,7 @@
 #define WINDOWSPLATFORM_H
 
 #include "AbstractPlatform.h"
+#include "win/WinThemeWatcher.h"
 
 #include <QApplication>
 #include <QDir>
@@ -9,6 +10,7 @@
 #include <QHash>
 #include <QMenu>
 #include <QPixmap>
+#include <QPointer>
 #include <QProcess>
 #include <QString>
 #include <QThread>
@@ -56,6 +58,9 @@ public:
     void addSyncToLeftPane(QString syncPath, QString syncName, QString uuid) override;
     void removeSyncFromLeftPane(QString syncPath) override;
     void removeAllSyncsFromLeftPane() override;
+
+    void disableContextMenu(bool isDisabled) override;
+
     bool makePubliclyReadable(const QString &fileName) override;
 
     void streamWithApp(const QString& app, const QString& url) override;
@@ -80,10 +85,14 @@ public:
 
     QString getArchUpdateString() const override;
 
+    Preferences::SystemColorScheme getCurrentThemeAppearance() const override;
+
 private:
     void removeSyncFromLeftPane(QString syncPath, QString syncName, QString uuid);
 
     void notifyItemChange(const QString& localPath, std::shared_ptr<AbstractShellNotifier> notifier);
+
+    void startThemeMonitor() override;
 
     QString findMimeType(const QString& extensionWithDot);
     QString findAssociatedExecutable(const QString& extensionWithDot);
@@ -105,6 +114,8 @@ private:
 
     WinShellDispatcherTask *shellDispatcherTask = nullptr;
     std::shared_ptr<AbstractShellNotifier> mSyncFileNotifier = nullptr;
+
+    QPointer<WinThemeWatcher> watcher;
 };
 
 #endif // WINDOWSPLATFORM_H

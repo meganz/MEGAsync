@@ -1,6 +1,7 @@
 #include "MegaTransferView.h"
 
 #include "MegaApplication.h"
+#include "MegaMenuItemAction.h"
 #include "MessageDialogOpener.h"
 #include "Platform.h"
 #include "TransfersWidget.h"
@@ -14,80 +15,7 @@ using namespace mega;
 
 const int MAX_ITEMS_FOR_CONTEXT_MENU = 10;
 
-QString MegaTransferView::cancelAllAskActionText()
-{
-    return tr("Cancel transfers?\n"
-              "All your transfers will be cancelled.");
-}
-
-QString MegaTransferView::cancelAndClearAskActionText()
-{
-    return tr("Cancel transfers?\n"
-              "All your transfers in this category will be cancelled and cleared.");
-}
-
-QString MegaTransferView::cancelAskActionText()
-{
-    return tr("Cancel transfers?\n"
-              "All your transfers in this category will be cancelled.");
-}
-
-QString MegaTransferView::cancelWithSyncAskActionText()
-{
-    return tr("Cancel transfers?\n"
-              "Your incomplete sync transfers won't be cancelled.");
-}
-
-QString MegaTransferView::cancelAndClearWithSyncAskActionText()
-{
-    return tr("Cancel transfers?\n"
-              "Your incomplete sync transfers won't be cancelled\n"
-              "All the other transfers will be cancelled and cleared.");
-}
-
-QString MegaTransferView::clearAllCompletedAskActionText()
-{
-    return tr("Clear transfers?\n"
-              "All your completed transfers will be cleared.");
-}
-
-QString MegaTransferView::clearCompletedAskActionText()
-{
-    return tr("Clear transfers?\n"
-              "All your completed transfers in this category will be cleared.");
-}
-
-//Multiple seletion
-QString MegaTransferView::cancelSelectedAskActionText()
-{
-    return tr("Cancel transfers?\n"
-              "All your selected transfers will be cancelled.");
-}
-
-QString MegaTransferView::cancelAndClearSelectedAskActionText()
-{
-    return tr("Cancel transfers?\n"
-              "All your selected transfers will be cancelled and cleared.");
-}
-
-QString MegaTransferView::cancelSelectedWithSyncAskActionText()
-{
-    return tr("Cancel transfers?\n"
-              "Your selected incomplete sync transfers won't be cancelled.");
-}
-
-QString MegaTransferView::cancelAndClearSelectedWithSyncAskActionText()
-{
-    return tr("Cancel transfers?\n"
-              "Your selected incomplete sync transfers won't be cancelled\n"
-              "All the other selected transfers will be cancelled and cleared.");
-}
-
-QString MegaTransferView::clearSelectedCompletedAskActionText()
-{
-    return tr("Clear transfers?\n"
-              "All the selected completed transfers in this category will be cleared.");
-}
+// Multiple seletion
 
 //Single seletion
 QString MegaTransferView::cancelSingleActionText()
@@ -246,28 +174,33 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getVisibleCancelOrClearI
             {
                 if(info.areAllCancellable || !isAnyCompleted)
                 {
-                    info.actionText = cancelAskActionText();
+                    info.titleText = cancelTransfersMultiSelectionTitleText();
+                    info.actionText = cancelCategoryTransfersDescriptionText();
                 }
                 else
                 {
-                    info.actionText = cancelAndClearAskActionText();
+                    info.titleText = cancelTransfersMultiSelectionTitleText();
+                    info.actionText = cancelAndClearDescriptionText();
                 }
             }
             else
             {
                 if(isAnyCompleted)
                 {
-                    info.actionText = cancelAndClearWithSyncAskActionText();
+                    info.titleText = cancelTransfersMultiSelectionTitleText();
+                    info.actionText = cancelAndClearTransfersWithSyncDescriptionText();
                 }
                 else
                 {
-                    info.actionText = cancelWithSyncAskActionText();
+                    info.titleText = cancelTransfersMultiSelectionTitleText();
+                    info.actionText = cancelTransfersWithSyncDescriptionText();
                 }
             }
         }
         else
         {
-            info.actionText = clearCompletedAskActionText();
+            info.titleText = clearTransfersMultiSelectionTitleText();
+            info.actionText = clearCategoryTransfersDescriptionText();
             info.buttonsText = getClearDialogButtons();
         }
     }
@@ -322,11 +255,16 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getSelectedCancelOrClear
         {
             if(isAnyCompleted)
             {
-                info.actionText = info.isAnyCancellable ? cancelAndClearSelectedWithSyncAskActionText() : clearSelectedCompletedAskActionText();
+                info.titleText = info.isAnyCancellable ? cancelTransfersMultiSelectionTitleText() :
+                                                         clearTransfersMultiSelectionTitleText();
+                info.actionText = info.isAnyCancellable ?
+                                      cancelAndClearSelectedWithSyncDescriptionText() :
+                                      clearSelectedCompletedTransfersDescriptionText();
             }
             else if(info.isAnyCancellable)
             {
-                info.actionText = cancelSelectedWithSyncAskActionText();
+                info.titleText = cancelTransfersMultiSelectionTitleText();
+                info.actionText = cancelSelectedWithSyncsDescriptionText();
             }
 
         }
@@ -336,17 +274,20 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getSelectedCancelOrClear
             {
                 if(info.isAnyCancellable)
                 {
-                    info.actionText = cancelAndClearSelectedAskActionText();
+                    info.titleText = cancelTransfersMultiSelectionTitleText();
+                    info.actionText = cancelAndClearSelectedDescriptionText();
                 }
                 else
                 {
-                    info.actionText = clearSelectedCompletedAskActionText();
+                    info.titleText = clearTransfersMultiSelectionTitleText();
+                    info.actionText = clearSelectedCompletedTransfersDescriptionText();
                     info.buttonsText = getClearDialogButtons();
                 }
             }
             else if(info.isAnyCancellable)
             {
-                info.actionText = cancelSelectedAskActionText();
+                info.titleText = cancelTransfersMultiSelectionTitleText();
+                info.actionText = cancelSelectedDescriptionText();
             }
         }
     }
@@ -395,6 +336,7 @@ void MegaTransferView::onCancelVisibleTransfers()
     if(!info.areAllSync)
     {
         MessageDialogInfo msgInfo;
+        msgInfo.titleText = info.titleText;
         msgInfo.descriptionText = info.actionText;
         msgInfo.parent = this;
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
@@ -421,6 +363,7 @@ void MegaTransferView::onCancelSelectedTransfers()
     auto info = getSelectedCancelOrClearInfo();
 
     MessageDialogInfo msgInfo;
+    msgInfo.titleText = info.titleText;
     msgInfo.descriptionText = info.actionText;
     msgInfo.parent = this;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
@@ -443,6 +386,78 @@ void MegaTransferView::onCancelSelectedTransfers()
     MessageDialogOpener::warning(msgInfo);
 }
 
+QString MegaTransferView::cancelTransfersMultiSelectionTitleText()
+{
+    return tr("Cancel transfers?");
+}
+
+QString MegaTransferView::clearTransfersMultiSelectionTitleText()
+{
+    return tr("Clear transfers?");
+}
+
+QString MegaTransferView::cancelAllDescriptionText()
+{
+    return tr("All your transfers will be cancelled.");
+}
+
+QString MegaTransferView::cancelAndClearDescriptionText()
+{
+    return tr("All your transfers in this category will be cancelled and cleared.");
+}
+
+QString MegaTransferView::cancelCategoryTransfersDescriptionText()
+{
+    return tr("All your transfers in this category will be cancelled.");
+}
+
+QString MegaTransferView::cancelTransfersWithSyncDescriptionText()
+{
+    return tr("Your incomplete sync transfers won't be cancelled.");
+}
+
+QString MegaTransferView::cancelAndClearTransfersWithSyncDescriptionText()
+{
+    return tr("Your incomplete sync transfers won't be cancelled\n"
+              "All the other transfers will be cancelled and cleared.");
+}
+
+QString MegaTransferView::clearAllCompletedDescriptionText()
+{
+    return tr("All your completed transfers will be cleared.");
+}
+
+QString MegaTransferView::clearCategoryTransfersDescriptionText()
+{
+    return tr("All your completed transfers in this category will be cleared.");
+}
+
+QString MegaTransferView::cancelSelectedDescriptionText()
+{
+    return tr("All your selected transfers will be cancelled.");
+}
+
+QString MegaTransferView::cancelAndClearSelectedDescriptionText()
+{
+    return tr("All your selected transfers will be cancelled and cleared.");
+}
+
+QString MegaTransferView::cancelSelectedWithSyncsDescriptionText()
+{
+    return tr("Your selected incomplete sync transfers won't be cancelled.");
+}
+
+QString MegaTransferView::cancelAndClearSelectedWithSyncDescriptionText()
+{
+    return tr("Your selected incomplete sync transfers won't be cancelled\n"
+              "All the other selected transfers will be cancelled and cleared.");
+}
+
+QString MegaTransferView::clearSelectedCompletedTransfersDescriptionText()
+{
+    return tr("All the selected completed transfers in this category will be cleared.");
+}
+
 void MegaTransferView::onCancelAllTransfers()
 {
     auto proxy (qobject_cast<TransfersManagerSortFilterProxyModel*>(model()));
@@ -450,8 +465,9 @@ void MegaTransferView::onCancelAllTransfers()
     if (proxy)
     {
         MessageDialogInfo msgInfo;
-        msgInfo.descriptionText =
-            proxy->isAnySync() ? cancelWithSyncAskActionText() : cancelAllAskActionText();
+        msgInfo.titleText = cancelTransfersMultiSelectionTitleText();
+        msgInfo.descriptionText = proxy->isAnySync() ? cancelTransfersWithSyncDescriptionText() :
+                                                       cancelAllDescriptionText();
         msgInfo.parent = this;
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
         msgInfo.defaultButton = QMessageBox::No;
@@ -473,7 +489,8 @@ void MegaTransferView::onCancelAllTransfers()
 void MegaTransferView::onClearAllTransfers()
 {
     MessageDialogInfo msgInfo;
-    msgInfo.titleText = clearAllCompletedAskActionText();
+    msgInfo.titleText = clearTransfersMultiSelectionTitleText();
+    msgInfo.descriptionText = clearAllCompletedDescriptionText();
     msgInfo.parent = this;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
@@ -495,7 +512,8 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
     auto info = getVisibleCancelOrClearInfo();
 
     MessageDialogInfo msgInfo;
-    msgInfo.titleText = info.actionText;
+    msgInfo.titleText = info.titleText;
+    msgInfo.descriptionText = info.actionText;
     msgInfo.parent = this;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
@@ -522,7 +540,8 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
 void MegaTransferView::onClearVisibleTransfers()
 {
     MessageDialogInfo msgInfo;
-    msgInfo.descriptionText = clearCompletedAskActionText();
+    msgInfo.titleText = clearTransfersMultiSelectionTitleText();
+    msgInfo.descriptionText = clearCategoryTransfersDescriptionText();
     msgInfo.parent = this;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
@@ -603,9 +622,9 @@ void MegaTransferView::onCustomContextMenu(const QPoint& point)
 QMenu* MegaTransferView::createContextMenu()
 {
     auto contextMenu = new QMenu(this);
-    contextMenu->setWindowFlags(contextMenu->windowFlags() | Qt::NoDropShadowWindowHint);
+    contextMenu->setProperty("class", QLatin1String("MegaMenu"));
+    contextMenu->setProperty("icon-token", QLatin1String("icon-primary"));
     contextMenu->setAttribute(Qt::WA_DeleteOnClose);
-    Platform::getInstance()->initMenu(contextMenu, "ContextMenu");
 
     QModelIndexList indexes = selectedIndexes();
     auto modelSize = model()->rowCount();
@@ -792,11 +811,18 @@ QMenu* MegaTransferView::createContextMenu()
 
     bool addSeparator(false);
 
-    if(actionFlag & EnableAction::PAUSE)
+    if (actionFlag & EnableAction::PAUSE)
     {
-        auto pauseAction = new MenuItemAction(pauseActionText(indexes.size()),QLatin1String(":/images/transfer_manager/context_menu/pause_ico.png"), contextMenu);
-        connect(pauseAction, &QAction::triggered,
-                this, &MegaTransferView::pauseSelectedClicked);
+        auto pauseAction =
+            new MegaMenuItemAction(pauseActionText(indexes.size()),
+                                   Utilities::getPixmapName(QLatin1String("pause"),
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false),
+                                   0,
+                                   contextMenu);
+        connect(pauseAction, &QAction::triggered, this, &MegaTransferView::pauseSelectedClicked);
 
         contextMenu->addAction(pauseAction);
         addSeparator = true;
@@ -804,7 +830,15 @@ QMenu* MegaTransferView::createContextMenu()
 
     if(actionFlag & EnableAction::RESUME)
     {
-        auto resumeAction = new MenuItemAction(resumeActionText(indexes.size()), QLatin1String(":/images/transfer_manager/context_menu/resume_ico.png"), contextMenu);
+        auto resumeAction =
+            new MegaMenuItemAction(resumeActionText(indexes.size()),
+                                   Utilities::getPixmapName(QLatin1String("play"),
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false),
+                                   0,
+                                   contextMenu);
         connect(resumeAction, &QAction::triggered,
                 this, &MegaTransferView::resumeSelectedClicked);
 
@@ -819,7 +853,15 @@ QMenu* MegaTransferView::createContextMenu()
     {
         if(localFilesToOpenByContextMenu.size() <= MAX_ITEMS_FOR_CONTEXT_MENU)
         {
-            auto openItemAction = new MenuItemAction(tr("Open"), QLatin1String(":/images/transfer_manager/context_menu/open_file_ico.png"), contextMenu);
+            auto openItemAction = new MegaMenuItemAction(
+                tr("Open"),
+                Utilities::getPixmapName(QLatin1String("external_link"),
+                                         Utilities::AttributeType::SMALL |
+                                             Utilities::AttributeType::THIN |
+                                             Utilities::AttributeType::OUTLINE,
+                                         false),
+                0,
+                contextMenu);
             connect(openItemAction, &QAction::triggered, this, &MegaTransferView::openItemClicked);
 
             contextMenu->addAction(openItemAction);
@@ -828,8 +870,15 @@ QMenu* MegaTransferView::createContextMenu()
         if(localFoldersToOpenByContextMenu.size() <= MAX_ITEMS_FOR_CONTEXT_MENU)
         {
             //Ico not included in transfer manager folder as it is also used by settingsDialog
-            auto showInFolderAction = new MenuItemAction(tr("Show in folder"), QLatin1String(":/images/show_in_folder_ico.png"),
-                                                         contextMenu);
+            auto showInFolderAction = new MegaMenuItemAction(
+                tr("Show in folder"),
+                Utilities::getPixmapName(QLatin1String("folder-open"),
+                                         Utilities::AttributeType::SMALL |
+                                             Utilities::AttributeType::THIN |
+                                             Utilities::AttributeType::OUTLINE,
+                                         false),
+                0,
+                contextMenu);
             connect(showInFolderAction, &QAction::triggered, this, &MegaTransferView::showInFolderClicked);
 
             contextMenu->addAction(showInFolderAction);
@@ -846,14 +895,30 @@ QMenu* MegaTransferView::createContextMenu()
             if (handlesToOpenByContextMenu.size() <= MAX_ITEMS_FOR_CONTEXT_MENU)
             {
                 //Ico not included in transfer manager folder as it is also used by settingsDialog
-                auto openInMEGAAction = new MenuItemAction(tr("Open in MEGA"), QLatin1String(":/images/ico_open_MEGA.png"), contextMenu);
+                auto openInMEGAAction = new MegaMenuItemAction(
+                    tr("Open in MEGA"),
+                    Utilities::getPixmapName(QLatin1String("MEGA"),
+                                             Utilities::AttributeType::SMALL |
+                                                 Utilities::AttributeType::THIN |
+                                                 Utilities::AttributeType::OUTLINE,
+                                             false),
+                    0,
+                    contextMenu);
                 connect(openInMEGAAction, &QAction::triggered, this, &MegaTransferView::openInMEGAClicked);
 
                 contextMenu->addAction(openInMEGAAction);
             }
             if (!containsIncomingShares)
             {
-                auto getLinkAction = new MenuItemAction(tr("Get link"), QLatin1String(":/images/transfer_manager/context_menu/get_link_ico.png"), contextMenu);
+                auto getLinkAction = new MegaMenuItemAction(
+                    tr("Get link"),
+                    Utilities::getPixmapName(QLatin1String("link-01"),
+                                             Utilities::AttributeType::SMALL |
+                                                 Utilities::AttributeType::THIN |
+                                                 Utilities::AttributeType::OUTLINE,
+                                             false),
+                    0,
+                    contextMenu);
                 connect(getLinkAction, &QAction::triggered, this, &MegaTransferView::getLinkClicked);
 
                 contextMenu->addAction(getLinkAction);
@@ -869,18 +934,28 @@ QMenu* MegaTransferView::createContextMenu()
     {
         if (!isTopIndex)
         {
-            auto moveToTopAction = new MenuItemAction(
+            auto moveToTopAction = new MegaMenuItemAction(
                 tr("Move to top"),
-                QLatin1String(":/images/transfer_manager/context_menu/move_top_ico.png"),
+                Utilities::getPixmapName(QLatin1String("move-top"),
+                                         Utilities::AttributeType::SMALL |
+                                             Utilities::AttributeType::THIN |
+                                             Utilities::AttributeType::OUTLINE,
+                                         false),
+                0,
                 contextMenu);
             connect(moveToTopAction,
                     &QAction::triggered,
                     this,
                     &MegaTransferView::moveToTopClicked);
 
-            auto moveUpAction = new MenuItemAction(
+            auto moveUpAction = new MegaMenuItemAction(
                 tr("Move up"),
-                QLatin1String(":/images/transfer_manager/context_menu/move_up_ico.png"),
+                Utilities::getPixmapName(QLatin1String("move-up"),
+                                         Utilities::AttributeType::SMALL |
+                                             Utilities::AttributeType::THIN |
+                                             Utilities::AttributeType::OUTLINE,
+                                         false),
+                0,
                 contextMenu);
             connect(moveUpAction, &QAction::triggered, this, &MegaTransferView::moveUpClicked);
 
@@ -892,15 +967,25 @@ QMenu* MegaTransferView::createContextMenu()
 
         if (!isBottomIndex)
         {
-            auto moveDownAction = new MenuItemAction(
+            auto moveDownAction = new MegaMenuItemAction(
                 tr("Move down"),
-                QLatin1String(":/images/transfer_manager/context_menu/move_down_ico.png"),
+                Utilities::getPixmapName(QLatin1String("move-down"),
+                                         Utilities::AttributeType::SMALL |
+                                             Utilities::AttributeType::THIN |
+                                             Utilities::AttributeType::OUTLINE,
+                                         false),
+                0,
                 contextMenu);
             connect(moveDownAction, &QAction::triggered, this, &MegaTransferView::moveDownClicked);
 
-            auto moveToBottomAction = new MenuItemAction(
+            auto moveToBottomAction = new MegaMenuItemAction(
                 tr("Move to bottom"),
-                QLatin1String(":/images/transfer_manager/context_menu/move_bottom_ico.png"),
+                Utilities::getPixmapName(QLatin1String("move-bottom"),
+                                         Utilities::AttributeType::SMALL |
+                                             Utilities::AttributeType::THIN |
+                                             Utilities::AttributeType::OUTLINE,
+                                         false),
+                0,
                 contextMenu);
             connect(moveToBottomAction,
                     &QAction::triggered,
@@ -918,8 +1003,16 @@ QMenu* MegaTransferView::createContextMenu()
 
     if(actionFlag & EnableAction::CANCEL)
     {
-        auto cancelAction = new MenuItemAction(actionFlag & EnableAction::CLEAR ? cancelAndClearActionText(indexes.size()) : cancelActionText(indexes.size()),
-                                               QLatin1String(":/images/transfer_manager/context_menu/cancel_transfer_ico.png"), contextMenu);
+        auto cancelAction = new MegaMenuItemAction(
+            actionFlag & EnableAction::CLEAR ? cancelAndClearActionText(indexes.size()) :
+                                               cancelActionText(indexes.size()),
+            Utilities::getPixmapName(QLatin1String("x"),
+                                     Utilities::AttributeType::SMALL |
+                                         Utilities::AttributeType::THIN |
+                                         Utilities::AttributeType::OUTLINE,
+                                     false),
+            0,
+            contextMenu);
         connect(cancelAction, &QAction::triggered,
                 this, &MegaTransferView::cancelSelectedClicked);
 
@@ -930,7 +1023,15 @@ QMenu* MegaTransferView::createContextMenu()
     }
     else if(actionFlag & EnableAction::CLEAR)
     {
-        auto clearAction = new MenuItemAction(tr("Clear"), QLatin1String(":/images/transfer_manager/context_menu/ico_clear.png"), contextMenu);
+        auto clearAction =
+            new MegaMenuItemAction(tr("Clear"),
+                                   Utilities::getPixmapName(QLatin1String("eraser"),
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false),
+                                   0,
+                                   contextMenu);
         connect(clearAction, &QAction::triggered,
                 this, &MegaTransferView::clearSelectedClicked);
 

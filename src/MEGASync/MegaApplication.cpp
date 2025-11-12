@@ -20,10 +20,12 @@
 #include "FatalEventHandler.h"
 #include "FullName.h"
 #include "GuiUtilities.h"
+#include "IconTokenizer.h"
 #include "ImportMegaLinksDialog.h"
 #include "IntervalExecutioner.h"
 #include "LoginController.h"
 #include "mega/types.h"
+#include "MegaMenuItemAction.h"
 #include "MegaProxyStyle.h"
 #include "MessageDialogOpener.h"
 #include "MyBackupsHandle.h"
@@ -315,7 +317,6 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     mTransferring = false;
     checkupdate = false;
     updateAction = nullptr;
-    aboutAction = nullptr;
     updateActionGuest = nullptr;
     showStatusAction = nullptr;
     updateBlocked = false;
@@ -337,7 +338,11 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     scanningTimer = nullptr;
 #endif
 
-    mDisableGfx = args.contains(QLatin1String("--nogfx")) || args.contains(QLatin1String("/nogfx"));
+    // Passing "--nogfx" or "/nogfx" disables graphics processing for the current run.
+    // To always disable graphics processing, create a "megasync.nogfx" file in the user data dir.
+    mDisableGfx |=
+        args.contains(QLatin1String("--nogfx")) || args.contains(QLatin1String("/nogfx"));
+
     mFolderTransferListener = std::make_shared<FolderTransferListener>();
 
     connect(mFolderTransferListener.get(), &FolderTransferListener::folderTransferUpdated,
@@ -423,7 +428,7 @@ void MegaApplication::initStyleAndResources()
     {
         QString sourceStandardComponentsStyleSheet = QString::fromLatin1(file.readAll());
         file.close();
-        setStyleSheet(sourceStandardComponentsStyleSheet);
+        setStyleSheet(Utilities::getPlatformProps(sourceStandardComponentsStyleSheet));
     }
     else
     {
@@ -508,6 +513,10 @@ void MegaApplication::initialize()
             &FatalEventHandler::requestRebootApp,
             this,
             &MegaApplication::rebootApplication);
+
+    // Check presence of media processing disabling file
+    const QFile nogfxFile(QDir(dataPath).filePath(QLatin1String("megasync.nogfx")));
+    mDisableGfx |= nogfxFile.exists();
 
     QTMegaApiManager::createMegaApi(megaApi,
                                     Preferences::CLIENT_KEY,
@@ -742,6 +751,13 @@ void MegaApplication::initialize()
     createUserMessageController();
 
     TokenParserWidgetManager::instance();
+
+#ifdef Q_OS_LINUX
+    connect(Platform::getInstance(),
+            &AbstractPlatform::themeChanged,
+            this,
+            &MegaApplication::onOperatingSystemThemeChanged);
+#endif
 }
 
 QString MegaApplication::applicationFilePath()
@@ -1235,12 +1251,6 @@ void MegaApplication::start()
         QmlDialogManager::instance()->openOnboardingDialog();
     }
 
-    static constexpr int FIRST_5_X_VERSION = 50000;
-    if (updated && !(preferences->getSession().isEmpty()) &&
-        (Preferences::lastVersionUponStartup < FIRST_5_X_VERSION))
-    {
-        QmlDialogManager::instance()->openWhatsNewDialog();
-    }
     updateTrayIcon();
 }
 
@@ -1306,21 +1316,19 @@ if (!preferences->lastExecutionTime())
     #endif
 }
 
-    preferences->setLastExecutionTime(QDateTime::currentDateTime().toMSecsSinceEpoch());
-    QDateTime now = QDateTime::currentDateTime();
-    preferences->setDsDiffTimeWithSDK(now.toMSecsSinceEpoch() / 100 - megaApi->getSDKtime());
+preferences->setLastExecutionTime(QDateTime::currentMSecsSinceEpoch());
 
-    startUpdateTask();
-    QString language = preferences->language();
-    changeLanguage(language);
-    updated = false;
+startUpdateTask();
+QString language = preferences->language();
+changeLanguage(language);
+updated = false;
 
-    checkOperatingSystem();
+checkOperatingSystem();
 
-    if (!infoDialog)
-    {
-        createInfoDialog();
-    }
+if (!infoDialog)
+{
+    createInfoDialog();
+}
     infoDialog->setUsage();
     infoDialog->setAvatar();
     infoDialog->setAccountType(preferences->accountType());
@@ -1470,6 +1478,9 @@ void MegaApplication::onLoginFinished()
                 this, &MegaApplication::onScheduledExecution);
     }
 
+    // Init desktop integration
+    ThemeManager::instance()->init();
+    Platform::getInstance()->disableContextMenu(Preferences::instance()->contextMenuDisabled());
     Platform::getInstance()->unHideTrayIcon();
 }
 
@@ -1533,6 +1544,7 @@ void MegaApplication::onLogout()
                 removeSyncsAndBackupsMenus();
                 start();
                 periodicTasks();
+                ThemeManager::instance()->init();
             }
         });
     });
@@ -1760,9 +1772,9 @@ void MegaApplication::processDownloadQueue(QString path)
     downloader->processDownloadQueue(info);
 }
 
-void MegaApplication::createTransferManagerDialog(TransfersWidget::TM_TAB tab)
+void MegaApplication::createTransferManagerDialog()
 {
-    mTransferManager = new TransferManager(tab, megaApi);
+    mTransferManager = new TransferManager(megaApi);
     infoDialog->setTransferManager(mTransferManager);
 
     // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
@@ -1840,22 +1852,6 @@ void MegaApplication::tryExitApplication(bool force)
         };
         MessageDialogOpener::question(msgInfo);
     }
-}
-
-void MegaApplication::highLightMenuEntry(QAction *action)
-{
-    if (!action)
-    {
-        return;
-    }
-
-    MenuItemAction* pAction = (MenuItemAction*)action;
-    if (lastHovered)
-    {
-        lastHovered->setHighlight(false);
-    }
-    pAction->setHighlight(true);
-    lastHovered = pAction;
 }
 
 void MegaApplication::pauseTransfers(bool pause)
@@ -2518,6 +2514,8 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
 void MegaApplication::createInfoDialog()
 {
     infoDialog = new InfoDialog(this);
+    TokenParserWidgetManager::instance()->applyCurrentTheme(infoDialog);
+    TokenParserWidgetManager::instance()->registerWidgetForTheming(infoDialog);
     connect(infoDialog.data(), &InfoDialog::dismissStorageOverquota,
             this, &MegaApplication::onDismissStorageOverquota);
     connect(infoDialog.data(), &InfoDialog::transferOverquotaMsgVisibilityChange,
@@ -3162,7 +3160,10 @@ void MegaApplication::unlink(bool keepLogs)
     }
     megaApiFolders->setAccountAuth(nullptr);
     DialogOpener::closeAllDialogs();
+
+    // Reset desktop integration
     Platform::getInstance()->notifyAllSyncFoldersRemoved();
+    Platform::getInstance()->disableContextMenu(false);
 
     AccountDetailsManager::instance()->reset();
 
@@ -3221,6 +3222,7 @@ void MegaApplication::showInfoMessage(QString message, QString title)
     DesktopNotifications::NotificationInfo info;
     info.message = message;
     info.title = title;
+
     showInfoMessage(info);
 }
 
@@ -3236,14 +3238,15 @@ void MegaApplication::showInfoMessage(DesktopNotifications::NotificationInfo inf
     if (mOsNotifications)
     {
 #ifdef __APPLE__
-        //In case this method is called from another thread
-        Utilities::queueFunctionInAppThread([this]()
-        {
-            if (infoDialog && infoDialog->isVisible())
+        // In case this method is called from another thread
+        Utilities::queueFunctionInAppThread(
+            [this]()
             {
-                infoDialog->hide();
-            }
-        });
+                if (infoDialog && infoDialog->isVisible())
+                {
+                    infoDialog->hide();
+                }
+            });
 #endif
         lastTrayMessage = info.message;
         mOsNotifications->sendInfoNotification(info);
@@ -3677,6 +3680,7 @@ void MegaApplication::PSAseen(int id)
     if (id >= 0)
     {
         megaApi->setPSA(id);
+        infoDialog->updateHeaderBackground();
     }
 }
 
@@ -3932,6 +3936,7 @@ void MegaApplication::goToFiles()
     if (infoDialog)
     {
         CloudDriveNodeSelector* nodeSelector = new CloudDriveNodeSelector();
+        nodeSelector->init();
         DialogOpener::showGeometryRetainerDialog<NodeSelector>(nodeSelector);
 
         mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::CLOUD_DRIVE_OPENED,
@@ -3981,7 +3986,10 @@ void MegaApplication::importLinks()
 
             //Show the dialog to paste public links
             auto pasteMegaLinksDialog = new PasteMegaLinksDialog();
-            DialogOpener::showDialog<PasteMegaLinksDialog, TransferManager>(pasteMegaLinksDialog, true, this, &MegaApplication::onPasteMegaLinksDialogFinish);
+            DialogOpener::showDialog<PasteMegaLinksDialog>(
+                pasteMegaLinksDialog,
+                this,
+                &MegaApplication::onPasteMegaLinksDialogFinish);
         }
     });
 }
@@ -4005,35 +4013,41 @@ void MegaApplication::onPasteMegaLinksDialogFinish(QPointer<PasteMegaLinksDialog
 
         mLinkProcessor->requestLinkInfo();
 
-        DialogOpener::showDialog<ImportMegaLinksDialog, TransferManager>(importDialog, true, [this, importDialog]()
-        {
-            if (importDialog->result() == QDialog::Accepted)
+        DialogOpener::showDialog<ImportMegaLinksDialog>(
+            importDialog,
+            [this, importDialog]()
             {
-                //If the user wants to download some links, do it
-                if (importDialog->shouldDownload())
+                if (importDialog->result() == QDialog::Accepted)
                 {
-                    if (!preferences->hasDefaultDownloadFolder())
+                    // If the user wants to download some links, do it
+                    if (importDialog->shouldDownload())
                     {
-                        preferences->setDownloadFolder(importDialog->getDownloadPath());
+                        if (!preferences->hasDefaultDownloadFolder())
+                        {
+                            preferences->setDownloadFolder(importDialog->getDownloadPath());
+                        }
+
+                        mLinkProcessor->downloadLinks(importDialog->getDownloadPath());
                     }
 
-                    mLinkProcessor->downloadLinks(importDialog->getDownloadPath());
-                }
-
-                //If the user wants to import some links, do it
-                if (preferences->logged() && importDialog->shouldImport())
-                {
-                    preferences->setOverStorageDismissExecution(0);
-
-                    connect(mLinkProcessor, &LinkProcessor::onLinkImportFinish, this, [this]() mutable
+                    // If the user wants to import some links, do it
+                    if (preferences->logged() && importDialog->shouldImport())
                     {
-                        preferences->setImportFolder(mLinkProcessor->getImportParentFolder());
-                    });
+                        preferences->setOverStorageDismissExecution(0);
 
-                    mLinkProcessor->importLinks(importDialog->getImportPath());
+                        connect(mLinkProcessor,
+                                &LinkProcessor::onLinkImportFinish,
+                                this,
+                                [this]() mutable
+                                {
+                                    preferences->setImportFolder(
+                                        mLinkProcessor->getImportParentFolder());
+                                });
+
+                        mLinkProcessor->importLinks(importDialog->getImportPath());
+                    }
                 }
-            }
-        });
+            });
     }
 }
 
@@ -4204,6 +4218,7 @@ void MegaApplication::downloadActionClicked()
         if(result == QDialog::Rejected)
         {
             auto downloadNodeSelector = new DownloadNodeSelector();
+            downloadNodeSelector->init();
             downloadNodeSelector->setSelectedNodeHandle();
 
             DialogOpener::showDialog<NodeSelector, TransferManager>(downloadNodeSelector, false, [this, downloadNodeSelector]()
@@ -4271,14 +4286,11 @@ void MegaApplication::transferManagerActionClicked(int tab)
 
     if(!mTransferManager)
     {
-        createTransferManagerDialog(static_cast<TransfersWidget::TM_TAB>(tab));
-    }
-    else
-    {
-        mTransferManager->toggleTab(tab);
+        createTransferManagerDialog();
     }
 
     DialogOpener::showGeometryRetainerDialog(mTransferManager);
+    mTransferManager->toggleTab(tab);
 }
 
 void MegaApplication::changeState()
@@ -5026,14 +5038,44 @@ void MegaApplication::onRequestLinksFinished()
     }
     QString linkForClipboard(links.join(QLatin1Char('\n')));
     QApplication::clipboard()->setText(linkForClipboard);
+
+    QString message;
     if (links.size() == 1)
     {
-        showInfoMessage(tr("The link has been copied to the clipboard"));
+        message = tr("The link has been copied to the clipboard");
     }
     else
     {
-        showInfoMessage(tr("The links have been copied to the clipboard"));
+        message = tr("The links have been copied to the clipboard");
     }
+
+    if (!preferences->getDontShowExportLinkDialog() &&
+        (!mOsNotifications ||
+         (mOsNotifications &&
+          !preferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES))))
+    {
+        MessageDialogInfo msgInfo;
+        msgInfo.descriptionText = message;
+        msgInfo.checkboxText = tr("Don’t show me again");
+        msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msgResult)
+        {
+            if (msgResult->result() == QMessageBox::StandardButton::Ok)
+            {
+                preferences->setDontShowExportLinkDialog(msgResult->isChecked());
+            }
+        };
+
+        MessageDialogOpener::success(msgInfo);
+    }
+    else
+    {
+        DesktopNotifications::NotificationInfo info;
+        info.title = MegaSyncApp->getMEGAString();
+        info.message = message;
+
+        showInfoMessage(info);
+    }
+
     exportProcessor->deleteLater();
     exportOps--;
 }
@@ -5500,6 +5542,10 @@ void MegaApplication::createTrayIconMenus()
 
     initialTrayMenu->insertAction(guestSettingsAction, showStatusAction);
 #endif
+
+#ifdef Q_OS_LINUX
+    onOperatingSystemThemeChanged(Platform::getInstance()->getCurrentThemeAppearance());
+#endif
 }
 
 void MegaApplication::createInfoDialogMenus()
@@ -5618,33 +5664,64 @@ void MegaApplication::createInfoDialogMenus()
 #endif
     {
         deleteMenu(infoDialogMenu);
-        infoDialogMenu = new QMenu();
-        Platform::getInstance()->initMenu(infoDialogMenu, "InfoDialogMenu");
-
-        //Highlight menu entry on mouse over
-        connect(infoDialogMenu, SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
-
-        //Hide highlighted menu entry when mouse over
-        infoDialogMenu->installEventFilter(this);
+        delete mBackupsMenu;
+        delete mSyncs2waysMenu;
+        infoDialogMenu = new QMenu(infoDialog);
     }
 
-    recreateMenuAction(&exitAction, infoDialogMenu, PlatformStrings::exit(),
-                       "://images/ico_quit.png", &MegaApplication::tryExitApplication);
-    recreateMenuAction(&settingsAction, infoDialogMenu, tr("Settings"),
-                       "://images/ico_preferences.png", &MegaApplication::openSettings);
-    recreateMenuAction(&MEGAWebAction,
-                       infoDialogMenu,
-                       tr("MEGA web"),
-                       "://images/ico_MEGA_website.png",
-                       &MegaApplication::goToMyCloud);
-    recreateMenuAction(&filesAction,
-                       infoDialogMenu,
-                       tr("Files"),
-                       Utilities::getFolderPixmapName(Utilities::FolderType::TYPE_NORMAL,
-                                                      Utilities::AttributeType::MEDIUM)
-                           .toUtf8()
-                           .constData(),
-                       &MegaApplication::goToFiles);
+    recreateMegaMenuAction(&exitAction,
+                           infoDialogMenu,
+                           PlatformStrings::exit(),
+                           Utilities::getPixmapName(QLatin1String("log-out-01"),
+                                                    Utilities::AttributeType::SMALL |
+                                                        Utilities::AttributeType::THIN |
+                                                        Utilities::AttributeType::OUTLINE,
+                                                    false)
+                               .toStdString()
+                               .c_str(),
+                           &MegaApplication::tryExitApplication);
+
+    recreateMegaMenuAction(&settingsAction,
+                           infoDialogMenu,
+                           tr("Settings"),
+                           Utilities::getPixmapName(QLatin1String("gear_six"),
+                                                    Utilities::AttributeType::SMALL |
+                                                        Utilities::AttributeType::THIN |
+                                                        Utilities::AttributeType::OUTLINE,
+                                                    false)
+                               .toStdString()
+                               .c_str(),
+                           &MegaApplication::openSettings);
+
+    connect(settingsAction,
+            &QAction::triggered,
+            this,
+            &MegaApplication::openSettings,
+            Qt::QueuedConnection);
+
+    recreateMegaMenuAction(&MEGAWebAction,
+                           infoDialogMenu,
+                           tr("MEGA web"),
+                           Utilities::getPixmapName(QLatin1String("globe-01"),
+                                                    Utilities::AttributeType::SMALL |
+                                                        Utilities::AttributeType::THIN |
+                                                        Utilities::AttributeType::OUTLINE,
+                                                    false)
+                               .toStdString()
+                               .c_str(),
+                           &MegaApplication::goToMyCloud);
+
+    recreateMegaMenuAction(&filesAction,
+                           infoDialogMenu,
+                           tr("Files"),
+                           Utilities::getPixmapName(QLatin1String("folder-open"),
+                                                    Utilities::AttributeType::SMALL |
+                                                        Utilities::AttributeType::THIN |
+                                                        Utilities::AttributeType::OUTLINE,
+                                                    false)
+                               .toStdString()
+                               .c_str(),
+                           &MegaApplication::goToFiles);
 
     // recreateMenuAction(&deviceCentreAction,
     //                    infoDialogMenu,
@@ -5652,30 +5729,71 @@ void MegaApplication::createInfoDialogMenus()
     //                    "://images/ico-device-centre.svg",
     //                    &MegaApplication::openDeviceCentre);
 
-    bool previousEnabledState = exitAction->isEnabled();
     if (!mSyncs2waysMenu)
     {
-        mSyncs2waysMenu = SyncsMenu::newSyncsMenu(MegaSync::TYPE_TWOWAY, previousEnabledState);
-        connect(mSyncs2waysMenu.data(), &SyncsMenu::addSync,
-                infoDialog.data(), &InfoDialog::onAddSync);
+        mSyncs2waysMenu = SyncsMenu::newSyncsMenu(MegaSync::TYPE_TWOWAY, infoDialogMenu);
+        connect(mSyncs2waysMenu.data(),
+                &SyncsMenu::addSync,
+                infoDialog.data(),
+                &InfoDialog::onAddSync);
     }
 
     if (!mBackupsMenu)
     {
-        mBackupsMenu = SyncsMenu::newSyncsMenu(MegaSync::TYPE_BACKUP, previousEnabledState);
-        connect(mBackupsMenu.data(), &SyncsMenu::addSync,
-                infoDialog.data(), &InfoDialog::onAddSync);
+        mBackupsMenu = SyncsMenu::newSyncsMenu(MegaSync::TYPE_BACKUP, infoDialogMenu);
+        connect(mBackupsMenu.data(),
+                &SyncsMenu::addSync,
+                infoDialog.data(),
+                &InfoDialog::onAddSync);
     }
 
-    recreateMenuAction(&importLinksAction, infoDialogMenu, tr("Open links"), "://images/ico_Import_links.png", &MegaApplication::importLinks);
-    recreateMenuAction(&uploadAction, infoDialogMenu, tr("Upload"), "://images/ico_upload.png", &MegaApplication::uploadActionClicked);
-    recreateMenuAction(&downloadAction, infoDialogMenu, tr("Download"), "://images/ico_download.png", &MegaApplication::downloadActionClicked);
-    recreateMenuAction(&streamAction, infoDialogMenu, tr("Stream"), "://images/ico_stream.png", &MegaApplication::streamActionClicked);
+    recreateMegaMenuAction(&importLinksAction,
+                           infoDialogMenu,
+                           tr("Open links"),
+                           Utilities::getPixmapName(QLatin1String("link-01"),
+                                                    Utilities::AttributeType::SMALL |
+                                                        Utilities::AttributeType::THIN |
+                                                        Utilities::AttributeType::OUTLINE,
+                                                    false)
+                               .toStdString()
+                               .c_str(),
+                           &MegaApplication::importLinks);
+    recreateMegaMenuAction(&uploadAction,
+                           infoDialogMenu,
+                           tr("Upload"),
+                           Utilities::getPixmapName(QLatin1String("arrow-up-circle"),
+                                                    Utilities::AttributeType::SMALL |
+                                                        Utilities::AttributeType::THIN |
+                                                        Utilities::AttributeType::OUTLINE,
+                                                    false)
+                               .toStdString()
+                               .c_str(),
+                           &MegaApplication::uploadActionClicked);
+    recreateMegaMenuAction(&downloadAction,
+                           infoDialogMenu,
+                           tr("Download"),
+                           Utilities::getPixmapName(QLatin1String("arrow-down-circle"),
+                                                    Utilities::AttributeType::SMALL |
+                                                        Utilities::AttributeType::THIN |
+                                                        Utilities::AttributeType::OUTLINE,
+                                                    false)
+                               .toStdString()
+                               .c_str(),
+                           &MegaApplication::downloadActionClicked);
+    recreateMegaMenuAction(&streamAction,
+                           infoDialogMenu,
+                           tr("Stream"),
+                           Utilities::getPixmapName(QLatin1String("stream"),
+                                                    Utilities::AttributeType::SMALL |
+                                                        Utilities::AttributeType::THIN |
+                                                        Utilities::AttributeType::OUTLINE,
+                                                    false)
+                               .toStdString()
+                               .c_str(),
+                           &MegaApplication::streamActionClicked);
 
-    previousEnabledState = true;
     if (updateAction)
     {
-        previousEnabledState = updateAction->isEnabled();
         updateAction->deleteLater();
         updateAction = nullptr;
     }
@@ -5688,25 +5806,42 @@ void MegaApplication::createInfoDialogMenus()
 
     if (updateAvailable)
     {
-        updateAction = new MenuItemAction(tr("Install update"), QLatin1String("://images/ico_about_MEGA.png"), infoDialogMenu);
-        updateAction->setManagesHoverStates(true);
-        updateAction->setEnabled(previousEnabledState);
-        connect(updateAction, &QAction::triggered, this, &MegaApplication::onInstallUpdateClicked, Qt::QueuedConnection);
-
+        updateAction =
+            new MegaMenuItemAction(tr("Install update"),
+                                   Utilities::getPixmapName(QLatin1String("MEGA"),
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false),
+                                   0);
+        connect(updateAction,
+                &QAction::triggered,
+                this,
+                &MegaApplication::onInstallUpdateClicked,
+                Qt::QueuedConnection);
         infoDialogMenu->addAction(updateAction);
     }
     else
     {
-        aboutAction = new MenuItemAction(tr("About"), QLatin1String("://images/ico_about_MEGA.png"), infoDialogMenu);
-        aboutAction->setManagesHoverStates(true);
-        connect(aboutAction, &QAction::triggered, this, &MegaApplication::onAboutClicked, Qt::QueuedConnection);
+        aboutAction =
+            new MegaMenuItemAction(tr("About"),
+                                   Utilities::getPixmapName(QLatin1String("MEGA"),
+                                                            Utilities::AttributeType::SMALL |
+                                                                Utilities::AttributeType::THIN |
+                                                                Utilities::AttributeType::OUTLINE,
+                                                            false),
+                                   0);
+        connect(aboutAction,
+                &QAction::triggered,
+                this,
+                &MegaApplication::onAboutClicked,
+                Qt::QueuedConnection);
 
         infoDialogMenu->addAction(aboutAction);
     }
 
     infoDialogMenu->addAction(MEGAWebAction);
     infoDialogMenu->addAction(filesAction);
-    // infoDialogMenu->addAction(deviceCentreAction);
     infoDialogMenu->addSeparator();
     if (mSyncs2waysMenu)
         infoDialogMenu->addAction(mSyncs2waysMenu->getAction());
@@ -5716,6 +5851,10 @@ void MegaApplication::createInfoDialogMenus()
     infoDialogMenu->addAction(uploadAction);
     infoDialogMenu->addAction(downloadAction);
     infoDialogMenu->addAction(streamAction);
+
+    infoDialogMenu->setProperty("class", QLatin1String("MegaMenu"));
+    infoDialogMenu->setProperty("icon-token", QLatin1String("icon-primary"));
+
     infoDialogMenu->addAction(settingsAction);
     infoDialogMenu->addSeparator();
     infoDialogMenu->addAction(exitAction);
@@ -6580,7 +6719,10 @@ void MegaApplication::startCrashReportingDialog()
                              .constData());
             QPointer<CrashReportDialog> crashDialog = new CrashReportDialog();
             crashDialog->setAttribute(Qt::WA_DeleteOnClose);
+            crashDialog->setParent(crashDialog->parentWidget(), crashDialog->windowFlags());
             TokenParserWidgetManager::instance()->applyCurrentTheme(crashDialog);
+            TokenParserWidgetManager::instance()->registerWidgetForTheming(crashDialog);
+
             connect(crashDialog,
                     &CrashReportDialog::finished,
                     this,
@@ -6608,3 +6750,35 @@ void MegaApplication::startCrashReportingDialog()
     }
 #endif
 }
+
+// clang-format off
+void MegaApplication::onOperatingSystemThemeChanged(const Preferences::SystemColorScheme& theme)
+{
+#ifdef Q_OS_LINUX
+    constexpr QSize iconSize(256, 256);
+
+    auto applyTokenToIconAction = [&](const QPointer<QMenu>& menu)
+    {
+        if (!menu.isNull() && menu.data() != nullptr)
+        {
+            foreach(auto action, menu->actions())
+            {
+                auto coloredPixmap = IconTokenizer::changePixmapColor(
+                    action->icon().pixmap(iconSize),
+                    TokenParserWidgetManager::instance()->getColor(
+                        QStringLiteral("icon-primary"),
+                        ThemeManager::instance()->getColorSchemaString(theme.systemScheme)));
+
+                if (coloredPixmap.has_value())
+                {
+                    action->setIcon(coloredPixmap.value());
+                }
+            }
+        }
+    };
+
+    applyTokenToIconAction(initialTrayMenu);
+#endif
+}
+
+// clang-format on

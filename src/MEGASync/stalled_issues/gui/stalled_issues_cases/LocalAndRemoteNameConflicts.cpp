@@ -52,6 +52,8 @@ void LocalAndRemoteNameConflicts::refreshUi()
             ui->localConflictNames->show();
         }
 
+        ui->selectLabel->setVisible(!nameConflict->isSolved());
+
         ui->retranslateUi(this);
     }
 }

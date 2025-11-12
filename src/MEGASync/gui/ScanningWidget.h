@@ -18,9 +18,7 @@ public:
     ~ScanningWidget();
 
     void show();
-    void hide();
     void disableCancelButton();
-    void updateAnimation();
 
 signals:
     void cancel();
@@ -35,8 +33,6 @@ protected:
     bool event(QEvent* event) override;
 
 private:
-    void startAnimation();
-
     static QString buildScanDescription(const unsigned int& folderCount, const unsigned int& fileCount);
 
     static void setRole(QObject* object, const char* name);
@@ -46,8 +42,7 @@ private:
     QString getScanningFileName() const;
 
     int mPreviousStage;
-    Ui::ScanningWidget *mUi;
-    QMovie *mMovie = nullptr;
+    Ui::ScanningWidget* mUi;
 };
 
 #endif // SCANNINGWIDGET_H

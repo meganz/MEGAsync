@@ -3,6 +3,7 @@
 #include "DialogOpener.h"
 #include "megaapi.h"
 #include "MultiQFileDialog.h"
+#include "TokenParserWidgetManager.h"
 
 #include <QDesktopWidget>
 #include <QScreen>
@@ -157,6 +158,8 @@ void AbstractPlatform::fileSelector(const SelectorInfo &info)
         fileDialog->setModal(true);
     }
 
+    TokenParserWidgetManager::styleQFileDialog(fileDialog);
+
     auto& func = info.func;
     DialogOpener::showDialog<QFileDialog>(fileDialog, [fileDialog, func]()
     {
@@ -195,6 +198,8 @@ void AbstractPlatform::folderSelector(const SelectorInfo &info)
             fileDialog->setModal(true);
         }
 
+        TokenParserWidgetManager::styleQFileDialog(fileDialog);
+
         DialogOpener::showDialog<QFileDialog>(fileDialog, [fileDialog, func]()
         {
             QStringList files;
@@ -207,11 +212,14 @@ void AbstractPlatform::folderSelector(const SelectorInfo &info)
     }
     else
     {
-        auto multiUploadFileDialog = new MultiQFileDialog(info.parent,
-                                                      info.title,
-                                                      defaultDir, info.multiSelection);
+        QPointer<MultiQFileDialog> multiUploadFileDialog =
+            new MultiQFileDialog(info.parent, info.title, defaultDir, info.multiSelection);
         multiUploadFileDialog->setOption(QFileDialog::DontResolveSymlinks, true);
         multiUploadFileDialog->setOption(QFileDialog::ShowDirsOnly, true);
+
+        QPointer<QFileDialog> qfileDialogPointer =
+            qobject_cast<QFileDialog*>(multiUploadFileDialog);
+        TokenParserWidgetManager::styleQFileDialog(qfileDialogPointer);
 
         DialogOpener::showDialog<MultiQFileDialog>(multiUploadFileDialog, [multiUploadFileDialog, func](){
             QStringList files;
@@ -233,21 +241,26 @@ void AbstractPlatform::fileAndFolderSelector(const SelectorInfo &info)
          defaultDir = previousFileUploadSelector->getDialog()->directory().path();
      }
 
-    auto multiUploadFileDialog = new MultiQFileDialog(info.parent,
-                                                  info.title,
-                                                  defaultDir, info.multiSelection);
+     QPointer<MultiQFileDialog> multiUploadFileDialog =
+         new MultiQFileDialog(info.parent, info.title, defaultDir, info.multiSelection);
 
-    multiUploadFileDialog->setOption(QFileDialog::DontResolveSymlinks, true);
+     multiUploadFileDialog->setOption(QFileDialog::DontResolveSymlinks, true);
 
-    auto& func = info.func;
-    DialogOpener::showDialog<MultiQFileDialog>(multiUploadFileDialog, [func, multiUploadFileDialog](){
-        QStringList files;
-        if(multiUploadFileDialog->result() == QDialog::Accepted)
-        {
-            files = multiUploadFileDialog->selectedFiles();
-        }
-        func(files);
-    });
+     QPointer<QFileDialog> qfileDialogPointer = qobject_cast<QFileDialog*>(multiUploadFileDialog);
+     TokenParserWidgetManager::styleQFileDialog(qfileDialogPointer);
+
+     auto& func = info.func;
+     DialogOpener::showDialog<MultiQFileDialog>(
+         multiUploadFileDialog,
+         [func, multiUploadFileDialog]()
+         {
+             QStringList files;
+             if (multiUploadFileDialog->result() == QDialog::Accepted)
+             {
+                 files = multiUploadFileDialog->selectedFiles();
+             }
+             func(files);
+         });
 }
 
 void AbstractPlatform::raiseFileFolderSelectors()
@@ -351,3 +364,10 @@ void AbstractPlatform::logInfoDialogCoordinates(const char *message, const QRect
                        .arg(otherInformation)
                        .toUtf8().constData());
 }
+
+Preferences::SystemColorScheme AbstractPlatform::getCurrentThemeAppearance() const
+{
+    return {};
+}
+
+void AbstractPlatform::applyCurrentThemeOnCurrentDialogFrame(QWindow*) {}

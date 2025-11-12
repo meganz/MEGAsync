@@ -6,6 +6,8 @@
     <string>NSApplication</string>
     <key>CFBundleIconFile</key>
     <string>app.icns</string>
+    <key>CFBundleIconName</key>
+    <string>MEGA_icon</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleSignature</key>
@@ -19,7 +21,7 @@
     <key>LSUIElement</key>
     <string>1</string>
     <key>NSRequiresAquaSystemAppearance</key>
-    <true/>
+    <false/>
     <key>LSMinimumSystemVersion</key>
     <string>10.15</string>
     <key>NSHighResolutionCapable</key>

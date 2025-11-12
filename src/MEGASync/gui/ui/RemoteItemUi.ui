@@ -65,22 +65,22 @@ background-color: transparent;
          <string notr="true"/>
         </property>
         <property name="frameShape">
-         <enum>QFrame::Shape::NoFrame</enum>
+         <enum>QFrame::NoFrame</enum>
         </property>
         <property name="editTriggers">
-         <set>QAbstractItemView::EditTrigger::AllEditTriggers</set>
+         <set>QAbstractItemView::AllEditTriggers</set>
         </property>
         <property name="alternatingRowColors">
          <bool>false</bool>
         </property>
         <property name="selectionMode">
-         <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+         <enum>QAbstractItemView::SingleSelection</enum>
         </property>
         <property name="selectionBehavior">
-         <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+         <enum>QAbstractItemView::SelectRows</enum>
         </property>
         <property name="textElideMode">
-         <enum>Qt::TextElideMode::ElideMiddle</enum>
+         <enum>Qt::ElideMiddle</enum>
         </property>
         <property name="showGrid">
          <bool>false</bool>
@@ -160,7 +160,7 @@ background-color: transparent;
          <item>
           <spacer name="hSpacer">
            <property name="orientation">
-            <enum>Qt::Orientation::Horizontal</enum>
+            <enum>Qt::Horizontal</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
@@ -171,7 +171,7 @@ background-color: transparent;
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="bAdd">
+          <widget class="TokenizableButton" name="bAdd">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -188,7 +188,7 @@ background-color: transparent;
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="focusPolicy">
-            <enum>Qt::FocusPolicy::StrongFocus</enum>
+            <enum>Qt::StrongFocus</enum>
            </property>
            <property name="text">
             <string>Add</string>
@@ -216,6 +216,13 @@ background-color: transparent;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TokenizableButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../Resources_common.qrc"/>
  </resources>

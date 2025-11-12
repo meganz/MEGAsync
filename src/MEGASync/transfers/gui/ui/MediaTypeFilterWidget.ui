@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MediaTypeFilterWidget</class>
+ <widget class="QWidget" name="MediaTypeFilterWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true"/>
+  </property>
+  <property name="layoutDirection">
+   <enum>Qt::RightToLeft</enum>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#MediaTypeFilterWidget
+{
+    background-color: #fff7f7f7; /*colorToken.surface-1*/
+}
+
+#bGroupBoxTitle
+{
+    text-align: left;
+    background: transparent;
+    border: none;
+    color: #ff04101E; /*colorToken.text-secondary*/
+}
+
+QGroupBox
+{
+    border: none;
+}</string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>4</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QWidget" name="titleContainer" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>10</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>5</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="TokenizableButton" name="bGroupBoxTitle">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::RightToLeft</enum>
+        </property>
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../gui/Resources_light.qrc">
+          <normaloff>:/chevron_down_small_thin_outline_secondary</normaloff>
+          <normalon>:/chevron_up_small_thin_outline_secondary</normalon>:/chevron_down_small_thin_outline_secondary</iconset>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="gbMediaType">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="cursor">
+      <cursorShape>ArrowCursor</cursorShape>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="title">
+      <string notr="true"/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="checkable">
+      <bool>false</bool>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+     <layout class="QVBoxLayout" name="wMediaTypeLayout">
+      <property name="spacing">
+       <number>8</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="TabSelector" name="tabArchives" native="true">
+        <property name="class" stdset="0">
+         <string notr="true">sidebar</string>
+        </property>
+        <property name="icon" stdset="0">
+         <iconset resource="../../../gui/Resources_common.qrc">
+          <normaloff>:/file-zip_small_thin_outline</normaloff>
+          <normalon>:/file-zip_small_thins_solid</normalon>:/file-zip_small_thin_outline</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="TabSelector" name="tabDocuments" native="true">
+        <property name="class" stdset="0">
+         <string notr="true">sidebar</string>
+        </property>
+        <property name="icon" stdset="0">
+         <iconset resource="../../../gui/Resources_common.qrc">
+          <normaloff>:/file-text_small_thin_outline</normaloff>
+          <normalon>:/file-text_small_thin_solid</normalon>:/file-text_small_thin_outline</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="TabSelector" name="tabImages" native="true">
+        <property name="class" stdset="0">
+         <string notr="true">sidebar</string>
+        </property>
+        <property name="icon" stdset="0">
+         <iconset resource="../../../gui/Resources_common.qrc">
+          <normaloff>:/file-image_small_thin_outline</normaloff>
+          <normalon>:/file-image_small_thin_solid</normalon>:/file-image_small_thin_outline</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="TabSelector" name="tabVideos" native="true">
+        <property name="class" stdset="0">
+         <string notr="true">sidebar</string>
+        </property>
+        <property name="icon" stdset="0">
+         <iconset resource="../../../gui/Resources_common.qrc">
+          <normaloff>:/file-film_small_thin_outline</normaloff>
+          <normalon>:/file-film_small_thin_solid</normalon>:/file-film_small_thin_outline</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="TabSelector" name="tabAudio" native="true">
+        <property name="class" stdset="0">
+         <string notr="true">sidebar</string>
+        </property>
+        <property name="icon" stdset="0">
+         <iconset resource="../../../gui/Resources_common.qrc">
+          <normaloff>:/file-audio_small_thin_outline</normaloff>
+          <normalon>:/file-audio_small_thin_solid</normalon>:/file-audio_small_thin_outline</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="TabSelector" name="tabOther" native="true">
+        <property name="class" stdset="0">
+         <string notr="true">sidebar</string>
+        </property>
+        <property name="icon" stdset="0">
+         <iconset resource="../../../gui/Resources_common.qrc">
+          <normaloff>:/file-02_small_thin_outline</normaloff>
+          <normalon>:/file-02_small_thin_solid</normalon>:/file-02_small_thin_outline</iconset>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TokenizableButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TabSelector</class>
+   <extends>QWidget</extends>
+   <header>TabSelector.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../../../gui/Resources_common.qrc"/>
+  <include location="../../../gui/Resources_light.qrc"/>
+ </resources>
+ <connections/>
+</ui>

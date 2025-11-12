@@ -19,12 +19,12 @@ public:
     void hide(bool fromCancellation);
     void disableCancelling();
     void setInCancellingStage();
-    void update();
     bool isActive();
     void onFolderTransferUpdate(const FolderTransferUpdateEvent& event);
 
 signals:
     void cancelTransfers();
+    void visibilityChanged(bool);
 
 private slots:
     void onCancelClicked();
@@ -36,8 +36,6 @@ private:
     CancelConfirmWidget* mConfirmWidget = nullptr;
     QWidget* mLastSelectedWidget = nullptr;
     QWidget* mFinishedWidget;
-
-    static const char* getControlStyles();
 };
 
 #endif // BLOCKINGUI_H

@@ -9,6 +9,7 @@
 #include "OtherSideMissingOrBlocked.h"
 #include "StalledIssuesCaseHeaders.h"
 #include "StalledIssuesProxyModel.h"
+#include "TokenParserWidgetManager.h"
 #include "Utilities.h"
 
 const int StalledIssuesDelegateWidgetsCache::DELEGATEWIDGETS_CACHESIZE = 30;
@@ -82,8 +83,7 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
 
     if(isNew)
     {
-        header->show();
-        header->hide();
+        header->init();
     }
 
     if(needsUpdate)
@@ -118,11 +118,10 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
         }
 
         item = createBodyWidget(parent, issue);
-        item->resize(QSize(size.width(), item->size().height()));
-        item->show();
-        item->hide();
-        item->updateUi(sourceIndex, issue);
         item->setDelegate(mDelegate);
+        item->resize(QSize(size.width(), item->size().height()));
+        item->updateUi(sourceIndex, issue);
+        item->init();
 
         itemsByRowMap.insert(row, item);
     }

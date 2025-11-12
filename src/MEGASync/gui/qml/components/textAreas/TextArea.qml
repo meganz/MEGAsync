@@ -137,6 +137,7 @@ FocusScope {
                     focus: true
                     placeholderTextColor: colors.placeholder
                     color: enabled ? colors.text : colors.textDisabled
+                    selectedTextColor: colors.textInverse
 
                     font {
                         pixelSize: sizes.textSize

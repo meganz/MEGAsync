@@ -9,7 +9,7 @@ class PasswordStrengthChecker : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString password MEMBER mPassword WRITE setPassword)
+    Q_PROPERTY(QString password MEMBER mPassword WRITE setPassword NOTIFY passwordChanged)
     Q_PROPERTY(PasswordStrength strength MEMBER mStrength READ getStrength NOTIFY strengthChanged)
 
 public:
@@ -29,6 +29,7 @@ public:
 
 signals:
     void strengthChanged();
+    void passwordChanged();
 
 private:
     mega::MegaApi* mMegaApi;

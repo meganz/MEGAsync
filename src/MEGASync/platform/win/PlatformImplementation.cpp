@@ -59,6 +59,10 @@ void PlatformImplementation::initialize(int, char *[])
 
     //In order to show dialogs when the application is inactive (for example, from the webclient)
     QWindowsWindowFunctions::setWindowActivationBehavior(QWindowsWindowFunctions::AlwaysActivateWindow);
+
+    watcher = new WinThemeWatcher(this);
+
+    startThemeMonitor();
 }
 
 void PlatformImplementation::prepareForSync()
@@ -515,6 +519,19 @@ bool CheckLeftPaneIcon(wchar_t *path, bool remove)
     return false;
 }
 
+void PlatformImplementation::startThemeMonitor()
+{
+    QObject::connect(watcher,
+                     &WinThemeWatcher::systemThemeChanged,
+                     this,
+                     &PlatformImplementation::themeChanged);
+}
+
+Preferences::SystemColorScheme PlatformImplementation::getCurrentThemeAppearance() const
+{
+    return watcher->getCurrentTheme();
+}
+
 void PlatformImplementation::removeSyncFromLeftPane(QString syncPath)
 {
     CheckLeftPaneIcon(syncPath.toStdWString().data(), true);
@@ -661,6 +678,40 @@ void PlatformImplementation::removeAllSyncsFromLeftPane()
     while (deleted)
     {
         deleted &= CheckLeftPaneIcon(NULL, true);
+    }
+}
+
+void PlatformImplementation::disableContextMenu(bool isDisabled)
+{
+    // Set a reg entry that will be read by the extension
+    // No entry means that the context menu is enabled.
+    static auto kRegPath =
+        QString::fromLatin1("HKEY_CURRENT_USER\\Software\\%1\\%2")
+            .arg(QCoreApplication::organizationName(), QCoreApplication::applicationName());
+    static auto kValueName = QString::fromLatin1("ShellExtensionDisabled"); // DWORD 0/1
+
+    QSettings appRegistryEntry(kRegPath, QSettings::NativeFormat);
+
+    if (isDisabled)
+    {
+        appRegistryEntry.setValue(kValueName, 1);
+    }
+    else
+    {
+        appRegistryEntry.remove(kValueName);
+    }
+    appRegistryEntry.sync();
+    if (appRegistryEntry.status() == QSettings::NoError)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "ShellExt context menu toggle: success");
+    }
+    else
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                     QString::fromLatin1("ShellExt context menu toggle: error %1")
+                         .arg(appRegistryEntry.status())
+                         .toUtf8()
+                         .constData());
     }
 }
 
@@ -847,8 +898,8 @@ void PlatformImplementation::stopShellDispatcher()
     {
         shellDispatcherTask->exitTask();
         shellDispatcherTask->wait();
-        delete shellDispatcherTask;
-        shellDispatcherTask = NULL;
+        shellDispatcherTask->deleteLater();
+        shellDispatcherTask = nullptr;
     }
 }
 

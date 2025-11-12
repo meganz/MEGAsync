@@ -4,9 +4,8 @@
 #include "AccountDetailsManager.h"
 #include "BandwidthSettings.h"
 #include "BugReportDialog.h"
-#include "ChangePassword.h"
+#include "ChangePasswordComponent.h"
 #include "CommonMessages.h"
-#include "CreateRemoveSyncsManager.h"
 #include "DialogOpener.h"
 #include "FullName.h"
 #include "MegaApplication.h"
@@ -14,7 +13,6 @@
 #include "Platform.h"
 #include "PowerOptions.h"
 #include "ProxySettings.h"
-#include "RemoveBackupDialog.h"
 #include "StatsEventHandler.h"
 #include "ThemeManager.h"
 #include "ui_SettingsDialog.h"
@@ -128,7 +126,7 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mUi->cAutoUpdate->hide();
 #endif
 
-    mUi->cFinderIcons->hide();
+    mUi->cDesktopIntegration->hide();
 #ifdef Q_OS_WINDOWS
     typedef LONG MEGANTSTATUS;
 
@@ -161,13 +159,11 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
             RtlGetVersion(&version);
             if (version.dwMajorVersion >= 10)
             {
-                mUi->cFinderIcons->show();
+                mUi->cDesktopIntegration->show();
             }
         }
     }
 #endif
-
-    mUi->gThemeSelector->hide();
 
 #ifdef Q_OS_MACOS
     this->setWindowTitle(tr("Settings"));
@@ -403,22 +399,15 @@ void SettingsDialog::loadSettings()
     mUi->cLanguage->addItems(languages);
     mUi->cLanguage->setCurrentIndex(currentIndex);
 
-    mUi->cbTheme->clear();
-    mUi->cbTheme->addItems(ThemeManager::instance()->themesAvailable());
-
-    auto themeIndex = static_cast<int>(mPreferences->getThemeType());
-    if (themeIndex < mUi->cbTheme->count())
-    {
-        mUi->cbTheme->setCurrentIndex(themeIndex);
-    }
+    // Color theme
+    initColorTheme();
 
     //Account
     mUi->lEmail->setText(mPreferences->email());
     auto fullName(
         (mPreferences->firstName() + QStringLiteral(" ") + mPreferences->lastName()).trimmed());
-    mUi->lName->setText(mUi->lName->fontMetrics().elidedText(fullName,
-                                                             Qt::ElideMiddle,
-                                                             mUi->lName->maximumWidth()));
+    mUi->lName->setText(mUi->lName->fontMetrics().elidedText(fullName,Qt::ElideMiddle,mUi->lName->maximumWidth()));
+
 
     // Update name in case it changes
     auto FullNameRequest = UserAttributes::FullName::requestFullName();
@@ -427,10 +416,7 @@ void SettingsDialog::loadSettings()
             this,
             [this](const QString& fullName)
             {
-                mUi->lName->setText(
-                    mUi->lName->fontMetrics().elidedText(fullName,
-                                                         Qt::ElideMiddle,
-                                                         mUi->lName->maximumWidth()));
+                mUi->lName->setText(mUi->lName->fontMetrics().elidedText(fullName,Qt::ElideMiddle,mUi->lName->maximumWidth()));
             });
 
     // Avatar
@@ -445,7 +431,7 @@ void SettingsDialog::loadSettings()
     updateDownloadFolder();
 
 #ifdef Q_OS_WINDOWS
-    mUi->cFinderIcons->setChecked(!mPreferences->leftPaneIconsDisabled());
+    mUi->cDesktopIntegration->setChecked(!mPreferences->leftPaneIconsDisabled());
 #endif
 
     updateNetworkTab();
@@ -530,6 +516,8 @@ bool SettingsDialog::event(QEvent* event)
 
         updateUploadFolder();
         updateDownloadFolder();
+
+        initColorTheme();
     }
 
     return QDialog::event(event);
@@ -836,11 +824,15 @@ void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
 }
 
 #ifdef Q_OS_WINDOWS
-void SettingsDialog::on_cFinderIcons_toggled(bool checked)
+// This settings toggles 2 integrations:
+// 1. Shortcut to synced folders in the explorer (left pane)
+// 2. Shell extension's context menu
+void SettingsDialog::on_cDesktopIntegration_toggled(bool checked)
 {
     if (mLoadingSettings)
         return;
 
+    // 1. Toggle left pane sync shortcuts in the explorer
     if (checked)
     {
         for (auto syncSetting: mModel->getAllSyncSettings())
@@ -855,6 +847,11 @@ void SettingsDialog::on_cFinderIcons_toggled(bool checked)
         Platform::getInstance()->removeAllSyncsFromLeftPane();
     }
     mPreferences->disableLeftPaneIcons(!checked);
+
+    // 2. Toggle shell extension's context menu
+
+    Platform::getInstance()->disableContextMenu(!checked);
+    mPreferences->disableContextMenu(!checked);
 }
 #endif
 
@@ -865,7 +862,7 @@ void SettingsDialog::on_cbTheme_currentIndexChanged(int index)
         return;
     }
 
-    ThemeManager::instance()->setTheme(static_cast<Preferences::ThemeType>(index));
+    ThemeManager::instance()->setTheme(mUi->cbTheme->currentData().value<Preferences::ThemeType>());
 }
 
 void SettingsDialog::on_bUpdate_clicked()
@@ -1119,7 +1116,7 @@ void SettingsDialog::on_bMyAccount_clicked()
 
 void SettingsDialog::on_bStorageDetails_clicked()
 {
-    auto accountDetailsDialog = new AccountDetailsDialog();
+    auto accountDetailsDialog = new AccountDetailsDialog(this);
     DialogOpener::showNonModalDialog<AccountDetailsDialog>(accountDetailsDialog);
 }
 
@@ -1190,6 +1187,11 @@ void SettingsDialog::setEnabledAllControls(const bool enabled)
     mUi->pNotifications->setEnabled(enabled);
 
     mUi->wStackFooter->setEnabled(enabled);
+}
+
+void SettingsDialog::setChangePasswordEnabled(bool enabled)
+{
+    mUi->bChangePassword->setEnabled(enabled);
 }
 
 void SettingsDialog::setSyncAddButtonEnabled(const bool enabled, SettingsDialog::Tabs tab)
@@ -1330,7 +1332,8 @@ void SettingsDialog::on_bExportMasterKey_clicked()
 
     QDir dir(defaultPath);
 
-    QFileDialog* dialog = new QFileDialog(this);
+    QPointer<QFileDialog> dialog = new QFileDialog(this);
+    dialog->setWindowModality(Qt::WindowModal);
     dialog->setFileMode(QFileDialog::AnyFile);
     dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     dialog->selectFile(dir.filePath(tr("MEGA-RECOVERYKEY")));
@@ -1339,6 +1342,10 @@ void SettingsDialog::on_bExportMasterKey_clicked()
     const QStringList schemes = QStringList(QStringLiteral("file"));
     dialog->setSupportedSchemes(schemes);
     dialog->setAcceptMode(QFileDialog::AcceptSave);
+
+    // Style
+    TokenParserWidgetManager::styleQFileDialog(dialog);
+
     DialogOpener::showDialog<QFileDialog>(
         dialog,
         [this, dialog]
@@ -1389,8 +1396,22 @@ void SettingsDialog::on_bChangePassword_clicked()
     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
         AppStatsEvents::EventType::SETTINGS_CHANGE_PASSWORD_CLICKED);
 
-    QPointer<ChangePassword> cPassword = new ChangePassword(this);
-    DialogOpener::showDialog<ChangePassword>(cPassword);
+    ChangePasswordComponent::registerQmlModules();
+    QPointer<QmlDialogWrapper<ChangePasswordComponent>> changePasswordDialog;
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<ChangePasswordComponent>>())
+    {
+        changePasswordDialog = dialog->getDialog();
+    }
+    else
+    {
+        changePasswordDialog = new QmlDialogWrapper<ChangePasswordComponent>(this);
+    }
+
+    DialogOpener::showDialog(changePasswordDialog,
+                             [changePasswordDialog]()
+                             {
+                                 changePasswordDialog->deleteLater();
+                             });
 }
 
 void SettingsDialog::on_bSessionHistory_clicked()
@@ -1456,8 +1477,7 @@ void SettingsDialog::on_bFolders_clicked()
 void SettingsDialog::on_bUploadFolder_clicked()
 {
     UploadNodeSelector* nodeSelector = new UploadNodeSelector(this);
-    // Temporary
-    nodeSelector->setProperty("TOKENIZED", true);
+    nodeSelector->init();
     std::shared_ptr<mega::MegaNode> defaultNode(
         mMegaApi->getNodeByPath(mUi->eUploadFolder->text().toStdString().c_str()));
     nodeSelector->setSelectedNodeHandle(defaultNode);
@@ -1712,6 +1732,38 @@ void SettingsDialog::startRequestTaskbarPinningTimer()
                 &SettingsDialog::onRequestTaskbarPinningTimeout);
 
         mTaskbarPinningRequestTimer->start(500ms);
+    }
+}
+
+void SettingsDialog::initColorTheme()
+{
+    const auto themes = ThemeManager::instance()->getAvailableThemes();
+
+    // Init
+    if (mUi->cbTheme->count() == 0)
+    {
+        // Add available themes
+        for (auto theme = themes.constKeyValueBegin(); theme != themes.constKeyValueEnd(); ++theme)
+        {
+            mUi->cbTheme->addItem(theme->second,
+                                  QVariant::fromValue<Preferences::ThemeType>(theme->first));
+        }
+
+        // Set current index to currently used theme
+        const auto currentTheme = ThemeManager::instance()->getCurrentTheme();
+        mUi->cbTheme->setCurrentIndex(
+            mUi->cbTheme->findData(QVariant::fromValue<Preferences::ThemeType>(currentTheme)));
+    }
+    // Re-translate
+    else if (mUi->cbTheme->count() == themes.size())
+    {
+        // Update entries with new translation
+        for (auto theme = themes.constKeyValueBegin(); theme != themes.constKeyValueEnd(); ++theme)
+        {
+            const auto themeIndex =
+                mUi->cbTheme->findData(QVariant::fromValue<Preferences::ThemeType>(theme->first));
+            mUi->cbTheme->setItemText(themeIndex, theme->second);
+        }
     }
 }
 

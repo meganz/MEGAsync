@@ -28,6 +28,11 @@ Item {
     visible: false
 
     onTypeChanged: {
+        hint.type = type;
+    }
+
+    function getBackgroundRectColor()
+    {
         switch(type) {
             case Constants.MessageType.NONE:
             case Constants.MessageType.SUCCESS:
@@ -35,17 +40,13 @@ Item {
                 console.warn("BannerText: Constants.MessageType -> " + type + " not defined yet");
                 break;
             case Constants.MessageType.WARNING:
-                backgroundColor = ColorTheme.notificationWarning;
-                break;
+                return ColorTheme.notificationWarning;
             case Constants.MessageType.ERROR:
-                backgroundColor = ColorTheme.notificationError;
-                break;
+                return ColorTheme.notificationError;
             default:
                 console.error("BannerText: Constants.MessageType -> " + type + " does not exist");
                 break;
         }
-
-        hint.type = type;
     }
 
     Rectangle {
@@ -61,6 +62,8 @@ Item {
             color: ColorTheme.borderSubtle
             width: root.showBorder ? root.borderWidth : 0
         }
+
+        color: getBackgroundRectColor();
 
         MouseArea {
             id: backgroundMouseArea

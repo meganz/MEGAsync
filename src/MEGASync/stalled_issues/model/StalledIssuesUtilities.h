@@ -50,9 +50,9 @@ class StalledIssuesUtilities : public QObject
 public:
     StalledIssuesUtilities();
 
-    static QIcon getLocalFileIcon(const QFileInfo& fileInfo, bool hasProblem);
-    static QIcon getRemoteFileIcon(mega::MegaNode* node, const QFileInfo &fileInfo, bool hasProblem);
-    static QIcon getIcon(bool isFile, const QFileInfo &fileInfo, bool hasProblem);
+    static QString getLocalFileIcon(const QFileInfo& fileInfo);
+    static QString getRemoteFileIcon(mega::MegaNode* node, const QFileInfo& fileInfo);
+    static QString getIcon(bool isFile, const QFileInfo& fileInfo);
 
     static void openLink(bool isCloud, const QString& path);
     static QUrl getLink(bool isCloud, const QString& path);

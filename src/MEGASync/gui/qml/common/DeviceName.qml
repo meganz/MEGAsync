@@ -25,7 +25,7 @@ QtObject {
         else if (name.match(RegexExpressions.deviceNameSpecialCharacters)) {
             return DeviceName.Error.SPECIAL_CHARACTERS;
         } 
-        else if (existingDeviceChecker.deviceNameAlreadyExists(name)) {
+        else if (existingDeviceChecker !== null && existingDeviceChecker.deviceNameAlreadyExists(name)) {
             return DeviceName.Error.NAME_EXIST;
         }
         return DeviceName.Error.NONE;

@@ -49,7 +49,9 @@ QString CommonMessages::createShellExtensionActionLabel(const QString &action, c
 
 QString CommonMessages::errorInvalidChars()
 {
-    return QCoreApplication::translate("CommonMessages", "The following characters are not allowed:\n%1").arg(Utilities::FORBIDDEN_CHARS);
+    return QCoreApplication::translate("CommonMessages",
+                                       "The following characters are not allowed: %1")
+        .arg(Utilities::FORBIDDEN_CHARS);
 }
 
 QString CommonMessages::getExpiredProFlexiMessage()

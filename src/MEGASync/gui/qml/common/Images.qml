@@ -10,19 +10,21 @@ QtObject {
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     readonly property url imagesPath: Qt.resolvedUrl("../../images/")
+    readonly property url imagesTokenizablePath: Qt.resolvedUrl(imagesPath + "themed/tokenizable/")
     readonly property url imagesQmlPath: Qt.resolvedUrl(imagesPath + "qml/")
     readonly property url imagesOnboardingPath: Qt.resolvedUrl(imagesQmlPath + "onboarding/")
     readonly property url imagesSyncsPath: Qt.resolvedUrl(imagesQmlPath + "syncs/")
     readonly property url imagesGuestPath: Qt.resolvedUrl(imagesQmlPath + "guest/")
-    readonly property url imagesExclusionsPath: Qt.resolvedUrl(imagesQmlPath + "/sync_exclusions/")
-    readonly property url imagesDeviceCentrePath: Qt.resolvedUrl(imagesQmlPath + "/device_center/")
-    readonly property url imagesSurveysPath: Qt.resolvedUrl(imagesQmlPath + "/surveys/")
+    readonly property url imagesExclusionsPath: Qt.resolvedUrl(imagesQmlPath + "sync_exclusions/")
+    readonly property url imagesDeviceCentrePath: Qt.resolvedUrl(imagesQmlPath + "device_center/")
+    readonly property url imagesSurveysPath: Qt.resolvedUrl(imagesQmlPath + "surveys/")
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Image paths
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     readonly property url alertCircle: imagesQmlPath + "alert_circle.svg"
+    readonly property url arrowUpDown: imagesQmlPath + "arrows-up-down-circle.svg"
     readonly property url alertCircleFilled: imagesQmlPath + "alert_circle_filled.svg"
     readonly property url alertTriangle: imagesQmlPath + "alert_triangle.svg"
     readonly property url alertTrianglePng: imagesQmlPath + "alert-triangle.png"
@@ -33,6 +35,7 @@ QtObject {
     readonly property url helpCircle: imagesQmlPath + "help_circle.svg"
     readonly property url indeterminate: imagesQmlPath + "indeterminate.svg"
     readonly property url lock: imagesQmlPath + "lock.svg"
+    readonly property url crystalLock: imagesPath + "lock.png"
     readonly property url loader: imagesQmlPath + "loader.svg"
     readonly property url smallCircle: imagesQmlPath + "small_circle.svg"
     readonly property url tip: imagesQmlPath + "tip.svg"
@@ -48,13 +51,10 @@ QtObject {
     readonly property url twofa: imagesQmlPath + "lock.png"
     readonly property url eye: imagesQmlPath + "eye.svg"
     readonly property url eyeOff: imagesQmlPath + "eye-off.svg"
-    readonly property url rocket: imagesQmlPath + "rocket.png"
-    readonly property url megaCloud: imagesQmlPath + "mega-cloud.png"
-    readonly property url contols: imagesQmlPath + "controls.png"
     readonly property url deviceCentreUpdate: imagesQmlPath + "device-centre-update.png"
-    readonly property url ok: imagesQmlPath + "ok.png"
+    readonly property url megaDevices: imagesQmlPath + "mega_3d_devices.png"
     readonly property url threeDots: imagesQmlPath + "three_dots.svg"
-    readonly property url monitor: imagesQmlPath + "monitor.svg"
+    readonly property url monitor: imagesTokenizablePath + "monitor_small_thin_outline.svg"
     readonly property url folderOpen: imagesQmlPath + "folder-open.svg"
     readonly property url pauseCircle: imagesQmlPath + "pause-circle.svg"
     readonly property url searchFilled: imagesQmlPath + "search.svg"
@@ -63,6 +63,15 @@ QtObject {
     readonly property url slashCircle: imagesQmlPath + "slash-circle.svg"
     readonly property url playCircle: imagesQmlPath + "play-circle.svg"
     readonly property url power: imagesQmlPath + "power.svg"
+    readonly property url upArrow: imagesQmlPath + "up-arrow.svg"
+    readonly property url downArrow: imagesQmlPath + "down-arrow.svg"
+
+    readonly property url dialogMessageQuestion: imagesQmlPath + "dialog_message_question.svg"
+    readonly property url dialogMessageInformation: imagesQmlPath + "dialog_message_information.svg"
+    readonly property url dialogMessageWarning: imagesQmlPath + "dialog_message_warning.svg"
+    readonly property url dialogMessageCritical: imagesQmlPath + "dialog_message_critical.svg"
+    readonly property url dialogMessageSuccess: imagesQmlPath + "dialog_message_success.svg"
+    readonly property url dialogMessageCross: imagesQmlPath + "dialog_message_cross.svg"
 
     readonly property url database: imagesOnboardingPath + "database.svg"
     readonly property url edit: imagesOnboardingPath + "edit.svg"
@@ -111,6 +120,8 @@ QtObject {
     readonly property url starEmpty: imagesSurveysPath + "star_empty.svg"
 
     readonly property url plus: imagesPath + "icon_plus.svg"
+    readonly property url pause_circle_medium_thin_outline: "qrc:/pause-circle_medium_thin_outline.svg"
+    readonly property url play_circle_medium_thin_outline: "qrc:/play-circle_medium_thin_outline.svg"
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Standard Icons

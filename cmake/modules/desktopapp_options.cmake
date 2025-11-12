@@ -36,6 +36,7 @@ if (ENABLE_DESKTOP_APP)
     set(ENABLE_LOG_PERFORMANCE ON)
     set(ENABLE_QT_BINDINGS ON)
     set(ENABLE_ISOLATED_GFX ON)
+    set(ENABLE_MEDIA_FILE_METADATA ON)
 endif()
 
 include(sdklib_options)

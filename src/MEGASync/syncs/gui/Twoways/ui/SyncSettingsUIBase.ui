@@ -112,6 +112,9 @@
               <height>16</height>
              </size>
             </property>
+            <property name="colorToken" stdset="0">
+             <string notr="true">icon-primary</string>
+            </property>
            </widget>
           </item>
           <item>

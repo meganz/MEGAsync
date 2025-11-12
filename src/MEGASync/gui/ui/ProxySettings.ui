@@ -9,12 +9,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>489</width>
-    <height>471</height>
+    <width>495</width>
+    <height>512</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -35,7 +35,12 @@
    <string>Proxies</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#lErrorIcon[type=&quot;error&quot;] 
+   <string notr="true">#ProxySettings
+{
+background-color: #FFFFFF; /*colorToken.page-background*/
+}
+
+#lErrorIcon[type=&quot;error&quot;] 
 {
 	image: url(:/images/banner/error.svg);
 }</string>
@@ -47,17 +52,20 @@
    <property name="spacing">
     <number>24</number>
    </property>
+   <property name="sizeConstraint">
+    <enum>QLayout::SetFixedSize</enum>
+   </property>
    <property name="leftMargin">
-    <number>20</number>
+    <number>48</number>
    </property>
    <property name="topMargin">
-    <number>10</number>
+    <number>48</number>
    </property>
    <property name="rightMargin">
-    <number>20</number>
+    <number>48</number>
    </property>
    <property name="bottomMargin">
-    <number>10</number>
+    <number>48</number>
    </property>
    <item>
     <widget class="QGroupBox" name="gProxy">
@@ -93,10 +101,10 @@
        <number>12</number>
       </property>
       <property name="horizontalSpacing">
-       <number>6</number>
+       <number>12</number>
       </property>
       <property name="verticalSpacing">
-       <number>20</number>
+       <number>24</number>
       </property>
       <item row="13" column="0">
        <widget class="QLabel" name="lProxyUsername">
@@ -473,7 +481,7 @@
      </property>
      <layout class="QHBoxLayout" name="buttonBoxLayout">
       <property name="spacing">
-       <number>10</number>
+       <number>12</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -505,13 +513,13 @@
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>26</height>
+          <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>26</height>
+          <height>16777215</height>
          </size>
         </property>
         <property name="cursor">
@@ -524,7 +532,7 @@
          <string notr="true">outline</string>
         </property>
         <property name="dimension" stdset="0">
-         <string notr="true">small</string>
+         <string notr="true">medium</string>
         </property>
        </widget>
       </item>
@@ -533,13 +541,13 @@
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>26</height>
+          <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>26</height>
+          <height>16777215</height>
          </size>
         </property>
         <property name="cursor">
@@ -555,7 +563,7 @@
          <string notr="true">primary</string>
         </property>
         <property name="dimension" stdset="0">
-         <string notr="true">small</string>
+         <string notr="true">medium</string>
         </property>
        </widget>
       </item>

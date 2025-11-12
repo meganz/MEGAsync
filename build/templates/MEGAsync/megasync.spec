@@ -11,102 +11,57 @@ Packager:	MEGA Linux Team <linux@mega.io>
 
 %global __requires_exclude ^lib(avcodec|avformat|avutil|swresample|swscale)\\.so\\.
 
-BuildRequires: autoconf, autoconf-archive, automake, libtool, gcc-c++, libicu-devel
+BuildRequires: autoconf, autoconf-archive, automake, libtool, gcc-c++, pkgconf
 BuildRequires: hicolor-icon-theme, zip, unzip, nasm, cmake, perl
+
+Recommends: xdg-desktop-portal
+
+Suggests: nautilus-megasync, dolphin-megasync, nemo-megasync, thunar-megasync
 
 #OpenSUSE
 %if 0%{?suse_version} || 0%{?sle_version}
+    BuildRequires: lsb-release
 
-    BuildRequires: libopenssl-devel, sqlite3-devel
-    BuildRequires: libbz2-devel, zlib-devel
-    BuildRequires: lsb-release, wget
-
-    # disabling post-build-checks that ocassionally prevent opensuse rpms from being generated
-    # plus it speeds up building process
-    #!BuildIgnore: post-build-checks
-
-    %if 0%{?sle_version} >= 150000
-        BuildRequires: libcurl4
-    %endif
-
-    %if 0%{?suse_version} > 1500 || 0%{?sle_version} >= 150400
-        BuildRequires: systemd-devel
-    %else
-        BuildRequires: libudev-devel
-    %endif
-
-    %if 0%{?suse_version} > 1500
-        BuildRequires: pkgconf-pkg-config
-    %else
-        BuildRequires: pkg-config
-        BuildRequires: gcc13 gcc13-c++
-        BuildRequires: python311
-    %endif
-
-    %if 0%{?suse_version} > 1500 || 0%{?sle_version} >= 150300 || (0%{?is_opensuse} && 0%{?sle_version} >= 150000)
-        BuildRequires: c-ares-devel
-    %else
-        BuildRequires: libcares-devel
-    %endif
-
-    %if !( ( "%{_target_cpu}" == "i586" && ( 0%{?sle_version} == 120200 || 0%{?sle_version} == 120300) ) || 0%{?suse_version} == 1230 )
-        BuildRequires: libraw-devel
-    %endif
-        BuildRequires: update-desktop-files
-
-    %if 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
-        BuildRequires: libqt5-qtbase-devel, libqt5-linguist-devel, libqt5-qtsvg-devel, libqt5-qtx11extras-devel, libqt5-qtdeclarative-devel
-        Requires: libQt5Core5 libqt5-qtquickcontrols libqt5-qtquickcontrols2
-    %else
-        BuildRequires: libqt4-devel, qt-devel
-    %endif
-
-    %if 0%{?suse_version} <= 1320
-        BuildRequires: libcryptopp-devel
-    %endif
-
+# disabling post-build-checks that ocassionally prevent opensuse rpms from being generated
+# plus it speeds up building process
+#!BuildIgnore: post-build-checks
+    BuildRequires: update-desktop-files
+    BuildRequires: libqt5-qtbase-devel, libqt5-linguist-devel, libqt5-qtsvg-devel, libqt5-qtx11extras-devel, libqt5-qtdeclarative-devel
+    Requires: libQt5Core5 libqt5-qtquickcontrols libqt5-qtquickcontrols2
+    BuildRequires: kernel-devel
 %else
+    BuildRequires: python3, kernel-headers
+%endif
 
-    %if 0%{?rhel_version} == 0 && 0%{?centos_version} < 800
-        #if !RHEL
-        BuildRequires: LibRaw-devel
-    %endif
+%if 0%{?suse_version} && 0%{?suse_version} <= 1500
+    BuildRequires: gcc14-c++
+%else
+    BuildRequires: gcc-c++
+%endif
 
+# OpenSuse Leap 15.6 -> python311
+# OpenSuse Leap 16.0 -> python313
+# OpenSuse Tumbleweed -> python313
+%if 0%{?sle_version} && 0%{?suse_version} < 1600
+BuildRequires: python311
+%endif
+%if (0%{?sle_version} || 0%{?is_opensuse}) && 0%{?suse_version} >= 1600
+BuildRequires: python313
 %endif
 
 #Fedora specific
 %if 0%{?fedora}
-    BuildRequires: openssl-devel, sqlite-devel, c-ares-devel
     BuildRequires: desktop-file-utils
-    BuildRequires: bzip2-devel
-    BuildRequires: systemd-devel
-    BuildRequires: lsb_release, pkgconf-pkg-config
+    BuildRequires: lsb_release
 
-    %if 0%{?fedora_version} >= 31
-        BuildRequires: fonts-filesystem
-    %else
-        BuildRequires: fontpackages-filesystem
-    %endif
-
-    %if 0%{?fedora_version} >= 40
-        BuildRequires: wget2, wget2-wget, zlib-ng-compat
-    %else
-        BuildRequires: wget, zlib-devel
-    %endif
-
-    # allowing for rpaths (taken as invalid, as if they were not absolute paths when they are)
+# allowing for rpaths (taken as invalid, as if they were not absolute paths when they are)
     %if 0%{?fedora_version} >= 35
         %define __brp_check_rpaths QA_RPATHS=0x0002 /usr/lib/rpm/check-rpaths
     %endif
 
-    %if 0%{?fedora_version} >= 23
-        BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel, qt5-qtx11extras-devel, qt5-qtdeclarative-devel
-        Requires: qt5-qtbase >= 5.6, qt5-qtsvg, qt5-qtdeclarative, qqc2-desktop-style, qt5-qtquickcontrols, qt5-qtquickcontrols2
-        BuildRequires: terminus-fonts
-    %else
-        BuildRequires: qt, qt-x11, qt-devel
-        BuildRequires: terminus-fonts
-    %endif
+    BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel, qt5-qtx11extras-devel, qt5-qtdeclarative-devel
+    Requires: qt5-qtbase >= 5.15, qt5-qtsvg, qt5-qtdeclarative, qqc2-desktop-style, qt5-qtquickcontrols, qt5-qtquickcontrols2
+
 %endif
 
 #centos/rhel/almalinux specific
@@ -116,10 +71,7 @@ BuildRequires: hicolor-icon-theme, zip, unzip, nasm, cmake, perl
 
 #CentOS/RedHat/AlmaLinux
 %if 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version}
-    BuildRequires: openssl-devel, sqlite-devel, c-ares-devel, bzip2-devel
     BuildRequires: desktop-file-utils
-    BuildRequires: systemd-devel
-    BuildRequires: bzip2-devel
     BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-linguist, qt5-qtsvg-devel, qt5-qtx11extras-devel, qt5-qtdeclarative-devel
     Requires: qt5-qtbase qt5-qtquickcontrols qt5-qtquickcontrols2 qt5-qtdeclarative
 %endif
@@ -140,7 +92,7 @@ BuildRequires: hicolor-icon-theme, zip, unzip, nasm, cmake, perl
 mega_build_id=`echo %{release} | sed "s/\.[^.]*$//" | sed "s/[^.]*\.//" | sed "s/[^0-9]//g"`
 sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1${mega_build_id}/g" src/MEGASync/control/Version.h
 
-%if ( 0%{?fedora_version} && 0%{?fedora_version}<=40 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?centos_version} == 800 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150600 )
+%if ( 0%{?fedora_version} && 0%{?fedora_version}<=41 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?centos_version} == 800 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150600 )
     %define extradefines -DMEGASYNC_DEPRECATED_OS
 %else
     %define extradefines %{nil}
@@ -176,18 +128,27 @@ if [ -n "%{extradefines}" ]; then
     export CXXFLAGS="%{extradefines} ${CXXFLAGS}"
 fi
 
-# OpenSuse Leap 15.x defaults to gcc7.
-# Python>=10 needed for VCPKG pkgconf
-%if 0%{?suse_version} <= 1500
-    export CC=gcc-13
-    export CXX=g++-13
+# OpenSuse Leap 15.6:
+# Use gcc14 instead of default (gcc7)
+# Python>=3.10 needed for VCPKG pkgconf
+%if 0%{?suse_version} && 0%{?suse_version} <= 1500
+    export CC=gcc-14
+    export CXX=g++-14
     mkdir python311
     ln -sf /usr/bin/python3.11 python311/python3
     export PATH=$PWD/python311:$PATH
 %endif
 
 cmake --version
-cmake ${vcpkg_root} -DENABLE_DESKTOP_UPDATE_GEN=OFF -DENABLE_DESIGN_TOKENS_IMPORTER=OFF -DENABLE_DESKTOP_APP_TESTS=OFF ${qtdefinitions} -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B %{_builddir}/build_dir
+cmake ${vcpkg_root} \
+      -DENABLE_DESKTOP_UPDATE_GEN=OFF \
+      -DENABLE_DESIGN_TOKENS_IMPORTER=OFF \
+      -DENABLE_DESKTOP_APP_TESTS=OFF \
+      ${qtdefinitions} \
+      -DCMAKE_VERBOSE_MAKEFILE=ON \
+      -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+      -S . \
+      -B %{_builddir}/build_dir
 
 %build
 
@@ -195,7 +156,8 @@ if [ -f /opt/cmake.tar.gz ]; then
     export PATH="${PWD}/cmake_inst/bin:${PATH}"
 fi
 
-cmake --build %{_builddir}/build_dir %{?_smp_mflags}
+cmake --build %{_builddir}/build_dir \
+              %{?_smp_mflags}
 
 %install
 
@@ -203,7 +165,8 @@ if [ -f /opt/cmake.tar.gz ]; then
     export PATH="${PWD}/cmake_inst/bin:${PATH}"
 fi
 
-cmake --install %{_builddir}/build_dir --prefix %{buildroot}
+cmake --install %{_builddir}/build_dir \
+                --prefix %{buildroot}
 
 %if 0%{?suse_version}
     %suse_update_desktop_file -n -i %{name} Network System
@@ -295,6 +258,10 @@ DATA
 %endif
 
 %if 0%{?sle_version} || 0%{?suse_version}
+    %if 0%{?sle_version} == 160000
+        %define reponame openSUSE_Leap_16.0
+    %endif
+
     %if 0%{?sle_version} == 150500
         %define reponame openSUSE_Leap_15.5
     %endif

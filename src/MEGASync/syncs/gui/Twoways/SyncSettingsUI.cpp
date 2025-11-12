@@ -54,12 +54,13 @@ void SyncSettingsUI::addButtonClicked(mega::MegaHandle megaFolderHandle)
 
 QString SyncSettingsUI::getFinishWarningIconString() const
 {
-    return QString::fromUtf8(":/images/settings-sync-warn.svg");
+    return Utilities::getPixmapName(QLatin1String("settings-sync-warn"),
+                                    Utilities::AttributeType::NONE);
 }
 
 QString SyncSettingsUI::getFinishIconString() const
 {
-    return QString::fromUtf8(":/images/settings-sync.svg");
+    return Utilities::getPixmapName(QLatin1String("settings-sync"), Utilities::AttributeType::NONE);
 }
 
 QString SyncSettingsUI::disableString() const

@@ -5,6 +5,7 @@
 #include "megaapi.h"
 #include "Preferences.h"
 #include "StatusInfo.h"
+#include "TabSelector.h"
 #include "TransferQuota.h"
 #include "TransferScanCancelUi.h"
 #include "TransfersModel.h"
@@ -29,7 +30,7 @@ class TransferManager : public QDialog
     Q_OBJECT
 
 public:
-    explicit TransferManager(TransfersWidget::TM_TAB tab, mega::MegaApi *megaApi);
+    explicit TransferManager(mega::MegaApi* megaApi);
     ~TransferManager();
 
     void pauseModel(bool state);
@@ -61,7 +62,6 @@ signals:
     void aboutToClose();
 
 protected:
-    bool eventFilter(QObject *obj, QEvent *event) override;
     void closeEvent(QCloseEvent* event) override;
     bool event(QEvent* event) override;
     void dragEnterEvent(QDragEnterEvent* event) override;
@@ -76,22 +76,15 @@ private:
     Ui::TransferManager* mUi;
     mega::MegaApi* mMegaApi;
 
-    QTimer mScanningTimer;
-    int mScanningAnimationIndex;
-
     std::shared_ptr<Preferences> mPreferences;
     QPoint mDragPosition;
-    QMap<TransfersWidget::TM_TAB, QFrame*> mTabFramesToggleGroup;
-    QMap<TransfersWidget::TM_TAB, QLabel*> mNumberLabelsGroup;
+    QMap<TransfersWidget::TM_TAB, TabSelector*> mTabSelectorsToggleGroup;
     QMap<TransfersWidget::TM_TAB, QWidget*> mTabNoItem;
     QMap<TransfersWidget::TM_TAB, QPair<int, Qt::SortOrder>> mTabSortCriterion;
 
     TransfersModel* mModel;
     TransfersCount mTransfersCount;
 
-    bool mSearchFieldReturnPressed;
-
-    QGraphicsDropShadowEffect* mShadowTab;
     QSet<Utilities::FileType> mFileTypesFilter;
     QTimer* mSpeedRefreshTimer;
     QTimer* mStatsRefreshTimer;
@@ -118,15 +111,13 @@ private:
     void checkPauseButtonVisibilityIfPossible();
     void showTransferQuotaBanner(bool state);
 
-    void showAllResults();
-    void showDownloadResults();
-    void showUploadResults();
-
-    void updateCurrentSearchText();
     void updateCurrentCategoryTitle();
 
     void filterByTab(TransfersWidget::TM_TAB tab);
     void startRequestTaskbarPinningTimer();
+    void createSearchChips();
+    QString getIssuesBannerButtonText();
+    QString getIssuesBannerText();
 
 private slots:
     void on_tCompleted_clicked();
@@ -135,14 +126,12 @@ private slots:
     void on_tAllTransfers_clicked();
     void on_tFailed_clicked();
     void on_tActionButton_clicked();
-    void on_bSearch_clicked();
-    void on_leSearchField_editingFinished();
-    void on_tSearchIcon_clicked();
-    void on_bSearchString_clicked();
-    void on_tSearchCancel_clicked();
-    void on_tClearSearchResult_clicked();
     void on_bPause_toggled();
     void pauseResumeTransfers(bool isPaused);
+
+    void on_tClearSearchResult_clicked();
+    void on_bSearchString_clicked();
+    void onSearch(const QString& text);
 
     void onStalledIssuesStateChanged();
     void checkContentInfo();
@@ -150,7 +139,6 @@ private slots:
     void on_tCogWheel_clicked();
     void on_bDownload_clicked();
     void on_bUpload_clicked();
-    void on_leSearchField_returnPressed();
 
     void on_bArchives_clicked();
     void on_bDocuments_clicked();
@@ -158,6 +146,7 @@ private slots:
     void on_bAudio_clicked();
     void on_bVideos_clicked();
     void on_bOther_clicked();
+    void onMediaTabSelectorClicked();
 
     void onUpdatePauseState(bool isPaused);
     void onPauseStateChangedByTransferResume();
@@ -167,17 +156,20 @@ private slots:
     void onTransfersDataUpdated();
     void refreshSearchStats();
 
-    void onVerticalScrollBarVisibilityChanged(bool state);
-
     void refreshSpeed();
     void refreshView();
     void disableTransferManager(bool state);
 
     void updateTransferWidget(QWidget* widgetToShow);
-    void onScanningAnimationUpdate();
 
     void onSortCriterionChanged(int sortBy, Qt::SortOrder order);
     void onRequestTaskbarPinningTimeout();
+
+    void showAllResults();
+    void showDownloadResults();
+    void showUploadResults();
+
+    void setStalledIssuesBannerText();
 };
 
 #endif // TRANSFERMANAGER_H

@@ -50,8 +50,10 @@ public:
     static QUrl getSyncFat32HelpUrl();
     static QUrl getFileVersionHistoryHelpUrl();
     static QUrl getTransferQuotaHelpUrl();
+    static QUrl getCredentialStuffingHelpUrl();
     Q_INVOKABLE static QUrl getCreateBackupHelpUrl();
     Q_INVOKABLE static QUrl getCreateSyncHelpUrl();
+    static QUrl getSslErrorHelpUrl();
 
     static QUrl getAcknowledgementsUrl();
 

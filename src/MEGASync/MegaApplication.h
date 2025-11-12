@@ -11,6 +11,7 @@
 #include "LinkProcessor.h"
 #include "megaapi.h"
 #include "MegaDownloader.h"
+#include "MegaMenuItemAction.h"
 #include "MegaSyncLogger.h"
 #include "MegaUploader.h"
 #include "PasteMegaLinksDialog.h"
@@ -269,7 +270,6 @@ public slots:
     void onUpdateError();
     void rebootApplication(bool update = true);
     void tryExitApplication(bool force = false);
-    void highLightMenuEntry(QAction* action);
     void pauseTransfers(bool pause);
     void checkNetworkInterfaces();
     void checkMemoryUsage();
@@ -333,7 +333,7 @@ protected:
     void processDownloadQueue(QString path);
     void disableSyncs();
     void restoreSyncs();
-    void createTransferManagerDialog(TransfersWidget::TM_TAB tab);
+    void createTransferManagerDialog();
     void deleteMenu(QMenu* menu);
     void clearMenu(QMenu* menu, bool deleteAction = false);
     void startHttpServer();
@@ -368,17 +368,17 @@ protected:
     QPointer<QMenu> guestMenu;
     QMenu emptyMenu;
 
-    MenuItemAction *exitAction;
-    MenuItemAction *settingsAction;
-    MenuItemAction *importLinksAction;
-    MenuItemAction *uploadAction;
-    MenuItemAction *downloadAction;
-    MenuItemAction *streamAction;
-    MenuItemAction* filesAction;
-    MenuItemAction* MEGAWebAction;
+    MegaMenuItemAction* exitAction;
+    MegaMenuItemAction* settingsAction;
+    MegaMenuItemAction* importLinksAction;
+    MegaMenuItemAction* uploadAction;
+    MegaMenuItemAction* downloadAction;
+    MegaMenuItemAction* streamAction;
+    MegaMenuItemAction* filesAction;
+    MegaMenuItemAction* MEGAWebAction;
     MenuItemAction* deviceCentreAction;
-    MenuItemAction *updateAction;
-    MenuItemAction *aboutAction;
+    MegaMenuItemAction* updateAction = nullptr;
+    MegaMenuItemAction* aboutAction = nullptr;
     QAction *showStatusAction;
     QPointer<SyncsMenu> mSyncs2waysMenu;
     QPointer<SyncsMenu> mBackupsMenu;
@@ -565,9 +565,12 @@ private:
 
     void updateMetadata(TransferMetaData* data, const QString& filePath);
 
-    template <class Func>
-    void recreateMenuAction(MenuItemAction** action, QMenu* menu, const QString& actionName,
-                            const char* iconPath, Func slotFunc)
+    template<class Func>
+    void recreateMegaMenuAction(MegaMenuItemAction** action,
+                                QMenu* menu,
+                                const QString& actionName,
+                                const char* iconPath,
+                                Func slotFunc)
     {
         bool previousEnabledState = true;
         if (*action)
@@ -576,13 +579,10 @@ private:
             (*action)->deleteLater();
             *action = nullptr;
         }
-
-        *action = new MenuItemAction(actionName, QLatin1String(iconPath), menu);
-        (*action)->setManagesHoverStates(true);
+        *action = new MegaMenuItemAction(actionName, QLatin1String(iconPath), 0);
         connect(*action, &QAction::triggered, this, slotFunc, Qt::QueuedConnection);
         (*action)->setEnabled(previousEnabledState);
     }
-
     template<class Func>
     void recreateAction(QAction** action,
                         QMenu* menu,
@@ -631,6 +631,7 @@ private slots:
     void onNotificationProcessed();
     void onScheduledExecution();
     void onCopyLinkError(const QString& nodeName, const int errorCode);
+    void onOperatingSystemThemeChanged(const Preferences::SystemColorScheme& theme);
 };
 
 #endif // MEGAAPPLICATION_H

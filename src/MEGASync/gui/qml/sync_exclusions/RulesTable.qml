@@ -10,6 +10,7 @@ import components.checkBoxes 1.0
 import components.texts 1.0 as Texts
 import components.images 1.0
 import components.buttons 1.0 as Buttons
+import QtQuick.Controls.Styles 1.4
 
 import WildCardEnum 1.0
 import ExclusionRulesModel 1.0
@@ -19,12 +20,14 @@ Rectangle {
 
     readonly property int tableRadius: 6
     readonly property int filesTargetIndex: 0
+    readonly property int defaultContentMargin: 12
 
     property int  editRuleTarget: 0
     property int  editRuleProperty: 0
     property string  editRuleValue: ""
     property int editIndex: -1
     property int removedIndex: -1
+    radius: tableRadius
 
     function getConfirmationMessage(target, wildcard, value) {
         if (target === ExclusionRulesModel.EXTENSION) {
@@ -85,19 +88,15 @@ Rectangle {
         }
         implicitHeight: 24 + tableRadius
         color: ColorTheme.surface2
-        z: 1
         radius: tableRadius
-        border{
-            color: ColorTheme.borderSubtle
-            width: 1
-        }
+
         Item{
             id: typeColumnHeaderItem
 
             anchors.left: parent.left
             anchors.top: parent.top
             height: parent.height
-            width: 196
+            width: 226
 
             CheckBox {
                 id: enableAll
@@ -108,7 +107,7 @@ Rectangle {
                     top: parent.top
                     topMargin: 4 - enableAll.sizes.focusBorderWidth
                     left: parent.left
-                    leftMargin: 12 - enableAll.sizes.focusBorderWidth
+                    leftMargin: root.defaultContentMargin - enableAll.sizes.focusBorderWidth
                 }
                 implicitWidth: 16
 
@@ -142,7 +141,7 @@ Rectangle {
                     top: parent.top
                     topMargin: 6
                     left: enableAll.right
-                    leftMargin: 12
+                    leftMargin: root.defaultContentMargin
                 }
                 text: ExclusionsStrings.typeHeader
                 Layout.preferredWidth: parent.width
@@ -157,7 +156,7 @@ Rectangle {
             id:  propertyColumnHeaderItem
 
             height: parent.height
-            width: 172
+            width: 142
             anchors{
                 top: parent.top
                 left: typeColumnHeaderItem.right
@@ -218,15 +217,48 @@ Rectangle {
             bottom: footerRect.top
             bottomMargin: -1 * tableRadius
         }
+        color:  "transparent"
+        z:1
 
-        border{
-            color: ColorTheme.borderSubtle
-            width: 1
-        }
-        z: 2
         TableView {
             id: tableView
 
+            backgroundVisible: true
+            style: TableViewStyle {
+                backgroundColor: ColorTheme.pageBackground
+                scrollBarBackground: Rectangle {
+                    implicitWidth: 14
+                    implicitHeight: parent.height
+                    color: ColorTheme.pageBackground
+                    border.color: "transparent"
+                }
+
+                // Scrollbar handle (the thumb)
+                handle: Item {
+                    implicitWidth: 14
+                    implicitHeight: 10
+
+                    Rectangle {
+                        anchors.fill: parent
+                        anchors.leftMargin: 2
+                        anchors.rightMargin: 2
+                        anchors.topMargin: 2
+                        anchors.bottomMargin: 2
+                        color: styleData.pressed ? ColorTheme.buttonPrimaryPressed
+                                                 : (styleData.hovered ? ColorTheme.buttonPrimaryHover
+                                                                      : ColorTheme.buttonPrimary)
+                        radius: 5
+                    }
+                }
+
+                decrementControl: Rectangle {
+                    visible: false
+                }
+
+                incrementControl: Rectangle {
+                    visible: false
+                }
+            }
             anchors{
                 fill: parent
             }
@@ -245,7 +277,7 @@ Rectangle {
 
                 role: "type"
                 title: "type"
-                width: 190
+                width: 220
 
                 delegate:
                     Item{
@@ -258,7 +290,7 @@ Rectangle {
                         implicitWidth: 16
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.left
-                        anchors.leftMargin: 12 - ruleCheck.sizes.focusBorderWidth
+                        anchors.leftMargin: root.defaultContentMargin - ruleCheck.sizes.focusBorderWidth
                         manageChecked: true
                         checked: (model)? !model.commented : false
 
@@ -279,13 +311,15 @@ Rectangle {
 
                         anchors{
                             left: ruleCheck.right
-                            leftMargin: 12
+                            leftMargin: root.defaultContentMargin
                             verticalCenter: parent.verticalCenter
                         }
+                        maximumAllowedWidth: typeColumn.width - ruleCheck.width - 2*root.defaultContentMargin -8 //The 8  is the  right margin
                         backgroundColor: ColorTheme.surface2
                         radius: 4
                         iconSource: model? Images.imagesExclusionsPath + model.iconName + '.svg': ""
                         iconSize:  Qt.size(16, 16)
+                        iconColor: ColorTheme.iconPrimary
                         text: model? model.type : ""
                     }
 
@@ -297,7 +331,7 @@ Rectangle {
 
                 role: "property";
                 title: "property";
-                width: 172
+                width: 142
                 delegate:
                     Item{
                     id: propertyColumnItem
@@ -321,7 +355,7 @@ Rectangle {
 
                 role: "value";
                 title: "value";
-                width: 150
+                width: Math.max(150, tableView.width - typeColumn.width - propertyColumn.width - buttonsColumn.width - 14)
                 delegate: Item{
                     id: valueColumnItem
 
@@ -330,10 +364,11 @@ Rectangle {
 
                         anchors{
                             left: parent.left
+                            right: parent.right
                             verticalCenter: parent.verticalCenter
                             leftMargin: 8
+                            rightMargin: 8
                         }
-                        width: valueColumn.width - 5
                         font.pixelSize: Texts.Text.Size.SMALL
                         text: model ? model.value: ""
                         color: ColorTheme.textPrimary
@@ -347,7 +382,6 @@ Rectangle {
                 id: buttonsColumn
 
                 width:64
-
                 delegate:Item {
                     id: buttonsColumnItem
 
@@ -398,6 +432,13 @@ Rectangle {
                 }
             } // buttonsColumn
         } // tableView
+        Rectangle{
+            anchors.fill: tableView
+            color: "transparent"
+            border.color: ColorTheme.borderStrong
+            border.width: 1
+
+        }
     } // tableRect
 
     Rectangle{
@@ -413,7 +454,7 @@ Rectangle {
         radius: tableRadius
         color: ColorTheme.surface1
         border{
-            color: ColorTheme.borderSubtle
+            color: ColorTheme.borderStrong
             width: 1
         }
 
@@ -437,7 +478,15 @@ Rectangle {
             }
         }
     } // footerRect
+    Rectangle
+    {
+        id: tableBorderRect
 
+        anchors.fill: parent
+        color:  "transparent"
+        border.color:  ColorTheme.borderStrong
+        radius: tableRadius
+    } // tableBorderRect
 
     Connections {
         id: rulesModelConnection

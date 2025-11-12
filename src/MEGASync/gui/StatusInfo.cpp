@@ -1,5 +1,6 @@
 #include "StatusInfo.h"
 
+#include "ThemeManager.h"
 #include "ui_StatusInfo.h"
 #include "Utilities.h"
 #include <MegaApplication.h>
@@ -16,6 +17,8 @@ StatusInfo::StatusInfo(QWidget *parent) :
     mScanningTimer.setInterval(60);
     mScanningAnimationIndex = 1;
     connect(&mScanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
+    ui->bIconState->setCursor(Qt::ArrowCursor);
+    setProperty("TOKENIZED", true);
 }
 
 StatusInfo::~StatusInfo()
@@ -26,6 +29,9 @@ StatusInfo::~StatusInfo()
 void StatusInfo::setState(TRANSFERS_STATES state)
 {
     this->mState = state;
+
+    // By default
+    auto iconStateToken = QString::fromUtf8("icon-primary");
 
     switch (this->mState)
     {
@@ -39,8 +45,9 @@ void StatusInfo::setState(TRANSFERS_STATES state)
             const QString statusText{tr("Paused")};
             ui->lStatusDesc->setToolTip(statusText);
             ui->lStatusDesc->setText(statusText);
-            ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/images/ico_pause_transfers_state.png")));
-            ui->bIconState->setIconSize(QSize(24, 24));
+
+            ui->bIconState->setProperty("state", QString::fromUtf8("paused"));
+
             break;
         }
         case TRANSFERS_STATES::STATE_UPDATED:
@@ -55,16 +62,18 @@ void StatusInfo::setState(TRANSFERS_STATES state)
                 const QString statusText{tr("Account full")};
                 ui->lStatusDesc->setToolTip(statusText);
                 ui->lStatusDesc->setText(statusText);
-                ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/images/ico_menu_full.png")));
-                ui->bIconState->setIconSize(QSize(24, 24));
+
+                ui->bIconState->setProperty("state", QString::fromUtf8("over_quota"));
+                iconStateToken = QString::fromUtf8("support-error");
             }
             else
             {
                 const QString statusText{tr("Up to date")};
                 ui->lStatusDesc->setToolTip(statusText);
                 ui->lStatusDesc->setText(statusText);
-                ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/images/ico_menu_uptodate_state.png")));
-                ui->bIconState->setIconSize(QSize(24, 24));
+
+                ui->bIconState->setProperty("state", QString::fromUtf8("up_to_date"));
+                iconStateToken = QString::fromUtf8("indicator-green");
             }
 
             break;
@@ -77,7 +86,7 @@ void StatusInfo::setState(TRANSFERS_STATES state)
                 mScanningTimer.start();
             }
 
-            const QString statusText{tr("Syncing")+QString::fromUtf8("...")};
+            const QString statusText{tr("Syncing…")};
             ui->lStatusDesc->setToolTip(statusText);
             ui->lStatusDesc->setText(statusText);
             break;
@@ -90,7 +99,7 @@ void StatusInfo::setState(TRANSFERS_STATES state)
                 mScanningTimer.start();
             }
 
-            const QString statusText{tr("Waiting")+QString::fromUtf8("...")};
+            const QString statusText{tr("Waiting…")};
             ui->lStatusDesc->setToolTip(statusText);
             ui->lStatusDesc->setText(statusText);
             break;
@@ -103,7 +112,7 @@ void StatusInfo::setState(TRANSFERS_STATES state)
                 mScanningTimer.start();
             }
 
-            const QString statusText{tr("Scanning")+QString::fromUtf8("...")};
+            const QString statusText{tr("Scanning…")};
             ui->lStatusDesc->setToolTip(statusText);
             ui->lStatusDesc->setText(statusText);
             break;
@@ -116,7 +125,7 @@ void StatusInfo::setState(TRANSFERS_STATES state)
                 mScanningTimer.start();
             }
 
-            const QString statusText{tr("Transferring")+QString::fromUtf8("...")};
+            const QString statusText{tr("Transferring…")};
             ui->lStatusDesc->setToolTip(statusText);
             ui->lStatusDesc->setText(statusText);
             break;
@@ -129,13 +138,17 @@ void StatusInfo::setState(TRANSFERS_STATES state)
             }
 
             setFailedText();
-            ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/images/transfer_manager/sidebar/cancel_all_ico_default.png")));
-            ui->bIconState->setIconSize(QSize(24, 24));
+            ui->bIconState->setProperty("state", QString::fromUtf8("failed"));
+            iconStateToken = QString::fromUtf8("indicator-pink");
+
             break;
         }
         default:
             break;
     }
+
+    ui->bIconState->setProperty(TOKEN_PROPERTIES::normalOff, iconStateToken);
+    ui->bIconState->style()->polish(ui->bIconState);
 }
 
 void StatusInfo::update()
@@ -163,18 +176,18 @@ void StatusInfo::setOverQuotaState(bool oq)
     setState(mState);
 }
 
-QIcon StatusInfo::scanningIcon(int& index)
+QIcon StatusInfo::scanningIcon(int index)
 {
-    index = index%12;
-    index++;
-    return Utilities::getCachedPixmap(
-                                QString::fromUtf8(":/images/ico_menu_scanning_%1.png").arg(index));
+    return QIcon(QString::fromUtf8(":/activity_indicator_%1.svg").arg(index));
 }
 
 void StatusInfo::scanningAnimationStep()
 {
+    const auto scanningIconImages = 30;
+    mScanningAnimationIndex = mScanningAnimationIndex % scanningIconImages;
+    ++mScanningAnimationIndex;
+    ui->bIconState->setProperty("state", QVariant());
     ui->bIconState->setIcon(scanningIcon(mScanningAnimationIndex));
-    ui->bIconState->setIconSize(QSize(24, 24));
 }
 
 void StatusInfo::setFailedText()
@@ -194,4 +207,21 @@ bool StatusInfo::event(QEvent* event)
         setState(mState);
     }
     return QWidget::event(event);
+}
+
+void StatusInfo::setPropertyAndPropagateToChildren(const char* name, const QVariant& value)
+{
+    setProperty(name, value);
+    auto children = this->children();
+    for (auto child: children)
+    {
+        if (auto widget = dynamic_cast<QWidget*>(child))
+        {
+            widget->setProperty(name, value);
+            widget->style()->unpolish(widget);
+            widget->style()->polish(widget);
+        }
+    }
+    style()->unpolish(this);
+    style()->polish(this);
 }

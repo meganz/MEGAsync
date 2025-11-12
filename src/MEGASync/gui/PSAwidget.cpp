@@ -151,6 +151,11 @@ void PSAwidget::removeAnnounce()
     ready = false;
 }
 
+bool PSAwidget::isActive()
+{
+    return info.idPSA >= 0;
+}
+
 void PSAwidget::on_bMore_clicked()
 {
     Utilities::openUrl(QUrl(info.urlClick));

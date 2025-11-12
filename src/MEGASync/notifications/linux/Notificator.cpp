@@ -76,7 +76,7 @@ Notificator::Notificator(const QString &programName, QSystemTrayIcon *trayicon, 
 Notificator::~Notificator()
 {
 #ifdef USE_DBUS
-    delete interface;
+    interface->deleteLater();
 #endif
 }
 
@@ -273,9 +273,15 @@ void Notificator::notify(DesktopAppNotification *notification)
             actions.append(a);
             actions.append(a);
         }
+        auto sessionbus = QDBusConnection::connectToBus(QDBusConnection::BusType::SessionBus,
+                                                        QLatin1String("session"));
 
-        QDBusConnection::sessionBus().connect(QString::fromUtf8("org.freedesktop.Notifications"),QString::fromUtf8("/org/freedesktop/Notifications"),
-                                              QString::fromUtf8("org.freedesktop.Notifications"),QString::fromUtf8(""), notification, SLOT(dBusNotificationCallback(QDBusMessage)));
+        sessionbus.connect(QString::fromUtf8("org.freedesktop.Notifications"),
+                           QString::fromUtf8("/org/freedesktop/Notifications"),
+                           QString::fromUtf8("org.freedesktop.Notifications"),
+                           QString::fromUtf8(""),
+                           notification,
+                           SLOT(dBusNotificationCallback(QDBusMessage)));
         notifyDBus((Class)notification->getType(), notification->getTitle(), notification->getText(),
                    notification->getImage(), notification->getExpirationTime(), actions, notification);
     }

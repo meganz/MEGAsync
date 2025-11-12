@@ -15,6 +15,7 @@
 #include <QLabel>
 #include <QMetaEnum>
 #include <QPixmap>
+#include <QPointer>
 #include <QProgressDialog>
 #include <QQueue>
 #include <QString>
@@ -336,10 +337,12 @@ public:
         NONE = 0x0,
         SMALL = 0x1,
         MEDIUM = 0x2,
-        DISABLED = 0x4,
-        SOLID = 0x8,
-        OUTLINE = 0x10,
-        INVERSE = 0x20
+        LARGE = 0x4,
+        THIN = 0x8,
+        REGULAR = 0x10,
+        OUTLINE = 0x20,
+        SOLID = 0x40,
+        INVERSE = 0x80
     };
     Q_DECLARE_FLAGS(AttributeTypes, AttributeType)
     Q_ENUM(AttributeType)
@@ -388,7 +391,7 @@ public:
     static QString createSimpleUsedOfString(long long usedData, long long totalData);
     static QString createSimpleUsedStringWithoutReplacement(long long usedData);
     static QString createCompleteUsedString(long long usedData, long long totalData, int percentage);
-    static QString getTimeString(long long secs, bool secondPrecision = true, bool color = true);
+    static QString getTimeString(long long secs, bool secondPrecision = true);
     static QString getAddedTimeString(long long secs);
     static QString extractJSONString(QString json, QString name);
     static QStringList extractJSONStringList(const QString& json, const QString& name);
@@ -431,12 +434,15 @@ public:
     static void openBackupCenter();
 
     static QString getCommonPath(const QString& path1, const QString& path2, bool cloudPaths);
+    static const QString getPlatformProps(const QString sourceStyleSheet);
 
     static bool isIncommingShare(mega::MegaNode* node);
     static int getNodeAccess(mega::MegaHandle handle);
     static int getNodeAccess(mega::MegaNode* handle);
     static QString getNodeStringAccess(mega::MegaNode* handle);
     static QString getNodeStringAccess(mega::MegaHandle handle);
+    static QIcon getNodeAccessIcon(mega::MegaHandle handle);
+    static QIcon getNodeAccessIcon(mega::MegaNode* node);
 
     enum HandlesType
     {
@@ -484,8 +490,54 @@ public:
             {
                 return classParent;
             }
+
             parent = parent->parentWidget();
         }
+
+        return nullptr;
+    }
+
+    static QPointer<QWidget> getParent(QWidget* widget, int level)
+    {
+        if (!widget || level < 0)
+        {
+            return nullptr;
+        }
+
+        int parentCounter(0);
+        QWidget* parent = widget->parentWidget();
+        while (parent)
+        {
+            if (parentCounter == level)
+            {
+                return parent;
+            }
+
+            parentCounter++;
+            parent = parent->parentWidget();
+        }
+
+        return nullptr;
+    }
+
+    static QPointer<QWidget> getParent(QWidget* widget, std::function<bool(QWidget*)> checkFunc)
+    {
+        if (!widget || !checkFunc)
+        {
+            return nullptr;
+        }
+
+        QWidget* parent = widget->parentWidget();
+        while (parent)
+        {
+            if (checkFunc(parent))
+            {
+                return parent;
+            }
+
+            parent = parent->parentWidget();
+        }
+
         return nullptr;
     }
 
@@ -500,7 +552,7 @@ private:
     static void initializeFolderTypes();
     static double toDoubleInUnit(unsigned long long bytes, unsigned long long unit);
     static QString getTimeFormat(const TimeInterval& interval);
-    static QString filledTimeString(const QString& timeFormat, const TimeInterval& interval, bool color);
+    static QString filledTimeString(const QString& timeFormat, const TimeInterval& interval);
 
     static QString cleanedTimeString(const QString& timeString);
 
@@ -532,7 +584,9 @@ public:
                                     const QString& token,
                                     const QSize& size);
     static QPixmap getPixmap(const QString& iconName, AttributeTypes attribute, const QSize& size);
-    static QString getPixmapName(const QString& iconName, AttributeTypes attribute);
+    static QString getPixmapName(const QString& iconName,
+                                 AttributeTypes attribute,
+                                 bool addResourcePrefix = true);
     static QIcon getExtensionPixmap(QString fileName, AttributeTypes attribute);
     static QString getExtensionPixmapName(QString fileName, AttributeTypes attribute);
     static QString getUndecryptedPixmapName(AttributeTypes attribute);

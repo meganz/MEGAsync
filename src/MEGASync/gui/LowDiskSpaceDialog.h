@@ -22,11 +22,20 @@ public:
                                 QWidget* parent = nullptr);
     ~LowDiskSpaceDialog();
 
+protected:
+    bool event(QEvent* event) override;
+
 private:
     static QString toString(long long bytes);
     void setupShadowEffect();
 
-    Ui::LowDiskSpaceDialog *ui;
+    Ui::LowDiskSpaceDialog* mUi;
+    long long mneededSize;
+    long long mfreeSize;
+    long long mdriveSize;
+    QString mdriveName;
+
+    void updateStrings();
 };
 
 #endif // LOWDISKSPACEDIALOG_H

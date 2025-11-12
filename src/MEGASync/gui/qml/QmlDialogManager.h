@@ -21,7 +21,6 @@ public:
 
     void openGuestDialog();
     bool openOnboardingDialog(bool force = false);
-    bool openWhatsNewDialog();
 
     bool raiseGuestDialog();
     void raiseOnboardingDialog();

@@ -23,8 +23,6 @@ QmlDialog {
 
     width: 640
     height: 680
-    maximumHeight: 680
-    maximumWidth: 640
     minimumHeight: 680
     minimumWidth: 640
     title: ExclusionsStrings.addExclusions
@@ -197,7 +195,7 @@ QmlDialog {
                     left: checkBoxText.right
                     leftMargin: 12
                 }
-                implicitWidth: 136
+                implicitWidth: 170
                 popupWidth: 210
                 currentIndex: syncExclusionsAccess.sizeExclusionStatus === disabledExclusionStatusIndex ? 0 : syncExclusionsAccess.sizeExclusionStatus
                 enabled: sizeRuleCheckbox.checked
@@ -261,7 +259,7 @@ QmlDialog {
                     left: lowLimitValue.right
                     leftMargin: 8 - lowLimitUnit.sizes.focusBorderWidth - lowLimitValue.sizes.focusBorderWidth
                 }
-                implicitWidth: 80
+                implicitWidth: 65
                 popupWidth: 107
                 currentIndex: syncExclusionsAccess.minimumAllowedUnit
                 enabled: sizeRuleCheckbox.checked
@@ -333,7 +331,7 @@ QmlDialog {
                     left: upperLimitValue.right
                     leftMargin: 8 - upperLimitValue.sizes.focusBorderWidth - upperLimitUnit.sizes.focusBorderWidth
                 }
-                implicitWidth: 80
+                implicitWidth: 65
                 popupWidth: 107
                 currentIndex: syncExclusionsAccess.maximumAllowedUnit
                 enabled: sizeRuleCheckbox.checked && (sizeLimitComboBox.currentText === ExclusionsStrings.outsideOf)
@@ -431,6 +429,7 @@ QmlDialog {
                 radius:4
                 horizontalPadding: 6
                 verticalPadding: 3
+                iconColor: ColorTheme.iconPrimary
                 anchors{
                     verticalCenter: parent.verticalCenter
                     left: nameRulesDescription.right
@@ -450,6 +449,8 @@ QmlDialog {
                 left: parent.left
                 right: parent.right
                 top: nameRulesDescriptionItem.bottom
+                bottom: doneButton.top
+                bottomMargin: 30
                 topMargin: 8
             }
             onEditRuleClicked: {

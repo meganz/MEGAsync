@@ -12,6 +12,8 @@
 #include <QMessageBox>
 #include <QPointer>
 #include <QQueue>
+#include <QScreen>
+#include <QWindow>
 
 #include <functional>
 #include <memory>
@@ -55,6 +57,7 @@ private:
         virtual void show() = 0;
         virtual void close() = 0;
         virtual bool isParent(QObject* parent) = 0;
+        virtual void applyCurrentTheme() = 0;
 
         bool ignoreCloseAllAction() const {return mIgnoreCloseAllAction;}
         void setIgnoreCloseAllAction(bool newIgnoreCloseAllAction){mIgnoreCloseAllAction = newIgnoreCloseAllAction;}
@@ -124,6 +127,10 @@ private:
             return (info.mDialog == mDialog);
         }
 
+        void applyCurrentTheme() override
+        {
+            Platform::getInstance()->applyCurrentThemeOnCurrentDialogFrame(mDialog->windowHandle());
+        }
 
     private:
         QPointer<DialogType> mDialog;
@@ -188,8 +195,6 @@ public:
                     dialogInfo->close();
                 }
             }
-
-            qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         }
     }
 
@@ -213,10 +218,8 @@ public:
         {
             closeDialogsByParentClass<ParentType>();
 
-            auto windowFlags = dialog->windowFlags();
             parentDialog->raise(true);
-            dialog->setParent(parentDialog->getDialog());
-            dialog->setWindowFlags(windowFlags);
+            dialog->setParent(parentDialog->getDialog(), dialog->windowFlags());
         }
     }
 
@@ -397,6 +400,14 @@ public:
         }
     }
 
+    static void currentThemeChanged()
+    {
+        foreach(auto dialogInfo, mOpenedDialogs)
+        {
+            dialogInfo->applyCurrentTheme();
+        }
+    }
+
     static QList<QPointer<QWidget>> getAllOpenedDialogs();
 
 private:
@@ -426,7 +437,6 @@ private:
                 if(removeSiblings && info->getDialog() != dialog)
                 {
                     QRect siblingGeometry = info->getDialog()->geometry();
-                    bool siblingIsMaximized = info->getDialog()->isMaximized();
                     dialog->setWindowFlags(info->getDialog()->windowFlags());
                     removeDialog(info->getDialog());
                     info->setDialog(dialog);
@@ -434,11 +444,7 @@ private:
 
                     initDialog(dialog);
 
-                    if(siblingIsMaximized)
-                    {
-                        dialog->setWindowState(Qt::WindowMaximized);
-                    }
-                    else if(siblingGeometry.isValid())
+                    if (siblingGeometry.isValid())
                     {
                         dialog->setGeometry(siblingGeometry);
                     }
@@ -470,12 +476,15 @@ private:
                 return nullptr;
             }
 
-            if(changeWindowModality)
+            TokenParserWidgetManager::instance()->applyCurrentTheme(dialog);
+
+            // Use to reload the widget stylesheet. Without this line, the new stylesheet is not
+            // correctly applied.
+            dialog->setParent(dialog->parentWidget(), dialog->windowFlags());
+
+            if (dialog->parent() && changeWindowModality)
             {
-                if(dialog->parent())
-                {
-                    dialog->setWindowModality(Qt::WindowModal);
-                }
+                dialog->setWindowModality(Qt::WindowModal);
             }
 
             auto geoInfo = mSavedGeometries.value(classType, GeometryInfo());
@@ -497,6 +506,31 @@ private:
             }
             else
             {
+                // If we don´t have parent, the dialog is not attached to any windows, so we should
+                // show it in a conveniente place
+                if (!dialog->parent())
+                {
+                    QPoint pos;
+                    QPoint mousePos = QCursor::pos();
+                    QScreen* screen = QGuiApplication::screenAt(mousePos);
+
+                    if (screen)
+                    {
+                        QRect screenGeometry = screen->geometry();
+
+                        int dialogWidth = dialog->geometry().width();
+                        int dialogHeight = dialog->geometry().height();
+                        pos.setX(screenGeometry.x() + (screenGeometry.width() - dialogWidth) / 2);
+                        pos.setY(screenGeometry.y() + (screenGeometry.height() - dialogHeight) / 2);
+                    }
+                    else
+                    {
+                        pos = mousePos;
+                    }
+
+                    dialog->move(pos);
+                }
+
                 dialog->show();
             }
 
@@ -511,7 +545,7 @@ private:
 
             info->raise(true);
 
-            TokenParserWidgetManager::instance()->applyCurrentTheme(dialog);
+            Platform::getInstance()->applyCurrentThemeOnCurrentDialogFrame(dialog->windowHandle());
 
             return info;
         }

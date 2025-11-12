@@ -241,6 +241,13 @@ QUrl ServiceUrls::getTransferQuotaHelpUrl()
     return url;
 }
 
+QUrl ServiceUrls::getCredentialStuffingHelpUrl()
+{
+    auto url = getHelpBaseUrl();
+    url.setPath(QLatin1String("/security/data-protection/credential-stuffing"));
+    return url;
+}
+
 QUrl ServiceUrls::getCreateBackupHelpUrl()
 {
     auto url = getDesktopAppHelpUrl();
@@ -252,6 +259,13 @@ QUrl ServiceUrls::getCreateSyncHelpUrl()
 {
     auto url = getDesktopAppHelpUrl();
     url.setPath(url.path() + QLatin1String("/set-up-syncs"));
+    return url;
+}
+
+QUrl ServiceUrls::getSslErrorHelpUrl()
+{
+    auto url = getHelpBaseUrl();
+    url.setPath(url.path() + QLatin1String("/security/data-protection/resolve-ssl-errors"));
     return url;
 }
 
@@ -489,6 +503,7 @@ void ServiceUrls::baseUrlOverride(const QString& url)
 {
     const QUrl newUrl(url);
     reset();
+    mMegaListener.reset();
     mDataReady = true;
     mDataPending = false;
     mDomains[DOMAIN_OVERRIDE] = newUrl.host();

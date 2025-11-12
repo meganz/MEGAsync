@@ -146,10 +146,7 @@ private:
     QPen mBgPen;
     QPen mFgPen;
 
-    const QIcon mMarkWarning;
-    const QIcon mMarkFull;
     const QIcon mDynTrsfOk;
-    const QIcon mDynTrsfFull;
     bool  mNoTotalValue;
 };
 

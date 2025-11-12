@@ -98,6 +98,7 @@ include(notifications/notifications.cmake)
 include(platform/platform.cmake)
 include(qtlockedfile/qtlockedfile.cmake)
 include(stalled_issues/stalledissues.cmake)
+include(node_selector/nodeselector.cmake)
 include(syncs/syncs.cmake)
 include(transfers/transfers.cmake)
 include(UserAttributesRequests/userattributesrequests.cmake)
@@ -212,6 +213,15 @@ if (MSVC)
         COMMAND "mt.exe" -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\MEGAsync.exe.manifest\" -inputresource:\"$<TARGET_FILE:MEGAsync>\"\;\#1 -outputresource:\"$<TARGET_FILE:MEGAsync>\"\;\#1
         COMMENT "Adding display aware manifest..."
     )
+endif()
+
+if (CMAKE_HOST_APPLE)
+    add_custom_command(
+            TARGET MEGAsync
+            POST_BUILD
+            COMMAND xcrun actool --compile "$<TARGET_FILE_DIR:MEGAsync>/../Resources" --include-all-app-icons --enable-on-demand-resources NO --enable-icon-stack-fallback-generation NO --platform macosx --minimum-deployment-target ${CMAKE_OSX_DEPLOYMENT_TARGET} "${CMAKE_CURRENT_SOURCE_DIR}/gui/images/MEGA_icon.icon"
+            COMMENT "Building Assets.car in Resources..."
+            )
 endif()
 
 # Copy GFX worker if needed

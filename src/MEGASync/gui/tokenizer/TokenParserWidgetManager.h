@@ -1,10 +1,16 @@
 #ifndef THEME_WIDGET_MANAGER_H
 #define THEME_WIDGET_MANAGER_H
 
-#include "Preferences/Preferences.h"
-
+#include <QColor>
+#include <QFileDialog>
+#include <QMap>
 #include <QObject>
-#include <QIcon>
+#include <QPointer>
+#include <QSet>
+#include <QString>
+#include <QWidget>
+
+#include <memory>
 
 class TokenParserWidgetManager : public QObject
 {
@@ -14,10 +20,12 @@ public:
     static std::shared_ptr<TokenParserWidgetManager> instance();
 
     void applyCurrentTheme();
-    void applyCurrentTheme(QWidget* dialog);
     void registerWidgetForTheming(QWidget* dialog);
+    void applyCurrentTheme(QWidget* dialog);
     void polish(QWidget* widget);
     QColor getColor(const QString& colorToken);
+    QColor getColor(const QString& colorToken, const QString& currentColorSchema);
+    static void styleQFileDialog(QPointer<QFileDialog> dialog);
 
 private:
     using ColorTokens = QMap<QString, QString>;
@@ -25,13 +33,10 @@ private:
     explicit TokenParserWidgetManager(QObject *parent = nullptr);
     void loadColorThemeJson();
     void loadStandardStyleSheetComponents();
-    void onThemeChanged(Preferences::ThemeType theme);
+    void onThemeChanged();
     void onUpdateRequested();
     void applyTheme(QWidget* widget);
-    void replaceThemeTokens(QString& styleSheet, const QString& currentTheme);
-    void replaceIconColorTokens(QWidget* widget,
-                                QString& styleSheet,
-                                const ColorTokens& colorTokens);
+    void replaceIconColorTokens(QWidget* widget, QString& styleSheet);
     void replaceColorTokens(QString& styleSheet, const ColorTokens& colorTokens);
     void removeFrameOnDialogCombos(QWidget* widget);
     bool isTokenized(QWidget* widget);

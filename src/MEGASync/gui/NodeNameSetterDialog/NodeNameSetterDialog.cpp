@@ -29,33 +29,36 @@ void NodeNameSetterDialog::init()
     // The dialog doesn't get resized on error
     mUi->textLabel->setMinimumSize(mUi->errorLabel->sizeHint());
 
-    connect(mUi->buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
-    QPushButton *okButton = mUi->buttonBox->button(QDialogButtonBox::Ok);
     //only enabled when there's input, guards against empty folder name
-    okButton->setEnabled(false);
+    mUi->okButton->setEnabled(false);
 
     mOriginalName = lineEditText();
     mUi->lineEdit->setText(mOriginalName);
     mUi->lineEdit->setSelection(lineEditSelection().start, lineEditSelection().length);
 
-    connect(mUi->lineEdit, &QLineEdit::textChanged, this, [this, okButton]()
-    {
-        bool hasText = !mUi->lineEdit->text().trimmed().isEmpty();
-        okButton->setEnabled(hasText);
-    });
+    connect(mUi->lineEdit,
+            &QLineEdit::textChanged,
+            this,
+            [this]()
+            {
+                bool hasText = !mUi->lineEdit->text().trimmed().isEmpty();
+                mUi->okButton->setEnabled(hasText);
+            });
 
     mUi->textLabel->setText(dialogText());
 
     mNewFolderErrorTimer.setSingleShot(true);
     connect(&mNewFolderErrorTimer, &QTimer::timeout, this, &NodeNameSetterDialog::newFolderErrorTimedOut);
-    connect(mUi->buttonBox, &QDialogButtonBox::accepted, this, &NodeNameSetterDialog::dialogAccepted);
-    connect(mUi->buttonBox, &QDialogButtonBox::rejected, this, [this]
-    {
-        reject();
-    });
+    connect(mUi->okButton, &QPushButton::clicked, this, &NodeNameSetterDialog::dialogAccepted);
+    connect(mUi->cancelButton,
+            &QPushButton::clicked,
+            this,
+            [this]
+            {
+                reject();
+            });
 
-    mUi->errorLabel->hide();
-    mUi->textLabel->show();
+    mUi->errorContainer->hide();
     mUi->lineEdit->setFocus();
 }
 
@@ -73,11 +76,12 @@ void NodeNameSetterDialog::showError(const QString &errorText)
 {
     mUi->errorLabel->setText(errorText);
 
-    mUi->textLabel->hide();
-    mUi->errorLabel->show();
-    Utilities::animateFadein(mUi->errorLabel);
+    mUi->errorContainer->show();
+    Utilities::animateFadein(mUi->errorContainer);
     mNewFolderErrorTimer.start(Utilities::ERROR_DISPLAY_TIME_MS); //(re)start timer
     mUi->lineEdit->setFocus();
+    mUi->lineEdit->setProperty("error", true);
+    setStyleSheet(styleSheet());
 }
 
 bool NodeNameSetterDialog::checkAlreadyExistingNode(const QString& nodeName, std::shared_ptr<mega::MegaNode> parentNode)
@@ -137,12 +141,15 @@ void NodeNameSetterDialog::dialogAccepted()
 
 void NodeNameSetterDialog::newFolderErrorTimedOut()
 {
-    Utilities::animateFadeout(mUi->errorLabel);
+    Utilities::animateFadeout(mUi->errorContainer);
     // after animation is finished, hide the error label and show the original text
     // 700 magic number is how long Utilities::  takes
-    QTimer::singleShot(700, this, [this]()
-    {
-        mUi->errorLabel->hide();
-        mUi->textLabel->show();
-    });
+    QTimer::singleShot(700,
+                       this,
+                       [this]()
+                       {
+                           mUi->errorContainer->hide();
+                           mUi->lineEdit->setProperty("error", false);
+                           setStyleSheet(styleSheet());
+                       });
 }

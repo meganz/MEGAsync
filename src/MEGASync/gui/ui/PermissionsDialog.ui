@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>551</height>
+    <width>524</width>
+    <height>608</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
+    <width>524</width>
     <height>0</height>
    </size>
   </property>
@@ -31,21 +31,31 @@
   <property name="windowTitle">
    <string>Permissions</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#PermissionsDialog
+{
+background-color: #FFFFFF; /*colorToken.page-background*/
+}
+</string>
+  </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>24</number>
    </property>
    <property name="leftMargin">
-    <number>20</number>
+    <number>48</number>
    </property>
    <property name="topMargin">
-    <number>20</number>
+    <number>48</number>
    </property>
    <property name="rightMargin">
-    <number>20</number>
+    <number>48</number>
    </property>
    <property name="bottomMargin">
-    <number>10</number>
+    <number>48</number>
    </property>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -69,8 +79,11 @@
        <property name="text">
         <string>Permissions for new folders and files</string>
        </property>
-       <property name="type" stdset="0">
-        <string notr="true">title</string>
+       <property name="semibold" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="font-size" stdset="0">
+        <string notr="true">body-1</string>
        </property>
       </widget>
      </item>
@@ -333,6 +346,9 @@
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="spacing">
+      <number>8</number>
+     </property>
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
@@ -370,7 +386,7 @@
         <string notr="true">outline</string>
        </property>
        <property name="dimension" stdset="0">
-        <string notr="true">small</string>
+        <string notr="true">medium</string>
        </property>
       </widget>
      </item>
@@ -401,7 +417,7 @@
         <string notr="true">primary</string>
        </property>
        <property name="dimension" stdset="0">
-        <string notr="true">small</string>
+        <string notr="true">medium</string>
        </property>
       </widget>
      </item>

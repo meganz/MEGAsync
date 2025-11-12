@@ -11,6 +11,7 @@
 #include "StatusInfo.h"
 #include "SyncInfo.h"
 #include "SyncsMenu.h"
+#include "TransferItem.h"
 #include "TransferQuota.h"
 #include "TransferScanCancelUi.h"
 #include "Utilities.h"
@@ -77,6 +78,7 @@ public:
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
     bool updateOverStorageState(int state);
     void createUpsellController();
+    void updateHeaderBackground();
 
     void reset();
 
@@ -101,7 +103,6 @@ public:
 
 private:
     InfoDialog() = delete;
-    void animateStates(bool opt);
     void hideEvent(QHideEvent *event) override;
     void showEvent(QShowEvent *event) override;
     void moveEvent(QMoveEvent *) override;
@@ -110,8 +111,6 @@ public slots:
 
     void pauseResumeClicked();
     void generalAreaClicked();
-    void dlAreaClicked();
-    void upAreaClicked();
 
     void pauseResumeHovered(QMouseEvent *event);
     void generalAreaHovered(QMouseEvent *event);
@@ -149,8 +148,6 @@ private slots:
     void on_bDiscard_clicked();
     void on_bBuyQuota_clicked();
 
-    void onAnimationFinished();
-
     void sTabsChanged(int tab);
 
     void on_bDismissSyncSettings_clicked();
@@ -162,11 +159,12 @@ private slots:
 
     void updateTransfersCount();
 
-    void onResetTransfersSummaryWidget();
     void onTransfersStateChanged();
 
     void onStalledIssuesChanged();
 
+    void onScanningVisibilityChanged(bool state);
+    void onTopTransferTypeChanged(TransferData::TransferTypes);
 signals:
 
     void openTransferManager(int tab);
@@ -186,15 +184,13 @@ private:
 
     FilterAlertWidget* filterMenu;
 
-    MenuItemAction *cloudItem;
-    MenuItemAction *sharesItem;
-    MenuItemAction *rubbishItem;
-
     int activeDownloadState, activeUploadState;
     bool pendingUploadsTimerRunning = false;
     bool pendingDownloadsTimerRunning = false;
     bool circlesShowAllActiveTransfersProgress;
     void setUnseenNotifications(long long value);
+
+    void changePSAVisibility(bool state);
 
     bool mIndexing; //scanning
     bool mWaiting;
@@ -216,9 +212,6 @@ private:
 #ifdef Q_OS_LINUX
     bool doNotActAsPopup;
 #endif
-
-    QPropertyAnimation *animation;
-    QGraphicsOpacityEffect *opacityEffect;
 
     bool mShownSomeIssuesOccurred = false;
     QPropertyAnimation *minHeightAnimationSomeIssues;
@@ -245,7 +238,6 @@ protected:
     QTimer downloadsFinishedTimer;
     QTimer uploadsFinishedTimer;
     QTimer transfersFinishedTimer;
-    QTimer mResetTransferSummaryWidget;
     MegaApplication* app;
     std::shared_ptr<Preferences> mPreferences;
     SyncInfo* mSyncInfo;
@@ -256,12 +248,12 @@ protected:
 private:
     static double computeRatio(long long completed, long long remaining);
     void enableUserActions(bool newState);
-    void changeStatusState(StatusInfo::TRANSFERS_STATES newState,
-                           bool animate = true);
+    void changeStatusState(StatusInfo::TRANSFERS_STATES newState);
     void fixMultiscreenResizeBug(int& posX, int& posY);
     void repositionInfoDialog();
     void initNotificationArea();
     void applyNotificationFilter(MessageType opt);
+    void setFooterState();
 
     TransferScanCancelUi* mTransferScanCancelUi = nullptr;
     QtPositioningBugFixer qtBugFixer;

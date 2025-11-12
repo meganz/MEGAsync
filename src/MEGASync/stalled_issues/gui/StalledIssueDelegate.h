@@ -29,6 +29,7 @@ public:
 
 public slots:
     void updateView();
+    void onSelectionChanged(const QItemSelection&, const QItemSelection& itemsDeselected);
 
 signals:
     bool goToIssue(StalledIssueFilterCriterion filter, const QModelIndex& sourceIndex);
@@ -49,12 +50,16 @@ protected slots:
     void updateVisibleIndexesSizeHint(int updateDelay, bool forceUpdate);
 
 private:
-    QColor getRowColor(const QModelIndex& index) const;
     QModelIndex getEditorCurrentIndex() const;
     QModelIndex getRelativeIndex(const QModelIndex &index) const;
     QModelIndex getHeaderIndex(const QModelIndex& index) const;
 
+    void updateRelativeIndex(const QModelIndex& parentIndex) const;
+
     StalledIssueBaseDelegateWidget *getStalledIssueItemWidget(const QModelIndex &proxyIndex, const StalledIssueVariant &data, const QSize& size = QSize()) const;
+
+    void updateColors() const;
+    void updateColorsCheckingTheme() const;
 
     StalledIssuesView* mView;
     StalledIssuesProxyModel* mProxyModel;
@@ -72,6 +77,11 @@ private:
     mutable int mSizeHintRequested = 0;
     mutable bool mFreshStart = true;
     mutable QMap<int, QPair<int, QSize>> mAverageHeaderHeight;
+
+    // Colors
+    mutable QColor mActiveColor;
+    mutable QColor mSelectedColor;
+    mutable QColor mBottomBorderColor;
 };
 
 #endif // STALLEDISSUEDELEGATE_H

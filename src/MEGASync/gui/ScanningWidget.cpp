@@ -21,9 +21,6 @@ ScanningWidget::ScanningWidget(QWidget *parent) :
     mUi(new Ui::ScanningWidget)
 {
     mUi->setupUi(this);
-    mMovie = new QMovie(this);
-    mMovie->setCacheMode(QMovie::CacheAll);
-    mMovie->setFileName(getScanningFileName());
 
     setRole(mUi->lStepTitle, "title");
     setRole(mUi->lStepDescription, "details");
@@ -38,38 +35,19 @@ ScanningWidget::ScanningWidget(QWidget *parent) :
 ScanningWidget::~ScanningWidget()
 {
     delete mUi;
-    delete mMovie;
 }
 
 void ScanningWidget::show()
 {
-    startAnimation();
-
     mUi->pBlockingStageCancel->show();
     mUi->pBlockingStageCancel->setEnabled(true);
     mUi->lStepTitle->setText(tr("Scanning"));
     mUi->lStepDescription->setText(QString());
 }
 
-void ScanningWidget::hide()
-{
-    mMovie->stop();
-    mUi->lAnimation->setMovie(nullptr);
-}
-
 void ScanningWidget::disableCancelButton()
 {
     mUi->pBlockingStageCancel->setEnabled(false);
-}
-
-void ScanningWidget::updateAnimation()
-{
-    if(mMovie->state() == QMovie::Running)
-    {
-        mMovie->stop();
-        mUi->lAnimation->setMovie(nullptr);
-    }
-    startAnimation();
 }
 
 void ScanningWidget::onReceiveStatusUpdate(const FolderTransferUpdateEvent &event)
@@ -114,15 +92,6 @@ bool ScanningWidget::event(QEvent* event)
         mUi->retranslateUi(this);
     }
     return QWidget::event(event);
-}
-
-void ScanningWidget::startAnimation()
-{
-    if (mMovie->isValid())
-    {
-        mUi->lAnimation->setMovie(mMovie);
-        mMovie->start();
-    }
 }
 
 QString ScanningWidget::buildScanDescription(const unsigned int& folderCount, const unsigned int& fileCount)

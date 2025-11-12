@@ -20,6 +20,22 @@ InfoDialogTransfersWidget::InfoDialogTransfersWidget(QWidget *parent) :
 void InfoDialogTransfersWidget::setupTransfers()
 {
     mProxyModel = new InfoDialogTransfersProxyModel(mUi->tView);
+
+    connect(mProxyModel,
+            &InfoDialogTransfersProxyModel::dataChanged,
+            this,
+            &InfoDialogTransfersWidget::onProxyModelModified);
+
+    connect(mProxyModel,
+            &InfoDialogTransfersProxyModel::rowsInserted,
+            this,
+            &InfoDialogTransfersWidget::onProxyModelModified);
+
+    connect(mProxyModel,
+            &InfoDialogTransfersProxyModel::rowsRemoved,
+            this,
+            &InfoDialogTransfersWidget::onProxyModelModified);
+
     mProxyModel->setSourceModel(MegaSyncApp->getTransfersModel());
     mProxyModel->sort(0);
     mProxyModel->setDynamicSortFilter(true);
@@ -33,8 +49,11 @@ InfoDialogTransfersWidget::~InfoDialogTransfersWidget()
     delete mProxyModel;
 }
 
-void InfoDialogTransfersWidget::showEvent(QShowEvent*)
+void InfoDialogTransfersWidget::showEvent(QShowEvent* event)
 {
+    onProxyModelModified();
+
+    QWidget::showEvent(event);
 }
 
 void InfoDialogTransfersWidget::onUiBlocked()
@@ -70,4 +89,29 @@ void InfoDialogTransfersWidget::configureTransferView()
     connect(MegaSyncApp->getTransfersModel(), &TransfersModel::unblockUiAndFilter, this, &InfoDialogTransfersWidget::onUiUnblocked);
 
     mViewHoverManager.setView(mUi->tView);
+}
+
+std::optional<TransferData::TransferTypes> InfoDialogTransfersWidget::getTopTransferType()
+{
+    if (!mProxyModel)
+        return std::nullopt;
+
+    QModelIndex firstProxyIndex = mProxyModel->index(0, 0);
+    if (!firstProxyIndex.isValid())
+        return std::nullopt;
+
+    auto transferData(qvariant_cast<TransferItem>(firstProxyIndex.data()).getTransferData());
+    return transferData->mType;
+}
+
+void InfoDialogTransfersWidget::onProxyModelModified()
+{
+    if (isVisible())
+    {
+        auto topTransferType = getTopTransferType();
+        if (topTransferType)
+        {
+            emit topTransferTypeChanged(topTransferType.value());
+        }
+    }
 }

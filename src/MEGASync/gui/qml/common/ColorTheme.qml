@@ -79,6 +79,7 @@ Item {
 	readonly property color notificationWarning: loader.item.notificationWarning
 	readonly property color pageBackground: loader.item.pageBackground
 	readonly property color selectionControl: loader.item.selectionControl
+	readonly property color selectionControlAlt: loader.item.selectionControlAlt
 	readonly property color supportError: loader.item.supportError
 	readonly property color supportInfo: loader.item.supportInfo
 	readonly property color supportSuccess: loader.item.supportSuccess
@@ -87,6 +88,7 @@ Item {
 	readonly property color surface2: loader.item.surface2
 	readonly property color surface3: loader.item.surface3
 	readonly property color surfaceInverseAccent: loader.item.surfaceInverseAccent
+	readonly property color surfaceTransparent: loader.item.surfaceTransparent
 	readonly property color textAccent: loader.item.textAccent
 	readonly property color textBrand: loader.item.textBrand
 	readonly property color textDisabled: loader.item.textDisabled

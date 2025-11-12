@@ -146,9 +146,7 @@ void TransfersAccountInfoWidget::refreshProgressBar()
 
 void TransfersAccountInfoWidget::updateUpgradeButtonVisibility()
 {
-    const bool isButtonVisible = Utilities::shouldDisplayUpgradeButton(mIsBandwithOverquota);
-    mUi->pbStorage->setVisible(isButtonVisible);
-    mUi->bUpgrade->setVisible(isButtonVisible);
+    mUi->bUpgrade->setVisible(Utilities::shouldDisplayUpgradeButton(mIsBandwithOverquota));
 }
 
 void TransfersAccountInfoWidget::on_bUpgrade_clicked()

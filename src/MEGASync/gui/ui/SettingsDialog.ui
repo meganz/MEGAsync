@@ -29,35 +29,7 @@
    <string>Settings</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">/*ColorTokenIcon;Button;bAccount;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bAccount;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bBackup;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bBackup;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bFolders;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bFolders;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bGeneral;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bGeneral;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bNetwork;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bNetwork;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bNotifications;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bNotifications;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bSecurity;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bSecurity;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bSyncs;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bSyncs;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bHelp;normal;off;colorToken.link-primary*/
-
-/*ColorTokenIcon;Button;bAdd;normal;off;colorToken.text-inverse-accent*/
-
-QWidget
+   <string notr="true">SettingsDialog
 {
 background-color: #FFFFFFFF; /*colorToken.page-background*/
 color: #ff303233; /*colorToken.text-primary*/
@@ -72,17 +44,6 @@ margin-top: 0px;
 {
 border-radius: 8px;
 }
-
-#downloadIcon
-{
-image: url(:/images/themed/light/arrow-down-circle.svg); /*replaceThemeToken*/
-}
-
-#uploadIcon
-{
-image: url(:/images/themed/light/arrow-up-circle.svg); /*replaceThemeToken*/
-}
-
 
 #SettingsDialog #pStorageQuota, #SettingsDialog #pTransferQuota
 {
@@ -121,12 +82,12 @@ background-color: #fff63d6b; /*colorToken.indicator-pink*/
 
 #iconDisabledSyncs
 {
-image: url(:/images/themed/light/error_sync_icon.svg); /*replaceThemeToken*/
+image: url(:/error_sync_icon);
 }
 
 #lDisabledSyncs
 {
-color: #ffe31b57; /*colorToken.text-error*/
+color: #ff303233; /*colorToken.text-primary*/
 background-color: transparent;
 }
 
@@ -167,14 +128,6 @@ background-color: transparent;
 color: #ff333333; /*colorToken.text-primary*/
 font-size: 10px;
 font-weight: 400;
-}
-
-#bHelp
-{
-border: none;
-color: #ff2C5BEB; /*colorToken.link-primary*/
-background-color: transparent;
-font-weight: 600;
 }
 
 #lName
@@ -228,6 +181,7 @@ text-align: left;
 border: none;
 padding: 0px;
 margin: 0px;
+color: #ff333333; /*colorToken.text-primary*/
 }
 
 #lBandwidthFree
@@ -300,7 +254,7 @@ margin-bottom: 3px;
        </spacer>
       </item>
       <item>
-       <widget class="QToolButton" name="bGeneral">
+       <widget class="TokenizableToolButton" name="bGeneral">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -330,7 +284,7 @@ margin-bottom: 3px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_common.qrc">
-          <normaloff>:/images/settings-general.svg</normaloff>:/images/settings-general.svg</iconset>
+          <normaloff>:/settings-general</normaloff>:/settings-general</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -350,10 +304,16 @@ margin-bottom: 3px;
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
+        <property name="normal_off" stdset="0">
+         <string notr="true">icon-secondary</string>
+        </property>
+        <property name="normal_on" stdset="0">
+         <string notr="true">icon-primary</string>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="bAccount">
+       <widget class="TokenizableToolButton" name="bAccount">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -383,7 +343,7 @@ margin-bottom: 3px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_common.qrc">
-          <normaloff>:/images/settings-account.svg</normaloff>:/images/settings-account.svg</iconset>
+          <normaloff>:/settings-account</normaloff>:/settings-account</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -400,10 +360,16 @@ margin-bottom: 3px;
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
+        <property name="normal_off" stdset="0">
+         <string notr="true">icon-secondary</string>
+        </property>
+        <property name="normal_on" stdset="0">
+         <string notr="true">icon-primary</string>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="bSyncs">
+       <widget class="TokenizableToolButton" name="bSyncs">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -433,7 +399,7 @@ margin-bottom: 3px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_common.qrc">
-          <normaloff>:/images/settings-sync.svg</normaloff>:/images/settings-sync.svg</iconset>
+          <normaloff>:/settings-sync</normaloff>:/settings-sync</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -450,10 +416,16 @@ margin-bottom: 3px;
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
+        <property name="normal_off" stdset="0">
+         <string notr="true">icon-secondary</string>
+        </property>
+        <property name="normal_on" stdset="0">
+         <string notr="true">icon-primary</string>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="bBackup">
+       <widget class="TokenizableToolButton" name="bBackup">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -483,7 +455,7 @@ margin-bottom: 3px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_common.qrc">
-          <normaloff>:/images/settings-backup.svg</normaloff>:/images/settings-backup.svg</iconset>
+          <normaloff>:/settings-backup</normaloff>:/settings-backup</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -500,10 +472,16 @@ margin-bottom: 3px;
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
+        <property name="normal_off" stdset="0">
+         <string notr="true">icon-secondary</string>
+        </property>
+        <property name="normal_on" stdset="0">
+         <string notr="true">icon-primary</string>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="bSecurity">
+       <widget class="TokenizableToolButton" name="bSecurity">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -533,7 +511,7 @@ margin-bottom: 3px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_common.qrc">
-          <normaloff>:/images/settings-shield.svg</normaloff>:/images/settings-shield.svg</iconset>
+          <normaloff>:/settings-shield</normaloff>:/settings-shield</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -550,10 +528,16 @@ margin-bottom: 3px;
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
+        <property name="normal_off" stdset="0">
+         <string notr="true">icon-secondary</string>
+        </property>
+        <property name="normal_on" stdset="0">
+         <string notr="true">icon-primary</string>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="bFolders">
+       <widget class="TokenizableToolButton" name="bFolders">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -583,7 +567,7 @@ margin-bottom: 3px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_common.qrc">
-          <normaloff>:/images/settings-folders.svg</normaloff>:/images/settings-folders.svg</iconset>
+          <normaloff>:/settings-folders</normaloff>:/settings-folders</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -600,10 +584,16 @@ margin-bottom: 3px;
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
+        <property name="normal_off" stdset="0">
+         <string notr="true">icon-secondary</string>
+        </property>
+        <property name="normal_on" stdset="0">
+         <string notr="true">icon-primary</string>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="bNetwork">
+       <widget class="TokenizableToolButton" name="bNetwork">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -633,7 +623,7 @@ margin-bottom: 3px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_common.qrc">
-          <normaloff>:/images/settings-network.svg</normaloff>:/images/settings-network.svg</iconset>
+          <normaloff>:/settings-network</normaloff>:/settings-network</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -650,10 +640,16 @@ margin-bottom: 3px;
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
+        <property name="normal_off" stdset="0">
+         <string notr="true">icon-secondary</string>
+        </property>
+        <property name="normal_on" stdset="0">
+         <string notr="true">icon-primary</string>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="bNotifications">
+       <widget class="TokenizableToolButton" name="bNotifications">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -683,7 +679,7 @@ margin-bottom: 3px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_common.qrc">
-          <normaloff>:/images/settings-notifications.svg</normaloff>:/images/settings-notifications.svg</iconset>
+          <normaloff>:/settings-notifications</normaloff>:/settings-notifications</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -702,6 +698,12 @@ margin-bottom: 3px;
         </property>
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+        <property name="normal_off" stdset="0">
+         <string notr="true">icon-secondary</string>
+        </property>
+        <property name="normal_on" stdset="0">
+         <string notr="true">icon-primary</string>
         </property>
        </widget>
       </item>
@@ -807,7 +809,7 @@ margin-bottom: 3px;
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="cFinderIcons">
+             <widget class="QCheckBox" name="cDesktopIntegration">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -953,7 +955,7 @@ margin-bottom: 3px;
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_12">
+        <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,1">
          <item>
           <widget class="QGroupBox" name="gLanguage">
            <property name="sizePolicy">
@@ -1018,72 +1020,79 @@ margin-bottom: 3px;
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="gThemeSelector">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+          <layout class="QVBoxLayout" name="verticalLayout_23">
+           <property name="spacing">
+            <number>0</number>
            </property>
-           <property name="title">
-            <string notr="true">Theme</string>
-           </property>
-           <property name="type" stdset="0">
-            <string notr="true">mega</string>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_21">
-            <property name="leftMargin">
-             <number>12</number>
-            </property>
-            <property name="topMargin">
-             <number>12</number>
-            </property>
-            <property name="rightMargin">
-             <number>12</number>
-            </property>
-            <property name="bottomMargin">
-             <number>12</number>
-            </property>
-            <item>
-             <widget class="QComboBox" name="cbTheme">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+           <item>
+            <widget class="QGroupBox" name="gThemeSelector">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="title">
+              <string notr="true">Theme</string>
+             </property>
+             <property name="type" stdset="0">
+              <string notr="true">mega</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_21">
+              <property name="leftMargin">
+               <number>12</number>
               </property>
-              <property name="minimumSize">
-               <size>
-                <width>266</width>
-                <height>0</height>
-               </size>
+              <property name="topMargin">
+               <number>12</number>
               </property>
-              <property name="cursor">
-               <cursorShape>PointingHandCursor</cursorShape>
+              <property name="rightMargin">
+               <number>12</number>
               </property>
-              <property name="type" stdset="0">
-               <string notr="true">mega</string>
+              <property name="bottomMargin">
+               <number>12</number>
               </property>
-              <property name="dimension" stdset="0">
-               <string notr="true">small</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_12">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
+              <item>
+               <widget class="QComboBox" name="cbTheme">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>266</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
+                <property name="type" stdset="0">
+                 <string notr="true">mega</string>
+                </property>
+                <property name="dimension" stdset="0">
+                 <string notr="true">small</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_12">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>0</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>
@@ -1384,6 +1393,9 @@ margin-bottom: 3px;
                   </property>
                   <property name="flat">
                    <bool>true</bool>
+                  </property>
+                  <property name="type" stdset="0">
+                   <string notr="true">ghost</string>
                   </property>
                  </widget>
                 </item>
@@ -1825,8 +1837,11 @@ margin-bottom: 3px;
               <property name="text">
                <string>Recovery Key</string>
               </property>
-              <property name="type" stdset="0">
-               <string notr="true">sub-title</string>
+              <property name="semi-bold" stdset="0">
+               <bool>true</bool>
+              </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">body-1</string>
               </property>
              </widget>
             </item>
@@ -1970,8 +1985,11 @@ margin-bottom: 3px;
               <property name="text">
                <string>Password</string>
               </property>
-              <property name="type" stdset="0">
-               <string notr="true">sub-title</string>
+              <property name="dimension" stdset="0">
+               <string notr="true">body-1</string>
+              </property>
+              <property name="semibold" stdset="0">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -2165,15 +2183,28 @@ margin-top: 0px;
                 <number>0</number>
                </property>
                <item>
-                <widget class="QPushButton" name="uploadIcon">
+                <widget class="IconLabel" name="uploadIcon">
+                 <property name="minimumSize">
+                  <size>
+                   <width>16</width>
+                   <height>16</height>
+                  </size>
+                 </property>
                  <property name="maximumSize">
                   <size>
-                   <width>26</width>
-                   <height>16777215</height>
+                   <width>16</width>
+                   <height>16</height>
                   </size>
                  </property>
                  <property name="text">
                   <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../Resources_common.qrc">
+                   <normaloff>:/arrow-up-circle_small_thin_outline</normaloff>:/arrow-up-circle_small_thin_outline</iconset>
+                 </property>
+                 <property name="normal_off" stdset="0">
+                  <string notr="true">icon-secondary</string>
                  </property>
                 </widget>
                </item>
@@ -2309,15 +2340,28 @@ margin-top: 0px;
                 <number>0</number>
                </property>
                <item>
-                <widget class="QPushButton" name="downloadIcon">
+                <widget class="IconLabel" name="downloadIcon">
+                 <property name="minimumSize">
+                  <size>
+                   <width>16</width>
+                   <height>16</height>
+                  </size>
+                 </property>
                  <property name="maximumSize">
                   <size>
-                   <width>26</width>
-                   <height>16777215</height>
+                   <width>16</width>
+                   <height>16</height>
                   </size>
                  </property>
                  <property name="text">
                   <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../Resources_common.qrc">
+                   <normaloff>:/arrow-down-circle_small_regular_outline</normaloff>:/arrow-down-circle_small_regular_outline</iconset>
+                 </property>
+                 <property name="normal_off" stdset="0">
+                  <string notr="true">icon-secondary</string>
                  </property>
                 </widget>
                </item>
@@ -3074,7 +3118,7 @@ margin-top: 0px;
        <number>0</number>
       </property>
       <item>
-       <widget class="QPushButton" name="bHelp">
+       <widget class="TokenizableButton" name="bHelp">
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
         </property>
@@ -3095,6 +3139,15 @@ margin-top: 0px;
          </size>
         </property>
         <property name="flat">
+         <bool>true</bool>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">link</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string notr="true">small</string>
+        </property>
+        <property name="semibold" stdset="0">
          <bool>true</bool>
         </property>
        </widget>
@@ -3133,7 +3186,11 @@ margin-top: 0px;
            </spacer>
           </item>
           <item>
-           <widget class="WaitingSpinnerWidget" name="wWaitingSpinner" native="true"/>
+           <widget class="WaitingSpinnerWidget" name="wWaitingSpinner" native="true">
+            <property name="colorToken" stdset="0">
+             <string notr="true">icon-primary</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QLabel" name="lOverlayProcessing">
@@ -3380,21 +3437,36 @@ margin-top: 0px;
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
+   <class>TokenizableToolButton</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
+  </customwidget>
+  <customwidget>
    <class>AvatarWidget</class>
    <extends>QWidget</extends>
    <header>AvatarWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>NotificationsSettings</class>
-   <extends>QWidget</extends>
-   <header>NotificationsSettings.h</header>
-   <container>1</container>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TokenizableButton</class>
+   <extends>QPushButton</extends>
+   <header>tokenizer/TokenizableItems/TokenizableButtons.h</header>
   </customwidget>
   <customwidget>
    <class>WaitingSpinnerWidget</class>
    <extends>QWidget</extends>
    <header>gui/WaitingSpinnerWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NotificationsSettings</class>
+   <extends>QWidget</extends>
+   <header>NotificationsSettings.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

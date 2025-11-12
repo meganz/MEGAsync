@@ -101,8 +101,6 @@ public:
     int bandwidthInterval();
     void setBandwidthInterval(int value);
     bool isTemporalBandwidthValid();
-    long long getMsDiffTimeWithSDK();
-    void setDsDiffTimeWithSDK(long long diffTime);
 
     long long getOverStorageDialogExecution();
     void setOverStorageDialogExecution(long long timestamp);
@@ -420,6 +418,8 @@ public:
     void disableOverlayIcons(bool value);
     bool leftPaneIconsDisabled();
     void disableLeftPaneIcons(bool value);
+    bool contextMenuDisabled();
+    void disableContextMenu(bool value);
     bool error();
 
     QString getDataPath();
@@ -429,16 +429,47 @@ public:
     void clearAll();
     void sync();
 
+    void setDontShowExportLinkDialog(bool value);
+    bool getDontShowExportLinkDialog();
+
     enum class ThemeType
     {
-        LIGHT_THEME = 0,
-        DARK_THEME = 1,
+        UNINITIALIZED = -1,
+        SYSTEM_DEFAULT = 0,
+        LIGHT_THEME = 1,
+        DARK_THEME = 2,
         LAST
     };
     Q_ENUM(ThemeType)
 
+    enum class ThemeAppeareance
+    {
+        UNINITIALIZED = -1,
+        DARK = 0,
+        LIGHT = 1
+    };
+    Q_ENUM(ThemeAppeareance)
+
+    // To store the different color scheme properties we can get from the system:
+    // System scheme (allowed in Windows)
+    // Apps scheme (All platforms)
+    // TODO future:
+    // Accent color
+    // High contrast
+    // ...
+    struct SystemColorScheme
+    {
+        ThemeAppeareance systemScheme = ThemeAppeareance::UNINITIALIZED;
+        ThemeAppeareance appsScheme = ThemeAppeareance::UNINITIALIZED;
+    };
+
     void setThemeType(ThemeType theme);
     ThemeType getThemeType();
+
+    static constexpr Preferences::ThemeAppeareance toTheme(bool dark) noexcept
+    {
+        return dark ? Preferences::ThemeAppeareance::DARK : Preferences::ThemeAppeareance::LIGHT;
+    }
 
 #if defined(ENABLE_SDK_ISOLATED_GFX)
     void setGfxWorkerEndpointInGeneral(const QString& endpoint);
@@ -585,8 +616,6 @@ public:
     //In this section, you need to move the keys to make them accessible from outside
     static const int minSyncStateChangeProcessingIntervalMs;
 
-    static int lastVersionUponStartup;
-
 protected:
     QMutex mutex;
     void login(QString account);
@@ -630,7 +659,6 @@ protected:
     int tempBandwidthInterval;
     bool isTempBandwidthValid;
     QString mDataPath;
-    long long diffTimeWithSDK;
     std::chrono::system_clock::time_point transferOverQuotaDialogDisabledUntil;
     std::chrono::system_clock::time_point transferOverQuotaOsNotificationDisabledUntil;
     std::chrono::system_clock::time_point transferAlmostOverQuotaOsNotificationDisabledUntil;
@@ -749,6 +777,7 @@ protected:
     static const QString disableOverlayIconsKey;
     static const QString disableFileVersioningKey;
     static const QString disableLeftPaneIconsKey;
+    static const QString disableContextMenuKey;
     static const QString sessionKey;
     static const QString ephemeralSessionKey;
     static const QString firstStartDoneKey;
@@ -845,8 +874,11 @@ protected:
     static const bool defaultDownloadMegaLinksEnabled;
     static const bool defaultSystemTrayPromptSuppressed;
     static const bool defaultAskOnExclusionRemove;
+    static const int defaultLastVersion;
 
     static const ThemeType defaultTheme;
+
+    static const QString dontShowExportLinkDialogKey;
 
 private:
     void updateFullName();

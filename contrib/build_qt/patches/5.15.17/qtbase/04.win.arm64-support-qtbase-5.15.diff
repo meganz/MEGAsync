@@ -1,0 +1,79 @@
+diff --git a/configure.bat b/configure.bat
+index b34e146f5fd..698174a08e4 100644
+--- a/configure.bat
++++ b/configure.bat
+@@ -95,6 +95,9 @@ goto doneargs
+ 
+     if /i "%~1" == "-make-tool" goto maketool
+     if /i "%~1" == "--make-tool" goto maketool
++
++	if /i "%~1" == "-external-hostbindir" goto hosttools
++    if /i "%~1" == "--external-hostbindir" goto hosttools
+ 
+ :nextarg
+     shift
+@@ -144,9 +147,14 @@ goto doneargs
+     set MAKE=%~1
+     goto nextarg
+ 
++:hosttools
++    shift
++    set CFG_HOST_QT_TOOLS_PATH=%~1
++    goto nextarg
++
+ :doneargs
+ 
+-rem Find various executables
++rem Find various executables
+ for %%C in (clang-cl.exe clang.exe cl.exe icl.exe g++.exe perl.exe jom.exe) do set %%C=%%~$PATH:C
+ 
+ rem Determine host spec
+@@ -276,7 +284,12 @@ cd ..
+ 
+ rem Generate qt.conf
+ 
+-> "%QTDIR%\bin\qt.conf" (
++set QTCONFFILE=%QTDIR%\bin\qt.conf
++
++echo "%QTCONFFILE%"
++echo "%QTDIR%"
++
++> "%QTCONFFILE%" (
+     @echo [EffectivePaths]
+     @echo Prefix=..
+     @echo [Paths]
+@@ -284,7 +297,7 @@ rem Generate qt.conf
+     @echo HostSpec=%PLATFORM%
+ )
+ if not "%QTDIR%" == "%QTSRC%" (
+-    >> "%QTDIR%\bin\qt.conf" (
++    >> "%QTCONFFILE%" (
+         @echo [EffectiveSourcePaths]
+         @echo Prefix=%QTSRC:\=/%
+     )
+@@ -293,4 +306,8 @@ if not "%QTDIR%" == "%QTSRC%" (
+ rem Launch qmake-based configure
+ 
+ cd "%TOPQTDIR%"
+-"%QTDIR%\bin\qmake.exe" "%TOPQTSRC%" -- %ARGS%
++if "%CFG_HOST_QT_TOOLS_PATH%" == "" (
++	"%QTDIR%\bin\qmake.exe" "%TOPQTSRC%" -- %ARGS%
++) else (
++	"%CFG_HOST_QT_TOOLS_PATH%\qmake.exe" -qtconf "%QTCONFFILE%" "%TOPQTSRC%" -- %ARGS%
++)
+diff --git a/mkspecs/common/msvc-desktop.conf b/mkspecs/common/msvc-desktop.conf
+index f5d12f445b4..2537704ec1d 100644
+--- a/mkspecs/common/msvc-desktop.conf
++++ b/mkspecs/common/msvc-desktop.conf
+@@ -26,6 +26,11 @@ contains(QMAKE_TARGET.arch, x86_64) {
+     QMAKE_COMPILER_DEFINES += _WIN64
+ }
+ 
++contains(QMAKE_TARGET.arch, arm64) {
++    DEFINES += WIN64
++    QMAKE_COMPILER_DEFINES += _WIN64
++}
++
+ QMAKE_CFLAGS_OPTIMIZE_DEBUG = -Od
+ QMAKE_CFLAGS_OPTIMIZE      = -O2
+ QMAKE_CFLAGS_OPTIMIZE_SIZE = -O1

@@ -1,34 +1,51 @@
 #include "ThemeManager.h"
 
+#include "DialogOpener.h"
 #include "Platform.h"
 #include "Preferences/Preferences.h"
 #include "ServiceUrls.h"
 #include "TextDecorator.h"
 #include "Utilities.h"
 
-const QMap<Preferences::ThemeType, QString> ThemeManager::mThemesMap = {
-    {Preferences::ThemeType::LIGHT_THEME,  QLatin1String("Light")},
-    {Preferences::ThemeType::DARK_THEME,  QLatin1String("Dark")}
-};
+const QMap<Preferences::ThemeAppeareance, QString> ThemeManager::mAppearance = {
+    {Preferences::ThemeAppeareance::LIGHT, QLatin1String("Light")},
+    {Preferences::ThemeAppeareance::DARK, QLatin1String("Dark")}};
+
+inline Preferences::ThemeAppeareance toAppearance(Preferences::ThemeType type)
+{
+    switch (type)
+    {
+        case Preferences::ThemeType::DARK_THEME:
+            return Preferences::ThemeAppeareance::DARK;
+        case Preferences::ThemeType::LIGHT_THEME:
+            return Preferences::ThemeAppeareance::LIGHT;
+        case Preferences::ThemeType::SYSTEM_DEFAULT:
+            [[fallthrough]];
+        default:
+            return Preferences::ThemeAppeareance::LIGHT;
+    }
+}
 
 ThemeManager::ThemeManager():
     QObject(nullptr),
-    mCurrentTheme(Preferences::ThemeType::LAST)
-{}
-
-Preferences::ThemeType ThemeManager::getSelectedTheme() const
+    mCurrentTheme(Preferences::ThemeType::UNINITIALIZED),
+    mCurrentColorScheme(Preferences::ThemeAppeareance::UNINITIALIZED)
 {
-    return mCurrentTheme;
+    connect(Platform::getInstance(),
+            &AbstractPlatform::themeChanged,
+            this,
+            &ThemeManager::onSystemAppearanceChanged,
+            Qt::UniqueConnection);
 }
 
-QString ThemeManager::getSelectedThemeString() const
+QString ThemeManager::getSelectedColorSchemaString() const
 {
-    return mThemesMap.value(mCurrentTheme, QLatin1String("Light"));
+    return getColorSchemaString(mCurrentColorScheme);
 }
 
-QString ThemeManager::getThemeString(Preferences::ThemeType theme) const
+QString ThemeManager::getColorSchemaString(Preferences::ThemeAppeareance themeId)
 {
-    return mThemesMap.value(theme, QLatin1String("Light"));
+    return mAppearance.value(themeId, QLatin1String("Light"));
 }
 
 ThemeManager* ThemeManager::instance()
@@ -40,12 +57,50 @@ ThemeManager* ThemeManager::instance()
 
 void ThemeManager::init()
 {
-    setTheme(Preferences::instance()->getThemeType());
+    auto theme = Preferences::instance()->getThemeType();
+    const auto desktopTheme = Platform::getInstance()->getCurrentThemeAppearance().appsScheme;
+
+    // If the desktop scheme is not available, fallback to Light theme
+    if (desktopTheme == Preferences::ThemeAppeareance::UNINITIALIZED)
+    {
+        if (theme == Preferences::ThemeType::SYSTEM_DEFAULT ||
+            theme == Preferences::ThemeType::UNINITIALIZED)
+        {
+            theme = Preferences::ThemeType::LIGHT_THEME;
+        }
+    }
+    // If it is available and theme in Preferences is not initialized, use System Default
+    else if (theme == Preferences::ThemeType::UNINITIALIZED)
+    {
+        theme = Preferences::ThemeType::SYSTEM_DEFAULT;
+    }
+
+    setTheme(theme);
 }
 
-QStringList ThemeManager::themesAvailable() const
+Preferences::ThemeType ThemeManager::getCurrentTheme() const
 {
-    return mThemesMap.values();
+    return mCurrentTheme;
+}
+
+Preferences::ThemeAppeareance ThemeManager::getCurrentColorScheme() const
+{
+    return mCurrentColorScheme;
+}
+
+QMap<Preferences::ThemeType, QString> ThemeManager::getAvailableThemes()
+{
+    mAvailableThemes.clear();
+
+    if (Platform::getInstance()->getCurrentThemeAppearance().appsScheme !=
+        Preferences::ThemeAppeareance::UNINITIALIZED)
+    {
+        mAvailableThemes.insert(Preferences::ThemeType::SYSTEM_DEFAULT, tr("System default"));
+    }
+    mAvailableThemes.insert(Preferences::ThemeType::DARK_THEME, tr("Dark"));
+    mAvailableThemes.insert(Preferences::ThemeType::LIGHT_THEME, tr("Light"));
+
+    return mAvailableThemes;
 }
 
 void ThemeManager::setTheme(Preferences::ThemeType theme)
@@ -54,7 +109,38 @@ void ThemeManager::setTheme(Preferences::ThemeType theme)
     {
         mCurrentTheme = theme;
 
-        if (!Platform::getInstance()->loadThemeResource(getThemeString(theme)))
+        if (theme == Preferences::ThemeType::SYSTEM_DEFAULT)
+        {
+            applyTheme(Platform::getInstance()->getCurrentThemeAppearance().appsScheme);
+        }
+        else
+        {
+            applyTheme(toAppearance(theme));
+        }
+
+        Preferences::instance()->setThemeType(mCurrentTheme);
+    }
+}
+
+void ThemeManager::onSystemAppearanceChanged(const Preferences::SystemColorScheme& systemScheme)
+{
+    const auto appsScheme = systemScheme.appsScheme;
+    if (mCurrentColorScheme != appsScheme &&
+        appsScheme != Preferences::ThemeAppeareance::UNINITIALIZED &&
+        (mCurrentTheme == Preferences::ThemeType::SYSTEM_DEFAULT ||
+         Preferences::instance()->getThemeType() == Preferences::ThemeType::UNINITIALIZED))
+    {
+        applyTheme(appsScheme);
+    }
+}
+
+void ThemeManager::applyTheme(Preferences::ThemeAppeareance theme)
+{
+    if (mCurrentColorScheme != theme)
+    {
+        mCurrentColorScheme = theme;
+
+        if (!Platform::getInstance()->loadThemeResource(getColorSchemaString(theme)))
         {
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, "Error loading resource files.");
             auto desktopAppInstallerUrl = ServiceUrls::getDesktopAppUrl();
@@ -72,10 +158,13 @@ void ThemeManager::setTheme(Preferences::ThemeType theme)
             ::exit(0);
         }
 
-        Preferences::instance()->setThemeType(mCurrentTheme);
-
-        emit themeChanged(theme);
+        emit themeChanged();
         Utilities::propagateCustomEvent(ThemeChanged);
+        DialogOpener::currentThemeChanged();
     }
 }
 
+Preferences::ThemeAppeareance ThemeManager::currentColorScheme() const
+{
+    return mCurrentColorScheme;
+}

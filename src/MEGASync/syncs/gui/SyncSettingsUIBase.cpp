@@ -139,7 +139,7 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
     }
 }
 
-void SyncSettingsUIBase::setToolBarItem(QToolButton* item)
+void SyncSettingsUIBase::setToolBarItem(TokenizableToolButton* item)
 {
     mToolBarItem = item;
 }

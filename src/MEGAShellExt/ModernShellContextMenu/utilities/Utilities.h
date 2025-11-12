@@ -27,6 +27,8 @@ const std::wstring GetExecutingModuleName();
 void log(const std::wstring& file, const std::wstring& message);
 
 bool isDarkModeActive();
+
+bool isContextMenuDisabled();
 }
 
 #endif // UTILITIES_H

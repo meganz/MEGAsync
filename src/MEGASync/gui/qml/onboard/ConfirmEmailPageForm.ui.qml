@@ -52,7 +52,6 @@ StackViewPage {
 
             rawText: OnboardingStrings.confirmEmailBodyText2
             font.pixelSize: Texts.Text.Size.MEDIUM
-            url: serviceUrlsAccess.getContactSupportUrl()
             manageMouse: true
             Layout.preferredWidth: layout.width
             KeyNavigation.tab: changeEmailLinkTextItem

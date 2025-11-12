@@ -1,6 +1,7 @@
 #include "DuplicatedNodeItem.h"
 
 #include "MegaApplication.h"
+#include "TokenParserWidgetManager.h"
 #include "ui_DuplicatedNodeItem.h"
 #include "Utilities.h"
 
@@ -16,6 +17,7 @@ DuplicatedNodeItem::DuplicatedNodeItem(QWidget* parent):
 {
     ui->setupUi(this);
     ui->lLearnMore->hide();
+    TokenParserWidgetManager::instance()->applyCurrentTheme(this);
 }
 
 DuplicatedNodeItem::~DuplicatedNodeItem()
@@ -38,7 +40,8 @@ void DuplicatedNodeItem::setDescription(const QString &description)
 
 void DuplicatedNodeItem::showLearnMore(const QString& url)
 {
-    QString moreAboutLink(QLatin1String("<a href=\"%1\"><font color=#333333>%2</font></a>"));
+    QString moreAboutLink(QLatin1String(
+        "<a href=\"%1\"><font color=#2C5BEB;/*colorToken.link-primary*/>%2</font></a>"));
     ui->lLearnMore->setText(moreAboutLink.arg(url,tr("Learn more")));
     ui->lLearnMore->show();
 }
@@ -88,7 +91,7 @@ void DuplicatedNodeItem::fillUi()
             QIcon(Utilities::getFolderPixmapName(Utilities::FolderType::TYPE_NORMAL,
                                                  Utilities::AttributeType::MEDIUM));
 
-    ui->lIcon->setPixmap(icon.pixmap(ui->lIcon->size()));
+    ui->lIcon->setIcon(icon);
 }
 
 void DuplicatedNodeItem::setModifiedTime(const QDateTime& dateTime)

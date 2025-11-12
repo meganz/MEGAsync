@@ -121,6 +121,7 @@
         <file>onboard/StackViewPage.qml</file>
         <file>onboard/PasswordConditionItem.qml</file>
         <file>onboard/PasswordInfoContent.qml</file>
+        <file>onboard/PasswordChecker.qml</file>
         <file>onboard/PasswordInfoContentForm.ui.qml</file>
         <file>onboard/PasswordInfoPopUp.qml</file>
         <file>onboard/syncs_types/qmldir</file>
@@ -169,10 +170,6 @@
         <file>sync_exclusions/ExclusionsStrings.qml</file>
         <file>sync_exclusions/RulesTable.qml</file>
         <file>sync_exclusions/AddRuleDialog.qml</file>
-        <file>whatsNew/WhatsNewStrings.qml</file>
-        <file>whatsNew/qmldir</file>
-        <file>whatsNew/WhatsNewDialog.qml</file>
-        <file>whatsNew/UpdatesElement.qml</file>
         <file>backups/qmldir</file>
         <file>backups/BackupsDialog.qml</file>
         <file>backups/BackupsFlow.qml</file>
@@ -214,5 +211,12 @@
         <file>deviceCentre/RenameDeviceDialog.qml</file>
         <file>common/DeviceName.qml</file>
         <file>syncs/ChooseSyncFolder.qml</file>
+        <file>quick_widget/TransfersSummaryItem.qml</file>
+        <file>quick_widget/qmldir</file>
+        <file>change_password/ChangePassword.qml</file>
+        <file>change_password/ChangePasswordPage.qml</file>
+        <file>change_password/TwoFAPage.qml</file>
+        <file>change_password/ChangePasswordStrings.qml</file>
+        <file>change_password/qmldir</file>
     </qresource>
 </RCC>

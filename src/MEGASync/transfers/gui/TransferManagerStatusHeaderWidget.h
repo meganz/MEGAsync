@@ -27,8 +27,8 @@ protected:
     bool event(QEvent* event) override;
 
 private slots:
-    void onTransferQuotaExceededUpdate();
-    void onUpgradeClicked(const QUrl& link);
+    void setTransferQuotaBannerText();
+    void onUpgradeClicked();
 
 private:
     Ui::TransferManagerStatusHeaderWidget* mUi;
@@ -37,6 +37,10 @@ private:
 
     void showAlmostFullStorageBanner();
     void showFullStorageBanner();
+
+    void setAlmostFullStorageBannerText();
+    void setFullStorageBannerText();
+    void setAllPausedBannerText();
 };
 
 #endif // TRANSFER_MANAGER_STATUS_HEADER_WIDGET_H

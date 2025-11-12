@@ -5,11 +5,20 @@
 #include "NautilusFileManager.h"
 
 #include <QHostInfo>
+#include <QObject>
 #include <QProgressBar>
 #include <QScreen>
 #include <QSet>
+#include <QVariantMap>
 #include <QX11Info>
 #include <sys/statvfs.h>
+
+#ifndef QT_NO_DBUS
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
+#include <QDBusInterface>
+#include <QDBusVariant>
+#endif
 
 #include <cstdlib>
 #include <cstring>
@@ -26,9 +35,16 @@ PlatformImplementation::PlatformImplementation()
     custom_icon = QString::fromUtf8("/usr/share/icons/hicolor/256x256/apps/mega.png");
 }
 
+PlatformImplementation::~PlatformImplementation()
+{
+    stopThemeMonitor();
+}
+
 void PlatformImplementation::initialize(int /*argc*/, char** /*argv*/)
 {
     mShellNotifier = std::make_shared<SignalShellNotifier>();
+
+    startThemeMonitor();
 }
 
 void PlatformImplementation::notifyItemChange(const QString& path, int)
@@ -910,4 +926,320 @@ void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, i
 
     QString otherInfo = QString::fromUtf8("dialog rect = %1, posx = %2, posy = %3").arg(rectToString(rect)).arg(*posx).arg(*posy);
     logInfoDialogCoordinates("Final", screenGeometry, otherInfo);
+}
+
+Preferences::SystemColorScheme PlatformImplementation::getCurrentThemeAppearance() const
+{
+    const auto theme = effectiveTheme();
+    return {theme, theme};
+}
+
+void PlatformImplementation::startThemeMonitor()
+{
+#ifndef QT_NO_DBUS
+    // Setup portal monitoring
+    setupSettingsPortalMonitor();
+#endif
+    if (!mIsSettingsPortalActive)
+    {
+        // Setup gsettings monitoring
+        setupGSettingsThemeCli();
+    }
+}
+
+void PlatformImplementation::stopThemeMonitor()
+{
+    mIsSettingsPortalActive = false;
+    mThemeMonitor.close();
+    mCurrentPortalTheme = Preferences::ThemeAppeareance::UNINITIALIZED;
+    mCurrentGSettingsTheme = Preferences::ThemeAppeareance::UNINITIALIZED;
+    mLastEmittedTheme = Preferences::ThemeAppeareance::UNINITIALIZED;
+    mUseGtkTheme = false;
+}
+
+#ifndef QT_NO_DBUS
+
+void PlatformImplementation::setupSettingsPortalMonitor()
+{
+    const QString DBUS_SERVICE = QLatin1String("org.freedesktop.portal.Desktop");
+    const QString DBUS_PATH = QLatin1String("/org/freedesktop/portal/desktop");
+    const QString DBUS_CONNECTION = QLatin1String("org.freedesktop.portal.Settings");
+    const QString DBUS_NAME = QLatin1String("SettingChanged");
+    const QString DBUS_SIG = QLatin1String("ssv");
+
+    auto sessionbus = QDBusConnection::connectToBus(QDBusConnection::BusType::SessionBus,
+                                                    QLatin1String("session"));
+
+    mIsSettingsPortalActive = sessionbus.interface()->isServiceRegistered(DBUS_SERVICE);
+    if (mIsSettingsPortalActive)
+    {
+        // Connect to setting changed signal.
+        mIsSettingsPortalActive = sessionbus.connect(DBUS_SERVICE,
+                                                     DBUS_PATH,
+                                                     DBUS_CONNECTION,
+                                                     DBUS_NAME,
+                                                     DBUS_SIG,
+                                                     this,
+                                                     SLOT(onSettingsPortalChanged(QDBusMessage)));
+
+        if (mIsSettingsPortalActive)
+        {
+            // Init value
+            mCurrentPortalTheme = readSettingsPortal();
+            mIsSettingsPortalActive =
+                mCurrentPortalTheme != Preferences::ThemeAppeareance::UNINITIALIZED;
+        }
+    }
+}
+
+Preferences::ThemeAppeareance PlatformImplementation::themeFromVariant(const QVariant& var)
+{
+    // Documentation:
+    // https://flatpak.github.io/xdg-desktop-portal/docs/doc-org.freedesktop.portal.Settings.html
+    static const unsigned int PORTAL_NO_PREFERENCE = 0;
+    static const unsigned int PORTAL_DARK = 1;
+    static const unsigned int PORTAL_LIGHT = 2;
+
+    auto theme = Preferences::ThemeAppeareance::UNINITIALIZED;
+
+    bool ok = false;
+    auto extractedValue = var.toUInt(&ok);
+
+    if (ok)
+    {
+        switch (extractedValue)
+        {
+            case PORTAL_DARK:
+            {
+                theme = Preferences::ThemeAppeareance::DARK;
+                break;
+            }
+            case PORTAL_LIGHT:
+                [[fallthrough]];
+            case PORTAL_NO_PREFERENCE:
+                [[fallthrough]];
+            default:
+            {
+                // Default to light theme
+                theme = Preferences::ThemeAppeareance::LIGHT;
+            }
+        }
+    }
+
+    return theme;
+}
+
+Preferences::ThemeAppeareance PlatformImplementation::readSettingsPortal()
+{
+    const QString DBUS_SERVICE = QLatin1String("org.freedesktop.portal.Desktop");
+    const QString DBUS_PATH = QLatin1String("/org/freedesktop/portal/desktop");
+    const QString DBUS_CONNECTION = QLatin1String("org.freedesktop.portal.Settings");
+    const QString DBUS_NS = QLatin1String("org.freedesktop.appearance");
+    const QString DBUS_KEY = QLatin1String("color-scheme");
+
+    auto settingsPortal = QDBusInterface(DBUS_SERVICE, DBUS_PATH, DBUS_CONNECTION);
+
+    // Prefer ReadOne(ns, key); fall back to Read(ns, [keys])
+    QString DBUS_CMD = QLatin1String("ReadOne");
+    QDBusMessage dbusMsg = settingsPortal.call(DBUS_CMD, DBUS_NS, DBUS_KEY);
+
+    QVariant val;
+    if (dbusMsg.type() == QDBusMessage::ReplyMessage && !dbusMsg.arguments().isEmpty())
+    {
+        val = dbusMsg.arguments().at(0);
+    }
+    else
+    {
+        DBUS_CMD = QLatin1String("Read");
+        dbusMsg = settingsPortal.call(DBUS_CMD, DBUS_NS, QStringList{DBUS_KEY});
+
+        if (dbusMsg.type() == QDBusMessage::ReplyMessage && !dbusMsg.arguments().isEmpty())
+        {
+            val = dbusMsg.arguments().at(0);
+            if (val.canConvert<QVariantMap>())
+            {
+                val = val.toMap().value(DBUS_KEY);
+            }
+        }
+    }
+
+    if (val.userType() == qMetaTypeId<QDBusVariant>())
+    {
+        val = qvariant_cast<QDBusVariant>(val).variant();
+    }
+
+    return themeFromVariant(val);
+}
+
+void PlatformImplementation::onSettingsPortalChanged(const QDBusMessage& msg)
+{
+    const QString DBUS_NS = QLatin1String("org.freedesktop.appearance");
+    const QString DBUS_KEY = QLatin1String("color-scheme");
+
+    const auto args = msg.arguments();
+    if (args.size() == 3)
+    {
+        const QString ns = args.at(0).toString();
+        const QString key = args.at(1).toString();
+
+        if (ns == DBUS_NS && key == DBUS_KEY)
+        {
+            QVariant val = args.at(2);
+
+            if (val.userType() == qMetaTypeId<QDBusVariant>())
+            {
+                val = qvariant_cast<QDBusVariant>(val).variant();
+            }
+            mCurrentPortalTheme = themeFromVariant(val);
+            maybeEmitTheme();
+        }
+    }
+}
+
+#endif
+
+Preferences::ThemeAppeareance
+    PlatformImplementation::themeFromColorSchemeString(const QString& schemeStr)
+{
+    // Documentation: https://gitlab.gnome.org/GNOME/Initiatives/-/wikis/Dark-Style-Preference
+    static const QString GSETTINGS_PREFER_LIGHT = QLatin1String("prefer-light");
+    static const QString GSETTINGS_PREFER_DARK = QLatin1String("prefer-dark");
+    static const QString GSETTINGS_DEFAULT = QLatin1String("default");
+
+    auto theme = Preferences::ThemeAppeareance::UNINITIALIZED;
+
+    // Default to light theme
+    if (schemeStr.contains(GSETTINGS_DEFAULT, Qt::CaseInsensitive) ||
+        schemeStr.contains(GSETTINGS_PREFER_LIGHT, Qt::CaseInsensitive))
+    {
+        theme = Preferences::ThemeAppeareance::LIGHT;
+    }
+    else if (schemeStr.contains(GSETTINGS_PREFER_DARK, Qt::CaseInsensitive))
+    {
+        theme = Preferences::ThemeAppeareance::DARK;
+    }
+    return theme;
+}
+
+Preferences::ThemeAppeareance
+    PlatformImplementation::themeFromGtkThemeString(const QString& themeStr)
+{
+    // Dark theme usually end with "-dark", like "Adwaita-dark"
+    static const QString GTK_DARK_ID = QLatin1String("-dark");
+    auto theme = Preferences::ThemeAppeareance::UNINITIALIZED;
+
+    if (themeStr.contains(GTK_DARK_ID, Qt::CaseInsensitive))
+    {
+        theme = Preferences::ThemeAppeareance::DARK;
+    }
+    else
+    {
+        // Default to light theme
+        theme = Preferences::ThemeAppeareance::LIGHT;
+    }
+    return theme;
+}
+
+Preferences::ThemeAppeareance PlatformImplementation::effectiveTheme() const
+{
+    auto theme = Preferences::ThemeAppeareance::UNINITIALIZED;
+    // Portal wins when it is initialized; otherwise use GSettings if initialized.
+    if (mCurrentPortalTheme != theme)
+    {
+        theme = mCurrentPortalTheme;
+    }
+    // Use fallback
+    else if (mCurrentGSettingsTheme != theme)
+    {
+        theme = mCurrentGSettingsTheme;
+    }
+    return theme;
+}
+
+void PlatformImplementation::maybeEmitTheme()
+{
+    const auto effTheme = effectiveTheme();
+    if (effTheme != mLastEmittedTheme)
+    {
+        mLastEmittedTheme = effTheme;
+        emit themeChanged({effTheme, effTheme});
+    }
+}
+
+void PlatformImplementation::setupGSettingsThemeCli()
+{
+    const QString GSETTINGS_BIN = QLatin1String("gsettings");
+    const QString GSETTINGS_DI_PATH = QLatin1String("org.gnome.desktop.interface");
+    const QString GSETTINGS_GET_CMD = QLatin1String("get");
+    const QString GSETTINGS_MONITOR_CMD = QLatin1String("monitor");
+    // Gnome 42+ key
+    const QString GSETTINGS_COLOR_SCHEME_KEY = QLatin1String("color-scheme");
+    // GTK theme for fallback
+    const QString GSETTINGS_GTK_THEME_KEY = QLatin1String("gtk-theme");
+
+    const int PROCESS_TIMEOUT_MS = 1500;
+
+    QProcess process;
+    process.start(GSETTINGS_BIN,
+                  {GSETTINGS_GET_CMD, GSETTINGS_DI_PATH, GSETTINGS_COLOR_SCHEME_KEY});
+    bool gSettingsAvailable =
+        process.waitForFinished(PROCESS_TIMEOUT_MS) && process.exitCode() == 0;
+    if (gSettingsAvailable)
+    {
+        const QString output = QString::fromUtf8(process.readAllStandardOutput());
+        mCurrentGSettingsTheme = themeFromColorSchemeString(output);
+    }
+
+    // gtk-theme fallback
+    if (mCurrentGSettingsTheme == Preferences::ThemeAppeareance::UNINITIALIZED)
+    {
+        process.start(GSETTINGS_BIN,
+                      {GSETTINGS_GET_CMD, GSETTINGS_DI_PATH, GSETTINGS_GTK_THEME_KEY});
+        gSettingsAvailable = process.waitForFinished(PROCESS_TIMEOUT_MS) && process.exitCode() == 0;
+        if (gSettingsAvailable)
+        {
+            const QString output = QString::fromUtf8(process.readAllStandardOutput());
+            mCurrentGSettingsTheme = themeFromGtkThemeString(output);
+            mUseGtkTheme = true;
+        }
+    }
+
+    if (mCurrentGSettingsTheme != Preferences::ThemeAppeareance::UNINITIALIZED)
+    {
+        mThemeMonitor.start(GSETTINGS_BIN,
+                            {GSETTINGS_MONITOR_CMD,
+                             GSETTINGS_DI_PATH,
+                             mUseGtkTheme ? GSETTINGS_GTK_THEME_KEY : GSETTINGS_COLOR_SCHEME_KEY});
+        QObject::connect(&mThemeMonitor,
+                         &QProcess::readyReadStandardOutput,
+                         this,
+                         &PlatformImplementation::onGsettingsThemeReadyRead);
+    }
+}
+
+void PlatformImplementation::onGsettingsThemeReadyRead()
+{
+    QRegularExpression themeRx;
+    if (mUseGtkTheme)
+    {
+        themeRx = QRegularExpression(QLatin1String(R"(.*gtk-theme.*'([^']+)')"));
+    }
+    else
+    {
+        themeRx = QRegularExpression(QLatin1String(R"(.*color-scheme.*'([^']+)')"));
+    }
+
+    while (mThemeMonitor.canReadLine())
+    {
+        const QString line = QString::fromUtf8(mThemeMonitor.readLine()).trimmed();
+        const auto match = themeRx.match(line);
+
+        if (match.hasMatch())
+        {
+            const QString val = match.captured(1);
+            mCurrentGSettingsTheme =
+                mUseGtkTheme ? themeFromGtkThemeString(val) : themeFromColorSchemeString(val);
+            maybeEmitTheme();
+        }
+    }
 }

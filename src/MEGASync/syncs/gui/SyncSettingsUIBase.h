@@ -8,6 +8,7 @@
 #include "SyncInfo.h"
 #include "SyncSettings.h"
 #include "TextDecorator.h"
+#include "TokenizableItems/TokenizableButtons.h"
 
 #include <QFutureWatcher>
 #include <QIcon>
@@ -199,7 +200,7 @@ public:
         syncsStateInformation(SAVING_FINISHED);
     }
 
-    void setToolBarItem(QToolButton* item);
+    void setToolBarItem(TokenizableToolButton* item);
 
     template<class DialogType>
     void setParentDialog(DialogType* newParentDialog)
@@ -259,7 +260,7 @@ private:
     SyncInfo* mSyncInfo;
     static QMap<mega::MegaSync::SyncType, QPointer<SyncItemModel>> mModels;
     QFutureWatcher<bool> mOpeMegaIgnoreWatcher;
-    QToolButton* mToolBarItem;
+    TokenizableToolButton* mToolBarItem;
 };
 
 #endif // SYNCSETTINGSUIBASE_H

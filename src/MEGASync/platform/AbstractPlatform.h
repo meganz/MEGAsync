@@ -29,8 +29,10 @@ struct SelectorInfo
     {}
 };
 
-class AbstractPlatform
+class AbstractPlatform: public QObject
 {
+    Q_OBJECT
+
 public:
     AbstractPlatform() = default;
     virtual ~AbstractPlatform() = default;
@@ -80,6 +82,9 @@ public:
     virtual void addSyncToLeftPane(QString syncPath, QString syncName, QString uuid);
     virtual void removeSyncFromLeftPane(QString syncPath);
     virtual void removeAllSyncsFromLeftPane();
+
+    virtual void disableContextMenu(bool isDisabled) {}
+
     virtual bool makePubliclyReadable(const QString& fileName);
 
     virtual void addFileManagerExtensionToSystem() {}
@@ -111,12 +116,22 @@ public:
         return {};
     }
 
+    virtual Preferences::SystemColorScheme getCurrentThemeAppearance() const;
+    virtual void applyCurrentThemeOnCurrentDialogFrame(QWindow* window);
+
+signals:
+    void themeChanged(Preferences::SystemColorScheme theme);
+
 protected:
     std::shared_ptr<AbstractShellNotifier> mShellNotifier = nullptr;
 
     void logInfoDialogCoordinates(const char *message, const QRect &screenGeometry, const QString &otherInformation);
     QString rectToString(const QRect &rect);
     bool loadRccResources(const QStringList& rccFiles);
+
+    virtual void startThemeMonitor() {}
+
+    virtual void stopThemeMonitor() {}
 };
 
 #endif // ABSTRACTPLATFORM_H

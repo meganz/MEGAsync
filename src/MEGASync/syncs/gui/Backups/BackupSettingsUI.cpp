@@ -1,5 +1,6 @@
 #include "BackupSettingsUI.h"
 
+#include "BackupCandidatesComponent.h"
 #include "BackupItemModel.h"
 #include "Backups.h"
 #include "BackupsController.h"
@@ -46,7 +47,7 @@ BackupSettingsUI::BackupSettingsUI(QWidget* parent):
                 });
     }
 
-    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<BackupCandidatesComponent>>())
     {
         setAddButtonEnabled(!dialog->getDialog()->isVisible());
     }
@@ -78,12 +79,14 @@ void BackupSettingsUI::removeSync(std::shared_ptr<SyncSettings> backup)
 
 QString BackupSettingsUI::getFinishWarningIconString() const
 {
-    return QString::fromUtf8(":/images/settings-backup-warn.svg");
+    return Utilities::getPixmapName(QLatin1String("settings-backup-warn"),
+                                    Utilities::AttributeType::NONE);
 }
 
 QString BackupSettingsUI::getFinishIconString() const
 {
-    return QString::fromUtf8(":/images/settings-backup.svg");
+    return Utilities::getPixmapName(QLatin1String("settings-backup"),
+                                    Utilities::AttributeType::NONE);
 }
 
 QString BackupSettingsUI::getOperationFailTitle() const

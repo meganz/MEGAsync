@@ -28,6 +28,11 @@ bool SomeIssuesOccurredMessage::event(QEvent* event)
 
 void SomeIssuesOccurredMessage::on_viewIssuesButton_clicked()
 {
+    showStalledIssuesDialog();
+}
+
+void SomeIssuesOccurredMessage::showStalledIssuesDialog()
+{
     auto stalledIssuesDialog = DialogOpener::findDialog<StalledIssuesDialog>();
     if(stalledIssuesDialog)
     {

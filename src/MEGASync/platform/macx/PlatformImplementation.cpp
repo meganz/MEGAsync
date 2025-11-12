@@ -1,5 +1,9 @@
 #include "PlatformImplementation.h"
 
+#include "MacXFunctions.h"
+#include "Preferences.h"
+#include "ThemeManager.h"
+
 #include <QHostInfo>
 #include <QScreen>
 
@@ -20,6 +24,9 @@ void PlatformImplementation::initialize(int /*argc*/, char *[] /*argv*/)
 {
     setMacXActivationPolicy();
     mShellNotifier = std::make_shared<SignalShellNotifier>();
+    watcher = new MacThemeWatcher(this);
+
+    startThemeMonitor();
 }
 
 void PlatformImplementation::fileSelector(const SelectorInfo& info)
@@ -110,6 +117,19 @@ bool PlatformImplementation::isFileManagerExtensionEnabled()
     }
 
     return true;
+}
+
+void PlatformImplementation::startThemeMonitor()
+{
+    QObject::connect(watcher,
+                     &MacThemeWatcher::systemThemeChanged,
+                     this,
+                     &PlatformImplementation::themeChanged);
+}
+
+Preferences::SystemColorScheme PlatformImplementation::getCurrentThemeAppearance() const
+{
+    return watcher->getCurrentTheme();
 }
 
 void PlatformImplementation::runPostAutoUpdateStep()
@@ -451,34 +471,34 @@ void PlatformImplementation::initMenu(QMenu* m, const char *objectName, const bo
         if (applyDefaultStyling)
         {
             m->setStyleSheet(QLatin1String("QMenu {"
-                                               "background: #ffffff;"
-                                               "padding-top: 5px;"
-                                               "padding-bottom: 5px;"
-                                               "border: 1px solid #B8B8B8;"
-                                               "border-radius: 5px;"
+                                           "background: #ffffff;"
+                                           "padding-top: 5px;"
+                                           "padding-bottom: 5px;"
+                                           "border: 1px solid #B8B8B8;"
+                                           "border-radius: 5px;"
                                            "}"
                                            "QMenu::separator {"
-                                               "height: 1px;"
-                                               "margin: 0px 8px 0px 8px;"
-                                               "background-color: rgba(0, 0, 0, 0.1);"
+                                           "height: 1px;"
+                                           "margin: 0px 8px 0px 8px;"
+                                           "background-color: rgba(0, 0, 0, 0.1);"
                                            "}"
-                                           // For vanilla QMenus (only in TransferManager and NodeSelectorTreeView (NodeSelector))
+                                           // For vanilla QMenus (only in TransferManager and
+                                           // NodeSelectorTreeView (NodeSelector))
                                            "QMenu::item {"
-                                               "font-size: 14px;"
-                                               "margin: 6px 16px 6px 16px;"
-                                               "color: #777777;"
-                                               "padding-right: 16px;"
+                                           "font-size: 14px;"
+                                           "margin: 6px 16px 6px 16px;"
+                                           "color: #777777;"
+                                           "padding-right: 16px;"
                                            "}"
                                            "QMenu::item:selected {"
-                                               "color: #000000;"
+                                           "color: #000000;"
                                            "}"
                                            // For menus with MenuItemActions
                                            "QLabel {"
-                                               "font-family: Lato;"
-                                               "font-size: 14px;"
-                                               "padding: 0px;"
-                                           "}"
-                                           ));
+                                           "font-family: Lato;"
+                                           "font-size: 14px;"
+                                           "padding: 0px;"
+                                           "}"));
             m->setAttribute(Qt::WA_TranslucentBackground);
             m->setWindowFlags(m->windowFlags() | Qt::FramelessWindowHint);
             m->ensurePolished();
@@ -567,4 +587,12 @@ void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, i
 
     QString otherInfo = QString::fromUtf8("dialog rect = %1, posx = %2, posy = %3").arg(rectToString(rect)).arg(*posx).arg(*posy);
     logInfoDialogCoordinates("Final", screenGeometry, otherInfo);
+}
+
+void PlatformImplementation::applyCurrentThemeOnCurrentDialogFrame(QWindow* window)
+{
+    applyThemeToFrameWindow(window,
+                            ThemeManager::instance()->getCurrentColorScheme() ==
+                                Preferences::ThemeAppeareance::DARK,
+                            true);
 }

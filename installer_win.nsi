@@ -31,6 +31,8 @@ VIAddVersionKey "ProductName" "MEGAsync"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\MEGAsync.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
+!define PRODUCT_DIR_PUBLISHER_REGPATH "Software\${PRODUCT_PUBLISHER}"
+!define PRODUCT_DIR_USER_REGKEY "${PRODUCT_DIR_PUBLISHER_REGPATH}\${PRODUCT_NAME}"
 !define PRODUCT_STARTMENU_REGVAL "NSIS:StartMenuDir"
 !define CSIDL_STARTUP '0x7' ;Startup path
 !define CSIDL_LOCALAPPDATA '0x1C' ;Local Application Data path
@@ -524,7 +526,7 @@ currentuser:
 modeselected:
 
   !insertmacro DEBUG_MSG "Closing MEGAsync"
-  ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /t /IM MEGAsync.exe"
+  ExecDos::exec /DETAILED /DISABLEFSR "$WINDIR\System32\taskkill.exe /f /t /IM MEGAsync.exe"
   Sleep 1000
 
   !insertmacro DEBUG_MSG "Installing files"
@@ -903,7 +905,7 @@ Function un.UninstallSyncs
 FunctionEnd
 
 Section Uninstall
-  ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /t /IM MEGASync.exe"
+  ExecDos::exec /DETAILED /DISABLEFSR "$WINDIR\System32\taskkill.exe /f /t /IM MEGASync.exe"
   Sleep 1000
 
   ${UAC.CallFunctionAsUser} un.UninstallSyncs
@@ -1097,6 +1099,9 @@ Section Uninstall
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
+  DeleteRegKey HKCU "${PRODUCT_DIR_USER_REGKEY}"
+  DeleteRegKey /ifempty HKCU "${PRODUCT_DIR_PUBLISHER_REGPATH}"
+
   SetAutoClose true
   SetRebootFlag false
 SectionEnd

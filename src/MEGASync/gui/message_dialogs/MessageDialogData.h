@@ -9,7 +9,6 @@
 #include <QUrl>
 
 #include <functional>
-#include <optional>
 
 class MessageDialogComponent;
 
@@ -34,7 +33,9 @@ public:
     ButtonStyle style = ButtonStyle::OUTLINE;
 
     MessageDialogButtonInfo() = default;
-    MessageDialogButtonInfo(const QString& buttonText, QMessageBox::StandardButton buttonType);
+    MessageDialogButtonInfo(const QString& buttonText,
+                            QMessageBox::StandardButton buttonType,
+                            ButtonStyle buttonStyle);
 };
 
 struct MessageDialogCheckboxInfo
@@ -115,7 +116,6 @@ struct MessageDialogInfo
     QMap<QMessageBox::StandardButton, QString> buttonsText;
     QMap<QMessageBox::StandardButton, QUrl> buttonsIcons;
     Qt::TextFormat textFormat;
-    QUrl imageUrl;
     bool enqueue;
     bool hideCloseButton;
     QString checkboxText;
@@ -139,7 +139,7 @@ class MessageDialogData: public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString title READ getTitle CONSTANT)
-    Q_PROPERTY(QUrl imageUrl READ getImageUrl NOTIFY imageChanged)
+    Q_PROPERTY(Type type READ getType NOTIFY typeChanged)
     Q_PROPERTY(MessageDialogTextInfo titleTextInfo READ getTitleTextInfo CONSTANT)
     Q_PROPERTY(MessageDialogTextInfo descriptionTextInfo READ getDescriptionTextInfo CONSTANT)
     Q_PROPERTY(QVariantList buttons READ getButtons NOTIFY buttonsChanged)
@@ -148,19 +148,20 @@ class MessageDialogData: public QObject
 public:
     enum class Type
     {
+        SUCCESS = 0,
         INFORMATION = 1,
         WARNING = 2,
         QUESTION = 3,
         CRITICAL = 4,
     };
+    Q_ENUM(Type)
 
     explicit MessageDialogData(Type type, MessageDialogInfo info, QObject* parent = nullptr);
     virtual ~MessageDialogData() = default;
 
     Type getType() const;
-    QWidget* getParentWidget() const;
+    QWidget* getParentDialog() const;
     QString getTitle() const;
-    QUrl getImageUrl() const;
     MessageDialogTextInfo getTitleTextInfo() const;
     MessageDialogTextInfo getDescriptionTextInfo() const;
     QVariantList getButtons() const;
@@ -173,12 +174,11 @@ public:
 
 signals:
     void typeChanged();
-    void imageChanged();
     void buttonsChanged();
     void checkboxChanged();
 
 private:
-    std::optional<Type> mType;
+    Type mType;
     MessageDialogInfo mInfo;
     QPointer<MessageDialogResult> mResult;
     QMap<QMessageBox::StandardButton, MessageDialogButtonInfo> mButtons;
@@ -189,9 +189,11 @@ private:
     void buttonClicked(QMessageBox::StandardButton type);
 
     void setImageUrl(const QUrl& url);
+    void setImageSize(const QSize& size);
     void buildButtons();
     void processButtonInfo(QMessageBox::StandardButtons buttons,
                            QMessageBox::StandardButton type,
+                           MessageDialogButtonInfo::ButtonStyle buttonStyle,
                            QString defaultText = QString());
     void updateButtonsByDefault(QMessageBox::StandardButtons buttons,
                                 QMessageBox::StandardButton defaultButton = QMessageBox::Ok);

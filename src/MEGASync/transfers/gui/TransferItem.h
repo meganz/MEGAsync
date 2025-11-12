@@ -1,11 +1,12 @@
 #ifndef TRANSFERITEM2_H
 #define TRANSFERITEM2_H
 
-#include "Utilities.h"
 #include "megaapi.h"
+#include "Utilities.h"
 
-#include <QSharedData>
+#include <QDateTime>
 #include <QMimeDatabase>
+#include <QSharedData>
 
 //Place here as they represent the number of real columns
 enum class SortCriterion
@@ -142,16 +143,14 @@ public:
     static bool canBeRetried(mega::MegaTransfer* transfer);
     bool isCancelled() const;
     bool isTempTransfer() const;
-    int64_t getRawFinishedTime() const;
-    int64_t getSecondsSinceFinished() const;
+    qint64 getSecondsSinceFinished() const;
     QDateTime getFinishedDateTime() const;
-    QString getFormattedFinishedTime() const;
     QString getFullFormattedFinishedTime() const;
     std::unique_ptr<mega::MegaNode> getNode() const;
 
 private:
     QString         mPath;
-    int64_t         mFinishedTime = 0;
+    QDateTime mFinishedTime;
     TransferState   mState = TransferState::TRANSFER_NONE;
     TransferState   mPreviousState = TransferState::TRANSFER_NONE;
     bool            mIgnorePauseQueueState = false;

@@ -60,7 +60,7 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
 
     // If user doesn´t have legacy rules, we don´t show the button as it won´t do anything
     syncStallModeSelectorUI->gBugReport->setVisible(
-        Preferences::instance()->hasLegacyExclusionRules());
+        Preferences::instance()->logged() && Preferences::instance()->hasLegacyExclusionRules());
 
     connect(syncStallModeSelectorUI->bApplyLegacyExclusions,
             &QPushButton::clicked,

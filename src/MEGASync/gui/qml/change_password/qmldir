@@ -1,0 +1,5 @@
+module syncs
+singleton ChangePasswordStrings 1.0 ChangePasswordStrings.qml
+ChangePassword 1.0 ChangePassword.qml
+ChangePasswordPage 1.0 ChangePasswordPage.qml
+TwoFAPage 1.0 TwoFAPage.qml

@@ -310,9 +310,15 @@ qreal Utilities::getDevicePixelRatio()
     return qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? qApp->devicePixelRatio() : 1.0;
 }
 
-QString Utilities::getPixmapName(const QString& iconName, AttributeTypes attribute)
+QString Utilities::getPixmapName(const QString& iconName,
+                                 AttributeTypes attribute,
+                                 bool addResourcePrefix)
 {
-    QString name(QLatin1String(":%1").arg(iconName));
+    QString name(iconName);
+    if (addResourcePrefix)
+    {
+        name.prepend(QLatin1String(":"));
+    }
 
     if (!attribute.testFlag(AttributeType::NONE))
     {
@@ -455,6 +461,7 @@ struct IconCache
             auto pair = mIcons.emplace(resourceName, QIcon());
             i = pair.first;
             i->second.addFile(resourceName, QSize(), QIcon::Normal, QIcon::Off);
+            i->second.addFile(resourceName, QSize(), QIcon::Selected, QIcon::Off);
         }
         return i->second;
     }
@@ -515,33 +522,54 @@ QString Utilities::getTimeFormat(const TimeInterval &interval)
     return timeFormat.trimmed();
 }
 
-QString Utilities::filledTimeString(const QString &timeFormat, const TimeInterval &interval, bool color)
+QString Utilities::filledTimeString(const QString& timeFormat, const TimeInterval& interval)
 {
-    QString daysFormat = QCoreApplication::translate("Utilities", "%1 [A]d[/A]");
-    QString hoursFormat = QCoreApplication::translate("Utilities", "%1 [A]h[/A]");
-    QString minutesFormat = QCoreApplication::translate("Utilities", "%1 [A]m[/A]");
-    QString secondsFormat = QCoreApplication::translate("Utilities", "%1 [A]s[/A]");
+    static const QString DAYS = QString::fromLatin1("[DAYS]");
+    static const QString HOURS = QString::fromLatin1("[HOURS]");
+    static const QString MINUTES = QString::fromLatin1("[MINUTES]");
+    static const QString SECONDS = QString::fromLatin1("[SECONDS]");
+
+    QString daysFormat = QCoreApplication::translate("Utilities", "%1d");
+    QString hoursFormat = QCoreApplication::translate("Utilities", "%1h");
+    QString minutesFormat = QCoreApplication::translate("Utilities", "%1m");
+    QString secondsFormat = QCoreApplication::translate("Utilities", "%1s");
+    QString onlySecondsFormat = QCoreApplication::translate("Utilities", "%1 sec");
 
     QString timeString = timeFormat;
+    QString timeCountStr;
 
-    QString timeCountStr = daysFormat.arg(interval.days, 2, 10, QLatin1Char('0'));
-    timeString.replace(QString::fromLatin1("[DAYS]"), timeCountStr);
+    if (timeString.contains(DAYS))
+    {
+        timeCountStr = daysFormat.arg(interval.days, 2, 10, QLatin1Char('0'));
+        timeString.replace(DAYS, timeCountStr);
+    }
 
-    timeCountStr = hoursFormat.arg(interval.hours, 2, 10, QLatin1Char('0'));
-    timeString.replace(QString::fromLatin1("[HOURS]"), timeCountStr);
+    if (timeString.contains(HOURS))
+    {
+        timeCountStr = hoursFormat.arg(interval.hours, 2, 10, QLatin1Char('0'));
+        timeString.replace(HOURS, timeCountStr);
+    }
 
-    timeCountStr = minutesFormat.arg(interval.minutes, 2, 10, QLatin1Char('0'));
-    timeString.replace(QString::fromLatin1("[MINUTES]"), timeCountStr);
+    if (timeString.contains(MINUTES))
+    {
+        timeCountStr = minutesFormat.arg(interval.minutes, 2, 10, QLatin1Char('0'));
+        timeString.replace(MINUTES, timeCountStr);
+    }
 
-    timeCountStr = secondsFormat.arg(interval.seconds, 2, 10, QLatin1Char('0'));
-    timeString.replace(QString::fromLatin1("[SECONDS]"), timeCountStr);
-
-    QString colorString = (color ? QLatin1String("color:#777777;") : QString());
-    QString styleStartTag = QString::fromUtf8("<span style=\"%1 text-decoration:none;\">").arg(colorString);
-    QString styleEndTag = QString::fromLatin1("</span>");
-
-    timeString.replace(QString::fromLatin1("[A]"),  styleStartTag);
-    timeString.replace(QString::fromLatin1("[/A]"), styleEndTag);
+    if (timeString.contains(SECONDS))
+    {
+        // No other field than seconds
+        if (timeString == timeFormat)
+        {
+            timeCountStr = onlySecondsFormat.arg(interval.seconds, 2, 10, QLatin1Char('0'));
+            timeString.replace(SECONDS, timeCountStr);
+        }
+        else
+        {
+            timeCountStr = secondsFormat.arg(interval.seconds, 2, 10, QLatin1Char('0'));
+            timeString.replace(SECONDS, timeCountStr);
+        }
+    }
 
     return cleanedTimeString(timeString);
 }
@@ -718,10 +746,10 @@ void Utilities::copyRecursively(QString srcPath, QString dstPath)
     }
 }
 
-QString Utilities::getTimeString(long long secs, bool secondPrecision, bool color)
+QString Utilities::getTimeString(long long secs, bool secondPrecision)
 {
     TimeInterval interval(secs, secondPrecision);
-    return filledTimeString(getTimeFormat(interval), interval, color);
+    return filledTimeString(getTimeFormat(interval), interval);
 }
 
 QString Utilities::getAddedTimeString(long long secs)
@@ -836,7 +864,7 @@ int Utilities::toNearestUnit(long long bytes)
 
 QString Utilities::getTranslatedSeparatorTemplate()
 {
-    return QCoreApplication::translate("Utilities", "%1/%2");
+    return QCoreApplication::translate("Utilities", "%1 / %2");
 }
 
 Utilities::ProgressSize Utilities::getProgressSizes(long long transferredBytes, long long totalBytes)
@@ -1650,6 +1678,21 @@ QString Utilities::getCommonPath(const QString &path1, const QString &path2, boo
     return ret;
 }
 
+const QString Utilities::getPlatformProps(const QString sourceStyleSheet)
+{
+    QString prefix;
+#ifdef Q_OS_MAC
+    prefix = QStringLiteral("/* macOS */\n"
+                            "* { font-family: Inter; font-size: 36px;}\n");
+#else
+    prefix = QStringLiteral("/* Linux and Windows */\n"
+                            "* { font-family: Lato; }\n");
+#endif
+
+    const QString qss = prefix + sourceStyleSheet;
+    return qss;
+}
+
 bool Utilities::isIncommingShare(MegaNode *node)
 {
     if (node && MegaSyncApp->getMegaApi()
@@ -1680,6 +1723,12 @@ int Utilities::getNodeAccess(MegaNode* node)
     }
 }
 
+QString Utilities::getNodeStringAccess(MegaHandle handle)
+{
+    auto node = std::unique_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+    return getNodeStringAccess(node.get());
+}
+
 QString Utilities::getNodeStringAccess(MegaNode* node)
 {
     auto access(getNodeAccess(node));
@@ -1708,10 +1757,38 @@ QString Utilities::getNodeStringAccess(MegaNode* node)
     }
 }
 
-QString Utilities::getNodeStringAccess(MegaHandle handle)
+QIcon Utilities::getNodeAccessIcon(MegaHandle handle)
 {
     auto node = std::unique_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
-    return getNodeStringAccess(node.get());
+    return getNodeAccessIcon(node.get());
+}
+
+QIcon Utilities::getNodeAccessIcon(MegaNode* node)
+{
+    auto access(getNodeAccess(node));
+    switch (access)
+    {
+        case MegaShare::ACCESS_READ:
+        {
+            return getIcon(QLatin1String("eye"),
+                           AttributeType::SMALL | AttributeType::THIN | AttributeType::OUTLINE);
+        }
+        case MegaShare::ACCESS_READWRITE:
+        {
+            return getIcon(QLatin1String("edit"),
+                           AttributeType::SMALL | AttributeType::THIN | AttributeType::OUTLINE);
+        }
+        case MegaShare::ACCESS_FULL:
+        {
+            return getIcon(QLatin1String("star"),
+                           AttributeType::SMALL | AttributeType::THIN | AttributeType::OUTLINE);
+        }
+        case MegaShare::ACCESS_OWNER:
+        default:
+        {
+            return QIcon();
+        }
+    }
 }
 
 Utilities::HandlesTypes Utilities::getHandlesType(const QList<MegaHandle>& handles)
@@ -2034,10 +2111,17 @@ bool Utilities::shouldDisplayUpgradeButton(const bool isTransferOverquota)
 
 void Utilities::propagateCustomEvent(QEvent::Type type)
 {
-    const auto widgets = QApplication::allWidgets();
-    for (QWidget* widget: widgets)
+    const auto topWidgets = QApplication::topLevelWidgets();
+    for (QWidget* topW: topWidgets)
     {
-        QApplication::postEvent(widget, new QEvent(type));
+        const auto children(topW->findChildren<QObject*>());
+
+        for (QObject* child: children)
+        {
+            QApplication::postEvent(child, new QEvent(type));
+        }
+
+        QApplication::postEvent(topW, new QEvent(type));
     }
 }
 

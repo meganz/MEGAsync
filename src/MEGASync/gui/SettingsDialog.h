@@ -64,6 +64,7 @@ public:
 
     void setSyncAddButtonEnabled(bool enabled,
                                  SettingsDialog::Tabs tab = SettingsDialog::Tabs::SYNCS_TAB);
+    void setChangePasswordEnabled(bool enabled);
 
 signals:
     void userActivity();
@@ -100,7 +101,7 @@ private slots:
     void on_cbSleepMode_toggled(bool checked);
     void on_cOverlayIcons_toggled(bool checked);
 #ifdef Q_OS_WINDOWS
-    void on_cFinderIcons_toggled(bool checked);
+    void on_cDesktopIntegration_toggled(bool checked);
 #endif
     void on_cbTheme_currentIndexChanged(int index);
     void on_bUpdate_clicked();
@@ -152,6 +153,7 @@ private:
     void setOverlayCheckboxEnabled(const bool enabled, const bool checked);
     void setProgressState(const QString& stateName);
     void startRequestTaskbarPinningTimer();
+    void initColorTheme();
 
     Ui::SettingsDialog* mUi;
     MegaApplication* mApp;

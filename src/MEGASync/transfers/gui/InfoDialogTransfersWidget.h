@@ -3,6 +3,7 @@
 
 #include "InfoDialogTransferLoadingItem.h"
 #include "MegaDelegateHoverManager.h"
+#include "TransferItem.h"
 #include "ViewLoadingScene.h"
 
 #include <QSortFilterProxyModel>
@@ -33,12 +34,15 @@ public:
     void setupTransfers();
     ~InfoDialogTransfersWidget();
 
+    std::optional<TransferData::TransferTypes> getTopTransferType();
+
 protected:
     void showEvent(QShowEvent *) override;
 
 private slots:
     void onUiBlocked();
     void onUiUnblocked();
+    void onProxyModelModified();
 
 private:
     Ui::InfoDialogTransfersWidget *mUi;
@@ -47,6 +51,9 @@ private:
 
 private:
     void configureTransferView();
+
+signals:
+    void topTransferTypeChanged(TransferData::TransferTypes);
 };
 
 #endif // INFODIALOGTRANSFERSWIDGET_H

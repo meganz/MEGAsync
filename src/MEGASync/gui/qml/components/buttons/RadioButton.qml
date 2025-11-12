@@ -54,6 +54,8 @@ Qml.RadioButton {
         implicitWidth: sizes.focusWidth
         implicitHeight: focusCircle.implicitWidth
         radius: implicitWidth / 2
+        color: "transparent"
+
         border {
             width: sizes.focusBorderWidth
             color: root.focus ? colors.focus : "transparent"
@@ -66,6 +68,7 @@ Qml.RadioButton {
             implicitWidth: sizes.externalCircleWidth
             implicitHeight: externalCircle.implicitWidth
             radius: implicitWidth / 2
+            color: "transparent"
             border {
                 width: sizes.externalBorderWidth
                 color: getColor()
@@ -120,10 +123,11 @@ Qml.RadioButton {
         id: mouseArea
 
         anchors.fill: parent
-        onClicked: {
+        propagateComposedEvents: true
+        onPressed: {
             processClick();
+            mouse.accepted = false;
         }
         cursorShape: Qt.PointingHandCursor
     }
-
 }
