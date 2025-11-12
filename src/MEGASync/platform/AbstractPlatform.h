@@ -8,6 +8,8 @@
 #include <QDialog>
 #include <QMenu>
 #include <QString>
+#include <QWindow>
+
 #include <string>
 
 struct SelectorInfo
