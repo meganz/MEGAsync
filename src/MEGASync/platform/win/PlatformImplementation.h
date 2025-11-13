@@ -86,6 +86,7 @@ public:
     QString getArchUpdateString() const override;
 
     Preferences::SystemColorScheme getCurrentThemeAppearance() const override;
+    void applyCurrentThemeOnCurrentDialogFrame(QWindow* window) override;
 
 private:
     void removeSyncFromLeftPane(QString syncPath, QString syncName, QString uuid);
