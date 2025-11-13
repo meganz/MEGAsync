@@ -1,6 +1,10 @@
 #ifndef CREATEREMOVEBACKUPSMANAGER_H
 #define CREATEREMOVEBACKUPSMANAGER_H
 
+#include "RemoveBackup.h"
+
+#include <QObject>
+#include <QPointer>
 #include <QWidget>
 
 #include <memory>
@@ -19,6 +23,8 @@ public:
 
 private:
     static void showBackupDialog(bool comesFromSettings, const QStringList& localFolders);
+
+    static RemoveBackup mRemoveBackupHandler;
 };
 
 #endif // CREATEREMOVEBACKUPSMANAGER_H

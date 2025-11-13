@@ -1,11 +1,11 @@
 #include "CreateRemoveBackupsManager.h"
 
 #include "BackupCandidatesComponent.h"
-#include "BackupsController.h"
 #include "DialogOpener.h"
 #include "QmlDialogWrapper.h"
-#include "RemoveBackupDialog.h"
 #include "SyncSettings.h"
+
+RemoveBackup CreateRemoveBackupsManager::mRemoveBackupHandler;
 
 void CreateRemoveBackupsManager::addBackup(bool comesFromSettings, const QStringList& localFolders)
 {
@@ -30,21 +30,7 @@ void CreateRemoveBackupsManager::addBackup(bool comesFromSettings, const QString
 
 void CreateRemoveBackupsManager::removeBackup(std::shared_ptr<SyncSettings> backup, QWidget* parent)
 {
-    QPointer<RemoveBackupDialog> dialog = new RemoveBackupDialog(backup, parent);
-
-    DialogOpener::showDialog(dialog,
-                             [dialog]()
-                             {
-                                 if (dialog->result() == QDialog::Accepted)
-                                 {
-                                     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
-                                         AppStatsEvents::EventType::CONFIRM_REMOVE_BACKUP);
-
-                                     BackupsController::instance().removeSync(
-                                         dialog->backupToRemove(),
-                                         dialog->targetFolder());
-                                 }
-                             });
+    CreateRemoveBackupsManager::mRemoveBackupHandler.removeBackup(backup, parent);
 }
 
 bool CreateRemoveBackupsManager::isBackupsDialogOpen()
@@ -64,6 +50,7 @@ void CreateRemoveBackupsManager::showBackupDialog(bool comesFromSettings,
     {
         backupsDialog = new QmlDialogWrapper<BackupCandidatesComponent>();
     }
+
     backupsDialog->wrapper()->setComesFromSettings(comesFromSettings);
     if (!localFolders.empty())
     {

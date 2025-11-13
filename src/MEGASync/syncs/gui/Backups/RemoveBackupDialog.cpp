@@ -10,27 +10,28 @@
 
 #include <QButtonGroup>
 
-RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSettings> backup, QWidget* parent):
+RemoveBackupDialog::RemoveBackupDialog(QWidget* parent):
     QDialog(parent),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mUi(new Ui::RemoveBackupDialog),
-    mBackup(backup),
     mTargetFolder(MegaSyncApp->getRootNode() ? MegaSyncApp->getRootNode()->getHandle() :
                                                mega::INVALID_HANDLE)
 {
     mUi->setupUi(this);
     mUi->lTarget->setReadOnly(true);
-    connect(mUi->bConfirm, &QPushButton::clicked, this, &QDialog::accept);
+    connect(mUi->bConfirm, &QPushButton::clicked, this, &RemoveBackupDialog::onConfirmClicked);
     connect(mUi->bCancel, &QPushButton::clicked, this, &QDialog::reject);
-    connect(mUi->rMoveFolder, &QRadioButton::toggled, this, &RemoveBackupDialog::OnMoveSelected);
-    connect(mUi->rDeleteFolder, &QRadioButton::toggled, this, &RemoveBackupDialog::OnDeleteSelected);
-    connect(mUi->bChange, &QPushButton::clicked, this, &RemoveBackupDialog::OnChangeButtonClicked);
+    connect(mUi->rMoveFolder, &QRadioButton::toggled, this, &RemoveBackupDialog::onMoveSelected);
+    connect(mUi->rDeleteFolder,
+            &QRadioButton::toggled,
+            this,
+            &RemoveBackupDialog::onDeleteSelected);
+    connect(mUi->bChange, &QPushButton::clicked, this, &RemoveBackupDialog::onChangeButtonClicked);
 
     mUi->moveToContainer->setEnabled(false);
-    mUi->lTarget->setText(mTargetFolder != mega::INVALID_HANDLE ?
+    mUi->lTarget->setText(MegaSyncApp->getRootNode() ?
                               MegaNodeNames::getRootNodeName(MegaSyncApp->getRootNode().get()) :
                               QString());
-    adjustSize();
 }
 
 RemoveBackupDialog::~RemoveBackupDialog()
@@ -38,31 +39,34 @@ RemoveBackupDialog::~RemoveBackupDialog()
     delete mUi;
 }
 
-std::shared_ptr<SyncSettings> RemoveBackupDialog::backupToRemove()
+void RemoveBackupDialog::onConfirmClicked()
 {
-    return mBackup;
+    auto targetFolder = mUi->rMoveFolder->isChecked() ? mTargetFolder : mega::INVALID_HANDLE;
+    emit removeBackup(targetFolder);
+    close();
 }
 
-//returns INVALID_HANDLE if user wants to delete the folder,
-//otherwise return selected folder, cloud drive if nothing is selected
-mega::MegaHandle RemoveBackupDialog::targetFolder()
+void RemoveBackupDialog::onDeleteSelected()
 {
-    return mUi->rMoveFolder->isChecked() ? mTargetFolder : mega::INVALID_HANDLE;
+    onOptionSelected(AppStatsEvents::EventType::DELETE_REMOVED_BAKCUP_CLICKED, false);
 }
 
-void RemoveBackupDialog::OnDeleteSelected()
+void RemoveBackupDialog::onMoveSelected()
 {
-    const bool enableMoveContainer = false;
-    OnOptionSelected(AppStatsEvents::EventType::DELETE_REMOVED_BAKCUP_CLICKED, enableMoveContainer);
+    onOptionSelected(AppStatsEvents::EventType::MOVE_REMOVED_BACKUP_FOLDER, true);
 }
 
-void RemoveBackupDialog::OnMoveSelected()
+void RemoveBackupDialog::onOptionSelected(const AppStatsEvents::EventType eventType,
+                                          const bool enableMoveContainer)
 {
-    const bool enableMoveContainer = true;
-    OnOptionSelected(AppStatsEvents::EventType::MOVE_REMOVED_BACKUP_FOLDER, enableMoveContainer);
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(eventType);
+    mUi->moveToContainer->setEnabled(enableMoveContainer);
+    mUi->bConfirm->setEnabled(true);
+    mUi->rMoveFolder->setAutoExclusive(true);
+    mUi->rDeleteFolder->setAutoExclusive(true);
 }
 
-void RemoveBackupDialog::OnChangeButtonClicked()
+void RemoveBackupDialog::onChangeButtonClicked()
 {
     auto nodeSelector = new MoveBackupNodeSelector(this);
     nodeSelector->init();
@@ -82,14 +86,4 @@ void RemoveBackupDialog::OnChangeButtonClicked()
                                       QString::fromUtf8(mMegaApi->getNodePath(targetNode.get())));
             }
         });
-}
-
-void RemoveBackupDialog::OnOptionSelected(const AppStatsEvents::EventType eventType,
-                                          const bool enableMoveContainer)
-{
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(eventType);
-    mUi->moveToContainer->setEnabled(enableMoveContainer);
-    mUi->bConfirm->setEnabled(true);
-    mUi->rMoveFolder->setAutoExclusive(true);
-    mUi->rDeleteFolder->setAutoExclusive(true);
 }
