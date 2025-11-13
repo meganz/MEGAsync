@@ -402,16 +402,24 @@ void SettingsDialog::loadSettings()
     // Color theme
     initColorTheme();
 
-    //Account
+    // Account name
     mUi->lEmail->setText(mPreferences->email());
     auto fullName(
         (mPreferences->firstName() + QStringLiteral(" ") + mPreferences->lastName()).trimmed());
-    mUi->lName->setText(mUi->lName->fontMetrics().elidedText(fullName,Qt::ElideMiddle,mUi->lName->maximumWidth()));
 
+    // do we already have that value on the attribute request?
+    auto fullNameRequest = UserAttributes::FullName::requestFullName();
+    if (fullName.isEmpty() || fullNameRequest->isAttributeReady())
+    {
+        fullName = fullNameRequest->getFullName();
+    }
+
+    mUi->lName->setText(mUi->lName->fontMetrics().elidedText(fullName,
+                                                             Qt::ElideMiddle,
+                                                             mUi->lName->maximumWidth()));
 
     // Update name in case it changes
-    auto FullNameRequest = UserAttributes::FullName::requestFullName();
-    connect(FullNameRequest.get(),
+    connect(fullNameRequest.get(),
             &UserAttributes::FullName::fullNameReady,
             this,
             [this](const QString& fullName)
