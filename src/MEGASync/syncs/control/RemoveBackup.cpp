@@ -1,6 +1,7 @@
 #include "RemoveBackup.h"
 
 #include "BackupsController.h"
+#include "ChooseMoveBackupFolderErrorDialog.h"
 #include "DialogOpener.h"
 #include "MessageDialogOpener.h"
 #include "RemoveBackupDialog.h"
@@ -10,7 +11,9 @@
 void RemoveBackup::removeBackup(std::shared_ptr<SyncSettings> backup, QWidget* parent)
 {
     mBackupToRemove = backup;
-    QPointer<RemoveBackupDialog> dialog = new RemoveBackupDialog(parent);
+    mParent = parent;
+
+    QPointer<RemoveBackupDialog> dialog = new RemoveBackupDialog(mParent);
 
     DialogOpener::showDialog(dialog,
                              [dialog]()
@@ -23,6 +26,8 @@ void RemoveBackup::removeBackup(std::shared_ptr<SyncSettings> backup, QWidget* p
 
 void RemoveBackup::onConfirmRemove(mega::MegaHandle targetFolder)
 {
+    mFolderToMoveBackupData = targetFolder;
+
     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
         AppStatsEvents::EventType::CONFIRM_REMOVE_BACKUP);
 
@@ -31,7 +36,7 @@ void RemoveBackup::onConfirmRemove(mega::MegaHandle targetFolder)
             this,
             &RemoveBackup::backupMoveOrRemoveRemoteFolderError);
 
-    BackupsController::instance().removeSync(mBackupToRemove, targetFolder);
+    BackupsController::instance().removeSync(mBackupToRemove, mFolderToMoveBackupData);
 }
 
 void RemoveBackup::backupMoveOrRemoveRemoteFolderError(std::shared_ptr<mega::MegaError> error)
@@ -41,10 +46,19 @@ void RemoveBackup::backupMoveOrRemoveRemoteFolderError(std::shared_ptr<mega::Meg
         if (error->getErrorCode() == mega::MegaError::API_EEXIST)
         {
             // show new target folder selection
-            MessageDialogInfo msgInfo;
-            msgInfo.titleText = tr("Need to change path");
-            msgInfo.descriptionText = tr("Need to change path");
-            MessageDialogOpener::warning(msgInfo);
+            QPointer<ChooseMoveBackupFolderErrorDialog> dialog =
+                new ChooseMoveBackupFolderErrorDialog(mFolderToMoveBackupData, mParent);
+
+            DialogOpener::showDialog(dialog,
+                                     [dialog]()
+                                     {
+                                         dialog->deleteLater();
+                                     });
+
+            connect(dialog,
+                    &ChooseMoveBackupFolderErrorDialog::moveBackup,
+                    this,
+                    &RemoveBackup::onConfirmNewTargetFolder);
         }
         else
         {
@@ -56,4 +70,12 @@ void RemoveBackup::backupMoveOrRemoveRemoteFolderError(std::shared_ptr<mega::Meg
             MessageDialogOpener::warning(msgInfo);
         }
     }
+}
+
+void RemoveBackup::onConfirmNewTargetFolder(mega::MegaHandle targetFolder)
+{
+    mFolderToMoveBackupData = targetFolder;
+
+    BackupsController::instance().moveOrDeleteRemovedBackupData(mBackupToRemove,
+                                                                mFolderToMoveBackupData);
 }

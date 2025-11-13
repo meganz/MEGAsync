@@ -57,6 +57,8 @@ public:
                    SyncInfo::SyncOrigin origin);
     void addSync(SyncConfig& sync);
     void removeSync(std::shared_ptr<SyncSettings> syncSetting, const mega::MegaHandle& remoteHandle = mega::INVALID_HANDLE);
+    void moveOrDeleteRemovedBackupData(std::shared_ptr<SyncSettings> syncSetting,
+                                       const mega::MegaHandle& remoteHandle = mega::INVALID_HANDLE);
     void prevalidateSync(SyncConfig& sync);
 
     void setSyncToRun(std::shared_ptr<SyncSettings> syncSetting);

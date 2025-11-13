@@ -22,9 +22,12 @@ public:
 
 private:
     void onConfirmRemove(mega::MegaHandle targetFolder);
+    void onConfirmNewTargetFolder(mega::MegaHandle targetFolder);
     void backupMoveOrRemoveRemoteFolderError(std::shared_ptr<mega::MegaError> error);
 
     std::shared_ptr<SyncSettings> mBackupToRemove;
+    mega::MegaHandle mFolderToMoveBackupData;
+    QWidget* mParent;
 };
 
 #endif
