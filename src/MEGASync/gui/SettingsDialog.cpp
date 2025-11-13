@@ -409,7 +409,7 @@ void SettingsDialog::loadSettings()
 
     // do we already have that value on the attribute request?
     auto fullNameRequest = UserAttributes::FullName::requestFullName();
-    if (fullName.isEmpty())
+    if (fullName.isEmpty() || fullNameRequest->isAttributeReady())
     {
         fullName = fullNameRequest->getFullName();
     }
