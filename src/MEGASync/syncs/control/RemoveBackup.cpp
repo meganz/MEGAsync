@@ -45,6 +45,11 @@ void RemoveBackup::backupMoveOrRemoveRemoteFolderError(std::shared_ptr<mega::Meg
     {
         if (error->getErrorCode() == mega::MegaError::API_EEXIST)
         {
+            auto title = tr("Error moving remote backup folder");
+            auto description =
+                tr("Reason: %1")
+                    .arg(QCoreApplication::translate("MegaError", error->getErrorString()));
+
             // show new target folder selection
             QPointer<ChooseMoveBackupFolderErrorDialog> dialog =
                 new ChooseMoveBackupFolderErrorDialog(mFolderToMoveBackupData, mParent);
