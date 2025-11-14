@@ -1033,7 +1033,7 @@ margin-bottom: 3px;
               </sizepolicy>
              </property>
              <property name="title">
-              <string notr="true">Theme</string>
+              <string>Theme</string>
              </property>
              <property name="type" stdset="0">
               <string notr="true">mega</string>
