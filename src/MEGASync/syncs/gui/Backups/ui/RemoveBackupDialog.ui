@@ -20,12 +20,7 @@
    <string>Stop backup</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">/*ColorTokenIcon;Button;bConfirm;normal;off;colorToken.text-inverse-accent*/
-/*ColorTokenIcon;Button;bConfirm;disabled;off;colorToken.text-inverse-accent*/
-/*ColorTokenIcon;Button;bConfirm;active;off;colorToken.text-inverse-accent*/
-/*ColorTokenIcon;Button;bConfirm;selected;off;colorToken.text-inverse-accent*/
-
-#RemoveBackupDialog
+   <string notr="true">#RemoveBackupDialog
 {
 background-color: #ffffff; /*colorToken.page-background*/
 }
