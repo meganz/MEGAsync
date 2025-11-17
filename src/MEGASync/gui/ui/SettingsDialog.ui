@@ -2362,7 +2362,7 @@ margin-top: 0px;
                  </property>
                  <property name="icon">
                   <iconset resource="../Resources_common.qrc">
-                   <normaloff>:/arrow-down-circle_small_regular_outline</normaloff>:/arrow-down-circle_small_regular_outline</iconset>
+                   <normaloff>:/arrow-down-circle_small_thin_outline</normaloff>:/arrow-down-circle_small_thin_outline</iconset>
                  </property>
                  <property name="normal_off" stdset="0">
                   <string notr="true">icon-secondary</string>

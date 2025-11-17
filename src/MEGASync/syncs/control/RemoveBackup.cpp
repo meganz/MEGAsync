@@ -29,7 +29,7 @@ void RemoveBackup::onConfirmRemove(mega::MegaHandle targetFolder)
 {
     if (targetFolder != mega::INVALID_HANDLE && checkBackupFolderExistOnTargetFolder(targetFolder))
     {
-        auto error = tr("Backup folder already exist on destination folder.");
+        auto error = tr("Folder already exists. Choose another.");
 
         mRemoveBackupDialog->setTargetFolderErrorHint(error);
     }

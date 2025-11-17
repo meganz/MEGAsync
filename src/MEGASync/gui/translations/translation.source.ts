@@ -6631,15 +6631,15 @@ Do you want to delete it anyway?</translation>
 <context>
     <name>RemoveBackup</name>
     <message>
-        <source>Backup folder already exist on destination folder.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Error moving or deleting MEGA backup folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Unable to move or delete the MEGA backup folder. Reason: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder already exists. Choose another.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
