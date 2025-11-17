@@ -1,7 +1,6 @@
 #include "RemoveBackup.h"
 
 #include "BackupsController.h"
-#include "ChooseMoveBackupFolderErrorDialog.h"
 #include "DialogOpener.h"
 #include "MessageDialogOpener.h"
 #include "RemoveBackupDialog.h"
@@ -12,75 +11,86 @@ void RemoveBackup::removeBackup(std::shared_ptr<SyncSettings> backup, QWidget* p
 {
     mBackupToRemove = backup;
     mParent = parent;
+    mRemoveBackupDialog = new RemoveBackupDialog(mParent);
 
-    QPointer<RemoveBackupDialog> dialog = new RemoveBackupDialog(mParent);
-
-    DialogOpener::showDialog(dialog,
-                             [dialog]()
+    DialogOpener::showDialog(mRemoveBackupDialog,
+                             [this]()
                              {
-                                 dialog->deleteLater();
+                                 mRemoveBackupDialog->deleteLater();
                              });
 
-    connect(dialog, &RemoveBackupDialog::removeBackup, this, &RemoveBackup::onConfirmRemove);
+    connect(mRemoveBackupDialog,
+            &RemoveBackupDialog::removeBackup,
+            this,
+            &RemoveBackup::onConfirmRemove);
 }
 
 void RemoveBackup::onConfirmRemove(mega::MegaHandle targetFolder)
 {
-    mFolderToMoveBackupData = targetFolder;
+    if (targetFolder != mega::INVALID_HANDLE && checkBackupFolderExistOnTargetFolder(targetFolder))
+    {
+        auto error = tr("Backup folder already exist on destination folder.");
 
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
-        AppStatsEvents::EventType::CONFIRM_REMOVE_BACKUP);
+        mRemoveBackupDialog->setTargetFolderErrorHint(error);
+    }
+    else
+    {
+        mFolderToMoveBackupData = targetFolder;
 
-    connect(&BackupsController::instance(),
-            &BackupsController::backupMoveOrRemoveRemoteFolderError,
-            this,
-            &RemoveBackup::backupMoveOrRemoveRemoteFolderError);
+        MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+            AppStatsEvents::EventType::CONFIRM_REMOVE_BACKUP);
 
-    BackupsController::instance().removeSync(mBackupToRemove, mFolderToMoveBackupData);
+        connect(&BackupsController::instance(),
+                &BackupsController::backupMoveOrRemoveRemoteFolderError,
+                this,
+                &RemoveBackup::backupMoveOrRemoveRemoteFolderError);
+
+        BackupsController::instance().removeSync(mBackupToRemove, mFolderToMoveBackupData);
+
+        mRemoveBackupDialog->close();
+    }
 }
 
 void RemoveBackup::backupMoveOrRemoveRemoteFolderError(std::shared_ptr<mega::MegaError> error)
 {
     if (error->getErrorCode() != mega::MegaError::API_OK)
     {
-        if (error->getErrorCode() == mega::MegaError::API_EEXIST)
-        {
-            auto title = tr("Error moving remote backup folder");
-            auto description =
-                tr("Reason: %1")
-                    .arg(QCoreApplication::translate("MegaError", error->getErrorString()));
-
-            // show new target folder selection
-            QPointer<ChooseMoveBackupFolderErrorDialog> dialog =
-                new ChooseMoveBackupFolderErrorDialog(mFolderToMoveBackupData, mParent);
-
-            DialogOpener::showDialog(dialog,
-                                     [dialog]()
-                                     {
-                                         dialog->deleteLater();
-                                     });
-
-            connect(dialog,
-                    &ChooseMoveBackupFolderErrorDialog::moveBackup,
-                    this,
-                    &RemoveBackup::onConfirmNewTargetFolder);
-        }
-        else
-        {
-            MessageDialogInfo msgInfo;
-            msgInfo.titleText = tr("Error moving or removing remote backup folder");
-            msgInfo.descriptionText =
-                tr("Failed to move or remove the remote backup folder. Reason: %1")
-                    .arg(QCoreApplication::translate("MegaError", error->getErrorString()));
-            MessageDialogOpener::warning(msgInfo);
-        }
+        MessageDialogInfo msgInfo;
+        msgInfo.titleText = tr("Error moving or deleting MEGA backup folder");
+        msgInfo.descriptionText =
+            tr("Unable to move or delete the MEGA backup folder. Reason: %1")
+                .arg(QCoreApplication::translate("MegaError", error->getErrorString()));
+        MessageDialogOpener::warning(msgInfo);
     }
 }
 
-void RemoveBackup::onConfirmNewTargetFolder(mega::MegaHandle targetFolder)
+bool RemoveBackup::checkBackupFolderExistOnTargetFolder(mega::MegaHandle targetFolder)
 {
-    mFolderToMoveBackupData = targetFolder;
+    QString backupName = mBackupToRemove->name();
+    auto targetNode =
+        std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(targetFolder));
 
-    BackupsController::instance().moveOrDeleteRemovedBackupData(mBackupToRemove,
-                                                                mFolderToMoveBackupData);
+    auto targetFolderName =
+        QString::fromUtf8(MegaSyncApp->getMegaApi()->getNodePath(targetNode.get()));
+
+    std::unique_ptr<mega::MegaNodeList> folderTargetChildNodes(
+        MegaSyncApp->getMegaApi()->getChildren(targetNode.get()));
+
+    bool found = false;
+    for (int index = 0; index < folderTargetChildNodes->size() && !found; ++index)
+    {
+        auto childNode = folderTargetChildNodes->get(index);
+        QString childNodeName = QString::fromUtf8(
+            MegaSyncApp->getMegaApi()->unescapeFsIncompatible(childNode->getName(), nullptr));
+
+        if (!SyncController::instance().isSyncCaseSensitive(mBackupToRemove->getMegaHandle()))
+        {
+            childNodeName = childNodeName.toLower();
+            backupName = backupName.toLower();
+        }
+
+        found = (backupName == childNodeName);
+    }
+
+    return found;
 }

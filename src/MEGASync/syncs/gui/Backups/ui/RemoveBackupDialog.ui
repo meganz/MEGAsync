@@ -30,6 +30,11 @@
 background-color: #ffffff; /*colorToken.page-background*/
 }
 
+#lErrorHint
+{
+color: #ffe31b57; /*colorToken.text-error*/
+}
+
 </string>
   </property>
   <property name="TOKENIZED" stdset="0">
@@ -208,22 +213,7 @@ background-color: #ffffff; /*colorToken.page-background*/
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout">
-            <property name="spacing">
-             <number>8</number>
-            </property>
-            <property name="leftMargin">
-             <number>1</number>
-            </property>
-            <property name="topMargin">
-             <number>1</number>
-            </property>
-            <property name="rightMargin">
-             <number>1</number>
-            </property>
-            <property name="bottomMargin">
-             <number>1</number>
-            </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
             <item>
              <widget class="QLineEdit" name="lTarget">
               <property name="minimumSize">
@@ -275,6 +265,13 @@ background-color: #ffffff; /*colorToken.page-background*/
              </widget>
             </item>
            </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="lErrorHint">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -408,7 +405,7 @@ background-color: #ffffff; /*colorToken.page-background*/
         <string>Stop backup</string>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="../../../../gui/Resources_common.qrc">
          <normaloff>:/mega_medium_thin_outline</normaloff>:/mega_medium_thin_outline</iconset>
        </property>
        <property name="default">
@@ -429,6 +426,8 @@ background-color: #ffffff; /*colorToken.page-background*/
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../../../gui/Resources_common.qrc"/>
+ </resources>
  <connections/>
 </ui>

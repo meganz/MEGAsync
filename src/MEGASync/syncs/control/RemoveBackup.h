@@ -9,6 +9,7 @@
 #include <memory>
 
 class SyncSettings;
+class RemoveBackupDialog;
 
 class RemoveBackup: public QObject
 {
@@ -17,17 +18,17 @@ class RemoveBackup: public QObject
 public:
     RemoveBackup() = default;
     ~RemoveBackup() = default;
-
     void removeBackup(std::shared_ptr<SyncSettings> backup, QWidget* parent);
 
 private:
     void onConfirmRemove(mega::MegaHandle targetFolder);
-    void onConfirmNewTargetFolder(mega::MegaHandle targetFolder);
     void backupMoveOrRemoveRemoteFolderError(std::shared_ptr<mega::MegaError> error);
+    bool checkBackupFolderExistOnTargetFolder(mega::MegaHandle targetFolder);
 
     std::shared_ptr<SyncSettings> mBackupToRemove;
     mega::MegaHandle mFolderToMoveBackupData;
     QWidget* mParent;
+    QPointer<RemoveBackupDialog> mRemoveBackupDialog;
 };
 
 #endif

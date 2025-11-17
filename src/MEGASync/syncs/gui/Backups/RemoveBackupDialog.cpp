@@ -32,6 +32,8 @@ RemoveBackupDialog::RemoveBackupDialog(QWidget* parent):
     mUi->lTarget->setText(MegaSyncApp->getRootNode() ?
                               MegaNodeNames::getRootNodeName(MegaSyncApp->getRootNode().get()) :
                               QString());
+
+    mUi->lErrorHint->setVisible(false);
 }
 
 RemoveBackupDialog::~RemoveBackupDialog()
@@ -43,7 +45,12 @@ void RemoveBackupDialog::onConfirmClicked()
 {
     auto targetFolder = mUi->rMoveFolder->isChecked() ? mTargetFolder : mega::INVALID_HANDLE;
     emit removeBackup(targetFolder);
-    close();
+}
+
+void RemoveBackupDialog::setTargetFolderErrorHint(QString error)
+{
+    mUi->lErrorHint->setText(error);
+    mUi->lErrorHint->setVisible(true);
 }
 
 void RemoveBackupDialog::onDeleteSelected()
@@ -68,6 +75,9 @@ void RemoveBackupDialog::onOptionSelected(const AppStatsEvents::EventType eventT
 
 void RemoveBackupDialog::onChangeButtonClicked()
 {
+    mUi->lErrorHint->setVisible(false);
+    mUi->lErrorHint->clear();
+
     auto nodeSelector = new MoveBackupNodeSelector(this);
     nodeSelector->init();
     DialogOpener::showDialog<NodeSelector>(

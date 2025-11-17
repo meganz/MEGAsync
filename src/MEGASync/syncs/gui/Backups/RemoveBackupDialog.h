@@ -18,6 +18,7 @@ class RemoveBackupDialog : public QDialog
 public:
     explicit RemoveBackupDialog(QWidget* parent = nullptr);
     ~RemoveBackupDialog();
+    void setTargetFolderErrorHint(QString error);
 
 signals:
     void removeBackup(mega::MegaHandle targetFolder);

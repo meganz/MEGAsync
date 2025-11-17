@@ -3,7 +3,6 @@ set(DESKTOP_APP_SYNCS_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/gui/Backups/BackupSettingsElements.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/Backups/BackupTableView.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/Backups/RemoveBackupDialog.h
-    ${CMAKE_CURRENT_LIST_DIR}/gui/Backups/ChooseMoveBackupFolderErrorDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/Backups/BackupSettingsUI.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/SyncSettingsUIBase.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/SyncTooltipCreator.h
@@ -32,7 +31,6 @@ set(DESKTOP_APP_SYNCS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/gui/Backups/BackupSettingsElements.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/Backups/BackupTableView.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/Backups/RemoveBackupDialog.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/gui/Backups/ChooseMoveBackupFolderErrorDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/Backups/BackupSettingsUI.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/SyncSettingsUIBase.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/SyncTooltipCreator.cpp
@@ -60,7 +58,6 @@ set(DESKTOP_APP_SYNCS_SOURCES
 set (DESKTOP_APP_SYNCS_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/gui/Backups/ui/OpenBackupsFolder.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/Backups/ui/RemoveBackupDialog.ui
-    ${CMAKE_CURRENT_LIST_DIR}/gui/Backups/ui/ChooseMoveBackupFolderErrorDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/Twoways/ui/SyncStallModeSelector.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/Twoways/ui/SyncSettingsUIBase.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/Twoways/ui/SyncAccountFullMessage.ui

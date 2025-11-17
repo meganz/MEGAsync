@@ -353,19 +353,9 @@
         <translation>Error adding sync</translation>
     </message>
     <message>
-        <source>Error moving or removing remote backup folder</source>
-        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>Error moving or deleting MEGA backup folder</translation>
-    </message>
-    <message>
         <source>Error removing backup</source>
         <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
         <translation>Error stopping backup</translation>
-    </message>
-    <message>
-        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
-        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>Unable to move or delete the MEGA backup folder. Reason: %1</translation>
     </message>
     <message>
         <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
@@ -6636,6 +6626,21 @@ Do you want to delete it anyway?</translation>
         <source>Remote</source>
         <translatorcomment>Title in the choosing widget used to offer the user the option to choose remote version when conflicts occur. SAT-973</translatorcomment>
         <translation>In MEGA</translation>
+    </message>
+</context>
+<context>
+    <name>RemoveBackup</name>
+    <message>
+        <source>Backup folder already exist on destination folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error moving or deleting MEGA backup folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to move or delete the MEGA backup folder. Reason: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
