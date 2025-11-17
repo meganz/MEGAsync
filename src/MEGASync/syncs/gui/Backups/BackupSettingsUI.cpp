@@ -67,7 +67,6 @@ bool BackupSettingsUI::event(QEvent* event)
 
 void BackupSettingsUI::removeSync(std::shared_ptr<SyncSettings> backup)
 {
-    // @jsubi.
     CreateRemoveBackupsManager::removeBackup(backup, this);
 }
 
