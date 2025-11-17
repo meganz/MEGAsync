@@ -34,6 +34,9 @@ RemoveBackupDialog::RemoveBackupDialog(QWidget* parent):
                               QString());
 
     mUi->lErrorHint->setVisible(false);
+
+    const QString label = QString::fromLatin1(" ") + tr("Stop backup");
+    mUi->bConfirm->setText(label);
 }
 
 RemoveBackupDialog::~RemoveBackupDialog()
