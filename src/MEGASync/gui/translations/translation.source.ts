@@ -6639,7 +6639,7 @@ Do you want to delete it anyway?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Folder already exists. Choose another.</source>
+        <source>Backup folder already exists on destination. Choose another.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
