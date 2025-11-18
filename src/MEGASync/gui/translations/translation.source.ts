@@ -6631,16 +6631,19 @@ Do you want to delete it anyway?</translation>
 <context>
     <name>RemoveBackup</name>
     <message>
-        <source>Error moving or deleting MEGA backup folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to move or delete the MEGA backup folder. Reason: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Backup folder already exists on destination. Choose another.</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can't move it there! SNC-6067 </translatorcomment>
+        <translation type="unfinished">Backup folder already exists on destination. Choose another.</translation>
+    </message>
+    <message>
+            <source>Error moving or removing remote backup folder</source>
+            <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+            <translation type="unfinished">Error moving or deleting MEGA backup folder</translation>
+    </message>
+    <message>
+        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
+        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation type="unfinished">Unable to move or delete the MEGA backup folder. Reason: %1</translation>
     </message>
 </context>
 <context>

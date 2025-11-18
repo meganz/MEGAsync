@@ -56,9 +56,9 @@ void RemoveBackup::backupMoveOrRemoveRemoteFolderError(std::shared_ptr<mega::Meg
     if (error->getErrorCode() != mega::MegaError::API_OK)
     {
         MessageDialogInfo msgInfo;
-        msgInfo.titleText = tr("Error moving or deleting MEGA backup folder");
+        msgInfo.titleText = tr("Error moving or removing remote backup folder");
         msgInfo.descriptionText =
-            tr("Unable to move or delete the MEGA backup folder. Reason: %1")
+            tr("Failed to move or remove the remote backup folder. Reason: %1")
                 .arg(QCoreApplication::translate("MegaError", error->getErrorString()));
         MessageDialogOpener::warning(msgInfo);
     }
