@@ -7253,6 +7253,11 @@ Do you want to delete it anyway?</translation>
         <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
+        <translation type="unfinished">Learn more</translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog_Bandwith</name>

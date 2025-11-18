@@ -660,3 +660,10 @@ void ServiceUrls::onAppStateChanged(AppState::AppStates oldAppState,
         reset();
     }
 }
+
+QUrl ServiceUrls::getSyncDebrisHelpLink()
+{
+    auto url = getHelpBaseUrl();
+    url.setPath(QLatin1String("/installs-apps/desktop/sync-debris"));
+    return url;
+}

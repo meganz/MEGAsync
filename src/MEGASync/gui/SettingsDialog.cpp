@@ -185,6 +185,8 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     connect(mUi->bBackup, &QPushButton::clicked, this, &SettingsDialog::on_bBackup_clicked);
     connect(mUi->bSyncs, &QPushButton::clicked, this, &SettingsDialog::on_bSyncs_clicked);
 
+    connect(mUi->bLearnMore, &QPushButton::clicked, this, &SettingsDialog::onBLearnMore);
+
     // React to AppState changes
     connect(AppState::instance().get(),
             &AppState::appStateChanged,
@@ -1779,4 +1781,9 @@ void SettingsDialog::onRequestTaskbarPinningTimeout()
 {
     mTaskbarPinningRequestTimer->stop();
     Platform::getInstance()->pinOnTaskbar();
+}
+
+void SettingsDialog::onBLearnMore()
+{
+    Utilities::openUrl(ServiceUrls::getSyncDebrisHelpLink());
 }
