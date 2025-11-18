@@ -99,7 +99,15 @@ bool CreateRemoveSyncsManager::performRemoveSync(std::shared_ptr<SyncSettings> s
 
 void CreateRemoveSyncsManager::showSyncDialog(SyncInfo::SyncOrigin origin, QString remoteFolder)
 {
-    QPointer<QmlDialogWrapper<SyncsComponent>> syncsDialog = new QmlDialogWrapper<SyncsComponent>();
+    QPointer<QmlDialogWrapper<SyncsComponent>> syncsDialog;
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
+    {
+        syncsDialog = dialog->getDialog();
+    }
+    else
+    {
+        syncsDialog = new QmlDialogWrapper<SyncsComponent>();
+    }
     syncsDialog->wrapper()->setSyncOrigin(origin);
     syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
 

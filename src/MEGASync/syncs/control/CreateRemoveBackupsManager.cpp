@@ -65,8 +65,15 @@ void CreateRemoveBackupsManager::performRemoveBackup(std::shared_ptr<SyncSetting
 
 void CreateRemoveBackupsManager::showBackupDialog(bool comesFromSettings)
 {
-    QPointer<QmlDialogWrapper<BackupCandidatesComponent>> backupsDialog =
-        new QmlDialogWrapper<BackupCandidatesComponent>();
+    QPointer<QmlDialogWrapper<BackupCandidatesComponent>> backupsDialog;
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<BackupCandidatesComponent>>())
+    {
+        backupsDialog = dialog->getDialog();
+    }
+    else
+    {
+        backupsDialog = new QmlDialogWrapper<BackupCandidatesComponent>();
+    }
     backupsDialog->wrapper()->setComesFromSettings(comesFromSettings);
 
     DialogOpener::showDialog(backupsDialog);
