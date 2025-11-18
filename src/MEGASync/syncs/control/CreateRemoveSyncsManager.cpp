@@ -7,9 +7,11 @@
 #include "SyncsComponent.h"
 #include "SyncSettings.h"
 
-void CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin origin, mega::MegaHandle handle)
+void CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin origin,
+                                       mega::MegaHandle handle,
+                                       const QString& localPath)
 {
-    CreateRemoveSyncsManager::performAddSync(origin, handle);
+    CreateRemoveSyncsManager::performAddSync(origin, handle, localPath);
 }
 
 bool CreateRemoveSyncsManager::removeSync(mega::MegaHandle handle, QWidget* parent)
@@ -23,7 +25,9 @@ bool CreateRemoveSyncsManager::removeSync(std::shared_ptr<SyncSettings> syncSett
     return CreateRemoveSyncsManager::performRemoveSync(syncSettings, parent);
 }
 
-void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin, mega::MegaHandle handle)
+void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin,
+                                              mega::MegaHandle handle,
+                                              const QString& localPath)
 {
     QString remoteFolder;
 
@@ -37,17 +41,17 @@ void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin, mega:
     if (overQuotaDialog)
     {
         DialogOpener::showDialog(overQuotaDialog,
-                                 [overQuotaDialog, origin, remoteFolder]()
+                                 [overQuotaDialog, origin, remoteFolder, localPath]()
                                  {
                                      if (overQuotaDialog->result() == QDialog::Rejected)
                                      {
-                                         showSyncDialog(origin, remoteFolder);
+                                         showSyncDialog(origin, remoteFolder, localPath);
                                      }
                                  });
     }
     else
     {
-        showSyncDialog(origin, remoteFolder);
+        showSyncDialog(origin, remoteFolder, localPath);
     }
 }
 
@@ -97,7 +101,9 @@ bool CreateRemoveSyncsManager::performRemoveSync(std::shared_ptr<SyncSettings> s
     return false;
 }
 
-void CreateRemoveSyncsManager::showSyncDialog(SyncInfo::SyncOrigin origin, QString remoteFolder)
+void CreateRemoveSyncsManager::showSyncDialog(SyncInfo::SyncOrigin origin,
+                                              QString remoteFolder,
+                                              QString localFolder)
 {
     QPointer<QmlDialogWrapper<SyncsComponent>> syncsDialog;
     if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
@@ -110,6 +116,11 @@ void CreateRemoveSyncsManager::showSyncDialog(SyncInfo::SyncOrigin origin, QStri
     }
     syncsDialog->wrapper()->setSyncOrigin(origin);
     syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
+
+    if (!localFolder.isEmpty())
+    {
+        syncsDialog->wrapper()->setLocalFolder(localFolder);
+    }
 
     DialogOpener::showDialog(syncsDialog);
 }
