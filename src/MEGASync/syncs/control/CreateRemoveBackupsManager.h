@@ -13,14 +13,12 @@ public:
     CreateRemoveBackupsManager() = delete;
     ~CreateRemoveBackupsManager() = delete;
 
-    static void addBackup(bool comesFromSettings);
+    static void addBackup(bool comesFromSettings, const QStringList& localFolders = QStringList());
     static void removeBackup(std::shared_ptr<SyncSettings> backup, QWidget* parent);
     static bool isBackupsDialogOpen();
 
 private:
-    static void performAddBackup(bool comesFromSettings);
-    static void performRemoveBackup(std::shared_ptr<SyncSettings> backup, QWidget* parent);
-    static void showBackupDialog(bool comesFromSettings);
+    static void showBackupDialog(bool comesFromSettings, const QStringList& localFolders);
 };
 
 #endif // CREATEREMOVEBACKUPSMANAGER_H

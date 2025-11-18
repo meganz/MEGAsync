@@ -22,11 +22,6 @@ public:
     static bool removeSync(std::shared_ptr<SyncSettings> syncSettings, QWidget* parent);
 
 private:
-    static void performAddSync(SyncInfo::SyncOrigin origin,
-                               mega::MegaHandle handle = mega::INVALID_HANDLE,
-                               const QString& localPath = QString());
-    static bool performRemoveSync(mega::MegaHandle remoteHandle, QWidget* parent);
-    static bool performRemoveSync(std::shared_ptr<SyncSettings> syncSettings, QWidget* parent);
     static void showSyncDialog(SyncInfo::SyncOrigin origin,
                                QString remoteFolder,
                                QString localFolder);

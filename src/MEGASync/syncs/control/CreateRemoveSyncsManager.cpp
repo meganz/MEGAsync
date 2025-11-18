@@ -11,24 +11,6 @@ void CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin origin,
                                        mega::MegaHandle handle,
                                        const QString& localPath)
 {
-    CreateRemoveSyncsManager::performAddSync(origin, handle, localPath);
-}
-
-bool CreateRemoveSyncsManager::removeSync(mega::MegaHandle handle, QWidget* parent)
-{
-    return CreateRemoveSyncsManager::performRemoveSync(handle, parent);
-}
-
-bool CreateRemoveSyncsManager::removeSync(std::shared_ptr<SyncSettings> syncSettings,
-                                          QWidget* parent)
-{
-    return CreateRemoveSyncsManager::performRemoveSync(syncSettings, parent);
-}
-
-void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin,
-                                              mega::MegaHandle handle,
-                                              const QString& localPath)
-{
     QString remoteFolder;
 
     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
@@ -55,9 +37,9 @@ void CreateRemoveSyncsManager::performAddSync(SyncInfo::SyncOrigin origin,
     }
 }
 
-bool CreateRemoveSyncsManager::performRemoveSync(mega::MegaHandle remoteHandle, QWidget* parent)
+bool CreateRemoveSyncsManager::removeSync(mega::MegaHandle handle, QWidget* parent)
 {
-    std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(remoteHandle));
+    std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
     if (!node)
     {
         return false;
@@ -75,11 +57,11 @@ bool CreateRemoveSyncsManager::performRemoveSync(mega::MegaHandle remoteHandle, 
         return false;
     }
 
-    return performRemoveSync(syncSettings, parent);
+    return removeSync(syncSettings, parent);
 }
 
-bool CreateRemoveSyncsManager::performRemoveSync(std::shared_ptr<SyncSettings> syncSettings,
-                                                 QWidget* parent)
+bool CreateRemoveSyncsManager::removeSync(std::shared_ptr<SyncSettings> syncSettings,
+                                          QWidget* parent)
 {
     if (syncSettings)
     {
