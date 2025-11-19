@@ -54,25 +54,42 @@ ExtServer::ExtServer(MegaApplication *app): QObject(),
 
 ExtServer::~ExtServer()
 {
-    for (auto client : m_clients)
+    // Stop accepting new connections
+    if (m_localServer)
     {
-        client->deleteLater();
+        m_localServer->close();
     }
 
+    // Disconnect and close all clients
+    for (auto client : m_clients)
+    {
+        if (!client)
+            continue;
+
+        client->disconnect(this);
+        client->close();
+
+        // Ensure deletion; otherwise parent will delete
+        client->deleteLater();
+    }
+    m_clients.clear();
+
+    // Remove socket file on disk
     QLocalServer::removeServer(sockPath);
-    m_localServer->close();
-    delete m_localServer;
 }
 
 // a new connection is available
 void ExtServer::acceptConnection()
 {
-    while (m_localServer->hasPendingConnections()) {
+    while (m_localServer && m_localServer->hasPendingConnections())
+    {
         QLocalSocket *client = m_localServer->nextPendingConnection();
 
         //LOG_debug << "Incoming connection";
         if (!client)
             return;
+
+        client->setParent(this);
 
         connect(client, SIGNAL(readyRead()), this, SLOT(onClientData()));
         connect(client, SIGNAL(disconnected()), this, SLOT(onClientDisconnected()));
