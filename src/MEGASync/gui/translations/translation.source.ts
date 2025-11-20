@@ -6632,13 +6632,13 @@ Do you want to delete it anyway?</translation>
     <name>RemoveBackup</name>
     <message>
         <source>Backup folder already exists on destination. Choose another.</source>
-        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can't move it there! SNC-6067 </translatorcomment>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can&apos;t move it there! SNC-6067 </translatorcomment>
         <translation type="unfinished">Backup folder already exists on destination. Choose another.</translation>
     </message>
     <message>
-            <source>Error moving or removing remote backup folder</source>
-            <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
-            <translation type="unfinished">Error moving or deleting MEGA backup folder</translation>
+        <source>Error moving or removing remote backup folder</source>
+        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation type="unfinished">Error moving or deleting MEGA backup folder</translation>
     </message>
     <message>
         <source>Failed to move or remove the remote backup folder. Reason: %1</source>
@@ -6662,11 +6662,6 @@ Do you want to delete it anyway?</translation>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
         <translation>Delete folder from MEGA</translation>
-    </message>
-    <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
-        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation>The folder will be deleted from MEGA, but it won’t be deleted from your device. This action can’t be undone.</translation>
     </message>
     <message>
         <source>Move folder</source>
@@ -6694,9 +6689,14 @@ Do you want to delete it anyway?</translation>
         <translation>Stop backup</translation>
     </message>
     <message>
-        <source>To stop backing up this folder, you need to either move it or delete it.</source>
-        <translatorcomment>Backup removal title description</translatorcomment>
-        <translation>To stop backing up this folder, you need to either move it or delete it</translation>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
+        <translation type="unfinished">The folder will be deleted from MEGA, but it won’t be deleted from your device. This action can’t be undone.</translation>
+    </message>
+    <message>
+        <source>To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].</source>
+        <translatorcomment>Backup removal title description. SNC-6067</translatorcomment>
+        <translation type="unfinished">To stop backing up this folder, you need to either move it or delete it</translation>
     </message>
 </context>
 <context>

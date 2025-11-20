@@ -99,7 +99,7 @@ color: #ffe31b57; /*colorToken.text-error*/
         </size>
        </property>
        <property name="text">
-        <string>To stop backing up this folder, you need to either move it or delete it.</string>
+        <string/>
        </property>
        <property name="textFormat">
         <enum>Qt::RichText</enum>
@@ -339,7 +339,7 @@ color: #ffe31b57; /*colorToken.text-error*/
        <item>
         <widget class="QLabel" name="lDeleteFolder">
          <property name="text">
-          <string>Folder will be deleted from MEGA. It won't be deleted from your computer. This action cannot be undone.</string>
+          <string/>
          </property>
          <property name="textFormat">
           <enum>Qt::RichText</enum>
