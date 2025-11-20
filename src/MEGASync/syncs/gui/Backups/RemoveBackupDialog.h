@@ -32,6 +32,7 @@ private slots:
 private:
     void onOptionSelected(const AppStatsEvents::EventType eventType,
                           const bool enableMoveContainer);
+    void clearTargetFolderError();
 
     mega::MegaApi* mMegaApi;
     Ui::RemoveBackupDialog* mUi;
