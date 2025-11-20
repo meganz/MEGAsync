@@ -77,6 +77,7 @@ public:
     static QUrl getAccountPlanUrl();
     static QUrl getAccountNotificationsUrl();
     static QUrl getIncomingPendingContactUrl();
+    static QUrl getSyncDebrisHelpLink();
 
     QUrl getProUrl() const;
     QUrl getProFlexiUrl() const;
