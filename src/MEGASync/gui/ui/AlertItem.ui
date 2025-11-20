@@ -7,19 +7,25 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>124</height>
+    <height>135</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>350</width>
+    <width>400</width>
     <height>124</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>400</width>
-    <height>124</height>
+    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -64,7 +70,7 @@ background-color: transparent;
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
-    <number>11</number>
+    <number>0</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -81,7 +87,7 @@ background-color: transparent;
    <item>
     <widget class="QWidget" name="wContainer" native="true">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -95,24 +101,24 @@ background-color: transparent;
      <property name="maximumSize">
       <size>
        <width>400</width>
-       <height>123</height>
+       <height>16777215</height>
       </size>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,1,0">
       <property name="spacing">
-       <number>0</number>
+       <number>4</number>
       </property>
       <property name="leftMargin">
        <number>16</number>
       </property>
       <property name="topMargin">
-       <number>7</number>
+       <number>12</number>
       </property>
       <property name="rightMargin">
        <number>16</number>
       </property>
       <property name="bottomMargin">
-       <number>7</number>
+       <number>12</number>
       </property>
       <item>
        <widget class="QWidget" name="wTitle" native="true">
@@ -460,10 +466,16 @@ border: none;
       </item>
       <item>
        <widget class="QLabel" name="lDesc">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>35</height>
+          <height>0</height>
          </size>
         </property>
         <property name="styleSheet">

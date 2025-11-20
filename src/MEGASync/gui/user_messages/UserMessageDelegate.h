@@ -36,6 +36,7 @@ protected:
 protected slots:
     void onHoverEnter(const QModelIndex& index);
     void onHoverLeave(const QModelIndex& index);
+    void onSizeHintChanged();
 
 private:
     class EditorInfo
