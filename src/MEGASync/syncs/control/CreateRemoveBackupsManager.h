@@ -3,10 +3,6 @@
 
 #include "RemoveBackup.h"
 
-#include <QObject>
-#include <QPointer>
-#include <QWidget>
-
 #include <memory>
 
 class SyncSettings;

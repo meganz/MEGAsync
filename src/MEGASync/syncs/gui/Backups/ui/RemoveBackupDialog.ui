@@ -237,6 +237,9 @@ color: #ffe31b57; /*colorToken.text-error*/
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <property name="spacing">
+           <number>8</number>
+          </property>
           <item>
            <widget class="QLineEdit" name="lTarget">
             <property name="minimumSize">
