@@ -1,31 +1,24 @@
 #ifndef CREATEREMOVEBACKUPSMANAGER_H
 #define CREATEREMOVEBACKUPSMANAGER_H
 
-#include <QObject>
-#include <QPointer>
+#include <QWidget>
 
 #include <memory>
 
 class SyncSettings;
 
-class CreateRemoveBackupsManager: public QObject
+class CreateRemoveBackupsManager
 {
-    Q_OBJECT
-
 public:
-    CreateRemoveBackupsManager() = default;
-    ~CreateRemoveBackupsManager() = default;
+    CreateRemoveBackupsManager() = delete;
+    ~CreateRemoveBackupsManager() = delete;
 
-    static const CreateRemoveBackupsManager*
-        addBackup(bool comesFromSettings, const QStringList& localFolders = QStringList());
-    static const CreateRemoveBackupsManager* removeBackup(std::shared_ptr<SyncSettings> backup,
-                                                          QWidget* parent);
-
-    bool isBackupsDialogOpen() const;
+    static void addBackup(bool comesFromSettings, const QStringList& localFolders = QStringList());
+    static void removeBackup(std::shared_ptr<SyncSettings> backup, QWidget* parent);
+    static bool isBackupsDialogOpen();
 
 private:
-    void performAddBackup(const QStringList& localFolders, bool comesFromSettings);
-    void performRemoveBackup(std::shared_ptr<SyncSettings> backup, QWidget* parent);
+    static void showBackupDialog(bool comesFromSettings, const QStringList& localFolders);
 };
 
 #endif // CREATEREMOVEBACKUPSMANAGER_H

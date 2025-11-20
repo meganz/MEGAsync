@@ -26,9 +26,11 @@ OverQuotaDialog::~OverQuotaDialog()
     delete ui;
 }
 
-QPointer<OverQuotaDialog> OverQuotaDialog::showDialog(OverQuotaDialogType type, QWidget *parent)
+QPointer<OverQuotaDialog> OverQuotaDialog::createDialogIfNeeded(OverQuotaDialogType type,
+                                                                QWidget* parent)
 {
-    bool showDialog(false);
+    bool createDialog(false);
+
     switch(type)
     {
     case OverQuotaDialogType::STORAGE_SYNCS:
@@ -38,7 +40,7 @@ QPointer<OverQuotaDialog> OverQuotaDialog::showDialog(OverQuotaDialogType type, 
        if(std::chrono::system_clock::now() >= notShowUntilTime)
        {
             Preferences::instance()->setStorageOverQuotaSyncsDialogLastExecution(std::chrono::system_clock::now());
-            showDialog = true;
+            createDialog = true;
        }
        break;
     }
@@ -49,7 +51,7 @@ QPointer<OverQuotaDialog> OverQuotaDialog::showDialog(OverQuotaDialogType type, 
        if(std::chrono::system_clock::now() >= notShowUntilTime)
        {
             Preferences::instance()->setTransferOverQuotaDownloadsDialogLastExecution(std::chrono::system_clock::now());
-            showDialog = true;
+            createDialog = true;
        }
        break;
     }
@@ -60,7 +62,7 @@ QPointer<OverQuotaDialog> OverQuotaDialog::showDialog(OverQuotaDialogType type, 
        if(std::chrono::system_clock::now() >= notShowUntilTime)
        {
             Preferences::instance()->setTransferOverQuotaImportLinksDialogLastExecution(std::chrono::system_clock::now());
-            showDialog = true;
+            createDialog = true;
        }
        break;
     }
@@ -71,7 +73,7 @@ QPointer<OverQuotaDialog> OverQuotaDialog::showDialog(OverQuotaDialogType type, 
        if(std::chrono::system_clock::now() >= notShowUntilTime)
        {
             Preferences::instance()->setTransferOverQuotaStreamDialogLastExecution(std::chrono::system_clock::now());
-            showDialog = true;
+            createDialog = true;
        }
        break;
     }
@@ -82,7 +84,7 @@ QPointer<OverQuotaDialog> OverQuotaDialog::showDialog(OverQuotaDialogType type, 
        if(std::chrono::system_clock::now() >= notShowUntilTime)
        {
             Preferences::instance()->setTransferOverQuotaSyncDialogLastExecution(std::chrono::system_clock::now());
-            showDialog = true;
+            createDialog = true;
        }
        break;
     }
@@ -93,13 +95,13 @@ QPointer<OverQuotaDialog> OverQuotaDialog::showDialog(OverQuotaDialogType type, 
        if(std::chrono::system_clock::now() >= notShowUntilTime)
        {
             Preferences::instance()->setStorageOverQuotaUploadsDialogLastExecution(std::chrono::system_clock::now());
-            showDialog = true;
+            createDialog = true;
        }
        break;
     }
     }
 
-    if(showDialog)
+    if (createDialog)
     {
         QPointer<OverQuotaDialog> dialog = new OverQuotaDialog(type, parent);
         return dialog;

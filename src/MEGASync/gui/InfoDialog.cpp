@@ -1124,8 +1124,8 @@ void InfoDialog::addSync(SyncInfo::SyncOrigin origin, mega::MegaHandle handle)
 
 void InfoDialog::addBackup()
 {
-    auto manager = CreateRemoveBackupsManager::addBackup(false);
-    if(manager->isBackupsDialogOpen())
+    CreateRemoveBackupsManager::addBackup(false);
+    if (CreateRemoveBackupsManager::isBackupsDialogOpen())
     {
         hide();
     }
