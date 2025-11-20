@@ -31,6 +31,16 @@
 background-color: #FFFFFF;/*colorToken.page-background*/
 }
 
+#labelHeader
+{
+  color: #303233; /*colorToken.text-primary*/
+}
+
+#labelMessage
+{
+  color: #616366; /*colorToken.text-secondary*/
+}
+
 </string>
   </property>
   <property name="TOKENIZED" stdset="0">
@@ -90,11 +100,11 @@ background-color: #FFFFFF;/*colorToken.page-background*/
          <property name="text">
           <string>Remove this sync?</string>
          </property>
-         <property name="dimension" stdset="0">
-          <string notr="true">label-2</string>
-         </property>
          <property name="semibold" stdset="0">
           <bool>true</bool>
+         </property>
+         <property name="font-size" stdset="0">
+          <string notr="true">label-2</string>
          </property>
         </widget>
        </item>
@@ -105,9 +115,6 @@ background-color: #FFFFFF;/*colorToken.page-background*/
          </property>
          <property name="wordWrap">
           <bool>true</bool>
-         </property>
-         <property name="font-size" stdset="0">
-          <string notr="true">body-2</string>
          </property>
         </widget>
        </item>
@@ -197,7 +204,7 @@ background-color: #FFFFFF;/*colorToken.page-background*/
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="text">
-        <string>Remove</string>
+        <string/>
        </property>
        <property name="icon">
         <iconset resource="../Resources_light.qrc">
