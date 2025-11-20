@@ -8,7 +8,10 @@ RemoveSyncConfirmationDialog::RemoveSyncConfirmationDialog(QWidget *parent)
 {
     ui->setupUi(this);
 
+    const QString label = QString::fromLatin1(" ") + tr("Remove");
+    ui->bRemove->setText(label);
     ui->bRemove->setDefault(true);
+
     setFocusProxy(ui->bRemove);
 }
 
