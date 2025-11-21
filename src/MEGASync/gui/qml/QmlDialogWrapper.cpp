@@ -161,7 +161,7 @@ void QmlDialogWrapperBase::hide()
 void QmlDialogWrapperBase::show()
 {
 #ifdef Q_OS_WINDOWS
-    if (!mShowDelay->isActive())
+    if (!mShowDelay.isActive())
     {
         mShowDelay.start();
     }
@@ -173,9 +173,9 @@ void QmlDialogWrapperBase::show()
 void QmlDialogWrapperBase::showSync()
 {
 #ifdef Q_OS_WINDOWS
-    if (mShowDelay->isActive())
+    if (mShowDelay.isActive())
     {
-        mShowDelay->stop();
+        mShowDelay.stop();
     }
 #endif
 
