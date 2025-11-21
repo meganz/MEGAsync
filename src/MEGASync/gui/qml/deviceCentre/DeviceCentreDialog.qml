@@ -10,7 +10,7 @@ QmlDialog {
     id: window
 
     title: DeviceCentreStrings.windowTitle
-    visible: true
+    visible: false
     modality: Qt.NonModal
     width: 1024
     height: 720

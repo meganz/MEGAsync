@@ -18,6 +18,7 @@
 #include <QQmlEngine>
 #include <QQuickWindow>
 #include <QScreen>
+#include <QTimer>
 
 #include <iostream>
 
@@ -110,6 +111,7 @@ public:
     bool isVisible();
     void hide();
     void show();
+    void showSync();
     void close();
     void activateWindow();
     QWindow* windowHandle();
@@ -143,6 +145,7 @@ protected:
 
 private:
     QDialog::DialogCode mResult;
+    QTimer mShowDelay;
 };
 
 

@@ -193,7 +193,7 @@ void TokenParserWidgetManager::applyCurrentTheme()
         applyCurrentTheme(dialog);
     }
 
-    for (auto widget: mRegisteredWidgets)
+    for (auto widget: qAsConst(mRegisteredWidgets))
     {
         applyCurrentTheme(widget);
     }
@@ -204,18 +204,17 @@ QColor TokenParserWidgetManager::getColor(const QString& colorToken)
     return getColor(colorToken, ThemeManager::instance()->getSelectedColorSchemaString());
 }
 
-QColor TokenParserWidgetManager::getColor(const QString& colorToken,
-                                          const QString& currentColorSchema)
+QColor TokenParserWidgetManager::getColor(const QString& colorToken, const QString& colorSchema)
 {
     QColor color;
 
-    if (!mColorThemedTokens.contains(currentColorSchema))
+    if (!mColorThemedTokens.contains(colorSchema))
     {
-        qWarning() << __func__ << " Error theme not found : " << currentColorSchema;
+        qWarning() << __func__ << " Error theme not found : " << colorSchema;
     }
     else
     {
-        const auto& colorTokens = mColorThemedTokens.value(currentColorSchema);
+        const auto& colorTokens = mColorThemedTokens.value(colorSchema);
         color = QColor(colorTokens.value(colorToken, QString()));
         if (!color.isValid())
         {
@@ -316,7 +315,7 @@ void TokenParserWidgetManager::removeFrameOnDialogCombos(QWidget* widget)
         return;
     }
 
-    for (auto comboBox: comboBoxes)
+    for (auto comboBox: qAsConst(comboBoxes))
     {
         comboBox->view()->window()->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint |
                                                    Qt::NoDropShadowWindowHint);
