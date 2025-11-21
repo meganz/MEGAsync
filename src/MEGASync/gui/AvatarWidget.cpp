@@ -146,7 +146,7 @@ QPixmap AvatarPixmap::createFromLetter(const QString& letter, const QColor& prim
     // Draw letter with drop shadow (using background base color, but darker)
     QFont font = painter.font();
     font.setPointSize(AVATAR_LETTER_SIZE_PT_FULL);
-    font.setFamily(QLatin1String("Lato Semibold"));
+    font.setWeight(600);
     painter.setFont(font);
     painter.setPen(Qt::white);
     painter.drawText(rect.adjusted(0, LATO_FONT_ADJUST, 0, 0), letter, QTextOption(Qt::AlignCenter));

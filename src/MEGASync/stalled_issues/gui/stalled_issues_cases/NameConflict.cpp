@@ -35,7 +35,7 @@ void NameDuplicatedContainer::paintEvent(QPaintEvent* event)
 
     font.setPointSize(Utilities::getDevicePixelRatio() < 2 ? 10 : 14);
     font.setItalic(true);
-    font.setFamily(QLatin1String("Lato Semibold"));
+    font.setWeight(600);
     painter.setFont(font);
     painter.setPen(Qt::gray);
     painter.drawText(textRect, tr("Duplicated"), QTextOption(Qt::AlignLeft));

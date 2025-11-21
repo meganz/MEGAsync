@@ -1686,7 +1686,7 @@ const QString Utilities::getPlatformProps(const QString sourceStyleSheet)
                             "* { font-family: Inter; font-size: 36px;}\n");
 #else
     prefix = QStringLiteral("/* Linux and Windows */\n"
-                            "* { font-family: Lato; }\n");
+                            "* { font-family: Segoe UI; }\n");
 #endif
 
     const QString qss = prefix + sourceStyleSheet;
