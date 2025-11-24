@@ -10,8 +10,7 @@ using namespace mega;
 using namespace std;
 
 NotifyServer::NotifyServer():
-    QObject(),
-    mLocalServer(0)
+    QObject()
 {
     // construct local socket path
     mSockPath = MegaApplication::applicationDataPath() + QDir::separator() +
@@ -72,8 +71,6 @@ void NotifyServer::acceptConnection()
         {
             return;
         }
-
-        client->setParent(this);
 
         connect(client, &QLocalSocket::disconnected, this, &NotifyServer::onClientDisconnected);
 

@@ -21,8 +21,8 @@ constexpr char RESPONSE_PAUSED[]  = "4";
 constexpr char RESPONSE_DEFAULT[] = "9";
 constexpr char RESPONSE_ERROR[]   = "10";
 
-ExtServer::ExtServer(MegaApplication *app): QObject(),
-    m_localServer(0)
+ExtServer::ExtServer(MegaApplication* app):
+    QObject()
 {
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), app, SLOT(shellUpload(QQueue<QString>)),Qt::QueuedConnection);
     connect(this, SIGNAL(newExportQueue(QQueue<QString>)), app, SLOT(shellExport(QQueue<QString>)),Qt::QueuedConnection);
@@ -88,8 +88,6 @@ void ExtServer::acceptConnection()
         //LOG_debug << "Incoming connection";
         if (!client)
             return;
-
-        client->setParent(this);
 
         connect(client, SIGNAL(readyRead()), this, SLOT(onClientData()));
         connect(client, SIGNAL(disconnected()), this, SLOT(onClientDisconnected()));

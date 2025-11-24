@@ -15,7 +15,7 @@ public:
     void notifySyncDel(const QString& path);
 
 protected:
-    QLocalServer* mLocalServer;
+    QPointer<QLocalServer> mLocalServer;
 
 public Q_SLOTS:
     void acceptConnection();
