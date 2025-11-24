@@ -11,7 +11,7 @@ ChangePasswordDialog {
     id: window
 
     readonly property int twoFAPageHeigh: 500
-    readonly property int passwordChangePageHeigh: 320
+    readonly property int passwordChangePageHeigh: 344
     readonly property int passwordChangePageWidth: 496
 
     title: ChangePasswordStrings.title

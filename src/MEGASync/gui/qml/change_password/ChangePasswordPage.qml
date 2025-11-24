@@ -84,6 +84,7 @@ FooterButtonsPage {
 
         anchors.fill: parent
         spacing: mainColumnDesignSpacing
+        anchors.bottomMargin: mainColumnDesignSpacing
 
         PasswordTextField {
             id: passwordItem
