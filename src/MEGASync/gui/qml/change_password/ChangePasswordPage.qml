@@ -96,6 +96,10 @@ FooterButtonsPage {
             cleanWhenError: false
 
             textField.onActiveFocusChanged: {
+                if (footerButtons.rightSecondary.activeFocus) {
+                    return;
+                }
+
                 if (textField.activeFocus) {
                     hint.visible = false;
                 }
