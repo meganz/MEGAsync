@@ -950,6 +950,8 @@ void PlatformImplementation::startThemeMonitor()
 void PlatformImplementation::stopThemeMonitor()
 {
     mIsSettingsPortalActive = false;
+    mThemeMonitor.kill();
+    mThemeMonitor.waitForFinished(1000);
     mThemeMonitor.close();
     mCurrentPortalTheme = Preferences::ThemeAppeareance::UNINITIALIZED;
     mCurrentGSettingsTheme = Preferences::ThemeAppeareance::UNINITIALIZED;
