@@ -21,9 +21,9 @@ class ExtServer: public QObject
     virtual ~ExtServer();
 
  protected:
-    QLocalServer *m_localServer;
-    QQueue<QString> uploadQueue;
-    QQueue<QString> exportQueue;
+     QPointer<QLocalServer> m_localServer;
+     QQueue<QString> uploadQueue;
+     QQueue<QString> exportQueue;
 
  public Q_SLOTS:
     void acceptConnection();

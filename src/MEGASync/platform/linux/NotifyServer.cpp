@@ -10,8 +10,7 @@ using namespace mega;
 using namespace std;
 
 NotifyServer::NotifyServer():
-    QObject(),
-    mLocalServer(0)
+    QObject()
 {
     // construct local socket path
     mSockPath = MegaApplication::applicationDataPath() + QDir::separator() +
@@ -38,14 +37,32 @@ NotifyServer::NotifyServer():
 
 NotifyServer::~NotifyServer()
 {
+    // Stop accepting new connections
+    if (mLocalServer)
+    {
+        mLocalServer->close();
+    }
+
+    // Close and schedule deletion of all clients
+    for (auto* client: mClients)
+    {
+        if (!client)
+            continue;
+
+        client->disconnect(this);
+        client->close();
+        client->deleteLater();
+    }
+    mClients.clear();
+
+    // Remove socket file path
     QLocalServer::removeServer(mSockPath);
-    mLocalServer->close();
 }
 
 // a new connection is available
 void NotifyServer::acceptConnection()
 {
-    while (mLocalServer->hasPendingConnections())
+    while (mLocalServer && mLocalServer->hasPendingConnections())
     {
         QLocalSocket* client = mLocalServer->nextPendingConnection();
 
@@ -96,7 +113,7 @@ void NotifyServer::onClientDisconnected()
 // send string to all connected clients
 void NotifyServer::doSendToAll(const QByteArray& payload)
 {
-    foreach(QLocalSocket* socket, mClients)
+    for (QLocalSocket* socket: mClients)
     {
         if (socket && socket->state() == QLocalSocket::ConnectedState) {
             socket->write(payload);
