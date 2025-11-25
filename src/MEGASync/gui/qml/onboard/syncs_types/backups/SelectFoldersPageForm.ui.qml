@@ -28,7 +28,10 @@ FooterButtonsPage {
             top: parent.top
             left: parent.left
             right: parent.right
+            bottom: footerButtons.top
+            bottomMargin: selectFolderLayout.spacing
         }
+
         spacing: Constants.defaultComponentSpacing
 
         HeaderTexts {
@@ -38,23 +41,11 @@ FooterButtonsPage {
             description: BackupsStrings.selectBackupFoldersDescription
         }
 
-        InfoAccount {
-            id: infoAccount
+        SelectTable {
+            id: backupsTable
 
-            Layout.preferredWidth: parent.width
-        }
-    }
-
-    SelectTable {
-        id: backupsTable
-
-        anchors {
-            top: selectFolderLayout.bottom
-            left: parent.left
-            right: parent.right
-            bottom: footerButtons.top
-            topMargin: 8
-            bottomMargin: selectFolderLayout.spacing
+            Layout.fillWidth: true
+            Layout.fillHeight: true
         }
     }
 }
