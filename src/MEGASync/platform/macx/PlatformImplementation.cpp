@@ -495,7 +495,7 @@ void PlatformImplementation::initMenu(QMenu* m, const char *objectName, const bo
                                            "}"
                                            // For menus with MenuItemActions
                                            "QLabel {"
-                                           "font-family: Lato;"
+                                           "font-family: Inter;"
                                            "font-size: 14px;"
                                            "padding: 0px;"
                                            "}"));

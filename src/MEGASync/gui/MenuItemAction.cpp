@@ -99,7 +99,7 @@ void MenuItemAction::setupActionWidget(const QIcon& icon, const QSize& iconSize)
     mContainer->setMinimumHeight(32);
     mContainer->setMaximumHeight(32);
     mContainer->setStyleSheet(QLatin1String("#wContainer { margin-left: 20px; padding: 0px; }"
-                                            "QLabel {font-family: Lato; font-size: 14px;}"
+                                            "QLabel {font-size: 14px;}"
                                             "QPushButton { border: none; }"));
 
     mIconButton->setAttribute(Qt::WA_TransparentForMouseEvents, true);
