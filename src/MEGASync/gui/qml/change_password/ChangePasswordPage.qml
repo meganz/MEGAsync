@@ -102,6 +102,7 @@ FooterButtonsPage {
 
                 if (textField.activeFocus) {
                     hint.visible = false;
+                    error = false;
                 }
                 else {
                     var hintVisible = true;
@@ -141,6 +142,14 @@ FooterButtonsPage {
             title: ChangePasswordStrings.confirmNewPassword
             hint.icon: Images.key
             cleanWhenError: false
+
+            textField.onActiveFocusChanged: {
+                if (textField.activeFocus) {
+                    hint.visible = false;
+                    error = false;
+                    passwordItem.error = false;
+                }
+            }
         }
     }
 
@@ -157,7 +166,6 @@ FooterButtonsPage {
             setError(errorMessage)
         }
     }
-
 }
 
 
