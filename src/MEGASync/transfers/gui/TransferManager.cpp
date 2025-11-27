@@ -3,7 +3,6 @@
 #include "MegaApplication.h"
 #include "MegaTransferView.h"
 #include "Platform.h"
-#include "SomeIssuesOccurredMessage.h"
 #include "StalledIssuesModel.h"
 #include "tokenizer/TokenizableItems/TokenPropertySetter.h"
 #include "ui_TransferManager.h"
@@ -61,7 +60,7 @@ TransferManager::TransferManager(MegaApi* megaApi):
             this,
             []()
             {
-                SomeIssuesOccurredMessage::showStalledIssuesDialog();
+                MegaApplication::showStalledIssuesDialog();
             });
     mDragBackDrop = new QWidget(this);
     mUiDragBackDrop->setupUi(mDragBackDrop);

@@ -1387,7 +1387,7 @@ background-color: transparent;
                           <number>5</number>
                          </property>
                          <item>
-                          <widget class="SomeIssuesOccurredMessage" name="issuesContainer" native="true"/>
+                          <widget class="BannerWidget" name="issuesBanner" native="true"/>
                          </item>
                         </layout>
                        </widget>
@@ -3682,15 +3682,15 @@ background-color: transparent;
    <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
   </customwidget>
   <customwidget>
-   <class>SomeIssuesOccurredMessage</class>
-   <extends>QWidget</extends>
-   <header>SomeIssuesOccurredMessage.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>StatusInfo</class>
    <extends>QWidget</extends>
    <header location="global">StatusInfo.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>BannerWidget</class>
+   <extends>QWidget</extends>
+   <header>BannerWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

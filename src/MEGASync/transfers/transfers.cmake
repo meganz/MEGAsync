@@ -12,7 +12,6 @@ set(DESKTOP_APP_TRANSFERS_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/model/TransfersModel.h
     ${CMAKE_CURRENT_LIST_DIR}/model/TransferMetaData.h
     ${CMAKE_CURRENT_LIST_DIR}/model/TransferTrack.h
-    ${CMAKE_CURRENT_LIST_DIR}/gui/SomeIssuesOccurredMessage.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/InfoDialogTransferDelegateWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/InfoDialogTransfersWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/gui/MegaTransferDelegate.h
@@ -40,7 +39,6 @@ set(DESKTOP_APP_TRANSFERS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/gui/TransferWidgetColumnsManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/model/InfoDialogTransfersProxyModel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/model/TransfersManagerSortFilterProxyModel.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/gui/SomeIssuesOccurredMessage.cpp
     ${CMAKE_CURRENT_LIST_DIR}/model/TransferMetaData.cpp
     ${CMAKE_CURRENT_LIST_DIR}/model/TransferTrack.cpp
     ${CMAKE_CURRENT_LIST_DIR}/gui/InfoDialogTransferDelegateWidget.cpp
@@ -88,7 +86,6 @@ target_sources(${ExecutableTarget}
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransferManagerDragBackDrop.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransfersStatusWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransfersSummaryWidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/SomeIssuesOccurredMessage.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransfersAccountInfoWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/ui/MediaTypeFilterWidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs/ui/DuplicatedNodeDialog.ui

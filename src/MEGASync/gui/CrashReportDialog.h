@@ -17,6 +17,9 @@ public:
     bool sendLogs();
     ~CrashReportDialog();
 
+protected:
+    bool event(QEvent* event) override;
+
 private:
     Ui::CrashReportDialog *ui;
 };

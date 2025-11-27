@@ -6783,4 +6783,18 @@ void MegaApplication::onOperatingSystemThemeChanged(const Preferences::SystemCol
 #endif
 }
 
+void MegaApplication::showStalledIssuesDialog()
+{
+    auto stalledIssuesDialog = DialogOpener::findDialog<StalledIssuesDialog>();
+    if(stalledIssuesDialog)
+    {
+        DialogOpener::showGeometryRetainerDialog(stalledIssuesDialog->getDialog());
+    }
+    else
+    {
+        auto newStalledIssuesDialog = new StalledIssuesDialog();
+        DialogOpener::showDialog<StalledIssuesDialog>(newStalledIssuesDialog);
+    }
+}
+
 // clang-format on

@@ -32,7 +32,12 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#wContent
+   <string notr="true">QWidget
+{
+	background-color: transparent;
+}
+
+#wContent
 {
 	border-radius: 8px;
 }
@@ -41,7 +46,6 @@
 {
 	font-size: 12px;
 	font-weight: 400;
-	background-color: transparent;
 }
 
 /* Warning */
@@ -219,7 +223,7 @@
           </widget>
          </item>
          <item row="0" column="0" alignment="Qt::AlignTop">
-          <widget class="QToolButton" name="lIcon">
+          <widget class="IconLabel" name="lIcon">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -302,6 +306,11 @@
    <class>WordWrapLabel</class>
    <extends>QLabel</extends>
    <header>WordWrapLabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
