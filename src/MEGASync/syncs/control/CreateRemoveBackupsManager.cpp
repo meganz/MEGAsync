@@ -5,8 +5,6 @@
 #include "QmlDialogWrapper.h"
 #include "SyncSettings.h"
 
-RemoveBackup CreateRemoveBackupsManager::mRemoveBackupHandler;
-
 void CreateRemoveBackupsManager::addBackup(bool comesFromSettings, const QStringList& localFolders)
 {
     auto overQuotaDialog = MegaSyncApp->createOverquotaDialogIfNeeded();
@@ -30,7 +28,12 @@ void CreateRemoveBackupsManager::addBackup(bool comesFromSettings, const QString
 
 void CreateRemoveBackupsManager::removeBackup(std::shared_ptr<SyncSettings> backup, QWidget* parent)
 {
-    CreateRemoveBackupsManager::mRemoveBackupHandler.removeBackup(backup, parent);
+    if (mRemoveBackupHandler == nullptr)
+    {
+        mRemoveBackupHandler = new RemoveBackup();
+    }
+
+    mRemoveBackupHandler->removeBackup(backup, parent);
 }
 
 bool CreateRemoveBackupsManager::isBackupsDialogOpen()

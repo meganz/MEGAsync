@@ -20,7 +20,7 @@ public:
 private:
     static void showBackupDialog(bool comesFromSettings, const QStringList& localFolders);
 
-    static RemoveBackup mRemoveBackupHandler;
+    static inline RemoveBackup* mRemoveBackupHandler = nullptr;
 };
 
 #endif // CREATEREMOVEBACKUPSMANAGER_H
