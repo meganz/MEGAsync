@@ -11,6 +11,7 @@
 #include "StatsEventHandler.h"
 #include "ui_StreamingFromMegaDialog.h"
 #include "Utilities.h"
+#include "WordWrapLabel.h"
 
 #include <QCloseEvent>
 #include <QFileDialog>
@@ -32,10 +33,6 @@ StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, mega::M
     , lastStreamSelection{LastStreamingSelection::NOT_SELECTED}
 {
     ui->setupUi(this);
-    Qt::WindowFlags flags =  Qt::Window | Qt::WindowSystemMenuHint
-                                | Qt::WindowMinimizeButtonHint
-                                | Qt::WindowCloseButtonHint;
-    this->setWindowFlags(flags);
 
     this->megaApi = megaApi;
     this->mMegaApiFolders = megaApiFolders;
@@ -55,6 +52,9 @@ StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, mega::M
     hideStreamingError();
 
     connect(mLinkProcessor.get(), &LinkProcessor::onLinkInfoRequestFinish, this, &StreamingFromMegaDialog::onLinkInfoAvailable);
+
+    ui->wErrorBannerOQ->setType(BannerWidget::Type::BANNER_ERROR);
+    setErrorBannerText();
 }
 
 StreamingFromMegaDialog::~StreamingFromMegaDialog()
@@ -70,6 +70,11 @@ bool StreamingFromMegaDialog::event(QEvent* event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        setErrorBannerText();
+    }
+    else if (event->type() == WordWrapLabel::HeightAdapted)
+    {
+        setFixedSize(maximumWidth(), sizeHint().height());
     }
 
     return QDialog::event(event);
@@ -157,6 +162,11 @@ void StreamingFromMegaDialog::showErrorMessage(const QString& message)
     msgInfo.parent = this;
 
     MessageDialogOpener::warning(msgInfo);
+}
+
+void StreamingFromMegaDialog::setErrorBannerText()
+{
+    ui->wErrorBannerOQ->setTitle(tr("Stream error: transfer overquota"));
 }
 
 //Connected only to onLinkImportFinish as only one link makes sense on streaming and it is always the first one
@@ -324,13 +334,13 @@ void StreamingFromMegaDialog::openStreamWithApp(QString app)
 
 void StreamingFromMegaDialog::showStreamingError()
 {
-    ui->wErrorOQ->setVisible(true);
+    ui->wErrorBannerOQ->show();
     adjustSize();
 }
 
 void StreamingFromMegaDialog::hideStreamingError()
 {
-    ui->wErrorOQ->setVisible(false);
+    ui->wErrorBannerOQ->hide();
     adjustSize();
 }
 

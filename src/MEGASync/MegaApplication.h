@@ -202,6 +202,7 @@ public:
 
     void updateUsedStorage(const bool sendEvent = false);
     void showUpsellDialog(UpsellPlans::ViewMode viewMode);
+    static void showStalledIssuesDialog();
 
 signals:
     void startUpdaterThread();

@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>460</width>
-    <height>442</height>
+    <height>542</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -19,13 +19,13 @@
   <property name="minimumSize">
    <size>
     <width>460</width>
-    <height>368</height>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>460</width>
-    <height>442</height>
+    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -54,23 +54,17 @@ background-color: #FFFFFF;  /*colorToken.page-background*/
   font-size: 12px;
   color: #303233; /*colorToken.text-on-color-disabled*/
 }
-
-#wErrorOQ {
-background-color: #FFE4E8; /*colorToken.notification-error*/
-border-radius: 8px;
-}
-
-#labelError {
-font-size: 12px;
-}
 </string>
   </property>
   <property name="TOKENIZED" stdset="0">
    <bool>true</bool>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_6">
+  <layout class="QVBoxLayout" name="verticalLayout_6" stretch="0,0,0,0">
    <property name="spacing">
-    <number>4</number>
+    <number>32</number>
+   </property>
+   <property name="sizeConstraint">
+    <enum>QLayout::SetFixedSize</enum>
    </property>
    <property name="leftMargin">
     <number>24</number>
@@ -170,7 +164,7 @@ font-size: 12px;
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <property name="spacing">
-          <number>4</number>
+          <number>11</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -251,6 +245,12 @@ font-size: 12px;
    </item>
    <item>
     <widget class="QWidget" name="wContainer" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <property name="spacing">
        <number>4</number>
@@ -274,6 +274,12 @@ font-size: 12px;
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <property name="spacing">
@@ -327,6 +333,12 @@ font-size: 12px;
            <property name="enabled">
             <bool>true</bool>
            </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -373,7 +385,7 @@ font-size: 12px;
                <string notr="true"/>
               </property>
               <property name="currentIndex">
-               <number>0</number>
+               <number>1</number>
               </property>
               <widget class="QWidget" name="pFileInfo">
                <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -545,6 +557,9 @@ font-size: 12px;
               </widget>
               <widget class="QWidget" name="pWaitingForFileInfo">
                <layout class="QHBoxLayout" name="horizontalLayout_8">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
                 <property name="leftMargin">
                  <number>0</number>
                 </property>
@@ -908,7 +923,7 @@ font-size: 12px;
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_4">
             <property name="spacing">
-             <number>4</number>
+             <number>11</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -988,94 +1003,38 @@ font-size: 12px;
     </widget>
    </item>
    <item>
-    <widget class="QWidget" name="wErrorOQ" native="true">
+    <widget class="BannerWidget" name="wErrorBannerOQ" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>42</height>
+       <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>42</height>
+       <height>16777215</height>
       </size>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_9">
-      <property name="leftMargin">
-       <number>13</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>13</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="IconLabel" name="toolButtonError">
-        <property name="minimumSize">
-         <size>
-          <width>16</width>
-          <height>16</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16</width>
-          <height>16</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="text">
-         <string notr="true"/>
-        </property>
-        <property name="icon">
-         <iconset resource="../Resources_common.qrc">
-          <normaloff>:/images/sync_states/x-circle-error.png</normaloff>:/images/sync_states/x-circle-error.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>16</width>
-          <height>16</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="labelError">
-        <property name="minimumSize">
-         <size>
-          <width>250</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Stream error: transfer overquota</string>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
     </widget>
    </item>
    <item>
     <widget class="QWidget" name="wClose" native="true">
      <property name="minimumSize">
       <size>
-       <width>0</width>
+       <width>410</width>
        <height>48</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>16777215</width>
+       <width>410</width>
        <height>48</height>
       </size>
      </property>
@@ -1140,7 +1099,7 @@ font-size: 12px;
   <zorder>wStreamResource</zorder>
   <zorder>wClose</zorder>
   <zorder>wContainer</zorder>
-  <zorder>wErrorOQ</zorder>
+  <zorder>wErrorBannerOQ</zorder>
  </widget>
  <customwidgets>
   <customwidget>
@@ -1152,6 +1111,12 @@ font-size: 12px;
    <class>IconLabel</class>
    <extends>QToolButton</extends>
    <header>tokenizer/TokenizableItems/IconLabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>BannerWidget</class>
+   <extends>QWidget</extends>
+   <header>BannerWidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

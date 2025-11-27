@@ -165,6 +165,8 @@ private slots:
 
     void onScanningVisibilityChanged(bool state);
     void onTopTransferTypeChanged(TransferData::TransferTypes);
+    void showStalledIssuesDialog();
+
 signals:
 
     void openTransferManager(int tab);

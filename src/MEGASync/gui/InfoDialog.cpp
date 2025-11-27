@@ -9,6 +9,7 @@
 #include "MegaApplication.h"
 #include "Platform.h"
 #include "ServiceUrls.h"
+#include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
 #include "ThemeManager.h"
@@ -304,6 +305,17 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
 
     updateUpgradeButtonText();
     updateCreateSyncButtonText();
+
+    ui->issuesBanner->setType(BannerWidget::Type::BANNER_ERROR);
+    ui->issuesBanner->setTitle(
+        QCoreApplication::translate("SomeIssuesOccurredMessage", "Some issues ocurred."));
+    ui->issuesBanner->setLinkText(
+        QCoreApplication::translate("SomeIssuesOccurredMessage", "View..."));
+
+    connect(ui->issuesBanner,
+            &BannerWidget::linkActivated,
+            this,
+            &InfoDialog::showStalledIssuesDialog);
 }
 
 InfoDialog::~InfoDialog()
@@ -1791,4 +1803,9 @@ void InfoDialog::setFooterState()
 void InfoDialog::onTopTransferTypeChanged(TransferData::TransferTypes type)
 {
     ui->bTransferManager->setTopTransferDirection(type & TransferData::TRANSFER_UPLOAD);
+}
+
+void InfoDialog::showStalledIssuesDialog()
+{
+    MegaApplication::showStalledIssuesDialog();
 }

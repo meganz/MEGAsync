@@ -69,6 +69,7 @@ private:
     void requestPublicNodeInfo();
     void requestNodeToLinkProcessor();
     void showErrorMessage(const QString& message);
+    void setErrorBannerText();
 };
 
 #endif // STREAMINGFROMMEGADIALOG_H

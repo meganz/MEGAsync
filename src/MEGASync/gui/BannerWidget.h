@@ -31,6 +31,7 @@ public:
     void setTitle(const QString& text);
     void setAutoManageTextUrl(bool newValue);
     void setLinkText(const QString& displayText);
+    QSize sizeHint() const override;
 
 signals:
     void linkActivated();

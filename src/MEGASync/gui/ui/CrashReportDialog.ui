@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>480</width>
-    <height>448</height>
+    <height>460</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,13 +19,13 @@
   <property name="minimumSize">
    <size>
     <width>480</width>
-    <height>448</height>
+    <height>460</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>480</width>
-    <height>448</height>
+    <width>16777215</width>
+    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -183,31 +183,27 @@ border-radius: 8;
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>56</height>
-        </size>
-       </property>
        <property name="type" stdset="0">
         <string notr="true">notification</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item>
-         <widget class="QLabel" name="lInfoBanner">
-          <property name="styleSheet">
-           <string notr="true"/>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
-          </property>
-          <property name="type" stdset="0">
-           <string notr="true">notification</string>
-          </property>
-         </widget>
+         <widget class="BannerWidget" name="lInfoBanner" native="true"/>
         </item>
        </layout>
       </widget>
@@ -218,7 +214,7 @@ border-radius: 8;
     <widget class="QWidget" name="wButtons" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <property name="spacing">
-       <number>-1</number>
+       <number>6</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -321,6 +317,14 @@ border-radius: 8;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>BannerWidget</class>
+   <extends>QWidget</extends>
+   <header>BannerWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
