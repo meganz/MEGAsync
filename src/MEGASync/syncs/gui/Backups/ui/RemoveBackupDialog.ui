@@ -244,7 +244,7 @@ color: #ffe31b57; /*colorToken.text-error*/
            <widget class="QLineEdit" name="lTarget">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>350</width>
               <height>35</height>
              </size>
             </property>
@@ -320,7 +320,7 @@ color: #ffe31b57; /*colorToken.text-error*/
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>80</width>
+              <width>85</width>
               <height>20</height>
              </size>
             </property>
