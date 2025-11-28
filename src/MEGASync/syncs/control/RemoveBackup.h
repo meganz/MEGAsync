@@ -16,7 +16,8 @@ class RemoveBackup: public QObject
     Q_OBJECT
 
 public:
-    RemoveBackup() = default;
+    using QObject::QObject;
+
     ~RemoveBackup() = default;
     void removeBackup(std::shared_ptr<SyncSettings> backup, QWidget* parent);
 
@@ -27,7 +28,7 @@ private:
 
     std::shared_ptr<SyncSettings> mBackupToRemove;
     mega::MegaHandle mFolderToMoveBackupData;
-    QWidget* mParent;
+    QPointer<QWidget> mParent;
     QPointer<RemoveBackupDialog> mRemoveBackupDialog;
 };
 

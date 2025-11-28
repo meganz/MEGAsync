@@ -30,7 +30,7 @@ void CreateRemoveBackupsManager::removeBackup(std::shared_ptr<SyncSettings> back
 {
     if (mRemoveBackupHandler == nullptr)
     {
-        mRemoveBackupHandler = new RemoveBackup();
+        mRemoveBackupHandler = new RemoveBackup(qApp);
     }
 
     mRemoveBackupHandler->removeBackup(backup, parent);
