@@ -5,32 +5,52 @@
 #include "MegaNodeNames.h"
 #include "NodeSelectorSpecializations.h"
 #include "StatsEventHandler.h"
+#include "TextDecorator.h"
 #include "ui_RemoveBackupDialog.h"
 #include "Utilities.h"
 
 #include <QButtonGroup>
 
-RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSettings> backup, QWidget* parent):
+RemoveBackupDialog::RemoveBackupDialog(QWidget* parent):
     QDialog(parent),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mUi(new Ui::RemoveBackupDialog),
-    mBackup(backup),
     mTargetFolder(MegaSyncApp->getRootNode() ? MegaSyncApp->getRootNode()->getHandle() :
                                                mega::INVALID_HANDLE)
 {
     mUi->setupUi(this);
     mUi->lTarget->setReadOnly(true);
-    connect(mUi->bConfirm, &QPushButton::clicked, this, &QDialog::accept);
+    connect(mUi->bConfirm, &QPushButton::clicked, this, &RemoveBackupDialog::onConfirmClicked);
     connect(mUi->bCancel, &QPushButton::clicked, this, &QDialog::reject);
-    connect(mUi->rMoveFolder, &QRadioButton::toggled, this, &RemoveBackupDialog::OnMoveSelected);
-    connect(mUi->rDeleteFolder, &QRadioButton::toggled, this, &RemoveBackupDialog::OnDeleteSelected);
-    connect(mUi->bChange, &QPushButton::clicked, this, &RemoveBackupDialog::OnChangeButtonClicked);
+    connect(mUi->rMoveFolder, &QRadioButton::toggled, this, &RemoveBackupDialog::onMoveSelected);
+    connect(mUi->rDeleteFolder,
+            &QRadioButton::toggled,
+            this,
+            &RemoveBackupDialog::onDeleteSelected);
+    connect(mUi->bChange, &QPushButton::clicked, this, &RemoveBackupDialog::onChangeButtonClicked);
 
-    mUi->moveToContainer->setEnabled(false);
-    mUi->lTarget->setText(mTargetFolder != mega::INVALID_HANDLE ?
+    mUi->lTarget->setText(MegaSyncApp->getRootNode() ?
                               MegaNodeNames::getRootNodeName(MegaSyncApp->getRootNode().get()) :
                               QString());
-    adjustSize();
+
+    mUi->lErrorHint->setVisible(false);
+
+    const QString label = QString::fromLatin1(" ") + tr("Stop backup");
+    mUi->bConfirm->setText(label);
+
+    Text::Bold boldDecorator;
+    auto deleteText = tr("Folder will be deleted from MEGA. It won't be deleted from "
+                         "your computer. [B]This action cannot be undone.[/B]");
+    boldDecorator.process(deleteText);
+    mUi->lDeleteFolder->setText(deleteText);
+
+    auto description = tr(
+        "To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].");
+    boldDecorator.process(description);
+    mUi->lSecondaryText->setText(description);
+
+    mUi->rMoveFolder->setAutoExclusive(true);
+    mUi->rDeleteFolder->setAutoExclusive(true);
 }
 
 RemoveBackupDialog::~RemoveBackupDialog()
@@ -38,32 +58,56 @@ RemoveBackupDialog::~RemoveBackupDialog()
     delete mUi;
 }
 
-std::shared_ptr<SyncSettings> RemoveBackupDialog::backupToRemove()
+void RemoveBackupDialog::onConfirmClicked()
 {
-    return mBackup;
+    auto targetFolder = mUi->rMoveFolder->isChecked() ? mTargetFolder : mega::INVALID_HANDLE;
+    emit removeBackup(targetFolder);
 }
 
-//returns INVALID_HANDLE if user wants to delete the folder,
-//otherwise return selected folder, cloud drive if nothing is selected
-mega::MegaHandle RemoveBackupDialog::targetFolder()
+void RemoveBackupDialog::setTargetFolderErrorHint(QString error)
 {
-    return mUi->rMoveFolder->isChecked() ? mTargetFolder : mega::INVALID_HANDLE;
+    mUi->lTarget->setProperty("error", QLatin1String("true"));
+
+    mUi->lErrorHint->setText(error);
+    mUi->lErrorHint->setVisible(true);
+
+    mUi->lTarget->style()->polish(mUi->lTarget);
 }
 
-void RemoveBackupDialog::OnDeleteSelected()
+void RemoveBackupDialog::onDeleteSelected()
 {
-    const bool enableMoveContainer = false;
-    OnOptionSelected(AppStatsEvents::EventType::DELETE_REMOVED_BAKCUP_CLICKED, enableMoveContainer);
+    onOptionSelected(AppStatsEvents::EventType::DELETE_REMOVED_BAKCUP_CLICKED, false);
 }
 
-void RemoveBackupDialog::OnMoveSelected()
+void RemoveBackupDialog::onMoveSelected()
 {
-    const bool enableMoveContainer = true;
-    OnOptionSelected(AppStatsEvents::EventType::MOVE_REMOVED_BACKUP_FOLDER, enableMoveContainer);
+    onOptionSelected(AppStatsEvents::EventType::MOVE_REMOVED_BACKUP_FOLDER, true);
 }
 
-void RemoveBackupDialog::OnChangeButtonClicked()
+void RemoveBackupDialog::onOptionSelected(const AppStatsEvents::EventType eventType,
+                                          const bool enableMoveContainer)
 {
+    if (!enableMoveContainer)
+    {
+        clearTargetFolderError();
+    }
+
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(eventType);
+    mUi->moveToContainer->setEnabled(enableMoveContainer);
+}
+
+void RemoveBackupDialog::clearTargetFolderError()
+{
+    mUi->lTarget->setProperty("error", QLatin1String("false"));
+    mUi->lErrorHint->setVisible(false);
+    mUi->lErrorHint->clear();
+    mUi->lTarget->style()->polish(mUi->lTarget);
+}
+
+void RemoveBackupDialog::onChangeButtonClicked()
+{
+    clearTargetFolderError();
+
     auto nodeSelector = new MoveBackupNodeSelector(this);
     nodeSelector->init();
     DialogOpener::showDialog<NodeSelector>(
@@ -82,14 +126,4 @@ void RemoveBackupDialog::OnChangeButtonClicked()
                                       QString::fromUtf8(mMegaApi->getNodePath(targetNode.get())));
             }
         });
-}
-
-void RemoveBackupDialog::OnOptionSelected(const AppStatsEvents::EventType eventType,
-                                          const bool enableMoveContainer)
-{
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(eventType);
-    mUi->moveToContainer->setEnabled(enableMoveContainer);
-    mUi->bConfirm->setEnabled(true);
-    mUi->rMoveFolder->setAutoExclusive(true);
-    mUi->rDeleteFolder->setAutoExclusive(true);
 }

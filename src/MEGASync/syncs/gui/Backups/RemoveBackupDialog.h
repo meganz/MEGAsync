@@ -2,7 +2,7 @@
 #define REMOVEBACKUPDIALOG_H
 
 #include "AppStatsEvents.h"
-#include "SyncSettings.h"
+#include "megaapi.h"
 
 #include <QDialog>
 #include <QPointer>
@@ -16,25 +16,26 @@ class RemoveBackupDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit RemoveBackupDialog(std::shared_ptr<SyncSettings> backup, QWidget *parent = nullptr);
+    explicit RemoveBackupDialog(QWidget* parent = nullptr);
     ~RemoveBackupDialog();
+    void setTargetFolderErrorHint(QString error);
 
-    std::shared_ptr<SyncSettings> backupToRemove();
-    mega::MegaHandle targetFolder();
-    QSize sizeHint() const override{return QSize(540, 340);}
+signals:
+    void removeBackup(mega::MegaHandle targetFolder);
 
 private slots:
-    void OnDeleteSelected();
-    void OnMoveSelected();
-    void OnChangeButtonClicked();
+    void onDeleteSelected();
+    void onMoveSelected();
+    void onChangeButtonClicked();
+    void onConfirmClicked();
 
 private:
-    void OnOptionSelected(const AppStatsEvents::EventType eventType,
+    void onOptionSelected(const AppStatsEvents::EventType eventType,
                           const bool enableMoveContainer);
+    void clearTargetFolderError();
 
     mega::MegaApi* mMegaApi;
-    Ui::RemoveBackupDialog *mUi;
-    std::shared_ptr<SyncSettings> mBackup;
+    Ui::RemoveBackupDialog* mUi;
     mega::MegaHandle mTargetFolder;
 };
 
