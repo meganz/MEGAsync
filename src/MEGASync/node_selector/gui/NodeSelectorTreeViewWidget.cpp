@@ -507,7 +507,7 @@ void NodeSelectorTreeViewWidget::onGoBackClicked()
 
     if (rootIndex.isValid())
     {
-        selectIndex(rootIndex, true);
+        selectIndex(rootIndex, true, true);
     }
 }
 
