@@ -73,7 +73,7 @@ public:
     void setOverQuotaMode(bool state);
     void setAccountType(int accType);
     void setDisabledSyncTags(QSet<int> tags);
-    void addBackup();
+    void addBackup(SyncInfo::SyncOrigin origin);
     void clearUserAttributes();
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
     bool updateOverStorageState(int state);
@@ -110,7 +110,6 @@ private:
 public slots:
 
     void pauseResumeClicked();
-    void generalAreaClicked();
 
     void pauseResumeHovered(QMouseEvent *event);
     void generalAreaHovered(QMouseEvent *event);

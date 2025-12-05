@@ -18,6 +18,7 @@ Syncs::Syncs(QObject* parent):
     connect(&mSyncController, &SyncController::syncAddStatus, this, &Syncs::onSyncAddRequestStatus);
     connect(SyncInfo::instance(), &SyncInfo::syncRemoved, this, &Syncs::onSyncRemoved);
     connect(MegaSyncApp, &MegaApplication::languageChanged, this, &Syncs::onLanguageChanged);
+    connect(mSyncsData.get(), &SyncsData::syncSetupSuccess, this, &Syncs::syncSetupSuccess);
 
     updateDefaultFolders();
 }

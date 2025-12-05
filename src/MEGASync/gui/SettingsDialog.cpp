@@ -30,14 +30,7 @@
 #include <QTranslator>
 #include <QUrl>
 
-#include <cassert>
 #include <memory>
-
-#ifdef Q_OS_WINDOWS
-extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
-#else
-#include "PermissionsDialog.h"
-#endif
 
 using namespace mega;
 using namespace std::chrono_literals;
@@ -1116,16 +1109,22 @@ void SettingsDialog::on_lAccountType_clicked()
 
 void SettingsDialog::on_bUpgrade_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::UPGRADE_CLICKED_SETTINGS);
     Utilities::upgradeClicked();
 }
 
 void SettingsDialog::on_bMyAccount_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::SETTINGS_MY_ACCOUNT_CLICKED);
     Utilities::openUrl(ServiceUrls::getAccountUrl());
 }
 
 void SettingsDialog::on_bStorageDetails_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::SETTINGS_DETAILS_CLICKED);
     auto accountDetailsDialog = new AccountDetailsDialog(this);
     DialogOpener::showNonModalDialog<AccountDetailsDialog>(accountDetailsDialog);
 }
@@ -1291,6 +1290,8 @@ void SettingsDialog::on_bBackup_clicked()
 
 void SettingsDialog::on_bBackupCenter_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::SETTINGS_DEVICE_CENTER_CLICKED);
     Utilities::openBackupCenter();
 }
 
@@ -1426,6 +1427,8 @@ void SettingsDialog::on_bChangePassword_clicked()
 
 void SettingsDialog::on_bSessionHistory_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::SETTINGS_SESSION_HISTORY_CLICKED);
     Utilities::openUrl(ServiceUrls::getSessionHistoryUrl());
 }
 

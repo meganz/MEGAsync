@@ -3966,15 +3966,16 @@ void MegaApplication::openDeviceCentre()
     QMLComponent::showDialog<DeviceCentre>();
 }
 
-void MegaApplication::importLinks()
+void MegaApplication::importLinks(AppStatsEvents::EventType event)
 {
     if (appfinished)
     {
         return;
     }
 
-    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_OPEN_LINKS_CLICKED,
-                                         sender(), importLinksAction, true);
+    mStatsEventHandler->sendTrackedEvent(event,
+                                         event ==
+                                             AppStatsEvents::EventType::MENU_OPEN_LINKS_CLICKED);
 
     mTransferQuota->checkImportLinksAlertDismissed([this](int result){
         if(result == QDialog::Rejected)
@@ -4115,15 +4116,17 @@ void MegaApplication::runUploadActionWithTargetHandle(const MegaHandle &targetFo
     processUpload();
 }
 
-void MegaApplication::uploadActionClicked()
+void MegaApplication::uploadActionClicked(AppStatsEvents::EventType event)
 {
     if (appfinished)
     {
         return;
     }
 
-    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_UPLOAD_CLICKED,
-                                         sender(), uploadAction, true);
+    mStatsEventHandler->sendTrackedEvent(
+        event,
+        event == AppStatsEvents::EventType::MENU_UPLOAD_CLICKED ||
+            event == AppStatsEvents::EventType::INFO_DIALOG_UPLOAD_CLICKED);
 
     const bool storageIsOverQuota(storageState == MegaApi::STORAGE_STATE_RED || storageState == MegaApi::STORAGE_STATE_PAYWALL);
     if (storageIsOverQuota)
@@ -4205,16 +4208,19 @@ bool MegaApplication::isInfoDialogVisible() const
     return infoDialog && infoDialog->isVisible();
 }
 
-void MegaApplication::downloadActionClicked()
+void MegaApplication::downloadActionClicked(bool skipEventSending)
 {
     if (appfinished)
     {
         return;
     }
-
-    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_DOWNLOAD_CLICKED,
-                                         sender(), downloadAction, true);
-
+    if (!skipEventSending)
+    {
+        mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_DOWNLOAD_CLICKED,
+                                             sender(),
+                                             downloadAction,
+                                             true);
+    }
     mTransferQuota->checkDownloadAlertDismissed([this](int result)
     {
         if(result == QDialog::Rejected)
@@ -5007,7 +5013,7 @@ void MegaApplication::externalAddBackup()
 
     if(infoDialog)
     {
-        infoDialog->addBackup();
+        infoDialog->addBackup(SyncInfo::SyncOrigin::EXTERNAL_ORIGIN);
     }
 }
 
@@ -5579,21 +5585,29 @@ void MegaApplication::createInfoDialogMenus()
                    tr("Settings"),
                    &MegaApplication::openSettings,
                    QString::fromLatin1(":/images/icons/tray/windows/settings.svg"));
-    recreateAction(&windowsImportLinksAction,
-                   windowsMenu,
-                   tr("Open links"),
-                   &MegaApplication::importLinks,
-                   QString::fromLatin1(":/images/icons/tray/windows/open_links.svg"));
+    recreateAction(
+        &windowsImportLinksAction,
+        windowsMenu,
+        tr("Open links"),
+        [this]()
+        {
+            importLinks();
+        },
+        QString::fromLatin1(":/images/icons/tray/windows/open_links.svg"));
     recreateAction(&windowsFilesAction,
                    windowsMenu,
                    tr("Files"),
                    &MegaApplication::goToFiles,
                    QString::fromLatin1(":/images/icons/tray/windows/drive.svg"));
-    recreateAction(&windowsUploadAction,
-                   windowsMenu,
-                   tr("Upload"),
-                   &MegaApplication::uploadActionClicked,
-                   QString::fromLatin1(":/images/icons/tray/windows/upload.svg"));
+    recreateAction(
+        &windowsUploadAction,
+        windowsMenu,
+        tr("Upload"),
+        [this]()
+        {
+            uploadActionClicked(AppStatsEvents::EventType::MENU_UPLOAD_CLICKED);
+        },
+        QString::fromLatin1(":/images/icons/tray/windows/upload.svg"));
     recreateAction(&windowsDownloadAction,
                    windowsMenu,
                    tr("Download"),
@@ -5759,7 +5773,10 @@ void MegaApplication::createInfoDialogMenus()
                                                     false)
                                .toStdString()
                                .c_str(),
-                           &MegaApplication::importLinks);
+                           [this]()
+                           {
+                               importLinks();
+                           });
     recreateMegaMenuAction(&uploadAction,
                            infoDialogMenu,
                            tr("Upload"),
@@ -5770,7 +5787,10 @@ void MegaApplication::createInfoDialogMenus()
                                                     false)
                                .toStdString()
                                .c_str(),
-                           &MegaApplication::uploadActionClicked);
+                           [this]()
+                           {
+                               uploadActionClicked(AppStatsEvents::EventType::MENU_UPLOAD_CLICKED);
+                           });
     recreateMegaMenuAction(&downloadAction,
                            infoDialogMenu,
                            tr("Download"),
@@ -5781,7 +5801,10 @@ void MegaApplication::createInfoDialogMenus()
                                                     false)
                                .toStdString()
                                .c_str(),
-                           &MegaApplication::downloadActionClicked);
+                           [this]()
+                           {
+                               downloadActionClicked();
+                           });
     recreateMegaMenuAction(&streamAction,
                            infoDialogMenu,
                            tr("Stream"),

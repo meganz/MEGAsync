@@ -5,6 +5,7 @@
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
 #include "ServiceUrls.h"
+#include "StatsEventHandler.h"
 #include "ThemeManager.h"
 #include "TokenParserWidgetManager.h"
 #include "ui_AlertItem.h"
@@ -674,7 +675,9 @@ void AlertItem::mousePressEvent(QMouseEvent* event)
             break;
         }
     }
-
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::NOTIFICATION_ITEM_CLICKED,
+        true);
     QWidget::mousePressEvent(event);
 }
 

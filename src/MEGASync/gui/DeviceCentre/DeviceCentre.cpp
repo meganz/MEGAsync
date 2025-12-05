@@ -189,8 +189,7 @@ void DeviceCentre::registerQmlModules()
 
 void DeviceCentre::openAddBackupDialog()
 {
-    const bool comesFromSettings = true;
-    CreateRemoveBackupsManager::addBackup(comesFromSettings);
+    CreateRemoveBackupsManager::addBackup(SyncInfo::SyncOrigin::MAIN_APP_ORIGIN);
 }
 
 void DeviceCentre::retrieveDeviceData(const QString& deviceId)

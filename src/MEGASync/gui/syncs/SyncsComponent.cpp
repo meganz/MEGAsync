@@ -9,7 +9,8 @@ static bool qmlRegistrationDone = false;
 
 SyncsComponent::SyncsComponent(QObject* parent):
     QMLComponent(parent),
-    mSyncs(std::make_unique<Syncs>())
+    mSyncs(std::make_unique<Syncs>()),
+    mOrigin(SyncInfo::SyncOrigin::NONE)
 {
     registerQmlModules();
 
@@ -28,6 +29,7 @@ SyncsComponent::SyncsComponent(QObject* parent):
             &ChooseLocalFolder::folderChosen,
             this,
             &SyncsComponent::onLocalFolderChosen);
+    connect(mSyncs.get(), &Syncs::syncSetupSuccess, this, &SyncsComponent::onSyncSetupSuccess);
 }
 
 void SyncsComponent::closingOnboardingDialog()
@@ -94,6 +96,7 @@ void SyncsComponent::viewSyncsInSettingsButtonClicked()
 void SyncsComponent::setSyncOrigin(SyncInfo::SyncOrigin origin)
 {
     mSyncs->setSyncOrigin(origin);
+    mOrigin = origin;
 }
 
 void SyncsComponent::setRemoteFolder(const QString& remoteFolder)
@@ -154,4 +157,34 @@ void SyncsComponent::closeDialogButtonClicked()
 {
     mSyncs->clearRemoteError();
     mSyncs->clearLocalError();
+}
+
+AppStatsEvents::EventType SyncsComponent::getEventType() const
+{
+    switch (mOrigin)
+    {
+        case SyncInfo::SyncOrigin::CONTEXT_MENU_ORIGIN:
+            return AppStatsEvents::EventType::SYNC_ADDED_CONTEXT_MENU;
+        case SyncInfo::SyncOrigin::ONBOARDING_ORIGIN:
+            return AppStatsEvents::EventType::SYNC_ADDED_ONBOARDING;
+        case SyncInfo::SyncOrigin::EXTERNAL_ORIGIN:
+            return AppStatsEvents::EventType::SYNC_ADDED_WEBCLIENT;
+        case SyncInfo::SyncOrigin::INFODIALOG_BUTTON_ORIGIN:
+            return AppStatsEvents::EventType::SYNC_ADDED_ADD_SYNC_BUTTON;
+        case SyncInfo::SyncOrigin::CLOUD_DRIVE_DIALOG_ORIGIN:
+            return AppStatsEvents::EventType::SYNC_ADDED_CLOUD_DRIVE_BUTTON;
+        case SyncInfo::SyncOrigin::OS_NOTIFICATION_ORIGIN:
+            return AppStatsEvents::EventType::SYNC_ADDED_OS_NOTIFICATION;
+        case SyncInfo::SyncOrigin::SETTINGS_ORIGIN:
+            return AppStatsEvents::EventType::SYNC_ADDED_SETTINGS;
+        case SyncInfo::SyncOrigin::MAIN_APP_ORIGIN:
+        default:
+            return AppStatsEvents::EventType::SYNC_ADDED_MAIN_APP;
+    }
+}
+
+void SyncsComponent::onSyncSetupSuccess(bool)
+{
+    auto syncAddEvent = getEventType();
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(syncAddEvent, true);
 }

@@ -11,7 +11,7 @@ static bool qmlRegistrationDone = false;
 
 BackupCandidatesComponent::BackupCandidatesComponent(QObject* parent):
     QMLComponent(parent),
-    mComesFromSettings(false),
+    mSyncOrigin(SyncInfo::SyncOrigin::NONE),
     mBackupCandidatesController(std::make_shared<BackupCandidatesController>()),
     mBackupsProxyModel(new BackupCandidatesProxyModel(mBackupCandidatesController))
 {
@@ -57,11 +57,6 @@ void BackupCandidatesComponent::openBackupsTabInPreferences() const
     MegaSyncApp->openSettings(SettingsDialog::BACKUP_TAB);
 }
 
-bool BackupCandidatesComponent::getComesFromSettings() const
-{
-    return mComesFromSettings;
-}
-
 BackupCandidates* BackupCandidatesComponent::getData()
 {
     return mBackupCandidatesController->getBackupCandidates().get();
@@ -73,12 +68,13 @@ void BackupCandidatesComponent::onBackupsCreationFinished(bool success)
     if (success)
     {
         mBackupsProxyModel->setSelectedFilterEnabled(false);
+        MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(getEventType());
     }
 }
 
-void BackupCandidatesComponent::setComesFromSettings(bool value)
+void BackupCandidatesComponent::setOrigin(SyncInfo::SyncOrigin origin)
 {
-    mComesFromSettings = value;
+    mSyncOrigin = origin;
 }
 
 void BackupCandidatesComponent::openExclusionsDialog() const
@@ -150,4 +146,24 @@ void BackupCandidatesComponent::selectAllFolders(Qt::CheckState state, bool from
 void BackupCandidatesComponent::createBackups(SyncInfo::SyncOrigin syncOrigin)
 {
     mBackupCandidatesController->createBackups(syncOrigin);
+}
+
+AppStatsEvents::EventType BackupCandidatesComponent::getEventType() const
+{
+    switch (mSyncOrigin)
+    {
+        case SyncInfo::SyncOrigin::CONTEXT_MENU_ORIGIN:
+            return AppStatsEvents::EventType::BACKUP_ADDED_CONTEXT_MENU;
+        case SyncInfo::SyncOrigin::EXTERNAL_ORIGIN:
+            return AppStatsEvents::EventType::BACKUP_ADDED_WEBCLIENT;
+        case SyncInfo::SyncOrigin::ONBOARDING_ORIGIN:
+            return AppStatsEvents::EventType::BACKUP_ADDED_ONBOARDING;
+        case SyncInfo::SyncOrigin::SETTINGS_ORIGIN:
+            return AppStatsEvents::EventType::BACKUP_ADDED_SETTINGS;
+        case SyncInfo::SyncOrigin::SHELL_EXT_ORIGIN:
+            return AppStatsEvents::EventType::BACKUP_ADDED_SHELL_EXTENSION;
+        case SyncInfo::SyncOrigin::MAIN_APP_ORIGIN:
+        default:
+            return AppStatsEvents::EventType::BACKUP_ADDED_MAIN_APP;
+    }
 }
