@@ -4,6 +4,7 @@
 #include "MegaTransferView.h"
 #include "Platform.h"
 #include "StalledIssuesModel.h"
+#include "StatsEventHandler.h"
 #include "tokenizer/TokenizableItems/TokenPropertySetter.h"
 #include "ui_TransferManager.h"
 #include "ui_TransferManagerDragBackDrop.h"
@@ -762,6 +763,8 @@ void TransferManager::on_tActionButton_clicked()
 
 void TransferManager::on_bPause_toggled()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::TRANSFER_MANAGER_PAUSE_RESUME_CLICKED);
     auto newState = !mModel->areAllPaused();
     pauseResumeTransfers(newState);
 
@@ -952,22 +955,27 @@ void TransferManager::onFileTypeButtonClicked(TransfersWidget::TM_TAB tab, Utili
 
 void TransferManager::on_bOpenLinks_clicked()
 {
-    MegaSyncApp->importLinks();
+    MegaSyncApp->importLinks(AppStatsEvents::EventType::TRANSFER_MANAGER_OPEN_LINKS_CLICKED);
 }
 
 void TransferManager::on_tCogWheel_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::TRANSFER_MANAGER_SETTINGS_CLICKED);
     MegaSyncApp->openSettings();
 }
 
 void TransferManager::on_bDownload_clicked()
 {
-    MegaSyncApp->downloadActionClicked();
+    static const bool SKIP_EVENT_SENDING = true;
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::TRANSFER_MANAGER_DOWNLOAD_CLICKED);
+    MegaSyncApp->downloadActionClicked(SKIP_EVENT_SENDING);
 }
 
 void TransferManager::on_bUpload_clicked()
 {
-    MegaSyncApp->uploadActionClicked();
+    MegaSyncApp->uploadActionClicked(AppStatsEvents::EventType::TRANSFER_MANAGER_UPLOAD_CLICKED);
 }
 
 void TransferManager::toggleTab(int newTab)

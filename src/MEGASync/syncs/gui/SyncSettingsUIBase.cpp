@@ -152,6 +152,8 @@ void SyncSettingsUIBase::setAddButtonEnabled(bool enabled)
 #ifndef Q_OS_WIN
 void SyncSettingsUIBase::onPermissionsClicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::SETTINGS_PERMISSIONS_CLICKED);
     MegaSyncApp->getMegaApi()->setDefaultFolderPermissions(
         Preferences::instance()->folderPermissionsValue());
     int folderPermissions = MegaSyncApp->getMegaApi()->getDefaultFolderPermissions();

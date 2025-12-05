@@ -429,3 +429,10 @@ void StreamingFromMegaDialog::onTransferTemporaryError(mega::MegaApi*, mega::Meg
         activateWindow();
     }
 }
+
+void StreamingFromMegaDialog::onTransferStart(mega::MegaApi* api, mega::MegaTransfer* transfer)
+{
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::LINK_STREAM_STARTED,
+        true);
+}

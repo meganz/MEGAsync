@@ -39,6 +39,9 @@ public:
 public slots:
     void onRequestFinish(mega::MegaRequest* request, mega::MegaError* error);
 
+signals:
+    void syncSetupSuccess(bool isFullSync);
+
 private slots:
     void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name);
     void onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings);

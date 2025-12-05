@@ -123,9 +123,6 @@ private:
 
     static QString getDescription(SyncInfo::SyncOrigin origin);
 
-    static std::optional<AppStatsEvents::EventType>
-        getSyncAddedEventType(const SyncInfo::SyncOrigin origin);
-
     QMap<QString, QString> mPendingBackups;
 
     //Sync/Backup operation signals

@@ -5,24 +5,25 @@
 #include "QmlDialogWrapper.h"
 #include "SyncSettings.h"
 
-void CreateRemoveBackupsManager::addBackup(bool comesFromSettings, const QStringList& localFolders)
+void CreateRemoveBackupsManager::addBackup(SyncInfo::SyncOrigin origin,
+                                           const QStringList& localFolders)
 {
     auto overQuotaDialog = MegaSyncApp->createOverquotaDialogIfNeeded();
 
     if (overQuotaDialog)
     {
         DialogOpener::showDialog(overQuotaDialog,
-                                 [overQuotaDialog, comesFromSettings, localFolders]()
+                                 [overQuotaDialog, origin, localFolders]()
                                  {
                                      if (overQuotaDialog->result() == QDialog::Rejected)
                                      {
-                                         showBackupDialog(comesFromSettings, localFolders);
+                                         showBackupDialog(origin, localFolders);
                                      }
                                  });
     }
     else
     {
-        showBackupDialog(comesFromSettings, localFolders);
+        showBackupDialog(origin, localFolders);
     }
 }
 
@@ -41,7 +42,7 @@ bool CreateRemoveBackupsManager::isBackupsDialogOpen()
     return DialogOpener::findDialog<QmlDialogWrapper<BackupCandidatesComponent>>() != nullptr;
 }
 
-void CreateRemoveBackupsManager::showBackupDialog(bool comesFromSettings,
+void CreateRemoveBackupsManager::showBackupDialog(SyncInfo::SyncOrigin origin,
                                                   const QStringList& localFolders)
 {
     QPointer<QmlDialogWrapper<BackupCandidatesComponent>> backupsDialog;
@@ -53,8 +54,7 @@ void CreateRemoveBackupsManager::showBackupDialog(bool comesFromSettings,
     {
         backupsDialog = new QmlDialogWrapper<BackupCandidatesComponent>();
     }
-
-    backupsDialog->wrapper()->setComesFromSettings(comesFromSettings);
+    backupsDialog->wrapper()->setOrigin(origin);
     if (!localFolders.empty())
     {
         backupsDialog->wrapper()->insertFolders(localFolders);

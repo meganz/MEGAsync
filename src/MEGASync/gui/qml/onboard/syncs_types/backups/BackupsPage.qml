@@ -7,6 +7,7 @@ import onboard.syncs_types 1.0
 
 import BackupsComponent 1.0
 import BackupCandidates 1.0
+import SyncInfo 1.0
 
 BackupsFlow {
     id: root
@@ -16,6 +17,10 @@ BackupsFlow {
     BackupsComponent
     {
         id: backupCandidatesComponentAccess
+        Component.onCompleted:
+        {
+            backupCandidatesComponentAccess.setOrigin(SyncInfo.ONBOARDING_ORIGIN)
+        }
     }
 
     selectFoldersPage: Component {
