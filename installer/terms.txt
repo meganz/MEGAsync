@@ -1,209 +1,306 @@
-MEGA LIMITED TERMS OF SERVICE ("TERMS")
+MEGA TERMS OF SERVICE ("TERMS")
 
 Scope of these terms
 
-1. Welcome to Mega. Mega Limited ("Mega", "we", "us") provides cloud storage and communication services with user-controlled encryption. Using Mega, you and other users can encrypt your files and chats using user-controlled encryption ("UCE"), upload, access, store, manage, share, communicate, download and decrypt files, chats and any data (all of which we call "data" in these terms) and give access to that data to others (all together, "services" and each, a "service"). We provide our services ourselves and via our related or affiliated entities, payment processors and resellers who act on our behalf, at our websites at https://mega.nz, https://mega.app and https://mega.io, subdomains and related sites ("websites"), using our mobile apps ("mobile apps"), our desktop apps ("desktop apps"), our command line tools ("cmd tools"), our browser extensions ("browser extensions") and our application programming interface ("API"). If you have questions about how to use our services or the great things you can do with Mega, check our Help Centre or, if you can't find the answer there, check our contacts page for details of who to contact.
-2. Important: We store all data on servers in New Zealand, Canada and Europe. If you access your data or give someone else access to your data using our services and you or they are not in New Zealand, Canada or Europe, you or they may be accessing that data from a country that does not give adequate protection to personal information when compared to that given under, the New Zealand Privacy Act 2020, the Canadian Personal Information Protection and Electronic Documents Act 2000 or the General Data Protection Regulation ("GDPR"). By agreeing to these terms, you authorise us to grant that access.
-3. These terms are binding and apply to any use of the services by you and anyone who you allow to access your data or our services. By using our services, you and they irrevocably agree to these terms. If you do not like these terms or don't want to be bound by them, you can't use our services. In particular, OUR SERVICES ARE PROVIDED SUBJECT TO CERTAIN DISCLAIMERS BY US AND UNDERTAKINGS BY YOU, INCLUDING AN INDEMNITY FROM YOU IF YOU BREACH THESE TERMS – see clauses 40-51. NEW ZEALAND LAW AND ARBITRATION OF ANY DISPUTES APPLIES EXCLUSIVELY – see clauses 52 and 53.
-4. We can change these terms at any time by providing you at least 30 days' prior notice of the change, whether via email or via a message in any service we provide. Your continued use after that notice means that you agree to the changed terms. If you have paid for a subscription that is due to expire after that 30 day notice period and you do not wish to continue to use our services under the new terms, you may terminate your subscription before the new terms come into force. We will then (but not otherwise) refund the unexpired portion of your subscription payment within 30 days and close your account. For more information about refunds, recurring paid subscriptions and their termination, see clauses 58-60.
-5. If you comply with these terms, then we grant you a non-exclusive, non-transferable, worldwide licence to access and use our services, in accordance with these terms and any plan you have subscribed for.
+1. Welcome to MEGA. When you are a user of Mega Cloud (whether a free user, or on a Pro or Business plan with MEGA VPN and MEGA PASS bundled for free), and/or of MEGA S4, your agreement for all these services is with Mega Privacy LLC (Hungarian Cg. 13-09-239012 with its registered office at Templom utca 17, 2161 Csomàd, Hungary). When you subscribe to MEGA VPN or MEGA Pass on a standalone paid plan, your agreement is with Mega Privacy (NZ) Limited (NZ company number 9324253) with its registered office at 120 Albert Street, Auckland, New Zealand. In all cases, throughout these terms, we refer to either company as "MEGA", "we", "us".
 
-Your data
+MEGA provides cloud storage and communication services with user-controlled encryption ("UCE"). With MEGA, you can use UCE to encrypt files (text, photos, videos, etc.) and communicate with others via encrypted chats, voice and video calls. You can upload your encrypted files to the cloud, manage, access, share, download and decrypt them. Together with other services which MEGA may provide from time to time, such as MEGA VPN, MEGA Pass and MEGA S4, all of the above are the "services" and each, is a "service". All encrypted files and communication data, and all other data you share with MEGA is called "Data" in these Terms.
 
-6. If you allow others to access your data (e.g. by giving them a link to, and a key to decrypt, that data), in addition to them accepting these terms, you are responsible for their actions and omissions while they are using our services and you agree to fully indemnify us for any claim, loss, damage, fine, costs (including our legal fees) and other liability if they breach any of these terms. This is particularly the case where you are the administrator of a business account (see clauses 33-35 and 54-57 below).
-7. UCE is fundamental to our services. This means that you, not us, have encrypted control of who has access to your data. You should keep your password and Recovery Key safe and confidential. You must not share your password with anyone else and should not release encryption keys to anyone else unless you wish them to have access to your data. If you lose or misplace your password, you will lose access to your data. Encryption won't help though if someone has full access to your system or device. We strongly urge you to use best practices for ensuring the safety and security of your system and devices (e.g. via unique passwords, security upgrades, firewall protection, anti-virus software, securing and encrypting your devices). Mega will never send you emails asking for your password so do not be fooled by any such email since it will not be from us.
-8. You must maintain copies of all data stored by you on our services. We do not make any guarantees that there will be no loss of data or the services will be bug free. You should download all data prior to termination of services.
-9. Our service may automatically (without us viewing the file content) delete a file you upload, store, access or share where it determines that the file is an exact duplicate of a file already on our service (a process usually referred to as deduplication). In that case, the original file will be accessed by you and any other user and that file will be retained as long as any user has a right to access it under these terms. Any right of deletion that you exercise will not apply to a deduplicated file that is associated with another user.
-10. We will store your data subject to these terms and any plan you subscribe to. If you choose to stop using our services, you must download your data first because after account closure we may, if we wish, delete all your data.
-If we suspend or terminate our services to you because you have breached these terms, or someone you have given access to has breached these terms, during the term of that suspension we may, if we wish, delete your data immediately or deny you access to your data but keep it for evidential purposes. See also clauses 33-35 and 54-57 below which set out details of what happens to users within a business account when the business account is suspended or terminated.
-In circumstances where we cease providing our services for other reasons, we will, if we consider it appropriate, it is reasonably practicable and we are not prevented by law or likely to incur any liability in doing so, give you 30 days' notice to retrieve your data.
+We provide our services at our websites at https://mega.nz, https://mega.io and related sites ("websites"), using our mobile apps ("mobile apps"), desktop apps ("desktop apps"), command line tools ("cmd tools"), browser extensions ("browser extensions") and application programming interface ("API"). We also use payment processors in relation to our services. If you have questions about how to use our services or the great things you can do with MEGA, check our Help Centre or, if you cannot find the answer there, check our contacts page for details of who to contact.
+
+2. Important: We store Data in our primary data centres in Japan, Canada and/or the European Union. In order to provide our services, Data may transit or be temporarily stored on servers in other countries, the full details of which can be found on our websites. YOU, AND ANY USERS OF A MEGA BUSINESS ACCOUNT OF WHICH YOU ARE THE ADMINISTRATOR, MUST BE AT LEAST 18 YEARS OF AGE, OR THE AGE OF MAJORITY IN THE JURISDICTION WHERE YOU OR THEY RESIDE, TO USE OUR SERVICES.
+
+3. These Terms are binding and apply to any use of the services by you and anyone you allow to access your Data or our services. By using our services, you and they irrevocably agree to these Terms. If you do not like these Terms or do not want to be bound by them, you must not use our services. In particular, OUR SERVICES ARE PROVIDED SUBJECT TO CERTAIN DISCLAIMERS BY US AND UNDERTAKINGS BY YOU, INCLUDING AN INDEMNITY FROM YOU IF YOU BREACH THESE TERMS – see clauses 55-58. WHEN YOUR AGREEMENT IS WITH MEGA PRIVACY LLC, HUNGARIAN LAW APPLIES EXCLUSIVELY. WHEN YOUR AGREEMENT IS WITH MEGA PRIVACY (NZ) LIMITED, NEW ZEALAND LAW APPLIES EXCLUSIVELY – see clauses 59 and 60.
+
+4. We may make material changes to these Terms at any time by giving you at least 30 days' notice, via email, SMS, pop-up or other prominent notice on our websites, or via a message in any service we provide. However, if we only make minor changes to these Terms or minor changes to our plans, these will become effective when notified. Your continued use after any notice of a minor change or after a material change comes into effect means that you agree to the changed Terms. If you have paid for a subscription that is due to expire during the 30-day notice period of a material change and you do not wish to continue to use our services under the new Terms, you must cancel your subscription before the new Terms come into force and close your account. For more information about refunds, recurring paid subscriptions and their termination, see clauses 70-73.
+
+5. If you comply with these Terms, then we grant you a non-exclusive, non-transferable, worldwide licence to access and use our services, in accordance with these Terms and any plan you have subscribed to.
+
+Your data: Your Files and Chats
+
+6. The following specific terms apply to the actual encrypted files that you upload, access and share using our services ("Your Files"):
+
+6.1. When you upload a file, it is already encrypted on your device, so we do not and cannot know what it contains. We generate and store encrypted previews of images, videos and certain other types of files. We gather a small amount of metadata about the type of file, but that does not disclose the content or information that the file contains.
+
+6.2. All Your Files remain encrypted at all times while they are on our system. They are never received, stored or otherwise dealt with by us in unencrypted form because any decryption takes place only on your device or that of another user to whom you have provided the file, folder or chat, album links and keys that are created when you create the links. Your Files are therefore not personal data since they are never held by MEGA in a form that is information about an identified or identifiable individual.
+
+6.3. None of Your Files are stored in, or made available from, the United States of America.
+
+6.4. We keep Your Files while you are subscribed to our services, subject to our file and data removal, suspension and termination rights set out in our Terms. For serious breaches of our Terms, we are entitled to remove any or all of Your Files immediately without notice and to suspend or terminate your account (e.g. if you upload and/or share child sexual abuse material or other illegal or infringing material). You must maintain copies of Your Files. We strive to provide great services but do not make any guarantees that there will be no loss of data or that the services will be bug free. You must download Your Files prior to the termination of services including where the administrator of a business account or multi-user account ("Business Account"), within which you have used the services, terminates that Business Account. If you forget your password you will lose access to all Your Files unless you have exported and retained a Recovery Key.
+
+6.5. When you delete one of Your Files it will be made inaccessible, marked for deletion and removed when the next appropriate file purging process is run, subject to any retention specifically necessary to provide our services, allowed under Privacy Policy and/or our Terms. After account termination, all Your Files will be marked for deletion and removed when the next appropriate file purging process is run, subject to any retention specifically allowed under Privacy Policy or our Terms.
+
+6.6. We may, but are not obliged to, keep Your Files after your account has been suspended or terminated. In particular, we may, but are not obliged to, keep Your Files where we consider it necessary for evidential purposes relating to a breach of our Terms or with respect to current or anticipated action by any competent law enforcement authority or other third party. In relation to the release of Your Files to competent law enforcement authorities and third parties, see our Takedown Guidance Policy.
+
+7. The following specific terms apply to the content of your text, voice and video chats and other related information ("Your Chats"):
+
+7.1. For private chats, only the people using the accounts that you are engaging within the chat can read, see or hear the chat content posted while they were a member of that chat group. Public chats can be read by anyone who has the link to that chat. Every text message you send is stored as an encrypted binary large object ("blob"). The times and participants of your successful and unsuccessful chats are stored in unencrypted form. The content of voice and video chats is not recorded or stored by MEGA. When the recording feature is activated by a participant for a given voice or video chat, the recording will be stored unencrypted on that participant's device. If you have enabled rich URL previews, a plain text preview of the URL is generated in our system but is stored separately. When you view the text or voice chat history and contents, or reinitiate a chat with the same participant(s), the blobs are decrypted in your browser or mobile app.
+
+7.2. All Your Chats remain encrypted at all times while they are on our system. They are never stored or otherwise dealt with by us in unencrypted form because encryption and any decryption of the blob take place only on your device. Your Chats are therefore not personal data since they are never held by MEGA in a form that is information about an identified or identifiable individual.
+
+7.3. None of Your Chats or related personal information are stored in, or made available from, the United States of America.
+
+7.4. We keep Your Chats while you are subscribed to our services but subject to our file and data removal, suspension and termination rights set out in our Terms. For serious breaches of our Terms, we are entitled to remove any or all of Your Chats immediately without notice and to suspend or terminate your account (e.g. if you exchange illegal or infringing material).
+
+7.5. Chats may be deleted by the moderator of the chat, who may be you or another MEGA user (depending on who has initiated the chat and been granted moderator rights). When the moderator deletes the chat history it will be removed from his or her chat and will no longer be accessible to any participant in that chat.
+
+8. If you allow others to access your Data (e.g. by giving them a link to, and a key to decrypt, that Data), in addition to them accepting these Terms, you are responsible for their actions and omissions while they are using our services and you agree to fully indemnify us for any claim, loss, damage, fine, costs (including our legal fees) and other liability if they breach any of these Terms, including where you are the administrator of a business account or multi-user account (together "Business Account") (see clauses 35-37, 61 and 64 below).
+
+9. UCE is fundamental to our services. This means that you, not us, have encrypted control of who has access to your Data. You should keep your password and recovery key safe and confidential. You must not share your password with anyone and should not release encryption keys to anyone unless you want them to have access to your Data. Access to your account is by way of nominated email address and password. It is your responsibility to keep these safe and secure as MEGA stores the email address but does not store the password.
+
+If you forget your password you will lose access to all your Data, unless you have exported and retained your Recovery Key. Encryption will not help if someone has full access to your password or device. We strongly urge you to use best practices for ensuring the safety and security of your system and devices (e.g. via unique passwords, security upgrades, firewall protection, anti-virus software, securing and encrypting your devices). MEGA will never send you emails asking for your password so do not be fooled. Any such email will not be from us.
+
+10. You must maintain copies of all Data stored by you on our services. We do not make any guarantees that there will be no loss of Data. You should download all Data prior to termination of services.
+
+11. When you upload, store, access or share a file that is an exact duplicate of a file already on our service, our service may automatically (without viewing the file) delete it and give you access to the existing file already on our service (a process usually referred to as deduplication). In that case, you and any other user with the right to access that file will have access to the original file which will be retained as long as any user has a right to access it under these Terms. If you delete a deduplicated file from your account, that will not affect other users with the right to access that file.
+
+12. We will store your Data subject to these Terms, our Privacy Policy, our Takedown Guidance Policy, our Cookie Policy, any additional terms applying to specific services and the terms of any plan you subscribe to. If you choose to stop using our services, you must download your Data first because after account closure we may delete all your Data.
+
+13. If we suspend or terminate our services to you because you have breached these Terms, or someone you have given access to has breached these Terms, during the term of that suspension we may delete your Data immediately or deny you access to your Data but keep it for evidential purposes. See also clauses 37-38, 60 and 63 below which set out details of what happens to users within a Business Account when the Business Account is suspended or terminated.
+
+14. In circumstances where we cease providing our services for other reasons, we will, if we consider it appropriate, it is reasonably practicable and we are not prevented by law or likely to incur any liability in doing so, give you 30 days' notice to retrieve your Data.
 
 Your obligations
 
-11. Once you have subscribed to a plan for our services (with payment having been made via one of our websites, one of our mobile apps or one of our related or affiliated entities, payment processors and resellers), you need to continue to pay the fees (if any) for that plan (and any other taxes or duties). No matter which reseller or related or affiliated entity of Mega you make payment to, your contract for services is with Mega Limited and is governed exclusively by these terms and our policies referenced in these terms.
-12. We can at any time change the fees for our services (other than those you have already paid for) and/or the terms of any services we provide to you (including without limitation the terms of any ‘achievements', ‘referral' or similar programs we may offer), as long as we give you (subject at all times to clause 34), 30 days' notice of any such changes. Where we change the fees for our services, in the absence of manifest error or other lawful error, you can't withhold payment or claim any set-off without getting our written agreement
-13. If at any time you do not make a payment to us when you are supposed to (including on termination), we can (and this doesn't affect any other rights we may have against you):
-13.1. suspend or terminate your use of the service and/or;
-13.2. require you to pay, on demand, default interest on any amount you owe us at 10% per annum calculated on a daily basis, from the date when payment was due until the date when payment is actually made by you. You will also need to pay all expenses and costs (including our full legal costs) in connection with us trying to recover any unpaid amount from you.
-14. You must:
-14.1. where you have subscribed for a service, always give us and keep up to date, your correct contact and any billing details and those of any users within a business account;
-14.2. comply fully with any account verification protocols we require you to follow, including account verification via SMS;
-14.3. comply with these terms and any other agreements you have with us and ensure that users within a business account, of which you are administrator, do likewise;
-14.4. comply with all applicable laws, regulations and rules when using our services and with respect to any data you upload, access or share using our services and ensure that users within a business account, of which you are administrator, do likewise.
+15. Once you have subscribed to a plan for our services (with payment having been made via one of our websites, mobile apps or one of our payment processors), you must continue to pay the fees (if any) for that plan (and any other taxes or duties). No matter who you make payment to, your contract for services is with MEGA and is governed exclusively by these Terms and our policies referenced in these Terms.
 
-What you can't do
+16. We may at any time change the fees for our services (other than those you have already paid) and/or any additional terms of any services we provide to you, as long as we give you notice (via email, SMS, pop-up or other prominent notice on our websites, or via a message in the relevant service). If we only make minor changes or if we only change our fees, these will become effective when notified. If we make material changes, these will become effective after 30 days' notice (subject at all times to clause 39). Where we change the fees for our services, in the absence of manifest error or other lawful excuse, you may not withhold payment or claim any set-off without getting our written agreement.
 
-15. You can't, and will ensure that no users within a business account, of which you are administrator:
-15.1. assign or transfer any rights you have under these terms to any other person (including by sharing your password with someone else) without our prior written consent;
-15.2. do anything that would damage, disrupt or place an unreasonable burden on our service or anyone else's use of our service, including but not limited to denial of service attacks or similar;
-15.3. infringe anyone else's intellectual property (including but not limited to copyright) or other rights in any data;
-15.4. resell or otherwise supply our services to anyone else without our prior written consent;
-15.5. open multiple free accounts;
-15.6. make use of any additional services which are not meant to be available to you on the plan you have subscribed for (including without limitation additional storage or additional functionality) and for the avoidance of doubt, this includes where, for whatever reason, we may have provided you access to such services;
-15.7. use our service:
-15.7.1. to store, use, download, upload, share, access, transmit, or otherwise make available, data in violation of any law in any country (including to breach copyright or other intellectual property rights held by us or anyone else);
-15.7.2. to send unwelcome communications of any kind (including but not limited to unlawful unsolicited commercial communications) to anyone (e.g. spam or chain letters);
-15.7.3. to abuse, defame, threaten, stalk or harass anyone, or to harm them as defined in the Harmful Digital Communications Act 2015 (NZ) or any similar law in any jurisdiction;
-15.7.4. to store, use, download, upload, share, access, transmit, or otherwise make available, unsuitable, offensive, obscene or discriminatory information of any kind;
-15.7.5. to run any network scanning software, spiders, spyware, robots, open relay software or similar software;
-15.7.6. to upload anything or otherwise introduce any spyware, viruses, worms, trojan horses, time bombs or bots or any other damaging items which could interfere with our, or anyone else's, network, device or computer system;
-15.7.7. to use any software or device which may hinder the services (like mail bombs, war dialing, automated multiple pinging etc.);
-15.7.8. to attempt to gain unauthorised access to any services other than those to which you have been given express permission to access; or
-15.7.9. to impersonate anyone or to try to trick or defraud anyone for any reason (e.g. by claiming to be someone you are not).
-16. If you register with us, you will need to use a password in conjunction with your specific account email address. You need to make sure your password is secure, not used by you on other sites and confidential. Make sure you tell us straight away if you think or know someone else has used your password or there has been any other security breach. We will hold you responsible for anything done using your account and password. MAKE YOUR PASSWORD A STRONG ONE AND KEEP IT SECURE. We are not responsible if someone else gains access to your computer or other device and/or your Mega password and/or encryption keys for any files.
+17. If at any time you do not make a payment to us when it is due (including on termination), we may (and this does not affect any other rights we may have against you) after notifying you:
+17.1. suspend or terminate your use of the service and/or;
+17.2. require you to pay, on demand, default interest on any amount you owe us at 10% per annum calculated on a daily basis, from the date when payment was due until the date when payment is actually made by you. You will also have to pay all expenses and costs (including our full legal costs) in connection with us trying to recover any unpaid amount from you.
+
+18. You must:
+18.1. give us, and keep up to date, your correct contact and any billing details and those of any users within a Business Account;
+18.2. comply fully with any account verification protocols we require you to follow, including account verification via SMS;
+18.3. comply with these Terms, all other applicable terms and policies and any other agreements you have with us and ensure that users within a Business Account, of which you are the administrator, also comply; and
+18.4. comply with all applicable laws, regulations and rules when using our services and with respect to any Data you upload, access or share using our services and ensure that users within a Business Account, of which you are the administrator, also comply. It is your responsibility to know and understand the laws applicable to the use of our services. This includes the laws applicable in the country you and anyone you share data or access with reside and may also include the laws of any country with which or through which you use our services to transmit or receive data.
+
+What you must not do
+
+19. You must not, and will ensure that no users within a Business Account of which you are the administrator:
+19.1. assign or transfer any rights you have under these Terms to any other person (including by sharing your password with anyone) without our prior written consent;
+19.2. do anything that would damage, disrupt or place an unreasonable burden on our service or anyone else's use of our service, including denial of service attacks or similar;
+19.3. infringe anyone's intellectual property (including copyright) or other rights in any data;
+19.4. sell or resell access to our services or otherwise supply our services to anyone without our prior written consent;
+19.5. open multiple free accounts;
+19.6. open a new account after a previous account has been suspended or terminated for breach of these Terms;
+19.7. make use of any additional services which are not meant to be available to you on the plan you have subscribed for (including additional storage or additional functionality). For the avoidance of doubt, this includes where, for whatever reason, we may have provided you access to such additional services;
+19.8. use our service to:
+19.8.1. undertake any unlawful, illicit, criminal or illegal activity;
+19.8.2. store, use, download, upload, share, access, transmit, or otherwise make available, Data in violation of any applicable law in any country (including to breach copyright or other intellectual property rights held by us or anyone else);
+19.8.3. send bulk unsolicited communications or unsolicited data of any sort (including unlawful unsolicited commercial communications) to anyone (e.g. spam or chain letters), including any that advertise any MEGA IP address or any URL/domain hosted by MEGA, or do any acts involving deceptive online marketing or fraud;
+19.8.4. undertake other actions or transmissions constituting spam;
+19.8.5. abuse, defame, threaten, stalk or harass anyone, or to harm them as defined in any applicable law;
+19.8.6. store, use, download, upload, share, access, transmit, or otherwise make available, unsuitable, offensive, obscene or discriminatory information of any kind;
+19.8.7. run any network scanning software, spiders, spyware, robots, open relay software or similar software;
+19.8.8. upload anything, transmit, or otherwise introduce any spyware, viruses, worms, trojan horses, time bombs or bots or any other damaging items which could interfere with our, or anyone else's, network, device or computer system;
+19.8.9. use our service for phishing, or to undertake DDoS attacks or any cyber-crime on any people, websites, computers or networks as defined in any applicable law;
+19.8.10. use any software or device which may hinder the services (like mail bombs, war dialing, automated multiple pinging etc.);
+19.8.11. access or connect to, or attempt to access or connect to, any computer without authorisation;
+19.8.12. attempt to gain unauthorised access to any services which you have not been given express permission to access;
+19.8.13. impersonate anyone or try to deceive or defraud anyone for any reason (e.g. by claiming to be someone you are not); or
+19.8.14. obtain, download, stream, share or publish data in breach of any law in any applicable country, including:
+19.8.14.1. material infringing anyone else's intellectual property or other rights in any data;
+19.8.14.2. illegal information of any kind.
+
+20. To register with us, you must use a password in conjunction with your specific account email address. You must not use an email address that is offensive, obscene, discriminatory or is otherwise suggestive of illegal activity. You must make sure your password is secure, confidential and not used by you on other sites. If you think or know that someone has used your password or there has been any other security breach, you must tell us immediately. We will hold you responsible for anything done on our services using your account and password. MAKE YOUR PASSWORD A STRONG ONE AND KEEP IT SECURE. We are not responsible if someone else gains access to your computer or other device and/or your MEGA password and/or encryption keys for any files.
 
 Intellectual property
 
-Our IP
+21. You must not, and you must not let anyone (including any user within a Business Account of which you are the administrator), use, copy, alter, distribute, display, licence, modify or reproduce, reverse assemble, reverse compile, communicate, share, transmit or otherwise make available, (whether digitally, electronically, by linking, or in hard copy or by any means whatsoever), any of our code, content, copyright materials, intellectual property or other rights without getting our permission in writing, other than in order to use our services as intended or as allowed under any open source licences under which we use intellectual property provided by others. The open source code that we use, where we obtained it, and licences for that code, are all detailed on the Github pages referenced on our websites and via our mobile apps.
 
-17. You are not allowed to, and you can't let anyone else (including in particular any user within a business account of which you are administrator), use, copy, alter, distribute, display, licence, modify or reproduce, reverse assemble, reverse compile, communicate, share, transmit or otherwise make available, (whether digitally, electronically, by linking, or in hard copy or by any means whatsoever), any of our code, content, copyright materials, intellectual property or other rights without getting our permission in writing, other than in order to use our services as intended or as allowed under any open source licences under which we use intellectual property provided by others. The open source code that we use, where we obtained it, and licences for that code, are all referenced on our websites and via our mobile apps.
-18. Without limiting any other provision of these terms, you are only permitted to directly and specifically use the API if you register at the developer registration page and agree that you may only publish or make available your application after we have approved it pursuant to our application approval process and licence agreement available on request at api@mega.io
+22. Without limiting any other provision of these Terms, you may only directly and specifically use the API if you register at the developer registration page and agree that you will only publish or make available your application after we have approved it pursuant to our application approval process and licence agreement available on request at [email protected]. Unless we have expressly agreed otherwise with you, we are entitled to revoke access to, or change, our API at any time without notice where we consider it necessary for our business purposes. We will not be responsible or liable if this causes your application to malfunction or be unusable.
 
-Your IP
+23. You warrant that you own, or are authorised to use, the intellectual property in any Data you store on, use, download, upload, share, access, transmit or otherwise make available to or from, our systems or when using our services. You grant us a worldwide, royalty-free licence to use, store, back up, copy, transmit, distribute, communicate, modify and otherwise make available, your Data, solely for the purposes of enabling you and those you give access to, to use our services and for any other purpose related to provision of the services to you and them.
 
-19. You own, or undertake that you are authorised to use, any intellectual property in any data you store on, use, download, upload, share, access, transmit or otherwise make available to or from, our systems or using our services. You grant us a worldwide, royalty-free licence to use, store, back-up, copy, transmit, distribute, communicate, modify and otherwise make available, your data, solely for the purposes of enabling you and those you give access to, to use our services and for any other purpose related to provision of the services to you and them.
+Copyright takedown notices
 
-Copyright Infringement Notices
+24. We respect the copyright of others and require that users of our services comply with copyright laws. You are strictly prohibited from using our services to infringe copyright. You may not upload, download, store, share, access, display, stream, distribute, e-mail, link to, communicate, transmit, or otherwise make available any files, data, or content that infringes any copyright or other proprietary rights of any person or entity.
 
-20. We respect the copyright of others and require that users of our services comply with copyright laws. You are strictly prohibited from using our services to infringe copyright. You may not upload, download, store, share, access, display, stream, distribute, e-mail, link to, communicate, transmit, or otherwise make available any files, data, or content that infringes any copyright or other proprietary rights of any person or entity.
-21. We will respond to notices of alleged copyright infringement that comply with applicable law and are properly provided to us. If you believe that your content has been copied or used in a way that constitutes copyright infringement, please provide us with the following information:
-21.1. a physical or electronic signature of the copyright owner or a person authorised to act on their behalf;
-21.2. identification of the copyrighted work claimed to have been infringed;
-21.3. identification of the material that is claimed to be infringing or to be the subject of infringing activity and that is to be removed or access to which is to be disabled, and information reasonably sufficient to permit us to locate the material including the exact URL link (with decryption key) to that material on Mega;
-21.4. your contact information, including your address, telephone number, and an email address; a statement by you that you have a good faith belief that use of the material in the manner complained of is not authorised by the copyright owner, its agent, or the law; and
-21.5. a statement that the information in the notification is accurate, and, under penalty of perjury (unless applicable law says otherwise), that you are authorised to act on behalf of the copyright owner.
-22. We reserve the right to remove data alleged to be infringing without prior notice, at our sole discretion, and without liability to you. In appropriate circumstances, we will also terminate your account if we consider you to be a repeat infringer. Details of our designated copyright agent for notice of alleged copyright infringement are on our contacts page.
+25. We will respond to notices of alleged copyright infringement that comply with applicable law and are properly provided to us. If you believe that your content has been copied or used in a way that constitutes copyright infringement, please see our Copyright Policy where you'll find details of the process for lodging a copyright takedown notice.
+
+26. We reserve the right to remove Data alleged to be infringing without prior notice, at our sole discretion, and without liability to you. We will suspend your account if we receive repeated copyright takedown notices. In appropriate circumstances, we may also terminate your account, including if we consider you to be a repeat infringer.
 
 Copyright counter-notices
 
-23. We process all takedown notices based on good faith acceptance of the representations from the party submitting the takedown notice. We do not review the material before processing the takedown notice.
-24. You may file a counter-notice if you believe that access to a file you have uploaded has been wrongly disabled because it was the subject of an incorrect takedown notice. You should only do so if you are confident that no other party owns copyright in the material, or you have rights to store the material and, if you are sharing it, that you have the right to do so.
-25. Please understand that:
-25.1. when we receive your counter-notice, we pass it, including your address and other contact information, to the party who issued the original takedown notice. By submitting your counter-notice you authorise us to do so;
-25.2. filing a counter-notification may lead to legal proceedings between you and the complaining party;
-25.3. there may be adverse legal consequences in New Zealand and/or your jurisdiction if you make a false or bad faith allegation by using this process;
-25.4. if, when using this counter-notice process, you make a false or bad faith allegation or otherwise breach these terms or any of our policies and that causes us any loss, costs (including legal costs), damages or other liability, we reserve the right to claim for and recover from you that loss, those costs (including full legal costs on a solicitor-client basis), damages and other liability, by deduction from any balance in your account and/or by proceedings in New Zealand and/or the jurisdiction of the address in your counter-notice; and
-25.5. we provide this counter-notice process voluntarily for the purposes of all applicable copyright takedown and counter-notice regimes in New Zealand and other jurisdictions, but, in doing so, we do not submit to any jurisdiction, law, tribunal or court other than those of New Zealand, as set out in these terms. We may amend, suspend or withdraw this counter-notice process at any time, provided that any counter-notices in train at that time shall continue to be processed.
-26. By filing a counter-notice, you are deemed to have accepted the above terms. If you do not accept the above terms, do not file a counter-notice.
-27. To file a counter-notice with us, you must provide a written communication at https://mega.io/dispute or by email to copyright@mega.io that includes substantially the following:
-27.1. Identification of the specific URL(s) of material that has been removed or to which access has been disabled;
-27.2. Your full name, address, telephone number, email address and the username of your Mega account;
-27.3. The statement: "I have a good faith belief that the material was removed or disabled as a result of a mistake or misidentification of the material to be removed or disabled.";
-27.4. The reasons for that good faith belief, sufficient to explain the mistake or misidentification to the person who filed the original takedown notice;
-27.5. The statement "I will accept service of proceedings in New Zealand or in the jurisdiction where my address in this counter-notice is located, from the person who provided Mega Limited with the original copyright takedown notice or an agent of such person.";
-27.6. A scanned physical signature or usual signoff in an email or using our webform will be accepted; and
-27.7. Any comments you wish to provide.
-28. We will only accept a counter-notification directly from the user from whose account a folder or file has been disabled. Counter-notifications must be submitted from the email address associated with that Mega account.
-29. If we do not receive any further communication from or on behalf of the person who originally submitted the takedown notice, or any communication we do receive does not in our sole opinion adequately justify the original takedown notice, we may, but shall not be obliged to, reinstate the material in approximately 10-14 days provided we have no reason to believe that the material infringes copyright.
-30. Nothing in this counter-notice section prejudices our right to remove or disable access to any material at any time, for any reason or no reason.
+27. We process all takedown notices based on good faith acceptance of the representations from the party submitting the notice. We do not review the material before processing the notice.
+
+28. You may file a counter-notice if you believe that access to Data has been wrongly disabled because it was the subject of an incorrect takedown notice. You should only do so if you are confident that no other party owns copyright in the material, or you have rights to store the material and, if you are sharing it, that you have the right to do so.
+
+29. Please understand that:
+29.1. when we receive your counter-notice, we pass it, including your address and other contact information, to the party who issued the original takedown notice. We may also disclose it to a public archive which is used for non-profit, research purposes. By submitting your counter-notice you authorise us to do so;
+29.2. filing a counter-notice may lead to legal proceedings between you and the complaining party;
+29.3. there may be adverse legal consequences in your jurisdiction or elsewhere if you make a false or bad faith allegation using this process;
+29.4. if you make a false or bad faith allegation or otherwise breach these Terms or any of our policies and that causes us any loss, costs (including full legal costs on a solicitor/client basis), damages or other liability, we reserve the right to claim for and recover from you that loss, those costs (including full legal costs), damages and other liability, by deduction from any balance in your account and/or by issuing proceedings as set out at clause 59.
+29.5. by providing this counter-notice process, we do not submit to any jurisdiction, law, tribunal or court other than as set out at clause 59. We may amend, suspend or withdraw this counter-notice process at any time, provided that any counter-notices in train at that time will continue to be processed.
+
+30. By filing a counter-notice, you accept the above terms. If you do not accept the above terms, do not file a counter-notice.
+
+31. To file a counter-notice with us, you must complete, sign and submit the form at https://mega.io/dispute with substantially the following information:
+31.1. Identification of the specific URL(s) of material that has been removed or to which access has been disabled;
+31.2. Description of the content;
+31.3. Your full name, address, telephone number, email address and the username of your MEGA account;
+31.4. The statement: "I have a good faith belief that the material was removed or disabled as a result of a mistake or misidentification of the material to be removed or disabled.";
+31.5. The reasons for that good faith belief, sufficient to explain the mistake or misidentification to the person who filed the original takedown notice;
+31.6. The statement "I will accept service of proceedings, from the person who provided MEGA with the original copyright takedown notice or an agent of such person in the jurisdiction where my address in this counter-notice is located or elsewhere.";
+31.7. A digital signature; and
+31.8. Any other comments you wish to provide.
+
+32. We will only accept a counter-notice directly from the user from whose account a folder or file has been disabled. Counter-notices must be submitted using the email address associated with that MEGA account.
+
+33. If we do not receive any further communication from or on behalf of the person who originally submitted the takedown notice, or any communication we do receive does not in our sole opinion adequately justify the original takedown notice, we may, but are not obliged to, reinstate the material in approximately 10 to 14 days provided we have no reason to believe that the material infringes copyright.
+
+34. Nothing in clauses 27 – 33 prejudices our right to remove or disable access to any material at any time, for any reason or no reason.
 
 Other infringement notices
 
-31. If you consider there has been some other infringement or breach of law, or of these terms, and wish to file a complaint, contact us at the relevant address on our contacts page. We will generally require the same amount of detail as set out above for copyright infringement notices. See also our Takedown Guidance Policy.
+35. If you consider there has been some other infringement or breach of law, or of these Terms, and wish to file a complaint, contact us at the relevant address on our contacts page. We will generally require the same level of detail as set out in our Copyright Policy. See also our Takedown Guidance Policy.
 
 Suspension and termination
 
-32. You can terminate your access to our services at any time by following the ‘Cancel your account' link in the Account section of our websites or the Settings section of our mobile apps. However, we will not provide any part-refund for any allowance not used on any subscription you may have, other than under clauses 4 and 58. If you are a business account administrator you may also terminate access to any user within the business account.
-33. We can immediately suspend or terminate your, and (as may be applicable) that of other users within a business account, access to our websites and our services without notice to you:
-33.1. if you or they breach any of these terms or any other agreement you or they have with us;
-33.2. at any time if you are not a registered user;
-33.3. if you are using a free account and that account has been inactive for over 3 months; or
-33.4. if we have been unable to contact you using the email address in your account details.
-34. Without in any way limiting the other rights available to us pursuant to these terms to take such further action as we deem necessary in any case, we may temporarily suspend your account, where a pattern of access to your account suggests to us that the account may have been compromised. You will subsequently be required to provide such verification of your right to access your account, as we deem appropriate, before we will unsuspend your account.
-35. We may also terminate, suspend or limit our services or any part of our services, for all users or for groups of users, without notice, at any time, and as applicable for any duration of time(s) that we specify, for any reason or no reason, provided that in any such cases, to the greatest extent permitted at law, we will have no liability to you in any regard as a result of any such actions.
-36. All charges outstanding on your account must be paid at termination.
+36. You may terminate your access to our services at any time by following the 'Delete account' link in the Account section of our websites or the Settings section of our mobile apps. However, we will not provide any part-refund for any allowance not used on any subscription you may have, other than under clauses 4, 39, 70 and 73. If you are a Business Account administrator you may also terminate access to any user within the Business Account. Refer to clause 73 for cancellation of recurring subscriptions established through mobile apps using in-app-purchase platforms.
 
-Export control
+37. We may immediately suspend or terminate your access to our services, and (as may be applicable) that of other users within a Business Account, and/or remove any of your Data, with or without notice to you if:
+37.1. you or they breach any of these Terms or any other agreement you or they have with us;
+37.2. you are not a registered user after you have been given notice that you must register;
+37.3. you or they materially exceed any applicable plan data limits after having been given notice to reduce usage;
+37.4. you are using a free account and that account has been inactive for over 3 months and you have been given notice to act;
+37.5. we have been unable to contact you using the email address in your account details;
+37.6. any information you provide to us indicates that you may have breached or may intend to breach these Terms, including an email address that is offensive, obscene, discriminatory or is otherwise suggestive of an illegal activity or a breach of these Terms; or
+37.7. we receive a credible report that you or any other user within a Business Account have used another online service provider in breach of any applicable law, or to do any of the things prohibited by clause 19.8 of these Terms.
 
-37. You may not use, export, re-export, import, or transfer any software or code supplied as part of your use of our services: (a) into any United States or New Zealand embargoed countries; or (b) to anyone listed as a specifically prohibited recipient by the United States Government or the New Zealand Government. By using our websites and our services, you represent and warrant that you are not located in any such country or on any such list. You also will not use our websites or our services for any purpose prohibited by United States, New Zealand or any other law, including, without limitation, the development, design, manufacture or production of missiles, nuclear, chemical or biological weapons.
+38. Without in any way limiting the other rights available to us pursuant to these Terms to take such further action as we deem necessary in any case, we may temporarily suspend your account, where a pattern of access to your account suggests to us that the account may have been compromised by you allowing your credentials to be exposed or ascertained by a third party. You will subsequently be required to provide such verification of your right to access your account, as we deem appropriate, before we will unsuspend your account.
+
+39. We may also at any time terminate, suspend or limit our services or any part of our services, for all users or for groups of users, by giving 30 days' notice and as applicable for any duration of time(s) that we specify where we consider it necessary for our business purposes. We will pay any refund you are entitled to under these Terms.
+
+40. All charges outstanding on your account as at termination for any reason must be paid.
+
+41. You may lodge an appeal in relation to a decision by MEGA to remove or disable access to any Data from your account, suspend or terminate your account, free of charge. Please complete the form available on our website no later than six months following the decision you wish to appeal.
+
+42. Once you have lodged your appeal with MEGA:
+42.1. We will acknowledge receipt within three working days;
+42.2. Your appeal will be reviewed;
+42.3. If we need more information or documents from you, we will contact you within 10 working days following receipt of your appeal; and
+42.4. We will advise you of the outcome of your appeal within 10 working days following receipt of the additional information mentioned above and explain our decision.
+
+43. MEGA's decision on your appeal is final.
 
 Severability and waiver
 
-38. If any provision of these terms is held to be invalid or unenforceable, the remaining provisions will remain in full force and effect. If we do not enforce any right or provision of these terms or if we in any instance grant any concession or indulgence, that will not be deemed a waiver of such right or provision or obligate us to grant any concession or indulgence to anyone else or to you again.
+44. If any provision of these Terms is held to be invalid or unenforceable, the remaining provisions will remain in full force and effect. If we do not enforce any right or provision of these Terms or if we in any instance grant any concession or indulgence, that will not be deemed a waiver of such right or provision or obligate us to grant any further concession or indulgence to you or anyone.
 
 Force Majeure
 
-39. We will not be liable by reason of any failure or delay in the performance of our obligations because of events beyond our reasonable control, which may include, without limitation, denial-of-service attacks, strikes, shortages, riots, insurrection, epidemics, pandemics, fires, flood, storm, explosions, acts of God, war, terrorism, governmental action, labour conditions, earthquakes, material shortages, extraordinary internet congestion or extraordinary connectivity issues or failure of a third party host, (each a "Force Majeure Event"). Upon the occurrence of a Force Majeure Event, we will be excused from any further performance of the obligations which are affected by that Force Majeure Event for so long as the event continues.
+45. We will not be liable by reason of any failure or delay in the performance of our obligations because of events beyond our reasonable control, which may include denial-of-service attacks, strikes, shortages, riots, insurrection, epidemics, pandemics, fires, floods, storms, explosions, acts of God, war, terrorism, governmental action, labour conditions, earthquakes, material shortages, extraordinary internet congestion or extraordinary connectivity issues or failure of a third-party supplier, (each a "Force Majeure Event"). Upon the occurrence of a Force Majeure Event, we will be excused from any further performance of the obligations which are affected by that Force Majeure Event for so long as the event continues.
 
-Disclaimers
+DISCLAIMERS
 
-40. WE DON'T GIVE YOU ANY WARRANTY OR UNDERTAKING ABOUT THE SERVICES WHICH ARE PROVIDED "AS IS". TO AVOID DOUBT, ALL IMPLIED CONDITIONS OR WARRANTIES ARE EXCLUDED AS MUCH AS IS PERMITTED BY LAW, INCLUDING (WITHOUT LIMITATION) WARRANTIES OF MERCHANTABILITY, FITNESS FOR PURPOSE, SAFETY, RELIABILITY, DURABILITY, TITLE AND NON-INFRINGEMENT.
-41. We will try to give you access to our services all the time, but we do not make any promises or provide you with a warranty that the services will be without any faults, bugs or interruptions.
-42. Whilst we intend that the services should be available 24 hours a day, seven days a week, it is possible that on occasions our services may be unavailable to permit maintenance or other development activity to take place or be periodically interrupted for reasons outside our control.
-43. Information provided on our services will change regularly. We will try to keep the information up to date and correct, but again, we do not make any promises or guarantees about the accuracy of such information.
-44. We do not warrant that the services will meet your requirements or that they will be suitable for any particular purpose.
-45. You are the controller in respect of some data Mega holds about you and Mega is the processor, for GDPR purposes. Mega is the controller in respect of some other data. See our Privacy and Data Policy for more details. These terms, our Privacy and Data Policy, our Cookie Policy and our Takedown Guidance Policy are the contract between us that governs our processing of that data. It is your sole responsibility to determine that the services meet the needs of you, your business or otherwise and are suitable for the purposes for which they are used.
-46. We also aren't legally responsible for:
-46.1. any corruption or loss of data or other content which you or anyone else may experience after using our services or any problems you may have when you access our services;
-46.2. devices or equipment that we do not own or have not given you;
-46.3. any loss or damage if you do not follow our reasonable instructions, these terms, our Privacy and Data Policy, our Cookie Policy and our Takedown Guidance Policy; and
-46.4. any actions or non-actions of other people which disrupt access to our services, including the
-46.4.1. content and nature of any data that you upload, access or share;
-46.4.2. content of ads appearing on our services (including links to advertisers' own websites) as the advertisers are responsible for the ads and we don't endorse the advertisers' products; and
-46.4.3. content of other people's websites even if a link to their websites is included on our websites or our mobile apps.
-47. You warrant that if you are accessing and using the services for the purposes of a business then, to the maximum extent permitted by law, any statutory consumer guarantees or legislation intended to protect non-business consumers in any jurisdiction (such as the Consumer Guarantees Act 1993 in New Zealand) do not apply to the supply of the services or these terms.
+46. WE DO NOT MAKE ANY WARRANTY OR UNDERTAKING ABOUT THE SERVICES WHICH ARE PROVIDED "AS IS". TO AVOID DOUBT, ALL IMPLIED CONDITIONS OR WARRANTIES ARE EXCLUDED AS MUCH AS IS PERMITTED BY LAW, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR PURPOSE, SAFETY, RELIABILITY, DURABILITY, TITLE AND NON-INFRINGEMENT.
 
-Limitation of liability and indemnity by you
+47. We will try to give you access to our services all the time, but we do not make any promises or provide you with a warranty that the services will be without any faults, bugs or interruptions.
 
-48. TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE (THIS INCLUDES OUR EMPLOYEES, OFFICERS, AGENTS AND AUTHORISED RESELLERS) ARE NOT LIABLE WHETHER IN CONTRACT, TORT (INCLUDING NEGLIGENCE), EQUITY OR ON ANY OTHER GROUNDS TO YOU OR ANYONE ELSE FOR ANY DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGE, LOSS, COST OR EXPENSE, DAMAGE TO PROPERTY, INJURY TO PERSONS, LOSS OF PROFITS, LOSS OF DATA OR REVENUE, LOSS OF USE, LOST BUSINESS OR MISSED OPPORTUNITIES, WASTED EXPENDITURE OR SAVINGS WHICH YOU MIGHT HAVE HAD, OCCURRING DIRECTLY OR INDIRECTLY FROM THE USE OR ABILITY OR INABILITY TO USE, OR RELIANCE ON, OUR SERVICES, AND BASED ON ANY TYPE OF LIABILITY INCLUDING BREACH OF CONTRACT, BREACH OF WARRANTY, TORT (INCLUDING NEGLIGENCE), STATUTORY OR PRODUCT LIABILITY, OR OTHERWISE.
-49. YOU SHALL INDEMNIFY US AGAINST ALL CLAIMS, COSTS (INCLUDING ALL OUR LEGAL COSTS), EXPENSES, DEMANDS OR LIABILITY, DAMAGES AND LOSSES WHETHER DIRECT, INDIRECT, CONSEQUENTIAL, OR OTHERWISE, AND WHETHER ARISING IN CONTRACT, TORT (INCLUDING IN EACH CASE NEGLIGENCE), OR EQUITY OR OTHERWISE, ARISING DIRECTLY OR INDIRECTLY FROM BREACH BY YOU OR ANYONE YOU GIVE ACCESS TO YOUR DATA, OF ANY OF THESE TERMS OR ANY POLICY REFERENCED IN THESE TERMS.
-50. IF YOU ARE NOT SATISFIED WITH THE SERVICES, THEN YOUR SOLE AND EXCLUSIVE REMEDY IS TO TERMINATE YOUR USE OF OUR SERVICES AND THE CONTRACT YOU HAVE WITH US.
-51. DESPITE THE ABOVE, IF ANY COURT OR OTHER COMPETENT AUTHORITY HOLDS US (THIS INCLUDES OUR OFFICERS, STAFF AND AGENTS) LIABLE FOR ANY MATTER RELATED TO THESE TERMS OR OUR SERVICES, OUR TOTAL COMBINED LIABILITY WILL BE LIMITED TO THE MOST RECENT SUBSCRIPTION AMOUNT YOU HAVE PAID TO US.
+48. Whilst we intend that the services should be available 24 hours a day, seven days a week, it is possible that on occasions our services may be unavailable to permit maintenance or other development activity to take place or be periodically interrupted for reasons outside our control.
+
+49. Information provided on our services will change regularly. We will try to keep the information up to date and correct to the best of our best knowledge.
+
+50. We do not warrant that the services will meet your requirements or that they will be suitable for any particular purpose.
+
+51. These Terms, our Privacy Policy, our Cookie Policy and our Takedown Guidance Policy are the contract between us that governs our processing of that personal information. It is your sole responsibility to determine that the services meet your needs, or those of your business or otherwise and are suitable for the purposes for which they are used.
+
+52. We also aren't liable for:
+52.1. any corruption or loss of Data or other content which you or anyone else may experience after using our services or any problems you may have when you access our services;
+52.2. any loss or damage if you do not follow our reasonable instructions, these Terms, our Privacy Policy, our Cookie Policy and our Takedown Guidance Policy;
+52.3. any actions or non-actions of other people which disrupt access to our services, including the content and nature of any data that you upload, access or share;
+52.4. content of ads appearing on our services (including links to advertisers' own websites) as the advertisers are responsible for the ads and we do not endorse the advertisers' products; and
+52.5. content of other people's websites even if a link to their websites is included on our websites or our mobile apps.
+
+53. You acknowledge that if you are accessing and using the services for the purposes of a business then, to the maximum extent permitted by law, any statutory consumer guarantees or legislation intended to protect non-business consumers in your jurisdiction do not apply to the supply of the services or these Terms to you.
+
+54. You are responsible for all costs and expenses associated with your use of our services, including any data charges from third party service providers. You are also responsible for ensuring you have a stable and active connection to the Internet.
+
+LIMITATION OF LIABILITY AND INDEMNITY BY YOU
+
+55. TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE (THIS INCLUDES OUR EMPLOYEES, OFFICERS AND AGENTS) ARE NOT LIABLE WHETHER IN CONTRACT, TORT (INCLUDING NEGLIGENCE), EQUITY OR ON ANY OTHER GROUNDS TO YOU OR ANYONE FOR ANY DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGE, LOSS, COST OR EXPENSE, DAMAGE TO PROPERTY, INJURY TO PERSONS, LOSS OF PROFITS, LOSS OF DATA OR REVENUE, LOSS OF USE, LOST BUSINESS OR MISSED OPPORTUNITIES, WASTED EXPENDITURE OR SAVINGS WHICH YOU MIGHT HAVE HAD, OCCURRING DIRECTLY OR INDIRECTLY FROM THE USE OR ABILITY OR INABILITY TO USE, OR RELIANCE ON, OUR SERVICES, AND BASED ON ANY TYPE OF LIABILITY INCLUDING BREACH OF CONTRACT, BREACH OF WARRANTY, TORT (INCLUDING NEGLIGENCE), STATUTORY OR PRODUCT LIABILITY, OR OTHERWISE.
+
+56. YOU INDEMNIFY US AGAINST ALL CLAIMS, COSTS (INCLUDING ALL OUR LEGAL COSTS), EXPENSES, DEMANDS OR LIABILITY, DAMAGES AND LOSSES WHETHER DIRECT, INDIRECT, CONSEQUENTIAL, OR OTHERWISE, AND WHETHER ARISING IN CONTRACT, TORT (INCLUDING IN EACH CASE NEGLIGENCE), OR EQUITY OR OTHERWISE, ARISING DIRECTLY OR INDIRECTLY FROM BREACH BY YOU OR ANYONE YOU GIVE ACCESS TO YOUR DATA, OF ANY OF THESE TERMS OR ANY POLICY REFERENCED IN THESE TERMS.
+
+57. IF YOU ARE NOT SATISFIED WITH THE SERVICES, THEN YOUR SOLE AND EXCLUSIVE REMEDY IS TO TERMINATE YOUR USE OF OUR SERVICES AND THE CONTRACT YOU HAVE WITH US.
+
+58. DESPITE THE ABOVE, IF ANY COURT OR OTHER COMPETENT AUTHORITY HOLDS US (THIS INCLUDES OUR OFFICERS, STAFF AND AGENTS) LIABLE FOR ANY MATTER RELATED TO THESE TERMS OR OUR SERVICES, OUR TOTAL COMBINED LIABILITY WILL BE LIMITED TO THE MOST RECENT SUBSCRIPTION AMOUNT YOU HAVE PAID TO US.
 
 Disputes and choice of law
 
-52. Any and all disputes arising out of this agreement, its termination, or our relationship with you shall be determined by binding arbitration under the Arbitration Act 1996 in Auckland, New Zealand, by one arbitrator who shall be a lawyer knowledgeable in relevant technology matters appointed by the President for the time being of the Arbitrators' and Mediators' Institute of New Zealand Incorporated (AMINZ) on a request by either you or us. The following terms apply to the arbitration in addition to those implied by New Zealand law:
-52.1. Notice must be given to apply for any interim measure in the arbitration proceeding;
-52.2. The arbitration proceeding will commence when a request is made to AMINZ to appoint an arbitrator;
-52.3. The arbitration shall be in English. The Arbitrator shall permit the parties and witnesses to appear by videoconference that we will organise and pay for; and
-52.4. We will pay the arbitrator's fees and expenses unless the arbitrator determines that you should meet some or all of those fees and expenses because your dispute is frivolous or vexatious.
-53. The relationship we have with you under these terms and their interpretation and construction together with any dispute, suspension or termination arising out of or in connection with them, is governed exclusively by New Zealand law. Mega does not submit to any other jurisdiction other than New Zealand and New Zealand law. You and we submit to the exclusive jurisdiction of the New Zealand arbitral tribunals (and courts for the purposes of the enforcement of any arbitral award or appeal on question of law). The parties agree to enforcement of the arbitral award and orders and any judgement in New Zealand and in any other country.
+59. We will seek to resolve any and all disputes arising out of this agreement, its termination, or our relationship with you amicably. In case of failure to do so, to the extent permitted by applicable law, the Balassagyarmat District Court in Hungary will have exclusive jurisdiction to hear any disputes when your agreement is with Mega Privacy LLC. When your agreement is with Mega Privacy (NZ) Limited, disputes will be determined by binding arbitration under the Arbitration Act 1996 in Auckland, New Zealand, by one arbitrator who will be a lawyer knowledgeable in relevant technology matters appointed pursuant to the Appointments Policy of the Arbitrators' and Mediators' Institute of New Zealand Incorporated (AMINZ) on a request by either you or us. European consumers may rely on alternative dispute resolution (ADR) which is a process allowing complaints to be settled out of court with the assistance of an impartial dispute resolution body. Through ADR, consumers can settle complaints outside of court procedures; see https://ec.europa.eu/consumers/odr/main/?event=main.adr.show2&lng=EN
 
-Business accounts
+60. The relationship we have with you under these Terms and their interpretation and construction together with any dispute, suspension or termination arising out of or in connection with them, is governed exclusively by Hungarian law when your agreement is with Mega Privacy LLC and by New Zealand law when your agreement is with Mega Privacy (NZ) Limited. MEGA does not submit to any other jurisdiction other than Hungary and Hungarian law and New Zealand and New Zealand law, as applicable.
 
-54. For business accounts, the administrator of that account can see and deal with the files and data associated with all users within that account (including any data and any personal information). In addition:
-54.1. If the business account is suspended or terminated, the action will affect the data and personal information of every user within that account;
-54.2. The administrator of the business account will be able to see and deal with, change or delete the files and data associated with every user within that account (including any of data and personal information); and
-54.3. The administrator of the business account will be able to terminate any user's account within the business account, restrict or disable usage of the account, change any user's password and otherwise deny access to the account and all data and personal information and such users will then lose access to all their data and all personal information associated with their account.
-55. In respect of payment for business accounts:
-55.1. We will charge the credit card associated with the business account with the applicable fees (including for any specified minimum) at the monthly billing date, on a recurring basis;
-55.2. Notwithstanding clause 55.1, acting at our sole discretion we will be entitled to offer such alternative payment methods and/or payment terms to you as we deem appropriate, provided that where such alternative payment methods and/or payment terms have been accepted by you, we may subsequently revoke such alternative payment methods and/or payment terms on 30 days' notice to you; and
-55.3. In the event that there is any dispute as to the amount of any payment due (for example in respect of the number of active users on your business account in any month) then our decision on such matter shall be final and binding, and in the absence of manifest error or other lawful error, you can't withhold payment or claim any set-off without getting our written agreement.
-56. Where a business account recurring payment fails for any reason, after 7 days we may suspend the account and all users within that account until payment is made. If no payment is made within a reasonable period of time, we will be entitled to terminate the business account and all users within that account, in which case all data and personal information associated with those users and the account will be subject to deletion in accordance with these terms.
-57. Business accounts are subject to a fair use policy as follows:
-57.1. Business accounts are only to be used for business purposes;
-57.2. Business accounts are intended for multiple users and are not to be held or used by one person;
-57.3. Each user must comply with these terms. Any breach of these terms by one user will be treated as a breach of these terms in respect of the whole account;
-57.4. Mega will not be liable to any business account user should the actions of another user within the account, including the administrator of the business account, cause any loss or damage to another user within the business account (including by way of deletion, amendment, sharing or any other dealing with data or personal information); and
-57.5. Each user's use of the business service must be fair, reasonable and not excessive, as reasonably determined by us by reference to average and/or estimated typical per business user usage of the business service. We will consider usage to be excessive and unreasonable where it materially exceeds the average and/or estimated use patterns over any day, week or month (or other period of time as determined by us) ("excessive usage"). If we identify excessive usage or consider that usage patterns on any business account indicate that any of the usage is not for business purposes we may suspend, and after 30 days' notice, terminate any or all of the users or the whole business account, in which case data and personal information associated with those users and the account will be subject to deletion in accordance with these terms. Examples of such unreasonable usage patterns also include: making non-business data publicly available, adding users who do not appear to Mega to be associated with the business, and uploading or sharing files from non-business related third party sites.
+Business Accounts
+
+61. The administrator of a Business Account can see and deal with the files and Data associated with all users within that account (including any Data and any personal information). In addition:
+61.1. If the Business Account is suspended or terminated, that will affect the Data and personal information of every user within that account;
+61.2. The administrator of the Business Account will be able to see and deal with, change or delete the files and Data associated with every user within that account (including any Data and personal information); and
+61.3. The administrator of the Business Account will be able to terminate any user's account within the Business Account, restrict or disable usage of the account, change any user's password and otherwise deny access to the account and all Data and personal information and such users will then lose access to all their Data and all personal information associated with their account.
+
+62. In respect of payment for Business Accounts:
+62.1. We will charge the credit card associated with the Business Account with the applicable fees (including for any specified minimum) at the monthly billing date, on a recurring basis;
+62.2. Despite clause 62.1, acting at our sole discretion we will be entitled to offer such alternative payment methods and/or payment terms to you as we deem appropriate, provided that where such alternative payment methods and/or payment terms have been accepted by you, we may subsequently revoke such alternative payment methods and/or payment terms on 30 days' notice to you; and
+62.3. In the event that there is any dispute as to the amount of any payment due (for example in respect of the number of active users on your Business Account in any month) then our decision on such matter will be final and binding, and in the absence of manifest error or other lawful excuse, you may not withhold payment or claim any set-off without our written agreement.
+
+63. Where a Business Account recurring payment fails for any reason, after 30 days we may suspend the account after notification and all users within that account until payment is made. If no payment is made within a reasonable period of time, we will be entitled to terminate the Business Account and all users within that account, in which case all Data and personal information associated with those users and the account will be subject to deletion in accordance with these Terms.
+
+64. Business Accounts are also subject to the following conditions:
+64.1. Each user must comply with these Terms. Any breach of these Terms by one user will be treated as a breach of these Terms in respect of the whole account; and
+64.2. MEGA will not be liable to any Business Account user should the actions of another user within the account, including the administrator of the Business Account, cause any loss or damage to another user within the Business Account (including by way of deletion, amendment, sharing or any other dealing with Data or personal information).
+
+Free trials
+
+65. If you choose to participate in a free trial:
+65.1. Your use of our services during the free trial is subject to these Terms, our Privacy Policy, our Cookie Policy, Takedown Guidance Policy and any terms specific to the free trial;
+65.2. You may cancel at any time without charge during the period specified in the applicable free period (typically up to 24 or 48 hours before the end of the free trial);
+65.3. If you do not cancel in time you will automatically be charged the ordinary price for the relevant service once the free trial has ended. These charges will renew automatically until you cancel your subscription; and
+65.4. Refunds are governed by clauses 70-73 of these Terms.
+
+66. You may only participate in one free trial for each of our services.
+
+Reasonable use policy
+
+67. If you are on any plan that does not include a limit as to data storage or transmission, your use of our services must be fair, reasonable and not excessive, as reasonably determined by us by reference to average and/or estimated typical per user usage of the service. We will consider usage to be excessive and unreasonable where it materially exceeds the average and/or estimated use patterns over any day, week or month (or other period of time as determined by us) ("excessive usage"). If we identify excessive or unreasonable usage, we may suspend, and after 30 days' notice, terminate your account, or in the case of a Business Account, any or all of the users or the whole Business Account, in which case Data and personal information associated with the user(s) and the account will be subject to deletion in accordance with these Terms. An example of such unreasonable usage pattern on a Business Account includes adding users who do not appear to MEGA to be associated with the administrator's family or business.
+
+68. MEGA may at its discretion impose limits or restrictions on:
+68.1. The number of devices accessing MEGA VPN per account at any time;
+68.2. Bandwidth usage in respect of any account.
+
+69. We may impose usage limits, block access to, suspend or discontinue MEGA VPN, or block certain kinds of usage at any time where we consider it necessary for our business purposes and without further notice to you.
 
 Refunds
 
-58. Unless otherwise provided by New Zealand law or by a particular service offer, all purchases are final and non-refundable. If you believe that Mega has charged you in error, you must contact us within 90 days of such charge. No refunds will be given for any charges more than 90 days old. We reserve the right to issue refunds or credits at our sole discretion. If we issue a refund or credit, we are under no obligation to issue the same or similar refund in the future. This refund policy does not affect any statutory rights that may apply. If you have made a payment by mistake and have not used the subscription plan services, you must contact support@mega.io within 24 hours. This will be acknowledged promptly and answered within 7 days.
+70. If you reside in the European Union you have the right to request a full refund within 14 days of the date of your purchase without giving any reason. If you reside in Brazil or South Korea, you have 7 days to request the refund for any reason. To do so, please send us an unequivocal statement that you wish to be refunded by email to [email protected]. Alternatively, you can use the model withdrawal form from Annex I of the EU Consumer Directive available on our website, if you prefer. We will refund you within 14 days of receiving your request using the same means of payment as you used for the initial transaction, unless you agree otherwise.
+
+71. For residents outside of the EU, Brazil and South Korea, unless otherwise provided by applicable law or by a particular service offer, all purchases are final and non-refundable. If you believe that MEGA has charged you in error, you must contact us within 30 days of such charge. No refunds will be given for any charges more than 30 days old. Unless required by law, we reserve the right to issue refunds or credits at our sole discretion. If we issue a refund or credit, we are under no obligation to issue the same or similar refund in the future. This refund policy does not affect any statutory rights that may apply. If you have made a payment by mistake and have not used the subscription plan services, you must contact [email protected] within 24 hours. We will do our best to respond to your email within 7 days.
 
 Recurring paid subscriptions
 
-59. Recurring subscriptions will renew indefinitely, either monthly or annually, based upon your chosen subscription period, unless the subscription is cancelled prior to a renewal date. For recurring subscriptions established via mobile apps using in-app-purchase platforms, you should refer to your app store account for details of the dates and terms of the subscription. Any other recurring subscription will renew on the same day of month as it was established, except in cases where the day is not available due to a short month, in which case the renewal date will be moved to the first day of the following month.
+72. Recurring subscriptions will renew indefinitely, either monthly or annually, based upon your chosen subscription period, unless the subscription is cancelled prior to a renewal date. For recurring subscriptions established via mobile apps using in-app-purchase platforms, you should refer to your app store account for details of the dates and terms of the subscription. Any other recurring subscription will renew on the same day of the month as it was established, except in cases where the day is not available due to a short month, in which case the renewal date will be moved to the first day of the following month.
 
 Cancellation of recurring paid subscriptions
 
-60. Recurring subscriptions established through the mobile app using in-app-purchase platforms should be cancelled through the relevant app store account directly. Any other recurring subscription should be cancelled by navigating to https://mega.app/account in your browser while you are logged into your account and selecting the option to cancel your subscription. Any payments processed after an effective subscription cancellation will be promptly refunded by us. If you cancel a paid subscription, but you maintain your Mega account as a free account, access to your account may be restricted or blocked if the level of use is above the limits applying to free accounts at that time.
+73. Recurring subscriptions established through mobile apps using in-app-purchase platforms should be cancelled through the relevant app store account directly. Any other recurring subscription should be cancelled by navigating to https://mega.nz/account in your browser while you are logged into your account and selecting the option to cancel your subscription. Any payments processed after an effective subscription cancellation will be promptly refunded by us. If you cancel a paid subscription, but you maintain your MEGA account as a free account, access to your account may be restricted or blocked if the level of use is above the limits applying to free accounts at that time.
 
 Information and privacy
 
-61. We reserve the right to disclose data and other information as required by law or any competent authority. Our approach is referenced in our Privacy and Data Policy and Takedown Guidance Policy, both of which are subject to these terms.
-62. You and anyone else you give access to are also bound by our Privacy and Data Policy, our Cookie Policy and Takedown Guidance Policy. By accepting these terms, you also accept our Privacy and Data Policy, our Cookie Policy and Takedown Guidance Policy.
+74. We reserve the right to disclose Data and other information, including personal information, as required by law or any competent authority. Our approach is referenced in our Privacy Policy and Takedown Guidance Policy, both of which are subject to these Terms.
 
-Notices
+75. You and anyone you give access to are also bound by our Privacy Policy, our Cookie Policy and Takedown Guidance Policy. By accepting these Terms, you also accept those Policies.
 
-63. You can contact us by sending an email to support@mega.io. If we need to contact you or provide you with notice we will email you at the email address you have recorded in your account details and such notices will be valid and deemed to be received by you whether or not you are using that address. We may also send notices via any chat facility or internal messaging system we may provide.
+76. You can contact us by sending an email to [email protected]. From time to time we may need to communicate with each other directly. We will use MEGA's chat facility, internal messaging system or the email or SMS address you have included in the settings information in your account and may also give notices to you and other users via popups or other notices prominently displayed on our website. Any communication to you will be deemed to be received by you no matter whether you are actively monitoring the account or its email address or not. You can communicate with us using the appropriate address on our contacts page and your email will be deemed to be received by us. Examples of direct communications include copyright or other enforcement emails, notifications under our Takedown Guidance Policy, system update information, data breach notifications, notification of major changes to our Terms, any Policy and billing information.
 
 Rights to third parties
 
-64. Mega Limited employees, officers, agents, related companies and affiliates together with authorised suppliers of services to and authorised resellers of, our services, are entitled to the benefit of all indemnities and other provisions of these terms which are for the benefit of Mega in these terms.
+77. MEGA's employees, officers, agents, related companies and affiliates together with authorised suppliers of service are entitled to the benefit of all indemnities and other provisions of these Terms which are for the benefit of MEGA in these Terms.
 
 Entire agreement
 
-65. These terms, our Privacy and Data Policy, our Cookie Policy and Takedown Guidance Policy, the terms of any plan you purchase and any other terms and policies expressly referenced in these terms, together constitute the entire agreement between us relating to your use of our services. From the date they come into force, in respect of any use of any of our services after that, they supersede and replace any prior agreement, arrangement or understanding between you and us regarding the use of our services. No agreement, arrangement or understanding alleged to be made between us, or representation alleged to be made, by us or on our behalf, to you, if inconsistent with these terms, shall be valid unless agreed to in writing by an executive officer of Mega Limited.
+78. These Terms, our Privacy Policy, our Cookie Policy and our Takedown Guidance Policy, the terms of any plan you purchase and any other terms and policies expressly referenced in these Terms, together constitute the entire agreement between us relating to your use of our services. This is not intended to displace terms that are required by law to be implied and which have not been validly excluded in these Terms. From the date they come into force, in respect of any use of any of our services after that, these Terms supersede and replace any prior agreement, arrangement or understanding between you and us regarding the use of our services. No agreement, arrangement or understanding alleged to be made between us, or representation alleged to be made, by us or on our behalf, to you, if inconsistent with these Terms, will be valid unless agreed to in writing by an executive officer of MEGA.
 
-Last updated 18 December 2020, effective 18 January 2021.
+General Terms of Service last updated 15 April 2025 and effective 15 May 2025.
