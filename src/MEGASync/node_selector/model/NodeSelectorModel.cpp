@@ -1,6 +1,7 @@
 #include "NodeSelectorModel.h"
 
 #include "CameraUploadFolder.h"
+#include "DeviceNames.h"
 #include "IconTokenizer.h"
 #include "MegaApiSynchronizedRequest.h"
 #include "MegaApplication.h"
@@ -561,6 +562,7 @@ NodeSelectorModel::NodeSelectorModel(QObject* parent):
 {
     mCameraFolderAttribute = UserAttributes::CameraUploadFolder::requestCameraUploadFolder();
     mMyChatFilesFolderAttribute = UserAttributes::MyChatFilesFolder::requestMyChatFilesFolder();
+    mDeviceName = UserAttributes::DeviceNames::requestDeviceName();
 
     mNodeRequesterThread = new QThread();
     mNodeRequesterWorker = new NodeRequester(this);
@@ -2488,10 +2490,27 @@ QVariant NodeSelectorModel::getText(const QModelIndex& index, NodeSelectorModelI
             {
                 return MegaNodeNames::getRubbishName();
             }
-            else
+            else if (item->getStatus() == NodeSelectorModelItem::Status::BACKUP)
             {
-                return MegaNodeNames::getNodeName(item->getNode().get());
+                if (auto backupItem = dynamic_cast<NodeSelectorModelItemBackup*>(item))
+                {
+                    if (backupItem->isVaultDevice())
+                    {
+                        auto node = item->getNode();
+                        QString nodeDeviceId(QString::fromUtf8(node->getDeviceId()));
+                        if (!nodeDeviceId.isEmpty() && mDeviceName->isAttributeReady())
+                        {
+                            auto deviceNames = mDeviceName->getDeviceNames();
+                            if (deviceNames.contains(nodeDeviceId))
+                            {
+                                return deviceNames[nodeDeviceId];
+                            }
+                        }
+                    }
+                }
             }
+
+            return MegaNodeNames::getNodeName(item->getNode().get());
         }
         case COLUMN::ADDED_DATE:
         {

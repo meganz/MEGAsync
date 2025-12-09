@@ -1,5 +1,6 @@
 #include "NodeSelectorModelSpecialised.h"
 
+#include "DeviceNames.h"
 #include "DuplicatedNodeDialog.h"
 #include "MegaApplication.h"
 #include "MyBackupsHandle.h"

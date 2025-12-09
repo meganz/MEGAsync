@@ -130,7 +130,7 @@ void DeviceNames::setDeviceNameAttribute()
     MegaSyncApp->getMegaApi()->setDeviceName(nullptr, mDeviceName.toUtf8().constData());
 }
 
-QMap<DeviceNames::DeviceId, DeviceNames::Name> DeviceNames::getDeviceNames()
+QMap<DeviceNames::DeviceId, DeviceNames::Name> DeviceNames::getDeviceNames() const
 {
     return mAccountDeviceNames;
 }

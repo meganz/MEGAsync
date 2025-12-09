@@ -492,6 +492,7 @@ private:
 
     std::shared_ptr<const UserAttributes::CameraUploadFolder> mCameraFolderAttribute;
     std::shared_ptr<const UserAttributes::MyChatFilesFolder> mMyChatFilesFolderAttribute;
+    std::shared_ptr<const UserAttributes::DeviceNames> mDeviceName;
 
     std::shared_ptr<mega::MegaRequestListener> mListener;
 
