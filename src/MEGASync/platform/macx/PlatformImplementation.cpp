@@ -355,8 +355,7 @@ void PlatformImplementation::notifySyncFileChange(string* localPath, int newStat
 
 void PlatformImplementation::syncFolderAdded(QString syncPath, QString syncName, QString /*syncID*/)
 {
-    addPathToPlaces(syncPath,syncName);
-    setFolderIcon(syncPath);
+    addPathToPlaces(syncPath, syncName);
 
     if (extService)
     {
@@ -367,7 +366,6 @@ void PlatformImplementation::syncFolderAdded(QString syncPath, QString syncName,
 void PlatformImplementation::syncFolderRemoved(QString syncPath, QString syncName, QString /*syncID*/)
 {
     removePathFromPlaces(syncPath);
-    unSetFolderIcon(syncPath);
 
     if (extService)
     {
