@@ -353,19 +353,9 @@
         <translation>Erreur d’ajout de la synchronisation</translation>
     </message>
     <message>
-        <source>Error moving or removing remote backup folder</source>
-        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>Erreur de déplacement ou de suppression du dossier de sauvegarde MEGA</translation>
-    </message>
-    <message>
         <source>Error removing backup</source>
         <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
         <translation>Erreur d’arrêt de la sauvegarde</translation>
-    </message>
-    <message>
-        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
-        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>Impossible de déplacer ou de supprimer le dossier de sauvegarde sur MEGA. Raison : %1</translation>
     </message>
     <message>
         <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
@@ -5004,11 +4994,6 @@ Saisissez un nom différent.</translation>
         <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It creates a sync in the selected folder. SAT-426</translatorcomment>
         <translation>Synchroniser</translation>
     </message>
-    <message>
-        <source>Upload</source>
-        <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It uploads to the selected. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>NodeSelectorTreeViewWidget</name>
@@ -5041,11 +5026,6 @@ Saisissez un nom différent.</translation>
         <source>Empty Rubbish bin</source>
         <translatorcomment>Button text to empty the rubbish bin. SAT-426</translatorcomment>
         <translation>Vider la Corbeille</translation>
-    </message>
-    <message>
-        <source>Folder is empty</source>
-        <translatorcomment>Message on the view when there are no items in a folder. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
@@ -6090,16 +6070,6 @@ Saisissez un nom différent.</translation>
 </context>
 <context>
     <name>Preferences</name>
-    <message>
-        <source>- Introducing dark mode!
-- We&apos;ve refreshed the app design.
-- We&apos;ve fixed bugs and made the app more reliable.
-</source>
-        <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
-        <translation>- Le mode sombre est désormais disponible.
-- Nous avons rafraîchi le design de l’application pour la rendre plus claire et plus facile à utiliser.
-- Corrections de bugs et amélioration de la stabilité de l’application.</translation>
-    </message>
 </context>
 <context>
     <name>ProgressIndicatorDialog</name>
@@ -6180,11 +6150,6 @@ Saisissez un nom différent.</translation>
         <source>We couldn’t connect using your proxy settings. Check your proxy details or try a different network.</source>
         <translatorcomment>Error banner shown when there is an error testing the proxy settings. SNC-5411</translatorcomment>
         <translation>Nous n’avons pas pu nous connecter à l’aide de vos paramètres proxy. Vérifiez les paramètres ou essayez un autre réseau.</translation>
-    </message>
-    <message>
-        <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
-        <translatorcomment>Error banner shown when proxy settings is not found in the environment, [B] is for bold . SNC-5411</translatorcomment>
-        <translation>Votre système ne dispose pas d’un proxy configuré. Pour vous connecter, définissez une valeur valide pour [B]http_proxy[/B] ou [B]https_proxy[/B] dans votre environnement.</translation>
     </message>
 </context>
 <context>
@@ -6639,6 +6604,9 @@ Voulez-vous le supprimer quand même ?</translation>
     </message>
 </context>
 <context>
+    <name>RemoveBackup</name>
+</context>
+<context>
     <name>RemoveBackupDialog</name>
     <message>
         <source>Cancel</source>
@@ -6656,8 +6624,8 @@ Voulez-vous le supprimer quand même ?</translation>
         <translation>Supprimer le dossier de MEGA</translation>
     </message>
     <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
-        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
         <translation>Le dossier sera supprimé de MEGA, mais il ne sera pas supprimé de votre appareil. Cette action ne peut pas être annulée.</translation>
     </message>
     <message>
@@ -6686,8 +6654,8 @@ Voulez-vous le supprimer quand même ?</translation>
         <translation>Arrêter la sauvegarde</translation>
     </message>
     <message>
-        <source>To stop backing up this folder, you need to either move it or delete it.</source>
-        <translatorcomment>Backup removal title description</translatorcomment>
+        <source>To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].</source>
+        <translatorcomment>Backup removal title description. SNC-6067</translatorcomment>
         <translation>Pour arrêter la sauvegarde de ce dossier, vous devez soit le déplacer, soit le supprimer.</translation>
     </message>
 </context>
@@ -7033,6 +7001,11 @@ Voulez-vous le supprimer quand même ?</translation>
         <translation>Lancer à la connexion</translation>
     </message>
     <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
+        <translation>En savoir plus</translation>
+    </message>
+    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>Un dossier local contenant une sauvegarde des fichiers supprimés dans MEGA</translation>
@@ -7176,6 +7149,11 @@ Voulez-vous le supprimer quand même ?</translation>
         <source>Synchronizations will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active syncs (not backups)</translatorcomment>
         <translation>Les synchronisations seront désactivées.</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation>Thème</translation>
     </message>
     <message>
         <source>Transfer Quota</source>
@@ -9745,11 +9723,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to indicate the amount of used and total space available. Keep %1 (used space) and %2 (total space) substitution placeholders because they will be filled with the required amounts of storage space dynamically including the unit (e.g. 1KB, 5MB, 8GB...). CON-944</translatorcomment>
         <translation>%1 de %2</translation>
     </message>
-    <message>
-        <source>%1 sec</source>
-        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
     <message numerus="yes">
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
@@ -9832,11 +9805,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Le transfert vient de se terminer</translation>
     </message>
     <message>
-        <source>Basic</source>
-        <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Business</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
         <translation>Entreprise</translation>
@@ -9845,11 +9813,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Bytes</source>
         <translatorcomment>Label to indicate bytes unit.</translatorcomment>
         <translation>octets</translation>
-    </message>
-    <message>
-        <source>Essential</source>
-        <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Free</source>
@@ -9910,11 +9873,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
         <translation>Pro Lite</translation>
-    </message>
-    <message>
-        <source>Starter</source>
-        <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>TB</source>

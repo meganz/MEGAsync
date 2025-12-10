@@ -344,19 +344,9 @@
         <translation>Eroare la adăugarea sincronizării</translation>
     </message>
     <message>
-        <source>Error moving or removing remote backup folder</source>
-        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>Eroare la mutarea sau ștergerea folderului de backup MEGA</translation>
-    </message>
-    <message>
         <source>Error removing backup</source>
         <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
         <translation>Eroare la oprirea backupului</translation>
-    </message>
-    <message>
-        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
-        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>Nu se poate muta sau șterge folderul de backup MEGA. Motivul: %1</translation>
     </message>
     <message>
         <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
@@ -5951,14 +5941,10 @@ Introdu un alt nume.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing dark mode!
-- We've refreshed the app design.
-- We've fixed bugs and made the app more reliable.
+        <source>- We've fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
-        <translation>- Modul întunecat este acum disponibil.
-- Am reîmprospătat designul aplicației pentru a-l face mai curat și mai ușor de folosit.
-- Bugurile au fost remediate și stabilitatea aplicației îmbunătățită.</translation>
+        <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6042,9 +6028,9 @@ Introdu un alt nume.</translation>
         <translation>Nu ne-am putut conecta folosind setările proxy. Verificați setările sau încercați o altă rețea.</translation>
     </message>
     <message>
-        <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
-        <translatorcomment>Error banner shown when proxy settings is not found in the environment, [B] is for bold . SNC-5411</translatorcomment>
-        <translation>Sistemul dvs. nu are un proxy setat. Pentru a vă conecta, setați un valid [B]http_proxy[/B] sau [B]https_proxy[/B] valoare în mediul tău.</translation>
+        <source>Your system doesn’t have a proxy set. To connect, set a valid http_proxy or https_proxy value in your environment.</source>
+        <translatorcomment>Error banner shown when proxy settings is not found in the environment . SNC-5411</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6499,6 +6485,24 @@ Vrei să îl ștergi oricum?</translation>
     </message>
 </context>
 <context>
+    <name>RemoveBackup</name>
+    <message>
+        <source>Backup folder already exists on destination. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can't move it there! SNC-6067 </translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error moving or removing remote backup folder</source>
+        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
+        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RemoveBackupDialog</name>
     <message>
         <source>Cancel</source>
@@ -6514,11 +6518,6 @@ Vrei să îl ștergi oricum?</translation>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
         <translation>Ștergeți folderul din MEGA</translation>
-    </message>
-    <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
-        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation>Folderul va fi șters din MEGA, dar nu va fi șters de pe dispozitiv. Această acțiune nu poate fi anulată.</translation>
     </message>
     <message>
         <source>Move folder</source>
@@ -6546,8 +6545,13 @@ Vrei să îl ștergi oricum?</translation>
         <translation>Oprește backupul</translation>
     </message>
     <message>
-        <source>To stop backing up this folder, you need to either move it or delete it.</source>
-        <translatorcomment>Backup removal title description</translatorcomment>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
+        <translation>Folderul va fi șters din MEGA, dar nu va fi șters de pe dispozitiv. Această acțiune nu poate fi anulată.</translation>
+    </message>
+    <message>
+        <source>To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].</source>
+        <translatorcomment>Backup removal title description. SNC-6067</translatorcomment>
         <translation>Pentru a opri realizarea de backupuri a acestui folder, trebuie fie să-l muți, fie să-l ștergi</translation>
     </message>
 </context>
@@ -7095,6 +7099,16 @@ Vrei să îl ștergi oricum?</translation>
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
         <translation><numerusform>zi</numerusform><numerusform>zile</numerusform><numerusform>de zile</numerusform></translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation>Temă</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
+        <translation>Aflați mai multe</translation>
     </message>
 </context>
 <context>

@@ -344,19 +344,9 @@
         <translation>동기화 추가 중 오류</translation>
     </message>
     <message>
-        <source>Error moving or removing remote backup folder</source>
-        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>MEGA 백업 폴더를 이동 또는 삭제하던 중 오류</translation>
-    </message>
-    <message>
         <source>Error removing backup</source>
         <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
         <translation>백업 중지 중 오류</translation>
-    </message>
-    <message>
-        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
-        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>MEGA 백업 폴더를 이동 또는 삭제할 수 없습니다. 사유: %1</translation>
     </message>
     <message>
         <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
@@ -5949,14 +5939,10 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing dark mode!
-- We've refreshed the app design.
-- We've fixed bugs and made the app more reliable.
+        <source>- We've fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
-        <translation>- 이제 다크 모드가 이용 가능합니다.
-- 앱이 더 깔끔하고 이용하기 쉽도록 앱 디자인을 새로 고쳤습니다.
-- 버그를 수정하였고 앱 안정성을 향상하였습니다.</translation>
+        <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6040,9 +6026,9 @@ Enter a different name</source>
         <translation>당신의 프록시 설정을 이용하여 연결할 수 없었습니다. 설정을 다시 확인하거나 다른 네트워크에 연결하세요.</translation>
     </message>
     <message>
-        <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
-        <translatorcomment>Error banner shown when proxy settings is not found in the environment, [B] is for bold . SNC-5411</translatorcomment>
-        <translation>시스템이 설정된 프록시가 없습니다. 연결하려면 유효한 [B]http_proxy[/B] 또는 [B]https_proxy[/B] 값을 환경에 설정해야 합니다.</translation>
+        <source>Your system doesn’t have a proxy set. To connect, set a valid http_proxy or https_proxy value in your environment.</source>
+        <translatorcomment>Error banner shown when proxy settings is not found in the environment . SNC-5411</translatorcomment>
+        <translation>탐지된 프록시가 없습니다. 연결하려면 환경에 유효한 http_proxy 또는 https_proxy 값을 설정해야 합니다.</translation>
     </message>
 </context>
 <context>
@@ -6497,6 +6483,24 @@ Do you want to delete it anyway?</source>
     </message>
 </context>
 <context>
+    <name>RemoveBackup</name>
+    <message>
+        <source>Backup folder already exists on destination. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can't move it there! SNC-6067 </translatorcomment>
+        <translation>이 위치에 이미 이 이름을 가진 폴더가 존재합니다, 다른 위치를 선택하세요</translation>
+    </message>
+    <message>
+        <source>Error moving or removing remote backup folder</source>
+        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation>MEGA에서 백업 폴더를 이동 또는 삭제하던 중 오류</translation>
+    </message>
+    <message>
+        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
+        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation>MEGA에서 백업 폴더를 이동 또는 삭제할 수 없습니다. 사유: %1</translation>
+    </message>
+</context>
+<context>
     <name>RemoveBackupDialog</name>
     <message>
         <source>Cancel</source>
@@ -6512,11 +6516,6 @@ Do you want to delete it anyway?</source>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
         <translation>MEGA에서 폴더 삭제</translation>
-    </message>
-    <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
-        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation>MEGA에서 폴더가 삭제되지만, 당신의 장치에서는 삭제되지 않습니다. 이 행동은 되돌릴 수 없습니다.</translation>
     </message>
     <message>
         <source>Move folder</source>
@@ -6544,9 +6543,14 @@ Do you want to delete it anyway?</source>
         <translation>백업 중단</translation>
     </message>
     <message>
-        <source>To stop backing up this folder, you need to either move it or delete it.</source>
-        <translatorcomment>Backup removal title description</translatorcomment>
-        <translation>이 폴더의 백업을 중단하시려면, 폴더를 이동하거나 삭제해야 합니다</translation>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
+        <translation>MEGA에서 폴더가 삭제되지만, 당신의 장치에서는 삭제되지 않습니다. 이 행동은 되돌릴 수 없습니다.</translation>
+    </message>
+    <message>
+        <source>To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].</source>
+        <translatorcomment>Backup removal title description. SNC-6067</translatorcomment>
+        <translation>이 폴더의 백업을 중단하려면, 폴더를 이동하거나 삭제해야 합니다</translation>
     </message>
 </context>
 <context>
@@ -7093,6 +7097,16 @@ Do you want to delete it anyway?</source>
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
         <translation><numerusform>일</numerusform></translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation>테마</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
+        <translation>더 알아보기</translation>
     </message>
 </context>
 <context>

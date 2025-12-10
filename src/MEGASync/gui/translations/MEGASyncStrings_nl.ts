@@ -344,19 +344,9 @@
         <translation>Fout bij toegevoegde synchronisatie</translation>
     </message>
     <message>
-        <source>Error moving or removing remote backup folder</source>
-        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>Fout bij verplaatsen of verwijderen van MEGA back-up map</translation>
-    </message>
-    <message>
         <source>Error removing backup</source>
         <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
         <translation>Fout bij stoppen van de back-up</translation>
-    </message>
-    <message>
-        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
-        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>Kan de MEGA back-up map niet verplaatsen of verwijderen. Reden: %1</translation>
     </message>
     <message>
         <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
@@ -5951,14 +5941,10 @@ Voer een andere naam in.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing dark mode!
-- We've refreshed the app design.
-- We've fixed bugs and made the app more reliable.
+        <source>- We've fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
-        <translation>- De donkere modus is nu beschikbaar.
-- We hebben het ontwerp van de applicatie vernieuwd om het overzichtelijker en gebruiksvriendelijker te maken.
-- Bugs zijn opgelost en de stabiliteit van de applicatie is verbeterd.</translation>
+        <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6042,9 +6028,9 @@ Voer een andere naam in.</translation>
         <translation>We konden geen verbinding maken via uw proxy-instellingen. Controleer de instellingen of probeer een ander netwerk.</translation>
     </message>
     <message>
-        <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
-        <translatorcomment>Error banner shown when proxy settings is not found in the environment, [B] is for bold . SNC-5411</translatorcomment>
-        <translation>Uw systeem heeft geen proxy ingesteld. Om verbinding te maken, stelt u een geldige [B]http_proxy[/B] of [B]https_proxy[/B] waarde in uwomgeving.</translation>
+        <source>Your system doesn’t have a proxy set. To connect, set a valid http_proxy or https_proxy value in your environment.</source>
+        <translatorcomment>Error banner shown when proxy settings is not found in the environment . SNC-5411</translatorcomment>
+        <translation>Geen proxy gedetecteerd. Om verbinding te maken, stelt u een geldige http_proxy- of http_proxy-waarde in uw omgeving in.</translation>
     </message>
 </context>
 <context>
@@ -6499,6 +6485,24 @@ Wilt u deze toch verwijderen?</translation>
     </message>
 </context>
 <context>
+    <name>RemoveBackup</name>
+    <message>
+        <source>Backup folder already exists on destination. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can't move it there! SNC-6067 </translatorcomment>
+        <translation>Er is al een map met deze naam op die lokatie, kies een andere lokatie</translation>
+    </message>
+    <message>
+        <source>Error moving or removing remote backup folder</source>
+        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation>Fout bij het verplaatsen of verwijderen van de backup-map in MEGA</translation>
+    </message>
+    <message>
+        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
+        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation>Kan de backup-map in MEGA niet verplaatsen of verwijderen. Reden: %1</translation>
+    </message>
+</context>
+<context>
     <name>RemoveBackupDialog</name>
     <message>
         <source>Cancel</source>
@@ -6514,11 +6518,6 @@ Wilt u deze toch verwijderen?</translation>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
         <translation>Verwijder de map uit MEGA</translation>
-    </message>
-    <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
-        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation>De map wordt verwijderd uit MEGA, maar niet van uw apparaat. Deze actie kan niet ongedaan worden gemaakt.</translation>
     </message>
     <message>
         <source>Move folder</source>
@@ -6546,8 +6545,13 @@ Wilt u deze toch verwijderen?</translation>
         <translation>Back-up stoppen</translation>
     </message>
     <message>
-        <source>To stop backing up this folder, you need to either move it or delete it.</source>
-        <translatorcomment>Backup removal title description</translatorcomment>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
+        <translation>De map wordt verwijderd uit MEGA, maar niet van uw apparaat. Deze actie kan niet ongedaan worden gemaakt.</translation>
+    </message>
+    <message>
+        <source>To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].</source>
+        <translatorcomment>Backup removal title description. SNC-6067</translatorcomment>
         <translation>Als u wilt stoppen met het maken van een back-up van deze map, moet u deze verplaatsen of verwijderen</translation>
     </message>
 </context>
@@ -7095,6 +7099,16 @@ Wilt u deze toch verwijderen?</translation>
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
         <translation><numerusform>dag</numerusform><numerusform>dagen</numerusform></translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation>Thema</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
+        <translation>Leer meer</translation>
     </message>
 </context>
 <context>

@@ -344,19 +344,9 @@
         <translation>Lỗi khi thêm đồng bộ</translation>
     </message>
     <message>
-        <source>Error moving or removing remote backup folder</source>
-        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>Lỗi khi di chuyển hoặc xóa bỏ thư mục sao lưu MEGA</translation>
-    </message>
-    <message>
         <source>Error removing backup</source>
         <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
         <translation>Lỗi khi chấm dứt sao lưu</translation>
-    </message>
-    <message>
-        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
-        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>Đã không thể di chuyển hoặc xóa đi thư mục sao lưu MEGA. Lý do: %1</translation>
     </message>
     <message>
         <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
@@ -2000,7 +1990,7 @@
     <message>
         <source>Finish set up</source>
         <translatorcomment>Text on the O.S. notification button to open the window for creating the first sync after the onboarding process (first run of the application). CON-1207</translatorcomment>
-        <translation>Kết thúc thiết lập</translation>
+        <translation>Hoàn tất thiết lập</translation>
     </message>
     <message>
         <source>Set up your first sync to get the most out of the desktop app</source>
@@ -3157,12 +3147,12 @@ Hãy chờ cho phiên tải lên được hoàn tất.</translation>
     <message>
         <source>Link can&apos;t be imported, invalid key or decryption error</source>
         <translatorcomment>Error message when there is a decryption error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation>Không thể chuyển nhập đường liên kết, chìa khóa không hợp lệ hoặc lỗi giải mã.</translation>
+        <translation>Không thể chuyển nhập đường liên kết, chìa khóa không hợp lệ hoặc lỗi giải mã.</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported, your storage is full</source>
         <translatorcomment>Error message when there is an error importing a MEGA link because the storage quota is exceeded. SNC-3673.</translatorcomment>
-        <translation>Không thể chuyển nhập đường liên kết, không gian lưu trữ bị đầy</translation>
+        <translation>Không thể chuyển nhập đường liên kết vì không gian lưu trữ đã đầy</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported: %1</source>
@@ -4861,7 +4851,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>New folder</source>
         <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It creates a new folder. SNC-5804</translatorcomment>
-        <translation>Thư Mục Mới</translation>
+        <translation>Thư mục mới</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -4901,7 +4891,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Upload</source>
         <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It uploads to the selected. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tải lên</translation>
     </message>
 </context>
 <context>
@@ -4939,7 +4929,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Folder is empty</source>
         <translatorcomment>Message on the view when there are no items in a folder. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thư mục trống rỗng</translation>
     </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
@@ -5949,14 +5939,10 @@ Nhập một tên khác.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing dark mode!
-- We've refreshed the app design.
-- We've fixed bugs and made the app more reliable.
+        <source>- We've fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
-        <translation>- Chế độ tối hiện có sẵn.
-- Chúng tôi đã làm mới thiết kế ứng dụng để làm cho nó sạch hơn và dễ sử dụng hơn.
-- Lỗi đã được sửa và tính ổn định của ứng dụng được cải thiện.</translation>
+        <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6040,9 +6026,9 @@ Nhập một tên khác.</translation>
         <translation>Chúng tôi đã không thể kết nối với proxy của bạn. Hãy kiểm tra proxy đã đặt hoặc thử một mạng khác.</translation>
     </message>
     <message>
-        <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
-        <translatorcomment>Error banner shown when proxy settings is not found in the environment, [B] is for bold . SNC-5411</translatorcomment>
-        <translation>Hệ thống của bạn chưa có đặt proxy nào. Để kết nối, hãy đặt giá trị hợp lệ cho [B]http_proxy[/B] hoặc [B]https_proxy[/B] trong môi trường của bạn.</translation>
+        <source>Your system doesn’t have a proxy set. To connect, set a valid http_proxy or https_proxy value in your environment.</source>
+        <translatorcomment>Error banner shown when proxy settings is not found in the environment . SNC-5411</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6497,6 +6483,24 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     </message>
 </context>
 <context>
+    <name>RemoveBackup</name>
+    <message>
+        <source>Backup folder already exists on destination. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can't move it there! SNC-6067 </translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error moving or removing remote backup folder</source>
+        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
+        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RemoveBackupDialog</name>
     <message>
         <source>Cancel</source>
@@ -6512,11 +6516,6 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
         <translation>Xóa thư mục khỏi MEGA</translation>
-    </message>
-    <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
-        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation>Thư mục sẽ bị xóa khỏi MEGA, nhưng sẽ vẫn được giữ nguyên vẹn trong thiết bị của bạn. Hành động này sẽ không thể hồi lại được.</translation>
     </message>
     <message>
         <source>Move folder</source>
@@ -6544,8 +6543,13 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
         <translation>Chấm dứt sao lưu</translation>
     </message>
     <message>
-        <source>To stop backing up this folder, you need to either move it or delete it.</source>
-        <translatorcomment>Backup removal title description</translatorcomment>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
+        <translation>Thư mục sẽ bị xóa khỏi MEGA, nhưng sẽ vẫn được giữ nguyên vẹn trong thiết bị của bạn. Hành động này sẽ không thể hồi lại được.</translation>
+    </message>
+    <message>
+        <source>To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].</source>
+        <translatorcomment>Backup removal title description. SNC-6067</translatorcomment>
         <translation>Để chấm dứt sao lưu thư mục này, bạn phải di chuyển hoặc xóa nó đi</translation>
     </message>
 </context>
@@ -7094,6 +7098,16 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
         <translation><numerusform>ngày</numerusform></translation>
     </message>
+    <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation>Nền giao diện</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
+        <translation>Tìm hiểu thêm</translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog_Bandwith</name>
@@ -7629,7 +7643,7 @@ Làm mới danh sách.</translation>
     <message>
         <source>Syncing…</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.  SNC-5938</translatorcomment>
-        <translation>Đang đồng[w]bộ…</translation>
+        <translation>Đang đồng bộ…</translation>
     </message>
     <message>
         <source>Transferring…</source>
@@ -9520,22 +9534,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1d</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation>%1d</translation>
+        <translation>%1ng</translation>
     </message>
     <message>
         <source>%1h</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation>%1h</translation>
+        <translation>%1g̀</translation>
     </message>
     <message>
         <source>%1m</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation>%1p</translation>
+        <translation>%1ṕ</translation>
     </message>
     <message>
         <source>%1s</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. Please do not add a space between the value and unit to keep the string as compact as possible. SNC-5623</translatorcomment>
-        <translation>%1s</translation>
+        <translation>%1giây</translation>
     </message>
     <message numerus="yes">
         <source>Added %n day ago</source>

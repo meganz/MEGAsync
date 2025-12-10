@@ -344,19 +344,9 @@
         <translation>Senkronizasyon eklenirken hata oluştu</translation>
     </message>
     <message>
-        <source>Error moving or removing remote backup folder</source>
-        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>MEGA yedekleme klasörü taşınırken veya silinirken hata oluştu</translation>
-    </message>
-    <message>
         <source>Error removing backup</source>
         <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
         <translation>Yedekleme durdurulurken hata oluştu</translation>
-    </message>
-    <message>
-        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
-        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>MEGA yedekleme klasörü taşınamadı veya silinemedi. Sebebi: %1</translation>
     </message>
     <message>
         <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
@@ -5950,14 +5940,10 @@ Farklı bir ad girin.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing dark mode!
-- We've refreshed the app design.
-- We've fixed bugs and made the app more reliable.
+        <source>- We've fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
-        <translation>- Artık koyu tema kullanılabilir.
-- Uygulama tasarımını daha sade ve kullanımı daha kolay hâle getirmek için yeniledik.
-- Hata düzeltmeleri yapıldı ve uygulama kararlılığı geliştirildi.</translation>
+        <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6041,9 +6027,9 @@ Farklı bir ad girin.</translation>
         <translation>Proxy ayarlarınız kullanılarak bağlanılamadı. Ayarları kontrol edin veya farklı bir ağ deneyin.</translation>
     </message>
     <message>
-        <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
-        <translatorcomment>Error banner shown when proxy settings is not found in the environment, [B] is for bold . SNC-5411</translatorcomment>
-        <translation>Sisteminizde bir proxy ayarlanmamış. Bağlanmak için ortamınızda geçerli bir [B]http_proxy[/B] veya [B]https_proxy[/B] değeri ayarlayın.</translation>
+        <source>Your system doesn’t have a proxy set. To connect, set a valid http_proxy or https_proxy value in your environment.</source>
+        <translatorcomment>Error banner shown when proxy settings is not found in the environment . SNC-5411</translatorcomment>
+        <translation>Proxy algılanmadı. Bağlanmak için ortamınızda geçerli bir http_proxy veya https_proxy değeri ayarlayın.</translation>
     </message>
 </context>
 <context>
@@ -6498,6 +6484,24 @@ Yine de silmek istiyor musunuz?</translation>
     </message>
 </context>
 <context>
+    <name>RemoveBackup</name>
+    <message>
+        <source>Backup folder already exists on destination. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can't move it there! SNC-6067 </translatorcomment>
+        <translation>Bu konumda aynı ada sahip bir klasör zaten var, başka bir konum seçin</translation>
+    </message>
+    <message>
+        <source>Error moving or removing remote backup folder</source>
+        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation>MEGA’da yedekleme klasörünü taşırken veya silerken hata oluştu</translation>
+    </message>
+    <message>
+        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
+        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation>MEGA’da yedekleme klasörü taşınamıyor veya silinemiyor. Sebebi: %1</translation>
+    </message>
+</context>
+<context>
     <name>RemoveBackupDialog</name>
     <message>
         <source>Cancel</source>
@@ -6513,11 +6517,6 @@ Yine de silmek istiyor musunuz?</translation>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
         <translation>Klasörü MEGA’dan sil</translation>
-    </message>
-    <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
-        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation>Klasör MEGA’dan silinecek ancak cihazınızdan silinmeyecektir. Bu işlem geri alınamaz.</translation>
     </message>
     <message>
         <source>Move folder</source>
@@ -6545,8 +6544,13 @@ Yine de silmek istiyor musunuz?</translation>
         <translation>Yedeklemeyi durdur</translation>
     </message>
     <message>
-        <source>To stop backing up this folder, you need to either move it or delete it.</source>
-        <translatorcomment>Backup removal title description</translatorcomment>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
+        <translation>Klasör MEGA’dan silinecek ancak cihazınızdan silinmeyecektir. Bu işlem geri alınamaz.</translation>
+    </message>
+    <message>
+        <source>To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].</source>
+        <translatorcomment>Backup removal title description. SNC-6067</translatorcomment>
         <translation>Bu klasörün yedeklemesini durdurmak için onu taşımanız veya silmeniz gerekir</translation>
     </message>
 </context>
@@ -7094,6 +7098,16 @@ Yine de silmek istiyor musunuz?</translation>
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
         <translation><numerusform>gün</numerusform><numerusform>gün</numerusform></translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation>Tema</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
+        <translation>Daha fazlasını öğrenin</translation>
     </message>
 </context>
 <context>
@@ -8512,7 +8526,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>(in queue)</source>
         <translatorcomment>Transfer is paused and no bytes have been transferred yet</translatorcomment>
-        <translation>(kuyrukta)</translation>
+        <translation>(sırada)</translation>
     </message>
     <message>
         <source>Completed</source>
@@ -8537,7 +8551,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>In queue</source>
         <translatorcomment>Transfer is active but not being processed yet</translatorcomment>
-        <translation>Kuyrukta</translation>
+        <translation>Sırada</translation>
     </message>
     <message>
         <source>Out of storage space</source>
