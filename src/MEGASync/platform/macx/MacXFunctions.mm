@@ -314,59 +314,6 @@ void removePathFromPlaces(QString path)
     CFRelease(favoriteItems);
 }
 
-void setFolderIcon(QString path)
-{
-    if (path.isEmpty() || !QFileInfo(path).exists())
-    {
-        return;
-    }
-
-    NSString *appPath = [[NSBundle mainBundle] bundlePath];
-    if (!appPath)
-    {
-        return;
-    }
-
-    NSString *folderPath = [NSString stringWithUTF8String:path.toUtf8().constData()];
-    if (!folderPath)
-    {
-        return;
-    }
-
-    NSImage* iconImage = NULL;
-    auto osVersion = QOperatingSystemVersion::current();
-    if (osVersion >= QOperatingSystemVersion::MacOSBigSur)
-    {
-        iconImage = [[NSImage alloc] initWithContentsOfFile:[appPath stringByAppendingString:@"/Contents/Resources/folder_bigsur.icns"]];
-    }
-    else
-    {
-        iconImage = [[NSImage alloc] initWithContentsOfFile:[appPath stringByAppendingString:@"/Contents/Resources/folder_yosemite.icns"]];
-    }
-
-    if (iconImage)
-    {
-        [[NSWorkspace sharedWorkspace] setIcon:iconImage forFile:folderPath options:0];
-        [iconImage release];
-    }
-}
-
-void unSetFolderIcon(QString path)
-{
-    if (path.isEmpty() || !QFileInfo(path).exists())
-    {
-        return;
-    }
-
-    NSString *folderPath = [NSString stringWithUTF8String:path.toUtf8().constData()];
-    if (!folderPath)
-    {
-        return;
-    }
-
-    [[NSWorkspace sharedWorkspace] setIcon:nil forFile:folderPath options:0];
-}
-
 QString defaultOpenApp(QString extension)
 {
     CFURLRef appURL = NULL;

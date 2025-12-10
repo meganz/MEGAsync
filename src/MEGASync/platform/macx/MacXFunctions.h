@@ -20,8 +20,6 @@ void addLoginItem();
 void removeLoginItem();
 void addPathToPlaces(QString path, QString pathName);
 void removePathFromPlaces(QString path);
-void setFolderIcon(QString path);
-void unSetFolderIcon(QString path);
 QString defaultOpenApp(QString extension);
 bool registerUpdateDaemon();
 bool userActive();
