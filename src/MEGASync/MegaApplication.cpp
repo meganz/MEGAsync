@@ -461,6 +461,9 @@ void MegaApplication::initialize()
             Qt::DirectConnection); // Use direct connection to make sure 'updated' and 'prevVersions' are set as needed
     preferences->initialize(dataPath);
 
+    // Apply specific rcc files depending on selected theme
+    initStyleAndResources();
+
     if (preferences->error())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Encountered corrupt prefrences.").toUtf8().constData());
@@ -473,9 +476,6 @@ void MegaApplication::initialize()
 
     preferences->setLastStatsRequest(0);
     lastExit = preferences->getLastExit();
-
-    // Apply specific rcc files depending on selected theme
-    initStyleAndResources();
 
     installTranslator(&translator);
     QString language = preferences->language();
