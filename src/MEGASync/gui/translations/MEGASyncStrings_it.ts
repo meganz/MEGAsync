@@ -353,19 +353,9 @@
         <translation>Errore nell’aggiunta della sincronizzazione</translation>
     </message>
     <message>
-        <source>Error moving or removing remote backup folder</source>
-        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>Errore durante lo spostamento o l’eliminazione della cartella MEGA di backup</translation>
-    </message>
-    <message>
         <source>Error removing backup</source>
         <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
         <translation>Errore durante la rimozione del backup</translation>
-    </message>
-    <message>
-        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
-        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>Impossibile spostare o eliminare la cartella MEGA di backup. Motivo: %1</translation>
     </message>
     <message>
         <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
@@ -583,7 +573,7 @@
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>La tua segnalazione non può essere inviata a causa di un errore. Riprova più tardi o contatta il nostro team di supporto su [A]support@mega.io[/A] se il problema persiste.</translation>
+        <translation>La tua segnalazione non può essere inviata a causa di un errore. Riprova più tardi o contatta il nostro team di supporto disponibile su [A]support@mega.io[/A] se il problema persiste.</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
@@ -628,7 +618,7 @@
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation>Per favore, riprova più tardi o contatta il nostro team di supporto su [A]support@mega.io[/A] sse il problema persiste.</translation>
+        <translation>Per favore, riprova più tardi o contatta il nostro team di supporto disponibile su [A]support@mega.io[/A] se il problema persiste.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -3070,12 +3060,12 @@ Attendi il completamento dei caricamenti.</translation>
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
-        <translation>Sei stato disconnesso da questo dispositivo da un’altra posizione.</translation>
+        <translation>Hai effettuato la disconnessione di questo dispositivo da un’altra posizione.</translation>
     </message>
     <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation>Disconnessione. Contatta [A]support@mega.io[/A] se il problema persiste.</translation>
+        <translation>Hai effettuato la disconnessione. Contatta [A]support@mega.io[/A] se il problema persiste.</translation>
     </message>
 </context>
 <context>
@@ -3241,7 +3231,7 @@ Attendi il completamento dei caricamenti.</translation>
     <message>
         <source>Link can&apos;t be imported, invalid key or decryption error</source>
         <translatorcomment>Error message when there is a decryption error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation>Il link non può essere importato. Chiave non valida o errore di decrittografia.</translation>
+        <translation>Il link non può essere importato. Chiave non valida o errore di decriptografia.</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported, your storage is full</source>
@@ -3301,7 +3291,7 @@ Attendi il completamento dei caricamenti.</translation>
     <message>
         <source>No Internet connection</source>
         <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
-        <translation>Nessuna connessione ad Internet</translation>
+        <translation>Nessuna connessione a Internet</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -6090,16 +6080,6 @@ Inserisci un nome differente.</translation>
 </context>
 <context>
     <name>Preferences</name>
-    <message>
-        <source>- Introducing dark mode!
-- We&apos;ve refreshed the app design.
-- We&apos;ve fixed bugs and made the app more reliable.
-</source>
-        <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
-        <translation>- La modalità oscura è ora disponibile.
-- Abbiamo aggiornato il design dell’app per renderla più pulita e facile da usare.
-- I bug sono stati corretti e la stabilità dell’app è migliorata.</translation>
-    </message>
 </context>
 <context>
     <name>ProgressIndicatorDialog</name>
@@ -6180,11 +6160,6 @@ Inserisci un nome differente.</translation>
         <source>We couldn’t connect using your proxy settings. Check your proxy details or try a different network.</source>
         <translatorcomment>Error banner shown when there is an error testing the proxy settings. SNC-5411</translatorcomment>
         <translation>Non siamo riusciti a connetterci utilizzando le tue impostazioni proxy. Controlla le impostazioni o prova un’altra rete.</translation>
-    </message>
-    <message>
-        <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
-        <translatorcomment>Error banner shown when proxy settings is not found in the environment, [B] is for bold . SNC-5411</translatorcomment>
-        <translation>Il tuo sistema non dispone di un proxy impostato. Per connetterti, imposta un valore valido [B]http_proxy[/B] o [B]http_proxy[/B] valore nel tuo ambiente.</translation>
     </message>
 </context>
 <context>
@@ -6639,6 +6614,9 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     </message>
 </context>
 <context>
+    <name>RemoveBackup</name>
+</context>
+<context>
     <name>RemoveBackupDialog</name>
     <message>
         <source>Cancel</source>
@@ -6656,8 +6634,8 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <translation>Elimina cartella da MEGA</translation>
     </message>
     <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
-        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
         <translation>La cartella verrà eliminata da MEGA, ma non dal dispositivo. Questa azione non può essere annullata.</translation>
     </message>
     <message>
@@ -6686,8 +6664,8 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <translation>Ferma backup</translation>
     </message>
     <message>
-        <source>To stop backing up this folder, you need to either move it or delete it.</source>
-        <translatorcomment>Backup removal title description</translatorcomment>
+        <source>To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].</source>
+        <translatorcomment>Backup removal title description. SNC-6067</translatorcomment>
         <translation>Per interrompere il backup di questa cartella, devi spostarla o eliminarla</translation>
     </message>
 </context>
@@ -7033,6 +7011,11 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <translation>Avvia al login</translation>
     </message>
     <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
+        <translation>Di più</translation>
+    </message>
+    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>Una cartella locale con il backup dei file eliminati in MEGA</translation>
@@ -7176,6 +7159,11 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <source>Synchronizations will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active syncs (not backups)</translatorcomment>
         <translation>Le sincronizzazioni verranno disattivate.</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation>Tema</translation>
     </message>
     <message>
         <source>Transfer Quota</source>
@@ -9832,11 +9820,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Trasferimento appena completato</translation>
     </message>
     <message>
-        <source>Basic</source>
-        <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Business</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
         <translation>Business</translation>
@@ -9845,11 +9828,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Bytes</source>
         <translatorcomment>Label to indicate bytes unit.</translatorcomment>
         <translation>Bytes</translation>
-    </message>
-    <message>
-        <source>Essential</source>
-        <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Free</source>
@@ -9910,11 +9888,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
         <translation>Pro Lite</translation>
-    </message>
-    <message>
-        <source>Starter</source>
-        <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>TB</source>
