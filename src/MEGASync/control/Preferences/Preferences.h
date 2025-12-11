@@ -18,7 +18,6 @@
 Q_DECLARE_METATYPE(QList<long long>)
 
 class SyncSettings;
-struct SyncData;
 class Preferences : public QObject
 {
     Q_OBJECT
@@ -318,17 +317,10 @@ public:
     void setNeverCreateLink(bool value);
 
     // sync related
-    void writeSyncSetting(std::shared_ptr<SyncSettings> syncSettings); //write sync into cache
-    void removeAllSyncSettings(); //remove all sync from cache
+    void writeSyncSetting(std::shared_ptr<SyncSettings> syncSettings); // write sync into cache
     void removeSyncSetting(std::shared_ptr<SyncSettings> syncSettings); //remove one sync from cache
     QMap<mega::MegaHandle, std::shared_ptr<SyncSettings> > getLoadedSyncsMap() const; //return loaded syncs when loggedin/entered user
-    void removeAllFolders(); //remove all syncs from cache
-    // old cache transition related:
-    void removeOldCachedSync(int position, QString email = QString());
-    //get a list of cached syncs (withouth loading them in memory): intended for transition to sdk caching them.
-    QList<SyncData> readOldCachedSyncs(int *cachedBusinessState = nullptr, int *cachedBlockedState = nullptr,
-                                       int *cachedStorageState = nullptr, QString email = QString());
-    void saveOldCachedSyncs(); //save the old cache (intended to clean them)
+    void removeAllFolders(); // remove all syncs from cache
 
     //**** LEGACY EXCLUSION RULES ****//
     unsigned long long upperSizeLimitValue();
@@ -643,9 +635,6 @@ protected:
     void setValueConcurrently(const QString &key, const QVariant &value, bool notifyChange = false);
 
     std::unique_ptr<EncryptedSettings> mSettings;
-
-    // sync configuration from old syncs
-    QList<SyncData> oldSyncs;
 
     // loaded syncs when loggedin/entered user. This is intended to be used to load values that are not stored in the sdk (like sync name/last known remote path)
     // the actual SyncSettings model is stored in Model::configuredSyncsMap. That one is the one that will be updated and persistent accordingly

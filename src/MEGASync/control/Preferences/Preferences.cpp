@@ -91,8 +91,7 @@ const char Preferences::UPDATE_PUBLIC_KEY[] =
     "EKLXQvBYy7hxG8EPUkrMVCaWzzTQAFEQ";
 const QString Preferences::UPDATE_FOLDER_NAME               = QString::fromLatin1("update");
 const QString Preferences::UPDATE_BACKUP_FOLDER_NAME = QString::fromLatin1("backup");
-const QString Preferences::PROXY_TEST_SUBSTRING             = QString::fromUtf8("-2");
-const QString Preferences::syncsGroupKey            = QString::fromLatin1("Syncs");
+const QString Preferences::PROXY_TEST_SUBSTRING = QString::fromUtf8("-2");
 const QString Preferences::syncsGroupByTagKey       = QString::fromLatin1("SyncsByTag");
 const QString Preferences::currentAccountKey        = QString::fromLatin1("currentAccount");
 const QString Preferences::currentAccountStatusKey  = QString::fromLatin1("currentAccountStatus");
@@ -2701,11 +2700,9 @@ void Preferences::setEmailAndGeneralSettings(const QString &email)
     bool proxyAuth = this->proxyRequiresAuth();
     QString proxyUsername = this->getProxyUsername();
     QString proxyPassword = this->getProxyPassword();
-
     QString session = this->getSessionInGeneral();
 
     this->setEmail(email);
-
     this->setSessionInUserGroup(session); //this is required to provide backwards compatibility
     this->setProxyType(proxyType);
     this->setProxyServer(proxyServer);
@@ -2850,178 +2847,6 @@ void Preferences::readFolders()
     mSettings->endGroup();
     mutex.unlock();
 }
-
-SyncData::SyncData(QString name,
-                   QString localFolder,
-                   mega::MegaHandle megaHandle,
-                   QString megaFolder,
-                   long long localfp,
-                   bool enabled,
-                   bool tempDisabled,
-                   int pos,
-                   QString syncID):
-    mName(name),
-    mLocalFolder(localFolder),
-    mMegaHandle(megaHandle),
-    mMegaFolder(megaFolder),
-    mLocalfp(localfp),
-    mEnabled(enabled),
-    mTemporarilyDisabled(tempDisabled),
-    mPos(pos),
-    mSyncID(syncID)
-{}
-
-void Preferences::removeOldCachedSync(int position, QString email)
-{
-    QMutexLocker qm(&mutex);
-    assert(logged() || !email.isEmpty());
-
-    // if not logged, use email to get into that user group and remove just some specific sync group
-    if (!logged() && email.size() && mSettings->containsGroup(email))
-    {
-        mSettings->beginGroup(email);
-        mSettings->beginGroup(syncsGroupKey);
-        mSettings->beginGroup(QString::number(position));
-        mSettings->remove(QString::fromLatin1("")); //Remove all previous values
-        mSettings->endGroup();//sync
-        mSettings->endGroup();//old syncs
-        mSettings->endGroup();//user
-        return;
-    }
-
-    // otherwise remove oldSync and rewrite all
-    auto it = oldSyncs.begin();
-    while (it != oldSyncs.end())
-    {
-        if (it->mPos == position)
-        {
-            it = oldSyncs.erase(it);
-        }
-        else
-        {
-            ++it;
-        }
-    }
-    saveOldCachedSyncs();
-}
-
-QList<SyncData> Preferences::readOldCachedSyncs(int *cachedBusinessState, int *cachedBlockedState, int *cachedStorageState, QString email)
-{
-    QMutexLocker qm(&mutex);
-    oldSyncs.clear();
-
-    // if not logged in & email provided, read old syncs from that user and load new-cache sync from prev session
-    bool temporarilyLoggedPrefs = false;
-    if (!instance()->logged() && !email.isEmpty())
-    {
-        loadedSyncsMap.clear(); //ensure loaded are empty even when there is no email
-        temporarilyLoggedPrefs = instance()->enterUser(email);
-        if (temporarilyLoggedPrefs)
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Migrating syncs data to SDK cache from previous session")
-                         .toUtf8().constData());
-        }
-        else
-        {
-            return oldSyncs;
-        }
-    }
-
-    assert(logged());
-    //restore cached status
-    if (cachedBusinessState) *cachedBusinessState = getValue<int>(businessStateQKey, -2);
-    if (cachedBlockedState) *cachedBlockedState = getValue<int>(blockedStateQKey, -2);
-    if (cachedStorageState) *cachedStorageState = getValue<int>(storageStateQKey, MegaApi::STORAGE_STATE_UNKNOWN);
-
-    mSettings->beginGroup(syncsGroupKey);
-    int numSyncs = mSettings->numChildGroups();
-    for (int i = 0; i < numSyncs; i++)
-    {
-        mSettings->beginGroup(i);
-
-        bool enabled = mSettings->value(folderActiveKey, true).toBool();
-
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Reading old cache sync setting ... ").toUtf8().constData());
-
-        if (temporarilyLoggedPrefs) //coming from old session
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromLatin1(" ... sync configuration rescued from old session. Set as disabled.")
-                         .toUtf8().constData());
-
-            enabled = false; // syncs coming from old sessions are now considered unsafe to continue automatically
-            // Note: in this particular case, we are not showing any error in the sync (since that information is not carried out
-            // to the SDK)
-        }
-
-        oldSyncs.push_back(SyncData(
-            mSettings->value(syncNameKey).toString(),
-            mSettings->value(localFolderKey).toString(),
-            mSettings->value(megaFolderHandleKey, QVariant::fromValue<mega::MegaHandle>(INVALID_HANDLE)).value<mega::MegaHandle>(),
-            mSettings->value(megaFolderKey).toString(),
-            mSettings->value(localFingerprintKey, 0).toLongLong(),
-            enabled,
-            mSettings->value(temporaryInactiveKey, false).toBool(),
-            i,
-            mSettings->value(syncIdKey, true).toString()));
-
-        mSettings->endGroup();
-    }
-    mSettings->endGroup();
-
-    if (temporarilyLoggedPrefs)
-    {
-        instance()->leaveUser();
-    }
-
-    return oldSyncs;
-}
-
-void Preferences::saveOldCachedSyncs()
-{
-    QMutexLocker qm(&mutex);
-    assert(logged());
-
-    if (!logged())
-    {
-        return;
-    }
-
-    mSettings->beginGroup(syncsGroupKey);
-
-    mSettings->remove(QString::fromLatin1("")); //Remove all previous values
-
-    int i = 0 ;
-    foreach(SyncData osd, oldSyncs) //normally if no errors happened it'll be empty
-    {
-        mSettings->beginGroup(QString::number(i));
-
-        mSettings->setValue(syncNameKey, osd.mName);
-        mSettings->setValue(localFolderKey, osd.mLocalFolder);
-        mSettings->setValue(localFingerprintKey, osd.mLocalfp);
-        mSettings->setValue(megaFolderHandleKey, QVariant::fromValue<mega::MegaHandle>(osd.mMegaHandle));
-        mSettings->setValue(megaFolderKey, osd.mMegaFolder);
-        mSettings->setValue(folderActiveKey, osd.mEnabled);
-        mSettings->setValue(syncIdKey, osd.mSyncID);
-
-        mSettings->endGroup();
-    }
-
-    mSettings->endGroup();
-}
-
-
-void Preferences::removeAllSyncSettings()
-{
-    QMutexLocker qm(&mutex);
-    assert(logged());
-
-    mSettings->beginGroup(syncsGroupByTagKey);
-
-    mSettings->remove(QString::fromLatin1("")); //removes group and all its settings
-
-    mSettings->endGroup();
-}
-
 
 void Preferences::removeSyncSetting(std::shared_ptr<SyncSettings> syncSettings)
 {
