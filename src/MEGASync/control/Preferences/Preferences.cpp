@@ -173,17 +173,8 @@ const QString Preferences::downloadLimitKBKey       = QString::fromLatin1("downl
 const QString Preferences::parallelUploadConnectionsKey       = QString::fromLatin1("parallelUploadConnections");
 const QString Preferences::parallelDownloadConnectionsKey     = QString::fromLatin1("parallelDownloadConnections");
 
-const QString Preferences::upperSizeLimitKey        = QString::fromLatin1("upperSizeLimit");
-const QString Preferences::lowerSizeLimitKey        = QString::fromLatin1("lowerSizeLimit");
-
-const QString Preferences::lastCustomStreamingAppKey    = QString::fromLatin1("lastCustomStreamingApp");
-
-const QString Preferences::upperSizeLimitValueKey       = QString::fromLatin1("upperSizeLimitValue");
-const QString Preferences::lowerSizeLimitValueKey       = QString::fromLatin1("lowerSizeLimitValue");
-const QString Preferences::upperSizeLimitUnitKey        = QString::fromLatin1("upperSizeLimitUnit");
-const QString Preferences::lowerSizeLimitUnitKey        = QString::fromLatin1("lowerSizeLimitUnit");
-
-
+const QString Preferences::lastCustomStreamingAppKey =
+    QString::fromLatin1("lastCustomStreamingApp");
 const QString Preferences::cleanerDaysLimitKey       = QString::fromLatin1("cleanerDaysLimit");
 const QString Preferences::cleanerDaysLimitValueKey  = QString::fromLatin1("cleanerDaysLimitValue");
 
@@ -273,10 +264,7 @@ const QString Preferences::awakeIfActiveKey = QString::fromLatin1("sleepIfInacti
 const bool Preferences::defaultAwakeIfActive = false;
 
 const bool Preferences::defaultStartOnStartup = true;
-const bool Preferences::defaultUpdateAutomatically  = true;
-const bool Preferences::defaultUpperSizeLimit       = false;
-const bool Preferences::defaultLowerSizeLimit       = false;
-
+const bool Preferences::defaultUpdateAutomatically = true;
 const bool Preferences::defaultCleanerDaysLimit     = true;
 
 const bool Preferences::defaultUseHttpsOnly         = true;
@@ -287,11 +275,7 @@ const long long Preferences::defaultTimeStamp       = 0;
 
 //The default appDataId starts from 1, as 0 will be used for invalid appDataId
 const unsigned long long Preferences::defaultTransferIdentifier = 1;
-const unsigned long long  Preferences::defaultUpperSizeLimitValue           = 1; //Input UI range 1-9999. Use 1 as default value
-const unsigned long long  Preferences::defaultLowerSizeLimitValue           = 1; //Input UI range 1-9999. Use 1 as default value
-const int  Preferences::defaultCleanerDaysLimitValue                        = 30;
-const int Preferences::defaultLowerSizeLimitUnit =  Preferences::MEGA_BYTE_UNIT;
-const int Preferences::defaultUpperSizeLimitUnit =  Preferences::MEGA_BYTE_UNIT;
+const int Preferences::defaultCleanerDaysLimitValue = 30;
 const int Preferences::defaultFolderPermissions = 0;
 const int Preferences::defaultFilePermissions   = 0;
 #ifdef WIN32
@@ -1581,28 +1565,6 @@ void Preferences::setDownloadLimitKB(int value)
     setValueConcurrently(downloadLimitKBKey, value);
 }
 
-bool Preferences::upperSizeLimit()
-{
-    return getValueConcurrent<bool>(upperSizeLimitKey, defaultUpperSizeLimit);
-}
-
-void Preferences::setUpperSizeLimit(bool value)
-{
-    setValueConcurrently(upperSizeLimitKey, value);
-}
-
-unsigned long long Preferences::upperSizeLimitValue()
-{
-    assert(logged());
-    return getValueConcurrent<unsigned long long>(upperSizeLimitValueKey, defaultUpperSizeLimitValue);
-}
-
-void Preferences::setUpperSizeLimitValue(unsigned long long value)
-{
-    assert(logged());
-    setValueConcurrently(upperSizeLimitValueKey, value);
-}
-
 bool Preferences::cleanerDaysLimit()
 {
     return getValueConcurrent<bool>(cleanerDaysLimitKey, defaultCleanerDaysLimit);
@@ -1623,51 +1585,6 @@ void Preferences::setCleanerDaysLimitValue(int value)
 {
     assert(logged());
     setValueConcurrently(cleanerDaysLimitValueKey, value);
-}
-
-int Preferences::upperSizeLimitUnit()
-{
-    assert(logged());
-    return getValueConcurrent<int>(upperSizeLimitUnitKey, defaultUpperSizeLimitUnit);
-}
-void Preferences::setUpperSizeLimitUnit(int value)
-{
-    assert(logged());
-    setValueConcurrently(upperSizeLimitUnitKey, value);
-}
-
-bool Preferences::lowerSizeLimit()
-{
-    return getValueConcurrent<bool>(lowerSizeLimitKey, defaultLowerSizeLimit);
-}
-
-void Preferences::setLowerSizeLimit(bool value)
-{
-    setValueConcurrently(lowerSizeLimitKey, value);
-}
-
-unsigned long long Preferences::lowerSizeLimitValue()
-{
-    assert(logged());
-    return getValueConcurrent<unsigned long long>(lowerSizeLimitValueKey, defaultLowerSizeLimitValue);
-}
-
-void Preferences::setLowerSizeLimitValue(unsigned long long value)
-{
-    assert(logged());
-    setValueConcurrently(lowerSizeLimitValueKey, value);
-}
-
-int Preferences::lowerSizeLimitUnit()
-{
-    assert(logged());
-    return getValueConcurrent<int>(lowerSizeLimitUnitKey, defaultLowerSizeLimitUnit);
-}
-
-void Preferences::setLowerSizeLimitUnit(int value)
-{
-    assert(logged());
-    setValueConcurrently(lowerSizeLimitUnitKey, value);
 }
 
 int Preferences::folderPermissionsValue()
@@ -2063,19 +1980,6 @@ void Preferences::removeAllFolders()
     mSettings->beginGroup(syncsGroupByTagKey);
     mSettings->remove(QLatin1String("")); //remove group and all its settings
     mSettings->endGroup();
-}
-QStringList Preferences::getExcludedSyncNames()
-{
-    assert(logged());
-    QStringList value = excludedSyncNames;
-    return value;
-}
-
-QStringList Preferences::getExcludedSyncPaths()
-{
-    assert(logged());
-    QStringList value = excludedSyncPaths;
-    return value;
 }
 
 bool Preferences::isOneTimeActionDone(int action)
@@ -2727,7 +2631,6 @@ void Preferences::login(QString account)
     mSettings->setValue(currentAccountKey, account);
     mSettings->beginGroup(account);
     readFolders();
-    loadExcludedSyncNames();
     const auto previousVersion =
         mSettings->value(lastVersionKey, Preferences::defaultLastVersion).toInt();
     if (previousVersion != Preferences::VERSION_CODE)
@@ -2782,36 +2685,6 @@ void Preferences::logout()
     }
     clearTemporalBandwidth();
     mutex.unlock();
-}
-
-static bool caseInsensitiveLessThan(const QString &s1, const QString &s2)
-{
-    return s1.toLower() < s2.toLower();
-}
-void Preferences::loadExcludedSyncNames()
-{
-    excludedSyncNames = getValue<QString>(excludedSyncNamesKey).split(QString::fromLatin1("\n", Qt::SkipEmptyParts));
-    if (excludedSyncNames.size()==1 && excludedSyncNames.at(0).isEmpty())
-    {
-        excludedSyncNames.clear();
-    }
-
-    excludedSyncPaths = getValue<QString>(excludedSyncPathsKey).split(QString::fromLatin1("\n", Qt::SkipEmptyParts));
-    if (excludedSyncPaths.size()==1 && excludedSyncPaths.at(0).isEmpty())
-    {
-        excludedSyncPaths.clear();
-    }
-    excludedSyncNames.removeDuplicates();
-    std::sort(excludedSyncNames.begin(), excludedSyncNames.end(), caseInsensitiveLessThan);
-
-    excludedSyncPaths.removeDuplicates();
-    std::sort(excludedSyncPaths.begin(), excludedSyncPaths.end(), caseInsensitiveLessThan);
-}
-
-bool Preferences::hasLegacyExclusionRules()
-{
-    return (!getExcludedSyncNames().isEmpty() || !getExcludedSyncPaths().isEmpty() ||
-            lowerSizeLimit() || upperSizeLimit());
 }
 
 QMap<mega::MegaHandle, std::shared_ptr<SyncSettings> > Preferences::getLoadedSyncsMap() const

@@ -322,27 +322,6 @@ public:
     QMap<mega::MegaHandle, std::shared_ptr<SyncSettings> > getLoadedSyncsMap() const; //return loaded syncs when loggedin/entered user
     void removeAllFolders(); // remove all syncs from cache
 
-    //**** LEGACY EXCLUSION RULES ****//
-    unsigned long long upperSizeLimitValue();
-    void setUpperSizeLimitValue(unsigned long long value);
-    unsigned long long lowerSizeLimitValue();
-    void setLowerSizeLimitValue(unsigned long long value);
-    bool upperSizeLimit();
-    void setUpperSizeLimit(bool value);
-    bool lowerSizeLimit();
-    void setLowerSizeLimit(bool value);
-    int upperSizeLimitUnit();
-    void setUpperSizeLimitUnit(int value);
-    int lowerSizeLimitUnit();
-    void setLowerSizeLimitUnit(int value);
-    QStringList getExcludedSyncNames();
-    QStringList getExcludedSyncPaths();
-    // preloads excluded sync names and adds missing defaults ones in previous versions
-    void loadExcludedSyncNames();
-
-    bool hasLegacyExclusionRules();
-    //**** END OF LEGACY EXCLUSION RULES ****/
-
     bool isOneTimeActionDone(int action);
     void setOneTimeActionDone(int action, bool done);
     void setSystemTrayPromptSuppressed(bool suppressed);
@@ -641,8 +620,6 @@ protected:
     // These are only used for retrieving values or removing at uninstall
     QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> loadedSyncsMap;
 
-    QStringList excludedSyncNames;
-    QStringList excludedSyncPaths;
     bool errorFlag;
     long long tempBandwidth;
     int tempBandwidthInterval;
@@ -718,12 +695,6 @@ protected:
     static const QString downloadLimitKBKey;
     static const QString parallelUploadConnectionsKey;
     static const QString parallelDownloadConnectionsKey;
-    static const QString upperSizeLimitKey;
-    static const QString lowerSizeLimitKey;
-    static const QString upperSizeLimitValueKey;
-    static const QString lowerSizeLimitValueKey;
-    static const QString upperSizeLimitUnitKey;
-    static const QString lowerSizeLimitUnitKey;
     static const QString cleanerDaysLimitKey;
     static const QString cleanerDaysLimitValueKey;
     static const QString folderPermissionsKey;
@@ -842,12 +813,6 @@ protected:
     static const bool defaultProxyRequiresAuth;
     static const QString defaultProxyUsername;
     static const QString defaultProxyPassword;
-    static const bool defaultUpperSizeLimit;
-    static const bool defaultLowerSizeLimit;
-    static const unsigned long long defaultUpperSizeLimitValue;
-    static const unsigned long long defaultLowerSizeLimitValue;
-    static const int defaultUpperSizeLimitUnit;
-    static const int defaultLowerSizeLimitUnit;
     static const bool defaultCleanerDaysLimit;
     static const int defaultCleanerDaysLimitValue;
     static const int defaultTransferDownloadMethod;
