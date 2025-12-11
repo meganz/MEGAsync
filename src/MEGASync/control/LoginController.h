@@ -74,17 +74,13 @@ public:
     Q_INVOKABLE void setCreateAccountErrorMsg(const QString& msg);
 
     void processOnboardingClosed();
-
     bool isFetchNodesFinished() const;
-
     void onRequestFinish(mega::MegaRequest* request, mega::MegaError* e);
     void onRequestUpdate(mega::MegaRequest* request);
-    void onRequestStart(mega::MegaRequest *request);
-
+    void onRequestStart(mega::MegaRequest* request);
     void onEvent(mega::MegaApi*, mega::MegaEvent* event) override;
 
 signals:
-
     void emailChanged();
     void changeRegistrationEmailFinished(bool success, const QString& errorMsg = QString());
     void emailConfirmed();
@@ -120,9 +116,6 @@ private slots:
     void onAppStateChanged(AppState::AppStates oldAppState, AppState::AppStates newAppState);
 
 private:
-    unsigned long long computeExclusionSizeLimit(const unsigned long long& sizeLimitValue, const int unit);
-    void migrateSyncConfToSdk(const QString& email);
-    void loadSyncExclusionRules(const QString& email);
     void dumpSession();
     QString getRepeatedEmailMsg();
     void setEmail(const QString& email);

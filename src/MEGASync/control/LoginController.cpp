@@ -167,12 +167,11 @@ void LoginController::setState(State state)
         if (state == State::FETCH_NODES_FINISHED)
         {
             onboardingFinished();
-        }
 
-        if (state == State::FETCH_NODES_FINISHED &&
-            AppState::instance()->getAppState() == AppState::RELOADING)
-        {
-            emit requestAppState(AppState::NOMINAL);
+            if (AppState::instance()->getAppState() == AppState::RELOADING)
+            {
+                emit requestAppState(AppState::NOMINAL);
+            }
         }
     }
 }
@@ -624,190 +623,8 @@ void LoginController::onLogout(mega::MegaRequest* request, mega::MegaError* e)
 void LoginController::fetchNodes(const QString& email)
 {
     assert(mState != FETCHING_NODES);
-           // We need to load exclusions and migrate sync configurations from MEGAsync held cache, to SDK's
-           // prior fetching nodes (when the SDK will resume syncing)
 
-           // If we are loging into a new session of an account previously used in MEGAsync,
-           // we will use the previous configurations stored in that user mPreferences
-           // However, there is a case in which we are not able to do so at this point:
-           // we don't know the user email.
-           // That should only happen when trying to resume a session (using the session id stored in general mPreferences)
-           // that didn't complete a fetch nodes (i.e. does not have mPreferences logged).
-           // that can happen for blocked accounts.
-           // Fortunately, the SDK can help us get the email of the session
-    bool needFindingOutEmail = !mPreferences->logged() && email.isEmpty() &&
-                               AppState::instance()->getAppState() != AppState::RELOADING;
-
-    auto loadMigrateAndFetchNodes = [this](const QString& email)
-    {
-        if ((!mPreferences->logged() && email.isEmpty()) // I still couldn't get the the email:
-                                                         // won't be able to access user settings
-            || AppState::instance()->getAppState() == AppState::RELOADING)
-        {
-            mMegaApi->fetchNodes();
-        }
-        else
-        {
-            loadSyncExclusionRules(email);
-            migrateSyncConfToSdk(email); // this will produce the fetch nodes once done
-        }
-    };
-
-    if (!needFindingOutEmail)
-    {
-        loadMigrateAndFetchNodes(email);
-    }
-    else // we will ask the SDK the email
-    {
-        auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
-            this,
-            [loadMigrateAndFetchNodes](mega::MegaRequest* request, mega::MegaError* e) {
-                    QString email;
-
-                    if (e->getErrorCode() == mega::MegaError::API_OK)
-                    {
-                        auto emailFromRequest = request->getEmail();
-                        if (emailFromRequest)
-                        {
-                            email = QString::fromUtf8(emailFromRequest);
-                        }
-                    }
-
-                    // in any case, proceed:
-                    loadMigrateAndFetchNodes(email);
-                });
-
-        mMegaApi->getUserEmail(mMegaApi->getMyUserHandleBinary(), listener.get());
-    }
-}
-
-void LoginController::migrateSyncConfToSdk(const QString& email)
-{
-    bool needsMigratingFromOldSession = !mPreferences->logged();
-    assert(mPreferences->logged() || !email.isEmpty());
-
-
-    int cachedBusinessState = 999;
-    int cachedBlockedState = 999;
-    int cachedStorageState = 999;
-
-    auto oldCachedSyncs = mPreferences->readOldCachedSyncs(&cachedBusinessState, &cachedBlockedState, &cachedStorageState, email);
-    auto oldCacheSyncsCount = oldCachedSyncs.size();
-    if (oldCacheSyncsCount > 0)
-    {
-        if (cachedBusinessState == -2)
-        {
-            cachedBusinessState = 999;
-        }
-        if (cachedBlockedState == -2)
-        {
-            cachedBlockedState = 999;
-        }
-        if (cachedStorageState == mega::MegaApi::STORAGE_STATE_UNKNOWN)
-        {
-            cachedStorageState = 999;
-        }
-
-        mMegaApi->copyCachedStatus(cachedStorageState, cachedBlockedState, cachedBusinessState);
-    }
-
-    foreach(SyncData osd, oldCachedSyncs)
-    {
-        QString msg1 = QString::fromUtf8("Copying sync data to SDK cache: ") + osd.mLocalFolder
-                           + QString::fromUtf8(". Name: ") + osd.mName;
-        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, msg1.toUtf8().constData());
-
-        auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
-            this,
-            [this, osd, &oldCacheSyncsCount, needsMigratingFromOldSession, email](mega::MegaRequest* request, mega::MegaError* e) {
-                if (e->getErrorCode() == mega::MegaError::API_OK)
-                {
-                    //preload the model with the restored configuration: that includes info that the SDK does not handle (e.g: syncID)
-                    SyncInfo::instance()->pickInfoFromOldSync(osd, request->getParentHandle(), needsMigratingFromOldSession);
-                    mPreferences->removeOldCachedSync(osd.mPos, email);
-                }
-                else
-                {
-                    QString msg2 = QString::fromUtf8("Failed to copy sync ") + osd.mLocalFolder
-                                       + QString::fromUtf8(": ") + QString::fromUtf8(e->getErrorString());
-                    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, msg2.toUtf8().constData());
-                }
-
-                --oldCacheSyncsCount;
-                if (oldCacheSyncsCount == 0)//All syncs copied to sdk, proceed with fetchnodes
-                {
-                    mMegaApi->fetchNodes();
-                }
-            });
-
-        mMegaApi->copySyncDataToCache(osd.mLocalFolder.toUtf8().constData(), osd.mName.toUtf8().constData(),
-                                      osd.mMegaHandle, osd.mMegaFolder.toUtf8().constData(),
-                                      osd.mLocalfp, osd.mEnabled, osd.mTemporarilyDisabled, listener.get());
-    }
-
-    if (oldCacheSyncsCount == 0)//No syncs to be copied to sdk, proceed with fetchnodes
-    {
-        mMegaApi->fetchNodes();
-    }
-}
-
-void LoginController::loadSyncExclusionRules(const QString& email)
-{
-    assert(mPreferences->logged() || !email.isEmpty());
-
-    // if not logged in & email provided, read old syncs from that user and load new-cache sync from prev session
-    bool temporarilyLoggedPrefs = false;
-    if (!mPreferences->logged() && !email.isEmpty())
-    {
-        temporarilyLoggedPrefs = mPreferences->enterUser(email);
-        if (!temporarilyLoggedPrefs) // nothing to load
-        {
-            return;
-        }
-        mPreferences->loadExcludedSyncNames(); //to attend the corner case:
-            // comming from old versions that didn't include some defaults
-
-    }
-    assert(mPreferences->logged()); //At this point mPreferences should be logged, just because you enterUser() or it was already logged
-
-    if (!mPreferences->logged())
-    {
-        return;
-    }
-    const QStringList exclusions = mPreferences->getExcludedSyncNames();
-    if(!exclusions.isEmpty())
-    {
-        std::vector<std::string> vExclusions;
-        for (const QString& exclusion : exclusions)
-        {
-            vExclusions.push_back(exclusion.toUtf8().constData());
-        }
-        mMegaApi->setLegacyExcludedNames(&vExclusions);
-    }
-    const QStringList exclusionPaths = mPreferences->getExcludedSyncPaths();
-    if(!exclusionPaths.isEmpty())
-    {
-        std::vector<std::string> vExclusionPaths;
-        for (const QString& exclusionPath : exclusionPaths)
-        {
-            vExclusionPaths.push_back(exclusionPath.toUtf8().constData());
-        }
-        mMegaApi->setLegacyExcludedPaths(&vExclusionPaths);
-    }
-    if (mPreferences->lowerSizeLimit())
-    {
-        mMegaApi->setLegacyExclusionLowerSizeLimit(computeExclusionSizeLimit(mPreferences->lowerSizeLimitValue(), mPreferences->lowerSizeLimitUnit()));
-    }
-
-    if (mPreferences->upperSizeLimit())
-    {
-        mMegaApi->setLegacyExclusionUpperSizeLimit(computeExclusionSizeLimit(mPreferences->upperSizeLimitValue(), mPreferences->upperSizeLimitUnit()));
-    }
-
-    if (temporarilyLoggedPrefs)
-    {
-        mPreferences->leaveUser();
-    }
+    mMegaApi->fetchNodes();
 }
 
 void LoginController::dumpSession()
@@ -831,13 +648,6 @@ void LoginController::setEmail(const QString& email)
         mEmail = email;
         emit emailChanged();
     }
-}
-
-unsigned long long LoginController::computeExclusionSizeLimit(const unsigned long long& sizeLimitValue, const int unit)
-{
-    const double bytesPerKb = 1024;
-    const double sizeLimitPower = pow(bytesPerKb, static_cast<double>(unit));
-    return sizeLimitValue * static_cast<unsigned long long>(trunc(sizeLimitPower));
 }
 
 void LoginController::runConnectivityCheck()
