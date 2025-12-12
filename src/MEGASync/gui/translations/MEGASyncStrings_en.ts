@@ -3994,7 +3994,7 @@ You will not be able to regain access to your stored data or be authorised to si
     <message>
         <source>Unable to retrieve the ID of current device</source>
         <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
-        <translation>Unable to create backup as the device you’re backing up from doesn’t have a name. Give your device a name and then try again. If issue continues, contact Support.</translation>
+        <translation>Unable to create a backup as the device you’re backing up from doesn’t have a name. Give your device a name and then try again. If the issue continues, contact Support.</translation>
     </message>
     <message>
         <source>Unable to write sync config to disk.</source>
@@ -5943,8 +5943,7 @@ Enter a different name.</translation>
         <source>- We&apos;ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
-        <translation>- We’ve fixed bugs and made the app more reliable.
-</translation>
+        <translation>- We’ve fixed bugs and made the app more reliable</translation>
     </message>
 </context>
 <context>
