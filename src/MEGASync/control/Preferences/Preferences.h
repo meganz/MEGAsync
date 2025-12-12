@@ -707,13 +707,6 @@ protected:
     static const QString proxyUsernameKey;
     static const QString proxyPasswordKey;
     static const QString configuredSyncsKey;
-    static const QString syncNameKey;
-    static const QString syncIdKey;
-    static const QString localFolderKey;
-    static const QString megaFolderKey;
-    static const QString megaFolderHandleKey;
-    static const QString folderActiveKey;
-    static const QString temporaryInactiveKey;
     static const QString downloadFolderKey;
     static const QString uploadFolderKey;
     static const QString hasDefaultUploadFolderKey;
