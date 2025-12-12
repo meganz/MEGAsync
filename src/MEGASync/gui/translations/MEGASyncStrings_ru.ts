@@ -5945,7 +5945,7 @@ Enter a different name</source>
         <source>- We've fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Мы исправили ошибки и повысили стабильность приложения</translation>
     </message>
 </context>
 <context>
