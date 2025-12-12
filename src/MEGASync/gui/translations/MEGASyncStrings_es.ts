@@ -6079,9 +6079,6 @@ Introduzca un nombre diferente.</translation>
     </message>
 </context>
 <context>
-    <name>Preferences</name>
-</context>
-<context>
     <name>ProgressIndicatorDialog</name>
     <message>
         <source>Cancel</source>
@@ -6160,6 +6157,11 @@ Introduzca un nombre diferente.</translation>
         <source>We couldn’t connect using your proxy settings. Check your proxy details or try a different network.</source>
         <translatorcomment>Error banner shown when there is an error testing the proxy settings. SNC-5411</translatorcomment>
         <translation>No ha sido posible conectarse con tus ajustes de proxy. Comprueba los ajustes o prueba con otra red.</translation>
+    </message>
+    <message>
+        <source>Your system doesn’t have a proxy set. To connect, set a valid http_proxy or https_proxy value in your environment.</source>
+        <translatorcomment>Error banner shown when proxy settings is not found in the environment . SNC-5411</translatorcomment>
+        <translation>No se ha detectado ningún proxy. Para conectarte, configura un valor válido de http_proxy o https_proxy en tu entorno.</translation>
     </message>
 </context>
 <context>
@@ -6615,6 +6617,21 @@ Do you want to delete it anyway?</source>
 </context>
 <context>
     <name>RemoveBackup</name>
+    <message>
+        <source>Backup folder already exists on destination. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can&apos;t move it there! SNC-6067 </translatorcomment>
+        <translation>Ya hay una carpeta con este nombre en esa ubicación, elige otra ubicación</translation>
+    </message>
+    <message>
+        <source>Error moving or removing remote backup folder</source>
+        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation>Error al mover o eliminar la carpeta de backup en MEGA</translation>
+    </message>
+    <message>
+        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
+        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation>No se puede mover o eliminar la carpeta de backup en MEGA. Razón: %1</translation>
+    </message>
 </context>
 <context>
     <name>RemoveBackupDialog</name>
@@ -7159,6 +7176,11 @@ Do you want to delete it anyway?</source>
         <source>Synchronizations will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active syncs (not backups)</translatorcomment>
         <translation>Las sincronizaciones se desactivarán.</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation>Modo</translation>
     </message>
     <message>
         <source>Transfer Quota</source>
