@@ -276,14 +276,27 @@ void Notificator::notify(DesktopAppNotification *notification)
         auto sessionbus = QDBusConnection::connectToBus(QDBusConnection::BusType::SessionBus,
                                                         QLatin1String("session"));
 
-        sessionbus.connect(QString::fromUtf8("org.freedesktop.Notifications"),
-                           QString::fromUtf8("/org/freedesktop/Notifications"),
-                           QString::fromUtf8("org.freedesktop.Notifications"),
-                           QString::fromUtf8(""),
-                           notification,
-                           SLOT(dBusNotificationCallback(QDBusMessage)));
-        notifyDBus((Class)notification->getType(), notification->getTitle(), notification->getText(),
-                   notification->getImage(), notification->getExpirationTime(), actions, notification);
+        if (sessionbus.connect(QString::fromUtf8(""),
+                               QString::fromUtf8("/org/freedesktop/Notifications"),
+                               QString::fromUtf8("org.freedesktop.Notifications"),
+                               QString::fromUtf8(""),
+                               notification,
+                               SLOT(dBusNotificationCallback(QDBusMessage))))
+        {
+            notifyDBus((Class)notification->getType(),
+                       notification->getTitle(),
+                       notification->getText(),
+                       notification->getImage(),
+                       notification->getExpirationTime(),
+                       actions,
+                       notification);
+        }
+        else
+        {
+            MegaApi::log(
+                MegaApi::LOG_LEVEL_ERROR,
+                QString::fromUtf8("Couldn't connect to session DBus.").toUtf8().constData());
+        }
     }
     else
 #endif
