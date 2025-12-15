@@ -111,5 +111,6 @@ bool RemoveBackup::checkTargetFolderExist(mega::MegaHandle targetFolder)
     auto targetNode =
         std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(targetFolder));
 
-    return targetNode && !targetNode->isRemoved();
+    return targetNode && !targetNode->isRemoved() &&
+           !MegaSyncApp->getMegaApi()->isInRubbish(targetNode.get());
 }
