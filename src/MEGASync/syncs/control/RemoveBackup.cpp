@@ -27,7 +27,14 @@ void RemoveBackup::removeBackup(std::shared_ptr<SyncSettings> backup, QWidget* p
 
 void RemoveBackup::onConfirmRemove(mega::MegaHandle targetFolder)
 {
-    if (targetFolder != mega::INVALID_HANDLE && checkBackupFolderExistOnTargetFolder(targetFolder))
+    if (targetFolder != mega::INVALID_HANDLE && !checkTargetFolderExist(targetFolder))
+    {
+        auto error = tr("Target folder doesn't exists. Choose another.");
+
+        mRemoveBackupDialog->setTargetFolderErrorHint(error);
+    }
+    else if (targetFolder != mega::INVALID_HANDLE &&
+             checkBackupFolderExistOnTargetFolder(targetFolder))
     {
         auto error = tr("Backup folder already exists on destination. Choose another.");
 
@@ -93,4 +100,12 @@ bool RemoveBackup::checkBackupFolderExistOnTargetFolder(mega::MegaHandle targetF
     }
 
     return found;
+}
+
+bool RemoveBackup::checkTargetFolderExist(mega::MegaHandle targetFolder)
+{
+    auto targetNode =
+        std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(targetFolder));
+
+    return targetNode && !targetNode->isRemoved();
 }

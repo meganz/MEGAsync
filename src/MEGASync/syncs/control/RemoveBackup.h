@@ -25,6 +25,7 @@ private:
     void onConfirmRemove(mega::MegaHandle targetFolder);
     void backupMoveOrRemoveRemoteFolderError(std::shared_ptr<mega::MegaError> error);
     bool checkBackupFolderExistOnTargetFolder(mega::MegaHandle targetFolder);
+    bool checkTargetFolderExist(mega::MegaHandle targetFolder);
 
     std::shared_ptr<SyncSettings> mBackupToRemove;
     mega::MegaHandle mFolderToMoveBackupData;
