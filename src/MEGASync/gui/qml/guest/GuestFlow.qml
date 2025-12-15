@@ -336,27 +336,29 @@ Item {
         BasePage {
             id: blockedPage
 
+            readonly property int iconTopMargin: 78
+            readonly property int iconSize: 96
+
             showProgressBar: false
             imageSource: Images.warningGuest
-            imageTopMargin: 110
+            imageHeight: iconSize
+            imageWidth: iconSize
+            imageTopMargin: iconTopMargin
             title: GuestStrings.accountTempLocked
             description: GuestStrings.accountTempLockedEmail
             descriptionFontSize: Texts.Text.Size.NORMAL
             descriptionColor: ColorTheme.textPrimary
             descriptionLineHeight: 18
 
-            leftButton {
+            rightButton {
                 text: GuestStrings.logOut
                 onClicked: {
                     guestContentAccess.onLogoutClicked();
                 }
             }
-            rightButton {
+
+            leftButton {
                 text: GuestStrings.resendEmail
-                icons {
-                    source: Images.mail
-                    position: Icon.Position.LEFT
-                }
                 onClicked: {
                     guestContentAccess.onVerifyEmailClicked();
                 }
