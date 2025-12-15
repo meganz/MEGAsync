@@ -7,6 +7,15 @@
 #include "StatsEventHandler.h"
 #include "SyncSettings.h"
 
+RemoveBackup::RemoveBackup(QObject* parent):
+    QObject(parent)
+{
+    connect(&BackupsController::instance(),
+            &BackupsController::backupMoveOrRemoveRemoteFolderError,
+            this,
+            &RemoveBackup::backupMoveOrRemoveRemoteFolderError);
+}
+
 void RemoveBackup::removeBackup(std::shared_ptr<SyncSettings> backup, QWidget* parent)
 {
     mBackupToRemove = backup;
@@ -29,7 +38,7 @@ void RemoveBackup::onConfirmRemove(mega::MegaHandle targetFolder)
 {
     if (targetFolder != mega::INVALID_HANDLE && !checkTargetFolderExist(targetFolder))
     {
-        auto error = tr("Target folder doesn't exists. Choose another.");
+        auto error = tr("Destination folder doesn't exists. Choose another.");
 
         mRemoveBackupDialog->setTargetFolderErrorHint(error);
     }
@@ -46,11 +55,6 @@ void RemoveBackup::onConfirmRemove(mega::MegaHandle targetFolder)
 
         MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
             AppStatsEvents::EventType::CONFIRM_REMOVE_BACKUP);
-
-        connect(&BackupsController::instance(),
-                &BackupsController::backupMoveOrRemoveRemoteFolderError,
-                this,
-                &RemoveBackup::backupMoveOrRemoveRemoteFolderError);
 
         BackupsController::instance().removeSync(mBackupToRemove, mFolderToMoveBackupData);
 
