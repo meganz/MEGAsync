@@ -419,7 +419,7 @@ void LoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e)
 
         dumpSession();
 
-        fetchNodes(mEmail);
+        fetchNodes();
         if (!mPreferences->hasLoggedIn())
         {
             mPreferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
@@ -620,7 +620,7 @@ void LoginController::onLogout(mega::MegaRequest* request, mega::MegaError* e)
     setState(LOGGED_OUT);
 }
 
-void LoginController::fetchNodes(const QString& email)
+void LoginController::fetchNodes()
 {
     assert(mState != FETCHING_NODES);
 

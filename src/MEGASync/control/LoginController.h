@@ -105,7 +105,7 @@ protected:
     void onAccountCreationCancel(mega::MegaRequest* request, mega::MegaError* e);
 
     void onLogout(mega::MegaRequest* request, mega::MegaError* e);
-    void fetchNodes(const QString& email = QString());
+    void fetchNodes();
 
     mega::MegaApi * mMegaApi;
     std::shared_ptr<Preferences> mPreferences;
