@@ -48,8 +48,6 @@ private:
     SyncInfo();
 
     std::shared_ptr<Preferences> preferences;
-    bool mIsFirstTwoWaySyncDone;
-    bool mIsFirstBackupDone;
 
     void saveUnattendedDisabledSyncs();
     void checkUnattendedDisabledSyncsForErrors();
@@ -81,8 +79,6 @@ public:
 
 protected:
     mutable QMutex syncMutex;
-
-    SyncOrigin mSyncToCreateOrigin;
 
     QMap<SyncType, QList<mega::MegaHandle>> configuredSyncs; //Tags of configured syncs
     QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> configuredSyncsMap;
@@ -176,7 +172,6 @@ public:
     void updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSettings> cs);
 
     void showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> syncSetting);
-    void setSyncToCreateOrigin(SyncOrigin newSyncToCreate);
 
 protected:
     void onEvent(mega::MegaApi* api, mega::MegaEvent* event) override;

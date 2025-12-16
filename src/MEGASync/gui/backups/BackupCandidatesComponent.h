@@ -37,7 +37,7 @@ public:
 
     Q_INVOKABLE void selectAllFolders(Qt::CheckState state, bool fromModel);
 
-    Q_INVOKABLE void createBackups(SyncInfo::SyncOrigin syncOrigin);
+    Q_INVOKABLE void createBackups();
 
     Q_INVOKABLE void setOrigin(SyncInfo::SyncOrigin origin);
 
@@ -54,7 +54,7 @@ private:
     AppStatsEvents::EventType getEventType() const;
 
 private:
-    SyncInfo::SyncOrigin mSyncOrigin;
+    SyncInfo::SyncOrigin mOrigin;
     std::shared_ptr<BackupCandidatesController> mBackupCandidatesController;
     QPointer<BackupCandidatesProxyModel> mBackupsProxyModel;
 };

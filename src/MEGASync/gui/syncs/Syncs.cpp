@@ -45,7 +45,6 @@ void Syncs::addSync(const QString& localFolder, const QString& megaFolder)
         remoteHandle = megaNode->getHandle();
     }
 
-    mSyncConfig.origin = mSyncsData->mSyncOrigin;
     mSyncConfig.remoteHandle = remoteHandle;
 
     if (remoteHandle == mega::INVALID_HANDLE)

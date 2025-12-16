@@ -39,7 +39,6 @@ public:
         mega::MegaHandle remoteHandle = mega::INVALID_HANDLE;
         QString syncName;
         mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY;
-        SyncInfo::SyncOrigin origin = SyncInfo::SyncOrigin::MAIN_APP_ORIGIN;
     };
 
     static SyncController& instance()
@@ -52,9 +51,7 @@ public:
     SyncController& operator=(const SyncController&) = delete;
     ~SyncController(){}
 
-    void addBackup(const QString& localFolder,
-                   const QString& syncName,
-                   SyncInfo::SyncOrigin origin);
+    void addBackup(const QString& localFolder, const QString& syncName);
     void addSync(SyncConfig& sync);
     void removeSync(std::shared_ptr<SyncSettings> syncSetting, const mega::MegaHandle& remoteHandle = mega::INVALID_HANDLE);
     void moveOrDeleteRemovedBackupData(std::shared_ptr<SyncSettings> syncSetting,
@@ -114,7 +111,7 @@ protected:
 
 private:
     void updateSyncSettings(const mega::MegaError& e, std::shared_ptr<SyncSettings> syncSetting);
-    void createPendingBackups(SyncInfo::SyncOrigin origin);
+    void createPendingBackups();
     std::optional<int> performMegaIgnoreCreation(const QString& syncLocalFolder,
                                                  mega::MegaHandle backupId);
 

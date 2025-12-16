@@ -8,7 +8,7 @@ ConfirmFoldersPageForm {
     signal openExclusionsDialog
     signal confirmFoldersMoveToSelect
     signal confirmFoldersMoveToFinal(bool success)
-    signal createBackups(int origin)
+    signal createBackups()
 
     footerButtons {
         leftSecondary.onClicked: {
@@ -22,7 +22,7 @@ ConfirmFoldersPageForm {
         rightPrimary.onClicked: {
             footerButtons.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            root.createBackups(window.syncOrigin);
+            root.createBackups();
         }
     }
 

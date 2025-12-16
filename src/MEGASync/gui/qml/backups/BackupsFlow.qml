@@ -80,8 +80,8 @@ Item {
             root.backupFlowMoveToFinal(success);
         }
 
-        function onCreateBackups(syncOrigin) {
-            backupCandidatesComponentAccess.createBackups(syncOrigin);
+        function onCreateBackups() {
+            backupCandidatesComponentAccess.createBackups();
         }
     }
 }

@@ -187,4 +187,20 @@ void SyncsComponent::onSyncSetupSuccess(bool)
 {
     auto syncAddEvent = getEventType();
     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(syncAddEvent, true);
+    // Send event for the first sync
+    if (!Preferences::instance()->isFirstSyncDone())
+    {
+        if (mOrigin == SyncInfo::SyncOrigin::ONBOARDING_ORIGIN)
+        {
+            MegaSyncApp->getStatsEventHandler()->sendEvent(
+                AppStatsEvents::EventType::FIRST_SYNC_FROM_ONBOARDING);
+        }
+        else
+        {
+            MegaSyncApp->getStatsEventHandler()->sendEvent(
+                AppStatsEvents::EventType::FIRST_SYNC); // When the event sending is done,
+                                                        // MegaApplication updates
+                                                        // Preferences::setFirstSyncDone
+        }
+    }
 }
