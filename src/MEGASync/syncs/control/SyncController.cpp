@@ -6,8 +6,6 @@
 #include "MyBackupsHandle.h"
 #include "Platform.h"
 #include "RequestListenerManager.h"
-#include "StalledIssuesUtilities.h"
-#include "StatsEventHandler.h"
 
 #include <QStorageInfo>
 #include <QTemporaryFile>
@@ -28,7 +26,7 @@ SyncController::SyncController(QObject* parent)
     assert(mSyncInfo);
 }
 
-void SyncController::createPendingBackups(SyncInfo::SyncOrigin origin)
+void SyncController::createPendingBackups()
 {
     for(auto it = mPendingBackups.cbegin(); it != mPendingBackups.cend(); it++)
     {
@@ -36,15 +34,12 @@ void SyncController::createPendingBackups(SyncInfo::SyncOrigin origin)
         conf.localFolder = QDir::toNativeSeparators(it.key());
         conf.syncName = it.value().isEmpty() ? getSyncNameFromPath(it.key()) : it.value();
         conf.type = mega::MegaSync::TYPE_BACKUP;
-        conf.origin = origin;
         addSync(conf);
     }
     mPendingBackups.clear();
 }
 
-void SyncController::addBackup(const QString& localFolder,
-                               const QString& syncName,
-                               SyncInfo::SyncOrigin origin)
+void SyncController::addBackup(const QString& localFolder, const QString& syncName)
 {
     mPendingBackups.insert(localFolder, syncName);
 
@@ -52,13 +47,14 @@ void SyncController::addBackup(const QString& localFolder,
     connect(request.get(),
             &UserAttributes::MyBackupsHandle::attributeReady,
             this,
-            [this, origin]() {
-                createPendingBackups(origin);
+            [this]()
+            {
+                createPendingBackups();
             });
 
     if(request->isAttributeReady())
     {
-        createPendingBackups(origin);
+        createPendingBackups();
     }
     else
     {
@@ -182,7 +178,6 @@ void SyncController::addSync(SyncConfig& sync)
             syncOperationEnds();
         });
 
-    mSyncInfo->setSyncToCreateOrigin(sync.origin);
     mApi->syncFolder(sync.type,
                      // The SDK wants the path in utf8, even in Windows!!
                      sync.localFolder.toStdString(),

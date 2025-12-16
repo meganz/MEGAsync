@@ -13,8 +13,6 @@ import ServiceUrls 1.0
 SyncsQmlDialog {
     id: window
 
-    readonly property int syncOrigin: SyncInfo.MAIN_APP_ORIGIN
-
     title: BackupsStrings.backupsWindowTitle
     visible: false
     modality: Qt.NonModal

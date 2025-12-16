@@ -36,11 +36,10 @@ SyncInfo *SyncInfo::instance()
     return SyncInfo::model.get();
 }
 
-SyncInfo::SyncInfo() : QObject(),
-    preferences (Preferences::instance()),
-    mIsFirstTwoWaySyncDone (preferences->isFirstSyncDone()),
-    mIsFirstBackupDone (preferences->isFirstBackupDone()),
-    syncMutex (QMutex::Recursive),
+SyncInfo::SyncInfo():
+    QObject(),
+    preferences(Preferences::instance()),
+    syncMutex(QMutex::Recursive),
     delegateListener(std::make_unique<QTMegaListener>(MegaSyncApp->getMegaApi(), this))
 {
     MegaSyncApp->getMegaApi()->addListener(delegateListener.get());
@@ -129,55 +128,6 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
     {
         syncSetting->setSyncID(QUuid::createUuid().toString().toUpper());
         Platform::getInstance()->syncFolderAdded(syncSetting->getLocalFolder(), syncSetting->name(true), syncSetting->getSyncID());
-    }
-
-    //send event for the first sync/backup
-    switch (syncSetting->getType())
-    {
-    case mega::MegaSync::SyncType::TYPE_TWOWAY:
-    {
-        // Send event for the first sync
-        if (!mIsFirstTwoWaySyncDone && !preferences->isFirstSyncDone())
-        {
-            if (mSyncToCreateOrigin == SyncOrigin::ONBOARDING_ORIGIN)
-            {
-                MegaSyncApp->getStatsEventHandler()->sendEvent(
-                    AppStatsEvents::EventType::FIRST_SYNC_FROM_ONBOARDING);
-            }
-            else
-            {
-                MegaSyncApp->getStatsEventHandler()->sendEvent(
-                    AppStatsEvents::EventType::FIRST_SYNC);
-            }
-
-            mSyncToCreateOrigin = SyncOrigin::NONE;
-        }
-        mIsFirstTwoWaySyncDone = true;
-        break;
-    }
-    case mega::MegaSync::SyncType::TYPE_BACKUP:
-    {
-        // Send event for the first backup
-        if (!mIsFirstBackupDone && !preferences->isFirstBackupDone())
-        {
-            if (mSyncToCreateOrigin == SyncOrigin::ONBOARDING_ORIGIN)
-            {
-                MegaSyncApp->getStatsEventHandler()->sendEvent(
-                    AppStatsEvents::EventType::FIRST_BACKUP_FROM_ONBOARDING);
-            }
-            else
-            {
-                MegaSyncApp->getStatsEventHandler()->sendEvent(
-                    AppStatsEvents::EventType::FIRST_BACKUP);
-            }
-
-            mSyncToCreateOrigin = SyncOrigin::NONE;
-        }
-        mIsFirstBackupDone = true;
-        break;
-    }
-    default:
-        break;
     }
 
     MessageDialogInfo msgInfo;
@@ -364,8 +314,6 @@ void SyncInfo::reset()
     configuredSyncsMap.clear();
     syncsSettingPickedFromOldConfig.clear();
     unattendedDisabledSyncs.clear();
-    mIsFirstTwoWaySyncDone = false;
-    mIsFirstBackupDone = false;
 }
 
 int SyncInfo::getNumSyncedFolders(const QVector<SyncType>& types)
@@ -631,11 +579,6 @@ void SyncInfo::checkUnattendedDisabledSyncsForErrors()
 
         mLastError = mega::MegaSync::NO_SYNC_ERROR;
     }
-}
-
-void SyncInfo::setSyncToCreateOrigin(SyncOrigin newSyncToCreate)
-{
-    mSyncToCreateOrigin = newSyncToCreate;
 }
 
 void SyncInfo::addUnattendedDisabledSync(MegaHandle tag, mega::MegaSync::SyncType type)

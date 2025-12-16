@@ -10,7 +10,7 @@ ConfirmFoldersPageForm {
 
     signal confirmFoldersMoveToSelect
     signal confirmFoldersMoveToFinal(bool success)
-    signal createBackups(int syncOrigin)
+    signal createBackups()
 
     footerButtons {
         leftPrimary.text: Strings.skip
@@ -26,7 +26,7 @@ ConfirmFoldersPageForm {
             footerButtons.enabled = false;
             enableConfirmHeader = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            root.createBackups(window.syncOrigin);
+            root.createBackups();
         }
     }
 

@@ -5,13 +5,14 @@
 #include "BackupCandidatesModel.h"
 #include "DialogOpener.h"
 #include "MegaApplication.h"
+#include "Preferences.h"
 #include "SyncsQmlDialog.h"
 
 static bool qmlRegistrationDone = false;
 
 BackupCandidatesComponent::BackupCandidatesComponent(QObject* parent):
     QMLComponent(parent),
-    mSyncOrigin(SyncInfo::SyncOrigin::NONE),
+    mOrigin(SyncInfo::SyncOrigin::NONE),
     mBackupCandidatesController(std::make_shared<BackupCandidatesController>()),
     mBackupsProxyModel(new BackupCandidatesProxyModel(mBackupCandidatesController))
 {
@@ -69,12 +70,29 @@ void BackupCandidatesComponent::onBackupsCreationFinished(bool success)
     {
         mBackupsProxyModel->setSelectedFilterEnabled(false);
         MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(getEventType());
+        // Send event for the first backup
+        if (!Preferences::instance()->isFirstBackupDone())
+        {
+            if (mOrigin == SyncInfo::SyncOrigin::ONBOARDING_ORIGIN)
+            {
+                MegaSyncApp->getStatsEventHandler()->sendEvent(
+                    AppStatsEvents::EventType::
+                        FIRST_BACKUP_FROM_ONBOARDING); // When the event sending is done,
+                                                       // MegaApplication updates
+                                                       // Preferences::setFirstBackupDone
+            }
+            else
+            {
+                MegaSyncApp->getStatsEventHandler()->sendEvent(
+                    AppStatsEvents::EventType::FIRST_BACKUP);
+            }
+        }
     }
 }
 
 void BackupCandidatesComponent::setOrigin(SyncInfo::SyncOrigin origin)
 {
-    mSyncOrigin = origin;
+    mOrigin = origin;
 }
 
 void BackupCandidatesComponent::openExclusionsDialog() const
@@ -143,14 +161,14 @@ void BackupCandidatesComponent::selectAllFolders(Qt::CheckState state, bool from
     mBackupCandidatesController->setCheckAllState(state, fromModel);
 }
 
-void BackupCandidatesComponent::createBackups(SyncInfo::SyncOrigin syncOrigin)
+void BackupCandidatesComponent::createBackups()
 {
-    mBackupCandidatesController->createBackups(syncOrigin);
+    mBackupCandidatesController->createBackups();
 }
 
 AppStatsEvents::EventType BackupCandidatesComponent::getEventType() const
 {
-    switch (mSyncOrigin)
+    switch (mOrigin)
     {
         case SyncInfo::SyncOrigin::CONTEXT_MENU_ORIGIN:
             return AppStatsEvents::EventType::BACKUP_ADDED_CONTEXT_MENU;

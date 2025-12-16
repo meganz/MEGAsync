@@ -26,7 +26,7 @@ public:
     void setCheckState(int row, bool state);
     QStringList getSelectedCandidates() const;
 
-    void createBackups(SyncInfo::SyncOrigin syncOrigin = SyncInfo::SyncOrigin::MAIN_APP_ORIGIN);
+    void createBackups();
 
     bool setData(int row, const QVariant& value, int role) override;
     bool setData(std::shared_ptr<BackupCandidates::Data> candidate, QVariant value, int role);

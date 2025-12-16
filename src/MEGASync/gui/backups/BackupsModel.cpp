@@ -1121,7 +1121,7 @@ QStringList BackupsProxyModel::getSelectedFolders() const
     return selectedFolders;
 }
 
-void BackupsProxyModel::createBackups(SyncInfo::SyncOrigin origin)
+void BackupsProxyModel::createBackups()
 {
     if (!backupsModel()->checkDirectories())
     {
@@ -1142,7 +1142,7 @@ void BackupsProxyModel::createBackups(SyncInfo::SyncOrigin origin)
             candidateList.append(candidate);
         }
     }
-    backupsModel()->backupsController()->addBackups(candidateList, origin);
+    backupsModel()->backupsController()->addBackups(candidateList);
 }
 
 BackupsModel* BackupsProxyModel::backupsModel()
