@@ -641,7 +641,6 @@ protected:
     static const QString currentAccountKey;
     static const QString currentAccountStatusKey;
     static const QString needsFetchNodesKey;
-    static const QString syncsGroupKey;
     static const QString syncsGroupByTagKey;
     static const QString emailKey;
     static const QString firstNameKey;

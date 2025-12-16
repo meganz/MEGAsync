@@ -12,8 +12,6 @@
 
 using namespace mega;
 
-const QLatin1String MEGA_IGNORE_FILE_NAME = QLatin1String(".megaignore");
-
 SyncController::SyncController(QObject* parent)
     : QObject(parent)
     , mPendingBackups(QMap<QString, QString>())
