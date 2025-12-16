@@ -104,7 +104,7 @@ protected:
 
 private:
     void updateSyncSettings(const mega::MegaError& e, std::shared_ptr<SyncSettings> syncSetting);
-    void createPendingBackups(SyncInfo::SyncOrigin origin);
+    void createPendingBackups();
 
     static QString getSyncAPIErrorMsg(int megaError);
     static QString getSyncTypeString(const mega::MegaSync::SyncType& syncType);
