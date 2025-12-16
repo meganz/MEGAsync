@@ -2141,6 +2141,11 @@ Check your email inbox for instructions on unlocking your account and tips on ho
         <translation>Your account has been locked for your protection after detecting a malicious login, so we require you to reset your password.[BR]
 Check your email inbox for instructions on unlocking your account and tips on how to prevent this from happening again.</translation>
     </message>
+    <message>
+        <source>Why am i seeing this?</source>
+        <translatorcomment>Locked account literal to point the user to the mega related help page. SNC-5508</translatorcomment>
+        <translation type="unfinished">Why am i seeing this?</translation>
+    </message>
 </context>
 <context>
     <name>GuiUtilities</name>
