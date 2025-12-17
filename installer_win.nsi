@@ -18,15 +18,15 @@ SetCompressor /SOLID /FINAL lzma
 !macroend
 
 ; HM NIS Edit Wizard helper defines
-BrandingText "MEGA Cloud"
+BrandingText "MEGA"
 !define PRODUCT_NAME "MEGAsync"
 
-VIAddVersionKey "CompanyName" "MEGA Cloud"
+VIAddVersionKey "CompanyName" "MEGA"
 VIAddVersionKey "FileDescription" "MEGAsync"
-VIAddVersionKey "LegalCopyright" "MEGA Cloud 2025"
+VIAddVersionKey "LegalCopyright" "MEGA 2025"
 VIAddVersionKey "ProductName" "MEGAsync"
 
-!define PRODUCT_PUBLISHER "Mega Cloud"
+!define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "https://mega.io"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\MEGAsync.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
