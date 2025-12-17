@@ -315,13 +315,26 @@ void Syncs::updateDefaultFolders()
 
 bool Syncs::setErrorIfExist(int errorCode, int syncErrorCode)
 {
+    static QList<mega::SyncError> localErrors{mega::SyncError::FILESYSTEM_FILE_IDS_ARE_UNSTABLE};
+
     if (errorCode != mega::MegaError::API_OK)
     {
-        mRemoteError = RemoteErrors::CANT_ADD_SYNC;
-        mRemoteMegaError.error = errorCode;
-        mRemoteMegaError.syncError = syncErrorCode;
+        if (localErrors.contains(static_cast<mega::SyncError>(syncErrorCode)))
+        {
+            mLocalError = LocalErrors::CANT_ADD_SYNC;
+            mLocalMegaError.error = errorCode;
+            mLocalMegaError.syncError = syncErrorCode;
 
-        mSyncsData->setRemoteError(getRemoteError());
+            mSyncsData->setLocalError(getLocalError());
+        }
+        else
+        {
+            mRemoteError = RemoteErrors::CANT_ADD_SYNC;
+            mRemoteMegaError.error = errorCode;
+            mRemoteMegaError.syncError = syncErrorCode;
+
+            mSyncsData->setRemoteError(getRemoteError());
+        }
 
         return true;
     }
@@ -347,11 +360,6 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString nam
 
 QString Syncs::getLocalError() const
 {
-    if (!mLocalError.has_value())
-    {
-        return {};
-    }
-
     switch (mLocalError.value())
     {
         case LocalErrors::EMPTY_PATH:
@@ -380,6 +388,15 @@ QString Syncs::getLocalError() const
                                                   errorMessage);
             return errorMessage;
         }
+
+        case LocalErrors::CANT_ADD_SYNC:
+        {
+            QString msg =
+                mSyncController.getErrorString(mLocalMegaError.error, mLocalMegaError.syncError);
+            const auto link = ServiceUrls::getContactSupportUrl().toString();
+            Text::RichText(link).process(msg);
+            return msg;
+        }
     }
 
     return {};
@@ -387,11 +404,6 @@ QString Syncs::getLocalError() const
 
 QString Syncs::getRemoteError() const
 {
-    if (!mRemoteError.has_value())
-    {
-        return {};
-    }
-
     switch (mRemoteError.value())
     {
         case RemoteErrors::EMPTY_PATH:
