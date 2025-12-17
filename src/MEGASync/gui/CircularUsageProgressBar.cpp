@@ -126,6 +126,11 @@ void CircularUsageProgressBar::drawText(QPainter& p, const QRectF& innerRect, do
 
     double pixelSize (innerRadius * 0.3);
 
+    if (mFontWeight.has_value())
+    {
+        f.setWeight(mFontWeight.value());
+    }
+
     f.setPixelSize(std::max(5, static_cast<int>(pixelSize * factor)));
 
     p.setFont(f);
@@ -301,5 +306,15 @@ void CircularUsageProgressBar::setOkStateTextColor(const QString& color)
         mOkStateTextColor = color;
 
         emit colorChanged();
+    }
+}
+
+void CircularUsageProgressBar::setFontWeigth(int weight)
+{
+    if (!mFontWeight.has_value() || mFontWeight.value() != weight)
+    {
+        mFontWeight = weight;
+
+        emit fontWeigthChanged();
     }
 }

@@ -7,6 +7,7 @@
 #include <QPainter>
 #include <QPen>
 #include <QWidget>
+#include <optional>
 
 class CircularUsageProgressBar : public QWidget
 {
@@ -44,9 +45,11 @@ public:
                    setLightFullProgressBarColor NOTIFY colorChanged)
     Q_PROPERTY(QString darkFullProgressBarColors READ getDarkFullProgressBarColor WRITE
                    setDarkFullProgressBarColor NOTIFY colorChanged)
+    Q_PROPERTY(int fontWeigth WRITE setFontWeigth NOTIFY fontWeigthChanged)
 
 signals:
     void colorChanged();
+    void fontWeigthChanged();
 
 protected:
     void paintEvent(QPaintEvent* event);
@@ -126,6 +129,8 @@ private:
         return {};
     }
 
+    void setFontWeigth(int weight);
+
     int     mPbValue;
     double  mPenWidth;
     double  mOuterRadius;
@@ -148,6 +153,7 @@ private:
 
     const QIcon mDynTrsfOk;
     bool  mNoTotalValue;
+    std::optional<int> mFontWeight;
 };
 
 #endif // CIRCULARUSAGEPROGRESSBAR_H
