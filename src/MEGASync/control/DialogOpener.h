@@ -98,6 +98,15 @@ private:
                 mDialog->raise();
                 mDialog->activateWindow();
             }
+
+#ifdef Q_OS_WINDOWS
+            static int applyFrameThemeTimeOut = 1;
+            QTimer::singleShot(applyFrameThemeTimeOut,
+                               [this]()
+                               {
+                                   this->applyCurrentTheme();
+                               });
+#endif
         }
 
         void show() override
@@ -545,7 +554,9 @@ private:
 
             info->raise(true);
 
+#ifndef Q_OS_WINDOWS
             Platform::getInstance()->applyCurrentThemeOnCurrentDialogFrame(dialog->windowHandle());
+#endif
 
             return info;
         }
