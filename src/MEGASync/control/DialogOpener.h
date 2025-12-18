@@ -100,7 +100,7 @@ private:
             }
 
 #ifdef Q_OS_WINDOWS
-            static int applyFrameThemeTimeOut = 1;
+            static int applyFrameThemeTimeOut = 5;
             QTimer::singleShot(applyFrameThemeTimeOut,
                                [this]()
                                {
