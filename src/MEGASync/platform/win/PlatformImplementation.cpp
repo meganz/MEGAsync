@@ -538,10 +538,20 @@ void PlatformImplementation::applyCurrentThemeOnCurrentDialogFrame(QWindow* wind
 {
     if (window != nullptr)
     {
-        auto hwnd = reinterpret_cast<HWND>(window->winId());
-        const auto appSheme = ThemeManager::instance()->getCurrentColorScheme();
-        const DWORD darkMode = appSheme == Preferences::ThemeAppeareance::DARK ? 1 : 0;
-        DwmSetWindowAttribute(hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE, &darkMode, sizeof(darkMode));
+        auto* hwnd = reinterpret_cast<HWND>(window->winId());
+        static int applyFrameThemeTimeOut = 5;
+        QTimer::singleShot(applyFrameThemeTimeOut,
+                           [hwnd]()
+                           {
+                               const auto appSheme =
+                                   ThemeManager::instance()->getCurrentColorScheme();
+                               const DWORD darkMode =
+                                   appSheme == Preferences::ThemeAppeareance::DARK ? 1 : 0;
+                               DwmSetWindowAttribute(hwnd,
+                                                     DWMWA_USE_IMMERSIVE_DARK_MODE,
+                                                     &darkMode,
+                                                     sizeof(darkMode));
+                           });
     }
 }
 
