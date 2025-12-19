@@ -117,7 +117,6 @@ void SyncInfo::removeAllFolders()
     }
     configuredSyncs.clear();
     configuredSyncsMap.clear();
-    syncsSettingPickedFromOldConfig.clear();
     unattendedDisabledSyncs.clear();
 }
 
@@ -201,21 +200,7 @@ std::shared_ptr<SyncSettings> SyncInfo::updateSyncSettings(MegaSync *sync)
 
     std::shared_ptr<SyncSettings> cs;
 
-    auto oldcsitr = syncsSettingPickedFromOldConfig.find(sync->getBackupId());
-
-    if (oldcsitr != syncsSettingPickedFromOldConfig.end()) // resumed after picked from old sync config)
-    {
-        cs = oldcsitr.value();
-
-        //move into the configuredSyncsMap
-        configuredSyncsMap.insert(sync->getBackupId(), cs);
-        MegaSync::SyncType type = static_cast<MegaSync::SyncType>(sync->getType());
-        configuredSyncs[type].append(sync->getBackupId());
-
-        // remove from picked
-        syncsSettingPickedFromOldConfig.erase(oldcsitr);
-    }
-    else if (configuredSyncsMap.contains(sync->getBackupId())) //existing configuration (an update)
+    if (configuredSyncsMap.contains(sync->getBackupId())) // existing configuration (an update)
     {
         cs = configuredSyncsMap[sync->getBackupId()];
     }
@@ -266,7 +251,6 @@ std::shared_ptr<SyncSettings> SyncInfo::updateSyncSettings(MegaSync *sync)
 
 void SyncInfo::rewriteSyncSettings()
 {
-    preferences->removeAllSyncSettings();
     QMutexLocker qm(&syncMutex);
 
     // Get all settings
@@ -294,25 +278,11 @@ void SyncInfo::onboardingFinished(bool onboardingShown)
     }
 }
 
-void SyncInfo::pickInfoFromOldSync(const SyncData &osd, MegaHandle backupId, bool loadedFromPreviousSessions)
-{
-    QMutexLocker qm(&syncMutex);
-    assert(preferences->logged() || loadedFromPreviousSessions);
-    assert (!configuredSyncsMap.contains(backupId) && "picking already configured sync!"); //this should always be the case
-
-    std::shared_ptr<SyncSettings> cs = syncsSettingPickedFromOldConfig[backupId] = std::make_shared<SyncSettings>(osd, loadedFromPreviousSessions);
-
-    cs->setBackupId(backupId); //assign the new tag given by the sdk
-
-    preferences->writeSyncSetting(cs);
-}
-
 void SyncInfo::reset()
 {
     QMutexLocker qm(&syncMutex);
     configuredSyncs.clear();
     configuredSyncsMap.clear();
-    syncsSettingPickedFromOldConfig.clear();
     unattendedDisabledSyncs.clear();
 }
 

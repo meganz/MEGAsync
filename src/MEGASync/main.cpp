@@ -231,13 +231,6 @@ void uninstall()
         {
             preferences->enterUser(i);
 
-            // we do first for old sync configuration (in case there were remaining for some user)
-            QList<SyncData> syncData = preferences->readOldCachedSyncs();
-            foreach(SyncData osd, syncData)
-            {
-                removeSyncData(osd.mLocalFolder, osd.mName.remove(QLatin1Char(':')), osd.mSyncID);
-            }
-
             // now for the new syncs cached configurations
             auto loadedSyncs = preferences->getLoadedSyncsMap();
             for (auto it = loadedSyncs.begin(); it != loadedSyncs.end(); it++)

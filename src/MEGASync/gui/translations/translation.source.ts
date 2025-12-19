@@ -8476,24 +8476,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
-    <name>SyncSettingsElements</name>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Button to confirm applying legacy exclusion rules to all syncs.con-1054</translatorcomment>
-        <translation>Apply</translation>
-    </message>
-    <message>
-        <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
-        <translatorcomment>Body text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs.con-1054</translatorcomment>
-        <translation>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</translation>
-    </message>
-    <message>
-        <source>[B]Apply previous exclusion rules?[/B]</source>
-        <translatorcomment>Title text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs [B] is for bold.con-1054</translatorcomment>
-        <translation>[B]Apply previous exclusion rules?[/B]</translation>
-    </message>
-</context>
-<context>
     <name>SyncSettingsUI</name>
     <message>
         <source>Error adding sync</source>
@@ -8555,16 +8537,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Advanced</source>
         <translatorcomment>Stalled issues solve mode to allow users to solve them manually.SNC-2565</translatorcomment>
         <translation>Advanced</translation>
-    </message>
-    <message>
-        <source>Apply previous exclusion rules</source>
-        <translatorcomment>Title for the settings section responible for applying legacy exclusion rules to sync folders.con-1054</translatorcomment>
-        <translation>Apply previous exclusion rules</translation>
-    </message>
-    <message>
-        <source>Apply rules</source>
-        <translatorcomment>Button used to force apply legacy exclusion rules to syncs.con-1054</translatorcomment>
-        <translation>Apply rules</translation>
     </message>
     <message>
         <source>Get full control of the sync issues</source>

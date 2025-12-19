@@ -82,7 +82,6 @@ protected:
 
     QMap<SyncType, QList<mega::MegaHandle>> configuredSyncs; //Tags of configured syncs
     QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> configuredSyncsMap;
-    QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> syncsSettingPickedFromOldConfig;
     QMap<SyncType, QSet<mega::MegaHandle>> unattendedDisabledSyncs; //Tags of syncs disabled due to errors since last dismissed
     std::unique_ptr<mega::QTMegaListener> delegateListener;
 
@@ -109,9 +108,6 @@ public:
 
     // OnboardingFinished
     void onboardingFinished(bool onboardingShown);
-
-    // load into sync model the information from an old cached sync
-    void pickInfoFromOldSync(const SyncData &osd, mega::MegaHandle backupId, bool loadedFromPreviousSessions);
 
     // remove syncs from model
     void removeSyncedFolderByBackupId(mega::MegaHandle backupId);

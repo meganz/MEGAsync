@@ -120,12 +120,6 @@ public:
     void showAddSyncError(mega::MegaRequest *request, mega::MegaError* e, QString localpath, QString remotePath = QString());
     void showAddSyncError(int errorCode, QString localpath, QString remotePath = QString());
 
-    /**
-     * @brief Migrate sync configuration to sdk cache
-     * @param email of sync configuration to migrate from sprevious sessions
-     */
-    void migrateSyncConfToSdk(QString email = QString());
-
     mega::MegaApi *getMegaApi() { return megaApi; }
     mega::MegaApi *getMegaApiFolders() { return megaApiFolders; }
     std::unique_ptr<mega::MegaApiLock> megaApiLock;
@@ -509,8 +503,6 @@ protected:
     bool misSyncingStateWrongLogged;
 
 private:
-    void loadSyncExclusionRules(QString email = QString());
-
     QList<QNetworkInterface> findNewNetworkInterfaces();
     bool checkNetworkInterfaces(const QList<QNetworkInterface>& newNetworkInterfaces) const;
     bool checkNetworkInterface(const QNetworkInterface& newNetworkInterface) const;

@@ -8,21 +8,6 @@
 
 #include <memory>
 
-struct SyncData
-{
-    SyncData(QString name, QString localFolder, mega::MegaHandle megaHandle, QString megaFolder,
-                long long localfp, bool enabled, bool tempDisabled, int pos, QString syncID);
-    QString mName;
-    QString mLocalFolder;
-    mega::MegaHandle mMegaHandle;
-    QString mMegaFolder;
-    long long mLocalfp;
-    bool mEnabled;
-    bool mTemporarilyDisabled;
-    int mPos;
-    QString mSyncID;
-};
-
 class SyncSettings
 {
 private:
@@ -33,10 +18,9 @@ private:
     QString mMegaFolder; //cached (in memory) value of the remote path
 
     static constexpr int CACHE_VERSION = 1;
-public:
 
+public:
     SyncSettings();
-    SyncSettings(const SyncData &osd, bool loadedFromPreviousSessions);
     SyncSettings(QString initializer);
     ~SyncSettings();
     SyncSettings(const SyncSettings& a);
