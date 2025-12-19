@@ -68,37 +68,13 @@ qproperty-lightFullProgressBarColors: #ffF63D6B; /*colorToken.indicator-pink*/
 qproperty-darkFullProgressBarColors: #ffF63D6B; /*colorToken.indicator-pink*/
 
 qproperty-okStateTextColor: #ff303233; /*colorToken.text-primary*/
+
+qproperty-fontWeigth: 600;
 }
 
-
-#AccountDetailsDialog[storageState=&quot;ok&quot;] #headerBox #lUsedStorage
+#lUsedStorage, #lUsedTransfer
 {
-color: #ff09bf5b; /*colorToken.text-success*/
-}
-
-#AccountDetailsDialog[storageState=&quot;warning&quot;] #headerBox #lUsedStorage
-{
-color: #fffb6514; /*colorToken.text-warning*/
-}
-
-#AccountDetailsDialog[storageState=&quot;full&quot;] #headerBox #lUsedStorage
-{
-color: #fff63d6b; /*colorToken.text-error*/
-}
-
-#AccountDetailsDialog[transferState=&quot;ok&quot;] #headerBox #lUsedTransfer
-{
-color: #ff09bf5b; /*colorToken.text-success*/
-}
-
-#AccountDetailsDialog[transferState=&quot;warning&quot;] #headerBox #lUsedTransfer
-{
-color: #fffb6514; /*colorToken.text-warning*/
-}
-
-#AccountDetailsDialog[transferState=&quot;full&quot;] #headerBox #lUsedTransfer
-{
-color: #fff63d6b; /*colorToken.text-error*/
+color: #ff303233; /*colorToken.text-primary*/
 }
 
 #AccountDetailsDialog[storageState=&quot;ok&quot;] #wDetailedUsage QProgressBar::chunk
