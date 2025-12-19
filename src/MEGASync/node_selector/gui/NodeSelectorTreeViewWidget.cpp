@@ -1236,13 +1236,23 @@ void NodeSelectorTreeViewWidget::selectIndex(const QModelIndex& index,
     auto selectionFlag(exclusiveSelect ? QItemSelectionModel::ClearAndSelect :
                                          QItemSelectionModel::Select);
 
-    if (setCurrent)
+    auto selectionModel = ui->tMegaFolders->selectionModel();
+    if (selectionModel != nullptr)
     {
-        ui->tMegaFolders->selectionModel()->setCurrentIndex(index,
-                                                            selectionFlag |
-                                                                QItemSelectionModel::Rows);
+        if (setCurrent)
+        {
+            selectionModel->setCurrentIndex(index, selectionFlag | QItemSelectionModel::Rows);
+        }
+
+        selectionModel->select(index, selectionFlag | QItemSelectionModel::Rows);
     }
-    ui->tMegaFolders->selectionModel()->select(index, selectionFlag | QItemSelectionModel::Rows);
+    else
+    {
+        mega::MegaApi::log(
+            mega::MegaApi::LOG_LEVEL_ERROR,
+            QString::fromUtf8("Invalid selectionModel access.").toUtf8().constData());
+    }
+
     ui->tMegaFolders->scrollTo(index, QAbstractItemView::ScrollHint::PositionAtCenter);
 }
 
