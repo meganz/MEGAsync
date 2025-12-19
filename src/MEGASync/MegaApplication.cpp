@@ -5057,31 +5057,29 @@ void MegaApplication::onRequestLinksFinished()
         message = tr("The links have been copied to the clipboard");
     }
 
-    if (!preferences->getDontShowExportLinkDialog() &&
-        (!mOsNotifications ||
-         (mOsNotifications &&
-          !preferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES))))
-    {
-        MessageDialogInfo msgInfo;
-        msgInfo.descriptionText = message;
-        msgInfo.checkboxText = tr("Don’t show me again");
-        msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msgResult)
-        {
-            if (msgResult->result() == QMessageBox::StandardButton::Ok)
-            {
-                preferences->setDontShowExportLinkDialog(msgResult->isChecked());
-            }
-        };
-
-        MessageDialogOpener::success(msgInfo);
-    }
-    else
+    /* notifications are alwaus prefered over pop-ups */
+    if (mOsNotifications && preferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES))
     {
         DesktopNotifications::NotificationInfo info;
         info.title = MegaSyncApp->getMEGAString();
         info.message = message;
 
         showInfoMessage(info);
+    }
+    else if (!preferences->getDontShowExportLinkDialog())
+    {
+        MessageDialogInfo msgInfo;
+        msgInfo.descriptionText = message;
+        msgInfo.checkboxText = tr("Don’t show me again");
+        msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msgResult)
+        {
+            if (msgResult->result() == QMessageBox::StandardButton::Close)
+            {
+                preferences->setDontShowExportLinkDialog(msgResult->isChecked());
+            }
+        };
+
+        MessageDialogOpener::success(msgInfo);
     }
 
     exportProcessor->deleteLater();
