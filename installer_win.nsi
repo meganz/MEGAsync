@@ -23,7 +23,7 @@ BrandingText "MEGA"
 
 VIAddVersionKey "CompanyName" "MEGA"
 VIAddVersionKey "FileDescription" "MEGAsync"
-VIAddVersionKey "LegalCopyright" "MEGA 2025"
+VIAddVersionKey "LegalCopyright" "MEGA 2026"
 VIAddVersionKey "ProductName" "MEGAsync"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
