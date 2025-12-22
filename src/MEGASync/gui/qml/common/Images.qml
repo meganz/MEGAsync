@@ -65,6 +65,7 @@ QtObject {
     readonly property url power: imagesQmlPath + "power.svg"
     readonly property url upArrow: imagesQmlPath + "up-arrow.svg"
     readonly property url downArrow: imagesQmlPath + "down-arrow.svg"
+    readonly property url externalLink: imagesQmlPath + "external-link.svg"
 
     readonly property url dialogMessageQuestion: imagesQmlPath + "dialog_message_question.svg"
     readonly property url dialogMessageInformation: imagesQmlPath + "dialog_message_information.svg"
@@ -91,7 +92,7 @@ QtObject {
     readonly property url guest: imagesGuestPath + "guest.png"
     readonly property url menu: imagesGuestPath + "menu.svg"
     readonly property url settings: imagesGuestPath + "settings.svg"
-    readonly property url warningGuest: imagesGuestPath + "warning.png"
+    readonly property url warningGuest: imagesGuestPath + "warning.svg"
     readonly property url settingUp: imagesGuestPath + "setting_up.png"
     readonly property url alertTriangleError: imagesGuestPath + "alert-triangle.png"
 

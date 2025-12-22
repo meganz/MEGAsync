@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>590</width>
-    <height>230</height>
+    <width>604</width>
+    <height>202</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -35,8 +35,23 @@ background-color: #ffffff; /*colorToken.page-background*/
    <bool>true</bool>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <property name="spacing">
+    <number>24</number>
+   </property>
    <property name="sizeConstraint">
     <enum>QLayout::SetFixedSize</enum>
+   </property>
+   <property name="leftMargin">
+    <number>24</number>
+   </property>
+   <property name="topMargin">
+    <number>24</number>
+   </property>
+   <property name="rightMargin">
+    <number>24</number>
+   </property>
+   <property name="bottomMargin">
+    <number>24</number>
    </property>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -95,6 +110,9 @@ background-color: #ffffff; /*colorToken.page-background*/
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_3">
+     <property name="spacing">
+      <number>24</number>
+     </property>
      <item>
       <widget class="QWidget" name="wContainer" native="true">
        <property name="minimumSize">
@@ -104,6 +122,9 @@ background-color: #ffffff; /*colorToken.page-background*/
         </size>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="spacing">
+         <number>12</number>
+        </property>
         <property name="leftMargin">
          <number>0</number>
         </property>

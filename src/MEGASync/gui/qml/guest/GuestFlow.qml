@@ -333,34 +333,8 @@ Item {
     Component {
         id: blockedPageComponent
 
-        BasePage {
+        LockedPage {
             id: blockedPage
-
-            showProgressBar: false
-            imageSource: Images.warningGuest
-            imageTopMargin: 110
-            title: GuestStrings.accountTempLocked
-            description: GuestStrings.accountTempLockedEmail
-            descriptionFontSize: Texts.Text.Size.NORMAL
-            descriptionColor: ColorTheme.textPrimary
-            descriptionLineHeight: 18
-
-            leftButton {
-                text: GuestStrings.logOut
-                onClicked: {
-                    guestContentAccess.onLogoutClicked();
-                }
-            }
-            rightButton {
-                text: GuestStrings.resendEmail
-                icons {
-                    source: Images.mail
-                    position: Icon.Position.LEFT
-                }
-                onClicked: {
-                    guestContentAccess.onVerifyEmailClicked();
-                }
-            }
 
             Connections {
                 target: window

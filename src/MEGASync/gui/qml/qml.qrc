@@ -158,6 +158,7 @@
         <file>guest/BasePage.qml</file>
         <file>guest/GuestFlow.qml</file>
         <file>guest/GuestDialog.qml</file>
+        <file>guest/LockedPage.qml</file>
         <file>guest/GuestStrings.qml</file>
         <file>upsell/qmldir</file>
         <file>upsell/UpsellDialog.qml</file>

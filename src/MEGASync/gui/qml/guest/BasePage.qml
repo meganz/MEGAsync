@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import QtQuick.Layouts 1.15
 
 import common 1.0
 
@@ -10,6 +11,8 @@ Item {
     id: root
 
     property alias imageSource: image.source
+    property alias imageWidth: image.width
+    property alias imageHeight: image.height
     property alias leftButton: leftButton
     property alias rightButton: rightButton
     property alias showProgressBar: progressBar.visible
@@ -36,6 +39,10 @@ Item {
             topMargin: imageTopMargin
         }
         source: Images.guest
+        sourceSize.width: width
+        sourceSize.height: height
+        fillMode: Image.PreserveAspectFit
+        smooth: true
     }
 
     Column {
