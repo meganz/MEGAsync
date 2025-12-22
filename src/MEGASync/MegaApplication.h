@@ -256,6 +256,7 @@ public slots:
     void externalLinkDownload(QString megaLink, QString auth);
     void externalFileUpload(mega::MegaHandle targetFolder);
     void externalFolderUpload(mega::MegaHandle targetFolder);
+    void externalFileFolderUpload(mega::MegaHandle targetFolder);
     void externalFolderSync(mega::MegaHandle targetFolder);
     void externalAddBackup();
     void externalOpenTransferManager(int tab);
