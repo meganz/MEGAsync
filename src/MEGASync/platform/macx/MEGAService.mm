@@ -32,4 +32,16 @@
     }
 }
 
+- (void)handleSyncFolder:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error {
+
+    if([[pboard types] containsObject:NSFilenamesPboardType]){
+
+        QStringList itemList;
+        NSArray* fileArray=[pboard propertyListForType:NSFilenamesPboardType];
+
+        itemList = qt_mac_NSArrayToQStringList(fileArray);
+        delegate->processSyncFolder(itemList);
+    }
+}
+
 @end

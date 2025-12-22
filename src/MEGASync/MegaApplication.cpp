@@ -5513,6 +5513,23 @@ void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)
     }
 }
 
+void MegaApplication::openSettingsAddSyncLocal(QString localFolderPath)
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    openSettings(SettingsDialog::SYNCS_TAB);
+
+    if (!localFolderPath.isEmpty())
+    {
+        CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin::SHELL_EXT_ORIGIN,
+                                          ::mega::INVALID_HANDLE,
+                                          localFolderPath);
+    }
+}
+
 void MegaApplication::createAppMenus()
 {
     if (appfinished)

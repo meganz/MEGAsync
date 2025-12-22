@@ -13,6 +13,7 @@ MacXSystemServiceTask::MacXSystemServiceTask(MegaApplication *receiver)
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "MEGA service starting...");
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), receiver, SLOT(shellUpload(QQueue<QString>)));
     connect(this, SIGNAL(newExportQueue(QQueue<QString>)), receiver, SLOT(shellExport(QQueue<QString>)));
+    connect(this, SIGNAL(openAddSyncLocal(QString)), receiver, SLOT(openSettingsAddSyncLocal(QString)));
 
 }
 
@@ -66,5 +67,21 @@ void MacXSystemServiceTask::processItems(QStringList itemsSelected)
 MacXSystemServiceTask::~MacXSystemServiceTask()
 {
 
+}
+
+void MacXSystemServiceTask::processSyncFolder(QStringList itemsSelected)
+{
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "MEGA service processing sync folder...");
+
+    for(int i = 0; i < itemsSelected.size(); i++)
+    {
+        QFileInfo file(itemsSelected.at(i));
+        if (file.exists() && file.isDir())
+        {
+            QString path = QDir::toNativeSeparators(file.absoluteFilePath());
+            emit openAddSyncLocal(path);
+            break;
+        }
+    }
 }
 

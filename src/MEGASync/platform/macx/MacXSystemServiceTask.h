@@ -15,6 +15,7 @@ public:
     virtual ~MacXSystemServiceTask();
 
     void processItems(QStringList itemsSelected);
+    void processSyncFolder(QStringList itemsSelected);
 
 protected:
     QQueue<QString> uploadQueue;
@@ -25,6 +26,6 @@ protected:
 signals:
     void newUploadQueue(QQueue<QString> uploadQueue);
     void newExportQueue(QQueue<QString> exportQueue);
-
+    void openAddSyncLocal(QString localPath);
 };
 #endif // MACXSYSTEMSERVICETASK_H
