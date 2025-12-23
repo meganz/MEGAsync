@@ -228,6 +228,7 @@ public slots:
     void openSettings(int tab = -1);
     void openSettingsAddSync(mega::MegaHandle megaFolderHandle);
     void openSettingsAddSyncLocal(QString localFolderPath);
+    void openSettingsAddBackupLocal(QString localFolderPath);
     void importLinks(
         AppStatsEvents::EventType event = AppStatsEvents::EventType::MENU_OPEN_LINKS_CLICKED);
     void officialWeb();

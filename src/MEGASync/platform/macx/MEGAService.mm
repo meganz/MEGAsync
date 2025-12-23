@@ -44,4 +44,17 @@
     }
 }
 
+// Services handler to open Add Backup dialog with selected local folder
+- (void)handleBackupFolder:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error {
+
+    if([[pboard types] containsObject:NSFilenamesPboardType]){
+
+        QStringList itemList;
+        NSArray* fileArray=[pboard propertyListForType:NSFilenamesPboardType];
+
+        itemList = qt_mac_NSArrayToQStringList(fileArray);
+        delegate->processBackupFolder(itemList);
+    }
+}
+
 @end
