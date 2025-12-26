@@ -9,7 +9,9 @@ typedef enum {
    STRING_SHARE = 2,
    STRING_SEND = 3,
    STRING_VIEW_ON_MEGA = 5,
-   STRING_VIEW_VERSIONS = 6
+   STRING_VIEW_VERSIONS = 6,
+   STRING_BACKUP = 7,
+   STRING_SYNC = 8
 } StringID;
 
 class ExtServer: public QObject
@@ -24,6 +26,7 @@ class ExtServer: public QObject
      QPointer<QLocalServer> m_localServer;
      QQueue<QString> uploadQueue;
      QQueue<QString> exportQueue;
+     QStringList backupList;
 
  public Q_SLOTS:
     void acceptConnection();
@@ -40,11 +43,14 @@ class ExtServer: public QObject
     void addToQueue(QQueue<QString>& queue, const char* content);
     void clearQueues();
     void viewOnMega(const char* content);
+    void sync(const char* content);
 
- signals:
+signals:
     void newUploadQueue(QQueue<QString> uploadQueue);
     void newExportQueue(QQueue<QString> exportQueue);
     void newViewOnMega(const QString& filePath, bool versions);
+    void newBackupList(QStringList backupQueue);
+    void newSync(const QString& folder);
 };
 
 #endif

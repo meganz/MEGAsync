@@ -31,6 +31,12 @@ ExtServer::ExtServer(MegaApplication* app):
             app,
             &MegaApplication::shellViewOnMega,
             Qt::QueuedConnection);
+    connect(this,
+            SIGNAL(newBackupList(QStringList)),
+            app,
+            SLOT(shellBackup(QStringList)),
+            Qt::QueuedConnection);
+    connect(this, SIGNAL(newSync(QString)), app, SLOT(shellSync(QString)), Qt::QueuedConnection);
 
     // construct local socket path
     sockPath = MegaApplication::applicationDataPath() + QDir::separator() + QString::fromLatin1("mega.socket");
@@ -299,6 +305,21 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
             strncpy(out, "0", BUFSIZE);
             break;
         }
+        case 'B':
+        {
+            const QString filePath = QString::fromUtf8(content);
+            const QFileInfo file(filePath);
+            if (file.exists())
+            {
+                backupList.append(QDir::toNativeSeparators(file.absoluteFilePath()));
+            }
+            break;
+        }
+        case 'Y':
+        {
+            sync(content);
+            break;
+        }
         case 'I':
         default:
             break;
@@ -336,6 +357,12 @@ QString ExtServer::getActionName(const int actionId)
         case STRING_VIEW_VERSIONS:
             name = QCoreApplication::translate("ShellExtension", "View previous versions");
             break;
+        case STRING_BACKUP:
+            name = QCoreApplication::translate("ShellExtension", "Backup");
+            break;
+        case STRING_SYNC:
+            name = QCoreApplication::translate("ShellExtension", "Sync");
+            break;
     }
     return name;
 }
@@ -363,6 +390,11 @@ void ExtServer::clearQueues()
         emit newExportQueue(exportQueue);
         exportQueue.clear();
     }
+    if (!backupList.isEmpty())
+    {
+        emit newBackupList(backupList);
+        backupList.clear();
+    }
 }
 
 void ExtServer::viewOnMega(const char *content)
@@ -372,5 +404,15 @@ void ExtServer::viewOnMega(const char *content)
     if (file.exists())
     {
         emit newViewOnMega(filePath, false);
+    }
+}
+
+void ExtServer::sync(const char* content)
+{
+    const QString path = QString::fromUtf8(content);
+    const QFileInfo folder(path);
+    if (folder.exists() && folder.isDir())
+    {
+        newSync(path);
     }
 }
