@@ -13,8 +13,8 @@ MacXSystemServiceTask::MacXSystemServiceTask(MegaApplication *receiver)
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "MEGA service starting...");
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), receiver, SLOT(shellUpload(QQueue<QString>)));
     connect(this, SIGNAL(newExportQueue(QQueue<QString>)), receiver, SLOT(shellExport(QQueue<QString>)));
-    connect(this, SIGNAL(openAddSyncLocal(QString)), receiver, SLOT(openSettingsAddSyncLocal(QString)));
-    connect(this, SIGNAL(openAddBackupLocal(QString)), receiver, SLOT(openSettingsAddBackupLocal(QString)));
+    connect(this, SIGNAL(addSyncFolder(QString)), receiver, SLOT(shellSync(QString)));
+    connect(this, SIGNAL(addBackupFolders(QStringList)), receiver, SLOT(shellBackup(QStringList)));
 
 }
 
@@ -80,7 +80,7 @@ void MacXSystemServiceTask::processSyncFolder(QStringList itemsSelected)
         if (file.exists() && file.isDir())
         {
             QString path = QDir::toNativeSeparators(file.absoluteFilePath());
-            emit openAddSyncLocal(path);
+            emit addSyncFolder(path);
             break;
         }
     }
@@ -89,16 +89,18 @@ void MacXSystemServiceTask::processSyncFolder(QStringList itemsSelected)
 void MacXSystemServiceTask::processBackupFolder(QStringList itemsSelected)
 {
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "MEGA service processing backup folder...");
-
+    QStringList backupFolders;
     for(int i = 0; i < itemsSelected.size(); i++)
     {
         QFileInfo file(itemsSelected.at(i));
         if (file.exists() && file.isDir())
         {
-            QString path = QDir::toNativeSeparators(file.absoluteFilePath());
-            emit openAddBackupLocal(path);
-            break;
+            backupFolders << QDir::toNativeSeparators(file.absoluteFilePath());
         }
+    }
+    if (!backupFolders.isEmpty())
+    {
+        emit addBackupFolders(backupFolders);
     }
 }
 

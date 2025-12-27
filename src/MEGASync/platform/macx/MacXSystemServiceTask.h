@@ -27,7 +27,7 @@ protected:
 signals:
     void newUploadQueue(QQueue<QString> uploadQueue);
     void newExportQueue(QQueue<QString> exportQueue);
-    void openAddSyncLocal(QString localPath);
-    void openAddBackupLocal(QString localPath);
+    void addSyncFolder(QString localPath);
+    void addBackupFolders(QStringList localPath);
 };
 #endif // MACXSYSTEMSERVICETASK_H
