@@ -15,7 +15,8 @@ const gchar OP_SEND        = 'C'; //Copy to user
 const gchar OP_STRING      = 'T'; //Get Translated String
 const gchar OP_VIEW        = 'V'; //View on MEGA
 const gchar OP_PREVIOUS    = 'R'; //View previous versions
-
+const gchar OP_BACKUP = 'B'; // Backup folder
+const gchar OP_SYNC = 'Y'; // Sync folder
 const gchar *RESPONSE_DEFAULT_str = "9";
 
 static void mega_ext_client_disconnect(MEGAExt *mega_ext);
@@ -263,6 +264,38 @@ gboolean mega_ext_client_open_previous(MEGAExt *mega_ext, const gchar *path)
     expanselocalpath(path,canonical);
 
     out = mega_ext_client_send_request(mega_ext, OP_PREVIOUS, canonical);
+
+    if (!out)
+        return FALSE;
+    g_free(out);
+
+    return TRUE;
+}
+
+gboolean mega_ext_client_backup(MEGAExt* mega_ext, const gchar* path)
+{
+    gchar* out;
+
+    char canonical[PATH_MAX];
+    expanselocalpath(path, canonical);
+
+    out = mega_ext_client_send_request(mega_ext, OP_BACKUP, canonical);
+
+    if (!out)
+        return FALSE;
+    g_free(out);
+
+    return TRUE;
+}
+
+gboolean mega_ext_client_sync(MEGAExt* mega_ext, const gchar* path)
+{
+    gchar* out;
+
+    char canonical[PATH_MAX];
+    expanselocalpath(path, canonical);
+
+    out = mega_ext_client_send_request(mega_ext, OP_SYNC, canonical);
 
     if (!out)
         return FALSE;

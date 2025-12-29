@@ -36,6 +36,8 @@ private Q_SLOTS:
     void uploadFiles();
     void viewOnMega();
     void viewPreviousVersions();
+    void backupFolders();
+    void syncFolder();
     QString getString(int type, int numFiles,int numFolders);
 
 private:
