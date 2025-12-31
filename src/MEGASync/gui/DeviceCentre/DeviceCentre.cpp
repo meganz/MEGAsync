@@ -431,57 +431,6 @@ void DeviceCentre::learnMore() const
     Utilities::openUrl(ServiceUrls::getContactSupportUrl());
 }
 
-void DeviceCentre::applyPreviousExclusionRules() const
-{
-    MessageDialogInfo msgInfo;
-    msgInfo.titleText = /*tr*/ QString::fromUtf8("Apply previous exclusion rules?");
-    Text::Bold boldDecorator;
-    boldDecorator.process(msgInfo.titleText);
-    msgInfo.descriptionText =
-        /*tr*/ QString::fromUtf8(
-            "The exclusion rules you set up in a previous version of the app will be applied to "
-            "all "
-            "of your syncs and backups. Any rules created since then will be overwritten.");
-    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-    QMap<QMessageBox::Button, QString> textsByButton;
-    textsByButton.insert(QMessageBox::Ok, /*tr*/ QString::fromUtf8("Apply"));
-    msgInfo.buttonsText = textsByButton;
-    msgInfo.finishFunc = [](QPointer<MessageDialogResult> msg)
-    {
-        if (msg->result() == QMessageBox::Ok)
-        {
-            // Step 0: Remove old default ignore
-            const auto defaultIgnoreFolder = Preferences::instance()->getDataPath();
-            const auto defaultIgnorePath =
-                defaultIgnoreFolder + QString::fromUtf8("/") +
-                QString::fromUtf8(MegaIgnoreManager::MEGA_IGNORE_DEFAULT_FILE_NAME);
-            QFile::remove(defaultIgnorePath);
-
-            // Step 1: Replace default ignore with one populated with legacy rules
-            MegaSyncApp->getMegaApi()->exportLegacyExclusionRules(
-                defaultIgnoreFolder.toStdString().c_str());
-            QFile::rename(defaultIgnoreFolder + QString::fromUtf8("/") +
-                              QString::fromUtf8(MegaIgnoreManager::MEGA_IGNORE_FILE_NAME),
-                          defaultIgnorePath);
-
-            // Step 2: Replace existing mega ignores files in all syncs
-            const auto syncsSettings = SyncInfo::instance()->getAllSyncSettings();
-            for (auto& sync: syncsSettings)
-            {
-                QFile ignoreFile(sync->getLocalFolder() + QString::fromUtf8("/") +
-                                 QString::fromUtf8(MegaIgnoreManager::MEGA_IGNORE_FILE_NAME));
-                if (ignoreFile.exists())
-                {
-                    ignoreFile.moveToTrash();
-                }
-                MegaSyncApp->getMegaApi()->exportLegacyExclusionRules(
-                    sync->getLocalFolder().toStdString().c_str());
-            }
-        }
-    };
-    MessageDialogOpener::warning(msgInfo);
-}
-
 void DeviceCentre::onSmartModeSelected() const
 {
     Preferences::instance()->setStalledIssuesMode(Preferences::StalledIssuesModeType::Smart);
