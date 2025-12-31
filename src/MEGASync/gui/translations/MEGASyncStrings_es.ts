@@ -353,19 +353,9 @@
         <translation>Error al añadir la sincronización</translation>
     </message>
     <message>
-        <source>Error moving or removing remote backup folder</source>
-        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>Error al mover o eliminar la carpeta de backup de MEGA</translation>
-    </message>
-    <message>
         <source>Error removing backup</source>
         <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
         <translation>Error al detener el backup</translation>
-    </message>
-    <message>
-        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
-        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>No se puede mover o eliminar la carpeta de backup de MEGA. Razón: %1</translation>
     </message>
     <message>
         <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
@@ -6089,19 +6079,6 @@ Introduzca un nombre diferente.</translation>
     </message>
 </context>
 <context>
-    <name>Preferences</name>
-    <message>
-        <source>- Introducing dark mode!
-- We&apos;ve refreshed the app design.
-- We&apos;ve fixed bugs and made the app more reliable.
-</source>
-        <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
-        <translation>- El modo oscuro ya está disponible.
-- Hemos actualizado el diseño de la aplicación para que sea más limpia y fácil de usar.
-- Se han corregido errores y se ha mejorado la estabilidad de la aplicación.</translation>
-    </message>
-</context>
-<context>
     <name>ProgressIndicatorDialog</name>
     <message>
         <source>Cancel</source>
@@ -6182,9 +6159,9 @@ Introduzca un nombre diferente.</translation>
         <translation>No ha sido posible conectarse con tus ajustes de proxy. Comprueba los ajustes o prueba con otra red.</translation>
     </message>
     <message>
-        <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
-        <translatorcomment>Error banner shown when proxy settings is not found in the environment, [B] is for bold . SNC-5411</translatorcomment>
-        <translation>El sistema no tiene un proxy configurado. Para conectarte, define un valor [B] http_proxy [/B] o [B] https_proxy [/B] válido en tu entorno.</translation>
+        <source>Your system doesn’t have a proxy set. To connect, set a valid http_proxy or https_proxy value in your environment.</source>
+        <translatorcomment>Error banner shown when proxy settings is not found in the environment . SNC-5411</translatorcomment>
+        <translation>No se ha detectado ningún proxy. Para conectarte, configura un valor válido de http_proxy o https_proxy en tu entorno.</translation>
     </message>
 </context>
 <context>
@@ -6639,6 +6616,24 @@ Do you want to delete it anyway?</source>
     </message>
 </context>
 <context>
+    <name>RemoveBackup</name>
+    <message>
+        <source>Backup folder already exists on destination. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can&apos;t move it there! SNC-6067 </translatorcomment>
+        <translation>Ya hay una carpeta con este nombre en esa ubicación, elige otra ubicación</translation>
+    </message>
+    <message>
+        <source>Error moving or removing remote backup folder</source>
+        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation>Error al mover o eliminar la carpeta de backup en MEGA</translation>
+    </message>
+    <message>
+        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
+        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation>No se puede mover o eliminar la carpeta de backup en MEGA. Razón: %1</translation>
+    </message>
+</context>
+<context>
     <name>RemoveBackupDialog</name>
     <message>
         <source>Cancel</source>
@@ -6656,8 +6651,8 @@ Do you want to delete it anyway?</source>
         <translation>Eliminar carpeta de MEGA</translation>
     </message>
     <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
-        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
         <translation>La carpeta se eliminará de MEGA, pero no de tu dispositivo. Esta acción no se puede deshacer.</translation>
     </message>
     <message>
@@ -6686,8 +6681,8 @@ Do you want to delete it anyway?</source>
         <translation>Detener backup</translation>
     </message>
     <message>
-        <source>To stop backing up this folder, you need to either move it or delete it.</source>
-        <translatorcomment>Backup removal title description</translatorcomment>
+        <source>To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].</source>
+        <translatorcomment>Backup removal title description. SNC-6067</translatorcomment>
         <translation>Para detener el backup de esta carpeta, tendrás que moverla o eliminarla</translation>
     </message>
 </context>
@@ -7033,6 +7028,11 @@ Do you want to delete it anyway?</source>
         <translation>Ejecutar al iniciar sesión</translation>
     </message>
     <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
+        <translation>Más información</translation>
+    </message>
+    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>Carpeta local con un backup de los archivos eliminados en MEGA</translation>
@@ -7176,6 +7176,11 @@ Do you want to delete it anyway?</source>
         <source>Synchronizations will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active syncs (not backups)</translatorcomment>
         <translation>Las sincronizaciones se desactivarán.</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation>Modo</translation>
     </message>
     <message>
         <source>Transfer Quota</source>
@@ -9832,11 +9837,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Transferencia completada ahora mismo</translation>
     </message>
     <message>
-        <source>Basic</source>
-        <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Business</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
         <translation>Business</translation>
@@ -9845,11 +9845,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Bytes</source>
         <translatorcomment>Label to indicate bytes unit.</translatorcomment>
         <translation>Bytes</translation>
-    </message>
-    <message>
-        <source>Essential</source>
-        <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Free</source>
@@ -9910,11 +9905,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
         <translation>Pro Lite</translation>
-    </message>
-    <message>
-        <source>Starter</source>
-        <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>TB</source>

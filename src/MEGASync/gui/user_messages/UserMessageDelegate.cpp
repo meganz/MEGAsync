@@ -47,7 +47,10 @@ void UserMessageDelegate::paint(QPainter* painter,
             return;
         }
 
-        item->resize(option.rect.width(), option.rect.height());
+        if (item->size() != option.rect.size())
+        {
+            item->resize(option.rect.width(), option.rect.height());
+        }
         item->render(painter, QPoint(0, 0), QRegion(0, 0, option.rect.width(), option.rect.height()));
 
         painter->restore();
@@ -193,6 +196,11 @@ void UserMessageDelegate::onHoverLeave(const QModelIndex& index)
     });
 }
 
+void UserMessageDelegate::onSizeHintChanged()
+{
+    emit sizeHintChanged(QModelIndex());
+}
+
 QModelIndex UserMessageDelegate::getEditorCurrentIndex() const
 {
     if(mEditor)
@@ -213,6 +221,11 @@ QWidget* UserMessageDelegate::getWidget(const QModelIndex& index) const
         {
             UserMessage* item = static_cast<UserMessage*>(filteredIndex.internalPointer());
             widget = mCacheManager->createOrGetWidget(index.row(), item, mView->viewport());
+            connect(widget,
+                    &UserMessageWidget::sizeHintChanged,
+                    this,
+                    &UserMessageDelegate::onSizeHintChanged,
+                    Qt::UniqueConnection);
         }
     }
     return widget;

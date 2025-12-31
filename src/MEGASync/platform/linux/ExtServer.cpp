@@ -21,8 +21,8 @@ constexpr char RESPONSE_PAUSED[]  = "4";
 constexpr char RESPONSE_DEFAULT[] = "9";
 constexpr char RESPONSE_ERROR[]   = "10";
 
-ExtServer::ExtServer(MegaApplication *app): QObject(),
-    m_localServer(0)
+ExtServer::ExtServer(MegaApplication* app):
+    QObject()
 {
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), app, SLOT(shellUpload(QQueue<QString>)),Qt::QueuedConnection);
     connect(this, SIGNAL(newExportQueue(QQueue<QString>)), app, SLOT(shellExport(QQueue<QString>)),Qt::QueuedConnection);
@@ -54,20 +54,35 @@ ExtServer::ExtServer(MegaApplication *app): QObject(),
 
 ExtServer::~ExtServer()
 {
-    for (auto client : m_clients)
+    // Stop accepting new connections
+    if (m_localServer)
     {
-        client->deleteLater();
+        m_localServer->close();
     }
 
+    // Disconnect and close all clients
+    for (auto client : m_clients)
+    {
+        if (!client)
+            continue;
+
+        client->disconnect(this);
+        client->close();
+
+        // Ensure deletion; otherwise parent will delete
+        client->deleteLater();
+    }
+    m_clients.clear();
+
+    // Remove socket file on disk
     QLocalServer::removeServer(sockPath);
-    m_localServer->close();
-    delete m_localServer;
 }
 
 // a new connection is available
 void ExtServer::acceptConnection()
 {
-    while (m_localServer->hasPendingConnections()) {
+    while (m_localServer && m_localServer->hasPendingConnections())
+    {
         QLocalSocket *client = m_localServer->nextPendingConnection();
 
         //LOG_debug << "Incoming connection";

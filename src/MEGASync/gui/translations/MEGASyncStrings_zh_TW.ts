@@ -344,19 +344,9 @@
         <translation>新增同步時發生錯誤</translation>
     </message>
     <message>
-        <source>Error moving or removing remote backup folder</source>
-        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>移動或刪除MEGA備份資料夾時發生錯誤</translation>
-    </message>
-    <message>
         <source>Error removing backup</source>
         <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
         <translation>停用備份時發生錯誤</translation>
-    </message>
-    <message>
-        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
-        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>無法移動或刪除MEGA備份資料夾。原因：%1</translation>
     </message>
     <message>
         <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
@@ -5949,14 +5939,10 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing dark mode!
-- We've refreshed the app design.
-- We've fixed bugs and made the app more reliable.
+        <source>- We've fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
-        <translation>- 現在提供深色模式。
-- 我們更新了應用程式設計，使其更簡潔易用。
-- 修復已知錯誤並提升應用程式穩定性。</translation>
+        <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6040,9 +6026,9 @@ Enter a different name</source>
         <translation>我們無法使用您的代理設定進行連線。請檢查設定或嘗試其它網路。</translation>
     </message>
     <message>
-        <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
-        <translatorcomment>Error banner shown when proxy settings is not found in the environment, [B] is for bold . SNC-5411</translatorcomment>
-        <translation>您的系統未設定代理。若要進行連接，請在您的環境中設定有效的[B]http_proxy[/B]或[B]https_proxy[/B]值。</translation>
+        <source>Your system doesn’t have a proxy set. To connect, set a valid http_proxy or https_proxy value in your environment.</source>
+        <translatorcomment>Error banner shown when proxy settings is not found in the environment . SNC-5411</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6497,6 +6483,24 @@ Do you want to delete it anyway?</source>
     </message>
 </context>
 <context>
+    <name>RemoveBackup</name>
+    <message>
+        <source>Backup folder already exists on destination. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can't move it there! SNC-6067 </translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error moving or removing remote backup folder</source>
+        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
+        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RemoveBackupDialog</name>
     <message>
         <source>Cancel</source>
@@ -6512,11 +6516,6 @@ Do you want to delete it anyway?</source>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
         <translation>從MEGA中刪除資料夾</translation>
-    </message>
-    <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
-        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation>資料夾將從MEGA中刪除，但不會從您的裝置中刪除。這個動作無法撤銷。</translation>
     </message>
     <message>
         <source>Move folder</source>
@@ -6544,8 +6543,13 @@ Do you want to delete it anyway?</source>
         <translation>停止備份</translation>
     </message>
     <message>
-        <source>To stop backing up this folder, you need to either move it or delete it.</source>
-        <translatorcomment>Backup removal title description</translatorcomment>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
+        <translation>資料夾將從MEGA中刪除，但不會從您的裝置中刪除。這個動作無法撤銷。</translation>
+    </message>
+    <message>
+        <source>To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].</source>
+        <translatorcomment>Backup removal title description. SNC-6067</translatorcomment>
         <translation>要停止備份此資料夾，您需要移動或刪除它</translation>
     </message>
 </context>
@@ -7093,6 +7097,16 @@ Do you want to delete it anyway?</source>
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
         <translation><numerusform>天</numerusform></translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
+        <translation>瞭解更多</translation>
     </message>
 </context>
 <context>

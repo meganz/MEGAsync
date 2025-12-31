@@ -3,17 +3,11 @@
 #include "DialogOpener.h"
 #include "megaapi.h"
 #include "ServiceUrls.h"
-#include "TextDecorator.h"
 #include "ui_ProxySettings.h"
 
 #include <QNetworkProxy>
 
 using namespace mega;
-
-namespace
-{
-Text::Bold boldDecorator;
-}
 
 ProxySettings::ProxySettings(MegaApplication* app, QWidget* parent):
     QDialog(parent),
@@ -31,6 +25,8 @@ ProxySettings::ProxySettings(MegaApplication* app, QWidget* parent):
     mProxyAuto->setText(tr("Auto-detect"));
     mProxyAuto->setCursor(Qt::PointingHandCursor);
     mUi->verticalLayout->addWidget(mProxyAuto);
+
+    mUi->wErrorBanner->setType(BannerWidget::Type::BANNER_ERROR);
 
     initialize();
 
@@ -59,15 +55,14 @@ ProxySettings::ProxySettings(MegaApplication* app, QWidget* parent):
                 {
                     auto errorMessage =
                         tr("Your system doesn’t have a proxy set. To connect, set a valid "
-                           "[B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.");
-                    boldDecorator.process(errorMessage);
-                    mUi->lErrorText->setText(errorMessage);
-                    mUi->wError->setVisible(true);
+                           "http_proxy or https_proxy value in your environment.");
+                    mUi->wErrorBanner->setTitle(errorMessage);
+                    mUi->wErrorBanner->setVisible(true);
                 }
                 else
                 {
-                    mUi->lErrorText->setText(QString());
-                    mUi->wError->setVisible(false);
+                    mUi->wErrorBanner->setTitle(QString());
+                    mUi->wErrorBanner->setVisible(false);
                 }
 #endif
             });
@@ -101,8 +96,8 @@ void ProxySettings::setManualMode(bool enabled)
     mUi->eProxyServer->setEnabled(enabled);
     mUi->eProxyPort->setEnabled(enabled);
     mUi->cProxyRequiresPassword->setEnabled(enabled);
-    mUi->lErrorText->setText(QString());
-    mUi->wError->setVisible(false);
+    mUi->wErrorBanner->setTitle(QString());
+    mUi->wErrorBanner->setVisible(false);
 
     if (mUi->cProxyRequiresPassword->isEnabled())
     {
@@ -156,9 +151,9 @@ void ProxySettings::onProxyTestFinished(bool success)
         {
             mProgressDialog->close();
         }
-        mUi->lErrorText->setText(tr("We couldn’t connect using your proxy settings. Check your "
-                                    "proxy details or try a different network."));
-        mUi->wError->setVisible(true);
+        mUi->wErrorBanner->setTitle(tr("We couldn’t connect using your proxy settings. Check your "
+                                       "proxy details or try a different network."));
+        mUi->wErrorBanner->setVisible(true);
         adjustSize();
     }
 }
@@ -216,12 +211,10 @@ void ProxySettings::on_bUpdate_clicked()
 #ifdef Q_OS_LINUX
         else
         {
-            auto errorMessage =
-                tr("Your system doesn’t have a proxy set. To connect, set a valid "
-                   "[B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.");
-            boldDecorator.process(errorMessage);
-            mUi->lErrorText->setText(errorMessage);
-            mUi->wError->setVisible(true);
+            auto errorMessage = tr("Your system doesn’t have a proxy set. To connect, set a valid "
+                                   "http_proxy or https_proxy value in your environment.");
+            mUi->wErrorBanner->setTitle(errorMessage);
+            mUi->wErrorBanner->setVisible(true);
             return;
         }
 #endif

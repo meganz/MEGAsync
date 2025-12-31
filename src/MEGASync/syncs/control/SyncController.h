@@ -57,6 +57,8 @@ public:
                    SyncInfo::SyncOrigin origin);
     void addSync(SyncConfig& sync);
     void removeSync(std::shared_ptr<SyncSettings> syncSetting, const mega::MegaHandle& remoteHandle = mega::INVALID_HANDLE);
+    void moveOrDeleteRemovedBackupData(std::shared_ptr<SyncSettings> syncSetting,
+                                       const mega::MegaHandle& remoteHandle = mega::INVALID_HANDLE);
     void prevalidateSync(SyncConfig& sync);
 
     void setSyncToRun(std::shared_ptr<SyncSettings> syncSetting);
@@ -120,9 +122,6 @@ private:
     static QString getSyncTypeString(const mega::MegaSync::SyncType& syncType);
 
     static QString getDescription(SyncInfo::SyncOrigin origin);
-
-    static std::optional<AppStatsEvents::EventType>
-        getSyncAddedEventType(const SyncInfo::SyncOrigin origin);
 
     QMap<QString, QString> mPendingBackups;
 

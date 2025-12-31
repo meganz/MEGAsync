@@ -2,6 +2,7 @@
 
 #include "DesktopManager.h"
 #include "RecursiveShellNotifier.h"
+#include "ThemeManager.h"
 #include "ThreadedQueueShellNotifier.h"
 #include "WinAPIShell.h"
 #include "WinShellDispatcherTask.h"
@@ -21,6 +22,7 @@
 
 #include <comdef.h>
 #include <dpapi.h>
+#include <dwmapi.h>
 #include <shellapi.h>
 #include <taskschd.h>
 #include <tchar.h>
@@ -530,6 +532,27 @@ void PlatformImplementation::startThemeMonitor()
 Preferences::SystemColorScheme PlatformImplementation::getCurrentThemeAppearance() const
 {
     return watcher->getCurrentTheme();
+}
+
+void PlatformImplementation::applyCurrentThemeOnCurrentDialogFrame(QWindow* window)
+{
+    if (window != nullptr)
+    {
+        auto* hwnd = reinterpret_cast<HWND>(window->winId());
+        static int applyFrameThemeTimeOut = 5;
+        QTimer::singleShot(applyFrameThemeTimeOut,
+                           [hwnd]()
+                           {
+                               const auto appSheme =
+                                   ThemeManager::instance()->getCurrentColorScheme();
+                               const DWORD darkMode =
+                                   appSheme == Preferences::ThemeAppeareance::DARK ? 1 : 0;
+                               DwmSetWindowAttribute(hwnd,
+                                                     DWMWA_USE_IMMERSIVE_DARK_MODE,
+                                                     &darkMode,
+                                                     sizeof(darkMode));
+                           });
+    }
 }
 
 void PlatformImplementation::removeSyncFromLeftPane(QString syncPath)

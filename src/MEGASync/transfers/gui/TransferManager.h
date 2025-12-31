@@ -120,17 +120,17 @@ private:
     QString getIssuesBannerText();
 
 private slots:
-    void on_tCompleted_clicked();
-    void on_tDownloads_clicked();
-    void on_tUploads_clicked();
-    void on_tAllTransfers_clicked();
-    void on_tFailed_clicked();
     void on_tActionButton_clicked();
     void on_bPause_toggled();
+    void onCompletedClicked();
+    void onDownloadsClicked();
+    void onUploadsClicked();
+    void onAllTransfersClicked();
+    void onFailedClicked();
     void pauseResumeTransfers(bool isPaused);
 
-    void on_tClearSearchResult_clicked();
-    void on_bSearchString_clicked();
+    void onClearSearchResultClicked();
+    void onSearchStringClicked();
     void onSearch(const QString& text);
 
     void onStalledIssuesStateChanged();
@@ -140,12 +140,12 @@ private slots:
     void on_bDownload_clicked();
     void on_bUpload_clicked();
 
-    void on_bArchives_clicked();
-    void on_bDocuments_clicked();
-    void on_bImages_clicked();
-    void on_bAudio_clicked();
-    void on_bVideos_clicked();
-    void on_bOther_clicked();
+    void onArchivesClicked();
+    void onDocumentsClicked();
+    void onImagesClicked();
+    void onAudioClicked();
+    void onVideosClicked();
+    void onOtherClicked();
     void onMediaTabSelectorClicked();
 
     void onUpdatePauseState(bool isPaused);

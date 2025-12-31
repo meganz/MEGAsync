@@ -111,6 +111,7 @@ QmlDialog{
     flags: Qt.Dialog
     color: ColorTheme.surface1
     title: ExclusionsStrings.addExclusion
+    visible : false
 
     Item {
         id: mainColumn

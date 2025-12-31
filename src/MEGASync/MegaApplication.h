@@ -2,6 +2,7 @@
 #define MEGAAPPLICATION_H
 
 #include "AppState.h"
+#include "AppStatsEvents.h"
 #include "BlockingStageProgressController.h"
 #include "DesktopNotifications.h"
 #include "DownloadFromMegaDialog.h"
@@ -179,7 +180,7 @@ public:
      * @param email of sync configuration to migrate from previous sessions. If present
      * syncs configured in previous sessions will be loaded.
      */
-    QPointer<OverQuotaDialog> showSyncOverquotaDialog();
+    QPointer<OverQuotaDialog> createOverquotaDialogIfNeeded();
     bool finished() const;
     bool isInfoDialogVisible() const;
 
@@ -202,6 +203,7 @@ public:
 
     void updateUsedStorage(const bool sendEvent = false);
     void showUpsellDialog(UpsellPlans::ViewMode viewMode);
+    static void showStalledIssuesDialog();
 
 signals:
     void startUpdaterThread();
@@ -231,17 +233,18 @@ public slots:
     void start();
     void openSettings(int tab = -1);
     void openSettingsAddSync(mega::MegaHandle megaFolderHandle);
-    void importLinks();
+    void importLinks(
+        AppStatsEvents::EventType event = AppStatsEvents::EventType::MENU_OPEN_LINKS_CLICKED);
     void officialWeb();
     void goToMyCloud();
     void goToFiles();
     void openDeviceCentre();
     void pauseTransfers();
     void showChangeLog();
-    void uploadActionClicked();
+    void uploadActionClicked(AppStatsEvents::EventType event);
     void uploadActionFromWindowAfterOverQuotaCheck();
     void runUploadActionWithTargetHandle(const mega::MegaHandle &targetFolder, QWidget *parent);
-    void downloadActionClicked();
+    void downloadActionClicked(bool skipEventSending = false);
     void downloadACtionClickedWithHandles(const QList<mega::MegaHandle>& handles);
     void streamActionClicked();
     void transferManagerActionClicked(int tab = 0);

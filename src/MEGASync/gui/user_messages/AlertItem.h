@@ -1,9 +1,8 @@
 #ifndef ALERT_ITEM_H
 #define ALERT_ITEM_H
 
-#include "UserMessageWidget.h"
-
 #include "megaapi.h"
+#include "UserMessageWidget.h"
 
 #include <QFutureWatcher>
 #include <QPointer>
@@ -33,8 +32,6 @@ public:
     void setData(UserMessage* data) override;
     UserMessage* getData() const override;
 
-    QSize minimumSizeHint() const override;
-    QSize sizeHint() const override;
     bool eventFilter(QObject* obj, QEvent* event) override;
 
     void setAlertHeading(UserAlert* alert);

@@ -5,6 +5,7 @@
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
 #include "ServiceUrls.h"
+#include "StatsEventHandler.h"
 #include "ThemeManager.h"
 #include "TokenParserWidgetManager.h"
 #include "ui_AlertItem.h"
@@ -626,17 +627,8 @@ bool AlertItem::eventFilter(QObject* obj, QEvent* event)
             }
         }
     }
+
     return QWidget::eventFilter(obj, event);
-}
-
-QSize AlertItem::minimumSizeHint() const
-{
-    return this->size();
-}
-
-QSize AlertItem::sizeHint() const
-{
-    return this->size();
 }
 
 void AlertItem::mousePressEvent(QMouseEvent* event)
@@ -683,7 +675,9 @@ void AlertItem::mousePressEvent(QMouseEvent* event)
             break;
         }
     }
-
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::NOTIFICATION_ITEM_CLICKED,
+        true);
     QWidget::mousePressEvent(event);
 }
 
@@ -759,13 +753,22 @@ bool AlertItem::event(QEvent* event)
             setAlertTimeStamp(mAlertData->getTimestamp(0));
         }
     }
-    if (event->type() == ThemeManager::ThemeChanged)
+    else if (event->type() == ThemeManager::ThemeChanged)
     {
         if (mAlertData)
         {
             setAlertContent(mAlertData);
         }
     }
+    else if (event->type() == QEvent::LayoutRequest)
+    {
+        if (size() != sizeHint())
+        {
+            emit sizeHintChanged();
+            mAlertData->setSizeHint(sizeHint());
+        }
+    }
+
     return UserMessageWidget::event(event);
 }
 

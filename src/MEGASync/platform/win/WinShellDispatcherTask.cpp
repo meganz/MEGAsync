@@ -639,7 +639,9 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                         Utilities::queueFunctionInAppThread(
                             [parameters]()
                             {
-                                CreateRemoveBackupsManager::addBackup(false, parameters);
+                                CreateRemoveBackupsManager::addBackup(
+                                    SyncInfo::SyncOrigin::SHELL_EXT_ORIGIN,
+                                    parameters);
                             });
                     }
                 }

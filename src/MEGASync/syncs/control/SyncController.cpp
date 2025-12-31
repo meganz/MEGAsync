@@ -177,16 +177,6 @@ void SyncController::addSync(SyncConfig& sync)
                     removeMegaIgnore(sync.localFolder);
                 }
             }
-            else
-            {
-                std::optional<AppStatsEvents::EventType> syncAddEvent =
-                    getSyncAddedEventType(sync.origin);
-                if (syncAddEvent.has_value())
-                {
-                    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(syncAddEvent.value(),
-                                                                          true);
-                }
-            }
 
             emit syncAddStatus(errorCode, syncErrorCode, sync.localFolder);
             syncOperationEnds();
@@ -217,7 +207,6 @@ void SyncController::removeSync(std::shared_ptr<SyncSettings> syncSetting, const
     syncOperationBegins();
 
     bool isBackup = syncSetting->getType() == MegaSync::TYPE_BACKUP;
-    MegaHandle backupRoot = syncSetting->getMegaHandle();
     MegaHandle backupId = syncSetting->backupId();
 
     auto removeSyncListener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
@@ -236,30 +225,7 @@ void SyncController::removeSync(std::shared_ptr<SyncSettings> syncSetting, const
             }
             else if (isBackup)
             {
-                auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
-                    this,
-                    [=](MegaRequest* request, MegaError* e){
-                        if (e->getErrorCode() != MegaError::API_OK)
-                        {
-                            QString errorMsg = QString::fromUtf8(e->getErrorString());
-                            QString logMsg = QString::fromUtf8("Error moving or deleting remote backup folder (request error): %1 (sync id): %2 (Folder handle):%3").arg(
-                                errorMsg, QString::number(backupId), QString::number(backupRoot));
-                            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
-
-                            emit backupMoveOrRemoveRemoteFolderError(std::shared_ptr<MegaError>(e->copy()));
-                        }
-                        else
-                        {
-                            QString logMsg = QString::fromUtf8("Remote backup folder correctly moved or removed. (Backup id): %1 (Folder handle): %2").arg(
-                                QString::number(backupId), QString::number(backupRoot));
-                            MegaApi::log(MegaApi::LOG_LEVEL_INFO, logMsg.toUtf8().constData());
-                        }
-                    });
-
-                // We now have to delete or remove the remote folder
-                MegaSyncApp->getMegaApi()->moveOrRemoveDeconfiguredBackupNodes(backupRoot,
-                                                                               remoteHandle,
-                                                                               listener.get());
+                moveOrDeleteRemovedBackupData(syncSetting, remoteHandle);
             }
 
             syncOperationEnds();
@@ -267,6 +233,42 @@ void SyncController::removeSync(std::shared_ptr<SyncSettings> syncSetting, const
         });
 
     mApi->removeSync(backupId, removeSyncListener.get());
+}
+
+void SyncController::moveOrDeleteRemovedBackupData(std::shared_ptr<SyncSettings> syncSetting,
+                                                   const mega::MegaHandle& remoteHandle)
+{
+    MegaHandle backupRoot = syncSetting->getMegaHandle();
+    MegaHandle backupId = syncSetting->backupId();
+
+    auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
+        this,
+        [=](MegaRequest* request, MegaError* e)
+        {
+            if (e->getErrorCode() != MegaError::API_OK)
+            {
+                QString errorMsg = QString::fromUtf8(e->getErrorString());
+                QString logMsg =
+                    QString::fromUtf8("Error moving or deleting remote backup folder (request "
+                                      "error): %1 (sync id): %2 (Folder handle):%3")
+                        .arg(errorMsg, QString::number(backupId), QString::number(backupRoot));
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
+
+                emit backupMoveOrRemoveRemoteFolderError(std::shared_ptr<MegaError>(e->copy()));
+            }
+            else
+            {
+                QString logMsg = QString::fromUtf8("Remote backup folder correctly moved or "
+                                                   "removed. (Backup id): %1 (Folder handle): %2")
+                                     .arg(QString::number(backupId), QString::number(backupRoot));
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO, logMsg.toUtf8().constData());
+            }
+        });
+
+    // We now have to delete or remove the remote folder
+    MegaSyncApp->getMegaApi()->moveOrRemoveDeconfiguredBackupNodes(backupRoot,
+                                                                   remoteHandle,
+                                                                   listener.get());
 }
 
 void SyncController::setSyncToRun(std::shared_ptr<SyncSettings> syncSetting)
@@ -953,31 +955,6 @@ QString SyncController::getSyncTypeString(const mega::MegaSync::SyncType& syncTy
         }
     }
     return typeString;
-}
-
-std::optional<AppStatsEvents::EventType>
-    SyncController::getSyncAddedEventType(const SyncInfo::SyncOrigin origin)
-{
-    switch (origin)
-    {
-        case SyncInfo::SyncOrigin::CONTEXT_MENU_ORIGIN:
-            return AppStatsEvents::EventType::SYNC_ADDED_CONTEXT_MENU;
-        case SyncInfo::SyncOrigin::ONBOARDING_ORIGIN:
-            return AppStatsEvents::EventType::SYNC_ADDED_ONBOARDING;
-        case SyncInfo::SyncOrigin::EXTERNAL_ORIGIN:
-            return AppStatsEvents::EventType::SYNC_ADDED_WEBCLIENT;
-        case SyncInfo::SyncOrigin::INFODIALOG_BUTTON_ORIGIN:
-            return AppStatsEvents::EventType::SYNC_ADDED_ADD_SYNC_BUTTON;
-        case SyncInfo::SyncOrigin::CLOUD_DRIVE_DIALOG_ORIGIN:
-            return AppStatsEvents::EventType::SYNC_ADDED_CLOUD_DRIVE_BUTTON;
-        case SyncInfo::SyncOrigin::OS_NOTIFICATION_ORIGIN:
-            return AppStatsEvents::EventType::SYNC_ADDED_OS_NOTIFICATION;
-        case SyncInfo::SyncOrigin::SETTINGS_ORIGIN:
-            return AppStatsEvents::EventType::SYNC_ADDED_SETTINGS;
-        case SyncInfo::SyncOrigin::MAIN_APP_ORIGIN:
-        default:
-            return AppStatsEvents::EventType::SYNC_ADDED_MAIN_APP;
-    }
 }
 
 //This system has been designed for Backups, as several backups can be created in a row

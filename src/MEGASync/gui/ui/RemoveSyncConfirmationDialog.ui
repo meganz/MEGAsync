@@ -31,6 +31,16 @@
 background-color: #FFFFFF;/*colorToken.page-background*/
 }
 
+#labelHeader
+{
+  color: #303233; /*colorToken.text-primary*/
+}
+
+#labelMessage
+{
+  color: #616366; /*colorToken.text-secondary*/
+}
+
 </string>
   </property>
   <property name="TOKENIZED" stdset="0">
@@ -58,24 +68,19 @@ background-color: #FFFFFF;/*colorToken.page-background*/
       <number>24</number>
      </property>
      <item>
-      <widget class="QLabel" name="labelFolderIcon">
-       <property name="minimumSize">
-        <size>
-         <width>96</width>
-         <height>96</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>96</width>
-         <height>96</height>
-        </size>
-       </property>
+      <widget class="IconLabel" name="toolButton">
        <property name="text">
         <string/>
        </property>
-       <property name="pixmap">
-        <pixmap resource="../Resources_common.qrc">:/images/icons/folder/synced-folder.png</pixmap>
+       <property name="icon">
+        <iconset resource="../Resources_common.qrc">
+         <normaloff>:/images/icons/folder/synced-folder.png</normaloff>:/images/icons/folder/synced-folder.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>96</width>
+         <height>96</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -95,11 +100,11 @@ background-color: #FFFFFF;/*colorToken.page-background*/
          <property name="text">
           <string>Remove this sync?</string>
          </property>
-         <property name="dimension" stdset="0">
-          <string notr="true">label-2</string>
-         </property>
          <property name="semibold" stdset="0">
           <bool>true</bool>
+         </property>
+         <property name="font-size" stdset="0">
+          <string notr="true">label-2</string>
          </property>
         </widget>
        </item>
@@ -110,9 +115,6 @@ background-color: #FFFFFF;/*colorToken.page-background*/
          </property>
          <property name="wordWrap">
           <bool>true</bool>
-         </property>
-         <property name="font-size" stdset="0">
-          <string notr="true">body-2</string>
          </property>
         </widget>
        </item>
@@ -202,7 +204,7 @@ background-color: #FFFFFF;/*colorToken.page-background*/
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="text">
-        <string>Remove</string>
+        <string/>
        </property>
        <property name="icon">
         <iconset resource="../Resources_light.qrc">
@@ -225,6 +227,11 @@ background-color: #FFFFFF;/*colorToken.page-background*/
    <class>TokenizableButton</class>
    <extends>QPushButton</extends>
    <header>TokenizableItems/TokenizableButtons.h</header>
+  </customwidget>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>

@@ -84,6 +84,7 @@ FooterButtonsPage {
 
         anchors.fill: parent
         spacing: mainColumnDesignSpacing
+        anchors.bottomMargin: mainColumnDesignSpacing
 
         PasswordTextField {
             id: passwordItem
@@ -96,8 +97,13 @@ FooterButtonsPage {
             cleanWhenError: false
 
             textField.onActiveFocusChanged: {
+                if (footerButtons.rightSecondary.activeFocus) {
+                    return;
+                }
+
                 if (textField.activeFocus) {
                     hint.visible = false;
+                    error = false;
                 }
                 else {
                     var hintVisible = true;
@@ -137,6 +143,14 @@ FooterButtonsPage {
             title: ChangePasswordStrings.confirmNewPassword
             hint.icon: Images.key
             cleanWhenError: false
+
+            textField.onActiveFocusChanged: {
+                if (textField.activeFocus) {
+                    hint.visible = false;
+                    error = false;
+                    passwordItem.error = false;
+                }
+            }
         }
     }
 
@@ -153,7 +167,6 @@ FooterButtonsPage {
             setError(errorMessage)
         }
     }
-
 }
 
 

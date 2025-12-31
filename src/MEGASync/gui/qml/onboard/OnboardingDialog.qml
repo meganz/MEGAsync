@@ -11,7 +11,7 @@ OnboardingQmlDialog {
     readonly property int syncOrigin: SyncInfo.ONBOARDING_ORIGIN
 
     title: OnboardingStrings.setUpMEGA
-    visible: true
+    visible: false
     modality: Qt.NonModal
     width: 800
     height: 560

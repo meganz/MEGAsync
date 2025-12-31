@@ -45,13 +45,6 @@ FooterButtonsPage {
             description: SyncsStrings.selectiveSyncDescription
         }
 
-        InfoAccount {
-            id: accountData
-
-            Layout.preferredWidth: parent.width
-            Layout.topMargin: 8
-        }
-
         ChooseSyncFolder {
             id: localFolder
 

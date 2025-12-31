@@ -11,12 +11,11 @@ ChangePasswordDialog {
     id: window
 
     readonly property int twoFAPageHeigh: 500
-    readonly property int passwordChangePageHeigh: 320
+    readonly property int passwordChangePageHeigh: 344
     readonly property int passwordChangePageWidth: 496
 
     title: ChangePasswordStrings.title
     visible: false
-    Component.onCompleted: Qt.callLater(() => window.visible = true)
     modality: Qt.WindowModal
     width: passwordChangePageWidth
     height: passwordChangePageHeigh

@@ -141,6 +141,7 @@ private slots:
     void onShellNotificationsProcessed();
     void onUserEmailChanged(mega::MegaHandle userHandle, const QString& newEmail);
     void onRequestTaskbarPinningTimeout();
+    void onBLearnMore();
 
 private:
     void loadSettings();

@@ -18,6 +18,7 @@ QmlDialog::QmlDialog(QWindow* parent):
     setFlags(flags() | Qt::Dialog);
     setIcon(QIcon(mIconSrc));
     setTitle(DEFAULT_TITLE);
+    setVisible(false);
 
     connect(this,
             &QmlDialog::requestPageFocus,

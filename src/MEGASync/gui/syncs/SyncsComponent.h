@@ -33,14 +33,21 @@ public:
     void setRemoteFolder(const QString& remoteFolder);
     void setLocalFolder(const QString& localFolder);
 
+public slots:
+    void onSyncSetupSuccess(bool);
+
 signals:
     void remoteFolderChosen(QString remotePath);
     void localFolderChosen(QString folderPath);
 
 private:
+    AppStatsEvents::EventType getEventType() const;
+
+private:
     ChooseRemoteFolder mRemoteFolderChooser;
     ChooseLocalFolder mLocalFolderChooser;
     std::unique_ptr<Syncs> mSyncs;
+    SyncInfo::SyncOrigin mOrigin;
     bool mEnteredOnSyncCreation = false;
 
     void onRemoteFolderChosen(QString remotePath);

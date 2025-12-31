@@ -1,5 +1,7 @@
 #include "SyncItemModel.h"
 
+#include "MegaApplication.h"
+#include "StatsEventHandler.h"
 #include "SyncInfo.h"
 #include "SyncSettings.h"
 #include "SyncTooltipCreator.h"
@@ -436,6 +438,10 @@ bool SyncItemModel::setData(const QModelIndex& index, const QVariant& value, int
             emit signalSyncCheckboxOn(sync);
         else if (value.toInt() == Qt::Unchecked)
             emit signalSyncCheckboxOff(sync);
+        auto const event = mSyncType == mega::MegaSync::TYPE_BACKUP ?
+                               AppStatsEvents::EventType::BACKUP_CHECKBOX_TOGGLED :
+                               AppStatsEvents::EventType::SYNC_CHECKBOX_TOGGLED;
+        MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(event);
         emit dataChanged(index, index, QVector<int>(role));
         return true;
     }

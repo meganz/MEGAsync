@@ -461,6 +461,9 @@ void MegaApplication::initialize()
             Qt::DirectConnection); // Use direct connection to make sure 'updated' and 'prevVersions' are set as needed
     preferences->initialize(dataPath);
 
+    // Apply specific rcc files depending on selected theme
+    initStyleAndResources();
+
     if (preferences->error())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Encountered corrupt prefrences.").toUtf8().constData());
@@ -473,9 +476,6 @@ void MegaApplication::initialize()
 
     preferences->setLastStatsRequest(0);
     lastExit = preferences->getLastExit();
-
-    // Apply specific rcc files depending on selected theme
-    initStyleAndResources();
 
     installTranslator(&translator);
     QString language = preferences->language();
@@ -550,7 +550,7 @@ void MegaApplication::initialize()
     // Set maximum log line size to 10k (same as SDK default)
     // Otherwise network logging can cause large glitches when logging hundreds of MB
     // On Mac it is particularly apparent, causing the beachball to appear often
-    long long newPayLoadLogSize = 10240;
+    size_t newPayLoadLogSize = 10240;
     megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Establishing max payload log size: %1").arg(newPayLoadLogSize).toUtf8().constData());
     megaApi->setMaxPayloadLogSize(newPayLoadLogSize);
     megaApiFolders->setMaxPayloadLogSize(newPayLoadLogSize);
@@ -3966,15 +3966,16 @@ void MegaApplication::openDeviceCentre()
     QMLComponent::showDialog<DeviceCentre>();
 }
 
-void MegaApplication::importLinks()
+void MegaApplication::importLinks(AppStatsEvents::EventType event)
 {
     if (appfinished)
     {
         return;
     }
 
-    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_OPEN_LINKS_CLICKED,
-                                         sender(), importLinksAction, true);
+    mStatsEventHandler->sendTrackedEvent(event,
+                                         event ==
+                                             AppStatsEvents::EventType::MENU_OPEN_LINKS_CLICKED);
 
     mTransferQuota->checkImportLinksAlertDismissed([this](int result){
         if(result == QDialog::Rejected)
@@ -4098,10 +4099,11 @@ void MegaApplication::runUploadActionWithTargetHandle(const MegaHandle &targetFo
     };
 
     const bool storageIsOverQuota(storageState == MegaApi::STORAGE_STATE_RED || storageState == MegaApi::STORAGE_STATE_PAYWALL);
-    if(storageIsOverQuota)
+    if (storageIsOverQuota)
     {
-        auto overQuotaDialog = OverQuotaDialog::showDialog(OverQuotaDialogType::STORAGE_UPLOAD);
-        if(overQuotaDialog)
+        auto overQuotaDialog =
+            OverQuotaDialog::createDialogIfNeeded(OverQuotaDialogType::STORAGE_UPLOAD);
+        if (overQuotaDialog)
         {
             overQuotaDialog->setParent(parent);
             DialogOpener::showDialog<OverQuotaDialog>(overQuotaDialog, [processUpload]()
@@ -4114,21 +4116,24 @@ void MegaApplication::runUploadActionWithTargetHandle(const MegaHandle &targetFo
     processUpload();
 }
 
-void MegaApplication::uploadActionClicked()
+void MegaApplication::uploadActionClicked(AppStatsEvents::EventType event)
 {
     if (appfinished)
     {
         return;
     }
 
-    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_UPLOAD_CLICKED,
-                                         sender(), uploadAction, true);
+    mStatsEventHandler->sendTrackedEvent(
+        event,
+        event == AppStatsEvents::EventType::MENU_UPLOAD_CLICKED ||
+            event == AppStatsEvents::EventType::INFO_DIALOG_UPLOAD_CLICKED);
 
     const bool storageIsOverQuota(storageState == MegaApi::STORAGE_STATE_RED || storageState == MegaApi::STORAGE_STATE_PAYWALL);
-    if(storageIsOverQuota)
+    if (storageIsOverQuota)
     {
-        auto overQuotaDialog = OverQuotaDialog::showDialog(OverQuotaDialogType::STORAGE_UPLOAD);
-        if(overQuotaDialog)
+        auto overQuotaDialog =
+            OverQuotaDialog::createDialogIfNeeded(OverQuotaDialogType::STORAGE_UPLOAD);
+        if (overQuotaDialog)
         {
             DialogOpener::showDialog<OverQuotaDialog, TransferManager>(overQuotaDialog, false, [this](){
                 uploadActionFromWindowAfterOverQuotaCheck();
@@ -4177,17 +4182,17 @@ void MegaApplication::uploadActionFromWindowAfterOverQuotaCheck()
     Platform::getInstance()->fileAndFolderSelector(info);
 }
 
-QPointer<OverQuotaDialog> MegaApplication::showSyncOverquotaDialog()
+QPointer<OverQuotaDialog> MegaApplication::createOverquotaDialogIfNeeded()
 {
     QPointer<OverQuotaDialog> dialog(nullptr);
 
-    if(storageState == MegaApi::STORAGE_STATE_RED)
+    if (storageState == MegaApi::STORAGE_STATE_RED)
     {
-        dialog = OverQuotaDialog::showDialog(OverQuotaDialogType::STORAGE_SYNCS);
+        dialog = OverQuotaDialog::createDialogIfNeeded(OverQuotaDialogType::STORAGE_SYNCS);
     }
-    else if(mTransferQuota->isOverQuota())
+    else if (mTransferQuota->isOverQuota())
     {
-        dialog = OverQuotaDialog::showDialog(OverQuotaDialogType::BANDWITH_SYNC);
+        dialog = OverQuotaDialog::createDialogIfNeeded(OverQuotaDialogType::BANDWITH_SYNC);
     }
 
     return dialog;
@@ -4203,16 +4208,19 @@ bool MegaApplication::isInfoDialogVisible() const
     return infoDialog && infoDialog->isVisible();
 }
 
-void MegaApplication::downloadActionClicked()
+void MegaApplication::downloadActionClicked(bool skipEventSending)
 {
     if (appfinished)
     {
         return;
     }
-
-    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_DOWNLOAD_CLICKED,
-                                         sender(), downloadAction, true);
-
+    if (!skipEventSending)
+    {
+        mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_DOWNLOAD_CLICKED,
+                                             sender(),
+                                             downloadAction,
+                                             true);
+    }
     mTransferQuota->checkDownloadAlertDismissed([this](int result)
     {
         if(result == QDialog::Rejected)
@@ -5005,7 +5013,7 @@ void MegaApplication::externalAddBackup()
 
     if(infoDialog)
     {
-        infoDialog->addBackup();
+        infoDialog->addBackup(SyncInfo::SyncOrigin::EXTERNAL_ORIGIN);
     }
 }
 
@@ -5577,21 +5585,29 @@ void MegaApplication::createInfoDialogMenus()
                    tr("Settings"),
                    &MegaApplication::openSettings,
                    QString::fromLatin1(":/images/icons/tray/windows/settings.svg"));
-    recreateAction(&windowsImportLinksAction,
-                   windowsMenu,
-                   tr("Open links"),
-                   &MegaApplication::importLinks,
-                   QString::fromLatin1(":/images/icons/tray/windows/open_links.svg"));
+    recreateAction(
+        &windowsImportLinksAction,
+        windowsMenu,
+        tr("Open links"),
+        [this]()
+        {
+            importLinks();
+        },
+        QString::fromLatin1(":/images/icons/tray/windows/open_links.svg"));
     recreateAction(&windowsFilesAction,
                    windowsMenu,
                    tr("Files"),
                    &MegaApplication::goToFiles,
                    QString::fromLatin1(":/images/icons/tray/windows/drive.svg"));
-    recreateAction(&windowsUploadAction,
-                   windowsMenu,
-                   tr("Upload"),
-                   &MegaApplication::uploadActionClicked,
-                   QString::fromLatin1(":/images/icons/tray/windows/upload.svg"));
+    recreateAction(
+        &windowsUploadAction,
+        windowsMenu,
+        tr("Upload"),
+        [this]()
+        {
+            uploadActionClicked(AppStatsEvents::EventType::MENU_UPLOAD_CLICKED);
+        },
+        QString::fromLatin1(":/images/icons/tray/windows/upload.svg"));
     recreateAction(&windowsDownloadAction,
                    windowsMenu,
                    tr("Download"),
@@ -5757,7 +5773,10 @@ void MegaApplication::createInfoDialogMenus()
                                                     false)
                                .toStdString()
                                .c_str(),
-                           &MegaApplication::importLinks);
+                           [this]()
+                           {
+                               importLinks();
+                           });
     recreateMegaMenuAction(&uploadAction,
                            infoDialogMenu,
                            tr("Upload"),
@@ -5768,7 +5787,10 @@ void MegaApplication::createInfoDialogMenus()
                                                     false)
                                .toStdString()
                                .c_str(),
-                           &MegaApplication::uploadActionClicked);
+                           [this]()
+                           {
+                               uploadActionClicked(AppStatsEvents::EventType::MENU_UPLOAD_CLICKED);
+                           });
     recreateMegaMenuAction(&downloadAction,
                            infoDialogMenu,
                            tr("Download"),
@@ -5779,7 +5801,10 @@ void MegaApplication::createInfoDialogMenus()
                                                     false)
                                .toStdString()
                                .c_str(),
-                           &MegaApplication::downloadActionClicked);
+                           [this]()
+                           {
+                               downloadActionClicked();
+                           });
     recreateMegaMenuAction(&streamAction,
                            infoDialogMenu,
                            tr("Stream"),
@@ -6779,6 +6804,20 @@ void MegaApplication::onOperatingSystemThemeChanged(const Preferences::SystemCol
 
     applyTokenToIconAction(initialTrayMenu);
 #endif
+}
+
+void MegaApplication::showStalledIssuesDialog()
+{
+    auto stalledIssuesDialog = DialogOpener::findDialog<StalledIssuesDialog>();
+    if(stalledIssuesDialog)
+    {
+        DialogOpener::showGeometryRetainerDialog(stalledIssuesDialog->getDialog());
+    }
+    else
+    {
+        auto newStalledIssuesDialog = new StalledIssuesDialog();
+        DialogOpener::showDialog<StalledIssuesDialog>(newStalledIssuesDialog);
+    }
 }
 
 // clang-format on

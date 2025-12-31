@@ -297,7 +297,8 @@ bool NodeSelectorTreeViewWidget::isInRootView() const
 
 bool NodeSelectorTreeViewWidget::isEmpty() const
 {
-    return ui->tMegaFolders->model()->rowCount(QModelIndex()) == 0;
+    return ui->tMegaFolders->model() ? ui->tMegaFolders->model()->rowCount(QModelIndex()) == 0 :
+                                       true;
 }
 
 void NodeSelectorTreeViewWidget::enableDragAndDrop(bool enable)
@@ -506,7 +507,7 @@ void NodeSelectorTreeViewWidget::onGoBackClicked()
 
     if (rootIndex.isValid())
     {
-        selectIndex(rootIndex, true);
+        selectIndex(rootIndex, true, true);
     }
 }
 

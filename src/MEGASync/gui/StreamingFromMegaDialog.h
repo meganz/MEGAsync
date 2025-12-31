@@ -30,6 +30,7 @@ public:
     ~StreamingFromMegaDialog();
 
     void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e) override;
+    void onTransferStart(mega::MegaApi* api, mega::MegaTransfer* transfer) override;
 
 public slots:
     void updateStreamingState();
@@ -69,6 +70,7 @@ private:
     void requestPublicNodeInfo();
     void requestNodeToLinkProcessor();
     void showErrorMessage(const QString& message);
+    void setErrorBannerText();
 };
 
 #endif // STREAMINGFROMMEGADIALOG_H

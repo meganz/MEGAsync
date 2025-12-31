@@ -30,14 +30,7 @@
 #include <QTranslator>
 #include <QUrl>
 
-#include <cassert>
 #include <memory>
-
-#ifdef Q_OS_WINDOWS
-extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
-#else
-#include "PermissionsDialog.h"
-#endif
 
 using namespace mega;
 using namespace std::chrono_literals;
@@ -184,6 +177,8 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
                               mUi->cOverlayIcons->isChecked());
     connect(mUi->bBackup, &QPushButton::clicked, this, &SettingsDialog::on_bBackup_clicked);
     connect(mUi->bSyncs, &QPushButton::clicked, this, &SettingsDialog::on_bSyncs_clicked);
+
+    connect(mUi->bLearnMore, &QPushButton::clicked, this, &SettingsDialog::onBLearnMore);
 
     // React to AppState changes
     connect(AppState::instance().get(),
@@ -402,16 +397,24 @@ void SettingsDialog::loadSettings()
     // Color theme
     initColorTheme();
 
-    //Account
+    // Account name
     mUi->lEmail->setText(mPreferences->email());
     auto fullName(
         (mPreferences->firstName() + QStringLiteral(" ") + mPreferences->lastName()).trimmed());
-    mUi->lName->setText(mUi->lName->fontMetrics().elidedText(fullName,Qt::ElideMiddle,mUi->lName->maximumWidth()));
 
+    // do we already have that value on the attribute request?
+    auto fullNameRequest = UserAttributes::FullName::requestFullName();
+    if (fullName.isEmpty() || fullNameRequest->isAttributeReady())
+    {
+        fullName = fullNameRequest->getFullName();
+    }
+
+    mUi->lName->setText(mUi->lName->fontMetrics().elidedText(fullName,
+                                                             Qt::ElideMiddle,
+                                                             mUi->lName->maximumWidth()));
 
     // Update name in case it changes
-    auto FullNameRequest = UserAttributes::FullName::requestFullName();
-    connect(FullNameRequest.get(),
+    connect(fullNameRequest.get(),
             &UserAttributes::FullName::fullNameReady,
             this,
             [this](const QString& fullName)
@@ -1106,16 +1109,22 @@ void SettingsDialog::on_lAccountType_clicked()
 
 void SettingsDialog::on_bUpgrade_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::UPGRADE_CLICKED_SETTINGS);
     Utilities::upgradeClicked();
 }
 
 void SettingsDialog::on_bMyAccount_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::SETTINGS_MY_ACCOUNT_CLICKED);
     Utilities::openUrl(ServiceUrls::getAccountUrl());
 }
 
 void SettingsDialog::on_bStorageDetails_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::SETTINGS_DETAILS_CLICKED);
     auto accountDetailsDialog = new AccountDetailsDialog(this);
     DialogOpener::showNonModalDialog<AccountDetailsDialog>(accountDetailsDialog);
 }
@@ -1281,6 +1290,8 @@ void SettingsDialog::on_bBackup_clicked()
 
 void SettingsDialog::on_bBackupCenter_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::SETTINGS_DEVICE_CENTER_CLICKED);
     Utilities::openBackupCenter();
 }
 
@@ -1416,6 +1427,8 @@ void SettingsDialog::on_bChangePassword_clicked()
 
 void SettingsDialog::on_bSessionHistory_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::SETTINGS_SESSION_HISTORY_CLICKED);
     Utilities::openUrl(ServiceUrls::getSessionHistoryUrl());
 }
 
@@ -1771,4 +1784,9 @@ void SettingsDialog::onRequestTaskbarPinningTimeout()
 {
     mTaskbarPinningRequestTimer->stop();
     Platform::getInstance()->pinOnTaskbar();
+}
+
+void SettingsDialog::onBLearnMore()
+{
+    Utilities::openUrl(ServiceUrls::getSyncDebrisHelpLink());
 }

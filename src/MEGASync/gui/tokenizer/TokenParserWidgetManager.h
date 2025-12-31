@@ -24,7 +24,7 @@ public:
     void applyCurrentTheme(QWidget* dialog);
     void polish(QWidget* widget);
     QColor getColor(const QString& colorToken);
-    QColor getColor(const QString& colorToken, const QString& currentColorSchema);
+    QColor getColor(const QString& colorToken, const QString& colorSchema);
     static void styleQFileDialog(QPointer<QFileDialog> dialog);
 
 private:

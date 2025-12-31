@@ -12,7 +12,6 @@ class BackupCandidatesComponent: public QMLComponent
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool comesFromSettings READ getComesFromSettings NOTIFY comesFromSettingsChanged)
     Q_PROPERTY(BackupCandidates* data READ getData CONSTANT)
 
 public:
@@ -40,8 +39,7 @@ public:
 
     Q_INVOKABLE void createBackups(SyncInfo::SyncOrigin syncOrigin);
 
-    void setComesFromSettings(bool value = false);
-    bool getComesFromSettings() const;
+    Q_INVOKABLE void setOrigin(SyncInfo::SyncOrigin origin);
 
     Q_INVOKABLE BackupCandidates* getData();
 
@@ -49,12 +47,14 @@ public slots:
     void onBackupsCreationFinished(bool success);
 
 signals:
-    void comesFromSettingsChanged(bool value);
     void backupsCreationFinished(bool success);
     void insertFolderAdded(int row);
 
 private:
-    bool mComesFromSettings;
+    AppStatsEvents::EventType getEventType() const;
+
+private:
+    SyncInfo::SyncOrigin mSyncOrigin;
     std::shared_ptr<BackupCandidatesController> mBackupCandidatesController;
     QPointer<BackupCandidatesProxyModel> mBackupsProxyModel;
 };

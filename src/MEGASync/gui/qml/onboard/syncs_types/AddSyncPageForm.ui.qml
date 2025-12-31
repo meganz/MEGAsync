@@ -48,12 +48,6 @@ FooterButtonsPage {
             description: SyncsStrings.selectiveSyncDescription
         }
 
-        InfoAccount {
-            id: accountData
-
-            Layout.preferredWidth: parent.width
-        }
-
         ColumnLayout {
             id: foldersColumn
 

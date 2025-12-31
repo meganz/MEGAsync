@@ -9,6 +9,7 @@
 #include "MegaApplication.h"
 #include "Platform.h"
 #include "ServiceUrls.h"
+#include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
 #include "ThemeManager.h"
@@ -50,11 +51,6 @@ static const char* TRANSPARENT_HEADER = "transparent_header";
 void InfoDialog::pauseResumeClicked()
 {
     app->pauseTransfers();
-}
-
-void InfoDialog::generalAreaClicked()
-{
-    app->transferManagerActionClicked(TransfersWidget::ALL_TRANSFERS_TAB);
 }
 
 void InfoDialog::pauseResumeHovered(QMouseEvent *event)
@@ -122,7 +118,7 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
     connect(ui->bTransferManager,
             SIGNAL(transferManagerClicked()),
             this,
-            SLOT(generalAreaClicked()));
+            SLOT(on_bTransferManager_clicked()));
 
     connect(ui->wSortNotifications, SIGNAL(clicked()), this, SLOT(onActualFilterClicked()));
 
@@ -304,6 +300,17 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
 
     updateUpgradeButtonText();
     updateCreateSyncButtonText();
+
+    ui->issuesBanner->setType(BannerWidget::Type::BANNER_ERROR);
+    ui->issuesBanner->setTitle(
+        QCoreApplication::translate("SomeIssuesOccurredMessage", "Some issues ocurred."));
+    ui->issuesBanner->setLinkText(
+        QCoreApplication::translate("SomeIssuesOccurredMessage", "View..."));
+
+    connect(ui->issuesBanner,
+            &BannerWidget::linkActivated,
+            this,
+            &InfoDialog::showStalledIssuesDialog);
 }
 
 InfoDialog::~InfoDialog()
@@ -847,7 +854,7 @@ void InfoDialog::onAddSync(mega::MegaSync::SyncType type)
         case mega::MegaSync::TYPE_BACKUP:
         {
             MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::MENU_ADD_BACKUP_CLICKED, true);
-            addBackup();
+            addBackup(SyncInfo::SyncOrigin::CONTEXT_MENU_ORIGIN);
             break;
         }
         default:
@@ -1104,12 +1111,18 @@ void InfoDialog::on_bSettings_clicked()
 
 void InfoDialog::on_bUpgrade_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::UPGRADE_CLICKED_INFO_DIALOG,
+        true);
     Utilities::upgradeClicked();
 }
 
 void InfoDialog::on_bUpgradeOverDiskQuota_clicked()
 {
-    on_bUpgrade_clicked();
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::UPGRADE_CLICKED_INFO_DIALOG_OVER_QUOTA_WARNING,
+        true);
+    Utilities::upgradeClicked();
 }
 
 void InfoDialog::openFolder(QString path)
@@ -1122,10 +1135,10 @@ void InfoDialog::addSync(SyncInfo::SyncOrigin origin, mega::MegaHandle handle)
     CreateRemoveSyncsManager::addSync(origin, handle);
 }
 
-void InfoDialog::addBackup()
+void InfoDialog::addBackup(SyncInfo::SyncOrigin origin)
 {
-    auto manager = CreateRemoveBackupsManager::addBackup(false);
-    if(manager->isBackupsDialogOpen())
+    CreateRemoveBackupsManager::addBackup(origin);
+    if (CreateRemoveBackupsManager::isBackupsDialogOpen())
     {
         hide();
     }
@@ -1133,7 +1146,7 @@ void InfoDialog::addBackup()
 
 void InfoDialog::onOverlayClicked()
 {
-    app->uploadActionClicked();
+    app->uploadActionClicked(AppStatsEvents::EventType::INFO_DIALOG_UPLOAD_CLICKED);
 }
 
 void InfoDialog::on_bTransferManager_clicked()
@@ -1319,6 +1332,8 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 
 void InfoDialog::on_bStorageDetails_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::STORAGE_USAGE_CLICKED_INFO_DIALOG);
     auto dialog = new AccountDetailsDialog();
     DialogOpener::showNonModalDialog<AccountDetailsDialog>(dialog);
 }
@@ -1390,7 +1405,9 @@ void InfoDialog::onActualFilterClicked()
     {
         return;
     }
-
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::NOTIFICATION_FILTERS_OPENED,
+        true);
     QPoint p = ui->wFilterAndSettings->mapToGlobal(QPoint(4, 4));
     filterMenu->move(p);
     filterMenu->show();
@@ -1402,12 +1419,33 @@ void InfoDialog::applyFilterOption(MessageType opt)
     {
         filterMenu->hide();
     }
-
+    AppStatsEvents::EventType event = AppStatsEvents::EventType::NOTIFICATION_FILTER_SELECTED_ALL;
+    switch (opt)
+    {
+        case MessageType::ALL:
+            event = AppStatsEvents::EventType::NOTIFICATION_FILTER_SELECTED_ALL;
+            break;
+        case MessageType::ALERT_SHARES:
+            event = AppStatsEvents::EventType::NOTIFICATION_FILTER_SELECTED_INCOMING_SHARES;
+            break;
+        case MessageType::ALERT_CONTACTS:
+            event = AppStatsEvents::EventType::NOTIFICATION_FILTER_SELECTED_CONTACTS;
+            break;
+        case MessageType::ALERT_PAYMENTS:
+            event = AppStatsEvents::EventType::NOTIFICATION_FILTER_SELECTED_PAYMENTS;
+            break;
+        default:
+            break;
+    }
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(event, true);
     applyNotificationFilter(opt);
 }
 
 void InfoDialog::on_bNotificationsSettings_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::NOTIFICATION_SETTINGS_CLICKED,
+        true);
     MegaSyncApp->openSettings(SettingsDialog::NOTIFICATIONS_TAB);
 }
 
@@ -1682,7 +1720,7 @@ void InfoDialog::initNotificationArea()
                                             ui->tvNotifications);
     ui->tvNotifications->setItemDelegate(delegate);
 
-    applyFilterOption(MessageType::ALL);
+    applyNotificationFilter(MessageType::ALL);
     connect(app->getNotificationController(), &UserMessageController::userMessagesReceived, this, [this]()
     {
         // We need to check if there is any user message to display or not
@@ -1791,4 +1829,9 @@ void InfoDialog::setFooterState()
 void InfoDialog::onTopTransferTypeChanged(TransferData::TransferTypes type)
 {
     ui->bTransferManager->setTopTransferDirection(type & TransferData::TRANSFER_UPLOAD);
+}
+
+void InfoDialog::showStalledIssuesDialog()
+{
+    MegaApplication::showStalledIssuesDialog();
 }

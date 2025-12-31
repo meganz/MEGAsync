@@ -12,6 +12,7 @@ const std::map<BannerWidget::Type, QLatin1String> TYPE_MAP{
     {BannerWidget::Type::BANNER_ERROR, QLatin1String{"error"}},
     {BannerWidget::Type::BANNER_INFO, QLatin1String{"info"}},
     {BannerWidget::Type::BANNER_SUCCESS, QLatin1String{"success"}}};
+constexpr int MINIMU_BANNER_HEIGHT = 44;
 }
 
 BannerWidget::BannerWidget(QWidget* parent):
@@ -23,7 +24,6 @@ BannerWidget::BannerWidget(QWidget* parent):
     mUi->wLinkContainer->hide();
     mUi->lTitle->hide();
     mUi->lText->hide();
-    mUi->lText->setKeepParentCursor(false);
 
     connect(mUi->bLink,
             &QPushButton::clicked,
@@ -67,6 +67,8 @@ void BannerWidget::setDescription(const QString& text)
 {
     mUi->lText->setText(text);
     mUi->lText->show();
+    mUi->lText->adjustSize();
+    updateGeometry();
 }
 
 void BannerWidget::setAutoManageTextUrl(bool newValue)
@@ -86,6 +88,10 @@ bool BannerWidget::event(QEvent* event)
     {
         checkLayoutOrientation();
     }
+    else if (event->type() == WordWrapLabel::HeightAdapted)
+    {
+        setMaximumHeight(sizeHint().height());
+    }
 
     return QWidget::event(event);
 }
@@ -94,6 +100,8 @@ void BannerWidget::setTitle(const QString& text)
 {
     mUi->lTitle->setText(text);
     mUi->lTitle->show();
+    mUi->lText->adjustSize();
+    updateGeometry();
 }
 
 void BannerWidget::checkLayoutOrientation()
@@ -117,4 +125,18 @@ void BannerWidget::checkLayoutOrientation()
         // Move button to the right
         mUi->contentLayout->insertWidget(1, mUi->wLinkContainer);
     }
+}
+
+QSize BannerWidget::sizeHint() const
+{
+    // Force layout to calculate with current constraints
+    auto hint = QWidget::sizeHint();
+
+    // Ensure minimum reasonable height
+    if (hint.height() < MINIMU_BANNER_HEIGHT)
+    {
+        hint.setHeight(MINIMU_BANNER_HEIGHT);
+    }
+
+    return hint;
 }

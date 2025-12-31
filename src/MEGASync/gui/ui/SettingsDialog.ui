@@ -198,6 +198,10 @@ font-weight: bold;
 {
 margin-top: 3px;
 margin-bottom: 3px;
+}
+#bLearnMore
+{
+padding-left: 0px;
 }</string>
   </property>
   <property name="TOKENIZED" stdset="0">
@@ -729,7 +733,7 @@ margin-bottom: 3px;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="pGeneral">
       <property name="sizePolicy">
@@ -1033,7 +1037,7 @@ margin-bottom: 3px;
               </sizepolicy>
              </property>
              <property name="title">
-              <string notr="true">Theme</string>
+              <string>Theme</string>
              </property>
              <property name="type" stdset="0">
               <string notr="true">mega</string>
@@ -2358,7 +2362,7 @@ margin-top: 0px;
                  </property>
                  <property name="icon">
                   <iconset resource="../Resources_common.qrc">
-                   <normaloff>:/arrow-down-circle_small_regular_outline</normaloff>:/arrow-down-circle_small_regular_outline</iconset>
+                   <normaloff>:/arrow-down-circle_small_thin_outline</normaloff>:/arrow-down-circle_small_thin_outline</iconset>
                  </property>
                  <property name="normal_off" stdset="0">
                   <string notr="true">icon-secondary</string>
@@ -2709,6 +2713,43 @@ margin-top: 0px;
             </property>
             <property name="dimension" stdset="0">
              <string notr="true">small</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_11">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="bLearnMore">
+            <property name="font">
+             <font>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="text">
+             <string>Learn more</string>
+            </property>
+            <property name="type" stdset="0">
+             <string notr="true">link</string>
+            </property>
+            <property name="dimension" stdset="0">
+             <string notr="true">medium</string>
             </property>
            </widget>
           </item>
@@ -3155,7 +3196,7 @@ margin-top: 0px;
       <item>
        <widget class="QStackedWidget" name="sOverlayMessageWidget">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="pEmpty"/>
         <widget class="QWidget" name="pProcessing">

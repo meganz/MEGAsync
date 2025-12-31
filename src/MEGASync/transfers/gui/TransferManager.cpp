@@ -3,8 +3,8 @@
 #include "MegaApplication.h"
 #include "MegaTransferView.h"
 #include "Platform.h"
-#include "SomeIssuesOccurredMessage.h"
 #include "StalledIssuesModel.h"
+#include "StatsEventHandler.h"
 #include "tokenizer/TokenizableItems/TokenPropertySetter.h"
 #include "ui_TransferManager.h"
 #include "ui_TransferManagerDragBackDrop.h"
@@ -61,7 +61,7 @@ TransferManager::TransferManager(MegaApi* megaApi):
             this,
             []()
             {
-                SomeIssuesOccurredMessage::showStalledIssuesDialog();
+                MegaApplication::showStalledIssuesDialog();
             });
     mDragBackDrop = new QWidget(this);
     mUiDragBackDrop->setupUi(mDragBackDrop);
@@ -88,27 +88,19 @@ TransferManager::TransferManager(MegaApi* megaApi):
     connect(mUi->tabAllTransfers,
             &TabSelector::clicked,
             this,
-            &TransferManager::on_tAllTransfers_clicked);
-    connect(mUi->tabDownloads,
-            &TabSelector::clicked,
-            this,
-            &TransferManager::on_tDownloads_clicked);
-    connect(mUi->tabUploads, &TabSelector::clicked, this, &TransferManager::on_tUploads_clicked);
-    connect(mUi->tabCompleted,
-            &TabSelector::clicked,
-            this,
-            &TransferManager::on_tCompleted_clicked);
-    connect(mUi->tabFailed, &TabSelector::clicked, this, &TransferManager::on_tFailed_clicked);
+            &TransferManager::onAllTransfersClicked);
+
+    connect(mUi->tabDownloads, &TabSelector::clicked, this, &TransferManager::onDownloadsClicked);
+    connect(mUi->tabUploads, &TabSelector::clicked, this, &TransferManager::onUploadsClicked);
+    connect(mUi->tabCompleted, &TabSelector::clicked, this, &TransferManager::onCompletedClicked);
+    connect(mUi->tabFailed, &TabSelector::clicked, this, &TransferManager::onFailedClicked);
 
     mTabSelectorsToggleGroup.insert(TransfersWidget::SEARCH_TAB, mUi->tabSearch);
     connect(mUi->tabSearch,
             &TabSelector::hidden,
             this,
-            &TransferManager::on_tClearSearchResult_clicked);
-    connect(mUi->tabSearch,
-            &TabSelector::clicked,
-            this,
-            &TransferManager::on_bSearchString_clicked);
+            &::TransferManager::onClearSearchResultClicked);
+    connect(mUi->tabSearch, &TabSelector::clicked, this, &TransferManager::onSearchStringClicked);
 
     mTabNoItem[TransfersWidget::ALL_TRANSFERS_TAB] = mUi->wNoTransfers;
     mTabNoItem[TransfersWidget::DOWNLOADS_TAB]     = mUi->wNoDownloads;
@@ -176,8 +168,10 @@ TransferManager::TransferManager(MegaApi* megaApi):
     connect(mUi->wTransfers, &TransfersWidget::transferPauseResumeStateChanged,
                 this, &TransferManager::showQuotaStorageDialogs);
 
-    connect(mUi->wTransfers, &TransfersWidget::changeToAllTransfersTab,
-                this, &TransferManager::on_tAllTransfers_clicked);
+    connect(mUi->wTransfers,
+            &TransfersWidget::changeToAllTransfersTab,
+            this,
+            &::TransferManager::onAllTransfersClicked);
 
     connect(mUi->wTransfers, &TransfersWidget::sortCriterionChanged,
         this, &TransferManager::onSortCriterionChanged);
@@ -361,7 +355,7 @@ void TransferManager::filterByTab(TransfersWidget::TM_TAB tab)
     }
 }
 
-void TransferManager::on_tCompleted_clicked()
+void TransferManager::onCompletedClicked()
 {
     if (mUi->wTransfers->getCurrentTab() != TransfersWidget::COMPLETED_TAB)
     {
@@ -370,7 +364,7 @@ void TransferManager::on_tCompleted_clicked()
     }
 }
 
-void TransferManager::on_tDownloads_clicked()
+void TransferManager::onDownloadsClicked()
 {
     if (mUi->wTransfers->getCurrentTab() != TransfersWidget::DOWNLOADS_TAB)
     {
@@ -379,7 +373,7 @@ void TransferManager::on_tDownloads_clicked()
     }
 }
 
-void TransferManager::on_tUploads_clicked()
+void TransferManager::onUploadsClicked()
 {
     if (mUi->wTransfers->getCurrentTab() != TransfersWidget::UPLOADS_TAB)
     {
@@ -388,7 +382,7 @@ void TransferManager::on_tUploads_clicked()
     }
 }
 
-void TransferManager::on_tAllTransfers_clicked()
+void TransferManager::onAllTransfersClicked()
 {
     if (mUi->wTransfers->getCurrentTab() != TransfersWidget::ALL_TRANSFERS_TAB)
     {
@@ -397,7 +391,7 @@ void TransferManager::on_tAllTransfers_clicked()
     }
 }
 
-void TransferManager::on_tFailed_clicked()
+void TransferManager::onFailedClicked()
 {
     if (mUi->wTransfers->getCurrentTab() != TransfersWidget::FAILED_TAB)
     {
@@ -769,6 +763,8 @@ void TransferManager::on_tActionButton_clicked()
 
 void TransferManager::on_bPause_toggled()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::TRANSFER_MANAGER_PAUSE_RESUME_CLICKED);
     auto newState = !mModel->areAllPaused();
     pauseResumeTransfers(newState);
 
@@ -834,7 +830,7 @@ void TransferManager::enableUserActions(bool enabled)
     mUi->wRightPaneHeader->setEnabled(enabled);
 }
 
-void TransferManager::on_bSearchString_clicked()
+void TransferManager::onSearchStringClicked()
 {
     auto searchTab = mTabSelectorsToggleGroup.value(TransfersWidget::SEARCH_TAB);
     if (searchTab)
@@ -843,7 +839,7 @@ void TransferManager::on_bSearchString_clicked()
     }
 }
 
-void TransferManager::on_tClearSearchResult_clicked()
+void TransferManager::onClearSearchResultClicked()
 {
     mUi->leSearch->onClearClicked();
     mUi->wSearch->setVisible(false);
@@ -852,7 +848,7 @@ void TransferManager::on_tClearSearchResult_clicked()
     {
         mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
         checkContentInfo();
-        on_tAllTransfers_clicked();
+        onAllTransfersClicked();
     }
 }
 
@@ -872,32 +868,32 @@ void TransferManager::showUploadResults()
     mUi->wTransfers->textFilterTypeChanged(TransferData::TRANSFER_UPLOAD);
 }
 
-void TransferManager::on_bArchives_clicked()
+void TransferManager::onArchivesClicked()
 {
     onFileTypeButtonClicked(TransfersWidget::TYPE_ARCHIVE_TAB, Utilities::FileType::TYPE_ARCHIVE);
 }
 
-void TransferManager::on_bDocuments_clicked()
+void TransferManager::onDocumentsClicked()
 {
     onFileTypeButtonClicked(TransfersWidget::TYPE_DOCUMENT_TAB, Utilities::FileType::TYPE_DOCUMENT);
 }
 
-void TransferManager::on_bImages_clicked()
+void TransferManager::onImagesClicked()
 {
     onFileTypeButtonClicked(TransfersWidget::TYPE_IMAGE_TAB, Utilities::FileType::TYPE_IMAGE);
 }
 
-void TransferManager::on_bAudio_clicked()
+void TransferManager::onAudioClicked()
 {
     onFileTypeButtonClicked(TransfersWidget::TYPE_AUDIO_TAB, Utilities::FileType::TYPE_AUDIO);
 }
 
-void TransferManager::on_bVideos_clicked()
+void TransferManager::onVideosClicked()
 {
     onFileTypeButtonClicked(TransfersWidget::TYPE_VIDEO_TAB, Utilities::FileType::TYPE_VIDEO);
 }
 
-void TransferManager::on_bOther_clicked()
+void TransferManager::onOtherClicked()
 {
     onFileTypeButtonClicked(TransfersWidget::TYPE_OTHER_TAB, Utilities::FileType::TYPE_OTHER);
 }
@@ -912,32 +908,32 @@ void TransferManager::onMediaTabSelectorClicked()
         {
             case TransfersWidget::TM_TAB::TYPE_ARCHIVE_TAB:
             {
-                on_bArchives_clicked();
+                onArchivesClicked();
                 break;
             }
             case TransfersWidget::TM_TAB::TYPE_DOCUMENT_TAB:
             {
-                on_bDocuments_clicked();
+                onDocumentsClicked();
                 break;
             }
             case TransfersWidget::TM_TAB::TYPE_IMAGE_TAB:
             {
-                on_bImages_clicked();
+                onImagesClicked();
                 break;
             }
             case TransfersWidget::TM_TAB::TYPE_VIDEO_TAB:
             {
-                on_bVideos_clicked();
+                onVideosClicked();
                 break;
             }
             case TransfersWidget::TM_TAB::TYPE_AUDIO_TAB:
             {
-                on_bAudio_clicked();
+                onAudioClicked();
                 break;
             }
             case TransfersWidget::TM_TAB::TYPE_OTHER_TAB:
             {
-                on_bOther_clicked();
+                onOtherClicked();
                 break;
             }
             default:
@@ -959,22 +955,27 @@ void TransferManager::onFileTypeButtonClicked(TransfersWidget::TM_TAB tab, Utili
 
 void TransferManager::on_bOpenLinks_clicked()
 {
-    MegaSyncApp->importLinks();
+    MegaSyncApp->importLinks(AppStatsEvents::EventType::TRANSFER_MANAGER_OPEN_LINKS_CLICKED);
 }
 
 void TransferManager::on_tCogWheel_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::TRANSFER_MANAGER_SETTINGS_CLICKED);
     MegaSyncApp->openSettings();
 }
 
 void TransferManager::on_bDownload_clicked()
 {
-    MegaSyncApp->downloadActionClicked();
+    static const bool SKIP_EVENT_SENDING = true;
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::TRANSFER_MANAGER_DOWNLOAD_CLICKED);
+    MegaSyncApp->downloadActionClicked(SKIP_EVENT_SENDING);
 }
 
 void TransferManager::on_bUpload_clicked()
 {
-    MegaSyncApp->uploadActionClicked();
+    MegaSyncApp->uploadActionClicked(AppStatsEvents::EventType::TRANSFER_MANAGER_UPLOAD_CLICKED);
 }
 
 void TransferManager::toggleTab(int newTab)

@@ -353,19 +353,9 @@
         <translation>Não foi possível adicionar a sincronização</translation>
     </message>
     <message>
-        <source>Error moving or removing remote backup folder</source>
-        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>Erro ao mover ou deletar a pasta de backup no MEGA</translation>
-    </message>
-    <message>
         <source>Error removing backup</source>
         <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
         <translation>Erro ao interromper o backup</translation>
-    </message>
-    <message>
-        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
-        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>Não foi possível mover ou deletar a pasta de backup no MEGA. Motivo: %1</translation>
     </message>
     <message>
         <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
@@ -5005,11 +4995,6 @@ Digite um nome diferente.
         <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It creates a sync in the selected folder. SAT-426</translatorcomment>
         <translation>Sincronizar</translation>
     </message>
-    <message>
-        <source>Upload</source>
-        <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It uploads to the selected. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>NodeSelectorTreeViewWidget</name>
@@ -5042,11 +5027,6 @@ Digite um nome diferente.
         <source>Empty Rubbish bin</source>
         <translatorcomment>Button text to empty the rubbish bin. SAT-426</translatorcomment>
         <translation>Esvaziar a Lixeira</translation>
-    </message>
-    <message>
-        <source>Folder is empty</source>
-        <translatorcomment>Message on the view when there are no items in a folder. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
@@ -6091,16 +6071,6 @@ Digite um nome diferente.
 </context>
 <context>
     <name>Preferences</name>
-    <message>
-        <source>- Introducing dark mode!
-- We&apos;ve refreshed the app design.
-- We&apos;ve fixed bugs and made the app more reliable.
-</source>
-        <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
-        <translation>- O modo escuro já está disponível.
-- Atualizamos o design do aplicativo para torná-lo mais limpo e fácil de usar.
-- Correções de bugs e melhorias de desempenho.</translation>
-    </message>
 </context>
 <context>
     <name>ProgressIndicatorDialog</name>
@@ -6181,11 +6151,6 @@ Digite um nome diferente.
         <source>We couldn’t connect using your proxy settings. Check your proxy details or try a different network.</source>
         <translatorcomment>Error banner shown when there is an error testing the proxy settings. SNC-5411</translatorcomment>
         <translation>Não foi possível nos conectar usando as suas configurações de proxy. Verifique as configurações ou conecte-se a outra rede.</translation>
-    </message>
-    <message>
-        <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
-        <translatorcomment>Error banner shown when proxy settings is not found in the environment, [B] is for bold . SNC-5411</translatorcomment>
-        <translation>O seu sistema não tem um proxy definido. Para se conectar, defina um valor [B]http_proxy[/B] ou [B]https_proxy[/B] válido no seu ambiente.</translation>
     </message>
 </context>
 <context>
@@ -6640,6 +6605,9 @@ Você quer deletá-lo mesmo assim?</translation>
     </message>
 </context>
 <context>
+    <name>RemoveBackup</name>
+</context>
+<context>
     <name>RemoveBackupDialog</name>
     <message>
         <source>Cancel</source>
@@ -6657,8 +6625,8 @@ Você quer deletá-lo mesmo assim?</translation>
         <translation>Deletar a pasta do MEGA</translation>
     </message>
     <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
-        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
         <translation>A pasta será deletada do MEGA, mas não do seu dispositivo. Esta ação não pode ser desfeita.</translation>
     </message>
     <message>
@@ -6687,8 +6655,8 @@ Você quer deletá-lo mesmo assim?</translation>
         <translation>Interromper o backup</translation>
     </message>
     <message>
-        <source>To stop backing up this folder, you need to either move it or delete it.</source>
-        <translatorcomment>Backup removal title description</translatorcomment>
+        <source>To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].</source>
+        <translatorcomment>Backup removal title description. SNC-6067</translatorcomment>
         <translation>Para parar de fazer backup desta pasta, você precisa movê-la ou excluí-la</translation>
     </message>
 </context>
@@ -7034,6 +7002,11 @@ Você quer deletá-lo mesmo assim?</translation>
         <translation>Abrir ao fazer login</translation>
     </message>
     <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
+        <translation>Mais informações</translation>
+    </message>
+    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>Pasta local com um backup dos arquivos deletados da pasta sincronizada remota (no MEGA)</translation>
@@ -7177,6 +7150,11 @@ Você quer deletá-lo mesmo assim?</translation>
         <source>Synchronizations will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active syncs (not backups)</translatorcomment>
         <translation>As sincronizações serão desativadas.</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation>Modo</translation>
     </message>
     <message>
         <source>Transfer Quota</source>
@@ -9833,11 +9811,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Transferência finalizada recentemente</translation>
     </message>
     <message>
-        <source>Basic</source>
-        <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Business</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
         <translation>Business</translation>
@@ -9846,11 +9819,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Bytes</source>
         <translatorcomment>Label to indicate bytes unit.</translatorcomment>
         <translation>Bytes</translation>
-    </message>
-    <message>
-        <source>Essential</source>
-        <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Free</source>
@@ -9911,11 +9879,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
         <translation>Pro Lite</translation>
-    </message>
-    <message>
-        <source>Starter</source>
-        <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>TB</source>

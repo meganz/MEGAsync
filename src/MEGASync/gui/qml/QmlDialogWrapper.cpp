@@ -41,7 +41,14 @@ QmlDialogWrapperBase::QmlDialogWrapperBase(QWidget* parent):
     QWidget(parent),
     mWindow(nullptr),
     mResult(QDialog::Rejected)
-{}
+{
+    static int SHOW_DELAY = 60;
+
+    mShowDelay.setInterval(SHOW_DELAY);
+    mShowDelay.setSingleShot(true);
+
+    connect(&mShowDelay, &QTimer::timeout, this, &QmlDialogWrapperBase::showSync);
+}
 
 QmlDialogWrapperBase::~QmlDialogWrapperBase()
 {
@@ -153,7 +160,26 @@ void QmlDialogWrapperBase::hide()
 
 void QmlDialogWrapperBase::show()
 {
-   setWindowState(mWindow->windowState());
+#ifdef Q_OS_WINDOWS
+    if (!mShowDelay.isActive())
+    {
+        mShowDelay.start();
+    }
+#else
+    setWindowState(mWindow->windowState());
+#endif
+}
+
+void QmlDialogWrapperBase::showSync()
+{
+#ifdef Q_OS_WINDOWS
+    if (mShowDelay.isActive())
+    {
+        mShowDelay.stop();
+    }
+#endif
+
+    setWindowState(mWindow->windowState());
 }
 
 void QmlDialogWrapperBase::activateWindow()

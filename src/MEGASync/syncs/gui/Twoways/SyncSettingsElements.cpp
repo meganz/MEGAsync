@@ -4,10 +4,10 @@
 #include "Preferences.h"
 #include "ServiceUrls.h"
 #include "StalledIssuesModel.h"
+#include "StatsEventHandler.h"
 #include "SyncController.h"
 #include "SyncInfo.h"
 #include "SyncSettingsUIBase.h"
-#include "TextDecorator.h"
 #include "ui_SyncAccountFullMessage.h"
 #include "ui_SyncStallModeSelector.h"
 #include "Utilities.h"
@@ -108,6 +108,8 @@ void SyncSettingsElements::onSmartModeSelected(bool checked)
         Preferences::instance()->setStalledIssuesMode(Preferences::StalledIssuesModeType::Smart);
         // Update the model to fix automatically the issues
         MegaSyncApp->getStalledIssuesModel()->updateActiveStalledIssues();
+        MegaSyncApp->getStatsEventHandler()->sendEvent(
+            AppStatsEvents::EventType::SETTINGS_ISSUE_RESOLUTION_SMART);
     }
 }
 
@@ -116,6 +118,8 @@ void SyncSettingsElements::onAdvanceModeSelected(bool checked)
     if (checked)
     {
         Preferences::instance()->setStalledIssuesMode(Preferences::StalledIssuesModeType::Advance);
+        MegaSyncApp->getStatsEventHandler()->sendEvent(
+            AppStatsEvents::EventType::SETTINGS_ISSUE_RESOLUTION_ADVANCED);
     }
 }
 

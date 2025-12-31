@@ -2,6 +2,7 @@
 
 #include "MegaApplication.h"
 #include "MyBackupsHandle.h"
+#include "StatsEventHandler.h"
 #include "SyncSettingsUIBase.h"
 #include "ui_OpenBackupsFolder.h"
 #include "Utilities.h"
@@ -54,6 +55,8 @@ void BackupSettingsElements::onOpenBackupFolderClicked()
 {
     auto myBackupsHandle = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
     Utilities::openInMega(myBackupsHandle->getMyBackupsHandle());
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::SETTINGS_VIEW_BACKUP_CLICKED);
 }
 
 void BackupSettingsElements::onMyBackupsFolderHandleSet(mega::MegaHandle h)

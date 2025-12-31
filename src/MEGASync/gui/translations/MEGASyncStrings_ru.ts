@@ -344,19 +344,9 @@
         <translation>Ошибка добавления синхронизации</translation>
     </message>
     <message>
-        <source>Error moving or removing remote backup folder</source>
-        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>Ошибка перемещения или удаления синхронизируемой папки MEGA</translation>
-    </message>
-    <message>
         <source>Error removing backup</source>
         <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
         <translation>Ошибка остановки синхронизации</translation>
-    </message>
-    <message>
-        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
-        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>Не удаётся переместить или удалить синхронизируемую папку MEGA. Причина: %1</translation>
     </message>
     <message>
         <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
@@ -5952,14 +5942,10 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Introducing dark mode!
-- We've refreshed the app design.
-- We've fixed bugs and made the app more reliable.
+        <source>- We've fixed bugs and made the app more reliable.
 </source>
-        <translatorcomment>Change log for version 6.0.0. CON-1516</translatorcomment>
-        <translation>- Добавлена тёмная тема.
-- Дизайн приложения стал понятнее и удобнее.
-- Исправлены ошибки и улучшена стабильность приложения.</translation>
+        <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
+        <translation>- Мы исправили ошибки и повысили стабильность приложения</translation>
     </message>
 </context>
 <context>
@@ -6043,9 +6029,9 @@ Enter a different name</source>
         <translation>Не удалось подключиться с этими настройками прокси-сервера. Проверьте настройки или попробуйте другую сеть.</translation>
     </message>
     <message>
-        <source>Your system doesn’t have a proxy set. To connect, set a valid [B]http_proxy[/B] or [B]https_proxy[/B] value in your environment.</source>
-        <translatorcomment>Error banner shown when proxy settings is not found in the environment, [B] is for bold . SNC-5411</translatorcomment>
-        <translation>В вашей системе не найдены настройки прокси. Для подключения установите в своей среде допустимое значение [B]http_proxy[/B] или [B]https_proxy[/B].</translation>
+        <source>Your system doesn’t have a proxy set. To connect, set a valid http_proxy or https_proxy value in your environment.</source>
+        <translatorcomment>Error banner shown when proxy settings is not found in the environment . SNC-5411</translatorcomment>
+        <translation>Прокси не обнаружены. Чтобы подключиться, задайте действительное значение http_proxy или https_proxy в своём окружении.</translation>
     </message>
 </context>
 <context>
@@ -6500,6 +6486,24 @@ Do you want to delete it anyway?</source>
     </message>
 </context>
 <context>
+    <name>RemoveBackup</name>
+    <message>
+        <source>Backup folder already exists on destination. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can't move it there! SNC-6067 </translatorcomment>
+        <translation>В этом расположении уже есть папка с таким названием, выберите другое расположение</translation>
+    </message>
+    <message>
+        <source>Error moving or removing remote backup folder</source>
+        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation>Ошибка при перемещении или удалении папки резервного копирования в MEGA</translation>
+    </message>
+    <message>
+        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
+        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation>Не удаётся переместить или удалить синхронизируемую папку в MEGA. Причина: %1</translation>
+    </message>
+</context>
+<context>
     <name>RemoveBackupDialog</name>
     <message>
         <source>Cancel</source>
@@ -6515,11 +6519,6 @@ Do you want to delete it anyway?</source>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
         <translation>Удалить папку из MEGA</translation>
-    </message>
-    <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
-        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation>Папка будет удалена из MEGA, но не с вашего устройства. Это действие нельзя отменить.</translation>
     </message>
     <message>
         <source>Move folder</source>
@@ -6547,8 +6546,13 @@ Do you want to delete it anyway?</source>
         <translation>Остановить резервное копирование</translation>
     </message>
     <message>
-        <source>To stop backing up this folder, you need to either move it or delete it.</source>
-        <translatorcomment>Backup removal title description</translatorcomment>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
+        <translation>Папка будет удалена из MEGA, но не с вашего устройства. Это действие нельзя отменить.</translation>
+    </message>
+    <message>
+        <source>To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].</source>
+        <translatorcomment>Backup removal title description. SNC-6067</translatorcomment>
         <translation>Чтобы прекратить резервное копирование этой папки, её нужно либо переместить, либо удалить</translation>
     </message>
 </context>
@@ -7096,6 +7100,16 @@ Do you want to delete it anyway?</source>
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
         <translation><numerusform>день</numerusform><numerusform>дня</numerusform><numerusform>дней</numerusform><numerusform>дня</numerusform></translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation>Тема</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
+        <translation>Подробнее</translation>
     </message>
 </context>
 <context>
