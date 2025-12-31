@@ -1458,7 +1458,8 @@ if (!infoDialog)
 
     if (!preferences->isFirstSyncDone())
     {
-        mSyncReminderNotificationManager = new SyncReminderNotificationManager(comesFromOnboarding);
+        mSyncReminderNotificationManager =
+            new SyncReminderNotificationManager(comesFromOnboarding, this);
         connect(&SyncController::instance(),
                 &SyncController::syncAddStatus,
                 mSyncReminderNotificationManager,
