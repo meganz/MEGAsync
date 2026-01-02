@@ -1,6 +1,7 @@
 #include "BannerWidget.h"
 
 #include "Preferences.h"
+#include "TokenParserWidgetManager.h"
 #include "ui_BannerWidget.h"
 
 #include <QStyle>
@@ -21,6 +22,7 @@ BannerWidget::BannerWidget(QWidget* parent):
     mType(Type::NONE)
 {
     mUi->setupUi(this);
+    TokenParserWidgetManager::instance()->applyCurrentTheme(this);
     mUi->wLinkContainer->hide();
     mUi->lTitle->hide();
     mUi->lText->hide();

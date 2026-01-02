@@ -96,6 +96,9 @@
 }
 </string>
   </property>
+  <property name="TOKENIZED" stdset="0">
+   <bool>true</bool>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
