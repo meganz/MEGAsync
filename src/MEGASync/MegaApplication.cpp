@@ -1538,7 +1538,6 @@ void MegaApplication::onLogout()
                 DialogOpener::closeAllDialogs();
                 mGfxProvider.reset();
                 mUserMessageController.reset();
-                mSyncReminderNotificationManager->deleteLater();
                 createUserMessageController();
                 infoDialog->deleteLater();
                 infoDialog = nullptr;
@@ -2227,7 +2226,6 @@ void MegaApplication::cleanAll()
 
     mGfxProvider.reset();
     mUserMessageController.reset();
-    mSyncReminderNotificationManager->deleteLater();
     infoDialog->deleteLater();
 
     // Delete menus and menu items
