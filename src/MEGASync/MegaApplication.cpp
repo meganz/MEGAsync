@@ -8,6 +8,7 @@
 #include "CommonMessages.h"
 #include "CrashHandler.h"
 #include "CrashReportDialog.h"
+#include "CreateRemoveBackupsManager.h"
 #include "CreateRemoveSyncsManager.h"
 #include "DateTimeFormatter.h"
 #include "DeviceCentre.h"
