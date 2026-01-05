@@ -152,9 +152,14 @@ void DownloadQueueController::askUserForChoice()
                                                         mCachedDriveData.mAvailableSpace,
                                                         mCachedDriveData.mTotalSpace,
                                                         driveName);
-    DialogOpener::showDialog<LowDiskSpaceDialog>(dialog, [this, dialog](){
-        dialog->result() == QDialog::Accepted ? tryDownload() : emit finishedAvailableSpaceCheck(false);
-    });
+
+    DialogOpener::showDialog<LowDiskSpaceDialog>(dialog,
+                                                 [this, dialog]()
+                                                 {
+                                                     dialog->result() == QDialog::Accepted ?
+                                                         tryDownload() :
+                                                         emit finishedAvailableSpaceCheck(false);
+                                                 });
 }
 
 QString DownloadQueueController::getDriveName(const QStorageInfo& driveInfo) const
