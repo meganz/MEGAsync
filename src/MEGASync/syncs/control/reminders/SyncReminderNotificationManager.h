@@ -27,7 +27,7 @@ public:
         DONE = 6
     };
 
-    SyncReminderNotificationManager(bool comesFromOnboarding);
+    SyncReminderNotificationManager(bool comesFromOnboarding, QObject* parent);
     ~SyncReminderNotificationManager();
 
 public slots:
