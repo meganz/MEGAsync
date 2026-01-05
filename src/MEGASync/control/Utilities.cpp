@@ -62,6 +62,11 @@ const long long MB = 1024 * KB;
 const long long GB = 1024 * MB;
 const long long TB = 1024 * GB;
 
+const long long DECIMAL_KB = 1000LL;
+const long long DECIMAL_MB = 1000LL * DECIMAL_KB;
+const long long DECIMAL_GB = 1000LL * DECIMAL_MB;
+const long long DECIMAL_TB = 1000LL * DECIMAL_GB;
+
 // Human-friendly list of forbidden chars for New Remote Folder
 const QLatin1String Utilities::FORBIDDEN_CHARS("\\ / : \" * < > \? |");
 // Forbidden chars PCRE using a capture list: [\\/:"\*<>?|]
@@ -822,6 +827,39 @@ QString Utilities::getSizeString(long long bytes)
 
     return locale.toString(toDoubleInUnit(bytes, 1)) + QString::fromLatin1(" ")
                     + QCoreApplication::translate("Utilities", "Bytes");
+}
+
+QString Utilities::getDecimalSizeString(long long bytes)
+{
+    QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
+    QLocale locale(language);
+
+    if (bytes >= DECIMAL_TB)
+    {
+        return locale.toString(toDoubleInUnit(bytes, DECIMAL_TB)) + QString::fromLatin1(" ") +
+               QCoreApplication::translate("Utilities", "TB");
+    }
+
+    if (bytes >= DECIMAL_GB)
+    {
+        return locale.toString(toDoubleInUnit(bytes, DECIMAL_GB)) + QString::fromLatin1(" ") +
+               QCoreApplication::translate("Utilities", "GB");
+    }
+
+    if (bytes >= DECIMAL_MB)
+    {
+        return locale.toString(toDoubleInUnit(bytes, DECIMAL_MB)) + QString::fromLatin1(" ") +
+               QCoreApplication::translate("Utilities", "MB");
+    }
+
+    if (bytes >= DECIMAL_KB)
+    {
+        return locale.toString(toDoubleInUnit(bytes, DECIMAL_KB)) + QString::fromLatin1(" ") +
+               QCoreApplication::translate("Utilities", "KB");
+    }
+
+    return locale.toString(toDoubleInUnit(bytes, 1)) + QString::fromLatin1(" ") +
+           QCoreApplication::translate("Utilities", "Bytes");
 }
 
 QString Utilities::getSizeStringLocalized(qint64 bytes)

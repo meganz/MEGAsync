@@ -375,6 +375,7 @@ public:
     };
 
     static QString getSizeString(long long bytes);
+    static QString getDecimalSizeString(long long);
     static QString getSizeStringLocalized(qint64 bytes);
     static int toNearestUnit(long long bytes);
     static QString getTranslatedSeparatorTemplate();

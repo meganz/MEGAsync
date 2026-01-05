@@ -33,7 +33,11 @@ LowDiskSpaceDialog::~LowDiskSpaceDialog()
 
 QString LowDiskSpaceDialog::toString(long long bytes)
 {
+#ifdef Q_OS_MACOS
+    return Utilities::getDecimalSizeString((bytes > 0) ? bytes : 0);
+#else
     return Utilities::getSizeString((bytes > 0) ? bytes : 0);
+#endif
 }
 
 void LowDiskSpaceDialog::updateStrings()
