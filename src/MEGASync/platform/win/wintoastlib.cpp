@@ -421,11 +421,6 @@ bool WinToast::isCompatible() {
 		|| (DllImporter::WindowsDeleteString == nullptr));
 }
 
-bool WinToastLib::WinToast::supportModernFeatures() {
-	RTL_OSVERSIONINFOW tmp = GetRealOSVersion();
-	return tmp.dwMajorVersion > 6;
-
-}
 std::wstring WinToast::configureAUMI(_In_ const std::wstring &companyName,
                                                _In_ const std::wstring &productName,
                                                _In_ const std::wstring &subProduct,
@@ -669,9 +664,8 @@ INT64 WinToast::showToast(_In_ const WinToastTemplate& toast, _In_  std::shared_
                         hr = setTextFieldHelper(xmlDocument.Get(), toast.textField(WinToastTemplate::TextField(i)), i);
                     }
 
-                    // Modern feature are supported Windows > Windows 10
-                    if (SUCCEEDED(hr) && supportModernFeatures()) {
-
+                    if (SUCCEEDED(hr))
+                    {
                         // Note that we do this *after* using toast.textFieldsCount() to
                         // iterate/fill the template's text fields, since we're adding yet another text field.
                         if (SUCCEEDED(hr)
@@ -690,7 +684,9 @@ INT64 WinToast::showToast(_In_ const WinToastTemplate& toast, _In_  std::shared_
                             hr = (toast.audioPath().empty() && toast.audioOption() == WinToastTemplate::Default)
                                 ? hr : setAudioFieldHelper(xmlDocument.Get(), toast.audioPath(), toast.audioOption());
                         }
-                    } else {
+                    }
+                    else
+                    {
                         DEBUG_MSG("Modern features (Actions/Sounds/Attributes) not supported in this os version");
                     }
 
