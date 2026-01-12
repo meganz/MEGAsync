@@ -10,7 +10,6 @@ import SyncsComponents 1.0
 SyncsFlow {
     id: root
 
-    required property StepPanel stepPanelRef
     required property var syncsContentItemRef
 
     selectiveSyncPageComponent: selectiveSyncPageComponentItem

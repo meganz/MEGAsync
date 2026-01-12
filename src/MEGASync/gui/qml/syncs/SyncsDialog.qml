@@ -1,13 +1,10 @@
 import QtQuick 2.0
 
 import common 1.0
-
 import components.views 1.0
-import components.steps 1.0
 
 import SyncsComponents 1.0
 import SyncInfo 1.0
-
 import ServiceUrls 1.0
 
 SyncsQmlDialog {
@@ -17,88 +14,65 @@ SyncsQmlDialog {
     visible: false
     modality: Qt.NonModal
     width: 640
-    height: 620
+    height: 430
     maximumHeight: height
     maximumWidth: width
     minimumHeight: height
     minimumWidth: width
 
-    Column {
-        id: contentItem
+    Rectangle {
+        id: syncsContentItem
 
         anchors.fill: parent
+        color: ColorTheme.surface1
 
-        StepPanel {
-            id: stepPanelItem
+        readonly property string syncsFlow: "syncsFlow"
+        readonly property string resume: "resume"
 
-            width: parent.width
-            step1String: SyncsStrings.selectFolders
-            step2String: SyncsStrings.confirm
-            helpUrl: serviceUrlsAccess.getCreateSyncHelpUrl()
-        }
-
-        Rectangle {
-            id: syncsContentItem
-
-            width: parent.width
-            height: parent.height - stepPanelItem.height
-            color: ColorTheme.surface1
-
-            readonly property string syncsFlow: "syncsFlow"
-            readonly property string resume: "resume"
-
-            state: syncsFlow
-            states: [
-                State {
-                    name: syncsContentItem.syncsFlow
-                    StateChangeScript {
-                        script: stackView.replace(syncsFlowPage);
-                    }
-                },
-                State {
-                    name: syncsContentItem.resume
-                    StateChangeScript {
-                        script: stackView.replace(resumePage);
-                    }
-                    PropertyChanges {
-                        target: stepPanelItem;
-                        state: stepPanelItem.stepCurrentDone;
-                        step2String: SyncsStrings.syncSetUp;
-                    }
+        state: syncsFlow
+        states: [
+            State {
+                name: syncsContentItem.syncsFlow
+                StateChangeScript {
+                    script: stackView.replace(syncsFlowPage);
                 }
-            ]
-
-            StackViewBase {
-                id: stackView
-
-                anchors {
-                    fill: parent
-                    margins: Constants.defaultWindowMargin
+            },
+            State {
+                name: syncsContentItem.resume
+                StateChangeScript {
+                    script: stackView.replace(resumePage);
                 }
+            }
+        ]
 
-                Component {
-                    id: syncsFlowPage
+        StackViewBase {
+            id: stackView
 
-                    SyncsPage {
-                        id: syncsFlowItem
+            anchors {
+                fill: parent
+                margins: Constants.defaultWindowMargin
+            }
 
-                        stepPanelRef : stepPanelItem
-                        syncsContentItemRef: syncsContentItem
-                    }
-                }
+            Component {
+                id: syncsFlowPage
 
-                Component {
-                    id: resumePage
+                SyncsPage {
+                    id: syncsFlowItem
 
-                    ResumeSyncsPage {
-                        id: resumeSyncsPageItem
-
-                        footerButtons.leftPrimary.visible: false
-                    }
+                    syncsContentItemRef: syncsContentItem
                 }
             }
 
-        } // Rectangle: syncsContentItem
+            Component {
+                id: resumePage
+
+                ResumeSyncsPage {
+                    id: resumeSyncsPageItem
+
+                    footerButtons.leftPrimary.visible: false
+                }
+            }
+        }
     }
 
 }
