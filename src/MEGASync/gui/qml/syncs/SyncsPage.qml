@@ -26,10 +26,13 @@ SyncsFlow {
             id: selectiveSyncPage
 
             footerButtons {
-                leftPrimary.visible: false
-                leftSecondary {
+                leftPrimary {
                     text: Strings.setExclusions
                     visible: localFolderChooser.chosenPath.length !== 0
+                }
+
+                rightSecondary {
+                    visible: true
                 }
             }
 

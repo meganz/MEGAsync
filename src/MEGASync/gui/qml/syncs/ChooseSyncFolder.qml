@@ -45,14 +45,14 @@ FocusScope {
         }
     }
 
-    OutlineButton {
+    SecondaryButton {
         id: changeButtonItem
 
         height: folderItem.textField.height
         anchors {
             right: parent.right
             top: parent.top
-            topMargin: 15
+            topMargin: 18
         }
         focus: true
         text: Strings.choose

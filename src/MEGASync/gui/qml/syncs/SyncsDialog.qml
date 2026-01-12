@@ -14,7 +14,7 @@ SyncsQmlDialog {
     visible: false
     modality: Qt.NonModal
     width: 640
-    height: 430
+    height: 460
     maximumHeight: height
     maximumWidth: width
     minimumHeight: height

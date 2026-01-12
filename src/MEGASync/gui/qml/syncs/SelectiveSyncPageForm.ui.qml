@@ -6,14 +6,19 @@ import common 1.0
 
 import components.accountData 1.0
 import components.pages 1.0
+import components.texts 1.0
 
 import SyncInfo 1.0
+import ServiceUrls 1.0
 
 FooterButtonsPage {
     id: root
 
     property alias localFolderChooser: localFolder
     property alias remoteFolderChooser: remoteFolder
+    property alias helpLink: helpLinkItem
+
+    readonly property int textSpacings: 8
 
     footerButtons {
         rightPrimary {
@@ -22,7 +27,8 @@ FooterButtonsPage {
         }
 
         rightSecondary {
-            visible : syncsDataAccess.syncOrigin === SyncInfo.ONBOARDING_ORIGIN
+            text: syncsDataAccess.syncOrigin === SyncInfo.ONBOARDING_ORIGIN ? Strings.previous : Strings.cancel
+            visible : true
         }
     }
 
@@ -37,12 +43,27 @@ FooterButtonsPage {
         }
         spacing: Constants.defaultComponentSpacing
 
-        HeaderTexts {
-            id: header
-
+        ColumnLayout {
             Layout.preferredWidth: parent.width
-            title: SyncsStrings.selectiveSyncTitle
-            description: SyncsStrings.selectiveSyncDescription
+            spacing: textSpacings
+
+            HeaderTexts {
+                id: header
+
+                Layout.preferredWidth: parent.width
+                title: SyncsStrings.selectiveSyncTitle
+                description: SyncsStrings.selectiveSyncDescription
+            }
+
+            RichText {
+                id: helpLinkItem
+
+                manageMouse: true
+                manageClick: true
+                rawText: SyncsStrings.helpSync
+                font.pixelSize: Text.Size.MEDIUM
+                visible: syncsDataAccess.syncOrigin !== SyncInfo.ONBOARDING_ORIGIN
+            }
         }
 
         ChooseSyncFolder {
