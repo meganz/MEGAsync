@@ -18,10 +18,10 @@ class MEGASyncPlugin: public KAbstractFileItemActionPlugin
 private:
     QLocalSocket sock;
     QString sockPath;
-    QString selectedFilePath;
-    QVector<QString> selectedFilePaths;
+    QString mSelectedFilePath;
+    QVector<QString> mSelectedFilePaths;
     int getState();
-    QString sendRequest(char type, QString command);
+    QString sendRequest(char type, const QString& command);
 
 public:
     explicit MEGASyncPlugin(QObject* parent = nullptr, const QVariantList& args = QVariantList());
@@ -39,7 +39,7 @@ private Q_SLOTS:
     QString getString(int type, int numFiles,int numFolders);
 
 private:
-    QAction* createChildAction(KActionMenu* menu, int type, int numFiles=0, int numFolders=0);
+    QAction* createChildAction(KActionMenu* menu, int type, int numFiles = 0, int numFolders = 0);
 };
 
 #endif
