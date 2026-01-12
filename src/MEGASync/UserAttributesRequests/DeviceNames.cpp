@@ -88,6 +88,11 @@ QString DeviceNames::getDeviceName() const
     return mDeviceName;
 }
 
+QString DeviceNames::getDeviceName(const DeviceId& deviceId) const
+{
+    return mAccountDeviceNames.value(deviceId);
+}
+
 QString DeviceNames::getDefaultDeviceName()
 {
     const auto MAX_DEVICE_NAME_SIZE = 28;

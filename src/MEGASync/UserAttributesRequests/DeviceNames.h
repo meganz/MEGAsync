@@ -26,6 +26,7 @@ public:
     bool isAttributeReady() const override;
 
     QString getDeviceName() const;
+    QString getDeviceName(const DeviceId& deviceId) const;
     QString getDefaultDeviceName();
     bool setDeviceName(const QString& deviceName);
     void setDeviceNameAttribute();
