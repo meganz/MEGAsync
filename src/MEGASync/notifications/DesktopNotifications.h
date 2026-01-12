@@ -93,7 +93,7 @@ private:
                                                const QString& message,
                                                const QString& email, const QStringList &actions = QStringList());
 
-    std::unique_ptr<Notificator> mNotificator;
+    Notificator* mNotificator;
     QString mNewContactIconPath, mStorageQuotaFullIconPath, mStorageQuotaWarningIconPath;
     QString mFolderIconPath, mFileDownloadSucceedIconPath;
     NotificationDelayer mDelayedNotificator;
