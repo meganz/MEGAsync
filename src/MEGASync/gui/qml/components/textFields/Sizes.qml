@@ -20,6 +20,7 @@ QtObject {
     property int borderRadius: 8
     property int borderWidth: 1
     property int hintTextSize: Texts.Text.Size.NORMAL
+    property int hintTextMargin: 2
     property int titleSpacing: 1
 
 }
