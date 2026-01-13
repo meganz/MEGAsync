@@ -5,10 +5,10 @@
 // mind if you want to change the format.
 #define VER_MAJOR 6
 #define VER_MINOR 1
-#define VER_MICRO 0
-#define VER_RC 2
+#define VER_MICRO 1
+#define VER_RC 0
 // Format: "VER_MAJOR.VER_MINOR.VER_MICRO.VER_RC\0"
-#define VER_PRODUCTVERSION_STR "6.1.0.2\0"
+#define VER_PRODUCTVERSION_STR "6.1.1.0\0"
 #define VER_PRODUCTVERSION VER_MAJOR, VER_MINOR, VER_MICRO, VER_RC
 #define VER_FILEVERSION VER_MAJOR, VER_MINOR, VER_MICRO, VER_RC
 #define VER_FILEVERSION_CODE (VER_MAJOR * 10000 + VER_MINOR * 100 + VER_MICRO)
@@ -20,13 +20,13 @@
 #define VER_COMPANYNAME_STR         "Mega Limited\0"
 #define VER_FILEDESCRIPTION_STR     "MEGAsync\0"
 #define VER_INTERNALNAME_STR        "MEGAsync.exe\0"
-#define VER_LEGALCOPYRIGHT_STR "Mega Limited 2025\0"
+#define VER_LEGALCOPYRIGHT_STR "Mega Limited 2026\0"
 #define VER_LEGALTRADEMARKS1_STR    "All Rights Reserved"
 #define VER_ORIGINALFILENAME_STR    "MEGAsync.exe\0"
 #define VER_PRODUCTNAME_STR         "MEGAsync\0"
 
 /* SDK commit hash, 7 chars */
-#define VER_SDK_ID "63daa4d" // v10.3.0
+#define VER_SDK_ID "1c13b13" // v10.3.1
 
 // clang-format off
 // Update scrips relying on this value if you move it
@@ -39,6 +39,7 @@
 //)
 #define VER_CHANGES_NOTES QT_TRANSLATE_NOOP("Preferences", \
 "- We've fixed bugs and made the app more reliable.\n"     \
+"- Restore synchronization for network drives.\n"     \
 )
 // clang-format on
 
