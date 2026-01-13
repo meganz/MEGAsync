@@ -59,7 +59,8 @@ FooterButtonsPage {
                 id: helpLinkItem
 
                 manageMouse: true
-                manageClick: true
+                manageHover: true
+                underlineLink: true
                 rawText: SyncsStrings.helpSync
                 font.pixelSize: Text.Size.MEDIUM
                 visible: syncsDataAccess.syncOrigin !== SyncInfo.ONBOARDING_ORIGIN

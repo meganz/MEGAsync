@@ -37,9 +37,7 @@ SelectiveSyncPageForm {
         syncsComponentAccess.chooseRemoteFolderButtonClicked();
     }
 
-    helpLink.onLinkClicked: {
-        Qt.openUrlExternally(serviceUrlsAccess.getCreateSyncHelpUrl());
-    }
+    helpLink.url: serviceUrlsAccess.getCreateSyncHelpUrl()
 
     function enableScreen() {
         root.enabled = true;

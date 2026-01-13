@@ -8665,6 +8665,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Page title to add syncs. CON-1268</translatorcomment>
         <translation>Select folders to sync</translation>
     </message>
+    <message>
+        <source>[A]Learn more[/A]</source>
+        <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
+        <translation type="unfinished">[A]Learn more[/A]</translation>
+    </message>
 </context>
 <context>
     <name>TextArea</name>
