@@ -159,8 +159,6 @@ Text {
                                     + "; color:" + urlColor + ";\">");
 
         root.text = copyText;
-
-        console.log(copyText)
     }
 
     onLinkActivated: (clickedUrl) => {

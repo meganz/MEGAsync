@@ -14,11 +14,13 @@ SyncsQmlDialog {
     visible: false
     modality: Qt.NonModal
     width: 640
-    height: 460
+    height: 430
     maximumHeight: height
     maximumWidth: width
     minimumHeight: height
     minimumWidth: width
+
+    readonly property int defaultWindowMargin: 24
 
     Rectangle {
         id: syncsContentItem
@@ -50,7 +52,7 @@ SyncsQmlDialog {
 
             anchors {
                 fill: parent
-                margins: Constants.defaultWindowMargin
+                margins: defaultWindowMargin
             }
 
             Component {
