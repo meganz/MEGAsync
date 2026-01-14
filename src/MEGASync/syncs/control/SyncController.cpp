@@ -49,15 +49,7 @@ void SyncController::addBackup(const QString& localFolder, const QString& syncNa
             {
                 createPendingBackups();
             });
-
-    if(request->isAttributeReady())
-    {
-        createPendingBackups();
-    }
-    else
-    {
-        request->createMyBackupsFolderIfNeeded();
-    }
+    request->createMyBackupsFolderIfNeeded();
 }
 
 QString SyncController::getErrorString(int errorCode, int syncErrorCode) const

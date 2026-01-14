@@ -1,6 +1,6 @@
 #include "SyncsMenu.h"
 
-#include "DeviceName.h"
+#include "DeviceNames.h"
 #include "MegaMenuItemAction.h"
 #include "MyBackupsHandle.h"
 #include "Preferences.h"
@@ -240,11 +240,11 @@ QString TwoWaySyncsMenu::createSyncTooltipText(const std::shared_ptr<SyncSetting
 BackupSyncsMenu::BackupSyncsMenu(QWidget* parent):
     SyncsMenu(mega::MegaSync::TYPE_BACKUP, mBackupItemIndent, parent),
     mDevNameAction(nullptr),
-    mDeviceNameRequest(UserAttributes::DeviceName::requestDeviceName()),
+    mDeviceNameRequest(UserAttributes::DeviceNames::requestDeviceName()),
     mMyBackupsHandleRequest(UserAttributes::MyBackupsHandle::requestMyBackupsHandle())
 {
     connect(mDeviceNameRequest.get(),
-            &UserAttributes::DeviceName::attributeReady,
+            &UserAttributes::DeviceNames::attributeReady,
             this,
             &BackupSyncsMenu::onDeviceNameSet);
 }

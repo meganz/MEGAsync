@@ -2,6 +2,7 @@
 
 #include "AccountStatusController.h"
 #include "BackupCandidatesComponent.h"
+#include "DeviceNameChecker.h"
 #include "LoginController.h"
 #include "MegaApplication.h"
 #include "MessageDialogOpener.h"
@@ -45,10 +46,23 @@ void Onboarding::openPreferences(int tabIndex) const
     MegaSyncApp->openSettings(tabIndex);
 }
 
-bool Onboarding::deviceNameAlreadyExists(const QString& name) const
+void Onboarding::checkDeviceName(const QString& name)
 {
-    // TODO : SAT-1645 implement this
-    return false;
+    DeviceNameChecker* deviceNameChecker = new DeviceNameChecker(this, name);
+    QObject::connect(deviceNameChecker,
+                     &QThread::finished,
+                     deviceNameChecker,
+                     &QObject::deleteLater);
+
+    QObject::connect(deviceNameChecker,
+                     &DeviceNameChecker::deviceNameCheck,
+                     this,
+                     [this](bool isValid)
+                     {
+                         emit deviceNameChecked(isValid);
+                     });
+
+    deviceNameChecker->start();
 }
 
 void Onboarding::showClosingButLoggingInWarningDialog() const

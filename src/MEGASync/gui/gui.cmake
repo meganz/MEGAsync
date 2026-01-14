@@ -83,6 +83,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/GuestQmlDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/OnboardingQmlDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/GuestContent.h
+    ${CMAKE_CURRENT_LIST_DIR}/onboarding/DeviceNameChecker.h
     ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions/ExclusionRulesModel.h
     ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions/SyncExclusions.h
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenParserWidgetManager.h
@@ -223,6 +224,7 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/GuestQmlDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/OnboardingQmlDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/GuestContent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/onboarding/DeviceNameChecker.cpp
     ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions/ExclusionRulesModel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions/SyncExclusions.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenParserWidgetManager.cpp

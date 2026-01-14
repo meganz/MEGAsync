@@ -7,11 +7,11 @@
 
 namespace UserAttributes
 {
-MyBackupsHandle::MyBackupsHandle(const QString &userEmail)
-    : AttributeRequest(userEmail)
-    , mMyBackupsFolderHandle(mega::INVALID_HANDLE)
-    , mMyBackupsFolderPath(QString())
-    , mCreationRequested(false)
+MyBackupsHandle::MyBackupsHandle(const QString& userEmail):
+    AttributeRequest(userEmail),
+    mMyBackupsFolderHandle(mega::INVALID_HANDLE),
+    mMyBackupsFolderPath(QString()),
+    mCreationRequested(false)
 {
     qRegisterMetaType<mega::MegaHandle>("mega::MegaHandle");
 }
@@ -79,6 +79,7 @@ void MyBackupsHandle::onMyBackupsFolderReady(mega::MegaHandle h)
         std::unique_ptr<char[]> path (MegaSyncApp->getMegaApi()->getNodePathByNodeHandle(h));
         mMyBackupsFolderPath = QString::fromUtf8(path.get());
     }
+
     emit attributeReady(mMyBackupsFolderHandle);
 }
 
@@ -109,7 +110,8 @@ void MyBackupsHandle::requestAttribute()
 
 bool MyBackupsHandle::isAttributeReady() const
 {
-    return mMyBackupsFolderHandle != mega::INVALID_HANDLE;
+    return !isAttributeRequestPending(mega::MegaApi::USER_ATTR_MY_BACKUPS_FOLDER) &&
+           !attributeRequestNeedsRetry(mega::MegaApi::USER_ATTR_MY_BACKUPS_FOLDER);
 }
 
 QString MyBackupsHandle::getMyBackupsLocalizedPath()
@@ -119,25 +121,25 @@ QString MyBackupsHandle::getMyBackupsLocalizedPath()
 
 QString MyBackupsHandle::getNodeLocalizedPath(QString path) const
 {
-// The path looks like "/Backups" (but localized), without the "/Vault" root
-// Note: if the node exists, its name is ignored and we always display the localized version,
-// as per requirements.
-    QString localizedPath (path);
+    // The path looks like "/Backups" (but localized), without the "/Vault" root
+    // Note: if the node exists, its name is ignored and we always display the localized version,
+    // as per requirements.
+    QString localizedPath(path);
     if (mMyBackupsFolderHandle != mega::INVALID_HANDLE)
     {
-        localizedPath = getMyBackupsLocalizedPath()
-                + QStringRef(&path, mMyBackupsFolderPath.size(), path.size() - mMyBackupsFolderPath.size()) ;
+        localizedPath =
+            getMyBackupsLocalizedPath() + QStringRef(&path,
+                                                     mMyBackupsFolderPath.size(),
+                                                     path.size() - mMyBackupsFolderPath.size());
     }
     return localizedPath;
 }
 
 void MyBackupsHandle::createMyBackupsFolderIfNeeded()
 {
-    if (!isAttributeReady()
-        && !isAttributeRequestPending(mega::MegaApi::USER_ATTR_MY_BACKUPS_FOLDER)
-        && !attributeRequestNeedsRetry(mega::MegaApi::USER_ATTR_MY_BACKUPS_FOLDER))
+    if (mMyBackupsFolderHandle == mega::INVALID_HANDLE && isAttributeReady())
     {
-        QString name = MegaNodeNames::getBackupsName();
+        const auto name = MegaNodeNames::getBackupsName();
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Creating MyBackups folder");
 
         // Register for SDK Request callbacks
@@ -147,9 +149,13 @@ void MyBackupsHandle::createMyBackupsFolderIfNeeded()
 
         mCreationRequested = false;
     }
-    else if(isAttributeRequestPending(mega::MegaApi::USER_ATTR_MY_BACKUPS_FOLDER))
+    else if (isAttributeRequestPending(mega::MegaApi::USER_ATTR_MY_BACKUPS_FOLDER))
     {
         mCreationRequested = true;
+    }
+    else if (mMyBackupsFolderHandle != mega::INVALID_HANDLE && isAttributeReady())
+    {
+        onMyBackupsFolderReady(mMyBackupsFolderHandle);
     }
 }
 
