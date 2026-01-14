@@ -726,12 +726,6 @@ bool NodeSelectorModelRubbish::canDropMimeData(const QMimeData* data,
                                                int,
                                                const QModelIndex& parent) const
 {
-    if (action == Qt::MoveAction)
-    {
-        // Allow copying/moving items to all the view space
-        return checkDraggedMimeData(data);
-    }
-
     return false;
 }
 
