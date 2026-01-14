@@ -53,9 +53,6 @@ FooterButtonsPage {
             title: OnboardingStrings.deviceName
             hint.icon: ""
             sizes: LargeSizes {}
-            textField {
-                text: deviceName.name
-            }
         }
     }
 }

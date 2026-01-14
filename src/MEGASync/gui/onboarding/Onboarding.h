@@ -13,13 +13,14 @@ public:
     QUrl getQmlUrl() override;
 
     Q_INVOKABLE void openPreferences(int tabIndex) const;
-    Q_INVOKABLE bool deviceNameAlreadyExists(const QString& name) const;
+    Q_INVOKABLE void checkDeviceName(const QString& name);
     Q_INVOKABLE void showClosingButLoggingInWarningDialog() const;
     Q_INVOKABLE void showClosingButCreatingAccount() const;
 
 signals:
     void accountBlocked(int errorCode);
     void logout();
+    void deviceNameChecked(bool valid);
 
 private:
     std::unique_ptr<SyncsComponent> mSyncsComponent;
