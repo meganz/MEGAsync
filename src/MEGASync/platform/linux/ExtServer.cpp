@@ -24,19 +24,27 @@ constexpr char RESPONSE_ERROR[]   = "10";
 ExtServer::ExtServer(MegaApplication* app):
     QObject()
 {
-    connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), app, SLOT(shellUpload(QQueue<QString>)),Qt::QueuedConnection);
-    connect(this, SIGNAL(newExportQueue(QQueue<QString>)), app, SLOT(shellExport(QQueue<QString>)),Qt::QueuedConnection);
+    connect(this,
+            &ExtServer::newUploadQueue,
+            app,
+            &MegaApplication::shellUpload,
+            Qt::QueuedConnection);
+    connect(this,
+            &ExtServer::newExportQueue,
+            app,
+            &MegaApplication::shellExport,
+            Qt::QueuedConnection);
     connect(this,
             &ExtServer::newViewOnMega,
             app,
             &MegaApplication::shellViewOnMega,
             Qt::QueuedConnection);
     connect(this,
-            SIGNAL(newBackupList(QStringList)),
+            &ExtServer::newBackupList,
             app,
-            SLOT(shellBackup(QStringList)),
+            &MegaApplication::shellBackup,
             Qt::QueuedConnection);
-    connect(this, SIGNAL(newSync(QString)), app, SLOT(shellSync(QString)), Qt::QueuedConnection);
+    connect(this, &ExtServer::newSync, app, &MegaApplication::shellSync, Qt::QueuedConnection);
 
     // construct local socket path
     sockPath = MegaApplication::applicationDataPath() + QDir::separator() + QString::fromLatin1("mega.socket");
