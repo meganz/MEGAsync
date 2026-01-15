@@ -21,6 +21,8 @@ FocusScope {
     property alias title: folderItem.title
     property alias leftIconSource: folderItem.leftIconSource
 
+    property Sizes sizes: Sizes {}
+
     signal buttonClicked
 
     width: parent.width
@@ -45,14 +47,14 @@ FocusScope {
         }
     }
 
-    OutlineButton {
+    SecondaryButton {
         id: changeButtonItem
 
         height: folderItem.textField.height
         anchors {
             right: parent.right
-            top: parent.top
-            topMargin: 15
+            bottom: folderItem.bottom
+            bottomMargin: folderItem.hint.visible ?  folderItem.hint.height + sizes.hintTextMargin : 0
         }
         focus: true
         text: Strings.choose

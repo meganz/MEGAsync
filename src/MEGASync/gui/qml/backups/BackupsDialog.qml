@@ -17,26 +17,19 @@ SyncsQmlDialog {
     visible: false
     modality: Qt.NonModal
     width: 640
-    height: 560
-    maximumHeight: 560
-    maximumWidth: 640
-    minimumHeight: 560
-    minimumWidth: 640
+    height: 403
+    maximumHeight: height
+    maximumWidth: width
+    minimumHeight: height
+    minimumWidth: width
     backup: true
+
+    readonly property int defaultWindowMargin: 24
 
     Column {
         id: contentItem
 
         anchors.fill: parent
-
-        StepPanel {
-            id: stepPanelItem
-
-            width: parent.width
-            step1String: BackupsStrings.selectFolders;
-            step2String: BackupsStrings.confirmFolders;
-            helpUrl: serviceUrlsAccess.getCreateBackupHelpUrl()
-        }
 
         Rectangle {
             id: backupsContentItem
@@ -45,7 +38,7 @@ SyncsQmlDialog {
             readonly property string resume: "resume"
 
             width: parent.width
-            height: parent.height - stepPanelItem.height
+            height: parent.height
             color: ColorTheme.surface1
 
             state: backupsFlow
@@ -61,7 +54,6 @@ SyncsQmlDialog {
                     StateChangeScript {
                         script: stackView.replace(resumePage);
                     }
-                    PropertyChanges { target: stepPanelItem; state: stepPanelItem.stepCurrentDone; }
                 }
             ]
 
@@ -70,7 +62,7 @@ SyncsQmlDialog {
 
                 anchors {
                     fill: parent
-                    margins: Constants.defaultWindowMargin
+                    margins: defaultWindowMargin
                 }
 
                 Component {
@@ -79,7 +71,6 @@ SyncsQmlDialog {
                     BackupsPage {
                         id: backupsFlowItem
 
-                        stepPanelRef: stepPanelItem
                         backupsContentItemRef: backupsContentItem
                     }
                 }
@@ -92,8 +83,7 @@ SyncsQmlDialog {
                     }
                 }
             }
-
-        } // Rectangle: backupsContentItem
+        }
     }
 
 }

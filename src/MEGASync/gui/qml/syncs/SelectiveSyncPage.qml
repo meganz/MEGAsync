@@ -1,8 +1,10 @@
 import QtQuick 2.15
 
 import syncs 1.0
+
 import SyncsComponents 1.0
 import SyncInfo 1.0
+import ServiceUrls 1.0
 
 SelectiveSyncPageForm {
     id: root
@@ -35,18 +37,25 @@ SelectiveSyncPageForm {
         syncsComponentAccess.chooseRemoteFolderButtonClicked();
     }
 
+    helpLink.url: serviceUrlsAccess.getCreateSyncHelpUrl()
+
     function enableScreen() {
         root.enabled = true;
         footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
     }
 
     footerButtons {
-        leftSecondary.onClicked: {
+        leftPrimary.onClicked: {
             syncsComponentAccess.exclusionsButtonClicked(localFolderChooser.chosenPath);
         }
 
         rightSecondary.onClicked: {
-            root.selectiveSyncMoveToBack();
+            if (syncsDataAccess.syncOrigin === SyncInfo.ONBOARDING_ORIGIN) {
+                root.selectiveSyncMoveToBack();
+            }
+            else {
+                window.close();
+            }
         }
 
         rightPrimary.onClicked: {
