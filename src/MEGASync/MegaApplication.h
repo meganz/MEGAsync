@@ -526,8 +526,6 @@ private:
     void reconnectIfNecessary(const bool disconnected, const QList<QNetworkInterface>& newNetworkInterfaces);
     bool isIdleForTooLong() const;
 
-    void startUpload(const QString& rawLocalPath, mega::MegaNode* target, mega::MegaCancelToken *cancelToken);
-
     void updateTransferNodesStage(mega::MegaTransfer* transfer);
 
     void logBatchStatus(const char* tag);

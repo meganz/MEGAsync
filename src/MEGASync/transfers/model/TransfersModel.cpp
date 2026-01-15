@@ -10,7 +10,6 @@
 #include "PowerOptions.h"
 #include "ServiceUrls.h"
 #include "SettingsDialog.h"
-#include "StatsEventHandler.h"
 #include "ThreadPool.h"
 #include "TransferItem.h"
 #include "TransferMetaData.h"
@@ -21,7 +20,6 @@
 
 #include <algorithm>
 #include <functional>
-#include <optional>
 
 using namespace mega;
 
@@ -1692,16 +1690,15 @@ void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, QExplici
                         std::unique_ptr<mega::MegaNode> parentNode(
                             MegaSyncApp->getMegaApi()->getNodeByHandle(
                                 failedTransfer->getParentHandle()));
-                        const int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
-                        const bool isSrcTemporary = false;
+                        MegaUploadOptions options;
+                        options.fileName = failedTransfer->getFileName();
+                        options.appData = appDataRaw;
+                        options.pitagTrigger = mega::MegaApi::PITAG_TRIGGER_PICKER;
+
                         mMegaApi->startUpload(failedTransfer->getPath(),
                                               parentNode.get(),
-                                              failedTransfer->getFileName(),
-                                              mtime,
-                                              appDataRaw,
-                                              isSrcTemporary,
-                                              false,
                                               nullptr,
+                                              &options,
                                               nullptr);
                     }
                 }
