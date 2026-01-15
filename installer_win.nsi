@@ -393,8 +393,8 @@ Function .onInit
   ${EndIf}
   !endif
 
-  ${IfNot} ${AtLeastWin8}
-    MessageBox MB_OK "This MEGA Desktop App installer is for Windows 8 or above"
+  ${IfNot} ${AtLeastWin10}
+    MessageBox MB_OK "This MEGA Desktop App installer is for Windows 10 or above"
     Quit
   ${EndIf}
 

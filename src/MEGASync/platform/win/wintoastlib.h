@@ -103,13 +103,12 @@ namespace WinToastLib {
         WinToast(void);
         virtual ~WinToast();
         static WinToast* instance();
-        static bool             isCompatible();
-		static bool				supportModernFeatures();
-		static std::wstring     configureAUMI(_In_ const std::wstring& companyName,
-                                                    _In_ const std::wstring& productName,
-                                                    _In_ const std::wstring& subProduct = std::wstring(),
-                                                    _In_ const std::wstring& versionInformation = std::wstring()
-                                                    );
+        static bool isCompatible();
+        static std::wstring
+            configureAUMI(_In_ const std::wstring& companyName,
+                          _In_ const std::wstring& productName,
+                          _In_ const std::wstring& subProduct = std::wstring(),
+                          _In_ const std::wstring& versionInformation = std::wstring());
         virtual bool            initialize();
         virtual bool            isInitialized() const { return _isInitialized; }
         virtual INT64           showToast(_In_ const WinToastTemplate& toast, _In_ std::shared_ptr<IWinToastHandler> handler);

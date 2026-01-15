@@ -38,11 +38,11 @@ interface INotificationCB : public IUnknown
     virtual HRESULT __stdcall Notify (ULONG, NOTIFYITEM *) = 0;
 };
 
-//ItrayNotifyNew GUID (Windows 8)
+//ItrayNotifyNew GUID (Windows 10)
 #pragma warning(suppress: 4467) //usage of ATL attributes is deprecated
 [ uuid ("D133CE13-3537-48BA-93A7-AFCD5D2053B4") ]
 
-//Virtual Functions for Windows 8
+// Virtual functions for Windows 10+ (interface originally introduced in Windows 8)
 interface ITrayNotifyNew : public IUnknown
 {
     virtual HRESULT __stdcall RegisterCallback (INotificationCB *,unsigned long *) = 0;
