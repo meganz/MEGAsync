@@ -33,6 +33,9 @@ Item {
 	readonly property color buttonError: loader.item.buttonError
 	readonly property color buttonErrorHover: loader.item.buttonErrorHover
 	readonly property color buttonErrorPressed: loader.item.buttonErrorPressed
+	readonly property color buttonOnColor: loader.item.buttonOnColor
+	readonly property color buttonOnColorHover: loader.item.buttonOnColorHover
+	readonly property color buttonOnColorPressed: loader.item.buttonOnColorPressed
 	readonly property color buttonOutline: loader.item.buttonOutline
 	readonly property color buttonOutlineBackgroundHover: loader.item.buttonOutlineBackgroundHover
 	readonly property color buttonOutlineHover: loader.item.buttonOutlineHover
@@ -99,6 +102,7 @@ Item {
 	readonly property color textInverseSecondary: loader.item.textInverseSecondary
 	readonly property color textOnColor: loader.item.textOnColor
 	readonly property color textOnColorDisabled: loader.item.textOnColorDisabled
+	readonly property color textOnColorInverse: loader.item.textOnColorInverse
 	readonly property color textPlaceholder: loader.item.textPlaceholder
 	readonly property color textPrimary: loader.item.textPrimary
 	readonly property color textSecondary: loader.item.textSecondary
