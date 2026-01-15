@@ -67,7 +67,7 @@ DesktopNotifications::DesktopNotifications(const QString &appName, QSystemTrayIc
      mPreferences(Preferences::instance()),
      mIsFirstTime(true)
 {
-    mNotificator = std::unique_ptr<Notificator>(new Notificator(appName, trayIcon, this));
+    mNotificator = new Notificator(appName, trayIcon, this);
 
     QDir appDir{MegaApplication::applicationDataPath()};
     appDir.mkdir(iconFolderName);
