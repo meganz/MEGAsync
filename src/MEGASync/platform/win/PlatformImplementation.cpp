@@ -555,6 +555,43 @@ void PlatformImplementation::applyCurrentThemeOnCurrentDialogFrame(QWindow* wind
     }
 }
 
+void PlatformImplementation::setRenderingBackend() const
+{
+    auto qtOpengl = qEnvironmentVariable("QT_OPENGL");
+    if (!qtOpengl.isEmpty())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                     QString::fromUtf8("Using system QT_OPENGL value: %1")
+                         .arg(qtOpengl)
+                         .toUtf8()
+                         .constData());
+    }
+    else
+    {
+        // Default to ANGLE to mitigate driver issues
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Setting QT_OPENGL value to \"angle\"");
+        qputenv("QT_OPENGL", "angle");
+
+        auto qtAnglePlatform = qEnvironmentVariable("QT_ANGLE_PLATFORM");
+        if (!qtAnglePlatform.isEmpty())
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                         QString::fromUtf8("Using system QT_ANGLE_PLATFORM value: %1")
+                             .arg(qtAnglePlatform)
+                             .toUtf8()
+                             .constData());
+        }
+        else
+        {
+            // Default to WARP
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Setting QT_ANGLE_PLATFORM value to \"warp\"");
+            qputenv("QT_ANGLE_PLATFORM", "warp");
+        }
+
+        QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+    }
+}
+
 void PlatformImplementation::removeSyncFromLeftPane(QString syncPath)
 {
     CheckLeftPaneIcon(syncPath.toStdWString().data(), true);

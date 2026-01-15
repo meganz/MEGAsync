@@ -387,6 +387,8 @@ int main(int argc, char *argv[])
     // adds thread-safety to OpenSSL
     QSslSocket::supportsSsl();
 
+    Platform::getInstance()->setRenderingBackend();
+
 #ifndef Q_OS_MACX
     const QString autoScreenScaleFactor = qEnvironmentVariable("QT_AUTO_SCREEN_SCALE_FACTOR");
     if (autoScreenScaleFactor == QString::fromUtf8("0"))
