@@ -942,6 +942,9 @@ void PlatformImplementation::setRenderingBackend() const
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Setting LIBGL_ALWAYS_SOFTWARE to 1");
         qputenv("LIBGL_ALWAYS_SOFTWARE", "1");
     }
+
+    // Improve QtQuickWidget compatibility
+    QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 }
 
 void PlatformImplementation::startThemeMonitor()
