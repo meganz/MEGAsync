@@ -6082,9 +6082,11 @@ Enter a different name.</translation>
     <name>Preferences</name>
     <message>
         <source>- We&apos;ve fixed bugs and made the app more reliable.
+- Restore synchronization for network drives.
 </source>
-        <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
-        <translation>- We’ve fixed bugs and made the app more reliable</translation>
+        <translation type="unfinished">- We&apos;ve fixed bugs and made the app more reliable.
+- Restore synchronization for network drives.
+</translation>
     </message>
 </context>
 <context>
