@@ -934,6 +934,16 @@ Preferences::SystemColorScheme PlatformImplementation::getCurrentThemeAppearance
     return {theme, theme};
 }
 
+void PlatformImplementation::setRenderingBackend() const
+{
+    QByteArray megaLibGL = qgetenv("MEGA_LIBGL_ALWAYS_SOFTWARE");
+    if (!megaLibGL.isEmpty() && megaLibGL == "1")
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Setting LIBGL_ALWAYS_SOFTWARE to 1");
+        qputenv("LIBGL_ALWAYS_SOFTWARE", "1");
+    }
+}
+
 void PlatformImplementation::startThemeMonitor()
 {
 #ifndef QT_NO_DBUS
