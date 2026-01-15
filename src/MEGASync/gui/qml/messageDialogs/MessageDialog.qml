@@ -36,6 +36,7 @@ QmlDialog {
     color: ColorTheme.surface1
     title: messageDialogDataAccess ? messageDialogDataAccess.title : ""
     visible: false
+    closeOnEscapePressed: true
 
     onVisibleChanged:
     {

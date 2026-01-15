@@ -22,6 +22,7 @@ SyncsQmlDialog {
     maximumWidth: width
     minimumHeight: height
     minimumWidth: width
+    closeOnEscapePressed: true
 
     Column {
         id: contentItem

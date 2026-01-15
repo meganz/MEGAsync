@@ -23,6 +23,7 @@ SyncsQmlDialog {
     minimumHeight: 560
     minimumWidth: 640
     backup: true
+    closeOnEscapePressed: true
 
     Column {
         id: contentItem
