@@ -315,7 +315,23 @@ void Syncs::updateDefaultFolders()
 
 bool Syncs::setErrorIfExist(int errorCode, int syncErrorCode)
 {
-    static QList<mega::SyncError> localErrors{mega::SyncError::FILESYSTEM_FILE_IDS_ARE_UNSTABLE};
+    static QList<mega::SyncError> localErrors{mega::SyncError::FILESYSTEM_FILE_IDS_ARE_UNSTABLE,
+                                              mega::SyncError::UNSUPPORTED_FILE_SYSTEM,
+                                              mega::SyncError::INVALID_LOCAL_TYPE,
+                                              mega::SyncError::LOCAL_PATH_TEMPORARY_UNAVAILABLE,
+                                              mega::SyncError::LOCAL_PATH_UNAVAILABLE,
+                                              mega::SyncError::LOCAL_FILESYSTEM_MISMATCH,
+                                              mega::SyncError::LOCAL_PATH_SYNC_COLLISION,
+                                              mega::SyncError::SYNC_CONFIG_WRITE_FAILURE,
+                                              mega::SyncError::COULD_NOT_CREATE_IGNORE_FILE,
+                                              mega::SyncError::SYNC_CONFIG_READ_FAILURE,
+                                              mega::SyncError::UNKNOWN_DRIVE_PATH,
+                                              mega::SyncError::UNABLE_TO_ADD_WATCH,
+                                              mega::SyncError::INSUFFICIENT_DISK_SPACE,
+                                              mega::SyncError::FAILURE_ACCESSING_PERSISTENT_STORAGE,
+                                              mega::SyncError::FILESYSTEM_ID_UNAVAILABLE,
+                                              mega::SyncError::UNABLE_TO_RETRIEVE_DEVICE_ID,
+                                              mega::SyncError::LOCAL_PATH_MOUNTED};
 
     if (errorCode != mega::MegaError::API_OK)
     {
