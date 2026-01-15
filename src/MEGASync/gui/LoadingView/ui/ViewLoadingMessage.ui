@@ -46,9 +46,6 @@ QProgressBar::chunk
     background-color: #04101E; /*colorToken.border-strong-selected*/
 }</string>
   </property>
-  <property name="TOKENIZED" stdset="0">
-   <bool>true</bool>
-  </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
     <number>0</number>

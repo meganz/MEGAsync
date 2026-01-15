@@ -51,9 +51,6 @@ padding-right: 0px;
 
 </string>
   </property>
-  <property name="TOKENIZED" stdset="0">
-   <bool>true</bool>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <property name="spacing">
     <number>24</number>

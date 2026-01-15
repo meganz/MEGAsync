@@ -62,9 +62,6 @@ background-color: #fff63d6b; /*colorToken.indicator-pink*/
 }
 </string>
   </property>
-  <property name="TOKENIZED" stdset="0">
-   <bool>true</bool>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>13</number>

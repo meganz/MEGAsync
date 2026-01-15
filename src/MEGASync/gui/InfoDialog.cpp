@@ -245,8 +245,7 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
 
     //Create the overlay widget with a transparent background
     overlay = new QPushButton(ui->pUpdated);
-    overlay->setStyleSheet(QString::fromLatin1("background-color: transparent; "
-                                              "border: none; "));
+    overlay->setStyleSheet(QString::fromLatin1("*{background-color: transparent; border: none;}"));
     overlay->resize(ui->pUpdated->size());
     overlay->setCursor(Qt::PointingHandCursor);
 
