@@ -2849,19 +2849,6 @@ bool MegaApplication::isIdleForTooLong() const
     return (QDateTime::currentMSecsSinceEpoch() - lastActiveTime) > Preferences::MAX_IDLE_TIME_MS;
 }
 
-void MegaApplication::startUpload(const QString& rawLocalPath, MegaNode* target, MegaCancelToken* cancelToken)
-{
-    auto localPathArray = QDir::toNativeSeparators(rawLocalPath).toUtf8();
-    const char* appData = nullptr;
-    const char* fileName = nullptr;
-    const bool startFirst = false;
-    const bool isSrcTemporary = false;
-    int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
-    MegaTransferListener* listener = nullptr;
-
-    megaApi->startUpload(localPathArray.constData(), target, fileName, mtime, appData, isSrcTemporary, startFirst, cancelToken, listener);
-}
-
 void MegaApplication::cancelScanningStage()
 {
     mBlockingBatch.cancelTransfer();
