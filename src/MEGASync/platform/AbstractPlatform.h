@@ -121,6 +121,8 @@ public:
     virtual Preferences::SystemColorScheme getCurrentThemeAppearance() const;
     virtual void applyCurrentThemeOnCurrentDialogFrame(QWindow* window);
 
+    virtual void setRenderingBackend() const {}
+
 signals:
     void themeChanged(Preferences::SystemColorScheme theme);
 

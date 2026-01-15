@@ -387,6 +387,8 @@ int main(int argc, char *argv[])
     // adds thread-safety to OpenSSL
     QSslSocket::supportsSsl();
 
+    Platform::getInstance()->setRenderingBackend();
+
 #ifndef Q_OS_MACX
     const QString autoScreenScaleFactor = qEnvironmentVariable("QT_AUTO_SCREEN_SCALE_FACTOR");
     if (autoScreenScaleFactor == QString::fromUtf8("0"))
@@ -495,15 +497,6 @@ int main(int argc, char *argv[])
     {
         MegaApi::log(message.logLevel, message.message.toUtf8().constData());
     }
-
-#ifdef Q_OS_LINUX
-    QByteArray megaLibGL = qgetenv("MEGA_LIBGL_ALWAYS_SOFTWARE");
-    if (!megaLibGL.isEmpty() && megaLibGL == "1")
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Setting LIBGL_ALWAYS_SOFTWARE to 1");
-        qputenv("LIBGL_ALWAYS_SOFTWARE", "1");
-    }
-#endif
 
 #ifndef Q_OS_MACX
     const QVector<QString> scaleFactorLogMessages = scaleFactorManager.getLogMessages();
