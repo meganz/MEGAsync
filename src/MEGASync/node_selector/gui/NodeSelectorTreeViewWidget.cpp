@@ -1524,7 +1524,7 @@ void NodeSelectorTreeViewWidget::updateNode(const UpdateNodesInfo& info, bool sc
     {
         if (proxyIndex.isValid() && ui->tMegaFolders->rootIndex() == proxyIndex)
         {
-            setTitleText(MegaNodeNames::getNodeName(info.node.get()));
+            setTitleText(proxyIndex.data(Qt::DisplayRole).toString());
         }
     }
 
@@ -1660,17 +1660,7 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex& proxy_idx)
         return;
     }
 
-    auto item = NodeSelectorModel::getItemByIndex(node_column_idx);
-    if (!item)
-    {
-        return;
-    }
-
-    auto node = item->getNode();
-    if (node)
-    {
-        setTitleText(MegaNodeNames::getNodeName(node.get()));
-    }
+    setTitleText(node_column_idx.data(Qt::DisplayRole).toString());
 }
 
 QIcon NodeSelectorTreeViewWidget::getEmptyIcon()
