@@ -102,9 +102,6 @@
 }
 /*********** multiple action button ****/</string>
   </property>
-  <property name="TOKENIZED" stdset="0">
-   <bool>true</bool>
-  </property>
   <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,0">
    <property name="spacing">
     <number>0</number>

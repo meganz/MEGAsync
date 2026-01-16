@@ -39,7 +39,6 @@ private:
     void replaceIconColorTokens(QWidget* widget, QString& styleSheet);
     void replaceColorTokens(QString& styleSheet, const ColorTokens& colorTokens);
     void removeFrameOnDialogCombos(QWidget* widget);
-    bool isTokenized(QWidget* widget);
     void tokenizeChildStyleSheets(QWidget* widget);
 
     QMap<QString, ColorTokens> mColorThemedTokens;

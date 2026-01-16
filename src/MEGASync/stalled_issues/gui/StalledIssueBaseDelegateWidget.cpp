@@ -19,8 +19,6 @@ StalledIssueBaseDelegateWidget::StalledIssueBaseDelegateWidget(QWidget *parent)
 
 void StalledIssueBaseDelegateWidget::init()
 {
-    setProperty("TOKENIZED", true);
-
     // By default the view widgets have transparent background
     QString styleS(styleSheet());
     styleS.prepend(QLatin1String("#%1\n{\nbackground-color: transparent;\n}\n").arg(objectName()));

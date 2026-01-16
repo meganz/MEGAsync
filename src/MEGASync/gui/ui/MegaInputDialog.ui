@@ -53,9 +53,6 @@ color: #ff303233; /*colorToken.text-primary*/
 
 </string>
   </property>
-  <property name="TOKENIZED" stdset="0">
-   <bool>true</bool>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
     <number>23</number>
