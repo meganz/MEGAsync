@@ -4,7 +4,6 @@
 #include "FullName.h"
 #include "MegaApplication.h"
 #include "Utilities.h"
-#include "ViewLoadingScene.h"
 
 const int NodeSelectorModelItem::ICON_SIZE = 17;
 const int UPDATE_ACCESS_THRESHOLD_MS = 50;
@@ -57,12 +56,12 @@ std::shared_ptr<mega::MegaNode> NodeSelectorModelItem::getNode() const
 
 bool NodeSelectorModelItem::isSpecialNode() const
 {
-    return (isCloudDrive() || isVault() || isRubbishBin());
+    return (isCloudDrive() || isMyBackupsFolder() || isRubbishBin());
 }
 
 bool NodeSelectorModelItem::canBeRenamed() const
 {
-    if (isCloudDrive() || isVault() || isRubbishBin() || isInRubbishBin() ||
+    if (isCloudDrive() || isMyBackupsFolder() || isRubbishBin() || isInRubbishBin() ||
         (mMegaApi->isInVault(mNode.get())) || (getNodeAccess() < mega::MegaShare::ACCESS_FULL))
     {
         return false;
@@ -182,7 +181,7 @@ int NodeSelectorModelItem::indexOf(NodeSelectorModelItem* item)
     return mChildItems.indexOf(item);
 }
 
-QString NodeSelectorModelItem::getOwnerName()
+QString NodeSelectorModelItem::getOwnerName() const
 {
     if (mFullNameAttribute && mFullNameAttribute->isAttributeReady())
     {
@@ -192,7 +191,7 @@ QString NodeSelectorModelItem::getOwnerName()
     return mOwnerEmail;
 }
 
-QString NodeSelectorModelItem::getOwnerEmail()
+QString NodeSelectorModelItem::getOwnerEmail() const
 {
     return mOwnerEmail;
 }
@@ -450,12 +449,12 @@ bool NodeSelectorModelItem::isInRubbishBin() const
     return mNode && mMegaApi->isInRubbish(mNode.get());
 }
 
-bool NodeSelectorModelItem::isVault() const
+bool NodeSelectorModelItem::isMyBackupsFolder() const
 {
     return false;
 }
 
-bool NodeSelectorModelItem::isVaultDevice() const
+bool NodeSelectorModelItem::isDeviceFolder() const
 {
     return false;
 }
@@ -554,21 +553,22 @@ bool NodeSelectorModelItemBackup::isSyncable()
     return false;
 }
 
-bool NodeSelectorModelItemBackup::isVault() const
+bool NodeSelectorModelItemBackup::isMyBackupsFolder() const
 {
-    // if it is a backup item and it doesn´t have parent it is the root node in backups tree
+    // If it is a backup item and it doesn't have parent it is the MyBackups folder
     return parent() == nullptr;
 }
 
-bool NodeSelectorModelItemBackup::isVaultDevice() const
-{
-    return parent() && parent()->parent() == nullptr;
-}
-
-bool NodeSelectorModelItemBackup::isVaultTopIndex() const
+bool NodeSelectorModelItemBackup::isDeviceFolder() const
 {
     auto parentItem = getParent();
-    return parentItem && parentItem->isVaultDevice();
+    return parentItem && parentItem->isMyBackupsFolder();
+}
+
+bool NodeSelectorModelItemBackup::isBackupFolder() const
+{
+    auto parentItem = getParent();
+    return parentItem && parentItem->isDeviceFolder();
 }
 
 NodeSelectorModelItem*

@@ -118,7 +118,7 @@ void NodeSelectorTreeView::drawBranches(QPainter* painter,
 {
     auto item = qvariant_cast<NodeSelectorModelItem*>(
         index.data(toInt(NodeSelectorModelRoles::MODEL_ITEM_ROLE)));
-    if (item && (item->isCloudDrive() || item->isVault() || item->isRubbishBin()))
+    if (item && (item->isCloudDrive() || item->isMyBackupsFolder() || item->isRubbishBin()))
     {
         return;
     }

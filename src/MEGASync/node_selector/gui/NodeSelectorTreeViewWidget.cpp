@@ -360,7 +360,7 @@ void NodeSelectorTreeViewWidget::updateColumnsWidth(bool updateVisibleColumnCoun
         {
             int width(0);
 
-            if ((*column) == NodeSelectorModel::COLUMN::NODE)
+            if ((*column) == NodeSelectorModel::Column::NODE)
             {
                 // Total minus the rest of columns
                 width = std::max(ui->tMegaFolders->viewport()->width() - widthTotal, minWidth * 2);
@@ -430,7 +430,7 @@ void NodeSelectorTreeViewWidget::onExpandReady()
         ui->tMegaFolders->setItemDelegate(new NodeRowDelegate(ui->tMegaFolders));
         ui->tMegaFolders->setTextElideMode(Qt::ElideMiddle);
 
-        ui->tMegaFolders->sortByColumn(NodeSelectorModel::NODE, Qt::AscendingOrder);
+        ui->tMegaFolders->sortByColumn(NodeSelectorModel::Column::NODE, Qt::AscendingOrder);
         ui->tMegaFolders->setModel(mProxyModel.get());
 
         ui->tMegaFolders->header()->setVisible(true);
@@ -1458,7 +1458,7 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
             foreach(auto& parentHandle, mAddedNodesByParentHandle.uniqueKeys())
             {
                 auto parentIndex = getAddedNodeParent(parentHandle);
-                auto infos(mAddedNodesByParentHandle.values(parentHandle));
+                const auto infos(mAddedNodesByParentHandle.values(parentHandle));
                 QList<std::shared_ptr<mega::MegaNode>> addedNodes;
 
                 for (const auto& info: infos)
@@ -1628,7 +1628,7 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex& proxy_idx)
 {
     // In case the idx is coming from a potentially hidden column, we always take the NODE column
     // As it is the only one that have childrens
-    auto node_column_idx = proxy_idx.sibling(proxy_idx.row(), NodeSelectorModel::COLUMN::NODE);
+    auto node_column_idx = proxy_idx.sibling(proxy_idx.row(), NodeSelectorModel::Column::NODE);
 
     mModel->setCurrentRootIndex(mProxyModel->mapToSource(node_column_idx));
     ui->tMegaFolders->setRootIndex(node_column_idx);

@@ -52,15 +52,15 @@ public:
     QPointer<NodeSelectorModelItem> getChild(int i);
     virtual int getNumChildren();
     int indexOf(NodeSelectorModelItem* item);
-    QString getOwnerName();
-    QString getOwnerEmail();
+    QString getOwnerName() const;
+    QString getOwnerEmail() const;
     void setOwner(std::unique_ptr<mega::MegaUser> user);
     QPixmap getOwnerIcon();
     QIcon getStatusIcons();
     Status getStatus() const;
     virtual bool isSyncable();
-    virtual bool isVault() const;
-    virtual bool isVaultDevice() const;
+    virtual bool isMyBackupsFolder() const;
+    virtual bool isDeviceFolder() const;
     bool isInShare() const;
     bool isInVault() const;
     bool isCloudDrive() const;
@@ -151,9 +151,9 @@ public:
                                          NodeSelectorModelItem* parentItem = 0);
     ~NodeSelectorModelItemBackup();
     bool isSyncable() override;
-    bool isVault() const override;
-    bool isVaultDevice() const override;
-    bool isVaultTopIndex() const;
+    bool isMyBackupsFolder() const override;
+    bool isDeviceFolder() const override;
+    bool isBackupFolder() const;
 
 private:
     NodeSelectorModelItem* createModelItem(std::unique_ptr<mega::MegaNode> node,

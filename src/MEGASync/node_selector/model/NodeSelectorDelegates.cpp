@@ -182,12 +182,12 @@ bool NodeRowDelegate::helpEvent(QHelpEvent* event,
 
     if (event->type() == QEvent::ToolTip)
     {
-        QRect rect = view->visualRect(index);
-        QString tooltipText = index.data(Qt::DisplayRole).toString();
+        const auto rect = view->visualRect(index);
+        const auto tooltipText = index.data(Qt::DisplayRole).toString();
         QFontMetrics fm = option.fontMetrics;
 
-        int margin = MARGIN;
-        if (index.column() == NodeSelectorModel::NODE)
+        auto margin = MARGIN;
+        if (index.column() == NodeSelectorModel::Column::NODE)
         {
             margin = ICON_MARGIN;
         }

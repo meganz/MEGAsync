@@ -4,7 +4,7 @@
 #include "DuplicatedNodeInfo.h"
 #include "megaapi.h"
 #include "MegaApplication.h"
-#include "MessageDialogOpener.h"
+#include "MessageDialogData.h"
 #include "NodeSelectorModelItem.h"
 #include "Utilities.h"
 
@@ -219,7 +219,7 @@ class NodeSelectorModel: public QAbstractItemModel
 public:
     static const int ROW_HEIGHT;
 
-    enum COLUMN
+    enum Column
     {
         NODE = 0,
         USER,
@@ -320,6 +320,12 @@ public:
 
     QVariant getIcon(const QModelIndex& index, NodeSelectorModelItem* item) const;
     QVariant getText(const QModelIndex& index, NodeSelectorModelItem* item) const;
+    virtual QVariant getDisplayText(NodeSelectorModelItem* item) const;
+    virtual QVariant getAddedDateText(NodeSelectorModelItem* item) const;
+    virtual QVariant getLastModifiedDateText(NodeSelectorModelItem* item) const;
+    virtual QVariant getAccessText(NodeSelectorModelItem* item) const;
+    virtual QVariant getUserText(NodeSelectorModelItem* item) const;
+
     void setFetchStep(int step);
 
     void loadTreeFromNode(const std::shared_ptr<mega::MegaNode> node);
@@ -492,7 +498,6 @@ private:
 
     std::shared_ptr<const UserAttributes::CameraUploadFolder> mCameraFolderAttribute;
     std::shared_ptr<const UserAttributes::MyChatFilesFolder> mMyChatFilesFolderAttribute;
-    std::shared_ptr<const UserAttributes::DeviceNames> mDeviceName;
 
     std::shared_ptr<mega::MegaRequestListener> mListener;
 
