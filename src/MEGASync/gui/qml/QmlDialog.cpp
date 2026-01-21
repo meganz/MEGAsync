@@ -73,11 +73,35 @@ void QmlDialog::centerAndRaise()
     QmlDialog::raise();
 }
 
+bool QmlDialog::getCloseOnEscapePressed() const
+{
+    return mCloseOnEscapePressed;
+}
+
+void QmlDialog::setCloseOnEscapePressed(bool active)
+{
+    if (active != mCloseOnEscapePressed)
+    {
+        mCloseOnEscapePressed = active;
+
+        emit closeOnEscapePressedChanged();
+    }
+}
+
 bool QmlDialog::event(QEvent* event)
 {
     if (event->type() == QEvent::Close)
     {
         emit finished();
+    }
+    else if (event->type() == QEvent::KeyPress)
+    {
+        auto* keyPressEvent = static_cast<QKeyEvent*>(event);
+        if (mCloseOnEscapePressed && keyPressEvent != nullptr &&
+            keyPressEvent->key() == Qt::Key_Escape)
+        {
+            close();
+        }
     }
 
     return QQuickWindow::event(event);

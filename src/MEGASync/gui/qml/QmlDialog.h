@@ -10,6 +10,7 @@ class QmlDialog: public QQuickWindow
     Q_OBJECT
 
     Q_PROPERTY(QString iconSrc MEMBER mIconSrc WRITE setIconSrc)
+    Q_PROPERTY(bool closeOnEscapePressed READ getCloseOnEscapePressed WRITE setCloseOnEscapePressed)
     Q_PROPERTY(QmlInstancesManager* instancesManager READ getInstancesManager NOTIFY
                    instancesManagerChanged)
 
@@ -21,6 +22,8 @@ public slots:
     void setIconSrc(const QString& iconSrc);
     QmlInstancesManager* getInstancesManager();
     void centerAndRaise();
+    bool getCloseOnEscapePressed() const;
+    void setCloseOnEscapePressed(bool active);
 
 signals:
     void instancesManagerChanged();
@@ -31,6 +34,7 @@ signals:
     void rejected();
     void requestPageFocus();
     void initializePageFocus();
+    void closeOnEscapePressedChanged();
 
 protected:
     bool event(QEvent* event) override;
@@ -38,6 +42,7 @@ protected:
 
 private:
     QString mIconSrc;
+    bool mCloseOnEscapePressed = false;
     QPointer<QmlInstancesManager> mInstancesManager;
 };
 

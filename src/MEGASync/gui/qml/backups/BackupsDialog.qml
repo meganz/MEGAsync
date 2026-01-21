@@ -23,6 +23,7 @@ SyncsQmlDialog {
     minimumHeight: height
     minimumWidth: width
     backup: true
+    closeOnEscapePressed: true
 
     readonly property int defaultWindowMargin: 24
 
