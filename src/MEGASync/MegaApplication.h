@@ -247,6 +247,8 @@ public slots:
     void processSetDownload(const QString& publicLink, const QList<mega::MegaHandle>& elementHandleList);
     void processUploads();
     void shellUpload(QQueue<QString> newUploadQueue);
+    void shellBackup(QStringList);
+    void shellSync(QString);
     void shellExport(QQueue<QString> newExportQueue);
     void shellViewOnMega(const QString& localPath, bool versions);
     void shellViewOnMegaByHandle(mega::MegaHandle handle, bool versions);

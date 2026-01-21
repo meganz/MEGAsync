@@ -10,5 +10,7 @@ gboolean mega_ext_client_upload(MEGAExt *mega_ext, const gchar *path);
 gboolean mega_ext_client_end_request(MEGAExt *mega_ext);
 gboolean mega_ext_client_open_link(MEGAExt *mega_ext, const gchar *path);
 gboolean mega_ext_client_open_previous(MEGAExt *mega_ext, const gchar *path);
+gboolean mega_ext_client_backup(MEGAExt* mega_ext, const gchar* path);
+gboolean mega_ext_client_sync(MEGAExt* mega_ext, const gchar* path);
 
 #endif

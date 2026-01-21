@@ -7362,6 +7362,16 @@ Do you want to delete it anyway?</translation>
         <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
         <translation>View previous versions</translation>
     </message>
+    <message>
+        <source>Backup</source>
+        <translatorcomment>Label displayed when a user is trying to backup folders to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation type="unfinished">Backup</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation type="unfinished">Sync</translation>
+    </message>
 </context>
 <context>
     <name>Sizes</name>

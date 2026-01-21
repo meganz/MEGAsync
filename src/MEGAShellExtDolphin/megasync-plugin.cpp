@@ -18,7 +18,9 @@ typedef enum {
     STRING_SEND = 3,
 
     STRING_VIEW_ON_MEGA = 5,
-    STRING_VIEW_VERSIONS = 6
+    STRING_VIEW_VERSIONS = 6,
+    STRING_BACKUP = 7,
+    STRING_SYNC = 8
 } StringID;
 
 enum {
@@ -41,7 +43,8 @@ const char OP_SEND        = 'C'; //Copy to user
 const char OP_STRING      = 'T'; //Get Translated String
 const char OP_VIEW        = 'V'; //View on MEGA
 const char OP_PREVIOUS    = 'R'; //View previous versions
-
+const char OP_BACKUP = 'B'; // Backup folder
+const char OP_SYNC = 'Y'; // Sync folder
 
 MEGASyncPlugin::MEGASyncPlugin(QObject* parent, const QList<QVariant> & args):
     KAbstractFileItemActionPlugin(parent)
@@ -130,6 +133,27 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
         if (act)
         {
             connect(act, &QAction::triggered, this, &MEGASyncPlugin::uploadFiles);
+        }
+    }
+
+    // if there are any unsynced folders selected
+    if (unsyncedFolders)
+    {
+        // Backup option
+        QAction* backupAct = createChildAction(menuAction, STRING_BACKUP, 0, unsyncedFolders);
+        if (backupAct)
+        {
+            connect(backupAct, &QAction::triggered, this, &MEGASyncPlugin::backupFolders);
+        }
+
+        // Sync option (only for single folder)
+        if (unsyncedFolders == 1 && unsyncedFiles == 0)
+        {
+            QAction* syncAct = createChildAction(menuAction, STRING_SYNC, 0, 0);
+            if (syncAct)
+            {
+                connect(syncAct, &QAction::triggered, this, &MEGASyncPlugin::syncFolder);
+            }
         }
     }
 
@@ -227,6 +251,25 @@ void MEGASyncPlugin::viewOnMega()
 void MEGASyncPlugin::viewPreviousVersions()
 {
     if (sendRequest(OP_PREVIOUS, QFileInfo(mSelectedFilePath).canonicalFilePath()).size())
+    {
+        sendRequest(OP_END, QLatin1String(" "));
+    }
+}
+
+void MEGASyncPlugin::backupFolders()
+{
+    for (int i = 0; i < selectedFilePaths.size(); i++)
+    {
+        QString path = selectedFilePaths.at(i);
+        if (sendRequest(OP_BACKUP, QFileInfo(path).canonicalFilePath()).size())
+        {}
+    }
+    sendRequest(OP_END, QLatin1String(" "));
+}
+
+void MEGASyncPlugin::syncFolder()
+{
+    if (sendRequest(OP_SYNC, QFileInfo(selectedFilePath).canonicalFilePath()).size())
     {
         sendRequest(OP_END, QLatin1String(" "));
     }

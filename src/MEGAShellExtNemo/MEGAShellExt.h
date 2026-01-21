@@ -26,7 +26,8 @@ struct _MEGAExt {
     gchar *string_getlink; // cached string
     gchar *string_viewonmega; // cached string
     gchar *string_viewprevious; // cached string
-
+    gchar* string_backup; // cached string
+    gchar* string_sync; // cached string
 };
 
 struct _MEGAExtClass {
@@ -50,7 +51,9 @@ typedef enum {
     STRING_SEND = 3,
 
     STRING_VIEW_ON_MEGA = 5,
-    STRING_VIEW_VERSIONS = 6
+    STRING_VIEW_VERSIONS = 6,
+    STRING_BACKUP = 7,
+    STRING_SYNC = 8
 } StringID;
 
 GType mega_ext_get_type(void);

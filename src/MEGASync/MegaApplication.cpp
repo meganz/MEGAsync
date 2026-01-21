@@ -8,6 +8,7 @@
 #include "CommonMessages.h"
 #include "CrashHandler.h"
 #include "CrashReportDialog.h"
+#include "CreateRemoveBackupsManager.h"
 #include "CreateRemoveSyncsManager.h"
 #include "DateTimeFormatter.h"
 #include "DeviceCentre.h"
@@ -4806,6 +4807,25 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
     processUploads();
 }
 
+void MegaApplication::shellBackup(QStringList newBackupList)
+{
+    if (appfinished)
+    {
+        return;
+    }
+    CreateRemoveBackupsManager::addBackup(SyncInfo::SyncOrigin::SHELL_EXT_ORIGIN, newBackupList);
+}
+
+void MegaApplication::shellSync(QString localFolder)
+{
+    if (appfinished)
+    {
+        return;
+    }
+    CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin::SHELL_EXT_ORIGIN,
+                                      ::mega::INVALID_HANDLE,
+                                      localFolder);
+}
 void MegaApplication::shellExport(QQueue<QString> newExportQueue)
 {
     if (appfinished || !megaApi->isLoggedIn())
