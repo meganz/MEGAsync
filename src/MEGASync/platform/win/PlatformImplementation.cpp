@@ -589,6 +589,9 @@ void PlatformImplementation::setRenderingBackend() const
         }
 
         QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+
+        // Improve QtQuickWidget compatibility
+        QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
     }
 }
 
