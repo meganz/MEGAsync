@@ -339,7 +339,6 @@ protected:
     void refreshStorageUIs();
     void manageBusinessStatus(int64_t event);
 
-    bool eventFilter(QObject *obj, QEvent *e) override;
     void createInfoDialog();
 
     QSystemTrayIcon *trayIcon;
@@ -383,8 +382,7 @@ protected:
 
     MenuItemAction *exitActionGuest;
     MenuItemAction *settingsActionGuest;
-    MenuItemAction *updateActionGuest;
-    MenuItemAction* lastHovered;
+    MenuItemAction* updateActionGuest;
 
 #ifdef __APPLE__
     QTimer *scanningTimer;

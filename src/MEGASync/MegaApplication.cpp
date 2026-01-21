@@ -256,7 +256,6 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     settingsActionGuest = nullptr;
     importLinksAction = nullptr;
     initialTrayMenu = nullptr;
-    lastHovered = nullptr;
     isPublic = false;
     prevVersion = 0;
     mTransfersModel = nullptr;
@@ -804,6 +803,8 @@ void MegaApplication::changeLanguage(QString languageCode)
     {
         currentLanguageCode = languageCode;
     }
+
+    emit languageChanged();
 
     QmlManager::instance()->retranslate();
 
@@ -2486,28 +2487,6 @@ void MegaApplication::initLocalServer()
     {
         startHttpServer();
     }
-}
-
-bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
-{
-    if (!appfinished && obj == infoDialogMenu)
-    {
-        if (e->type() == QEvent::Leave)
-        {
-            if (lastHovered)
-            {
-                lastHovered->setHighlight(false);
-                lastHovered = nullptr;
-            }
-        }
-    }
-
-    if (!appfinished && e->type() == QEvent::LanguageChange)
-    {
-        emit languageChanged();
-    }
-
-    return QApplication::eventFilter(obj, e);
 }
 
 void MegaApplication::createInfoDialog()
@@ -5513,8 +5492,6 @@ void MegaApplication::createAppMenus()
 // Create menus for the tray icon.
 void MegaApplication::createTrayIconMenus()
 {
-    lastHovered = nullptr;
-
     // First, create the initial Menu, shown while not connected
 
     // Clear menu if it exists

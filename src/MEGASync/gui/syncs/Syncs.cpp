@@ -380,6 +380,11 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString nam
 
 QString Syncs::getLocalError() const
 {
+    if (!mLocalError.has_value())
+    {
+        return {};
+    }
+
     switch (mLocalError.value())
     {
         case LocalErrors::EMPTY_PATH:
@@ -424,6 +429,11 @@ QString Syncs::getLocalError() const
 
 QString Syncs::getRemoteError() const
 {
+    if (!mRemoteError.has_value())
+    {
+        return {};
+    }
+
     switch (mRemoteError.value())
     {
         case RemoteErrors::EMPTY_PATH:
