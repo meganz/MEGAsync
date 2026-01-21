@@ -10,6 +10,7 @@
 #include "CrashReportDialog.h"
 #include "CreateRemoveBackupsManager.h"
 #include "CreateRemoveSyncsManager.h"
+#include "CreateRemoveBackupsManager.h"
 #include "DateTimeFormatter.h"
 #include "DeviceCentre.h"
 #include "DialogOpener.h"
@@ -3031,8 +3032,8 @@ void MegaApplication::processUpgradeSecurityEvent()
 
     // Prepare the dialog
     QString message = tr("Your account's security is now being upgraded. "
-                         "This will happen only once. If you have seen this message for "
-                         "this account before, press Cancel.");
+           "This will happen only once. If you have seen this message for "
+           "this account before, press Cancel.");
     if (!outSharesStrings.isEmpty())
     {
         message.append(QLatin1String("<br><br>"));
@@ -4687,7 +4688,7 @@ void MegaApplication::processSetDownload(const QString& publicLink,
     {
         showInfoDialogIfHTTPServerSender();
 
-        // Request to download Set
+               // Request to download Set
         if (mSetManager)
         {
             mSetManager->requestDownloadSetFromLink(publicLink,
