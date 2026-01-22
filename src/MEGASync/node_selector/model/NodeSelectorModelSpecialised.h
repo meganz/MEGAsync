@@ -1,6 +1,7 @@
 #ifndef NODESELECTORMODELSPECIALISED_H
 #define NODESELECTORMODELSPECIALISED_H
 
+#include "DeviceNames.h"
 #include "NodeSelectorModel.h"
 
 #include <memory>
@@ -18,6 +19,10 @@ class NodeSelectorModelCloudDrive: public NodeSelectorModel
 public:
     explicit NodeSelectorModelCloudDrive(QObject* parent = 0);
     virtual ~NodeSelectorModelCloudDrive() = default;
+
+    QVariant getDisplayText(NodeSelectorModelItem* item) const override;
+    QVariant getAddedDateText(NodeSelectorModelItem* item) const override;
+    QVariant getLastModifiedDateText(NodeSelectorModelItem* item) const override;
 
     void createRootNodes() override;
     int rootItemsCount() const override;
@@ -98,6 +103,10 @@ public:
     explicit NodeSelectorModelBackups(QObject* parent = 0);
     ~NodeSelectorModelBackups() = default;
 
+    QVariant getDisplayText(NodeSelectorModelItem* item) const override;
+    QVariant getAddedDateText(NodeSelectorModelItem* item) const override;
+    QVariant getLastModifiedDateText(NodeSelectorModelItem* item) const override;
+
     void createRootNodes() override;
     int rootItemsCount() const override;
 
@@ -119,6 +128,7 @@ signals:
 private slots:
     void onRootItemCreated();
     void onMyBackupsHandleReceived(mega::MegaHandle handle);
+    void onDeviceNamesUpdated();
 
 private:
     std::shared_ptr<mega::MegaNodeList> mBackupsNodeList;
@@ -126,6 +136,7 @@ private:
     bool addToLoadingList(const std::shared_ptr<mega::MegaNode> node) override;
     void loadLevelFinished() override;
     int mBackupDevicesSize;
+    std::shared_ptr<const UserAttributes::DeviceNames> mDeviceNamesRequest;
 };
 
 class NodeSelectorModelSearch: public NodeSelectorModel
@@ -136,6 +147,7 @@ public:
     explicit NodeSelectorModelSearch(NodeSelectorModelItemSearch::Types allowedType,
                                      QObject* parent = 0);
     ~NodeSelectorModelSearch() = default;
+
     void firstLoad() override;
     void createRootNodes() override;
     void searchByText(const QString& text);

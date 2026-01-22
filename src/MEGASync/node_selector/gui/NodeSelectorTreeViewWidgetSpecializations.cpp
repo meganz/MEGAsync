@@ -1,5 +1,6 @@
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
 
+#include "DeviceNames.h"
 #include "MegaNodeNames.h"
 #include "NodeSelectorModel.h"
 #include "NodeSelectorModelSpecialised.h"
@@ -90,8 +91,8 @@ MegaHandle
 void NodeSelectorTreeViewWidgetCloudDrive::onRootIndexChanged(const QModelIndex& source_idx)
 {
     Q_UNUSED(source_idx)
-    ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::USER);
-    ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::ACCESS);
+    ui->tMegaFolders->header()->hideSection(NodeSelectorModel::Column::USER);
+    ui->tMegaFolders->header()->hideSection(NodeSelectorModel::Column::ACCESS);
 
     NodeSelectorTreeViewWidget::onRootIndexChanged(source_idx);
 }
@@ -143,16 +144,16 @@ void NodeSelectorTreeViewWidgetIncomingShares::onRootIndexChanged(const QModelIn
 {
     if (idx.isValid())
     {
-        ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::USER);
-        ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::ACCESS);
+        ui->tMegaFolders->header()->hideSection(NodeSelectorModel::Column::USER);
+        ui->tMegaFolders->header()->hideSection(NodeSelectorModel::Column::ACCESS);
     }
     else
     {
-        ui->tMegaFolders->header()->showSection(NodeSelectorModel::COLUMN::USER);
-        ui->tMegaFolders->header()->showSection(NodeSelectorModel::COLUMN::ACCESS);
+        ui->tMegaFolders->header()->showSection(NodeSelectorModel::Column::USER);
+        ui->tMegaFolders->header()->showSection(NodeSelectorModel::Column::ACCESS);
     }
 
-    ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::ADDED_DATE);
+    ui->tMegaFolders->header()->hideSection(NodeSelectorModel::Column::ADDED_DATE);
 
     NodeSelectorTreeViewWidget::onRootIndexChanged(idx);
 
@@ -161,13 +162,13 @@ void NodeSelectorTreeViewWidgetIncomingShares::onRootIndexChanged(const QModelIn
     auto item(NodeSelectorModel::getItemByIndex(in_share_idx));
     if (in_share_idx.isValid() && item)
     {
-        in_share_idx = in_share_idx.sibling(in_share_idx.row(), NodeSelectorModel::COLUMN::USER);
+        in_share_idx = in_share_idx.sibling(in_share_idx.row(), NodeSelectorModel::Column::USER);
         QPixmap folderPixmap = qvariant_cast<QPixmap>(idx.data(Qt::DecorationRole));
         QPixmap pm = qvariant_cast<QPixmap>(in_share_idx.data(Qt::DecorationRole));
         ui->sh_folderIcon->setIcon(folderPixmap);
         ui->sh_userIcon->setIcon(pm);
 
-        in_share_idx = in_share_idx.sibling(in_share_idx.row(), NodeSelectorModel::COLUMN::ACCESS);
+        in_share_idx = in_share_idx.sibling(in_share_idx.row(), NodeSelectorModel::Column::ACCESS);
         QPixmap accessPixmap = qvariant_cast<QPixmap>(in_share_idx.data(Qt::DecorationRole));
         ui->sh_accessIcon->setIcon(accessPixmap);
 
@@ -281,6 +282,21 @@ NodeSelectorTreeViewWidgetBackups::NodeSelectorTreeViewWidgetBackups(SelectTypeS
     NodeSelectorTreeViewWidget(mode, parent)
 {
     setTitle(MegaNodeNames::getBackupsName());
+
+    // Monitor Device Names changes and update the title if the current folder is a Device Folder
+    auto deviceNamesRequest = UserAttributes::DeviceNames::requestDeviceName();
+    connect(deviceNamesRequest.get(),
+            &UserAttributes::DeviceNames::attributeReady,
+            this,
+            [&]()
+            {
+                auto rootIndex(ui->tMegaFolders->rootIndex());
+                auto* item = NodeSelectorModel::getItemByIndex(rootIndex);
+                if (item && item->isDeviceFolder())
+                {
+                    setTitleText(rootIndex.data(Qt::DisplayRole).toString());
+                }
+            });
 }
 
 QString NodeSelectorTreeViewWidgetBackups::getRootText()
@@ -309,9 +325,8 @@ NodeSelectorTreeViewWidget::EmptyLabelInfo NodeSelectorTreeViewWidgetBackups::ge
 
 void NodeSelectorTreeViewWidgetBackups::onRootIndexChanged(const QModelIndex& idx)
 {
-    Q_UNUSED(idx)
-    ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::USER);
-    ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::ACCESS);
+    ui->tMegaFolders->header()->hideSection(NodeSelectorModel::Column::USER);
+    ui->tMegaFolders->header()->hideSection(NodeSelectorModel::Column::ACCESS);
 
     NodeSelectorTreeViewWidget::onRootIndexChanged(idx);
 }
@@ -547,9 +562,9 @@ void NodeSelectorTreeViewWidgetSearch::changeColumnsVisibility(
             break;
     }
 
-    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::USER, hideUserColumn);
-    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ACCESS, hideAccessColumn);
-    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::ADDED_DATE, hideAddedDate);
+    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::Column::USER, hideUserColumn);
+    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::Column::ACCESS, hideAccessColumn);
+    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::Column::ADDED_DATE, hideAddedDate);
 
     onRootIndexChanged(QModelIndex());
 }
@@ -794,8 +809,8 @@ NodeSelectorTreeViewWidget::EmptyLabelInfo NodeSelectorTreeViewWidgetRubbish::ge
 void NodeSelectorTreeViewWidgetRubbish::onRootIndexChanged(const QModelIndex& source_idx)
 {
     Q_UNUSED(source_idx)
-    ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::USER);
-    ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::ACCESS);
+    ui->tMegaFolders->header()->hideSection(NodeSelectorModel::Column::USER);
+    ui->tMegaFolders->header()->hideSection(NodeSelectorModel::Column::ACCESS);
 
     NodeSelectorTreeViewWidget::onRootIndexChanged(source_idx);
 }
