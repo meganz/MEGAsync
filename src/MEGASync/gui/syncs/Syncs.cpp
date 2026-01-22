@@ -9,6 +9,8 @@
 #include "SyncsData.h"
 #include "TextDecorator.h"
 
+#include <QSet>
+
 Syncs::Syncs(QObject* parent):
     QObject(parent),
     mSyncsData(std::make_unique<SyncsData>()),
@@ -317,11 +319,42 @@ bool Syncs::setErrorIfExist(int errorCode, int syncErrorCode)
 {
     if (errorCode != mega::MegaError::API_OK)
     {
-        mRemoteError = RemoteErrors::CANT_ADD_SYNC;
-        mRemoteMegaError.error = errorCode;
-        mRemoteMegaError.syncError = syncErrorCode;
+        static const QSet<mega::SyncError> localErrors{
+            mega::SyncError::FILESYSTEM_FILE_IDS_ARE_UNSTABLE,
+            mega::SyncError::UNSUPPORTED_FILE_SYSTEM,
+            mega::SyncError::INVALID_LOCAL_TYPE,
+            mega::SyncError::LOCAL_PATH_TEMPORARY_UNAVAILABLE,
+            mega::SyncError::LOCAL_PATH_UNAVAILABLE,
+            mega::SyncError::LOCAL_FILESYSTEM_MISMATCH,
+            mega::SyncError::LOCAL_PATH_SYNC_COLLISION,
+            mega::SyncError::SYNC_CONFIG_WRITE_FAILURE,
+            mega::SyncError::COULD_NOT_CREATE_IGNORE_FILE,
+            mega::SyncError::SYNC_CONFIG_READ_FAILURE,
+            mega::SyncError::UNKNOWN_DRIVE_PATH,
+            mega::SyncError::UNABLE_TO_ADD_WATCH,
+            mega::SyncError::INSUFFICIENT_DISK_SPACE,
+            mega::SyncError::FAILURE_ACCESSING_PERSISTENT_STORAGE,
+            mega::SyncError::FILESYSTEM_ID_UNAVAILABLE,
+            mega::SyncError::UNABLE_TO_RETRIEVE_DEVICE_ID,
+            mega::SyncError::LOCAL_PATH_MOUNTED,
+        };
 
-        mSyncsData->setRemoteError(getRemoteError());
+        if (localErrors.contains(static_cast<mega::SyncError>(syncErrorCode)))
+        {
+            mLocalError = LocalErrors::CANT_ADD_SYNC;
+            mLocalMegaError.error = errorCode;
+            mLocalMegaError.syncError = syncErrorCode;
+
+            mSyncsData->setLocalError(getLocalError());
+        }
+        else
+        {
+            mRemoteError = RemoteErrors::CANT_ADD_SYNC;
+            mRemoteMegaError.error = errorCode;
+            mRemoteMegaError.syncError = syncErrorCode;
+
+            mSyncsData->setRemoteError(getRemoteError());
+        }
 
         return true;
     }
@@ -379,6 +412,15 @@ QString Syncs::getLocalError() const
                                                   mega::MegaSync::TYPE_TWOWAY,
                                                   errorMessage);
             return errorMessage;
+        }
+
+        case LocalErrors::CANT_ADD_SYNC:
+        {
+            QString msg =
+                mSyncController.getErrorString(mLocalMegaError.error, mLocalMegaError.syncError);
+            const auto link = ServiceUrls::getContactSupportUrl().toString();
+            Text::RichText(link).process(msg);
+            return msg;
         }
     }
 

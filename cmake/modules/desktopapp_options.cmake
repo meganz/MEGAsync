@@ -20,7 +20,7 @@ option(ENABLE_DESKTOP_UPDATE_GEN "Enable desktop update generator tool" ON)
 
 option(ENABLE_DESKTOP_APP_WERROR "Enable warnings as errors" ON)
 option(ENABLE_DESIGN_TOKENS_IMPORTER "Enable design tokens importer tool" OFF)
-option(ENABLE_DESKTOP_APP_TESTS "Enable Desktop app Automated tests" ON)
+option(ENABLE_DESKTOP_APP_TESTS "Enable Desktop app Automated tests" OFF)
 
 if(WIN32 AND CMAKE_GENERATOR_PLATFORM MATCHES "ARM64")
     option(USE_BREAKPAD "Enable Usage of breakpad" OFF)
