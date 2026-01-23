@@ -250,7 +250,9 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] menambahkan %n barang</numerusform></translation>
+        <translation>
+            <numerusform>[A] menambahkan %n barang</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] blocked you as contact</source>
@@ -285,7 +287,9 @@
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A] menghapus %n barang</numerusform></translation>
+        <translation>
+            <numerusform>[A] menghapus %n barang</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] sent you a contact request</source>
@@ -295,7 +299,9 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>[A] memperbarui %n item</numerusform></translation>
+        <translation>
+            <numerusform>[A] memperbarui %n item</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -395,12 +401,16 @@
     <message numerus="yes">
         <source>%1, but %n folder couldn’t be backed up</source>
         <translatorcomment>Notification message to indicate that backups have been created (%1) but other %n backups have failed. Keep both %1 indicating a text with correctly created backups and %n to indicate the number of backups failed. SNC-5495</translatorcomment>
-        <translation><numerusform>%1, kecuali %n folder tidak dapat dicadangkan</numerusform></translation>
+        <translation>
+            <numerusform>%1, kecuali %n folder tidak dapat dicadangkan</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder was backed up</source>
         <translatorcomment>Notification message to indicate that %n backups have been created. Keep %n to indicate the number of backups created. SNC-5495</translatorcomment>
-        <translation><numerusform>%n folder dicadangkan</numerusform></translation>
+        <translation>
+            <numerusform>%n folder dicadangkan</numerusform>
+        </translation>
     </message>
     <message>
         <source>Not all folders were backed up</source>
@@ -413,7 +423,9 @@
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
-        <translation><numerusform>Beberapa folder dengan nama yang sama sudah ada di Cadangan anda. Ganti nama folder baru untuk melanjutkan dengan cadangan. Nama folder tidak akan berubah di komputer anda.</numerusform></translation>
+        <translation>
+            <numerusform>Beberapa folder dengan nama yang sama sudah ada di Cadangan anda. Ganti nama folder baru untuk melanjutkan dengan cadangan. Nama folder tidak akan berubah di komputer anda.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Backup folders can&apos;t contain or be contained by other backup folder</source>
@@ -428,7 +440,9 @@
     <message numerus="yes">
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
-        <translation><numerusform>Folder ini tidak dicadangkan. Coba lagi.</numerusform></translation>
+        <translation>
+            <numerusform>Folder ini tidak dicadangkan. Coba lagi.</numerusform>
+        </translation>
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
@@ -513,7 +527,7 @@
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
-        <translatorcomment>Description label about the option Use HTTPS for transfers that don't start checkbox.</translatorcomment>
+        <translatorcomment>Description label about the option Use HTTPS for transfers that don&apos;t start checkbox.</translatorcomment>
         <translation>Hanya aktifkan opsi ini jika transfer tidak dimulai. Dalam semua keadaan lain, menggunakan HTTP memuaskan karena MEGA sudah mengenkripsi semua data.</translation>
     </message>
     <message>
@@ -821,8 +835,10 @@
     </message>
     <message numerus="yes">
         <source>Are you sure you want to solve the issue?</source>
-        <translatorcomment>Warning text to confirm the user's choice in resolving a stalled issue.SNC-2565</translatorcomment>
-        <translation><numerusform>Selesaikan masalah?</numerusform></translation>
+        <translatorcomment>Warning text to confirm the user&apos;s choice in resolving a stalled issue.SNC-2565</translatorcomment>
+        <translation>
+            <numerusform>Selesaikan masalah?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -841,18 +857,22 @@
     </message>
     <message>
         <source>Solve</source>
-        <translatorcomment>User options for the header widget of a stalled issue shown when there's a missing file fingerprint.SNC-2565</translatorcomment>
+        <translatorcomment>User options for the header widget of a stalled issue shown when there&apos;s a missing file fingerprint.SNC-2565</translatorcomment>
         <translation>Selesaikan</translation>
     </message>
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation><numerusform>Tindakan ini akan mengunduh file ke lokasi sementara, memperbaiki masalah dan kemudian menghapus file sementara.</numerusform></translation>
+        <translation>
+            <numerusform>Tindakan ini akan mengunduh file ke lokasi sementara, memperbaiki masalah dan kemudian menghapus file sementara.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers,[B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Lanjutkan transfer anda untuk memperbaiki masalah.</numerusform></translation>
+        <translation>
+            <numerusform>Lanjutkan transfer anda untuk memperbaiki masalah.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -906,12 +926,16 @@
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation><numerusform>Paket keanggotaan Pro anda kedaluwarsa %n hari lalu</numerusform></translation>
+        <translation>
+            <numerusform>Paket keanggotaan Pro anda kedaluwarsa %n hari lalu</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Your Pro membership plan will expire in %n day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation><numerusform>Paket keanggotaan Pro anda akan kedaluwarsa dalam %n hari</numerusform></translation>
+        <translation>
+            <numerusform>Paket keanggotaan Pro anda akan kedaluwarsa dalam %n hari</numerusform>
+        </translation>
     </message>
     <message>
         <source>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</source>
@@ -1033,12 +1057,12 @@
     <name>DeleteWaitingOnMovesHeader</name>
     <message>
         <source>Waiting for other processes to complete.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when we're waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
         <translation>Menunggu proses lain selesai.</translation>
     </message>
     <message>
         <source>Waiting to move [B]%1[/B]</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when we're waiting for a move operation to complete to make sure the file should be deleted.[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted.[B] is for bold.SNC-2565</translatorcomment>
         <translation>Menunggu untuk pindah [B]%1[/B]</translation>
     </message>
 </context>
@@ -1122,7 +1146,7 @@
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Akun Pro Flexi dinonaktifkan</translation>
+        <translation>Akun Pro&#xa0;Flexi dinonaktifkan</translation>
     </message>
     <message>
         <source>Reject</source>
@@ -1192,7 +1216,9 @@
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
-        <translation><numerusform>Anda memiliki sisa %n hari untuk menyimpan data anda</numerusform></translation>
+        <translation>
+            <numerusform>Anda memiliki sisa %n hari untuk menyimpan data anda</numerusform>
+        </translation>
     </message>
     <message>
         <source>You have unread notifications</source>
@@ -1257,7 +1283,9 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] menambahkan %n barang</numerusform></translation>
+        <translation>
+            <numerusform>[A] menambahkan %n barang</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -1272,7 +1300,9 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>[A] memperbarui %n item</numerusform></translation>
+        <translation>
+            <numerusform>[A] memperbarui %n item</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1319,7 +1349,7 @@
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don't have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>Anda tidak mempunyai write permission dalam folder lokal ini.</translation>
     </message>
 </context>
@@ -1342,13 +1372,17 @@
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1 item dipilih.</numerusform></translation>
+        <translation>
+            <numerusform>%1 item dipilih.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1. %2 telah dihapus. Untuk memilih ulang, tutup jendela ini dan coba lagi. </numerusform></translation>
+        <translation>
+            <numerusform>%1. %2 telah dihapus. Untuk memilih ulang, tutup jendela ini dan coba lagi. </numerusform>
+        </translation>
     </message>
     <message>
         <source>Download</source>
@@ -1358,12 +1392,16 @@
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation><numerusform>Item yang anda pilih telah dihapus. Untuk memilih ulang, tutup jendela ini dan coba lagi.</numerusform></translation>
+        <translation>
+            <numerusform>Item yang anda pilih telah dihapus. Untuk memilih ulang, tutup jendela ini dan coba lagi.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation><numerusform>Anda tidak lagi memiliki akses ke item ini. Mintalah orang yang membagikannya kepada anda untuk membagikannya lagi.</numerusform></translation>
+        <translation>
+            <numerusform>Anda tidak lagi memiliki akses ke item ini. Mintalah orang yang membagikannya kepada anda untuk membagikannya lagi.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1399,7 +1437,9 @@
     <message numerus="yes">
         <source>Apply to all %1 duplicates</source>
         <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation><numerusform>Terapkan ke semua %1 duplikat</numerusform></translation>
+        <translation>
+            <numerusform>Terapkan ke semua %1 duplikat</numerusform>
+        </translation>
     </message>
     <message>
         <source>File already exists</source>
@@ -1578,7 +1618,7 @@
         <translation>Kecualikan file berdasarkan ukuran</translation>
     </message>
     <message>
-        <source>Exclude files by specifying the lower and upper size limit, or just the files that are greater than or lesser than a specific size.</source>
+        <source>Exclude&#xa0;files by specifying the lower and upper size limit, or just the files that are&#xa0;greater than or&#xa0;lesser than a specific size.</source>
         <translatorcomment>Description for size exclusion rules section.SAT-449</translatorcomment>
         <translation>Kecualikan file dengan menetapkan batas ukuran minimum dan maksimum, atau file yang lebih besar atau lebih kecil dari ukuran tertentu.</translation>
     </message>
@@ -1910,17 +1950,17 @@
     <name>FileIssueHeader</name>
     <message>
         <source>A single file had an issue that needs a user decision to solve</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a file which requires user's intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a file which requires user&apos;s intervention.SNC-2565</translatorcomment>
         <translation>File memiliki masalah yang membutuhkan keputusan anda untuk menyelesaikannya</translation>
     </message>
     <message>
         <source>A single folder had an issue that needs a user decision to solve.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a folder which requires user's intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a folder which requires user&apos;s intervention.SNC-2565</translatorcomment>
         <translation>Folder memiliki masalah yang membutuhkan keputusan anda untuk menyelesaikannya</translation>
     </message>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's an issue with a file or folder which requires user's intervention, [B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s an issue with a file or folder which requires user&apos;s intervention, [B] is for bold.SNC-2565</translatorcomment>
         <translation>Tidak dapat menyinkronkan [B]%1[/B]</translation>
     </message>
 </context>
@@ -1952,12 +1992,16 @@
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
-        <translation><numerusform>%n berkas</numerusform></translation>
+        <translation>
+            <numerusform>%n berkas</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
-        <translation><numerusform>%n folder</numerusform></translation>
+        <translation>
+            <numerusform>%n folder</numerusform>
+        </translation>
     </message>
     <message>
         <source>Click the toolbar item for a menu.</source>
@@ -2007,12 +2051,12 @@
     <name>FolderMatchedAgainstFileHeader</name>
     <message>
         <source>Cannot sync folders against files.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
         <translation>File yang anda coba sinkronkan tidak memiliki ekstensi dan memiliki nama yang sama dengan folder yang ada</translation>
     </message>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
         <translation>Tidak dapat menyinkronkan [B]%1[/B]</translation>
     </message>
 </context>
@@ -2219,7 +2263,7 @@ Periksa kotak masuk email anda untuk petunjuk tentang membuka kunci akun anda da
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Label to refer Pro Flexi tier CON-467</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Storage space:</source>
@@ -2271,22 +2315,22 @@ Periksa kotak masuk email anda untuk petunjuk tentang membuka kunci akun anda da
     </message>
     <message>
         <source>No notifications</source>
-        <translatorcomment>Label to indicate that there aren't notifications available at this moment.</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications available at this moment.</translatorcomment>
         <translation>Tidak ada notifikasi</translation>
     </message>
     <message>
         <source>No notifications for contacts</source>
-        <translatorcomment>Label to indicate that there aren't notifications of contacts</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of contacts</translatorcomment>
         <translation>Tidak ada pemberitahuan untuk kontak</translation>
     </message>
     <message>
         <source>No notifications for incoming shares</source>
-        <translatorcomment>Label to indicate that there aren't notifications of incoming shares</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of incoming shares</translatorcomment>
         <translation>Tidak ada pemberitahuan untuk saham yang masuk</translation>
     </message>
     <message>
         <source>No notifications for payments</source>
-        <translatorcomment>Label to indicate that there aren't notifications of payments</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation>Tidak ada pemberitahuan untuk pembayaran</translation>
     </message>
     <message>
@@ -2402,7 +2446,9 @@ Periksa kotak masuk email anda untuk petunjuk tentang membuka kunci akun anda da
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation><numerusform>Kami telah menghubungi anda melalui email ke [A] pada [B]tapi anda masih punya  %n berkas sebesar [D] dalam akun MEGA anda, yang mengharuskan anda memiliki [E].</numerusform></translation>
+        <translation>
+            <numerusform>Kami telah menghubungi anda melalui email ke [A] pada [B]tapi anda masih punya  %n berkas sebesar [D] dalam akun MEGA anda, yang mengharuskan anda memiliki [E].</numerusform>
+        </translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</source>
@@ -2412,12 +2458,16 @@ Periksa kotak masuk email anda untuk petunjuk tentang membuka kunci akun anda da
     <message numerus="yes">
         <source>You have %n day left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. %n- number of days left to upgrade.</translatorcomment>
-        <translation><numerusform>Anda memiliki %n hari tersisa untuk meningkatkan, atau data Anda akan dihapus</numerusform></translation>
+        <translation>
+            <numerusform>Anda memiliki %n hari tersisa untuk meningkatkan, atau data Anda akan dihapus</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You have %n hour left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: %n- number of hours left to upgrade.</translatorcomment>
-        <translation><numerusform>Anda memiliki %n jam tersisa untuk meningkatkan, atau data Anda akan dihapus</numerusform></translation>
+        <translation>
+            <numerusform>Anda memiliki %n jam tersisa untuk meningkatkan, atau data Anda akan dihapus</numerusform>
+        </translation>
     </message>
     <message>
         <source>You must act immediately to save your data</source>
@@ -2548,7 +2598,7 @@ Periksa kotak masuk email anda untuk petunjuk tentang membuka kunci akun anda da
     </message>
     <message>
         <source>Failed to install the necessary components.</source>
-        <translatorcomment>This is the text of an error message displayed when there's a problem installing Notification Area Icon Support. The message indicates that the required components for the feature couldn't be installed. SNC-2270</translatorcomment>
+        <translatorcomment>This is the text of an error message displayed when there&apos;s a problem installing Notification Area Icon Support. The message indicates that the required components for the feature couldn&apos;t be installed. SNC-2270</translatorcomment>
         <translation>Gagal menginstal komponen yang diperlukan.</translation>
     </message>
     <message>
@@ -2601,7 +2651,7 @@ Silakan nyalakan kembali komputer anda untuk menyelesaikan instalasi.</translati
 sudo dnf install gnome-shell-extensions
 sudo dnf install gnome-shell-extension-appindicator
 gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</source>
-        <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there's an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
+        <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there&apos;s an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
         <translation>Untuk menginstal secara manual, jalankan perintah berikut:
 
 sudo dnf install gnome-shell-extensions
@@ -2793,7 +2843,9 @@ Tunggu hingga unggahan selesai.</translation>
     <message numerus="yes">
         <source>The [B]remote file[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>File yang sudah disimpan di MEGA akan memiliki akhiran seperti (1) ditambahkan.</numerusform></translation>
+        <translation>
+            <numerusform>File yang sudah disimpan di MEGA akan memiliki akhiran seperti (1) ditambahkan.</numerusform>
+        </translation>
     </message>
     <message>
         <source>The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
@@ -2803,7 +2855,9 @@ Tunggu hingga unggahan selesai.</translation>
     <message numerus="yes">
         <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Folder yang sudah disimpan di MEGA akan memiliki akhiran seperti (1) ditambahkan.</numerusform></translation>
+        <translation>
+            <numerusform>Folder yang sudah disimpan di MEGA akan memiliki akhiran seperti (1) ditambahkan.</numerusform>
+        </translation>
     </message>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
@@ -2888,7 +2942,9 @@ Tunggu hingga unggahan selesai.</translation>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Lanjutkan transfer anda untuk memperbaiki masalah.</numerusform></translation>
+        <translation>
+            <numerusform>Lanjutkan transfer anda untuk memperbaiki masalah.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -3262,7 +3318,7 @@ Tunggu hingga unggahan selesai.</translation>
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Akun Pro Flexi dinonaktifkan</translation>
+        <translation>Akun Pro&#xa0;Flexi dinonaktifkan</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -3296,7 +3352,7 @@ Tunggu hingga unggahan selesai.</translation>
     </message>
     <message>
         <source>Stalled</source>
-        <translatorcomment>Tooltip for tray icon when there' a sync stal.SNC-2565</translatorcomment>
+        <translatorcomment>Tooltip for tray icon when there&apos; a sync stal.SNC-2565</translatorcomment>
         <translation>Masalah terdeteksi</translation>
     </message>
     <message>
@@ -3353,8 +3409,10 @@ Tunggu hingga unggahan selesai.</translation>
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>Ada transfer aktif. Keluar dari aplikasi?
-Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</numerusform></translation>
+        <translation>
+            <numerusform>Ada transfer aktif. Keluar dari aplikasi?
+Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</numerusform>
+        </translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
@@ -3389,7 +3447,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn't any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>Terkini</translation>
     </message>
     <message>
@@ -3415,7 +3473,9 @@ https://mega.co.nz/#sync</source>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
         <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
-        <translation><numerusform>Anda sedang berbagi folder berikut: %1</numerusform></translation>
+        <translation>
+            <numerusform>Anda sedang berbagi folder berikut: %1</numerusform>
+        </translation>
     </message>
     <message>
         <source>You are not logged in</source>
@@ -3724,7 +3784,7 @@ Periksa kotak masuk email anda untuk informasi lebih lanjut tentang cara mengaju
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
+        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
         <translation>Akun anda dihentikan karena pelanggaran Ketentuan Layanan MEGA.
 Anda tidak akan dapat memperoleh kembali akses ke data yang disimpan atau diberi wewenang untuk mendaftar akun MEGA baru.</translation>
     </message>
@@ -3897,7 +3957,7 @@ Anda tidak akan dapat memperoleh kembali akses ke data yang disimpan atau diberi
     </message>
     <message>
         <source>Mismatch on sync root FSID.</source>
-        <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
+        <translatorcomment>SDK error shown when the sync&apos;s root FSID changed meaning it is a different folder, and we can&apos;t identify the old sync db as the name depends on this. SAT-815</translatorcomment>
         <translation>Masalah menyinkronkan atau membuat cadangan folder ini karena perubahan pada folder lokal. Hentikan sinkronisasi atau pencadangan dan coba atur lagi di Pengaturan, atau hubungi Dukungan.</translation>
     </message>
     <message>
@@ -3993,7 +4053,7 @@ Anda tidak akan dapat memperoleh kembali akses ke data yang disimpan atau diberi
     <message>
         <source>Unable to retrieve the ID of current device</source>
         <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
-        <translation>Tidak dapat membuat cadangan karena perangkat yang anda cadangkan tidak memiliki nama. Beri nama perangkat anda, lalu coba lagi. Jika masalah berlanjut, hubungi Bantuan.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Unable to write sync config to disk.</source>
@@ -4091,12 +4151,16 @@ Anda tidak akan dapat memperoleh kembali akses ke data yang disimpan atau diberi
     <message numerus="yes">
         <source>Cancel and clear transfer</source>
         <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
-        <translation><numerusform>Batalkan dan hapus transfer</numerusform></translation>
+        <translation>
+            <numerusform>Batalkan dan hapus transfer</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Cancel transfer</source>
         <translatorcomment>Context menu action to cancel transfer</translatorcomment>
-        <translation><numerusform>Batalkan transfer</numerusform></translation>
+        <translation>
+            <numerusform>Batalkan transfer</numerusform>
+        </translation>
     </message>
     <message>
         <source>Cancel transfer?</source>
@@ -4116,7 +4180,9 @@ Anda tidak akan dapat memperoleh kembali akses ke data yang disimpan atau diberi
     <message numerus="yes">
         <source>Clear transfer</source>
         <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
-        <translation><numerusform>Hapus transfer</numerusform></translation>
+        <translation>
+            <numerusform>Hapus transfer</numerusform>
+        </translation>
     </message>
     <message>
         <source>Clear transfer?</source>
@@ -4181,12 +4247,16 @@ Anda tidak akan dapat memperoleh kembali akses ke data yang disimpan atau diberi
     <message numerus="yes">
         <source>Pause transfer</source>
         <translatorcomment>Context menu action to pause transfer</translatorcomment>
-        <translation><numerusform>Jeda transfer</numerusform></translation>
+        <translation>
+            <numerusform>Jeda transfer</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Resume transfer</source>
         <translatorcomment>Context menu action to resume transfer</translatorcomment>
-        <translation><numerusform>Lanjutkan transfer</numerusform></translation>
+        <translation>
+            <numerusform>Lanjutkan transfer</numerusform>
+        </translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -4194,7 +4264,7 @@ Anda tidak akan dapat memperoleh kembali akses ke data yang disimpan atau diberi
         <translation>Tunjukkan di folder</translation>
     </message>
     <message>
-        <source>Your incomplete sync transfers won't be cancelled
+        <source>Your incomplete sync transfers won&apos;t be cancelled
 All the other transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
         <translation>Transfer sinkronisasi tidak dapat dibatalkan, tetapi semua transfer lainnya akan dibatalkan dan dihapus</translation>
@@ -4205,7 +4275,7 @@ All the other transfers will be cancelled and cleared.</source>
         <translation>Sinkronisasi transfer tidak dapat dibatalkan</translation>
     </message>
     <message>
-        <source>Your selected incomplete sync transfers won't be cancelled
+        <source>Your selected incomplete sync transfers won&apos;t be cancelled
 All the other selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
         <translation>Sinkronisasi transfer tidak dapat dibatalkan, tetapi semua transfer yang dipilih lainnya akan dibatalkan dan dihapus</translation>
@@ -4348,12 +4418,12 @@ Muat ulang tampilan.</translation>
     </message>
     <message>
         <source>Modified externally</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it's modified externally.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s modified externally.SNC-2565</translatorcomment>
         <translation>Dimodifikasi secara eksternal</translation>
     </message>
     <message>
         <source>No action needed</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it's solved.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s solved.SNC-2565</translatorcomment>
         <translation>Tidak ada tindakan yang diperlukan</translation>
     </message>
     <message>
@@ -4934,7 +5004,9 @@ Masukkan nama yang berbeda.</translation>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
         <translatorcomment>Body of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
-        <translation><numerusform>Jika anda meninggalkan folder ini, anda tidak akan dapat melihatnya lagi.</numerusform></translation>
+        <translation>
+            <numerusform>Jika anda meninggalkan folder ini, anda tidak akan dapat melihatnya lagi.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Leave</source>
@@ -4944,7 +5016,9 @@ Masukkan nama yang berbeda.</translation>
     <message numerus="yes">
         <source>Leave this shared folder?</source>
         <translatorcomment>Title of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
-        <translation><numerusform>Tinggalkan folder bersama ini?</numerusform></translation>
+        <translation>
+            <numerusform>Tinggalkan folder bersama ini?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Move</source>
@@ -4959,7 +5033,9 @@ Masukkan nama yang berbeda.</translation>
     <message numerus="yes">
         <source>Move %n items to Rubbish bin?</source>
         <translatorcomment>Main text of the confirmation messagebox to move some items (files or folders) pto the rubbish bin. %n is the number of items to delete. CON-334</translatorcomment>
-        <translation><numerusform>Pindah %n barang ke tempat sampah?</numerusform></translation>
+        <translation>
+            <numerusform>Pindah %n barang ke tempat sampah?</numerusform>
+        </translation>
     </message>
     <message>
         <source>New folder</source>
@@ -4974,17 +5050,23 @@ Masukkan nama yang berbeda.</translation>
     <message numerus="yes">
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a file(s) from the rubbish bin. %n is the number of files to delete. CON-1258</translatorcomment>
-        <translation><numerusform>Anda akan menghapus berkas %n secara permanen. Apakah anda ingin melanjutkan?</numerusform></translation>
+        <translation>
+            <numerusform>Anda akan menghapus berkas %n secara permanen. Apakah anda ingin melanjutkan?</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n folder. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a folder(s) from the rubbish bin. %n is the number of folders to delete. CON-1258</translatorcomment>
-        <translation><numerusform>Anda akan menghapus %n folder secara permanen. Apakah anda ingin melanjutkan?</numerusform></translation>
+        <translation>
+            <numerusform>Anda akan menghapus %n folder secara permanen. Apakah anda ingin melanjutkan?</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n items. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently some items (files and folders) from the rubbish bin. %n is the number of items to delete. CON-1258</translatorcomment>
-        <translation><numerusform>Anda akan menghapus barang %n secara permanen. Apakah anda ingin melanjutkan?</numerusform></translation>
+        <translation>
+            <numerusform>Anda akan menghapus barang %n secara permanen. Apakah anda ingin melanjutkan?</numerusform>
+        </translation>
     </message>
     <message>
         <source>You cannot undo this action</source>
@@ -5039,7 +5121,9 @@ Masukkan nama yang berbeda.</translation>
     <message numerus="yes">
         <source>%n result found</source>
         <translatorcomment>Search tab subtitle that shows the number of coincidences found. %n is the number of found nodes. SNC-5804</translatorcomment>
-        <translation><numerusform>%n hasil ditemukan</numerusform></translation>
+        <translation>
+            <numerusform>%n hasil ditemukan</numerusform>
+        </translation>
     </message>
     <message>
         <source>No search results</source>
@@ -5062,27 +5146,35 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Offer expires in %1 m %2 s</source>
         <translatorcomment>Text indicating that the offer expires in the %1 minutes and %2 seconds. The placeholder %1 shall be replaced by the number of minutes and %2 by the number of seconds. CON-868</translatorcomment>
-        <translation>Penawaran berakhir dalam %1 menit %2 detik</translation>
+        <translation>Penawaran berakhir dalam %1&#xa0;menit %2&#xa0;detik</translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n day</source>
         <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
-        <translation><numerusform>Penawaran berakhir dalam %n hari</numerusform></translation>
+        <translation>
+            <numerusform>Penawaran berakhir dalam %n hari</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n hour</source>
         <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
-        <translation><numerusform>Penawaran berakhir dalam %n jam</numerusform></translation>
+        <translation>
+            <numerusform>Penawaran berakhir dalam %n jam</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n minute</source>
         <translatorcomment>Text indicating that the offer expires in the %n minutes. The placeholder %n shall be replaced by the number of minutes. CON-868/SNC-4853</translatorcomment>
-        <translation><numerusform>Penawaran berakhir pada %n menit</numerusform></translation>
+        <translation>
+            <numerusform>Penawaran berakhir pada %n menit</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n second</source>
         <translatorcomment>Text indicating that the offer expires in the %n seconds. Placeholder %n shall be replaced by the number of seconds. CON-868/SNC-4853</translatorcomment>
-        <translation><numerusform>Penawaran berakhir pada %n detik</numerusform></translation>
+        <translation>
+            <numerusform>Penawaran berakhir pada %n detik</numerusform>
+        </translation>
     </message>
     <message>
         <source>PROMO</source>
@@ -5607,7 +5699,7 @@ Masukkan nama yang berbeda.</translation>
     </message>
     <message>
         <source>You can view your backups and their statuses under the Backup tab in Settings.</source>
-        <translatorcomment>Text indicating that the user can view the backups in settings' backups tab CON-738</translatorcomment>
+        <translatorcomment>Text indicating that the user can view the backups in settings&apos; backups tab CON-738</translatorcomment>
         <translation>Anda dapat melihat cadangan dan statusnya di bawah tab Cadangan di Pengaturan.</translation>
     </message>
     <message>
@@ -5664,7 +5756,9 @@ Masukkan nama yang berbeda.</translation>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A] menghapus %n barang</numerusform></translation>
+        <translation>
+            <numerusform>[A] menghapus %n barang</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -5902,17 +5996,17 @@ Masukkan nama yang berbeda.</translation>
     </message>
     <message>
         <source>Moved to OS Recycle Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user's in Windows.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
         <translation>Item dipindahkan ke Recycle Bin</translation>
     </message>
     <message>
         <source>Moved to OS Rubbish Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user's choice in MacOS.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
         <translation>Item dipindahkan ke Sampah</translation>
     </message>
     <message>
         <source>Moved to OS Trash</source>
-        <translatorcomment>Label showing what happened to the file based on the user's choice in linux.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
         <translation>Item dipindahkan ke Sampah</translation>
     </message>
     <message>
@@ -5939,7 +6033,16 @@ Masukkan nama yang berbeda.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We've fixed bugs and made the app more reliable.
+        <source>- Improved reliability for problematic graphics drivers on Windows.
+- Minor bug fixes and performance improvements.
+</source>
+        <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
+        <translation>- Improved reliability for problematic graphics drivers on Windows.
+- Minor bug fixes and performance improvements.
+</translation>
+    </message>
+    <message>
+        <source>- We&apos;ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
         <translation type="unfinished"></translation>
@@ -6115,7 +6218,7 @@ Ingin menggantinya?</translation>
         <translation>&amp;Simpan</translation>
     </message>
     <message>
-        <source>'%1' is write protected.
+        <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
         <translation>”%1” dilindungi dari penulisan.
@@ -6347,27 +6450,27 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 GB</translation>
+        <translation>%1&#xa0;GB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 KB</translation>
+        <translation>%1&#xa0;KB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 MB</translation>
+        <translation>%1&#xa0;MB</translation>
     </message>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 TB</translation>
+        <translation>%1&#xa0;TB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 bytes</translation>
+        <translation>%1&#xa0;bytes</translation>
     </message>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
@@ -6486,8 +6589,13 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <name>RemoveBackup</name>
     <message>
         <source>Backup folder already exists on destination. Choose another.</source>
-        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can't move it there! SNC-6067 </translatorcomment>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can&apos;t move it there! SNC-6067 </translatorcomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destination folder doesn’t exist. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
+        <translation>Destination folder doesn’t exist. Choose another.</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
@@ -6518,6 +6626,11 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <translation>Hapus folder dari MEGA</translation>
     </message>
     <message>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
+        <translation>Folder akan dihapus dari MEGA, tetapi tidak akan dihapus dari perangkat anda. Tindakan ini tidak dapat dibatalkan.</translation>
+    </message>
+    <message>
         <source>Move folder</source>
         <translatorcomment>Radio button option label</translatorcomment>
         <translation>Pindahkan folder ke drive Cloud</translation>
@@ -6541,11 +6654,6 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <source>Stop backup</source>
         <translatorcomment>Backup removal dialog window title (Linux and windows)</translatorcomment>
         <translation>Hentikan pencadangan</translation>
-    </message>
-    <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
-        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
-        <translation>Folder akan dihapus dari MEGA, tetapi tidak akan dihapus dari perangkat anda. Tindakan ini tidak dapat dibatalkan.</translation>
     </message>
     <message>
         <source>To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].</source>
@@ -6635,12 +6743,16 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
-        <translation><numerusform>%n file</numerusform></translation>
+        <translation>
+            <numerusform>%n file</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
-        <translation><numerusform>%n folder</numerusform></translation>
+        <translation>
+            <numerusform>%n folder</numerusform>
+        </translation>
     </message>
     <message>
         <source>Adding transfers…</source>
@@ -6889,6 +7001,11 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <translation>Luncurkan saat masuk</translation>
     </message>
     <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
+        <translation>Pelajari selengkapnya</translation>
+    </message>
+    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>Folder lokal dengan cadangan file dihapus di MEGA</translation>
@@ -7034,6 +7151,11 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <translation>Sinkronisasi akan berhenti berfungsi.</translation>
     </message>
     <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Transfer Quota</source>
         <translatorcomment>Section title for account transfer quota details.</translatorcomment>
         <translation>Kuota transfer</translation>
@@ -7066,7 +7188,9 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message numerus="yes">
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
-        <translation><numerusform>Kuota yang digunakan untuk yang terakhir %n jam:</numerusform></translation>
+        <translation>
+            <numerusform>Kuota yang digunakan untuk yang terakhir %n jam:</numerusform>
+        </translation>
     </message>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
@@ -7096,17 +7220,9 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message numerus="yes">
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation><numerusform>hari</numerusform></translation>
-    </message>
-    <message>
-        <source>Theme</source>
-        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Learn more</source>
-        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
-        <translation>Pelajari selengkapnya</translation>
+        <translation>
+            <numerusform>hari</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -7140,12 +7256,16 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation><numerusform>%n berkas</numerusform></translation>
+        <translation>
+            <numerusform>%n berkas</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation><numerusform>%n folder</numerusform></translation>
+        <translation>
+            <numerusform>%n folder</numerusform>
+        </translation>
     </message>
     <message>
         <source>Add backup</source>
@@ -7156,6 +7276,11 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <source>Add sync</source>
         <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
         <translation>Tambah sync</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translatorcomment>Label displayed when a user is trying to backup folders to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>Backup</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -7176,6 +7301,11 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <source>Share with a MEGA user</source>
         <translatorcomment>Label displayed when a user is trying to share a public link of a file/folder with a user. String as short as possible.</translatorcomment>
         <translation>Bagikan dengan pengguna MEGA</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>Sync</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -7384,7 +7514,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
     </message>
     <message>
         <source>MAC verification failure.</source>
-        <translatorcomment>Label descriping sync stall path issue when there's Cryptographic error .SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stall path issue when there&apos;s Cryptographic error .SNC-2565</translatorcomment>
         <translation>Kegagalan verifikasi MAC</translation>
     </message>
     <message>
@@ -7394,7 +7524,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
     </message>
     <message>
         <source>Name too long for filesystem.</source>
-        <translatorcomment>Label descriping sync stallwhen move target's name is too long.SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stallwhen move target&apos;s name is too long.SNC-2565</translatorcomment>
         <translation>Nama terlalu panjang untuk sistem file</translation>
     </message>
     <message>
@@ -7496,27 +7626,37 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message numerus="yes">
         <source>Failed: %n</source>
         <translatorcomment>Name of the tab containing failed sync stalls in sync stalls dialog, %n variable is for the count.SAT-1034</translatorcomment>
-        <translation><numerusform>Gagal: %n</numerusform></translation>
+        <translation>
+            <numerusform>Gagal: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Item type conflict: %n</source>
         <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
-        <translation><numerusform>Konflik jenis item: %n</numerusform></translation>
+        <translation>
+            <numerusform>Konflik jenis item: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Name conflict: %n</source>
         <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
-        <translation><numerusform>Konflik nama: %n</numerusform></translation>
+        <translation>
+            <numerusform>Konflik nama: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Other: %n</source>
         <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
-        <translation><numerusform>Lainnya: %n</numerusform></translation>
+        <translation>
+            <numerusform>Lainnya: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Resolved: %n</source>
         <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
-        <translation><numerusform>Terselesaikan: %n</numerusform></translation>
+        <translation>
+            <numerusform>Terselesaikan: %n</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -7558,28 +7698,38 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <source>%1 and %n issues failed.</source>
         <translatorcomment>In-view message displayed when several issues have failed and fixed. This string is the second part of string for multi plural support
         being the first part about the issues fixed. SAT-1034</translatorcomment>
-        <translation><numerusform>%1 dan %n masalah gagal diselesaikan</numerusform></translation>
+        <translation>
+            <numerusform>%1 dan %n masalah gagal diselesaikan</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues failed</source>
         <translatorcomment>In-view message displayed when all issue have failed. SAT-1034</translatorcomment>
-        <translation><numerusform>%n masalah gagal diselesaikan</numerusform></translation>
+        <translation>
+            <numerusform>%n masalah gagal diselesaikan</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues fixed</source>
         <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress. This string can be used by its own or as first part of string for multi plural support
         when several issues have failed. SNC-2565</translatorcomment>
-        <translation><numerusform>%n masalah diselesaikan</numerusform></translation>
+        <translation>
+            <numerusform>%n masalah diselesaikan</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues fixed and 1 issue failed</source>
         <translatorcomment>In-view message displayed when one issue has failed and several issues have been solved. SAT-1034</translatorcomment>
-        <translation><numerusform>%n masalah diperbaiki dan 1 masalah gagal diselesaikan</numerusform></translation>
+        <translation>
+            <numerusform>%n masalah diperbaiki dan 1 masalah gagal diselesaikan</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>1 issue fixed and %n issues failed</source>
         <translatorcomment>In-view message displayed when one issue has been solved and several issues have failed. SAT-1034</translatorcomment>
-        <translation><numerusform>1 masalah diperbaiki dan %n masalah gagal diselesaikan</numerusform></translation>
+        <translation>
+            <numerusform>1 masalah diperbaiki dan %n masalah gagal diselesaikan</numerusform>
+        </translation>
     </message>
     <message>
         <source>Fixing issues</source>
@@ -7587,7 +7737,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <translation>Menyelesaikan masalah…</translation>
     </message>
     <message>
-        <source>Issues can't be fixed.
+        <source>Issues can&apos;t be fixed.
 Verify the permissions of the .megaignore on file your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>Beberapa masalah tidak dapat diselesaikan.
@@ -7604,7 +7754,7 @@ Verifikasi izin file .megaignore di lokasi folder sinkronisasi lokal anda.</tran
         <translation>Muat ulang</translation>
     </message>
     <message>
-        <source>Some issues can't be fixed.
+        <source>Some issues can&apos;t be fixed.
 Verify the permissions of the .megaignore file on your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>Beberapa masalah tidak dapat diselesaikan.
@@ -8341,7 +8491,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-4208</translatorcomment>
-        <translation>[B]%1[/B] tidak dapat ditambahkan karena akun Pro Flexi anda telah dinonaktifkan karena kegagalan pembayaran atau anda telah membatalkan langganan anda. Untuk melanjutkan, lakukan pembayaran dan aktifkan kembali langganan anda.</translation>
+        <translation>[B]%1[/B] tidak dapat ditambahkan karena akun Pro&#xa0;Flexi anda telah dinonaktifkan karena kegagalan pembayaran atau anda telah membatalkan langganan anda. Untuk melanjutkan, lakukan pembayaran dan aktifkan kembali langganan anda.</translation>
     </message>
     <message>
         <source>Error opening megaignore file</source>
@@ -8493,13 +8643,20 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Page title to add syncs. CON-1268</translatorcomment>
         <translation>Pilih folder untuk disinkronkan</translation>
     </message>
+    <message>
+        <source>[A]Learn more[/A]</source>
+        <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
+        <translation>[A]Learn more[/A]</translation>
+    </message>
 </context>
 <context>
     <name>TextArea</name>
     <message numerus="yes">
         <source>Maximum length is %n characters.</source>
         <translatorcomment>Label to indicate the maximum number of characters in the text area. The %n placeholder indicates the number of characters, please keep it. CON-942</translatorcomment>
-        <translation><numerusform>Panjang maksimum adalah %n karakter</numerusform></translation>
+        <translation>
+            <numerusform>Panjang maksimum adalah %n karakter</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -8598,7 +8755,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>%1 result found</source>
         <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
-        <translation><numerusform>%1 hasil ditemukan </numerusform></translation>
+        <translation>
+            <numerusform>%1 hasil ditemukan </numerusform>
+        </translation>
     </message>
     <message>
         <source>All</source>
@@ -8803,55 +8962,75 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>%1, but %n item couldn’t be downloaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%1, tapi %n item tidak dapat diunduh. </numerusform></translation>
+        <translation>
+            <numerusform>%1, tapi %n item tidak dapat diunduh. </numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1, but %n item couldn’t be uploaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%1, tapi %n item tidak dapat diunggah. </numerusform></translation>
+        <translation>
+            <numerusform>%1, tapi %n item tidak dapat diunggah. </numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n item tidak dapat diunduh %1.</numerusform></translation>
+        <translation>
+            <numerusform>%n item tidak dapat diunduh %1.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n item tidak dapat diunggah ke %1.</numerusform></translation>
+        <translation>
+            <numerusform>%n item tidak dapat diunggah ke %1.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%n item diunduh </numerusform></translation>
+        <translation>
+            <numerusform>%n item diunduh </numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n item diunduh ke %1.</numerusform></translation>
+        <translation>
+            <numerusform>%n item diunduh ke %1.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during an upload operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n item tidak ada lagi atau diganti namanya. </numerusform></translation>
+        <translation>
+            <numerusform>%n item tidak ada lagi atau diganti namanya. </numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n barang sudah tidak ada. </numerusform></translation>
+        <translation>
+            <numerusform>%n barang sudah tidak ada. </numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%n item diunggah </numerusform></translation>
+        <translation>
+            <numerusform>%n item diunggah </numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n item diunggah ke %1.</numerusform></translation>
+        <translation>
+            <numerusform>%n item diunggah ke %1.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Could not download</source>
@@ -8891,7 +9070,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>Retry failed items</source>
         <translatorcomment>Notification button to retry failed transfers when not all the transfers failed. CON-223</translatorcomment>
-        <translation><numerusform>Coba lagi item yang gagal</numerusform></translation>
+        <translation>
+            <numerusform>Coba lagi item yang gagal</numerusform>
+        </translation>
     </message>
     <message>
         <source>Show in MEGA</source>
@@ -8916,12 +9097,16 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>Upload stopped</source>
         <translatorcomment>Title of the notification displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
-        <translation><numerusform>Unggahan dihentikan</numerusform></translation>
+        <translation>
+            <numerusform>Unggahan dihentikan</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You logged out of MEGA so your upload has stopped. You can resume the upload after logging back in.</source>
         <translatorcomment>Notification message displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
-        <translation><numerusform>Anda keluar dari MEGA sehingga unggahan anda telah berhenti. Anda dapat melanjutkan upload setelah masuk kembali.</numerusform></translation>
+        <translation>
+            <numerusform>Anda keluar dari MEGA sehingga unggahan anda telah berhenti. Anda dapat melanjutkan upload setelah masuk kembali.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -9339,12 +9524,12 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <name>UploadIssueHeader</name>
     <message>
         <source>Cannot reach the destination folder.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.SNC-2565</translatorcomment>
         <translation>Tidak dapat mencapai folder tujuan</translation>
     </message>
     <message>
         <source>Can´t upload [B]%1[/B] to the selected location</source>
-        <translatorcomment>Title for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
         <translation>Tidak dapat mengunggah [B]%1[/B] ke lokasi yang dipilih</translation>
     </message>
 </context>
@@ -9449,7 +9634,7 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message>
         <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
         <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Perlu lebih banyak penyimpanan?[BR][B][A]Coba Pro Flexi[/A][/B]</translation>
+        <translation>Perlu lebih banyak penyimpanan?[BR][B][A]Coba Pro&#xa0;Flexi[/A][/B]</translation>
     </message>
     <message>
         <source>Recommended</source>
@@ -9510,7 +9695,9 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message numerus="yes">
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
-        <translation><numerusform>%1 (%2%) dari %3 terpakai</numerusform></translation>
+        <translation>
+            <numerusform>%1 (%2%) dari %3 terpakai</numerusform>
+        </translation>
     </message>
     <message>
         <source>%1 / %2</source>
@@ -9530,7 +9717,9 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message numerus="yes">
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
-        <translation><numerusform>%1 terpakai</numerusform></translation>
+        <translation>
+            <numerusform>%1 terpakai</numerusform>
+        </translation>
     </message>
     <message>
         <source>%1d</source>
@@ -9555,32 +9744,44 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message numerus="yes">
         <source>Added %n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transfer selesai %n hari yang lalu</numerusform></translation>
+        <translation>
+            <numerusform>Transfer selesai %n hari yang lalu</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transfer selesai %n jam yang lalu</numerusform></translation>
+        <translation>
+            <numerusform>Transfer selesai %n jam yang lalu</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transfer selesai %n menit yang lalu</numerusform></translation>
+        <translation>
+            <numerusform>Transfer selesai %n menit yang lalu</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transfer selesai %n bulan lalu</numerusform></translation>
+        <translation>
+            <numerusform>Transfer selesai %n bulan lalu</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transfer selesai %n detik yang lalu</numerusform></translation>
+        <translation>
+            <numerusform>Transfer selesai %n detik yang lalu</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transfer selesai %n tahun lalu</numerusform></translation>
+        <translation>
+            <numerusform>Transfer selesai %n tahun lalu</numerusform>
+        </translation>
     </message>
     <message>
         <source>Added just now</source>
@@ -9630,42 +9831,42 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message>
         <source>MEGA Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type CON-719</translatorcomment>
-        <translation>MEGA Basic</translation>
+        <translation>MEGA&#xa0;Basic</translation>
     </message>
     <message>
         <source>MEGA Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type CON-719</translatorcomment>
-        <translation>MEGA Essential</translation>
+        <translation>MEGA&#xa0;Essential</translation>
     </message>
     <message>
         <source>MEGA Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type CON-719</translatorcomment>
-        <translation>MEGA Starter</translation>
+        <translation>MEGA&#xa0;Starter</translation>
     </message>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Starter</source>

@@ -2141,11 +2141,6 @@ Check your email inbox for instructions on unlocking your account and tips on ho
         <translation>Your account has been locked for your protection after detecting a malicious login, so we require you to reset your password.[BR]
 Check your email inbox for instructions on unlocking your account and tips on how to prevent this from happening again.</translation>
     </message>
-    <message>
-        <source>Why am i seeing this?</source>
-        <translatorcomment>Locked account literal to point the user to the mega related help page. SNC-5508</translatorcomment>
-        <translation type="unfinished">Why am i seeing this?</translation>
-    </message>
 </context>
 <context>
     <name>GuiUtilities</name>
@@ -6086,10 +6081,13 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We&apos;ve fixed bugs and made the app more reliable.
+        <source>- Improved reliability for problematic graphics drivers on Windows.
+- Minor bug fixes and performance improvements.
 </source>
-        <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
-        <translation>- We’ve fixed bugs and made the app more reliable</translation>
+        <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
+        <translation>- Improved reliability for problematic graphics drivers on Windows.
+- Minor bug fixes and performance improvements.
+</translation>
     </message>
 </context>
 <context>
@@ -6670,6 +6668,11 @@ Do you want to delete it anyway?</translation>
         <translation>Delete folder from MEGA</translation>
     </message>
     <message>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
+        <translation>The folder will be deleted from MEGA, but it won’t be deleted from your device. This action can’t be undone.</translation>
+    </message>
+    <message>
         <source>Move folder</source>
         <translatorcomment>Radio button option label</translatorcomment>
         <translation>Move folder to Cloud drive</translation>
@@ -6693,11 +6696,6 @@ Do you want to delete it anyway?</translation>
         <source>Stop backup</source>
         <translatorcomment>Backup removal dialog window title (Linux and windows)</translatorcomment>
         <translation>Stop backup</translation>
-    </message>
-    <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
-        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
-        <translation>The folder will be deleted from MEGA, but it won’t be deleted from your device. This action can’t be undone.</translation>
     </message>
     <message>
         <source>To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].</source>
@@ -7047,6 +7045,11 @@ Do you want to delete it anyway?</translation>
         <translation>Launch at login</translation>
     </message>
     <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
+        <translation>Learn more</translation>
+    </message>
+    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>A local folder with a backup of files deleted in MEGA</translation>
@@ -7192,6 +7195,11 @@ Do you want to delete it anyway?</translation>
         <translation>Syncs will be disabled.</translation>
     </message>
     <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation>Theme</translation>
+    </message>
+    <message>
         <source>Transfer Quota</source>
         <translatorcomment>Section title for account transfer quota details.</translatorcomment>
         <translation>Transfer quota</translation>
@@ -7262,16 +7270,6 @@ Do you want to delete it anyway?</translation>
             <numerusform>days</numerusform>
         </translation>
     </message>
-    <message>
-        <source>Theme</source>
-        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
-        <translation>Theme</translation>
-    </message>
-    <message>
-        <source>Learn more</source>
-        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
-        <translation>Learn more</translation>
-    </message>
 </context>
 <context>
     <name>SettingsDialog_Bandwith</name>
@@ -7328,6 +7326,11 @@ Do you want to delete it anyway?</translation>
         <translation>Add sync</translation>
     </message>
     <message>
+        <source>Backup</source>
+        <translatorcomment>Label displayed when a user is trying to backup folders to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>Backup</translation>
+    </message>
+    <message>
         <source>Get MEGA link</source>
         <translatorcomment>Label displayed when a user is trying to get public link of a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
         <translation>Get MEGA link</translation>
@@ -7348,6 +7351,11 @@ Do you want to delete it anyway?</translation>
         <translation>Share with a MEGA user</translation>
     </message>
     <message>
+        <source>Sync</source>
+        <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>Sync</translation>
+    </message>
+    <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label displayed when a user is trying to upload a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
         <translation>Upload to MEGA</translation>
@@ -7361,16 +7369,6 @@ Do you want to delete it anyway?</translation>
         <source>View previous versions</source>
         <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
         <translation>View previous versions</translation>
-    </message>
-    <message>
-        <source>Backup</source>
-        <translatorcomment>Label displayed when a user is trying to backup folders to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
-        <translation type="unfinished">Backup</translation>
-    </message>
-    <message>
-        <source>Sync</source>
-        <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
-        <translation type="unfinished">Sync</translation>
     </message>
 </context>
 <context>
@@ -8678,7 +8676,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>[A]Learn more[/A]</source>
         <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
-        <translation type="unfinished">[A]Learn more[/A]</translation>
+        <translation>[A]Learn more[/A]</translation>
     </message>
 </context>
 <context>

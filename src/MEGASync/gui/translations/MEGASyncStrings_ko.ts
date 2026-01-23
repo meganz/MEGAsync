@@ -250,7 +250,9 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] 님이 항목 %n개를 추가하였습니다</numerusform></translation>
+        <translation>
+            <numerusform>[A] 님이 항목 %n개를 추가하였습니다</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] blocked you as contact</source>
@@ -285,7 +287,9 @@
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A]님이 %n개 항목 삭제</numerusform></translation>
+        <translation>
+            <numerusform>[A]님이 %n개 항목 삭제</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] sent you a contact request</source>
@@ -295,7 +299,9 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>[A]님이 항목 %n개를 수정하였습니다</numerusform></translation>
+        <translation>
+            <numerusform>[A]님이 항목 %n개를 수정하였습니다</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -395,12 +401,16 @@
     <message numerus="yes">
         <source>%1, but %n folder couldn’t be backed up</source>
         <translatorcomment>Notification message to indicate that backups have been created (%1) but other %n backups have failed. Keep both %1 indicating a text with correctly created backups and %n to indicate the number of backups failed. SNC-5495</translatorcomment>
-        <translation><numerusform>%1, 그러나 폴더 %n개가 백업 되지 않았습니다</numerusform></translation>
+        <translation>
+            <numerusform>%1, 그러나 폴더 %n개가 백업 되지 않았습니다</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder was backed up</source>
         <translatorcomment>Notification message to indicate that %n backups have been created. Keep %n to indicate the number of backups created. SNC-5495</translatorcomment>
-        <translation><numerusform>폴더 %n개가 백업 되었습니다</numerusform></translation>
+        <translation>
+            <numerusform>폴더 %n개가 백업 되었습니다</numerusform>
+        </translation>
     </message>
     <message>
         <source>Not all folders were backed up</source>
@@ -413,7 +423,9 @@
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
-        <translation><numerusform>같은 이름을 가진 일부 폴더가 백업에 존재합니다. 백업을 진행하려면 이름을 변경하세요. 폴더 이름은 컴퓨터에서는 바뀌지 않습니다.</numerusform></translation>
+        <translation>
+            <numerusform>같은 이름을 가진 일부 폴더가 백업에 존재합니다. 백업을 진행하려면 이름을 변경하세요. 폴더 이름은 컴퓨터에서는 바뀌지 않습니다.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Backup folders can&apos;t contain or be contained by other backup folder</source>
@@ -428,7 +440,9 @@
     <message numerus="yes">
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
-        <translation><numerusform>이 폴더들은 백업되지 않았습니다. 다시 시도하세요.</numerusform></translation>
+        <translation>
+            <numerusform>이 폴더들은 백업되지 않았습니다. 다시 시도하세요.</numerusform>
+        </translation>
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
@@ -513,7 +527,7 @@
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
-        <translatorcomment>Description label about the option Use HTTPS for transfers that don't start checkbox.</translatorcomment>
+        <translatorcomment>Description label about the option Use HTTPS for transfers that don&apos;t start checkbox.</translatorcomment>
         <translation>전송이 시작되지 않을 때에만 이 옵션을 활성화하세요. 다른 모든 상황에서는, MEGA가 이미 모든 데이터를 암호화했기 때문에 HTTP만으로도 충분합니다.</translation>
     </message>
     <message>
@@ -789,7 +803,7 @@
     <message>
         <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
         <translatorcomment>Messagebox secondary string to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation>모든 항목이 영구적으로 삭제됩니다. 이 행동은 되돌릴 수 [B]없습니다[/B]</translation>
+        <translation>모든 항목이 영구적으로 삭제됩니다. 이 행동은 되돌릴 수 [B]없습니다[/B].</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -821,8 +835,10 @@
     </message>
     <message numerus="yes">
         <source>Are you sure you want to solve the issue?</source>
-        <translatorcomment>Warning text to confirm the user's choice in resolving a stalled issue.SNC-2565</translatorcomment>
-        <translation><numerusform>문제를 해결할까요?</numerusform></translation>
+        <translatorcomment>Warning text to confirm the user&apos;s choice in resolving a stalled issue.SNC-2565</translatorcomment>
+        <translation>
+            <numerusform>문제를 해결할까요?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -841,18 +857,22 @@
     </message>
     <message>
         <source>Solve</source>
-        <translatorcomment>User options for the header widget of a stalled issue shown when there's a missing file fingerprint.SNC-2565</translatorcomment>
+        <translatorcomment>User options for the header widget of a stalled issue shown when there&apos;s a missing file fingerprint.SNC-2565</translatorcomment>
         <translation>해결</translation>
     </message>
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation><numerusform>이 행동은 파일을 임시 위치에 다운로드하고, 문제를 수정한 뒤 임시 파일을 삭제합니다.</numerusform></translation>
+        <translation>
+            <numerusform>이 행동은 파일을 임시 위치에 다운로드하고, 문제를 수정한 뒤 임시 파일을 삭제합니다.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers,[B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>문제를 수정하려면 전송을 재개하세요.</numerusform></translation>
+        <translation>
+            <numerusform>문제를 수정하려면 전송을 재개하세요.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -906,12 +926,16 @@
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation><numerusform>당신의 Pro 회원권 요금제가 %n일 전에 만료되었습니다</numerusform></translation>
+        <translation>
+            <numerusform>당신의 Pro 회원권 요금제가 %n일 전에 만료되었습니다</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Your Pro membership plan will expire in %n day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation><numerusform>당신의 Pro 회원권 요금제가 %n일 이내에 만료됩니다.</numerusform></translation>
+        <translation>
+            <numerusform>당신의 Pro 회원권 요금제가 %n일 이내에 만료됩니다</numerusform>
+        </translation>
     </message>
     <message>
         <source>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</source>
@@ -987,7 +1011,7 @@
     <message>
         <source>You can help us to improve MEGA by sending this error report to the Helpdesk.</source>
         <translatorcomment>Body for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
-        <translation>이 오류 보고를 고객센터에 보내서 MEGA를 개선하는 것을 도울 수 있습니다.</translation>
+        <translation>이 오류 보고를 고객센터에 보내서 MEGA를 개선하는 것을 도울 수 있습니다</translation>
     </message>
 </context>
 <context>
@@ -1033,12 +1057,12 @@
     <name>DeleteWaitingOnMovesHeader</name>
     <message>
         <source>Waiting for other processes to complete.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when we're waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
         <translation>다른 프로세스가 완료되기를 기다리는 중입니다.</translation>
     </message>
     <message>
         <source>Waiting to move [B]%1[/B]</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when we're waiting for a move operation to complete to make sure the file should be deleted.[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted.[B] is for bold.SNC-2565</translatorcomment>
         <translation>이동 대기 중 [B]%1[/B]</translation>
     </message>
 </context>
@@ -1122,7 +1146,7 @@
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Pro Flexi 계정이 비활성화되었습니다</translation>
+        <translation>Pro&#xa0;Flexi 계정이 비활성화되었습니다</translation>
     </message>
     <message>
         <source>Reject</source>
@@ -1192,7 +1216,9 @@
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
-        <translation><numerusform>데이터를 지킬 수 있는 날이 %n일 남았습니다</numerusform></translation>
+        <translation>
+            <numerusform>데이터를 지킬 수 있는 날이 %n일 남았습니다</numerusform>
+        </translation>
     </message>
     <message>
         <source>You have unread notifications</source>
@@ -1257,7 +1283,9 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A]님이 %n개 항목 추가</numerusform></translation>
+        <translation>
+            <numerusform>[A]님이 %n개 항목 추가</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -1272,7 +1300,9 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>[X]님이 항목 #개를 수정하였습니다</numerusform></translation>
+        <translation>
+            <numerusform>[X]님이 항목 #개를 수정하였습니다</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1319,7 +1349,7 @@
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don't have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>당신은 이 로컬 폴더에 쓰기 권한을 가지고 있지 않습니다.</translation>
     </message>
 </context>
@@ -1342,13 +1372,17 @@
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1개 항목이 선택되었습니다.</numerusform></translation>
+        <translation>
+            <numerusform>%1개 항목이 선택되었습니다.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1. %2개 항목이 제거되었습니다. 다시 선택하려면, 이 창을 닫고 다시 시도하세요.</numerusform></translation>
+        <translation>
+            <numerusform>%1. %2개 항목이 제거되었습니다. 다시 선택하려면, 이 창을 닫고 다시 시도하세요.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Download</source>
@@ -1358,12 +1392,16 @@
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation><numerusform>선택한 항목이 제거되었습니다. 다시 선택하려면, 이 창을 닫고 다시 시도하세요.</numerusform></translation>
+        <translation>
+            <numerusform>선택한 항목이 제거되었습니다. 다시 선택하려면, 이 창을 닫고 다시 시도하세요.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation><numerusform>이 항목에 대한 접근 권한이 없습니다. 공유해준 사람에게 다시 공유해달라고 요청하세요.</numerusform></translation>
+        <translation>
+            <numerusform>이 항목에 대한 접근 권한이 없습니다. 공유해준 사람에게 다시 공유해달라고 요청하세요.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1399,7 +1437,9 @@
     <message numerus="yes">
         <source>Apply to all %1 duplicates</source>
         <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation><numerusform>모든 %1개의 중복에 적용</numerusform></translation>
+        <translation>
+            <numerusform>모든 %1개의 중복에 적용</numerusform>
+        </translation>
     </message>
     <message>
         <source>File already exists</source>
@@ -1578,7 +1618,7 @@
         <translation>크기에 따라 파일 제외</translation>
     </message>
     <message>
-        <source>Exclude files by specifying the lower and upper size limit, or just the files that are greater than or lesser than a specific size.</source>
+        <source>Exclude&#xa0;files by specifying the lower and upper size limit, or just the files that are&#xa0;greater than or&#xa0;lesser than a specific size.</source>
         <translatorcomment>Description for size exclusion rules section.SAT-449</translatorcomment>
         <translation>최소와 최대 크기 제한을 설정하거나, 특정 사이즈보다 크거나 작은 파일을 제외합니다.</translation>
     </message>
@@ -1910,17 +1950,17 @@
     <name>FileIssueHeader</name>
     <message>
         <source>A single file had an issue that needs a user decision to solve</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a file which requires user's intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a file which requires user&apos;s intervention.SNC-2565</translatorcomment>
         <translation>해결하기 위해 당신의 결정이 필요한 문제가 있는 파일이 있습니다</translation>
     </message>
     <message>
         <source>A single folder had an issue that needs a user decision to solve.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a folder which requires user's intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a folder which requires user&apos;s intervention.SNC-2565</translatorcomment>
         <translation>해결하기 위해 당신의 결정이 필요한 문제가 있는 폴더가 있습니다</translation>
     </message>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's an issue with a file or folder which requires user's intervention, [B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s an issue with a file or folder which requires user&apos;s intervention, [B] is for bold.SNC-2565</translatorcomment>
         <translation>[B]%1[/B]을/를 동기화할 수 없음</translation>
     </message>
 </context>
@@ -1952,12 +1992,16 @@
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
-        <translation><numerusform>파일 %n개</numerusform></translation>
+        <translation>
+            <numerusform>파일 %n개</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
-        <translation><numerusform>폴더 %n개</numerusform></translation>
+        <translation>
+            <numerusform>폴더 %n개</numerusform>
+        </translation>
     </message>
     <message>
         <source>Click the toolbar item for a menu.</source>
@@ -2007,12 +2051,12 @@
     <name>FolderMatchedAgainstFileHeader</name>
     <message>
         <source>Cannot sync folders against files.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
         <translation>동기화하려는 파일에 확장자가 없고 존재하는 폴더와 이름이 같습니다</translation>
     </message>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
         <translation>[B]%1[/B]을/를 동기화할 수 없음</translation>
     </message>
 </context>
@@ -2219,7 +2263,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Label to refer Pro Flexi tier CON-467</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro Flexi</translation>
     </message>
     <message>
         <source>Storage space:</source>
@@ -2271,22 +2315,22 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     </message>
     <message>
         <source>No notifications</source>
-        <translatorcomment>Label to indicate that there aren't notifications available at this moment.</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications available at this moment.</translatorcomment>
         <translation>알림 없음</translation>
     </message>
     <message>
         <source>No notifications for contacts</source>
-        <translatorcomment>Label to indicate that there aren't notifications of contacts</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of contacts</translatorcomment>
         <translation>연락처 알림 없음</translation>
     </message>
     <message>
         <source>No notifications for incoming shares</source>
-        <translatorcomment>Label to indicate that there aren't notifications of incoming shares</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of incoming shares</translatorcomment>
         <translation>들어오는 공유 알림 없음</translation>
     </message>
     <message>
         <source>No notifications for payments</source>
-        <translatorcomment>Label to indicate that there aren't notifications of payments</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation>결제에 대한 알림 없음</translation>
     </message>
     <message>
@@ -2332,7 +2376,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation>계정 업그레이드</translation>
+        <translation>계정을 업그레이드 하세요.</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -2372,7 +2416,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>전송 할당량 초과</translation>
+        <translation>전송 할당량 초과됨</translation>
     </message>
     <message>
         <source>Transfers</source>
@@ -2402,7 +2446,9 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation><numerusform>우리는 [B]에 [A]로 이메일을 발송하여 연락을 하였지만, 여전히 당신의 MEGA 계정에 [D]를 차지하는 %n개의 파일이 존재하며, 이는 [E]가 필요합니다.</numerusform></translation>
+        <translation>
+            <numerusform>우리는 [B]에 [A]로 이메일을 발송하여 연락을 하였지만, 여전히 당신의 MEGA 계정에 [D]를 차지하는 %n개의 파일이 존재하며, 이는 [E]가 필요합니다.</numerusform>
+        </translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</source>
@@ -2412,12 +2458,16 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message numerus="yes">
         <source>You have %n day left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. %n- number of days left to upgrade.</translatorcomment>
-        <translation><numerusform>업그레이드까지 %n일 남았으며, 이후 당신의 데이터는 삭제 대상이 됩니다</numerusform></translation>
+        <translation>
+            <numerusform>업그레이드까지 %n일 남았으며, 이후 당신의 데이터는 삭제 대상이 됩니다</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You have %n hour left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: %n- number of hours left to upgrade.</translatorcomment>
-        <translation><numerusform>업그레이드까지 %n시간 남았으며, 이후 당신의 데이터는 삭제 대상이 됩니다</numerusform></translation>
+        <translation>
+            <numerusform>업그레이드까지 %n시간 남았으며, 이후 당신의 데이터는 삭제 대상이 됩니다</numerusform>
+        </translation>
     </message>
     <message>
         <source>You must act immediately to save your data</source>
@@ -2548,7 +2598,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     </message>
     <message>
         <source>Failed to install the necessary components.</source>
-        <translatorcomment>This is the text of an error message displayed when there's a problem installing Notification Area Icon Support. The message indicates that the required components for the feature couldn't be installed. SNC-2270</translatorcomment>
+        <translatorcomment>This is the text of an error message displayed when there&apos;s a problem installing Notification Area Icon Support. The message indicates that the required components for the feature couldn&apos;t be installed. SNC-2270</translatorcomment>
         <translation>필수 구성 요소 설치를 실패하였습니다.</translation>
     </message>
     <message>
@@ -2601,7 +2651,7 @@ Please log out of your computer to complete the installation.</source>
 sudo dnf install gnome-shell-extensions
 sudo dnf install gnome-shell-extension-appindicator
 gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</source>
-        <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there's an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
+        <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there&apos;s an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
         <translation>수동으로 설치하려면, 다음의 명령어를 실행하세요:
 
 sudo dnf install gnome-shell-extensions
@@ -2793,7 +2843,9 @@ Please wait for the upload to complete.</source>
     <message numerus="yes">
         <source>The [B]remote file[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>MEGA에 이미 저장된 파일에 (1) 같은 접미사가 추가됩니다.</numerusform></translation>
+        <translation>
+            <numerusform>MEGA에 이미 저장된 파일에 (1) 같은 접미사가 추가됩니다.</numerusform>
+        </translation>
     </message>
     <message>
         <source>The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
@@ -2803,7 +2855,9 @@ Please wait for the upload to complete.</source>
     <message numerus="yes">
         <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>MEGA에 이미 저장된 폴더에 (1) 같은 접미사가 추가됩니다.</numerusform></translation>
+        <translation>
+            <numerusform>MEGA에 이미 저장된 폴더에 (1) 같은 접미사가 추가됩니다.</numerusform>
+        </translation>
     </message>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
@@ -2833,7 +2887,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>This action will choose the local side</source>
         <translatorcomment>Informative text in a message box explainging that the local file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>이 행동을 하면, 로컬 항목이 선택됩니다</translation>
+        <translation>이 행동을 하면, 로컬 항목이 선택됩니다.</translation>
     </message>
     <message>
         <source>This action will choose the remote side</source>
@@ -2888,7 +2942,9 @@ Please wait for the upload to complete.</source>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>문제를 수정하려면 전송을 재개하세요.</numerusform></translation>
+        <translation>
+            <numerusform>문제를 수정하려면 전송을 재개하세요.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -3262,7 +3318,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Pro Flexi 계정이 비활성화되었습니다</translation>
+        <translation>Pro&#xa0;Flexi 계정이 비활성화되었습니다</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -3296,7 +3352,7 @@ Please wait for the upload to complete.</source>
     </message>
     <message>
         <source>Stalled</source>
-        <translatorcomment>Tooltip for tray icon when there' a sync stal.SNC-2565</translatorcomment>
+        <translatorcomment>Tooltip for tray icon when there&apos; a sync stal.SNC-2565</translatorcomment>
         <translation>문제 감지됨</translation>
     </message>
     <message>
@@ -3332,7 +3388,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>The folder %1 can&apos;t be downloaded. Error received : %2.</source>
         <translatorcomment>Error message when there is an error downloading a MEGA link, and this error is a generic error. SNC-2549.</translatorcomment>
-        <translation>%1 폴더를 다운로드할 수 없습니다. 수신한 에러 : %2</translation>
+        <translation>%1 폴더를 다운로드할 수 없습니다. 발생한 오류: %2.</translation>
     </message>
     <message>
         <source>The folder %1 can&apos;t be downloaded. The download may have failed due to a casing mismatch. Ensure the folders match exactly and try again.</source>
@@ -3353,8 +3409,10 @@ Please wait for the upload to complete.</source>
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>활성 상태의 전송이 있습니다. 앱을 나갈까요?
-앱을 다시 열면 전송이 자동으로 재개됩니다.</numerusform></translation>
+        <translation>
+            <numerusform>활성 상태의 전송이 있습니다. 앱을 나갈까요?
+앱을 다시 열면 전송이 자동으로 재개됩니다.</numerusform>
+        </translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
@@ -3380,16 +3438,16 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Label to indicate that the current account transfer quota has been exceeded (tray icon tooltip). CON-561</translatorcomment>
-        <translation>전송 할당량 초과</translation>
+        <translation>전송 할당량 초과됨</translation>
     </message>
     <message>
         <source>Transferring</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is in a transferring state (ongoing transfers are running)</translatorcomment>
-        <translation>전송중</translation>
+        <translation>전송 중</translation>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn't any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>최신 버전</translation>
     </message>
     <message>
@@ -3415,7 +3473,9 @@ https://mega.co.nz/#sync</source>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
         <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
-        <translation><numerusform>현재 다음의 폴더를 공유 중입니다: %1</numerusform></translation>
+        <translation>
+            <numerusform>현재 다음의 폴더를 공유 중입니다: %1</numerusform>
+        </translation>
     </message>
     <message>
         <source>You are not logged in</source>
@@ -3724,7 +3784,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
+        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
         <translation>당신의 계정이 MEGA의 이용 약관 위반으로 삭제되었습니다.
 저장된 데이터에 대한 접근 또는 새 MEGA 계정에 가입하는 것이 금지됩니다.</translation>
     </message>
@@ -3853,7 +3913,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Insufficient disk space.</source>
         <translatorcomment>SDK error indicating that there is no sufficient disk space. CON-537</translatorcomment>
-        <translation>다운로드에 필요한 공간 부족</translation>
+        <translation>다운로드에 필요한 공간이 부족합니다.</translation>
     </message>
     <message>
         <source>Invalid scan interval specified.</source>
@@ -3897,7 +3957,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Mismatch on sync root FSID.</source>
-        <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
+        <translatorcomment>SDK error shown when the sync&apos;s root FSID changed meaning it is a different folder, and we can&apos;t identify the old sync db as the name depends on this. SAT-815</translatorcomment>
         <translation>이 폴더를 동기화 또는 백업하던 중 로컬 폴더의 변경으로 인해 문제가 발생했습니다. 동기화 또는 백업을 멈추고 설정에서 다시 설정하세요, 또는 지원에 연락주세요.</translation>
     </message>
     <message>
@@ -3913,7 +3973,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Reached storage quota limit</source>
         <translatorcomment>Label to show that the account reached storage limit during a SDK operation.</translatorcomment>
-        <translation>저장소 할당량 초과</translation>
+        <translation>저장소 할당량 초과됨</translation>
     </message>
     <message>
         <source>Remote node has been deleted</source>
@@ -3973,7 +4033,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Unable to create initial ignore file.</source>
         <translatorcomment>SDK error to inform the user that the ignore file couldn´t be created. CON-537</translatorcomment>
-        <translation>이 동기화 또는 백업을 위한 .megaignore 파일을 만들 수 없습니다.</translation>
+        <translation>이 동기화 또는 백업을 위한 .megaignore 파일을 만들 수 없습니다</translation>
     </message>
     <message>
         <source>Unable to open state cache database.</source>
@@ -3993,7 +4053,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Unable to retrieve the ID of current device</source>
         <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
-        <translation>이름이 없는 장치에서 백업을 시도하고 있기 때문에 백업을 만들 수 없습니다. 장치에 이름을 붙여주고 다시 시도하세요. 만약 문제가 계속 되면, 지원에 연락하세요.</translation>
+        <translation>백업 하는 장치에 이름이 없어서 백업을 만들 수 없습니다. 장치에 이름을 짓고 다시 시도하세요. 문제가 계속 되면 지원에 연락하세요.</translation>
     </message>
     <message>
         <source>Unable to write sync config to disk.</source>
@@ -4038,7 +4098,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your plan has expired</source>
         <translatorcomment>Label to show that the current account is expired during a SDK operation. SNC-3747</translatorcomment>
-        <translation>요금제가 만료되었습니다.</translation>
+        <translation>요금제가 만료되었습니다</translation>
     </message>
 </context>
 <context>
@@ -4091,12 +4151,16 @@ https://mega.co.nz/#sync</source>
     <message numerus="yes">
         <source>Cancel and clear transfer</source>
         <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
-        <translation><numerusform>전송 취소하고 지우기</numerusform></translation>
+        <translation>
+            <numerusform>전송 취소하고 지우기</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Cancel transfer</source>
         <translatorcomment>Context menu action to cancel transfer</translatorcomment>
-        <translation><numerusform>전송 취소</numerusform></translation>
+        <translation>
+            <numerusform>전송 취소</numerusform>
+        </translation>
     </message>
     <message>
         <source>Cancel transfer?</source>
@@ -4116,7 +4180,9 @@ https://mega.co.nz/#sync</source>
     <message numerus="yes">
         <source>Clear transfer</source>
         <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
-        <translation><numerusform>전송 초기화</numerusform></translation>
+        <translation>
+            <numerusform>전송 초기화</numerusform>
+        </translation>
     </message>
     <message>
         <source>Clear transfer?</source>
@@ -4181,12 +4247,16 @@ https://mega.co.nz/#sync</source>
     <message numerus="yes">
         <source>Pause transfer</source>
         <translatorcomment>Context menu action to pause transfer</translatorcomment>
-        <translation><numerusform>전송 일시정지</numerusform></translation>
+        <translation>
+            <numerusform>전송 일시정지</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Resume transfer</source>
         <translatorcomment>Context menu action to resume transfer</translatorcomment>
-        <translation><numerusform>전송 재개</numerusform></translation>
+        <translation>
+            <numerusform>전송 재개</numerusform>
+        </translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -4194,7 +4264,7 @@ https://mega.co.nz/#sync</source>
         <translation>폴더 안에 보이기</translation>
     </message>
     <message>
-        <source>Your incomplete sync transfers won't be cancelled
+        <source>Your incomplete sync transfers won&apos;t be cancelled
 All the other transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
         <translation>동기화 전송은 취소할 수 없지만, 모든 다른 전송은 취소되고 지워집니다</translation>
@@ -4205,7 +4275,7 @@ All the other transfers will be cancelled and cleared.</source>
         <translation>동기화 전송은 취소할 수 없습니다</translation>
     </message>
     <message>
-        <source>Your selected incomplete sync transfers won't be cancelled
+        <source>Your selected incomplete sync transfers won&apos;t be cancelled
 All the other selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
         <translation>동기화 전송은 취소할 수 없지만, 모든 다른 선택한 전송은 취소되고 지워집니다</translation>
@@ -4348,12 +4418,12 @@ Please refresh the view</source>
     </message>
     <message>
         <source>Modified externally</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it's modified externally.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s modified externally.SNC-2565</translatorcomment>
         <translation>외부에서 수정됨</translation>
     </message>
     <message>
         <source>No action needed</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it's solved.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s solved.SNC-2565</translatorcomment>
         <translation>조치가 필요하지 않음</translation>
     </message>
     <message>
@@ -4934,7 +5004,9 @@ Enter a different name</source>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
         <translatorcomment>Body of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
-        <translation><numerusform>이 폴더들을 떠나면, 다시는 볼 수 없습니다.</numerusform></translation>
+        <translation>
+            <numerusform>이 폴더들을 떠나면, 다시는 볼 수 없습니다.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Leave</source>
@@ -4944,7 +5016,9 @@ Enter a different name</source>
     <message numerus="yes">
         <source>Leave this shared folder?</source>
         <translatorcomment>Title of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
-        <translation><numerusform>이 공유된 폴더를 나갈까요?</numerusform></translation>
+        <translation>
+            <numerusform>이 공유된 폴더를 나갈까요?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Move</source>
@@ -4959,7 +5033,9 @@ Enter a different name</source>
     <message numerus="yes">
         <source>Move %n items to Rubbish bin?</source>
         <translatorcomment>Main text of the confirmation messagebox to move some items (files or folders) pto the rubbish bin. %n is the number of items to delete. CON-334</translatorcomment>
-        <translation><numerusform>항목 %n개를 휴지통으로 옮길까요?</numerusform></translation>
+        <translation>
+            <numerusform>항목 %n개를 휴지통으로 옮길까요?</numerusform>
+        </translation>
     </message>
     <message>
         <source>New folder</source>
@@ -4974,17 +5050,23 @@ Enter a different name</source>
     <message numerus="yes">
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a file(s) from the rubbish bin. %n is the number of files to delete. CON-1258</translatorcomment>
-        <translation><numerusform>영구적으로 파일 %n개를 삭제하려고 합니다. 진행하시겠습니까?</numerusform></translation>
+        <translation>
+            <numerusform>영구적으로 파일 %n개를 삭제하려고 합니다. 진행하시겠습니까?</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n folder. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a folder(s) from the rubbish bin. %n is the number of folders to delete. CON-1258</translatorcomment>
-        <translation><numerusform>영구적으로 폴더 %n개를 삭제하려고 합니다. 진행하시겠습니까?</numerusform></translation>
+        <translation>
+            <numerusform>영구적으로 폴더 %n개를 삭제하려고 합니다. 진행하시겠습니까?</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n items. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently some items (files and folders) from the rubbish bin. %n is the number of items to delete. CON-1258</translatorcomment>
-        <translation><numerusform>영구적으로 항목 %n개를 삭제하려고 합니다. 진행하시겠습니까?</numerusform></translation>
+        <translation>
+            <numerusform>영구적으로 항목 %n개를 삭제하려고 합니다. 진행하시겠습니까?</numerusform>
+        </translation>
     </message>
     <message>
         <source>You cannot undo this action</source>
@@ -5039,7 +5121,9 @@ Enter a different name</source>
     <message numerus="yes">
         <source>%n result found</source>
         <translatorcomment>Search tab subtitle that shows the number of coincidences found. %n is the number of found nodes. SNC-5804</translatorcomment>
-        <translation><numerusform>%1개의 결과 찾음</numerusform></translation>
+        <translation>
+            <numerusform>%1개의 결과 찾음</numerusform>
+        </translation>
     </message>
     <message>
         <source>No search results</source>
@@ -5067,22 +5151,30 @@ Enter a different name</source>
     <message numerus="yes">
         <source>Offer expires in %n day</source>
         <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
-        <translation><numerusform>%n일 내로 제안이 만료됩니다</numerusform></translation>
+        <translation>
+            <numerusform>%n일 내로 제안이 만료됩니다</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n hour</source>
         <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
-        <translation><numerusform>%n시간 내로 제안이 만료됩니다</numerusform></translation>
+        <translation>
+            <numerusform>%n시간 내로 제안이 만료됩니다</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n minute</source>
         <translatorcomment>Text indicating that the offer expires in the %n minutes. The placeholder %n shall be replaced by the number of minutes. CON-868/SNC-4853</translatorcomment>
-        <translation><numerusform>%n분 내로 제안이 만료됩니다</numerusform></translation>
+        <translation>
+            <numerusform>%n분 내로 제안이 만료됩니다</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n second</source>
         <translatorcomment>Text indicating that the offer expires in the %n seconds. Placeholder %n shall be replaced by the number of seconds. CON-868/SNC-4853</translatorcomment>
-        <translation><numerusform>%n초 내로 제안이 만료됩니다</numerusform></translation>
+        <translation>
+            <numerusform>%n초 내로 제안이 만료됩니다</numerusform>
+        </translation>
     </message>
     <message>
         <source>PROMO</source>
@@ -5383,7 +5475,7 @@ Enter a different name</source>
     <message>
         <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
         <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
-        <translation>만약 1시간 내에 이메일을 받지 못 했다면, 스팸 폴더를 확인하세요. 만약 여전히 찾지 못 하였다면, [B][A]지원에 연락하세요[/A][/B]</translation>
+        <translation>만약 1시간 내에 이메일을 받지 못 했다면, 스팸 폴더를 확인하세요. 만약 여전히 찾지 못 하였다면, [B][A]지원에 연락하세요[/A][/B].</translation>
     </message>
     <message>
         <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
@@ -5508,7 +5600,7 @@ Enter a different name</source>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>데스크톱 앱이 실행 중일 때 선택된 폴더가 자동으로 MEGA에 읽기 전용 폴더로 백업됩니다. 백업에 대한 변경은 로컬 장치에서만 할 수 있습니다.</translation>
+        <translation>데스크톱 앱이 실행 중일 때 선택된 폴더가 자동으로 MEGA에 읽기 전용 폴더로 백업됩니다. 백업에 대한 변경은 로컬 장치에서만 할 수 있습니다. </translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -5607,7 +5699,7 @@ Enter a different name</source>
     </message>
     <message>
         <source>You can view your backups and their statuses under the Backup tab in Settings.</source>
-        <translatorcomment>Text indicating that the user can view the backups in settings' backups tab CON-738</translatorcomment>
+        <translatorcomment>Text indicating that the user can view the backups in settings&apos; backups tab CON-738</translatorcomment>
         <translation>백업과 현재 상황을 설정의 백업 탭에서 볼 수 있습니다.</translation>
     </message>
     <message>
@@ -5664,7 +5756,9 @@ Enter a different name</source>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A]님이 %n개 항목 삭제</numerusform></translation>
+        <translation>
+            <numerusform>[A]님이 %n개 항목 삭제</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -5902,17 +5996,17 @@ Enter a different name</source>
     </message>
     <message>
         <source>Moved to OS Recycle Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user's in Windows.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
         <translation>휴지통으로 이동됨</translation>
     </message>
     <message>
         <source>Moved to OS Rubbish Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user's choice in MacOS.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
         <translation>항목이 휴지통으로 이동됨</translation>
     </message>
     <message>
         <source>Moved to OS Trash</source>
-        <translatorcomment>Label showing what happened to the file based on the user's choice in linux.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
         <translation>항목이 휴지통으로 이동됨</translation>
     </message>
     <message>
@@ -5939,10 +6033,19 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We've fixed bugs and made the app more reliable.
+        <source>- Improved reliability for problematic graphics drivers on Windows.
+- Minor bug fixes and performance improvements.
+</source>
+        <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
+        <translation>- Improved reliability for problematic graphics drivers on Windows.
+- Minor bug fixes and performance improvements.
+</translation>
+    </message>
+    <message>
+        <source>- We&apos;ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- 버그를 수정하고 앱을 더 안정적으로 만들었습니다</translation>
     </message>
 </context>
 <context>
@@ -6115,7 +6218,7 @@ Do you want to replace it?</source>
         <translation>&amp;저장</translation>
     </message>
     <message>
-        <source>'%1' is write protected.
+        <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
         <translation>″%1″은/는 쓰기 보호되어있습니다.
@@ -6324,7 +6427,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation>보기</translation>
+        <translation>보기 </translation>
     </message>
     <message>
         <source>Show &amp;hidden files</source>
@@ -6339,7 +6442,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Unknown</source>
         <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
-        <translation>Unknown</translation>
+        <translation>알 수 없음</translation>
     </message>
 </context>
 <context>
@@ -6486,8 +6589,13 @@ Do you want to delete it anyway?</source>
     <name>RemoveBackup</name>
     <message>
         <source>Backup folder already exists on destination. Choose another.</source>
-        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can't move it there! SNC-6067 </translatorcomment>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can&apos;t move it there! SNC-6067 </translatorcomment>
         <translation>이 위치에 이미 이 이름을 가진 폴더가 존재합니다, 다른 위치를 선택하세요</translation>
+    </message>
+    <message>
+        <source>Destination folder doesn’t exist. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
+        <translation>Destination folder doesn’t exist. Choose another.</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
@@ -6518,6 +6626,11 @@ Do you want to delete it anyway?</source>
         <translation>MEGA에서 폴더 삭제</translation>
     </message>
     <message>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
+        <translation>MEGA에서 폴더가 삭제되지만, 당신의 장치에서는 삭제되지 않습니다. 이 행동은 되돌릴 수 없습니다.</translation>
+    </message>
+    <message>
         <source>Move folder</source>
         <translatorcomment>Radio button option label</translatorcomment>
         <translation>클라우드 드라이브로 폴더 이동</translation>
@@ -6541,11 +6654,6 @@ Do you want to delete it anyway?</source>
         <source>Stop backup</source>
         <translatorcomment>Backup removal dialog window title (Linux and windows)</translatorcomment>
         <translation>백업 중단</translation>
-    </message>
-    <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
-        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
-        <translation>MEGA에서 폴더가 삭제되지만, 당신의 장치에서는 삭제되지 않습니다. 이 행동은 되돌릴 수 없습니다.</translation>
     </message>
     <message>
         <source>To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].</source>
@@ -6635,12 +6743,16 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
-        <translation><numerusform>파일 %n개</numerusform></translation>
+        <translation>
+            <numerusform>파일 %n개</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
-        <translation><numerusform>폴더 %n개</numerusform></translation>
+        <translation>
+            <numerusform>폴더 %n개</numerusform>
+        </translation>
     </message>
     <message>
         <source>Adding transfers…</source>
@@ -6665,7 +6777,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation>탐색중</translation>
+        <translation>탐색 중…</translation>
     </message>
     <message>
         <source>found %1, %2</source>
@@ -6889,6 +7001,11 @@ Do you want to delete it anyway?</source>
         <translation>로그인할 때 실행</translation>
     </message>
     <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
+        <translation>더 알아보기</translation>
+    </message>
+    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>MEGA에서 파일의 백업이 삭제된 로컬 폴더</translation>
@@ -7034,6 +7151,11 @@ Do you want to delete it anyway?</source>
         <translation>동기화가 비활성화 됩니다.</translation>
     </message>
     <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation>테마</translation>
+    </message>
+    <message>
         <source>Transfer Quota</source>
         <translatorcomment>Section title for account transfer quota details.</translatorcomment>
         <translation>전송 할당량</translation>
@@ -7066,7 +7188,9 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
-        <translation><numerusform>지난 %n 시간 동안 사용한 할당량:</numerusform></translation>
+        <translation>
+            <numerusform>지난 %n 시간 동안 사용한 할당량:</numerusform>
+        </translation>
     </message>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
@@ -7096,17 +7220,9 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation><numerusform>일</numerusform></translation>
-    </message>
-    <message>
-        <source>Theme</source>
-        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
-        <translation>테마</translation>
-    </message>
-    <message>
-        <source>Learn more</source>
-        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
-        <translation>더 알아보기</translation>
+        <translation>
+            <numerusform>일</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -7140,12 +7256,16 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation><numerusform>파일 %n개</numerusform></translation>
+        <translation>
+            <numerusform>파일 %n개</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation><numerusform>폴더 %n개</numerusform></translation>
+        <translation>
+            <numerusform>폴더 %n개</numerusform>
+        </translation>
     </message>
     <message>
         <source>Add backup</source>
@@ -7156,6 +7276,11 @@ Do you want to delete it anyway?</source>
         <source>Add sync</source>
         <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
         <translation>동기화 추가</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translatorcomment>Label displayed when a user is trying to backup folders to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>Backup</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -7176,6 +7301,11 @@ Do you want to delete it anyway?</source>
         <source>Share with a MEGA user</source>
         <translatorcomment>Label displayed when a user is trying to share a public link of a file/folder with a user. String as short as possible.</translatorcomment>
         <translation>MEGA 이용자와 공유</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>Sync</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -7384,7 +7514,7 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <source>MAC verification failure.</source>
-        <translatorcomment>Label descriping sync stall path issue when there's Cryptographic error .SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stall path issue when there&apos;s Cryptographic error .SNC-2565</translatorcomment>
         <translation>MAC 인증 실패</translation>
     </message>
     <message>
@@ -7394,7 +7524,7 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <source>Name too long for filesystem.</source>
-        <translatorcomment>Label descriping sync stallwhen move target's name is too long.SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stallwhen move target&apos;s name is too long.SNC-2565</translatorcomment>
         <translation>이름이 파일시스템에서 이용하기에 너무 깁니다</translation>
     </message>
     <message>
@@ -7496,27 +7626,37 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>Failed: %n</source>
         <translatorcomment>Name of the tab containing failed sync stalls in sync stalls dialog, %n variable is for the count.SAT-1034</translatorcomment>
-        <translation><numerusform>실패함: %n</numerusform></translation>
+        <translation>
+            <numerusform>실패함: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Item type conflict: %n</source>
         <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
-        <translation><numerusform>항목 형식 충돌: %n</numerusform></translation>
+        <translation>
+            <numerusform>항목 형식 충돌: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Name conflict: %n</source>
         <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
-        <translation><numerusform>이름 충돌: %n</numerusform></translation>
+        <translation>
+            <numerusform>이름 충돌: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Other: %n</source>
         <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
-        <translation><numerusform>기타: %n</numerusform></translation>
+        <translation>
+            <numerusform>기타: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Resolved: %n</source>
         <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
-        <translation><numerusform>해결됨: %n</numerusform></translation>
+        <translation>
+            <numerusform>해결됨: %n</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -7558,28 +7698,38 @@ Do you want to delete it anyway?</source>
         <source>%1 and %n issues failed.</source>
         <translatorcomment>In-view message displayed when several issues have failed and fixed. This string is the second part of string for multi plural support
         being the first part about the issues fixed. SAT-1034</translatorcomment>
-        <translation><numerusform>%1 그리고 %n개의 문제 해결을 실패함</numerusform></translation>
+        <translation>
+            <numerusform>%1 그리고 %n개의 문제 해결을 실패함</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues failed</source>
         <translatorcomment>In-view message displayed when all issue have failed. SAT-1034</translatorcomment>
-        <translation><numerusform>%n개의 문제 해결을 실패했음</numerusform></translation>
+        <translation>
+            <numerusform>%n개의 문제 해결을 실패했음</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues fixed</source>
         <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress. This string can be used by its own or as first part of string for multi plural support
         when several issues have failed. SNC-2565</translatorcomment>
-        <translation><numerusform>%n개의 문제 해결됨</numerusform></translation>
+        <translation>
+            <numerusform>%n개의 문제 해결됨</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues fixed and 1 issue failed</source>
         <translatorcomment>In-view message displayed when one issue has failed and several issues have been solved. SAT-1034</translatorcomment>
-        <translation><numerusform>%n개의 문제가 수정되고 1개의 문제 해결을 실패함</numerusform></translation>
+        <translation>
+            <numerusform>%n개의 문제가 수정되고 1개의 문제 해결을 실패함</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>1 issue fixed and %n issues failed</source>
         <translatorcomment>In-view message displayed when one issue has been solved and several issues have failed. SAT-1034</translatorcomment>
-        <translation><numerusform>1개의 문제가 수정되고 %n개의 문제 해결을 실패함</numerusform></translation>
+        <translation>
+            <numerusform>1개의 문제가 수정되고 %n개의 문제 해결을 실패함</numerusform>
+        </translation>
     </message>
     <message>
         <source>Fixing issues</source>
@@ -7587,7 +7737,7 @@ Do you want to delete it anyway?</source>
         <translation>문제 해결 중…</translation>
     </message>
     <message>
-        <source>Issues can't be fixed.
+        <source>Issues can&apos;t be fixed.
 Verify the permissions of the .megaignore on file your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>일부 문제를 해결할 수 없었습니다.
@@ -7604,7 +7754,7 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
         <translation>새로 고침</translation>
     </message>
     <message>
-        <source>Some issues can't be fixed.
+        <source>Some issues can&apos;t be fixed.
 Verify the permissions of the .megaignore file on your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>일부 문제를 해결할 수 없었습니다.
@@ -7875,7 +8025,7 @@ Please, refresh the list.</source>
     <message>
         <source>You’re helping to improve MEGA for you and everyone who uses it</source>
         <translatorcomment>Description text of the final view after sending the survey responses. CON-942</translatorcomment>
-        <translation>당신은 당신과 MEGA 이용자 모두를 위해 개선을 돕고 있습니다.</translation>
+        <translation>당신은 당신과 MEGA 이용자 모두를 위해 개선을 돕고 있습니다</translation>
     </message>
 </context>
 <context>
@@ -7982,7 +8132,7 @@ Please, refresh the list.</source>
     <message>
         <source>Invalid remote path.</source>
         <translatorcomment>The selected remote path for the sync creation is invalid</translatorcomment>
-        <translation>이 MEGA 폴더는 동기화할 수 없습니다.</translation>
+        <translation>이 MEGA 폴더는 동기화할 수 없습니다. </translation>
     </message>
     <message>
         <source>This folder is already being synced.</source>
@@ -8037,7 +8187,7 @@ Please, refresh the list.</source>
     <message>
         <source>You don&apos;t have enough permissions for this remote folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it the remote folder is an incoming share and the current user doesn´t have enought permisions</translatorcomment>
-        <translation>이 공유된 폴더에 전체 권한이 없기 때문에 동기화할 수 없습니다.</translation>
+        <translation>이 공유된 폴더에 전체 권한이 없기 때문에 동기화할 수 없습니다. </translation>
     </message>
 </context>
 <context>
@@ -8065,7 +8215,7 @@ Please, refresh the list.</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation>MEGA 폴더가 변경되어서 백업 “%1”이/가 비활성화 되었습니다</translation>
+        <translation>MEGA 폴더가 변경되어서 백업 “%1”이/가 비활성화 되었습니다.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
@@ -8085,7 +8235,7 @@ Please, refresh the list.</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation>백업 “%1”이/가 비활성화 되었습니다. MEGA 폴더 (또는 그 일부)에 완전한 접근 권한이 없습니다</translation>
+        <translation>백업 “%1”이/가 비활성화 되었습니다. MEGA 폴더 (또는 그 일부)에 완전한 접근 권한이 없습니다.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
@@ -8198,12 +8348,12 @@ Please move it to a location that is less than 64 folders deep.</source>
     <message>
         <source>Paused</source>
         <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
-        <translation>일시정지 중</translation>
+        <translation>일시정지됨</translation>
     </message>
     <message>
         <source>Scanning</source>
         <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
-        <translation>탐색중</translation>
+        <translation>탐색 중</translation>
     </message>
     <message>
         <source>Sort by Downloads</source>
@@ -8341,7 +8491,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-4208</translatorcomment>
-        <translation>[B]%1[/B]은/는 당신의 Pro Flexi 계정이 결제를 실패했거나 구독을 취소했기 때문에 추가될 수 없습니다. 계속 하려면, 결제를 하고 구독을 재활성화 하세요.</translation>
+        <translation>[B]%1[/B]은/는 당신의 Pro&#xa0;Flexi 계정이 결제를 실패했거나 구독을 취소했기 때문에 추가될 수 없습니다. 계속 하려면, 결제를 하고 구독을 재활성화 하세요.</translation>
     </message>
     <message>
         <source>Error opening megaignore file</source>
@@ -8493,13 +8643,20 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Page title to add syncs. CON-1268</translatorcomment>
         <translation>동기화할 폴더 선택</translation>
     </message>
+    <message>
+        <source>[A]Learn more[/A]</source>
+        <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
+        <translation>[A]Learn more[/A]</translation>
+    </message>
 </context>
 <context>
     <name>TextArea</name>
     <message numerus="yes">
         <source>Maximum length is %n characters.</source>
         <translatorcomment>Label to indicate the maximum number of characters in the text area. The %n placeholder indicates the number of characters, please keep it. CON-942</translatorcomment>
-        <translation><numerusform>최대 길이는 %n자입니다</numerusform></translation>
+        <translation>
+            <numerusform>최대 길이는 %n자입니다</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -8535,7 +8692,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Completing</source>
         <translatorcomment>Transfer is being completed</translatorcomment>
-        <translation>완료중</translation>
+        <translation>완료 중…</translation>
     </message>
     <message>
         <source>Downloading…</source>
@@ -8555,12 +8712,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Out of storage space</source>
         <translatorcomment>Transfer is paused for out of storage space</translatorcomment>
-        <translation>저장소 할당량 초과</translation>
+        <translation>저장소 할당량 초과됨</translation>
     </message>
     <message>
         <source>Out of transfer quota</source>
         <translatorcomment>Transfer is paused for out of transfer quota</translatorcomment>
-        <translation>전송 할당량 초과</translation>
+        <translation>전송 할당량 초과됨</translation>
     </message>
     <message>
         <source>Paused</source>
@@ -8575,7 +8732,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Retrying</source>
         <translatorcomment>Transfer is starting again after failure</translatorcomment>
-        <translation>재시도중</translation>
+        <translation>재시도 중…</translation>
     </message>
     <message>
         <source>Starting…</source>
@@ -8598,7 +8755,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>%1 result found</source>
         <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
-        <translation><numerusform>%1개의 결과 찾음</numerusform></translation>
+        <translation>
+            <numerusform>%1개의 결과 찾음</numerusform>
+        </translation>
     </message>
     <message>
         <source>All</source>
@@ -8779,7 +8938,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Transfer quota exceeded.</source>
         <translatorcomment>Error text indicating that the transfer quota has been exceeded for pro users. CON-1061</translatorcomment>
-        <translation>전송 할당량 초과</translation>
+        <translation>전송 할당량 초과됨</translation>
     </message>
     <message>
         <source>Upgrade now</source>
@@ -8803,55 +8962,75 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>%1, but %n item couldn’t be downloaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%1, 그러나 %n개의 항목이 다운로드 되지 않았습니다.</numerusform></translation>
+        <translation>
+            <numerusform>%1, 그러나 %n개의 항목이 다운로드 되지 않았습니다.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1, but %n item couldn’t be uploaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%1, 그러나 %n개의 항목이 업로드 되지 않았습니다.</numerusform></translation>
+        <translation>
+            <numerusform>%1, 그러나 %n개의 항목이 업로드 되지 않았습니다.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n개의 항목이 %1에 다운로드 되지 않았습니다.</numerusform></translation>
+        <translation>
+            <numerusform>%n개의 항목이 %1에 다운로드 되지 않았습니다.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n개의 항목이 %1에 업로드 되지 않았습니다.</numerusform></translation>
+        <translation>
+            <numerusform>%n개의 항목이 %1에 업로드 되지 않았습니다.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%n개의 항목이 다운로드 되었습니다</numerusform></translation>
+        <translation>
+            <numerusform>%n개의 항목이 다운로드 되었습니다</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n개의 항목이 %1에 다운로드 되었습니다</numerusform></translation>
+        <translation>
+            <numerusform>%n개의 항목이 %1에 다운로드 되었습니다.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during an upload operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n개의 항목이 더 이상 존재하지 않거나 이름이 바뀌었습니다.</numerusform></translation>
+        <translation>
+            <numerusform>%n개의 항목이 더 이상 존재하지 않거나 이름이 바뀌었습니다.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n개의 항목이 더 이상 존재하지 않습니다.</numerusform></translation>
+        <translation>
+            <numerusform>%n개의 항목이 더 이상 존재하지 않습니다.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%n개의 항목이 업로드 되었습니다</numerusform></translation>
+        <translation>
+            <numerusform>%n개의 항목이 업로드 되었습니다</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n개의 항목이 %1에 업로드 되었습니다</numerusform></translation>
+        <translation>
+            <numerusform>%n개의 항목이 %1에 업로드 되었습니다.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Could not download</source>
@@ -8891,7 +9070,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>Retry failed items</source>
         <translatorcomment>Notification button to retry failed transfers when not all the transfers failed. CON-223</translatorcomment>
-        <translation><numerusform>실패한 항목 다시 시도</numerusform></translation>
+        <translation>
+            <numerusform>실패한 항목 다시 시도</numerusform>
+        </translation>
     </message>
     <message>
         <source>Show in MEGA</source>
@@ -8916,12 +9097,16 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>Upload stopped</source>
         <translatorcomment>Title of the notification displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
-        <translation><numerusform>업로드 멈춤</numerusform></translation>
+        <translation>
+            <numerusform>업로드 멈춤</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You logged out of MEGA so your upload has stopped. You can resume the upload after logging back in.</source>
         <translatorcomment>Notification message displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
-        <translation><numerusform>MEGA에서 로그아웃 하였기 때문에 업로드가 멈추었습니다. 다시 로그인한 후 업로드를 재개할 수 있습니다.</numerusform></translation>
+        <translation>
+            <numerusform>MEGA에서 로그아웃 하였기 때문에 업로드가 멈추었습니다. 다시 로그인한 후 업로드를 재개할 수 있습니다.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -9047,7 +9232,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation>모든 다운로드 전송 취소</translation>
+        <translation>모든 다운로드 전송 취소 </translation>
     </message>
     <message>
         <source>Cancel all failed</source>
@@ -9338,12 +9523,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <name>UploadIssueHeader</name>
     <message>
         <source>Cannot reach the destination folder.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.SNC-2565</translatorcomment>
         <translation>대상 폴더에 도달할 수 없음</translation>
     </message>
     <message>
         <source>Can´t upload [B]%1[/B] to the selected location</source>
-        <translatorcomment>Title for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
         <translation>선택한 위치로 [B]%1[/B]을/를 업로드할 수 없음</translation>
     </message>
 </context>
@@ -9448,7 +9633,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
         <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>저장소가 더 필요한가요?[BR][B][A]Pro Flexi를 써보세요[/A][/B]</translation>
+        <translation>저장소가 더 필요한가요?[BR][B][A]Pro&#xa0;Flexi를 써보세요[/A][/B]</translation>
     </message>
     <message>
         <source>Recommended</source>
@@ -9463,12 +9648,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Title of the window showing that the transfer quota has been exceeded. CON-945</translatorcomment>
-        <translation>전송 할당량 초과</translation>
+        <translation>전송 할당량 초과됨</translation>
     </message>
     <message>
         <source>Upgrade your account to get more storage quota.</source>
         <translatorcomment>Message shown when the user needs to upgrade their account to get more storage space. CON-945 SNC-5474</translatorcomment>
-        <translation>더 많은 저장소 할당량을 받으려면 업그레이드 하세요.</translation>
+        <translation>더 많은 저장소 할당량을 받으려면 업그레이드 하세요</translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
@@ -9509,7 +9694,9 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
-        <translation><numerusform>%3 중 %1 (%2%) 사용됨</numerusform></translation>
+        <translation>
+            <numerusform>%3 중 %1 (%2%) 사용됨</numerusform>
+        </translation>
     </message>
     <message>
         <source>%1 / %2</source>
@@ -9529,7 +9716,9 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
-        <translation><numerusform>%1 사용됨</numerusform></translation>
+        <translation>
+            <numerusform>%1 사용됨</numerusform>
+        </translation>
     </message>
     <message>
         <source>%1d</source>
@@ -9554,32 +9743,44 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>Added %n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
-        <translation><numerusform>전송이 %n일 전에 완료됨</numerusform></translation>
+        <translation>
+            <numerusform>전송이 %n일 전에 완료됨</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
-        <translation><numerusform>전송이 %n시간 전에 완료됨</numerusform></translation>
+        <translation>
+            <numerusform>전송이 %n시간 전에 완료됨</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
-        <translation><numerusform>전송이 %n분 전에 완료됨</numerusform></translation>
+        <translation>
+            <numerusform>전송이 %n분 전에 완료됨</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
-        <translation><numerusform>전송이 %n개월 전에 완료됨</numerusform></translation>
+        <translation>
+            <numerusform>전송이 %n개월 전에 완료됨</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
-        <translation><numerusform>전송이 %n초 전에 완료됨</numerusform></translation>
+        <translation>
+            <numerusform>전송이 %n초 전에 완료됨</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
-        <translation><numerusform>전송이 %n년 전에 완료됨</numerusform></translation>
+        <translation>
+            <numerusform>전송이 %n년 전에 완료됨</numerusform>
+        </translation>
     </message>
     <message>
         <source>Added just now</source>
@@ -9589,7 +9790,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Basic</translation>
     </message>
     <message>
         <source>Business</source>
@@ -9604,7 +9805,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Essential</translation>
     </message>
     <message>
         <source>Free</source>
@@ -9629,47 +9830,47 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>MEGA Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type CON-719</translatorcomment>
-        <translation>MEGA Basic</translation>
+        <translation>MEGA Basic</translation>
     </message>
     <message>
         <source>MEGA Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type CON-719</translatorcomment>
-        <translation>MEGA Essential</translation>
+        <translation>MEGA&#xa0;Essential</translation>
     </message>
     <message>
         <source>MEGA Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type CON-719</translatorcomment>
-        <translation>MEGA Starter</translation>
+        <translation>MEGA&#xa0;Starter</translation>
     </message>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Starter</translation>
     </message>
     <message>
         <source>TB</source>

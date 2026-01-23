@@ -250,7 +250,10 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A]heeft %n item toegevoegd</numerusform><numerusform>[A]heeft %n items toegevoegd</numerusform></translation>
+        <translation>
+            <numerusform>[A]heeft %n item toegevoegd</numerusform>
+            <numerusform>[A]heeft %n items toegevoegd</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] blocked you as contact</source>
@@ -285,7 +288,10 @@
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A]heeft %n item verwijderd</numerusform><numerusform>[A]heeft %n items verwijderd</numerusform></translation>
+        <translation>
+            <numerusform>[A]heeft %n item verwijderd</numerusform>
+            <numerusform>[A]heeft %n items verwijderd</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] sent you a contact request</source>
@@ -295,7 +301,10 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>[A] heeft  %n item bijgewerkt</numerusform><numerusform>[A] heeft %n items bijgewerkt</numerusform></translation>
+        <translation>
+            <numerusform>[A] heeft  %n item bijgewerkt</numerusform>
+            <numerusform>[A] heeft %n items bijgewerkt</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -395,12 +404,18 @@
     <message numerus="yes">
         <source>%1, but %n folder couldn’t be backed up</source>
         <translatorcomment>Notification message to indicate that backups have been created (%1) but other %n backups have failed. Keep both %1 indicating a text with correctly created backups and %n to indicate the number of backups failed. SNC-5495</translatorcomment>
-        <translation><numerusform>%1, maar %n er kon geen back-up van de map worden gemaakt</numerusform><numerusform>%1, maar %n van mappen kon geen back-up worden gemaakt</numerusform></translation>
+        <translation>
+            <numerusform>%1, maar %n er kon geen back-up van de map worden gemaakt</numerusform>
+            <numerusform>%1, maar %n van mappen kon geen back-up worden gemaakt</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder was backed up</source>
         <translatorcomment>Notification message to indicate that %n backups have been created. Keep %n to indicate the number of backups created. SNC-5495</translatorcomment>
-        <translation><numerusform>%n map was een back-up gemaakt</numerusform><numerusform>%n mappen waren een back-up van gemaakt </numerusform></translation>
+        <translation>
+            <numerusform>%n map was een back-up gemaakt</numerusform>
+            <numerusform>%n mappen waren een back-up van gemaakt </numerusform>
+        </translation>
     </message>
     <message>
         <source>Not all folders were backed up</source>
@@ -413,8 +428,11 @@
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
-        <translation><numerusform>Een map met dezelfde naam bestaat al in uw Backups. Hernoem de nieuwe map om door te gaan met de back-up. Map naam wordt niet gewijzigd op uw computer.</numerusform><numerusform>Sommige mappen met dezelfde naam bestaan al in uw Back-ups. Hernoem de nieuwe mappen om door te gaan met de back-up. 
-Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
+        <translation>
+            <numerusform>Een map met dezelfde naam bestaat al in uw Backups. Hernoem de nieuwe map om door te gaan met de back-up. Map naam wordt niet gewijzigd op uw computer.</numerusform>
+            <numerusform>Sommige mappen met dezelfde naam bestaan al in uw Back-ups. Hernoem de nieuwe mappen om door te gaan met de back-up. 
+Map namen worden niet gewijzigd op uw computer.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Backup folders can&apos;t contain or be contained by other backup folder</source>
@@ -429,7 +447,10 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     <message numerus="yes">
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
-        <translation><numerusform>Er is geen back-up gemaakt van deze map. Probeer het nog eens.</numerusform><numerusform>Er is geen back-up gemaakt van deze mappen. Probeer het nog eens.</numerusform></translation>
+        <translation>
+            <numerusform>Er is geen back-up gemaakt van deze map. Probeer het nog eens.</numerusform>
+            <numerusform>Er is geen back-up gemaakt van deze mappen. Probeer het nog eens.</numerusform>
+        </translation>
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
@@ -514,7 +535,7 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
-        <translatorcomment>Description label about the option Use HTTPS for transfers that don't start checkbox.</translatorcomment>
+        <translatorcomment>Description label about the option Use HTTPS for transfers that don&apos;t start checkbox.</translatorcomment>
         <translation>Schakel deze optie alleen in als de overdracht niet start. Onder alle andere omstandigheden is het gebruik van HTTP bevredigend, aangezien MEGA alle gegevens al codeert.</translation>
     </message>
     <message>
@@ -822,8 +843,11 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to solve the issue?</source>
-        <translatorcomment>Warning text to confirm the user's choice in resolving a stalled issue.SNC-2565</translatorcomment>
-        <translation><numerusform>Het probleem oplossen?</numerusform><numerusform>De problemen oplossen?</numerusform></translation>
+        <translatorcomment>Warning text to confirm the user&apos;s choice in resolving a stalled issue.SNC-2565</translatorcomment>
+        <translation>
+            <numerusform>Het probleem oplossen?</numerusform>
+            <numerusform>De problemen oplossen?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -842,18 +866,24 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     </message>
     <message>
         <source>Solve</source>
-        <translatorcomment>User options for the header widget of a stalled issue shown when there's a missing file fingerprint.SNC-2565</translatorcomment>
+        <translatorcomment>User options for the header widget of a stalled issue shown when there&apos;s a missing file fingerprint.SNC-2565</translatorcomment>
         <translation>Oplossen</translation>
     </message>
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation><numerusform>Met deze actie wordt het bestand naar een tijdelijke lokatie gedownload, wordt het probleem opgelost en wordt dan het tijdelijke bestand verwijderd.</numerusform><numerusform>Met deze actie worden de bestanden naar een tijdelijke lokatie gedownload, worden de problemen opgelost en dan worden de tijdelijke bestanden verwijderd.</numerusform></translation>
+        <translation>
+            <numerusform>Met deze actie wordt het bestand naar een tijdelijke lokatie gedownload, wordt het probleem opgelost en wordt dan het tijdelijke bestand verwijderd.</numerusform>
+            <numerusform>Met deze actie worden de bestanden naar een tijdelijke lokatie gedownload, worden de problemen opgelost en dan worden de tijdelijke bestanden verwijderd.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers,[B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Hervat uw overdrachten om het probleem op te lossen.</numerusform><numerusform>Hervat uw overdrachten om de problemen op te lossen.</numerusform></translation>
+        <translation>
+            <numerusform>Hervat uw overdrachten om het probleem op te lossen.</numerusform>
+            <numerusform>Hervat uw overdrachten om de problemen op te lossen.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -907,12 +937,18 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation><numerusform>Uw Pro lidmaatschap abonnement is %n dag geleden verlopen</numerusform><numerusform>Uw Pro lidmaatschap abonnement is %n dagen geleden verlopen</numerusform></translation>
+        <translation>
+            <numerusform>Uw Pro lidmaatschap abonnement is %n dag geleden verlopen</numerusform>
+            <numerusform>Uw Pro lidmaatschap abonnement is %n dagen geleden verlopen</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Your Pro membership plan will expire in %n day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation><numerusform>Uw Pro lidmaatschap abonnement verloopt over %n dag</numerusform><numerusform>Uw Pro lidmaatschap abonnement verloopt over %n dagen</numerusform></translation>
+        <translation>
+            <numerusform>Uw Pro lidmaatschap abonnement verloopt over %n dag</numerusform>
+            <numerusform>Uw Pro lidmaatschap abonnement verloopt over %n dagen</numerusform>
+        </translation>
     </message>
     <message>
         <source>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</source>
@@ -1034,12 +1070,12 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     <name>DeleteWaitingOnMovesHeader</name>
     <message>
         <source>Waiting for other processes to complete.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when we're waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
         <translation>Wachten tot andere processen zijn voltooid.</translation>
     </message>
     <message>
         <source>Waiting to move [B]%1[/B]</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when we're waiting for a move operation to complete to make sure the file should be deleted.[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted.[B] is for bold.SNC-2565</translatorcomment>
         <translation>Wachten om [B]%1[/B] te verplaatsen</translation>
     </message>
 </context>
@@ -1193,7 +1229,10 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
-        <translation><numerusform>U heeft %n dag over om uw gegevens te redden</numerusform><numerusform>U heeft %n dagen over om uw gegevens te redden</numerusform></translation>
+        <translation>
+            <numerusform>U heeft %n dag over om uw gegevens te redden</numerusform>
+            <numerusform>U heeft %n dagen over om uw gegevens te redden</numerusform>
+        </translation>
     </message>
     <message>
         <source>You have unread notifications</source>
@@ -1258,7 +1297,10 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] heeft %n item toegevoegd </numerusform><numerusform>[A]heeft %n items toegevoegd </numerusform></translation>
+        <translation>
+            <numerusform>[A] heeft %n item toegevoegd </numerusform>
+            <numerusform>[A]heeft %n items toegevoegd </numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -1273,7 +1315,10 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>[A] heeft  %n item bijgewerkt</numerusform><numerusform>[A] heeft %n items bijgewerkt</numerusform></translation>
+        <translation>
+            <numerusform>[A] heeft  %n item bijgewerkt</numerusform>
+            <numerusform>[A] heeft %n items bijgewerkt</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1320,7 +1365,7 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don't have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>U heeft geen schrijf rechten voor deze lokale map.</translation>
     </message>
 </context>
@@ -1343,13 +1388,19 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1 item geselecteerd.</numerusform><numerusform>%1 items geselecteerd.</numerusform></translation>
+        <translation>
+            <numerusform>%1 item geselecteerd.</numerusform>
+            <numerusform>%1 items geselecteerd.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1. %2 was verwijderd. Om te her selecteren, sluit dit venster en probeer nogmaals.</numerusform><numerusform>%1. %2 waren verwijderd. Om te her selecteren, sluit dit venster en probeer nogmaals.</numerusform></translation>
+        <translation>
+            <numerusform>%1. %2 was verwijderd. Om te her selecteren, sluit dit venster en probeer nogmaals.</numerusform>
+            <numerusform>%1. %2 waren verwijderd. Om te her selecteren, sluit dit venster en probeer nogmaals.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Download</source>
@@ -1359,12 +1410,18 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation><numerusform>Het item die u had geselecteerd was verwijderd. Om te herselecteren, sluit dit venster en probeer nogmaals.</numerusform><numerusform>De items die u had geselecteerd waren verwijderd. Om te herselecteren, sluit dit venster en probeer nogmaals.</numerusform></translation>
+        <translation>
+            <numerusform>Het item die u had geselecteerd was verwijderd. Om te herselecteren, sluit dit venster en probeer nogmaals.</numerusform>
+            <numerusform>De items die u had geselecteerd waren verwijderd. Om te herselecteren, sluit dit venster en probeer nogmaals.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation><numerusform>U heeft geen toegang meer tot dit item. Vraag de persoon die het met u heeft gedeeld om het opnieuw te delen.</numerusform><numerusform>U heeft geen toegang meer tot deze items. Vraag de persoon die ze met u heeft gedeeld om ze opnieuw te delen.</numerusform></translation>
+        <translation>
+            <numerusform>U heeft geen toegang meer tot dit item. Vraag de persoon die het met u heeft gedeeld om het opnieuw te delen.</numerusform>
+            <numerusform>U heeft geen toegang meer tot deze items. Vraag de persoon die ze met u heeft gedeeld om ze opnieuw te delen.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1400,7 +1457,10 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     <message numerus="yes">
         <source>Apply to all %1 duplicates</source>
         <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation><numerusform>Toepassen op de andere duplicaat</numerusform><numerusform>Toepassen op alle %1 duplicaten</numerusform></translation>
+        <translation>
+            <numerusform>Toepassen op de andere duplicaat</numerusform>
+            <numerusform>Toepassen op alle %1 duplicaten</numerusform>
+        </translation>
     </message>
     <message>
         <source>File already exists</source>
@@ -1579,7 +1639,7 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
         <translation>Bestanden op grootte uitsluiten</translation>
     </message>
     <message>
-        <source>Exclude files by specifying the lower and upper size limit, or just the files that are greater than or lesser than a specific size.</source>
+        <source>Exclude&#xa0;files by specifying the lower and upper size limit, or just the files that are&#xa0;greater than or&#xa0;lesser than a specific size.</source>
         <translatorcomment>Description for size exclusion rules section.SAT-449</translatorcomment>
         <translation>Sluit bestanden uit door een minimale en maximale groottelimiet in te stellen, of bestanden die groter of kleiner zijn dan een bepaalde grootte.</translation>
     </message>
@@ -1911,17 +1971,17 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     <name>FileIssueHeader</name>
     <message>
         <source>A single file had an issue that needs a user decision to solve</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a file which requires user's intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a file which requires user&apos;s intervention.SNC-2565</translatorcomment>
         <translation>Een bestand heeft een probleem waarvoor uw besluit nodig is om het op te lossen</translation>
     </message>
     <message>
         <source>A single folder had an issue that needs a user decision to solve.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a folder which requires user's intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a folder which requires user&apos;s intervention.SNC-2565</translatorcomment>
         <translation>Een map heeft een probleem waarvoor uw besluit nodig is om het op te lossen</translation>
     </message>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's an issue with a file or folder which requires user's intervention, [B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s an issue with a file or folder which requires user&apos;s intervention, [B] is for bold.SNC-2565</translatorcomment>
         <translation>Kan [B]%1[/B] niet synchroniseren</translation>
     </message>
 </context>
@@ -1953,12 +2013,18 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
-        <translation><numerusform>%n bestand</numerusform><numerusform>%n bestanden</numerusform></translation>
+        <translation>
+            <numerusform>%n bestand</numerusform>
+            <numerusform>%n bestanden</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
-        <translation><numerusform>%n map</numerusform><numerusform>%n mappen</numerusform></translation>
+        <translation>
+            <numerusform>%n map</numerusform>
+            <numerusform>%n mappen</numerusform>
+        </translation>
     </message>
     <message>
         <source>Click the toolbar item for a menu.</source>
@@ -2008,12 +2074,12 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     <name>FolderMatchedAgainstFileHeader</name>
     <message>
         <source>Cannot sync folders against files.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
         <translation>Het bestand dat u probeert te synchroniseren heeft geen extensie en heeft dezelfde naam als een bestaande map</translation>
     </message>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
         <translation>Kan [B]%1[/B] niet synchroniseren</translation>
     </message>
 </context>
@@ -2220,7 +2286,7 @@ Controleer uw e-mailinbox voor instructies over het ontgrendelen van uw account 
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Label to refer Pro Flexi tier CON-467</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Storage space:</source>
@@ -2272,22 +2338,22 @@ Controleer uw e-mailinbox voor instructies over het ontgrendelen van uw account 
     </message>
     <message>
         <source>No notifications</source>
-        <translatorcomment>Label to indicate that there aren't notifications available at this moment.</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications available at this moment.</translatorcomment>
         <translation>Geen meldingen</translation>
     </message>
     <message>
         <source>No notifications for contacts</source>
-        <translatorcomment>Label to indicate that there aren't notifications of contacts</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of contacts</translatorcomment>
         <translation>Geen meldingen voor contacten</translation>
     </message>
     <message>
         <source>No notifications for incoming shares</source>
-        <translatorcomment>Label to indicate that there aren't notifications of incoming shares</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of incoming shares</translatorcomment>
         <translation>Geen meldingen voor binnenkomende delingen</translation>
     </message>
     <message>
         <source>No notifications for payments</source>
-        <translatorcomment>Label to indicate that there aren't notifications of payments</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation>Geen meldingen voor betalingen</translation>
     </message>
     <message>
@@ -2403,7 +2469,10 @@ Controleer uw e-mailinbox voor instructies over het ontgrendelen van uw account 
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation><numerusform>We hebben per e-mail contact met u opgenomen naar [A] op [B], maar u heeft nog steeds %n bestand die gebruikt [D] in uw MEGA-account, waarvoor u [E] nodig heeft.</numerusform><numerusform>We hebben per e-mail contact met u opgenomen naar [A] op [B], maar u heeft nog steeds %n bestanden die gebruiken [D] in uw MEGA-account, waarvoor u [E] nodig heeft.</numerusform></translation>
+        <translation>
+            <numerusform>We hebben per e-mail contact met u opgenomen naar [A] op [B], maar u heeft nog steeds %n bestand die gebruikt [D] in uw MEGA-account, waarvoor u [E] nodig heeft.</numerusform>
+            <numerusform>We hebben per e-mail contact met u opgenomen naar [A] op [B], maar u heeft nog steeds %n bestanden die gebruiken [D] in uw MEGA-account, waarvoor u [E] nodig heeft.</numerusform>
+        </translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</source>
@@ -2413,12 +2482,18 @@ Controleer uw e-mailinbox voor instructies over het ontgrendelen van uw account 
     <message numerus="yes">
         <source>You have %n day left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. %n- number of days left to upgrade.</translatorcomment>
-        <translation><numerusform>U heeft %n resterende dag om te upgraden, anders worden uw gegevens verwijderd</numerusform><numerusform>U heeft %n resterende dagen om te upgraden, anders worden uw gegevens verwijderd</numerusform></translation>
+        <translation>
+            <numerusform>U heeft %n resterende dag om te upgraden, anders worden uw gegevens verwijderd</numerusform>
+            <numerusform>U heeft %n resterende dagen om te upgraden, anders worden uw gegevens verwijderd</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You have %n hour left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: %n- number of hours left to upgrade.</translatorcomment>
-        <translation><numerusform>U heeft %n uur resterend om te upgraden, anders worden uw gegevens verwijderd</numerusform><numerusform>U heeft %n resterende uren om te upgraden, anders worden uw gegevens verwijderd</numerusform></translation>
+        <translation>
+            <numerusform>U heeft %n uur resterend om te upgraden, anders worden uw gegevens verwijderd</numerusform>
+            <numerusform>U heeft %n resterende uren om te upgraden, anders worden uw gegevens verwijderd</numerusform>
+        </translation>
     </message>
     <message>
         <source>You must act immediately to save your data</source>
@@ -2549,7 +2624,7 @@ Controleer uw e-mailinbox voor instructies over het ontgrendelen van uw account 
     </message>
     <message>
         <source>Failed to install the necessary components.</source>
-        <translatorcomment>This is the text of an error message displayed when there's a problem installing Notification Area Icon Support. The message indicates that the required components for the feature couldn't be installed. SNC-2270</translatorcomment>
+        <translatorcomment>This is the text of an error message displayed when there&apos;s a problem installing Notification Area Icon Support. The message indicates that the required components for the feature couldn&apos;t be installed. SNC-2270</translatorcomment>
         <translation>Het installeren van de benodigde onderdelen is mislukt.</translation>
     </message>
     <message>
@@ -2602,7 +2677,7 @@ Start de computer opnieuw op om de installatie te voltooien.</translation>
 sudo dnf install gnome-shell-extensions
 sudo dnf install gnome-shell-extension-appindicator
 gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</source>
-        <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there's an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
+        <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there&apos;s an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
         <translation>Voer de volgende opdrachten uit om handmatig te installeren:
 
 sudo dnf install gnome-shell-extensions
@@ -2794,7 +2869,10 @@ Wacht tot het uploaden is voltooid.</translation>
     <message numerus="yes">
         <source>The [B]remote file[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Aan het bestand in MEGA wordt een achtervoegsel zoals (1) toegevoegd.</numerusform><numerusform>Aan de bestanden die al in MEGA zijn opgeslagen, wordt een achtervoegsel zoals (1) toegevoegd.</numerusform></translation>
+        <translation>
+            <numerusform>Aan het bestand in MEGA wordt een achtervoegsel zoals (1) toegevoegd.</numerusform>
+            <numerusform>Aan de bestanden die al in MEGA zijn opgeslagen, wordt een achtervoegsel zoals (1) toegevoegd.</numerusform>
+        </translation>
     </message>
     <message>
         <source>The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
@@ -2804,7 +2882,10 @@ Wacht tot het uploaden is voltooid.</translation>
     <message numerus="yes">
         <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Aan de map die al in MEGA is opgeslagen, wordt een achtervoegsel zoals (1) toegevoegd.</numerusform><numerusform>Aan de mappen die al in MEGA zijn opgeslagen, wordt een achtervoegsel zoals (1) toegevoegd.</numerusform></translation>
+        <translation>
+            <numerusform>Aan de map die al in MEGA is opgeslagen, wordt een achtervoegsel zoals (1) toegevoegd.</numerusform>
+            <numerusform>Aan de mappen die al in MEGA zijn opgeslagen, wordt een achtervoegsel zoals (1) toegevoegd.</numerusform>
+        </translation>
     </message>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
@@ -2889,7 +2970,10 @@ Wacht tot het uploaden is voltooid.</translation>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Hervat uw overdrachten om het probleem op te lossen.</numerusform><numerusform>Hervat uw overdrachten om de problemen op te lossen.</numerusform></translation>
+        <translation>
+            <numerusform>Hervat uw overdrachten om het probleem op te lossen.</numerusform>
+            <numerusform>Hervat uw overdrachten om de problemen op te lossen.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -3297,7 +3381,7 @@ Wacht tot het uploaden is voltooid.</translation>
     </message>
     <message>
         <source>Stalled</source>
-        <translatorcomment>Tooltip for tray icon when there' a sync stal.SNC-2565</translatorcomment>
+        <translatorcomment>Tooltip for tray icon when there&apos; a sync stal.SNC-2565</translatorcomment>
         <translation>Probleem gedetecteerd</translation>
     </message>
     <message>
@@ -3354,9 +3438,12 @@ Wacht tot het uploaden is voltooid.</translation>
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>Er is een actieve overdracht. Wilt u de applicatie verlaten?
-De overdracht worden automatisch hervat wanneer u de applicatie heropend.</numerusform><numerusform>Er zijn actieve overdrachten. Wilt u de applicatie verlaten?
-Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numerusform></translation>
+        <translation>
+            <numerusform>Er is een actieve overdracht. Wilt u de applicatie verlaten?
+De overdracht worden automatisch hervat wanneer u de applicatie heropend.</numerusform>
+            <numerusform>Er zijn actieve overdrachten. Wilt u de applicatie verlaten?
+Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numerusform>
+        </translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
@@ -3391,7 +3478,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn't any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>Bijgewerkt</translation>
     </message>
     <message>
@@ -3417,7 +3504,10 @@ https://mega.co.nz/#sync</source>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
         <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
-        <translation><numerusform>U bent de volgende map aan het delen: %1</numerusform><numerusform>U bent de volgende mappen aan het delen:%1</numerusform></translation>
+        <translation>
+            <numerusform>U bent de volgende map aan het delen: %1</numerusform>
+            <numerusform>U bent de volgende mappen aan het delen:%1</numerusform>
+        </translation>
     </message>
     <message>
         <source>You are not logged in</source>
@@ -3726,7 +3816,7 @@ Kijk in uw e-mailinbox voor meer informatie over hoe u een tegenmelding kunt ind
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
+        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
         <translation>Uw account is beëindigd vanwege een schending van de Algemene Voorwaarden van MEGA.
 U zult niet opnieuw toegang krijgen tot uw opgeslagen gegevens en u kunt zich niet aanmelden voor een nieuw MEGA-account.</translation>
     </message>
@@ -3899,7 +3989,7 @@ U zult niet opnieuw toegang krijgen tot uw opgeslagen gegevens en u kunt zich ni
     </message>
     <message>
         <source>Mismatch on sync root FSID.</source>
-        <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
+        <translatorcomment>SDK error shown when the sync&apos;s root FSID changed meaning it is a different folder, and we can&apos;t identify the old sync db as the name depends on this. SAT-815</translatorcomment>
         <translation>Probleem bij het synchroniseren of maken van een reservekopie van deze map vanwege wijzigingen in de lokale map. Stop de synchronisatie of de backup en probeer het opnieuw in te stellen in Instellingen, of neem contact op met de Klantenservice.</translation>
     </message>
     <message>
@@ -3995,7 +4085,7 @@ U zult niet opnieuw toegang krijgen tot uw opgeslagen gegevens en u kunt zich ni
     <message>
         <source>Unable to retrieve the ID of current device</source>
         <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
-        <translation>Kan geen back-up maken omdat het apparaat waarvan u een back-up maakt geen naam heeft. Geef uw apparaat een naam en probeer het dan opnieuw. Als het probleem zich blijft voordoen, neem contact op met de Ondersteuning.</translation>
+        <translation>Het lukt niet om een back-up te maken omdat het apparaat waarvan u een back-up wilt maken geen naam heeft. Geef uw apparaat een naam en probeer het opnieuw. Als het probleem zich blijft voordoen, neem dan contact op met de ondersteuning.</translation>
     </message>
     <message>
         <source>Unable to write sync config to disk.</source>
@@ -4093,12 +4183,18 @@ U zult niet opnieuw toegang krijgen tot uw opgeslagen gegevens en u kunt zich ni
     <message numerus="yes">
         <source>Cancel and clear transfer</source>
         <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
-        <translation><numerusform>Annuleer en wis overdracht</numerusform><numerusform>Annuleer en overdrachten wissen</numerusform></translation>
+        <translation>
+            <numerusform>Annuleer en wis overdracht</numerusform>
+            <numerusform>Annuleer en overdrachten wissen</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Cancel transfer</source>
         <translatorcomment>Context menu action to cancel transfer</translatorcomment>
-        <translation><numerusform>Overdracht annuleren</numerusform><numerusform>Overdrachten annuleren</numerusform></translation>
+        <translation>
+            <numerusform>Overdracht annuleren</numerusform>
+            <numerusform>Overdrachten annuleren</numerusform>
+        </translation>
     </message>
     <message>
         <source>Cancel transfer?</source>
@@ -4118,7 +4214,10 @@ U zult niet opnieuw toegang krijgen tot uw opgeslagen gegevens en u kunt zich ni
     <message numerus="yes">
         <source>Clear transfer</source>
         <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
-        <translation><numerusform>Overdracht wissen</numerusform><numerusform>Overdrachten wissen</numerusform></translation>
+        <translation>
+            <numerusform>Overdracht wissen</numerusform>
+            <numerusform>Overdrachten wissen</numerusform>
+        </translation>
     </message>
     <message>
         <source>Clear transfer?</source>
@@ -4183,12 +4282,18 @@ U zult niet opnieuw toegang krijgen tot uw opgeslagen gegevens en u kunt zich ni
     <message numerus="yes">
         <source>Pause transfer</source>
         <translatorcomment>Context menu action to pause transfer</translatorcomment>
-        <translation><numerusform>Overdracht pauzeren</numerusform><numerusform>Overdrachten pauzeren</numerusform></translation>
+        <translation>
+            <numerusform>Overdracht pauzeren</numerusform>
+            <numerusform>Overdrachten pauzeren</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Resume transfer</source>
         <translatorcomment>Context menu action to resume transfer</translatorcomment>
-        <translation><numerusform>Overdracht hervatten</numerusform><numerusform>Overdrachten hervatten</numerusform></translation>
+        <translation>
+            <numerusform>Overdracht hervatten</numerusform>
+            <numerusform>Overdrachten hervatten</numerusform>
+        </translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -4196,7 +4301,7 @@ U zult niet opnieuw toegang krijgen tot uw opgeslagen gegevens en u kunt zich ni
         <translation>Weergeven in map</translation>
     </message>
     <message>
-        <source>Your incomplete sync transfers won't be cancelled
+        <source>Your incomplete sync transfers won&apos;t be cancelled
 All the other transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
         <translation>Synchronisatieoverdrachten kunnen niet worden geannuleerd, maar alle andere overdrachten worden geannuleerd en gewist</translation>
@@ -4207,7 +4312,7 @@ All the other transfers will be cancelled and cleared.</source>
         <translation>Synchronisatie-overdrachten kunnen niet worden geannuleerd</translation>
     </message>
     <message>
-        <source>Your selected incomplete sync transfers won't be cancelled
+        <source>Your selected incomplete sync transfers won&apos;t be cancelled
 All the other selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
         <translation>Synchronisatieoverdrachten kunnen niet worden geannuleerd, maar alle andere geselecteerde overdrachten worden geannuleerd en gewist</translation>
@@ -4350,12 +4455,12 @@ ververs de weergave.</translation>
     </message>
     <message>
         <source>Modified externally</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it's modified externally.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s modified externally.SNC-2565</translatorcomment>
         <translation>Extern gewijzigd</translation>
     </message>
     <message>
         <source>No action needed</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it's solved.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s solved.SNC-2565</translatorcomment>
         <translation>Geen actie nodig</translation>
     </message>
     <message>
@@ -4893,7 +4998,7 @@ Voer een andere naam in.</translation>
     <message>
         <source>Upload</source>
         <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It uploads to the selected. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Upload</translation>
     </message>
 </context>
 <context>
@@ -4931,12 +5036,15 @@ Voer een andere naam in.</translation>
     <message>
         <source>Folder is empty</source>
         <translatorcomment>Message on the view when there are no items in a folder. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Map is leeg</translation>
     </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
         <translatorcomment>Body of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
-        <translation><numerusform>Als u de map verlaat, bent u niet in staat het weer te zien.</numerusform><numerusform>Als u deze mappen verlaat, kunt u ze niet meer zien.</numerusform></translation>
+        <translation>
+            <numerusform>Als u de map verlaat, bent u niet in staat het weer te zien.</numerusform>
+            <numerusform>Als u deze mappen verlaat, kunt u ze niet meer zien.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Leave</source>
@@ -4946,7 +5054,10 @@ Voer een andere naam in.</translation>
     <message numerus="yes">
         <source>Leave this shared folder?</source>
         <translatorcomment>Title of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
-        <translation><numerusform>Deze gedeelde map verlaten?</numerusform><numerusform>Deze gedeelde mappen verlaten?</numerusform></translation>
+        <translation>
+            <numerusform>Deze gedeelde map verlaten?</numerusform>
+            <numerusform>Deze gedeelde mappen verlaten?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Move</source>
@@ -4961,7 +5072,10 @@ Voer een andere naam in.</translation>
     <message numerus="yes">
         <source>Move %n items to Rubbish bin?</source>
         <translatorcomment>Main text of the confirmation messagebox to move some items (files or folders) pto the rubbish bin. %n is the number of items to delete. CON-334</translatorcomment>
-        <translation><numerusform> %n item verplaatsen naar de Prullenbak?</numerusform><numerusform>%n items verplaatsen naar de Prullenbak?</numerusform></translation>
+        <translation>
+            <numerusform> %n item verplaatsen naar de Prullenbak?</numerusform>
+            <numerusform>%n items verplaatsen naar de Prullenbak?</numerusform>
+        </translation>
     </message>
     <message>
         <source>New folder</source>
@@ -4976,17 +5090,26 @@ Voer een andere naam in.</translation>
     <message numerus="yes">
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a file(s) from the rubbish bin. %n is the number of files to delete. CON-1258</translatorcomment>
-        <translation><numerusform>U staat op het punt om %n bestand permanent te verwijderen. Wilt u verder gaan?</numerusform><numerusform>U staat op het punt om permanent %n bestanden te verwijderen. Wilt u verder gaan?</numerusform></translation>
+        <translation>
+            <numerusform>U staat op het punt om %n bestand permanent te verwijderen. Wilt u verder gaan?</numerusform>
+            <numerusform>U staat op het punt om permanent %n bestanden te verwijderen. Wilt u verder gaan?</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n folder. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a folder(s) from the rubbish bin. %n is the number of folders to delete. CON-1258</translatorcomment>
-        <translation><numerusform>U staat op het punt om %n map permanent te verwijderen. Wilt u doorgaan?</numerusform><numerusform>U staat op het punt om %n mappen permanent te verwijderen. Wilt u doorgaan?</numerusform></translation>
+        <translation>
+            <numerusform>U staat op het punt om %n map permanent te verwijderen. Wilt u doorgaan?</numerusform>
+            <numerusform>U staat op het punt om %n mappen permanent te verwijderen. Wilt u doorgaan?</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n items. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently some items (files and folders) from the rubbish bin. %n is the number of items to delete. CON-1258</translatorcomment>
-        <translation><numerusform>U staat op het punt om %n item permanent te verwijderen. Wilt verder gaan?</numerusform><numerusform>U staat op het punt om %n items permanent te verwijderen. Wilt u verder gaan?</numerusform></translation>
+        <translation>
+            <numerusform>U staat op het punt om %n item permanent te verwijderen. Wilt verder gaan?</numerusform>
+            <numerusform>U staat op het punt om %n items permanent te verwijderen. Wilt u verder gaan?</numerusform>
+        </translation>
     </message>
     <message>
         <source>You cannot undo this action</source>
@@ -5041,7 +5164,10 @@ Voer een andere naam in.</translation>
     <message numerus="yes">
         <source>%n result found</source>
         <translatorcomment>Search tab subtitle that shows the number of coincidences found. %n is the number of found nodes. SNC-5804</translatorcomment>
-        <translation><numerusform>%n resultaat gevonden</numerusform><numerusform>%n resultaten gevonden</numerusform></translation>
+        <translation>
+            <numerusform>%n resultaat gevonden</numerusform>
+            <numerusform>%n resultaten gevonden</numerusform>
+        </translation>
     </message>
     <message>
         <source>No search results</source>
@@ -5064,27 +5190,39 @@ Voer een andere naam in.</translation>
     <message>
         <source>Offer expires in %1 m %2 s</source>
         <translatorcomment>Text indicating that the offer expires in the %1 minutes and %2 seconds. The placeholder %1 shall be replaced by the number of minutes and %2 by the number of seconds. CON-868</translatorcomment>
-        <translation>Aanbieding vervalt over %1 m %2 s</translation>
+        <translation>Aanbieding vervalt over %1&#xa0;m %2&#xa0;s</translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n day</source>
         <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
-        <translation><numerusform>Aanbieding vervalt over %n dag</numerusform><numerusform>Aanbieding vervalt over %n dagen</numerusform></translation>
+        <translation>
+            <numerusform>Aanbieding vervalt over %n dag</numerusform>
+            <numerusform>Aanbieding vervalt over %n dagen</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n hour</source>
         <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
-        <translation><numerusform>Aanbieding vervalt over %n uur</numerusform><numerusform>Aanbieding vervalt over %n uren</numerusform></translation>
+        <translation>
+            <numerusform>Aanbieding vervalt over %n uur</numerusform>
+            <numerusform>Aanbieding vervalt over %n uren</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n minute</source>
         <translatorcomment>Text indicating that the offer expires in the %n minutes. The placeholder %n shall be replaced by the number of minutes. CON-868/SNC-4853</translatorcomment>
-        <translation><numerusform>Aanbieding vervalt over %n minuut</numerusform><numerusform>Aanbieding vervalt over%n minuten</numerusform></translation>
+        <translation>
+            <numerusform>Aanbieding vervalt over %n minuut</numerusform>
+            <numerusform>Aanbieding vervalt over%n minuten</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n second</source>
         <translatorcomment>Text indicating that the offer expires in the %n seconds. Placeholder %n shall be replaced by the number of seconds. CON-868/SNC-4853</translatorcomment>
-        <translation><numerusform>Aanbieding vervalt over %n seconde</numerusform><numerusform>Aanbieding vervalt over %n seconden</numerusform></translation>
+        <translation>
+            <numerusform>Aanbieding vervalt over %n seconde</numerusform>
+            <numerusform>Aanbieding vervalt over %n seconden</numerusform>
+        </translation>
     </message>
     <message>
         <source>PROMO</source>
@@ -5609,7 +5747,7 @@ Voer een andere naam in.</translation>
     </message>
     <message>
         <source>You can view your backups and their statuses under the Backup tab in Settings.</source>
-        <translatorcomment>Text indicating that the user can view the backups in settings' backups tab CON-738</translatorcomment>
+        <translatorcomment>Text indicating that the user can view the backups in settings&apos; backups tab CON-738</translatorcomment>
         <translation>U kunt uw back-ups en hun status bekijken op het tabblad Back-up in Instellingen.</translation>
     </message>
     <message>
@@ -5666,7 +5804,10 @@ Voer een andere naam in.</translation>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A] heeft %n item verwijderd</numerusform><numerusform>[A]heeft %n items verwijderd</numerusform></translation>
+        <translation>
+            <numerusform>[A] heeft %n item verwijderd</numerusform>
+            <numerusform>[A]heeft %n items verwijderd</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -5904,17 +6045,17 @@ Voer een andere naam in.</translation>
     </message>
     <message>
         <source>Moved to OS Recycle Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user's in Windows.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
         <translation>Item verplaatst naar de Prullenbak</translation>
     </message>
     <message>
         <source>Moved to OS Rubbish Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user's choice in MacOS.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
         <translation>Item verplaatst naar de Prullenbak</translation>
     </message>
     <message>
         <source>Moved to OS Trash</source>
-        <translatorcomment>Label showing what happened to the file based on the user's choice in linux.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
         <translation>Item verplaatst naar de Prullenbak</translation>
     </message>
     <message>
@@ -5941,10 +6082,19 @@ Voer een andere naam in.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We've fixed bugs and made the app more reliable.
+        <source>- Improved reliability for problematic graphics drivers on Windows.
+- Minor bug fixes and performance improvements.
+</source>
+        <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
+        <translation>- Improved reliability for problematic graphics drivers on Windows.
+- Minor bug fixes and performance improvements.
+</translation>
+    </message>
+    <message>
+        <source>- We&apos;ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- We hebben bugs verholpen en de app betrouwbaarder gemaakt</translation>
     </message>
 </context>
 <context>
@@ -6117,7 +6267,7 @@ Wilt u het vervangen?</translation>
         <translation>&amp;Opslaan</translation>
     </message>
     <message>
-        <source>'%1' is write protected.
+        <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
         <translation>“%1” is beveiligd tegen schrijven.
@@ -6349,27 +6499,27 @@ Wilt u deze toch verwijderen?</translation>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 GB</translation>
+        <translation>%1&#xa0;GB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 KB</translation>
+        <translation>%1&#xa0;KB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 MB</translation>
+        <translation>%1&#xa0;MB</translation>
     </message>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 TB</translation>
+        <translation>%1&#xa0;TB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 bytes</translation>
+        <translation>%1&#xa0;bytes</translation>
     </message>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
@@ -6488,8 +6638,13 @@ Wilt u deze toch verwijderen?</translation>
     <name>RemoveBackup</name>
     <message>
         <source>Backup folder already exists on destination. Choose another.</source>
-        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can't move it there! SNC-6067 </translatorcomment>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can&apos;t move it there! SNC-6067 </translatorcomment>
         <translation>Er is al een map met deze naam op die lokatie, kies een andere lokatie</translation>
+    </message>
+    <message>
+        <source>Destination folder doesn’t exist. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
+        <translation>Destination folder doesn’t exist. Choose another.</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
@@ -6520,6 +6675,11 @@ Wilt u deze toch verwijderen?</translation>
         <translation>Verwijder de map uit MEGA</translation>
     </message>
     <message>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
+        <translation>De map wordt verwijderd uit MEGA, maar niet van uw apparaat. Deze actie kan niet ongedaan worden gemaakt.</translation>
+    </message>
+    <message>
         <source>Move folder</source>
         <translatorcomment>Radio button option label</translatorcomment>
         <translation>Verplaats de map naar de Cloud-schijf</translation>
@@ -6543,11 +6703,6 @@ Wilt u deze toch verwijderen?</translation>
         <source>Stop backup</source>
         <translatorcomment>Backup removal dialog window title (Linux and windows)</translatorcomment>
         <translation>Back-up stoppen</translation>
-    </message>
-    <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
-        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
-        <translation>De map wordt verwijderd uit MEGA, maar niet van uw apparaat. Deze actie kan niet ongedaan worden gemaakt.</translation>
     </message>
     <message>
         <source>To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].</source>
@@ -6637,12 +6792,18 @@ Wilt u deze toch verwijderen?</translation>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
-        <translation><numerusform>%n bestand</numerusform><numerusform>%n bestanden</numerusform></translation>
+        <translation>
+            <numerusform>%n bestand</numerusform>
+            <numerusform>%n bestanden</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
-        <translation><numerusform>%n map</numerusform><numerusform>%n mappen</numerusform></translation>
+        <translation>
+            <numerusform>%n map</numerusform>
+            <numerusform>%n mappen</numerusform>
+        </translation>
     </message>
     <message>
         <source>Adding transfers…</source>
@@ -6891,6 +7052,11 @@ Wilt u deze toch verwijderen?</translation>
         <translation>Start bij inloggen</translation>
     </message>
     <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
+        <translation>Leer meer</translation>
+    </message>
+    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>Een lokale map met een back-up van bestanden die verwijderd zijn in MEGA</translation>
@@ -7036,6 +7202,11 @@ Wilt u deze toch verwijderen?</translation>
         <translation>Synchronisaties worden uitgeschakeld</translation>
     </message>
     <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation>Thema</translation>
+    </message>
+    <message>
         <source>Transfer Quota</source>
         <translatorcomment>Section title for account transfer quota details.</translatorcomment>
         <translation>Overdrachtstegoed</translation>
@@ -7068,7 +7239,10 @@ Wilt u deze toch verwijderen?</translation>
     <message numerus="yes">
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
-        <translation><numerusform>Verbruikt tegoed in het afgelopen uur:</numerusform><numerusform>Verbruikt tegoed in de afgelopen %n uur:</numerusform></translation>
+        <translation>
+            <numerusform>Verbruikt tegoed in het afgelopen uur:</numerusform>
+            <numerusform>Verbruikt tegoed in de afgelopen %n uur:</numerusform>
+        </translation>
     </message>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
@@ -7098,17 +7272,10 @@ Wilt u deze toch verwijderen?</translation>
     <message numerus="yes">
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation><numerusform>dag</numerusform><numerusform>dagen</numerusform></translation>
-    </message>
-    <message>
-        <source>Theme</source>
-        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
-        <translation>Thema</translation>
-    </message>
-    <message>
-        <source>Learn more</source>
-        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
-        <translation>Leer meer</translation>
+        <translation>
+            <numerusform>dag</numerusform>
+            <numerusform>dagen</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -7142,12 +7309,18 @@ Wilt u deze toch verwijderen?</translation>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation><numerusform>%n bestand</numerusform><numerusform>%n bestanden</numerusform></translation>
+        <translation>
+            <numerusform>%n bestand</numerusform>
+            <numerusform>%n bestanden</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation><numerusform>%n map</numerusform><numerusform>%n mappen</numerusform></translation>
+        <translation>
+            <numerusform>%n map</numerusform>
+            <numerusform>%n mappen</numerusform>
+        </translation>
     </message>
     <message>
         <source>Add backup</source>
@@ -7158,6 +7331,11 @@ Wilt u deze toch verwijderen?</translation>
         <source>Add sync</source>
         <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
         <translation>Synchroniseren toevoegen</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translatorcomment>Label displayed when a user is trying to backup folders to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>Backup</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -7178,6 +7356,11 @@ Wilt u deze toch verwijderen?</translation>
         <source>Share with a MEGA user</source>
         <translatorcomment>Label displayed when a user is trying to share a public link of a file/folder with a user. String as short as possible.</translatorcomment>
         <translation>Delen met een MEGA gebruiker</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>Sync</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -7386,7 +7569,7 @@ Wilt u deze toch verwijderen?</translation>
     </message>
     <message>
         <source>MAC verification failure.</source>
-        <translatorcomment>Label descriping sync stall path issue when there's Cryptographic error .SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stall path issue when there&apos;s Cryptographic error .SNC-2565</translatorcomment>
         <translation>MAC-verificatie mislukt</translation>
     </message>
     <message>
@@ -7396,7 +7579,7 @@ Wilt u deze toch verwijderen?</translation>
     </message>
     <message>
         <source>Name too long for filesystem.</source>
-        <translatorcomment>Label descriping sync stallwhen move target's name is too long.SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stallwhen move target&apos;s name is too long.SNC-2565</translatorcomment>
         <translation>Naam te lang voor bestandssysteem</translation>
     </message>
     <message>
@@ -7498,27 +7681,42 @@ Wilt u deze toch verwijderen?</translation>
     <message numerus="yes">
         <source>Failed: %n</source>
         <translatorcomment>Name of the tab containing failed sync stalls in sync stalls dialog, %n variable is for the count.SAT-1034</translatorcomment>
-        <translation><numerusform>Mislukt: %n</numerusform><numerusform>Mislukt: %n</numerusform></translation>
+        <translation>
+            <numerusform>Mislukt: %n</numerusform>
+            <numerusform>Mislukt: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Item type conflict: %n</source>
         <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
-        <translation><numerusform>Conflicten met het itemtype: %n</numerusform><numerusform>Conflicten met het itemtype: %n</numerusform></translation>
+        <translation>
+            <numerusform>Conflicten met het itemtype: %n</numerusform>
+            <numerusform>Conflicten met het itemtype: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Name conflict: %n</source>
         <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
-        <translation><numerusform>Naamconflicten: %n</numerusform><numerusform>Naamconflicten: %n</numerusform></translation>
+        <translation>
+            <numerusform>Naamconflicten: %n</numerusform>
+            <numerusform>Naamconflicten: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Other: %n</source>
         <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
-        <translation><numerusform>Andere: %n</numerusform><numerusform>Andere: %n</numerusform></translation>
+        <translation>
+            <numerusform>Andere: %n</numerusform>
+            <numerusform>Andere: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Resolved: %n</source>
         <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
-        <translation><numerusform>Opgelost: %n</numerusform><numerusform>Opgelost: %n</numerusform></translation>
+        <translation>
+            <numerusform>Opgelost: %n</numerusform>
+            <numerusform>Opgelost: %n</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -7560,28 +7758,43 @@ Wilt u deze toch verwijderen?</translation>
         <source>%1 and %n issues failed.</source>
         <translatorcomment>In-view message displayed when several issues have failed and fixed. This string is the second part of string for multi plural support
         being the first part about the issues fixed. SAT-1034</translatorcomment>
-        <translation><numerusform>%1 en %n probleem kon niet worden opgelost</numerusform><numerusform>%1 en %n problemen konden niet worden opgelost</numerusform></translation>
+        <translation>
+            <numerusform>%1 en %n probleem kon niet worden opgelost</numerusform>
+            <numerusform>%1 en %n problemen konden niet worden opgelost</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues failed</source>
         <translatorcomment>In-view message displayed when all issue have failed. SAT-1034</translatorcomment>
-        <translation><numerusform>%n probleem kon niet worden opgelost</numerusform><numerusform>%n problemen konden niet worden opgelost</numerusform></translation>
+        <translation>
+            <numerusform>%n probleem kon niet worden opgelost</numerusform>
+            <numerusform>%n problemen konden niet worden opgelost</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues fixed</source>
         <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress. This string can be used by its own or as first part of string for multi plural support
         when several issues have failed. SNC-2565</translatorcomment>
-        <translation><numerusform>%n probleem opgelost</numerusform><numerusform>%n problemen opgelost</numerusform></translation>
+        <translation>
+            <numerusform>%n probleem opgelost</numerusform>
+            <numerusform>%n problemen opgelost</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues fixed and 1 issue failed</source>
         <translatorcomment>In-view message displayed when one issue has failed and several issues have been solved. SAT-1034</translatorcomment>
-        <translation><numerusform>%n probleem opgelost en 1 probleem kon niet worden opgelost</numerusform><numerusform>%n problemen opgelost en 1 probleem kon niet worden opgelost</numerusform></translation>
+        <translation>
+            <numerusform>%n probleem opgelost en 1 probleem kon niet worden opgelost</numerusform>
+            <numerusform>%n problemen opgelost en 1 probleem kon niet worden opgelost</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>1 issue fixed and %n issues failed</source>
         <translatorcomment>In-view message displayed when one issue has been solved and several issues have failed. SAT-1034</translatorcomment>
-        <translation><numerusform>1 probleem opgelost en %n probleem kon niet worden opgelost</numerusform><numerusform>1 probleem opgelost en %n problemen konden niet worden opgelost</numerusform></translation>
+        <translation>
+            <numerusform>1 probleem opgelost en %n probleem kon niet worden opgelost</numerusform>
+            <numerusform>1 probleem opgelost en %n problemen konden niet worden opgelost</numerusform>
+        </translation>
     </message>
     <message>
         <source>Fixing issues</source>
@@ -7589,7 +7802,7 @@ Wilt u deze toch verwijderen?</translation>
         <translation>Problemen oplossen…</translation>
     </message>
     <message>
-        <source>Issues can't be fixed.
+        <source>Issues can&apos;t be fixed.
 Verify the permissions of the .megaignore on file your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>Sommige problemen kunnen niet worden opgelost.
@@ -7606,7 +7819,7 @@ Controleer de machtigingen van het .megaignore bestand op de locaties van uw lok
         <translation>Vernieuw</translation>
     </message>
     <message>
-        <source>Some issues can't be fixed.
+        <source>Some issues can&apos;t be fixed.
 Verify the permissions of the .megaignore file on your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>Sommige problemen kunnen niet worden opgelost.
@@ -8343,7 +8556,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-4208</translatorcomment>
-        <translation>[B]%1[/B]kan niet worden toegevoegd omdat uw Pro Flexi-account is gedeactiveerd vanwege een mislukte betaling of omdat u uw abonnement heeft opgezegd. Om door te gaan, voert u een betaling uit en activeert u uw abonnement opnieuw.</translation>
+        <translation>[B]%1[/B]kan niet worden toegevoegd omdat uw Pro&#xa0;Flexi-account is gedeactiveerd vanwege een mislukte betaling of omdat u uw abonnement heeft opgezegd. Om door te gaan, voert u een betaling uit en activeert u uw abonnement opnieuw.</translation>
     </message>
     <message>
         <source>Error opening megaignore file</source>
@@ -8495,13 +8708,21 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Page title to add syncs. CON-1268</translatorcomment>
         <translation>Selecteer mappen om te synchroniseren</translation>
     </message>
+    <message>
+        <source>[A]Learn more[/A]</source>
+        <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
+        <translation>[A]Learn more[/A]</translation>
+    </message>
 </context>
 <context>
     <name>TextArea</name>
     <message numerus="yes">
         <source>Maximum length is %n characters.</source>
         <translatorcomment>Label to indicate the maximum number of characters in the text area. The %n placeholder indicates the number of characters, please keep it. CON-942</translatorcomment>
-        <translation><numerusform>De maximale lengte is %n karakters.</numerusform><numerusform>De maximale lengte is %n karakters.</numerusform></translation>
+        <translation>
+            <numerusform>De maximale lengte is %n karakters.</numerusform>
+            <numerusform>De maximale lengte is %n karakters.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -8600,7 +8821,10 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>%1 result found</source>
         <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
-        <translation><numerusform>%1 resultaat gevonden</numerusform><numerusform>%1 resultaten gevonden</numerusform></translation>
+        <translation>
+            <numerusform>%1 resultaat gevonden</numerusform>
+            <numerusform>%1 resultaten gevonden</numerusform>
+        </translation>
     </message>
     <message>
         <source>All</source>
@@ -8805,55 +9029,85 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>%1, but %n item couldn’t be downloaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%1, maar %n item konden niet gedownload worden.</numerusform><numerusform>%1, maar %n items kon niet gedownload worden.</numerusform></translation>
+        <translation>
+            <numerusform>%1, maar %n item konden niet gedownload worden.</numerusform>
+            <numerusform>%1, maar %n items kon niet gedownload worden.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1, but %n item couldn’t be uploaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%1, maar %n item kon niet geüpload worden.</numerusform><numerusform>%1, maar %n items konden niet geüpload worden.</numerusform></translation>
+        <translation>
+            <numerusform>%1, maar %n item kon niet geüpload worden.</numerusform>
+            <numerusform>%1, maar %n items konden niet geüpload worden.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n item kon niet gedownload worden naar %1.</numerusform><numerusform>%n items konden niet gedownload worden naar %1.</numerusform></translation>
+        <translation>
+            <numerusform>%n item kon niet gedownload worden naar %1.</numerusform>
+            <numerusform>%n items konden niet gedownload worden naar %1.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n item kon niet geüpload worden naar %1.</numerusform><numerusform>%n items konden niet geüpload worden naar %1.</numerusform></translation>
+        <translation>
+            <numerusform>%n item kon niet geüpload worden naar %1.</numerusform>
+            <numerusform>%n items konden niet geüpload worden naar %1.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%n item gedownload</numerusform><numerusform>%n items gedownload</numerusform></translation>
+        <translation>
+            <numerusform>%n item gedownload</numerusform>
+            <numerusform>%n items gedownload</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n item gedownload naar %1.</numerusform><numerusform>%n items gedownload naar %1.</numerusform></translation>
+        <translation>
+            <numerusform>%n item gedownload naar %1.</numerusform>
+            <numerusform>%n items gedownload naar %1.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during an upload operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n item bestaat niet langer of was hernoemd.</numerusform><numerusform>%n items bestaan niet langer of waren hernoemd.</numerusform></translation>
+        <translation>
+            <numerusform>%n item bestaat niet langer of was hernoemd.</numerusform>
+            <numerusform>%n items bestaan niet langer of waren hernoemd.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n item bestaat niet langer.</numerusform><numerusform>%n items bestaan niet langer.</numerusform></translation>
+        <translation>
+            <numerusform>%n item bestaat niet langer.</numerusform>
+            <numerusform>%n items bestaan niet langer.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%n item geüpload</numerusform><numerusform>%n items geüpload</numerusform></translation>
+        <translation>
+            <numerusform>%n item geüpload</numerusform>
+            <numerusform>%n items geüpload</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n item geüpload naar %1.</numerusform><numerusform>%n items geüpload naar %1.</numerusform></translation>
+        <translation>
+            <numerusform>%n item geüpload naar %1.</numerusform>
+            <numerusform>%n items geüpload naar %1.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Could not download</source>
@@ -8893,7 +9147,10 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>Retry failed items</source>
         <translatorcomment>Notification button to retry failed transfers when not all the transfers failed. CON-223</translatorcomment>
-        <translation><numerusform>Mislukte item opnieuw proberen</numerusform><numerusform>Mislukte items opnieuw proberen</numerusform></translation>
+        <translation>
+            <numerusform>Mislukte item opnieuw proberen</numerusform>
+            <numerusform>Mislukte items opnieuw proberen</numerusform>
+        </translation>
     </message>
     <message>
         <source>Show in MEGA</source>
@@ -8918,12 +9175,18 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>Upload stopped</source>
         <translatorcomment>Title of the notification displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
-        <translation><numerusform>Het uploaden is gestopt</numerusform><numerusform>Uploads zijn gestopt</numerusform></translation>
+        <translation>
+            <numerusform>Het uploaden is gestopt</numerusform>
+            <numerusform>Uploads zijn gestopt</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You logged out of MEGA so your upload has stopped. You can resume the upload after logging back in.</source>
         <translatorcomment>Notification message displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
-        <translation><numerusform>U bent uitgelogd bij MEGA, dus het uploaden is gestopt. U kunt het uploaden hervatten nadat U weer bent ingelogd.</numerusform><numerusform>U bent uitgelogd bij MEGA, dus uw uploads zijn gestopt. U kunt de uploads hervatten nadat u weer bent ingelogd.</numerusform></translation>
+        <translation>
+            <numerusform>U bent uitgelogd bij MEGA, dus het uploaden is gestopt. U kunt het uploaden hervatten nadat U weer bent ingelogd.</numerusform>
+            <numerusform>U bent uitgelogd bij MEGA, dus uw uploads zijn gestopt. U kunt de uploads hervatten nadat u weer bent ingelogd.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -9340,12 +9603,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <name>UploadIssueHeader</name>
     <message>
         <source>Cannot reach the destination folder.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.SNC-2565</translatorcomment>
         <translation>Kan de doelmap niet bereiken</translation>
     </message>
     <message>
         <source>Can´t upload [B]%1[/B] to the selected location</source>
-        <translatorcomment>Title for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
         <translation>Kan [B]%1[/B] niet uploaden naar de geselecteerde locatie</translation>
     </message>
 </context>
@@ -9450,7 +9713,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
         <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Meer opslag nodig?[BR][B][A]Probeer Pro Flexi[/A][/B]</translation>
+        <translation>Meer opslag nodig?[BR][B][A]Probeer Pro&#xa0;Flexi[/A][/B]</translation>
     </message>
     <message>
         <source>Recommended</source>
@@ -9511,7 +9774,10 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
-        <translation><numerusform>%1 (%2%) van %3 gebruikt</numerusform><numerusform>%1 (%2%) van %3 gebruikt</numerusform></translation>
+        <translation>
+            <numerusform>%1 (%2%) van %3 gebruikt</numerusform>
+            <numerusform>%1 (%2%) van %3 gebruikt</numerusform>
+        </translation>
     </message>
     <message>
         <source>%1 / %2</source>
@@ -9526,12 +9792,15 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 sec</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation>%1 sec</translation>
+        <translation>%1&#xa0;sec</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
-        <translation><numerusform>%1 gebruikt</numerusform><numerusform>%1 gebruikt</numerusform></translation>
+        <translation>
+            <numerusform>%1 gebruikt</numerusform>
+            <numerusform>%1 gebruikt</numerusform>
+        </translation>
     </message>
     <message>
         <source>%1d</source>
@@ -9556,32 +9825,50 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>Added %n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Overdracht %n dag geleden voltooid</numerusform><numerusform>Overdracht %n dagen geleden voltooid</numerusform></translation>
+        <translation>
+            <numerusform>Overdracht %n dag geleden voltooid</numerusform>
+            <numerusform>Overdracht %n dagen geleden voltooid</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Overdracht %n uur geleden voltooid</numerusform><numerusform>Overdracht %n uur geleden voltooid</numerusform></translation>
+        <translation>
+            <numerusform>Overdracht %n uur geleden voltooid</numerusform>
+            <numerusform>Overdracht %n uur geleden voltooid</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Overdracht %n minuut geleden voltooid</numerusform><numerusform>Overdracht %n minuten geleden voltooid</numerusform></translation>
+        <translation>
+            <numerusform>Overdracht %n minuut geleden voltooid</numerusform>
+            <numerusform>Overdracht %n minuten geleden voltooid</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Overdracht %n maand geleden voltooid</numerusform><numerusform>Overdracht %n maand geleden voltooid</numerusform></translation>
+        <translation>
+            <numerusform>Overdracht %n maand geleden voltooid</numerusform>
+            <numerusform>Overdracht %n maand geleden voltooid</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Overdracht %n seconden geleden voltooid</numerusform><numerusform>Overdracht %n seconden geleden voltooid</numerusform></translation>
+        <translation>
+            <numerusform>Overdracht %n seconden geleden voltooid</numerusform>
+            <numerusform>Overdracht %n seconden geleden voltooid</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Overdracht %n jaar geleden voltooid</numerusform><numerusform>Overdracht %n jaar geleden voltooid</numerusform></translation>
+        <translation>
+            <numerusform>Overdracht %n jaar geleden voltooid</numerusform>
+            <numerusform>Overdracht %n jaar geleden voltooid</numerusform>
+        </translation>
     </message>
     <message>
         <source>Added just now</source>
@@ -9591,7 +9878,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Basic</translation>
     </message>
     <message>
         <source>Business</source>
@@ -9606,7 +9893,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Essential</translation>
     </message>
     <message>
         <source>Free</source>
@@ -9631,47 +9918,47 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>MEGA Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type CON-719</translatorcomment>
-        <translation>MEGA Basic</translation>
+        <translation>MEGA&#xa0;Basic</translation>
     </message>
     <message>
         <source>MEGA Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type CON-719</translatorcomment>
-        <translation>MEGA Essential</translation>
+        <translation>MEGA&#xa0;Essential</translation>
     </message>
     <message>
         <source>MEGA Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type CON-719</translatorcomment>
-        <translation>MEGA Starter</translation>
+        <translation>MEGA&#xa0;Starter</translation>
     </message>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Starter</translation>
     </message>
     <message>
         <source>TB</source>
