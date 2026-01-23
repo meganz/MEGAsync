@@ -6637,6 +6637,11 @@ Do you want to delete it anyway?</translation>
         <translation>There is already a folder with this name in that location, choose another location</translation>
     </message>
     <message>
+        <source>Destination folder doesn’t exist. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
+        <translation>Destination folder doesn’t exist. Choose another.</translation>
+    </message>
+    <message>
         <source>Error moving or removing remote backup folder</source>
         <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
         <translation>Error moving or deleting the backup folder in MEGA</translation>
@@ -6645,11 +6650,6 @@ Do you want to delete it anyway?</translation>
         <source>Failed to move or remove the remote backup folder. Reason: %1</source>
         <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
         <translation>Unable to move or delete the backup folder in MEGA. Reason: %1</translation>
-    </message>
-    <message>
-        <source>Destination folder doesn&apos;t exists. Choose another.</source>
-        <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
-        <translation type="unfinished">Destination folder doesn&apos;t exists. Choose another.</translation>
     </message>
 </context>
 <context>
